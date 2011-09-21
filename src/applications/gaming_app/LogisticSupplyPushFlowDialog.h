@@ -106,17 +106,17 @@ private:
     //@{
     typedef std::map< QString, Dotation > T_Supplies;
 
-    struct dotationQuantity 
+    struct DotationQuantity 
     {
         QString dotationName_;
         int quantity_;
-        dotationQuantity(): quantity_(0) {}
-        dotationQuantity( const QString& dotationName, int quantity ): dotationName_( dotationName ), quantity_( quantity ) {}
+        DotationQuantity(): quantity_(0) {}
+        DotationQuantity( const QString& dotationName, int quantity ): dotationName_( dotationName ), quantity_( quantity ) {}
     };
 
-    typedef std::vector< dotationQuantity > T_SuppliesVector;
+    typedef std::vector< DotationQuantity > T_SuppliesVector;
 
-    typedef std::map< const kernel::Automat_ABC*, T_SuppliesVector > T_RecipientSupplies;    
+    typedef std::map< const kernel::Automat_ABC*, T_SuppliesVector > T_RecipientSupplies;
     typedef std::vector< const kernel::Automat_ABC* > T_Recipients;
     typedef QMap< QString, const kernel::Automat_ABC* > T_RecipientsNames;
     //@}

@@ -34,6 +34,7 @@
 #include "protocol/SimulationSenders.h"
 #include <boost/bind.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/foreach.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -269,11 +270,9 @@ namespace
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Validate()
 {
-    /*
-    const Automat_ABC* target = targetCombo_->count() ? targetCombo_->GetValue() : 0;
-    if( !selected_ || !target )
+    if( !selected_ )
         return;
-    targetCombo_->setFocus();
+
     accept();
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
@@ -282,26 +281,21 @@ void LogisticSupplyPushFlowDialog::Validate()
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
 
     parameters::PushFlowParameters* pushFlowParameters = new parameters::PushFlowParameters( it.NextElement() );
-    unsigned int rows = 0;
-    for( int i = 0; i < table_->numRows(); ++i )
-        if( !table_->item( i, 0 )->text().isEmpty() )
-            ++rows;
-
-    if( rows > 0 )
+    BOOST_FOREACH( const T_RecipientSupplies::value_type& recipientSupply, recipientSupplies_ )
     {
-        for( int i = 0; i < table_->numRows(); ++i )
+        BOOST_FOREACH( const DotationQuantity& resource, recipientSupply.second )
         {
-            const QString text = table_->text( i, 0 );
-            if( text.isEmpty() )
-                continue;
-            pushFlowParameters->AddResource( *supplies_[ text ].type_, table_->text( i, 1 ).toInt(), *target );
+            const DotationType* dotationType = supplies_[ resource.dotationName_ ].type_;
+            assert( dotationType );
+            pushFlowParameters->AddResource( *dotationType, resource.quantity_, *recipientSupply.first );
         }
     }
+
     action->AddParameter( *pushFlowParameters );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );
-    */
+    
     
     clearRecipientsTable();
     clearRecipientsData();
@@ -590,11 +584,11 @@ void LogisticSupplyPushFlowDialog::clearResourcesData()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::eraseRecipientData( int index )
 {
-    if ( index >= recipients_.size() )
+    if( index >= recipients_.size() )
         return;
     T_Recipients::iterator it = recipients_.begin(); std::advance( it, index );
     T_RecipientSupplies::iterator itSupplies = recipientSupplies_.find( *it );
-    if ( itSupplies != recipientSupplies_.end() )
+    if( itSupplies != recipientSupplies_.end() )
         recipientSupplies_.erase( itSupplies );
     recipients_.erase( it );
 }
@@ -606,7 +600,7 @@ void LogisticSupplyPushFlowDialog::eraseRecipientData( int index )
 void LogisticSupplyPushFlowDialog::insertNewRecipientData( int index, const kernel::Automat_ABC* pRecipient )
 {
     T_SuppliesVector emptySupplies;
-    if ( recipientSupplies_.find( pRecipient ) == recipientSupplies_.end() )
+    if( recipientSupplies_.find( pRecipient ) == recipientSupplies_.end() )
         recipientSupplies_[ pRecipient ] = emptySupplies;
     recipients_.insert( recipients_.begin() + index, pRecipient );
 }
@@ -619,7 +613,7 @@ void LogisticSupplyPushFlowDialog::OnRecipientValueChanged( int row, int /*col*/
 {
     ExclusiveComboTableItem& item = *static_cast< ExclusiveComboTableItem* >( recipientsTable_->item( row, 0 ) );
     QString selection = item.currentText();
-    if ( selection.isEmpty() )
+    if( selection.isEmpty() )
     {
         if ( recipientsTable_->numRows() > 1 )
             recipientsTable_->removeRow( row );
@@ -631,10 +625,9 @@ void LogisticSupplyPushFlowDialog::OnRecipientValueChanged( int row, int /*col*/
         const kernel::Automat_ABC* pRecipient = recipientsNames_[ selection ];
         if ( pRecipient )
             insertNewRecipientData( row, pRecipient );
-        if ( row + 1 == recipientsTable_->numRows() )      
+        if ( row + 1 == recipientsTable_->numRows() )
             AddRecipientItem();
     }
-
     OnRecipientSelectionChanged( row , 0 );
 }
 
@@ -668,7 +661,7 @@ void LogisticSupplyPushFlowDialog::OnRecipientSelectionChanged( int row, int /*c
             selected_->Get< kernel::TacticalHierarchies >().Accept< SupplyStates >( visitor );
 
             T_SuppliesVector& supplies = it->second;
-            for ( int i=0; i<supplies.size(); ++i )
+            for( int i=0; i < supplies.size(); ++i )
             {
                 const QString& dotationName = supplies[i].dotationName_;
                 int available = 0;
@@ -677,7 +670,6 @@ void LogisticSupplyPushFlowDialog::OnRecipientSelectionChanged( int row, int /*c
                     available = itDotation->second.quantity_;
                 AddResourceItem( dotationName, available, supplies[i].quantity_ );
             }
-
             AddResourceItem();
         }
     }
@@ -710,7 +702,6 @@ void LogisticSupplyPushFlowDialog::computeAvailableRecipients( QStringList& reci
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog::OnResourcesValueChanged
 // Created: MMC 2011-09-19
@@ -732,9 +723,9 @@ void LogisticSupplyPushFlowDialog::OnResourcesValueChanged( int row, int col )
 
     const Dotation& dotationSelected = supplies_[ selection ];
     T_SuppliesVector& supplies = it->second;
-    if ( row == supplies.size() )
+    if( row == supplies.size() )
     {
-        dotationQuantity newDotation( selection, 1 );
+        DotationQuantity newDotation( selection, 1 );
         supplies.push_back( newDotation );
     }
 
@@ -758,7 +749,7 @@ void LogisticSupplyPushFlowDialog::OnResourcesValueChanged( int row, int col )
         }
         else
         {   
-            dotationQuantity& dotationQty = (*itSupplies);
+            DotationQuantity& dotationQty = *itSupplies;
             if ( col == 0 )
             {
                 dotationQty.dotationName_ = selection;
