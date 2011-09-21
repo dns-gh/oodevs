@@ -156,6 +156,7 @@ void MIL_FireClass::ReadUrbanModifiers( xml::xistream& xis )
 {
     xis >> xml::start( "urban-modifiers" );
     urbanModifiers_.reset( new PHY_UrbanAttritionData( xis ) );
+	xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
