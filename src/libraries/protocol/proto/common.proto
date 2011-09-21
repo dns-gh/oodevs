@@ -788,20 +788,14 @@ message Extension {
     repeated Entry entries = 1; //!< The extension entries @see Entry
 }
 
+/** @struct ResourceNetworkElement
+    @brief A resource network element message
+*/
 message ResourceNetworkElement
 {
     required ObjectId            object   = 1; //! An object identifier
     required ResourceNetworkType resource = 2; //!< The resource network type
 }
-
-/*
-message Link {
-        required ObjectId   object   = 1; //!< The target identifier
-        required int32      capacity = 2; //!< The capacity
-        required uint32     flow     = 3; //!< The flow identifier
-    }
-    
-*/
 
 /** @struct SupplyFlowResource
     @brief The resource part of supply flow (push/pull) messages
