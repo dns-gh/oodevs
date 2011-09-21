@@ -1790,6 +1790,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
         OnReceiveMsgCheckPointSetFrequencyAck ();
     else if( wrapper.message().has_control_checkpoint_save_now_ack() )
         OnReceiveMsgCheckPointSaveNowAck      ();
+    else if( wrapper.message().has_control_checkpoint_save_delete() )
+        return;
     else if( wrapper.message().has_control_send_current_state_begin() )
         return;
     else if( wrapper.message().has_control_send_current_state_end() )
