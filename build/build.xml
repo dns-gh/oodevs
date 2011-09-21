@@ -1421,7 +1421,6 @@
             <include name="data/terrains/Angers_x9/**"/>
             <include name="exercises/Tuto_sw/**"/>
             <include name="data/terrains/Sw_terrain2/**"/>
-            <include name="data/models/ada/physical/france/**"/>
             <include name="exercises/tutorials/01 - Generalities/**"/>
             <include name="exercises/tutorials/02 - Gaming/**"/>
             <include name="exercises/tutorials/03 - Missions/**"/>

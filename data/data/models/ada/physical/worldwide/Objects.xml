@@ -79,7 +79,7 @@
     <burn/>
     <propagation model="fire"/>
   </object>
-  <object geometry="polygon" name="Decontamination Point" symbol="G*MPNDP---****X" type="decontamination site">
+  <object geometry="polygon" name="Decontamination Site" symbol="G*MPNDP---****X" type="decontamination site">
     <avoidable distance="250"/>
     <decontamination/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
@@ -523,4 +523,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="0089446209" -->
+<!-- signature="3505924381" -->

@@ -185,7 +185,7 @@
   <automat decisional-model="Ground Surveillance Radar" id="244" name="Ground suveillance radar" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Ground surveillance radar"/>
   </automat>
-  <automat decisional-model="NBC reconnaissance platoon" id="245" name="NBC reconaissance platoon" type="Automate NBC">
+  <automat decisional-model="NBC reconnaissance platoon" id="245" name="NBC reconnaissance platoon" type="Automate NBC">
     <unit command-post="true" max-occurs="3" min-occurs="3" type="NBC reconnaissance troop"/>
   </automat>
   <automat decisional-model="NBC decontamination platoon" id="246" name="NBC decontamination platoon" type="Automate NBC">
@@ -461,4 +461,4 @@
     <unit min-occurs="2" type="HS - Law_Police"/>
   </automat>
 </automats>
-<!-- signature="2095028455" -->
+<!-- signature="2941129900" -->
