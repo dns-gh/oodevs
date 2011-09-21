@@ -313,6 +313,8 @@
       <missions>
         <mission name="PION ASS Assurer la Mise En Oeuvre">
           <fragorder name="Appliquer les feux"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
@@ -4154,6 +4156,8 @@
         <mission name="PION ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION Faire Mouvement"/>
         <mission name="PION Soutenir En Mesure De"/>
@@ -4168,6 +4172,8 @@
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Poursuivre"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
@@ -4236,6 +4242,8 @@
         <mission name="PION ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION Faire Mouvement"/>
         <mission name="PION Soutenir En Mesure De"/>
@@ -4250,6 +4258,8 @@
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Poursuivre"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
@@ -4318,6 +4328,8 @@
         <mission name="PION ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION Faire Mouvement"/>
         <mission name="PION Soutenir En Mesure De"/>
@@ -4331,6 +4343,8 @@
         <mission name="PION ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
@@ -4399,6 +4413,8 @@
         <mission name="PION ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION Faire Mouvement"/>
         <mission name="PION Soutenir En Mesure De"/>
@@ -4413,6 +4429,8 @@
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Poursuivre"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
       </missions>
       <fragorders>
@@ -6292,6 +6310,8 @@
         <mission name="PION ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
@@ -6463,6 +6483,8 @@
         <mission name="PION ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Oeuvre">
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
@@ -6506,6 +6528,8 @@
         <mission name="PION ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Oeuvre">
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
@@ -6547,6 +6571,8 @@
         <mission name="PION ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
@@ -7772,18 +7798,26 @@
           <fragorder name="Poursuivre"/>
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Batterie Inopinee">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
       </missions>
       <fragorders>
@@ -7820,18 +7854,26 @@
           <fragorder name="Poursuivre"/>
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Batterie Inopinee">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
       </missions>
       <fragorders>
@@ -7859,6 +7901,8 @@
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Poursuivre"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION Faire Mouvement"/>
         <mission name="PION Suivre"/>
@@ -7872,14 +7916,20 @@
         <mission name="PION ASS Assurer Mise En Batterie Inopinee">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
       </missions>
       <fragorders>
@@ -7948,18 +7998,26 @@
           <fragorder name="Poursuivre"/>
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Batterie Inopinee">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
       </missions>
       <fragorders>
@@ -8410,18 +8468,26 @@
           <fragorder name="Poursuivre"/>
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Batterie Inopinee">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
         <mission name="PION ASS Assurer Mise En Oeuvre Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Effectuer Mouvement De Sauvegarde"/>
+          <fragorder name="Pion Engager"/>
+          <fragorder name="Pion Desengager"/>
         </mission>
       </missions>
       <fragorders>
@@ -15046,4 +15112,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0270383223" -->
+<!-- signature="2312659684" -->

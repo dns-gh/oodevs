@@ -566,5 +566,9 @@
   <report category="operational" id="396" message="Reconnaissance impossible (l'objectif n'est pas accessible)"/>
   <report category="operational" id="397" message="L'objectif n'est pas accessible"/>
   <report category="operational" id="398" message="Pas de points cles dans la zone"/>
+  <report category="operational" id="399" message="Etat engagé"/>
+  <report category="operational" id="400" message="Etat désengagé"/>
+  <report category="operational" id="401" message="Unité déjà engagée"/>
+  <report category="operational" id="402" message="Unité déjà désengagée"/>
 </reports>
-<!-- signature="0189303840" -->
+<!-- signature="2855594782" -->

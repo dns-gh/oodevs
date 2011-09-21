@@ -5,7 +5,127 @@ local emptyTable = emptyTable
 
 include "bit.lua"
 
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: GGE 20-09-11 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Pions/Common/Missions/MettreEnOeuvre.hal $
+]]--[[// $Author: GGE $
+]]--[[// $Modtime: 20/09/11 18:04 $
+]]--[[// $Revision: 35 $
+]]--[[// $Workfile: MettreEnOeuvre.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "BEH_Pion_ASS_GererOrdre_Engager"
+{
+    feedbacks = { { { "done_BEH_Pion_ASS_GererOrdre_Engager" }, "BEH_Pion_ASS_GererOrdre_Engager" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_GererOrdre_Engager, {value} ) end,
+    activations =
+    {
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
+    },
 
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.bAutorise_Inopine = self.params[1]
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// Prise en charge de l'ordre d'engagement
+]]--[[//---------------------------------------------------------------------
+]]local selOrder = DEC_GetCategory( "ordres_recus" )
+        for _,x_ordre in pairs( selOrder or emptyTable ) do
+            do
+                local repOrdreCond = x_ordre
+                if( repOrdreCond:GetType() == "Rep_OrderConduite_Pion_Engager" ) then
+                    do
+                        DEC_Trace( "Engager " .. EnumToString( F_Pion_GeteEtatPhaseMission( myself ), E_EtatPion_PhaseMission ) )
+						if ( myself.Engaged_ == nil ) then
+							do
+							    if( self._namedParams.bAutorise_Inopine or F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_PretPourConduiteTir ) then
+								    do
+										Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : Engager", } )
+										Activate( self.activations.ACT_RC, 1, { eRC_Engaged, } )
+										myself.Engaged_ = true
+								    end		
+							    else
+									Activate( self.activations.ACT_RC, 1, { eRC_MissionImpossible, } )
+								end
+							end	
+						else
+							Activate( self.activations.ACT_RC, 1, { eRC_AlreadyEngaged, } )
+						end
+                    end
+                end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { repOrdreCond, } )
+            end
+
+        end
+
+    end,
+}	
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: GGE 20-09-11 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Pions/Common/Missions/MettreEnOeuvre.hal $
+]]--[[// $Author: GGE $
+]]--[[// $Modtime: 20/09/11 18:04 $
+]]--[[// $Revision: 35 $
+]]--[[// $Workfile: MettreEnOeuvre.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "BEH_Pion_ASS_GererOrdre_Desengager"
+{
+    feedbacks = { { { "done_BEH_Pion_ASS_GererOrdre_Desengager" }, "BEH_Pion_ASS_GererOrdre_Desengager" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_GererOrdre_Desengager, {value} ) end,
+    activations =
+    {
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.bAutorise_Inopine = self.params[1]
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[// Prise en charge de l'ordre d'engagement
+]]--[[//---------------------------------------------------------------------
+]]local selOrder = DEC_GetCategory( "ordres_recus" )
+        for _,x_ordre in pairs( selOrder or emptyTable ) do
+            do
+                local repOrdreCond = x_ordre
+                if( repOrdreCond:GetType() == "Rep_OrderConduite_Pion_Desengager" ) then
+                    do
+                        DEC_Trace( "Desengager " .. EnumToString( F_Pion_GeteEtatPhaseMission( myself ), E_EtatPion_PhaseMission ) )
+						if ( myself.Engaged_ ~= nil and myself.Engaged_ ) then
+								do
+									Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : Desengager", } )
+									Activate( self.activations.ACT_RC, 1, { eRC_Disengaged, } )
+									myself.Engaged_ = nil
+								end
+						else
+							Activate( self.activations.ACT_RC, 1, { eRC_AlreadyDisengaged, } )
+						end
+                    end
+                end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { repOrdreCond, } )
+            end
+
+        end
+
+    end,
+}
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -1312,6 +1432,12 @@ connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux,
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux, "BEH_Pion_ASS_SauvegardeSurPosition", nodes.BEH_Pion_ASS_SauvegardeSurPosition }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux, "BEH_Pion_ASS_SauvegardeSurPoste", nodes.BEH_Pion_ASS_SauvegardeSurPoste }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_Engager, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_Engager, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_Engager, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_Desengager, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_Desengager, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_Desengager, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_Canon, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_Canon, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_Canon, "BEH_Tir_Pion_ASS_AppliquerFeux", nodes.BEH_Tir_Pion_ASS_AppliquerFeux }

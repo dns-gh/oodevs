@@ -25,6 +25,8 @@ node "MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition"
     {
         { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
         { "BEH_Pion_ASS_GererOrdre_AppliquerFeux", { "done_BEH_Pion_ASS_GererOrdre_AppliquerFeux" } },
+        { "BEH_Pion_ASS_GererOrdre_Engager", { "done_BEH_Pion_ASS_GererOrdre_Engager" } },
+        { "BEH_Pion_ASS_GererOrdre_Desengager", { "done_BEH_Pion_ASS_GererOrdre_Desengager" } },   		
         { "BEH_Info_Pion_ASS_GererDisponibiliteAuTir", { "done_BEH_Info_Pion_ASS_GererDisponibiliteAuTir" } },
         { "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission", { "done_BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission" } },
         { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
@@ -66,6 +68,8 @@ node "MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition"
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
         --[[//---------------------------------------------------------------------
 ]]Activate( self.activations.BEH_Pion_ASS_GererOrdre_AppliquerFeux, 1, { true, } )
+        Activate( self.activations.BEH_Pion_ASS_GererOrdre_Engager, 1, { true, } )
+        Activate( self.activations.BEH_Pion_ASS_GererOrdre_Desengager, 1, { true, } )
         --[[// Mission
 ]]Activate( self.activations.BEH_Info_Pion_ASS_GererDisponibiliteAuTir, 1, { true, } )
          do
@@ -100,6 +104,8 @@ eventmanager_plugin.MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition = { "mission" }
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition, "BEH_Pion_ASS_GererOrdre_AppliquerFeux", nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition, "BEH_Pion_ASS_GererOrdre_Engager", nodes.BEH_Pion_ASS_GererOrdre_Engager }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition, "BEH_Pion_ASS_GererOrdre_Desengager", nodes.BEH_Pion_ASS_GererOrdre_Desengager }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition, "BEH_Info_Pion_ASS_GererDisponibiliteAuTir", nodes.BEH_Info_Pion_ASS_GererDisponibiliteAuTir }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition, "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission", nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

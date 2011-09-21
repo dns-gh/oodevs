@@ -566,5 +566,9 @@
   <report category="operational" id="396" message="The target cannot be reconnoitred because it is not accessible)"/>
   <report category="operational" id="397" message="The target is not accessible"/>
   <report category="operational" id="398" message="No key positions found in area"/>
+  <report category="operational" id="399" message="Engaged"/>
+  <report category="operational" id="400" message="Disengaged"/>
+  <report category="operational" id="401" message="Already engaged"/>
+  <report category="operational" id="402" message="Already disengaged"/>
 </reports>
-<!-- signature="0993953922" -->
+<!-- signature="1298836406" -->

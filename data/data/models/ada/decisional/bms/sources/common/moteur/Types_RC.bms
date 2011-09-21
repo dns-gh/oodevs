@@ -414,7 +414,11 @@ eRC_NoPositionsToReachTargets = 395
 eRC_TheTargetCannotBeReconnoitre = 396
 eRC_TargetIsNotAccessible = 397
 eRC_NoKeyPositionsFoundInArea = 398
-eNbr = 399
+eRC_Engaged = 399
+eRC_Disengaged = 400
+eRC_AlreadyEngaged = 401
+eRC_AlreadyDisengaged = 402
+eNbr = 403
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
 ]]--[[// Parametre : T_Pion
