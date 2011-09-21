@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
   <parties>
     <party id="1" name="AZUR" type="friend">
       <objects>
@@ -72,65 +72,19 @@
             <unit command-post="false" id="330" name="RENS - Drone DRAC" position="31UCQ0410601178" type="RENS - Drone DRAC"/>
             <unit command-post="false" id="331" name="RENS - Drone DRAC" position="31UCQ0512601641" type="RENS - Drone DRAC"/>
           </automat>
-          <automat engaged="true" id="332" knowledge-group="2" name="HUMUS - INF - Compagnie Commando [332]" type="HUMUS - INF - Compagnie Commando">
-            <unit command-post="true" id="333" name="HUMUS - INF - PC" position="31UCQ0788802464" type="HUMUS - INF - PC"/>
-            <unit command-post="false" id="334" name="HUMUS - INF - Section Cdo BTR60" position="31UCQ0837101947" type="HUMUS - INF - Section Cdo BTR60"/>
-            <unit command-post="false" id="335" name="HUMUS - INF - Section Cdo Toyota" position="31UCQ0785201466" type="HUMUS - INF - Section Cdo Toyota"/>
-            <unit command-post="false" id="336" name="HUMUS - INF - Grp mortier 60" position="31UCQ0736901983" type="HUMUS - INF - Grp mortier 60"/>
-            <unit command-post="false" id="337" name="HUMUS - ABC - Peloton T55" position="31UCQ0838802446" type="HUMUS - ABC - Peloton T55"/>
-            <unit command-post="false" id="338" name="HUMUS - INF - Section Cdo BMP1" position="31UCQ0857801940" type="HUMUS - INF - Section Cdo BMP1"/>
-            <unit command-post="false" id="339" name="HUMUS - ASY -  Activiste" position="31UCQ0835301448" type="HUMUS - ASY -  Activiste"/>
-            <unit command-post="false" id="340" name="HUMUS - RENS - Societe Militaire Privee" position="31UCQ0784501259" type="HUMUS - RENS - Societe Militaire Privee"/>
+          <automat engaged="true" id="350" knowledge-group="2" name="INF . Section TE [350]" type="INF . Section TE">
+            <unit command-post="true" id="351" name="INF . PC Section TE" position="31UBQ9558507280" type="INF . PC Section TE"/>
+            <unit command-post="false" id="352" name="INF . Groupe TE" position="31UBQ9606806763" type="INF . Groupe TE"/>
+            <unit command-post="false" id="353" name="INF . Groupe TE" position="31UBQ9554906282" type="INF . Groupe TE"/>
+            <unit command-post="false" id="354" name="INF . Groupe TE" position="31UBQ9506706799" type="INF . Groupe TE"/>
+            <unit command-post="false" id="355" name="INF . Groupe TE" position="31UBQ9608607262" type="INF . Groupe TE"/>
           </automat>
-          <automat engaged="true" id="341" knowledge-group="2" name="HUMUS - INF - Compagnie [341]" type="HUMUS - INF - Compagnie">
-            <unit command-post="true" id="342" name="HUMUS - INF - PC" position="31UBP9943498620" type="HUMUS - INF - PC"/>
-            <unit command-post="false" id="343" name="HUMUS - INF - Grp mortier 82" position="31UBP9991798103" type="HUMUS - INF - Grp mortier 82"/>
-            <unit command-post="false" id="344" name="HUMUS - INF - Section BTR60" position="31UBP9939897621" type="HUMUS - INF - Section BTR60"/>
-            <unit command-post="false" id="345" name="HUMUS - INF - Section BMP1" position="31UBP9891598139" type="HUMUS - INF - Section BMP1"/>
-            <unit command-post="false" id="346" name="HUMUS - ABC - Peloton T55" position="31UBP9993598602" type="HUMUS - ABC - Peloton T55"/>
-            <unit command-post="false" id="347" name="HUMUS - INF - Groupe AC" position="31UCP0012498095" type="HUMUS - INF - Groupe AC"/>
-            <unit command-post="false" id="348" name="HUMUS - INF - Section GAZ66" position="31UBP9989997604" type="HUMUS - INF - Section GAZ66"/>
-            <unit command-post="false" id="349" name="HUMUS - INF - Section ZIL 131" position="31UBP9939197415" type="HUMUS - INF - Section ZIL 131"/>
-          </automat>
-          <automat engaged="true" id="350" knowledge-group="2" name="INF - Section TE [350]" type="INF - Section TE">
-            <unit command-post="true" id="351" name="INF - PC Section TE" position="31UBQ9558507280" type="INF - PC Section TE"/>
-            <unit command-post="false" id="352" name="INF - Groupe TE" position="31UBQ9606806763" type="INF - Groupe TE"/>
-            <unit command-post="false" id="353" name="INF - Groupe TE" position="31UBQ9554906282" type="INF - Groupe TE"/>
-            <unit command-post="false" id="354" name="INF - Groupe TE" position="31UBQ9506706799" type="INF - Groupe TE"/>
-            <unit command-post="false" id="355" name="INF - Groupe TE" position="31UBQ9608607262" type="INF - Groupe TE"/>
-          </automat>
-          <automat engaged="true" id="356" knowledge-group="2" name="INF - Section AC Milan [356]" type="INF - Section AC Milan">
-            <unit command-post="true" id="357" name="INF - PC AC MILAN" position="31UCQ0674209185" type="INF - PC AC MILAN"/>
-            <unit command-post="false" id="358" name="INF - Groupe AC VBL MILAN" position="31UCQ0722508668" type="INF - Groupe AC VBL MILAN"/>
-            <unit command-post="false" id="359" name="INF - Groupe AC VBL MILAN" position="31UCQ0670608186" type="INF - Groupe AC VBL MILAN"/>
-            <unit command-post="false" id="360" name="INF - Groupe AC VBL MILAN" position="31UCQ0622408704" type="INF - Groupe AC VBL MILAN"/>
-            <unit command-post="false" id="361" name="INF - Groupe AC VBL MILAN" position="31UCQ0724309167" type="INF - Groupe AC VBL MILAN"/>
-          </automat>
-          <automat engaged="true" id="362" knowledge-group="2" name="GLAISE - ABC - Escadron Reco [362]" type="GLAISE - ABC - Escadron Reco">
-            <unit command-post="true" id="363" name="GLAISE - ABC - PC Escadron RECO" position="31UBQ9587402433" type="GLAISE - ABC - PC Escadron RECO"/>
-            <unit command-post="false" id="364" name="GLAISE - ABC - Patrouille EI BMP 2" position="31UBQ9635701916" type="GLAISE - ABC - Patrouille EI BMP 2"/>
-            <unit command-post="false" id="365" name="GLAISE - ABC - Patrouille EI BMP 1" position="31UBQ9583801434" type="GLAISE - ABC - Patrouille EI BMP 1"/>
-            <unit command-post="false" id="366" name="GLAISE - ABC - Peloton SCORPION" position="31UBQ9535501951" type="GLAISE - ABC - Peloton SCORPION"/>
-            <unit command-post="false" id="367" name="GLAISE - ABC - Peloton SCORPION" position="31UBQ9637402415" type="GLAISE - ABC - Peloton SCORPION"/>
-          </automat>
-          <automat engaged="true" id="368" knowledge-group="2" name="GLAISE - ABC - Peloton EI [368]" type="GLAISE - ABC - Peloton EI">
-            <unit command-post="true" id="369" name="GLAISE - ABC - PC Peloton EI BRDM2" position="31UCQ0896706802" type="GLAISE - ABC - PC Peloton EI BRDM2"/>
-            <unit command-post="false" id="370" name="GLAISE - ABC - Patrouille EI BRDM2" position="31UCQ0945006285" type="GLAISE - ABC - Patrouille EI BRDM2"/>
-            <unit command-post="false" id="371" name="GLAISE - ABC - Patrouille EI BRDM2" position="31UCQ0893105803" type="GLAISE - ABC - Patrouille EI BRDM2"/>
-          </automat>
-          <automat engaged="true" id="372" knowledge-group="2" name="GLAISE - ABC - Escadron CHIEFTAIN [372]" type="GLAISE - ABC - Escadron CHIEFTAIN">
-            <unit command-post="true" id="373" name="GLAISE - ABC - PC Escadron CHIEFTAIN" position="31UCQ0914805413" type="GLAISE - ABC - PC Escadron CHIEFTAIN"/>
-            <unit command-post="false" id="374" name="GLAISE - ABC - Section CHIEFTAIN" position="31UCQ0963104896" type="GLAISE - ABC - Section CHIEFTAIN"/>
-            <unit command-post="false" id="375" name="GLAISE - ABC - Section CHIEFTAIN" position="31UCQ0911304415" type="GLAISE - ABC - Section CHIEFTAIN"/>
-            <unit command-post="false" id="376" name="GLAISE - ABC - Section CHIEFTAIN" position="31UCQ0863004932" type="GLAISE - ABC - Section CHIEFTAIN"/>
-          </automat>
-          <automat engaged="true" id="377" knowledge-group="2" name="GLAISE - INF - CAC [377]" type="GLAISE - INF - CAC">
-            <unit command-post="true" id="378" name="GLAISE - INF - Cie CDT CAC" position="31UBQ9139106279" type="GLAISE - INF - Cie CDT CAC"/>
-            <unit command-post="false" id="379" name="GLAISE - AC - Section toyota 106 SR" position="31UBQ9187405761" type="GLAISE - AC - Section toyota 106 SR"/>
-            <unit command-post="false" id="380" name="GLAISE - AC - Section toyota 106 SR" position="31UBQ9135505280" type="GLAISE - AC - Section toyota 106 SR"/>
-            <unit command-post="false" id="381" name="GLAISE - AC - Section BRDM2 AT 5" position="31UBQ9087205797" type="GLAISE - AC - Section BRDM2 AT 5"/>
-            <unit command-post="false" id="382" name="GLAISE - AC - Section BRDM2 AT 5" position="31UBQ9189106261" type="GLAISE - AC - Section BRDM2 AT 5"/>
-            <unit command-post="false" id="383" name="GLAISE - AC - Section BRDM2 AT 5" position="31UBQ9208105754" type="GLAISE - AC - Section BRDM2 AT 5"/>
+          <automat engaged="true" id="356" knowledge-group="2" name="INF . Section AC Milan [356]" type="INF . Section AC Milan">
+            <unit command-post="true" id="357" name="INF . PC AC MILAN" position="31UCQ0674209185" type="INF . PC AC MILAN"/>
+            <unit command-post="false" id="358" name="INF . Groupe AC VBL MILAN" position="31UCQ0722508668" type="INF . Groupe AC VBL MILAN"/>
+            <unit command-post="false" id="359" name="INF . Groupe AC VBL MILAN" position="31UCQ0670608186" type="INF . Groupe AC VBL MILAN"/>
+            <unit command-post="false" id="360" name="INF . Groupe AC VBL MILAN" position="31UCQ0622408704" type="INF . Groupe AC VBL MILAN"/>
+            <unit command-post="false" id="361" name="INF . Groupe AC VBL MILAN" position="31UCQ0724309167" type="INF . Groupe AC VBL MILAN"/>
           </automat>
           <automat engaged="true" id="384" knowledge-group="2" name="ALAT - Escadrille HM [384]" type="ALAT - Escadrille HM">
             <unit command-post="true" id="385" name="ALAT - PC Escadrille" position="31UBQ8655306682" type="ALAT - PC Escadrille"/>
@@ -166,56 +120,19 @@
             <unit command-post="true" id="449" name="GLAISE - ASS - PC" position="31UBQ8498808120" type="GLAISE - ASS - PC"/>
             <unit command-post="false" id="450" name="GLAISE - ASS - EO" position="31UBQ8547007603" type="GLAISE - ASS - EO"/>
           </automat>
-          <automat engaged="true" id="453" knowledge-group="2" name="GLAISE - GEN - Cie Combat genie de DB [453]" type="GLAISE - GEN - Cie Combat genie de DB">
-            <unit command-post="true" id="454" name="GLAISE - GEN - PC Cie Genie" position="31UBQ8331506567" type="GLAISE - GEN - PC Cie Genie"/>
-            <unit command-post="false" id="455" name="GLAISE - GEN - Section combat" position="31UBQ8379806050" type="GLAISE - GEN - Section combat"/>
-            <unit command-post="false" id="456" name="GLAISE - GEN - Section combat" position="31UBQ8327905569" type="GLAISE - GEN - Section combat"/>
-            <unit command-post="false" id="457" name="GLAISE - GEN - Section combat" position="31UBQ8279606086" type="GLAISE - GEN - Section combat"/>
-            <unit command-post="false" id="458" name="GLAISE - GEN - Section combat" position="31UBQ8381506549" type="GLAISE - GEN - Section combat"/>
-            <unit command-post="false" id="459" name="GLAISE - GEN - Section combat" position="31UBQ8400506043" type="GLAISE - GEN - Section combat"/>
-            <unit command-post="false" id="460" name="GLAISE - GEN - Section combat" position="31UBQ8378005551" type="GLAISE - GEN - Section combat"/>
-          </automat>
-          <automat engaged="true" id="461" knowledge-group="2" name="GLAISE - GEN - Cie Franchissement de DB [461]" type="GLAISE - GEN - Cie Franchissement de DB">
-            <unit command-post="true" id="462" name="GLAISE - GEN - Section CDT genie franchissement" position="31UBQ8156809394" type="GLAISE - GEN - Section CDT genie franchissement"/>
-            <unit command-post="false" id="463" name="GLAISE - GEN - Groupe MTU 72" position="31UBQ8205008877" type="GLAISE - GEN - Groupe MTU 72"/>
-            <unit command-post="false" id="464" name="GLAISE - GEN - Groupe MTU 72" position="31UBQ8153208396" type="GLAISE - GEN - Groupe MTU 72"/>
-            <unit command-post="false" id="465" name="GLAISE - GEN - Groupe MTU 72" position="31UBQ8104908913" type="GLAISE - GEN - Groupe MTU 72"/>
-            <unit command-post="false" id="466" name="GLAISE - GEN - Groupe MTU 72" position="31UBQ8206809376" type="GLAISE - GEN - Groupe MTU 72"/>
-            <unit command-post="false" id="467" name="GLAISE - GEN - Groupe GSP" position="31UBQ8225808870" type="GLAISE - GEN - Groupe GSP"/>
-            <unit command-post="false" id="468" name="GLAISE - GEN - Groupe GSP" position="31UBQ8203208378" type="GLAISE - GEN - Groupe GSP"/>
-            <unit command-post="false" id="469" name="GLAISE - GEN - Groupe GSP" position="31UBQ8152408189" type="GLAISE - GEN - Groupe GSP"/>
-            <unit command-post="false" id="470" name="GLAISE - GEN - Groupe GSP" position="31UBQ8103108414" type="GLAISE - GEN - Groupe GSP"/>
-            <unit command-post="false" id="471" name="GLAISE - GEN - Groupe PMP" position="31UBQ8084208920" type="GLAISE - GEN - Groupe PMP"/>
-            <unit command-post="false" id="472" name="GLAISE - GEN - Groupe PMP" position="31UBQ8106709412" type="GLAISE - GEN - Groupe PMP"/>
-          </automat>
-          <automat engaged="true" id="473" knowledge-group="2" name="GLAISE - GEN - Cie Organisation terrain de DB [473]" type="GLAISE - GEN - Cie Organisation terrain de DB">
-            <unit command-post="true" id="474" name="GLAISE - GEN - Section CDT genie organisation terrain" position="31UBQ8883612359" type="GLAISE - GEN - Section CDT genie organisation terrain"/>
-            <unit command-post="false" id="475" name="GLAISE - GEN - Groupe GMZ 3" position="31UBQ8931911842" type="GLAISE - GEN - Groupe GMZ 3"/>
-            <unit command-post="false" id="476" name="GLAISE - GEN - Groupe GMZ 3" position="31UBQ8880011361" type="GLAISE - GEN - Groupe GMZ 3"/>
-            <unit command-post="false" id="477" name="GLAISE - GEN - Groupe GMZ 3" position="31UBQ8831711878" type="GLAISE - GEN - Groupe GMZ 3"/>
-            <unit command-post="false" id="478" name="GLAISE - GEN - Groupe GMZ 3" position="31UBQ8933612341" type="GLAISE - GEN - Groupe GMZ 3"/>
-            <unit command-post="false" id="479" name="GLAISE - GEN - Groupe MDK2" position="31UBQ8952611835" type="GLAISE - GEN - Groupe MDK2"/>
-            <unit command-post="false" id="480" name="GLAISE - GEN - Groupe MDK2" position="31UBQ8930111343" type="GLAISE - GEN - Groupe MDK2"/>
-            <unit command-post="false" id="481" name="GLAISE - GEN - Groupe MDK2" position="31UBQ8879311154" type="GLAISE - GEN - Groupe MDK2"/>
-          </automat>
-          <automat engaged="true" id="482" knowledge-group="2" logistic-level="logistic-base" name="GLAISE - LOG - TC2 [482]" type="GLAISE - LOG - TC2">
-            <unit command-post="true" id="483" name="GLAISE - LOG - TC2" position="31UBQ8234211670" type="GLAISE - LOG - TC2"/>
-          </automat>
-          <automat engaged="true" id="484" knowledge-group="2" name="GLAISE - NBC - Groupe Reco [484]" type="GLAISE - NBC - Groupe Reco">
-            <unit command-post="true" id="485" name="GLAISE - NBC - PC Reco RKh" position="31UBQ8120512172" type="GLAISE - NBC - PC Reco RKh"/>
-            <unit command-post="false" id="486" name="GLAISE - NBC - Equipe Reco RKh" position="31UBQ8168811655" type="GLAISE - NBC - Equipe Reco RKh"/>
-            <unit command-post="false" id="487" name="GLAISE - NBC - Equipe Reco RKh" position="31UBQ8116911173" type="GLAISE - NBC - Equipe Reco RKh"/>
+          <automat engaged="true" id="482" knowledge-group="2" logistic-level="logistic-base" name="GLAISE - LOG . TC2 [482]" type="GLAISE - LOG . TC2">
+            <unit command-post="true" id="483" name="GLAISE - LOG . TC2" position="31UBQ8234211670" type="GLAISE - LOG . TC2"/>
           </automat>
           <automat engaged="true" id="488" knowledge-group="2" name="GLAISE - RENS - URH [488]" type="GLAISE - RENS - URH">
             <unit command-post="true" id="489" name="GLAISE - RENS - PC URH" position="31UBQ8556411325" type="GLAISE - RENS - PC URH"/>
             <unit command-post="false" id="490" name="GLAISE - RENS - Patrouille URH" position="31UBQ8604710807" type="GLAISE - RENS - Patrouille URH"/>
           </automat>
-          <automat engaged="true" id="497" knowledge-group="2" name="ABC - Escadron Blinde AMX 10 RC [497]" type="ABC - Escadron Blinde AMX 10 RC">
-            <unit command-post="true" id="498" name="ABC - PC" position="31UBQ8388620383" type="ABC - PC"/>
-            <unit command-post="false" id="499" name="ABC - PLT AMX 10 RC CDP OFF" position="31UBQ8436919866" type="ABC - PLT AMX 10 RC CDP OFF"/>
-            <unit command-post="false" id="500" name="ABC - PLT AMX 10 RC CDP OFF" position="31UBQ8385019385" type="ABC - PLT AMX 10 RC CDP OFF"/>
-            <unit command-post="false" id="501" name="ABC - PLT AMX 10 RC CDP OFF" position="31UBQ8336819902" type="ABC - PLT AMX 10 RC CDP OFF"/>
-            <unit command-post="false" id="502" name="ABC - PLT AMX 10 RC CDP SOFF" position="31UBQ8438720365" type="ABC - PLT AMX 10 RC CDP SOFF"/>
+          <automat engaged="true" id="497" knowledge-group="2" name="ABC . Escadron Blinde AMX 10 RC [497]" type="ABC . Escadron Blinde AMX 10 RC">
+            <unit command-post="true" id="498" name="ABC . PC" position="31UBQ8388620383" type="ABC . PC"/>
+            <unit command-post="false" id="499" name="ABC . PLT AMX 10 RC CDP OFF" position="31UBQ8436919866" type="ABC . PLT AMX 10 RC CDP OFF"/>
+            <unit command-post="false" id="500" name="ABC . PLT AMX 10 RC CDP OFF" position="31UBQ8385019385" type="ABC . PLT AMX 10 RC CDP OFF"/>
+            <unit command-post="false" id="501" name="ABC . PLT AMX 10 RC CDP OFF" position="31UBQ8336819902" type="ABC . PLT AMX 10 RC CDP OFF"/>
+            <unit command-post="false" id="502" name="ABC . PLT AMX 10 RC CDP SOFF" position="31UBQ8438720365" type="ABC . PLT AMX 10 RC CDP SOFF"/>
           </automat>
           <automat engaged="true" id="503" knowledge-group="2" name="ART - Batterie de Reco et Tir AUF1 [503]" type="ART - Batterie de Reco et Tir AUF1">
             <unit command-post="true" id="504" name="ART - PC Batterie ASS" position="31UBQ9618611175" type="ART - PC Batterie ASS"/>
@@ -224,20 +141,17 @@
             <unit command-post="false" id="507" name="ART - Equipe de Reco AUF1" position="31UBQ9566810694" type="ART - Equipe de Reco AUF1"/>
             <unit command-post="false" id="508" name="ART - Equipe de Reco AUF1" position="31UBQ9668711157" type="ART - Equipe de Reco AUF1"/>
           </automat>
-          <automat engaged="true" id="517" knowledge-group="2" name="INF - Compagnie CBT AMX 10 P [517]" type="INF - Compagnie CBT AMX 10 P">
-            <unit command-post="true" id="518" name="INF - Section CDT CIE quaternaire AMX10P" position="31UBQ8514063866" type="INF - Section CDT CIE quaternaire AMX10P"/>
-            <unit command-post="false" id="519" name="INF - Section CBT AMX10P CDS OFF" position="31UBQ8562363348" type="INF - Section CBT AMX10P CDS OFF"/>
-            <unit command-post="false" id="520" name="INF - Section CBT AMX10P CDS OFF" position="31UBQ8510462867" type="INF - Section CBT AMX10P CDS OFF"/>
-            <unit command-post="false" id="521" name="INF - Section CBT AMX10P CDS OFF" position="31UBQ8462163385" type="INF - Section CBT AMX10P CDS OFF"/>
-            <unit command-post="false" id="522" name="INF - Section CBT AMX10P CDS SOFF" position="31UBQ8564163848" type="INF - Section CBT AMX10P CDS SOFF"/>
+          <automat engaged="true" id="517" knowledge-group="2" name="INF . Compagnie CBT AMX 10 P [517]" type="INF . Compagnie CBT AMX 10 P">
+            <unit command-post="true" id="518" name="INF . Section CDT CIE quaternaire AMX10P" position="31UBQ8514063866" type="INF . Section CDT CIE quaternaire AMX10P"/>
+            <unit command-post="false" id="519" name="INF . Section CBT AMX10P CDS OFF" position="31UBQ8562363348" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit command-post="false" id="520" name="INF . Section CBT AMX10P CDS OFF" position="31UBQ8510462867" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit command-post="false" id="521" name="INF . Section CBT AMX10P CDS OFF" position="31UBQ8462163385" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit command-post="false" id="522" name="INF . Section CBT AMX10P CDS SOFF" position="31UBQ8564163848" type="INF . Section CBT AMX10P CDS SOFF"/>
           </automat>
-          <automat engaged="true" id="523" knowledge-group="2" name="INF - Compagnie PROTERRE [523]" type="INF - Compagnie PROTERRE">
-            <unit command-post="true" id="524" name="INF - Section CDT PROTERRE" position="31UBQ8842965360" type="INF - Section CDT PROTERRE"/>
-            <unit command-post="false" id="525" name="INF - Section PROTERRE" position="31UBQ8891164843" type="INF - Section PROTERRE"/>
-            <unit command-post="false" id="526" name="INF - Section PROTERRE" position="31UBQ8839364361" type="INF - Section PROTERRE"/>
-          </automat>
-          <automat engaged="true" id="3560" knowledge-group="2" name="GLAISE - ASS - Porteur SCUD [3560]" type="GLAISE - ASS - Porteur SCUD">
-            <unit command-post="true" id="3561" name="GLAISE - ASS - Porteur SCUD" position="30UYV1705310013" type="GLAISE - ASS - Porteur SCUD"/>
+          <automat engaged="true" id="523" knowledge-group="2" name="INF . Compagnie PROTERRE [523]" type="INF . Compagnie PROTERRE">
+            <unit command-post="true" id="524" name="INF . Section CDT PROTERRE" position="31UBQ8842965360" type="INF . Section CDT PROTERRE"/>
+            <unit command-post="false" id="525" name="INF . Section PROTERRE" position="31UBQ8891164843" type="INF . Section PROTERRE"/>
+            <unit command-post="false" id="526" name="INF . Section PROTERRE" position="31UBQ8839364361" type="INF . Section PROTERRE"/>
           </automat>
           <automat engaged="true" id="3562" knowledge-group="2" name="ART - Batterie de Reco et Tir 120 RTF1 4 pieces [3562]" type="ART - Batterie de Reco et Tir 120 RTF1 4 pieces">
             <unit command-post="true" id="3563" name="ART - PC Batterie Mortier 120" position="30UYV1612110203" type="ART - PC Batterie Mortier 120"/>
@@ -245,11 +159,6 @@
             <unit command-post="false" id="3565" name="ART - Equipe Reco M120 VAB" position="30UYV1616409205" type="ART - Equipe Reco M120 VAB"/>
             <unit command-post="false" id="3566" name="ART - Section Mortier 120 OFF 2 pcs Pour SIC" position="30UYV1564209682" type="ART - Section Mortier 120 OFF 2 pcs Pour SIC"/>
             <unit command-post="false" id="3567" name="ART - Section Mortier 120 SOFF 2 pcs Pour SIC" position="30UYV1662110224" type="ART - Section Mortier 120 SOFF 2 pcs Pour SIC"/>
-          </automat>
-          <automat engaged="true" id="3580" knowledge-group="2" name="ABC - HUMUS Peloton Reco [3580]" type="ABC - HUMUS Peloton Reco">
-            <unit command-post="true" id="3581" name="HUMUS - ABC - PC" position="30UYV1821709832" type="HUMUS - ABC - PC"/>
-            <unit command-post="false" id="3582" name="HUMUS - ABC - Patrouille BRDM2" position="30UYV1873909355" type="HUMUS - ABC - Patrouille BRDM2"/>
-            <unit command-post="false" id="3583" name="HUMUS - ABC - Patrouille PickUp" position="30UYV1826008834" type="HUMUS - ABC - Patrouille PickUp"/>
           </automat>
           <automat engaged="true" id="3592" knowledge-group="2" name="CIRCU - Escadron Transport Blinde [3592]" type="CIRCU - Escadron Transport Blinde">
             <unit command-post="true" id="3593" name="CIRCU - Peloton CDT ESC TRPT BLD" position="30UYV1826913982" type="CIRCU - Peloton CDT ESC TRPT BLD"/>
@@ -346,15 +255,7 @@
         <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
         <knowledge-group id="270" name="Groupe de connaissance [270]" type="Standard"/>
       </communication>
-      <populations>
-        <population attitude="calme" id="3622" name="Foule standard [3622]" position="31UBQ9527104949" type="Foule standard">
-          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
-          <adhesions>
-            <adhesion party="1" value="0"/>
-            <adhesion party="3" value="0"/>
-          </adhesions>
-        </population>
-      </populations>
+      <populations/>
       <inhabitants/>
       <logistics/>
     </party>
@@ -377,12 +278,12 @@
       </objects>
       <tactical>
         <formation id="8" level="x" name="61(VN)BRIMOTO/BTR ">
-          <automat engaged="true" id="3500" knowledge-group="4" name="INF - Section TE [350]" type="INF - Section TE">
-            <unit command-post="true" id="3510" name="INF - PC Section TE" position="31UBQ9558507280" type="INF - PC Section TE"/>
-            <unit command-post="false" id="3520" name="INF - Groupe TE" position="31UBQ9606806763" type="INF - Groupe TE"/>
-            <unit command-post="false" id="3530" name="INF - Groupe TE" position="31UBQ9554906282" type="INF - Groupe TE"/>
-            <unit command-post="false" id="3540" name="INF - Groupe TE" position="31UBQ9506706799" type="INF - Groupe TE"/>
-            <unit command-post="false" id="3550" name="INF - Groupe TE" position="31UBQ9608607262" type="INF - Groupe TE"/>
+          <automat engaged="true" id="3500" knowledge-group="4" name="INF . Section TE [350]" type="INF . Section TE">
+            <unit command-post="true" id="3510" name="INF . PC Section TE" position="31UBQ9558507280" type="INF . PC Section TE"/>
+            <unit command-post="false" id="3520" name="INF . Groupe TE" position="31UBQ9606806763" type="INF . Groupe TE"/>
+            <unit command-post="false" id="3530" name="INF . Groupe TE" position="31UBQ9554906282" type="INF . Groupe TE"/>
+            <unit command-post="false" id="3540" name="INF . Groupe TE" position="31UBQ9506706799" type="INF . Groupe TE"/>
+            <unit command-post="false" id="3550" name="INF . Groupe TE" position="31UBQ9608607262" type="INF . Groupe TE"/>
           </automat>
         </formation>
       </tactical>
@@ -403,4 +304,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2770730234" -->
+<!-- signature="3755078373" -->

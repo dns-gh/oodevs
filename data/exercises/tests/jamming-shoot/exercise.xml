@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<exercise model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/exercise.xsd">
+<exercise model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/exercise.xsd">
   <meta>
     <briefing/>
     <resources/>
@@ -10,4 +10,4 @@
   <terrain name="Paris_Est"/>
   <model dataset="ada" physical="france"/>
 </exercise>
-<!-- signature="3082414696" -->
+<!-- signature="3150037537" -->

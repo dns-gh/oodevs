@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<scores model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/scores.xsd">
+<scores model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/scores.xsd">
   <score name="Distance">
     <formula><![CDATA[distance( select( position(), $unit1), select( position(), $unit2 ) )]]></formula>
     <gauge type="Smileys">
@@ -25,4 +25,4 @@
     </indicators>
   </score>
 </scores>
-<!-- signature="0153031479" -->
+<!-- signature="0740070310" -->

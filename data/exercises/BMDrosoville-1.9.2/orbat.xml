@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
   <parties>
     <party id="1" name="GoodGuys" type="friend">
       <objects>
@@ -117,15 +117,15 @@
             <unit command-post="false" id="152" name="ONG Intervention" position="31TCM1163490636" type="ONG Intervention"/>
             <unit command-post="false" id="153" name="ONG Intervention" position="31TCM1160490942" type="ONG Intervention"/>
           </automat>
-          <automat engaged="true" id="58" knowledge-group="2" logistic-level="logistic-base" name="TC2 LOG" type="LOG - TC2 LOG">
-            <unit command-post="true" id="59" name="TC2" position="31TCM0973787237" type="LOG - TC2"/>
+          <automat engaged="true" id="58" knowledge-group="2" logistic-level="logistic-base" name="TC2 LOG" type="LOG . TC2 LOG">
+            <unit command-post="true" id="59" name="TC2" position="31TCM0973787237" type="LOG . TC2"/>
           </automat>
-          <automat engaged="true" id="67" knowledge-group="2" name="Compagnie INF AMX 10 P [67]" type="INF - Compagnie CBT AMX 10 P">
-            <unit command-post="true" id="68" name="Section CDT CIE INF AMX10P" position="31TCM1157789807" type="INF - Section CDT CIE quaternaire AMX10P"/>
-            <unit command-post="false" id="69" name="Section CBT INF AMX10P CDS OFF" position="31TCM1206289292" type="INF - Section CBT AMX10P CDS OFF"/>
-            <unit command-post="false" id="70" name="Section CBT INF AMX10P CDS OFF" position="31TCM1154588809" type="INF - Section CBT AMX10P CDS OFF"/>
-            <unit command-post="false" id="71" name="Section CBT INF AMX10P CDS OFF" position="31TCM1106089324" type="INF - Section CBT AMX10P CDS OFF"/>
-            <unit command-post="false" id="72" name="Section CBT INF AMX10P CDS SOFF" position="31TCM1207789791" type="INF - Section CBT AMX10P CDS SOFF"/>
+          <automat engaged="true" id="67" knowledge-group="2" name="Compagnie INF AMX 10 P [67]" type="INF . Compagnie CBT AMX 10 P">
+            <unit command-post="true" id="68" name="Section CDT CIE INF AMX10P" position="31TCM1157789807" type="INF . Section CDT CIE quaternaire AMX10P"/>
+            <unit command-post="false" id="69" name="Section CBT INF AMX10P CDS OFF" position="31TCM1206289292" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit command-post="false" id="70" name="Section CBT INF AMX10P CDS OFF" position="31TCM1154588809" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit command-post="false" id="71" name="Section CBT INF AMX10P CDS OFF" position="31TCM1106089324" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit command-post="false" id="72" name="Section CBT INF AMX10P CDS SOFF" position="31TCM1207789791" type="INF . Section CBT AMX10P CDS SOFF"/>
           </automat>
           <automat engaged="true" id="73" knowledge-group="2" name="Batterie de Tir AUF1 [73]" type="ASS . Batterie de Tir AUF1">
             <unit command-post="true" id="74" name="PC Batterie ASS[74]" position="31TCM1413286675" type="PC . Batterie ASS"/>
@@ -174,9 +174,9 @@
       <objects/>
       <tactical>
         <formation id="62" level="ii" name="Formation">
-          <automat engaged="false" id="63" knowledge-group="61" name="Refugies x100 [63]" type="REFUGIE - Foule x100">
-            <unit command-post="true" id="64" name="Refugies 100 Pers[64]" position="31TCM0967389547" type="Foule 100 Pers"/>
-            <unit command-post="false" id="65" name="Refugies 100 Pers[65]" position="31TCM0913989321" type="Foule 100 Pers"/>
+          <automat engaged="false" id="63" knowledge-group="61" name="Refugies x100 [63]" type="CIV . Individus Isoles">
+            <unit command-post="true" id="64" name="Individu Isole[64]" position="31TCM0967389547" type="Individu Isole"/>
+            <unit command-post="false" id="65" name="Individu Isole[65]" position="31TCM0913989321" type="Individu Isole"/>
             <unit command-post="false" id="209" name="Terroriste IED" position="31TCM0808387976" type="Terroriste IED"/>
           </automat>
         </formation>
@@ -278,4 +278,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1388068029" -->
+<!-- signature="4111685645" -->

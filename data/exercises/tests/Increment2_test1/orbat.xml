@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.2/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Camp Bleu" type="friend">
       <objects>
@@ -26,8 +26,8 @@
             <unit command-post="false" id="20" name="PIA Dominante INF" position="29TNF3271057443" type="PIA Dominante INF"/>
             <unit command-post="false" id="21" name="PIA Dominante Reco" position="29TNF3330158136" type="PIA Dominante Reco"/>
           </automat>
-          <automat engaged="true" id="34" knowledge-group="95" logistic-level="logistic-base" name="TC2 LOG [34]" type="LOG - TC2 LOG">
-            <unit command-post="true" id="35" name="TC2 LOG" position="29TNF3111159270" type="LOG - TC2"/>
+          <automat engaged="true" id="34" knowledge-group="95" name="TC2 LOG [34]" type="LOG . TC2 LOG">
+            <unit command-post="true" id="35" name="TC2 LOG" position="29TNF3111159270" type="LOG . TC2"/>
           </automat>
           <limit name="Limite 90">
             <point>29TNF2690165242</point>
@@ -218,8 +218,8 @@
             <unit command-post="false" id="123" name="PIA Dominante INF" position="29TNF3416858526" type="PIA Dominante INF"/>
             <unit command-post="false" id="124" name="PIA Dominante Reco" position="29TNF3513058899" type="PIA Dominante Reco"/>
           </automat>
-          <automat engaged="true" id="126" knowledge-group="98" logistic-level="logistic-base" name="TC2 LOG [34]" type="LOG - TC2 LOG">
-            <unit command-post="true" id="127" name="TC2 LOG" position="29TNF3111159270" type="LOG - TC2"/>
+          <automat engaged="true" id="126" knowledge-group="98" name="TC2 LOG [34]" type="LOG . TC2 LOG">
+            <unit command-post="true" id="127" name="TC2 LOG" position="29TNF3111159270" type="LOG . TC2"/>
           </automat>
           <limit name="Limite 90">
             <point>29TNF2690165242</point>
@@ -345,4 +345,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="4282209885" -->
+<!-- signature="3683106681" -->
