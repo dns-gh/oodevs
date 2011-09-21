@@ -3,6 +3,9 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Nbc.bms"
 
 local emptyTable = emptyTable
 
+include "bit.lua"
+
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Nbc()
 ]]--[[//
@@ -16,6 +19,7 @@ local emptyTable = emptyTable
     activations =
     {
         { "BEH_Nbc_Recevoir_OrdreInopine", { "done_BEH_Nbc_Recevoir_OrdreInopine" } },
+        { "BEH_ReactToNBC", { "done_BEH_ReactToNBC" } },
     },
 
     create = function( self )
@@ -23,11 +27,18 @@ local emptyTable = emptyTable
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Nbc_Recevoir_OrdreInopine, 1, emptyTable )--[[//-----------------------------------------------------------------------------
+        --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de l'ordre de conduite
 ]]--[[//-----------------------------------------------------------------------------
-]]--[[// pour anibas 
-]]
+]]if( not DEC_Agent_AutomateEstEmbraye() and DEC_Agent_EstContamine() ) then
+            do
+                SetStateVariable( "VE_NiveauNBC", 4 )
+            end
+--[[// pour anibas
+]]        end
+
+        Activate( self.activations.BEH_Nbc_Recevoir_OrdreInopine, 1, emptyTable )
+        Activate( self.activations.BEH_ReactToNBC, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -53,47 +64,84 @@ node "BEH_Nbc_Recevoir_OrdreInopine"
 
     activate = function( self )
         local Activate = Activate
-        --[[//-----------------------------------------------------------------------------
-]]--[[// Reception d'un ordre du superieur
-]]--[[//-----------------------------------------------------------------------------
-]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
-                local ordre = x
-                if( ordre:GetszHint_() == "" ) then
+                local repOrdre = x
+                 do
+                    local _continue = true
+                    local switch_1 = repOrdre:GetType()
+                        if switch_1 == "Rep_OrderConduite_MettreTenueNBC" then
+                            SetStateVariable( "VE_NiveauNBC", 4 )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
+                            SetStateVariable( "VE_NiveauNBC", 0 )
+                            _continue = false
+                                                end
+                    end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_ReactToNBC
+]]--[[//
+]]--[[// Commentaires : Comportement automatique d'évitement des zones NBC
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_ReactToNBC"
+{
+    feedbacks = { { { "done_BEH_ReactToNBC" }, "BEH_ReactToNBC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ReactToNBC, {value} ) end,
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        local pos = DEC_Agent_Position()
+        local lstObjects = DEC_Connaissances_ObjetsDansCercle( pos, 2000, S_TypeObject_ToString( eTypeObjectNuageNBC ), S_TypeObject_ToString( eTypeObjectZoneNBC ) )
+        local lstObjectsInside = {}
+        for _,x in pairs( lstObjects or emptyTable ) do
+        local _continue = true
+do
+                local objet = x
+                if( DEC_Geometrie_EstPointDansLocalisation( pos, DEC_ConnaissanceObjet_Localisation( object ) ) ) then
                     do
-                        --[[//-----------------------------------------------------------------------------
-]]--[[// ordre de conduite
-]]--[[//-----------------------------------------------------------------------------
-]]local repOrdre = ordre
-                        local bEstUtilise = true
-                         do
-                            local _continue = true
-                            local switch_1 = repOrdre:GetType()
-                                if switch_1 == "Rep_OrderConduite_MettreTenueNBC" then
-                                                                    SetStateVariable( "VE_NiveauNBC", 4 )
-                                    _continue = false
-                                elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
-                                                                    SetStateVariable( "VE_NiveauNBC", 0 )
-                                    _continue = false
-                                
-                                else
-                                                                    bEstUtilise = false
-                                    _continue = false
-                                                                end
-                            end
-
-                        if( bEstUtilise ) then
-                            do
-                                --[[// on a finit de traiter l'ordre, on le supprime
-]]Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
-                            end
-                        end
-
+                        DEC_UserTypeList_PushBack( lstObjectsInside, objet )
                     end
                 end
 
+            end
+
+        end
+
+        local positions = {}
+        for _,x in pairs( lstObjectsInside or emptyTable ) do
+        local _continue = true
+do
+                local objet = x
+                DEC_UserTypeList_PushBack( positions, DEC_Geometrie_GetLeavingAreaPosition( DEC_ConnaissanceObjet_Localisation( objet ) ) )
+            end
+
+        end
+
+        for _,x in pairs( positions or emptyTable ) do
+        local _continue = true
+do
+                local position = x
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1 / DEC_Geometrie_DistanceBetweenPoints( position, pos ), { position, eProgressionDirect, eTypeItiRepli, } )
             end
 
         end
@@ -190,6 +238,8 @@ node "ACT_Nbc_MettreTenueProtection"
 
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_Nbc, "BEH_Nbc_Recevoir_OrdreInopine", nodes.BEH_Nbc_Recevoir_OrdreInopine }
+connections[ #connections + 1 ] = { nodes.BEH_Nbc, "BEH_ReactToNBC", nodes.BEH_ReactToNBC }
 connections[ #connections + 1 ] = { nodes.BEH_Nbc_GererAlerteNiv4, "ACT_Nbc_MettreTenueProtection", nodes.ACT_Nbc_MettreTenueProtection }
 connections[ #connections + 1 ] = { nodes.BEH_Nbc_GererAlerteNiv4, "ACT_Nbc_PasserEnNiveauNBC", nodes.ACT_Nbc_PasserEnNiveauNBC }
 connections[ #connections + 1 ] = { nodes.BEH_Nbc_Recevoir_OrdreInopine, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_ReactToNBC, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }

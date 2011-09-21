@@ -49,53 +49,36 @@ node "BEH_Rens_Recevoir_OrdreInopine"
 
     activate = function( self )
         local Activate = Activate
-        --[[//-----------------------------------------------------------------------------
-]]--[[// Reception d'un ordre du superieur
-]]--[[//-----------------------------------------------------------------------------
-]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
-                local ordre = x
-                if( ordre:GetszHint_() == "" ) then
-                    do
-                        --[[//-----------------------------------------------------------------------------
-]]--[[// ordre de conduite
-]]--[[//-----------------------------------------------------------------------------
-]]local repOrdre = ordre
-                        local bEstUtilise = true
-                         do
-                            local _continue = true
-                            local switch_1 = repOrdre:GetType()
-                                if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadio" then
-                                                                    SetStateVariable( "VE_SilenceRadio", 4 )
-                                    _continue = false
-                                elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
-                                                                    SetStateVariable( "VE_SilenceRadio", 0 )
-                                    _continue = false
-                                elseif switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
-                                                                    SetStateVariable( "VE_SilenceRadar", 4 )
-                                    _continue = false
-                                elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
-                                                                    SetStateVariable( "VE_SilenceRadar", 0 )
-                                    _continue = false
-                                
-                                else
-                                                                    bEstUtilise = false
-                                    _continue = false
-                                                                end
-                            end
-
-                        if( bEstUtilise ) then
-                            do
-                                --[[// on a finit de traiter l'ordre, on le supprime
-]]Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
-                            end
-                        end
-
+                local repOrdre = x
+                 do
+                    local _continue = true
+                    local switch_1 = repOrdre:GetType()
+                        if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadio" then
+                            SetStateVariable( "VE_SilenceRadioPartiel", 0 )
+                            SetStateVariable( "VE_SilenceRadio", 4 )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_PasserEnSilenceRadioPartiel" then
+                            SetStateVariable( "VE_SilenceRadio", 0 )
+                            SetStateVariable( "VE_SilenceRadioPartiel", 4 )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
+                            SetStateVariable( "VE_SilenceRadio", 0 )
+                            SetStateVariable( "VE_SilenceRadioPartiel", 0 )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
+                            SetStateVariable( "VE_SilenceRadar", 4 )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
+                            SetStateVariable( "VE_SilenceRadar", 0 )
+                            _continue = false
+                                                end
                     end
-                end
 
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end
 
         end
@@ -126,7 +109,7 @@ node "BEH_Rens_PasserEnSilenceRadio"
 
     activate = function( self )
         local Activate = Activate
-                Activate( self.activations.ACT_Info_Trace, 1, { "Passage en Silence Radio", } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Radio communication off", } )
         Activate( self.activations.ACT_Rens_CommuterRadio, 1, emptyTable )--[[// Passer en silence radio
 ]]
     end,
@@ -136,10 +119,43 @@ node "BEH_Rens_PasserEnSilenceRadio"
     end,
 
 --[[// *****************************************************************************
+]]--[[// BEH_Rens_PasserEnSilenceRadioPartiel
+]]--[[//
+]]--[[//Commentaires :appelé par la motivation "Passer en silence radio Partiel" dépendant
+]]--[[//               de la variable d'état 'VE_SilenceRadioPartiel'
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Rens_PasserEnSilenceRadioPartiel"
+{
+    feedbacks = { { { "done_BEH_Rens_PasserEnSilenceRadioPartiel" }, "BEH_Rens_PasserEnSilenceRadioPartiel" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Rens_PasserEnSilenceRadioPartiel, {value} ) end,
+    activations =
+    {
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Rens_CommuterRadioPartiel", { "done_ACT_Rens_CommuterRadioPartiel" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+                Activate( self.activations.ACT_Info_Trace, 1, { "Radio communication off/Can listen not talk", } )
+        Activate( self.activations.ACT_Rens_CommuterRadioPartiel, 1, emptyTable )--[[// Passer en silence radio
+]]
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "Arret Silence Radio Partiel" )
+    end,
+
+--[[// *****************************************************************************
 ]]--[[// BEH_Rens_PasserEnSilenceRadar
 ]]--[[//
-]]--[[//Commentaires :appelé par la motivation "Passer en silence radio" dépendant
-]]--[[//               de la variable d'état 'VE_SilenceRadio'
+]]--[[//Commentaires :appelé par la motivation "Passer en silence radar" dépendant
+]]--[[//               de la variable d'état 'VE_SilenceRadar'
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -175,4 +191,6 @@ connections[ #connections + 1 ] = { nodes.BEH_Rens, "BEH_Rens_Recevoir_OrdreInop
 connections[ #connections + 1 ] = { nodes.BEH_Rens_PasserEnSilenceRadar, "ACT_Pion_Rens_PasserEnSilenceRadar", nodes.ACT_Pion_Rens_PasserEnSilenceRadar }
 connections[ #connections + 1 ] = { nodes.BEH_Rens_PasserEnSilenceRadio, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Rens_PasserEnSilenceRadio, "ACT_Rens_CommuterRadio", nodes.ACT_Rens_CommuterRadio }
+connections[ #connections + 1 ] = { nodes.BEH_Rens_PasserEnSilenceRadioPartiel, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Rens_PasserEnSilenceRadioPartiel, "ACT_Rens_CommuterRadioPartiel", nodes.ACT_Rens_CommuterRadioPartiel }
 connections[ #connections + 1 ] = { nodes.BEH_Rens_Recevoir_OrdreInopine, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

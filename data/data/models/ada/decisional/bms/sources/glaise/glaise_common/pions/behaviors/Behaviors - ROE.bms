@@ -45,6 +45,9 @@ node "BEH_ROE_Recevoir_OrdreInopine"
         { "ACT_Maj_Pion_PasserEnTirLibre", { "done_ACT_Maj_Pion_PasserEnTirLibre" } },
         { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "done_ACT_Maj_Pion_PasserEnTirSurRiposte" } },
         { "ACT_Maj_Pion_PasserEnTirInterdit", { "done_ACT_Maj_Pion_PasserEnTirInterdit" } },
+        { "ACT_Maj_Pion_InterdireMunition", { "done_ACT_Maj_Pion_InterdireMunition" } },
+        { "ACT_Maj_Pion_AutoriserMunition", { "done_ACT_Maj_Pion_AutoriserMunition" } },
+        { "ACT_Maj_Pion_AutoriserToutesMunitions", { "done_ACT_Maj_Pion_AutoriserToutesMunitions" } },
         { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
@@ -60,59 +63,49 @@ node "BEH_ROE_Recevoir_OrdreInopine"
         for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
-                local ordre = x
-                if( ordre:GetszHint_() == "" ) then
-                    do
-                        --[[//-----------------------------------------------------------------------------
-]]--[[// ordre de conduite
-]]--[[//-----------------------------------------------------------------------------
-]]local repOrdre = ordre
-                        local bEstUtilise = true
-                         do
-                            local _continue = true
---[[// cast
-]]--[[// TIR LIBRE
+                local repOrdre = x
+                 do
+                    local _continue = true
+--[[// TIR LIBRE
 ]]--[[// TIR SUR RIPOSTE
 ]]--[[// TIR INTERDIT
-]]                            local switch_1 = repOrdre:GetType()
-                                if switch_1 == "Rep_OrderConduite_ChangerReglesEngagement" then
-                                                                    local ordreROE = ordre
-                                     do
-                                        local _continue = true
-                                        local switch_2 = ordreROE:GetorderConduiteChangerReglesEngagement_()
-                                            if switch_2 == eEtatROE_TirLibre then
-                                                                                            DEC_Trace( " === ORDRE --> ROE TIR LIBRE" )
-                                                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
-                                                _continue = false
-                                            elseif switch_2 == eEtatROE_TirSurRiposte then
-                                                                                            DEC_Trace( " === ORDRE --> ROE TIR SUR RIPOSTE" )
-                                                Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
-                                                _continue = false
-                                            elseif switch_2 == eEtatROE_TirInterdit then
-                                                                                            DEC_Trace( " === ORDRE --> ROE TIR INTERDIT" )
-                                                Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, emptyTable )
-                                                _continue = false
-                                                                                        end
-                                        end
+]]                    local switch_1 = repOrdre:GetType()
+                        if switch_1 == "Rep_OrderConduite_ChangerReglesEngagement" then
+                            local ordreROE = repOrdre
+                             do
+                                local _continue = true
+                                local switch_2 = ordreROE:GetorderConduiteChangerReglesEngagement_()
+                                    if switch_2 == eEtatROE_TirLibre then
+                                        DEC_Trace( " === Frag Order --> ROE FREE FIRE" )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
+                                        _continue = false
+                                    elseif switch_2 == eEtatROE_TirSurRiposte then
+                                        DEC_Trace( " === Frag Order --> ROE RETURN OF FIRE" )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
+                                        _continue = false
+                                    elseif switch_2 == eEtatROE_TirInterdit then
+                                        DEC_Trace( " === Frag Order --> ROE FORBIDDEN FIRE" )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, emptyTable )
+                                        _continue = false
+                                                                        end
+                                end
 
-                                    _continue = false
-                                
-                                else
-                                                                    bEstUtilise = false
-                                    _continue = false
-                                                                end
-                            end
-
-                        if( bEstUtilise ) then
-                            do
-                                --[[// on a finit de traiter l'ordre, on le supprime
-]]Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
-                            end
-                        end
-
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_Pion_InterdireMunition" then
+                            local ordreInterdireMun = repOrdre
+                            Activate( self.activations.ACT_Maj_Pion_InterdireMunition, 1, { ordreInterdireMun, } )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_Pion_AutoriserMunition" then
+                            local ordreAutoriserMun = repOrdre
+                            Activate( self.activations.ACT_Maj_Pion_AutoriserMunition, 1, { ordreAutoriserMun, } )
+                            _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_Pion_AutoriserToutesMunitions" then
+                            Activate( self.activations.ACT_Maj_Pion_AutoriserToutesMunitions, 1, emptyTable )
+                            _continue = false
+                                                end
                     end
-                end
 
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end
 
         end
@@ -207,4 +200,7 @@ connections[ #connections + 1 ] = { nodes.BEH_ROE_GererTirRestreint, "ACT_Tir_Ch
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopine, "ACT_Maj_Pion_PasserEnTirLibre", nodes.ACT_Maj_Pion_PasserEnTirLibre }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopine, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopine, "ACT_Maj_Pion_PasserEnTirInterdit", nodes.ACT_Maj_Pion_PasserEnTirInterdit }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopine, "ACT_Maj_Pion_InterdireMunition", nodes.ACT_Maj_Pion_InterdireMunition }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopine, "ACT_Maj_Pion_AutoriserMunition", nodes.ACT_Maj_Pion_AutoriserMunition }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopine, "ACT_Maj_Pion_AutoriserToutesMunitions", nodes.ACT_Maj_Pion_AutoriserToutesMunitions }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopine, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

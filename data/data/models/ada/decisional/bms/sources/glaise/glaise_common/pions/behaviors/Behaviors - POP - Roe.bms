@@ -122,59 +122,39 @@ node "BEH_ROE_Recevoir_OrdreInopinePopulation"
         for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
-                local ordre = x
-                if( ordre:GetszHint_() == "" ) then
-                    do
-                        --[[//-----------------------------------------------------------------------------
-]]--[[// ordre de conduite
-]]--[[//-----------------------------------------------------------------------------
-]]local repOrdre = ordre
-                        local bEstUtilise = true
-                         do
-                            local _continue = true
+                local repOrdre = x
+                 do
+                    local _continue = true
 --[[// cast
 ]]--[[// TIR INTERDIT POP
 ]]--[[// TIR SOMMATION POP
 ]]--[[// TIR NEUTRALISATION POP
-]]                            local switch_1 = repOrdre:GetType()
-                                if switch_1 == "Rep_OrderConduite_ChangerReglesEngagementPopulation" then
-                                                                    local ordreROE = ordre
-                                     do
-                                        local _continue = true
-                                        local switch_2 = ordreROE:GetorderConduiteChangerReglesEngagementPopulation_()
-                                            if switch_2 == eEtatROEPopulation_EmploiForceInterdit then
-                                                                                            DEC_Trace( " === ORDRE --> ROE POPULATION: EMPLOI FORCE INTERDIT" )
-                                                Activate( self.activations.ACT_Maj_Pion_PasserEnEmploiForceInterdit, 1, emptyTable )
-                                                _continue = false
-                                            elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
-                                                                                            DEC_Trace( " === ORDRE --> ROE POPULATION: MAINTIEN A DISTANCE PAR MOYENS NON LETAUX" )
-                                                Activate( self.activations.ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux, 1, emptyTable )
-                                                _continue = false
-                                            elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
-                                                                                            DEC_Trace( " === ORDRE --> ROE POPULATION: ARMES LETALES AUTORISEES" )
-                                                Activate( self.activations.ACT_Maj_Pion_PasserEnArmesLetalesAutorisees, 1, emptyTable )
-                                                _continue = false
-                                                                                        end
-                                        end
+]]                    local switch_1 = repOrdre:GetType()
+                        if switch_1 == "Rep_OrderConduite_ChangerReglesEngagementPopulation" then
+                            local ordreROE = repOrdre
+                             do
+                                local _continue = true
+                                local switch_2 = ordreROE:GetorderConduiteChangerReglesEngagementPopulation_()
+                                    if switch_2 == eEtatROEPopulation_EmploiForceInterdit then
+                                        DEC_Trace( " === Frag order --> POPULATION ROE: USE OF FORCE FORBIDDEN" )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnEmploiForceInterdit, 1, emptyTable )
+                                        _continue = false
+                                    elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+                                        DEC_Trace( " === Frag order --> POPULATION ROE: KEEP DISTANCE WITH NON LETHAL MEANS" )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux, 1, emptyTable )
+                                        _continue = false
+                                    elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
+                                        DEC_Trace( " === Frag order --> POPULATION ROE: ENABLE LETHAL WEAPONS" )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnArmesLetalesAutorisees, 1, emptyTable )
+                                        _continue = false
+                                                                        end
+                                end
 
-                                    _continue = false
-                                
-                                else
-                                                                    bEstUtilise = false
-                                    _continue = false
-                                                                end
-                            end
-
-                        if( bEstUtilise ) then
-                            do
-                                --[[// on a finit de traiter l'ordre, on le supprime
-]]Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
-                            end
-                        end
-
+                            _continue = false
+                                                end
                     end
-                end
 
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end
 
         end
