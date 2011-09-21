@@ -5,7 +5,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -18,9 +17,6 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION MELEE Attaquer">
           <fragorder name="Deboucher"/>
-        </mission>
-        <mission name="PION MELEE Barrer">
-          <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION MELEE Controler">
           <fragorder name="Abandonner travaux"/>
@@ -92,7 +88,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
@@ -136,7 +131,6 @@
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -202,7 +196,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.INF.PC">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -279,7 +272,6 @@
           <fragorder name="Pion Engager"/>
           <fragorder name="Pion Desengager"/>
         </mission>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -317,7 +309,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.NRBC.Decontamination">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -359,7 +350,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.NRBC.Reco">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -400,7 +390,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.NRBC.ROTA">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -440,7 +429,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -523,7 +511,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.PC">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -562,7 +549,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.MPG - EBG">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -624,7 +610,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.PAA - EFA - PFM">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -664,7 +649,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -704,7 +688,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.SOUVIM - MADEZ - Deminage lourd">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -744,7 +727,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.DLRG">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -785,7 +767,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.PAT">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -823,7 +804,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.Section travaux">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -872,7 +852,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.MATS">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -915,7 +894,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.Equipement zone de poser et plage">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -956,7 +934,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.Equipement montagne">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -1005,7 +982,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ONG Intervention">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -1053,7 +1029,6 @@
     </unit>
     <unit dia-type="france.military.platoon.terrorism.roles.Terroriste" file="BMPion.bms" masalife="true" name="Masalife.Sniper">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -1091,7 +1066,6 @@
     </unit>
     <unit dia-type="france.military.platoon.terrorism.roles.Terroriste" file="BMPion.bms" masalife="true" name="Masalife.Terroriste">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
@@ -1141,7 +1115,6 @@
     <unit dia-type="france.military.platoon.terrorism.roles.Individu" file="BMPion.bms" masalife="true" name="Masalife.Individu Isole">
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
@@ -1183,7 +1156,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ONG LOG">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -1223,7 +1195,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Milice">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -3339,7 +3310,6 @@
         <mission name="PION LOG Armer PIA"/>
         <mission name="PION LOG Bloquer Zone"/>
         <mission name="PION LOG Appuyer Franchissement Sur Un Point"/>
-        <mission name="PION LOG Reconnaitre Zone De Deploiement"/>
         <mission name="PION Se Faire Transporter"/>
         <mission name="PION Stationner"/>
         <mission name="PION Orienter Refugies"/>
@@ -4877,7 +4847,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.Energie et traitement des eaux">
       <missions>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -4920,7 +4889,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -4966,7 +4934,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5009,7 +4976,6 @@
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.INF.Commando">
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5057,7 +5023,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5117,7 +5082,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5177,7 +5141,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5233,7 +5196,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5305,7 +5267,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5374,7 +5335,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5420,7 +5380,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5471,7 +5430,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5524,7 +5482,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5564,7 +5521,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5603,7 +5559,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5644,7 +5599,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -5685,7 +5639,6 @@
     <unit dia-type="france.military.platoon.terrorism.roles.Individu" file="BMPion.bms" masalife="true" name="Masalife.DPRE">
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
@@ -5705,7 +5658,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Stationner"/>
@@ -5739,7 +5691,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Suivre"/>
@@ -5776,7 +5727,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -5814,7 +5764,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -5855,7 +5804,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Position"/>
@@ -5896,7 +5844,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Position"/>
@@ -5937,7 +5884,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Position"/>
@@ -5973,7 +5919,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Renforcer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
@@ -6007,7 +5952,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Renforcer"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -6046,7 +5990,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Renforcer"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -6081,7 +6024,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Renforcer"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -6119,7 +6061,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Renforcer"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -6154,7 +6095,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Renforcer"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -6189,7 +6129,6 @@
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
@@ -6225,7 +6164,6 @@
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.CIRCU.Peloton Transport Blindes">
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -6264,7 +6202,6 @@
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.CIRCU.Patrouille Circulation">
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
@@ -6308,7 +6245,6 @@
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.CIRCU.PC Appui Mob">
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
-        <mission name="PION COMMUNES AllerA"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -6365,7 +6301,6 @@
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="AUTOMATE MELEE Barrer"/>
         <mission name="AUTOMATE MELEE Boucler"/>
         <mission name="AUTOMATE MELEE Couvrir"/>
         <mission name="AUTOMATE MELEE Controler"/>
@@ -9880,9 +9815,6 @@
   <crowd>
     <crowd dia-type="france.military.crowd.roles.Foule" file="BMCrowd.bms" masalife="true" name="Masalife.Foule">
       <missions>
-        <mission name="FOULES COMMUNES AllerA">
-          <fragorder name="Population Changer Attitude"/>
-        </mission>
         <mission name="FOULES COMMUNES Faire Mouvement">
           <fragorder name="Population Changer Attitude"/>
         </mission>
@@ -9911,4 +9843,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1560692009" -->
+<!-- signature="2395120072" -->
