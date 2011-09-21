@@ -1404,9 +1404,9 @@
         </sequential>
     </macrodef>
 
-    <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.tutorials,package.otpack.defense.france,
+    <target name="package.otpacks" depends="package.otpack.defense.worldwide, package.otpack.defense.france,
                                             package.otpack.defense.scipio,package.otpack.defense.scipio.VA,package.otpack.security.worldwide,package.otpack.security.masa,
-                                            package.otpack.lossc,package.otpack.tutosw,package.otpack.validation,package.otpack.trainingML, package.otpack.decisional3, package.otpack.decisional4, package.otpack.decisional5"
+                                            package.otpack.lossc, package.otpack.validation,package.otpack.trainingML, package.otpack.decisional3, package.otpack.decisional4, package.otpack.decisional5"
                                             description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
@@ -1419,11 +1419,8 @@
             <include name="data/terrains/Nord egypt/**"/>
             <include name="data/terrains/Paris_Est/**"/>
             <include name="data/terrains/Angers_x9/**"/>
-        </pack>
-    </target>
-
-    <target name="package.otpack.defense.tutorials" description="package du defense-tutorials otpack">
-        <pack name="defense-tutorials" description="tutorials exercises package">
+            <include name="exercises/Tuto_sw/**"/>
+            <include name="data/terrains/Sw_terrain2/**"/>
             <include name="data/models/ada/physical/france/**"/>
             <include name="exercises/tutorials/01 - Generalities/**"/>
             <include name="exercises/tutorials/02 - Gaming/**"/>
@@ -1437,8 +1434,7 @@
             <include name="exercises/tutorials/10 - NBC/**"/>
             <include name="exercises/tutorials/11 - Preparation/**"/>
             <include name="exercises/tutorials/12 - AAR/**"/>
-            <include name="exercises/tutorials/13 - Advanced features/**"/>
-            <include name="data/terrains/Paris_Est/**"/>
+            <include name="exercises/tutorials/13 - Advanced features/**"/>          
         </pack>
     </target>
 
@@ -1536,13 +1532,6 @@
             <include name="exercises/LOSSC Scenario 2/**"/>
             <include name="exercises/LOSSC Scenario 3/**"/>
             <include name="data/terrains/afghan_kabuldist/**"/>
-        </pack>
-    </target>
-
-    <target name="package.otpack.tutosw" description="package du Tuto_sw otpack">
-        <pack name="tutosw" description="tuto_sw exercises package">
-            <include name="exercises/Tuto_sw/**"/>
-            <include name="data/terrains/Sw_terrain2/**"/>
         </pack>
     </target>
 
