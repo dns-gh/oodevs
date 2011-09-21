@@ -1406,7 +1406,7 @@
 
     <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.france,
                                             package.otpack.defense.scipio,package.otpack.defense.scipio.VA,package.otpack.security.worldwide,package.otpack.security.masa,
-                                            package.otpack.lossc,package.otpack.validation,package.otpack.trainingML,package.otpack.decisional3,package.otpack.decisional4,package.otpack.decisional5"
+                                            package.otpack.lossc,package.otpack.trainingML,package.otpack.decisional3,package.otpack.decisional4,package.otpack.decisional5"
                                    description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
@@ -1531,24 +1531,6 @@
             <include name="exercises/LOSSC Scenario 2/**"/>
             <include name="exercises/LOSSC Scenario 3/**"/>
             <include name="data/terrains/afghan_kabuldist/**"/>
-        </pack>
-    </target>
-
-    <target name="package.otpack.validation" description="package de validation otpack">
-        <pack name="validationsw" description="validation, performance and charge exercises package">
-            <include name="data/models/ada/physical/scipio/**"/>
-            <include name="data/models/ada/physical/scipioPIV3/**"/>
-            <include name="data/models/ada/physical/france/**"/>
-            <include name="data/propagations/test/**"/>
-            <include name="exercises/ValidationTests/Charge/**"/>
-            <include name="exercises/ValidationTests/Performance/**"/>
-            <include name="exercises/ValidationTests/Validation/**"/>
-            <include name="exercises/ValidationTests/ValidationLight/**"/>
-            <include name="data/terrains/Performance/500_1000/**"/>
-            <include name="data/terrains/Performance/500_500/**"/>
-            <include name="data/terrains/Performance/500_500_light/**"/>
-            <include name="data/terrains/Cabourg/**"/>
-            <include name="data/terrains/PortoV3Lite/**"/>
         </pack>
     </target>
 
