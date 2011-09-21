@@ -22,6 +22,8 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 EquipmentType::EquipmentType( xml::xistream& xis, const tools::Resolver_ABC< WeaponSystemType, std::string >& weapons )
 {
+    carryingLogSupplyFunction_ = false;
+
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "id", id_ )
         >> xml::attribute( "protection", protection_ )
@@ -33,6 +35,9 @@ EquipmentType::EquipmentType( xml::xistream& xis, const tools::Resolver_ABC< Wea
         >> xml::end
         >> xml::optional >> xml::start( "composition" )
         >> xml::list( "category", *this, &EquipmentType::ReadResourceCategory )
+        >> xml::end
+        >> xml::optional >> xml::start( "logistic-functions" )
+            >> xml::list( "supply-functions", *this, &EquipmentType::ReadLogSupplyFunction )
         >> xml::end;
 }
 
@@ -132,4 +137,24 @@ void EquipmentType::ReadResourceCategory( xml::xistream& xis )
 void EquipmentType::ReadResource( xml::xistream& xis )
 {
     resources_.push_back( new DotationCapacityType( xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EquipmentType::ReadLogSupplyFunction
+// Created: MMC 2011-09-21
+// -----------------------------------------------------------------------------
+void EquipmentType::ReadLogSupplyFunction( xml::xistream& xis )
+{
+    if ( xis.has_child( "carrying" ) )
+        carryingLogSupplyFunction_ = true;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: EquipmentType::IsLogSupplyFunctionCarrying
+// Created: MMC 2011-09-21
+// -----------------------------------------------------------------------------
+bool EquipmentType::IsLogSupplyFunctionCarrying() const
+{
+    return carryingLogSupplyFunction_;
 }

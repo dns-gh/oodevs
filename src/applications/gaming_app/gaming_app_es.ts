@@ -1520,6 +1520,10 @@ Motivo: %3
         <source>Add Waypoint</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Log Supply Push Flow</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyRecompletionDialog</name>

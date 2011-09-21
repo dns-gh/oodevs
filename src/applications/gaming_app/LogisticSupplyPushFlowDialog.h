@@ -20,6 +20,7 @@ namespace kernel
     class Automat_ABC;
     class Controllers;
     class Entity_ABC;
+    class EquipmentType;
     class Formation_ABC;
     class Profile_ABC;
     class Time_ABC;
@@ -67,11 +68,11 @@ private slots:
     void Show();
     void Validate();
     void Reject();
-    void OnSelectionChanged();
-    void OnValueChanged( int row, int col );
     void OnRecipientValueChanged( int row, int /*col*/ );
     void OnRecipientSelectionChanged( int row, int /*col*/ );
-    void OnResourcesValueChanged( int row, int /*col*/ );
+    void OnResourcesValueChanged( int row, int col );
+    void OnCarriersUseCheckStateChanged();
+    void OnCarriersValueChanged( int row, int col );
     //@}
 
 private:
@@ -83,7 +84,6 @@ private:
 
     //! @name Helpers
     //@{
-    void AddItem();
     void AddDotation( const SupplyStates& states );
     void InsertMenuEntry( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
 
@@ -91,34 +91,44 @@ private:
     void AddResourceItem();
     void AddResourceItem( QString dotationName, int Available, int qtySupply );
     void AddCarrierItem();
+    void AddCarrierItem( QString dotationName, int Available, int qtySupply );
     void AddWaypoint();
 
-    void clearRecipientsTable();
-    void clearRecipientsData();
-    void clearResourcesTable();
-    void clearResourcesData();
-    void computeAvailableRecipients( QStringList& recipientsNames );
-    void insertNewRecipientData( int index, const kernel::Automat_ABC* pRecipient );
-    void eraseRecipientData( int index );
+    void ClearRecipientsTable();
+    void ClearRecipientsData();
+    void ClearResourcesTable();
+    void ClearResourcesData();
+    void ClearCarriersTable();
+    void ClearCarriersData();
+    void ComputeAvailableRecipients( QStringList& recipientsNames );
+    void InsertNewRecipientData( int index, const kernel::Automat_ABC* pRecipient );
+    void EraseRecipientData( int index );
+    void ComputeAvailableCarriers( QStringList& carriersNames );
+    void AddCarryingEquipment( const kernel::Entity_ABC& entity );
     //@}
 
     //! @name Types
     //@{
     typedef std::map< QString, Dotation > T_Supplies;
 
-    struct DotationQuantity 
+    struct ObjectQuantity 
     {
-        QString dotationName_;
+        QString objectName_;
         int quantity_;
-        DotationQuantity(): quantity_(0) {}
-        DotationQuantity( const QString& dotationName, int quantity ): dotationName_( dotationName ), quantity_( quantity ) {}
+
+        ObjectQuantity(): quantity_(0) {}
+        ObjectQuantity( const QString& objectName, int quantity ): objectName_( objectName ), quantity_( quantity ) {}
     };
 
-    typedef std::vector< DotationQuantity > T_SuppliesVector;
+    typedef std::vector< ObjectQuantity > T_SuppliesVector;
+    typedef std::vector< ObjectQuantity > T_CarriersVector;
 
-    typedef std::map< const kernel::Automat_ABC*, T_SuppliesVector > T_RecipientSupplies;
+    typedef std::map< const kernel::Automat_ABC*, T_SuppliesVector > T_RecipientSupplies;    
     typedef std::vector< const kernel::Automat_ABC* > T_Recipients;
     typedef QMap< QString, const kernel::Automat_ABC* > T_RecipientsNames;
+
+    typedef std::map< QString , unsigned int > T_CarriersQty;
+    typedef std::map< QString , const kernel::EquipmentType* > T_CarriersName;    
     //@}
 
 private:
@@ -136,15 +146,19 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QStringList dotationTypes_;
     T_Supplies supplies_;
+    T_CarriersQty carriersTypes_;
+    T_CarriersName carriersTypeNames_;
 
     Q3Table* recipientsTable_;
     Q3Table* resourcesTable_;
     Q3Table* carriersTable_;
     QListView* waypointList_;
+    QCheckBox* carriersUseCheck_;
 
     T_Recipients recipients_;
     T_RecipientSupplies recipientSupplies_;
     T_RecipientsNames recipientsNames_;
+    T_CarriersVector carriers_;
 
     const kernel::Automat_ABC* pRecipientSelected_;
     //@}

@@ -1520,6 +1520,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Add Waypoint</source>
         <translation>Ajouter point de passage</translation>
     </message>
+    <message>
+        <source>Log Supply Push Flow</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyRecompletionDialog</name>
