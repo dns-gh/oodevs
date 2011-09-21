@@ -313,6 +313,24 @@ bool ADN_Workspace::IsValidDatabase()
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::IsValidDatabase
+// Created: LDC 2011-09-21
+// -----------------------------------------------------------------------------
+void ADN_Workspace::ShowSymbols( bool symbols )
+{
+    symbols_ = symbols;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::IsValidDatabase
+// Created: PHC 2011-09-21
+// -----------------------------------------------------------------------------
+bool ADN_Workspace::ShowSymbols() const
+{
+    return symbols_;
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::SaveAs
 // Created: JDY 03-07-04

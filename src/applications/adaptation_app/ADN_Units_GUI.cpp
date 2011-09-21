@@ -46,6 +46,7 @@
 ADN_Units_GUI::ADN_Units_GUI( ADN_Units_Data& data )
     : ADN_GUI_ABC( "ADN_Units_GUI" )
     , data_( data )
+    , pSymbolWidget_( 0 )
 {
     // NOTHING
 }
@@ -135,23 +136,29 @@ void ADN_Units_GUI::Build()
     vInfosConnectors[eNatureNature] = &pNatureGui_->GetConnector();
 
     // Symbol
-    Q3VBox* pSymbolLayout = new Q3VBox( pNatureGroup );
-    QLabel* pSymbolLabel = new QLabel( pSymbolLayout );
-    pSymbolWidget_ = new ADN_SymbolWidget( pSymbolLayout );
-    pSymbolWidget_->makeCurrent();
-    pSymbolWidget_->initializeGL();
-    pSymbolWidget_->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-    pSymbolWidget_->setMinimumSize( 130, 140 );
-    pSymbolWidget_->setMaximumSize( 130, 140 );
-    connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), pSymbolWidget_, SLOT( OnNatureChanged( const QString& ) ) );
-    connect( pSymbolWidget_, SIGNAL( SymbolChanged( const QString& ) ), pSymbolLabel, SLOT( setText( const QString& ) ) );
+if( ADN_Workspace::GetWorkspace().ShowSymbols() )
+    {
+        Q3VBox* pSymbolLayout = new Q3VBox( pNatureGroup );
+        QLabel* pSymbolLabel = new QLabel( pSymbolLayout );
+        pSymbolWidget_ = new ADN_SymbolWidget( pSymbolLayout );
+        pSymbolWidget_->makeCurrent();
+        pSymbolWidget_->initializeGL();
+        pSymbolWidget_->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+        pSymbolWidget_->setMinimumSize( 130, 140 );
+        pSymbolWidget_->setMaximumSize( 130, 140 );
+        connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), pSymbolWidget_, SLOT( OnNatureChanged( const QString& ) ) );
+        connect( pSymbolWidget_, SIGNAL( SymbolChanged( const QString& ) ), pSymbolLabel, SLOT( setText( const QString& ) ) );
+    }
     QWidget* pHolder = builder.AddFieldHolder( pNatureGroup );
 
     ADN_UnitSymbolsComboBox* unitSymbolsCombo = builder.AddField< ADN_UnitSymbolsComboBox >( pHolder, tr( "UnitSymbol"), vInfosConnectors[ eNatureSymbol ] );
 
-    unitSymbolsCombo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
-    connect( unitSymbolsCombo, SIGNAL( UnitSymbolChanged( const QString& ) ), pNatureGui_, SLOT( OnUnitSymbolChanged( const QString& ) ) );
-    connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), unitSymbolsCombo, SLOT( OnNatureChanged( const QString& ) ) );
+    if( ADN_Workspace::GetWorkspace().ShowSymbols() )
+    {    
+        unitSymbolsCombo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
+        connect( unitSymbolsCombo, SIGNAL( UnitSymbolChanged( const QString& ) ), pNatureGui_, SLOT( OnUnitSymbolChanged( const QString& ) ) );
+        connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), unitSymbolsCombo, SLOT( OnNatureChanged( const QString& ) ) );
+    }
 
     // Commandement
     Q3GroupBox* pCommandGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Command" ), pGroup );
@@ -398,11 +405,13 @@ ADN_SymbolWidget* ADN_Units_GUI::GetSymbolWidget() const
 // -----------------------------------------------------------------------------
 void ADN_Units_GUI::SetSymbolFactory( kernel::SymbolFactory& factory )
 {
-    assert( pSymbolWidget_ );
-    pSymbolWidget_->SetSymbolFactory( factory );
-    assert( pNatureGui_ );
-    if( factory.GetSymbolRule() )
-        pNatureGui_->SetRootSymbolRule( *factory.GetSymbolRule() );
+    if( pSymbolWidget_ )
+    {
+        pSymbolWidget_->SetSymbolFactory( factory );
+        assert( pNatureGui_ );
+        if( factory.GetSymbolRule() )
+            pNatureGui_->SetRootSymbolRule( *factory.GetSymbolRule() );
+    }
 }
 
 // -----------------------------------------------------------------------------

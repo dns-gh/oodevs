@@ -397,6 +397,8 @@ void ADN_Drawings_Data::ReadCategory( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis, const std::string& name )
 {
+    if( !ADN_Workspace::GetWorkspace().ShowSymbols() )
+        return;
     try
     {
         drawings_.AddItem( new DrawingInfo( xis, renderer_, *tools_, name ) );

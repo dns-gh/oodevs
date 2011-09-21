@@ -106,6 +106,8 @@ public:
     bool SaveAs( const std::string& filename );
     void ExportHtml( const std::string& strPath );
     bool IsValidDatabase();
+    void ShowSymbols( bool );
+    bool ShowSymbols() const;
 
     ADN_Project_Data& GetProject();
     ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >& GetNbc();
@@ -193,6 +195,7 @@ private:
     ADN_ProgressIndicator_ABC* pProgressIndicator_;
     QtUndoStack* pUndoStack_;
     E_OpenMode nOpenMode_;
+    bool symbols_;
     static ADN_Workspace* pWorkspace_;
 };
 

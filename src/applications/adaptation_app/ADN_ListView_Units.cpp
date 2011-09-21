@@ -128,7 +128,10 @@ std::string ADN_ListView_Units::GetToolTipFor( Q3ListViewItem& item )
 // -----------------------------------------------------------------------------
 void ADN_ListView_Units::ConnectNatureSymbol( UnitInfos* pValidData )
 {
-    UnitInfos* pInfos = static_cast< UnitInfos* >( pValidData );
-    if ( ADN_Units_GUI::eNatureSymbol < vItemConnectors_.size() )
-        vItemConnectors_[ ADN_Units_GUI::eNatureSymbol ]->Connect( &pInfos->natureSymbol_, true );
+    if( ADN_Workspace::GetWorkspace().ShowSymbols() )
+    {
+        UnitInfos* pInfos = static_cast< UnitInfos* >( pValidData );
+        if ( pInfos && ADN_Units_GUI::eNatureSymbol < vItemConnectors_.size() )
+            vItemConnectors_[ ADN_Units_GUI::eNatureSymbol ]->Connect( &pInfos->natureSymbol_, true );
+    }
 }

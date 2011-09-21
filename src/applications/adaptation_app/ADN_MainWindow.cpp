@@ -542,32 +542,35 @@ bool ADN_MainWindow::SelectOpenMode()
 {
     E_OpenMode nMode = eOpenMode_Normal;
 
-    for(;;)
-    {
-        // let the user choose the open mode of its project
-        ADN_OpenMode_Dialog openModeDialog( this );
+    if( strAdminPassword_.isEmpty() || strAdminPassword_.isNull() )
+        nMode == eOpenMode_Admin;
+    else
+        for(;;)
+        {
+            // let the user choose the open mode of its project
+            ADN_OpenMode_Dialog openModeDialog( this );
 
-        if( openModeDialog.exec() == QDialog::Rejected )
-            return false;
+            if( openModeDialog.exec() == QDialog::Rejected )
+                return false;
 
-        nMode = openModeDialog.GetOpenMode();
-        if( nMode == eOpenMode_Normal )
-            break; // normal mode, we can continue
+            nMode = openModeDialog.GetOpenMode();
+            if( nMode == eOpenMode_Normal )
+                break; // normal mode, we can continue
 
-        // admin mode, we need to check the password
-        assert( nMode == eOpenMode_Admin );
-        QString strGivenPassword = openModeDialog.GetPassword();
+            // admin mode, we need to check the password
+            assert( nMode == eOpenMode_Admin );
+            QString strGivenPassword = openModeDialog.GetPassword();
 
-        if( strAdminPassword_ == strGivenPassword.ascii() )
-            break; // password ok
+            if( strAdminPassword_ == strGivenPassword.ascii() )
+                break; // password ok
 
-        // wrong password, inform the user and let him try again
-        QMessageBox::critical( this,
-                               tr( "Invalid password"),
-                               tr( "The password you entered is not valid. Please try again."),
-                               QMessageBox::Ok,
-                               Qt::NoButton );
-    }
+            // wrong password, inform the user and let him try again
+            QMessageBox::critical( this,
+                                   tr( "Invalid password"),
+                                   tr( "The password you entered is not valid. Please try again."),
+                                   QMessageBox::Ok,
+                                   QMessageBox::NoButton );
+        }
 
     workspace_.SetOpenMode( nMode );
 

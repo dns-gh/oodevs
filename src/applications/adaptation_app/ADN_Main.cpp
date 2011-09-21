@@ -98,6 +98,7 @@ int main( uint nArgc, char** ppArgv )
     desc.add_options()
         ( "input,i" , po::value< std::string >( &inputFile  )->default_value( "" ), "specify root input file (physical.xml)" )
         ( "output,o", po::value< std::string >( &outputFile )->default_value( "" ), "specify output file (physical.xml) (open/save-mode: input must be specified)" )
+        ( "nosymbols,n", "turn off unit symbols view" )
     ;
     po::variables_map vm;
     po::store( po::parse_command_line( nArgc, ppArgv, desc ), vm );
@@ -105,7 +106,8 @@ int main( uint nArgc, char** ppArgv )
 
     try
     {
-        if( app.Initialize( inputFile, outputFile, nArgc, ppArgv ) )
+        bool nosymbols = vm.count( "nosymbols" );
+        if( app.Initialize( inputFile, outputFile, nosymbols, nArgc, ppArgv ) )
             app.exec();
     }
     catch( ADN_Exception_ABC& e )
