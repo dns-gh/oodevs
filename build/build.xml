@@ -1404,10 +1404,10 @@
         </sequential>
     </macrodef>
 
-    <target name="package.otpacks" depends="package.otpack.defense.worldwide, package.otpack.defense.france,
+    <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.france,
                                             package.otpack.defense.scipio,package.otpack.defense.scipio.VA,package.otpack.security.worldwide,package.otpack.security.masa,
-                                            package.otpack.lossc, package.otpack.validation,package.otpack.trainingML, package.otpack.decisional3, package.otpack.decisional4, package.otpack.decisional5"
-                                            description="package the exercise otpacks"/>
+                                            package.otpack.lossc,package.otpack.validation,package.otpack.trainingML,package.otpack.decisional3,package.otpack.decisional4,package.otpack.decisional5"
+                                   description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
         <pack name="defense-worldwide" description="defense-worldwide exercises package">
@@ -1535,7 +1535,7 @@
     </target>
 
     <target name="package.otpack.validation" description="package de validation otpack">
-        <pack name="validationsw" description="validation, performance and charge exercises package">
+        <pack name="validations" description="validation, performance and charge exercises package">
             <include name="data/models/ada/physical/scipio/**"/>
             <include name="data/models/ada/physical/scipioPIV3/**"/>
             <include name="data/models/ada/physical/france/**"/>
