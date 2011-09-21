@@ -29,7 +29,7 @@ namespace
         std::string result = value;
         if( value == "$rootdir$" )
             result = config.GetRootDir();
-        else if( value == "$exercice$" )
+        else if( value == "$exercise$" )
             result = config.GetExerciseName();
         return "\"" + result + "\"";
     }

@@ -21,7 +21,7 @@
       <filter command="ExportDQP.exe">
         <arguments>
           <argument name="0"/>
-          <argument name="-exercice" value="$exercice$"/>
+          <argument name="-exercise" value="$exercise$"/>
           <argument name="-root-dir" value="$rootdir$"/>
         </arguments>
         <descriptions>
@@ -32,7 +32,7 @@
       <filter command="ExportDQP.exe">
         <arguments>
           <argument name="1"/>
-          <argument name="-exercice" value="$exercice$"/>
+          <argument name="-exercise" value="$exercise$"/>
           <argument name="-root-dir" value="$rootdir$"/>
         </arguments>
         <descriptions>
@@ -50,7 +50,7 @@
     <filters>
       <filter command="ImportDQP.exe" reload-exercise="true">
         <arguments>
-          <argument name="-exercice" value="$exercice$"/>
+          <argument name="-exercise" value="$exercise$"/>
           <argument name="-root-dir" value="$rootdir$"/>
         </arguments>
         <descriptions>
@@ -60,7 +60,7 @@
       </filter>
       <filter command="Melmil.exe" reload-exercise="true">
         <arguments>
-          <argument name="-exercice" value="$exercice$"/>
+          <argument name="-exercise" value="$exercise$"/>
           <argument name="-root-dir" value="$rootdir$"/>
         </arguments>
         <descriptions>
@@ -71,4 +71,4 @@
     </filters>
   </section>
 </sections>
-<!-- signature="0696494884" -->
+<!-- signature="0573735086" -->
