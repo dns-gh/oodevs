@@ -285,13 +285,12 @@ BOOST_FIXTURE_TEST_CASE( automat_attributes_to_client_is_converted, ContextFixtu
 {
     content.mutable_automat_attributes()->mutable_automat()->set_id( 7 );
     content.mutable_automat_attributes()->set_mode( sword::engaged );
-    content.mutable_automat_attributes()->set_force_ratio( sword::ForceRatio::neutral );
     content.mutable_automat_attributes()->set_meeting_engagement( sword::avoiding );
     content.mutable_automat_attributes()->set_operational_state( sword::operational );
     content.mutable_automat_attributes()->set_roe( sword::RulesOfEngagement::free_fire );
     FillExtension( content.mutable_automat_attributes()->mutable_extension()->add_entries() );
     FillExtension( content.mutable_automat_attributes()->mutable_extension()->add_entries() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_attributes { automat { id: 7 } etat_automate: embraye rapport_de_force: neutre combat_de_rencontre: etat_esquive etat_operationnel: operationnel roe: tir_libre extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_attributes { automat { id: 7 } etat_automate: embraye combat_de_rencontre: etat_esquive etat_operationnel: operationnel roe: tir_libre extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
