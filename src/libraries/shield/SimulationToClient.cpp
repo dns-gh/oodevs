@@ -511,7 +511,6 @@ void SimulationToClient::Convert( const sword::AutomatAttributes& from, MsgsSimT
 {
     CONVERT_ID( automat );
     CONVERT_AUTOMAT_MODE( mode, etat_automate );
-    ConvertForceRatio( from, to );
     ConvertMeetingEngagementStatus( from, to );
     ConvertOperationalStatus( from, to );
     ConvertRulesOfEngagement( from, to );
