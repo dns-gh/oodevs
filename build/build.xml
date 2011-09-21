@@ -1272,7 +1272,7 @@
                 <length file="${reports.dir}/doxygen.log" when="greater" length="0"/>
             </condition>
         </fail>
-        <htmlhelp input="${out.dir}/sdk" outdir="${out.dir}/sdk"/>
+        <htmlhelp input="${out.dir}/sdk" outdir="${dist.dir}"/>
     </target>
 
     <!--
