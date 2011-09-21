@@ -346,10 +346,6 @@
         <translation type="unfinished">Objetos</translation>
     </message>
     <message>
-        <source>Crowd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The following entities cannot be loaded: </source>
         <translation type="unfinished">Las siguientes entidades no pueden ser cargadas: </translation>
     </message>
@@ -392,6 +388,14 @@
     <message>
         <source>Parties:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="unfinished">Poblaciones</translation>
     </message>
 </context>
 <context>

@@ -43,8 +43,10 @@ FilterOrbatReIndexer::FilterOrbatReIndexer( const tools::ExerciseConfig& config,
     : Filter()
     , model_                ( model )
     , orbatFile_            ( config.GetOrbatFile() )
+    , isUrbanBlock_         ( false )
     , shift_                ( 0 )
     , objectsCheckBox_      ( 0 )
+    , crowdsCheckBox_       ( 0 )
     , populationsCheckBox_  ( 0 )
     , initialStateCheckBox_ ( 0 )
     , logisticLinksCheckBox_( 0 )
@@ -154,36 +156,35 @@ void FilterOrbatReIndexer::ReadTeam( xml::xistream& xis )
 void FilterOrbatReIndexer::ReadField( const std::string& name, xml::xistream& xis, xml::xostream& xos )
 {
     if( name == "object" && !objectsCheckBox_->isChecked() ||
-        name == "population" && !populationsCheckBox_->isChecked() ||
+        name == "population" && !crowdsCheckBox_->isChecked() ||
         ( name == "equipments" || name == "humans" || name == "resources" ) && !initialStateCheckBox_->isChecked() ||
         name == "stocks" && !stocksCheckBox_->isChecked() )
         return;
-    if( name == "logistics" && !logisticLinksCheckBox_->isChecked() || 
-        name == "diplomacy" && !diplomacyCheckBox_->isChecked() )
-    {
-        xos << xml::start( name );
-        xos << xml::end;
-        return;
-    }
     if( name == "party" )
     {
         unsigned long partyID = xis.attribute< unsigned long >( "id", 0 );
         if( partyID != 0 && !IsPartyChecked( partyID ) )
             return;
     }
-    if( name == "diplomacy" )
-    {
-        xos << xml::start( name );
-        xis >> xml::list( "party", *this, &FilterOrbatReIndexer::ReadDiplomacy, xos );
-        xos << xml::end;
-    }
+
     xos << xml::start( name );
-    std::string text;
-    xis >> xml::attributes( *this, &FilterOrbatReIndexer::ReadAttribute, xos )
-        >> xml::list( *this, &FilterOrbatReIndexer::ReadField, xos )
-        >> xml::optional >> text;
-    if( !text.empty() ) // $$$$ SBO 2008-04-08: check for cdata
-        xos << text;
+    if( !( name == "logistics" && !logisticLinksCheckBox_->isChecked() || 
+           name == "diplomacy" && !diplomacyCheckBox_->isChecked() || 
+           name == "inhabitants" && !populationsCheckBox_->isChecked() ) )
+    {
+        isUrbanBlock_ = name == "urban-block";
+        if( name == "diplomacy" )
+            xis >> xml::list( "party", *this, &FilterOrbatReIndexer::ReadDiplomacy, xos );
+        else
+        {
+            std::string text;
+            xis >> xml::attributes( *this, &FilterOrbatReIndexer::ReadAttribute, xos )
+                >> xml::list( *this, &FilterOrbatReIndexer::ReadField, xos )
+                >> xml::optional >> text;
+            if( !text.empty() ) // $$$$ SBO 2008-04-08: check for cdata
+                xos << text;
+        }
+    }
     xos << xml::end;
 }
 
@@ -193,7 +194,7 @@ void FilterOrbatReIndexer::ReadField( const std::string& name, xml::xistream& xi
 // -----------------------------------------------------------------------------
 void FilterOrbatReIndexer::ReadAttribute( const std::string& name, xml::xistream& xis, xml::xostream& xos )
 {
-    if( IsIndex( name ) )
+    if( !isUrbanBlock_ && IsIndex( name ) )
         xos << xml::attribute( name, xis.value< unsigned long >() + shift_ );
     else
         xos << xml::attribute( name, xis.value< std::string >() );
@@ -251,7 +252,8 @@ QWidget* FilterOrbatReIndexer::CreateParametersWidget( QWidget* parent )
 
         Q3GroupBox* optionBox = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterOrbatReIndexer", "Import options:" ), hbox, "FilterOrbatReIndexer_PartiesGroupBox" );
         objectsCheckBox_       = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Objects" )       , "FilterOrbatReIndexer_ObjectsCheckBox" );
-        populationsCheckBox_   = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Crowd" )         , "FilterOrbatReIndexer_PopulationsCheckBox");
+        crowdsCheckBox_        = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Crowds" )        , "FilterOrbatReIndexer_CrowdsCheckBox");
+        populationsCheckBox_   = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Populations" )   , "FilterOrbatReIndexer_PopulationsCheckBox");
         initialStateCheckBox_  = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Initial state" ) , "FilterOrbatReIndexer_InitialStateCheckBox");
         logisticLinksCheckBox_ = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Logistic links" ), "FilterOrbatReIndexer_LogisticLinksCheckBox");
         stocksCheckBox_        = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Stocks" )        , "FilterOrbatReIndexer_StocksCheckBox");

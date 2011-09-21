@@ -81,8 +81,10 @@ private:
     Model&             model_;
     const std::string  orbatFile_;
     QLineEdit*         filename_;
+    bool               isUrbanBlock_;
 
     QCheckBox*         objectsCheckBox_;
+    QCheckBox*         crowdsCheckBox_;
     QCheckBox*         populationsCheckBox_;
     QCheckBox*         initialStateCheckBox_;
     QCheckBox*         logisticLinksCheckBox_;

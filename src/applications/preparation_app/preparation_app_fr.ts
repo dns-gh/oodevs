@@ -346,10 +346,6 @@
         <translation>Objets</translation>
     </message>
     <message>
-        <source>Crowd</source>
-        <translation>Foule</translation>
-    </message>
-    <message>
         <source>Error loading the new orbat file</source>
         <translation>Erreur de chargement du nouveau fichier orbat</translation>
     </message>
@@ -392,6 +388,14 @@
     <message>
         <source>Parties:</source>
         <translation>Armées:</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
     </message>
 </context>
 <context>
