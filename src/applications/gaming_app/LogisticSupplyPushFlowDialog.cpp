@@ -86,24 +86,25 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     waypointLocationCreator_ = new LocationCreator( 0, layer, *this );
     waypointLocationCreator_->Allow( false, false, false, false, false );
 
-    QTabWidget* tabs = new QTabWidget( this );
+    tabs_ = new QTabWidget( this );
     QGridLayout* tabLayout = new QGridLayout( this, 3, 2 );
-    tabLayout->addWidget( tabs, 0, 0, 1, 3 );
+    tabLayout->addWidget( tabs_, 0, 0, 1, 3 );
 
-    QWidget* resourcesTab = new QWidget( tabs );
-    QWidget* carriersTab = new QWidget( tabs );
-    QWidget* routeTab = new QWidget( tabs );
-    tabs->addTab( resourcesTab, tools::translate( "Logistic : Push supply flow", "Resources" ) );
-    tabs->addTab( carriersTab, tools::translate( "Logistic : Push supply flow", "Carriers" ) );
-    tabs->addTab( routeTab, tools::translate( "Logistic : Push supply flow", "Route" ) );
-    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), tabs );
-    QPushButton* addWaypointButton = new QPushButton( tr( "Add Waypoint" ), tabs );
-    QPushButton* delWaypointButton = new QPushButton( tr( "Delete Waypoint" ), tabs );
-    QPushButton* okButton = new QPushButton( tr( "Ok" ), tabs );
+    QWidget* resourcesTab = new QWidget( tabs_ );
+    QWidget* carriersTab = new QWidget( tabs_ );
+    QWidget* routeTab = new QWidget( tabs_ );
+    tabs_->addTab( resourcesTab, tools::translate( "Logistic : Push supply flow", "Resources" ) );
+    tabs_->addTab( carriersTab, tools::translate( "Logistic : Push supply flow", "Carriers" ) );
+    tabs_->addTab( routeTab, tools::translate( "Logistic : Push supply flow", "Route" ) );
+    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), tabs_ );
+    QPushButton* addWaypointButton = new QPushButton( tr( "Add Waypoint" ), tabs_ );
+    QPushButton* okButton = new QPushButton( tr( "Ok" ), tabs_ );
+    delWaypointButton_ = new QPushButton( tr( "Delete Waypoint" ), tabs_ );
+    delWaypointButton_->setEnabled( false );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
     connect( okButton, SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( addWaypointButton, SIGNAL( clicked() ), SLOT( AddWaypoint() ) );
-    delWaypointButton->setEnabled( false );
+    connect( delWaypointButton_, SIGNAL( clicked() ), SLOT( DeleteWaypoint() ) );
 
     tabLayout->addWidget( okButton, 1, 0, 1, 1 );
     tabLayout->addWidget( addWaypointButton, 1, 1, 1, 1 );
@@ -158,13 +159,13 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     waypointList_->setMovement( QListView::Snap );
     waypointList_->setDragDropMode( QAbstractItemView::InternalMove );
     waypointList_->setDragDropOverwriteMode( false );
-    QStringList routePoints;
-    waypointList_->setModel( new customStringListModel( routePoints ) );
-    waypointList_->setFixedSize( 270, 300 );
+    waypointList_->setModel( new customStringListModel( QStringList() ) );
+    waypointList_->setFixedSize( 270, 300 );    
+    connect( waypointList_->selectionModel(), SIGNAL( selectionChanged(const QItemSelection &, const QItemSelection &) ), this, SLOT( OnWaypointSelect( const QItemSelection&, const QItemSelection& ) ) );
     QVBoxLayout* waypointLayout = new QVBoxLayout( routeTab );
     waypointLayout->setSizeConstraint( QLayout::SetMaximumSize );
     waypointLayout->addWidget( waypointList_ );
-    waypointLayout->addWidget( delWaypointButton );
+    waypointLayout->addWidget( delWaypointButton_ );
     
     controllers_.Register( *this );
     hide();
@@ -220,7 +221,8 @@ void LogisticSupplyPushFlowDialog::Show()
     
     AddRecipientItem();
     AddCarrierItem();
-    
+    tabs_->setCurrentPage( 0 );
+
     show();
 }
 
@@ -286,6 +288,15 @@ void LogisticSupplyPushFlowDialog::Reject()
     ClearCarriersData();
     ClearRouteList();
     ClearRouteData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::closeEvent
+// Created: MMC 2011-07-21
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::closeEvent( QCloseEvent* /*pEvent*/ )
+{
+    Reject();
 }
 
 namespace
@@ -460,6 +471,38 @@ void LogisticSupplyPushFlowDialog::AddWaypoint()
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::GetSelectedWaypoint
+// Created: MMC 2011-09-22
+// -----------------------------------------------------------------------------
+QString LogisticSupplyPushFlowDialog::GetSelectedWaypoint()
+{
+    QModelIndexList indexList = waypointList_->selectionModel()->selectedIndexes();
+    if ( indexList.count() == 0 )
+        return QString();
+
+    int row = indexList.first().row();
+    return static_cast< customStringListModel* >( waypointList_->model() )->stringList().at( row );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::DeleteWaypoint
+// Created: MMC 2011-09-22
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::DeleteWaypoint()
+{
+    QString waypoint = GetSelectedWaypoint();
+    T_PointNames::iterator itPoint = points_.find( waypoint );
+    if( itPoint != points_.end() )
+    {
+        points_.erase( itPoint );
+        customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
+        QStringList waypoints = pModel->stringList();
+        waypoints.remove( waypoint );
+        pModel->setStringList( waypoints );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog::clearRecipientsTable
 // Created: MMC 2011-09-19
 // -----------------------------------------------------------------------------
@@ -529,6 +572,7 @@ void LogisticSupplyPushFlowDialog::ClearCarriersData()
 void LogisticSupplyPushFlowDialog::ClearRouteList()
 {
     static_cast< customStringListModel* >( waypointList_->model() )->setStringList( QStringList() );
+    delWaypointButton_->setEnabled( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -861,6 +905,16 @@ void LogisticSupplyPushFlowDialog::OnCarriersValueChanged( int row, int col )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::OnWaypoitnSelect
+// Created: MMC 2011-09-21
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::OnWaypointSelect( const QItemSelection& selection, const QItemSelection& /*deselection*/ )
+{
+    QString waypoint = GetSelectedWaypoint();
+    delWaypointButton_->setEnabled( points_.find( waypoint ) != points_.end() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog::Handle
 // Created: MMC 2011-09-21
 // -----------------------------------------------------------------------------
@@ -884,7 +938,7 @@ void LogisticSupplyPushFlowDialog::Handle( kernel::Location_ABC& location )
 // Name: LogisticSupplyPushFlowDialog::VisitPoint
 // Created: MMC 2011-09-21
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::VisitPoint ( const geometry::Point2f& point )
+void LogisticSupplyPushFlowDialog::VisitPoint( const geometry::Point2f& point )
 {
     selectedPoint_ = point;
 }
@@ -899,12 +953,12 @@ void LogisticSupplyPushFlowDialog::ComputeRoute( T_Route& route )
     customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
     QStringList waypoints = pModel->stringList();
 
-    for ( QStringList::iterator it = waypoints.begin(); it != waypoints.end(); ++it )
+    for( QStringList::iterator it = waypoints.begin(); it != waypoints.end(); ++it )
     {
         QString str = *it;
-        if ( points_.find( str ) != points_.end() )
+        if( points_.find( str ) != points_.end() )
             route.push_back( Waypoint( points_[ str ] ) );
-        else
+        else if( recipientsNames_.find( str ) != recipientsNames_.end() )
             route.push_back( Waypoint( recipientsNames_[ str ] ) );
     }
 }

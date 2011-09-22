@@ -80,12 +80,15 @@ private slots:
     void Show();
     void Validate();
     void Reject();
+    void closeEvent( QCloseEvent* /*pEvent*/ );
     void AddWaypoint();
+    void DeleteWaypoint();
     void OnRecipientValueChanged( int row, int /*col*/ );
     void OnRecipientSelectionChanged( int row, int /*col*/ );
     void OnResourcesValueChanged( int row, int col );
     void OnCarriersUseCheckStateChanged();
     void OnCarriersValueChanged( int row, int col );
+    void OnWaypointSelect( const QItemSelection& selected, const QItemSelection& /*deselected*/ );
     //@}
 
 private:
@@ -169,6 +172,7 @@ private:
     //! @name Helpers
     //@{
     void ComputeRoute( T_Route& route );
+    QString GetSelectedWaypoint();
     //@}
 
 private:
@@ -189,11 +193,13 @@ private:
     T_CarriersQty carriersTypes_;
     T_CarriersName carriersTypeNames_;
 
+    QTabWidget* tabs_;
     Q3Table* recipientsTable_;
     Q3Table* resourcesTable_;
     Q3Table* carriersTable_;
     QListView* waypointList_;
     QCheckBox* carriersUseCheck_;
+    QPushButton* delWaypointButton_;
 
     T_Recipients recipients_;
     T_RecipientSupplies recipientSupplies_;
