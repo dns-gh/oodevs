@@ -23,6 +23,7 @@ namespace kernel
     class GlTools_ABC;
     class Inhabitant_ABC;
     class PropertiesDictionary;
+    class Controller;
 }
 
 namespace gui
@@ -59,9 +60,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location,
+             InhabitantPositions( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location,
                                   const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary );
-             InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel,
+             InhabitantPositions( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel,
                                   kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary );
     virtual ~InhabitantPositions();
     //@}
@@ -96,6 +97,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     const UrbanModel& urbanModel_;
     kernel::Inhabitant_ABC& inhabitant_;

@@ -174,7 +174,7 @@ Inhabitant_ABC* AgentFactory::Create( Entity_ABC& parent, const InhabitantType& 
     Inhabitant* result = new Inhabitant( type, number, name, controllers_.controller_, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
-    Positions& positions = *new InhabitantPositions( static_.coordinateConverter_, location, model_.urban_, *result, dico );
+    Positions& positions = *new InhabitantPositions( controllers_.controller_, static_.coordinateConverter_, location, model_.urban_, *result, dico );
     if( positions.GetPosition() == geometry::Point2f( 0, 0 ) )
     {
         delete &positions;
@@ -290,7 +290,7 @@ Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, Team_ABC& parent 
 {
     Inhabitant* result = new Inhabitant( xis, controllers_.controller_, idManager_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
-    result->Attach< Positions >( *new InhabitantPositions( xis, static_.coordinateConverter_, model_.urban_, *result, dico ) );
+    result->Attach< Positions >( *new InhabitantPositions( xis, controllers_.controller_, static_.coordinateConverter_, model_.urban_, *result, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dico ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );

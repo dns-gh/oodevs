@@ -64,9 +64,10 @@ namespace
 // Name: InhabitantPositions constructor
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-InhabitantPositions::InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location,
+InhabitantPositions::InhabitantPositions( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location,
                                           const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary )
-    : converter_ ( converter )
+    : controller_( controller )
+    , converter_ ( converter )
     , urbanModel_( urbanModel )
     , inhabitant_( inhabitant )
     , dictionary_( dictionary )
@@ -82,9 +83,10 @@ InhabitantPositions::InhabitantPositions( const kernel::CoordinateConverter_ABC&
 // Name: InhabitantPositions constructor
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-InhabitantPositions::InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel,
+InhabitantPositions::InhabitantPositions( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel,
                                           kernel::Inhabitant_ABC& inhabitant , kernel::PropertiesDictionary& dictionary )
-    : converter_ ( converter )
+    : controller_( controller )
+    , converter_ ( converter )
     , urbanModel_( urbanModel )
     , inhabitant_( inhabitant )
     , dictionary_( dictionary )
@@ -274,6 +276,7 @@ void InhabitantPositions::Add( const gui::TerrainObjectProxy& object, const geom
         if( polygon.IsInside( positions->Barycenter() ) && !Exists( object.GetId() ) )
             livingUrbanObject_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
     UpdateDictionary();
+    controller_.Update( inhabitant_ );
 }
 
 namespace
@@ -297,6 +300,7 @@ void InhabitantPositions::Remove( const gui::TerrainObjectProxy& object, const g
             livingUrbanObject_.erase( std::remove_if( livingUrbanObject_.begin(), livingUrbanObject_.end(),
                                                       boost::bind( &Check, _1, boost::cref( object ) ) ), livingUrbanObject_.end() );
     UpdateDictionary();
+    controller_.Update( inhabitant_ );
 }
 
 // -----------------------------------------------------------------------------
