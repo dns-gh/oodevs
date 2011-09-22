@@ -1724,11 +1724,13 @@
         <mission name="Common - park"/>
         <mission name="Common - follow"/>
         <mission name="Engineer - activate obstacle"/>
+        <mission name="Engineer - enhance mobility"/>
         <mission name="Engineer - bypass"/>
         <mission name="Engineer - breach"/>
         <mission name="Engineer - breach (an area)"/>
         <mission name="Engineer - support a crossing site"/>
         <mission name="Engineer - open a route"/>
+        <mission name="Engineer - perform counter-mobility work"/>
         <mission name="Engineer - perform work"/>
         <mission name="Engineer - recon a route"/>
         <mission name="Engineer - recon a crossing site"/>
@@ -2669,6 +2671,7 @@
         <mission name="Security - evacuate area"/>
         <mission name="Security - supply"/>
         <mission name="Security - evacuate victim"/>
+        <mission name="Security - clear building collapse"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -4172,4 +4175,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2047274072" -->
+<!-- signature="2053131784" -->
