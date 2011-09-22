@@ -18,3 +18,5 @@ include "Appui/Alat/Pions/Common/Missions/Decrocher.bms"
 
 include "Appui/Alat/Pions/Common/Missions/RenseignerSurFoule.bms"
 
+include "Appui/Alat/Pions/Common/Missions/PasserAuCommandementDe.bms"
+

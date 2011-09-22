@@ -1,0 +1,121 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/missions/PasserAuCommandementDe.bms"] = true
+
+local emptyTable = emptyTable
+
+--[[//------------------------------------------------------------------------------
+]]--[[// MIS_Pion_PasserAuCommandementDe()
+]]--[[//
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_PasserAuCommandementDe"
+{
+    feedbacks = { { { "done_MIS_Pion_PasserAuCommandementDe" }, "MIS_Pion_PasserAuCommandementDe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_PasserAuCommandementDe, {value} ) end,
+    activations =
+    {
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "done_BEH_Dep_Pion_ALAT_RejoindrePoint" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "done_BEH_Dep_Pion_ALAT_SePoser" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.pionPC = self.pionPC or DEC_Pion_PionPCDeAutomate( self._namedParams.mission.automate_ )
+        self.ePhase = self.ePhase or eRejoindrePosition
+        self.eEtat = self.eEtat or eActionEnCours
+        if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+         do
+            local _continue = true
+--[[// Progression jusqu'au lieu de rendez-vous
+]]--[[// Renforce l'unité amie
+]]            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRejoindrePosition then
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eSeMettreEnPlace
+                                _continue = false
+                            end
+
+                        end
+                    end
+
+                        if _continue then
+                        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
+                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.mission.lieu_, eProgressionDefaut, eTypeItiInfiltration, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
+                        _continue = false
+                    end
+                                cases_switch_1[1] = true
+elseif switch_1 == eSeMettreEnPlace then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
+                    if( DEC_Pion_ChangeAutomate( self._namedParams.mission.automate_ ) ) then
+                        DEC_RC( eRC_ReussiteRenforcement, myself, self._namedParams.mission.automate_ )
+                    else
+                        DEC_RC( eRC_EchecRenforcement, myself, self._namedParams.mission.automate_ )
+                    end
+
+                    self.ePhase = eFinMission
+                                cases_switch_1[2] = true
+                end
+                if cases_switch_1[2] or switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                myself:ClearplotsRavitaillement_()
+                                F_Pion_SetobjectifEsquive( myself, nil )
+                                DEC_FinMission()
+                                                                self:SendFeedback( eActionEffectuee )
+                                Halt( self )
+                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
+self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
+                    _continue = false
+                                cases_switch_1[3] = true
+                end
+            end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_PasserAuCommandementDe = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_PasserAuCommandementDe, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_PasserAuCommandementDe, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_PasserAuCommandementDe, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_PasserAuCommandementDe, "BEH_Dep_Pion_ALAT_RejoindrePoint", nodes.BEH_Dep_Pion_ALAT_RejoindrePoint }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_PasserAuCommandementDe, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }
