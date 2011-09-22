@@ -46,21 +46,21 @@ namespace
         bfs::path output( bfs::path( bfs::path( directory ) / bfs::path( input ).filename() ) );
         return output.replace_extension( extension ).native_file_string();
     }
-    std::string MakeXsl( const std::string& file, const std::string& lang = "" )
+    std::string MakeXsl( const std::string& file, const tools::ExerciseConfig& config, const std::string& lang = "" )
     {
         const std::string extension( lang.empty() ? "" : "_" + lang );
         const std::string xsl( file + extension + ".xsl" );
-        bfs::path filter( tools::GeneralConfig::BuildResourceChildFile( ( bfs::path( "export" ) / xsl ).native_file_string() ) );
+        bfs::path filter( config.BuildPhysicalChildFile( ( bfs::path( "Filters" ) / xsl ).native_file_string() ) );
         return filter.native_file_string();
     }
-    std::string ResolveXslFile( const std::string& xsl, const std::string& lang )
+    std::string ResolveXslFile( const std::string& xsl, const std::string& lang, const tools::ExerciseConfig& config )
     {
-        std::string xslFile( MakeXsl( xsl, lang ) );
+        std::string xslFile( MakeXsl( xsl, config, lang ) );
         if( !bfs::exists( xslFile ) )
         {
-            xslFile = MakeXsl( xsl, "en" );
+            xslFile = MakeXsl( xsl, config, "en" );
             if( !bfs::exists( xslFile ) )
-                xslFile = MakeXsl( xsl );
+                xslFile = MakeXsl( xsl, config );
         }
         return xslFile;
     }
@@ -73,7 +73,7 @@ namespace
 FilterXsl::FilterXsl( xml::xistream& xis, const tools::ExerciseConfig& config )
     : Filter()
     , xsl_            ( xis.attribute< std::string >( "xsl" ) )
-    , xslFile_        ( ResolveXslFile( xis.attribute< std::string >( "xsl" ), currentLanguage_ ) )
+    , xslFile_        ( ResolveXslFile( xis.attribute< std::string >( "xsl" ), currentLanguage_, config ) )
     , inputFile_      ( ResolveInputFile( xis.attribute< std::string >( "target" ), config ) )
     , exerciseFile_   ( config.GetExerciseFile().c_str() )
     , outputExtension_( xis.attribute< std::string >( "output" ) )
