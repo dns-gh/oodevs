@@ -1433,6 +1433,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticListView</name>
+    <message>
+        <source>Change Logistic Links</source>
+        <translation type="unfinished">Changer les Liens Logistiques</translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -1522,6 +1529,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Log Supply Push Flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Waypoint</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1744,6 +1755,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source> - Not connected</source>
         <translation type="unfinished"> - Non connecté</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

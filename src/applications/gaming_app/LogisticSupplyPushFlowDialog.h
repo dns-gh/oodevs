@@ -12,8 +12,10 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
+#include "clients_gui/ShapeHandler_ABC.h"
 
 namespace kernel
 {
@@ -24,11 +26,18 @@ namespace kernel
     class Formation_ABC;
     class Profile_ABC;
     class Time_ABC;
+    class Location_ABC;
 }
 
 namespace actions
 {
     class ActionsModel;
+}
+
+namespace gui
+{
+    class LocationCreator;
+    class ParametersLayer;
 }
 
 class Dotation;
@@ -46,13 +55,15 @@ class LogisticSupplyPushFlowDialog : public QDialog
                                    , public tools::Observer_ABC
                                    , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                                    , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
+                                   , public gui::ShapeHandler_ABC
+                                   , public kernel::LocationVisitor_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const kernel::Profile_ABC& profile );
+             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation,  gui::ParametersLayer& layer, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyPushFlowDialog();
     //@}
 
@@ -60,6 +71,7 @@ public:
     //@{
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
+    virtual void Handle( kernel::Location_ABC& location );
     //@}
 
 private slots:
@@ -68,6 +80,7 @@ private slots:
     void Show();
     void Validate();
     void Reject();
+    void AddWaypoint();
     void OnRecipientValueChanged( int row, int /*col*/ );
     void OnRecipientSelectionChanged( int row, int /*col*/ );
     void OnResourcesValueChanged( int row, int col );
@@ -92,7 +105,6 @@ private:
     void AddResourceItem( QString dotationName, int Available, int qtySupply );
     void AddCarrierItem();
     void AddCarrierItem( QString dotationName, int Available, int qtySupply );
-    void AddWaypoint();
 
     void ClearRecipientsTable();
     void ClearRecipientsData();
@@ -100,11 +112,20 @@ private:
     void ClearResourcesData();
     void ClearCarriersTable();
     void ClearCarriersData();
+    void ClearRouteList();
+    void ClearRouteData();
     void ComputeAvailableRecipients( QStringList& recipientsNames );
     void InsertNewRecipientData( int index, const kernel::Automat_ABC* pRecipient );
     void EraseRecipientData( int index );
     void ComputeAvailableCarriers( QStringList& carriersNames );
     void AddCarryingEquipment( const kernel::Entity_ABC& entity );
+
+    virtual void VisitLines    ( const T_PointVector& /*points*/ ) {}
+    virtual void VisitRectangle( const T_PointVector& /*points*/ ) {}
+    virtual void VisitPolygon  ( const T_PointVector& /*points*/ ) {}
+    virtual void VisitCircle   ( const geometry::Point2f& /*center*/, float /*radius*/ ) {}
+    virtual void VisitPoint    ( const geometry::Point2f& point );
+    virtual void VisitPath     ( const geometry::Point2f& /*first*/, const T_PointVector& /*points*/ ) {}
     //@}
 
     //! @name Types
@@ -120,15 +141,34 @@ private:
         ObjectQuantity( const QString& objectName, int quantity ): objectName_( objectName ), quantity_( quantity ) {}
     };
 
+    struct Waypoint
+    {
+        geometry::Point2f point_;
+        const kernel::Automat_ABC* pRecipient_;
+
+        Waypoint( const geometry::Point2f& point ) : pRecipient_( 0 ), point_( point ) {}
+        Waypoint( const kernel::Automat_ABC* pRecipient ): pRecipient_( pRecipient ) {}
+
+        bool isPoint() { return !pRecipient_; }
+        bool isRecipient() { return !isPoint(); }
+    };
+
     typedef std::vector< ObjectQuantity > T_SuppliesVector;
     typedef std::vector< ObjectQuantity > T_CarriersVector;
+    typedef std::vector< Waypoint > T_Route;
 
     typedef std::map< const kernel::Automat_ABC*, T_SuppliesVector > T_RecipientSupplies;    
     typedef std::vector< const kernel::Automat_ABC* > T_Recipients;
     typedef QMap< QString, const kernel::Automat_ABC* > T_RecipientsNames;
 
     typedef std::map< QString , unsigned int > T_CarriersQty;
-    typedef std::map< QString , const kernel::EquipmentType* > T_CarriersName;    
+    typedef std::map< QString , const kernel::EquipmentType* > T_CarriersName;   
+    typedef std::map< QString , geometry::Point2f > T_PointNames;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ComputeRoute( T_Route& route );
     //@}
 
 private:
@@ -159,6 +199,11 @@ private:
     T_RecipientSupplies recipientSupplies_;
     T_RecipientsNames recipientsNames_;
     T_CarriersVector carriers_;
+
+    bool startWaypointLocation_;
+    gui::LocationCreator* waypointLocationCreator_;
+    geometry::Point2f selectedPoint_;
+    T_PointNames points_;
 
     const kernel::Automat_ABC* pRecipientSelected_;
     //@}

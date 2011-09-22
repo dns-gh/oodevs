@@ -30,6 +30,7 @@ namespace tools
 namespace gui
 {
     class ItemFactory_ABC;
+    class ParametersLayer;
 }
 
 class Model;
@@ -51,7 +52,7 @@ public:
     //@{
              Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel,
                       Publisher_ABC& publisher, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation,
-                      const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config, const RcEntityResolver_ABC& rcResolver, gui::ItemFactory_ABC& factory );
+                      const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config, const RcEntityResolver_ABC& rcResolver, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer );
     virtual ~Dialogs();
     //@}
 };

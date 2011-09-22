@@ -1433,6 +1433,13 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>LogisticListView</name>
+    <message>
+        <source>Change Logistic Links</source>
+        <translation type="unfinished">Cambiar enlace logístico</translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -1522,6 +1529,10 @@ Motivo: %3
     </message>
     <message>
         <source>Log Supply Push Flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Waypoint</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1744,6 +1755,10 @@ Motivo: %3
     <message>
         <source> - Not connected</source>
         <translation type="unfinished"> - No conectado</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

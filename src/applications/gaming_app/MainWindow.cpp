@@ -182,7 +182,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     lighting_ = new SimulationLighting( controllers, this );
     gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     gui::PreferencesDialog* prefDialog = new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_ );
-    new Dialogs( this, controllers, model_, staticModel, publisher, model_.actions_, simulation, profile, network.GetCommands(), config, rcResolver, *factory );
     new VisionConesToggler( controllers, publisher, this );
 
     glProxy_ = new gui::GlProxy();
@@ -241,6 +240,9 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     ::FormationLayer* formationLayer = new ::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_, *simpleFilter_ );
 
     addToolBarBreak();
+
+    //Dialogs
+    new Dialogs( this, controllers, model_, staticModel, publisher, model_.actions_, simulation, profile, network.GetCommands(), config, rcResolver, *factory, *paramLayer );
 
     // Profile
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );

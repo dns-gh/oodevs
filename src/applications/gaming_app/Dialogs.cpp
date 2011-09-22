@@ -41,13 +41,13 @@
 // -----------------------------------------------------------------------------
 Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel,
                   Publisher_ABC& publisher, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation,
-                  const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config, const RcEntityResolver_ABC& rcResolver, gui::ItemFactory_ABC& factory )
+                  const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config, const RcEntityResolver_ABC& rcResolver, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer )
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, actionsModel, staticModel, simulation, profile );
     new ChangeLogisticLinksDialog( parent, controllers, actionsModel, staticModel, simulation, profile  );
     new LogisticSupplyChangeQuotasDialog( parent, controllers, actionsModel, staticModel, simulation, model, profile  );
-    new LogisticSupplyPushFlowDialog( parent, controllers, actionsModel, staticModel, simulation, model.agents_, profile  );
+    new LogisticSupplyPushFlowDialog( parent, controllers, actionsModel, staticModel, simulation, layer, model.agents_, profile  );
     new LogisticSupplyPullFlowDialog( parent, controllers, actionsModel, staticModel, simulation, model.agents_, model.teams_, profile  );
     new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
