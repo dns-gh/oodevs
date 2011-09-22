@@ -9,10 +9,36 @@
   </population>
   <population associated-crowd="Standard Crowd" id="1" name="popType2">
     <repartition children="0.4" female="0.3" male="0.3"/>
-    <schedule transfer-time="1h"/>
+    <schedule transfer-time="1h">
+      <event day="monday" from="00:00" motivation="home" to="07:00"/>
+      <event day="monday" from="07:00" motivation="office" to="19:00"/>
+      <event day="monday" from="19:00" motivation="leisure" to="22:00"/>
+      <event day="monday" from="22:00" motivation="home" to="23:59"/>
+      <event day="tuesday" from="00:00" motivation="home" to="07:00"/>
+      <event day="tuesday" from="07:00" motivation="office" to="19:00"/>
+      <event day="tuesday" from="19:00" motivation="leisure" to="22:00"/>
+      <event day="tuesday" from="22:00" motivation="home" to="23:59"/>
+      <event day="wednesday" from="00:00" motivation="home" to="07:00"/>
+      <event day="wednesday" from="07:00" motivation="office" to="19:00"/>
+      <event day="wednesday" from="19:00" motivation="leisure" to="22:00"/>
+      <event day="wednesday" from="22:00" motivation="home" to="23:59"/>
+      <event day="thursday" from="00:00" motivation="home" to="07:00"/>
+      <event day="thursday" from="07:00" motivation="office" to="19:00"/>
+      <event day="thursday" from="19:00" motivation="leisure" to="22:00"/>
+      <event day="thursday" from="22:00" motivation="home" to="23:59"/>
+      <event day="friday" from="00:00" motivation="home" to="07:00"/>
+      <event day="friday" from="07:00" motivation="office" to="19:00"/>
+      <event day="friday" from="19:00" motivation="leisure" to="23:59"/>
+      <event day="saturday" from="00:00" motivation="home" to="10:00"/>
+      <event day="saturday" from="10:00" motivation="leisure" to="23:59"/>
+      <event day="sunday" from="00:00" motivation="leisure" to="04:00"/>
+      <event day="sunday" from="04:00" motivation="home" to="16:00"/>
+      <event day="sunday" from="16:00" motivation="leisure" to="22:00"/>
+      <event day="sunday" from="22:00" motivation="home" to="23:59"/>
+    </schedule>
     <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
     <health-need people-per-facility="1000"/>
     <consumption/>
   </population>
 </populations>
-<!-- signature="2277498810" -->
+<!-- signature="2863438480" -->

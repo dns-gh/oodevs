@@ -101,7 +101,7 @@
   <accommodations>
     <accommodation max-capacity="1" nominal-capacity="0.1" role="default"/>
     <accommodation max-capacity="0.7" nominal-capacity="0.5" role="leisure"/>
-    <accommodation max-capacity="0.1" nominal-capacity="0.07" role="home"/>
+    <accommodation max-capacity="0.07" nominal-capacity="0.03" role="home"/>
     <accommodation max-capacity="0.3" nominal-capacity="0.2" role="office"/>
   </accommodations>
   <infrastructures>
@@ -177,4 +177,4 @@
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="3255811961" -->
+<!-- signature="2112502992" -->
