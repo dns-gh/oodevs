@@ -256,7 +256,6 @@ void PushFlowParameters::Serialize( xml::xostream& xos ) const
             << xml::end;
     }
     Serialize( wayBackPath_, "wayBackPath", xos );
-    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
