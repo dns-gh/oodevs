@@ -91,6 +91,10 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::CategoryInfo::CreateCopy
     pCopy->rPackageVolume_ = rPackageVolume_.GetData();
     pCopy->rPackageWeight_ = rPackageWeight_.GetData();
     pCopy->ptrResourceNature_ = ptrResourceNature_.GetData();
+    pCopy->strCodeEMAT6_ = strCodeEMAT6_.GetData();
+    pCopy->strCodeEMAT8_ = strCodeEMAT8_.GetData();
+    pCopy->strCodeLFRIL_ = strCodeLFRIL_.GetData();
+    pCopy->strCodeNNO_ = strCodeNNO_.GetData();
     return pCopy;
 }
 
