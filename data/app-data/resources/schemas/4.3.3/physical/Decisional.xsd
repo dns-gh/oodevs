@@ -16,6 +16,7 @@
             <xs:attribute name="component" type="T_NonNegativeDouble" use="required"/>
             <xs:attribute name="major-component" type="T_NonNegativeDouble" use="required"/>
             <xs:attribute name="crew" type="T_NonNegativeDouble" use="required"/>
+            <xs:attribute name="threshold" type="T_NonNegativeDouble" use="required"/>
           </xs:complexType>
         </xs:element>
         <xs:element name="force-ratio">
