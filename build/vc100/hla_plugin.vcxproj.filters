@@ -172,6 +172,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp">
       <Filter>Source Files\Dispatcher</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -371,6 +374,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver_ABC.h">
       <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h">
+      <Filter>Source Files\Types</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
