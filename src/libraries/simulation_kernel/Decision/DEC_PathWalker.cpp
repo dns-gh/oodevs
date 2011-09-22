@@ -127,6 +127,8 @@ bool DEC_PathWalker::SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath )
 {
     if( pCurrentPath_.get() && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RolePion_Location >().HasDoneMagicMove()*/ )
         return true;
+
+    bool bCanSendTerrainReport = pPath != pCurrentPath_;
     pCurrentPath_ = pPath;
     pPath->InsertDecPoints(); // $$$ HIDEUX
     movingEntity_.NotifyCurrentPathChanged();
@@ -135,7 +137,7 @@ bool DEC_PathWalker::SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath )
     itCurrentPathPoint_ = pPath->GetCurrentKeyOnPath( movingEntity_.GetPosition() );
     if( itCurrentPathPoint_ == pPath->GetResult().end() )
         return false;
-    if( pCurrentPath_->GetState() == DEC_PathResult::ePartial )
+    if( ( pCurrentPath_->GetState() == DEC_PathResult::ePartial ) && bCanSendTerrainReport )
         movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
     itNextPathPoint_ = itCurrentPathPoint_;
     ++itNextPathPoint_;
