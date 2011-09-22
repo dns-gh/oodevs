@@ -240,7 +240,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Log Supply Push Flow" ), true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
 
-    parameters::PushFlowParameters* pushFlowParameters = new parameters::PushFlowParameters( it.NextElement() );
+    parameters::PushFlowParameters* pushFlowParameters = new parameters::PushFlowParameters( it.NextElement(), static_.coordinateConverter_ );
     BOOST_FOREACH( const T_RecipientSupplies::value_type& recipientSupply, recipientSupplies_ )
     {
         BOOST_FOREACH( const ObjectQuantity& resource, recipientSupply.second )
@@ -253,13 +253,29 @@ void LogisticSupplyPushFlowDialog::Validate()
     BOOST_FOREACH( const ObjectQuantity& carrier, carriers_ )
         pushFlowParameters->AddTransporter( *carriersTypeNames_[ carrier.objectName_ ], carrier.quantity_ );
 
+    // Route
+    customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
+    QStringList waypoints = pModel->stringList();
+    T_PointVector currentPath;
+    const kernel::Automat_ABC* currentRecipient = 0;
+    for( QStringList::iterator it = waypoints.begin(); it != waypoints.end(); ++it )
+    {
+        QString str = *it;
+        if ( points_.find( str ) != points_.end() )
+            currentPath.push_back( points_[ str ] );
+        else
+        {
+            currentRecipient = recipientsNames_[ str ];
+            pushFlowParameters->SetPath( currentPath, *currentRecipient );
+            currentPath.clear();
+        }
+    }
+    pushFlowParameters->SetWayBackPath( currentPath );
+
     action->AddParameter( *pushFlowParameters );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );
-
-    T_Route route;
-    ComputeRoute( route );
 
     ClearRecipientsTable();
     ClearRecipientsData();

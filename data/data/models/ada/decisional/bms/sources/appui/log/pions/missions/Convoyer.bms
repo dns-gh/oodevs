@@ -35,7 +35,11 @@ include "bit.lua"
 
     activate = function( self )
         local Activate = Activate
-        self.ePhase = DEC_Ravitaillement_Convoi_ActionCourante()
+        newPhase = DEC_Ravitaillement_Convoi_ActionCourante()
+        if newPhase ~= self.ePhase then
+           self.ePhase = newPhase
+           self.itinerary = nil
+        end
         self.eEtat = self.eEtat or eActionEnCours        
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
         Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
@@ -53,22 +57,25 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         elseif self.ePhase == eConvoyerAction_Load then
             Activate( self.activations.ACT_RC, 1, { eRC_Convoi_ChargementEnCours, } )
         elseif self.ePhase == eConvoyerAction_Unload then
-            Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DechargementEnCours, } )
+            Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DechargementEnCours } )
         elseif self.ePhase == eConvoyerAction_MoveToSupplier then
+            self.itinerary = self.itinerary or DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination()
             Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DeplacementVersPointChargement, } )
-            Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { DEC_Ravitaillement_Convoi_Ravitailleur(), 500, 900, DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination() } )
+            Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { DEC_Ravitaillement_Convoi_Ravitailleur(), 500, 900, self.itinerary } )
             if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_Ravitaillement_Convoi_Ravitailleur():DEC_Agent_Position() ) < 500 ) then
                 DEC_Ravitaillement_Convoi_DeplacementVersRavitailleurEffectue();
             end
         elseif self.ePhase == eConvoyerAction_MoveToSupplyRecipient then
+            self.itinerary = self.itinerary or DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination()
             Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DeplacementVersPointDechargement, } )
-            Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { DEC_Ravitaillement_Convoi_DestinataireCourant(), 500, 900, DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination() } )
+            Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { DEC_Ravitaillement_Convoi_DestinataireCourant(), 500, 900, self.itinerary } )
             if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_Ravitaillement_Convoi_DestinataireCourant():DEC_Agent_Position() ) < 500 ) then
                 DEC_Ravitaillement_Convoi_DeplacementVersDestinataireEffectue();
             end
         elseif self.ePhase == eConvoyerAction_MoveToTransportersProvider then
+            self.itinerary = self.itinerary or DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination()
             Activate( self.activations.ACT_RC, 1, { eRC_Convoi_Retour, } )
-            Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { DEC_Ravitaillement_Convoi_Transporteur(), 500, 900, DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination() } )
+            Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { DEC_Ravitaillement_Convoi_Transporteur(), 500, 900, self.itinerary } )
             if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_Ravitaillement_Convoi_Transporteur():DEC_Agent_Position() ) < 500 ) then
                 DEC_Ravitaillement_Convoi_DeplacementVersTransporteurEffectue();
             end
@@ -152,8 +159,8 @@ node "BEH_Dep_LOG_Suivre"
                         do return end
                     end
                     
-                    DEC_Copie_PointDansListePoints( DEC_Agent_PositionPtr( self._namedParams.ami ), self._namedParams.wayPoints )
-                    self.itVersAmi = self._namedParams.wayPoints;
+                    self.itVersAmi = DEC_Copie_Liste( self._namedParams.wayPoints )
+                    DEC_Copie_PointDansListePoints( DEC_Agent_PositionPtr( self._namedParams.ami ), self.itVersAmi )
                     self.eComportement = eRejoindre
                                 cases_switch_1[1] = true
                 end
