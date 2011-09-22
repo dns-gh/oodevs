@@ -50,6 +50,7 @@
         <xs:element name="urban" type="FileReference"/>
         <xs:element name="volumes" type="FileReference"/>
         <xs:element name="weapon-systems" type="FileReference"/>
+        <xs:element name="urbanTemplates" type="FileReference"/>
       </xs:all>
       <xs:attribute name="model-version" type="T_Version"/>
     </xs:complexType>
