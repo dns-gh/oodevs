@@ -95,12 +95,14 @@ ADN_ListView_Models.cpp \
 ADN_ListView_Objects.cpp \
 ADN_ListView_Orders.cpp \
 ADN_ListView_ResourceNetworks.cpp \
+ADN_ListView_RoofShapes.cpp \
 ADN_ListView_Sensors.cpp \
 ADN_ListView_Units.cpp \
 ADN_ListView_UrbanAccommodation_Type.cpp \
 ADN_ListView_UrbanInfrastructure_Type.cpp \
 ADN_ListView_UrbanMaterial_Type.cpp \
 ADN_ListView_Urban_Type.cpp \
+ADN_ListView_Templates.cpp \
 ADN_MainWindow.cpp \
 ADN_Maintenance_GUI.cpp \
 ADN_MissionParameterValues_Table.cpp \
@@ -171,6 +173,7 @@ ADN_SurfaceFireInfos_Table.cpp \
 ADN_TableDialog.cpp \
 ADN_Table_Objects_FirePropagationModifier.cpp \
 ADN_Table_Objects_LocationScore.cpp \
+ADN_Template_Usages.cpp \
 ADN_Tr.cpp \
 ADN_Type_Repartition.cpp \
 ADN_Unit_Wizard.cpp \

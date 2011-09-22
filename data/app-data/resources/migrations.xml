@@ -72,6 +72,7 @@
     <added-file filename="Extensions.xml" assign-file="schemas/4.3.0/added-files/Extensions.xml"/>
     <added-file filename="scores.xml" assign-file="schemas/4.3.1/added-files/scores.xml"/>
     <added-file filename="symbols.xml" assign-file="schemas/4.3.1/added-files/symbols.xml"/>
+    <added-file filename="UrbanTemplates.xml" assign-file="schemas/4.3.3/added-files/UrbanTemplates.xml"/>
   </added-files>
 
   <migration from="3.0" to="4.2.0">
@@ -128,8 +129,9 @@
     <upgrade schema="schemas/4.3.1/physical/Pathfind.xsd" apply="schemas/4.3.2/xsl/Pathfind_4.3.1-4.3.2.xsl"/>
     <upgrade schema="schemas/4.3.1/exercise/weather.xsd" apply="schemas/4.3.2/xsl/weather_4.3.1-4.3.2.xsl"/>
     <upgrade schema="schemas/4.3.1/physical/Units.xsd" apply="schemas/4.3.2/xsl/units_4.3.1-4.3.2.xsl"/>    
-    <upgrade schema="schemas/4.3.1/physical/Decisional.xsd" apply="schemas/4.3.2/xsl/Decisional_4.3.1-4.3.2.xsl"/>    
+    <upgrade schema="schemas/4.3.1/physical/Decisional.xsd" apply="schemas/4.3.2/xsl/Decisional_4.3.1-4.3.2.xsl"/>
   </migration>
-  <migration from="4.3.2" to="4.3.3">   
+  <migration from="4.3.2" to="4.3.3">
+      <upgrade schema="schemas/4.3.2/physical/Physical.xsd" apply="schemas/4.3.3/xsl/physical_4.3.2-4.3.3.xsl"/>
   </migration>
 </migrations>

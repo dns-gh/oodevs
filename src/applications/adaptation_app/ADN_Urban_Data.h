@@ -137,12 +137,102 @@ public:
     typedef T_UrbanMaterialInfos_Vector::iterator        IT_UrbanMaterialInfos_Vector;
     typedef T_UrbanMaterialInfos_Vector::const_iterator CIT_UrbanMaterialInfos_Vector;
 
+//*****************************************************************************
+
+public:
+    class RoofShapeInfos : public ADN_Ref_ABC
+                        , public ADN_DataTreeNode_ABC
+    {
+    public:
+                 RoofShapeInfos();
+        explicit RoofShapeInfos( xml::xistream& input );
+        virtual ~RoofShapeInfos();
+
+        bool operator==( const std::string& str );
+        virtual std::string GetNodeName();
+        virtual std::string GetItemName();
+        void WriteRoofShape( xml::xostream& output );
+
+    public:
+        //! @name Member Data
+        //@{
+        ADN_Type_String strName_;
+        //@}
+    };
+
+    typedef ADN_Type_Vector_ABC< RoofShapeInfos >     T_RoofShapeInfos_Vector;
+    typedef T_RoofShapeInfos_Vector::iterator        IT_RoofShapeInfos_Vector;
+    typedef T_RoofShapeInfos_Vector::const_iterator CIT_RoofShapeInfos_Vector;
 
 //*****************************************************************************
+
 public:
     typedef ADN_Type_String UrbanInfos;
     typedef ADN_Type_Vector_ABC< UrbanInfos > T_UrbanInfos_Vector;
     typedef T_UrbanInfos_Vector::iterator    IT_UrbanInfos_Vector;
+
+//*****************************************************************************
+
+    class UsageTemplateInfos : public ADN_Ref_ABC
+                             , public ADN_DataTreeNode_ABC
+    {
+    public:
+                 UsageTemplateInfos();
+        explicit UsageTemplateInfos( xml::xistream& input );
+        virtual ~UsageTemplateInfos();
+
+        virtual std::string GetNodeName();
+        virtual std::string GetItemName();
+        void Write( xml::xostream& output );
+
+    public:
+        ADN_Type_String strName_;
+        ADN_Type_Int proportion_;
+    };
+
+    typedef ADN_Type_Vector_ABC< UsageTemplateInfos >    T_UsageTemplateInfosVector;
+    typedef T_UsageTemplateInfosVector::iterator        IT_UsageTemplateInfosVector;
+    typedef T_UsageTemplateInfosVector::const_iterator CIT_UsageTemplateInfosVector;
+
+//*****************************************************************************
+public:
+    class UrbanTemplateInfos : public ADN_Ref_ABC
+                             , public ADN_DataTreeNode_ABC
+    {
+    public:
+                 UrbanTemplateInfos();
+        explicit UrbanTemplateInfos( xml::xistream& input );
+        virtual ~UrbanTemplateInfos();
+
+        virtual std::string GetNodeName();
+        virtual std::string GetItemName();
+        void Write( xml::xostream& output );
+
+    private:
+        void ReadUsage( xml::xistream& xis );
+
+    public:
+        //! @name Member Data
+        //@{
+        ADN_Type_String strName_;
+        ADN_Type_String color_;
+        ADN_Type_Int alpha_;
+        ADN_Type_Int height_;
+        ADN_Type_Int floor_;
+        ADN_Type_Int parking_;
+        ADN_Type_Double occupation_;
+        ADN_Type_Int trafficability_;
+        ADN_TypePtr_InVector_ABC< ADN_Urban_Data::UrbanMaterialInfos > ptrMaterial_;
+        ADN_TypePtr_InVector_ABC< ADN_Urban_Data::RoofShapeInfos > ptrRoofShape_;
+        T_UsageTemplateInfosVector usages_;
+        //@}
+    };
+
+    typedef ADN_Type_Vector_ABC< UrbanTemplateInfos >     T_UrbanTemplateInfos_Vector;
+    typedef T_UrbanTemplateInfos_Vector::iterator        IT_UrbanTemplateInfos_Vector;
+    typedef T_UrbanTemplateInfos_Vector::const_iterator CIT_UrbanTemplateInfos_Vector;
+
+//*****************************************************************************
 
 public:
              ADN_Urban_Data();
@@ -150,19 +240,24 @@ public:
 
     virtual void FilesNeeded( T_StringList& l ) const;
     virtual void Reset();
+    virtual void Save();
+    virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void ReadArchive( xml::xistream& input );
     virtual void WriteArchive( xml::xostream& output );
+    void ReadTemplates( xml::xistream& input );
+    void WriteTemplates( xml::xostream& output );
 
     T_UrbanMaterialInfos_Vector& GetMaterialsInfos();
     UrbanMaterialInfos* FindMaterial( const std::string& strName );
     T_UrbanInfos_Vector& GetFacadesInfos();
     UrbanInfos* FindFacade( const std::string& strName );
-    T_UrbanInfos_Vector& GetRoofShapesInfos();
-    UrbanInfos* FindRoofShape( const std::string& strName );
+    T_RoofShapeInfos_Vector& GetRoofShapesInfos();
+    RoofShapeInfos* FindRoofShape( const std::string& strName );
     T_AccommodationInfos_Vector& GetAccommodationsInfos();
     AccommodationInfos* FindAccommodation( const std::string& strName );
     T_InfrastructureInfos_Vector& GetInfrastructuresInfos();
     InfrastructureInfos* FindInfrastructure( const std::string& strName );
+    T_UrbanTemplateInfos_Vector& GetTemplatesInfos();
 
 private:
     //! @name Helpers
@@ -186,16 +281,19 @@ private:
     void ReadInfrastructure  ( xml::xistream& input );
     void ReadInfrastructures ( xml::xistream& input );
     void WriteInfrastructures( xml::xostream& output ) const;
+
+    void ReadTemplate( xml::xistream& input );
     //@}
 
 private:
     //! @name Member Data
     //@{
     T_UrbanMaterialInfos_Vector vMaterials_;
-    T_UrbanInfos_Vector vRoofShapes_;
+    T_RoofShapeInfos_Vector vRoofShapes_;
     T_UrbanInfos_Vector vFacades_;
     T_AccommodationInfos_Vector vAccommodations_;
     T_InfrastructureInfos_Vector vInfrastructures_;
+    T_UrbanTemplateInfos_Vector vTemplates_;
     //@}
 
 public:
@@ -267,7 +365,7 @@ ADN_Urban_Data::UrbanInfos* ADN_Urban_Data::FindFacade( const std::string& strNa
 // Created: SLG 2010-03-08
 //-----------------------------------------------------------------------------
 inline
-ADN_Urban_Data::T_UrbanInfos_Vector& ADN_Urban_Data::GetRoofShapesInfos()
+ADN_Urban_Data::T_RoofShapeInfos_Vector& ADN_Urban_Data::GetRoofShapesInfos()
 {
     return vRoofShapes_;
 }
@@ -277,10 +375,10 @@ ADN_Urban_Data::T_UrbanInfos_Vector& ADN_Urban_Data::GetRoofShapesInfos()
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
 inline
-ADN_Urban_Data::UrbanInfos* ADN_Urban_Data::FindRoofShape( const std::string& strName )
+ADN_Urban_Data::RoofShapeInfos* ADN_Urban_Data::FindRoofShape( const std::string& strName )
 {
-    for( IT_UrbanInfos_Vector it = vRoofShapes_.begin(); it != vRoofShapes_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( ( *it )->GetData(), strName ) )
+    for( CIT_RoofShapeInfos_Vector it = vRoofShapes_.begin(); it != vRoofShapes_.end(); ++it )
+        if( **it == strName )
             return *it;
     return 0;
 }
@@ -339,6 +437,16 @@ bool ADN_Urban_Data::InfrastructureInfos::operator==( const std::string& str )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::operator==
+// Created: LGY 2011-09-21
+// -----------------------------------------------------------------------------
+inline
+bool ADN_Urban_Data::RoofShapeInfos::operator==( const std::string& str )
+{
+    return ADN_Tools::CaselessCompare( strName_.GetData(), str );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Urban_Data::FindInfrastructure
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
@@ -349,6 +457,16 @@ ADN_Urban_Data::InfrastructureInfos* ADN_Urban_Data::FindInfrastructure( const s
         if( **it == strName )
             return *it;
     return 0;
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::GetTemplatesInfos
+// Created: LGY 2011-09-20
+//-----------------------------------------------------------------------------
+inline
+ADN_Urban_Data::T_UrbanTemplateInfos_Vector& ADN_Urban_Data::GetTemplatesInfos()
+{
+    return vTemplates_;
 }
 
 #endif // __ADN_Urban_Data_h_

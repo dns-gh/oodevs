@@ -2275,6 +2275,17 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_Templates</name>
+    <message>
+        <source>New</source>
+        <translation>Nouveau</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
     <name>ADN_ListView_Units</name>
     <message>
         <source>Units</source>
@@ -4387,6 +4398,25 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Template_Usages</name>
+    <message>
+        <source>Usage</source>
+        <translation>Utilisation</translation>
+    </message>
+    <message>
+        <source>Proportion(%)</source>
+        <translation>Proportion(%)</translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation>Nouveau</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Tools</name>
     <message>
         <source>Multi references</source>
@@ -5349,6 +5379,17 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
 </context>
 <context>
+    <name>ADN_Urban_Data</name>
+    <message>
+        <source>Urban data - Invalid material type &apos;%1&apos;</source>
+        <translation>Urbain - Type de matériel invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Urban data - Invalid roof-shape type &apos;%1&apos;</source>
+        <translation>Urbain - Type de toit invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Invalid data</source>
@@ -5444,6 +5485,54 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>persons/m2</source>
         <translation>personnes/m2</translation>
+    </message>
+    <message>
+        <source>Templates</source>
+        <translation>Patrons</translation>
+    </message>
+    <message>
+        <source>Template</source>
+        <translation>Patron</translation>
+    </message>
+    <message>
+        <source>Architecture</source>
+        <translation>Architecture</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation>Couleur</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation>Hauteur</translation>
+    </message>
+    <message>
+        <source>Floor number</source>
+        <translation>Nombre d&apos;étages</translation>
+    </message>
+    <message>
+        <source>Parking floors</source>
+        <translation>Nombre d&apos;étages de parking</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Occupation</source>
+        <translation>Occupation</translation>
+    </message>
+    <message>
+        <source>Trafficability</source>
+        <translation>Traficabilité</translation>
+    </message>
+    <message>
+        <source>Roof shape</source>
+        <translation>Forme du toit</translation>
+    </message>
+    <message>
+        <source>Alpha</source>
+        <translation>Alpha</translation>
     </message>
 </context>
 <context>
@@ -6338,14 +6427,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Facade - Invalid volume type name</source>
         <translation>Façade - Type de volume invalide</translation>
-    </message>
-    <message>
-        <source>RoofShape - Duplicated roofShape type name &apos;%1&apos;</source>
-        <translation>Type de toit - Nom du type de toit dupliqué &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>RoofShape - Duplicated roofShape type names</source>
-        <translation>Type de toit - Noms de type de toit dupliqués</translation>
     </message>
     <message>
         <source>RoofShape - Invalid roofShape type name</source>

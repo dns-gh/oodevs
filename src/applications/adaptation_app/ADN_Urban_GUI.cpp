@@ -19,6 +19,10 @@
 #include "ADN_Tr.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_Equipement_Data.h"
+#include "ADN_ListView_Templates.h"
+#include "ADN_Template_Usages.h"
+#include "ADN_ColorNameSelector.h"
+#include "ADN_ListView_RoofShapes.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Urban_GUI constructor
@@ -61,8 +65,6 @@ void ADN_Urban_GUI::Build()
     pLayout->setAutoAdd( true );
 
     Q3GroupBox* pBox = new Q3GroupBox( 2, Qt::Horizontal, pMainWidget_ );
-
-    ///////////////////
     // Materials
     Q3GroupBox* pGroupMaterials = new Q3VGroupBox( tr( "Materials" ), pBox );
     Q3HBox* pGroupMaterial = new Q3HBox(pGroupMaterials);
@@ -82,7 +84,6 @@ void ADN_Urban_GUI::Build()
     pAttritionTable_ = new ADN_Urban_AttritionTable( pGroupMaterials );
     vMaterialInfosConnectors[ eUrbanMaterialAttrition ] = &pAttritionTable_->GetConnector();
 
-    ///////////////////
     // Facades
     Q3GroupBox* pGroupFacades = new Q3VGroupBox( tr( "Facades" ), pBox );
     Q3HBox* pGroupFacade = new Q3HBox(pGroupFacades);
@@ -99,14 +100,13 @@ void ADN_Urban_GUI::Build()
     pEdit = new ADN_EditLine_String(pGroupFacades);
     vFacadeInfosConnectors[ eUrbanName ] = &pEdit->GetConnector();
 
-    ///////////////////
     // RoofShapes
     Q3GroupBox* pGroupRoofShapes = new Q3VGroupBox( tr( "RoofShapes" ), pBox );
     Q3HBox* pGroupRoofShape = new Q3HBox(pGroupRoofShapes);
 
     // roofshapes list
     T_ConnectorVector vRoofShapeInfosConnectors( eNbrUrbanGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
-    pListRoofShape_= new ADN_ListView_Urban_Type( pGroupRoofShape, "RoofShape" );
+    pListRoofShape_= new ADN_ListView_RoofShapes( pGroupRoofShape, "RoofShape" );
     static_cast< ADN_Connector_Vector_ABC* >( &pListRoofShape_->GetConnector() )->Connect( &data_.GetRoofShapesInfos() );
 
     // roofsape
@@ -116,7 +116,6 @@ void ADN_Urban_GUI::Build()
     pEdit = new ADN_EditLine_String(pGroupRoofShapes);
     vRoofShapeInfosConnectors[ eUrbanName ] = &pEdit->GetConnector();
 
-    ///////////////////
     // Accommodations
     Q3GroupBox* pGroupAccommodations = new Q3VGroupBox( tr( "Activities" ), pBox );
     ADN_GuiBuilder builder;
@@ -142,7 +141,6 @@ void ADN_Urban_GUI::Build()
     builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Nominal capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationNominalCapacity ], tr( "persons/m2" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Maximal capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationMaxCapacity ], tr( "persons/m2" ), eGreaterZero );
 
-    ///////////////////
     // Infrastructures
     Q3GroupBox* pGroupInfrastructures = new Q3VGroupBox( tr( "Infrastructures" ), pBox );
     Q3HBox* pGroupInfrastructure = new Q3HBox( pGroupInfrastructures );
@@ -169,10 +167,41 @@ void ADN_Urban_GUI::Build()
         builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency bed rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_EmergencyBedRate ], 0, eGreaterEqualZero );
     }
 
+    Q3GroupBox* pTemplates = new Q3HGroupBox( tr( "Templates" ), pBox );
+    Q3VBox* pGroupTemplates = new Q3VBox( pTemplates );
+    T_ConnectorVector vUsageInfosConnectors( eNbrUrbanUsageGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
+    pListTemplate_ = new ADN_ListView_Templates( pGroupTemplates, "Template" );
+    static_cast< ADN_Connector_Vector_ABC* >( &pListTemplate_->GetConnector() )->Connect( &data_.GetTemplatesInfos() );
+    Q3GroupBox* pGroupTemplate = new Q3VGroupBox( tr( "Template" ), pGroupTemplates );
+    pHolder = builder.AddFieldHolder( pGroupTemplate );
+    Q3HBox* pInfoBox = new Q3HBox( pGroupTemplate );
+    pInfoBox->setSpacing( 10 );
+    builder.AddField< ADN_EditLine_String >( pInfoBox, tr( "Name" ), vUsageInfosConnectors[ eUrbanUsageName ] );
+    builder.AddField< ADN_ColorNameSelector >( pInfoBox, tr( "Color" ), vUsageInfosConnectors[ eUrbanUsageColor ] );
+    ADN_EditLine_Int* alpha = builder.AddField< ADN_EditLine_Int >( pInfoBox, tr( "Alpha" ), vUsageInfosConnectors[ eUrbanUsageAlpha ] );
+    alpha->GetValidator().setRange( 0, 255 );
+    Q3GroupBox* pArchitecture = new Q3VGroupBox( tr( "Architecture" ), pGroupTemplate );
+    Q3HBox* pArchitectureBox = new Q3HBox( pArchitecture );
+    pArchitectureBox->setSpacing( 10 );
+    builder.AddField< ADN_EditLine_Int >( pArchitectureBox, tr( "Floor number" ), vUsageInfosConnectors[ eUrbanUsageFloorNumber ], 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pArchitectureBox, tr( "Parking floors" ), vUsageInfosConnectors[ eUrbanUsageParkingFloors ], 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pArchitectureBox, tr( "Occupation" ), vUsageInfosConnectors[ eUrbanUsageOccupation ], 0, eZeroOne );
+    Q3HBox* pArchitectureBox2 = new Q3HBox( pArchitecture );
+    pArchitectureBox2->setSpacing( 10 );
+    builder.AddField< ADN_EditLine_Int >( pArchitectureBox2, tr( "Height" ), vUsageInfosConnectors[ eUrbanUsageHeight ], 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pArchitectureBox2, tr( "Trafficability" ), vUsageInfosConnectors[ eUrbanUsageTrafficability ], 0, eGreaterEqualZero );
+    Q3HBox* pArchitectureBox3 = new Q3HBox( pArchitecture );
+    pArchitectureBox3->setSpacing( 10 );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Urban_Data::UrbanMaterialInfos > >( pArchitectureBox3, tr( "Material" ), vUsageInfosConnectors[ eUrbanUsageMaterial ] );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Urban_Data::RoofShapeInfos > >( pArchitectureBox3, tr( "Roof shape" ), vUsageInfosConnectors[ eUrbanUsageRoofShape ] );
+    pUsages_ = new ADN_Template_Usages( pGroupTemplate );
+    vUsageInfosConnectors[ eUrbanUsageRole ] = &pUsages_->GetConnector();
+
     // set auto connectors
     pListMaterial_->SetItemConnectors( vMaterialInfosConnectors );
     pListFacade_->SetItemConnectors( vFacadeInfosConnectors );
     pListRoofShape_->SetItemConnectors( vRoofShapeInfosConnectors );
     pListAccommodation_->SetItemConnectors( vAccommodationInfosConnectors );
     pListInfrastructure_->SetItemConnectors( vInfrastructureInfosConnectors );
+    pListTemplate_->SetItemConnectors( vUsageInfosConnectors );
 }

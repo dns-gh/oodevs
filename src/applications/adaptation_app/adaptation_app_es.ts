@@ -2273,6 +2273,17 @@ tirador</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_Templates</name>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_ListView_Units</name>
     <message>
         <source>Units</source>
@@ -4385,6 +4396,25 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Template_Usages</name>
+    <message>
+        <source>Usage</source>
+        <translation type="unfinished">Uso</translation>
+    </message>
+    <message>
+        <source>Proportion(%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Tools</name>
     <message>
         <source>Multi references</source>
@@ -5338,6 +5368,17 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Urban_Data</name>
+    <message>
+        <source>Urban data - Invalid material type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban data - Invalid roof-shape type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Invalid data</source>
@@ -5432,6 +5473,54 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>persons/m2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Templates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Template</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Architecture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floor number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parking floors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Occupation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trafficability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Roof shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alpha</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6326,14 +6415,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Facade - Invalid volume type name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>RoofShape - Duplicated roofShape type name &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>RoofShape - Duplicated roofShape type names</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

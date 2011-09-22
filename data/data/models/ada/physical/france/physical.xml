@@ -38,5 +38,6 @@
   <scores file="scores.xml"/>
   <symbols file="symbols.xml"/>
   <filters file="Filters/Filters.xml"/>
+  <urbanTemplates file="UrbanTemplates.xml"/>
 </physical>
-<!-- signature="2361668314" -->
+<!-- signature="1712134510" -->

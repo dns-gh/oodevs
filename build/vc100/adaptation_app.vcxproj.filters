@@ -1258,6 +1258,18 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.cpp">
       <Filter>Source Files\Common widgets\List view</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ColorNameSelector.cpp">
+      <Filter>Source Files\Common widgets\Color selector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_RoofShapes.cpp">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Templates.cpp">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Template_Usages.cpp">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1917,6 +1929,12 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.h">
       <Filter>Source Files\Common widgets\List view</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_RoofShapes.h">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Templates.h">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2302,6 +2320,12 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Categories_AttritionEffect_Table.h">
       <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ColorNameSelector.h">
+      <Filter>Source Files\Common widgets\Color selector</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Template_Usages.h">
+      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
