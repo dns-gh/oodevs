@@ -543,7 +543,7 @@ bool ADN_MainWindow::SelectOpenMode()
     E_OpenMode nMode = eOpenMode_Normal;
 
     if( strAdminPassword_.isEmpty() || strAdminPassword_.isNull() )
-        nMode == eOpenMode_Admin;
+        nMode = eOpenMode_Admin;
     else
         for(;;)
         {
