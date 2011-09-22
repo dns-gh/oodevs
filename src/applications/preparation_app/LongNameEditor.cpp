@@ -129,20 +129,8 @@ void LongNameEditor::Generate()
         if( !attribute )
             return;
 
-        QString country = ".";
-        const Entity_ABC* entity = selected_;
-        while( entity && country.length() == 1 )
-        {
-            const DictionaryExtensions* ext = entity->Retrieve< DictionaryExtensions >();
-            if( ext && ext->IsEnabled() )
-                country += GetCountryAlias( ext->GetValue( "Nationalite" ) ).c_str();
-            const TacticalHierarchies* pTactical = entity->Retrieve< TacticalHierarchies >();
-            entity = pTactical ? pTactical->GetSuperior() : 0;
-        }
-        country = country.toUpper();
-
         QString longName = GetEntityName( *selected_ );
-        entity = selected_;
+        const Entity_ABC* entity = selected_;
         const TacticalHierarchies* pTactical = selected_->Retrieve< TacticalHierarchies >();
         while( entity && pTactical )
         {
@@ -161,8 +149,8 @@ void LongNameEditor::Generate()
             }
         }
 
-        TransmitToSubordinates( *selected_.ConstCast(), longName, country, *attribute );
-        SetExtension( *selected_.ConstCast(), longName, country, *attribute );
+        TransmitToSubordinates( *selected_.ConstCast(), longName, *attribute );
+        SetExtension( *selected_.ConstCast(), longName, *attribute );
     }
 }
 
@@ -183,7 +171,7 @@ std::string LongNameEditor::GetCountryAlias( const std::string& country ) const
 // Name: LongNameEditor::TransmitToSubordinates
 // Created: JSR 2011-09-13
 // -----------------------------------------------------------------------------
-void LongNameEditor::TransmitToSubordinates( const Entity_ABC& entity, const QString& name, const QString& country, const AttributeType& attribute ) const
+void LongNameEditor::TransmitToSubordinates( const Entity_ABC& entity, const QString& name, const AttributeType& attribute ) const
 {
     const TacticalHierarchies* pTactical = entity.Retrieve< TacticalHierarchies >();
     if( pTactical )
@@ -193,8 +181,8 @@ void LongNameEditor::TransmitToSubordinates( const Entity_ABC& entity, const QSt
         {
             Entity_ABC& child = const_cast< Entity_ABC& >( children.NextElement() );
             QString childName = GetEntityName( child ) + "." + name;
-            SetExtension( child, childName, country, attribute );
-            TransmitToSubordinates( child, childName, country, attribute );
+            SetExtension( child, childName, attribute );
+            TransmitToSubordinates( child, childName, attribute );
         }
     }
 }
@@ -203,7 +191,7 @@ void LongNameEditor::TransmitToSubordinates( const Entity_ABC& entity, const QSt
 // Name: LongNameEditor::SetExtension
 // Created: JSR 2011-09-13
 // -----------------------------------------------------------------------------
-void LongNameEditor::SetExtension( Entity_ABC& entity, const QString& name, const QString& country, const AttributeType& attribute ) const
+void LongNameEditor::SetExtension( Entity_ABC& entity, const QString& name, const AttributeType& attribute ) const
 {
     if( DictionaryExtensions* ext = entity.Retrieve< DictionaryExtensions >() )
     {
@@ -225,8 +213,9 @@ void LongNameEditor::SetExtension( Entity_ABC& entity, const QString& name, cons
         {
             ext->SetEnabled( true );
             QString longName = name;
-            if( country.length() > 1 )
-                longName += country;
+            std::string country = ext->GetValue( "Nationalite" );
+            if( !country.empty() )
+                longName += ( "." + GetCountryAlias( country ) ).c_str();
             longName = longName.remove( ' ' ).replace( 'é', "e", Qt::CaseInsensitive ).replace( 'è', "e", Qt::CaseInsensitive )
                 .replace( 'ç', "c", Qt::CaseInsensitive ).replace( 'à', "a", Qt::CaseInsensitive ).replace( QRegExp( "[^a-zA-Z0-9.]" ), "" )
                 .toUpper();
