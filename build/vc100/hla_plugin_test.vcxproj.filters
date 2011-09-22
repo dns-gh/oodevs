@@ -91,6 +91,9 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnitTeleporterTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentResolverTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.h">
@@ -178,6 +181,9 @@
       <Filter>Source Files\mock</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUnitTypeResolver.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentResolver.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
   </ItemGroup>

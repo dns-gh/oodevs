@@ -158,6 +158,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnClassBuilderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentControllerTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentResolverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprDeserializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprSerializationTest.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockModel.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectRegistration.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentListener.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentSubject.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAggregateFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockResolver.h" />

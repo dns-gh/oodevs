@@ -114,6 +114,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregateFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SilentEntity.cpp" />
@@ -166,6 +167,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentListener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentSubject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory.h" />

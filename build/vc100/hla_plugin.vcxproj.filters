@@ -169,6 +169,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\SimulationFacade.cpp">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -362,6 +365,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\SimulationFacade.h">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver_ABC.h">
+      <Filter>Source Files\Dispatcher</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

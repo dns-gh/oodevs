@@ -53,7 +53,7 @@ namespace hla
 */
 // Created: SLI 2011-09-15
 // =============================================================================
-    class SimulationFacade : private tools::MessageObserver< sword::ControlEndTick >
+class SimulationFacade : private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
     //! @name Constructors/Destructor
