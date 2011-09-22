@@ -150,7 +150,7 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
     {
         SetColor( node->second.resource_ );
         if( node->second.links_.size() > 0 )
-            for( std::vector< ResourceLink >::const_iterator link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
+            for( ResourceNetwork_ABC::CIT_ResourceLinks link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
             {
                 kernel::Entity_ABC* target = link->urban_ ? static_cast< kernel::Entity_ABC* >( urbans_.Find( link->id_ ) ) : objects_.Find( link->id_ );
                 if( !target )

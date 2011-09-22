@@ -95,6 +95,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     detection_.Load( config );
     extensions_.Load( config );
     drawings_.Load( config );
+    accommodationTypes_.Load( config );
     indicators_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
     gaugeTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
     successFactorActionTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "SuccessFactorActions.xml" ) );
@@ -114,5 +115,6 @@ void StaticModel::Purge()
     types_.Purge();
     objectTypes_.Purge();
     extensions_.Purge();
+    accommodationTypes_.Purge();
     controllers_.controller_.Update( ModelUnLoaded() );
 }

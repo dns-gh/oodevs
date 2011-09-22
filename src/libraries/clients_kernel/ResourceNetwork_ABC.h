@@ -45,6 +45,10 @@ public:
         unsigned int flow_;
     };
 
+    typedef std::vector< ResourceLink >       T_ResourceLinks;
+    typedef T_ResourceLinks::iterator        IT_ResourceLinks;
+    typedef T_ResourceLinks::const_iterator CIT_ResourceLinks;
+
     struct ResourceNode
     {
         ResourceNode()
@@ -69,7 +73,7 @@ public:
         unsigned int stock_;
         unsigned int totalFlow_;
         std::string resource_;
-        std::vector< ResourceLink > links_;
+        T_ResourceLinks links_;
     };
 
     typedef std::map< std::string, ResourceNode > T_ResourceNodes;

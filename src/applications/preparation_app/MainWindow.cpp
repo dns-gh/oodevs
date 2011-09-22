@@ -254,7 +254,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     }
     // ResourceNetwork panel
     {
-        QDockWidget* pResourceWnd = new ResourceNetworkDialog( this, controllers, staticModel_.objectTypes_ );
+        QDockWidget* pResourceWnd = new ResourceNetworkDialog( this, controllers, staticModel_, model_ );
         addDockWidget( Qt::LeftDockWidgetArea, pResourceWnd );
         pResourceWnd->hide();
     }

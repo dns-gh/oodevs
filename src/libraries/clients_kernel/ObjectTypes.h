@@ -107,13 +107,9 @@ private:
     void ReadResourceNetworks( xml::xistream& xis );
     void ReadResourceNetwork( xml::xistream& xis );
     void ReadUrbanTypes( xml::xistream& xis );
-    void ReadFacadeTypes( xml::xistream& xis );
     void ReadFacadeType( xml::xistream& xis );
-    void ReadMaterialCompositionTypes( xml::xistream& xis );
     void ReadMaterialCompositionType( xml::xistream& xis );
-    void ReadRoofShapeTypes( xml::xistream& xis );
     void ReadRoofShapeType( xml::xistream& xis );
-    void ReadInfrastructureTypes( xml::xistream& xis );
     void ReadInfrastructureType( xml::xistream& xis );
     //@}
 

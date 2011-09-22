@@ -11,6 +11,7 @@
 #define __InhabitantType_h_
 
 #include "tools/Resolver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -27,7 +28,7 @@ namespace kernel
 */
 // Created: SLG 2010-11-23
 // =============================================================================
-class InhabitantType
+class InhabitantType : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -45,13 +46,13 @@ public:
     float GetChildrenPercentage() const;
     unsigned int GetHealthPeopleNumber() const;
     const PopulationType& GetCrowdType() const;
+    double GetConsumption( const std::string& resource ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    InhabitantType( const InhabitantType& );            //!< Copy constructor
-    InhabitantType& operator=( const InhabitantType& ); //!< Assignment operator
+    void ReadConsumption( xml::xistream& xis );
     //@}
 
 private:
@@ -64,6 +65,7 @@ private:
     float female_;
     float children_;
     unsigned int healthNeed_;
+    std::map< std::string, double > consumptions_;
     //@}
 };
 

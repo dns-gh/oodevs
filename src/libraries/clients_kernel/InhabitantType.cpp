@@ -32,6 +32,9 @@ InhabitantType::InhabitantType( xml::xistream& xis, const tools::Resolver_ABC< P
             >> xml::attribute( "female", female_ )
             >> xml::attribute( "children", children_ )
         >> xml::end
+        >> xml::start( "consumption" )
+            >> xml::list( "resource", *this, &InhabitantType::ReadConsumption )
+        >> xml::end
         >> xml::start( "health-need" )
             >> xml::attribute( "people-per-facility", healthNeed_ )
         >> xml::end;
@@ -107,4 +110,25 @@ float InhabitantType::GetChildrenPercentage() const
 unsigned int InhabitantType::GetHealthPeopleNumber() const
 {
     return healthNeed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantType::GetConsumption
+// Created: JSR 2011-09-21
+// -----------------------------------------------------------------------------
+double InhabitantType::GetConsumption( const std::string& resource ) const
+{
+    std::map< std::string, double >::const_iterator it = consumptions_.find( resource);
+    if( it == consumptions_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantType::ReadConsumption
+// Created: JSR 2011-09-21
+// -----------------------------------------------------------------------------
+void InhabitantType::ReadConsumption( xml::xistream& xis )
+{
+    consumptions_[ xis.attribute< std::string >( "type" ) ] = xis.attribute< double >( "need" );
 }

@@ -56,6 +56,9 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
         production_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
         connect( production_, SIGNAL( valueChanged( int ) ), this, SLOT( OnProductionChanged( int ) ) );
     }
+    generateProduction_ = new QPushButton( tools::translate( "gui::ResourceLinksDialog_ABC", "Automatic production" ), groupBox_ ); 
+    connect( generateProduction_, SIGNAL( clicked() ), this, SLOT( GenerateProduction() ) );
+    generateProduction_->hide();
     {
         Q3HBox* box = new Q3HBox( groupBox_ );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Consumption:" ), box );
@@ -158,7 +161,7 @@ void ResourceLinksDialog_ABC::Update()
         return;
     }
     selectedItem_ = item;
-    std::string resource = item->text().ascii();
+    std::string resource = item->text().toStdString();
     ResourceNetwork_ABC::ResourceNode& node = resourceNodes_[ resource ];
     groupBox_->setChecked( node.isEnabled_ );
     production_->setValue( node.production_ );
@@ -187,7 +190,7 @@ void ResourceLinksDialog_ABC::Update()
 void ResourceLinksDialog_ABC::OnActivationChanged( bool on )
 {
     if( dotationList_->selectedItem() )
-        resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].isEnabled_ = on;
+        resourceNodes_[ dotationList_->selectedItem()->text().toStdString() ].isEnabled_ = on;
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +200,7 @@ void ResourceLinksDialog_ABC::OnActivationChanged( bool on )
 void ResourceLinksDialog_ABC::OnProductionChanged( int value )
 {
     if( dotationList_->selectedItem() )
-        resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].production_ = value;
+        resourceNodes_[ dotationList_->selectedItem()->text().toStdString() ].production_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -207,7 +210,7 @@ void ResourceLinksDialog_ABC::OnProductionChanged( int value )
 void ResourceLinksDialog_ABC::OnConsumptionChanged( int value )
 {
     if( dotationList_->selectedItem() )
-        resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].consumption_ = value;
+        resourceNodes_[ dotationList_->selectedItem()->text().toStdString() ].consumption_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +220,7 @@ void ResourceLinksDialog_ABC::OnConsumptionChanged( int value )
 void ResourceLinksDialog_ABC::OnCriticalChanged( bool on )
 {
     if( dotationList_->selectedItem() )
-        resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].critical_ = on;
+        resourceNodes_[ dotationList_->selectedItem()->text().toStdString() ].critical_ = on;
 }
 
 // -----------------------------------------------------------------------------
@@ -227,7 +230,7 @@ void ResourceLinksDialog_ABC::OnCriticalChanged( bool on )
 void ResourceLinksDialog_ABC::OnMaxStockChanged( int value )
 {
     if( dotationList_->selectedItem() )
-        resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].maxStock_ = value;
+        resourceNodes_[ dotationList_->selectedItem()->text().toStdString() ].maxStock_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -237,7 +240,7 @@ void ResourceLinksDialog_ABC::OnMaxStockChanged( int value )
 void ResourceLinksDialog_ABC::OnStockChanged( int value )
 {
     if( dotationList_->selectedItem() )
-        resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].stock_ = value;
+        resourceNodes_[ dotationList_->selectedItem()->text().toStdString() ].stock_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -248,7 +251,7 @@ void ResourceLinksDialog_ABC::OnValueChanged( int, int )
 {
     if( dotationList_->selectedItem() )
     {
-        std::string resource = dotationList_->selectedItem()->text().ascii();
+        std::string resource = dotationList_->selectedItem()->text().toStdString();
         for( int j = 0; j < table_->numRows(); ++j )
         {
             Q3CheckTableItem* item = static_cast< Q3CheckTableItem* >( table_->item( j, 1 ) );
@@ -271,7 +274,7 @@ void ResourceLinksDialog_ABC::Validate()
     if( dotationList_->selectedItem() )
     {
         // in case spin boxes have not been validated
-        std::string resource = dotationList_->selectedItem()->text().ascii();
+        std::string resource = dotationList_->selectedItem()->text().toStdString();
         resourceNodes_[ resource ].production_ = production_->value();
         resourceNodes_[ resource ].consumption_ = consumption_->value();
         resourceNodes_[ resource ].maxStock_ = maxStock_->value();
@@ -372,7 +375,7 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
             unsigned long destId = linkToChange_->GetId();
             ResourceNode& sourceNode = selected_->FindOrCreateResourceNode( resource.GetName() );
             const_cast< ResourceNetwork_ABC& >( linkToChange_->Get< ResourceNetwork_ABC >() ).FindOrCreateResourceNode( resource.GetName() ); // necessary to create a node for this ressource
-            std::vector< ResourceLink >::iterator itLink;
+            ResourceNetwork_ABC::IT_ResourceLinks itLink;
             for( itLink = sourceNode.links_.begin(); itLink != sourceNode.links_.end(); ++itLink )
                 if( itLink->urban_ == destUrban && itLink->id_ == destId )
                     break;
@@ -387,4 +390,19 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
     linkToChange_ = 0;
     Show();
     DoValidate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::GenerateProduction
+// Created: JSR 2011-09-20
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::GenerateProduction()
+{
+    if( dotationList_->selectedItem() )
+        if( DoGenerateProduction() )
+        {
+            DoValidate();
+            controllers_.controller_.Update( *selected_ );
+            Update();
+        }
 }

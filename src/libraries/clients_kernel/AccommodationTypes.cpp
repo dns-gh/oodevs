@@ -32,7 +32,7 @@ AccommodationTypes::AccommodationTypes()
 // -----------------------------------------------------------------------------
 AccommodationTypes::~AccommodationTypes()
 {
-    DeleteAll();
+    Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +44,15 @@ void AccommodationTypes::Load( const tools::ExerciseConfig& config )
     DeleteAll();
     const tools::Loader_ABC& loader = config.GetLoader();
     loader.LoadPhysicalFile( "urban", boost::bind( &AccommodationTypes::ReadAccommodations, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AccommodationTypes::Purge
+// Created: JSR 2011-09-22
+// -----------------------------------------------------------------------------
+void AccommodationTypes::Purge()
+{
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------

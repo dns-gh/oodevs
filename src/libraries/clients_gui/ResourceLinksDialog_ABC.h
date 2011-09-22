@@ -67,6 +67,7 @@ private slots:
     void OnValueChanged( int i, int j );
     void Validate();
     void OnChangeLink( int resourceId );
+    void GenerateProduction();
     //@}
 
 private:
@@ -79,6 +80,7 @@ private:
     virtual void Select( const kernel::Object_ABC& element );
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
     virtual void NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& menu );
+    virtual bool DoGenerateProduction() { return false; }
     void Show();
     //@}
 
@@ -97,6 +99,7 @@ protected:
     Q3ListBox* dotationList_;
     Q3GroupBox* groupBox_;
     QSpinBox* production_;
+    QPushButton* generateProduction_;
     QSpinBox* consumption_;
     QCheckBox* critical_;
     Q3HBox* stockBox_;

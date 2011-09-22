@@ -308,23 +308,20 @@ void ObjectTypes::ReadResourceNetwork( xml::xistream& xis )
 void ObjectTypes::ReadUrbanTypes( xml::xistream& xis )
 {
     xis >> xml::start( "urban" )
-        >> xml::start( "urban-block-types" );
-    ReadFacadeTypes( xis );
-    ReadMaterialCompositionTypes( xis );
-    ReadRoofShapeTypes( xis );
-    xis >> xml::end;
-    ReadInfrastructureTypes( xis );
-    xis >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: StaticModel::ReadFacadeTypes
-// Created: SLG 2010-11-17
-// -----------------------------------------------------------------------------
-void ObjectTypes::ReadFacadeTypes( xml::xistream& xis )
-{
-    xis >> xml::start( "facade-types" )
-        >> xml::list ( "facade-type", *this, &ObjectTypes::ReadFacadeType )
+            >> xml::start( "urban-block-types" )
+                >> xml::start( "facade-types" )
+                    >> xml::list ( "facade-type", *this, &ObjectTypes::ReadFacadeType )
+                >> xml::end
+                >> xml::start( "material-composition-types" )
+                    >> xml::list ( "material-composition-type", *this, &ObjectTypes::ReadMaterialCompositionType )
+                >> xml::end
+                >> xml::start( "roof-shape-types" )
+                    >> xml::list ( "roof-shape-type", *this, &ObjectTypes::ReadRoofShapeType )
+                >> xml::end
+            >> xml::end
+            >> xml::optional >> xml::start( "infrastructures" )
+                >> xml::list ( "infrastructure", *this, &ObjectTypes::ReadInfrastructureType )
+            >> xml::end
         >> xml::end;
 }
 
@@ -339,17 +336,6 @@ void ObjectTypes::ReadFacadeType( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectTypes::ReadMaterialCompositionTypes
-// Created: SLG 2010-11-17
-// -----------------------------------------------------------------------------
-void ObjectTypes::ReadMaterialCompositionTypes( xml::xistream& xis )
-{
-    xis >> xml::start( "material-composition-types" )
-        >> xml::list ( "material-composition-type", *this, &ObjectTypes::ReadMaterialCompositionType )
-        >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectTypes::ReadMaterialCompositionType
 // Created: SLG 2010-11-17
 // -----------------------------------------------------------------------------
@@ -360,17 +346,6 @@ void ObjectTypes::ReadMaterialCompositionType( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectTypes::ReadRoofShapeTypes
-// Created: SLG 2010-11-17
-// -----------------------------------------------------------------------------
-void ObjectTypes::ReadRoofShapeTypes( xml::xistream& xis )
-{
-    xis >> xml::start( "roof-shape-types" )
-        >> xml::list ( "roof-shape-type", *this, &ObjectTypes::ReadRoofShapeType )
-        >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectTypes::ReadRoofShapeType
 // Created: SLG 2010-11-17
 // -----------------------------------------------------------------------------
@@ -378,17 +353,6 @@ void ObjectTypes::ReadRoofShapeType( xml::xistream& xis )
 {
     RoofShapeType* type = new RoofShapeType( xis );
     StringResolver< RoofShapeType >::Register( type->GetName(), *type );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectTypes::ReadInfrastructureType
-// Created: SLG 2010-12-30
-// -----------------------------------------------------------------------------
-void ObjectTypes::ReadInfrastructureTypes( xml::xistream& xis )
-{
-    xis >> xml::optional >> xml::start( "infrastructures" )
-        >> xml::list ( "infrastructure", *this, &ObjectTypes::ReadInfrastructureType )
-        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

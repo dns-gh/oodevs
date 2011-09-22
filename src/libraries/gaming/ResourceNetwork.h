@@ -82,6 +82,8 @@ private:
     const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver_;
     const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
     const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver_;
+    static int maxFlow_;
+    static double stippleFactor_;
     //@}
 };
 

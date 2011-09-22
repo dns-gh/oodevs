@@ -46,6 +46,7 @@ public:
     //! @name Operations
     //@{
     void Load( const tools::ExerciseConfig& config );
+    void Purge();
     //@}
 
 private:

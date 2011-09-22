@@ -78,6 +78,7 @@ public:
     virtual void Display( kernel::Displayer_ABC& ) const {}
     void UpdateHumans( const std::string& inhabitant, const T_BlockOccupation& occupations, bool alerted, bool confined, bool evacuated, float angriness );
     void NotifyUpdated( const UrbanDisplayOptions& );
+    float GetLivingSpace() const;
     //@}
 
 private:
@@ -91,7 +92,6 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     float GetDensity() const;
-    float GetLivingSpace() const;
     unsigned int GetHumans() const;
     void UpdateColor();
     //@}

@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">A propos</translation>
+        <translation>A propos</translation>
     </message>
 </context>
 <context>
@@ -560,11 +560,11 @@ Please check access permissions or write protection.</source>
     <name>gui::FormationLayer</name>
     <message>
         <source>Aggregate</source>
-        <translation type="unfinished">Agréger</translation>
+        <translation>Agréger</translation>
     </message>
     <message>
         <source>Disaggregate</source>
-        <translation type="unfinished">Désagréger</translation>
+        <translation>Désagréger</translation>
     </message>
 </context>
 <context>
@@ -738,7 +738,7 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Superior:</source>
-        <translation type="unfinished"></translation>
+        <translation>Supérieur:</translation>
     </message>
 </context>
 <context>
@@ -1386,6 +1386,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Add/Remove link</source>
         <translation>Ajouter/Supprimer lien</translation>
+    </message>
+    <message>
+        <source>Automatic production</source>
+        <translation>Production automatique</translation>
     </message>
 </context>
 <context>

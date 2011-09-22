@@ -28,6 +28,9 @@ using namespace geometry;
 using namespace gui;
 using namespace kernel;
 
+int ResourceNetwork::maxFlow_ = 0;
+double ResourceNetwork::stippleFactor_ = 1;
+
 // -----------------------------------------------------------------------------
 // Name: ResourceNetwork constructor
 // Created: JSR 2011-03-04
@@ -118,7 +121,7 @@ void ResourceNetwork::Draw( const Viewport_ABC& viewport, const GlTools_ABC& too
         if( node->second.links_.size() > 0 )
         {
             glEnable( GL_LINE_STIPPLE );
-            for( std::vector< ResourceLink >::const_iterator link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
+            for( ResourceNetwork_ABC::CIT_ResourceLinks link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
             {
                 const Entity_ABC* target = FindEntity( link->id_ );
                 if( !target )
@@ -267,8 +270,14 @@ void ResourceNetwork::SetColor( const std::string& resource ) const
 // -----------------------------------------------------------------------------
 void ResourceNetwork::UpdateStipple( int value ) const
 {
+    if( maxFlow_ < value )
+    {
+        maxFlow_ = value;
+        stippleFactor_ = 128. / maxFlow_;
+    }
     long time = clock();
-    value = std::min( value, 256 );
+    if( value )
+        value = std::max( 5, static_cast< int >( stippleFactor_ * value ) );
     unsigned short shift = ( unsigned short ) ( ( ( time * value ) >> 8 ) % 128 ) >> 3;
     glLineStipple( 1, 0x00FF << shift | 0x00FF >> ( 16-shift ) );
 }
