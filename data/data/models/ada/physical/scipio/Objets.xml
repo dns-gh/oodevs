@@ -286,7 +286,6 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <contamination max-toxic="1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
-    <spawnObject object="nbc cloud"/>
   </object>
   <object geometry="polygon" name="zone brouillage" symbol="G*EW***********" type="jamming area">
     <bypassable bypass-speed="-1"/>
@@ -539,4 +538,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="1838197815" -->
+<!-- signature="2065125757" -->

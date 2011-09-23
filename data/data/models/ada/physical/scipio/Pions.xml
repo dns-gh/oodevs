@@ -19606,6 +19606,8 @@
     <equipments>
       <equipment count="1" crew="1" major="true" type="Fantassin Oeil"/>
     </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -19632,6 +19634,8 @@
     <equipments>
       <equipment count="1" crew="1" major="true" type="Fantassin lunettes"/>
     </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -19654,4 +19658,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1587834957" -->
+<!-- signature="1468743786" -->
