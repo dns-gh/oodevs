@@ -289,7 +289,7 @@
       <parameter dia-name="zoneImplantation2_" name="Zone implantation2" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnBatterieInopinee" dia-type=" T_Mission_Pion_ASS_AssurerMiseEnBatterieInopinee" id="465" name="PION ASS Assurer Mise En Batterie Inopinee" package="support">
+    <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnBatterieInopinee" dia-type="T_Mission_Pion_ASS_AssurerMiseEnBatterieInopinee" id="465" name="PION ASS Assurer Mise En Batterie Inopinee" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -3408,4 +3408,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Desengager" id="400" name="Pion Desengager"/>
   </fragorders>
 </missions>
-<!-- signature="2543623455" -->
+<!-- signature="4212793529" -->
