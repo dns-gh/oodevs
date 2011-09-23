@@ -163,3 +163,9 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_sends_other_fuse_type, ConfiguredFix
     const int16 other = 0;
     BOOST_CHECK_EQUAL( parameters.fuseType, other );
 }
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_empty_munition_object_identifier, ConfiguredFixture )
+{
+    BOOST_CHECK_EQUAL( parameters.munitionObjectIdentifier.str(), "" );
+}
+
