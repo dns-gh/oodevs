@@ -25,6 +25,7 @@ class Omt13String
 public:
     //! @name Constructors/Destructor
     //@{
+             Omt13String();
     explicit Omt13String( const std::string& data );
     virtual ~Omt13String();
     //@}
@@ -38,6 +39,18 @@ public:
             archive << data_[ i ];
         archive << static_cast< char >( 0 );
     }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        int8 data = -1;
+        while( data != 0 )
+        {
+            archive >> data;
+            if( data != 0 )
+                data_.push_back( data );
+        }
+    }
+    std::string str() const;
     //@}
 
 private:

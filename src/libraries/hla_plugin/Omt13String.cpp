@@ -16,6 +16,15 @@ using namespace plugins::hla;
 // Name: Omt13String constructor
 // Created: SLI 2011-09-22
 // -----------------------------------------------------------------------------
+Omt13String::Omt13String()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Omt13String constructor
+// Created: SLI 2011-09-22
+// -----------------------------------------------------------------------------
 Omt13String::Omt13String( const std::string& data )
     : data_( data )
 {
@@ -29,4 +38,13 @@ Omt13String::Omt13String( const std::string& data )
 Omt13String::~Omt13String()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Omt13String::str
+// Created: SLI 2011-09-22
+// -----------------------------------------------------------------------------
+std::string Omt13String::str() const
+{
+    return data_;
 }
