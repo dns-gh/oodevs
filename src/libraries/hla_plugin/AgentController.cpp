@@ -65,7 +65,7 @@ namespace
 // -----------------------------------------------------------------------------
 void AgentController::Create( dispatcher::Agent& entity )
 {
-    if( boost::algorithm::starts_with( entity.GetName().toStdString(), "HLA_" ) )
+    if( boost::algorithm::starts_with( entity.GetName().toStdString(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
         return;
     agents_.push_back( T_Agent( new AgentProxy( entity ) ) );
     const std::string type = entity.GetType().GetName();
