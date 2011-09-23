@@ -37,7 +37,7 @@ class FilterOrbatReIndexer : public Filter
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterOrbatReIndexer( const tools::ExerciseConfig& config, Model& model );
+             FilterOrbatReIndexer( QWidget* mainwindow, const tools::ExerciseConfig& config, Model& model );
     virtual ~FilterOrbatReIndexer();
     //@}
 
@@ -49,6 +49,12 @@ public:
     virtual QWidget* CreateParametersWidget( QWidget* parent );
     virtual bool IsValid() const;
    //@}
+
+signals:
+    //! @name Types
+    //@{
+    void DoConsistencyCheck( unsigned int );
+    //@}
 
 private:
     //! @name Types

@@ -15,6 +15,7 @@
 #include "clients_kernel/Tools.h"
 #include "preparation/IdManager.h"
 #include "preparation/Model.h"
+#include "preparation/ModelConsistencyChecker.h"
 #include "preparation/TeamsModel.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem/operations.hpp>
@@ -39,7 +40,7 @@ namespace
 // Name: FilterOrbatReIndexer constructor
 // Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------
-FilterOrbatReIndexer::FilterOrbatReIndexer( const tools::ExerciseConfig& config, Model& model )
+FilterOrbatReIndexer::FilterOrbatReIndexer( QWidget* mainwindow, const tools::ExerciseConfig& config, Model& model )
     : Filter()
     , model_                ( model )
     , orbatFile_            ( config.GetOrbatFile() )
@@ -55,7 +56,7 @@ FilterOrbatReIndexer::FilterOrbatReIndexer( const tools::ExerciseConfig& config,
     , checkedPixmap_        ( MAKE_PIXMAP( check ) )
     , uncheckedPixmap_      ( MAKE_PIXMAP( cross ) )
 {
-    // NOTHING
+    connect( this, SIGNAL( DoConsistencyCheck( unsigned int ) ), mainwindow, SLOT( CheckConsistency( unsigned int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -301,6 +302,7 @@ void FilterOrbatReIndexer::Execute()
     model_.teams_.Load( newXis, model_, loadingErrors );
     if( !loadingErrors.empty() )
         QMessageBox::critical( QApplication::activeModalWidget(), tools::translate( "FilterOrbatReIndexer", "Error loading the new orbat file" ), ( tools::translate( "FilterOrbatReIndexer", "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() ).ascii() );
+    emit( DoConsistencyCheck( ModelConsistencyChecker::eAllUniqueness ) );
 }
 
 // -----------------------------------------------------------------------------

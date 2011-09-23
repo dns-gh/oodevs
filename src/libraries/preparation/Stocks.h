@@ -48,6 +48,7 @@ public:
     virtual ~Stocks();
     void AddDotation( Dotation* pNewDotation );
     void DeleteAll();
+    bool HasDotations() const;
     //@}
 
 private:

@@ -44,6 +44,7 @@ public:
     void AddDotation( const Dotation& dotation );
     void Clear();
     void Update();
+    unsigned long CountDotations() const;
     //@}
 
 private:

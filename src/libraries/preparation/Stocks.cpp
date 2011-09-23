@@ -123,3 +123,12 @@ void Stocks::CreateDictionary( Entity_ABC& entity, PropertiesDictionary& dico )
     item_ = new DotationsItem( controller_, entity, dico, tools::translate( "Stocks", "Stocks" ), *(Resolver< Dotation >*)this );
     dico.Register( entity, tools::translate( "Stocks", "Stocks/Stocks" ), item_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Stocks::HasDotations
+// Created: ABR 2011-09-22
+// -----------------------------------------------------------------------------
+bool Stocks::HasDotations() const
+{
+    return ( item_ ) ? item_->CountDotations() != 0 : false;
+}

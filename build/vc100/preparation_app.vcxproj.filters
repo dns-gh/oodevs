@@ -92,6 +92,9 @@
     <Filter Include="Source Files\Dialogs\Profiles\Rights">
       <UniqueIdentifier>{ce4754c1-1256-4f35-ae16-34d0eda0e3a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dialogs\Consistency">
+      <UniqueIdentifier>{ef8e205d-93c8-4eeb-97fc-71c09fc62a0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp">
@@ -427,9 +430,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitRights.cpp">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\LongNameEditor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\ControlsChecker.cpp">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </ClCompile>
@@ -438,6 +438,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\LivingAreaEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LongNameEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ModelConsistencyDialog.cpp">
+      <Filter>Source Files\Dialogs\Consistency</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -608,6 +614,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\LogisticListView.h">
       <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ModelConsistencyDialog.h">
+      <Filter>Source Files\Dialogs\Consistency</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

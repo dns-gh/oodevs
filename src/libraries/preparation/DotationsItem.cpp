@@ -63,6 +63,15 @@ void DotationsItem::AddDotation( const DotationType& type, unsigned long quantit
 }
 
 // -----------------------------------------------------------------------------
+// Name: DotationsItem::CountDotations
+// Created: ABR 2011-09-22
+// -----------------------------------------------------------------------------
+unsigned long DotationsItem::CountDotations() const
+{
+    return dotations_.Count();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DotationsItem::Clear
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------

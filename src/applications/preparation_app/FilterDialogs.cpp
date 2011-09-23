@@ -51,7 +51,7 @@ void FilterDialogs::Load()
     config_.GetLoader().LoadOptionalPhysicalFile( "filters", boost::bind( &FilterDialogs::Load, this, _1 ) );
     if( !Find( "import" ) )
         CreateImportDialog();
-    Get( "import" ).AddFilter( *new FilterOrbatReIndexer( config_, model_ ) );
+    Get( "import" ).AddFilter( *new FilterOrbatReIndexer( parent_, config_, model_ ) );
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->InsertMenuEntry( menu_ );
 }

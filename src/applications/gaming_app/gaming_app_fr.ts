@@ -1436,7 +1436,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>LogisticListView</name>
     <message>
         <source>Change Logistic Links</source>
-        <translation type="unfinished">Changer les Liens Logistiques</translation>
+        <translation>Changer les Liens Logistiques</translation>
     </message>
 </context>
 <context>
@@ -1758,7 +1758,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Logistic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique</translation>
     </message>
 </context>
 <context>

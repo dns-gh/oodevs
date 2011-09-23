@@ -50,6 +50,7 @@ class MapLayer_ABC;
 class Menu;
 class Model;
 class ModelBuilder;
+class ModelConsistencyDialog;
 class ObjectCreationPanel;
 class ScoreDialog;
 class StaticModel;
@@ -99,6 +100,7 @@ public slots:
     void ToggleFullScreen();
     void ToggleDocks();
     void ReloadExercise();
+    void CheckConsistency( unsigned int filters = 0 );
     //@}
 
 private:
@@ -162,6 +164,7 @@ private:
     ScoreDialog* pScoreDialog_;
     FilterDialogs* filterDialogs_;
     QProgressDialog* progressDialog_;
+    ModelConsistencyDialog* consistencyDialog_;
     //@}
 };
 

@@ -26,6 +26,7 @@
 #include "LogisticListView.h"
 #include "Menu.h"
 #include "ModelBuilder.h"
+#include "ModelConsistencyDialog.h"
 #include "ObjectCreationPanel.h"
 #include "InhabitantCreationPanel.h"
 #include "ObjectListView.h"
@@ -301,6 +302,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
     menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
     setMenuBar( menu_ );
+    consistencyDialog_ = new ModelConsistencyDialog( this, model, staticModel_ );
     filterDialogs_ = new FilterDialogs( this, config_, model, *menu_ );
 
     // Layers
@@ -629,6 +631,7 @@ bool MainWindow::Save()
         result = model_.Save( config_, checker );
         if( result )
             SetWindowTitle( false );
+        CheckConsistency();
     }
     return result;
 }
@@ -684,6 +687,20 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
     WriteOptions();
 
     QMainWindow::closeEvent( pEvent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::CheckConsistency
+// Created: ABR 2011-09-23
+// -----------------------------------------------------------------------------
+void MainWindow::CheckConsistency( unsigned int filters /*= 0*/ )
+{
+    if( !consistencyDialog_ )
+        return;
+    if( filters )
+        consistencyDialog_->CheckConsistency( filters );
+    else
+        consistencyDialog_->CheckConsistency();
 }
 
 // -----------------------------------------------------------------------------
