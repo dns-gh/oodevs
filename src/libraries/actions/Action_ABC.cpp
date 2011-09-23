@@ -188,7 +188,7 @@ void Action_ABC::Display( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Action_ABC::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "name", name_ );
+    xos << xml::attribute( "name", name_.ascii() );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "parameter" );
