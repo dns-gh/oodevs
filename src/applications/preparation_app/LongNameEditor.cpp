@@ -219,6 +219,11 @@ void LongNameEditor::SetExtension( Entity_ABC& entity, const QString& name, cons
             longName = longName.remove( ' ' ).replace( 'é', "e", Qt::CaseInsensitive ).replace( 'è', "e", Qt::CaseInsensitive )
                 .replace( 'ç', "c", Qt::CaseInsensitive ).replace( 'à', "a", Qt::CaseInsensitive ).replace( QRegExp( "[^a-zA-Z0-9.]" ), "" )
                 .toUpper();
+            int min;
+            int max;
+            attribute.GetMinMaxLength( min, max );
+            if( max != -1 )
+                longName = longName.left( max );
             ext->SetValue( "NomLong", longName.toStdString() );
             controllers_.controller_.Update( *ext );
             controllers_.controller_.Update( entity );
