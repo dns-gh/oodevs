@@ -30,11 +30,14 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/SimpleLocationDrawer.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "clients_gui/LocationCreator.h"
@@ -85,6 +88,8 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
 
     waypointLocationCreator_ = new LocationCreator( 0, layer, *this );
     waypointLocationCreator_->Allow( false, false, false, false, false );
+    routeLocationCreator_ = new LocationCreator( 0, layer, *this );
+    routeLocationCreator_->Allow( false, false, false, false, false );
 
     tabs_ = new QTabWidget( this );
     QGridLayout* tabLayout = new QGridLayout( this, 3, 2 );
@@ -160,8 +165,13 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     waypointList_->setDragDropMode( QAbstractItemView::InternalMove );
     waypointList_->setDragDropOverwriteMode( false );
     waypointList_->setModel( new customStringListModel( QStringList() ) );
-    waypointList_->setFixedSize( 270, 300 );    
-    connect( waypointList_->selectionModel(), SIGNAL( selectionChanged(const QItemSelection &, const QItemSelection &) ), this, SLOT( OnWaypointSelect( const QItemSelection&, const QItemSelection& ) ) );
+    waypointList_->setFixedSize( 270, 300 );
+    connect( waypointList_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnWaypointSelect() ) );
+    connect( waypointList_->model(), SIGNAL( modelReset() ), this, SLOT( OnWaypointRowChanged() ) );
+    connect( waypointList_->model(), SIGNAL( dataChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( OnWaypointRowChanged() ) );
+    connect( waypointList_->model(), SIGNAL( rowsInserted( const QModelIndex&, int, int ) ), this, SLOT( OnWaypointRowChanged() ) );
+    connect( waypointList_->model(), SIGNAL( rowsMoved( const QModelIndex&, int, int, const QModelIndex&, int ) ), this, SLOT( OnWaypointRowChanged() ) );
+    connect( waypointList_->model(), SIGNAL( rowsRemoved ( const QModelIndex&, int, int ) ), this, SLOT( OnWaypointRowChanged() ) );
     QVBoxLayout* waypointLayout = new QVBoxLayout( routeTab );
     waypointLayout->setSizeConstraint( QLayout::SetMaximumSize );
     waypointLayout->addWidget( waypointList_ );
@@ -218,7 +228,10 @@ void LogisticSupplyPushFlowDialog::Show()
 {
     if( !selected_ )
         return;
-    
+
+    controllers_.Register( *routeLocationCreator_ );
+    routeLocationCreator_->StartLine();
+
     AddRecipientItem();
     AddCarrierItem();
     tabs_->setCurrentPage( 0 );
@@ -232,6 +245,13 @@ void LogisticSupplyPushFlowDialog::Show()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Validate()
 {
+    accept();
+
+    if( startWaypointLocation_ )
+        controllers_.Unregister( *waypointLocationCreator_ );
+    else
+        controllers_.Unregister( *routeLocationCreator_ );
+
     if( !selected_ )
         return;
 
@@ -261,7 +281,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     for( QStringList::iterator it = waypoints.begin(); it != waypoints.end(); ++it )
     {
         QString str = *it;
-        if ( points_.find( str ) != points_.end() )
+        if( points_.find( str ) != points_.end() )
             currentPath.push_back( points_[ str ] );
         else
         {
@@ -294,8 +314,10 @@ void LogisticSupplyPushFlowDialog::Validate()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Reject()
 {
+    if( routeLocationCreator_ )
+        controllers_.Unregister( *routeLocationCreator_ );
+
     reject();
-    selected_ = 0;
     ClearRecipientsTable();
     ClearRecipientsData();
     ClearResourcesTable();
@@ -304,6 +326,7 @@ void LogisticSupplyPushFlowDialog::Reject()
     ClearCarriersData();
     ClearRouteList();
     ClearRouteData();
+    selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -481,7 +504,10 @@ void LogisticSupplyPushFlowDialog::AddCarrierItem( QString dotationName, int Ava
 void LogisticSupplyPushFlowDialog::AddWaypoint()
 {
     if( !startWaypointLocation_ )
-        controllers_.Register( *waypointLocationCreator_ );
+    {
+       controllers_.Register( *waypointLocationCreator_ );
+       controllers_.Unregister( *routeLocationCreator_ );
+    }    
     startWaypointLocation_ = true;
     waypointLocationCreator_->StartPoint();
 }
@@ -493,7 +519,7 @@ void LogisticSupplyPushFlowDialog::AddWaypoint()
 QString LogisticSupplyPushFlowDialog::GetSelectedWaypoint()
 {
     QModelIndexList indexList = waypointList_->selectionModel()->selectedIndexes();
-    if ( indexList.count() == 0 )
+    if( indexList.count() == 0 )
         return QString();
 
     int row = indexList.first().row();
@@ -598,6 +624,7 @@ void LogisticSupplyPushFlowDialog::ClearRouteList()
 void LogisticSupplyPushFlowDialog::ClearRouteData()
 {
     points_.clear();
+    routeDrawpoints_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -686,7 +713,7 @@ void LogisticSupplyPushFlowDialog::OnRecipientValueChanged( int row, int /*col*/
 {
     customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
     QStringList waypoints = pModel->stringList();
-    if ( row < recipients_.size() )
+    if( row < recipients_.size() )
         waypoints.removeAll( recipients_[ row ]->GetName() );
     pModel->setStringList( waypoints );
 
@@ -707,7 +734,6 @@ void LogisticSupplyPushFlowDialog::OnRecipientValueChanged( int row, int /*col*/
             QStringList waypoints = pModel->stringList();
             waypoints.append( pRecipient->GetName() );
             pModel->setStringList( waypoints );
-
             InsertNewRecipientData( row, pRecipient );
         }
         if( row + 1 == recipientsTable_->numRows() )      
@@ -924,10 +950,19 @@ void LogisticSupplyPushFlowDialog::OnCarriersValueChanged( int row, int col )
 // Name: LogisticSupplyPushFlowDialog::OnWaypoitnSelect
 // Created: MMC 2011-09-21
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::OnWaypointSelect( const QItemSelection& selection, const QItemSelection& /*deselection*/ )
+void LogisticSupplyPushFlowDialog::OnWaypointSelect()
 {
     QString waypoint = GetSelectedWaypoint();
     delWaypointButton_->setEnabled( points_.find( waypoint ) != points_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::OnWaypointRowChanged
+// Created: MMC 2011-09-21
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::OnWaypointRowChanged()
+{
+    UpdateRouteDrawpoints();
 }
 
 // -----------------------------------------------------------------------------
@@ -946,7 +981,12 @@ void LogisticSupplyPushFlowDialog::Handle( kernel::Location_ABC& location )
         waypoints.append( locationName );
         pModel->setStringList( waypoints );
     }
-    controllers_.Unregister( *waypointLocationCreator_ );
+    if( startWaypointLocation_ )
+    {
+        controllers_.Unregister( *waypointLocationCreator_ );
+        controllers_.Register( *routeLocationCreator_ );
+        routeLocationCreator_->StartLine();
+    }
     startWaypointLocation_ = false;
 }
 
@@ -978,3 +1018,49 @@ void LogisticSupplyPushFlowDialog::ComputeRoute( T_Route& route )
             route.push_back( Waypoint( recipientsNames_[ str ] ) );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::UpdateRouteDrawpoints
+// Created: MMC 2011-09-22
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::UpdateRouteDrawpoints()
+{
+    routeDrawpoints_.clear();
+    T_Route route;
+    ComputeRoute( route );
+
+    const kernel::Positions* startPos = static_cast< const kernel::Positions* >( selected_->Retrieve< kernel::Positions >() );
+    if( startPos )
+        routeDrawpoints_.push_back( startPos->GetPosition() );
+
+    for( int i=0; i < route.size(); ++i )
+        if( route[i].isPoint() )
+            routeDrawpoints_.push_back( route[i].point_ );
+         else
+         {
+            const kernel::Automat_ABC* pRecipient = route[i].pRecipient_;
+            const kernel::Positions* pos = static_cast< const kernel::Positions* >( pRecipient->Retrieve< kernel::Positions >() );
+            if( pos )
+                routeDrawpoints_.push_back( pos->GetPosition() );
+         }
+
+    if( startPos )
+        routeDrawpoints_.push_back( startPos->GetPosition() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::Draw
+// Created: MMC 2011-09-22
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::Draw( const kernel::Location_ABC& /*location*/, const geometry::Rectangle2f& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+{
+    if( startWaypointLocation_ || routeDrawpoints_.empty() )
+        return;
+
+    for( int i=1; i < routeDrawpoints_.size(); ++i )
+    {
+        glColor4f( COLOR_ORANGE );
+        glLineStipple( 1, tools.StipplePattern( -1 ) );
+        tools.DrawCurvedArrow( routeDrawpoints_[i-1], routeDrawpoints_[i], 0.6f );
+    }
+}   

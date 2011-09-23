@@ -72,6 +72,7 @@ public:
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
     virtual void Handle( kernel::Location_ABC& location );
+    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private slots:
@@ -88,7 +89,8 @@ private slots:
     void OnResourcesValueChanged( int row, int col );
     void OnCarriersUseCheckStateChanged();
     void OnCarriersValueChanged( int row, int col );
-    void OnWaypointSelect( const QItemSelection& selected, const QItemSelection& /*deselected*/ );
+    void OnWaypointSelect();
+    void OnWaypointRowChanged();
     //@}
 
 private:
@@ -173,6 +175,7 @@ private:
     //@{
     void ComputeRoute( T_Route& route );
     QString GetSelectedWaypoint();
+    void UpdateRouteDrawpoints();
     //@}
 
 private:
@@ -208,8 +211,10 @@ private:
 
     bool startWaypointLocation_;
     gui::LocationCreator* waypointLocationCreator_;
+    gui::LocationCreator* routeLocationCreator_;
     geometry::Point2f selectedPoint_;
     T_PointNames points_;
+    std::vector< geometry::Point2f > routeDrawpoints_;
 
     const kernel::Automat_ABC* pRecipientSelected_;
     //@}
