@@ -372,14 +372,14 @@ void ADN_Sensors_GUI::AddHeaders( ADN_Table* pTable, int& nCol, const char* szNa
 {
     ADN_GuiBuilder builder;
     pTable->AddBoldGridCol( nCol );
-    builder.AddTableCell( pTable, 0, nCol, 1, materials.size(), szName );
+    builder.AddTableCell( pTable, 0, nCol, 1, static_cast< int >( materials.size() ), szName );
     unsigned int n = 0;
     for( ADN_Categories_Data::CIT_SizeInfos_Vector it = materials.begin(); it != materials.end(); ++it )
     {
         builder.AddTableCell( pTable, 1, nCol + n, (*it)->GetData().c_str() );
         ++n;
     }
-    nCol += materials.size();
+    nCol += static_cast< int >( materials.size() );
 }
 
 // -----------------------------------------------------------------------------
