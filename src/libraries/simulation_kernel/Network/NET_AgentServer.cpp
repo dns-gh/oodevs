@@ -90,6 +90,7 @@ void NET_AgentServer::ConnectionError( const std::string& address, const std::st
     MT_LOG_INFO_MSG( "Connection to '" << address << "' lost (" << error << ")" );
     ServerNetworker::ConnectionError( address, error );
     pMsgMgr_->RemoveClient( address );
+    AllowConnections();
 }
 
 // -----------------------------------------------------------------------------

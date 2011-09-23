@@ -95,6 +95,7 @@ Model::~Model()
 void Model::Reset()
 {
     simulation_->Reset();
+    urbanKnowledges_       .DeleteAll();
     fireEffects_           .DeleteAll();
     populationFires_       .DeleteAll();
     fires_                 .DeleteAll();
