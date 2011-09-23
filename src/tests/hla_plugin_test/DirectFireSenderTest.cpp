@@ -150,3 +150,10 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_uses_simulation_identifier_for_firin
 {
     BOOST_CHECK_EQUAL( parameters.firingObjectIdentifier.str(), boost::lexical_cast< std::string >( firingUnitIdentifier ) );
 }
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_sender_sends_constant_final_velocity_vector, ConfiguredFixture )
+{
+    BOOST_CHECK_SMALL( parameters.finalVelocityVector.VX(),       0.00001 );
+    BOOST_CHECK_SMALL( parameters.finalVelocityVector.VY(),       0.00001 );
+    BOOST_CHECK_CLOSE( parameters.finalVelocityVector.VZ(), 700., 0.00001 );
+}

@@ -74,6 +74,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              VelocityVector();
+             VelocityVector( float X, float Y, float Z );
              VelocityVector( const WorldLocation& location, float speed, float heading );
     virtual ~VelocityVector();
     //@}

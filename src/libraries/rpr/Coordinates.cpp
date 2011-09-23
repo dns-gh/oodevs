@@ -117,6 +117,22 @@ VelocityVector::VelocityVector()
 
 // -----------------------------------------------------------------------------
 // Name: VelocityVector::VelocityVector
+// Created: SLI 2011-09-23
+// -----------------------------------------------------------------------------
+VelocityVector::VelocityVector( float x, float y, float z )
+    : xv_( x )
+    , yv_( y )
+    , zv_( z )
+{
+    geometry::Vector3f speed( x, y, z );
+    speed.Normalize();
+    xn_ = speed.X();
+    yn_ = speed.Y();
+    zn_ = speed.Z();
+}
+
+// -----------------------------------------------------------------------------
+// Name: VelocityVector::VelocityVector
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
 VelocityVector::VelocityVector( const WorldLocation& location, float rSpeed, float heading )
