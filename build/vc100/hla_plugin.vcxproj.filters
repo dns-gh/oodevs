@@ -175,6 +175,12 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp">
       <Filter>Source Files\Types</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireSender.cpp">
+      <Filter>Source Files\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireSender.cpp">
+      <Filter>Source Files\Interactions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -377,6 +383,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h">
       <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireSender.h">
+      <Filter>Source Files\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireSender.h">
+      <Filter>Source Files\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Interactions.h">
+      <Filter>Source Files\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender_ABC.h">
+      <Filter>Source Files\Interactions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

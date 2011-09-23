@@ -143,6 +143,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\ClassBuilderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\ContextHandlerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\DimensionTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\DirectFireSenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\EntityTypeResolverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FederateFacadeTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FormationCreaterTest.cpp" />
@@ -153,6 +154,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\IndirectFireSenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\MunitionDetonationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnClassBuilderTest.cpp" />
@@ -182,6 +184,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederate.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederateAmbassadorFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionHandler.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionSender.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockKnowledgeGroup.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMessageController.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockModel.h" />
