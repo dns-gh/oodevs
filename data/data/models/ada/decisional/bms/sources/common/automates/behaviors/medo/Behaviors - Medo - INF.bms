@@ -1022,7 +1022,6 @@ node "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone"
     activate = function( self )
         local Activate = Activate
         self.ptBarrer = self.ptBarrer or nil
-        self.bValide = self.bValide or false
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
@@ -1045,10 +1044,10 @@ node "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone"
             end
 
         if( ModuleBegins() ) then
-            self.bValide = DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion( self._namedParams.zoneBarrer, self.ptBarrer, self._namedParams.pPion )
+            self.ptBarrer = DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion( self._namedParams.zoneBarrer, self._namedParams.pPion )
         end
 
-        if( not self.bValide or self.ptBarrer == 0 ) then
+        if( not self.ptBarrer ) then
             do
                 Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                 do return end

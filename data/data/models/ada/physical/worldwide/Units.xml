@@ -795,6 +795,13 @@
         <resource capacity="10000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
+    <stocks>
+      <stock category="Unite essence" threshold="30"/>
+      <stock category="Unite tranche D" threshold="30"/>
+      <stock category="Unite non tranche D" threshold="30"/>
+      <stock category="Unite vivre" threshold="30"/>
+      <stock category="Pieces" threshold="30"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -1088,6 +1095,13 @@
         <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
+    <stocks>
+      <stock category="Unite essence" threshold="0"/>
+      <stock category="Unite tranche D" threshold="0"/>
+      <stock category="Unite non tranche D" threshold="0"/>
+      <stock category="Unite vivre" threshold="0"/>
+      <stock category="Pieces" threshold="0"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -1116,6 +1130,13 @@
         <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
+    <stocks>
+      <stock category="Unite essence" threshold="0"/>
+      <stock category="Unite tranche D" threshold="0"/>
+      <stock category="Unite non tranche D" threshold="0"/>
+      <stock category="Unite vivre" threshold="0"/>
+      <stock category="Pieces" threshold="0"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -1172,6 +1193,13 @@
         <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
+    <stocks>
+      <stock category="Unite essence" threshold="0"/>
+      <stock category="Unite tranche D" threshold="0"/>
+      <stock category="Unite non tranche D" threshold="0"/>
+      <stock category="Unite vivre" threshold="0"/>
+      <stock category="Pieces" threshold="0"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -1200,6 +1228,13 @@
         <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
+    <stocks>
+      <stock category="Unite essence" threshold="0"/>
+      <stock category="Unite tranche D" threshold="0"/>
+      <stock category="Unite non tranche D" threshold="0"/>
+      <stock category="Unite vivre" threshold="0"/>
+      <stock category="Pieces" threshold="0"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -1241,6 +1276,13 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <stocks>
+      <stock category="Unite essence" threshold="0"/>
+      <stock category="Unite tranche D" threshold="0"/>
+      <stock category="Unite non tranche D" threshold="0"/>
+      <stock category="Unite vivre" threshold="0"/>
+      <stock category="Pieces" threshold="0"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -1701,6 +1743,13 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <stocks>
+      <stock category="Unite essence" threshold="0"/>
+      <stock category="Unite tranche D" threshold="0"/>
+      <stock category="Unite non tranche D" threshold="0"/>
+      <stock category="Unite vivre" threshold="0"/>
+      <stock category="Pieces" threshold="0"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -1722,6 +1771,13 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <stocks>
+      <stock category="Unite essence" threshold="0"/>
+      <stock category="Unite tranche D" threshold="0"/>
+      <stock category="Unite non tranche D" threshold="0"/>
+      <stock category="Unite vivre" threshold="0"/>
+      <stock category="Pieces" threshold="0"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -5852,4 +5908,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0212132443" -->
+<!-- signature="0678688187" -->

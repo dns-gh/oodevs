@@ -629,7 +629,9 @@ node "BEH_Medo_Automate_INF_AssignerBarrer_DansZone"
                                 end
 
                                 local point = DEC_ListePoints_GetAt( self.listePoint, self.rIterateurPoint )
-                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_BarrerDansZone, 1, { ePhase_MRT, pion, point, } )
+								self.locations = {}
+								self.locations[point] = self.locations[point] or DEC_Geometrie_ConvertirPointEnLocalisation( point )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_BarrerDansZone, 1, { ePhase_MRT, pion, self.locations[point], } )
                                                                 self.rIterateurPoint = self.rIterateurPoint + 1
                             end
 

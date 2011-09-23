@@ -7,7 +7,7 @@
   </alat-monitoring-times>
   <cobra-radar action-range="100000"/>
   <radars>
-    <radar action-range="20000" name="Radar doppler RASIT" type="radar">
+    <radar action-range="60000" name="Radar doppler RASIT" type="radar">
       <detectable-activities>
         <detectable-activity type="Deplacement" value="true"/>
         <detectable-activity type="EnTravaux" value="true"/>
@@ -4095,4 +4095,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="2023163864" -->
+<!-- signature="3222835377" -->
