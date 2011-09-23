@@ -12,12 +12,13 @@
 #include "FireAttribute.h"
 #include "BurnAttribute.h"
 #include "MIL_FireClass.h"
-#include "UrbanDestructionCapacity.h"
 #include "MIL_Object_ABC.h"
-#include "Entities\Agents\MIL_Agent_ABC.h"
-#include "Entities\Agents\Roles\Composantes\PHY_RoleInterface_Composantes.h"
-#include "Entities\Populations\MIL_PopulationElement_ABC.h"
-#include "Entities\Agents\Units\Humans\MIL_Injury_Fire.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "Entities/Agents/Units/Humans/MIL_Injury_Fire.h"
+#include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_ObjectManager.h"
 
 #include <xeumeuleu/xml.hpp>
 
@@ -89,17 +90,6 @@ void BurnCapacity::Finalize( MIL_Object_ABC& object )
 {
     BurnAttribute& burnAttribute = object.GetAttribute< BurnAttribute >();
     burnAttribute.StartBurn( object );
-
-    // Overwrite urban destruction capacity
-    const MIL_FireClass& fireClass = object.GetAttribute< FireAttribute >().GetClass();
-    UrbanDestructionCapacity* destructionCapacity = object.Retrieve< UrbanDestructionCapacity >();
-    if( !destructionCapacity )
-    {
-        destructionCapacity = new UrbanDestructionCapacity( fireClass.GetUrbanAttritionData() );
-        object.AddCapacity( destructionCapacity );
-    }
-    else
-        *destructionCapacity = UrbanDestructionCapacity( fireClass.GetUrbanAttritionData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,4 +126,21 @@ void BurnCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_Populati
 void BurnCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
 {
     object.GetAttribute< BurnAttribute >().Burn( object );
+
+	//attrition on objects
+	const PHY_UrbanAttritionData& urbanAttritionData = object.GetAttribute< FireAttribute >().GetClass().GetUrbanAttritionData();
+	std::vector< TER_Object_ABC* > objects;
+    TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( object.GetLocalisation(), objects );
+    for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
+    {
+        MIL_Object_ABC* pObject = static_cast< MIL_Object_ABC* >( *it );
+        const TER_Localisation& location = object.GetLocalisation();
+        if( location.GetType() == TER_Localisation::ePoint )
+        {
+            if( pObject->GetLocalisation().IsInside( location.GetPoints().front() ) )
+                pObject->ApplyDestruction( location, urbanAttritionData );
+        }
+        else
+            pObject->ApplyDestruction( location, urbanAttritionData );
+    }
 }
