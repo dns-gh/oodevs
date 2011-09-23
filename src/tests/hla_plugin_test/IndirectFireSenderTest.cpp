@@ -122,3 +122,16 @@ BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_uses_simulation_identifier_for_fir
 {
     BOOST_CHECK_EQUAL( parameters.firingObjectIdentifier.str(), boost::lexical_cast< std::string >( firingUnitIdentifier ) );
 }
+
+BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_sends_constant_final_velocity_vector, ConfiguredFixture )
+{
+    BOOST_CHECK_SMALL( parameters.finalVelocityVector.VX(),       0.00001 );
+    BOOST_CHECK_SMALL( parameters.finalVelocityVector.VY(),       0.00001 );
+    BOOST_CHECK_CLOSE( parameters.finalVelocityVector.VZ(), 400., 0.00001 );
+}
+
+BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_sends_other_fuse_type, ConfiguredFixture )
+{
+    const int16 other = 0;
+    BOOST_CHECK_EQUAL( parameters.fuseType, other );
+}

@@ -66,6 +66,8 @@ void IndirectFireSender::Notify( const sword::StopUnitFire& message, int /*conte
     parameters.eventIdentifier.eventCount = static_cast< uint16 >( fireIdentifier );
     parameters.eventIdentifier.issuingObjectIdentifier = Omt13String( federateName_ );
     parameters.firingObjectIdentifier = Omt13String( boost::lexical_cast< std::string >( startMessage.firing_unit().id() ) );
+    parameters.finalVelocityVector = rpr::VelocityVector( 0., 0., 400. );  // $$$$ _RC_ SLI 2011-09-23: Hardcoded
+    parameters.fuseType = 0; // Other
     fires_.erase( fireIdentifier );
     interactionSender_.Send( parameters );
 }
