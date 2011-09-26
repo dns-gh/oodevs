@@ -10,6 +10,8 @@
 #ifndef __MessageCallback_ABC_h_
 #define __MessageCallback_ABC_h_
 
+#include <string>
+
 namespace tools
 {
     class Message;
@@ -32,6 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual void OnError( const std::string& endpoint, const std::string& error ) = 0;
+    virtual void OnWarning( const std::string& endpoint, const std::string& warning ) = 0;
     virtual void OnMessage( const std::string& endpoint, Message& message ) = 0;
     //@}
 

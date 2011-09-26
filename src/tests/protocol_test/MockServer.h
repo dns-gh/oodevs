@@ -31,6 +31,7 @@ public:
     MOCK_METHOD( ConnectionSucceeded, 1 )
     MOCK_METHOD( ConnectionFailed, 2 )
     MOCK_METHOD( ConnectionError, 2 )
+    MOCK_METHOD( ConnectionWarning, 2 )
 };
 
 #endif // __MockServer_h_

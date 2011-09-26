@@ -66,6 +66,17 @@ std::size_t Message::Size() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Message::Data
+// Created: MCO 2011-09-26
+// -----------------------------------------------------------------------------
+const char* Message::Data() const
+{
+    if( ! data_ || Size() == 0 )
+        return 0;
+    return &(*data_)[readOffset_];
+}
+
+// -----------------------------------------------------------------------------
 // Name: Message::Read
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
@@ -75,7 +86,7 @@ void Message::Read( char* data, std::size_t size )
         return;
     if( ! data_ || readOffset_ + size > data_->size() )
         throw std::overflow_error( "Message read overflow" );
-    memcpy( data, & (*data_)[ readOffset_ ], size );
+    memcpy( data, &(*data_)[readOffset_], size );
     readOffset_ += size;
 }
 

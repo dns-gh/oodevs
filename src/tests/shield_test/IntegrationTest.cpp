@@ -34,7 +34,7 @@ namespace
     };
 
     template< typename C, typename F >
-    void wait( C condition, F flush, int timeout = 10000, int sleep = 100 )
+    void wait( C condition, F flush, int timeout = 1000, int sleep = 100 )
     {
         while( !condition() && timeout > 0 )
         {
@@ -45,7 +45,7 @@ namespace
         }
     }
 
-    struct Client : tools::ClientNetworker
+    MOCK_BASE_CLASS( Client, tools::ClientNetworker )
     {
         Client()
             : tools::ClientNetworker( "localhost:" + boost::lexical_cast< std::string >( PORT ) )
@@ -53,12 +53,13 @@ namespace
             RegisterMessage( *this, &Client::Receive );
         }
         MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const MsgsSimToClient::MsgSimToClient& ), Receive );
-        MOCK_METHOD_EXT( ConnectionSucceeded, 1, void( const std::string& ), ConnectionSucceeded );
-        MOCK_METHOD_EXT( ConnectionFailed, 2, void( const std::string&, const std::string& ), ConnectionFailed );
-        MOCK_METHOD_EXT( ConnectionError, 2, void( const std::string&, const std::string& ), ConnectionError );
+        MOCK_METHOD( ConnectionSucceeded, 1 );
+        MOCK_METHOD( ConnectionFailed, 2 );
+        MOCK_METHOD( ConnectionError, 2 );
+        MOCK_METHOD( ConnectionWarning, 2 );
         std::string host;
     };
-    struct Server : tools::ServerNetworker
+    MOCK_BASE_CLASS( Server, tools::ServerNetworker )
     {
         Server()
             : tools::ServerNetworker( PORT + 1 )
@@ -67,9 +68,10 @@ namespace
             RegisterMessage( *this, &Server::Receive );
         }
         MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToSim& ), Receive );
-        MOCK_METHOD_EXT( ConnectionSucceeded, 1, void( const std::string& ), ConnectionSucceeded );
-        MOCK_METHOD_EXT( ConnectionFailed, 2, void( const std::string&, const std::string& ), ConnectionFailed );
-        MOCK_METHOD_EXT( ConnectionError, 2, void( const std::string&, const std::string& ), ConnectionError );
+        MOCK_METHOD( ConnectionSucceeded, 1 );
+        MOCK_METHOD( ConnectionFailed, 2 );
+        MOCK_METHOD( ConnectionError, 2 );
+        MOCK_METHOD( ConnectionWarning, 2 );
         std::string host;
     };
     struct ListenerFixture
@@ -145,14 +147,24 @@ BOOST_FIXTURE_TEST_CASE( unsupported_message_sent_from_client_is_detected_by_pro
         msg.mutable_message();
         client.Send( client.host, msg );
     }
-    int notified = 3;
-    MOCK_EXPECT( server, ConnectionError ).once().calls( --bl::var( notified ) );
-    MOCK_EXPECT( client, ConnectionError ).once().calls( --bl::var( notified ) );
+    bool notified = false;
     MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
-                                                mock::contain( "aborted" ) &&
-                                                mock::contain( "Unknown message tag" ) ).calls( --bl::var( notified ) );
-    MOCK_EXPECT( listener, Error );
-    wait( bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
+                                                mock::contain( "warning" ) &&
+                                                mock::contain( "Unknown message tag" ) ).calls( bl::var( notified ) = true );
+    wait( bl::var( notified ), boost::bind( &Fixture::Update, this ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( message_too_long_sent_from_client_is_detected_by_proxy, Fixture )
+{
+    {
+        tools::Message msg( 32 * 1024 + 12 ); // 32 kB + margin for header and stuff
+        client.Send( client.host, 1, msg );
+    }
+    bool notified = false;
+    MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
+                                                mock::contain( "warning" ) &&
+                                                mock::contain( "Message size too large" ) ).calls( bl::var( notified ) = true );
+    wait( bl::var( notified ), boost::bind( &Fixture::Update, this ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( message_sent_from_simulation_is_received_on_client, Fixture )
@@ -177,12 +189,26 @@ BOOST_FIXTURE_TEST_CASE( unsupported_message_sent_from_simulation_is_detected_by
         msg.mutable_message()->mutable_control_checkpoint_set_frequency()->set_frequency( 12 );
         server.Send( server.host, msg );
     }
-    int notified = 3;
-    MOCK_EXPECT( server, ConnectionError ).once().calls( --bl::var( notified ) );
-    MOCK_EXPECT( client, ConnectionError ).once().calls( --bl::var( notified ) );
+    bool notified = false;
     MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection to" ) &&
-                                                mock::contain( "aborted" ) &&
-                                                mock::contain( "Unknown message tag" ) ).calls( --bl::var( notified ) );
-    MOCK_EXPECT( listener, Error );
-    wait( bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
+                                                mock::contain( "warning" ) &&
+                                                mock::contain( "Unknown message tag" ) ).calls( bl::var( notified ) = true );
+    wait( bl::var( notified ), boost::bind( &Fixture::Update, this ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( invalid_message_sent_from_client_is_logged_on_simulation, Fixture )
+{
+    {
+        MsgsClientToSim::MsgClientToSim msg;
+        msg.set_context( 77 );
+        msg.mutable_message()->mutable_control_checkpoint_set_frequency()->set_frequency( 12 );
+        MOCK_EXPECT( listener, Debug ).once();
+        client.Send( client.host, msg );
+    }
+    MOCK_EXPECT( listener, Debug ).once();
+    MOCK_EXPECT( server, Receive ).once().throws( std::runtime_error( "Something is wrong" ) );
+    bool notified = false;
+    MOCK_EXPECT( server, ConnectionWarning ).once().with( mock::any,
+                                                          mock::contain( "Something is wrong context: 77 message { control_checkpoint_set_frequency { frequency: 12 } }" ) ).calls( bl::var( notified ) = true );
+    wait( bl::var( notified ), boost::bind( &Fixture::Update, this ) );
 }

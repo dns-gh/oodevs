@@ -77,9 +77,11 @@ private:
     virtual void ConnectionSucceeded( const std::string& from );
     virtual void ConnectionFailed( const std::string& from, const std::string& error );
     virtual void ConnectionError( const std::string& from, const std::string& error );
+    virtual void ConnectionWarning( const std::string& from, const std::string& warning );
 
     virtual void Info( const std::string& message );
     virtual void Error( const std::string& from, const std::string& message );
+    virtual void Warning( const std::string& from, const std::string& message );
     virtual void Debug( const DebugInfo_ABC& info );
     //@}
 

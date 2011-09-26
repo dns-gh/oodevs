@@ -64,6 +64,15 @@ void ObjectMessageService::RegisterErrorCallback( const T_Callback& error )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectMessageService::RegisterWarningCallback
+// Created: MCO 2011-09-26
+// -----------------------------------------------------------------------------
+void ObjectMessageService::RegisterWarningCallback( const T_Callback& warning )
+{
+    warning_ = warning;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectMessageService::OnError
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
@@ -71,6 +80,16 @@ void ObjectMessageService::OnError( const std::string& endpoint, const std::stri
 {
     if( error_ )
         error_( endpoint, error );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMessageService::OnWarning
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void ObjectMessageService::OnWarning( const std::string& endpoint, const std::string& warning )
+{
+    if( warning_ )
+        warning_( endpoint, warning );
 }
 
 // -----------------------------------------------------------------------------

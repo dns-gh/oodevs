@@ -46,6 +46,7 @@ public:
     using MessageDispatcher_ABC::RegisterMessage;
 
     void RegisterErrorCallback( const T_Callback& error );
+    void RegisterWarningCallback( const T_Callback& warning );
 
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
     virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
@@ -69,6 +70,7 @@ private:
     //! @name Operations
     //@{
     virtual void OnError( const std::string& endpoint, const std::string& error );
+    virtual void OnWarning( const std::string& endpoint, const std::string& error );
     virtual void OnMessage( const std::string& endpoint, Message& message );
     //@}
 
@@ -83,7 +85,7 @@ private:
     //! @name Member data
     //@{
     T_Callbacks callbacks_;
-    T_Callback error_;
+    T_Callback error_, warning_;
     unsigned long nbMessagesReceived_;
     //@}
 };

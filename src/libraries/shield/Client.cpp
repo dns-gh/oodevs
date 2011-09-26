@@ -64,6 +64,7 @@ Client::Client( boost::asio::io_service& service, const std::string& from,
     , connector_          ( new tools::Connector( service, *sockets_, *connectionBuffer_ ) )
 {
     messageService_->RegisterErrorCallback( boost::bind( &Client::ConnectionError, this, _1, _2 ) );
+    messageService_->RegisterWarningCallback( boost::bind( &Client::ConnectionWarning, this, _1, _2 ) );
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveSimToClient ) );
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveAuthenticationToClient ) );
     RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveDispatcherToClient ) );
@@ -237,6 +238,15 @@ void Client::ConnectionFailed( const std::string& host, const std::string& error
 void Client::ConnectionError( const std::string& host, const std::string& error )
 {
     listener_.Error( from_, "Shield proxy connection to " + host + " aborted : " + error );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::ConnectionWarning
+// Created: MCO 2011-09-26
+// -----------------------------------------------------------------------------
+void Client::ConnectionWarning( const std::string& host, const std::string& warning )
+{
+    listener_.Warning( from_, "Shield proxy connection to " + host + " warning : " + warning );
 }
 
 // -----------------------------------------------------------------------------

@@ -36,6 +36,7 @@ public:
     //@{
     virtual void Info( const std::string& message ) = 0;
     virtual void Error( const std::string& from, const std::string& message ) = 0;
+    virtual void Warning( const std::string& from, const std::string& message ) = 0;
     virtual void Debug( const DebugInfo_ABC& info ) = 0;
     //@}
 };

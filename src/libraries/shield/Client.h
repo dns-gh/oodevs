@@ -89,7 +89,6 @@ private:
     //@{
     virtual void ConnectionSucceeded( const std::string& host );
     virtual void ConnectionFailed( const std::string& host, const std::string& error );
-    virtual void ConnectionError( const std::string& host, const std::string& error );
 
     virtual void Send( sword::ClientToAar& message );
     virtual void Send( sword::ClientToAuthentication& message );
@@ -116,6 +115,9 @@ private:
 
     //! @name Helpers
     //@{
+    void ConnectionError( const std::string& host, const std::string& error );
+    void ConnectionWarning( const std::string& host, const std::string& warning );
+
     template< typename T >
     void DoSend( T& message );
     //@}

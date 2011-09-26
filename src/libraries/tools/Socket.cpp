@@ -94,10 +94,17 @@ void Socket::HeaderRead( Message& header, const boost::system::error_code& error
     {
         unsigned long size;
         header >> size;
-        Message message( size );
-        boost::asio::async_read( *socket_, message.MakeInputBuffer(),
-                                 boost::bind( &Socket::Read, shared_from_this(),
-                                              message, boost::asio::placeholders::error ) );
+        static const unsigned long limit = 32 * 1024; // 32 kB
+        if( size > limit )
+            message_->OnWarning( endpoint_,
+                "Message size too large : " + boost::lexical_cast< std::string >( size ) );
+        else
+        {
+            Message message( size );
+            boost::asio::async_read( *socket_, message.MakeInputBuffer(),
+                                     boost::bind( &Socket::Read, shared_from_this(),
+                                                  message, boost::asio::placeholders::error ) );
+        }
     }
     else
         message_->OnError( endpoint_, error.message() );

@@ -35,6 +35,7 @@ ServerNetworker::ServerNetworker( unsigned short port )
     , thread_          ( boost::bind( &ServerNetworker::Run, this ) )
 {
     messageService_->RegisterErrorCallback( boost::bind( &ServerNetworker::ConnectionError, this, _1, _2 ) );
+    messageService_->RegisterWarningCallback( boost::bind( &ServerNetworker::ConnectionWarning, this, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,6 +170,15 @@ void ServerNetworker::ConnectionFailed( const std::string& , const std::string& 
 void ServerNetworker::ConnectionError( const std::string& endpoint, const std::string& )
 {
     sockets_->Disconnect( endpoint );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ServerNetworker::ConnectionWarning
+// Created: MCO 2011-09-26
+// -----------------------------------------------------------------------------
+void ServerNetworker::ConnectionWarning( const std::string& , const std::string& )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -35,6 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual void OnError( const std::string& endpoint, const std::string& error );
+    virtual void OnWarning( const std::string& endpoint, const std::string& error );
     virtual void OnMessage( const std::string& endpoint, Message& message );
 
     void Commit( MessageCallback_ABC& callback );
@@ -57,9 +58,9 @@ private:
     //@{
     struct Event
     {
-        Event( const std::string& endpoint, const std::string& error );
+        Event( const std::string& endpoint, const std::string& error, const std::string& warning );
         Event( const std::string& endpoint, const Message& message );
-        std::string endpoint_, error_;
+        std::string endpoint_, error_, warning_;
         Message message_;
     };
     typedef std::vector< Event >   T_Events;

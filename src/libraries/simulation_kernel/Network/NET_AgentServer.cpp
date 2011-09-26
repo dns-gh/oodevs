@@ -94,6 +94,16 @@ void NET_AgentServer::ConnectionError( const std::string& address, const std::st
 }
 
 // -----------------------------------------------------------------------------
+// Name: NET_AgentServer::ConnectionWarning
+// Created: MCO 2011-09-26
+// -----------------------------------------------------------------------------
+void NET_AgentServer::ConnectionWarning( const std::string& address , const std::string& warning )
+{
+    MT_LOG_INFO_MSG( "Connection to '" << address << "' warning (" << warning << ")" );
+    ServerNetworker::ConnectionWarning( address, warning );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NET_AgentServer::SetMustSendUnitVisionCones
 // Created: NLD 2003-10-24
 // -----------------------------------------------------------------------------

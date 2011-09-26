@@ -34,9 +34,10 @@ BufferedMessageCallback::~BufferedMessageCallback()
 // Name: BufferedMessageCallback::Event::Event
 // Created: AGE 2007-09-07
 // -----------------------------------------------------------------------------
-BufferedMessageCallback::Event::Event( const std::string& endpoint, const std::string& error )
+BufferedMessageCallback::Event::Event( const std::string& endpoint, const std::string& error, const std::string& warning )
     : endpoint_( endpoint )
-    , error_( error )
+    , error_   ( error )
+    , warning_ ( warning )
 {
     // NOTHING
 }
@@ -59,7 +60,17 @@ BufferedMessageCallback::Event::Event( const std::string& endpoint, const Messag
 void BufferedMessageCallback::OnError( const std::string& endpoint, const std::string& error )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    events_.push_back( Event( endpoint, error ) );
+    events_.push_back( Event( endpoint, error, "" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BufferedMessageCallback::OnWarning
+// Created: MCO 2011-09-26
+// -----------------------------------------------------------------------------
+void BufferedMessageCallback::OnWarning( const std::string& endpoint, const std::string& warning )
+{
+    boost::mutex::scoped_lock locker( mutex_ );
+    events_.push_back( Event( endpoint, "", warning ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,6 +99,8 @@ void BufferedMessageCallback::Commit( MessageCallback_ABC& callback )
     {
         if( ! it->error_.empty() )
             callback.OnError( it->endpoint_, it->error_ );
+        else if( ! it->warning_.empty() )
+            callback.OnWarning( it->endpoint_, it->warning_ );
         else
             Commit( callback, it->endpoint_, it->message_ );
     }
@@ -105,10 +118,10 @@ void BufferedMessageCallback::Commit( MessageCallback_ABC& callback, const std::
     }
     catch( std::exception& e )
     {
-        callback.OnError( endpoint, e.what() );
+        callback.OnWarning( endpoint, e.what() );
     }
     catch( ... )
     {
-        callback.OnError( endpoint, "unknown exception" );
+        callback.OnWarning( endpoint, "unknown exception" );
     }
 }

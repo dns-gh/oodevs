@@ -37,6 +37,7 @@ ClientNetworker::ClientNetworker( const std::string& host /* = "" */, bool retry
     , thread_          ( boost::bind( &ClientNetworker::Run, this ) )
 {
     messageService_->RegisterErrorCallback( boost::bind( &ClientNetworker::ConnectionError, this, _1, _2 ) );
+    messageService_->RegisterWarningCallback( boost::bind( &ClientNetworker::ConnectionWarning, this, _1, _2 ) );
     if( !host.empty() )
         Connect( host, retry );
 }
@@ -116,6 +117,15 @@ void ClientNetworker::ConnectionError( const std::string& endpoint, const std::s
     sockets_->Disconnect( endpoint );
     if( retry_ )
         connector_->Connect( host_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientNetworker::ConnectionWarning
+// Created: MCO 2011-09-26
+// -----------------------------------------------------------------------------
+void ClientNetworker::ConnectionWarning( const std::string& , const std::string& )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

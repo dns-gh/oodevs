@@ -119,6 +119,25 @@ void Server::ConnectionError( const std::string& from, const std::string& error 
 }
 
 // -----------------------------------------------------------------------------
+// Name: Server::ConnectionWarning
+// Created: MCO 2010-12-01
+// -----------------------------------------------------------------------------
+void Server::ConnectionWarning( const std::string& from, const std::string& warning )
+{
+    listener_.Error( "Shield proxy connection from " + from + " warning : " + warning );
+    tools::ServerNetworker::ConnectionWarning( from, warning );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Server::Warning
+// Created: MCO 2010-12-01
+// -----------------------------------------------------------------------------
+void Server::Warning( const std::string& from, const std::string& warning )
+{
+    listener_.Error( "Shield proxy connection from " + from + " warning : " + warning );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Server::Info
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------

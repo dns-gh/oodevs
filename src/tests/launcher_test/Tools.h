@@ -87,7 +87,7 @@ namespace launcher_test
     {
         MockDispatcher( unsigned short port )
             : tools::ServerNetworker( port )
-            , authPerformed         ( false )
+            , authPerformed( false )
         {
             AllowConnections();
             RegisterMessage< MockDispatcher, sword::ClientToSim >( *this, &MockDispatcher::Receive );
@@ -95,9 +95,10 @@ namespace launcher_test
         }
         MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToSim& ), ReceiveSim );
         MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToAuthentication& ), ReceiveAuth );
-        MOCK_METHOD_EXT( ConnectionSucceeded, 1, void( const std::string& ), ConnectionSucceeded );
-        MOCK_METHOD_EXT( ConnectionFailed, 2, void( const std::string&, const std::string& ), ConnectionFailed );
-        MOCK_METHOD_EXT( ConnectionError, 2, void( const std::string&, const std::string& ), ConnectionError );
+        MOCK_METHOD( ConnectionSucceeded, 1 );
+        MOCK_METHOD( ConnectionFailed, 2 );
+        MOCK_METHOD( ConnectionError, 2 );
+        MOCK_METHOD( ConnectionWarning, 2 );
 
         template <typename M>
         void Send( M& msg )

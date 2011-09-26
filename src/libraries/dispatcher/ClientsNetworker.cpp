@@ -56,7 +56,7 @@ void ClientsNetworker::Receive( const sword::SimToClient& wrapper )
 // Name: ClientsNetworker::ConnectionSucceeded
 // Created: NLD 2002-07-12
 // -----------------------------------------------------------------------------
-void ClientsNetworker::ConnectionSucceeded( const std::string& link  )
+void ClientsNetworker::ConnectionSucceeded( const std::string& link )
 {
     MT_LOG_INFO_MSG( "Connection received from client '" << link << "'" );
     ServerNetworker::ConnectionSucceeded( link  );
@@ -79,7 +79,7 @@ void ClientsNetworker::ConnectionFailed( const std::string& address, const std::
 // Name: ClientsNetworker::ConnectionError
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
-void ClientsNetworker::ConnectionError( const std::string& link , const std::string& reason )
+void ClientsNetworker::ConnectionError( const std::string& link, const std::string& reason )
 {
     MT_LOG_INFO_MSG( "Connection to '" << link << "' lost (" << reason << ")" );
     ServerNetworker::ConnectionError( link, reason );
@@ -92,6 +92,16 @@ void ClientsNetworker::ConnectionError( const std::string& link , const std::str
         delete client;
     }
     MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::ConnectionWarning
+// Created: MCO 2011-09-26
+// -----------------------------------------------------------------------------
+void ClientsNetworker::ConnectionWarning( const std::string& link, const std::string& warning )
+{
+    MT_LOG_INFO_MSG( "Connection to '" << link << "' warning (" << warning << ")" );
+    ServerNetworker::ConnectionWarning( link, warning );
 }
 
 // -----------------------------------------------------------------------------

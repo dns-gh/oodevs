@@ -14,6 +14,7 @@
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include <boost/bind/apply.hpp>
+#include <string>
 #include <vector>
 
 namespace tools
@@ -71,8 +72,19 @@ public:
     virtual void OnMessage( const std::string& link, Message& input )
     {
         MessageDecoder< T > decoder( input );
-        for( std::vector< T_Callback >::const_iterator it = callbacks_.begin(); it != callbacks_.end(); ++it )
-            (*it)( link, decoder );
+        try
+        {
+            for( std::vector< T_Callback >::const_iterator it = callbacks_.begin(); it != callbacks_.end(); ++it )
+                (*it)( link, decoder );
+        }
+        catch( std::exception& e )
+        {
+            throw std::runtime_error( e.what() + (" " + decoder.DebugString()) );
+        }
+        catch( ... )
+        {
+            throw std::runtime_error( "Unknown exception " + decoder.DebugString() );
+        }
     }
     //@}
 

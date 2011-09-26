@@ -26,15 +26,10 @@ class MessageDecoder
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MessageDecoder( Message& message )
+    explicit MessageDecoder( const Message& message )
     {
-        const std::size_t size = message.Size();
-        // $$$$ SBO 2009-10-26: Find a way to get rid of new
-        char* buffer = new char[ size ];
-        message.Read( buffer, size );
-        if( ! message_.ParseFromString( std::string( buffer, size ) ) )
-            throw std::runtime_error( __FUNCTION__ ": message deserialization failed." );
-        delete[] buffer;
+        if( ! message_.ParseFromArray( message.Data(), message.Size() ) )
+            throw std::runtime_error( "Message deserialization failed" );
     }
     //@}
 
@@ -43,6 +38,11 @@ public:
     operator const T&() const
     {
         return message_;
+    }
+
+    std::string DebugString() const
+    {
+        return message_.ShortDebugString();
     }
     //@}
 
