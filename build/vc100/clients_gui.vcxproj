@@ -135,7 +135,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichListItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SimplerRichText.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SpinTableItem.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableCrew.cpp" />
