@@ -14,19 +14,6 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Entity_ABC.h"
 
-namespace
-{
-    struct VariantPointer
-    {
-        VariantPointer() : ptr_( 0 ) {}
-        VariantPointer( const VariantPointer& other ) : ptr_( other.ptr_ ) {}
-        VariantPointer( const void* ptr ) : ptr_( ptr ) {}
-
-        const void* ptr_;
-    };
-    Q_DECLARE_METATYPE( VariantPointer );
-}
-
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyDialog constructor
 // Created: ABR 2011-09-23
