@@ -99,7 +99,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Spawn )
     MIL_ObjectLoader loader;
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
-                             "        <spawn object='toto' action-range='10'/>"
+                             "        <spawn object='toto' action-range='10' nbc='false'/>"
                              "    </object>"
                              "</objects>" );
     BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
