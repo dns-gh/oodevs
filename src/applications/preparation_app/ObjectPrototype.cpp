@@ -91,6 +91,12 @@ namespace
         container.push_back( new NBCPrototype( parent, resolver, toxic, object ) );
     }
 
+    void BridgingAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
+    {
+        if( xis.attribute< std::string >( "type" ) == "" || xis.attribute< std::string >( "type" ) == "bridge" )
+            container.push_back( new CrossingSitePrototype( parent, object ) );
+    }
+
     void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType, std::string >& resolver, Object_ABC*& object )
     {
         container.push_back( new MedicalTreatmentPrototype( parent, resolver, object ) );
@@ -202,7 +208,8 @@ namespace
         factory->Register( "activable"                 , boost::bind( &Capacity< ObstaclePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "time-limited"              , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "supply-route"              , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( object ) ) );
-        factory->Register( "bridging"                  , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( object ) ) );
+        factory->Register( "bridging"                  , boost::bind( &::BridgingAttribute, _1, _2, _3, boost::ref( object ) ) );
+
         factory->Register( "delay"                     , boost::bind( &Capacity< DelayPrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "lodging"                   , boost::bind( &Capacity< LodgingPrototype >::Build, _2, _3, boost::ref( object ) ) );

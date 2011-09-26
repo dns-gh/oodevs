@@ -248,7 +248,7 @@
     <workable max-animator="1"/>
   </object>
   <object geometry="line" name="site franchissement" symbol="G*MPBCL---****X" type="crossing site">
-    <bridging type="bridge"/>
+    <bridging type=""/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
@@ -539,4 +539,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="3455992426" -->
+<!-- signature="1224502227" -->

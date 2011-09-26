@@ -33,6 +33,7 @@ BridgingCapacity::BridgingCapacity( xml::xistream& xis )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 BridgingCapacity::BridgingCapacity()
+    : type_( "bridge" )
 {
     // NOTHING
 }
@@ -41,7 +42,8 @@ BridgingCapacity::BridgingCapacity()
 // Name: BridgingCapacityconstructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-BridgingCapacity::BridgingCapacity( const BridgingCapacity& /*from*/ )
+BridgingCapacity::BridgingCapacity( const BridgingCapacity& from )
+    : type_( from.type_ )
 {
     // NOTHING
 }
@@ -105,9 +107,12 @@ namespace
 // -----------------------------------------------------------------------------
 void BridgingCapacity::Finalize( MIL_Object_ABC& object )
 {
-    T_PointVector vector;
-    CreateBridgeGeometry( object.GetLocalisation().GetPoints(), vector );
-    handler_.Reset( new TER_DynamicData( vector, Convert( type_ ) ) );
+    if( type_ != "" )
+    {
+        T_PointVector vector;
+        CreateBridgeGeometry( object.GetLocalisation().GetPoints(), vector );
+        handler_.Reset( new TER_DynamicData( vector, Convert( type_ ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

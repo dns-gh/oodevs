@@ -89,6 +89,13 @@ namespace
         xis >> xml::optional >> xml::list( "improvable", builder, &ConstructorBuilder::ImprovePrototype, density );
     }
 
+
+    void BridgingAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
+    {
+        if( xis.attribute< std::string >( "type" ) == "" || xis.attribute< std::string >( "type" ) == "bridge" )
+            container.push_back( new CrossingSitePrototype( parent, attributesList ) );
+    }
+
     //void BypassableAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
     //{
     //}
@@ -206,7 +213,7 @@ namespace
         factory->Register( "time-limited"              , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "delay"                     , boost::bind( &Capacity< DelayPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "supply-route"              , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
-        factory->Register( "bridging"                  , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "bridging"                  , boost::bind( &BridgingAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "flood"                     , boost::bind( &Capacity< FloodPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "lodging"                   , boost::bind( &Capacity< LodgingPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "underground-network"       , boost::bind( &UndergroundAttribute, _2, _3, boost::ref( controllers ), boost::ref( attributesList ) ) );

@@ -89,7 +89,7 @@
     <supply-route/>
   </object>
   <object geometry="line" name="Crossing Site" symbol="G*MPBCL---****X" type="crossing site">
-    <bridging type="bridge"/>
+    <bridging type=""/>
   </object>
   <object geometry="point" name="ROTA Point" symbol="G*ROTA*********" type="rota area">
     <contamination max-toxic="-1"/>
@@ -523,4 +523,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="0887439116" -->
+<!-- signature="2602398667" -->

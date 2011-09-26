@@ -318,6 +318,7 @@ ENT_Tr::T_ConverterCrossingType ENT_Tr::CrossingTypeConverter_[] =
     T_ConverterCrossingType( "main road"     , QT_TRANSLATE_NOOP( "ENT_Tr", "main road" )     , eMainRoad ),
     T_ConverterCrossingType( "secondary road", QT_TRANSLATE_NOOP( "ENT_Tr", "secondary road" ), eSecondaryRoad ),
     T_ConverterCrossingType( "country road"  , QT_TRANSLATE_NOOP( "ENT_Tr", "country road" )  , eCountryRoad ),
+    T_ConverterCrossingType( ""       , QT_TRANSLATE_NOOP( "ENT_Tr", "" )              , eNothing ),
     T_ConverterCrossingType( "", "", ( E_CrossingType ) - 1 )
 };
 

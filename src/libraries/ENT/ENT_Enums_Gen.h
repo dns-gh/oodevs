@@ -319,7 +319,8 @@ enum E_CrossingType
     eMainRoad,
     eSecondaryRoad,
     eCountryRoad,
-    eNbrCrossingType
+    eNothing,
+    eNbrCrossingType,
 };
 
 enum E_EquipmentState
