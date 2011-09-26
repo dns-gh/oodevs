@@ -73,6 +73,11 @@ void IndirectFireSender::Notify( const sword::StopUnitFire& message, int /*conte
     parameters.fuseType = 0; // Other
     parameters.munitionObjectIdentifier = Omt13String();
     parameters.munitionType = munitionTypeResolver_.Resolve( startMessage.ammunition().id() );
+    parameters.quantityFired = 3; // Hardcoded
+    parameters.rateOfFire = 3; // Hardcoded
+    parameters.relativeDetonationLocation = rpr::VelocityVector(); // Entity location
+    parameters.targetObjectIdentifier = Omt13String(); // Fire on position
+    parameters.warheadType = 0; // Other
     fires_.erase( fireIdentifier );
     interactionSender_.Send( parameters );
 }

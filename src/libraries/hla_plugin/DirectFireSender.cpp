@@ -78,6 +78,12 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
     parameters.finalVelocityVector = rpr::VelocityVector( 0., 0., 700. ); // $$$$ _RC_ SLI 2011-09-23: Hardcoded
     parameters.fuseType = 0; // Other
     parameters.munitionObjectIdentifier = Omt13String();
+    parameters.munitionType = rpr::EntityType( "2 8 71 2 10" ); // 12.7mm, Hardcoded
+    parameters.quantityFired = 10; // Hardcoded
+    parameters.rateOfFire = 40; // Hardcoded
+    parameters.relativeDetonationLocation = rpr::VelocityVector(); // Entity location
+    parameters.targetObjectIdentifier = Omt13String( targetTdentifier );
+    parameters.warheadType = 0; // Other
     fires_.erase( fireIdentifier );
     interactionSender_.Send( parameters );
 }

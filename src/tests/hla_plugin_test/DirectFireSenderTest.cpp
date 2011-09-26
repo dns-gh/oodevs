@@ -101,14 +101,15 @@ namespace
     {
     public:
         ConfiguredFixture()
-            : latitude ( 1. )
-            , longitude( 2. )
+            : latitude        ( 1. )
+            , longitude       ( 2. )
+            , targetIdentifier( 1337 )
         {
             BOOST_REQUIRE( remoteAgentListener );
             remoteAgentListener->Moved( "distant", latitude, longitude );
             startMessage.mutable_start_unit_fire()->mutable_fire()->set_id( fireIdentifier );
             startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::direct );
-            startMessage.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( 1338 );
+            startMessage.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( targetIdentifier );
             stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
             MOCK_EXPECT( remoteAgentResolver, Resolve ).returns( "distant" );
             controller.Dispatch( startMessage );
@@ -116,6 +117,7 @@ namespace
             controller.Dispatch( stopMessage );
         }
         interactions::MunitionDetonation parameters;
+        const unsigned int targetIdentifier;
         const double latitude;
         const double longitude;
     };
@@ -169,3 +171,35 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_empty_munition_object_identifie
     BOOST_CHECK_EQUAL( parameters.munitionObjectIdentifier.str(), "" );
 }
 
+BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_constant_7_62mm_munition_type, ConfiguredFixture )
+{
+    BOOST_CHECK_EQUAL( parameters.munitionType.str(), "2 8 71 2 10 0 0" );
+}
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_constant_7_62mm_quantity_fired, ConfiguredFixture )
+{
+    BOOST_CHECK_EQUAL( parameters.quantityFired, 10 );
+}
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_constant_7_62mm_rate_of_fire, ConfiguredFixture )
+{
+    BOOST_CHECK_EQUAL( parameters.rateOfFire, 40 );
+}
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_empty_relative_detonation_location, ConfiguredFixture )
+{
+    BOOST_CHECK_SMALL( parameters.relativeDetonationLocation.X(), 0.00001 );
+    BOOST_CHECK_SMALL( parameters.relativeDetonationLocation.Y(), 0.00001 );
+    BOOST_CHECK_SMALL( parameters.relativeDetonationLocation.Z(), 0.00001 );
+}
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_target_object_identifier, ConfiguredFixture )
+{
+    BOOST_CHECK_EQUAL( parameters.targetObjectIdentifier.str(), "distant" );
+}
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_constant_warhead_type_to_other, ConfiguredFixture )
+{
+    const int16 other = 0;
+    BOOST_CHECK_EQUAL( parameters.warheadType, other );
+}

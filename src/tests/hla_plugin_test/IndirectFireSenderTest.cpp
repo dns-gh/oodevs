@@ -147,3 +147,31 @@ BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_send_resolved_munition_type, Confi
 {
     BOOST_CHECK_EQUAL( parameters.munitionType.str(), ammunitionName );
 }
+
+BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_send_constant_quantity_fired, ConfiguredFixture )
+{
+    BOOST_CHECK_EQUAL( parameters.quantityFired, 3 );
+}
+
+BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_send_one_rate_of_fire, ConfiguredFixture )
+{
+    BOOST_CHECK_EQUAL( parameters.rateOfFire, 3 );
+}
+
+BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_send_empty_relative_detonation_location, ConfiguredFixture )
+{
+    BOOST_CHECK_SMALL( parameters.relativeDetonationLocation.X(), 0.00001 );
+    BOOST_CHECK_SMALL( parameters.relativeDetonationLocation.Y(), 0.00001 );
+    BOOST_CHECK_SMALL( parameters.relativeDetonationLocation.Z(), 0.00001 );
+}
+
+BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_send_empty_target_object_identifier, ConfiguredFixture )
+{
+    BOOST_CHECK_EQUAL( parameters.targetObjectIdentifier.str(), "" );
+}
+
+BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_send_constant_warhead_type_to_other, ConfiguredFixture )
+{
+    const int16 other = 0;
+    BOOST_CHECK_EQUAL( parameters.warheadType, other );
+}
