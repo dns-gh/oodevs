@@ -33,26 +33,12 @@ namespace hla
 
 using namespace plugins::hla;
 
-namespace
-{
-    template< typename T >
-    class PublishOnly : public ::hla::InteractionNotification_ABC< T >
-    {
-    public:
-        virtual void Receive( T& /*interaction*/ )
-        {
-            throw std::runtime_error( "publish only" );
-        }
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: MunitionDetonation constructor
 // Created: SLI 2011-06-24
 // -----------------------------------------------------------------------------
-MunitionDetonation::MunitionDetonation( Federate_ABC& federate )
-    : pNotification_( new PublishOnly< interactions::MunitionDetonation >() )
-    , pInteraction_ ( new ::hla::Interaction< interactions::MunitionDetonation >( *pNotification_ ) )
+MunitionDetonation::MunitionDetonation( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::MunitionDetonation >& notification )
+    : pInteraction_ ( new ::hla::Interaction< interactions::MunitionDetonation >( notification ) )
 {
     pInteraction_->Register( "ArticulatedPartData"       , ::hla::CreateParameter( &interactions::MunitionDetonation::articulatedPartData ) );
     pInteraction_->Register( "DetonationLocation"        , ::hla::CreateParameter( &interactions::MunitionDetonation::detonationLocation ) );
@@ -68,7 +54,7 @@ MunitionDetonation::MunitionDetonation( Federate_ABC& federate )
     pInteraction_->Register( "RelativeDetonationLocation", ::hla::CreateParameter( &interactions::MunitionDetonation::relativeDetonationLocation ) );
     pInteraction_->Register( "TargetObjectIdentifier"    , ::hla::CreateParameter( &interactions::MunitionDetonation::targetObjectIdentifier ) );
     pInteraction_->Register( "WarheadType"               , ::hla::CreateParameter( &interactions::MunitionDetonation::targetObjectIdentifier ) );
-    federate.Register( ::hla::InteractionIdentifier( "MunitionDetonation" ), *pInteraction_, true, false );
+    federate.Register( ::hla::InteractionIdentifier( "MunitionDetonation" ), *pInteraction_, true, true );
 }
 
 // -----------------------------------------------------------------------------

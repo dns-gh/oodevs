@@ -40,7 +40,7 @@ class MunitionDetonation : public InteractionSender_ABC< interactions::MunitionD
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MunitionDetonation( Federate_ABC& federate );
+             MunitionDetonation( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::MunitionDetonation >& notification );
     virtual ~MunitionDetonation();
     //@}
 
@@ -52,7 +52,6 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::MunitionDetonation > > pNotification_;
     std::auto_ptr< ::hla::Interaction< interactions::MunitionDetonation > > pInteraction_;
     //@}
 };

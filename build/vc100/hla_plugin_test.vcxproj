@@ -184,6 +184,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederate.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederateAmbassadorFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionHandler.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionNotification.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionSender.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockKnowledgeGroup.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMessageController.h" />
