@@ -185,7 +185,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_push_flow_parameters() )
         return new parameters::PushFlowParameters( parameter, converter_ );
     if( message.has_pull_flow_parameters() )
-        return new parameters::PullFlowParameters( parameter );
+        return new parameters::PullFlowParameters( parameter, converter_ );
     return 0;
 }
 
@@ -330,7 +330,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     else if( type == "pushflowparameters" )
         param.reset( new parameters::PushFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, xis ) );
     else if( type == "pullflowparameters" )
-        param.reset( new parameters::PullFlowParameters( parameter, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, xis ) );
+        param.reset( new parameters::PullFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, xis ) );
     else
         return false;
     return true;

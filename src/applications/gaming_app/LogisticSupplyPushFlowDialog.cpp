@@ -67,7 +67,6 @@ namespace
     };
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
@@ -101,18 +100,20 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     tabs_->addTab( resourcesTab, tools::translate( "Logistic : Push supply flow", "Resources" ) );
     tabs_->addTab( carriersTab, tools::translate( "Logistic : Push supply flow", "Carriers" ) );
     tabs_->addTab( routeTab, tools::translate( "Logistic : Push supply flow", "Route" ) );
+    connect( tabs_, SIGNAL( currentChanged( int ) ), SLOT( OnTabChanged( int ) ) );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), tabs_ );
-    QPushButton* addWaypointButton = new QPushButton( tr( "Add Waypoint" ), tabs_ );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), tabs_ );
+    addWaypointButton_ = new QPushButton( tr( "Add Waypoint" ), tabs_ );
     delWaypointButton_ = new QPushButton( tr( "Delete Waypoint" ), tabs_ );
     delWaypointButton_->setEnabled( false );
+    addWaypointButton_->setVisible( false );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
     connect( okButton, SIGNAL( clicked() ), SLOT( Validate() ) );
-    connect( addWaypointButton, SIGNAL( clicked() ), SLOT( AddWaypoint() ) );
+    connect( addWaypointButton_, SIGNAL( clicked() ), SLOT( AddWaypoint() ) );
     connect( delWaypointButton_, SIGNAL( clicked() ), SLOT( DeleteWaypoint() ) );
 
     tabLayout->addWidget( okButton, 1, 0, 1, 1 );
-    tabLayout->addWidget( addWaypointButton, 1, 1, 1, 1 );
+    tabLayout->addWidget( addWaypointButton_, 1, 1, 1, 1 );
     tabLayout->addWidget( cancelButton, 1, 2, 1, 1 );
     this->setFixedSize( 300, 400 );
 
@@ -123,7 +124,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     recipientsTable_->setColumnWidth( 0 , 260 );
     recipientsTable_->setNumRows( 0 );
     connect( recipientsTable_, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnRecipientValueChanged( int, int ) ) );
-    connect( recipientsTable_, SIGNAL( currentChanged(int, int) ), this, SLOT( OnRecipientSelectionChanged( int, int ) ) );
+    connect( recipientsTable_, SIGNAL( currentChanged( int, int ) ), this, SLOT( OnRecipientSelectionChanged( int, int ) ) );
 
     resourcesTable_ = new Q3Table( 0, 3, resourcesTab );
     resourcesTable_->horizontalHeader()->setLabel( 0, tools::translate( "Logistic : Push supply flow", "Resource" ) );
@@ -235,6 +236,7 @@ void LogisticSupplyPushFlowDialog::Show()
     AddRecipientItem();
     AddCarrierItem();
     tabs_->setCurrentPage( 0 );
+    addWaypointButton_->setVisible( false );
 
     show();
 }
@@ -744,7 +746,7 @@ void LogisticSupplyPushFlowDialog::OnRecipientValueChanged( int row, int /*col*/
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyChangeQuotasDialog::OnRecipientValueChanged
+// Name: LogisticSupplyChangeQuotasDialog::OnRecipientSelectionChanged
 // Created: MMC 2011-09-19
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::OnRecipientSelectionChanged( int row, int /*col*/ )
@@ -1063,4 +1065,13 @@ void LogisticSupplyPushFlowDialog::Draw( const kernel::Location_ABC& /*location*
         glLineStipple( 1, tools.StipplePattern( -1 ) );
         tools.DrawCurvedArrow( routeDrawpoints_[i-1], routeDrawpoints_[i], 0.6f );
     }
-}   
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::OnTabChanged
+// Created: MMC 2011-09-26
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::OnTabChanged( int index )
+{
+    addWaypointButton_->setVisible( index == 2 );
+}

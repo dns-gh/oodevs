@@ -1367,6 +1367,45 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>Logistic : Pull supply flow</name>
+    <message>
+        <source>Resources</source>
+        <translation>Dotations</translation>
+    </message>
+    <message>
+        <source>Carriers</source>
+        <translation>Vecteurs</translation>
+    </message>
+    <message>
+        <source>Resource</source>
+        <translation>Dotation</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation>Disponible</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation>Quantité</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>Manual selection of transport carriers</source>
+        <translation>Sélection manuelle des vecteurs de transport</translation>
+    </message>
+    <message>
+        <source>Route</source>
+        <translation>Itinéraire</translation>
+    </message>
+    <message>
+        <source>Supplier:</source>
+        <translation>Fournisseur:</translation>
+    </message>
+</context>
+<context>
     <name>Logistic : Push supply flow</name>
     <message>
         <source>Resources</source>
@@ -1481,22 +1520,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Tirer flux</translation>
     </message>
     <message>
-        <source>Target:</source>
-        <translation>Cible:</translation>
-    </message>
-    <message>
-        <source>Resource</source>
-        <translation>Dotation</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation>Quantité</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation>Disponible</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -1505,8 +1528,16 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Annuler</translation>
     </message>
     <message>
+        <source>Add Waypoint</source>
+        <translation>Ajouter point de passage</translation>
+    </message>
+    <message>
+        <source>Delete Waypoint</source>
+        <translation>Supprimer le point de passage</translation>
+    </message>
+    <message>
         <source>Log Supply Pull Flow</source>
-        <translation>Ravitaillement tirer flux</translation>
+        <translation>Ravitaillement Tirer Flux</translation>
     </message>
 </context>
 <context>
@@ -1529,11 +1560,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Log Supply Push Flow</source>
-        <translation type="unfinished"></translation>
+        <translation>Ravitaillement Pousser Flux</translation>
     </message>
     <message>
         <source>Delete Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le point de passage</translation>
     </message>
 </context>
 <context>

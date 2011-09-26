@@ -14,6 +14,7 @@
 
 namespace sword {
     class PullFlowParameters;
+    class PointList;
 }
 
 namespace kernel {
@@ -22,6 +23,7 @@ namespace kernel {
     class Formation_ABC;
     class EquipmentType;
     class EntityResolver_ABC;
+    class CoordinateConverter_ABC;
 }
 
 namespace actions {
@@ -38,8 +40,8 @@ class PullFlowParameters : public Parameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PullFlowParameters( const kernel::OrderParameter& parameter );
-             PullFlowParameters( const kernel::OrderParameter& parameter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis );
+    explicit PullFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
+             PullFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis );
     virtual ~PullFlowParameters();
     //@}
 
@@ -48,11 +50,15 @@ public:
     void SetSupplier( const kernel::Automat_ABC& supplierAutomat );
     void SetSupplier( const kernel::Formation_ABC& supplierFormation );
     void AddResource( const kernel::DotationType& type, unsigned long quantity );
-    void AddConvoyer( const kernel::EquipmentType& type, unsigned long quantity );
+    void AddTransporter( const kernel::EquipmentType& type, unsigned long quantity );
+    void SetWayOutPath( const T_PointVector& path );
+    void SetWayBackPath( const T_PointVector& path );
 
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     virtual bool IsSet() const;
+
+    void ReadPoint( xml::xistream& xis, T_PointVector& points );
     //@}
 
 private:
@@ -72,6 +78,8 @@ private:
     //@{
     virtual std::string SerializeType() const;
     virtual void Serialize( xml::xostream& xos ) const;
+    void Serialize( const T_PointVector& path, const std::string& tag, xml::xostream& xos ) const;
+    void CommitTo( const T_PointVector& path, sword::PointList& msgPath ) const;
 
     void ReadResource   ( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver );
     void ReadTransporter( xml::xistream& xis, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver );
@@ -80,10 +88,13 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     T_Resources resources_;
     T_Equipments transporters_;
     const kernel::Automat_ABC* supplierAutomat_;
     const kernel::Formation_ABC* supplierFormation_;
+    T_PointVector wayOutPath_;
+    T_PointVector wayBackPath_;
     //@}
 };
 

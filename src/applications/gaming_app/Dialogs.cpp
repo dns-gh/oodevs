@@ -48,7 +48,7 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new ChangeLogisticLinksDialog( parent, controllers, actionsModel, staticModel, simulation, profile  );
     new LogisticSupplyChangeQuotasDialog( parent, controllers, actionsModel, staticModel, simulation, model, profile  );
     new LogisticSupplyPushFlowDialog( parent, controllers, actionsModel, staticModel, simulation, layer, model.agents_, profile  );
-    new LogisticSupplyPullFlowDialog( parent, controllers, actionsModel, staticModel, simulation, model.agents_, model.teams_, profile  );
+    new LogisticSupplyPullFlowDialog( parent, controllers, actionsModel, staticModel, simulation, layer, model.agents_, model.teams_, profile  );
     new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new MedicalCapacityUpdateDialog( parent, controllers, actionsModel, staticModel, simulation, publisher, profile );

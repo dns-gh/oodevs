@@ -1367,6 +1367,45 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>Logistic : Pull supply flow</name>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished">Dotaciones</translation>
+    </message>
+    <message>
+        <source>Carriers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished">Disponible</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished">Cantidad</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual selection of transport carriers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supplier:</source>
+        <translation type="unfinished">Proveedor:</translation>
+    </message>
+</context>
+<context>
     <name>Logistic : Push supply flow</name>
     <message>
         <source>Resources</source>
@@ -1481,27 +1520,19 @@ Motivo: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Target:</source>
-        <translation type="unfinished">Blanco:</translation>
-    </message>
-    <message>
-        <source>Resource</source>
-        <translation type="unfinished">Dotación</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished">Cantidad</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation type="unfinished">Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Waypoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Waypoint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -9,14 +9,18 @@
 
 #include "actions_pch.h"
 #include "PullFlowParameters.h"
+#include "LocationBase.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/EntityResolver_ABC.h"
+#include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace kernel;
 using namespace actions;
@@ -26,10 +30,11 @@ using namespace parameters;
 // Name: PullFlowParameters constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-PullFlowParameters::PullFlowParameters( const OrderParameter& parameter )
+PullFlowParameters::PullFlowParameters( const OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
     : Parameter< QString >( parameter )
     , supplierFormation_  ( 0 )
     , supplierAutomat_    ( 0 )
+    , converter_          ( converter )
 {
     // NOTHING
 }
@@ -38,10 +43,11 @@ PullFlowParameters::PullFlowParameters( const OrderParameter& parameter )
 // Name: PullFlowParameters constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis )
+PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis )
     : Parameter< QString >( parameter )
     , supplierFormation_  ( 0 )
     , supplierAutomat_    ( 0 )
+    , converter_          ( converter )
 {
     unsigned int idTmp;
     xis >> xml::start( "supplier" )
@@ -53,7 +59,13 @@ PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter,
         supplierFormation_ = &entityResolver.GetFormation( idTmp) ;
 
     xis >> xml::list( "resource", *this, &PullFlowParameters::ReadResource, dotationTypeResolver )
-        >> xml::list( "transporter", *this, &PullFlowParameters::ReadTransporter, equipmentTypeResolver );
+        >> xml::list( "transporter", *this, &PullFlowParameters::ReadTransporter, equipmentTypeResolver )
+        >> xml::start( "wayOutPath" )
+            >> xml::list( "point", *this, &PullFlowParameters::ReadPoint, wayBackPath_ )
+        >> xml::end
+        >> xml::start( "wayBackPath" )
+            >> xml::list( "point", *this, &PullFlowParameters::ReadPoint, wayBackPath_ )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +102,28 @@ void PullFlowParameters::ReadTransporter( xml::xistream& xis, const tools::Resol
 }
 
 // -----------------------------------------------------------------------------
+// Name: PushFlowParameters::ReadPoint
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+void PullFlowParameters::ReadPoint( xml::xistream& xis, T_PointVector& points )
+{
+    std::string mgrs;
+    xis >> xml::attribute( "coordinates", mgrs );
+
+    std::vector< std::string > result;
+    boost::algorithm::split( result, mgrs, boost::is_any_of(" ") );
+    geometry::Point2f point;
+    if( result.size() == 2 ) //Location in WGS84
+    {
+        point = converter_.ConvertFromGeo( geometry::Point2d( boost::lexical_cast< double >( result[ 0 ] ),
+            boost::lexical_cast< double >( result[ 1 ] ) ) );
+    }
+    else
+        point = converter_.ConvertToXY( mgrs );
+    points.push_back( point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PullFlowParameters::SetSupplier
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
@@ -116,6 +150,33 @@ void PullFlowParameters::SetSupplier( const kernel::Formation_ABC& supplierForma
 void PullFlowParameters::AddResource( const kernel::DotationType& type, unsigned long quantity )
 {
     resources_[ &type ] += quantity;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PullFlowParameters::AddTransporter
+// Created: MMC 2011-09-26
+// -----------------------------------------------------------------------------
+void PullFlowParameters::AddTransporter( const kernel::EquipmentType& type, unsigned long quantity )
+{
+    transporters_[ &type ] += quantity;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PullFlowParameters::SetWayOutPath
+// Created: MMC 2011-09-26
+// -----------------------------------------------------------------------------
+void PullFlowParameters::SetWayOutPath( const T_PointVector& path )
+{
+    wayOutPath_ = path;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PullFlowParameters::SetWayBackPath
+// Created: SBO 2011-09-26
+// -----------------------------------------------------------------------------
+void PullFlowParameters::SetWayBackPath( const T_PointVector& path )
+{
+    wayBackPath_ = path;
 }
 
 // -----------------------------------------------------------------------------
@@ -151,6 +212,37 @@ void PullFlowParameters::CommitTo( sword::MissionParameter_Value& message ) cons
         msg->mutable_equipmenttype()->set_id( equipment.first->GetId() );
         msg->set_quantity( equipment.second );
     }
+
+    if( !wayOutPath_.empty() )
+        CommitTo( wayOutPath_, *msgPullFlow->mutable_wayoutpath() );
+    if( !wayBackPath_.empty() )
+        CommitTo( wayBackPath_, *msgPullFlow->mutable_waybackpath() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PullFlowParameters::CommitTo
+// Created: SBO 2007-06-26
+// -----------------------------------------------------------------------------
+void PullFlowParameters::CommitTo( const T_PointVector& path, sword::PointList& msgPath ) const
+{
+    BOOST_FOREACH( const geometry::Point2f& point, path )
+    {
+        sword::Location& msgPoint = *msgPath.add_elem()->mutable_location();
+        msgPoint.set_type( sword::Location_Geometry_point );
+        converter_.ConvertToGeo( point, *msgPoint.mutable_coordinates()->add_elem() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PullFlowParameters::Serialize
+// Created: SBO 2007-06-26
+// -----------------------------------------------------------------------------
+void PullFlowParameters::Serialize( const T_PointVector& path, const std::string& tag, xml::xostream& xos ) const
+{
+    xos << xml::start( tag );
+    BOOST_FOREACH( const geometry::Point2f& point, path )
+        xos << xml::start( "point" ) << xml::attribute( "coordinates", converter_.ConvertToMgrs( point ) ) << xml::end;
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -179,6 +271,8 @@ void PullFlowParameters::Serialize( xml::xostream& xos ) const
                 << xml::attribute( "quantity", equipment.second )
             << xml::end;
     }
+    Serialize( wayBackPath_, "wayOutPath", xos );
+    Serialize( wayBackPath_, "wayBackPath", xos );
 }
 
 // -----------------------------------------------------------------------------

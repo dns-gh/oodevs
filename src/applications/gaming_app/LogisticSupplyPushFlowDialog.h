@@ -63,7 +63,7 @@ class LogisticSupplyPushFlowDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation,  gui::ParametersLayer& layer, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const kernel::Profile_ABC& profile );
+             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyPushFlowDialog();
     //@}
 
@@ -91,6 +91,7 @@ private slots:
     void OnCarriersValueChanged( int row, int col );
     void OnWaypointSelect();
     void OnWaypointRowChanged();
+    void OnTabChanged( int index );
     //@}
 
 private:
@@ -188,8 +189,6 @@ private:
     const tools::Resolver_ABC< kernel::Automat_ABC >& automats_;
     const kernel::Profile_ABC& profile_;
 
-    gui::ValuedComboBox< const kernel::Automat_ABC* >* targetCombo_;
-    Q3Table* table_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QStringList dotationTypes_;
     T_Supplies supplies_;
@@ -203,6 +202,7 @@ private:
     QListView* waypointList_;
     QCheckBox* carriersUseCheck_;
     QPushButton* delWaypointButton_;
+    QPushButton* addWaypointButton_;
 
     T_Recipients recipients_;
     T_RecipientSupplies recipientSupplies_;
