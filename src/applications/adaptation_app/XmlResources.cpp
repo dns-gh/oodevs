@@ -52,5 +52,5 @@ static const char* physicalXml =
 "  <symbols file=\"symbols.xml\"/>\n"
 "  <scores file=\"scores.xml\"/>\n"
 "  <filters file=\"Filters/Filters.xml\"/>\n"
-"  <urbanTemplates file=\"UrbanTemplates.xml\"/>\n"
+"  <urban-templates file=\"UrbanTemplates.xml\"/>\n"
 "</physical>";

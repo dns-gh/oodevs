@@ -4,8 +4,8 @@
   <xsl:template match="/physical">
       <xsl:copy>
           <xsl:apply-templates select="node()|@*"/>
-          <xsl:if test="count( ./urbanTemplates ) = 0">
-              <xsl:element name="urbanTemplates">
+          <xsl:if test="count( ./urban-templates ) = 0">
+              <xsl:element name="urban-templates">
                   <xsl:attribute name="file">UrbanTemplates.xml</xsl:attribute>
               </xsl:element>
           </xsl:if>
