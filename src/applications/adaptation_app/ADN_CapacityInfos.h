@@ -69,7 +69,6 @@ enum E_Capacities
     eResourceNetworkCapacity,
     eScatteringCapacity,
     eSpawnCapacity,
-    eSpawnObjectCapacity,
     eStockCapacity,
     eStructuralCapacity,
     eSupplyCapacity,

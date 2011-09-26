@@ -2430,9 +2430,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.cpp">
       <Filter>Source Files\Entities\Agents\Actions\CrowdTransport</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SpawnObjectCapacity.cpp">
-      <Filter>Source Files\Entities\Objects\Capacities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConsign.cpp">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Consign</Filter>
     </ClCompile>
@@ -4804,9 +4801,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.h">
       <Filter>Source Files\Entities\Agents\Actions\CrowdTransport</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\SpawnObjectCapacity.h">
-      <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConsign.h">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Consign</Filter>

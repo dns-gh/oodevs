@@ -233,7 +233,7 @@ void ADN_Objects_GUI::Build()
     }
 
     // NBC
-    Q3GroupBox* gNBC = new Q3GroupBox( 1, Qt::Horizontal, tr( "NBC" ), hBox );
+    Q3GroupBox* gNBC = new Q3GroupBox( 2, Qt::Horizontal, tr( "NBC" ), hBox );
     // Contamination
     ADN_GroupBox* contamination = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Contamination" ), gNBC );
     {
@@ -246,13 +246,6 @@ void ADN_Objects_GUI::Build()
     {
         vInfosConnectors[ eIntoxicationCapacityPresent ] = & intoxication->GetConnector();
         builder.AddField< ADN_EditLine_Int >( intoxication, tr( "Max Toxic" ), vInfosConnectors[ eIntoxicationCapacity_MaxToxic ], tr( "items" ) );
-    }
-
-    // Spawn object
-    ADN_GroupBox* spawnObject = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Can spawn a cloud" ), gNBC );
-    {
-        vInfosConnectors[ eSpawnObjectCapacityPresent ] = &spawnObject->GetConnector();
-        builder.AddField< ADN_ComboBox_Vector< ADN_Objects_Data::ObjectInfos > >( spawnObject, tr( "Object" ), vInfosConnectors[ eSpawnObjectType ] );
     }
 
     // Decontamination
@@ -285,6 +278,7 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eSpawnCapacityPresent ] = & spawn->GetConnector();
         builder.AddField<ADN_EditLine_Double>( spawn, tr( "Action range" ), vInfosConnectors[eActionRange], tr( "m" ) );
         builder.AddField< ADN_ComboBox_Vector< ADN_Objects_Data::ObjectInfos > >( spawn, tr( "Object" ), vInfosConnectors[ eObjectType ] );
+        builder.AddField< ADN_CheckBox >( spawn, tr( "NBC" ), vInfosConnectors[ eSpawnNBC ] );
     }
 
     ADN_GroupBox* medical = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Medical" ), hBox );

@@ -246,11 +246,7 @@
 				<xs:complexType>
 					<xs:attribute name="object" type="xs:string"/>
 					<xs:attribute name="action-range" type="xs:double"/>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="spawnObject" minOccurs="0">
-				<xs:complexType>
-					<xs:attribute name="object" type="xs:string"/>
+					<xs:attribute name="nbc" type="xs:boolean"/>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="heuristic" minOccurs="0">

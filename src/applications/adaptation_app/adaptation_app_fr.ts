@@ -3231,10 +3231,6 @@ du tireur</translation>
         <translation>Issue de réseau souterrain</translation>
     </message>
     <message>
-        <source>Can spawn a cloud</source>
-        <translation>Peut générer un nuage</translation>
-    </message>
-    <message>
         <source>Trafficability</source>
         <translation>Traficabilité</translation>
     </message>

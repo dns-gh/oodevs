@@ -8,20 +8,21 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "MIL_AgentServer.h"
 #include "SpawnCapacity.h"
+#include "MIL_AgentServer.h"
 #include "ChildObjectAttribute.h"
 #include "Object.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "MIL_ObjectLoader.h"
 #include "MIL_ObjectManipulator_ABC.h"
-#include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MIL_Singletons.h"
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
+#include "MIL_NbcAgentType.h"
+#include "NBCAttribute.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_GUID( SpawnCapacity, "SpawnCapacity" )
@@ -31,10 +32,12 @@ BOOST_CLASS_EXPORT_GUID( SpawnCapacity, "SpawnCapacity" )
 // Created: SLG 2010-02-17
 // -----------------------------------------------------------------------------
 SpawnCapacity::SpawnCapacity( xml::xistream& xis )
-: rActionRange_( 0 )
+    : rActionRange_( 0 )
+    , nbc_         ( false )
 {
     xis >> xml::attribute( "action-range", rActionRange_ )
-        >> xml::attribute( "object", childType_ );
+        >> xml::attribute( "object", childType_ )
+        >> xml::attribute( "nbc", nbc_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +45,8 @@ SpawnCapacity::SpawnCapacity( xml::xistream& xis )
 // Created: SLG 2010-02-17
 // -----------------------------------------------------------------------------
 SpawnCapacity::SpawnCapacity()
-: rActionRange_( 0 )
+    : rActionRange_( 0 )
+    , nbc_         ( false )
 {
     // NOTHING
 }
@@ -52,8 +56,9 @@ SpawnCapacity::SpawnCapacity()
 // Created: SLG 2010-02-17
 // -----------------------------------------------------------------------------
 SpawnCapacity::SpawnCapacity( const SpawnCapacity& from )
-: rActionRange_( from.rActionRange_ )
-, childType_( from.childType_ )
+    : rActionRange_( from.rActionRange_ )
+    , childType_   ( from.childType_ )
+    , nbc_         ( from.nbc_ )
 {
     // NOTHING
 }
@@ -68,16 +73,16 @@ SpawnCapacity::~SpawnCapacity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void SpawnCapacity::serialize
+// Name: SpawnCapacity::serialize
 // Created: SLG 2010-02-17
 // -----------------------------------------------------------------------------
 template< typename Archive >
 void SpawnCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-        & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
         & rActionRange_
-        & childType_;
+        & childType_
+        & nbc_;
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +92,6 @@ void SpawnCapacity::serialize( Archive& file, const unsigned int )
 void SpawnCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
-    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,17 +102,62 @@ void SpawnCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     SpawnCapacity* capacity = new SpawnCapacity( *this );
     object.AddCapacity( capacity );
-    TER_Localisation location = object.GetLocalisation();
-    location.Scale( rActionRange_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCapacity::Finalize
+// Created: LGY 2011-09-26
+// -----------------------------------------------------------------------------
+void SpawnCapacity::Finalize( MIL_Object_ABC& object )
+{
     try
     {
-        Object* childObject= static_cast< Object* >( MIL_Singletons::GetEntityManager().CreateObject( childType_, *object.GetArmy(), location ) );
-        object.GetAttribute< ChildObjectAttribute >().AddChildObject( *childObject );
-        object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
+        if( nbc_ )
+            CreateNBCObject( object );
+        else
+            CreateObject( object );
     }
     catch( std::exception& e )
     {
         MT_LOG_ERROR_MSG( e.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCapacity::CreateObject
+// Created: LGY 2011-09-26
+// -----------------------------------------------------------------------------
+void SpawnCapacity::CreateObject( MIL_Object_ABC& object )
+{
+    TER_Localisation location = object.GetLocalisation();
+    location.Scale( rActionRange_ );
+    Object* childObject= static_cast< Object* >( MIL_Singletons::GetEntityManager().CreateObject( childType_, *object.GetArmy(), location ) );
+    object.GetAttribute< ChildObjectAttribute >().AddChildObject( *childObject );
+}
+
+namespace
+{
+    bool IsGas( const NBCAttribute& attribute )
+    {
+        const NBCAttribute::T_NBCAgents& agents = attribute.GetNBCAgents();
+        for( NBCAttribute::CIT_NBCAgents it = agents.begin(); it != agents.end(); ++it )
+            if( (*it)->IsGasContaminating() || (*it)->IsGasPoisonous() )
+                return true;
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCapacity::CreateNBCObject
+// Created: LGY 2011-09-26
+// -----------------------------------------------------------------------------
+void SpawnCapacity::CreateNBCObject( MIL_Object_ABC& object )
+{
+    const NBCAttribute* pNBC = object.RetrieveAttribute< NBCAttribute >();
+    if( pNBC && IsGas( *pNBC ) )
+    {
+        MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( childType_, *object.GetArmy(), object.GetLocalisation() );
+        pObject->GetAttribute< NBCAttribute >().Update( *pNBC );
     }
 }
 
@@ -118,7 +167,10 @@ void SpawnCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void SpawnCapacity::AddCreator( MIL_Object_ABC& object, const MIL_Agent_ABC& agent )
 {
-    MIL_Object_ABC* childObject = object.RetrieveAttribute< ChildObjectAttribute >()->GetChildObject();
-    if( childObject )
-        childObject->operator ()().AddDetector( agent );
+    if( !nbc_ )
+    {
+        MIL_Object_ABC* childObject = object.RetrieveAttribute< ChildObjectAttribute >()->GetChildObject();
+        if( childObject )
+            childObject->operator ()().AddDetector( agent );
+    }
 }

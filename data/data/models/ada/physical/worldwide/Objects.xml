@@ -361,7 +361,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable/>
     </constructor>
-    <spawn action-range="1000" object="sensorsDetectionZone"/>
+    <spawn action-range="1000" nbc="false" object="sensorsDetectionZone"/>
     <structural value="1"/>
   </object>
   <object geometry="point" name="Supply Point" symbol="G*SPPR----****X" type="supply point">
@@ -408,7 +408,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable/>
     </constructor>
-    <spawn action-range="500" object="Captage de victimes"/>
+    <spawn action-range="500" nbc="false" object="Captage de victimes"/>
     <workable max-animator="1"/>
   </object>
   <object geometry="polygon" name="Meeting Place for Victims (PRV)" symbol="G*GPGAL---****X" type="emergency meeting place"/>
@@ -523,4 +523,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="3505924381" -->
+<!-- signature="0887439116" -->

@@ -348,7 +348,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable/>
     </constructor>
-    <spawn action-range="1000" object="sensorsDetectionZone"/>
+    <spawn action-range="1000" nbc="false" object="sensorsDetectionZone"/>
     <structural value="1"/>
   </object>
   <object geometry="polygon" name="Bloc urbain" symbol="" type="urban block">
@@ -396,4 +396,4 @@
     <workable max-animator="3"/>
   </object>
 </objects>
-<!-- signature="3281066737" -->
+<!-- signature="0056629166" -->
