@@ -286,6 +286,7 @@ void UserProfileWidget::ActivateControls()
         bool supervisor = std::find( supervisors_.begin(), supervisors_.end(), profile_->GetUserRole() ) != supervisors_.end();
         dynamic_cast< UserProfileControls_ABC* >( pUnits_->widget( 1 ) )->Update( supervisor );
         dynamic_cast< UserProfileControls_ABC* >( pPopulations_->widget( 1 ) )->Update( supervisor );
+        OnSupervisorChanged( supervisor );
     }
 }
 
