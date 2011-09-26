@@ -65,7 +65,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnLoginChanged( const QString& text );
+    void OnLoginChanged();
     void OnPasswordChanged( const QString& text );
     void OnSupervisorChanged( bool supervisor );
     void OnUserRoleActivation( bool enable );

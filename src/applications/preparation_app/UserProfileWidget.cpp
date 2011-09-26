@@ -61,7 +61,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         connect( userRole_, SIGNAL( activated( const QString& ) ), this, SLOT( OnUserRole( const QString& ) ) );
         userRoleGroup_->hide();
         addTab( box, tr( "General" ) );
-        connect( login_, SIGNAL( textChanged( const QString& ) ), SLOT( OnLoginChanged( const QString& ) ) );
+        connect( login_, SIGNAL( editingFinished() ), this, SLOT( OnLoginChanged() ) );
         connect( password_, SIGNAL( textChanged( const QString& ) ), SLOT( OnPasswordChanged( const QString& ) ) );
     }
     {
@@ -189,14 +189,14 @@ void UserProfileWidget::Display( UserProfile& profile )
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileWidget::OnLoginChanged
-// Created: SBO 2007-11-08
+// Created: LGY 2011-09-26
 // -----------------------------------------------------------------------------
-void UserProfileWidget::OnLoginChanged( const QString& text )
+void UserProfileWidget::OnLoginChanged()
 {
     try
     {
         if( profile_ )
-            profile_->SetLogin( text );
+            profile_->SetLogin( login_->text() );
     }
     catch( std::exception& e )
     {
