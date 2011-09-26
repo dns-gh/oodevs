@@ -11,8 +11,13 @@
 #define __ModelConsistencyDialog_h_
 
 #include <boost/noncopyable.hpp>
-
 #include "preparation/ModelConsistencyChecker.h"
+
+namespace kernel
+{
+    class ActionController;
+    class Entity_ABC;
+}
 
 // =============================================================================
 /** @class  ModelConsistencyDialog
@@ -23,29 +28,50 @@
 class ModelConsistencyDialog : public QDialog
                              , private boost::noncopyable
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel );
+             ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::ActionController& actionController );
     virtual ~ModelConsistencyDialog();
     //@}
 
-    //! @name Operations
+public slots:
+    //! @name Slots
     //@{
     void CheckConsistency( unsigned int filters = ModelConsistencyChecker::eAllChecks );
     //@}
 
 private:
+    //! @name Types
+    //@{
+    enum E_Column { eID = 0, eName = 1, eDescription = 2 };
+    //@}
+
     //! @name Helpers
     //@{
-    void UpdateErrorListView();
+    void UpdateDataModel();
+    void AddItem( int row, int col, QString text, const kernel::Entity_ABC& entity );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnRefresh();
+    void OnSelectionChanged( const QModelIndex& );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ModelConsistencyChecker checker_;
-    unsigned int            currentFilters_;
+    kernel::ActionController&         actionController_;
+    ModelConsistencyChecker           checker_;
+    unsigned int                      currentFilters_;
+    QTableView*                       tableView_;
+    QStandardItemModel*               dataModel_;
+    QStringList                       horizontalHeaders_;
+    std::map< unsigned int, QString > errorDescriptions_;
     //@}
 };
 

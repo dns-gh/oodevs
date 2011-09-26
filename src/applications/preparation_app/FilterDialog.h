@@ -76,17 +76,17 @@ signals:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< FilterManager >  filterManager_;
-    Q3ListBox*                       list_;
-    QLabel*                         description_;
-    QPushButton*                    okButton_;
-    Q3WidgetStack*                   stack_;
+    std::auto_ptr< FilterManager > filterManager_;
+    Q3ListBox*                     list_;
+    QLabel*                        description_;
+    QPushButton*                   okButton_;
+    Q3WidgetStack*                 stack_;
     //@}
 
 public:
     //! @name Public static member data
     //@{
-    static const int                menuIndex_;
+    static const int               menuIndex_;
     //@}
 };
 

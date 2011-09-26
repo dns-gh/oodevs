@@ -290,7 +290,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pScoreDialog_ = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_, config_, *glProxy_ );
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
     fileToolBar_ = new FileToolbar( this, controllers );
-
+    consistencyDialog_ = new ModelConsistencyDialog( this, model, staticModel_, controllers_.actions_ );
     LivingAreaEditor* pLivingAreaEditor = new LivingAreaEditor( this, controllers, *paramLayer, *glProxy_ );
 
     addToolBar( fileToolBar_ );
@@ -300,9 +300,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // Menu
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
-    menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
+    menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, *consistencyDialog_, *factory, expiration, *help );
     setMenuBar( menu_ );
-    consistencyDialog_ = new ModelConsistencyDialog( this, model, staticModel_ );
     filterDialogs_ = new FilterDialogs( this, config_, model, *menu_ );
 
     // Layers

@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "ModelConsistencyChecker.h"
-
 #include "AgentsModel.h"
 #include "FormationModel.h"
 #include "LimitsModel.h"
@@ -21,10 +20,8 @@
 #include "Stocks.h"
 #include "TacticalLine_ABC.h"
 #include "TeamsModel.h"
-
 #include "clients_gui/Tools.h"
 #include "clients_gui/LongNameHelper.h"
-
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -34,7 +31,6 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-
 #include "tools/Resolver.h"
 #include <boost/bind.hpp>
 
@@ -216,15 +212,15 @@ void ModelConsistencyChecker::CheckUniqueness( E_ConsistencyCheck type, bool ( *
             const Entity_ABC& entity2 = **iter;
             if( ( *comparator )( entity1, entity2 ) )
             {
-                if( std::find( error.ids_.begin(), error.ids_.end(), entity1.GetId() ) == error.ids_.end() )
-                    error.ids_.push_back( entity1.GetId() );
-                error.ids_.push_back( entity2.GetId() );
+                if( std::find( error.entities_.begin(), error.entities_.end(), &entity1 ) == error.entities_.end() )
+                    error.entities_.push_back( &entity1 );
+                error.entities_.push_back( &entity2 );
                 iter = entities_.erase( iter );
             }
             else
                 ++iter;
         }
-        if( !error.ids_.empty() )
+        if( !error.entities_.empty() )
             errors_.push_back( error );
     }
 }
@@ -243,7 +239,7 @@ void ModelConsistencyChecker::CheckStockInitialization()
         if( stocks && !stocks->HasDotations() )
         {
             ConsistencyError error( eStockInitialization );
-            error.ids_.push_back( agent.GetId() );
+            error.entities_.push_back( &agent );
             errors_.push_back( error );
         }
     }
@@ -263,7 +259,7 @@ void ModelConsistencyChecker::CheckLogisticInitialization()
         if( hierarchy->GetSuperior() == 0 )
         {
             ConsistencyError error( eLogisticInitialization );
-            error.ids_.push_back( automat.GetId() );
+            error.entities_.push_back( &automat );
             errors_.push_back( error );
         }
     }

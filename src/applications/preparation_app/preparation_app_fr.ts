@@ -856,6 +856,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>&amp;Reload</source>
         <translation>Recharger</translation>
     </message>
+    <message>
+        <source>Consistency analysis...</source>
+        <translation>Analyse de cohérence...</translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>
@@ -874,6 +878,65 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Delete &apos;%1&apos;?</source>
         <translation>Supprimer &quot;%1&quot; ?</translation>
+    </message>
+</context>
+<context>
+    <name>ModelConsistencyDialog</name>
+    <message>
+        <source>Consistency analysis</source>
+        <translation>Analyse de cohérence</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Actualiser</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Fermer</translation>
+    </message>
+    <message>
+        <source>Duplicate long name for units %1.</source>
+        <translation>Les unités %1 possèdent le même nom long.</translation>
+    </message>
+    <message>
+        <source>Duplicate name for parties %1.</source>
+        <translation>Les camps %1 possèdent le même nom.</translation>
+    </message>
+    <message>
+        <source>Duplicate name for objects %1.</source>
+        <translation>Les objects %1 possèdent le même nom.</translation>
+    </message>
+    <message>
+        <source>Duplicate name for limas %1.</source>
+        <translation>Les limas %1 possèdent le même nom.</translation>
+    </message>
+    <message>
+        <source>Duplicate name for limits %1.</source>
+        <translation>Les limites %1 possèdent le même nom.</translation>
+    </message>
+    <message>
+        <source>No stocks initialized.</source>
+        <translation>Stocks non initialisés.</translation>
+    </message>
+    <message>
+        <source>No logistic link initialized.</source>
+        <translation>Liens logistiques non initialisés.</translation>
+    </message>
+    <message>
+        <source> and </source>
+        <translation> et </translation>
     </message>
 </context>
 <context>

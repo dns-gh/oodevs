@@ -856,6 +856,10 @@ Do you want to save anyway?</source>
         <source>&amp;Reload</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Consistency analysis...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>
@@ -874,6 +878,65 @@ Do you want to save anyway?</source>
     <message>
         <source>Delete &apos;%1&apos;?</source>
         <translation>Borrar &quot;%1&quot; ?</translation>
+    </message>
+</context>
+<context>
+    <name>ModelConsistencyDialog</name>
+    <message>
+        <source>Consistency analysis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nombre</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Cerrar</translation>
+    </message>
+    <message>
+        <source>Duplicate long name for units %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate name for parties %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate name for objects %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate name for limas %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate name for limits %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No stocks initialized.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No logistic link initialized.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> and </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

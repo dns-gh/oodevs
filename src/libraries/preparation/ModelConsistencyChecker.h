@@ -55,8 +55,8 @@ public:
     {
         ConsistencyError( E_ConsistencyCheck type ) : type_( type ) {}
 
-        std::vector< unsigned long > ids_;
-        E_ConsistencyCheck type_;
+        E_ConsistencyCheck                       type_;
+        std::vector< const kernel::Entity_ABC* > entities_;
     };
     //@}
 

@@ -67,7 +67,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog, QDialog& consistencyDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
     : QMenuBar    ( pParent )
     , controllers_( controllers )
 {
@@ -145,6 +145,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu->insertItem( tools::translate( "Menu", "Properties..." ), &exerciseDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Scores..." ), &scoreDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Success factors..." ), &successFactorDialog, SLOT( exec() ) );
+    menu->insertItem( tools::translate( "Menu", "Consistency analysis..." ), &consistencyDialog, SLOT( CheckConsistency() ) );
     Wrap( insertItem( tools::translate( "Menu", "&Exercise" ), menu ) );
 
     QMenu* pMenu = pParent->createPopupMenu();

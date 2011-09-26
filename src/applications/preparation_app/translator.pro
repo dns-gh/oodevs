@@ -29,6 +29,7 @@ LogisticStockEditor.cpp \
 MainWindow.cpp \
 Menu.cpp \
 ModelBuilder.cpp \
+ModelConsistencyDialog.cpp \
 ObjectCreationPanel.cpp \
 PeopleAffinitiesDialog.cpp \
 PopulationRepartitionEditor.cpp \
