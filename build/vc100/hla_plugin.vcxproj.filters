@@ -38,7 +38,7 @@
     <Filter Include="Source Files\Dispatcher\Simulation">
       <UniqueIdentifier>{fcd167dc-d124-494d-9e30-4177258c2828}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Dispatcher\Resolvers">
+    <Filter Include="Source Files\Resolvers">
       <UniqueIdentifier>{d197b6f9-447b-4645-aeb5-a591705436eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -179,16 +179,19 @@
       <Filter>Source Files\Interactions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.cpp">
-      <Filter>Source Files\Dispatcher\Resolvers</Filter>
+      <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp">
-      <Filter>Source Files\Dispatcher\Resolvers</Filter>
+      <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp">
-      <Filter>Source Files\Dispatcher\Resolvers</Filter>
+      <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.cpp">
       <Filter>Source Files\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.cpp">
+      <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -394,25 +397,31 @@
       <Filter>Source Files\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver_ABC.h">
-      <Filter>Source Files\Dispatcher\Resolvers</Filter>
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.h">
-      <Filter>Source Files\Dispatcher\Resolvers</Filter>
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver_ABC.h">
-      <Filter>Source Files\Dispatcher\Resolvers</Filter>
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.h">
-      <Filter>Source Files\Dispatcher\Resolvers</Filter>
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.h">
-      <Filter>Source Files\Dispatcher\Resolvers</Filter>
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver_ABC.h">
-      <Filter>Source Files\Dispatcher\Resolvers</Filter>
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.h">
       <Filter>Source Files\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver_ABC.h">
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

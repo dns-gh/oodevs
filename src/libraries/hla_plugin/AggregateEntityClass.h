@@ -30,6 +30,7 @@ namespace hla
     class AgentSubject_ABC;
     class Federate_ABC;
     class ClassBuilder_ABC;
+    class LocalAgentResolver_ABC;
     class RemoteAggregateFactory_ABC;
     class RemoteAgentListener_ABC;
     class RemoteAgentListenerComposite;
@@ -47,7 +48,7 @@ class AggregateEntityClass : public RemoteAgentSubject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject,
+             AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
                                    const AggregateFactory_ABC& factory, const RemoteAggregateFactory_ABC& remoteFactory,
                                    const ClassBuilder_ABC& builder );
     virtual ~AggregateEntityClass();
@@ -62,8 +63,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
-    virtual void Destroyed( const std::string& identifier );
+    virtual void Created( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
     //@}
 
     //! @name Operations
@@ -84,6 +84,7 @@ private:
     //@{
     unsigned short id_;
     AgentSubject_ABC& subject_;
+    LocalAgentResolver_ABC& resolver_;
     const AggregateFactory_ABC& factory_;
     const RemoteAggregateFactory_ABC& remoteFactory_;
     T_Entities localEntities_;

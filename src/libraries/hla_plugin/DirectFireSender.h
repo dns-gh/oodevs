@@ -32,6 +32,7 @@ namespace plugins
 namespace hla
 {
     class RemoteAgentResolver_ABC;
+    class LocalAgentResolver_ABC;
     class RemoteAgentSubject_ABC;
     template< typename Interaction > class InteractionSender_ABC;
 
@@ -53,8 +54,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              DirectFireSender( InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender,
-                               const RemoteAgentResolver_ABC& resolver, RemoteAgentSubject_ABC& remoteAgentSubject,
-                               tools::MessageController_ABC< sword::SimToClient_Content >& controller, const std::string& federateName );
+                               const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
+                               RemoteAgentSubject_ABC& remoteAgentSubject, tools::MessageController_ABC< sword::SimToClient_Content >& controller, const std::string& federateName );
     virtual ~DirectFireSender();
     //@}
 
@@ -87,7 +88,8 @@ private:
     //! @name Member data
     //@{
     InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender_;
-    const RemoteAgentResolver_ABC& resolver_;
+    const RemoteAgentResolver_ABC& remoteResolver_;
+    const LocalAgentResolver_ABC& localResolver_;
     RemoteAgentSubject_ABC& remoteAgentSubject_;
     const std::string federateName_;
     T_Fires fires_;

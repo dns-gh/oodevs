@@ -83,7 +83,7 @@ private:
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory,
+                                AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
                                 const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory )
     : timeFactory_                ( new ::hla::SimpleTimeFactory() )
     , intervalFactory_            ( new ::hla::SimpleTimeIntervalFactory() )
@@ -96,7 +96,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , pNetnRemoteAggregateFactory_( new NetnRemoteAggregateFactory( *pRemoteAggregateFactory_ ) )
     , pClassBuilder_              ( new ClassBuilder() )
     , pNetnClassBuilder_          ( new NetnClassBuilder( *pClassBuilder_ ) )
-    , agentClass_                 ( new AggregateEntityClass( *federate_, subject,
+    , agentClass_                 ( new AggregateEntityClass( *federate_, subject, resolver,
                                                               xis.attribute< bool >( "netn", true ) ? *pNetnAggregateFactory_ : *pAggregateFactory_,
                                                               xis.attribute< bool >( "netn", true ) ? *pNetnRemoteAggregateFactory_ : *pRemoteAggregateFactory_,
                                                               xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_ ) )

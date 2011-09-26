@@ -16,11 +16,13 @@
 #include "RemoteAggregateFactory_ABC.h"
 #include "RemoteAgentListener_ABC.h"
 #include "RemoteAgentListenerComposite.h"
+#include "LocalAgentResolver_ABC.h"
 #include "ClassBuilder_ABC.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
 #include <hla/ObjectRegistration_ABC.h>
 #include <boost/foreach.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
 
@@ -28,11 +30,12 @@ using namespace plugins::hla;
 // Name: AggregateEntityClass constructor
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
-AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject,
+AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
                                             const AggregateFactory_ABC& factory, const RemoteAggregateFactory_ABC& remoteFactory,
                                             const ClassBuilder_ABC& builder )
     : id_           ( 1 )
     , subject_      ( subject )
+    , resolver_     ( resolver )
     , factory_      ( factory )
     , remoteFactory_( remoteFactory )
     , pListeners_   ( new RemoteAgentListenerComposite() )
@@ -55,33 +58,23 @@ AggregateEntityClass::~AggregateEntityClass()
 // Name: AggregateEntityClass::Created
 // Created: SLI 2011-01-10
 // -----------------------------------------------------------------------------
-void AggregateEntityClass::Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
+void AggregateEntityClass::Created( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
-    localEntities_[ identifier ] = T_Entity( factory_.Create( agent, name, ++id_, force, type ).release() );
-    hlaClass_->Register( *localEntities_[ identifier ], identifier );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntityClass::Destroyed
-// Created: SLI 2011-07-25
-// -----------------------------------------------------------------------------
-void AggregateEntityClass::Destroyed( const std::string& identifier )
-{
-    if( localEntities_.find( identifier ) == localEntities_.end() )
-        return;
-    hlaClass_->Unregister( *localEntities_[ identifier ] );
-    localEntities_.erase( identifier );
+    T_Entity localEntity( factory_.Create( agent, name, ++id_, force, type ).release() );
+    ::hla::ObjectIdentifier objectId = hlaClass_->Register( *localEntity, boost::lexical_cast< std::string >( identifier ) );
+    localEntities_[ objectId.ToString() ] = localEntity;
+    resolver_.Add( identifier, objectId.ToString() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AggregateEntityClass::Create
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-Aggregate_ABC& AggregateEntityClass::Create( const ::hla::ObjectIdentifier& /*objectID*/, const std::string& objectName )
+Aggregate_ABC& AggregateEntityClass::Create( const ::hla::ObjectIdentifier& objectID, const std::string& /*objectName*/ )
 {
-    T_Entity& entity = remoteEntities_[ objectName ];
-    entity.reset( remoteFactory_.Create( objectName, *pListeners_ ).release() );
-    pListeners_->Created( objectName );
+    T_Entity& entity = remoteEntities_[ objectID.ToString() ];
+    entity.reset( remoteFactory_.Create( objectID.ToString(), *pListeners_ ).release() );
+    pListeners_->Created( objectID.ToString() );
     return *entity;
 }
 

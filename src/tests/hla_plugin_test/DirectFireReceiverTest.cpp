@@ -11,6 +11,7 @@
 #include "hla_plugin/DirectFireReceiver.h"
 #include "hla_plugin/Interactions.h"
 #include "MockRemoteAgentResolver.h"
+#include "MockLocalAgentResolver.h"
 #include "MockSimulationPublisher.h"
 #include "MockContextFactory.h"
 #include "protocol/Senders.h"
@@ -24,14 +25,15 @@ namespace
     {
     public:
         Fixture()
-            : receiver        ( publisher, resolver, factory )
+            : receiver        ( publisher, remoteResolver, localResolver, factory )
             , entityImpact    ( 1 )
             , sourceIdentifier( 42 )
             , targetIdentifier( 43 )
         {
             MOCK_EXPECT( factory, Create ).returns( 42 );
         }
-        MockRemoteAgentResolver resolver;
+        MockRemoteAgentResolver remoteResolver;
+        MockLocalAgentResolver localResolver;
         dispatcher::MockSimulationPublisher publisher;
         MockContextFactory factory;
         DirectFireReceiver receiver;
@@ -45,12 +47,12 @@ namespace
 BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_sends_create_direct_fire_order_when_receiving_entity_impact_munition_detonation, Fixture )
 {
     sword::ClientToSim message;
-    MOCK_EXPECT( resolver, ResolveName ).once().with( "source" ).returns( sourceIdentifier );
-    MOCK_EXPECT( resolver, ResolveName ).once().with( "target" ).returns( targetIdentifier );
+    MOCK_EXPECT( remoteResolver, ResolveName ).once().with( "remote source" ).returns( sourceIdentifier );
+    MOCK_EXPECT( localResolver, ResolveName ).once().with( "local target" ).returns( targetIdentifier );
     MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
     parameters.detonationResultCode = entityImpact;
-    parameters.firingObjectIdentifier = Omt13String( "source" );
-    parameters.targetObjectIdentifier = Omt13String( "target" );
+    parameters.firingObjectIdentifier = Omt13String( "remote source" );
+    parameters.targetObjectIdentifier = Omt13String( "local target" );
     receiver.Receive( parameters );
     mock::verify();
     BOOST_CHECK( message.message().has_unit_magic_action() );
@@ -77,17 +79,17 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_does_nothing_when_receiving_mal_fo
 {
     parameters.detonationResultCode = entityImpact;
     parameters.firingObjectIdentifier = Omt13String( "unknown" );
-    parameters.targetObjectIdentifier = Omt13String( "target" );
-    MOCK_EXPECT( resolver, ResolveName ).once().with( "unknown" ).returns( 0 );
+    parameters.targetObjectIdentifier = Omt13String( "local target" );
+    MOCK_EXPECT( remoteResolver, ResolveName ).once().with( "unknown" ).returns( 0 );
     receiver.Receive( parameters );
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_does_nothing_when_receiving_mal_formed_entity_impact_munition_detonation_3, Fixture )
 {
     parameters.detonationResultCode = entityImpact;
-    parameters.firingObjectIdentifier = Omt13String( "source" );
+    parameters.firingObjectIdentifier = Omt13String( "remote source" );
     parameters.targetObjectIdentifier = Omt13String( "unknown" );
-    MOCK_EXPECT( resolver, ResolveName ).once().with( "source" ).returns( sourceIdentifier );
-    MOCK_EXPECT( resolver, ResolveName ).once().with( "unknown" ).returns( 0 );
+    MOCK_EXPECT( remoteResolver, ResolveName ).once().with( "remote source" ).returns( sourceIdentifier );
+    MOCK_EXPECT( localResolver, ResolveName ).once().with( "unknown" ).returns( 0 );
     receiver.Receive( parameters );
 }

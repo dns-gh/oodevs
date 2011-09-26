@@ -53,6 +53,7 @@ namespace hla
     class ObjectResolver_ABC;
     class Stepper;
     class UnitTypeResolver_ABC;
+    class LocalAgentResolver_ABC;
     class SimulationFacade;
 
 // =============================================================================
@@ -92,6 +93,7 @@ private:
     std::auto_ptr< FederateAmbassadorFactory_ABC > pDebugFederateFactory_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityTypeResolver_;
     std::auto_ptr< UnitTypeResolver_ABC > pUnitTypeResolver_;
+    std::auto_ptr< LocalAgentResolver_ABC > pLocalAgentResolver_;
     std::auto_ptr< tools::MessageController< sword::SimToClient_Content > > pMessageController_;
     std::auto_ptr< AgentSubject_ABC > pSubject_;
     std::auto_ptr< FederateFacade > pFederate_;

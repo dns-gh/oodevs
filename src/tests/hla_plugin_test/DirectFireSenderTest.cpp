@@ -12,6 +12,7 @@
 #include "hla_plugin/Omt13String.h"
 #include "hla_plugin/Interactions.h"
 #include "MockMessageController.h"
+#include "MockLocalAgentResolver.h"
 #include "MockRemoteAgentSubject.h"
 #include "MockRemoteAgentResolver.h"
 #include "MockInteractionSender.h"
@@ -34,6 +35,7 @@ namespace
             MOCK_EXPECT( remoteAgentSubject, Unregister );
         }
         MockRemoteAgentResolver remoteAgentResolver;
+        MockLocalAgentResolver localAgentResolver;
         tools::MessageController< sword::SimToClient_Content > controller;
         MockRemoteAgentSubject remoteAgentSubject;
         RemoteAgentListener_ABC* remoteAgentListener;
@@ -43,7 +45,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : sender              ( interactionSender, remoteAgentResolver, remoteAgentSubject, controller, "federate" )
+            : sender              ( interactionSender, remoteAgentResolver, localAgentResolver, remoteAgentSubject, controller, "federate" )
             , fireIdentifier      ( 42 )
             , firingUnitIdentifier( 1338 )
         {
@@ -77,6 +79,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_does_not_resend_an_already_sent_mess
     startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::direct );
     controller.Dispatch( startMessage );
     MOCK_EXPECT( remoteAgentResolver, ResolveIdentifier ).returns( "distant" );
+    MOCK_EXPECT( localAgentResolver, ResolveIdentifier ).returns( "local" );
     MOCK_EXPECT( interactionSender, Send ).once();
     stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
     controller.Dispatch( stopMessage );
@@ -111,7 +114,8 @@ namespace
             startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::direct );
             startMessage.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( targetIdentifier );
             stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
-            MOCK_EXPECT( remoteAgentResolver, ResolveIdentifier ).returns( "distant" );
+            MOCK_EXPECT( remoteAgentResolver, ResolveIdentifier ).once().with( targetIdentifier ).returns( "distant" );
+            MOCK_EXPECT( localAgentResolver, ResolveIdentifier ).once().with( firingUnitIdentifier ).returns( "local" );
             controller.Dispatch( startMessage );
             MOCK_EXPECT( interactionSender, Send ).once().with( mock::retrieve( parameters ) );
             controller.Dispatch( stopMessage );
@@ -150,7 +154,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_uses_fire_identifier_for_event_ident
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_sender_uses_simulation_identifier_for_firing_object_identifier, ConfiguredFixture )
 {
-    BOOST_CHECK_EQUAL( parameters.firingObjectIdentifier.str(), boost::lexical_cast< std::string >( firingUnitIdentifier ) );
+    BOOST_CHECK_EQUAL( parameters.firingObjectIdentifier.str(), "local" );
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_sender_sends_constant_final_velocity_vector, ConfiguredFixture )

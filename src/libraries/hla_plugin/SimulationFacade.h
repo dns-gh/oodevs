@@ -41,6 +41,7 @@ namespace hla
     class RemoteAgentSubject_ABC;
     class ContextFactory_ABC;
     template< typename Message > class ContextHandler_ABC;
+    class LocalAgentResolver_ABC;
     class AutomatDisengager;
     class FormationCreater;
     class AutomatCreater;
@@ -61,7 +62,7 @@ public:
              SimulationFacade( tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel,
                                const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
-                               RemoteAgentSubject_ABC& remoteAgentSubject );
+                               RemoteAgentSubject_ABC& remoteAgentSubject, const LocalAgentResolver_ABC& localAgentResolver );
     virtual ~SimulationFacade();
     //@}
 
@@ -80,6 +81,7 @@ private:
     const dispatcher::StaticModel& staticModel_;
     const UnitTypeResolver_ABC& unitTypeResolver_;
     RemoteAgentSubject_ABC& remoteAgentSubject_;
+    const LocalAgentResolver_ABC& localAgentResolver_;
     std::auto_ptr< ContextFactory_ABC > pContextFactory_;
     std::auto_ptr< ContextHandler_ABC< sword::FormationCreation > > pFormationHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::AutomatCreation > > pAutomatHandler_;

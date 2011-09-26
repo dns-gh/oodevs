@@ -65,13 +65,14 @@ namespace
 SimulationFacade::SimulationFacade( tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
                                     dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel,
                                     const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
-                                    RemoteAgentSubject_ABC& remoteAgentSubject )
+                                    RemoteAgentSubject_ABC& remoteAgentSubject, const LocalAgentResolver_ABC& localAgentResolver )
     : messageController_     ( messageController )
     , publisher_             ( publisher )
     , dynamicModel_          ( dynamicModel )
     , staticModel_           ( staticModel )
     , unitTypeResolver_      ( unitTypeResolver )
     , remoteAgentSubject_    ( remoteAgentSubject )
+    , localAgentResolver_    ( localAgentResolver )
     , pContextFactory_       ( new ContextFactory() )
     , pFormationHandler_     ( new FormationContextHandler( messageController, *pContextFactory_, publisher ) )
     , pAutomatHandler_       ( new AutomatContextHandler( messageController, *pContextFactory_, publisher ) )

@@ -27,12 +27,11 @@ using namespace plugins::hla;
 // Name: AgentController constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentController::AgentController( tools::MessageController_ABC< sword::SimToClient_Content >& controller, dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& resolver )
+AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& resolver )
     : model_   ( model )
     , resolver_( resolver )
 {
     model_.RegisterFactory( *this );
-    CONNECT( controller, *this, unit_destruction );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,17 +69,7 @@ void AgentController::Create( dispatcher::Agent& entity )
     agents_.push_back( T_Agent( new AgentProxy( entity ) ) );
     const std::string type = entity.GetType().GetName();
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-        (*it)->Created( *agents_.back(), boost::lexical_cast< std::string >( entity.GetId() ), entity.GetName().toStdString(), GetForce( entity ), resolver_.Find( type ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentController::Notify
-// Created: SLI 2011-06-29
-// -----------------------------------------------------------------------------
-void AgentController::Notify( const sword::UnitDestruction& message, int /*context*/ )
-{
-    for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-        (*it)->Destroyed( boost::lexical_cast< std::string >( message.unit().id() ) );
+        (*it)->Created( *agents_.back(), entity.GetId(), entity.GetName().toStdString(), GetForce( entity ), resolver_.Find( type ) );
 }
 
 // -----------------------------------------------------------------------------

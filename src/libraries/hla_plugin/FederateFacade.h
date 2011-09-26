@@ -43,6 +43,7 @@ namespace hla
     class AggregateFactory_ABC;
     class RemoteAggregateFactory_ABC;
     class ClassBuilder_ABC;
+    class LocalAgentResolver_ABC;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -57,7 +58,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                             AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory,
+                             AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
                              const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory );
     virtual ~FederateFacade();
     //@}

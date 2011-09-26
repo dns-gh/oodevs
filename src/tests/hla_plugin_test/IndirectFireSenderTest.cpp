@@ -14,6 +14,7 @@
 #include "MockMessageController.h"
 #include "MockInteractionSender.h"
 #include "MockMunitionTypeResolver.h"
+#include "MockLocalAgentResolver.h"
 #include "protocol/Simulation.h"
 #include "tools/MessageController.h"
 #include <boost/lexical_cast.hpp>
@@ -26,7 +27,7 @@ namespace
     {
     public:
         Fixture()
-            : sender              ( interactionSender, controller, "federate", munitionTypeResolver )
+            : sender              ( interactionSender, controller, "federate", munitionTypeResolver, localResolver )
             , fireIdentifier      ( 42 )
             , firingUnitIdentifier( 1338 )
         {
@@ -35,6 +36,7 @@ namespace
         }
         tools::MessageController< sword::SimToClient_Content > controller;
         MockInteractionSender< interactions::MunitionDetonation > interactionSender;
+        MockLocalAgentResolver localResolver;
         MockMunitionTypeResolver munitionTypeResolver;
         IndirectFireSender sender;
         sword::SimToClient_Content startMessage;
@@ -76,6 +78,7 @@ namespace
             position->set_longitude( longitude );
             startMessage.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( 1338 );
             stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
+            MOCK_EXPECT( localResolver, ResolveIdentifier ).once().with( firingUnitIdentifier ).returns( "local" );
             controller.Dispatch( startMessage );
             MOCK_EXPECT( interactionSender, Send ).once().with( mock::retrieve( parameters ) );
             MOCK_EXPECT( munitionTypeResolver, Resolve ).once().with( ammunitionType ).returns( rpr::EntityType( ammunitionName ) );
@@ -101,7 +104,7 @@ BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_articulated_part_data_is_always_em
     BOOST_CHECK_EQUAL( size, parameters.articulatedPartData );
 }
 
-BOOST_FIXTURE_TEST_CASE( direct_fire_sender_sends_position_location, ConfiguredFixture )
+BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_sends_position_location, ConfiguredFixture )
 {
     BOOST_CHECK_CLOSE( parameters.detonationLocation.Latitude(),  latitude,  0.00001 );
     BOOST_CHECK_CLOSE( parameters.detonationLocation.Longitude(), longitude, 0.00001 );
@@ -122,7 +125,7 @@ BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_uses_fire_identifier_for_event_ide
 
 BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_uses_simulation_identifier_for_firing_object_identifier, ConfiguredFixture )
 {
-    BOOST_CHECK_EQUAL( parameters.firingObjectIdentifier.str(), boost::lexical_cast< std::string >( firingUnitIdentifier ) );
+    BOOST_CHECK_EQUAL( parameters.firingObjectIdentifier.str(), "local" );
 }
 
 BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_sends_constant_final_velocity_vector, ConfiguredFixture )

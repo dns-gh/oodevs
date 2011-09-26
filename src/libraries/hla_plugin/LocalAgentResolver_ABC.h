@@ -7,46 +7,40 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_AgentListener_ABC_h
-#define plugins_hla_AgentListener_ABC_h
+#ifndef plugins_hla_LocalAgentResolver_ABC_h
+#define plugins_hla_LocalAgentResolver_ABC_h
 
-#include "rpr/ForceIdentifier.h"
-#include <string>
 #include <boost/noncopyable.hpp>
-
-namespace rpr
-{
-    class EntityType;
-}
+#include <string>
 
 namespace plugins
 {
 namespace hla
 {
-    class Agent_ABC;
-
 // =============================================================================
-/** @class  AgentListener_ABC
-    @brief  Agent listener definition
+/** @class  LocalAgentResolver_ABC
+    @brief  Local agent resolver definition
 */
-// Created: SLI 2011-01-10
+// Created: SLI 2011-09-26
 // =============================================================================
-class AgentListener_ABC : private boost::noncopyable
+class LocalAgentResolver_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListener_ABC() {}
-    virtual ~AgentListener_ABC() {}
+             LocalAgentResolver_ABC() {}
+    virtual ~LocalAgentResolver_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Created( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type ) = 0;
+    virtual void Add( unsigned int simulationIdentifier, const std::string& objectIdentifier ) = 0;
+    virtual std::string Resolve( unsigned int simulationIdentifier ) const = 0;
+    virtual unsigned int Resolve( const std::string& objectIdentifier ) const = 0;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_AgentListener_ABC_h
+#endif // plugins_hla_LocalAgentResolver_ABC_h

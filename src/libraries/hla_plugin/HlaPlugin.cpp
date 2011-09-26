@@ -18,6 +18,7 @@
 #include "ObjectResolver.h"
 #include "Stepper.h"
 #include "UnitTypeResolver.h"
+#include "LocalAgentResolver.h"
 #include "SimulationFacade.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
@@ -60,13 +61,14 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pDebugFederateFactory_ ( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger, *pObjectResolver_ ) )
     , pEntityTypeResolver_   ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "dis", "dis.xml" ) ) ) )
     , pUnitTypeResolver_     ( new UnitTypeResolver( *pEntityTypeResolver_, staticModel.types_ ) )
+    , pLocalAgentResolver_   ( new LocalAgentResolver() )
     , pMessageController_    ( new tools::MessageController< sword::SimToClient_Content >() )
-    , pSubject_              ( new AgentController( *pMessageController_, dynamicModel, *pEntityTypeResolver_ ) )
-    , pFederate_             ( new FederateFacade( xis, *pMessageController_, *pSubject_,
+    , pSubject_              ( new AgentController( dynamicModel, *pEntityTypeResolver_ ) )
+    , pFederate_             ( new FederateFacade( xis, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                    xis.attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                    xis.attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
                                                    config.BuildPluginDirectory( "hla" ) ) )
-    , pSimulationFacade_     ( new SimulationFacade( *pMessageController_, publisher, dynamicModel, staticModel, *pUnitTypeResolver_, *pFederate_ ) )
+    , pSimulationFacade_     ( new SimulationFacade( *pMessageController_, publisher, dynamicModel, staticModel, *pUnitTypeResolver_, *pFederate_, *pLocalAgentResolver_ ) )
     , pStepper_              ( new Stepper( xis, *pMessageController_, publisher ) )
 {
     // NOTHING

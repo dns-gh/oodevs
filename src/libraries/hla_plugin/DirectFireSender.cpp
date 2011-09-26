@@ -14,6 +14,7 @@
 #include "InteractionSender_ABC.h"
 #include "RemoteAgentResolver_ABC.h"
 #include "RemoteAgentSubject_ABC.h"
+#include "LocalAgentResolver_ABC.h"
 #include "protocol/Simulation.h"
 #include <boost/lexical_cast.hpp>
 
@@ -24,10 +25,12 @@ using namespace plugins::hla;
 // Created: SLI 2011-09-23
 // -----------------------------------------------------------------------------
 DirectFireSender::DirectFireSender( InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender,
-                                    const RemoteAgentResolver_ABC& resolver, RemoteAgentSubject_ABC& remoteAgentSubject,
-                                    tools::MessageController_ABC< sword::SimToClient_Content >& controller, const std::string& federateName )
+                                    const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
+                                    RemoteAgentSubject_ABC& remoteAgentSubject, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
+                                    const std::string& federateName )
     : interactionSender_ ( interactionSender )
-    , resolver_          ( resolver )
+    , remoteResolver_    ( remoteResolver )
+    , localResolver_     ( localResolver )
     , remoteAgentSubject_( remoteAgentSubject )
     , federateName_      ( federateName )
 {
@@ -65,7 +68,7 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
     if( fires_.find( fireIdentifier ) == fires_.end() )
         return;
     const sword::StartUnitFire& startMessage = fires_[ fireIdentifier ];
-    const std::string targetTdentifier = resolver_.Resolve( startMessage.target().unit().id() );
+    const std::string targetTdentifier = remoteResolver_.Resolve( startMessage.target().unit().id() );
     if( targetTdentifier.empty() )
         return;
     interactions::MunitionDetonation parameters;
@@ -74,7 +77,7 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
     parameters.detonationResultCode = 1; // EntityImpact
     parameters.eventIdentifier.eventCount = static_cast< uint16 >( fireIdentifier );
     parameters.eventIdentifier.issuingObjectIdentifier = Omt13String( federateName_ );
-    parameters.firingObjectIdentifier = Omt13String( boost::lexical_cast< std::string >( startMessage.firing_unit().id() ) );
+    parameters.firingObjectIdentifier = Omt13String( localResolver_.Resolve( startMessage.firing_unit().id() ) );
     parameters.finalVelocityVector = rpr::VelocityVector( 0., 0., 700. ); // $$$$ _RC_ SLI 2011-09-23: Hardcoded
     parameters.fuseType = 0; // Other
     parameters.munitionObjectIdentifier = Omt13String();

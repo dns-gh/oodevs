@@ -10,6 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "DirectFireReceiver.h"
 #include "RemoteAgentResolver_ABC.h"
+#include "LocalAgentResolver_ABC.h"
 #include "Interactions.h"
 #include "ContextFactory_ABC.h"
 #include "protocol/SimulationSenders.h"
@@ -21,10 +22,12 @@ using namespace plugins::hla;
 // Name: DirectFireReceiver constructor
 // Created: SLI 2011-09-26
 // -----------------------------------------------------------------------------
-DirectFireReceiver::DirectFireReceiver( dispatcher::SimulationPublisher_ABC& publisher, const RemoteAgentResolver_ABC& resolver, const ContextFactory_ABC& factory )
-    : publisher_( publisher )
-    , resolver_ ( resolver )
-    , factory_  ( factory )
+DirectFireReceiver::DirectFireReceiver( dispatcher::SimulationPublisher_ABC& publisher, const RemoteAgentResolver_ABC& remoteResolver,
+                                        const LocalAgentResolver_ABC& localResolver, const ContextFactory_ABC& factory )
+    : publisher_      ( publisher )
+    , remoteResolver_ ( remoteResolver )
+    , localResolver_  ( localResolver )
+    , factory_        ( factory )
 {
     // NOTHING
 }
@@ -50,10 +53,10 @@ void DirectFireReceiver::Receive( interactions::MunitionDetonation& interaction 
     const std::string target = interaction.targetObjectIdentifier.str();
     if( source.empty() || target.empty() )
         return;
-    const unsigned int sourceIdentifier = resolver_.Resolve( source );
+    const unsigned int sourceIdentifier = remoteResolver_.Resolve( source );
     if( sourceIdentifier == 0 )
         return;
-    const unsigned int targetIdentifier = resolver_.Resolve( target );
+    const unsigned int targetIdentifier = localResolver_.Resolve( target );
     if( targetIdentifier == 0 )
         return;
     simulation::UnitMagicAction message;

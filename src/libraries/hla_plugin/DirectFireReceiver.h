@@ -26,6 +26,7 @@ namespace interactions
     struct MunitionDetonation;
 }
     class RemoteAgentResolver_ABC;
+    class LocalAgentResolver_ABC;
     class ContextFactory_ABC;
 
 // =============================================================================
@@ -39,7 +40,8 @@ class DirectFireReceiver : public ::hla::InteractionNotification_ABC< interactio
 public:
     //! @name Constructors/Destructor
     //@{
-             DirectFireReceiver( dispatcher::SimulationPublisher_ABC& publisher, const RemoteAgentResolver_ABC& resolver, const ContextFactory_ABC& factory );
+             DirectFireReceiver( dispatcher::SimulationPublisher_ABC& publisher, const RemoteAgentResolver_ABC& remoteResolver,
+                                 const LocalAgentResolver_ABC& localResolver, const ContextFactory_ABC& factory );
     virtual ~DirectFireReceiver();
     //@}
 
@@ -57,7 +59,8 @@ private:
     //! @name Member data
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
-    const RemoteAgentResolver_ABC& resolver_;
+    const RemoteAgentResolver_ABC& remoteResolver_;
+    const LocalAgentResolver_ABC& localResolver_;
     const ContextFactory_ABC& factory_;
     //@}
 };
