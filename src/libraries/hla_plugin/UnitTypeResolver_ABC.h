@@ -23,7 +23,7 @@ namespace hla
 {
 // =============================================================================
 /** @class  UnitTypeResolver_ABC
-    @brief  UnitTypeResolver definition
+    @brief  Unit type resolver definition
 */
 // Created: SLI 2011-09-15
 // =============================================================================
