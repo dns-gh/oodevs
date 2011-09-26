@@ -1048,7 +1048,7 @@
     </message>
     <message>
         <source>Connection to </source>
-        <translation>Connection à </translation>
+        <translation>Connexion à </translation>
     </message>
     <message>
         <source> lost (cause :</source>

@@ -24,10 +24,9 @@ using namespace launcher;
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
 SwordFacade::SwordFacade( bool isDispatcher )
-    : isDispatcher_( isDispatcher )
-    , isConnected_( false )
-    , isAuthenticated_ ( false )
-    , process_()
+    : isDispatcher_   ( isDispatcher )
+    , isConnected_    ( false )
+    , isAuthenticated_( false )
 {
     // NOTHING
 }
@@ -93,6 +92,7 @@ void SwordFacade::OnConnectionFailed( const std::string& /*endpoint*/, const std
 {
     isConnected_ = false;
 }
+
 // -----------------------------------------------------------------------------
 // Name: SwordFacade::OnConnectionError
 // Created: AHC 2011-05-16
@@ -102,6 +102,7 @@ void SwordFacade::OnConnectionError( const std::string& /*endpoint*/, const std:
     isConnected_ = false;
     isAuthenticated_ = false;
 }
+
 // -----------------------------------------------------------------------------
 // Name: SwordFacade::OnAuthenticationSucceeded
 // Created: AHC 2011-05-16
@@ -110,6 +111,7 @@ void SwordFacade::OnAuthenticationSucceeded( const std::string& /*profile*/ )
 {
     isAuthenticated_ = true;
 }
+
 // -----------------------------------------------------------------------------
 // Name: SwordFacade::OnAuthenticationFailed
 // Created: AHC 2011-05-16

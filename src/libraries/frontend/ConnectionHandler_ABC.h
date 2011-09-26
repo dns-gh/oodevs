@@ -12,7 +12,6 @@
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  ConnectionHandler_ABC
     @brief  ConnectionHandler_ABC
@@ -21,7 +20,6 @@ namespace frontend
 // =============================================================================
 class ConnectionHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
