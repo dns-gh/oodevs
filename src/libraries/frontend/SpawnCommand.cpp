@@ -159,6 +159,7 @@ void SpawnCommand::StopProcess()
         }
         while( Thread32Next( hThreadSnap, &te32 ) );
         EnumThreadWindows( internal_->pid_.dwThreadId, &::CloseWndProc, 0 );
+        TerminateProcess( internal_->pid_.hProcess, 0 );
     }
 }
 
