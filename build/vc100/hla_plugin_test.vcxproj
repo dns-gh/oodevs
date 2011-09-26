@@ -143,6 +143,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\ClassBuilderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\ContextHandlerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\DimensionTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\DirectFireReceiverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\DirectFireSenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\EntityTypeResolverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FederateFacadeTest.cpp" />

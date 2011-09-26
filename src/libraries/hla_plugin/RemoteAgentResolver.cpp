@@ -50,6 +50,18 @@ std::string RemoteAgentResolver::Resolve( unsigned int identifier ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::Resolve
+// Created: SLI 2011-09-26
+// -----------------------------------------------------------------------------
+unsigned int RemoteAgentResolver::Resolve( const std::string& identifier ) const
+{
+    T_Identifiers::right_const_iterator it = identifiers_.right.find( identifier );
+    if( it == identifiers_.right.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
 // Name: RemoteAgentResolver::Created
 // Created: SLI 2011-09-22
 // -----------------------------------------------------------------------------

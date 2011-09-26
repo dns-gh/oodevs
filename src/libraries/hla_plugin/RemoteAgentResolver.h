@@ -50,6 +50,7 @@ public:
     //! @name Operations
     //@{
     virtual std::string Resolve( unsigned int identifier ) const;
+    virtual unsigned int Resolve( const std::string& identifier ) const;
     //@}
 
 private:

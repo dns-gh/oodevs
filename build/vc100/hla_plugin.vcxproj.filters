@@ -187,6 +187,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp">
       <Filter>Source Files\Dispatcher\Resolvers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.cpp">
+      <Filter>Source Files\Interactions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -407,6 +410,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver_ABC.h">
       <Filter>Source Files\Dispatcher\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.h">
+      <Filter>Source Files\Interactions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

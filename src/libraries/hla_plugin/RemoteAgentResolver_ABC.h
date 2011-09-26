@@ -35,6 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual std::string Resolve( unsigned int identifier ) const = 0;
+    virtual unsigned int Resolve( const std::string& identifier ) const = 0;
     //@}
 };
 

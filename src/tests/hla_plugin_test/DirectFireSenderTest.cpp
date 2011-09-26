@@ -76,7 +76,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_does_not_resend_an_already_sent_mess
     startMessage.mutable_start_unit_fire()->mutable_fire()->set_id( fireIdentifier );
     startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::direct );
     controller.Dispatch( startMessage );
-    MOCK_EXPECT( remoteAgentResolver, Resolve ).returns( "distant" );
+    MOCK_EXPECT( remoteAgentResolver, ResolveIdentifier ).returns( "distant" );
     MOCK_EXPECT( interactionSender, Send ).once();
     stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
     controller.Dispatch( stopMessage );
@@ -91,7 +91,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_does_not_send_if_target_is_not_dista
     startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::direct );
     startMessage.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( 1337 );
     controller.Dispatch( startMessage );
-    MOCK_EXPECT( remoteAgentResolver, Resolve ).once().with( 1337u ).returns( "" );
+    MOCK_EXPECT( remoteAgentResolver, ResolveIdentifier ).once().with( 1337u ).returns( "" );
     controller.Dispatch( stopMessage );
 }
 
@@ -111,7 +111,7 @@ namespace
             startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::direct );
             startMessage.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( targetIdentifier );
             stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
-            MOCK_EXPECT( remoteAgentResolver, Resolve ).returns( "distant" );
+            MOCK_EXPECT( remoteAgentResolver, ResolveIdentifier ).returns( "distant" );
             controller.Dispatch( startMessage );
             MOCK_EXPECT( interactionSender, Send ).once().with( mock::retrieve( parameters ) );
             controller.Dispatch( stopMessage );
