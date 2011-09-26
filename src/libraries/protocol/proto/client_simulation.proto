@@ -87,7 +87,7 @@ message UnitMagicAction {
         crowd_change_health_state         = 15; //!< A crowd change health state magic action
         crowd_change_attitude             = 16; //!< A crowd change attitude magic action
         crowd_change_affinities           = 17; //!< A crowd change affinities magic action
-        crowd_change_armed_individuals    = 18; //!< A crowd change armed individuals magic action        
+        crowd_change_armed_individuals    = 18; //!< A crowd change armed individuals magic action
         change_knowledge_group            = 19; //!< A change knowledge group magic action
         change_logistic_links             = 20; //!< A change logistic links magic action
         unit_change_superior              = 21; //!< A unit change superior magic action
@@ -117,6 +117,7 @@ message UnitMagicAction {
         change_equipment_state            = 45; //!< A change equipment state magic action
         change_human_state                = 46; //!< A change human state magic action
         change_dotation                   = 47; //!< A create dotation magic action
+        create_direct_fire_order          = 48; //!< A direct fire order creation magic action
     }
     required Tasker            tasker     = 1; //!< The tasker @todo Explain what is a "tasker"
     required Type              type       = 2; //!< The magic action typ
@@ -137,7 +138,7 @@ message KnowledgeMagicAction {
         update_party        = 1; //!< A update party knowledge magic action
         update_party_parent = 2; //!< A update party parent knowledge magic action
         update_type         = 3; //!< A update type knowledge magic action
-        add_knowledge       = 4; //!< An add knowledge in group magic action        
+        add_knowledge       = 4; //!< An add knowledge in group magic action
     }
     required KnowledgeGroupId  knowledge_group = 1; //!< The knowledge group identifier
     required Type              type            = 2; //!< The magic action type
