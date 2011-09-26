@@ -65,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const std::string type_;
+    std::string type_;
     MIL_DynamicPathDataHandler handler_;
     //@}
 };

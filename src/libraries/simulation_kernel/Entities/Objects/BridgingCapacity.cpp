@@ -64,7 +64,8 @@ BridgingCapacity::~BridgingCapacity()
 template< typename Archive >
 void BridgingCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+         & type_;
 }
 
 // -----------------------------------------------------------------------------
