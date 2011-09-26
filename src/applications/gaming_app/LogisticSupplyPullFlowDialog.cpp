@@ -279,8 +279,6 @@ void LogisticSupplyPullFlowDialog::Validate()
         pullFlowParameters->AddResource( *dotationType, supply.quantity_ );
     }
 
-    // pullFlowParameters->Set()
-
     BOOST_FOREACH( const ObjectQuantity& carrier, carriers_ )
         pullFlowParameters->AddTransporter( *carriersTypeNames_[ carrier.objectName_ ], carrier.quantity_ );
 
@@ -681,13 +679,14 @@ void LogisticSupplyPullFlowDialog::OnSupplierValueChanged()
 {
     customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
     QStringList waypoints = pModel->stringList();
-    waypoints.removeAll( selected_->GetName() );    
+    if ( supplier_ )
+        waypoints.removeAll( supplier_->GetName() );    
     EraseSupplierData();
 
     QString selection = supplierCombo_->text( supplierCombo_->currentIndex() );
     supplier_ = suppliersNames_[ selection ];
     if( supplier_ )
-        waypoints.append( selected_->GetName() );
+        waypoints.append( supplier_->GetName() );
 
     pModel->setStringList( waypoints );
     OnSupplierSelectionChanged();
@@ -958,8 +957,8 @@ void LogisticSupplyPullFlowDialog::ComputeRoute( T_Route& route )
         QString str = *it;
         if( points_.find( str ) != points_.end() )
             route.push_back( Waypoint( points_[ str ] ) );
-        else if( selected_ )
-            route.push_back( Waypoint( selected_ ) );
+        else if( supplier_ )
+            route.push_back( Waypoint( supplier_ ) );
     }
 }
 
@@ -976,7 +975,7 @@ void LogisticSupplyPullFlowDialog::UpdateRouteDrawpoints()
     if ( !supplier_ )
         return;
 
-    const kernel::Positions* startPos = static_cast< const kernel::Positions* >( supplier_->Retrieve< kernel::Positions >() );
+    const kernel::Positions* startPos = static_cast< const kernel::Positions* >( selected_->Retrieve< kernel::Positions >() );
     if( startPos )
         routeDrawpoints_.push_back( startPos->GetPosition() );
 
@@ -985,7 +984,7 @@ void LogisticSupplyPullFlowDialog::UpdateRouteDrawpoints()
             routeDrawpoints_.push_back( route[i].point_ );
         else
         {
-            const kernel::Positions* pos = static_cast< const kernel::Positions* >( selected_->Retrieve< kernel::Positions >() );
+            const kernel::Positions* pos = static_cast< const kernel::Positions* >( supplier_->Retrieve< kernel::Positions >() );
             if( pos )
                 routeDrawpoints_.push_back( pos->GetPosition() );
         }
