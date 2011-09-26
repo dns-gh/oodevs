@@ -30,6 +30,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionAlat.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -904,34 +905,47 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
     {
         CIT_PerceptionVector itPerception;
 
-        TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( *perceiverPosition_, GetMaxAgentPerceptionDistance(), perceivableAgents );
-        AppendHackedAgents( perceivableAgents );
-        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).Execute( perceivableAgents, *pion_.GetAlgorithms().detectionComputerFactory_ );
-
-        TER_Object_ABC::T_ObjectVector perceivableObjects;
-        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( *perceiverPosition_, GetMaxObjectPerceptionDistance(), perceivableObjects );
-        AppendUniversalObjects( perceivableObjects );
-        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).Execute( perceivableObjects );
+        double maxPerceptionDistance = GetMaxAgentPerceptionDistance();
 
         std::set< const urban::TerrainObject_ABC* > perceivableUrbanBlock;
         MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( perceiverPosition_->rX_ ),
                                                                                                            static_cast< float >( perceiverPosition_->rY_ ) ),
                                                                                         maxBlockPerceptionDistance,
                                                                                         perceivableUrbanBlock );
-        for( std::set< const urban::TerrainObject_ABC* >::const_iterator itUrban = perceivableUrbanBlock.begin(); itUrban != perceivableUrbanBlock.end(); ++itUrban )
-            NotifyPerception( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( **itUrban ), PHY_PerceptionLevel::identified_ );
+        if( !perceivableUrbanBlock.empty() )
+        {
+            double occupation = 0.;  
+            for( std::set< const urban::TerrainObject_ABC* >::const_iterator itUrban = perceivableUrbanBlock.begin(); itUrban != perceivableUrbanBlock.end(); ++itUrban )
+            {
+                const UrbanObjectWrapper& wrapper = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( **itUrban );
+                NotifyPerception( wrapper, PHY_PerceptionLevel::identified_ );
+                occupation += wrapper.GetOccupation();
+            }
+            occupation /= perceivableUrbanBlock.size();
+            maxPerceptionDistance *= ( 1 - 9*occupation/10 );
+        }
+        
+        TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
+
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( *perceiverPosition_, maxPerceptionDistance, perceivableAgents );
+        AppendHackedAgents( perceivableAgents );
+        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+            (**itPerception).Execute( perceivableAgents, *pion_.GetAlgorithms().detectionComputerFactory_ );
+
+        TER_Object_ABC::T_ObjectVector perceivableObjects;
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( *perceiverPosition_, maxPerceptionDistance, perceivableObjects );
+        AppendUniversalObjects( perceivableObjects );
+        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+            (**itPerception).Execute( perceivableObjects );
 
         TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations;
-        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( *perceiverPosition_, GetMaxAgentPerceptionDistance(), perceivableConcentrations );
+        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( *perceiverPosition_, maxPerceptionDistance, perceivableConcentrations );
         AppendHackedPopulationConcentrations( perceivableConcentrations );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableConcentrations );
 
         TER_PopulationFlow_ABC::T_PopulationFlowVector perceivableFlows;
-        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( *perceiverPosition_, GetMaxAgentPerceptionDistance(), perceivableFlows );
+        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( *perceiverPosition_, maxPerceptionDistance, perceivableFlows );
         AppendHackedPopulationFlows( perceivableFlows );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableFlows );
