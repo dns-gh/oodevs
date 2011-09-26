@@ -13,6 +13,7 @@
 #include "hla_plugin/Interactions.h"
 #include "MockMessageController.h"
 #include "MockInteractionSender.h"
+#include "MockMunitionTypeResolver.h"
 #include "protocol/Simulation.h"
 #include "tools/MessageController.h"
 #include <boost/lexical_cast.hpp>
@@ -25,7 +26,7 @@ namespace
     {
     public:
         Fixture()
-            : sender              ( interactionSender, controller, "federate" )
+            : sender              ( interactionSender, controller, "federate", munitionTypeResolver )
             , fireIdentifier      ( 42 )
             , firingUnitIdentifier( 1338 )
         {
@@ -34,6 +35,7 @@ namespace
         }
         tools::MessageController< sword::SimToClient_Content > controller;
         MockInteractionSender< interactions::MunitionDetonation > interactionSender;
+        MockMunitionTypeResolver munitionTypeResolver;
         IndirectFireSender sender;
         sword::SimToClient_Content startMessage;
         sword::SimToClient_Content stopMessage;
@@ -55,29 +57,20 @@ BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_does_nothing_when_no_start_unit_fi
     controller.Dispatch( stopMessage );
 }
 
-BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_does_not_resend_an_already_sent_message, Fixture )
-{
-    startMessage.mutable_start_unit_fire()->mutable_fire()->set_id( fireIdentifier );
-    startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::indirect );
-    controller.Dispatch( startMessage );
-    MOCK_EXPECT( interactionSender, Send ).once();
-    stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
-    controller.Dispatch( stopMessage );
-    mock::verify();
-    controller.Dispatch( stopMessage );
-}
-
 namespace
 {
     class ConfiguredFixture : public Fixture
     {
     public:
         ConfiguredFixture()
-            : latitude ( 1. )
-            , longitude( 2. )
+            : latitude      ( 1. )
+            , longitude     ( 2. )
+            , ammunitionType( 123 )
+            , ammunitionName( "1 2 3 0 0 0 0" )
         {
             startMessage.mutable_start_unit_fire()->mutable_fire()->set_id( fireIdentifier );
             startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::indirect );
+            startMessage.mutable_start_unit_fire()->mutable_ammunition()->set_id( ammunitionType );
             sword::CoordLatLong* position = startMessage.mutable_start_unit_fire()->mutable_target()->mutable_position();
             position->set_latitude( latitude );
             position->set_longitude( longitude );
@@ -85,12 +78,21 @@ namespace
             stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
             controller.Dispatch( startMessage );
             MOCK_EXPECT( interactionSender, Send ).once().with( mock::retrieve( parameters ) );
+            MOCK_EXPECT( munitionTypeResolver, Resolve ).once().with( ammunitionType ).returns( rpr::EntityType( ammunitionName ) );
             controller.Dispatch( stopMessage );
         }
         interactions::MunitionDetonation parameters;
         const double latitude;
         const double longitude;
+        const unsigned int ammunitionType;
+        const std::string ammunitionName;
     };
+}
+
+BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_does_not_resend_an_already_sent_message, ConfiguredFixture )
+{
+    mock::verify();
+    controller.Dispatch( stopMessage );
 }
 
 BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_articulated_part_data_is_always_empty, ConfiguredFixture )
@@ -139,4 +141,9 @@ BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_sends_other_fuse_type, ConfiguredF
 BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_send_empty_munition_object_identifier, ConfiguredFixture )
 {
     BOOST_CHECK_EQUAL( parameters.munitionObjectIdentifier.str(), "" );
+}
+
+BOOST_FIXTURE_TEST_CASE( indirect_fire_sender_send_resolved_munition_type, ConfiguredFixture )
+{
+    BOOST_CHECK_EQUAL( parameters.munitionType.str(), ammunitionName );
 }

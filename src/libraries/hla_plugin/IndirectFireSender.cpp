@@ -12,6 +12,7 @@
 #include "Omt13String.h"
 #include "Interactions.h"
 #include "InteractionSender_ABC.h"
+#include "MunitionTypeResolver_ABC.h"
 #include "protocol/Simulation.h"
 #include <boost/lexical_cast.hpp>
 
@@ -22,9 +23,11 @@ using namespace plugins::hla;
 // Created: SLI 2011-09-23
 // -----------------------------------------------------------------------------
 IndirectFireSender::IndirectFireSender( InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender,
-                                        tools::MessageController_ABC< sword::SimToClient_Content >& controller, const std::string& federateName )
-    : interactionSender_( interactionSender )
-    , federateName_     ( federateName )
+                                        tools::MessageController_ABC< sword::SimToClient_Content >& controller, const std::string& federateName,
+                                        MunitionTypeResolver_ABC& munitionTypeResolver )
+    : interactionSender_   ( interactionSender )
+    , federateName_        ( federateName )
+    , munitionTypeResolver_( munitionTypeResolver )
 {
     CONNECT( controller, *this, start_unit_fire );
     CONNECT( controller, *this, stop_unit_fire );
@@ -69,6 +72,7 @@ void IndirectFireSender::Notify( const sword::StopUnitFire& message, int /*conte
     parameters.finalVelocityVector = rpr::VelocityVector( 0., 0., 400. );  // $$$$ _RC_ SLI 2011-09-23: Hardcoded
     parameters.fuseType = 0; // Other
     parameters.munitionObjectIdentifier = Omt13String();
+    parameters.munitionType = munitionTypeResolver_.Resolve( startMessage.ammunition().id() );
     fires_.erase( fireIdentifier );
     interactionSender_.Send( parameters );
 }
