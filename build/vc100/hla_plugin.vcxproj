@@ -109,6 +109,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\Dimension.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Formation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireSender.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregateFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.cpp" />
@@ -166,6 +167,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Interactions.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregateFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.h" />

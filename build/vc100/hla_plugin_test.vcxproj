@@ -188,6 +188,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockKnowledgeGroup.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMessageController.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockModel.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMunitionTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectRegistration.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentListener.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentResolver.h" />
