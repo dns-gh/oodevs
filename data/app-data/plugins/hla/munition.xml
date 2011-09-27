@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<dis-mapping default-type="2 2 71 2 13" default-name="152-mm High Explosive Shell" threshold="0 0 9 1 1 9 9">
+    <!-- dis : Kind Domain Country Category Subcategory Specific Extra -->
+    <!-- aggregates -->
+    <entry name="152-mm High Explosive Shell" dis="2 2 71 2 13"/>
+</dis-mapping>

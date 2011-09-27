@@ -95,7 +95,13 @@
                 <setting attribute="@dis" type="string" default="dis.xml">
                     <descriptions>
                         <description lang="en" name="DIS"><![CDATA[]]>Entity types mapping.</description>
-                        <description lang="fr" name="DIS"><![CDATA[]]>Matching des types d'entités.</description>
+                        <description lang="fr" name="DIS"><![CDATA[]]>Mapping des types d'entités.</description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@munition" type="string" default="munition.xml">
+                    <descriptions>
+                        <description lang="en" name="DIS"><![CDATA[]]>Munition types mapping.</description>
+                        <description lang="fr" name="DIS"><![CDATA[]]>Mapping des types de munition.</description>
                     </descriptions>
                 </setting>
                 <setting attribute="@debug" type="boolean" default="false">
