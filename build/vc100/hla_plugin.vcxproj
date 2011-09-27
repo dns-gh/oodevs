@@ -109,6 +109,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateMarking.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Dimension.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Formation.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateMarking.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Dimension.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Formation.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Interactions.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender_ABC.h" />

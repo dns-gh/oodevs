@@ -81,7 +81,7 @@ namespace
             MOCK_EXPECT( localResolver, ResolveIdentifier ).once().with( firingUnitIdentifier ).returns( "local" );
             controller.Dispatch( startMessage );
             MOCK_EXPECT( interactionSender, Send ).once().with( mock::retrieve( parameters ) );
-            MOCK_EXPECT( munitionTypeResolver, Resolve ).once().with( ammunitionType ).returns( rpr::EntityType( ammunitionName ) );
+            MOCK_EXPECT( munitionTypeResolver, ResolveIdentifier ).once().with( ammunitionType ).returns( rpr::EntityType( ammunitionName ) );
             controller.Dispatch( stopMessage );
         }
         interactions::MunitionDetonation parameters;

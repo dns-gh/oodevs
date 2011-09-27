@@ -24,7 +24,8 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockMunitionTypeResolver, MunitionTypeResolver_ABC )
 {
-    MOCK_METHOD( Resolve, 1 );
+    MOCK_METHOD_EXT( Resolve, 1, rpr::EntityType( unsigned int ), ResolveIdentifier );
+    MOCK_METHOD_EXT( Resolve, 1, unsigned int( const rpr::EntityType& ), ResolveType );
 };
 
 }

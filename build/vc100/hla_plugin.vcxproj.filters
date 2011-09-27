@@ -193,6 +193,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.cpp">
+      <Filter>Source Files\Interactions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -422,6 +425,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.h">
+      <Filter>Source Files\Interactions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

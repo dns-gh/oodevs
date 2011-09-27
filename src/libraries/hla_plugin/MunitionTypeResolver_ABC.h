@@ -21,7 +21,6 @@ namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  MunitionTypeResolver_ABC
     @brief  Munition type resolver definition
@@ -40,6 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual rpr::EntityType Resolve( unsigned int munitionIdentifier ) const = 0;
+    virtual unsigned int    Resolve( const rpr::EntityType& munitionType ) const = 0;
     //@}
 };
 
