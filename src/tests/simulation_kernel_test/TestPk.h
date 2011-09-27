@@ -68,6 +68,7 @@ public:
         PHY_Protection::Terminate();
         PHY_Volume::Terminate();
         PHY_DotationNature::Terminate();
+        PHY_DotationLogisticType::Terminate();
         PHY_DotationType::Terminate();
     }
 };

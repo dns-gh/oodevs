@@ -84,7 +84,7 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         MOCK_EXPECT( time, GetTickDuration ).returns( 10u );
         MOCK_EXPECT( time, GetCurrentTick ).returns( 10u );
 
-        const std::string dotations( "<resources><resource name='ammo' category='munition' id='1' nature='Solide' id-nature='1' package-size='1' package-mass='1' package-volume='1'>"
+        const std::string dotations( "<resources><resource name='ammo' category='munition' id='1' logistic-supply-class='whatever' nature='Solide' id-nature='1' package-size='1' package-mass='1' package-volume='1'>"
             "<attritions><attrition destruction='0' protection='protection1' repairable-with-evacuation='0.2' repairable-without-evacuation='0.8'/></attritions>"
             "<indirect-fire type='explosif' intervention-type='1' neutralization-ratio='1.5' x-dispersion='100' y-dispersion='100'/></resource></resources>" );
         TestIndirectFireModifier* testRole = new TestIndirectFireModifier( time, effectManager, pion, dotations );
