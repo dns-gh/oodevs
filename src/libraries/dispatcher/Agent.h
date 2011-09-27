@@ -160,6 +160,7 @@ private:
     sword::UnitAttributes::EnumUnitTiredness   nTiredness_;
     sword::UnitAttributes::EnumUnitMorale      nMorale_;
     sword::UnitAttributes::EnumUnitExperience  nExperience_;
+    sword::UnitAttributes::EnumUnitStress      nStress_;
     const kernel::Team_ABC*                    pSideSurrenderedTo_;
     bool                                       bPrisonner_;
     bool                                       bRefugeeManaged_;

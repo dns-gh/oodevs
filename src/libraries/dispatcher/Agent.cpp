@@ -76,6 +76,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , nTiredness_                 ( sword::UnitAttributes::rested )
     , nMorale_                    ( sword::UnitAttributes::high )
     , nExperience_                ( sword::UnitAttributes::expert )
+    , nStress_                    ( sword::UnitAttributes::calm )
     , pSideSurrenderedTo_         ( 0 )
     , bPrisonner_                 ( false )
     , bRefugeeManaged_            ( false )
@@ -222,7 +223,8 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
     UPDATE_ASN_ATTRIBUTE( roe_crowd                 , nPopulationRoe_ );
     UPDATE_ASN_ATTRIBUTE( tiredness                 , nTiredness_ );
     UPDATE_ASN_ATTRIBUTE( morale                    , nMorale_ );
-    UPDATE_ASN_ATTRIBUTE( experience, nExperience_ );
+    UPDATE_ASN_ATTRIBUTE( experience                , nExperience_ );
+    UPDATE_ASN_ATTRIBUTE( stress                    , nStress_ );
 
     if( message.has_surrendered_unit()  )
         pSideSurrenderedTo_ = message.surrendered_unit().id() == 0 ? 0 : &model_.Sides().Get( message.surrendered_unit().id() );
@@ -462,6 +464,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_tiredness( nTiredness_ );
         asn().set_morale( nMorale_ );
         asn().set_experience( nExperience_ );
+        asn().set_stress( nStress_ );
         asn().mutable_surrendered_unit()->set_id( pSideSurrenderedTo_ ? pSideSurrenderedTo_->GetId() : 0 );
         asn().set_prisoner( bPrisonner_ );
         asn().set_refugees_managed( bRefugeeManaged_ );
