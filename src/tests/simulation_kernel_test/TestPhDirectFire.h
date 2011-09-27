@@ -13,6 +13,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationLogisticType.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
@@ -40,7 +41,9 @@ public:
 
         xml::xistringstream xisDotationNature( "<natures><nature type='Solide' id='1'/></natures>" );
         PHY_DotationNature::Initialize( xisDotationNature );
-        xml::xistringstream xisDotations( "<resources><resource name='ammo' category='munition' id='1' nature='Solide' id-nature='1' package-size='1' package-mass='1' package-volume='1'><attritions>"
+        xml::xistringstream xisLogisticSupplyClasses( "<logistic-supply-classes><logistic-supply-class id='12' type='whatever'/></logistic-supply-classes>" );
+        PHY_DotationLogisticType::Initialize( xisLogisticSupplyClasses );
+        xml::xistringstream xisDotations( "<resources><resource name='ammo' category='munition' id='1' logistic-supply-class='whatever' nature='Solide' id-nature='1' package-size='1' package-mass='1' package-volume='1'><attritions>"
             "<attrition destruction='0' protection='protection1' repairable-with-evacuation='0.1' repairable-without-evacuation='0.05'/></attritions></resource></resources>" );
         PHY_DotationType::Initialize( xisDotations );
 

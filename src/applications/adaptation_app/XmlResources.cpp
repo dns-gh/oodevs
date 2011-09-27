@@ -21,6 +21,7 @@ static const char* physicalXml =
 "  <active-protections file=\"ActiveProtections.xml\"/>\n"
 "  <human-protections file=\"HumanProtections.xml\"/>\n"
 "  <resource-natures file=\"DotationNatures.xml\"/>\n"
+"  <logistic-supply-classes file=\"LogisticSupplyClasses.xml\"/>\n"
 "  <objects file=\"Objets.xml\"/>\n"
 "  <resources file=\"Dotations.xml\"/>\n"
 "  <launchers file=\"Lanceurs.xml\"/>\n"

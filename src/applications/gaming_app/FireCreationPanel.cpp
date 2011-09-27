@@ -239,7 +239,7 @@ void FireCreationPanel::NotifyUpdated( const kernel::ModelLoaded& )
     while( it.HasMoreElements() )
     {
         const kernel::DotationType& type = it.NextElement();
-        if( type.IsDType() )
+        if( type.IsIndirectFireAmmunition() )
         {
             sword::ResourceType dot;
             dot.set_id( type.GetId() );

@@ -41,7 +41,6 @@ PHY_UnitType::sComposanteTypeData::sComposanteTypeData()
 // -----------------------------------------------------------------------------
 PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     : dotationCapacitiesTC1_            ( "logistics", xis )
-    , stockLogisticThresholdRatios_     ( PHY_DotationLogisticType::GetDotationLogisticTypes().size(), 0.1 )
     , composanteTypes_                  ()
     , postureTimes_                     ( PHY_Posture::GetPostures().size(), 0 )
     , rInstallationTime_                ( 0. )
@@ -144,15 +143,14 @@ void PHY_UnitType::InitializeCrossingHeight( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_UnitType::ReadStock( xml::xistream& xis )
 {
-    const PHY_DotationLogisticType* pType = PHY_DotationLogisticType::Find( xis.attribute< std::string >( "category" ) );
+    const PHY_DotationLogisticType* pType = PHY_DotationLogisticType::Find( xis.attribute< std::string >( "logistic-supply-class" ) );
     if( !pType )
         xis.error( "Unknown logistic dotation type" );
-    assert( stockLogisticThresholdRatios_.size() > pType->GetID() );
     double rThreshold = xis.attribute< double >( "threshold" );
     if( rThreshold < 0 || rThreshold > 100 )
         xis.error( "stock: threshold not in [0..100]" );
     rThreshold /= 100.;
-    stockLogisticThresholdRatios_[ pType->GetID() ] = rThreshold;
+    stockLogisticThresholdRatios_[ pType ] = rThreshold;
 }
 
 // -----------------------------------------------------------------------------
@@ -332,8 +330,8 @@ double PHY_UnitType::GetPostureTime( const PHY_Posture& posture ) const
 // -----------------------------------------------------------------------------
 double PHY_UnitType::GetStockLogisticThresholdRatio( const PHY_DotationLogisticType& type ) const
 {
-    assert( stockLogisticThresholdRatios_.size() > type.GetID() );
-    return stockLogisticThresholdRatios_[ type.GetID() ];
+    CIT_StockLogisticThresholdRatios it = stockLogisticThresholdRatios_.find( &type );
+    return it == stockLogisticThresholdRatios_.end() ? 0.1 : it->second;
 }
 
 // -----------------------------------------------------------------------------

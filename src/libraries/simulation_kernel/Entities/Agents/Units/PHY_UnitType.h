@@ -86,8 +86,8 @@ private:
 
     typedef std::vector< unsigned int > T_PostureTimesVector;
 
-    typedef std::vector< double >                            T_StockLogisticThresholdRatios;
-    typedef T_StockLogisticThresholdRatios::const_iterator CIT_StockLogisticThresholdRatios;
+    typedef std::map< const PHY_DotationLogisticType*, double > T_StockLogisticThresholdRatios;
+    typedef T_StockLogisticThresholdRatios::const_iterator      CIT_StockLogisticThresholdRatios;
     //@}
 
 private:

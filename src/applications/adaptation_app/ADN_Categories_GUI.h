@@ -19,6 +19,7 @@ class ADN_ListView_Categories_Armor;
 class ADN_ListView_Categories_Size;
 class ADN_ListView_Categories_DotationNature;
 class ADN_Categories_AttritionEffect_Table;
+class ADN_ListView_Categories_LogisticSupplyClass;
 class ADN_ComboBox;
 
 // =============================================================================
@@ -57,6 +58,12 @@ public:
         eNbrDotationNatureGuiElements
     };
 
+    enum E_LogisticSupplyClassGuiElements
+    {
+        eLogisticSupplyClassName,
+        eNbrLogisticSupplyClassGuiElements
+    };
+
 public slots:
     void OnTypeChanged( int index );
 
@@ -72,6 +79,7 @@ private:
     ADN_ListView_Categories_Armor*          pListArmor_;
     ADN_ListView_Categories_Size*           pListSize_;
     ADN_ListView_Categories_DotationNature* pListDotationNature_;
+    ADN_ListView_Categories_LogisticSupplyClass* pListLogisticSupplyClasses_;
     ADN_Categories_AttritionEffect_Table*   pAttritionEffects_;
 
     ADN_ComboBox* pComboType_;

@@ -23,6 +23,7 @@
 #include "RoofShapeType.h"
 #include "VolumeType.h"
 #include "WeaponSystemType.h"
+#include "LogisticSupplyClass.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
@@ -58,6 +59,7 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
 {
     Purge();
     const tools::Loader_ABC& loader = config.GetLoader();
+    loader.LoadPhysicalFile( "logistic-supply-classes", boost::bind( &ObjectTypes::ReadLogisticSupplyClasses, this, _1 ) );;
     loader.LoadPhysicalFile( "objects", boost::bind( &ObjectTypes::ReadObjectTypes, this, _1 ) );
     loader.LoadPhysicalFile( "resources", boost::bind( &ObjectTypes::ReadDotations, this, _1 ) );
     loader.LoadPhysicalFile( "volumes", boost::bind( &ObjectTypes::ReadVolumes, this, _1 ) );
@@ -91,6 +93,7 @@ void ObjectTypes::Purge()
     tools::StringResolver< MaterialCompositionType >::DeleteAll();
     tools::StringResolver< RoofShapeType >::DeleteAll();
     tools::StringResolver< InfrastructureType >::DeleteAll();
+    tools::StringResolver< LogisticSupplyClass >::DeleteAll();
     nVolumeId = 0;
 }
 
@@ -137,7 +140,7 @@ void ObjectTypes::ReadDotations( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadDotation( xml::xistream& xis )
 {
-    DotationType* dotation = new DotationType( xis );
+    DotationType* dotation = new DotationType( xis, *this );
     Resolver2< DotationType >::Register( dotation->GetId(), dotation->GetName(), *dotation );
 }
 
@@ -280,6 +283,25 @@ void ObjectTypes::ReadVolume( xml::xistream& xis )
 {
     VolumeType* volume = new VolumeType( xis, nVolumeId++ );
     tools::Resolver< VolumeType >::Register( volume->GetId(), *volume );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadLogisticSupplyClasses
+// Created: JSR 2010-06-07
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadLogisticSupplyClasses( xml::xistream& xis )
+{
+    xis >> xml::start( "logistic-supply-classes" ) >> xml::list( "logistic-supply-class", *this, &ObjectTypes::ReadLogisticSupplyClass );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadLogisticSupplyClass
+// Created: JSR 2010-06-07
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadLogisticSupplyClass( xml::xistream& xis )
+{
+    LogisticSupplyClass* data = new LogisticSupplyClass( xis );
+    tools::StringResolver< LogisticSupplyClass >::Register( data->GetName(), *data );
 }
 
 // -----------------------------------------------------------------------------

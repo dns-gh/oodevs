@@ -410,6 +410,12 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
+	<xs:simpleType name="T_LogisticSupplyClass">
+		<xs:annotation>
+			<xs:documentation>Classe logistique d'une ressource. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
 	<xs:simpleType name="T_ResourceCategory">
 		<xs:annotation>
 			<xs:documentation>catégorie de la ressources</xs:documentation>
@@ -437,18 +443,6 @@
 			<xs:enumeration value="Mitraille"/>
 			<xs:enumeration value="Obus"/>
 			<xs:enumeration value="ALR"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="T_StockCategory">
-		<xs:annotation>
-			<xs:documentation/>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="Unite essence"/>
-			<xs:enumeration value="Unite tranche D"/>
-			<xs:enumeration value="Unite non tranche D"/>
-			<xs:enumeration value="Unite vivre"/>
-			<xs:enumeration value="Pieces"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_NRBCeffectType">

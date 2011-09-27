@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
 	<xs:include schemaLocation="tools.xsd"/>
 	<xs:simpleType name="T_IntegralPercentage">
@@ -101,7 +102,7 @@
 									<xs:sequence>
 										<xs:element name="stock" minOccurs="0" maxOccurs="unbounded">
 											<xs:complexType>
-												<xs:attribute name="category" type="T_StockCategory" use="required"/>
+												<xs:attribute name="logistic-supply-class" type="T_LogisticSupplyClass" use="required"/>
 												<xs:attribute name="threshold" type="xs:nonNegativeInteger" use="required"/>
 											</xs:complexType>
 										</xs:element>
@@ -166,8 +167,8 @@
 									<xs:attribute name="urban-area" type="T_IntegralPercentage" use="required"/>
 								</xs:complexType>
 							</xs:element>
-              <xs:element name="repartition" type="T_Repartition" minOccurs="0"/>
-              <xs:element name="crossing-height" minOccurs="0">
+							<xs:element name="repartition" type="T_Repartition" minOccurs="0"/>
+							<xs:element name="crossing-height" minOccurs="0">
 								<xs:complexType>
 									<xs:attribute name="height" type="xs:string" use="required"/>
 								</xs:complexType>

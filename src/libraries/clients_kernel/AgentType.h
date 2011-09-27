@@ -28,6 +28,7 @@ namespace kernel
     class DecisionalModel;
     class DotationCapacityType;
     class SymbolFactory;
+    class LogisticSupplyClass;
 
 // =============================================================================
 /** @class  AgentType
@@ -68,8 +69,7 @@ public:
     bool IsLogisticMaintenance() const;
     bool IsLogisticMedical() const;
 
-    bool IsStockCategoryDefined( std::string category ) const;
-    unsigned int GetStockCategoryThreshold( std::string category ) const;
+    bool IsStockCategoryDefined( const LogisticSupplyClass& logClass ) const;
     //@}
 
 private:
@@ -85,7 +85,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadEquipment( xml::xistream& xis, const  tools::Resolver_ABC< ComponentType, std::string >& resolver  );
+    void ReadEquipment( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& resolver  );
     void ReadCrewRank( xml::xistream& xis );
     void ReadResourcesCategory( xml::xistream& xis );
     void ReadResources( xml::xistream& xis );

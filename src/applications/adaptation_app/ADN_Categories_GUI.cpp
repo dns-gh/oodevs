@@ -20,6 +20,7 @@
 #include "ADN_ListView_Categories_Armor.h"
 #include "ADN_ListView_Categories_Size.h"
 #include "ADN_ListView_Categories_DotationNature.h"
+#include "ADN_ListView_Categories_LogisticSupplyClass.h"
 #include "ADN_Categories_AttritionEffect_Table.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Tr.h"
@@ -139,10 +140,29 @@ void ADN_Categories_GUI::Build()
     pEdit = new ADN_EditLine_String( pNatureGroup );
     vDotationNatureInfosConnectors[ eDotationNatureName ] = &pEdit->GetConnector();
 
+    ///////////////////
+    // Logistic resource categories
+    Q3GroupBox* pLogResourceCatGroup = new Q3VGroupBox( tr( "Logistic resource categories" ), pBox );
+    Q3HBox*     pLogResourceCatHBox  = new Q3HBox( pLogResourceCatGroup );
+
+    // dotation natures list
+    T_ConnectorVector   vLogisticSupplyClassesConnectors( eNbrLogisticSupplyClassGuiElements, (ADN_Connector_ABC*)0 );
+    pListLogisticSupplyClasses_ = new ADN_ListView_Categories_LogisticSupplyClass( pLogResourceCatHBox );
+    static_cast<ADN_Connector_Vector_ABC*>( &pListLogisticSupplyClasses_->GetConnector() )->Connect( &data_.GetLogisticSupplyClasses() );
+    //QWhatsThis::add( pListDotationNature_, "Les différentes nature de dotations existantes dans la simulation." );
+
+    // size
+    pLogResourceCatGroup = new Q3VGroupBox( tr( "Logistic resource category" ), pLogResourceCatGroup );
+    pLogResourceCatGroup->setInsideMargin( 20 );
+    pLogResourceCatGroup->setInsideSpacing( 20 );
+    pEdit = new ADN_EditLine_String( pLogResourceCatGroup );
+    vLogisticSupplyClassesConnectors[ eLogisticSupplyClassName ] = &pEdit->GetConnector();
+
     // set auto connectors
     pListArmor_->SetItemConnectors( vArmorInfosConnectors );
     pListSize_->SetItemConnectors( vSizeInfosConnectors );
     pListDotationNature_->SetItemConnectors( vDotationNatureInfosConnectors );
+    pListLogisticSupplyClasses_->SetItemConnectors( vLogisticSupplyClassesConnectors );
 }
 
 // -----------------------------------------------------------------------------

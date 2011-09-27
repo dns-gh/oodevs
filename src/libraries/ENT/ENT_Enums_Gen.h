@@ -378,15 +378,4 @@ enum E_InjuriesSeriousness
     eNbrInjuriesSeriousness = 4
 };
 
-enum E_StockCategory
-{
-    eStockCategory_UniteFuel,
-    eStockCategory_UniteFieldArtyAmmo,
-    eStockCategory_UniteNotFieldArtyAmmo,
-    eStockCategory_UniteSupply,
-    eStockCategory_Piece,
-    eNbrStockCategory
-};
-
-
 #endif // __ENT_Enums_Gen_h_

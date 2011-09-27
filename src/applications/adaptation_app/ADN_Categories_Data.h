@@ -19,6 +19,7 @@
 #include "ADN_Tools.h"
 #include "ADN_ArmorInfos.h"
 #include "ADN_ResourceNatureInfos.h"
+#include "ADN_LogisticSupplyClass.h"
 #include "IdentifierFactory.h"
 
 namespace xml { class xistream; }
@@ -47,9 +48,11 @@ public:
     helpers::T_ArmorInfos_Vector&          GetArmorsInfos();
     T_SizeInfos_Vector&                    GetSizesInfos();
     helpers::T_ResourceNatureInfos_Vector& GetDotationNaturesInfos();
+    helpers::T_LogisticSupplyClass_Vector& GetLogisticSupplyClasses();
     helpers::ArmorInfos*                   FindArmor( const std::string& strName );
     SizeInfos*                             FindSize( const std::string& strName );
     helpers::ResourceNatureInfos*          FindDotationNature( const std::string& strName );
+    helpers::LogisticSupplyClass*     FindLogisticSupplyClass( const std::string& strName );
     static unsigned long                   GetNewIdentifier();
 
 private:
@@ -59,15 +62,19 @@ private:
     void ReadArmors( xml::xistream& input );
     void ReadNature( xml::xistream& input );
     void ReadDotationNatures( xml::xistream& input );
+    void ReadLogisticSupplyClass( xml::xistream& input );
+    void ReadLogisticSupplyClasses( xml::xistream& input );
 
     void WriteSizes( xml::xostream& output );
     void WriteArmors( xml::xostream& output );
     void WriteDotationNatures( xml::xostream& output );
+    void WriteLogisticSupplyClasses( xml::xostream& output );
 
 private:
     helpers::T_ArmorInfos_Vector vArmors_;
     T_SizeInfos_Vector  vSizes_;
     helpers::T_ResourceNatureInfos_Vector vDotationNatures_;
+    helpers::T_LogisticSupplyClass_Vector vLogisticSupplyClasses_;
     static IdentifierFactory idFactory_;
 };
 
@@ -101,6 +108,16 @@ inline
 helpers::T_ResourceNatureInfos_Vector& ADN_Categories_Data::GetDotationNaturesInfos()
 {
     return vDotationNatures_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_Data::GetLogisticSupplyClasses
+// Created: SBO 2006-03-23
+// -----------------------------------------------------------------------------
+inline
+helpers::T_LogisticSupplyClass_Vector& ADN_Categories_Data::GetLogisticSupplyClasses()
+{
+    return vLogisticSupplyClasses_;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,6 +155,19 @@ inline
 helpers::ResourceNatureInfos* ADN_Categories_Data::FindDotationNature( const std::string& strName )
 {
     for( helpers::IT_ResourceNatureInfos_Vector it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
+        if( ADN_Tools::CaselessCompare( (*it)->GetData(), strName ) )
+            return *it;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_Data::FindLogisticSupplyClass
+// Created: SBO 2006-03-23
+// -----------------------------------------------------------------------------
+inline
+helpers::LogisticSupplyClass* ADN_Categories_Data::FindLogisticSupplyClass( const std::string& strName )
+{
+    for( helpers::IT_LogisticSupplyClass_Vector it = vLogisticSupplyClasses_.begin(); it != vLogisticSupplyClasses_.end(); ++it )
         if( ADN_Tools::CaselessCompare( (*it)->GetData(), strName ) )
             return *it;
     return 0;

@@ -11,6 +11,7 @@
 #define __DotationType_h_
 
 #include <boost/noncopyable.hpp>
+#include "tools/Resolver.h"
 
 namespace xml
 {
@@ -19,6 +20,7 @@ namespace xml
 
 namespace kernel
 {
+    class LogisticSupplyClass;
 
 // =============================================================================
 /** @class  DotationType
@@ -31,7 +33,7 @@ class DotationType : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DotationType( xml::xistream& xis );
+    explicit DotationType( xml::xistream& xis, const tools::Resolver_ABC< LogisticSupplyClass, std::string >& resolver );
     virtual ~DotationType();
     //@}
 
@@ -43,10 +45,11 @@ public:
     const std::string& GetName() const; // $$$$ AGE 2006-04-28: category and name are kind of mixed up
     const std::string& GetCategory() const;
     const std::string& GetType() const;
+    const LogisticSupplyClass& GetLogisticSupplyClass() const;
 
     bool IsGas() const;
     bool IsAmmunition() const;
-    bool IsDType() const;
+    bool IsIndirectFireAmmunition() const;
     //@}
 
 private:
@@ -57,9 +60,10 @@ private:
     unsigned long categoryId_;
     std::string category_;
     std::string type_;
+    const LogisticSupplyClass* logisticSupplyClass_;
     bool gaz_;
     bool ammunition_;
-    bool dType_;
+    bool indirectFireAmmunition_;
     //@}
 };
 

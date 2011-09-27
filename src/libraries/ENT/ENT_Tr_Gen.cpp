@@ -377,17 +377,6 @@ ENT_Tr::T_ConverterInjuriesSeriousness ENT_Tr::InjuriesSeriousnessConverter_ [] 
     T_ConverterInjuriesSeriousness( "", "", ( E_InjuriesSeriousness ) - 1 )
 };
 
-ENT_Tr::T_ConverterStockCategory ENT_Tr::stockCategoryConverter_[] =
-{
-    T_ConverterStockCategory( "Unite essence",          QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Fuel"),                 eStockCategory_UniteFuel ),
-    T_ConverterStockCategory( "Unite tranche D" ,       QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Field arty ammo"),      eStockCategory_UniteFieldArtyAmmo ),
-    T_ConverterStockCategory( "Unite non tranche D",    QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Not field arty ammo"),  eStockCategory_UniteNotFieldArtyAmmo ),
-    T_ConverterStockCategory( "Unite vivre"  ,          QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Water/food"),           eStockCategory_UniteSupply ),
-    T_ConverterStockCategory( "Pieces"       ,          QT_TRANSLATE_NOOP("ENT_Tr" ,"Logistic - Parts"),                eStockCategory_Piece ),
-    T_ConverterStockCategory( "", "", (E_StockCategory)-1 )
-};
-
-
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -426,8 +415,7 @@ void ENT_Tr::InitTranslations()
     InitTr( HumanLocationConverter_, "ENT_Tr" );
     InitTr( EquipmentStateConverter_, "ENT_Tr" );
     InitTr( InjuriesSeriousnessConverter_, "ENT_Tr" );
-    InitTr( stockCategoryConverter_, "ENT_Tr" );
-}
+ }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromLocationType
@@ -717,16 +705,6 @@ const std::string& ENT_Tr::ConvertFromInjuriesSeriousness( E_InjuriesSeriousness
     return ENT_Tr::InverseFindInConverter( InjuriesSeriousnessConverter_, nValue, nConverterType );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromStockCategory
-// Created: MMC 2011-08-31
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromStockCategory( E_StockCategory nValue, E_Conversion nConversion )
-{
-    return ENT_Tr::InverseFindInConverter( stockCategoryConverter_, nValue, nConversion );
-}
-
-
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLocationType
 // Created: AGR
@@ -1006,11 +984,3 @@ E_InjuriesSeriousness ENT_Tr::ConvertToInjuriesSeriousness( const std::string& s
     return ENT_Tr::FindInConverter( InjuriesSeriousnessConverter_, strName );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToStockCategory
-// Created: MMC 2011-08-31
-// -----------------------------------------------------------------------------
-E_StockCategory ENT_Tr::ConvertToStockCategory( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( stockCategoryConverter_, strName );
-}

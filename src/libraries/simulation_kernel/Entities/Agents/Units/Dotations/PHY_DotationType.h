@@ -20,7 +20,6 @@ namespace xml
 }
 
 class PHY_DotationCategory;
-class PHY_DotationLogisticType;
 
 // =============================================================================
 // @class  PHY_DotationType
@@ -56,9 +55,8 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&              GetName               () const;
-          unsigned int              GetID                 () const;
-    const PHY_DotationLogisticType& GetDefaultLogisticType() const;
+    const std::string& GetName() const;
+          unsigned int GetID  () const;
     //@}
 
     //! @name Operators
@@ -93,7 +91,7 @@ private:
     //@}
 
 private:
-     PHY_DotationType( const std::string& strName, E_DotationType nType, const PHY_DotationLogisticType& defaultLogisticType );
+     PHY_DotationType( const std::string& strName, E_DotationType nType );
     ~PHY_DotationType();
 
     //! @name Initialisation
@@ -103,16 +101,15 @@ private:
 
     void RegisterDotation( const std::string& strCategoryName, xml::xistream& xis );
     //@}
+    
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadDotation( xml::xistream& xis );
     //@}
 
 private:
     const std::string               strName_;
     const E_DotationType            nType_;
-    const PHY_DotationLogisticType& defaultLogisticType_;
           T_DotationCategoryMap     dotationCategories_;
 
 private:

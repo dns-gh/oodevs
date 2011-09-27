@@ -39,40 +39,32 @@ public:
 public:
     //! @name Manager
     //@{
-    static void Initialize();
+    static void Initialize( xml::xistream& xis );
     static void Terminate ();
 
-    static const PHY_DotationLogisticType*  Find                    ( const std::string& strName );
+    static const PHY_DotationLogisticType*  Find                    ( const std::string& type );
     static const PHY_DotationLogisticType*  Find                    ( unsigned int nID );
     static const T_DotationLogisticTypeMap& GetDotationLogisticTypes();
     //@}
 
+    //! @name Helpers
+    //@{
+    static void ReadDotationLogisticType( xml::xistream& xis );
+    //@}
+
     //! @name Accessors
     //@{
-    const std::string& GetName() const;
-          unsigned int         GetID  () const;
+    const std::string& GetType() const;
+    unsigned int       GetID  () const;
     //@}
 
 private:
-    //! @name Types
-    //@{
-    enum E_DotationLogisticType
-    {
-        eUniteEssence   = 0,
-        eUniteFeuTD     = 1,
-        eUniteFeuSansTD = 2,
-        eUniteVivre     = 3,
-        ePieces         = 4
-    };
-    //@}
-
-private:
-     PHY_DotationLogisticType( const std::string& strName, E_DotationLogisticType nType );
+     PHY_DotationLogisticType( unsigned int id, const std::string& type );
     ~PHY_DotationLogisticType();
 
 private:
-    const std::string            strName_;
-    const E_DotationLogisticType nType_;
+    const unsigned int id_;
+    const std::string  type_;
 
 private:
     static T_DotationLogisticTypeMap dotationLogisticTypes_;

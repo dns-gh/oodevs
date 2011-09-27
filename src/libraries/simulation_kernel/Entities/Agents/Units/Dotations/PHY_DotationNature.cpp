@@ -17,14 +17,6 @@
 PHY_DotationNature::T_DotationNatureMap PHY_DotationNature::natures_;
 unsigned int PHY_DotationNature::nNextID_ = 0;
 
-struct PHY_DotationNature::LoadingWrapper
-{
-    void ReadNature( xml::xistream& xis )
-    {
-        PHY_DotationNature::ReadNature( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationNature::Initialize
 // Created: NLD 2006-03-21
@@ -32,10 +24,9 @@ struct PHY_DotationNature::LoadingWrapper
 void PHY_DotationNature::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing dotation natures" );
-    LoadingWrapper loader;
 
     xis >> xml::start( "natures" )
-            >> xml::list( "nature", loader, &LoadingWrapper::ReadNature )
+            >> xml::list( "nature", &PHY_DotationNature::ReadNature )
         >> xml::end;
 }
 

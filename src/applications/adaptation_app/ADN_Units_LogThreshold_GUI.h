@@ -13,6 +13,7 @@
 #define __ADN_Units_LogThreshold_GUI_h_
 
 #include "ADN_CommonGfx.h"
+#include "ADN_Units_Data.h"
 
 // =============================================================================
 /** @class  ADN_Units_LogThreshold_GUI
@@ -27,15 +28,10 @@ public:
     explicit ADN_Units_LogThreshold_GUI( QWidget* pParent = 0 );
     virtual ~ADN_Units_LogThreshold_GUI();
 
-    void InitializeLogThresholds();
-
 private:
-/*
     virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
-    void AddNewLogCategory( ADN_Equipement_Data::CategoryInfo& category );
-    void RemoveCurrentDotation();
-    bool Contains( ADN_Equipement_Data::CategoryInfo& category );
-*/
+    void AddNewLogSupplyClass( helpers::LogisticSupplyClass& data );
+    void RemoveCurrentLogSupplyClass();
 };
 
 

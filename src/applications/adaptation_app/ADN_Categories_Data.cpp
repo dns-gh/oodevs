@@ -36,6 +36,7 @@ ADN_Categories_Data::ADN_Categories_Data()
 , vArmors_()
 , vSizes_()
 , vDotationNatures_()
+, vLogisticSupplyClasses_()
 {
     vArmors_.SetNodeName( "la liste des catégories de blindage" );
     vArmors_.SetItemTypeName( "la catégorie de blindage" );
@@ -43,6 +44,8 @@ ADN_Categories_Data::ADN_Categories_Data()
     vSizes_.SetItemTypeName( "la catégorie de volume" );
     vDotationNatures_.SetNodeName( "la liste des nature de dotations" );
     vDotationNatures_.SetItemTypeName( "la nature de dotation" );
+    vLogisticSupplyClasses_.SetNodeName( "la liste des categories logistiques pour les dotations" );
+    vLogisticSupplyClasses_.SetItemTypeName( "la categorie logistique" );
     idFactory_.Reserve( 0 );
 }
 
@@ -64,6 +67,7 @@ void ADN_Categories_Data::FilesNeeded(T_StringList& files) const
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData() );
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData() );
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLogisticSupplyClasses_.GetData() );
 }
 
 //-----------------------------------------------------------------------------
@@ -75,6 +79,7 @@ void ADN_Categories_Data::Reset()
     vArmors_.Reset();
     vSizes_.Reset();
     vDotationNatures_.Reset();
+    vLogisticSupplyClasses_.Reset();
     idFactory_.Reset();
 }
 
@@ -95,6 +100,10 @@ void ADN_Categories_Data::Load( const tools::Loader_ABC& fileLoader )
     const std::string szDotationNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
     fileLoader.LoadFile( szDotationNaturesFile, boost::bind( &ADN_Categories_Data::ReadDotationNatures, this, _1 ) );
+
+    const std::string szLogisticSupplyClassesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLogisticSupplyClasses_.GetData();
+    fileLoader.LoadFile( szLogisticSupplyClassesFile, boost::bind( &ADN_Categories_Data::ReadLogisticSupplyClasses, this, _1 ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -107,8 +116,8 @@ void ADN_Categories_Data::Save()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
     {
         ADN_Tools::CreatePathToFile( szArmorFile );
-        xml::xofstream armorOutput( szArmorFile );
-        WriteArmors( armorOutput );
+        xml::xofstream output( szArmorFile );
+        WriteArmors( output );
     }
     tools::WriteXmlCrc32Signature( szArmorFile );
 
@@ -116,8 +125,8 @@ void ADN_Categories_Data::Save()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
     {
         ADN_Tools::CreatePathToFile( szSizesFile );
-        xml::xofstream sizeOutput( szSizesFile );
-        WriteSizes( sizeOutput );
+        xml::xofstream output( szSizesFile );
+        WriteSizes( output );
     }
     tools::WriteXmlCrc32Signature( szSizesFile );
 
@@ -125,10 +134,19 @@ void ADN_Categories_Data::Save()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
     {
         ADN_Tools::CreatePathToFile( szNaturesFile );
-        xml::xofstream naturesOutput( szNaturesFile );
-        WriteDotationNatures( naturesOutput );
+        xml::xofstream output( szNaturesFile );
+        WriteDotationNatures( output );
     }
     tools::WriteXmlCrc32Signature( szNaturesFile );
+
+    std::string szLogisticSupplyClassesFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLogisticSupplyClasses_.GetData();
+    {
+        ADN_Tools::CreatePathToFile( szLogisticSupplyClassesFile );
+        xml::xofstream output( szLogisticSupplyClassesFile );
+        WriteLogisticSupplyClasses( output );
+    }
+    tools::WriteXmlCrc32Signature( szLogisticSupplyClassesFile );
 }
 
 
@@ -249,6 +267,27 @@ void ADN_Categories_Data::ReadNature( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Categories_Data::ReadLogisticSupplyClass
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Categories_Data::ReadLogisticSupplyClass( xml::xistream& input )
+{
+    std::string strName;
+    int id ( 0 );
+    input >> xml::attribute( "type", strName );
+    input >> xml::optional() >> xml::attribute( "id", id );
+    helpers::T_LogisticSupplyClass_Vector::iterator found = std::find_if( vLogisticSupplyClasses_.begin(), vLogisticSupplyClasses_.end(), ADN_String_Cmp( strName ) );
+    if( found != vLogisticSupplyClasses_.end() )
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Duplicated resource logistic category '%1'" ).arg( strName.c_str() ).ascii() );
+    if ( !id )
+        id = idFactory_.Create();
+    helpers::LogisticSupplyClass* pNew = new helpers::LogisticSupplyClass( strName, id );
+    pNew->SetDataName( "le nom de la categorie logistic de dotation" );
+    vLogisticSupplyClasses_.AddItem( pNew );
+    idFactory_.Reserve( id );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::ReadDotationNatures
 // Created: SBO 2006-03-23
 // -----------------------------------------------------------------------------
@@ -256,6 +295,17 @@ void ADN_Categories_Data::ReadDotationNatures( xml::xistream& input )
 {
     input >> xml::start( "natures" )
             >> xml::list( "nature", *this, &ADN_Categories_Data::ReadNature )
+          >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_Data::ReadLogisticSupplyClasses
+// Created: SBO 2006-03-23
+// -----------------------------------------------------------------------------
+void ADN_Categories_Data::ReadLogisticSupplyClasses( xml::xistream& input )
+{
+    input >> xml::start( "logistic-supply-classes" )
+            >> xml::list( "logistic-supply-class", *this, &ADN_Categories_Data::ReadLogisticSupplyClass )
           >> xml::end;
 }
 
@@ -319,6 +369,31 @@ void ADN_Categories_Data::WriteDotationNatures( xml::xostream& output )
             throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data","Categories - Invalid resource nature" ).ascii() );
         std::string strData( ( *it )->GetData() );
         output << xml::start( "nature" )
+                << xml::attribute( "type", trim( strData ) )
+                << xml::attribute( "id", ( *it )->id_ )
+               << xml::end;
+    }
+    output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_Data::WriteLogisticSupplyClasses
+// Created: SBO 2006-03-23
+// -----------------------------------------------------------------------------
+void ADN_Categories_Data::WriteLogisticSupplyClasses( xml::xostream& output )
+{
+    // Check the dotation natures for duplicates.
+    if( HasDuplicates( vLogisticSupplyClasses_, StringExtractor() ) )
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Duplicated logistic resource category" ).ascii() );
+
+    output << xml::start( "logistic-supply-classes" );
+    ADN_Tools::AddSchema( output, "LogisticSupplyClasses" );
+    for( helpers::T_LogisticSupplyClass_Vector::const_iterator it = vLogisticSupplyClasses_.begin(); it != vLogisticSupplyClasses_.end(); ++it )
+    {
+        if( ( *it )->GetData().empty() )
+            throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data","Categories - Invalid resource nature" ).ascii() );
+        std::string strData( ( *it )->GetData() );
+        output << xml::start( "logistic-supply-class" )
                 << xml::attribute( "type", trim( strData ) )
                 << xml::attribute( "id", ( *it )->id_ )
                << xml::end;

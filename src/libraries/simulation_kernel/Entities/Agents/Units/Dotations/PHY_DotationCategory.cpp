@@ -155,7 +155,6 @@ void PHY_DotationCategory::InitializeUrbanAttritions( xml::xistream& xis )
             data->UpdateGlobalScore();
         }
     };
-
     xis >> xml::list( "urban-modifiers", boost::bind( &UrbanModifier::Read, _1, boost::ref( urbanAttritionData_ ) ) );
 }
 
@@ -186,11 +185,11 @@ void PHY_DotationCategory::ReadIndirectFire( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::InitializeLogisticType( xml::xistream& xis )
 {
-    pLogisticType_ = &type_.GetDefaultLogisticType();
-    bool dTranche = false;
-    xis >> xml::optional >> xml::attribute( "d-type", dTranche );
-    if( dTranche )
-        pLogisticType_ = &PHY_DotationLogisticType::uniteFeuTD_;
+    std::string strLogisticSupplyClass;
+    xis >> xml::attribute( "logistic-supply-class", strLogisticSupplyClass );
+    pLogisticType_ = PHY_DotationLogisticType::Find( strLogisticSupplyClass );
+    if( !pLogisticType_ )
+        xis.error( "Unknown logistic supply class" );
 }
 
 // -----------------------------------------------------------------------------

@@ -11,6 +11,7 @@
 #include "ADN_Equipement_GUI.h"
 #include "moc_ADN_Equipement_GUI.cpp"
 #include "ADN_ComboBox_Equipment_Nature.h"
+#include "ADN_ComboBox_Equipment_LogisticSupplyClass.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_Equipement_AmmoListView.h"
 #include "ADN_Equipement_AttritionGraph.h"
@@ -113,6 +114,7 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pPare
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeLFRIL" ), vConnectors[eGenLFRILCode ] );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeNNO" ), vConnectors[ eGenNNOCode ] );
     builder.AddField< ADN_ComboBox_Equipment_Nature >( pHolder, tr( "Nature" ), vConnectors[ eGenNature] );
+    builder.AddField< ADN_ComboBox_Equipment_LogisticSupplyClass >( pHolder, tr( "Logistic supply class" ), vConnectors[ eGenLogisticSupplyClass] );
     Q3GroupBox* pPackagingGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Nbr per package" ), vConnectors[ ePackageNbr ], 0, eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Package weight" ), vConnectors[ ePackageWeight ], tr( "T" ), eGreaterZero );
@@ -159,7 +161,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeNNO" ), vConnectors[ eNNOCode ] );
     builder.AddEnumField< E_MunitionType >( pHolder, tr( "Type" ), vConnectors[ eType ], ADN_Tr::ConvertFromMunitionType );
     builder.AddField< ADN_ComboBox_Equipment_Nature >( pHolder, tr( "Nature" ), vConnectors[ eNature ] );
-    builder.AddField< ADN_CheckBox >( pHolder, tr( "FieldArtyAmmo" ), vConnectors[ eTrancheD ] );
+    builder.AddField< ADN_ComboBox_Equipment_LogisticSupplyClass >( pHolder, tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );
 
     // Packaging
     Q3GroupBox* pPackagingGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox );

@@ -1060,11 +1060,11 @@
       <crew-rank count="57" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -1099,11 +1099,11 @@
       <crew-rank count="34" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -2806,11 +2806,11 @@
       <crew-rank count="50" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -3332,11 +3332,11 @@
       <crew-rank count="88" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -3375,11 +3375,8 @@
       <crew-rank count="98" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -3414,11 +3411,11 @@
       <crew-rank count="73" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -3456,11 +3453,11 @@
       <crew-rank count="29" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -4205,11 +4202,11 @@
       <crew-rank count="81" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -4336,11 +4333,11 @@
       <crew-rank count="54" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -4666,11 +4663,11 @@
       <crew-rank count="71" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -5147,11 +5144,11 @@
       <crew-rank count="69" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -5290,11 +5287,11 @@
       <crew-rank count="70" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -5366,11 +5363,11 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -5395,11 +5392,11 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -5423,11 +5420,11 @@
       <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -5452,11 +5449,11 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -5481,11 +5478,11 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -5531,11 +5528,11 @@
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -5961,11 +5958,10 @@
       </category>
     </logistics>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -6218,11 +6214,11 @@
       <crew-rank count="130" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -6315,11 +6311,11 @@
       <crew-rank count="78" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -6394,11 +6390,11 @@
       <crew-rank count="84" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -6437,11 +6433,11 @@
       <crew-rank count="61" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -6977,11 +6973,11 @@
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -7005,7 +7001,7 @@
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -7028,11 +7024,11 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -7056,11 +7052,11 @@
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -7123,11 +7119,11 @@
       <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -9592,11 +9588,11 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -9621,11 +9617,11 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -9649,11 +9645,11 @@
       <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -9678,11 +9674,11 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -9707,11 +9703,11 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -9780,11 +9776,11 @@
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -9830,11 +9826,11 @@
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -9858,11 +9854,11 @@
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -12234,11 +12230,11 @@
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite essence" threshold="10"/>
-      <stock category="Unite tranche D" threshold="10"/>
-      <stock category="Unite non tranche D" threshold="10"/>
-      <stock category="Unite vivre" threshold="10"/>
-      <stock category="Pieces" threshold="10"/>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
@@ -12383,4 +12379,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1370118140" -->
+<!-- signature="0831486090" -->

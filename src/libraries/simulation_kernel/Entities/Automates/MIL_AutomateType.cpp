@@ -113,7 +113,7 @@ void MIL_AutomateType::ReadAutomat( xml::xistream& xis )
     }
     catch( std::runtime_error& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        xis.error( e.what() );
         pType = 0;
     }
 
@@ -318,8 +318,6 @@ void MIL_AutomateType::RegisterFunctions( directia::brain::Brain& /*brain*/, MIL
 const MIL_AutomateType* MIL_AutomateType::FindAutomateType( const std::string& strName )
 {
     CIT_AutomateTypeMap it = automateTypes_.find( strName );
-
-
     return it == automateTypes_.end() ? 0 : it->second;
 }
 
@@ -330,7 +328,6 @@ const MIL_AutomateType* MIL_AutomateType::FindAutomateType( const std::string& s
 const MIL_AutomateType* MIL_AutomateType::FindAutomateType( unsigned int nID )
 {
     CIT_AutomateTypeMap it = std::find_if( automateTypes_.begin(), automateTypes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &MIL_AutomateType::GetID ), std::select2nd< T_AutomateTypeMap::value_type >() ) ) );
-
     return it == automateTypes_.end() ? 0 : it->second;
 }
 

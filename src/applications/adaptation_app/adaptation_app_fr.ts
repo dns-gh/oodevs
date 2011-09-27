@@ -620,6 +620,14 @@ Arrêt moteur allumé</translation>
         <source>Resource natures</source>
         <translation>Nature de ressource</translation>
     </message>
+    <message>
+        <source>Logistic resource categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic resource category</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ChangeValueCommand</name>
@@ -1605,8 +1613,8 @@ Arrêt moteur allumé</translation>
         <translation>PKs</translation>
     </message>
     <message>
-        <source>FieldArtyAmmo</source>
-        <translation>Tranche D</translation>
+        <source>Logistic supply class</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5340,12 +5348,20 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
     <message>
-        <source>Category</source>
-        <translation>Catégorie</translation>
-    </message>
-    <message>
         <source>Log threshold (%)</source>
         <translation>Seuil logistique (%)</translation>
+    </message>
+    <message>
+        <source>Logistic supply class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove class</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6079,6 +6095,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Categories - Invalid resource nature</source>
         <translation>Catégories - Nature de ressource invalide</translation>
     </message>
+    <message>
+        <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated logistic resource category</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Composante_Data</name>
@@ -6159,6 +6183,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
         <translation>Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6374,10 +6402,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Le pion n&apos;a pas d&apos;équipage dans l&apos;équipement &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Unit types - Invalid resource &apos;%1&apos;</source>
-        <translation>Type de pion - ressource &quot;%1&quot; invalide</translation>
-    </message>
-    <message>
         <source>Unit types - Invalid stance &apos;%1&apos;</source>
         <translation>Type de pion - Posture &quot;%1&quot; invalide</translation>
     </message>
@@ -6404,6 +6428,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Units</source>
         <translation>Pions</translation>
+    </message>
+    <message>
+        <source>Unit - Invalid resource logistic supply class &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

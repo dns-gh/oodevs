@@ -145,7 +145,6 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     PHY_PerceptionLevel          ::Initialize();
     PHY_RadarClass               ::Initialize();
     MIL_PopulationAttitude       ::Initialize();
-    PHY_DotationLogisticType     ::Initialize();
     MIL_LimaFunction             ::Initialize();
 
     InitializeType< PHY_MaterialCompositionType    >( config, "urban"              );
@@ -161,6 +160,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< PHY_Volume                     >( config, "volumes"            );
     InitializeType< PHY_Protection                 >( config, "protections"        );
     InitializeType< PHY_DotationNature             >( config, "resource-natures"   );
+    InitializeType< PHY_DotationLogisticType       >( config, "logistic-supply-classes" );
     InitializeType< PHY_DotationType               >( config, "resources"          );
     InitializeType< PHY_ResourceNetworkType        >( config, "resource-networks"  );
     InitializeType< MIL_FireClass                  >( config, "fires"              );

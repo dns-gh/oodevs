@@ -17,6 +17,7 @@
 #include "ADN_Enums.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_ResourceNatureInfos.h"
+#include "ADN_LogisticSupplyClass.h"
 #include "ADN_UrbanAttritionInfos.h"
 #include <boost/noncopyable.hpp>
 
@@ -62,6 +63,7 @@ public:
         ADN_Type_String strCodeLFRIL_;
         ADN_Type_String strCodeNNO_;
         ADN_TypePtr_InVector_ABC<helpers::ResourceNatureInfos> ptrResourceNature_;
+        ADN_TypePtr_InVector_ABC<helpers::LogisticSupplyClass> ptrLogisticSupplyClass_;
         ADN_Type_Double rNbrInPackage_;
         ADN_Type_Double rPackageVolume_;
         ADN_Type_Double rPackageWeight_;
@@ -153,8 +155,6 @@ public:
 
     public:
         ADN_Type_Enum< E_MunitionType, eNbrMunitionType > nType_;
-
-        ADN_Type_Bool bTrancheD_;
 
         ADN_Type_Bool bDirect_;
         ADN_Type_Bool bIndirect_;

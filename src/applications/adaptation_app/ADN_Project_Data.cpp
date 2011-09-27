@@ -77,6 +77,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "active-protections", szActiveProtections_ );
     ReadFile( input, "human-protections", szHumanProtections_ );
     ReadFile( input, "resource-natures", szDotationNatures_ );
+    ReadFile( input, "logistic-supply-classes", szLogisticSupplyClasses_ );
     ReadFile( input, "objects", szObjects_ );
     ReadFile( input, "resources", szEquipements_ );
     ReadFile( input, "launchers", szLaunchers_ );
@@ -127,6 +128,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "active-protections", szActiveProtections_ );
     WriteFile( output, "human-protections", szHumanProtections_ );
     WriteFile( output, "resource-natures", szDotationNatures_ );
+    WriteFile( output, "logistic-supply-classes", szLogisticSupplyClasses_ );
     WriteFile( output, "objects", szObjects_ );
     WriteFile( output, "resources", szEquipements_ );
     WriteFile( output, "launchers", szLaunchers_ );

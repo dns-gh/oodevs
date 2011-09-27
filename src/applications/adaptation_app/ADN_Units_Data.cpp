@@ -140,14 +140,13 @@ void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output, bool 
 // Name: ADN_Units_Data::StockLogThresholdInfos::StockLogThresholdInfos
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-ADN_Units_Data::StockLogThresholdInfos::StockLogThresholdInfos( E_StockCategory eCategory )
+ADN_Units_Data::StockLogThresholdInfos::StockLogThresholdInfos()
 : ADN_DataTreeNode_ABC()
-, eCategory_          ( eCategory )
+, ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
 , rLogThreshold_      ( 0. )
 {
-    ADN_Type_Enum< E_StockCategory, eNbrStockCategory >::SetConverter( &ENT_Tr::ConvertFromStockCategory );
-    eCategory_.SetDataName( "la catégorie de stock" );
-    eCategory_.SetParentNode( *this );
+//    strName_.SetDataName( "la catégorie de stock" );
+//    strName_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,14 +173,14 @@ std::string ADN_Units_Data::StockLogThresholdInfos::GetItemName()
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 {
-    std::string strCategory;
-    input >> xml::attribute( "category", strCategory )
+    std::string strLogisticSupplyClass;
+    input >> xml::attribute( "logistic-supply-class", strLogisticSupplyClass )
           >> xml::attribute( "threshold", rLogThreshold_ );
 
-    E_StockCategory eCategory = ENT_Tr::ConvertToStockCategory( strCategory );
-    if( eCategory == (E_StockCategory)-1 )
-        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).ascii(), tools::translate( "Units_Data", "Unit types - Invalid resource '%1'" ).arg( strCategory.c_str() ).ascii() );
-    eCategory_ = eCategory;
+    helpers::LogisticSupplyClass* pClass = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindLogisticSupplyClass( strLogisticSupplyClass );
+    if( !pClass )
+        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).ascii(), tools::translate( "Units_Data", "Unit - Invalid resource logistic supply class '%1'" ).arg( strLogisticSupplyClass.c_str() ).ascii() );
+    ptrLogisticSupplyClass_ = pClass;
 }
 
 // -----------------------------------------------------------------------------
@@ -191,7 +190,7 @@ void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "stock" )
-            << xml::attribute( "category", ENT_Tr::ConvertFromStockCategory( eCategory_.GetData() ) )
+            << xml::attribute( "logistic-supply-class", ptrLogisticSupplyClass_.GetData()->GetData() )
             << xml::attribute( "threshold", rLogThreshold_ )
            << xml::end;
 }
@@ -203,7 +202,7 @@ void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output
 ADN_Units_Data::StockLogThresholdInfos* ADN_Units_Data::StockLogThresholdInfos::CreateCopy()
 {
     StockLogThresholdInfos* pCopy = new StockLogThresholdInfos();
-    pCopy->eCategory_     = eCategory_.GetData();
+    pCopy->ptrLogisticSupplyClass_ = ptrLogisticSupplyClass_.GetData();
     pCopy->rLogThreshold_ = rLogThreshold_.GetData();
     return pCopy;
 }
@@ -251,6 +250,7 @@ void ADN_Units_Data::StockInfos::ReadStock( xml::xistream& input, ADN_Type_Bool&
     vLogThresholds_.AddItem( spNew.release() );
     stockThresholds = true;
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::StockInfos::ReadArchive

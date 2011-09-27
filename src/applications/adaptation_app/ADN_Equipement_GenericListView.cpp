@@ -80,6 +80,7 @@ void ADN_Equipement_GenericListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eGenLFRILCode]->Connect( &pInfos->strCodeLFRIL_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGenNNOCode]->Connect( &pInfos->strCodeNNO_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGenNature]->Connect( &pInfos->ptrResourceNature_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eGenLogisticSupplyClass]->Connect( &pInfos->ptrLogisticSupplyClass_, bConnect );
 }
 
 
