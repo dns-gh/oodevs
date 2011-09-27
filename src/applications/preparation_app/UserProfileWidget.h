@@ -31,6 +31,7 @@ namespace gui
 class UserProfile;
 class UserProfileRights_ABC;
 class ControlsChecker_ABC;
+class ProfilesModel;
 
 // =============================================================================
 /** @class  UserProfileWidget
@@ -50,7 +51,7 @@ public:
     //@{
              UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
                                 gui::EntitySymbols& icons, const kernel::ExtensionTypes& extensions,
-                                ControlsChecker_ABC& checker );
+                                ControlsChecker_ABC& checker, ProfilesModel& model );
     virtual ~UserProfileWidget();
     //@}
 
@@ -92,6 +93,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::ExtensionTypes& extensions_;
     ControlsChecker_ABC& checker_;
+    ProfilesModel& model_;
     UserProfile* profile_;
     QLineEdit* login_;
     QLineEdit* password_;

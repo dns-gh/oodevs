@@ -12,8 +12,6 @@
 
 #include "preparation/UserProfile.h"
 
-class ProfilesModel;
-
 // =============================================================================
 /** @class  ProfileEditor
     @brief  Profile edition proxy
@@ -25,7 +23,7 @@ class ProfileEditor : public UserProfile
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileEditor( const UserProfile& profile, kernel::Controller& controller, const ProfilesModel& profiles );
+             ProfileEditor( const UserProfile& profile, kernel::Controller& controller );
     virtual ~ProfileEditor();
     //@}
 
@@ -45,7 +43,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const ProfilesModel& profiles_;
     const UserProfile& profile_;
     //@}
 };

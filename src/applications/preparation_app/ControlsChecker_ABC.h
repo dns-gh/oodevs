@@ -44,10 +44,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( const T_ProfileEditors& editors ) = 0;
-    virtual std::string GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const = 0;
-    virtual void Update( const UserProfile& profile, const kernel::Entity_ABC& entity ) = 0;
+    virtual QString GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const = 0;
     virtual QString Validate() = 0;
+    virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const = 0;
+    virtual bool Exists( const QString& login ) const = 0;
+    virtual void Update( const UserProfile& profile, const kernel::Entity_ABC& entity ) = 0;
+    virtual void Display( const T_ProfileEditors& editors ) = 0;
     //@}
 };
 

@@ -14,6 +14,7 @@
 #include "UserProfileUnitControls.h"
 #include "UserProfilePopulationRights.h"
 #include "UserProfilePopulationControls.h"
+#include "ControlsChecker_ABC.h"
 #include "clients_kernel/AttributeType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
@@ -22,6 +23,8 @@
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "preparation/UserProfile.h"
+#include "preparation/ProfilesModel.h"
+#include "preparation/Tools.h"
 
 using namespace kernel;
 
@@ -31,11 +34,12 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory,
                                       gui::EntitySymbols& icons, const ExtensionTypes& extensions,
-                                      ControlsChecker_ABC& checker )
+                                      ControlsChecker_ABC& checker, ProfilesModel& model )
     : QTabWidget   ( parent, "UserProfileWidget" )
     , controllers_ ( controllers )
     , extensions_  ( extensions )
     , checker_     ( checker )
+    , model_       ( model )
     , profile_     ( 0 )
     , userRoleDico_( 0 )
 {
@@ -196,7 +200,14 @@ void UserProfileWidget::OnLoginChanged()
     try
     {
         if( profile_ )
-            profile_->SetLogin( login_->text() );
+        {
+            QString login = login_->text();
+            if( checker_.Exists( profile_->GetLogin(), login ) )
+                throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).ascii() );
+            if( profile_->GetLogin() != login && model_.Exists( login ) && !checker_.Exists( login ) )
+                throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).ascii() );
+            profile_->SetLogin( login );
+        }
     }
     catch( std::exception& e )
     {

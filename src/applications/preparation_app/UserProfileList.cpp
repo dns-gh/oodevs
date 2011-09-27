@@ -89,7 +89,7 @@ void UserProfileList::OnSelectionChanged()
         const UserProfile* profile = profiles_.at( list_->currentItem() );
         UserProfile*& editor = editors_[profile];
         if( !editor )
-            editor = new ProfileEditor( *profile, controllers_.controller_, model_ );
+            editor = new ProfileEditor( *profile, controllers_.controller_ );
         checker_.Display( editors_ );
         pages_.Display( *editor );
     }

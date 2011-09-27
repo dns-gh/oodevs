@@ -1020,13 +1020,6 @@ Do you want to save anyway?</source>
     </message>
 </context>
 <context>
-    <name>ProfileEditor</name>
-    <message>
-        <source>Duplicate login: &apos;%1&apos;.</source>
-        <translation>Usuario repetido: &apos;%1&apos;.</translation>
-    </message>
-</context>
-<context>
     <name>ProfileWizardDialog</name>
     <message>
         <source>User profiles creation wizard</source>
@@ -1865,6 +1858,10 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
     <message>
         <source>&apos;Control&apos; permission allows you to control an unit.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate login: &apos;%1&apos;.</source>
+        <translation type="unfinished">Usuario repetido: &apos;%1&apos;.</translation>
     </message>
 </context>
 <context>

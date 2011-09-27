@@ -37,16 +37,17 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const T_ProfileEditors& editors );
-    virtual QString Validate();
     virtual void Update( const UserProfile& profile, const kernel::Entity_ABC& entity );
-    virtual std::string GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const;
+    virtual QString GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const;
+    virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const;
+    virtual bool Exists( const QString& login ) const;
+    virtual QString Validate();
     //@}
 
 private:
     //! @name Helpers
     //@{
     void UpdateProfile( UserProfile& profile, const kernel::Entity_ABC& entity, bool control );
-    void ValidateSide( );
     //@}
 
 private:

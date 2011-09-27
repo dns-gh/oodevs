@@ -18,10 +18,9 @@
 // Name: ProfileEditor constructor
 // Created: SBO 2007-11-08
 // -----------------------------------------------------------------------------
-ProfileEditor::ProfileEditor( const UserProfile& profile, kernel::Controller& controller, const ProfilesModel& profiles )
+ProfileEditor::ProfileEditor( const UserProfile& profile, kernel::Controller& controller )
     : UserProfile( profile )
     , controller_( controller )
-    , profiles_  ( profiles )
     , profile_   ( profile )
 {
     // NOTHING
@@ -42,8 +41,6 @@ ProfileEditor::~ProfileEditor()
 // -----------------------------------------------------------------------------
 void ProfileEditor::SetLogin( const QString& value )
 {
-    if( profile_.GetLogin() != value && profiles_.Exists( value ) )
-        throw std::exception( tools::translate( "ProfileEditor", "Duplicate login: '%1'." ).arg( value ).ascii() );
     UserProfile::SetLogin( value );
     controller_.Update( profile_ );
 }

@@ -1020,13 +1020,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
-    <name>ProfileEditor</name>
-    <message>
-        <source>Duplicate login: &apos;%1&apos;.</source>
-        <translation>Profil en double: &apos;%1&apos;.</translation>
-    </message>
-</context>
-<context>
     <name>ProfileWizardDialog</name>
     <message>
         <source>User profiles creation wizard</source>
@@ -1865,6 +1858,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>&apos;Control&apos; permission allows you to control an unit.</source>
         <translation>&apos;Contrôle&apos; permet de contrôler une unité.</translation>
+    </message>
+    <message>
+        <source>Duplicate login: &apos;%1&apos;.</source>
+        <translation>Profil en double: &apos;%1&apos;.</translation>
     </message>
 </context>
 <context>

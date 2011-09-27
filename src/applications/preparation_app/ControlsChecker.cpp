@@ -56,12 +56,12 @@ void ControlsChecker::Display( const T_ProfileEditors& editors )
 // Name: ControlsChecker::GetProfileControl
 // Created: LGY 2011-09-15
 // -----------------------------------------------------------------------------
-std::string ControlsChecker::GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const
+QString ControlsChecker::GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const
 {
     for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
         if( it->second )
         {
-            std::string login = it->second->GetLogin();
+            QString login = it->second->GetLogin();
             const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior();
             if( profile.GetLogin().ascii() != login )
                 if( it->second->IsWriteable( entity ) || ( parent && it->second->IsWriteable( *parent ) ) )
@@ -126,4 +126,28 @@ QString ControlsChecker::Validate()
             result += "\n";
         }
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlsChecker::Exists
+// Created: LGY 2011-09-26
+// -----------------------------------------------------------------------------
+bool ControlsChecker::Exists( const QString& oldLogin, const QString& newLogin ) const
+{
+    for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
+        if( it->first && it->first->GetLogin() != oldLogin && it->second && it->second->GetLogin() == newLogin )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlsChecker::Exists
+// Created: LGY 2011-09-27
+// -----------------------------------------------------------------------------
+bool ControlsChecker::Exists( const QString& login ) const
+{
+    for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
+        if( it->first && it->first->GetLogin() == login && it->second && it->second->GetLogin() != login )
+            return true;
+    return false;
 }
