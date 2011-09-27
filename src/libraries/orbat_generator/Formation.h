@@ -40,7 +40,7 @@ public:
 public:
     //! @name Operations
     //@{
-    void Formation::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen, unsigned int KnowledgeGroupId );
+    void Formation::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen );
     void Formation::AddAutomate( boost::shared_ptr< Automate > automate );
     //@}
 

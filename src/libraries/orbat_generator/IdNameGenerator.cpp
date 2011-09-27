@@ -8,10 +8,24 @@
 // *****************************************************************************
 #include "orbat_generator_pch.h"
 #include "IdNameGenerator.h"
+#include "stdlib.h"
 #include <iostream>
 #include <xeumeuleu/xml.hpp>
+#include <boost/format.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace orbat_generator;
+
+namespace
+{
+    std::string ReadCoordinates( xml::xisubstream xis, const std::string& attribute )
+    {
+        std::string result;
+        xis >> xml::start( "structure" )
+                >> xml::attribute( attribute, result );
+        return result;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: IdNameGenerator constructor
@@ -22,8 +36,16 @@ IdNameGenerator::IdNameGenerator( xml::xisubstream xis )
     , formationId_( 0 )
     , automateId_ ( 0 )
     , pionId_     ( 0 )
+	, knowledgeId_( 0 )
+	, upperLeft_  ( ReadCoordinates( xis, "point1" ) )
+	, lowerRight_ ( ReadCoordinates( xis, "point2" ) )
 {
-    xis >> xml::start( "structure" )
+    srand( time( NULL ) );
+    std::string firstCoord;
+	std::string secondCoord;
+	xis >> xml::start( "structure" )
+          >> xml::attribute( "point1", firstCoord )
+          >> xml::attribute( "point2", secondCoord )
           >> xml::attribute( "pattern", pattern_ )
           >> xml::start( "party" )
             >> xml::attribute( "pattern", partyName_ )
@@ -65,6 +87,70 @@ void IdNameGenerator::RewindAll() const
     formationId_ = 0;
     automateId_ = 0;
     pionId_ = 0 ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IdNameGenerator::RandomChar
+// Created: RCD 2011-04-20
+// -----------------------------------------------------------------------------
+
+char IdNameGenerator::RandomChar( char upLeft, char downRight ) const
+	{
+        if ( upLeft >= downRight )
+            return upLeft;
+        else
+            return ( char( rand() % ( downRight + 1 - upLeft ) + upLeft ) );
+	}
+
+// -----------------------------------------------------------------------------
+// Name: IdNameGenerator::RandomInt
+// Created: RCD 2011-04-20
+// -----------------------------------------------------------------------------
+
+std::string IdNameGenerator::RandomInt( unsigned int min, unsigned int max ) const
+	{
+        std::string  res;
+        if ( min >= max )
+            res = boost::lexical_cast< std::string >( min );
+        else
+            res = boost::lexical_cast< std::string >( rand() % ( max - min ) + min );
+        unsigned int it = 5;
+        while( it > res.size() )
+            res = '0' + res;
+        return res;
+	}
+// -----------------------------------------------------------------------------
+// Name: IdNameGenerator::ComputeCoord
+// Created: RCD 2011-04-20
+// -----------------------------------------------------------------------------
+
+std::string IdNameGenerator::ComputeCoord() const
+    {
+        std::string prefixe = upperLeft_.prefixe;
+        char alphaX = RandomChar( upperLeft_.alphaX, lowerRight_.alphaX );
+        char alphaY = RandomChar( upperLeft_.alphaY, lowerRight_.alphaY );
+        unsigned int max = 99999;
+        unsigned int min = 0;
+        if ( alphaX == upperLeft_.alphaX )
+            min = upperLeft_.x;
+        if ( alphaX == lowerRight_.alphaX )
+            max = lowerRight_.x;
+        std::string x = RandomInt( min, max );
+        if ( alphaY == upperLeft_.alphaY )
+            min = upperLeft_.y;
+        if ( alphaY == lowerRight_.alphaY )
+            max = lowerRight_.y;
+        std::string y = RandomInt( min, max );
+        return ( prefixe + alphaX + alphaY + x + y );
+    }
+
+// -----------------------------------------------------------------------------
+// Name: IdNameGenerator::ComputeAutomateId
+// Created: RCD 2011-03-02
+// -----------------------------------------------------------------------------
+unsigned int IdNameGenerator::ComputeKnowledgeId() const
+{
+    return ++knowledgeId_;
 }
 
 // -----------------------------------------------------------------------------

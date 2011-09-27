@@ -33,7 +33,7 @@ class Pion : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Pion( bool posteDeCommandement, const std::string type, const std::string posi );
+             Pion( bool posteDeCommandement, const std::string type );
     virtual ~Pion();
     //@}
 
@@ -47,7 +47,6 @@ private:
     //! @name Member data
     //@{
     const std::string type_;
-    const std::string posi_;
     const bool pc_;
     //@}
 };

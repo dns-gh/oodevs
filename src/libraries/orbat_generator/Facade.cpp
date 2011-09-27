@@ -83,8 +83,9 @@ void Facade::RetrieveData( xml::xisubstream xis, unsigned int& automateQuantity,
     unsigned int formationQuantity = 0;
     unsigned int objectQuantity = 0;
     std::vector< std::string > formationsRecord;
-    xis >> xml::start( "structure" )
-          >> xml::attribute( "point", defaultPoint_ )
+	std::string firstCoord;
+	std::string secondCoord;
+	xis >> xml::start( "structure" )
           >> xml::start( "party" )
             >> xml::attribute( "quantity", partyQuantity )
           >> xml::end
@@ -193,7 +194,6 @@ void Facade::FillPion( xml::xistream& xis, unsigned int& pionsParAutomate )
     const std::string name = xis.attribute( "name", "Error" );
     if( std::find( excludes_.begin(), excludes_.end(), name ) == excludes_.end() )
     {
-        std::string posi = defaultPoint_;
         unsigned int quantity = xis.attribute< int >( "max-occurs", 1 );
         if ( quantity > pionsParAutomate )
             quantity = pionsParAutomate;
@@ -202,7 +202,7 @@ void Facade::FillPion( xml::xistream& xis, unsigned int& pionsParAutomate )
         for( unsigned int it = 0; it < quantity; ++it )
             if( quantity > 0 )
             {
-                pions_.push_back( boost::shared_ptr< Pion >( new Pion( commandPost, type, posi ) ) );
+                pions_.push_back( boost::shared_ptr< Pion >( new Pion( commandPost, type ) ) );
                 --pionsParAutomate;
             }
     }
@@ -252,7 +252,7 @@ void Facade::AddCrowds( xml::xostream& orbat )
         << xml::end
         << xml::start( "communication" )
         << xml::start( "knowledge-group" )
-        << xml::attribute< unsigned int >( "id", id * 1000 )
+        << xml::attribute< unsigned int >( "id", ( id +1 ) * 1000 )
         << xml::attribute< std::string >( "name", "Groupe de connaissance" )
         << xml::attribute< std::string >( "type", "Standard" )
         << xml::end
@@ -266,7 +266,7 @@ void Facade::AddCrowds( xml::xostream& orbat )
         orbat         << xml::attribute< std::string >( "attitude", "calme" )
             << xml::attribute< unsigned int >( "id", id )
             << xml::attribute< std::string >( "name", name )
-            << xml::attribute< std::string >( "position", defaultPoint_ )
+            << xml::attribute< std::string >( "position", idNameGen_.ComputeCoord() )
             << xml::attribute< std::string >( "type", crowds_[ it ] )
             << xml::start( "composition" )
             << xml::attribute( "contaminated", 0 )

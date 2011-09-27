@@ -38,16 +38,17 @@ Formation::~Formation()
 // Name: Formation::InsertIntoOrbat
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-void Formation::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen, unsigned int KnowledgeGroupId )
+void Formation::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen )
 {
     unsigned int id = idNameGen.ComputeFormationId();
+    unsigned int knowledgeId = idNameGen.ComputeKnowledgeId();
     std::string name = idNameGen.ComputeFormationName();
     orbat << xml::start( "formation" )
             << xml::attribute< int >( "id", id )
             << xml::attribute< std::string >( "level", type_ )
             << xml::attribute< std::string >( "name", name );
     for ( unsigned int it = 0; it < automates_.size(); ++it )
-        automates_[ it ]->InsertIntoOrbat( orbat, idNameGen, KnowledgeGroupId );
+        automates_[ it ]->InsertIntoOrbat( orbat, idNameGen, knowledgeId * 1000 );
     orbat << xml::end;
 }
 

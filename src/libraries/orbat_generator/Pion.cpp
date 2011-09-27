@@ -18,10 +18,9 @@ using namespace orbat_generator;
 // Name: Pion constructor
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-Pion::Pion( bool posteDeCommandement, const std::string type, const std::string posi )
+Pion::Pion( bool posteDeCommandement, const std::string type )
     : pc_   ( posteDeCommandement )
     , type_ ( type )
-    , posi_ ( posi )
 {
     // NOTHING
 }
@@ -47,7 +46,7 @@ void Pion::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameG
             << xml::attribute< bool >( "command-post", pc_ )
             << xml::attribute< int >( "id", id )
             << xml::attribute< std::string >( "name", name )
-            << xml::attribute< std::string >( "position", posi_ )
+            << xml::attribute< std::string >( "position", idNameGen.ComputeCoord() )
             << xml::attribute< std::string >( "type", type_ )
           << xml::end;
 }

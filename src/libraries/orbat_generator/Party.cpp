@@ -64,15 +64,19 @@ void Party::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idName
             << xml::end
             << xml::start( "tactical" );
     for ( unsigned int it = 0; it < formations_.size(); ++it )
-        formations_[ it ]->InsertIntoOrbat( orbat, idNameGen, 1000 * id );
+        formations_[ it ]->InsertIntoOrbat( orbat, idNameGen );
     orbat   << xml::end
-            << xml::start( "communication" )
-              << xml::start( "knowledge-group" )
-                << xml::attribute< unsigned int >( "id", 1000 * id )
-                << xml::attribute< std::string >( "name", "Groupe de connaissance" )
-                << xml::attribute< std::string >( "type", "Standard" )
-              << xml::end
-            << xml::end
+            << xml::start( "communication" );
+    unsigned int knowledgeId = idNameGen.ComputeKnowledgeId() - 1;
+	for( unsigned int it = 0; it < formations_.size(); ++it )
+	{
+        orbat     << xml::start( "knowledge-group" )
+                    << xml::attribute< unsigned int >( "id", 1000 * ( knowledgeId - it ) )
+                    << xml::attribute< std::string >( "name", "Groupe de connaissance" )
+                    << xml::attribute< std::string >( "type", "Standard" )
+                  << xml::end;
+	}
+    orbat   << xml::end
             << xml::start( "populations" )
             << xml::end
             << xml::start( "inhabitants" )

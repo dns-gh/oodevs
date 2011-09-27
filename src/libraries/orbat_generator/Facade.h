@@ -32,6 +32,7 @@ class Facade : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
+             Facade();
              Facade( xml::xistream& xis, const bfs::path& base );
     virtual ~Facade();
     //@}
@@ -62,7 +63,6 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string defaultPoint_;
     std::vector< std::string > excludes_;
     std::vector< std::string > crowds_;
     const IdNameGenerator idNameGen_;
