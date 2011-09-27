@@ -48,6 +48,9 @@ public:
     void Cancel();
     //@}
 
+signals:
+    void DoConsistencyCheck( unsigned int );
+
 private slots:
     //! @name Slots
     //@{

@@ -82,13 +82,6 @@
     </message>
 </context>
 <context>
-    <name>ControlsChecker</name>
-    <message>
-        <source>Unit &apos;%1&apos; is associated with multiple profiles:</source>
-        <translation type="unfinished">L&apos;unité &apos;%1&apos; est associé à plusieurs profils :</translation>
-    </message>
-</context>
-<context>
     <name>DotationsEditor</name>
     <message>
         <source>Resources editor</source>
@@ -938,6 +931,18 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source> and </source>
         <translation> et </translation>
     </message>
+    <message>
+        <source>Association with multiple profiles: %1.</source>
+        <translation>Association avec plusieurs profils: %1.</translation>
+    </message>
+    <message>
+        <source>Not &apos;readable&apos; to any user profile. You will not be able to see it on the game.</source>
+        <translation>Indisponible en &apos;lecture&apos; pour tous les profils utilisateurs. Vous ne pourrez pas la voir en phase de conduite.</translation>
+    </message>
+    <message>
+        <source>Not &apos;writable&apos; to any user profile. You will not be able to give orders to it on the game.</source>
+        <translation>Indisponible en &apos;écriture&apos; pour tous les profils utilisateurs. Vous ne pourrez pas lui donner des ordres en phase de conduite.</translation>
+    </message>
 </context>
 <context>
     <name>ObjectCreationPanel</name>
@@ -1782,10 +1787,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Delete</source>
         <translation>Supprimer</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
 </context>
 <context>

@@ -56,6 +56,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
     box = new Q3VBox( this );
     box->setMargin( 5 );
     list_ = new UserProfileList( box, *pages_, controllers, model.profiles_, *pChecher_ );
+    connect( list_, SIGNAL( DoConsistencyCheck( unsigned int ) ), parent, SLOT( CheckConsistency( unsigned int ) ) );
     grid->addWidget( box, 1, 0 );
 
     box = new Q3HBox( this );

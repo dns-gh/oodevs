@@ -157,38 +157,6 @@ bool ProfilesModel::Exists( const QString& login ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfilesModel::CheckValidity
-// Created: SBO 2007-11-06
-// -----------------------------------------------------------------------------
-bool ProfilesModel::CheckValidity( const Model& model, ModelChecker_ABC& checker ) const
-{
-    bool unReadableUnits  = false;
-    bool unWriteableUnits = false;
-
-    // check that every unit is at least readable
-    tools::Iterator< const kernel::Agent_ABC& > agents = model.GetAgentResolver().CreateIterator();
-    while( agents.HasMoreElements() )
-    {
-        const kernel::Entity_ABC& entity = agents.NextElement();
-        if( !IsWriteable( entity ) )
-        {
-            unWriteableUnits = true;
-            if( !IsReadable( entity ) )
-                unReadableUnits = true;
-        }
-    }
-    if( unReadableUnits
-        && !checker.Prompt( tools::translate( "ProfilesModel", "Some units in the orbat are not \"readable\" to any user profile.\n"
-                                                               "You will not be able to see these units on the game.\n" ) ) )
-        return false;
-    if( unWriteableUnits
-        && !checker.Prompt( tools::translate( "ProfilesModel", "Some units in the orbat are not \"writeable\" to any user profile.\n"
-                                                               "You will not be able to give orders to these units.\n" ) ) )
-        return false;
-    return checker.Validate();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ProfilesModel::IsReadable
 // Created: SBO 2007-11-06
 // -----------------------------------------------------------------------------

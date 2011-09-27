@@ -678,22 +678,6 @@
         <source>New profile</source>
         <translation>Nouveau profil</translation>
     </message>
-    <message>
-        <source>Some units in the orbat are not &quot;readable&quot; to any user profile.
-You will not be able to see these units on the game.
-</source>
-        <translation>Certaines unités de l&apos;ODB ne sont &quot;lisibles&quot; par aucun profil utilisateur.
-Vous ne pourrez pas voir ces unités en phase de conduite.
-</translation>
-    </message>
-    <message>
-        <source>Some units in the orbat are not &quot;writeable&quot; to any user profile.
-You will not be able to give orders to these units.
-</source>
-        <translation>Certaines unités de l&apos;ODB ne sont &quot;en écriture&quot; pour aucun profil utilisateur.
-Vous ne pourrez pas donner d&apos;ordres à ces unités en phase de conduite.
-</translation>
-    </message>
 </context>
 <context>
     <name>ScoresModel</name>

@@ -16,6 +16,7 @@
 #include "LogisticHierarchiesBase.h"
 #include "Model.h"
 #include "ObjectsModel.h"
+#include "ProfilesModel.h"
 #include "StaticModel.h"
 #include "Stocks.h"
 #include "TacticalLine_ABC.h"
@@ -33,6 +34,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "tools/Resolver.h"
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 
 using namespace kernel;
 using namespace tools;
@@ -103,6 +105,7 @@ namespace
 bool ModelConsistencyChecker::CheckConsistency( unsigned int filters /*= eAllChecks*/ )
 {
     errors_.clear();
+    filters_ = filters;
     if( filters & eLongNameUniqueness )
         CheckUniqueness( eLongNameUniqueness, &CompareLongName );
     if( filters & eTeamNameUniqueness )
@@ -117,6 +120,10 @@ bool ModelConsistencyChecker::CheckConsistency( unsigned int filters /*= eAllChe
         CheckStockInitialization();
     if( filters & eLogisticInitialization )
         CheckLogisticInitialization();
+    if( filters & eProfileUniqueness )
+        CheckProfileUniqueness();
+    if( filters & eProfileUnreadable || filters & eProfileUnwritable )
+        CheckProfileInitialization();
     return !errors_.empty();
 }
 
@@ -190,6 +197,9 @@ void ModelConsistencyChecker::FillEntitiesCopy( E_ConsistencyCheck type )
         break;
     case eStockInitialization:
     case eLogisticInitialization:
+    case eProfileUniqueness:
+    case eProfileUnreadable:
+    case eProfileUnwritable:
     default:
         throw std::runtime_error( __FUNCTION__ " invalid call to FillEntitiesCopy." );
         break;
@@ -237,11 +247,7 @@ void ModelConsistencyChecker::CheckStockInitialization()
         const Agent_ABC& agent = it.NextElement();
         const Stocks* stocks = agent.Retrieve< Stocks >();
         if( stocks && !stocks->HasDotations() )
-        {
-            ConsistencyError error( eStockInitialization );
-            error.entities_.push_back( &agent );
-            errors_.push_back( error );
-        }
+            AddError( eStockInitialization, &agent );
     }
 }
 
@@ -257,10 +263,64 @@ void ModelConsistencyChecker::CheckLogisticInitialization()
         const Automat_ABC& automat = it.NextElement();
         const LogisticBaseStates* hierarchy = static_cast< const LogisticBaseStates* >( automat.Retrieve< LogisticHierarchiesBase >() );
         if( hierarchy->GetSuperior() == 0 )
-        {
-            ConsistencyError error( eLogisticInitialization );
-            error.entities_.push_back( &automat );
-            errors_.push_back( error );
-        }
+            AddError( eLogisticInitialization, &automat );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckProfileUniqueness
+// Created: ABR 2011-09-27
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckProfileUniqueness()
+{
+    ProfilesModel::T_Units units;
+    model_.profiles_.Visit( units );
+    QString result;
+    BOOST_FOREACH( const ProfilesModel::T_Units::value_type& element, units )
+        if( element.second.size() > 1 )
+        {
+            const kernel::Entity_ABC* entity = model_.GetTeamResolver().Find( element.first );
+            if( !entity )
+                entity = model_.GetAutomatResolver().Find( element.first );
+            if( !entity )
+                entity = model_.GetPopulationResolver().Find( element.first );
+            if( !entity )
+                continue;
+            std::string optional;
+            BOOST_FOREACH( const std::string& profile, element.second )
+                optional += " '" + profile + "'";
+            AddError( eProfileUniqueness, entity, optional );
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckProfileInitialization
+// Created: ABR 2011-09-27
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckProfileInitialization()
+{
+    Iterator< const Agent_ABC& > it = model_.GetAgentResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Agent_ABC& agent = it.NextElement();
+        if( filters_ & eProfileUnwritable && !model_.profiles_.IsWriteable( agent ) )
+            AddError( eProfileUnwritable, &agent );
+        if( filters_ & eProfileUnreadable && !model_.profiles_.IsReadable( agent ) )
+            AddError( eProfileUnreadable, &agent );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::AddError
+// Created: ABR 2011-09-27
+// -----------------------------------------------------------------------------
+ModelConsistencyChecker::ConsistencyError& ModelConsistencyChecker::AddError( E_ConsistencyCheck type, const kernel::Entity_ABC* entity, const std::string optional /*= ""*/ )
+{
+    assert( entity );
+    ConsistencyError error ( type );
+    error.entities_.push_back( entity );
+    if( !optional.empty() )
+        error.optional_ = optional;
+    errors_.push_back( error );
+    return error;
 }

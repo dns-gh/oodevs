@@ -316,7 +316,6 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
 
     const bool valid = teams_.CheckValidity( checker )
                     && agents_.CheckValidity( checker )
-                    && profiles_.CheckValidity( *this, checker )
                     && scores_.CheckValidity( checker, schemaWriter )
                     && successFactors_.CheckValidity( checker, schemaWriter );
     if( valid )

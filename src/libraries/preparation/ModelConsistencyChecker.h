@@ -45,11 +45,20 @@ public:
         eObjectNameUniqueness   = 4,
         eLimaNameUniqueness     = 8,
         eLimitNameUniqueness    = 16,
+        eAllUniqueness          = 31,
+
         eStockInitialization    = 32,
         eLogisticInitialization = 64,
-        eAllUniqueness          = 31,
         eAllInitialization      = 96,
-        eAllChecks              = 127
+
+        eAllCheckWithoutProfile = 127,
+
+        eProfileUniqueness      = 128,
+        eProfileUnreadable      = 256,
+        eProfileUnwritable      = 512,
+        eAllProfile             = 896,
+
+        eAllChecks              = 1023
     };
     struct ConsistencyError
     {
@@ -57,6 +66,7 @@ public:
 
         E_ConsistencyCheck                       type_;
         std::vector< const kernel::Entity_ABC* > entities_;
+        std::string                              optional_;
     };
     //@}
 
@@ -80,10 +90,13 @@ public:
 private:
     //! @name Helpers
     //@{
+    ConsistencyError& AddError( E_ConsistencyCheck type, const kernel::Entity_ABC* entity, const std::string optional = "" );
     void FillEntitiesCopy( E_ConsistencyCheck type );
     void CheckUniqueness( E_ConsistencyCheck type, bool ( *comparator )( const kernel::Entity_ABC&, const kernel::Entity_ABC& ) );
     void CheckStockInitialization();
     void CheckLogisticInitialization();
+    void CheckProfileUniqueness();
+    void CheckProfileInitialization();
     //@}
 
 private:
@@ -91,6 +104,7 @@ private:
     //@{
     const Model&        model_;
     const StaticModel&  staticModel_;
+    unsigned int        filters_;
 
     T_ConsistencyErrors errors_;
     T_Entities          entities_;

@@ -41,7 +41,6 @@ public:
     virtual QString GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const;
     virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const;
     virtual bool Exists( const QString& login ) const;
-    virtual QString Validate();
     //@}
 
 private:

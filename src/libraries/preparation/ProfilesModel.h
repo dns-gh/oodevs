@@ -68,7 +68,6 @@ public:
     void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
     void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
-    bool CheckValidity( const Model& model, ModelChecker_ABC& checker ) const;
 
     void CreateProfile();
     void CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly );
@@ -77,6 +76,8 @@ public:
 
     bool Exists( const QString& login ) const;
     const UserProfile* Find( const QString& name ) const;
+    bool IsReadable( const kernel::Entity_ABC& entity ) const;
+    bool IsWriteable( const kernel::Entity_ABC& entity ) const;
 
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
@@ -95,8 +96,6 @@ private:
     //@{
     void Read( xml::xistream& xis );
     void LoadProfile( xml::xistream& xis );
-    bool IsReadable( const kernel::Entity_ABC& entity ) const;
-    bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     //@}
 
     //! @name Types

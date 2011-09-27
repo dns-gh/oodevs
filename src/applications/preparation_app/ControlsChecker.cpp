@@ -109,31 +109,6 @@ void ControlsChecker::UpdateProfile( UserProfile& profile, const kernel::Entity_
 }
 
 // -----------------------------------------------------------------------------
-// Name: ControlsChecker::Validate
-// Created: LGY 2011-09-16
-// -----------------------------------------------------------------------------
-QString ControlsChecker::Validate()
-{
-    ProfilesModel::T_Units units;
-    model_.profiles_.Visit( units );
-    QString result;
-    BOOST_FOREACH( const ProfilesModel::T_Units::value_type& element, units )
-        if( element.second.size() > 1 )
-        {
-            const kernel::Entity_ABC* entity = model_.GetTeamResolver().Find( element.first );
-            if( !entity )
-                entity = model_.GetAutomatResolver().Find( element.first );
-            if( !entity )
-                entity = model_.GetPopulationResolver().Find( element.first );
-            result += QString( tools::translate( "ControlsChecker", "Unit '%1' is associated with multiple profiles:" ) ).arg( entity->GetName().ascii() );
-            BOOST_FOREACH( const std::string& profile, element.second )
-                result += QString( " '%1 '" ).arg( profile.c_str() );
-            result += "\n";
-        }
-    return result;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ControlsChecker::Exists
 // Created: LGY 2011-09-26
 // -----------------------------------------------------------------------------

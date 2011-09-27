@@ -66,6 +66,9 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ ModelConsistencyChecker::eLimitNameUniqueness ]    = tr( "Duplicate name for limits %1." );
     errorDescriptions_[ ModelConsistencyChecker::eStockInitialization ]    = tr( "No stocks initialized." );
     errorDescriptions_[ ModelConsistencyChecker::eLogisticInitialization ] = tr( "No logistic link initialized." );
+    errorDescriptions_[ ModelConsistencyChecker::eProfileUniqueness ]      = tr( "Association with multiple profiles: %1." );
+    errorDescriptions_[ ModelConsistencyChecker::eProfileUnreadable ]      = tr( "Not 'readable' to any user profile. You will not be able to see it on the game." );
+    errorDescriptions_[ ModelConsistencyChecker::eProfileUnwritable]       = tr( "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,9 +110,9 @@ void ModelConsistencyDialog::UpdateDataModel()
 {
     dataModel_->clear();
     dataModel_->setHorizontalHeaderLabels( horizontalHeaders_ );
-    tableView_->horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
-    tableView_->horizontalHeader()->setResizeMode( 1, QHeaderView::ResizeToContents );
-    tableView_->horizontalHeader()->setResizeMode( 2, QHeaderView::Stretch );
+    tableView_->horizontalHeader()->setResizeMode( eID, QHeaderView::ResizeToContents );
+    tableView_->horizontalHeader()->setResizeMode( eName, QHeaderView::ResizeToContents );
+    tableView_->horizontalHeader()->setResizeMode( eDescription, QHeaderView::Stretch );
 
     int currentRow = 0;
     const ModelConsistencyChecker::T_ConsistencyErrors& errors = checker_.GetConsistencyErrors();
@@ -125,8 +128,8 @@ void ModelConsistencyDialog::UpdateDataModel()
             const kernel::Entity_ABC& entity = **entityIt;
             AddItem( currentRow, eID, QString::number( entity.GetId() ), entity );
             AddItem( currentRow, eName, entity.GetName(), entity );
-            AddItem( currentRow, eDescription, ( error.type_ & ModelConsistencyChecker::eAllUniqueness )
-                ? errorDescriptions_[ error.type_ ].arg( idList ) 
+            AddItem( currentRow, eDescription, ( error.type_ & ModelConsistencyChecker::eAllUniqueness || error.type_ & ModelConsistencyChecker::eProfileUniqueness )
+                ? errorDescriptions_[ error.type_ ].arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() )
                 : errorDescriptions_[ error.type_ ], entity );
         }
     }
