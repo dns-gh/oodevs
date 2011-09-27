@@ -153,6 +153,7 @@ Population_ABC* AgentFactory::Create( Entity_ABC& parent, const PopulationType& 
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
     result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
+    result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, &parent ) );
     if( Populations* popus = top->Retrieve< Populations >() )
         popus->AddPopulation( *result );
     result->Polish();
@@ -276,6 +277,7 @@ Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, Team_ABC& parent )
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
+    result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, &parent ) );
     if( Populations* popus = parent.Retrieve< Populations >() )
         popus->AddPopulation( *result );
     result->Polish();
