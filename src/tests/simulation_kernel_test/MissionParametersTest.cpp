@@ -335,6 +335,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter )
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );
     BOOST_CHECK_EQUAL( true, out.has_resourcetype() );
     BOOST_CHECK_EQUAL( 42u, out.resourcetype().id() );
+
+    PHY_DotationType::Terminate();
+    PHY_DotationNature::Terminate();
+    PHY_DotationLogisticType::Terminate();
 }
 
 // -----------------------------------------------------------------------------
