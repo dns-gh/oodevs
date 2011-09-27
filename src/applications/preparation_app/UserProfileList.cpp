@@ -13,8 +13,9 @@
 #include "UserProfileWidget.h"
 #include "ProfileEditor.h"
 #include "ControlsChecker_ABC.h"
-#include "preparation/UserProfile.h"
+#include "preparation/ModelConsistencyChecker.h"
 #include "preparation/ProfilesModel.h"
+#include "preparation/UserProfile.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 
@@ -60,15 +61,7 @@ void UserProfileList::Save()
         *const_cast< UserProfile* >( it->first ) = *it->second;
         controllers_.controller_.Update( it->first );
     }
-    QString result = checker_.Validate();
-    if( result != "" )
-    {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle( tr( "Profile" ) );
-        msgBox.setText( result );
-        msgBox.setStandardButtons( QMessageBox::Ok );
-        msgBox.exec();
-    }
+    emit( DoConsistencyCheck( ModelConsistencyChecker::eAllProfile ) );
 }
 
 // -----------------------------------------------------------------------------
