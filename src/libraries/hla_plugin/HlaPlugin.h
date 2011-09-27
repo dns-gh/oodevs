@@ -53,8 +53,12 @@ namespace hla
     class ObjectResolver_ABC;
     class Stepper;
     class UnitTypeResolver_ABC;
+    class MunitionTypeResolver_ABC;
     class LocalAgentResolver_ABC;
+    class RemoteAgentResolver_ABC;
+    class ContextFactory_ABC;
     class SimulationFacade;
+    class InteractionsFacade;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -86,18 +90,23 @@ private:
     //@{
     dispatcher::Logger_ABC& logger_;
     dispatcher::SimulationPublisher_ABC& publisher_;
+    std::auto_ptr< ContextFactory_ABC > pContextFactory_;
     std::auto_ptr< ObjectResolver_ABC > pObjectResolver_;
     std::auto_ptr< RtiAmbassadorFactory_ABC > pRtiFactory_;
     std::auto_ptr< RtiAmbassadorFactory_ABC > pDebugRtiFactory_;
     std::auto_ptr< FederateAmbassadorFactory_ABC > pFederateFactory_;
     std::auto_ptr< FederateAmbassadorFactory_ABC > pDebugFederateFactory_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityTypeResolver_;
+    std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityMunitionTypeResolver_;
     std::auto_ptr< UnitTypeResolver_ABC > pUnitTypeResolver_;
+    std::auto_ptr< MunitionTypeResolver_ABC > pMunitionTypeResolver_;
     std::auto_ptr< LocalAgentResolver_ABC > pLocalAgentResolver_;
     std::auto_ptr< tools::MessageController< sword::SimToClient_Content > > pMessageController_;
     std::auto_ptr< AgentSubject_ABC > pSubject_;
     std::auto_ptr< FederateFacade > pFederate_;
     std::auto_ptr< SimulationFacade > pSimulationFacade_;
+    std::auto_ptr< RemoteAgentResolver_ABC > pRemoteAgentResolver_;
+    std::auto_ptr< InteractionsFacade > pInteractionsFacade_;
     std::auto_ptr< Stepper > pStepper_;
     //@}
 };

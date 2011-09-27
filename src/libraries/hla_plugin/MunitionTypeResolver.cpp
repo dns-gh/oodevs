@@ -20,9 +20,11 @@ using namespace plugins::hla;
 // Name: MunitionTypeResolver constructor
 // Created: VPR 2011-09-26
 // -----------------------------------------------------------------------------
-MunitionTypeResolver::MunitionTypeResolver( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::DotationType, unsigned int >& dotationTypeResolver )
+MunitionTypeResolver::MunitionTypeResolver( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::DotationType, unsigned long >& dotationTypeResolver,
+                                            const tools::Resolver_ABC< kernel::DotationType, std::string > dotationNameResolver )
     : entityTypeResolver_  ( entityTypeResolver )
     , dotationTypeResolver_( dotationTypeResolver )
+    , dotationNameResolver_( dotationNameResolver )
 {
     // NOTHING
 }
@@ -44,4 +46,14 @@ rpr::EntityType MunitionTypeResolver::Resolve( unsigned int munitionIdentifier )
 {
     const kernel::DotationType& dotationType = dotationTypeResolver_.Get( munitionIdentifier );
     return entityTypeResolver_.Find( dotationType.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MunitionTypeResolver::Resolve
+// Created: SLI 2011-09-27
+// -----------------------------------------------------------------------------
+unsigned int MunitionTypeResolver::Resolve( const rpr::EntityType& munitionType ) const
+{
+    const std::string munitionName = entityTypeResolver_.Resolve( munitionType );
+    return dotationNameResolver_.Get( munitionName ).GetId();
 }

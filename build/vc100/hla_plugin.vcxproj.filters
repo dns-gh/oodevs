@@ -196,6 +196,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.cpp">
       <Filter>Source Files\Interactions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\InteractionsFacade.cpp">
+      <Filter>Source Files\Interactions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -427,6 +430,9 @@
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.h">
+      <Filter>Source Files\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionsFacade.h">
       <Filter>Source Files\Interactions</Filter>
     </ClInclude>
   </ItemGroup>

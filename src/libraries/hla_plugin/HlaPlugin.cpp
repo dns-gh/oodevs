@@ -17,11 +17,16 @@
 #include "DebugFederateAmbassadorFactory.h"
 #include "ObjectResolver.h"
 #include "Stepper.h"
+#include "ContextFactory.h"
 #include "UnitTypeResolver.h"
+#include "MunitionTypeResolver.h"
 #include "LocalAgentResolver.h"
+#include "RemoteAgentResolver.h"
 #include "SimulationFacade.h"
+#include "InteractionsFacade.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
 #include "dispatcher/StaticModel.h"
@@ -52,24 +57,29 @@ namespace
 HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::StaticModel& staticModel,
                       dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config,
                       xml::xistream& xis, dispatcher::Logger_ABC& logger )
-    : logger_                ( logger )
-    , publisher_             ( publisher )
-    , pObjectResolver_       ( new ObjectResolver() )
-    , pRtiFactory_           ( new RtiAmbassadorFactory( xis, xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/protocols.xml" ) ) )
-    , pDebugRtiFactory_      ( new DebugRtiAmbassadorFactory( *pRtiFactory_, logger, *pObjectResolver_ ) )
-    , pFederateFactory_      ( new FederateAmbassadorFactory( ReadTimeStep( config.GetSessionFile() ) ) )
-    , pDebugFederateFactory_ ( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger, *pObjectResolver_ ) )
-    , pEntityTypeResolver_   ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "dis", "dis.xml" ) ) ) )
-    , pUnitTypeResolver_     ( new UnitTypeResolver( *pEntityTypeResolver_, staticModel.types_ ) )
-    , pLocalAgentResolver_   ( new LocalAgentResolver() )
-    , pMessageController_    ( new tools::MessageController< sword::SimToClient_Content >() )
-    , pSubject_              ( new AgentController( dynamicModel, *pEntityTypeResolver_ ) )
-    , pFederate_             ( new FederateFacade( xis, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
-                                                   xis.attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
-                                                   xis.attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
-                                                   config.BuildPluginDirectory( "hla" ) ) )
-    , pSimulationFacade_     ( new SimulationFacade( *pMessageController_, publisher, dynamicModel, staticModel, *pUnitTypeResolver_, *pFederate_, *pLocalAgentResolver_ ) )
-    , pStepper_              ( new Stepper( xis, *pMessageController_, publisher ) )
+    : logger_                     ( logger )
+    , publisher_                  ( publisher )
+    , pContextFactory_            ( new ContextFactory() )
+    , pObjectResolver_            ( new ObjectResolver() )
+    , pRtiFactory_                ( new RtiAmbassadorFactory( xis, xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/protocols.xml" ) ) )
+    , pDebugRtiFactory_           ( new DebugRtiAmbassadorFactory( *pRtiFactory_, logger, *pObjectResolver_ ) )
+    , pFederateFactory_           ( new FederateAmbassadorFactory( ReadTimeStep( config.GetSessionFile() ) ) )
+    , pDebugFederateFactory_      ( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger, *pObjectResolver_ ) )
+    , pEntityTypeResolver_        ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "dis", "dis.xml" ) ) ) )
+    , pEntityMunitionTypeResolver_( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "munition", "munition.xml" ) ) ) )
+    , pUnitTypeResolver_          ( new UnitTypeResolver( *pEntityTypeResolver_, staticModel.types_ ) )
+    , pMunitionTypeResolver_      ( new MunitionTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
+    , pLocalAgentResolver_        ( new LocalAgentResolver() )
+    , pMessageController_         ( new tools::MessageController< sword::SimToClient_Content >() )
+    , pSubject_                   ( new AgentController( dynamicModel, *pEntityTypeResolver_ ) )
+    , pFederate_                  ( new FederateFacade( xis, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
+                                                        xis.attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
+                                                        xis.attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
+                                                        config.BuildPluginDirectory( "hla" ) ) )
+    , pSimulationFacade_          ( new SimulationFacade( *pContextFactory_, *pMessageController_, publisher, dynamicModel, staticModel, *pUnitTypeResolver_, *pFederate_, *pLocalAgentResolver_ ) )
+    , pRemoteAgentResolver_       ( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) )
+    , pInteractionsFacade_        ( new InteractionsFacade( *pFederate_, publisher, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, xis.attribute< std::string >( "name", "SWORD" ) ) )
+    , pStepper_                   ( new Stepper( xis, *pMessageController_, publisher ) )
 {
     // NOTHING
 }

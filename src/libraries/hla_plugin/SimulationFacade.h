@@ -11,6 +11,7 @@
 #define plugins_hla_SimulationFacade_h
 
 #include "tools/MessageObserver.h"
+#include "ContextHandler_ABC.h"
 
 namespace tools
 {
@@ -40,7 +41,6 @@ namespace hla
     class UnitTypeResolver_ABC;
     class RemoteAgentSubject_ABC;
     class ContextFactory_ABC;
-    template< typename Message > class ContextHandler_ABC;
     class LocalAgentResolver_ABC;
     class AutomatDisengager;
     class FormationCreater;
@@ -54,16 +54,24 @@ namespace hla
 */
 // Created: SLI 2011-09-15
 // =============================================================================
-class SimulationFacade : private tools::MessageObserver< sword::ControlEndTick >
+class SimulationFacade : public ContextHandler_ABC< sword::UnitCreation >
+                       , private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationFacade( tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
+             SimulationFacade( const ContextFactory_ABC& contextFactory, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel,
                                const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
                                RemoteAgentSubject_ABC& remoteAgentSubject, const LocalAgentResolver_ABC& localAgentResolver );
     virtual ~SimulationFacade();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Register( ResponseObserver_ABC< sword::UnitCreation >& observer );
+    virtual void Unregister( ResponseObserver_ABC< sword::UnitCreation >& observer );
+    virtual void Send( simulation::UnitMagicAction& message, const std::string& identifier );
     //@}
 
 private:
@@ -75,6 +83,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const ContextFactory_ABC& contextFactory_;
     tools::MessageController_ABC< sword::SimToClient_Content >& messageController_;
     dispatcher::SimulationPublisher_ABC& publisher_;
     dispatcher::Model_ABC& dynamicModel_;
@@ -82,7 +91,6 @@ private:
     const UnitTypeResolver_ABC& unitTypeResolver_;
     RemoteAgentSubject_ABC& remoteAgentSubject_;
     const LocalAgentResolver_ABC& localAgentResolver_;
-    std::auto_ptr< ContextFactory_ABC > pContextFactory_;
     std::auto_ptr< ContextHandler_ABC< sword::FormationCreation > > pFormationHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::AutomatCreation > > pAutomatHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::UnitCreation > > pUnitHandler_;

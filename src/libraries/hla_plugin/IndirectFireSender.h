@@ -51,7 +51,7 @@ public:
     //@{
              IndirectFireSender( InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender,
                                  tools::MessageController_ABC< sword::SimToClient_Content >& controller, const std::string& federateName,
-                                 MunitionTypeResolver_ABC& munitionTypeResolver, const LocalAgentResolver_ABC& localResolver );
+                                 const MunitionTypeResolver_ABC& munitionTypeResolver, const LocalAgentResolver_ABC& localResolver );
     virtual ~IndirectFireSender();
     //@}
 

@@ -139,3 +139,93 @@ void FederateFacade::Unregister( RemoteAgentListener_ABC& listener )
 {
     agentClass_->Unregister( listener );
 }
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Connect
+// Created: SLI 2011-09-27
+// -----------------------------------------------------------------------------
+bool FederateFacade::Connect()
+{
+    return federate_->Connect();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Disconnect
+// Created: SLI 2011-09-27
+// -----------------------------------------------------------------------------
+void FederateFacade::Disconnect()
+{
+    federate_->Disconnect();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Create
+// Created: SLI 2011-09-27
+// -----------------------------------------------------------------------------
+bool FederateFacade::Create( const std::string& federation, const std::string& fomFile )
+{
+    return federate_->Create( federation, fomFile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Destroy
+// Created: SLI 2011-09-27
+// -----------------------------------------------------------------------------
+bool FederateFacade::Destroy( const std::string& federation )
+{
+    return federate_->Destroy( federation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Join
+// Created: SLI 2011-09-27
+// -----------------------------------------------------------------------------
+bool FederateFacade::Join( const std::string& federation, bool timeConstrained, bool timeRegulating )
+{
+    return federate_->Join( federation, timeConstrained, timeRegulating );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Resign
+// Created: SLI 2011-09-27
+// -----------------------------------------------------------------------------
+void FederateFacade::Resign()
+{
+    federate_->Resign();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Step
+// Created: SLI 2011-09-27
+// -----------------------------------------------------------------------------
+void FederateFacade::Step()
+{
+    federate_->Step();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Register
+// Created: SLI 2011-09-27
+// -----------------------------------------------------------------------------
+void FederateFacade::Register( const ::hla::ClassIdentifier& classID, ::hla::Class_ABC& objectClass, bool publish, bool subscribe )
+{
+    federate_->Register( classID, objectClass, publish, subscribe );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Register
+// Created: SLI 2011-09-27
+// -----------------------------------------------------------------------------
+void FederateFacade::Register( const ::hla::InteractionIdentifier& interactionID, ::hla::Interaction_ABC& interactionClass, bool publish, bool subscribe )
+{
+    federate_->Register( interactionID, interactionClass, publish, subscribe );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Register
+// Created: SLI 2011-09-27
+// -----------------------------------------------------------------------------
+void FederateFacade::Register( ::hla::FederateAmbassador_ABC& listener )
+{
+    federate_->Register( listener );
+}

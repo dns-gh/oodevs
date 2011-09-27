@@ -43,20 +43,23 @@ class MunitionTypeResolver : public MunitionTypeResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MunitionTypeResolver( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::DotationType, unsigned int >& dotationTypeResolver );
+             MunitionTypeResolver( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::DotationType, unsigned long >& dotationTypeResolver,
+                                   const tools::Resolver_ABC< kernel::DotationType, std::string > dotationNameResolver );
     virtual ~MunitionTypeResolver();
     //@}
 
     //! @name Operations
     //@{
     virtual rpr::EntityType Resolve( unsigned int munitionIdentifier ) const;
+    virtual unsigned int Resolve( const rpr::EntityType& munitionType ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const rpr::EntityTypeResolver_ABC& entityTypeResolver_;
-    const tools::Resolver_ABC< kernel::DotationType, unsigned int >& dotationTypeResolver_;
+    const tools::Resolver_ABC< kernel::DotationType, unsigned long >& dotationTypeResolver_;
+    const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationNameResolver_;
     //@}
 };
 

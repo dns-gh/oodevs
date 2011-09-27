@@ -11,6 +11,7 @@
 #define plugins_hla_FederateFacade_h
 
 #include "RemoteAgentSubject_ABC.h"
+#include "Federate_ABC.h"
 #include "tools/MessageObserver.h"
 #include <memory>
 
@@ -52,6 +53,7 @@ namespace hla
 // Created: SBO 2008-02-18
 // =============================================================================
 class FederateFacade : public RemoteAgentSubject_ABC
+                     , public Federate_ABC
                      , private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
@@ -67,6 +69,25 @@ public:
     //@{
     virtual void Register( RemoteAgentListener_ABC& listener );
     virtual void Unregister( RemoteAgentListener_ABC& listener );
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual bool Connect();
+    virtual void Disconnect();
+
+    virtual bool Create( const std::string& federation, const std::string& fomFile );
+    virtual bool Destroy( const std::string& federation );
+
+    virtual bool Join( const std::string& federation, bool timeConstrained, bool timeRegulating );
+    virtual void Resign();
+
+    virtual void Step();
+
+    virtual void Register( const ::hla::ClassIdentifier& classID, ::hla::Class_ABC& objectClass, bool publish, bool subscribe );
+    virtual void Register( const ::hla::InteractionIdentifier& interactionID, ::hla::Interaction_ABC& interactionClass, bool publish, bool subscribe );
+
+    virtual void Register( ::hla::FederateAmbassador_ABC& listener );
     //@}
 
 private:
