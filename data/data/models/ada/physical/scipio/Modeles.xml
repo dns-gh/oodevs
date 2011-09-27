@@ -474,7 +474,6 @@
         <mission name="PION GENIE Valoriser">
           <fragorder name="Abandonner travaux"/>
         </mission>
-        <mission name="PION Detruire point du reseau"/>
         <mission name="PION Activer reseau souterrain"/>
         <mission name="PION Desactiver reseau souterrain"/>
         <mission name="PION Entrer dans un reseau souterrain"/>
@@ -483,6 +482,7 @@
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Produire et alimenter"/>
         <mission name="PION GENIE Equiper Exploiter Site Franchissement"/>
+        <mission name="PION Desactiver Point Du Reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1003,11 +1003,11 @@
         <mission name="PION GENIE Reparer">
           <fragorder name="Abandonner travaux"/>
         </mission>
-        <mission name="PION Detruire point du reseau"/>
         <mission name="PION Activer reseau souterrain"/>
         <mission name="PION Desactiver reseau souterrain"/>
         <mission name="PION Produire et alimenter"/>
         <mission name="PION GENIE Retablir Point Du Reseau"/>
+        <mission name="PION Desactiver Point Du Reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1087,7 +1087,7 @@
         <mission name="PION Sortir du reseau souterrain"/>
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
-        <mission name="PION Detruire point du reseau"/>
+        <mission name="PION Desactiver Point Du Reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1208,7 +1208,6 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION Detruire point du reseau"/>
         <mission name="PION Activer reseau souterrain"/>
         <mission name="PION Desactiver reseau souterrain"/>
         <mission name="PION Entrer dans un reseau souterrain"/>
@@ -1222,6 +1221,7 @@
         <mission name="PION MELEE Surveiller"/>
         <mission name="PION MELEE Detruire"/>
         <mission name="PION MILICE Appui contre mobilite"/>
+        <mission name="PION Desactiver Point Du Reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9788,12 +9788,12 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Detruire point du reseau"/>
         <mission name="AUTOMATE MELEE Detruire"/>
         <mission name="AUTOMATE MELEE Harceler"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
         <mission name="AUTOMATE MELEE Controler"/>
         <mission name="AUTOMATE MILICE Appui contre mobilite"/>
+        <mission name="AUTOMATE Desactiver Point Du Reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -9843,4 +9843,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2395120072" -->
+<!-- signature="1833484606" -->
