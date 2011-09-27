@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ControlsChecker.h"
 #include "preparation/ProfileHierarchies_ABC.h"
+#include "preparation/TacticalHierarchies.h"
 #include "preparation/Model.h"
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
@@ -62,7 +63,11 @@ QString ControlsChecker::GetProfileControl( const UserProfile& profile, const ke
         if( it->second )
         {
             QString login = it->second->GetLogin();
-            const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior();
+            const kernel::Entity_ABC* parent = 0;
+            if( const ProfileHierarchies_ABC* pProfileHierarchy = entity.Retrieve< ProfileHierarchies_ABC >() )
+                parent = pProfileHierarchy->GetSuperior();
+            else if( const TacticalHierarchies* pTacticalHierarchy = entity.Retrieve< TacticalHierarchies >() )
+                parent = &pTacticalHierarchy->GetTop();
             if( profile.GetLogin().ascii() != login )
                 if( it->second->IsWriteable( entity ) || ( parent && it->second->IsWriteable( *parent ) ) )
                     return login;
