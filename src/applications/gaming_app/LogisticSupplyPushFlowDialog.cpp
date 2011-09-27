@@ -91,6 +91,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     routeLocationCreator_->Allow( false, false, false, false, false );
 
     tabs_ = new QTabWidget( this );
+    tabs_->setMargin( 5 );
     QGridLayout* tabLayout = new QGridLayout( this, 3, 2 );
     tabLayout->addWidget( tabs_, 0, 0, 1, 3 );
 
@@ -115,7 +116,9 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     tabLayout->addWidget( okButton, 1, 0, 1, 1 );
     tabLayout->addWidget( addWaypointButton_, 1, 1, 1, 1 );
     tabLayout->addWidget( cancelButton, 1, 2, 1, 1 );
-    this->setFixedSize( 300, 400 );
+    this->setFixedSize( 320, 420 );
+    tabLayout->setMargin( 5 );
+    tabLayout->setSpacing( 5 );
 
     recipientsTable_ = new Q3Table( 0, 1, resourcesTab );
     recipientsTable_->horizontalHeader()->setLabel( 0, tools::translate( "Logistic : Push supply flow", "Recipients" ) );
@@ -392,7 +395,8 @@ void LogisticSupplyPushFlowDialog::AddRecipientItem()
     if( row > 0 )
     {
         curItem = static_cast< ExclusiveComboTableItem* >( recipientsTable_->item( row-1, 0 ) );
-        current = curItem->currentItem();
+        if( curItem )
+            current = curItem->currentItem();
     }
 
     QStringList recipientsList;
@@ -418,7 +422,8 @@ void LogisticSupplyPushFlowDialog::AddResourceItem()
     if( row > 0 )
     {
         curItem = static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( row-1, 0 ) );
-        current = curItem->currentItem();
+        if( curItem )
+            current = curItem->currentItem();
     }
 
     QStringList resourcesList; resourcesList.append( QString() );
@@ -450,7 +455,9 @@ void LogisticSupplyPushFlowDialog::AddResourceItem( QString dotationName, int Av
 
     assert( resourcesTable_->numRows() > 0 );
     const int rowIndex = resourcesTable_->numRows() - 1;
-    static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( rowIndex, 0 ) )->setCurrentItem( dotationName );
+    ExclusiveComboTableItem* curItem = static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( rowIndex, 0 ) );
+    if( curItem )
+        curItem->setCurrentItem( dotationName );
     resourcesTable_->item( rowIndex, 1 )->setText( QString::number( Available ) );
     resourcesTable_->item( rowIndex, 2 )->setText( QString::number( qtySupply ) );
 }
@@ -467,7 +474,8 @@ void LogisticSupplyPushFlowDialog::AddCarrierItem()
     if( row > 0 )
     {
         curItem = static_cast< ExclusiveComboTableItem* >( carriersTable_->item( row-1, 0 ) );
-        current = curItem->currentItem();
+        if( curItem )
+            current = curItem->currentItem();
     }
 
     QStringList carriersList;
@@ -494,7 +502,9 @@ void LogisticSupplyPushFlowDialog::AddCarrierItem( QString dotationName, int Ava
 
     assert( carriersTable_->numRows() > 0 );
     const int rowIndex = carriersTable_->numRows() - 1;
-    static_cast< ExclusiveComboTableItem* >( carriersTable_->item( rowIndex, 0 ) )->setCurrentItem( dotationName );
+    ExclusiveComboTableItem* curItem = static_cast< ExclusiveComboTableItem* >( carriersTable_->item( rowIndex, 0 ) );
+    if( curItem )
+        curItem->setCurrentItem( dotationName );
     carriersTable_->item( rowIndex, 1 )->setText( QString::number( Available ) );
     carriersTable_->item( rowIndex, 2 )->setText( QString::number( qtySupply ) );
 }
@@ -719,8 +729,10 @@ void LogisticSupplyPushFlowDialog::OnRecipientValueChanged( int row, int /*col*/
         waypoints.removeAll( recipients_[ row ]->GetName() );
     pModel->setStringList( waypoints );
 
-    ExclusiveComboTableItem& item = *static_cast< ExclusiveComboTableItem* >( recipientsTable_->item( row, 0 ) );
-    QString selection = item.currentText();
+    ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( recipientsTable_->item( row, 0 ) );
+    QString selection;
+    if( item )
+        selection = item->currentText();
     if( selection.isEmpty() )
     {
         if( recipientsTable_->numRows() > 1 )
@@ -751,8 +763,10 @@ void LogisticSupplyPushFlowDialog::OnRecipientValueChanged( int row, int /*col*/
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::OnRecipientSelectionChanged( int row, int /*col*/ )
 {
-    ExclusiveComboTableItem& item = *static_cast< ExclusiveComboTableItem* >( recipientsTable_->item( row, 0 ) );
-    QString selection = item.currentText();
+    ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( recipientsTable_->item( row, 0 ) );
+    QString selection;
+    if( item )
+        selection = item->currentText();
     if( selection.isEmpty() )
         pRecipientSelected_ = 0;
     else
@@ -830,8 +844,10 @@ void LogisticSupplyPushFlowDialog::OnResourcesValueChanged( int row, int col )
     if( it == recipientSupplies_.end() )
         return;
 
-    ExclusiveComboTableItem& item = *static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( row, 0 ) );
-    QString selection = item.currentText();
+    ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( row, 0 ) );
+    QString selection;
+    if( item )
+        selection = item->currentText();
     Q3TableItem& itemAVailable = *resourcesTable_->item( row, 1 );
     Q3TableItem& itemValue = *resourcesTable_->item( row, 2 );
     int newValue = itemValue.text().toInt();
@@ -897,8 +913,10 @@ void LogisticSupplyPushFlowDialog::OnCarriersUseCheckStateChanged()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::OnCarriersValueChanged( int row, int col )
 {
-    ExclusiveComboTableItem& item = *static_cast< ExclusiveComboTableItem* >( carriersTable_->item( row, 0 ) );
-    QString selection = item.currentText();
+    ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( carriersTable_->item( row, 0 ) );
+    QString selection;
+    if( item )
+        selection = item->currentText();
     Q3TableItem& itemAVailable = *carriersTable_->item( row, 1 );
     Q3TableItem& itemValue = *carriersTable_->item( row, 2 );
     int newValue = itemValue.text().toInt();

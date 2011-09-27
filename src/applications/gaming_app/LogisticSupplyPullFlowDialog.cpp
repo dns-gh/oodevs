@@ -91,6 +91,7 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Con
     routeLocationCreator_->Allow( false, false, false, false, false );
 
     tabs_ = new QTabWidget( this );
+    tabs_->setMargin( 5 );
     QGridLayout* tabLayout = new QGridLayout( this, 3, 2 );
     tabLayout->addWidget( tabs_, 0, 0, 1, 3 );
 
@@ -115,7 +116,9 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Con
     tabLayout->addWidget( okButton, 1, 0, 1, 1 );
     tabLayout->addWidget( addWaypointButton_, 1, 1, 1, 1 );
     tabLayout->addWidget( cancelButton, 1, 2, 1, 1 );
-    this->setFixedSize( 300, 400 );
+    this->setFixedSize( 320, 420 );
+    tabLayout->setMargin( 5 );
+    tabLayout->setSpacing( 5 );
 
     supplierCombo_ = new ValuedComboBox< const Entity_ABC* >( resourcesTab );
     supplierCombo_->setMinimumWidth( 260 );
@@ -222,7 +225,7 @@ void LogisticSupplyPullFlowDialog::Show()
 
     supplierCombo_->clear();
     supplierCombo_->AddItem( QString(), 0 );
-    for ( T_SuppliersNames::iterator it = suppliersNames_.begin(); it != suppliersNames_.end(); ++it )
+    for( T_SuppliersNames::iterator it = suppliersNames_.begin(); it != suppliersNames_.end(); ++it )
         supplierCombo_->AddItem( it.key(), it.value() );
 
     OnSupplierValueChanged();
@@ -266,12 +269,12 @@ void LogisticSupplyPullFlowDialog::Validate()
     const kernel::Automat_ABC* pSupplierAutomat = dynamic_cast< const kernel::Automat_ABC* >( supplier_ );
     const kernel::Formation_ABC* pSupplierFormation = dynamic_cast< const kernel::Formation_ABC* >( supplier_ );
     assert( pSupplierAutomat || pSupplierFormation );
-    if ( pSupplierAutomat )
+    if( pSupplierAutomat )
         pullFlowParameters->SetSupplier( *pSupplierAutomat );
     else if( pSupplierFormation )
         pullFlowParameters->SetSupplier( *pSupplierFormation );
 
-    for ( T_SuppliesVector::iterator it = supplierSupplies_.begin(); it != supplierSupplies_.end(); ++it )
+    for( T_SuppliesVector::iterator it = supplierSupplies_.begin(); it != supplierSupplies_.end(); ++it )
     {
         const ObjectQuantity& supply = *it;
         const DotationType* dotationType = supplies_[ supply.objectName_ ].type_;
@@ -292,7 +295,7 @@ void LogisticSupplyPullFlowDialog::Validate()
         QString str = *it;
         if( points_.find( str ) != points_.end() )
         {
-            if ( isOutPath )
+            if( isOutPath )
                 outPath.push_back( points_[ str ] );
             else
                 backPath.push_back( points_[ str ] );
@@ -401,7 +404,8 @@ void LogisticSupplyPullFlowDialog::AddResourceItem()
     if( row > 0 )
     {
         curItem = static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( row-1, 0 ) );
-        current = curItem->currentItem();
+        if( curItem )
+            current = curItem->currentItem();
     }
 
     QStringList resourcesList; resourcesList.append( QString() );
@@ -433,7 +437,9 @@ void LogisticSupplyPullFlowDialog::AddResourceItem( QString dotationName, int Av
 
     assert( resourcesTable_->numRows() > 0 );
     const int rowIndex = resourcesTable_->numRows() - 1;
-    static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( rowIndex, 0 ) )->setCurrentItem( dotationName );
+    ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( rowIndex, 0 ) );
+    if( item )
+        item->setCurrentItem( dotationName );
     resourcesTable_->item( rowIndex, 1 )->setText( QString::number( Available ) );
     resourcesTable_->item( rowIndex, 2 )->setText( QString::number( qtySupply ) );
 }
@@ -450,7 +456,8 @@ void LogisticSupplyPullFlowDialog::AddCarrierItem()
     if( row > 0 )
     {
         curItem = static_cast< ExclusiveComboTableItem* >( carriersTable_->item( row-1, 0 ) );
-        current = curItem->currentItem();
+        if( curItem )
+            current = curItem->currentItem();
     }
 
     QStringList carriersList;
@@ -477,7 +484,9 @@ void LogisticSupplyPullFlowDialog::AddCarrierItem( QString dotationName, int Ava
 
     assert( carriersTable_->numRows() > 0 );
     const int rowIndex = carriersTable_->numRows() - 1;
-    static_cast< ExclusiveComboTableItem* >( carriersTable_->item( rowIndex, 0 ) )->setCurrentItem( dotationName );
+    ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( carriersTable_->item( rowIndex, 0 ) );
+    if( item )
+        item->setCurrentItem( dotationName );
     carriersTable_->item( rowIndex, 1 )->setText( QString::number( Available ) );
     carriersTable_->item( rowIndex, 2 )->setText( QString::number( qtySupply ) );
 }
@@ -679,7 +688,7 @@ void LogisticSupplyPullFlowDialog::OnSupplierValueChanged()
 {
     customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
     QStringList waypoints = pModel->stringList();
-    if ( supplier_ )
+    if( supplier_ )
         waypoints.removeAll( supplier_->GetName() );    
     EraseSupplierData();
 
@@ -772,8 +781,10 @@ void LogisticSupplyPullFlowDialog::OnResourcesValueChanged( int row, int col )
     if( !supplier_ )
         return;
 
-    ExclusiveComboTableItem& item = *static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( row, 0 ) );
-    QString selection = item.currentText();
+    ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( row, 0 ) );
+    QString selection;
+    if( item )
+        selection = item->currentText();
     Q3TableItem& itemAVailable = *resourcesTable_->item( row, 1 );
     Q3TableItem& itemValue = *resourcesTable_->item( row, 2 );
     int newValue = itemValue.text().toInt();
@@ -838,8 +849,10 @@ void LogisticSupplyPullFlowDialog::OnCarriersUseCheckStateChanged()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPullFlowDialog::OnCarriersValueChanged( int row, int col )
 {
-    ExclusiveComboTableItem& item = *static_cast< ExclusiveComboTableItem* >( carriersTable_->item( row, 0 ) );
-    QString selection = item.currentText();
+    ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( carriersTable_->item( row, 0 ) );
+    QString selection;
+    if( item )
+        selection = item->currentText();
     Q3TableItem& itemAVailable = *carriersTable_->item( row, 1 );
     Q3TableItem& itemValue = *carriersTable_->item( row, 2 );
     int newValue = itemValue.text().toInt();
@@ -972,7 +985,7 @@ void LogisticSupplyPullFlowDialog::UpdateRouteDrawpoints()
     T_Route route;
     ComputeRoute( route );
 
-    if ( !supplier_ )
+    if( !supplier_ )
         return;
 
     const kernel::Positions* startPos = static_cast< const kernel::Positions* >( selected_->Retrieve< kernel::Positions >() );
