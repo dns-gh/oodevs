@@ -196,6 +196,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_tiredness( sword::UnitAttributes::tired );
                 message.set_morale( sword::UnitAttributes::fanatical );
                 message.set_experience( sword::UnitAttributes::veteran );
+                message.set_stress( sword::UnitAttributes::calm );
                 message.mutable_surrendered_unit()->set_id( 0 );
                 message.set_prisoner( true );
                 message.set_refugees_managed( true );
