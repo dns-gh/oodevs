@@ -8,6 +8,8 @@
           <xsl:if test="count( ./logistic-supply-classes ) = 0">
               <xsl:element name="logistic-supply-classes">
                   <xsl:attribute name="file">LogisticSupplyClasses.xml</xsl:attribute>
+              </xsl:element>
+          </xsl:if>
           <xsl:if test="count( ./urban-templates ) = 0">
               <xsl:element name="urban-templates">
                   <xsl:attribute name="file">UrbanTemplates.xml</xsl:attribute>
