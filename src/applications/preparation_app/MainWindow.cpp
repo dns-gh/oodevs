@@ -629,8 +629,10 @@ bool MainWindow::Save()
         SaveModelChecker checker( this );
         result = model_.Save( config_, checker );
         if( result )
+        {
             SetWindowTitle( false );
-        CheckConsistency();
+            CheckConsistency();
+        }
     }
     return result;
 }
