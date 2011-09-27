@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_gui/Tools.h"
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: Note constructor
@@ -77,8 +78,8 @@ void Note::Display( Q3ListViewItem* item ) const
     item->setText( 0, name_.c_str() );
     item->setText( 1, noteNumber_.c_str() );
     item->setText( 2, noteText_.c_str() );
-    item->setText( 3, creationTime_.c_str() );
-    item->setText( 4, lastUpdateTime_.c_str() );
+    item->setText( 3, boost::posix_time::to_simple_string( boost::posix_time::from_iso_string( creationTime_ ) ).c_str() );
+    item->setText( 4, boost::posix_time::to_simple_string( boost::posix_time::from_iso_string( lastUpdateTime_ ) ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

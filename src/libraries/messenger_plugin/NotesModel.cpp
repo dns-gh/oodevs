@@ -60,6 +60,8 @@ NotesModel::~NotesModel()
 // -----------------------------------------------------------------------------
 void NotesModel::HandleRequest( const sword::MarkerCreationRequest& message, unsigned int context )
 {
+    if( currentTime_.empty() )
+        return;
     std::auto_ptr< Note > note( new Note( idManager_.NextId(), message, currentTime_ ) );
     Register( note->GetId(), *note );
     if( note->GetParent() )
@@ -290,7 +292,14 @@ void NotesModel::ReadNote( const std::string& input, std::vector< unsigned int >
         if( fields.size() != 6 )
             return;
         const unsigned int parent = boost::lexical_cast< unsigned int >( fields[1] );
-        notes.push_back( CreateNote( fields, parent ? notes[ parent - ::headerLines ] : 0 ) );
+        if( fields[ 4 ].find( '-' ) != std::string::npos && fields[ 4 ].find( ':' ) != std::string::npos )
+        {
+            if( fields[ 4 ].find( ' ' ) == std::string::npos && fields[ 4 ].find( 'T' ) != std::string::npos )
+                fields[ 4 ].replace( fields[ 4 ].find( 'T' ), 1, " " );
+            fields[ 4 ] = boost::posix_time::to_iso_string( boost::posix_time::time_from_string( fields[ 4 ] ) );
+        }
+        if( !fields[ 4 ].empty() )
+            notes.push_back( CreateNote( fields, parent ? notes[ parent - ::headerLines ] : 0 ) );
     }
     catch( boost::bad_lexical_cast& e )
     {
@@ -324,7 +333,7 @@ unsigned int NotesModel::CreateNote( std::vector< std::string >& fields, const u
 // -----------------------------------------------------------------------------
 void NotesModel::UpdateTime( const std::string& message )
 {
-    currentTime_ = boost::posix_time::to_simple_string( boost::posix_time::from_iso_string( message ) );
+    currentTime_ = message;
 }
 
 namespace directia

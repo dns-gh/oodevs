@@ -23,12 +23,12 @@ using namespace plugins::messenger;
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
 Note::Note( unsigned long id, const sword::MarkerCreationRequest& message, const std::string& currentTime )
-    : id_( id )
-    , name_( message.marker().name() )
-    , number_( message.marker().number() )
-    , description_( message.marker().description() )
-    , parent_( message.marker().parent().id() )
-    , creationTime_ ( currentTime )
+    : id_            ( id )
+    , name_          ( message.marker().name() )
+    , number_        ( message.marker().number() )
+    , description_   ( message.marker().description() )
+    , parent_        ( message.marker().parent().id() )
+    , creationTime_  ( currentTime )
     , lastUpdateTime_( currentTime )
 {
     // NOTHING
@@ -39,12 +39,12 @@ Note::Note( unsigned long id, const sword::MarkerCreationRequest& message, const
 // Created: HBD 2010-02-17
 // -----------------------------------------------------------------------------
 Note::Note(unsigned long id, std::vector<std::string>& values, unsigned int parent, const std::string& currentTime )
-    : id_( id )
-    , name_( values[ 0 ] )
-    , number_( values[ 2 ] )
-    , description_( values[ 3 ] )
-    , parent_( parent )
-    , creationTime_ ( values[ 4 ] )
+    : id_            ( id )
+    , name_          ( values[ 0 ] )
+    , number_        ( values[ 2 ] )
+    , description_   ( values[ 3 ] )
+    , parent_        ( parent )
+    , creationTime_  ( values[ 4 ] )
     , lastUpdateTime_( currentTime )
 {
     // NOTHING
