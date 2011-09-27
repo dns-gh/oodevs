@@ -16,6 +16,7 @@
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileList constructor
@@ -55,7 +56,10 @@ UserProfileList::~UserProfileList()
 void UserProfileList::Save()
 {
     for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
+    {
         *const_cast< UserProfile* >( it->first ) = *it->second;
+        controllers_.controller_.Update( it->first );
+    }
     QString result = checker_.Validate();
     if( result != "" )
     {

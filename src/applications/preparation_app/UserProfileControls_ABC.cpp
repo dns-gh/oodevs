@@ -62,7 +62,7 @@ void UserProfileControls_ABC::Commit()
             const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
             const Status status = Status( item->text( 2 ).toInt() );
             const bool isWriteable = ( status == eControl ) ? ( supervisor_ ? false : true ) : false;
-            const bool isReadable = ( status == eControl ) ? true : profile_->IsReadable( *entity );
+            const bool isReadable = status == eControl;
             profile_->SetReadable( *entity, isReadable );
             profile_->SetWriteable( *entity, isWriteable );
             ValueChanged( entity, isReadable, isWriteable );
@@ -146,8 +146,8 @@ void UserProfileControls_ABC::SetStatus( gui::ValuedListItem* item, bool inherit
     const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
     if( !entity )
         return;
-    const bool isControl = supervisor_ ? profile_->IsReadable( *entity ) : profile_->IsWriteable( *entity );
-    SetStatus( item, isControl, inheritsControllable );
+    bool isControl = supervisor_ ? profile_->IsReadable( *entity ) : profile_->IsWriteable( *entity );
+    SetStatus( item, isControl && !inheritsControllable, inheritsControllable );
 }
 
 // -----------------------------------------------------------------------------
