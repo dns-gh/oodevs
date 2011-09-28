@@ -102,10 +102,10 @@ void CreateSession::SetDefaultValues()
 
         //Réglage des paramètres du GC
         setter_->SetValue( "session/config/simulation/GarbageCollector/@setpause"  , 100 );
-        setter_->SetValue( "session/config/simulation/GarbageCollector/@setstepmul"  , 100 );
+        setter_->SetValue( "session/config/simulation/GarbageCollector/@setstepmul"  , 200 );
         //
 
-        setter_->SetValue( "session/config/simulation/pathfinder/@threads"         , 1 );
+        setter_->SetValue( "session/config/simulation/pathfinder/@threads"         , 4 );
     }
     {
         setter_->SetValue( "session/config/dispatcher/network/@client", "localhost:" +  // $$$$ AGE 2007-10-09:
