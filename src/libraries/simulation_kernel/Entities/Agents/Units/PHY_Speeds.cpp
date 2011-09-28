@@ -59,14 +59,15 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
     , nLinearImpassabilityMask_ ( 0 )
 {
     static const TerrainData areas[]   = {
-        TerrainData::Forest(), TerrainData::Plantation(), TerrainData::Swamp(),
-        TerrainData::Urban(), TerrainData::Water(), TerrainData::Dune(), TerrainData::Ice() };
+        TerrainData::Forest(), TerrainData::Plantation(), TerrainData::Swamp(), TerrainData::Urban(),
+        TerrainData::Water(), TerrainData::Dune(), TerrainData::Ice(), TerrainData::Mountain() };
     static const TerrainData borders[] = {
-        TerrainData::ForestBorder(), TerrainData::PlantationBorder(), TerrainData::SwampBorder(),
-        TerrainData::UrbanBorder(), TerrainData::WaterBorder(), TerrainData::DuneBorder(), TerrainData::IceBorder() };
+        TerrainData::ForestBorder(), TerrainData::PlantationBorder(), TerrainData::SwampBorder(), TerrainData::UrbanBorder(),
+        TerrainData::WaterBorder(), TerrainData::DuneBorder(), TerrainData::IceBorder(), TerrainData::MountainBorder() };
     static const TerrainData linears[] = {
-        TerrainData::Cliff(), TerrainData::Motorway(), TerrainData::LargeRoad(), TerrainData::MediumRoad(), TerrainData::SmallRoad(),
-        TerrainData::Bridge(), TerrainData::Railroad(), TerrainData::LargeRiver(), TerrainData::MediumRiver(), TerrainData::SmallRiver(), TerrainData::Crossroad() };
+        TerrainData::Cliff(), TerrainData::Motorway(), TerrainData::LargeRoad(), TerrainData::MediumRoad(),
+        TerrainData::SmallRoad(), TerrainData::Bridge(), TerrainData::Railroad(), TerrainData::LargeRiver(),
+        TerrainData::MediumRiver(), TerrainData::SmallRiver(), TerrainData::Crossroad() };
 
     for( unsigned int nOffset = 0; nOffset != 8; ++nOffset )
         rAreaSpeeds_[ nOffset ] = role.GetSpeedWithReinforcement( areas[ nOffset ] );
@@ -95,14 +96,15 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded )
     , nLinearImpassabilityMask_ ( 0 )
 {
     static const TerrainData areas[]   = {
-        TerrainData::Forest(), TerrainData::Plantation(), TerrainData::Swamp(),
-        TerrainData::Urban(), TerrainData::Water(), TerrainData::Dune(), TerrainData::Ice() };
+        TerrainData::Forest(), TerrainData::Plantation(), TerrainData::Swamp(), TerrainData::Urban(),
+        TerrainData::Water(), TerrainData::Dune(), TerrainData::Ice(), TerrainData::Mountain() };
     static const TerrainData borders[] = {
-        TerrainData::ForestBorder(), TerrainData::PlantationBorder(), TerrainData::SwampBorder(),
-        TerrainData::UrbanBorder(), TerrainData::WaterBorder(), TerrainData::DuneBorder(), TerrainData::IceBorder() };
+        TerrainData::ForestBorder(), TerrainData::PlantationBorder(), TerrainData::SwampBorder(), TerrainData::UrbanBorder(),
+        TerrainData::WaterBorder(), TerrainData::DuneBorder(), TerrainData::IceBorder(), TerrainData::MountainBorder() };
     static const TerrainData linears[] = {
-        TerrainData::Cliff(), TerrainData::Motorway(), TerrainData::LargeRoad(), TerrainData::MediumRoad(), TerrainData::SmallRoad(),
-        TerrainData::Bridge(), TerrainData::Railroad(), TerrainData::LargeRiver(), TerrainData::MediumRiver(), TerrainData::SmallRiver(), TerrainData::Crossroad() };
+        TerrainData::Cliff(), TerrainData::Motorway(), TerrainData::LargeRoad(), TerrainData::MediumRoad(),
+        TerrainData::SmallRoad(), TerrainData::Bridge(), TerrainData::Railroad(), TerrainData::LargeRiver(),
+        TerrainData::MediumRiver(), TerrainData::SmallRiver(), TerrainData::Crossroad() };
 
     for( unsigned int nOffset = 0; nOffset != 8; ++nOffset )
         rAreaSpeeds_[ nOffset ] = role.GetSpeedWithReinforcement( areas[ nOffset ] );
@@ -270,7 +272,7 @@ bool PHY_Speeds::IsPassable( const TerrainData& data ) const
      || ( data.Border() & nBorderImpassabilityMask_ ) )
         return false;
     if( ( data.Area() & nAreaImpassabilityMask_ )                   // je suis en surface impassable
-      & ~( data.Border() & ~nBorderImpassabilityMask_ ) )           // et je ne suis pas sur un bord passable de meme type
+      & ~( data.Border() & nBorderPassabilityMask_ ) )              // et je ne suis pas sur un bord passable de meme type
         return false;
     return true;
 }
@@ -282,51 +284,40 @@ bool PHY_Speeds::IsPassable( const TerrainData& data ) const
 void PHY_Speeds::GenerateMasks()
 {
     {
-        // If you can go on a road, you can go on whatever there is under the road
         nLinearPassabilityMask_ = 0;
-        unsigned int nOffset = TerrainData::Motorway().ExtractLinearOffset();
-        if( rLinearSpeeds_[ nOffset ] > 0 )
-            nLinearPassabilityMask_ |= (1 << nOffset);
-        nOffset = TerrainData::LargeRoad().ExtractLinearOffset();
-        if( rLinearSpeeds_[ nOffset ] > 0 )
-            nLinearPassabilityMask_ |= (1 << nOffset);
-        nOffset = TerrainData::MediumRoad().ExtractLinearOffset();
-        if( rLinearSpeeds_[ nOffset ] > 0 )
-            nLinearPassabilityMask_ |= (1 << nOffset);
-        nOffset = TerrainData::SmallRoad().ExtractLinearOffset();
-        if( rLinearSpeeds_[ nOffset ] > 0 )
-            nLinearPassabilityMask_ |= (1 << nOffset);
-        nOffset = TerrainData::Bridge().ExtractLinearOffset();
-        if( rLinearSpeeds_[ nOffset ] > 0 )
-            nLinearPassabilityMask_ |= (1 << nOffset);
-    }
-    {
-        // If you can go on water, you're not stopped by anything that could cross the water
-        nAreaPassabilityMask_ = 0;
-        const unsigned int nOffset = TerrainData::Water().ExtractAreaOffset();
-        if( rAreaSpeeds_[ nOffset ] > 0 )
-            nAreaPassabilityMask_ |= (1 << nOffset);
-    }
-    {
-        nAreaImpassabilityMask_ = 0;
-        unsigned int nOffset = 0;
-        for( double* it = rAreaSpeeds_; it != rAreaSpeeds_ + 8; ++it, ++nOffset )
-            if( *it == 0. )
-                nAreaImpassabilityMask_ |= (1<<nOffset);
-    }
-    {
-        nBorderImpassabilityMask_ = 0;
-        unsigned int nOffset = 0;
-        for( double* it = rBorderSpeeds_; it != rBorderSpeeds_ + 8; ++it, ++nOffset )
-            if( *it == 0. )
-                nBorderImpassabilityMask_ |= (1<<nOffset);
-    }
-    {
         nLinearImpassabilityMask_ = 0;
         unsigned int nOffset = 0;
         for( double* it = rLinearSpeeds_; it != rLinearSpeeds_ + 11; ++it, ++nOffset )
+        {
             if( *it == 0. )
                 nLinearImpassabilityMask_ |= (1<<nOffset);
+            else
+                nLinearPassabilityMask_ |= (1<<nOffset);
+        }
+    }
+    {
+        nBorderPassabilityMask_ = 0;
+        nBorderImpassabilityMask_ = 0;
+        unsigned int nOffset = 0;
+        for( double* it = rBorderSpeeds_; it != rBorderSpeeds_ + 8; ++it, ++nOffset )
+        {
+            if( *it == 0. )
+                nBorderImpassabilityMask_ |= (1<<nOffset);
+            else
+                nBorderPassabilityMask_ |= (1<<nOffset);
+        }
+    }
+    {
+        nAreaPassabilityMask_ = 0;
+        nAreaImpassabilityMask_ = 0;
+        unsigned int nOffset = 0;
+        for( double* it = rAreaSpeeds_; it != rAreaSpeeds_ + 8; ++it, ++nOffset )
+        {
+            if( *it == 0. )
+                nAreaImpassabilityMask_ |= (1<<nOffset);
+            else
+                nAreaPassabilityMask_ |= (1<<nOffset);
+        }
     }
 }
 

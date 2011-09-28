@@ -35,7 +35,7 @@ public:
     //@{
              PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration );
     explicit PHY_Speeds( const moving::PHY_RoleAction_Moving& role );
-    explicit PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded );
+             PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded );
     virtual ~PHY_Speeds();
     //@}
 
@@ -43,7 +43,7 @@ public:
     //@{
     double GetMaxSpeed() const;
     double GetMaxSpeed( const TerrainData& data ) const;
-    bool     IsPassable( const TerrainData& data ) const;
+    bool   IsPassable ( const TerrainData& data ) const;
     //@}
 
     //! @name Accessors
@@ -71,17 +71,17 @@ private:
     //! @name Member data
     //@{
     double rMaxSpeed_;
-
-    double  rBaseSpeed_;
+    double rBaseSpeed_;
     double* rAreaSpeeds_  ;
     double* rBorderSpeeds_;
     double* rLinearSpeeds_;
 
     unsigned short nLinearPassabilityMask_;
+    unsigned short nLinearImpassabilityMask_;
+    unsigned char  nBorderPassabilityMask_;
+    unsigned char  nBorderImpassabilityMask_;
     unsigned char  nAreaPassabilityMask_;
     unsigned char  nAreaImpassabilityMask_;
-    unsigned char  nBorderImpassabilityMask_;
-    unsigned short nLinearImpassabilityMask_;
     //@}
 };
 
