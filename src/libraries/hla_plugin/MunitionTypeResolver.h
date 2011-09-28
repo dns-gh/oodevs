@@ -44,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MunitionTypeResolver( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::DotationType, unsigned long >& dotationTypeResolver,
-                                   const tools::Resolver_ABC< kernel::DotationType, std::string > dotationNameResolver );
+                                   const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationNameResolver );
     virtual ~MunitionTypeResolver();
     //@}
 

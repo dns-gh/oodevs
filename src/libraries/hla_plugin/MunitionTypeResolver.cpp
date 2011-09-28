@@ -21,7 +21,7 @@ using namespace plugins::hla;
 // Created: VPR 2011-09-26
 // -----------------------------------------------------------------------------
 MunitionTypeResolver::MunitionTypeResolver( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::DotationType, unsigned long >& dotationTypeResolver,
-                                            const tools::Resolver_ABC< kernel::DotationType, std::string > dotationNameResolver )
+                                            const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationNameResolver )
     : entityTypeResolver_  ( entityTypeResolver )
     , dotationTypeResolver_( dotationTypeResolver )
     , dotationNameResolver_( dotationNameResolver )
