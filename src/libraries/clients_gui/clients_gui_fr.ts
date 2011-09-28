@@ -712,11 +712,11 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Density Gradient map</source>
-        <translation type="unfinished"></translation>
+        <translation>Gradient de densité</translation>
     </message>
     <message>
         <source>Occupation Gradient map</source>
-        <translation type="unfinished"></translation>
+        <translation>Gradient d&apos;occupation</translation>
     </message>
 </context>
 <context>
@@ -817,11 +817,11 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Infrastructures</source>
-        <translation type="unfinished"></translation>
+        <translation>Infrastructures</translation>
     </message>
     <message>
         <source>Display Infrastructures</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les infrastructures</translation>
     </message>
 </context>
 <context>
@@ -966,11 +966,11 @@ Voulez-vous le supprimer?</translation>
     <name>gui::LodgingPrototype_ABC</name>
     <message>
         <source>Lodging</source>
-        <translation type="unfinished">Hébergement</translation>
+        <translation>Hébergement</translation>
     </message>
     <message>
         <source>Capacity:</source>
-        <translation type="unfinished">Capacité:</translation>
+        <translation>Capacité:</translation>
     </message>
 </context>
 <context>
@@ -1015,11 +1015,11 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Logistic unit:</source>
-        <translation type="unfinished"></translation>
+        <translation>Unité logistique:</translation>
     </message>
     <message>
         <source>Camp&apos;s logistic unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Unité logistique du camp</translation>
     </message>
 </context>
 <context>
@@ -1466,19 +1466,19 @@ Voulez-vous le supprimer?</translation>
     <name>gui::StockPrototype_ABC</name>
     <message>
         <source>Stock parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de stock</translation>
     </message>
     <message>
         <source>Resource type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de ressource:</translation>
     </message>
     <message>
         <source>Stock:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stock:</translation>
     </message>
     <message>
         <source>Max stock:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stock max:</translation>
     </message>
 </context>
 <context>
@@ -1538,7 +1538,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Line thickness: </source>
@@ -1919,7 +1919,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Temperature:</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperature:</translation>
     </message>
 </context>
 </TS>

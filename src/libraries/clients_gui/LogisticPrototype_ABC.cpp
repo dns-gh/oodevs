@@ -11,6 +11,7 @@
 
 #include "clients_gui_pch.h"
 #include "LogisticPrototype_ABC.h"
+#include "LongNameHelper.h"
 #include "moc_LogisticPrototype_ABC.cpp"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -54,6 +55,15 @@ bool LogisticPrototype_ABC::CheckValidity() const
     return logSuperiors_->count() && logSuperiors_->GetValue();
 }
 
+namespace
+{
+    QString GetDisplayName( const Entity_ABC& entity )
+    {
+        std::string longName = LongNameHelper::GetEntityLongName( entity );
+        return longName.empty() ? entity.GetName() : longName.c_str();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticPrototype_ABC::NotifyCreated
 // Created: SBO 2006-04-19
@@ -63,10 +73,10 @@ void LogisticPrototype_ABC::NotifyCreated( const Automat_ABC& automat )
     if( logSuperiors_->GetItemIndex( &automat ) != -1 )
         return;
 
-    if( automat.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+    if( automat.GetLogisticLevel() == LogisticLevel::none_ )
         return;
 
-    logSuperiors_->AddItem( automat.GetName(), &automat );
+    logSuperiors_->AddItem( GetDisplayName( automat ), &automat );
     if( !selected_ )
         selected_ = &automat;
 }
@@ -80,10 +90,10 @@ void LogisticPrototype_ABC::NotifyCreated( const Formation_ABC& formation )
     if( logSuperiors_->GetItemIndex( &formation ) != -1 )
         return;
 
-    if( formation.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+    if( formation.GetLogisticLevel() == LogisticLevel::none_ )
         return;
 
-    logSuperiors_->AddItem( formation.GetName(), &formation );
+    logSuperiors_->AddItem( GetDisplayName( formation ), &formation );
     if( !selected_ )
         selected_ = &formation;
 }
@@ -107,12 +117,27 @@ void LogisticPrototype_ABC::NotifyDeleted( const Formation_ABC& formation )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticPrototype_ABC::NotifyUpdated
+// Created: JSR 2011-09-28
+// -----------------------------------------------------------------------------
+void LogisticPrototype_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    int pos = logSuperiors_->GetItemIndex( &entity );
+    if( pos != -1 )
+    {
+        QString toDisplay = GetDisplayName( entity );
+        if( logSuperiors_->text( pos ) != toDisplay )
+            logSuperiors_->ChangeItem( toDisplay, &entity );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticPrototype_ABC::NotifyContextMenu
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
 void LogisticPrototype_ABC::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    if( isVisible() && agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+    if( isVisible() && agent.GetLogisticLevel() != LogisticLevel::none_ )
     {
         selected_ = &agent;
         menu.InsertItem( "Parameter", tr( "Camp's logistic unit" ), this, SLOT( SetSelected() ) );
@@ -125,7 +150,7 @@ void LogisticPrototype_ABC::NotifyContextMenu( const Automat_ABC& agent, Context
 // -----------------------------------------------------------------------------
 void LogisticPrototype_ABC::NotifyContextMenu( const Formation_ABC& formation, ContextMenu& menu )
 {
-    if( isVisible() && formation.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+    if( isVisible() && formation.GetLogisticLevel() != LogisticLevel::none_ )
     {
         selected_ = &formation;
         menu.InsertItem( "Parameter", tr( "Camp's logistic unit" ), this, SLOT( SetSelected() ) );
