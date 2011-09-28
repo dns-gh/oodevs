@@ -96,6 +96,8 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
+    if( msg.has_motivation() )
+        motivation_ = msg.motivation();
 }
 
 // -----------------------------------------------------------------------------
@@ -128,6 +130,7 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     msg().set_healthy( nNbrHealthyHumans_ );
     msg().set_wounded( nNbrWoundedHumans_ );
     msg().set_dead( nNbrDeadHumans_ );
+    msg().set_motivation( motivation_ );
     msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
     msg().mutable_satisfaction()->set_safety( safetySatisfaction_ );
     msg().mutable_satisfaction()->set_lodging( lodgingSatisfaction_ );

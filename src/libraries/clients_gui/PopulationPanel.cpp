@@ -112,7 +112,7 @@ void PopulationPanel::Display( const PopulationPart_ABC& part, Displayer_ABC& di
 {
     unsigned int totalHumans = part.GetHealthyHumans() + part.GetWoundedHumans() + part.GetContaminatedHumans() + part.GetDeadHumans();
     float aliveDensity = ( totalHumans == 0 ) ? 0 :
-        part.GetDensity() * ( part.GetHealthyHumans() + part.GetWoundedHumans() + + part.GetContaminatedHumans() ) / totalHumans;
+        part.GetDensity() * ( part.GetHealthyHumans() + part.GetWoundedHumans() + part.GetContaminatedHumans() ) / totalHumans;
     displayer.Display( tools::translate( "gui::PopulationPanel", "Chunks" ), part.GetName() )
              .Display( tools::translate( "gui::PopulationPanel", "Healthy" ), part.GetHealthyHumans() )
              .Display( tools::translate( "gui::PopulationPanel", "Wounded" ), part.GetWoundedHumans() )

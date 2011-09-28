@@ -55,7 +55,7 @@ void LivingArea::DoUpdate( const sword::PopulationUpdate& message )
         {
             gui::T_Human& humans = humans_[ id ];
             for( int j = 0; j < occupation.persons_size(); ++j )
-                humans.persons_[ occupation.persons( j ).usage().c_str() ] = occupation.persons( j ).number();
+                humans.persons_[ occupation.persons( j ).usage().c_str() ].first = occupation.persons( j ).number();
             humans.alerted_ = occupation.alerted();
             humans.confined_ = occupation.confined();
             humans.evacuated_ = occupation.evacuated();
@@ -78,7 +78,7 @@ void LivingArea::Accept( kernel::LivingAreaVisitor_ABC& visitor ) const
         {
             unsigned int resident = 0;
             BOOST_FOREACH( const gui::T_BlockOccupation::value_type& person, it->second.persons_ )
-                resident += person.second;
+                resident += person.second.first;
             visitor.Visit( block.first, resident, it->second.alerted_, it->second.angriness_, it->second.confined_, it->second.evacuated_ );
         }
     }

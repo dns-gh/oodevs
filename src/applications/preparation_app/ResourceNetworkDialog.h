@@ -47,7 +47,6 @@ private:
     virtual bool DoGenerateProduction();
     bool IsNetworkValid( const kernel::ResourceNetwork_ABC::ResourceNode& node, unsigned int id, const std::string& resource, std::set< unsigned int >& array );
     unsigned int ComputeConsumption( unsigned int id, const std::string& resource, double inhabitantConsumption ) const;
-    double GetNominalOccupation( const gui::TerrainObjectProxy& block ) const;
     //@}
 
 private:

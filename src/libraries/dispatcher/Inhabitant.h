@@ -87,6 +87,7 @@ private:
     const unsigned long nType_;
     const std::string strName_;
     const std::string text_;
+    std::string motivation_;
     Team_ABC& side_;
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;

@@ -15,13 +15,14 @@ namespace gui
     typedef std::map< std::string, unsigned int > T_Usages;
     typedef T_Usages::const_iterator            CIT_Usages;
 
-    typedef std::map< QString, unsigned int >   T_BlockOccupation;
-    typedef T_BlockOccupation::const_iterator CIT_BlockOccupation;
+    typedef std::map< QString, std::pair< unsigned int, unsigned int > >   T_BlockOccupation; // pair< occupation, taux d'occupation >
+    typedef T_BlockOccupation::iterator                                   IT_BlockOccupation;
+    typedef T_BlockOccupation::const_iterator                            CIT_BlockOccupation;
 
     struct T_Human
     {
         T_Human()
-            : alerted_ ( false )
+            : alerted_  ( false )
             , confined_ ( false )
             , evacuated_( false )
             , angriness_( 0.f )

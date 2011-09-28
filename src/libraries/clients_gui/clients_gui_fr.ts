@@ -68,7 +68,7 @@
     </message>
     <message>
         <source>PhysicalFeatures/Motivations/</source>
-        <translation>PhysicalFeatures/Motivations/</translation>
+        <translation>Eléments physiques/Motivations/</translation>
     </message>
     <message>
         <source>Resident</source>
@@ -93,6 +93,38 @@
     <message>
         <source>PhysicalFeatures/Architecture/parkingFloors</source>
         <translation>Eléments physiques/Architecture/Etages de parking</translation>
+    </message>
+    <message>
+        <source>/Percentage</source>
+        <translation>/Pourcentage</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Défaut</translation>
+    </message>
+    <message>
+        <source>/Nominal capacity</source>
+        <translation>/Capacité nominale</translation>
+    </message>
+    <message>
+        <source>/Maximal capacity</source>
+        <translation>/Capacité maximale</translation>
+    </message>
+    <message>
+        <source>Occupation rate</source>
+        <translation>Taux d'occupation</translation>
+    </message>
+    <message>
+        <source>Occupations/</source>
+        <translation>Occupations/</translation>
+    </message>
+    <message>
+        <source>Total of inhabitants:</source>
+        <translation>Population totale:</translation>
+    </message>
+    <message>
+        <source>Occupation rate (%1):</source>
+        <translation>Taux d'occupation (%1):</translation>
     </message>
 </context>
 <context>

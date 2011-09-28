@@ -11,6 +11,7 @@
 #include "MIL_Schedule.h"
 #include "MIL_LivingArea_ABC.h"
 #include "MIL_AgentServer.h"
+#include "protocol/ClientSenders.h"
 #include "tools/xmlcodecs.h"
 #include <boost/foreach.hpp>
 #include <boost/optional.hpp>
@@ -21,9 +22,10 @@
 // Created: LGY 2011-01-19
 // -----------------------------------------------------------------------------
 MIL_Schedule::MIL_Schedule( MIL_LivingArea_ABC& livingArea )
-    : livingArea_ ( livingArea )
-    , isMoving_   ( false )
-    , initialized_( false )
+    : livingArea_              ( livingArea )
+    , isMoving_                ( false )
+    , initialized_             ( false )
+    , currentMotivationChanged_( true )
 {
     // NOTHING
 }
@@ -125,6 +127,29 @@ void MIL_Schedule::RestartLastEvent()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Schedule::SendFullState
+// Created: JSR 2011-09-27
+// -----------------------------------------------------------------------------
+void MIL_Schedule::SendFullState( client::PopulationUpdate& msg ) const
+{
+    if( currentMotivation_ )
+        msg().set_motivation( *currentMotivation_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Schedule::UpdateNetwork
+// Created: JSR 2011-09-27
+// -----------------------------------------------------------------------------
+void MIL_Schedule::UpdateNetwork( client::PopulationUpdate& msg ) const
+{
+    if( currentMotivation_ && currentMotivationChanged_ )
+    {
+        currentMotivationChanged_ = false;
+        msg().set_motivation( *currentMotivation_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Schedule::Update
 // Created: LGY 2011-01-19
 // -----------------------------------------------------------------------------
@@ -162,7 +187,11 @@ bool MIL_Schedule::Check( Event& event, const bpt::ptime& pdate, unsigned int du
     {
         event.occurence_ = 0;
         livingArea_.StartMotivation( event.motivation_ );
-        currentMotivation_ = event.motivation_;
+        if( event.motivation_ != currentMotivation_ )
+        {
+            currentMotivation_ = event.motivation_;
+            currentMotivationChanged_ = true;
+        }
         isMoving_ = true;
         event.occurence_++;
         result = true;

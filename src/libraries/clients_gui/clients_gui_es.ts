@@ -94,6 +94,38 @@
         <source>PhysicalFeatures/Architecture/parkingFloors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>/Percentage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>/Nominal capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>/Maximal capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Occupation rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Occupations/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total of inhabitants:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Occupation rate (%1):</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Règle GL</name>

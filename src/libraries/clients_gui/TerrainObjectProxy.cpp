@@ -11,13 +11,15 @@
 #include "TerrainObjectProxy.h"
 #include "Tools.h"
 #include "UrbanDisplayOptions.h"
+#include "clients_kernel/AccommodationType.h"
+#include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/Architecture_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/Usages_ABC.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
-#include "clients_kernel/Architecture_ABC.h"
+#include "clients_kernel/Usages_ABC.h"
 #include "protocol/Simulation.h"
 #include <boost/foreach.hpp>
 
@@ -32,15 +34,17 @@ const QString TerrainObjectProxy::typeName_ = "terrainObjectProxy";
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, const std::string& name, unsigned int id
-                                      , const ObjectType& type, UrbanDisplayOptions& options )
+TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, const std::string& name, unsigned int id, const ObjectType& type
+                                      , UrbanDisplayOptions& options, const AccommodationTypes& accommodations )
     : EntityImplementation< Object_ABC >( controllers.controller_, id, name.c_str() )
     , Creatable< TerrainObjectProxy >( controllers.controller_, this )
-    , controllers_( controllers )
-    , name_       ( name )
-    , id_         ( id )
-    , type_       ( type )
-    , options_    ( options )
+    , controllers_    ( controllers )
+    , density_        ( 0 )
+    , type_           ( type )
+    , accommodations_ ( accommodations )
+    , livingSpace_    ( 0 )
+    , nominalCapacity_( 0 )
+    , options_        ( options )
 {
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
@@ -75,9 +79,9 @@ void TerrainObjectProxy::DoUpdate( const sword::UrbanUpdate& /*msg*/ )
 // -----------------------------------------------------------------------------
 QString TerrainObjectProxy::GetName() const
 {
-    if( name_.empty() )
+    if( name_.isEmpty() )
         return QString( tools::translate( "Urban", "Urban block[%1]" ).arg( id_ ) );
-    return name_.c_str();
+    return name_;
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +106,7 @@ void TerrainObjectProxy::Select( ActionController& controller ) const
 // Name: TerrainObjectProxy::Activate
 // Created: LGY 2011-05-02
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::Activate( kernel::ActionController& controller ) const
+void TerrainObjectProxy::Activate( ActionController& controller ) const
 {
     controller.Activate( *this, *static_cast< const Entity_ABC* >( this ) );
 }
@@ -115,8 +119,8 @@ void TerrainObjectProxy::CreateDictionary( Controller& controller )
 {
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     EntityImplementation< Object_ABC >::Attach( dictionary );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Identifier" ), ( const unsigned long& ) EntityImplementation< Object_ABC >::id_ );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Name" ), ( const QString& ) EntityImplementation< Object_ABC >::name_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Identifier" ), static_cast< const unsigned long& >( id_ ) );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Name" ), static_cast< const QString& >( name_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,45 +130,66 @@ void TerrainObjectProxy::CreateDictionary( Controller& controller )
 void TerrainObjectProxy::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Block", "Density:" ), density_ );
+    displayer.Display( tools::translate( "Block", "Total of inhabitants:" ), GetHumans() );
+    for( CIT_BlockOccupation it = motivations_.begin(); it != motivations_.end(); ++it )
+        displayer.Display( tools::translate( "Block", "Occupation rate (%1):" ).arg( it->first ), it->second.second );
+}
+
+namespace
+{
+    template< typename T >
+    void RegisterValue( TerrainObjectProxy& proxy, const QString& key, const T& value )
+    {
+        PropertiesDictionary& dico = proxy.Get< PropertiesDictionary >();
+        if( !dico.HasKey( key ) )
+            dico.Register( static_cast< const Entity_ABC& >( proxy ), key, value );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::UpdateHumans
 // Created: LGY 2010-12-30
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, const T_BlockOccupation& occupations, bool alerted, bool confined, bool evacuated, float angriness  )
+void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, const sword::PopulationUpdate_BlockOccupation& occupation )
 {
     T_Human& mutableHuman = humans_[ inhabitant ];
-    for( CIT_BlockOccupation it = occupations.begin(); it != occupations.end(); ++it )
-        mutableHuman.persons_[ it->first ] = it->second;
-    mutableHuman.alerted_ = alerted;
-    mutableHuman.confined_ = confined;
-    mutableHuman.evacuated_ = evacuated;
-    mutableHuman.angriness_ = angriness;
+    for( int i = 0; i < occupation.persons_size(); ++i )
+    {
+        unsigned int number = occupation.persons( i ).number();
+        const QString& usage = occupation.persons( i ).usage().c_str();
+        mutableHuman.persons_[ usage ].first = number;
+        mutableHuman.persons_[ usage ].second = GetNominalCapacity() == 0 ? 0 : static_cast< unsigned int >( 100 * number / GetNominalCapacity() );
+    }
+    mutableHuman.alerted_ = occupation.alerted();
+    mutableHuman.confined_ = occupation.confined();
+    mutableHuman.evacuated_ = occupation.evacuated();
+    mutableHuman.angriness_ = occupation.angriness();
     const T_Human& human = mutableHuman;
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
     const QString keyBase = tools::translate( "Block", "Populations/" ) + inhabitant.c_str() + "/";
     for( CIT_BlockOccupation it = human.persons_.begin(); it != human.persons_.end(); ++ it )
     {
         const QString keyOccupation = keyBase + it->first + "/";
-        const QString keyNumber = keyOccupation + tools::translate( "Block", "Resident" );
-        if( !dictionary.HasKey( keyNumber ) )
-            dictionary.Register( constEntity, keyNumber, it->second );
+        RegisterValue( *this, keyOccupation + tools::translate( "Block", "Resident" ), it->second.first );
+        RegisterValue( *this, keyOccupation + tools::translate( "Block", "Occupation rate" ), it->second.second );
     }
-    const QString keyAlerted = keyBase + tools::translate( "Block", "Alerted" );
-    const QString keyConfined = keyBase + tools::translate( "Block", "Confined" );
-    const QString keyEvacuated = keyBase + tools::translate( "Block", "Evacuated" );
-    if( !dictionary.HasKey( keyAlerted ) )
-        dictionary.Register( constEntity, keyAlerted, human.alerted_ );
-    if( !dictionary.HasKey( keyConfined ) )
-        dictionary.Register( constEntity, keyConfined, human.confined_ );
-    if( !dictionary.HasKey( keyEvacuated ) )
-        dictionary.Register( constEntity, keyEvacuated, human.evacuated_ );
-    const QString keyAngriness = keyBase + tools::translate( "Block", "Angriness" );
-    if( !dictionary.HasKey( keyAngriness ) )
-        dictionary.Register( constEntity, keyAngriness, human.angriness_ );
-    density_ = GetDensity();
+    RegisterValue( *this, keyBase + tools::translate( "Block", "Alerted" ), human.alerted_ );
+    RegisterValue( *this, keyBase + tools::translate( "Block", "Confined" ), human.confined_ );
+    RegisterValue( *this, keyBase + tools::translate( "Block", "Evacuated" ), human.evacuated_ );
+    RegisterValue( *this, keyBase + tools::translate( "Block", "Angriness" ), human.angriness_ );
+    for( IT_BlockOccupation it = motivations_.begin(); it != motivations_.end(); ++it )
+        it->second.first = 0;
+    for( T_Humans::const_iterator h = humans_.begin(); h != humans_.end(); ++h )
+        for( CIT_BlockOccupation it = h->second.persons_.begin(); it != h->second.persons_.end(); ++it )
+            motivations_[ it->first ].first += it->second.first;
+    for( IT_BlockOccupation it = motivations_.begin(); it != motivations_.end(); ++ it )
+    {
+        double nominalCapacity = GetNominalCapacity( it->first.toStdString() );
+        it->second.second = nominalCapacity ?  static_cast< unsigned int >( 100 * it->second.first / nominalCapacity ) : 0;
+        const QString keyOccupation = tools::translate( "Block", "Occupations/" ) + it->first + "/";
+        RegisterValue( *this, keyOccupation + tools::translate( "Block", "Resident" ), it->second.first );
+        RegisterValue( *this, keyOccupation + tools::translate( "Block", "Occupation rate" ), it->second.second );
+    }
+    UpdateDensity();
     UpdateColor();
 }
 
@@ -190,15 +215,13 @@ void TerrainObjectProxy::UpdateColor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::GetDensity
+// Name: TerrainObjectProxy::UpdateDensity
 // Created: LGY 2011-01-07
 // -----------------------------------------------------------------------------
-float TerrainObjectProxy::GetDensity() const
+void TerrainObjectProxy::UpdateDensity()
 {
     float livingSpace = GetLivingSpace();
-    if( livingSpace == 0 )
-        return 0.f;
-    return GetHumans() / GetLivingSpace();
+    density_ = livingSpace == 0 ? 0 : GetHumans() / livingSpace;
 }
 
 // -----------------------------------------------------------------------------
@@ -210,7 +233,7 @@ unsigned int TerrainObjectProxy::GetHumans() const
     unsigned int humans = 0;
     BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
         for( CIT_BlockOccupation it = human.second.persons_.begin(); it != human.second.persons_.end(); ++ it )
-            humans += it->second;
+            humans += it->second.first;
     return humans;
 }
 
@@ -220,11 +243,42 @@ unsigned int TerrainObjectProxy::GetHumans() const
 // -----------------------------------------------------------------------------
 float TerrainObjectProxy::GetLivingSpace() const
 {
-    if( const kernel::UrbanPositions_ABC* positions = Retrieve< kernel::UrbanPositions_ABC >() )
+    if( livingSpace_ == 0 )
+        if( const UrbanPositions_ABC* positions = Retrieve< UrbanPositions_ABC >() )
+        {
+            livingSpace_ = positions->ComputeArea();
+            if( const Architecture_ABC* architecture = Retrieve< Architecture_ABC >() )
+                livingSpace_ *= ( architecture->GetFloorNumber() + 1 ) * ( static_cast< float >( architecture->GetOccupation() ) * 0.01f );
+        }
+    return livingSpace_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::GetNominalCapacity
+// Created: JSR 2011-09-27
+// -----------------------------------------------------------------------------
+double TerrainObjectProxy::GetNominalCapacity() const
+{
+    if( nominalCapacity_ == 0 )
     {
-        const kernel::Architecture_ABC* architecture = Retrieve< kernel::Architecture_ABC >();
-        float factor = architecture ? ( architecture->GetFloorNumber() + 1 ) * ( static_cast< float >( architecture->GetOccupation() ) / 100.f ) : 1.f;
-        return positions->ComputeArea() * factor;
+        tools::Iterator< const AccommodationType& > it = accommodations_.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const AccommodationType& acc = it.NextElement();
+            double proportion = Get< Usages_ABC >().Find( acc.GetRole() ) * 0.01;
+            nominalCapacity_ += GetLivingSpace() * proportion * acc.GetNominalCapacity();
+        }
     }
+    return nominalCapacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::GetNominalCapacity
+// Created: JSR 2011-09-27
+// -----------------------------------------------------------------------------
+double TerrainObjectProxy::GetNominalCapacity( const std::string& motivation ) const
+{
+    if( const AccommodationType* acc = accommodations_.Find( motivation ) )
+        return GetLivingSpace() * Get< Usages_ABC >().Find( motivation ) * 0.01 * acc->GetNominalCapacity();
     return 0;
 }

@@ -112,7 +112,7 @@ bool UrbanDisplayOptions::SetColor( kernel::UrbanColor_ABC& color, float livingS
         unsigned int nbrHumans = 0;
         for( T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
             for( CIT_BlockOccupation it = human->second.persons_.begin(); it != human->second.persons_.end(); ++ it )
-                nbrHumans += it->second;
+                nbrHumans += it->second.first;
         if( nbrHumans == 0 )
             SetUrbanColor( unoccupiedDensity_, color );
         else
@@ -132,7 +132,7 @@ bool UrbanDisplayOptions::SetColor( kernel::UrbanColor_ABC& color, float livingS
             {
                 CIT_BlockOccupation occupation = human->second.persons_.find( accommodationDisplayed_ );
                 if( occupation != human->second.persons_.end() )
-                    nbrHumans += occupation->second;
+                    nbrHumans += occupation->second.first;
             }
         }
         if( nbrHumans == 0.f )

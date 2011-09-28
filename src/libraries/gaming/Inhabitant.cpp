@@ -36,11 +36,11 @@ namespace
 // Name: Inhabitant constructor
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& controller, const UrbanModel& model, const tools::Resolver_ABC< InhabitantType >& typeResolver,
+Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& controller, const UrbanModel& model, const kernel::InhabitantType& type,
                         const tools::Resolver_ABC< DotationType >& dotationResolver )
     : EntityImplementation< Inhabitant_ABC >( controller, message.id().id(), QString( message.name().c_str() ) )
     , controller_      ( controller )
-    , type_            ( typeResolver.Get( message.type().id() ) )
+    , type_            ( type )
     , male_            ( ToInt( type_.GetMalePercentage() ) )
     , female_          ( ToInt( type_.GetFemalePercentage() ) )
     , children_        ( ToInt( type_.GetChildrenPercentage() ) )
@@ -48,11 +48,20 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& co
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
+    Polygon2f polygon;
     for( int i = 0; i < message.objects_size(); ++i )
     {
         int id = message.objects( i ).id();
-        livingUrbanObject_[ id ] = &model.GetObject( id );
+        gui::TerrainObjectProxy& proxy = model.GetObject( id );
+        livingUrbanObject_[ id ] = &proxy;
+        if( const UrbanPositions_ABC* positions = proxy.Retrieve< UrbanPositions_ABC >() )
+        {
+            polygon.Add( positions->Barycenter() );
+            BOOST_FOREACH( const Polygon2f::T_Vertices::value_type& point, positions->Vertices() )
+                boundingBox_.Incorporate( point );
+        }
     }
+    position_ = polygon.Barycenter();
     CreateDictionary();
     RegisterSelf( *this );
     controller_.Register( *this );
@@ -139,16 +148,12 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
     for( int i = 0; i < msg.occupations_size(); ++i )
     {
         const sword::PopulationUpdate_BlockOccupation& occupation = msg.occupations( i );
-        unsigned int id = occupation.object().id();
-        CIT_UrbanObjectVector it = livingUrbanObject_.find( id );
+        CIT_UrbanObjectVector it = livingUrbanObject_.find( occupation.object().id() );
         if( it != livingUrbanObject_.end() )
-        {
-            gui::T_BlockOccupation blockOccupation;
-            for( int j = 0; j < occupation.persons_size(); ++j )
-                blockOccupation[ occupation.persons( j ).usage().c_str() ] = occupation.persons( j ).number();
-            it->second->UpdateHumans( name_.ascii(), blockOccupation, occupation.alerted(), occupation.confined(), occupation.evacuated(), occupation.angriness() );
-        }
+            it->second->UpdateHumans( name_.ascii(), occupation );
     }
+    if( msg.has_motivation() )
+        motivation_ = msg.motivation();
     controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }
 
@@ -169,11 +174,7 @@ void Inhabitant::Draw( const Point2f& /*where*/, const Viewport_ABC& /*viewport*
 // -----------------------------------------------------------------------------
 Point2f Inhabitant::GetPosition( bool ) const
 {
-    Polygon2f poly;
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        if( const UrbanPositions_ABC* positions = it->second->Retrieve< UrbanPositions_ABC >() )
-            poly.Add( positions->Barycenter() );
-    return poly.Barycenter();
+    return position_;
 }
 
 // -----------------------------------------------------------------------------
@@ -209,12 +210,7 @@ bool Inhabitant::IsIn( const Rectangle2f& /*rectangle*/ ) const
 // -----------------------------------------------------------------------------
 Rectangle2f Inhabitant::GetBoundingBox() const
 {
-    Rectangle2f box;
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        if( const UrbanPositions_ABC* positions = it->second->Retrieve< UrbanPositions_ABC >() )
-            BOOST_FOREACH( const Polygon2f::T_Vertices::value_type& point, positions->Vertices() )
-                box.Incorporate( point );
-    return box;
+    return boundingBox_;
 }
 
 // -----------------------------------------------------------------------------
@@ -236,6 +232,7 @@ void Inhabitant::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Inhabitant", "Alive:" ), healthy_ );
     displayer.Display( tools::translate( "Inhabitant", "Wounded:" ), wounded_ );
     displayer.Display( tools::translate( "Inhabitant", "Dead:" ), dead_ );
+    displayer.Display( tools::translate( "Inhabitant", "Motivation:" ), motivation_ );
     displayer.Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ );
     displayer.Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ );
     displayer.Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
@@ -253,7 +250,8 @@ void Inhabitant::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Inhabitant", "Alive:" ), healthy_ )
              .Display( tools::translate( "Inhabitant", "Wounded:" ), wounded_ )
-             .Display( tools::translate( "Inhabitant", "Dead:" ), dead_ );
+             .Display( tools::translate( "Inhabitant", "Dead:" ), dead_ )
+             .Display( tools::translate( "Inhabitant", "Motivation:" ), motivation_ );
 }
 
 // -----------------------------------------------------------------------------

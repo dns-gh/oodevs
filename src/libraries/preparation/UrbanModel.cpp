@@ -55,9 +55,10 @@ namespace
 UrbanModel::UrbanModel( Controllers& controllers, const StaticModel& staticModel, const tools::Resolver< Object_ABC >& objects )
     : controllers_        ( controllers )
     , objectTypes_        ( staticModel.objectTypes_ )
+    , accommodationTypes_ ( staticModel.accommodationTypes_ )
     , objects_            ( objects )
     , urbanStateVersion_  ( ::defaultUrbanStateVersion )
-    , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
+    , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, accommodationTypes_ ) )
 {
     // NOTHING
 }
@@ -228,7 +229,8 @@ void UrbanModel::Purge()
 // -----------------------------------------------------------------------------
 void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
 {
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject.GetName(), urbanObject.GetId(), objectTypes_.StringResolver< ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
+    const kernel::ObjectType& type = objectTypes_.StringResolver< ObjectType >::Get( "urban block" );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject.GetName(), urbanObject.GetId(), type, *urbanDisplayOptions_, accommodationTypes_ );
     PropertiesDictionary& dictionary = pTerrainObject->Get< PropertiesDictionary >();
     pTerrainObject->Attach< StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( urbanObject.Retrieve< urban::ColorAttribute >() ) );
@@ -240,10 +242,10 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
         const urban::ResourceNetworkAttribute* resource = urbanObject.Retrieve< urban::ResourceNetworkAttribute >();
         pTerrainObject->Attach< ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, resource, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), *this, objects_, objectTypes_ ) );
     }
-    pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( urbanObject, std::auto_ptr< Usages_ABC >( new gui::Usages( dictionary ) ) ) );
     const urban::PhysicalAttribute* pPhysical = urbanObject.Retrieve< urban::PhysicalAttribute >();
     if( pPhysical && pPhysical->GetArchitecture() )
         pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( *pPhysical->GetArchitecture(), std::auto_ptr< Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
+    pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( urbanObject, std::auto_ptr< Usages_ABC >( new gui::Usages( dictionary, accommodationTypes_, pTerrainObject->GetLivingSpace() ) ) ) );
     if( const urban::InfrastructureAttribute* infra = urbanObject.Retrieve< urban::InfrastructureAttribute >() )
         if( const InfrastructureType* infraType = objectTypes_.StringResolver< InfrastructureType >::Find( infra->GetType() ) )
         {

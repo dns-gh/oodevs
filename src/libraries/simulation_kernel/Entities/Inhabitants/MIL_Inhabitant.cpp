@@ -232,6 +232,8 @@ void MIL_Inhabitant::SendFullState() const
     msg().set_healthy( nNbrHealthyHumans_ );
     msg().set_dead( nNbrDeadHumans_ );
     msg().set_wounded( nNbrWoundedHumans_ );
+    if( pSchedule_.get() )
+        pSchedule_->SendFullState( msg );
     pLivingArea_->SendFullState( msg );
     pSatisfactions_->SendFullState( msg );
     pAffinities_->SendFullState( msg );
@@ -285,11 +287,13 @@ void MIL_Inhabitant::UpdateNetwork()
         msg().set_wounded( nNbrWoundedHumans_ );
         msg().set_dead( nNbrDeadHumans_ );
     }
+    if( pSchedule_.get() )
+        pSchedule_->UpdateNetwork( msg );
     pLivingArea_->UpdateNetwork( msg );
     pSatisfactions_->UpdateNetwork( msg );
     pAffinities_->UpdateNetwork( msg );
     pExtensions_->UpdateNetwork( msg );
-    if( healthStateChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() || msg().has_adhesions() || msg().has_extension() )
+    if( healthStateChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() || msg().has_adhesions() || msg().has_extension() || msg().has_motivation() )
         msg.Send( NET_Publisher_ABC::Publisher() );
     healthStateChanged_ = false;
 }

@@ -134,7 +134,7 @@ unsigned int ResourceNetworkDialog::ComputeConsumption( unsigned int id, const s
     if( inhabitantConsumption > 0)
         if( const gui::TerrainObjectProxy* block = dynamic_cast< const gui::TerrainObjectProxy* >( object ) )
         {
-            double tmp = inhabitantConsumption * GetNominalOccupation( *block );
+            double tmp = inhabitantConsumption * block->GetNominalCapacity();
             if( tmp >= std::numeric_limits< int >::max() )
                 return std::numeric_limits< int >::max();
             consumption = static_cast< int >( tmp );
@@ -148,33 +148,4 @@ unsigned int ResourceNetworkDialog::ComputeConsumption( unsigned int id, const s
         consumption = std::max( static_cast< int >( consumption + childMaxConsumption * node->links_.size() - node->production_ ), 0 );
     }
     return consumption;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceNetworkDialog::GetNominalOccupation
-// Created: JSR 2011-09-22
-// -----------------------------------------------------------------------------
-double ResourceNetworkDialog::GetNominalOccupation( const gui::TerrainObjectProxy& block ) const
-{
-    double occupation = 0;
-    double livingSpace = block.GetLivingSpace();
-    tools::Iterator< const AccommodationType& > it = staticModel_.accommodationTypes_.CreateIterator();
-    double proportionSum = 0;
-    const AccommodationType* defaultAcc = 0;
-    while( it.HasMoreElements() )
-    {
-        const AccommodationType& acc = it.NextElement();
-        if( acc.GetRole() == "default" )
-        {
-            defaultAcc = &acc;
-            continue;
-        }
-        const Usages_ABC& usages = block.Get< Usages_ABC >();
-        double proportion = usages.Find( acc.GetRole() ) * 0.01;
-        proportionSum += proportion;
-        occupation += livingSpace * proportion * acc.GetNominalCapacity();
-    }
-    if( defaultAcc && proportionSum < 1 )
-        occupation += livingSpace * ( 1 - proportionSum ) * defaultAcc->GetNominalCapacity();        
-    return occupation;
 }

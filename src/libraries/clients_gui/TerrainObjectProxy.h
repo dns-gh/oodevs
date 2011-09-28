@@ -19,10 +19,11 @@
 
 namespace kernel
 {
-    class PropertiesDictionary;
-    class ObjectType;
-    class Displayer_ABC;
+    class AccommodationTypes;
     class Controllers;
+    class Displayer_ABC;
+    class ObjectType;
+    class PropertiesDictionary;
 }
 
 namespace sword
@@ -57,8 +58,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainObjectProxy( kernel::Controllers& controllers, const std::string& name,
-                                 unsigned int id, const kernel::ObjectType& type, UrbanDisplayOptions& options );
+             TerrainObjectProxy( kernel::Controllers& controllers, const std::string& name, unsigned int id
+                 , const kernel::ObjectType& type, UrbanDisplayOptions& options, const kernel::AccommodationTypes& accommodations );
     virtual ~TerrainObjectProxy();
     //@}
 
@@ -76,9 +77,10 @@ public:
     virtual void Activate( kernel::ActionController& controller ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Display( kernel::Displayer_ABC& ) const {}
-    void UpdateHumans( const std::string& inhabitant, const T_BlockOccupation& occupations, bool alerted, bool confined, bool evacuated, float angriness );
+    void UpdateHumans( const std::string& inhabitant, const sword::PopulationUpdate_BlockOccupation& occupation );
     void NotifyUpdated( const UrbanDisplayOptions& );
     float GetLivingSpace() const;
+    double GetNominalCapacity() const;
     //@}
 
 private:
@@ -91,9 +93,10 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
-    float GetDensity() const;
+    void UpdateDensity();
     unsigned int GetHumans() const;
     void UpdateColor();
+    double GetNominalCapacity( const std::string& motivation ) const;
     //@}
 
     //! @name Types
@@ -105,12 +108,13 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const std::string name_;
-    unsigned int id_;
     float density_;
     T_Humans humans_;
+    T_BlockOccupation motivations_;
     const kernel::ObjectType& type_;
-    unsigned int occupation_;
+    const kernel::AccommodationTypes& accommodations_;
+    mutable float livingSpace_;
+    mutable double nominalCapacity_;
     UrbanDisplayOptions& options_;
     //@}
 };

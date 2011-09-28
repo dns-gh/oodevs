@@ -51,7 +51,7 @@ class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
 public:
     //! @name Constructor/Destructor
     //@{
-             Inhabitant( const sword::PopulationCreation& message, kernel::Controller& controller, const UrbanModel& model, const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver,
+             Inhabitant( const sword::PopulationCreation& message, kernel::Controller& controller, const UrbanModel& model, const kernel::InhabitantType& type,
                          const tools::Resolver_ABC< kernel::DotationType >& dotationResolver );
     virtual ~Inhabitant();
     //@}
@@ -114,6 +114,9 @@ private:
     T_MotivationSatisfactions motivationSatisfactions_;
     T_ResourceSatisfactions resourceSatisfactions_;
     T_UrbanObjectVector livingUrbanObject_;
+    geometry::Rectangle2f boundingBox_;
+    geometry::Point2f position_;
+    std::string motivation_;
     //@}
 };
 

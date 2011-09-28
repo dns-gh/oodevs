@@ -12,6 +12,11 @@
 
 #include <boost/noncopyable.hpp>
 
+namespace client
+{
+    class PopulationUpdate;
+}
+
 namespace xml
 {
     class xistream;
@@ -38,6 +43,8 @@ public:
     virtual void Update( unsigned int date, unsigned int duration ) = 0;
     virtual bool IsMoving() const = 0;
     virtual void RestartLastEvent() = 0;
+    virtual void SendFullState( client::PopulationUpdate& msg ) const = 0;
+    virtual void UpdateNetwork( client::PopulationUpdate& msg ) const = 0;
     //@}
 };
 

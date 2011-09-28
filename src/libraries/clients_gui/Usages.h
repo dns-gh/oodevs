@@ -15,6 +15,7 @@
 
 namespace kernel
 {
+    class AccommodationTypes;
     class PropertiesDictionary;
 }
 
@@ -31,7 +32,7 @@ class Usages : public kernel::Usages_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Usages( kernel::PropertiesDictionary& dictionary );
+    explicit Usages( kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace );
     virtual ~Usages();
     //@}
 
@@ -42,10 +43,20 @@ public:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, std::pair< unsigned int, unsigned int > > T_Occupations;
+    //@}
+
+private:
     //! @name Member Data
     //@{
     kernel::PropertiesDictionary& dictionary_;
+    const kernel::AccommodationTypes& accommodationTypes_;
+    float livingSpace_;
     T_Usages usages_;
+    T_Occupations occupations;
+    static const std::string defaultStr;
     //@}
 };
 

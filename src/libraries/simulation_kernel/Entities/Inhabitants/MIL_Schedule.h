@@ -43,6 +43,8 @@ public:
     virtual bool IsMoving() const;
     virtual void AddEvent( const std::string& motivation, int transfertTimeInSecond = 0 );
     virtual void RestartLastEvent();
+    virtual void SendFullState( client::PopulationUpdate& msg ) const;
+    virtual void UpdateNetwork( client::PopulationUpdate& msg ) const;
     //@}
 
 private:
@@ -79,6 +81,7 @@ private:
     bool initialized_;
     boost::optional< Event > optionalEvent_;
     boost::optional< std::string > currentMotivation_;
+    mutable bool currentMotivationChanged_;
     //@}
 };
 

@@ -233,7 +233,8 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
 // -----------------------------------------------------------------------------
 kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& message )
 {
-    Inhabitant* result = new Inhabitant( message, controllers_.controller_, model_.urbanObjects_, static_.types_, static_.objectTypes_ );
+    const kernel::InhabitantType& type = static_.types_.tools::Resolver< kernel::InhabitantType >::Get( message.type().id() );
+    Inhabitant* result = new Inhabitant( message, controllers_.controller_, model_.urbanObjects_, type, static_.objectTypes_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new InhabitantPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );

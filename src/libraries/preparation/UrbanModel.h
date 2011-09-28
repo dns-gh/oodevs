@@ -78,6 +78,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::ObjectTypes& objectTypes_;
+    const kernel::AccommodationTypes& accommodationTypes_;
     const tools::Resolver< kernel::Object_ABC >& objects_;
     std::string urbanStateVersion_;
     std::auto_ptr< gui::UrbanDisplayOptions > urbanDisplayOptions_;

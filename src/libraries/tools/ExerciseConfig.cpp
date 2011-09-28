@@ -52,7 +52,8 @@ ExerciseConfig::~ExerciseConfig()
 void ExerciseConfig::Parse( int argc, char** argv )
 {
     tools::GeneralConfig::Parse( argc, argv );
-    LoadExercise( GetExerciseFile() );
+    if( !GetExerciseName().empty() )
+        LoadExercise( GetExerciseFile() );
 }
 
 // -----------------------------------------------------------------------------

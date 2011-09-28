@@ -704,6 +704,10 @@
         <source>Satisfactions/Resource/</source>
         <translation>Satisfaction/Ressource/</translation>
     </message>
+    <message>
+        <source>Motivation:</source>
+        <translation>Motivation:</translation>
+    </message>
 </context>
 <context>
     <name>Intelligence</name>
