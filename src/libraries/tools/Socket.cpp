@@ -96,7 +96,7 @@ void Socket::HeaderRead( Message& header, const boost::system::error_code& error
         header >> size;
         static const unsigned long limit = 32 * 1024; // 32 kB
         if( size > limit )
-            message_->OnWarning( endpoint_,
+            message_->OnError( endpoint_,
                 "Message size too large : " + boost::lexical_cast< std::string >( size ) );
         else
         {
