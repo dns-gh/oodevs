@@ -112,7 +112,7 @@
     </message>
     <message>
         <source>Occupation rate</source>
-        <translation>Taux d'occupation</translation>
+        <translation>Taux d&apos;occupation</translation>
     </message>
     <message>
         <source>Occupations/</source>
@@ -124,7 +124,7 @@
     </message>
     <message>
         <source>Occupation rate (%1):</source>
-        <translation>Taux d'occupation (%1):</translation>
+        <translation>Taux d&apos;occupation (%1):</translation>
     </message>
 </context>
 <context>

@@ -105,6 +105,7 @@ private:
     QString nature_;
     std::string symbol_;
     QCheckBox* mounted_;
+    Q3HBox* natureBox_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     std::auto_ptr< kernel::IntelligencePrototype > intelligence_;
     //@}

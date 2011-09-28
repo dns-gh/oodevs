@@ -79,9 +79,10 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
         new QLabel( tr( "Mounted combat: " ), group );
         mounted_ = new QCheckBox( group );
     }
+    natureBox_ = new Q3HBox( gBox );
     if( config )
     {
-        NatureSelectionWidget* nature = new NatureSelectionWidget( gBox, config->GetLoader() );
+        NatureSelectionWidget* nature = new NatureSelectionWidget( natureBox_, config->GetLoader() );
         connect( nature, SIGNAL( NatureSelected( const QString& ) ), SLOT( OnNatureChanged( const QString& ) ) );
         connect( nature, SIGNAL( StartDrag() ), SLOT( OnNatureDragged() ) );
     }
@@ -236,7 +237,7 @@ void IntelligencesPanel::Load( const tools::ExerciseConfig& config )
 {
     symbolFactory_->Load( config );
 
-    NatureSelectionWidget* nature = new NatureSelectionWidget( this, config.GetLoader() );
+    NatureSelectionWidget* nature = new NatureSelectionWidget( natureBox_, config.GetLoader() );
     connect( nature, SIGNAL( NatureSelected( const QString& ) ), SLOT( OnNatureChanged( const QString& ) ) );
     connect( nature, SIGNAL( StartDrag() ), SLOT( OnNatureDragged() ) );
 }
