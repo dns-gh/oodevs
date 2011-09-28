@@ -100,9 +100,9 @@ void RemoteExercise::Start( const std::string& session ) const
 // Name: RemoteExercise::StartDispatcher
 // Created: AHC 2011-05-19
 // -----------------------------------------------------------------------------
-void RemoteExercise::StartDispatcher( const std::string& session ) const
+void RemoteExercise::StartDispatcher( const std::string& session, const T_Parameters& parameters ) const
 {
-    host_.StartDispatcher( name_, session );
+    host_.StartDispatcher( name_, session, parameters );
 }
 
 // -----------------------------------------------------------------------------

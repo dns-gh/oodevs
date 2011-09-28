@@ -11,14 +11,14 @@
 #ifndef __LAUNCHER_SWORDFACADE_H__
 #define __LAUNCHER_SWORDFACADE_H__
 
-#include <map>
-#include <vector>
-#include <memory>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
+#include "MessageHandler_ABC.h"
 #include "client_proxy/SwordConnectionHandler_ABC.h"
 #include "client_proxy/SwordMessageHandler_ABC.h"
-#include "MessageHandler_ABC.h"
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
+#include <vector>
+#include <memory>
+#include <map>
 
 class SwordProxy;
 class SwordMessageHandler_ABC;
@@ -40,6 +40,8 @@ namespace sword
 
 namespace launcher
 {
+    class Config;
+
 // =============================================================================
 /** @class  SwordFacade
     @brief  SwordFacade
@@ -52,7 +54,7 @@ class SwordFacade : public SwordConnectionHandler_ABC
 public:
     //! @name Constructor/destructor
     //@{
-             SwordFacade( bool isDispatcher = false );
+    explicit SwordFacade( bool isDispatcher = false );
     virtual ~SwordFacade();
     //@}
 
@@ -64,8 +66,8 @@ public:
 
     //! @name Operations
     //@{
-    void Start(frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > command,
-        const std::string& supervisorProfile, const std::string& supervisorPassword, bool testMode = false);
+    void Start( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > command,
+                const std::string& supervisorProfile, const std::string& supervisorPassword, const launcher::Config& config );
     void Stop();
     // SwordConnectionHandler_ABC interface
     virtual void OnConnectionSucceeded( const std::string& endpoint );

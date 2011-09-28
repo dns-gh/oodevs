@@ -11,10 +11,11 @@
 #define __Host_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include <string>
+#include <map>
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  Host_ABC
     @brief  Host_ABC
@@ -23,6 +24,11 @@ namespace frontend
 // =============================================================================
 class Host_ABC : private boost::noncopyable
 {
+public:
+    //! @name Constructors/Destructor
+    //@{
+    typedef std::map< std::string, std::string > T_Parameters;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -35,7 +41,7 @@ public:
     //@{
     virtual std::string GetId() const = 0;
     virtual void StartSimulation( const std::string& exercise, const std::string& session ) const = 0;
-    virtual void StartDispatcher( const std::string& exercise, const std::string& session ) const = 0;
+    virtual void StartDispatcher( const std::string& exercise, const std::string& session, const T_Parameters& parameters ) const = 0;
     virtual void StartReplay( const std::string& exercise, const std::string& session ) const = 0;
     virtual void StopSession( const std::string& exercise, const std::string& session ) const = 0;
     virtual void QueryProfileList(const std::string& exercise) const = 0;

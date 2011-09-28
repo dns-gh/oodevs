@@ -9,9 +9,9 @@
 
 #include "launcher_dll_pch.h"
 #include "SwordFacade.h"
+#include "Config.h"
 #include "client_proxy/SwordProxy.h"
 #include "frontend/ProcessWrapper.h"
-#include "frontend/CommandLineTools.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/AuthenticationSenders.h"
@@ -45,15 +45,15 @@ SwordFacade::~SwordFacade()
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
 void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > command,
-                        const std::string& supervisorProfile, const std::string& supervisorPassword, bool testMode )
+                        const std::string& supervisorProfile, const std::string& supervisorPassword, const launcher::Config& config )
 {
-    if( !testMode )
+    if( ! config.GetTestMode() )
     {
         boost::shared_ptr<frontend::ProcessWrapper> wrapper( new frontend::ProcessWrapper( observer, command ) );
         wrapper->Start();
         process_ = wrapper;
     }
-    client_.reset( new SwordProxy("localhost", frontend::DispatcherPort(1), supervisorProfile, supervisorPassword ) );
+    client_.reset( new SwordProxy( "localhost", config.GetDispatcherPort(), supervisorProfile, supervisorPassword ) );
     client_->RegisterMessageHandler( this );
     client_->Connect( this );
 }

@@ -122,7 +122,7 @@ namespace launcher_test
                 authenticated_ = true;
             }
             else
-                Receive( endpoint, msg); // forward to mock
+                Receive( endpoint, msg ); // forward to mock
         }
         std::string host;
         bool authenticated_;
@@ -131,20 +131,18 @@ namespace launcher_test
     struct ApplicationFixture
     {
         ApplicationFixture()
-            : varg( MakeArg() )
-            , args( boost::assign::list_of< char* >( "" )( "--root-dir=../../data" )( "--exercises-dir=tests/launcher_test" )( "--test" )( &varg[0] ) )
+            : arg1( "--launcher-port=" + boost::lexical_cast< std::string >( PORT ) )
+            , arg2( "--dispatcher-port=" + boost::lexical_cast< std::string >( PORT + 2 ) )
+            , args( boost::assign::list_of< char* >( "" )
+                                                   ( "--root-dir=../../data" )
+                                                   ( "--exercises-dir=tests/launcher_test" )
+                                                   ( "--test" )
+                                                   ( const_cast< char* >( arg1.c_str() ) )
+                                                   ( const_cast< char* >( arg2.c_str() ) ) )
             , argc( args.size() )
             , app ( argc, &args[0] )
         {}
-        std::vector< char > MakeArg()
-        {
-            const std::string arg( "--launcher-port=" + boost::lexical_cast< std::string >( PORT ) );
-            std::vector< char > result( arg.begin(), arg.end() );
-            result.push_back( 0 );
-            return result;
-        }
-        std::string arg;
-        std::vector< char > varg;
+        std::string arg1, arg2;
         std::vector< char* > args;
         int argc;
         QApplication app;
@@ -181,7 +179,7 @@ namespace launcher_test
         Fixture()
             : client    ( controllers.controller_ )
             , timeout   ( 5000 )
-            , dispatcher( frontend::DispatcherPort( 1 ) ) // $$$$ MCO : this crap is responsible for at least 3 or 4 build failures per day
+            , dispatcher( PORT + 2 )
         {
             launcher.Initialize( argc, &args[0] );
             BOOST_REQUIRE_MESSAGE( launcher.GetLastError().empty(), launcher.GetLastError() );
@@ -228,10 +226,14 @@ namespace launcher_test
             savePath = bfs::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/" + session + "/session.xml.save" ) );
             bfs::copy_file( filePath, savePath, bfs::copy_option::overwrite_if_exists );
 
-            MakeSession();
-
             MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
-            exercise->StartDispatcher( session );
+            exercise->StartDispatcher( session,
+                boost::assign::map_list_of
+                    ( "session/config/simulation/network/@port", boost::lexical_cast< std::string >( PORT + 1 ) )
+                    ( "session/config/dispatcher/network/@client", "localhost:" + boost::lexical_cast< std::string >( PORT + 1 ) )
+                    ( "session/config/dispatcher/network/@server", boost::lexical_cast< std::string >( PORT + 2 ) )
+                    ( "session/config/gaming/network/@server", "localhost:" + boost::lexical_cast< std::string >( PORT + 2 ) )
+                );
 
             timeout.Start();
             while( ( !exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && !timeout.Expired() )

@@ -34,6 +34,7 @@ public:
     //! @name Operations
     //@{
     unsigned short GetLauncherPort() const;
+    unsigned short GetDispatcherPort() const;
     bool           GetTestMode() const;
     //@}
 
@@ -41,6 +42,7 @@ private:
     //! @name Member data
     //@{
     unsigned short launcherPort_;
+    unsigned short dispatcherPort_;
     //@}
 };
 

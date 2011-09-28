@@ -10,6 +10,7 @@
 #include "launcher_dll_pch.h"
 #include "Config.h"
 #include "clients_gui/Tools.h"
+#include "frontend/CommandLineTools.h"
 #include <shlobj.h>
 #pragma warning( push, 0 )
 #include <QtCore/qsettings.h>
@@ -55,6 +56,7 @@ Config::Config()
     po::options_description desc( "Launcher options" );
     desc.add_options()
         ( "launcher-port", po::value( &launcherPort_ ), "specify the launcher server port number" )
+        ( "dispatcher-port", po::value( &dispatcherPort_ )->default_value( frontend::DispatcherPort( 1 ) ), "specify the dispatcher server port number" )
         ( "test", "enable test mode" )
     ;
     AddOptions( desc );
@@ -76,6 +78,15 @@ Config::~Config()
 unsigned short Config::GetLauncherPort() const
 {
     return launcherPort_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetDispatcherPort
+// Created: MCO 2011-09-28
+// -----------------------------------------------------------------------------
+unsigned short Config::GetDispatcherPort() const
+{
+    return dispatcherPort_;
 }
 
 // -----------------------------------------------------------------------------

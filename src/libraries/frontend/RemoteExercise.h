@@ -51,7 +51,7 @@ public:
     virtual bool IsRunning() const;
     virtual bool IsHostedBy( const std::string& host ) const;
     virtual void Start( const std::string& session ) const;
-    virtual void StartDispatcher( const std::string& session ) const;
+    virtual void StartDispatcher( const std::string& session, const T_Parameters& parameters ) const;
     virtual void Replay( const std::string& session ) const;
     virtual void Stop( const std::string& session ) const;
     virtual void QueryProfileList() const;

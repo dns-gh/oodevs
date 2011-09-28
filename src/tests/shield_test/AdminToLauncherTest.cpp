@@ -32,8 +32,12 @@ BOOST_FIXTURE_TEST_CASE( session_start_request_to_launcher_is_converted, Context
     content.mutable_session_start_request()->set_session( "session" );
     content.mutable_session_start_request()->set_type( MsgsAdminToLauncher::MsgSessionStartRequest::dispatch );
     content.mutable_session_start_request()->set_checkpoint( "checkpoint" );
-    MsgsAdminToLauncher::SessionParameter* param1 = content.mutable_session_start_request()->add_parameter(); param1->set_key("key1"); param1->set_value("value1");
-    MsgsAdminToLauncher::SessionParameter* param2 = content.mutable_session_start_request()->add_parameter(); param2->set_key("key2"); param2->set_value("value2");
+    MsgsAdminToLauncher::SessionParameter* param1 = content.mutable_session_start_request()->add_parameter();
+    param1->set_key("key1");
+    param1->set_value("value1");
+    MsgsAdminToLauncher::SessionParameter* param2 = content.mutable_session_start_request()->add_parameter();
+    param2->set_key("key2");
+    param2->set_value("value2");
     MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { session_start_request { exercise: \"name\" session: \"session\" type: dispatch checkpoint: \"checkpoint\" "
             "parameter { key: \"key1\" value: \"value1\" } parameter { key: \"key2\" value: \"value2\" } } }" ) );
     converter.ReceiveAdminToLauncher( msg );
