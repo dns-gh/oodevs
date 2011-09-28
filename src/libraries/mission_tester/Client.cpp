@@ -142,6 +142,15 @@ void Client::OnConnectionError( const std::string& /*endpoint*/, const std::stri
 }
 
 // -----------------------------------------------------------------------------
+// Name: Client::OnConnectionWarning
+// Created: MCO 2011-03-28
+// -----------------------------------------------------------------------------
+void Client::OnConnectionWarning( const std::string& endpoint, const std::string& reason )
+{
+    std::cerr << "Connection warning for '" << endpoint << "', :" << reason << std::endl;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Client::OnAuthenticationSucceeded
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------

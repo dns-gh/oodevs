@@ -114,6 +114,16 @@ void LoggerApplication::ConnectionError( const std::string& address, const std::
 }
 
 // -----------------------------------------------------------------------------
+// Name: LoggerApplication::ConnectionWarning
+// Created: MCO 2011-09-28
+// -----------------------------------------------------------------------------
+void LoggerApplication::ConnectionWarning( const std::string& address, const std::string& warning )
+{
+    DumpTime();
+    file_ << "Connection warning: " << address << " : " << warning << std::endl;
+}
+
+// -----------------------------------------------------------------------------
 // Name: LoggerApplication::OnReceiveSimToClient
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------

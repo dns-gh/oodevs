@@ -82,6 +82,16 @@ void SimulationNetworker::ConnectionError( const std::string& address, const std
 }
 
 // -----------------------------------------------------------------------------
+// Name: SimulationNetworker::ConnectionWarning
+// Created: MCO 2011-09-28
+// -----------------------------------------------------------------------------
+void SimulationNetworker::ConnectionWarning( const std::string& address, const std::string& warning )
+{
+    MT_LOG_INFO_MSG( "Connection to '" << address << "' warning (" << warning << ")" );
+    ClientNetworker::ConnectionWarning( address, warning );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SimulationNetworker::OnReceiveSimToClient
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------

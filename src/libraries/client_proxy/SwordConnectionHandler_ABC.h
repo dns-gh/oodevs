@@ -31,6 +31,7 @@ public:
     virtual void OnConnectionSucceeded( const std::string& endpoint ) = 0;
     virtual void OnConnectionFailed( const std::string& endpoint, const std::string& reason ) = 0;
     virtual void OnConnectionError( const std::string& endpoint, const std::string& reason ) = 0;
+    virtual void OnConnectionWarning( const std::string& endpoint, const std::string& reason ) = 0;
     virtual void OnAuthenticationSucceeded( const std::string& profile ) = 0;
     virtual void OnAuthenticationFailed( const std::string& profile, const std::string& reason ) = 0;
     //@}

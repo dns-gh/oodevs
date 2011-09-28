@@ -69,6 +69,18 @@ void LauncherClient::ConnectionSucceeded( const std::string& endpoint )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LauncherClient::ConnectionFailed
+// Created: SBO 2010-10-22
+// -----------------------------------------------------------------------------
+void LauncherClient::ConnectionFailed( const std::string& address, const std::string& error )
+{
+    tools::ClientNetworker::ConnectionFailed( address, error );
+    if( handler_ )
+        handler_->OnConnectionFailed( error );
+    ResetConnection();
+}
+
+// -----------------------------------------------------------------------------
 // Name: LauncherClient::ConnectionError
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
@@ -81,15 +93,14 @@ void LauncherClient::ConnectionError( const std::string& address, const std::str
 }
 
 // -----------------------------------------------------------------------------
-// Name: LauncherClient::ConnectionFailed
-// Created: SBO 2010-10-22
+// Name: LauncherClient::ConnectionWarning
+// Created: MCO 2011-09-28
 // -----------------------------------------------------------------------------
-void LauncherClient::ConnectionFailed( const std::string& address, const std::string& error )
+void LauncherClient::ConnectionWarning( const std::string& address, const std::string& warning )
 {
-    tools::ClientNetworker::ConnectionFailed( address, error );
+    tools::ClientNetworker::ConnectionWarning( address, warning );
     if( handler_ )
-        handler_->OnConnectionFailed( error );
-    ResetConnection();
+        handler_->OnError( warning );
 }
 
 // -----------------------------------------------------------------------------

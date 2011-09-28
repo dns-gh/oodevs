@@ -88,6 +88,15 @@ void SimulationMonitor::ConnectionError( const std::string& endpoint, const std:
 }
 
 // -----------------------------------------------------------------------------
+// Name: SimulationMonitor::ConnectionWarning
+// Created: MCO 2011-09-28
+// -----------------------------------------------------------------------------
+void SimulationMonitor::ConnectionWarning( const std::string& endpoint, const std::string& reason )
+{
+    tools::ClientNetworker::ConnectionWarning( endpoint, reason );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SimulationMonitor::Connected
 // Created: SBO 2010-11-12
 // -----------------------------------------------------------------------------

@@ -49,6 +49,7 @@ private:
     virtual void ConnectionSucceeded( const std::string& endpoint );
     virtual void ConnectionFailed   ( const std::string& address, const std::string& error );
     virtual void ConnectionError    ( const std::string& address, const std::string& error );
+    virtual void ConnectionWarning  ( const std::string& address, const std::string& warning );
 
     void OnReceiveSimToClient           ( const std::string& from, const sword::SimToClient& wrapper );
     void OnReceiveMsgAuthenticationToClient( const std::string& from, const sword::AuthenticationToClient& wrapper );

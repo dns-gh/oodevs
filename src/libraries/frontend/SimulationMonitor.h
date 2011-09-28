@@ -54,6 +54,7 @@ private:
     virtual void ConnectionSucceeded( const std::string& endpoint );
     virtual void ConnectionFailed( const std::string& endpoint, const std::string& reason );
     virtual void ConnectionError( const std::string& endpoint, const std::string& reason );
+    virtual void ConnectionWarning( const std::string& endpoint, const std::string& reason );
     //@}
 
     //! @name Message handlers

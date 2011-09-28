@@ -116,6 +116,11 @@ namespace
             std::cout << "connection error : " << host << " : " << error << std::endl;
             tools::ClientNetworker::ConnectionError( host, error );
         }
+        virtual void ConnectionWarning( const std::string& host, const std::string& warning )
+        {
+            std::cout << "connection warning : " << host << " : " << warning << std::endl;
+            tools::ClientNetworker::ConnectionWarning( host, warning );
+        }
     private:
     std::string host_;
     std::string profile_;

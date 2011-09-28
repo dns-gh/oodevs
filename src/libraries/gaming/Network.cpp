@@ -172,3 +172,13 @@ void Network::ConnectionError( const std::string& address, const std::string& er
     manager_->Disconnect();
     simu_.Disconnect();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Network::ConnectionWarning
+// Created: MCO 2011-09-28
+// -----------------------------------------------------------------------------
+void Network::ConnectionWarning( const std::string& address, const std::string& warning )
+{
+    ClientNetworker::ConnectionWarning( address, warning );
+    logger_.Error() << tools::translate( "Network", "Connection to " ) << address << tools::translate( "Network", " warning (cause :" ) << warning << ")";
+}

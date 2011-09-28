@@ -74,8 +74,8 @@ protected:
     //@{
     virtual void ConnectionSucceeded( const std::string& endpoint );
     virtual void ConnectionFailed( const std::string& address, const std::string& error );
-    virtual void ConnectionError( const std::string& address, const std::string& error );
-    virtual void ConnectionWarning( const std::string& address, const std::string& warning );
+    virtual void ConnectionError( const std::string& address, const std::string& error ) = 0;
+    virtual void ConnectionWarning( const std::string& address, const std::string& warning ) = 0;
     //@}
 
 private:

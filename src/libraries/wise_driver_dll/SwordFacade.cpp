@@ -153,6 +153,20 @@ void SwordFacade::OnConnectionError( const std::string& endpoint, const std::str
 }
 
 // -----------------------------------------------------------------------------
+// Name: SwordFacade::OnConnectionWarning
+// Created: MCO 2011-09-28
+// -----------------------------------------------------------------------------
+void SwordFacade::OnConnectionWarning( const std::string& endpoint, const std::string& reason )
+{
+    std::wstringstream message;
+    message << L"Connection to simulation '" << ToWideString( endpoint ) << L"' warning. Reason: " << ToWideString( reason );
+    if( disconnect_ )
+        driver_.NotifyInfoMessage( message.str() );
+    else
+        driver_.NotifyErrorMessage( message.str(), MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_OPEN_FAILED ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SwordFacade::OnAuthenticationSucceeded
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------

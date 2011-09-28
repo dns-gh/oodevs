@@ -69,6 +69,16 @@ void ConnectionHandlerProxy::OnConnectionError( const std::string& endpoint, con
 }
 
 // -----------------------------------------------------------------------------
+// Name: ConnectionHandlerProxy::OnConnectionWarning
+// Created: MCO 2011-09-28
+// -----------------------------------------------------------------------------
+void ConnectionHandlerProxy::OnConnectionWarning( const std::string& endpoint, const std::string& reason )
+{
+    if( handler_ )
+        handler_->OnConnectionWarning( endpoint, reason );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ConnectionHandlerProxy::OnAuthenticationSucceeded
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------

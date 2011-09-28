@@ -103,6 +103,7 @@ namespace
         MOCK_METHOD( OnConnectionSucceeded, 1 );
         MOCK_METHOD( OnConnectionFailed, 2 );
         MOCK_METHOD( OnConnectionError, 2 );
+        MOCK_METHOD( OnConnectionWarning, 2 );
         MOCK_METHOD( OnAuthenticationSucceeded, 1 );
         MOCK_METHOD( OnAuthenticationFailed, 2 );
     };

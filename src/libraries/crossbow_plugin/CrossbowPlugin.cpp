@@ -56,6 +56,14 @@ namespace
             message.Send( *this );
             std::cout << "Dummy::ConnectionSucceeded " << endpoint << std::endl;
         }
+        virtual void ConnectionError( const std::string& endpoint, const std::string& reason )
+        {
+            std::cerr << "Dummy::ConnectionError " << endpoint << " : " << reason << std::endl;
+        }
+        virtual void ConnectionWarning( const std::string& endpoint, const std::string& reason )
+        {
+            std::cerr << "Dummy::ConnectionWarning " << endpoint << " : " << reason << std::endl;
+        }
 
     private:
         std::string endpoint_;

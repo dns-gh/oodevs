@@ -1066,6 +1066,10 @@
         <source> (cause :</source>
         <translation> (causa :</translation>
     </message>
+    <message>
+        <source> warning (cause :</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Object</name>

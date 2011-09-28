@@ -57,6 +57,7 @@ void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_
     client_->RegisterMessageHandler( this );
     client_->Connect( this );
 }
+
 // -----------------------------------------------------------------------------
 // Name: SwordFacade::Stop
 // Created: AHC 2011-05-16
@@ -101,6 +102,15 @@ void SwordFacade::OnConnectionError( const std::string& /*endpoint*/, const std:
 {
     isConnected_ = false;
     isAuthenticated_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::OnConnectionWarning
+// Created: MCO 2011-09-28
+// -----------------------------------------------------------------------------
+void SwordFacade::OnConnectionWarning( const std::string& /*endpoint*/, const std::string& /*reason*/ )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

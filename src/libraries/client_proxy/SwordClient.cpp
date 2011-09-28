@@ -99,6 +99,16 @@ void SwordClient::ConnectionError( const std::string& endpoint, const std::strin
 }
 
 // -----------------------------------------------------------------------------
+// Name: SwordClient::ConnectionWarning
+// Created: SEB 2010-10-12
+// -----------------------------------------------------------------------------
+void SwordClient::ConnectionWarning( const std::string& endpoint, const std::string& warning )
+{
+    tools::ClientNetworker::ConnectionWarning( endpoint, warning );
+    connectionHandler_->OnConnectionWarning( endpoint, warning );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SwordClient::HandleAarToClient
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------

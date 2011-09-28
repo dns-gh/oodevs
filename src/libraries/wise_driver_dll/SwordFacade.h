@@ -60,6 +60,7 @@ private:
     virtual void OnConnectionSucceeded( const std::string& endpoint );
     virtual void OnConnectionFailed( const std::string& endpoint, const std::string& reason );
     virtual void OnConnectionError( const std::string& endpoint, const std::string& reason );
+    virtual void OnConnectionWarning( const std::string& endpoint, const std::string& reason );
     virtual void OnAuthenticationSucceeded( const std::string& profile );
     virtual void OnAuthenticationFailed( const std::string& profile, const std::string& reason );
     //@}
