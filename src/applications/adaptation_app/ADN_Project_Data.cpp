@@ -22,6 +22,7 @@
 #include <tools/XmlCrc32Signature.h>
 #include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
+#include <process.h>
 #include <windows.h>
 
 namespace bfs = boost::filesystem;
@@ -268,7 +269,9 @@ void ADN_Project_Data::WorkDirInfos::UseTempDirectory( bool bActivateTemp )
         }
         std::string res( pTempDir );
         std::replace( res.begin(), res.end(), '\\', '/' );
-        szTempDir_ = res + "sword ot data.tmp/";
+        std::stringstream stream;
+        stream << res << _getpid() << "sword ot data.tmp/";
+        szTempDir_ = stream.str();
         free( pTempDir );
     }
 }
