@@ -63,7 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent_ABC& agent_;
+    const dispatcher::Agent_ABC& agent_;
     T_Listeners listeners_;
     //@}
 };

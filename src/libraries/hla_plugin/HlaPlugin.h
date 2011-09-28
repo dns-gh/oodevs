@@ -49,7 +49,7 @@ namespace hla
     class FederateFacade;
     class RtiAmbassadorFactory_ABC;
     class FederateAmbassadorFactory_ABC;
-    class AgentSubject_ABC;
+    class AgentController;
     class ObjectResolver_ABC;
     class Stepper;
     class UnitTypeResolver_ABC;
@@ -88,8 +88,12 @@ public:
 private:
     //! @name Member data
     //@{
-    dispatcher::Logger_ABC& logger_;
+    dispatcher::Model_ABC& dynamicModel_;
+    const dispatcher::StaticModel& staticModel_;
     dispatcher::SimulationPublisher_ABC& publisher_;
+    const dispatcher::Config& config_;
+    std::auto_ptr< xml::xistream > pXis_;
+    dispatcher::Logger_ABC& logger_;
     std::auto_ptr< ContextFactory_ABC > pContextFactory_;
     std::auto_ptr< ObjectResolver_ABC > pObjectResolver_;
     std::auto_ptr< RtiAmbassadorFactory_ABC > pRtiFactory_;
@@ -102,7 +106,7 @@ private:
     std::auto_ptr< MunitionTypeResolver_ABC > pMunitionTypeResolver_;
     std::auto_ptr< LocalAgentResolver_ABC > pLocalAgentResolver_;
     std::auto_ptr< tools::MessageController< sword::SimToClient_Content > > pMessageController_;
-    std::auto_ptr< AgentSubject_ABC > pSubject_;
+    std::auto_ptr< AgentController > pSubject_;
     std::auto_ptr< FederateFacade > pFederate_;
     std::auto_ptr< SimulationFacade > pSimulationFacade_;
     std::auto_ptr< RemoteAgentResolver_ABC > pRemoteAgentResolver_;

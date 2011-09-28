@@ -39,12 +39,11 @@ namespace hla
 // Created: SBO 2008-02-18
 // =============================================================================
 class AgentController : public AgentSubject_ABC
-                      , private dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& resolver );
+    explicit AgentController( const rpr::EntityTypeResolver_ABC& resolver );
     virtual ~AgentController();
     //@}
 
@@ -52,12 +51,7 @@ public:
     //@{
     virtual void Register( AgentListener_ABC& listener );
     virtual void Unregister( AgentListener_ABC& listener );
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void Create( dispatcher::Agent& entity );
+    void Visit( dispatcher::Model_ABC& model );
     //@}
 
 private:
@@ -72,7 +66,6 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Model_ABC& model_;
     const rpr::EntityTypeResolver_ABC& resolver_;
     T_Listeners listeners_;
     T_Agents agents_;

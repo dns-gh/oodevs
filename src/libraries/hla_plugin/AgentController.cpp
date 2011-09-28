@@ -27,11 +27,10 @@ using namespace plugins::hla;
 // Name: AgentController constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& resolver )
-    : model_   ( model )
-    , resolver_( resolver )
+AgentController::AgentController( const rpr::EntityTypeResolver_ABC& resolver )
+    : resolver_( resolver )
 {
-    model_.RegisterFactory( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +39,7 @@ AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::Entit
 // -----------------------------------------------------------------------------
 AgentController::~AgentController()
 {
-    model_.UnregisterFactory( *this );
+    // NOTHING
 }
 
 namespace
@@ -59,17 +58,22 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentController::Create
-// Created: SBO 2008-02-18
+// Name: AgentController::Visit
+// Created: SLI 2011-09-28
 // -----------------------------------------------------------------------------
-void AgentController::Create( dispatcher::Agent& entity )
+void AgentController::Visit( dispatcher::Model_ABC& model )
 {
-    if( boost::algorithm::starts_with( entity.GetName().toStdString(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
-        return;
-    agents_.push_back( T_Agent( new AgentProxy( entity ) ) );
-    const std::string type = entity.GetType().GetName();
-    for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-        (*it)->Created( *agents_.back(), entity.GetId(), entity.GetName().toStdString(), GetForce( entity ), resolver_.Find( type ) );
+    for( tools::Iterator< const dispatcher::Agent_ABC& > it = model.Agents().CreateIterator(); it.HasMoreElements(); )
+    {
+        dispatcher::Agent_ABC& agent = const_cast< dispatcher::Agent_ABC& >( it.NextElement() ); // $$$$ _RC_ SLI 2011-09-28: erk...
+        if( !boost::algorithm::starts_with( agent.GetName().toStdString(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
+        {
+            agents_.push_back( T_Agent( new AgentProxy( agent ) ) );
+            const std::string type = agent.GetType().GetName();
+            for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
+                (*it)->Created( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), GetForce( agent ), resolver_.Find( type ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

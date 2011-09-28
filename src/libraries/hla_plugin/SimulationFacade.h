@@ -10,7 +10,6 @@
 #ifndef plugins_hla_SimulationFacade_h
 #define plugins_hla_SimulationFacade_h
 
-#include "tools/MessageObserver.h"
 #include "ContextHandler_ABC.h"
 
 namespace tools
@@ -55,7 +54,6 @@ namespace hla
 // Created: SLI 2011-09-15
 // =============================================================================
 class SimulationFacade : public ContextHandler_ABC< sword::UnitCreation >
-                       , private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
     //! @name Constructors/Destructor
@@ -72,12 +70,6 @@ public:
     virtual void Register( ResponseObserver_ABC< sword::UnitCreation >& observer );
     virtual void Unregister( ResponseObserver_ABC< sword::UnitCreation >& observer );
     virtual void Send( simulation::UnitMagicAction& message, const std::string& identifier );
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void Notify( const sword::ControlEndTick& message, int context );
     //@}
 
 private:

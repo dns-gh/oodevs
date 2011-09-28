@@ -77,13 +77,13 @@ SimulationFacade::SimulationFacade( const ContextFactory_ABC& contextFactory, to
     , pFormationHandler_     ( new FormationContextHandler( messageController, contextFactory, publisher ) )
     , pAutomatHandler_       ( new AutomatContextHandler( messageController, contextFactory, publisher ) )
     , pUnitHandler_          ( new UnitContextHandler( messageController, contextFactory, publisher ) )
-    , pAutomatDisengager_    ( 0 )
-    , pFormationCreater_     ( 0 )
-    , pAutomatCreater_       ( 0 )
-    , pUnitTeleporter_       ( 0 )
-    , pRemoteAgentController_( 0 )
+    , pAutomatDisengager_    ( new AutomatDisengager( *pAutomatHandler_, publisher_, contextFactory_ ) )
+    , pFormationCreater_     ( new FormationCreater( dynamicModel_.Sides(), *pFormationHandler_ ) )
+    , pAutomatCreater_       ( new AutomatCreater( *pFormationHandler_, *pAutomatHandler_, staticModel_.types_, dynamicModel_.KnowledgeGroups() ) )
+    , pUnitTeleporter_       ( new UnitTeleporter( remoteAgentSubject_, *pUnitHandler_, publisher_, contextFactory_ ) )
+    , pRemoteAgentController_( new RemoteAgentController( remoteAgentSubject_, *pAutomatHandler_, *pUnitHandler_, dynamicModel_.Sides(), unitTypeResolver_ ) )
 {
-    CONNECT( messageController, *this, control_end_tick );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -93,20 +93,6 @@ SimulationFacade::SimulationFacade( const ContextFactory_ABC& contextFactory, to
 SimulationFacade::~SimulationFacade()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationFacade::Notify
-// Created: SLI 2011-09-15
-// -----------------------------------------------------------------------------
-void SimulationFacade::Notify( const sword::ControlEndTick& /*message*/, int /*context*/ )
-{
-    DISCONNECT( messageController_, *this, control_end_tick );
-    pAutomatDisengager_.reset( new AutomatDisengager( *pAutomatHandler_, publisher_, contextFactory_ ) );
-    pFormationCreater_.reset( new FormationCreater( dynamicModel_.Sides(), *pFormationHandler_ ) );
-    pAutomatCreater_.reset( new AutomatCreater( *pFormationHandler_, *pAutomatHandler_, staticModel_.types_, dynamicModel_.KnowledgeGroups() ) );
-    pUnitTeleporter_.reset( new UnitTeleporter( remoteAgentSubject_, *pUnitHandler_, publisher_, contextFactory_ ) );
-    pRemoteAgentController_.reset( new RemoteAgentController( remoteAgentSubject_, *pAutomatHandler_, *pUnitHandler_, dynamicModel_.Sides(), unitTypeResolver_ ) );
 }
 
 // -----------------------------------------------------------------------------
