@@ -61,6 +61,7 @@ public:
         double       rSpeed_;
         unsigned int eAngle_;
         MT_Vector2D  vDirection_;
+        sWindData() : rSpeed_( 0.), eAngle_( 0 ) {}
     };
     struct sCloudData
     {
@@ -68,6 +69,7 @@ public:
         int          nCeiling_;
         int          nDensityPercentage_;
         double       rDensity_;
+        sCloudData() : nFloor_( 0 ), nCeiling_( 0 ), nDensityPercentage_( 0 ), rDensity_( 0. ) {}
     };
 
 public:
