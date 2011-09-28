@@ -15,6 +15,7 @@ Filter.cpp \
 FilterCommand.cpp \
 FilterDialog.cpp \
 FilterDialogs.cpp \
+FilterInputArgument.cpp \
 FilterManager.cpp \
 FilterOrbatReIndexer.cpp \
 FilterXsl.cpp \

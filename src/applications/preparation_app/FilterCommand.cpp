@@ -9,7 +9,8 @@
 
 #include "preparation_app_pch.h"
 #include "FilterCommand.h"
-
+#include "moc_FilterCommand.cpp"
+#include "FilterInputArgument.h"
 #include "clients_kernel/Tools.h"
 #include "frontend/SpawnCommand.h"
 #include "frontend/ProcessWrapper.h"
@@ -31,6 +32,16 @@ namespace
             result = config.GetRootDir();
         else if( value == "$exercise$" )
             result = config.GetExerciseName();
+        else if( value == "$exercise_dir$" )
+            result = config.GetExerciseDir( config.GetExerciseName() );
+        else if( value == "$orbat_file$" )
+            result = config.GetOrbatFile();
+        else if( value == "$input$" ) // $$$$ ABR 2011-09-28: Cf FilterInputArgument
+            result = "";
+        else if( value == "$input_file$" )
+            result = "";
+        else if( value == "$input_dir$" )
+            result = "";
         return "\"" + result + "\"";
     }
 }
@@ -44,13 +55,14 @@ FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& c
     , config_        ( config )
     , command_       ( xis.attribute< std::string >( "command" ) )
     , reloadExercise_( xis.attribute< bool >( "reload-exercise", false ) )
+    , minimalDisplay_( xis.attribute< bool >( "minimal-display", false ) )
     , path_          ( xis.attribute< std::string >( "directory", "." ) )
+    , commandLabel_  ( 0 )
 {
     assert( !command_.empty() );
     ReadDescriptions( xis );
     ReadArguments( xis );
-    for( IT_Arguments it = arguments_.begin(); it != arguments_.end(); ++it )
-        argumentsLine_ += ( it->second.empty() ) ? " " + it->first : " " + it->first + "=" + ConvertArgumentVariable( it->second, config_ );
+    ComputeArgument();
     ComputePath();
 }
 
@@ -111,7 +123,26 @@ void FilterCommand::ReadArgument( xml::xistream& xis )
     assert( xis.has_attribute( "name" ) );
     const std::string name = xis.attribute< std::string >( "name" );
     const std::string value = xis.attribute< std::string >( "value", "" );
-    arguments_.push_back( std::pair< std::string, std::string >( name, value ) );
+    arguments_.push_back( std::pair< std::string, std::string >( name, ConvertArgumentVariable( value, config_ ) ) );
+    if( value == "$input_file$" || value == "$input_dir$" || value == "$input$" )
+    {
+        FilterInputArgument* inputArgument = new FilterInputArgument( value, config_.GetExerciseDir( config_.GetExerciseName() ) );
+        inputArguments_[ arguments_.size() - 1 ] = inputArgument;
+        connect( inputArgument, SIGNAL( ValueChanged() ), this, SLOT( OnValueChanged() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterCommand::ComputeArgument
+// Created: ABR 2011-09-28
+// -----------------------------------------------------------------------------
+void FilterCommand::ComputeArgument()
+{
+    argumentsLine_.clear();
+    for( IT_Arguments it = arguments_.begin(); it != arguments_.end(); ++it )
+        argumentsLine_ += ( it->second.empty() ) ? " " + it->first : " " + it->first + "=" + it->second;
+    if( commandLabel_ )
+        commandLabel_->setText( ( command_ + argumentsLine_ ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,24 +202,41 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
 {
     Q3GroupBox* parametersWidget = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterCommand", "Command overview" ), parent, "FilterCommand_ParameterGroupBox" );
     QWidget* widget = new QWidget( parametersWidget, "FilterCommand_BaseWidget" );
-    QGridLayout* grid = new QGridLayout( widget, 3, 2, 0, 5, "FilterCommand_GridLayout" );
-    grid->setMargin( 5 );
+
+    int row = ( !minimalDisplay_ ) ? 3 : ( path_.empty() ) ? 2 : 1;
+    QGridLayout* grid = new QGridLayout( widget, ( inputArguments_.empty() ) ? row : row + static_cast< int >( inputArguments_.size() ), 2, 0, 5, "FilterCommand_GridLayout" );
     grid->setColStretch( 1, 1 );
 
-    grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Command:" ), widget, "FilterCommand_CommandTitle" ), 0, 0 );
-    grid->addWidget( new QLabel( ( command_ + argumentsLine_ ).c_str(), widget, "FilterCommand_CommandLabel" ), 0, 1 );
-
-    grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Path:" ), widget, "FilterCommand_PathTitle" ), 1, 0 );
-    grid->addWidget( ( path_.empty() )
-        ? new QLabel( "<font color=\"#FF0000\">" + tools::translate( "FilterCommand", "File not found, move your binary to the filters directory, or update the $PATH environment variable." ) + "</font>", widget, "FilterCommand_PathLabel" )
-        : new QLabel( path_.c_str(), widget, "FilterCommand_PathLabel" ), 1, 1 );
-
-    grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Reload exercise:" ), widget, "FilterCommand_ReloadTitle" ), 2, 0 );
+    // Command
+    if( !minimalDisplay_ )
+    {
+        grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Command:" ), widget, "FilterCommand_CommandTitle" ), row, 0 );
+        commandLabel_ = new QLabel( ( command_ + argumentsLine_ ).c_str(), widget, "FilterCommand_CommandLabel" );
+        commandLabel_->setWordWrap( true );
+        grid->addWidget( commandLabel_, row++, 1 );
+    }
+    // Path
+    if( !minimalDisplay_ || ( minimalDisplay_ && path_.empty() ) )
+    {
+        grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Path:" ), widget, "FilterCommand_PathTitle" ), row, 0 );
+        QLabel* pathLabel = ( path_.empty() )
+            ? new QLabel( "<font color=\"#FF0000\">" + tools::translate( "FilterCommand", "File not found, move your binary to the filters directory, or update the $PATH environment variable." ) + "</font>", widget, "FilterCommand_PathLabel" )
+            : new QLabel( path_.c_str(), widget, "FilterCommand_PathLabel" );
+        pathLabel->setWordWrap( true );
+        grid->addWidget( pathLabel, row++, 1 );
+    }
+    // Reload-Exercise
+    grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Reload exercise:" ), widget, "FilterCommand_ReloadTitle" ), row, 0 );
     QCheckBox* checkBox = new QCheckBox( widget, "FilterCommand_ReloadCheckBox" );
     checkBox->setChecked( reloadExercise_ );
     checkBox->setEnabled( false );
-    grid->addWidget( checkBox, 2, 1 );
-
+    grid->addWidget( checkBox, row++, 1 );
+    // Input arguments
+    for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it, ++row )
+    {
+        grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Argument '%1':" ).arg( arguments_[ it->first ].first.c_str() ), widget, "FilterCommand_CommandTitle" ), row, 0 );
+        grid->addWidget( it->second->CreateWidget( widget ), row, 1 );
+    }
     return parametersWidget;
 }
 
@@ -224,4 +272,15 @@ void FilterCommand::NotifyError( const std::string& error, std::string /*command
 {
     reloadExercise_ = false;
     QMessageBox::critical( QApplication::activeModalWidget(), tools::translate( "FilterDialog", "Error on filter execution" ), error.c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterCommand::OnValueChanged
+// Created: ABR 2011-09-28
+// -----------------------------------------------------------------------------
+void FilterCommand::OnValueChanged()
+{
+    for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
+        arguments_[ it->first ].second = inputArguments_[ it->first ]->GetText().ascii();
+    ComputeArgument();
 }

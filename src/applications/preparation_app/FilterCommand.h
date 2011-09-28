@@ -13,6 +13,8 @@
 #include "Filter.h"
 #include "frontend/ProcessObserver_ABC.h"
 
+class FilterInputArgument;
+
 // =============================================================================
 /** @class  FilterCommand
     @brief  FilterCommand
@@ -22,6 +24,7 @@
 class FilterCommand : public Filter
                     , public frontend::ProcessObserver_ABC
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -50,7 +53,14 @@ private:
     //@{
     void ReadArguments( xml::xistream& xis );
     void ReadArgument( xml::xistream& xis );
+    void ComputeArgument();
     void ComputePath();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnValueChanged();
     //@}
 
 private:
@@ -59,6 +69,9 @@ private:
     typedef std::vector< std::pair< std::string, std::string > > T_Arguments;
     typedef T_Arguments::iterator                               IT_Arguments;
     typedef T_Arguments::const_iterator                        CIT_Arguments;
+
+    typedef std::map< size_t, FilterInputArgument* >             T_InputArguments;
+    typedef T_InputArguments::const_iterator                   CIT_InputArguments;
     //@}
 
 private:
@@ -68,8 +81,11 @@ private:
     const std::string            command_;
     std::string                  argumentsLine_;
     T_Arguments                  arguments_;
+    T_InputArguments             inputArguments_;
     std::string                  path_;
     bool                         reloadExercise_;
+    bool                         minimalDisplay_;
+    QLabel*                      commandLabel_;
     //@}
 };
 

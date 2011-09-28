@@ -445,6 +445,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\ModelConsistencyDialog.cpp">
       <Filter>Source Files\Dialogs\Consistency</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FilterInputArgument.cpp">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -757,9 +760,6 @@
     <CustomBuild Include="..\..\src\applications\preparation_app\Filter_ABC.h">
       <Filter>Source Files\Dialogs\Filter</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\FilterCommand.h">
-      <Filter>Source Files\Dialogs\Filter</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\FilterDialog.h">
       <Filter>Source Files\Dialogs\Filter</Filter>
     </CustomBuild>
@@ -813,6 +813,12 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\ModelConsistencyDialog.h">
       <Filter>Source Files\Dialogs\Consistency</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\FilterInputArgument.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\FilterCommand.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

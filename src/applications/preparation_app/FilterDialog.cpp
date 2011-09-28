@@ -52,7 +52,7 @@ FilterDialog::FilterDialog( QWidget* parent, xml::xistream& xis, const tools::Ex
     // Buttons
     {
         Q3HBox* box = new Q3HBox( this, "FilterDialog_ButtonsHBox" );
-        box->setMargin( 5 );
+        box->setSpacing( 5 );
         box->setMaximumHeight( 40 );
         okButton_ = new QPushButton( tools::translate( "FilterDialog", "Ok" ), box, "FilterDialog_OkButton" );
         okButton_->setDefault( true );

@@ -266,6 +266,10 @@
         <source>Reload exercise:</source>
         <translation>Recharger l&apos;exercise:</translation>
     </message>
+    <message>
+        <source>Argument &apos;%1&apos;:</source>
+        <translation>Argument &apos;%1&apos;:</translation>
+    </message>
 </context>
 <context>
     <name>FilterDialog</name>
@@ -299,6 +303,21 @@
     <message>
         <source>Unknown section: %1.</source>
         <translation>Section inconnue: %1.</translation>
+    </message>
+</context>
+<context>
+    <name>FilterInputArgument</name>
+    <message>
+        <source>Browse...</source>
+        <translation>Parcourir...</translation>
+    </message>
+    <message>
+        <source>Select a file</source>
+        <translation>Sélectionnez un fichier</translation>
+    </message>
+    <message>
+        <source>Select a directory</source>
+        <translation>Sélectionnez un répertoire</translation>
     </message>
 </context>
 <context>

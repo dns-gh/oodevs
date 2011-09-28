@@ -266,6 +266,10 @@
         <source>Reload exercise:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Argument &apos;%1&apos;:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FilterDialog</name>
@@ -298,6 +302,21 @@
     </message>
     <message>
         <source>Unknown section: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilterInputArgument</name>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a directory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
