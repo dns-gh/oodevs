@@ -43,11 +43,11 @@ public:
     virtual void Replay( const std::string& session ) const = 0;
     virtual void Stop( const std::string& session ) const = 0;
     virtual void QueryProfileList() const = 0;
-    virtual void Pause(const std::string& session) const = 0;
-    virtual void Resume(const std::string& session) const = 0;
+    virtual void Pause( const std::string& session ) const = 0;
+    virtual void Resume( const std::string& session ) const = 0;
     virtual void ChangeDateTime( const std::string& session, const std::string& date ) const = 0;
-    virtual void SaveCheckpoint(const std::string& session, const std::string& name) const = 0;
-    virtual void QueryConnectedProfileList(const std::string& session) const = 0;
+    virtual void SaveCheckpoint( const std::string& session, const std::string& name ) const = 0;
+    virtual void QueryConnectedProfileList( const std::string& session ) const = 0;
     //@}
 
     //! @name Operations

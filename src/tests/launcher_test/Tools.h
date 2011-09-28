@@ -27,12 +27,13 @@
 #include <boost/filesystem.hpp>
 #include <boost/assign.hpp>
 
+namespace bfs = boost::filesystem;
+
 #define LAUNCHER_CHECK_MESSAGE( MSG, EXPECTED ) BOOST_CHECK_EQUAL( MSG.ShortDebugString(), EXPECTED )
 
 namespace launcher_test
 {
-    const std::string  defaultHost = "127.0.0.1";
-    const unsigned int timeOut     = 5000;
+    const std::string host = "127.0.0.1";
 
     template< typename P >
     void FillProfileDescription( P* p )
@@ -87,7 +88,7 @@ namespace launcher_test
     {
         MockDispatcher( unsigned short port )
             : tools::ServerNetworker( port )
-            , authPerformed( false )
+            , authenticated_( false )
         {
             AllowConnections();
             RegisterMessage< MockDispatcher, sword::ClientToSim >( *this, &MockDispatcher::Receive );
@@ -108,7 +109,7 @@ namespace launcher_test
 
         bool AuthenticationPerformed() const
         {
-            return authPerformed;
+            return authenticated_;
         }
         void AutoAuthentification( const std::string& endpoint, const sword::ClientToAuthentication& msg )
         {
@@ -118,13 +119,13 @@ namespace launcher_test
                 *response().mutable_server_version() = msg.message().authentication_request().version();
                 response().set_error_code( sword::AuthenticationResponse::success );
                 response.Send( *this, msg.has_context() ? msg.context() : 1 );
-                authPerformed = true;
+                authenticated_ = true;
             }
             else
                 Receive( endpoint, msg); // forward to mock
         }
         std::string host;
-        bool authPerformed;
+        bool authenticated_;
     };
 
     struct ApplicationFixture
@@ -179,13 +180,13 @@ namespace launcher_test
     {
         Fixture()
             : client    ( controllers.controller_ )
-            , timeout   ( timeOut )
-            , dispatcher( frontend::DispatcherPort( 1 ) )
+            , timeout   ( 5000 )
+            , dispatcher( frontend::DispatcherPort( 1 ) ) // $$$$ MCO : this crap is responsible for at least 3 or 4 build failures per day
         {
             launcher.Initialize( argc, &args[0] );
             BOOST_REQUIRE_MESSAGE( launcher.GetLastError().empty(), launcher.GetLastError() );
             MOCK_EXPECT( handler, OnConnectionSucceeded ).once();
-            client.Connect( defaultHost, PORT, handler );
+            client.Connect( host, PORT, handler );
             while( !client.Connected() && !timeout.Expired() )
                 Update();
         }
@@ -207,44 +208,44 @@ namespace launcher_test
     {
         ExerciseFixture()
             : Fixture()
-            , exerciceListener( controllers )
-            , SESSION         ( "default" )
-            , exercise        ( 0 )
-            , handler         ( new MockResponseHandler() )
+            , listener( controllers )
+            , session ( "default" )
+            , exercise( 0 )
+            , handler ( new MockResponseHandler() )
         {
             BOOST_REQUIRE( client.Connected() );
             client.QueryExerciseList();
             timeout.Start();
 
-            while( !exerciceListener.Check() && !timeout.Expired() )
+            while( !listener.Check() && !timeout.Expired() )
                 Update();
-            BOOST_REQUIRE( exerciceListener.Check() );
+            BOOST_REQUIRE( listener.Check() );
 
-            exercise = exerciceListener.exercises_.front();
+            exercise = listener.exercises_.front();
             BOOST_REQUIRE( exercise );
 
-            filePath = boost::filesystem::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/" + SESSION + "/session.xml" ) );
-            savePath = boost::filesystem::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/" + SESSION + "/session.xml.save" ) );
-            std::remove( savePath.string().c_str() );
-            boost::filesystem::copy_file( filePath, savePath );
+            filePath = bfs::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/" + session + "/session.xml" ) );
+            savePath = bfs::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/" + session + "/session.xml.save" ) );
+            bfs::copy_file( filePath, savePath, bfs::copy_option::overwrite_if_exists );
+
+            MakeSession();
 
             MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
-            exercise->StartDispatcher( SESSION );
+            exercise->StartDispatcher( session );
 
             timeout.Start();
-            while( (!exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && !timeout.Expired() )
+            while( ( !exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && !timeout.Expired() )
                 Update();
             BOOST_REQUIRE( exercise->IsRunning() );
             client.Register( handler );
             mock::verify();
         }
-       ~ExerciseFixture()
-       {
-           exercise->Stop( SESSION );
-           std::remove( filePath.string().c_str() );
-           boost::filesystem::copy_file( savePath, filePath );
+        ~ExerciseFixture()
+        {
+           exercise->Stop( session );
+           bfs::copy_file( savePath, filePath, bfs::copy_option::overwrite_if_exists );
            std::remove( savePath.string().c_str() );
-       }
+        }
 
         void VerifySendRequest( const std::string& expected )
         {
@@ -273,11 +274,11 @@ namespace launcher_test
             while( !message.IsInitialized() && !timeout.Expired() )
                 Update();
         }
-        boost::filesystem::path filePath;
-        boost::filesystem::path savePath;
-        ExerciseListener exerciceListener;
+        bfs::path filePath;
+        bfs::path savePath;
+        ExerciseListener listener;
         const frontend::Exercise_ABC* exercise;
-        const std::string SESSION;
+        const std::string session;
         boost::shared_ptr< MockResponseHandler > handler;
     };
 }
