@@ -52,7 +52,7 @@
     </message>
     <message>
         <source>PhysicalFeatures/Architecture/occupation</source>
-        <translation>Eléments physiques/Architecture/Occupation</translation>
+        <translation>Eléments physiques/Architecture/Densité du bâti au sol</translation>
     </message>
     <message>
         <source>PhysicalFeatures/Architecture/trafficability</source>
