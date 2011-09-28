@@ -26,7 +26,7 @@
     -->
     <target name="libraries" depends="library.tools,library.MT_Tools,library.ENT,library.protocol,library.simulation_terrain,library.simulation_kernel,
                                       library.clients_kernel,library.clients_gui,library.actions,library.actions,library.actions_gui,library.reports,
-                                      library.gaming,library.preparation,library.plugins,library.3a,library.mission_tester,library.orbat_generator" description="build all libraries"/>
+                                      library.gaming,library.preparation,library.plugins,library.3a,library.mission_tester" description="build all libraries"/>
 
     <target name="library.tools" description="build tools static library">
         <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
@@ -408,12 +408,6 @@
         </build-lib>
     </target>
 
-    <target name="library.orbat_generator" description="build orbat generator lib">
-        <build-lib name="orbat_generator" pattern="lib${ant.project.name}_orbat_generator-${platform}-mt@{suffix}" suffix="-gd">
-            <defineset define="QT3_SUPPORT"/>
-        </build-lib>
-    </target>
-
     <!--
     ============================================================================
      applications
@@ -428,7 +422,7 @@
     <target name="applications.clients" description="build Sword Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app,
                      application.loadtester_app,application.import_app,application.wise_driver_dll,library.vrforces_plugin_dll,
-                     application.mission_tester_app,application.orbat_generator_app,application.edxlhave_app,
+                     application.mission_tester_app,application.edxlhave_app,
                      application.launcher_test_app,application.xml_signature_app"/>
 
     <target name="applications.frontends" description="build Sword Frontend executables"
@@ -689,11 +683,6 @@
         </build-app>
     </target>
 
-    <target name="application.orbat_generator_app" depends="library.orbat_generator" description="build application">
-        <build-app name="orbat_generator_app" subsystem="console" depends="boost,xerces,xalan"
-            libs="lib${ant.project.name}_orbat_generator-${platform}-mt@{suffix}"/>
-    </target>
-
     <target name="application.edxlhave_app" depends="library.protocol" description="build edxl_app (Emergency Data Exchange)">
         <build-app name="edxlhave_app" depends="xerces,boost,protobuf,openssl" libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" subsystem="console" >
             <includepath path="${out.dir}/release/libraries/protocol"/>
@@ -801,7 +790,7 @@
     <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,
                                  shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,application.simulation_kernel_test,
                                  application.integration_decisionnal_test,protocol_test,checkpoint_test,import_test,positions_plugin_test,
-                                 actions_test,launcher_test,reports_test,flood_test,mission_tester_test,orbat_generator_test" description="run all tests"/>
+                                 actions_test,launcher_test,reports_test,flood_test,mission_tester_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xerces,terrain,boost,protobuf" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},lib${ant.project.name}_protocol-${platform}-mt"/>
@@ -929,11 +918,6 @@
             <syslibset libs="geocoord"/>
             <defineset define="QT3_SUPPORT"/>
         </build-test>
-    </target>
-
-    <target name="orbat_generator_test" depends="library.orbat_generator">
-        <build-test name="orbat_generator" depends="boost,xalan,xerces"
-            libs="lib${ant.project.name}_orbat_generator-${platform}-mt"/>
     </target>
 
     <target name="flood_test" depends="library.flood">
