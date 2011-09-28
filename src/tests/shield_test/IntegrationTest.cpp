@@ -160,11 +160,14 @@ BOOST_FIXTURE_TEST_CASE( message_too_long_sent_from_client_is_detected_by_proxy,
         tools::Message msg( 32 * 1024 + 12 ); // 32 kB + margin for header and stuff
         client.Send( client.host, 1, msg );
     }
-    bool notified = false;
+    int notified = 3;
+    MOCK_EXPECT( server, ConnectionError ).once().calls( --bl::var( notified ) );
+    MOCK_EXPECT( client, ConnectionError ).once().calls( --bl::var( notified ) );
     MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
-                                                mock::contain( "warning" ) &&
-                                                mock::contain( "Message size too large" ) ).calls( bl::var( notified ) = true );
-    wait( bl::var( notified ), boost::bind( &Fixture::Update, this ) );
+                                                mock::contain( "aborted" ) &&
+                                                mock::contain( "Message size too large" ) ).calls( --bl::var( notified ) );
+    MOCK_EXPECT( listener, Error );
+    wait( bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( message_sent_from_simulation_is_received_on_client, Fixture )
