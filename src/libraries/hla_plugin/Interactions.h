@@ -29,6 +29,12 @@ struct EventIdentifierStruct
         archive << eventCount;
         issuingObjectIdentifier.Serialize( archive );
     }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        archive >> eventCount;
+        issuingObjectIdentifier.Deserialize( archive );
+    }
     uint16 eventCount;
     Omt13String issuingObjectIdentifier;
 };

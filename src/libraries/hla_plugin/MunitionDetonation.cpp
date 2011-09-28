@@ -25,8 +25,9 @@ namespace hla
         return serializer;
     }
     template< typename T >
-    Deserializer& operator>>( Deserializer& deserializer, T& /*parameter*/ )
+    Deserializer& operator>>( Deserializer& deserializer, T& parameter )
     {
+        parameter.Deserialize( deserializer );
         return deserializer;
     }
 }
@@ -53,7 +54,7 @@ MunitionDetonation::MunitionDetonation( Federate_ABC& federate, ::hla::Interacti
     pInteraction_->Register( "RateOfFire"                , ::hla::CreateParameter( &interactions::MunitionDetonation::rateOfFire ) );
     pInteraction_->Register( "RelativeDetonationLocation", ::hla::CreateParameter( &interactions::MunitionDetonation::relativeDetonationLocation ) );
     pInteraction_->Register( "TargetObjectIdentifier"    , ::hla::CreateParameter( &interactions::MunitionDetonation::targetObjectIdentifier ) );
-    pInteraction_->Register( "WarheadType"               , ::hla::CreateParameter( &interactions::MunitionDetonation::targetObjectIdentifier ) );
+    pInteraction_->Register( "WarheadType"               , ::hla::CreateParameter( &interactions::MunitionDetonation::warheadType ) );
     federate.Register( ::hla::InteractionIdentifier( "MunitionDetonation" ), *pInteraction_, true, true );
 }
 
