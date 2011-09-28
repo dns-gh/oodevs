@@ -186,6 +186,7 @@ private:
     const tools::Resolver_ABC< kernel::Automat_ABC >& automats_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& formations_;
     const kernel::Profile_ABC& profile_;
+    gui::ParametersLayer& layer_;
 
     kernel::SafePointer< kernel::Automat_ABC > selected_;
     QStringList dotationTypes_;

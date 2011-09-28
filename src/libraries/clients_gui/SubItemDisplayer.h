@@ -46,7 +46,9 @@ private:
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
+    Q3ListViewItem* LastSibling();
     Q3ListViewItem* FindChild( const QString& name );
+    Q3ListViewItem* FindAddChild( const QString& name );
     //@}
 
     //! @name Types

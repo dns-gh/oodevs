@@ -72,8 +72,7 @@ Displayer_ABC& SubItemDisplayer::operator()( Q3ListViewItem* item )
 // -----------------------------------------------------------------------------
 Displayer_ABC& SubItemDisplayer::SubItem( const QString& name )
 {
-    current_ = FindChild( name );
-    current_->setText( 0, name );
+    current_ = FindAddChild( name );
     return *this;
 }
 
@@ -104,27 +103,57 @@ void SubItemDisplayer::EndDisplay()
     current_->setText( 1, message_ );
 }
 
+
 // -----------------------------------------------------------------------------
-// Name: SubItemDisplayer::FindChild
-// Created: AGE 2006-02-28
+// Name: SubItemDisplayer::LastChild
+// Created: MMC 2011-09-28
+// -----------------------------------------------------------------------------
+Q3ListViewItem* SubItemDisplayer::LastSibling()
+{
+    Q3ListViewItem* previous = parent_->firstChild();
+    Q3ListViewItem* child = previous;
+    while( child )
+    {
+        previous = child;
+        child = child->nextSibling();
+    }
+    return previous;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SubItemDisplayer::{
+// Created: MMC 2011-09-28
 // -----------------------------------------------------------------------------
 Q3ListViewItem* SubItemDisplayer::FindChild( const QString& name )
+{
+    Q3ListViewItem* child = parent_->firstChild();
+    while( child )
+    {
+        if ( child->text( 0 ) == name )
+            return child;
+        child = child->nextSibling();
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SubItemDisplayer::FindAddChild
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+Q3ListViewItem* SubItemDisplayer::FindAddChild( const QString& name )
 {
     if( ! parent_ )
         throw std::runtime_error( "Parent not set" );
     if( name == name_ )
         return parent_;
-    Q3ListViewItem* previous = parent_->firstChild();
-    Q3ListViewItem* child = previous;
-    for( unsigned int i = 0; i < children_.size(); ++i )
-    {
-        if( ! child )
-            child = factory_.CreateItem( parent_, previous );
-        if( children_[i] == name )
-            return child;
-        previous = child;
-        child = child->nextSibling();
-    }
-    AddChild( name );
-    return FindChild( name );
+    if( find( children_.begin(), children_.end(), name ) == children_.end() )
+        AddChild( name );
+    Q3ListViewItem* foundItem = FindChild( name );
+    if ( foundItem )
+        return foundItem;
+
+    Q3ListViewItem* newItem = factory_.CreateItem( parent_, LastSibling() );
+    assert( newItem );
+    newItem->setText( 0, name );
+    return newItem;
 }

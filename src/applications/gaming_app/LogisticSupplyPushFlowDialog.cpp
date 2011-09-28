@@ -41,6 +41,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "clients_gui/LocationCreator.h"
+#include "clients_gui/ParametersLayer.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/bind.hpp>
 #include <boost/noncopyable.hpp>
@@ -82,6 +83,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     , selected_( controllers )
     , pRecipientSelected_( 0 )
     , startWaypointLocation_( false )
+    , layer_( layer )
 {  
     setCaption( tr( "Push supply flow" ) );
 
@@ -233,7 +235,7 @@ void LogisticSupplyPushFlowDialog::Show()
     if( !selected_ )
         return;
 
-    controllers_.Register( *routeLocationCreator_ );
+    controllers_.Update( *routeLocationCreator_ );
     routeLocationCreator_->StartLine();
 
     AddRecipientItem();
@@ -251,11 +253,9 @@ void LogisticSupplyPushFlowDialog::Show()
 void LogisticSupplyPushFlowDialog::Validate()
 {
     accept();
-
-    if( startWaypointLocation_ )
-        controllers_.Unregister( *waypointLocationCreator_ );
-    else
-        controllers_.Unregister( *routeLocationCreator_ );
+    layer_.Reset();
+    controllers_.Unregister( *waypointLocationCreator_ );
+    controllers_.Unregister( *routeLocationCreator_ );
 
     if( !selected_ )
         return;
@@ -319,10 +319,11 @@ void LogisticSupplyPushFlowDialog::Validate()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Reject()
 {
-    if( routeLocationCreator_ )
-        controllers_.Unregister( *routeLocationCreator_ );
-
     reject();
+    layer_.Reset();
+    controllers_.Unregister( *waypointLocationCreator_ );
+    controllers_.Unregister( *routeLocationCreator_ );
+
     ClearRecipientsTable();
     ClearRecipientsData();
     ClearResourcesTable();
@@ -517,8 +518,8 @@ void LogisticSupplyPushFlowDialog::AddWaypoint()
 {
     if( !startWaypointLocation_ )
     {
-       controllers_.Register( *waypointLocationCreator_ );
        controllers_.Unregister( *routeLocationCreator_ );
+       controllers_.Update( *waypointLocationCreator_ );
     }    
     startWaypointLocation_ = true;
     waypointLocationCreator_->StartPoint();
@@ -1004,7 +1005,7 @@ void LogisticSupplyPushFlowDialog::Handle( kernel::Location_ABC& location )
     if( startWaypointLocation_ )
     {
         controllers_.Unregister( *waypointLocationCreator_ );
-        controllers_.Register( *routeLocationCreator_ );
+        controllers_.Update( *routeLocationCreator_ );
         routeLocationCreator_->StartLine();
     }
     startWaypointLocation_ = false;

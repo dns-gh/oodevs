@@ -246,6 +246,7 @@ void ParametersLayer::Reset()
     NotifyDone();
     delete current_;
     current_ = 0;
+    cursors_->SelectTool( QCursor(), false );
 }
 
 // -----------------------------------------------------------------------------
