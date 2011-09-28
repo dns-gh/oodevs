@@ -688,93 +688,14 @@
                 </choice>
             </case>
             <case name="special c2 headquarters component" symbol="h"/>
-            <case name="emergency" symbol="e">
-                <choice name="services">
-                    <case name="medical" symbol="m">
-                        <choice name="capacity">
-                            <case name="hospital" symbol="h"/>
-                            <case name="evacuation" symbol="e">
-                                 <choice name="specialization">
-                                    <case name="ambulance" symbol="a"/>
-                                    <case name="helicopter" symbol="h"/>
-                                </choice>
-                            </case>
-                            <case name="operation" symbol="o"/>
-                        </choice>
-                    </case>
-                    <case name="firefighter" symbol="f">
-                        <choice name="capacity">
-                            <case name="fire station" symbol="s"/>
-                            <case name="fire hydrant" symbol="h"/>
-                            <case name="operation" symbol="o">
-                                 <choice name="specialization">
-                                    <case name="fire suppression" symbol="s"/>
-                                </choice>
-                            </case>
-                        </choice>
-                    </case>
-                    <case name="police" symbol="p">
-                        <choice name="capacity">
-                            <case name="law enforcement" symbol="e"/>
-                            <case name="operation" symbol="o">
-                                 <choice name="specialization">
-                                    <case name="police" symbol="p"/>
-                                    <case name="border patrol" symbol="b"/>
-                                    <case name="fbi" symbol="f"/>
-                                </choice>
-                            </case>
-                        </choice>
-                    </case>
-                    <case name="nbc" symbol="n">
-                        <choice name="agent">
-                            <case name="biological" symbol="b">
-                                <choice name="category">
-                                    <case name="recon equipped" symbol="r"/>
-                                </choice>
-                            </case>
-                            <case name="chemical" symbol="c">
-                                <choice name="category">
-                                    <case name="recon" symbol="r">
-                                        <choice name="mobility">
-                                            <case name="wheeled armored vehicle" symbol="w"/>
-                                            <case name="wheeled armored vehicle surveillance" symbol="s"/>
-                                        </choice>
-                                    </case>
-                                    <case name="smoke" symbol="s">
-                                        <choice name="mobility">
-                                            <case name="armor" symbol="a"/>
-                                            <case name="motorized" symbol="m"/>
-                                        </choice>
-                                    </case>
-                                    <case name="smoke decon" symbol="c">
-                                        <choice name="mobility">
-                                            <case name="mechanized" symbol="k"/>
-                                            <case name="motorized" symbol="m"/>
-                                        </choice>
-                                    </case>
-                                </choice>
-                            </case>
-                            <case name="decontamination" symbol="d"/>
-                            <case name="nuclear" symbol="n"/>
-                            <case name="radiological" symbol="r"/>
-                        </choice>
-                    </case>
-                    <case name="public safety" symbol="s">
-                        <choice name="capacity">
-                            <case name="operation" symbol="o">
-                                <choice name="structure">
-                                    <case name="operation center" symbol="c"/>
-                                    <case name="shelter" symbol="s"/>
-                                    <case name="staging area" symbol="a"/>
-                                    <case name="incident command center" symbol="i"/>
-                                </choice>
-                            </case>
-                            <case name="teams" symbol="t"/>
-                        </choice>
-                    </case>
-                </choice>
-            </case>
-        </choice>
+			<case name="mootw" symbol="m">
+				<choice name="category">
+					<case name="individual" symbol="i"/>
+					<case name="refugees" symbol="r"/>
+					<case name="ong" symbol="o"/>
+				</choice>
+			</case>
+		</choice>
     </symbols>
     <levels base="levels/">
         <choice name="level">
@@ -818,4 +739,4 @@
       <choice name ="warehouse"/>
     </infrastructures>
 </app6>
-<!-- signature="2504437272" -->
+<!-- signature="2454732376" -->

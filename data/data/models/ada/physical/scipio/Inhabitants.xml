@@ -69,5 +69,98 @@
       <resource need="5" type="eau courante"/>
     </consumption>
   </population>
+  <population associated-crowd="Foule mixte" id="3" name="Population active">
+    <repartition children="0" female="0.4" male="0.6"/>
+    <schedule transfer-time="40m">
+      <event day="monday" from="00:00" motivation="Logement" to="07:59"/>
+      <event day="monday" from="08:00" motivation="Travail" to="17:59"/>
+      <event day="monday" from="18:00" motivation="Loisir" to="21:59"/>
+      <event day="monday" from="22:00" motivation="Logement" to="23:59"/>
+      <event day="tuesday" from="00:00" motivation="Logement" to="07:59"/>
+      <event day="tuesday" from="08:00" motivation="Travail" to="17:59"/>
+      <event day="tuesday" from="18:00" motivation="Loisir" to="21:59"/>
+      <event day="tuesday" from="22:00" motivation="Logement" to="23:59"/>
+      <event day="wednesday" from="00:00" motivation="Logement" to="07:59"/>
+      <event day="wednesday" from="08:00" motivation="Travail" to="17:59"/>
+      <event day="wednesday" from="18:00" motivation="Loisir" to="21:59"/>
+      <event day="wednesday" from="22:00" motivation="Logement" to="23:59"/>
+      <event day="thursday" from="00:00" motivation="Logement" to="07:59"/>
+      <event day="thursday" from="08:00" motivation="Travail" to="17:59"/>
+      <event day="thursday" from="18:00" motivation="Loisir" to="21:59"/>
+      <event day="thursday" from="22:00" motivation="Logement" to="23:59"/>
+      <event day="friday" from="00:00" motivation="Logement" to="07:59"/>
+      <event day="friday" from="08:00" motivation="Travail" to="17:59"/>
+      <event day="friday" from="18:00" motivation="Loisir" to="21:59"/>
+      <event day="friday" from="22:00" motivation="Logement" to="23:59"/>
+      <event day="saturday" from="00:00" motivation="Logement" to="08:59"/>
+      <event day="saturday" from="09:00" motivation="Loisir" to="23:59"/>
+      <event day="sunday" from="00:00" motivation="Logement" to="10:59"/>
+      <event day="sunday" from="11:00" motivation="Loisir" to="21:59"/>
+      <event day="sunday" from="22:00" motivation="Logement" to="23:59"/>
+    </schedule>
+    <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
+    <health-need people-per-facility="1000"/>
+    <consumption>
+      <resource need="2" type="eau courante"/>
+      <resource need="1" type="electricite"/>
+    </consumption>
+  </population>
+  <population associated-crowd="Foule de femmes et d'enfants" id="4" name="Population oisive">
+    <repartition children="0.3" female="0.5" male="0.2"/>
+    <schedule transfer-time="40m">
+      <event day="monday" from="00:00" motivation="Logement" to="10:59"/>
+      <event day="monday" from="11:00" motivation="Loisir" to="23:59"/>
+      <event day="tuesday" from="00:00" motivation="Logement" to="10:59"/>
+      <event day="tuesday" from="11:00" motivation="Loisir" to="23:59"/>
+      <event day="wednesday" from="00:00" motivation="Logement" to="10:59"/>
+      <event day="wednesday" from="11:00" motivation="Loisir" to="23:59"/>
+      <event day="thursday" from="00:00" motivation="Logement" to="10:59"/>
+      <event day="thursday" from="11:00" motivation="Loisir" to="23:59"/>
+      <event day="friday" from="00:00" motivation="Logement" to="10:59"/>
+      <event day="friday" from="11:00" motivation="Loisir" to="23:59"/>
+      <event day="saturday" from="00:00" motivation="Logement" to="08:59"/>
+      <event day="saturday" from="09:00" motivation="Loisir" to="23:59"/>
+      <event day="sunday" from="00:00" motivation="Logement" to="10:59"/>
+      <event day="sunday" from="11:00" motivation="Loisir" to="21:59"/>
+      <event day="sunday" from="22:00" motivation="Logement" to="23:59"/>
+    </schedule>
+    <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
+    <health-need people-per-facility="1000"/>
+    <consumption>
+      <resource need="2" type="eau courante"/>
+      <resource need="1" type="electricite"/>
+    </consumption>
+  </population>
+  <population associated-crowd="Foule de femmes et d'enfants" id="5" name="Population scolaire">
+    <repartition children="0.7" female="0.2" male="0.1"/>
+    <schedule transfer-time="40m">
+      <event day="monday" from="00:00" motivation="Logement" to="08:59"/>
+      <event day="monday" from="09:00" motivation="Travail" to="16:59"/>
+      <event day="monday" from="17:00" motivation="Logement" to="23:59"/>
+      <event day="tuesday" from="00:00" motivation="Logement" to="08:59"/>
+      <event day="tuesday" from="09:00" motivation="Travail" to="16:59"/>
+      <event day="tuesday" from="17:00" motivation="Logement" to="23:59"/>
+      <event day="wednesday" from="00:00" motivation="Logement" to="08:59"/>
+      <event day="wednesday" from="09:00" motivation="Travail" to="16:59"/>
+      <event day="wednesday" from="17:00" motivation="Logement" to="23:59"/>
+      <event day="thursday" from="00:00" motivation="Logement" to="08:59"/>
+      <event day="thursday" from="09:00" motivation="Travail" to="16:59"/>
+      <event day="thursday" from="17:00" motivation="Logement" to="23:59"/>
+      <event day="friday" from="00:00" motivation="Logement" to="08:59"/>
+      <event day="friday" from="09:00" motivation="Travail" to="16:59"/>
+      <event day="friday" from="17:00" motivation="Logement" to="23:59"/>
+      <event day="saturday" from="00:00" motivation="Logement" to="08:59"/>
+      <event day="saturday" from="09:00" motivation="Loisir" to="23:59"/>
+      <event day="sunday" from="00:00" motivation="Logement" to="10:59"/>
+      <event day="sunday" from="11:00" motivation="Loisir" to="21:59"/>
+      <event day="sunday" from="22:00" motivation="Logement" to="23:59"/>
+    </schedule>
+    <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
+    <health-need people-per-facility="1000"/>
+    <consumption>
+      <resource need="2" type="eau courante"/>
+      <resource need="1" type="electricite"/>
+    </consumption>
+  </population>
 </populations>
-<!-- signature="1754035152" -->
+<!-- signature="2506519857" -->

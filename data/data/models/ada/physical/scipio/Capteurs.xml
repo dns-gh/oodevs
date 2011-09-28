@@ -400,18 +400,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="300" type="brechage obstacle">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="300" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -741,18 +729,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="500" type="landslide">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="500" type="brechage obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1415,18 +1391,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="brechage obstacle">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="100" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -1768,18 +1732,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="400" type="landslide">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="400" type="brechage obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5092,18 +5044,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="brechage obstacle">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="400" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -5433,18 +5373,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="2500" type="landslide">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="0"/>
-            <distance-modifier type="Arret" value="0"/>
-            <distance-modifier type="PosteReflexe" value="0"/>
-            <distance-modifier type="Poste" value="0"/>
-            <distance-modifier type="PosteAmenage" value="0"/>
-            <distance-modifier type="PostePrepareGenie" value="0"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="2500" type="brechage obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5848,18 +5776,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="brechage obstacle">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="1000" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -6131,18 +6047,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="400" type="landslide">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="400" type="brechage obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -6568,18 +6472,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="brechage obstacle">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="150" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -6872,18 +6764,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="brechage obstacle">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="500" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -7066,6 +6946,80 @@
         </object>
       </object-detection>
     </sensor>
+    <sensor detection-delay="0h" name="Capteur Cynotechnique">
+      <unit-detection angle="180" firer-detection-distance="0" scanning="false">
+        <base-distances close-range="30">
+          <base-distance distance="0" level="identification"/>
+          <base-distance distance="0" level="recognition"/>
+          <base-distance distance="120" level="detection"/>
+        </base-distances>
+        <distance-modifiers>
+          <population-modifier density="0.2" modifier="0.5"/>
+          <size-modifiers>
+            <distance-modifier type="Drone" value="0"/>
+            <distance-modifier type="Gros" value="1"/>
+            <distance-modifier type="Moyen" value="1"/>
+            <distance-modifier type="Petit" value="1"/>
+            <distance-modifier type="Personnel" value="1"/>
+          </size-modifiers>
+          <precipitation-modifiers>
+            <distance-modifier type="PasDePrecipitation" value="1"/>
+            <distance-modifier type="TempeteDeSable" value="0.1"/>
+            <distance-modifier type="Brouillard" value="0.9"/>
+            <distance-modifier type="Crachin" value="0.9"/>
+            <distance-modifier type="Pluie" value="0.8"/>
+            <distance-modifier type="Neige" value="0.9"/>
+            <distance-modifier type="Fumigene" value="0.3"/>
+          </precipitation-modifiers>
+          <visibility-modifiers>
+            <distance-modifier type="JourSansNuage" value="1"/>
+            <distance-modifier type="JourPeuNuageux" value="1"/>
+            <distance-modifier type="JourMoyennementNuageux" value="1"/>
+            <distance-modifier type="JourAssezNuageux" value="1"/>
+            <distance-modifier type="JourTresNuageux" value="1"/>
+            <distance-modifier type="NuitPleineLune" value="1"/>
+            <distance-modifier type="NuitTroisQuartDeLune" value="1"/>
+            <distance-modifier type="NuitDemiLune" value="1"/>
+            <distance-modifier type="NuitQuartDeLune" value="1"/>
+            <distance-modifier type="NuitNouvelleLune" value="1"/>
+            <distance-modifier type="Eclairant" value="1"/>
+          </visibility-modifiers>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+          <target-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </target-posture-modifiers>
+          <terrain-modifiers>
+            <distance-modifier type="Sol" value="1"/>
+            <distance-modifier type="Vide" value="1"/>
+            <distance-modifier type="Foret" value="1"/>
+            <distance-modifier type="Urbain" value="1"/>
+          </terrain-modifiers>
+          <urbanBlock-material-modifiers>
+            <distance-modifier type="Bois" value="0.9"/>
+            <distance-modifier type="Beton" value="0.7"/>
+            <distance-modifier type="Brique" value="0.7"/>
+            <distance-modifier type="Metal" value="0.5"/>
+            <distance-modifier type="Torchis" value="0.9"/>
+            <distance-modifier type="Prefabrique" value="0.9"/>
+            <distance-modifier type="Vegetation" value="0.9"/>
+          </urbanBlock-material-modifiers>
+        </distance-modifiers>
+      </unit-detection>
+    </sensor>
   </sensors>
 </sensors>
-<!-- signature="2204341355" -->
+<!-- signature="2437816713" -->

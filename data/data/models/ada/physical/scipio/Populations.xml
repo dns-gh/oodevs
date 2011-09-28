@@ -168,7 +168,7 @@
       </attrition-effect>
     </attrition-effects>
     <unit-fire-effects>
-      <unit attrition-surface="5" ph="0" rule-of-engagment="maintien a distance par moyens non letaux"/>
+      <unit attrition-surface="5" ph="0.0005" rule-of-engagment="maintien a distance par moyens non letaux"/>
       <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
     </unit-fire-effects>
     <urban-destruction-effects>
@@ -597,8 +597,8 @@
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.5">
         <protection name="CombattantProtege">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.001" repairable-with-evacuation="0.005" repairable-without-evacuation="0.01"/>
+          <armed destruction="0.002" repairable-with-evacuation="0.01" repairable-without-evacuation="0.01"/>
         </protection>
         <protection name="CharLourd">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -621,18 +621,18 @@
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
         </protection>
         <protection name="VehiculeNonProtege">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.001" repairable-with-evacuation="0.001" repairable-without-evacuation="0.002"/>
+          <armed destruction="0.001" repairable-with-evacuation="0.01" repairable-without-evacuation="0.01"/>
         </protection>
         <protection name="Combattant">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.001" repairable-with-evacuation="0.007" repairable-without-evacuation="0.02"/>
+          <armed destruction="0.002" repairable-with-evacuation="0.01" repairable-without-evacuation="0.01"/>
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.5">
         <protection name="CombattantProtege">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.005" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.05"/>
         </protection>
         <protection name="CharLourd">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -655,18 +655,18 @@
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
         </protection>
         <protection name="VehiculeNonProtege">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.001" repairable-with-evacuation="0.005" repairable-without-evacuation="0.01"/>
+          <armed destruction="0.005" repairable-with-evacuation="0.05" repairable-without-evacuation="0.05"/>
         </protection>
         <protection name="Combattant">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.005" repairable-with-evacuation="0.05" repairable-without-evacuation="0.05"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.5">
         <protection name="CombattantProtege">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
         </protection>
         <protection name="CharLourd">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -689,12 +689,12 @@
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
         </protection>
         <protection name="VehiculeNonProtege">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.001" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
         </protection>
         <protection name="Combattant">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.01" repairable-with-evacuation="0.07" repairable-without-evacuation="0.12"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
         </protection>
       </attrition-effect>
     </attrition-effects>
@@ -704,9 +704,9 @@
     </unit-fire-effects>
     <urban-destruction-effects>
       <urban-destruction-effect attitude="calme" density="0" time="0s"/>
-      <urban-destruction-effect attitude="agitee" density="0" time="0s"/>
-      <urban-destruction-effect attitude="excitee" density="0" time="0s"/>
-      <urban-destruction-effect attitude="agressive" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agitee" density="0.001" time="950m"/>
+      <urban-destruction-effect attitude="excitee" density="0.001" time="750m"/>
+      <urban-destruction-effect attitude="agressive" density="0.001" time="550m"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
   </population>
@@ -842,6 +842,81 @@
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.5">
         <protection name="CombattantProtege">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0.001" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.07" repairable-without-evacuation="0.12"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+      </attrition-effect>
+    </attrition-effects>
+    <unit-fire-effects>
+      <unit attrition-surface="100" ph="0.0005" rule-of-engagment="maintien a distance par moyens non letaux"/>
+      <unit attrition-surface="10" ph="0.3" rule-of-engagment="armes letales autorisees"/>
+    </unit-fire-effects>
+    <urban-destruction-effects>
+      <urban-destruction-effect attitude="calme" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agitee" density="0.002" time="950m"/>
+      <urban-destruction-effect attitude="excitee" density="0.002" time="550m"/>
+      <urban-destruction-effect attitude="agressive" density="0.002" time="150m"/>
+    </urban-destruction-effects>
+    <repartition children="0" female="0" male="1"/>
+  </population>
+  <population armed-individuals="0" concentration-density="0.01" decisional-model="Masalife.Foule" id="5" moving-base-density="0.3" moving-speed="5" name="Foule de femmes et d'enfants">
+    <slowing-effects>
+      <slowing-effect population-attitude="calme">
+        <unit max-speed="5" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="8" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="15" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="40" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agitee">
+        <unit max-speed="4" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="7" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="12" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="30" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="excitee">
+        <unit max-speed="3" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="5" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="10" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="4" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agressive">
+        <unit max-speed="2" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="4" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="7" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="2" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+    </slowing-effects>
+    <attrition-effects>
+      <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
+        <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
         </protection>
@@ -874,18 +949,651 @@
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
         </protection>
       </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0.0001" repairable-with-evacuation="0.0005" repairable-without-evacuation="0.001"/>
+          <armed destruction="0.0005" repairable-with-evacuation="0.001" repairable-without-evacuation="0.001"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0.0002" repairable-with-evacuation="0.0005" repairable-without-evacuation="0.001"/>
+          <armed destruction="0.0005" repairable-with-evacuation="0.001" repairable-without-evacuation="0.001"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0.0001" repairable-with-evacuation="0.0005" repairable-without-evacuation="0.001"/>
+          <armed destruction="0.0005" repairable-with-evacuation="0.001" repairable-without-evacuation="0.001"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0.0002" repairable-with-evacuation="0.0005" repairable-without-evacuation="0.001"/>
+          <armed destruction="0.0005" repairable-with-evacuation="0.001" repairable-without-evacuation="0.001"/>
+        </protection>
+      </attrition-effect>
     </attrition-effects>
     <unit-fire-effects>
-      <unit attrition-surface="100" ph="0.0005" rule-of-engagment="maintien a distance par moyens non letaux"/>
-      <unit attrition-surface="10" ph="0.3" rule-of-engagment="armes letales autorisees"/>
+      <unit attrition-surface="5" ph="0.0005" rule-of-engagment="maintien a distance par moyens non letaux"/>
+      <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
     </unit-fire-effects>
     <urban-destruction-effects>
       <urban-destruction-effect attitude="calme" density="0" time="0s"/>
-      <urban-destruction-effect attitude="agitee" density="0" time="0s"/>
-      <urban-destruction-effect attitude="excitee" density="0" time="0s"/>
-      <urban-destruction-effect attitude="agressive" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agitee" density="0.0001" time="950m"/>
+      <urban-destruction-effect attitude="excitee" density="0.0001" time="750m"/>
+      <urban-destruction-effect attitude="agressive" density="0.0001" time="550m"/>
     </urban-destruction-effects>
-    <repartition children="0" female="0" male="1"/>
+    <repartition children="0.3" female="0.7" male="0"/>
+  </population>
+  <population armed-individuals="0" concentration-density="0.01" decisional-model="Masalife.Foule" id="6" moving-base-density="0.3" moving-speed="5" name="Foule mixte">
+    <slowing-effects>
+      <slowing-effect population-attitude="calme">
+        <unit max-speed="5" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="8" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="15" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="40" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agitee">
+        <unit max-speed="4" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="7" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="12" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="30" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="excitee">
+        <unit max-speed="3" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="5" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="10" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="4" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agressive">
+        <unit max-speed="2" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="4" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="7" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="2" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+    </slowing-effects>
+    <attrition-effects>
+      <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0.0001" repairable-with-evacuation="0.0005" repairable-without-evacuation="0.001"/>
+          <armed destruction="0.0005" repairable-with-evacuation="0.001" repairable-without-evacuation="0.001"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0.0002" repairable-with-evacuation="0.0005" repairable-without-evacuation="0.001"/>
+          <armed destruction="0.0005" repairable-with-evacuation="0.001" repairable-without-evacuation="0.001"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0.0001" repairable-with-evacuation="0.0005" repairable-without-evacuation="0.001"/>
+          <armed destruction="0.0005" repairable-with-evacuation="0.001" repairable-without-evacuation="0.001"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0.0005" repairable-with-evacuation="0.001" repairable-without-evacuation="0.002"/>
+          <armed destruction="0.001" repairable-with-evacuation="0.002" repairable-without-evacuation="0.002"/>
+        </protection>
+      </attrition-effect>
+    </attrition-effects>
+    <unit-fire-effects>
+      <unit attrition-surface="5" ph="0.0005" rule-of-engagment="maintien a distance par moyens non letaux"/>
+      <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
+    </unit-fire-effects>
+    <urban-destruction-effects>
+      <urban-destruction-effect attitude="calme" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agitee" density="0.001" time="950m"/>
+      <urban-destruction-effect attitude="excitee" density="0.001" time="750m"/>
+      <urban-destruction-effect attitude="agressive" density="0.001" time="550m"/>
+    </urban-destruction-effects>
+    <repartition children="0.1" female="0.45" male="0.45"/>
+  </population>
+  <population armed-individuals="0.5" concentration-density="0.02" decisional-model="Masalife.Foule" id="7" moving-base-density="0.3" moving-speed="6" name="Foule armée">
+    <slowing-effects>
+      <slowing-effect population-attitude="calme">
+        <unit max-speed="5" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="8" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="15" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="40" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agitee">
+        <unit max-speed="4" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="7" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="12" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="30" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="excitee">
+        <unit max-speed="3" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="5" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="10" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="4" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agressive">
+        <unit max-speed="2" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="4" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="7" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="2" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+    </slowing-effects>
+    <attrition-effects>
+      <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0.001" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.07" repairable-without-evacuation="0.12"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0.001" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.07" repairable-without-evacuation="0.12"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+      </attrition-effect>
+    </attrition-effects>
+    <unit-fire-effects>
+      <unit attrition-surface="5" ph="0.0005" rule-of-engagment="maintien a distance par moyens non letaux"/>
+      <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
+    </unit-fire-effects>
+    <urban-destruction-effects>
+      <urban-destruction-effect attitude="calme" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agitee" density="0.002" time="950m"/>
+      <urban-destruction-effect attitude="excitee" density="0.002" time="550m"/>
+      <urban-destruction-effect attitude="agressive" density="0.002" time="250m"/>
+    </urban-destruction-effects>
+    <repartition children="0" female="0.35" male="0.65"/>
+  </population>
+  <population armed-individuals="0.25" concentration-density="0.015" decisional-model="Masalife.Foule" id="8" moving-base-density="0.3" moving-speed="6" name="Foule manipulée">
+    <slowing-effects>
+      <slowing-effect population-attitude="calme">
+        <unit max-speed="5" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="8" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="15" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="40" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agitee">
+        <unit max-speed="4" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="7" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="12" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="30" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="excitee">
+        <unit max-speed="3" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="5" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="10" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="4" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+      <slowing-effect population-attitude="agressive">
+        <unit max-speed="2" population-density="0.3" unit-size="Gros"/>
+        <unit max-speed="4" population-density="0.3" unit-size="Moyen"/>
+        <unit max-speed="7" population-density="0.3" unit-size="Petit"/>
+        <unit max-speed="2" population-density="0.3" unit-size="Personnel"/>
+      </slowing-effect>
+    </slowing-effects>
+    <attrition-effects>
+      <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0.001" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.07" repairable-without-evacuation="0.12"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+      </attrition-effect>
+      <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
+        <protection name="CombattantProtege">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+        <protection name="CharLourd">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="CharMoyen">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="BlindeLeger">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="TransportBlinde">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="Aeronef">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
+        <protection name="VehiculeNonProtege">
+          <unarmed destruction="0.001" repairable-with-evacuation="0.01" repairable-without-evacuation="0.02"/>
+          <armed destruction="0.01" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+        <protection name="Combattant">
+          <unarmed destruction="0.01" repairable-with-evacuation="0.07" repairable-without-evacuation="0.12"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        </protection>
+      </attrition-effect>
+    </attrition-effects>
+    <unit-fire-effects>
+      <unit attrition-surface="5" ph="0.0005" rule-of-engagment="maintien a distance par moyens non letaux"/>
+      <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
+    </unit-fire-effects>
+    <urban-destruction-effects>
+      <urban-destruction-effect attitude="calme" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agitee" density="0.001" time="950m"/>
+      <urban-destruction-effect attitude="excitee" density="0.001" time="550m"/>
+      <urban-destruction-effect attitude="agressive" density="0.001" time="250m"/>
+    </urban-destruction-effects>
+    <repartition children="0.1" female="0.45" male="0.45"/>
   </population>
 </populations>
-<!-- signature="1711130411" -->
+<!-- signature="3997300369" -->

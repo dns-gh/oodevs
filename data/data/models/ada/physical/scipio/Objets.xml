@@ -418,28 +418,8 @@
     <population-filter density="0"/>
     <workable max-animator="10"/>
   </object>
-  <object geometry="point" name="incendie" symbol="O*VPA-----*****" type="fire">
+  <object geometry="point" name="incendie" point-size="50" symbol="O*VPA-----*****" type="fire">
     <burn/>
-  </object>
-  <object geometry="polygon" name="feu sauvage" symbol="O*VPA-----*****" type="surface fire">
-    <burn/>
-    <fire-propagation-modifier>
-      <modifier fire-class="Classe A" ignition-threshold="0" max-combustion-energy="50000"/>
-    </fire-propagation-modifier>
-    <propagation model="fire"/>
-    <universal/>
-  </object>
-  <object geometry="point" name="inondation" symbol="G*MPORC---****X" type="flood">
-    <flood>
-      <injuries>
-        <injury percentage="0.1" type="u1"/>
-        <injury percentage="0.05" type="u2"/>
-        <injury percentage="0.05" type="u3"/>
-        <injury percentage="0.05" type="ue"/>
-        <injury percentage="0.05" type="dead"/>
-      </injuries>
-    </flood>
-    <universal/>
   </object>
   <object geometry="polygon" name="mouvement population" symbol="" type="population moving"/>
   <object geometry="point" name="station de metro" symbol="G*EXIT*********" type="metro station">
@@ -470,12 +450,6 @@
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
-  </object>
-  <object geometry="point" name="brechage obstacle" symbol="" type="brechage obstacle">
-    <activable/>
-    <bypassable bypass-speed="10"/>
-    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="controle de zone" symbol="" type="controle de zone"/>
   <object geometry="polygon" name="zone minee lineaire retardee" symbol="G*MPOFA---****X" type="zone minee lineaire retardee">
@@ -539,4 +513,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="1224502227" -->
+<!-- signature="3898784694" -->
