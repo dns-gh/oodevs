@@ -11,8 +11,13 @@
 #include "UserProfileUnitControls.h"
 #include "moc_UserProfileUnitControls.cpp"
 #include "PreparationProfile.h"
+#include "preparation/Model.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
 
@@ -24,12 +29,15 @@ using namespace kernel;
 // Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
 UserProfileUnitControls::UserProfileUnitControls( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory,
-                                                  EntitySymbols& icons, ControlsChecker_ABC& checker )
+                                                  EntitySymbols& icons, ControlsChecker_ABC& checker, Model& model )
     : HierarchyListView< ProfileHierarchies_ABC >( parent, controllers, factory, PreparationProfile::GetProfile(), icons )
     , UserProfileControls_ABC( this, checker )
+    , model_( model )
 {
     controllers_.Register( *this );
     connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
+    setSortColumn( -1 );
+    setSorting( -1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +57,34 @@ void UserProfileUnitControls::Display( const kernel::Entity_ABC& entity, gui::Va
 {
     HierarchyListView< ProfileHierarchies_ABC >::Display( entity, item );
     LongNameHelper::SetItemLongName( entity, *item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::Show
+// Created: LGY 2011-09-28
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::Show()
+{
+    tools::Iterator< const kernel::Team_ABC& > itTeam = model_.GetTeamResolver().CreateIterator();
+    while( itTeam.HasMoreElements() )
+    {
+        const kernel::Team_ABC& team = itTeam.NextElement();
+        tools::Iterator< const kernel::Entity_ABC& > itFormation = team.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+        while( itFormation.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& formation = itFormation.NextElement();
+            tools::Iterator< const kernel::Entity_ABC& > itAutomat = formation.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+            ValuedListItem* first = 0;
+            while( itAutomat.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& automat = itAutomat.NextElement();
+                if( !first )
+                    first = FindItem( &automat, firstChild() );
+                else if( ValuedListItem* item = FindItem( &automat, firstChild() ) )
+                        item->moveItem( first );
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -49,7 +49,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    pages_ = new UserProfileWidget( box, controllers, factory, icons, extensions, *pChecher_, model.profiles_ );
+    pages_ = new UserProfileWidget( box, controllers, factory, icons, extensions, *pChecher_, model );
     pages_->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
 
@@ -108,4 +108,13 @@ void ProfileDialog::OnReject()
 {
     list_->Cancel();
     reject();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileDialog::showEvent
+// Created: LGY 2011-09-28
+// -----------------------------------------------------------------------------
+void ProfileDialog::showEvent( QShowEvent* /*pEvent*/ )
+{
+    pages_->Show();
 }

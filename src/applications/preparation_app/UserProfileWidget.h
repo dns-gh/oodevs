@@ -31,7 +31,7 @@ namespace gui
 class UserProfile;
 class UserProfileRights_ABC;
 class ControlsChecker_ABC;
-class ProfilesModel;
+class Model;
 
 // =============================================================================
 /** @class  UserProfileWidget
@@ -51,7 +51,7 @@ public:
     //@{
              UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
                                 gui::EntitySymbols& icons, const kernel::ExtensionTypes& extensions,
-                                ControlsChecker_ABC& checker, ProfilesModel& model );
+                                ControlsChecker_ABC& checker, Model& model );
     virtual ~UserProfileWidget();
     //@}
 
@@ -61,6 +61,7 @@ public:
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     void Display( UserProfile& profile );
     void SetEnabled( bool enabled );
+    void Show();
     //@}
 
 private slots:
@@ -93,7 +94,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::ExtensionTypes& extensions_;
     ControlsChecker_ABC& checker_;
-    ProfilesModel& model_;
+    Model& model_;
     UserProfile* profile_;
     QLineEdit* login_;
     QLineEdit* password_;

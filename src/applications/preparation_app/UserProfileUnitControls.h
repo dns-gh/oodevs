@@ -14,6 +14,8 @@
 #include "preparation/ProfileHierarchies_ABC.h"
 #include "UserProfileControls_ABC.h"
 
+class Model;
+
 // =============================================================================
 /** @class  UserProfileUnitControls
     @brief  User profile unit controls
@@ -30,13 +32,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              UserProfileUnitControls( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
-                                      gui::EntitySymbols& icons, ControlsChecker_ABC& checker );
+                                      gui::EntitySymbols& icons, ControlsChecker_ABC& checker, Model& model );
     virtual ~UserProfileUnitControls();
     //@}
 
     //! @name Operations
     //@{
     virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
+    void Show();
     //@}
 
 signals:
@@ -69,6 +72,12 @@ private:
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
+    //@}
+
+private:
+    //! @name Member Data
+    //@{
+Model& model_;
     //@}
 };
 

@@ -24,6 +24,7 @@
 #include "clients_kernel/ExtensionTypes.h"
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
+#include "preparation/Model.h"
 #include "preparation/Tools.h"
 
 using namespace kernel;
@@ -34,7 +35,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory,
                                       gui::EntitySymbols& icons, const ExtensionTypes& extensions,
-                                      ControlsChecker_ABC& checker, ProfilesModel& model )
+                                      ControlsChecker_ABC& checker, Model& model )
     : QTabWidget   ( parent, "UserProfileWidget" )
     , controllers_ ( controllers )
     , extensions_  ( extensions )
@@ -82,7 +83,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         pUnits_->addWidget( ( Q3ListView* ) unitRights );
         tabs->addTab( pUnits_, tr( "Units" ) );
 
-        UserProfileUnitControls* unitControls = new UserProfileUnitControls( tabs, controllers, factory, icons, checker_ );
+        UserProfileUnitControls* unitControls = new UserProfileUnitControls( tabs, controllers, factory, icons, checker_, model );
         pUnits_->addWidget( ( Q3ListView* ) unitControls );
         connect( unitControls, SIGNAL( ProfiledChanged( const kernel::Entity_ABC*, bool, bool ) ), unitRights, SLOT( OnProfiledChanged( const kernel::Entity_ABC*, bool, bool ) ) );
         connect( unitRights, SIGNAL( ProfiledChanged( const kernel::Entity_ABC*, bool ) ), unitControls, SLOT( OnProfiledChanged( const kernel::Entity_ABC*, bool ) ) );
@@ -204,7 +205,7 @@ void UserProfileWidget::OnLoginChanged()
             QString login = login_->text();
             if( checker_.Exists( profile_->GetLogin(), login ) )
                 throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).ascii() );
-            if( profile_->GetLogin() != login && model_.Exists( login ) && !checker_.Exists( login ) )
+            if( profile_->GetLogin() != login && model_.profiles_.Exists( login ) && !checker_.Exists( login ) )
                 throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).ascii() );
             profile_->SetLogin( login );
         }
@@ -312,4 +313,13 @@ void UserProfileWidget::DeactivateControls()
     pPopulations_->setCurrentIndex( 0 );
     pUnits_->setCurrentIndex( 0 );
     pInformations_->setCurrentIndex( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::Show
+// Created: LGY 2011-09-28
+// -----------------------------------------------------------------------------
+void UserProfileWidget::Show()
+{
+    dynamic_cast< UserProfileUnitControls* >( pUnits_->widget( 1 ) )->Show();
 }
