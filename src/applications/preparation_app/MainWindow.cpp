@@ -241,7 +241,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         pListsTabWidget->addTab( listsTabBox, tr( "Populations" ) );
         pListsTabWidget->addTab( new IntelligenceList( controllers, *factory, *icons, PreparationProfile::GetProfile() ), tr( "Intelligences" ) );
     }
-    pListDockWnd_->setWindowTitle( "Units" );
+    pListDockWnd_->setWindowTitle( tr( "ORBAT" ) );
     pListDockWnd_->setWidget( pListsTabWidget );
 
     // Properties panel

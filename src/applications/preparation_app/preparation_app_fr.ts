@@ -572,7 +572,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Tactical</source>
-        <translation type="unfinished"></translation>
+        <translation>Tactique</translation>
     </message>
     <message>
         <source>Communication</source>
@@ -580,11 +580,11 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Crowds</source>
-        <translation type="unfinished">Foules</translation>
+        <translation>Foules</translation>
     </message>
     <message>
         <source>Intelligences</source>
-        <translation type="unfinished"></translation>
+        <translation>Renseignements</translation>
     </message>
     <message>
         <source>Formations</source>
@@ -661,6 +661,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Initialize data ...</source>
         <translation>Initialisation des données ...</translation>
+    </message>
+    <message>
+        <source>ORBAT</source>
+        <translation>ODB</translation>
     </message>
 </context>
 <context>

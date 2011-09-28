@@ -758,7 +758,7 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Karma: </source>
-        <translation>Karma: </translation>
+        <translation>Affiliation: </translation>
     </message>
     <message>
         <source>Mounted combat: </source>

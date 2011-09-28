@@ -662,6 +662,10 @@ Do you want to save anyway?</source>
         <source>Initialize data ...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ORBAT</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

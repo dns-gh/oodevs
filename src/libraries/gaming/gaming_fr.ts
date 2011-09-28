@@ -733,7 +733,7 @@
     </message>
     <message>
         <source>Info/Karma</source>
-        <translation>Info/Karma</translation>
+        <translation>Info/Affiliation</translation>
     </message>
     <message>
         <source>Intelligence [%1]</source>
@@ -749,7 +749,7 @@
     </message>
     <message>
         <source>Karma:</source>
-        <translation>Karma:</translation>
+        <translation>Affiliation:</translation>
     </message>
 </context>
 <context>

@@ -244,7 +244,7 @@
     </message>
     <message>
         <source>Info/Karma</source>
-        <translation>Info/Karma</translation>
+        <translation>Info/Affiliation</translation>
     </message>
 </context>
 <context>
@@ -761,7 +761,7 @@ Détail: %1.</translation>
     </message>
     <message>
         <source>Info/Karma</source>
-        <translation>Info/Karma</translation>
+        <translation>Info/Affiliation</translation>
     </message>
 </context>
 <context>
