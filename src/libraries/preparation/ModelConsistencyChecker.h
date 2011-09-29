@@ -90,7 +90,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    ConsistencyError& AddError( E_ConsistencyCheck type, const kernel::Entity_ABC* entity, const std::string optional = "" );
+    void AddError( E_ConsistencyCheck type, const kernel::Entity_ABC* entity, const std::string& optional = "" );
     void FillEntitiesCopy( E_ConsistencyCheck type );
     void CheckUniqueness( E_ConsistencyCheck type, bool ( *comparator )( const kernel::Entity_ABC&, const kernel::Entity_ABC& ) );
     void CheckStockInitialization();

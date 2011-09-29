@@ -314,13 +314,11 @@ void ModelConsistencyChecker::CheckProfileInitialization()
 // Name: ModelConsistencyChecker::AddError
 // Created: ABR 2011-09-27
 // -----------------------------------------------------------------------------
-ModelConsistencyChecker::ConsistencyError& ModelConsistencyChecker::AddError( E_ConsistencyCheck type, const kernel::Entity_ABC* entity, const std::string optional /*= ""*/ )
+void ModelConsistencyChecker::AddError( E_ConsistencyCheck type, const kernel::Entity_ABC* entity, const std::string& optional /*= ""*/ )
 {
     assert( entity );
     ConsistencyError error ( type );
     error.entities_.push_back( entity );
-    if( !optional.empty() )
-        error.optional_ = optional;
+    error.optional_ = optional;
     errors_.push_back( error );
-    return error;
 }
