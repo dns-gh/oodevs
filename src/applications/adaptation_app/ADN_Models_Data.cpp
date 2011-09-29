@@ -182,6 +182,7 @@ void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
     if( !mission )
         throw ADN_DataException( tools::translate( "Models_Data", "Invalid data" ).ascii(), tools::translate( "Models_Data", "Doctrine models - Invalid mission '%1'" ).arg( strName_.GetData().c_str() ).ascii() );
     mission_ = mission;
+    mission_.GetData()->strName_.Connect( &strName_ );
     input >> xml::list( "fragorder", *this, &ADN_Models_Data::MissionInfos::ReadFragOrder );
 }
 
