@@ -139,7 +139,7 @@ namespace launcher_test
                                                    ( "--test" )
                                                    ( const_cast< char* >( arg1.c_str() ) )
                                                    ( const_cast< char* >( arg2.c_str() ) ) )
-            , argc( args.size() )
+            , argc( static_cast< int >( args.size() ) )
             , app ( argc, &args[0] )
         {}
         std::string arg1, arg2;

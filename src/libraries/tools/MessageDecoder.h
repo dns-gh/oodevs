@@ -28,7 +28,7 @@ public:
     //@{
     explicit MessageDecoder( const Message& message )
     {
-        if( ! message_.ParseFromArray( message.Data(), message.Size() ) )
+        if( ! message_.ParseFromArray( message.Data(), static_cast< int >( message.Size() ) ) )
             throw std::runtime_error( "Message deserialization failed" );
     }
     //@}
