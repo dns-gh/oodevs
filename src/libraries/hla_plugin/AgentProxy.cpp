@@ -19,6 +19,14 @@
 
 using namespace plugins::hla;
 
+namespace
+{
+    void NotifyEquipment( EventListener_ABC& listener, const dispatcher::Equipment& equipment )
+    {
+        listener.EquipmentChanged( equipment.nEquipmentType_, equipment.nNbrAvailable_ );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentProxy constructor
 // Created: SLI 2011-02-04
@@ -49,6 +57,7 @@ void AgentProxy::Register( EventListener_ABC& listener )
     listeners_.push_back( &listener );
     listener.SpatialChanged( agent_.GetPosition().X(), agent_.GetPosition().Y(),
                              agent_.GetAltitude(), agent_.GetSpeed(), agent_.GetDirection() );
+    agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( listener ), _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,14 +67,6 @@ void AgentProxy::Register( EventListener_ABC& listener )
 void AgentProxy::Unregister( EventListener_ABC& listener )
 {
     listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
-}
-
-namespace
-{
-    void NotifyEquipment( EventListener_ABC& listener, const dispatcher::Equipment& equipment )
-    {
-        listener.EquipmentChanged( equipment.nEquipmentType_, equipment.nNbrAvailable_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
