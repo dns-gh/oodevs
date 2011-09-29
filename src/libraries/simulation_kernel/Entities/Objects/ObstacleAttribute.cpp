@@ -90,7 +90,7 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
         >> xml::end;
     if( activationTime_ != 0 && activityTime_ == 0 )  // $$$$ _RC_ LGY 2011-08-31: default 6h
         activityTime_ = 21600;
-    endActivity_ = activationTime_ + activationTime_;
+    endActivity_ = activationTime_ + activityTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +108,7 @@ ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attri
         activityTime_  = attributes.list( 4 ).quantity();
     if( activationTime_ != 0 && activityTime_ == 0 )  // $$$$ _RC_ LGY 2011-08-31: default 6h
         activityTime_ = 21600;
-    endActivity_ = activationTime_ + activationTime_;
+    endActivity_ = activationTime_ + activityTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -143,6 +143,18 @@ void ObstacleAttribute::SetType( sword::ObstacleType_DemolitionTargetType obstac
     obstacle_ = obstacleType;
     if( sword::ObstacleType_DemolitionTargetType_preliminary == obstacleType )
         bActivated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::SetActivityTime
+// Created: JSR 2011-09-29
+// -----------------------------------------------------------------------------
+void ObstacleAttribute::SetActivityTime( unsigned int activityTime )
+{
+    activityTime_  = activityTime;
+    if( activationTime_ != 0 && activityTime_ == 0 )  // $$$$ _RC_ LGY 2011-08-31: default 6h
+        activityTime_ = 21600;
+    endActivity_ = activationTime_ + activityTime_;
 }
 
 // -----------------------------------------------------------------------------

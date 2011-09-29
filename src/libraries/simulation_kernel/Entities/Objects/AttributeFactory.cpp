@@ -197,7 +197,13 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
                 object.GetAttribute< MineAttribute >() = MineAttribute( attributes );
                 break;
             case ObjectMagicAction::activity_time:
-                object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attributes );
+                {
+                    ObstacleAttribute* obstacle = object.RetrieveAttribute< ObstacleAttribute >();
+                    if( obstacle && attributes.list_size() > 1 && attributes.list( 1 ).has_quantity() )
+                        obstacle->SetActivityTime( attributes.list( 1 ).quantity() );
+                    else
+                        object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attributes );
+                }
                 break;
             case ObjectMagicAction::bypass:
                 object.GetAttribute< BypassAttribute >() = BypassAttribute( attributes );

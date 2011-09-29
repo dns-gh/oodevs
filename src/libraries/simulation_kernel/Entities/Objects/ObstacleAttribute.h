@@ -64,6 +64,7 @@ public:
 
     //! @name
     //@{
+    void SetActivityTime( unsigned int activityTime );
     int GetActivationTime() const;
     int GetEndActivity() const;
     bool IsActivable() const;
