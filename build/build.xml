@@ -1402,7 +1402,7 @@
             <include name="exercises/Musoria Border Defense/**"/>
             <include name="data/terrains/Nord egypt/**"/>
             <include name="data/terrains/Paris_Est/**"/>
-            <include name="data/terrains/Angers_x9/**"/>
+            <include name="data/terrains/Angers_x9_en/**"/>
             <include name="exercises/Tuto_sw/**"/>
             <include name="data/terrains/Sw_terrain2/**"/>
             <include name="exercises/tutorials/01 - Generalities/**"/>
