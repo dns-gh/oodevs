@@ -71,16 +71,15 @@ namespace
 // Created: ABR 2011-06-17
 // -----------------------------------------------------------------------------
 FilterXsl::FilterXsl( xml::xistream& xis, const tools::ExerciseConfig& config )
-    : Filter()
+    : Filter( xis )
     , xsl_            ( xis.attribute< std::string >( "xsl" ) )
-    , xslFile_        ( ResolveXslFile( xis.attribute< std::string >( "xsl" ), currentLanguage_, config ) )
+    , xslFile_        ( ResolveXslFile( xis.attribute< std::string >( "xsl" ), description_.GetCurrentLanguage(), config ) )
     , inputFile_      ( ResolveInputFile( xis.attribute< std::string >( "target" ), config ) )
     , exerciseFile_   ( config.GetExerciseFile().c_str() )
     , outputExtension_( xis.attribute< std::string >( "output" ) )
     , output_         ( 0 )
 {
     assert( !xsl_.empty() && !xslFile_.empty() && !inputFile_.empty() && !exerciseFile_.empty() && !outputExtension_.empty() );
-    ReadDescriptions( xis );
 }
 
 // -----------------------------------------------------------------------------

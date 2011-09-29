@@ -15,30 +15,17 @@
 #include "preparation/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-namespace
-{
-    std::string GetCurrentLanguage()
-    {
-        QSettings settings;
-        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: FilterManager constructor
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
 FilterManager::FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, Q3ListBox& list, Q3WidgetStack& stack )
-    : config_         ( config )
-    , id_             ( xis.attribute< std::string >( "id" ) )
-    , currentLanguage_( GetCurrentLanguage() )
+    : description_( xis )
+    , config_     ( config )
+    , id_         ( xis.attribute< std::string >( "id" ) )
 {
     assert( !id_.empty() );
-    xis >> xml::start( "descriptions" )
-            >> xml::list( "description", *this, &FilterManager::ReadDescription )
-        >> xml::end
-        >> xml::start( "filters" )
+    xis >> xml::start( "filters" )
             >> xml::list( "filter", *this, &FilterManager::ReadFilter, list, stack )
         >> xml::end;
 }
@@ -56,40 +43,19 @@ FilterManager::~FilterManager()
 // Name: FilterManager::GetName
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
-const std::string& FilterManager::GetName() const
+const std::string FilterManager::GetName() const
 {
-    T_Descriptions::const_iterator it = descriptions_.find( currentLanguage_ );
-    if( it != descriptions_.end() )
-        return it->second;
-    else
-    {
-        it = descriptions_.find( "en" );
-        if( it != descriptions_.end() )
-            return it->second;
-    }
-    return id_;
+    std::string name = description_.GetName();
+    return ( name.empty() ) ? id_ : name;
 }
 
 // -----------------------------------------------------------------------------
 // Name: FilterManager::GetId
 // Created: ABR 2011-06-24
 // -----------------------------------------------------------------------------
-const std::string& FilterManager::GetId() const
+const std::string FilterManager::GetId() const
 {
     return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FilterManager::ReadDescription
-// Created: ABR 2011-06-20
-// -----------------------------------------------------------------------------
-void FilterManager::ReadDescription( xml::xistream& xis )
-{
-    assert( ( xis.has_attribute( "xml:lang" ) || xis.has_attribute( "lang" ) ) && xis.has_attribute( "name" ) );
-    const std::string lang = xis.has_attribute( "xml:lang" ) ? xis.attribute< std::string >( "xml:lang" ) : xis.attribute< std::string >( "lang" );
-    const std::string name = xis.attribute< std::string >( "name" );
-    assert( !name.empty() && !lang.empty() );
-    descriptions_[ lang ] = name;
 }
 
 // -----------------------------------------------------------------------------

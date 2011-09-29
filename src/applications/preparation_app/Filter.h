@@ -11,6 +11,7 @@
 #define __Filter_h_
 
 #include "Filter_ABC.h"
+#include "FilterDescription.h"
 
 namespace tools
 {
@@ -36,6 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Filter();
+    explicit Filter( xml::xistream& xis );
     virtual ~Filter();
     //@}
 
@@ -47,28 +49,9 @@ public:
     //@}
 
 protected:
-    //! @name Helpers
-    //@{
-    void ReadDescriptions( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void ReadDescription( xml::xistream& xis );
-    //@}
-
-protected:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, std::pair< std::string, std::string > > T_Descriptions;
-    //@}
-
-protected:
     //! @name Member data
     //@{
-    const std::string currentLanguage_;
-    T_Descriptions    descriptions_;
+    FilterDescription description_;
     //@}
 };
 

@@ -11,13 +11,15 @@
 #include "FilterInputArgument.h"
 #include "moc_FilterInputArgument.cpp"
 #include "clients_kernel/Tools.h"
+#include "FilterDescription.h"
 
 // -----------------------------------------------------------------------------
 // Name: FilterInputArgument constructor
 // Created: ABR 2011-09-28
 // -----------------------------------------------------------------------------
-FilterInputArgument::FilterInputArgument( const std::string& argumentValue, const std::string exerciseDir /*= ""*/ )
+FilterInputArgument::FilterInputArgument( const std::string& argumentValue, const FilterDescription& description, const std::string exerciseDir /*= ""*/ )
     : exerciseDir_( exerciseDir )
+    , description_( description.GetName() )
 {
     if( argumentValue == "$input$" )
         type_ = eInput;
@@ -58,6 +60,7 @@ QWidget* FilterInputArgument::CreateWidget( QWidget* parent )
         QPushButton* browseBtn = new QPushButton( tools::translate( "FilterInputArgument", "Browse..." ), result, "FilterInputArgument_BrowseButton" );
         connect( browseBtn, SIGNAL( clicked() ), SLOT( OnBrowse() ) );
     }
+    line_->setText( description_.c_str() );
     connect( line_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnTextChanged( const QString& ) ) );
     return result;
 }

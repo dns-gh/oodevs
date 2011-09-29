@@ -238,13 +238,6 @@
     </message>
 </context>
 <context>
-    <name>Filter</name>
-    <message>
-        <source>No description available</source>
-        <translation>Aucune description disponible</translation>
-    </message>
-</context>
-<context>
     <name>FilterCommand</name>
     <message>
         <source>Command overview</source>
@@ -269,6 +262,13 @@
     <message>
         <source>Argument &apos;%1&apos;:</source>
         <translation>Argument &apos;%1&apos;:</translation>
+    </message>
+</context>
+<context>
+    <name>FilterDescription</name>
+    <message>
+        <source>No description available</source>
+        <translation>Aucune description disponible</translation>
     </message>
 </context>
 <context>

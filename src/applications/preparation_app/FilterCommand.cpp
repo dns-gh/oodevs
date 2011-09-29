@@ -23,35 +23,12 @@
 
 namespace bfs = boost::filesystem;
 
-namespace
-{
-    std::string ConvertArgumentVariable( std::string value, const tools::ExerciseConfig& config )
-    {
-        std::string result = value;
-        if( value == "$rootdir$" )
-            result = config.GetRootDir();
-        else if( value == "$exercise$" )
-            result = config.GetExerciseName();
-        else if( value == "$exercise_dir$" )
-            result = config.GetExerciseDir( config.GetExerciseName() );
-        else if( value == "$orbat_file$" )
-            result = config.GetOrbatFile();
-        else if( value == "$input$" ) // $$$$ ABR 2011-09-28: Cf FilterInputArgument
-            result = "";
-        else if( value == "$input_file$" )
-            result = "";
-        else if( value == "$input_dir$" )
-            result = "";
-        return "\"" + result + "\"";
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: FilterCommand constructor
 // Created: ABR 2011-06-17
 // -----------------------------------------------------------------------------
 FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& config )
-    : Filter()
+    : Filter( xis )
     , config_        ( config )
     , command_       ( xis.attribute< std::string >( "command" ) )
     , reloadExercise_( xis.attribute< bool >( "reload-exercise", false ) )
@@ -60,7 +37,6 @@ FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& c
     , commandLabel_  ( 0 )
 {
     assert( !command_.empty() );
-    ReadDescriptions( xis );
     ReadArguments( xis );
     ComputeArgument();
     ComputePath();
@@ -123,10 +99,11 @@ void FilterCommand::ReadArgument( xml::xistream& xis )
     assert( xis.has_attribute( "name" ) );
     const std::string name = xis.attribute< std::string >( "name" );
     const std::string value = xis.attribute< std::string >( "value", "" );
-    arguments_.push_back( std::pair< std::string, std::string >( name, ConvertArgumentVariable( value, config_ ) ) );
+    arguments_.push_back( std::pair< std::string, std::string >( name, ConvertArgumentVariable( value ) ) );
     if( value == "$input_file$" || value == "$input_dir$" || value == "$input$" )
     {
-        FilterInputArgument* inputArgument = new FilterInputArgument( value, config_.GetExerciseDir( config_.GetExerciseName() ) );
+        FilterDescription description( xis );
+        FilterInputArgument* inputArgument = new FilterInputArgument( value, description, config_.GetExerciseDir( config_.GetExerciseName() ) );
         inputArguments_[ arguments_.size() - 1 ] = inputArgument;
         connect( inputArgument, SIGNAL( ValueChanged() ), this, SLOT( OnValueChanged() ) );
     }
@@ -192,6 +169,32 @@ void FilterCommand::ComputePath()
         }
     }
     emit statusChanged( IsValid() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterCommand::ConvertArgumentVariable
+// Created: ABR 2011-09-29
+// -----------------------------------------------------------------------------
+std::string FilterCommand::ConvertArgumentVariable( std::string value )
+{
+    std::string result = value;
+    if( value == "$rootdir$" )
+        result = config_.GetRootDir();
+    else if( value == "$exercise$" )
+        result = config_.GetExerciseName();
+    else if( value == "$exercise_dir$" )
+        result = config_.GetExerciseDir( config_.GetExerciseName() );
+    else if( value == "$orbat_file$" )
+        result = config_.GetOrbatFile();
+    else if( value == "$language$" )
+        result = description_.GetCurrentLanguage();
+    else if( value == "$input$" ) // $$$$ ABR 2011-09-28: Cf FilterInputArgument
+        result = "";
+    else if( value == "$input_file$" )
+        result = "";
+    else if( value == "$input_dir$" )
+        result = "";
+    return "\"" + result + "\"";
 }
 
 // -----------------------------------------------------------------------------

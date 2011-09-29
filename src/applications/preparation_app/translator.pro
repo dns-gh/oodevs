@@ -11,8 +11,8 @@ ExerciseCreationDialog.cpp \
 ExerciseDialog.cpp \
 FileLoaderObserver.cpp \
 FileToolbar.cpp \
-Filter.cpp \
 FilterCommand.cpp \
+FilterDescription.cpp \
 FilterDialog.cpp \
 FilterDialogs.cpp \
 FilterInputArgument.cpp \

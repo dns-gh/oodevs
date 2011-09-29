@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
+#include "FilterDescription.h"
 
 namespace tools
 {
@@ -45,8 +46,8 @@ public:
 
     //! @name Operations
     //@{
-    const std::string& GetName() const;
-    const std::string& GetId() const;
+    const std::string GetName() const;
+    const std::string GetId() const;
     void AddFilter( Filter_ABC& filter, Q3ListBox& list, Q3WidgetStack& stack );
     Filter_ABC& GetFilter( unsigned int index );
     const Filter_ABC& GetFilter( unsigned int index ) const;
@@ -55,15 +56,12 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ReadDescription( xml::xistream& xis );
     void ReadFilter( xml::xistream& xis, Q3ListBox& list, Q3WidgetStack& stack );
     //@}
 
 private:
     //! @name Type
     //@{
-    typedef std::map< std::string, std::string > T_Descriptions;
-
     typedef boost::ptr_vector< Filter_ABC >      T_Filters;
     typedef T_Filters::iterator                 IT_Filters;
     typedef T_Filters::const_iterator          CIT_Filters;
@@ -74,8 +72,7 @@ private:
     //@{
     const tools::ExerciseConfig& config_;
     const std::string            id_;
-    const std::string            currentLanguage_;
-    T_Descriptions               descriptions_;
+    FilterDescription            description_;
     T_Filters                    filters_;
     //@}
 };
