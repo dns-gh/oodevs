@@ -929,10 +929,16 @@ void  MIL_AgentPion::OnReceiveRecoverHumansTransporters()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveCreateWound( const sword::MissionParameters& msg )
 {
-    if( msg.elem( 0 ).value_size() == 1 && msg.elem( 1 ).value_size() == 1 ) // injury_id && injury_type
+    if( msg.elem_size() > 2 )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
+    if( msg.elem( 0 ).value_size() == 1 )
     {
         MIL_Injury_Wound* injury = new MIL_Injury_Wound( msg.elem( 0 ).value().Get( 0 ).identifier() );
-        injury->SetInjuryCategory( static_cast< MIL_MedicalTreatmentType::E_InjuryCategories >( msg.elem( 1 ).value().Get( 0 ).identifier() ) );
+        if( msg.elem_size() == 2 && msg.elem( 1 ).value_size() == 1 )
+            injury->SetInjuryCategory( static_cast< MIL_MedicalTreatmentType::E_InjuryCategories >( msg.elem( 1 ).value().Get( 0 ).identifier() ) );
+        else
+            injury->SetInjuryCategory( static_cast< MIL_MedicalTreatmentType::E_InjuryCategories >( MIL_Random::rand32_oi( MIL_MedicalTreatmentType::eNone, MIL_MedicalTreatmentType::eDead ) ) );
         GetRole< PHY_RolePion_Composantes >().ApplyInjury( *injury );
     }
 }
