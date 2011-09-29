@@ -96,8 +96,18 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg )
     const sword::MissionParameter& location = msg.elem( 9 );
     if( location.value_size() != 1 || !location.value().Get(0).has_location() )
         throw std::exception( "Meteo : bad attribute for Location" );
-    NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 0 ), upLeft_    );
-    NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 1 ), downRight_ );
+    if( location.value().Get(0).location().coordinates().elem_size() == 2 ) // $$$$ ABR 2011-09-29: Sword protocol
+    {
+        NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 0 ), upLeft_    );
+        NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 1 ), downRight_ );
+    }
+    else if( location.value().Get(0).location().coordinates().elem_size() == 4 ) // $$$$ ABR 2011-09-29: Shield protocol
+    {
+        NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 0 ), upLeft_    );
+        NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 2 ), downRight_ );
+    }
+    else
+        throw std::exception( "Meteo : bad attribute for Location" );
 }
 
 // -----------------------------------------------------------------------------
