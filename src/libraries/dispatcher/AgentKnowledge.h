@@ -53,6 +53,7 @@ public:
     //@{
     virtual const kernel::Team_ABC* GetTeam() const;
     virtual const kernel::Agent_ABC* GetEntity() const;
+    virtual unsigned long GetEntityId() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual sword::UnitIdentification::Level GetMaxPerceptionLevel() const;

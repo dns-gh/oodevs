@@ -29,9 +29,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void VisitKnowledgesAgent( unsigned long knowledges ) = 0;
-    virtual void VisitKnowledgesObject( unsigned long knowledges ) = 0;
-    virtual void VisitKnowledgesPopulation( unsigned long knowledges ) = 0;
+    virtual void VisitKnowledgesAgent( std::size_t knowledges ) = 0;
+    virtual void VisitKnowledgesObject( std::size_t knowledges ) = 0;
+    virtual void VisitKnowledgesPopulation( std::size_t knowledges ) = 0;
     //@}
 };
 

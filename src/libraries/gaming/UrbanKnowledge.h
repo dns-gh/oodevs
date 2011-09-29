@@ -59,8 +59,9 @@ public:
     //@{
     virtual QString GetName() const;
     virtual const kernel::Entity_ABC* GetEntity() const;
-    virtual const kernel::Team_ABC*   GetTeam() const;
-    virtual const kernel::Team_ABC&   GetOwner() const;
+    virtual unsigned long GetEntityId() const;
+    virtual const kernel::Team_ABC* GetTeam() const;
+    virtual const kernel::Team_ABC& GetOwner() const;
 
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
@@ -85,6 +86,7 @@ private:
     const tools::Resolver< gui::TerrainObjectProxy >& terrainObjectResolver_;
     const kernel::Team_ABC& owner_;
     gui::TerrainObjectProxy* pRealUrban_;
+    unsigned long entityId_;
     kernel::OptionalValue< bool > bIsPerceived_;
     kernel::OptionalValue< int > rProgress_;
     kernel::OptionalValue< int > rMaxProgress_;

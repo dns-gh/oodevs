@@ -31,6 +31,8 @@ MOCK_BASE_CLASS( MockDEC_KnowledgeResolver_ABC, DEC_KnowledgeResolver_ABC )
     MOCK_METHOD_EXT( ResolveKnowledgePopulation, 1, DEC_Knowledge_Population*( const sword::CrowdKnowledgeId& ), ResolveKnowledgePopulationFromMessage );
     MOCK_METHOD_EXT( ResolveKnowledgePopulation, 1, DEC_Knowledge_Population*( const MIL_Population& ), ResolveKnowledgePopulation );
     MOCK_METHOD_EXT( ResolveKnowledgePopulation, 1, DEC_Knowledge_Population*( unsigned int ), ResolveKnowledgePopulationFromId );
+
+    MOCK_METHOD( ResolveKnowledgeObjectByObjectID, 1 );
 };
 
 #endif // __MockDEC_KnowledgeResolver_ABC_h_

@@ -142,7 +142,7 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
         sword::ObjectKnowledgeCreation& message = *expected.mutable_message()->mutable_object_knowledge_creation();
         message.mutable_knowledge()->set_id( 1 );
         message.mutable_party()->set_id( side.GetId() );
-        message.mutable_object()->set_id( 0 );
+        message.mutable_object()->set_id( 4 );
         message.mutable_type()->set_id( "mines" );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         message.mutable_attributes();

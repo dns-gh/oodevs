@@ -417,6 +417,16 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetKnowl
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgeObjectFromObjectID
+// Created: JSR 2011-09-29
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetKnowledgeObjectFromObjectID( unsigned int nID ) const
+{
+    assert( pKnowledgeObjectContainer_ );
+    return pKnowledgeObjectContainer_->GetKnowledgeObjectFromObjectID( nID );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgeObject
 // Created: NLD 2004-03-26
 // -----------------------------------------------------------------------------
@@ -504,6 +514,15 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveK
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( unsigned int /*nID*/ ) const
+{
+    return boost::shared_ptr< DEC_Knowledge_Object >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObjectByObjectID
+// Created: JSR 2011-09-28
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObjectByObjectID( unsigned int /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }

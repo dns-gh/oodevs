@@ -136,6 +136,7 @@ public:
     const DEC_KnowledgeBlackBoard_KnowledgeGroup& GetKnowledge() const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int ) const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const MIL_Object_ABC& object ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int ) const;
     // LTO begin
     const T_KnowledgeGroupVector&                 GetKnowledgeGroups() const;
           MIL_KnowledgeGroup*                     GetParent   () const;

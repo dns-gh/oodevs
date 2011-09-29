@@ -65,6 +65,7 @@ public:
     //@{
     virtual const kernel::Team_ABC* GetTeam() const;
     virtual const kernel::Object_ABC* GetEntity() const;
+    virtual unsigned long GetEntityId() const;
     virtual const kernel::Team_ABC& GetOwner() const;
     virtual QString GetTypeName() const;
     //@}
@@ -96,6 +97,7 @@ private:
     const Model_ABC& model_;
     const kernel::Team_ABC& owner_;
     const kernel::Object_ABC* pObject_;
+    unsigned long entityId_;
     const std::string nType_;
     const kernel::KnowledgeGroup_ABC* knowledgeGroup_;
     const QString typename_;

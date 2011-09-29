@@ -197,6 +197,15 @@ const kernel::Population_ABC* PopulationKnowledge::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::GetEntityId
+// Created: JSR 2011-09-28
+// -----------------------------------------------------------------------------
+unsigned long PopulationKnowledge::GetEntityId() const
+{
+    return popu_.GetId();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::GetTeam
 // Created: NLD 2010-11-03
 // -----------------------------------------------------------------------------

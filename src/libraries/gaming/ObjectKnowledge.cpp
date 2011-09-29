@@ -39,6 +39,7 @@ ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKn
     , objectResolver_( objectResolver )
     , type_          ( & typeResolver.Get( message.type().id() ) )
     , pRealObject_   ( objectResolver_.Find( message.object().id() ) )
+    , entityId_      ( message.object().id() )
     , pTeam_         ( 0 )
 {
     RegisterSelf( *this );
@@ -70,7 +71,11 @@ ObjectKnowledge::~ObjectKnowledge()
 void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     if( message.has_object()  )
+    {
         pRealObject_ = objectResolver_.Find( message.object().id() );
+        if( pRealObject_ )
+            entityId_ = pRealObject_->GetId();
+    }
     if( message.has_relevance() )
         nRelevance_ = message.relevance();
     if( message.has_perceived() )
@@ -134,6 +139,15 @@ QString ObjectKnowledge::GetName() const
 const Object_ABC* ObjectKnowledge::GetEntity() const
 {
     return pRealObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetEntityId
+// Created: JSR 2011-09-28
+// -----------------------------------------------------------------------------
+unsigned long ObjectKnowledge::GetEntityId() const
+{
+    return entityId_;
 }
 
 // -----------------------------------------------------------------------------

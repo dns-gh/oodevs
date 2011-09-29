@@ -218,6 +218,18 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromObjectID
+// Created: JSR 2011-09-29
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromObjectID( unsigned int nID ) const
+{
+    for( CIT_KnowledgeObjectIDMap it = knowledgeObjectFromIDMap_.begin(); it != knowledgeObjectFromIDMap_.end(); ++it )
+        if( it->second->GetObjectId() == nID )
+            return it->second;
+    return boost::shared_ptr< DEC_Knowledge_Object >();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::HasKnowledgeObject
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------

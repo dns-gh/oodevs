@@ -107,6 +107,7 @@ public:
     bool IsReservedObstacle() const;
     bool IsReservedObstacleActivated() const;
     virtual unsigned int GetID() const;
+    unsigned int GetObjectId() const;
     const std::string& GetName() const;
     MIL_Object_ABC* GetObjectKnown() const;
     const MIL_ObjectType_ABC& GetType() const;
@@ -189,6 +190,7 @@ private:
     const MIL_Army_ABC* pArmyKnowing_;
     const MIL_KnowledgeGroup* pGroupKnowing_;
     MIL_Object_ABC* pObjectKnown_; // Objet réel (peut ne plus exister...)
+    const unsigned int objectId_;
     const MIL_ObjectType_ABC* pObjectType_;
     const unsigned int  nID_;
     std::string name_;

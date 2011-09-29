@@ -57,6 +57,7 @@ public:
     //@{
     virtual QString GetName() const;
     virtual const kernel::Population_ABC* GetEntity() const;
+    virtual unsigned long GetEntityId() const;
     virtual const kernel::Team_ABC* GetTeam() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
 

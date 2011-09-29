@@ -10,6 +10,7 @@
 #ifndef __DEC_KnowledgeResolver_ABC_h_
 #define __DEC_KnowledgeResolver_ABC_h_
 
+#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
 namespace sword
@@ -32,13 +33,13 @@ class MIL_Agent_ABC;
 */
 // Created: NLD 2006-11-22
 // =============================================================================
-class DEC_KnowledgeResolver_ABC
+class DEC_KnowledgeResolver_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KnowledgeResolver_ABC() {};
-    virtual ~DEC_KnowledgeResolver_ABC() {};
+             DEC_KnowledgeResolver_ABC() {}
+    virtual ~DEC_KnowledgeResolver_ABC() {}
     //@}
 
     //! @name Operations
@@ -50,17 +51,11 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const = 0;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const MIL_Object_ABC& object ) const = 0;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int nID ) const = 0;
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const = 0;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const MIL_Population& population ) const = 0;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    DEC_KnowledgeResolver_ABC( const DEC_KnowledgeResolver_ABC& );            //!< Copy constructor
-    DEC_KnowledgeResolver_ABC& operator=( const DEC_KnowledgeResolver_ABC& ); //!< Assignment operator
     //@}
 };
 

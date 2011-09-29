@@ -44,7 +44,7 @@ public:
     void CommitTo( M& message ) const
     {
         if( GetValue() )
-            message.set_id( GetValue()->GetEntity()->GetId() );
+            message.set_id( id_ );
     }
     //@}
 

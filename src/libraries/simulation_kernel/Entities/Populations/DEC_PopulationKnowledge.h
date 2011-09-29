@@ -33,7 +33,6 @@ class MIL_Population;
 // Created: JVT 2004-08-03
 // =============================================================================
 class DEC_PopulationKnowledge : public DEC_KnowledgeResolver_ABC
-                              , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -67,6 +66,7 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const MIL_Object_ABC& object ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int nID ) const;
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const MIL_Population& population ) const;

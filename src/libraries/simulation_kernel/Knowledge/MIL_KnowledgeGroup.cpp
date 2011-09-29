@@ -618,6 +618,18 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeOb
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeObjectByObjectID
+// Created: JSR 2011-09-29
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeObjectByObjectID( unsigned int id ) const
+{
+    boost::shared_ptr< DEC_Knowledge_Object > result = GetKnowledge().ResolveKnowledgeObjectByObjectID( id );
+    if( !result && parent_ )
+        result = parent_->ResolveKnowledgeObjectByObjectID( id );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::GetArmy
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------

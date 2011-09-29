@@ -129,6 +129,15 @@ const kernel::Agent_ABC* AgentKnowledge::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetEntityId
+// Created: JSR 2011-09-28
+// -----------------------------------------------------------------------------
+unsigned long AgentKnowledge::GetEntityId() const
+{
+    return realAgent_.GetId();
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentKnowledge::GetTeam
 // Created: NLD 2010-11-03
 // -----------------------------------------------------------------------------

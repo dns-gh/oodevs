@@ -267,7 +267,7 @@ std::vector<  boost::shared_ptr< DEC_Knowledge_Agent > > DEC_MiscFunctions::GetE
     MIL_Army_ABC& army = caller->GetPion().GetArmy();
     for ( std::set<  boost::shared_ptr< DEC_Knowledge_Agent > >::const_iterator it = enemyRepresentations_.begin(); it != enemyRepresentations_.end(); ++it )
     {
-        if( (*it)->IsValid() && (*it)->IsAnEnemy( army ) );
+        if( (*it)->IsValid() && (*it)->IsAnEnemy( army ) )
             result.push_back( *it );
     }
     return result;

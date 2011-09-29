@@ -164,6 +164,15 @@ const kernel::Entity_ABC* UrbanKnowledge::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanKnowledge::GetEntityId
+// Created: JSR 2011-09-28
+// -----------------------------------------------------------------------------
+unsigned long UrbanKnowledge::GetEntityId() const
+{
+    return pUrban_ ? pUrban_->GetId() : 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanKnowledge::GetOwner
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------

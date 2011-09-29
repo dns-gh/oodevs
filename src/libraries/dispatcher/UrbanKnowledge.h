@@ -63,6 +63,7 @@ public:
     //@{
     virtual const kernel::Team_ABC* GetTeam() const;
     virtual const Entity_ABC* GetEntity() const;
+    virtual unsigned long GetEntityId() const;
     virtual const kernel::Team_ABC& GetOwner() const;
     //@}
 

@@ -46,9 +46,10 @@ MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const sword::ObjectK
                                                             const MIL_EntityManager_ABC& entityManager )
 {
     MIL_Object_ABC* pObject = entityManager.FindObject( asn.id() );
-    if( !pObject )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
-    pKnowledgeObject_ = resolver.ResolveKnowledgeObject( *pObject );
+    if( pObject )
+        pKnowledgeObject_ = resolver.ResolveKnowledgeObject( *pObject );
+    else
+        pKnowledgeObject_ = resolver.ResolveKnowledgeObjectByObjectID( asn.id() );
     if( !pKnowledgeObject_ )
        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
 }
@@ -88,7 +89,7 @@ bool MIL_ObjectKnowledgeParameter::ToObjectKnowledge( boost::shared_ptr< DEC_Kno
 // -----------------------------------------------------------------------------
 bool MIL_ObjectKnowledgeParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    elem.mutable_objectknowledge()->set_id( pKnowledgeObject_->GetObjectKnown()->GetID() );
+    elem.mutable_objectknowledge()->set_id( pKnowledgeObject_->GetObjectId() );
     return true;
 }
 

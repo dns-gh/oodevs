@@ -205,6 +205,15 @@ const kernel::Population_ABC* PopulationKnowledge::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::GetEntityId
+// Created: JSR 2011-09-28
+// -----------------------------------------------------------------------------
+unsigned long PopulationKnowledge::GetEntityId() const
+{
+    return population_.GetId();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::GetOwner
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------

@@ -54,6 +54,7 @@ public:
     //@{
     virtual QString GetName() const;
     virtual const kernel::Object_ABC* GetEntity() const;
+    virtual unsigned long GetEntityId() const;
     virtual const kernel::Team_ABC* GetTeam() const;
     virtual const kernel::Entity_ABC& GetOwner() const;
     virtual std::string GetSymbol() const;
@@ -84,6 +85,7 @@ private:
     const kernel::ObjectType* type_;
     std::string position_;
     kernel::Object_ABC* pRealObject_;
+    unsigned long entityId_;
     const kernel::Team_ABC* pTeam_;
     kernel::OptionalValue< bool > bIsPerceived_;
     kernel::OptionalValue< uint > nRelevance_;

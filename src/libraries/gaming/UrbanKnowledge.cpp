@@ -23,10 +23,12 @@ UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const sword::UrbanKnowled
     : EntityImplementation< UrbanKnowledge_ABC >( controller, message.knowledge().id(), "" )
     , terrainObjectResolver_( terrainObjectResolver )
     , owner_                ( owner )
-    , pRealUrban_           ( 0 )
+    , pRealUrban_           ( terrainObjectResolver_.Find( message.object().id() ) )
+    , entityId_             ( 0 )
 {
+    if( pRealUrban_ )
+        entityId_ = pRealUrban_->GetId();
     RegisterSelf( *this );
-    pRealUrban_ = terrainObjectResolver_.Find( message.object().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +47,11 @@ UrbanKnowledge::~UrbanKnowledge()
 void UrbanKnowledge::DoUpdate( const sword::UrbanKnowledgeUpdate& message )
 {
     if( message.object().id() )
+    {
         pRealUrban_ = terrainObjectResolver_.Find( message.object().id() );
+        if( pRealUrban_ )
+            entityId_ = pRealUrban_->GetId();
+    }
     if( message.has_perceived() )
         bIsPerceived_ = message.perceived();
     if( message.has_progress() )
@@ -109,6 +115,15 @@ QString UrbanKnowledge::GetName() const
 const Entity_ABC* UrbanKnowledge::GetEntity() const
 {
     return pRealUrban_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanKnowledge::GetEntityId
+// Created: JSR 2011-09-28
+// -----------------------------------------------------------------------------
+unsigned long UrbanKnowledge::GetEntityId() const
+{
+    return entityId_;
 }
 
 // -----------------------------------------------------------------------------

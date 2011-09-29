@@ -73,7 +73,8 @@ public:
     virtual void Accept ( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual const kernel::Team_ABC* GetTeam() const;
-    virtual const kernel::Population_ABC*     GetEntity() const;
+    virtual const kernel::Population_ABC* GetEntity() const;
+    virtual unsigned long GetEntityId() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;

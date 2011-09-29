@@ -107,6 +107,7 @@ namespace
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetTeam, 0 );
         MOCK_METHOD( GetEntity, 0 );
+        MOCK_METHOD( GetEntityId, 0 );
         MOCK_METHOD( GetOwner, 0 );
         MOCK_METHOD( Display, 1 );
         MOCK_METHOD( DisplayInList, 1 );
@@ -118,6 +119,7 @@ namespace
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetTeam, 0 );
         MOCK_METHOD( GetEntity, 0 );
+        MOCK_METHOD( GetEntityId, 0 );
         MOCK_METHOD( GetOwner, 0 );
         MOCK_METHOD( Display, 1 );
     };
@@ -147,6 +149,7 @@ namespace
         MOCK_METHOD( GetTeam, 0 );
         MOCK_METHOD( GetOwner, 0 );
         MOCK_METHOD( GetEntity, 0 );
+        MOCK_METHOD( GetEntityId, 0 );
         MOCK_METHOD( Display, 1 );
         MOCK_METHOD( DisplayInList, 1 );
     };

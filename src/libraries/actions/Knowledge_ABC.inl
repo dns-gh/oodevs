@@ -89,10 +89,7 @@ void Knowledge_ABC< ConcreteEntity >::NotifyValueSet()
     else
     {
         const_cast< ConcreteEntity* >( GetValue() )->AddListener( *this );
-        if( !GetValue()->GetEntity() )
-            id_ = 0;
-        else
-            id_ = GetValue()->GetEntity()->GetId();
+        id_ = GetValue()->GetEntityId();
         isEntityValid_ = true;
     }
 }

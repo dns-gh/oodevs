@@ -29,6 +29,7 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const sword::ObjectKno
     , model_                         ( model )
     , owner_                         ( model.Sides().Get( message.party().id() ) )
     , pObject_                       ( model.Objects().Find( message.object().id() ) )
+    , entityId_                      ( 0 )
     , nType_                         ( message.type().id() )
     , knowledgeGroup_                ( message.has_knowledge_group() ? &model.KnowledgeGroups().Get( message.knowledge_group().id() ) : 0 )
     , localisation_                  ()
@@ -39,6 +40,8 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const sword::ObjectKno
 {
     if( !pObject_ )
         pObject_ = model.UrbanBlocks().Find( message.object().id() );
+    if( pObject_ )
+        entityId_ = pObject_->GetId();
 
     optionals_.realObjectPresent = pObject_ != 0;
     optionals_.relevancePresent = 0;
@@ -105,6 +108,8 @@ void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
         pObject_ = model_.Objects().Find( message.object().id() );
         if( !pObject_ )
             pObject_ = model_.UrbanBlocks().Find( message.object().id() );
+        if( pObject_ )
+            entityId_ = pObject_->GetId();
         optionals_.realObjectPresent = 1;
     }
 
@@ -123,7 +128,7 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
     if( knowledgeGroup_ )
         asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
     if( optionals_.realObjectPresent )
-        asn().mutable_object()->set_id( pObject_ ? pObject_->GetId() : 0 );
+        asn().mutable_object()->set_id( entityId_ );
     asn().mutable_type()->set_id( nType_ );  // $$$$ _RC_ PHC 2010-07-07: ???
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation
     asn.Send( publisher );
@@ -196,6 +201,15 @@ const kernel::Team_ABC* ObjectKnowledge::GetTeam() const
 const kernel::Object_ABC* ObjectKnowledge::GetEntity() const
 {
     return pObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetEntityId
+// Created: JSR 2011-09-28
+// -----------------------------------------------------------------------------
+unsigned long ObjectKnowledge::GetEntityId() const
+{
+    return pObject_ ? pObject_->GetId() : 0;
 }
 
 // -----------------------------------------------------------------------------

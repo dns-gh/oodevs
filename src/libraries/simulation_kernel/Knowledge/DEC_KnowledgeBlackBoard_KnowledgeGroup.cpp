@@ -560,6 +560,17 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObjectByObjectID
+// Created: JSR 2011-09-28
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObjectByObjectID( unsigned int nID ) const
+{
+    if( pKnowledgeObjectContainer_ )
+        return pKnowledgeObjectContainer_->GetKnowledgeObjectFromObjectID( nID );
+    return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeObjectFromObjectID( nID );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------

@@ -591,6 +591,15 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::Res
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObjectByObjectID
+// Created: JSR 2011-09-28
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObjectByObjectID( unsigned int nID ) const
+{
+    return pPion_->GetKnowledgeGroup().ResolveKnowledgeObjectByObjectID( nID );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------

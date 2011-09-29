@@ -135,10 +135,6 @@ void MIL_ObjectManipulator::Destroy()
     if( ResourceNetworkCapacity* resourceNetwork = object_.Retrieve< ResourceNetworkCapacity >() )
         MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().UnregisterNode( object_.GetID() );
     object_.MarkForDestruction();
-    // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
-    const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
-    for( tools::Iterator< const MIL_Army_ABC& > it = armies.CreateIterator(); it.HasMoreElements(); )
-        it.NextElement().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( object_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -243,26 +243,26 @@ namespace
         {
             // NOTHING
         }
-        virtual void VisitKnowledgesAgent( unsigned long knowledges )
+        virtual void VisitKnowledgesAgent( std::size_t knowledges )
         {
             agents_ += knowledges;
         }
-        virtual void VisitKnowledgesObject( unsigned long knowledges )
+        virtual void VisitKnowledgesObject( std::size_t knowledges )
         {
             objects_ += knowledges;
         }
-        virtual void VisitKnowledgesPopulation( unsigned long knowledges )
+        virtual void VisitKnowledgesPopulation( std::size_t knowledges )
         {
             populations_ += knowledges;
         }
-        unsigned long Count()
+        std::size_t Count()
         {
             return agents_ + objects_ + populations_;
         }
     public:
-        unsigned long agents_;
-        unsigned long objects_;
-        unsigned long populations_;
+        std::size_t agents_;
+        std::size_t objects_;
+        std::size_t populations_;
     };
 }
 

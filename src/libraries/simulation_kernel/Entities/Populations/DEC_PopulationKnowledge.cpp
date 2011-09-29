@@ -213,6 +213,15 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgeObjectByObjectID
+// Created: JSR 2011-09-28
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObjectByObjectID( unsigned int nID ) const
+{
+    return population_.GetArmy().GetKnowledge().GetKnowledgeObjectFromObjectID( nID );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
