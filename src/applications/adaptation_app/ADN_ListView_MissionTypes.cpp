@@ -22,9 +22,10 @@ typedef ADN_Missions_Data::Mission Mission;
 // Name: ADN_ListView_MissionTypes constructor
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( ADN_Missions_Data::T_Mission_Vector& missions, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
+ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
     : ADN_ListView( parent, szName )
-    , missions_( missions )
+    , missions_   ( missions )
+    , eEntityType_( eEntityType )
 {
     addColumn( tools::translate( "ADN_ListView_MissionTypes", "Missions" ) );
     setResizeMode( Q3ListView::AllColumns );
@@ -50,8 +51,8 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
 {
     if( pCurData_ == 0 )
         return;
-    Mission* pInfos = (Mission*)pCurData_;
-//    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Missions_GUI::eNbrGuiElements );
+    Mission* pInfos = static_cast< Mission* >( pCurData_ );
+    //ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Missions_GUI::eNbrGuiElements );
     vItemConnectors_[ADN_Missions_GUI::eName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eDoctrineDescription]->Connect( &pInfos->doctrineDescription_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eUsageDescription]->Connect( &pInfos->usageDescription_, bConnect );
@@ -80,4 +81,17 @@ void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
         FillContextMenuWithDefault( popupMenu, wizard );
         popupMenu.exec( pt );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_MissionTypes::GetToolTipFor
+// Created: ABR 2011-09-29
+// -----------------------------------------------------------------------------
+std::string ADN_ListView_MissionTypes::GetToolTipFor( Q3ListViewItem& item )
+{
+    void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
+    Mission* pCastData = static_cast< Mission* >( pData );
+    std::string strToolTip = tools::translate( "ADN_ListView_MissionTypes", "<b>Used by:</b><br>" ).ascii()
+        + ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_, *pCastData );
+    return strToolTip;
 }

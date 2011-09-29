@@ -12,6 +12,7 @@
 
 #include "ADN_GUI_ABC.h"
 #include "ADN_Missions_Data.h"
+#include "ADN_Models_Data.h"
 
 // =============================================================================
 /** @class  ADN_Missions_GUI
@@ -55,7 +56,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildMissions( Q3GroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, bool automat );
+    QWidget* BuildMissions( Q3GroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType );
     QWidget* BuildUnitMissions( QWidget* parent );
     QWidget* BuildAutomatMissions( QWidget* parent );
     QWidget* BuildPopulationMissions( QWidget* parent );

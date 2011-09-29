@@ -2207,6 +2207,10 @@ du tireur</translation>
         <source>Missions</source>
         <translation>Missions</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
+        <translation>&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Missions</name>

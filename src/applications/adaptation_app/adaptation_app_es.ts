@@ -2205,6 +2205,10 @@ tirador</translation>
         <source>Missions</source>
         <translation>Misiones</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Missions</name>

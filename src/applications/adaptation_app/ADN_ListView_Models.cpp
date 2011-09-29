@@ -26,8 +26,8 @@ typedef ADN_Models_Data::ModelInfos ModelInfos;
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_ListView_Models::ADN_ListView_Models( ModelInfos::E_ModelEntityType eEntityType, QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
-, eEntityType_( eEntityType )
+    : ADN_ListView( pParent, szName, f )
+    , eEntityType_( eEntityType )
 {
     // Add one column.
     addColumn( tools::translate( "ADN_ListView_Models", "Models" ) );
@@ -90,7 +90,7 @@ void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
 std::string ADN_ListView_Models::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
-    ModelInfos* pCastData = (ModelInfos*)pData;
+    ModelInfos* pCastData = static_cast< ModelInfos* >( pData );
     std::string strToolTip = tools::translate( "ADN_ListView_Models", "<b>Used by:</b><br>" ).ascii();
     switch( eEntityType_ )
     {

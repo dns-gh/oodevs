@@ -65,7 +65,7 @@ void ADN_Missions_GUI::Build()
 // Name: ADN_Missions_GUI::BuildMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildMissions( Q3GroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, bool automat )
+QWidget* ADN_Missions_GUI::BuildMissions( Q3GroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType )
 {
     ADN_GuiBuilder builder;
 
@@ -74,7 +74,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( Q3GroupBox*& pGroup, QWidget* parent, 
 
     // Missions listview
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
-    ADN_ListView_MissionTypes* listMissions = new ADN_ListView_MissionTypes( missions, mainWidget );
+    ADN_ListView_MissionTypes* listMissions = new ADN_ListView_MissionTypes( eEntityType, missions, mainWidget );
     listMissions->GetConnector().Connect( &missions );
 
     // Mission data
@@ -84,7 +84,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( Q3GroupBox*& pGroup, QWidget* parent, 
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Type" ), vInfosConnectors[eDiaType] );
-    if( automat )
+    if( eEntityType == ADN_Models_Data::ModelInfos::eAutomat )
     {
         builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "MRT Behavior" ), vInfosConnectors[eMRTBehavior] );
         builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "CDT Behavior" ), vInfosConnectors[eCDTBehavior] );
@@ -124,7 +124,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( Q3GroupBox*& pGroup, QWidget* parent, 
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildUnitMissions( QWidget* parent )
 {
-    return BuildMissions( pUnitMissionsGroup_, parent, data_.unitMissions_, false );
+    return BuildMissions( pUnitMissionsGroup_, parent, data_.unitMissions_, ADN_Models_Data::ModelInfos::ePawn );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ QWidget* ADN_Missions_GUI::BuildUnitMissions( QWidget* parent )
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildAutomatMissions( QWidget* parent )
 {
-    return BuildMissions( pAutomatMissionsGroup_, parent, data_.automatMissions_, true );
+    return BuildMissions( pAutomatMissionsGroup_, parent, data_.automatMissions_, ADN_Models_Data::ModelInfos::eAutomat );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +142,7 @@ QWidget* ADN_Missions_GUI::BuildAutomatMissions( QWidget* parent )
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildPopulationMissions( QWidget* parent )
 {
-    return BuildMissions( pPopulationMissionsGroup_, parent, data_.populationMissions_, false );
+    return BuildMissions( pPopulationMissionsGroup_, parent, data_.populationMissions_, ADN_Models_Data::ModelInfos::ePopulation );
 }
 
 // -----------------------------------------------------------------------------

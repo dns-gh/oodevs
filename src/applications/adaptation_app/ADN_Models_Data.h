@@ -134,6 +134,7 @@ public:
 
     void            FilesNeeded(T_StringList& l) const;
     void            Reset();
+    std::string     GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& model );
 
     T_ModelInfos_Vector&    GetUnitModelsInfos();
     ModelInfos*             FindUnitModel( const std::string& strName );
@@ -159,6 +160,38 @@ private:
 };
 
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::GetModelsThatUse
+// Created: ABR 2011-09-29
+// -----------------------------------------------------------------------------
+inline
+std::string ADN_Models_Data::GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& mission )
+{
+    std::string strResult = "";
+    T_ModelInfos_Vector* currentVector = 0;
+    if( type == ModelInfos::ePawn )
+        currentVector = &vUnitModels_;
+    else if( type == ModelInfos::eAutomat )
+        currentVector = &vAutomataModels_;
+    else
+        currentVector = &vPopulationModels_;
+    for( IT_ModelInfos_Vector it = currentVector->begin(); it != currentVector->end(); ++it )
+    {
+        ModelInfos* pModel = *it;
+        if( !pModel )
+            continue;
+        for( IT_MissionInfos_Vector missionIt = pModel->vMissions_.begin(); missionIt != pModel->vMissions_.end(); ++missionIt )
+            if( ( *missionIt )->mission_ == &mission )
+            {
+                if( strResult != "" )
+                    strResult += "<br>";
+                strResult += "<nobr>" + pModel->strName_.GetData() + "</nobr>";
+                break;
+            }
+    }
+    return strResult;
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Models_Data::GetUnitModelsInfos
 // Created: JDY 03-07-24
@@ -168,7 +201,6 @@ ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetUnitModelsInfos()
 {
     return vUnitModels_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Models_Data::FindUnitModel
@@ -183,7 +215,6 @@ ADN_Models_Data::ModelInfos* ADN_Models_Data::FindUnitModel( const std::string& 
     return *it;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Models_Data::GetAutomataModelsInfos
 // Created: APE 2004-12-01
@@ -193,7 +224,6 @@ ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetAutomataModelsInfos()
 {
     return vAutomataModels_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Models_Data::FindAutomataModel
@@ -217,7 +247,6 @@ ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetPopulationModelsInfos(
 {
     return vPopulationModels_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Models_Data::FindPopulationModel
