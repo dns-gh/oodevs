@@ -30,7 +30,6 @@ namespace launcher
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, CheckpointDeleteRequest , checkpoint_delete_request )
     GENERATE_MESSAGE( sword::AdminToLauncher, sword, SessionNotificationRequest , session_notification )
 
-
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, ConnectionResponse          , connection_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, ExerciseListResponse  , exercise_list_response )
     GENERATE_MESSAGE( sword::LauncherToAdmin, sword, SessionListResponse, session_list_response )

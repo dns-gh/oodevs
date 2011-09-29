@@ -21,8 +21,8 @@ using namespace frontend;
 // Created: SBO 2010-10-21
 // -----------------------------------------------------------------------------
 RemoteHost::RemoteHost( LauncherPublisher& publisher, const std::string& host, kernel::Controller& controller )
-    : publisher_( publisher )
-    , id_( host )
+    : publisher_ ( publisher )
+    , id_        ( host )
     , controller_( controller )
 {
     // NOTHING
@@ -246,7 +246,7 @@ void RemoteHost::Handle( const sword::CheckpointDeleteResponse& /*message*/ )
 // Name: RemoteHost::Pause
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteHost::Pause(const std::string& exercise, const std::string& session) const
+void RemoteHost::Pause( const std::string& exercise, const std::string& session ) const
 {
     launcher::SessionCommandExecutionRequest message;
     message().set_exercise( exercise );
@@ -259,7 +259,7 @@ void RemoteHost::Pause(const std::string& exercise, const std::string& session) 
 // Name: RemoteHost::Resume
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteHost::Resume(const std::string& exercise, const std::string& session) const
+void RemoteHost::Resume( const std::string& exercise, const std::string& session ) const
 {
     launcher::SessionCommandExecutionRequest message;
     message().set_exercise( exercise );
@@ -272,7 +272,7 @@ void RemoteHost::Resume(const std::string& exercise, const std::string& session)
 // Name: RemoteHost::SaveCheckpoint
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteHost::SaveCheckpoint(const std::string& exercise, const std::string& session, const std::string& name) const
+void RemoteHost::SaveCheckpoint( const std::string& exercise, const std::string& session, const std::string& name ) const
 {
     launcher::SessionCommandExecutionRequest message;
     message().set_exercise( exercise );
@@ -298,7 +298,7 @@ void RemoteHost::ChangeDateTime( const std::string& exercise, const std::string&
 // Name: RemoteHost::QueryConnectedProfileList
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteHost::QueryConnectedProfileList( const std::string& exercise, const std::string& session) const
+void RemoteHost::QueryConnectedProfileList( const std::string& exercise, const std::string& session ) const
 {
     launcher::ConnectedProfileListRequest message;
     message().set_exercise( exercise );

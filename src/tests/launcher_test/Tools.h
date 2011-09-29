@@ -256,7 +256,7 @@ namespace launcher_test
             timeout.Start();
             while( !message.IsInitialized()&& !timeout.Expired() )
                 Update();
-            LAUNCHER_CHECK_MESSAGE( message, expected.c_str() );
+            LAUNCHER_CHECK_MESSAGE( message, expected );
             mock::verify();
         }
         void VerifySendAuthRequest( const std::string& expected )

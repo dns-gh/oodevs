@@ -44,11 +44,11 @@ public:
     virtual void StartDispatcher( const std::string& exercise, const std::string& session, const T_Parameters& parameters ) const = 0;
     virtual void StartReplay( const std::string& exercise, const std::string& session ) const = 0;
     virtual void StopSession( const std::string& exercise, const std::string& session ) const = 0;
-    virtual void QueryProfileList(const std::string& exercise) const = 0;
-    virtual void Pause( const std::string& exercise, const std::string& session) const = 0;
-    virtual void Resume( const std::string& exercise, const std::string& session) const = 0;
+    virtual void QueryProfileList( const std::string& exercise ) const = 0;
+    virtual void Pause( const std::string& exercise, const std::string& session ) const = 0;
+    virtual void Resume( const std::string& exercise, const std::string& session ) const = 0;
     virtual void ChangeDateTime( const std::string& exercise, const std::string& session, const std::string& date ) const = 0;
-    virtual void SaveCheckpoint( const std::string& exercise, const std::string& session, const std::string& name) const = 0;
+    virtual void SaveCheckpoint( const std::string& exercise, const std::string& session, const std::string& name ) const = 0;
     virtual void QueryConnectedProfileList( const std::string& exercise, const std::string& session ) const = 0;
     //@}
 };
