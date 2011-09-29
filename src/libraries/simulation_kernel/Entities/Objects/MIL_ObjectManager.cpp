@@ -357,6 +357,8 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
             const sword::MissionParameters& params = msg.parameters();
             if( params.elem_size() && params.elem( 0 ).value_size() && params.elem( 0 ).value().Get( 0 ).list_size() )
                 nErrorCode = pObject->OnUpdate( params.elem( 0 ).value() );
+            else
+                nErrorCode = sword::ObjectMagicActionAck::error_invalid_specific_attributes;
         }
     }
     client::ObjectMagicActionAck asnReplyMsg;
