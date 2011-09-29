@@ -65,23 +65,15 @@ namespace
 SimulationFacade::SimulationFacade( const ContextFactory_ABC& contextFactory, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
                                     dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel,
                                     const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
-                                    RemoteAgentSubject_ABC& remoteAgentSubject, const LocalAgentResolver_ABC& localAgentResolver )
-    : contextFactory_        ( contextFactory )
-    , messageController_     ( messageController )
-    , publisher_             ( publisher )
-    , dynamicModel_          ( dynamicModel )
-    , staticModel_           ( staticModel )
-    , unitTypeResolver_      ( unitTypeResolver )
-    , remoteAgentSubject_    ( remoteAgentSubject )
-    , localAgentResolver_    ( localAgentResolver )
-    , pFormationHandler_     ( new FormationContextHandler( messageController, contextFactory, publisher ) )
+                                    RemoteAgentSubject_ABC& remoteAgentSubject )
+    : pFormationHandler_     ( new FormationContextHandler( messageController, contextFactory, publisher ) )
     , pAutomatHandler_       ( new AutomatContextHandler( messageController, contextFactory, publisher ) )
     , pUnitHandler_          ( new UnitContextHandler( messageController, contextFactory, publisher ) )
-    , pAutomatDisengager_    ( new AutomatDisengager( *pAutomatHandler_, publisher_, contextFactory_ ) )
-    , pFormationCreater_     ( new FormationCreater( dynamicModel_.Sides(), *pFormationHandler_ ) )
-    , pAutomatCreater_       ( new AutomatCreater( *pFormationHandler_, *pAutomatHandler_, staticModel_.types_, dynamicModel_.KnowledgeGroups() ) )
-    , pUnitTeleporter_       ( new UnitTeleporter( remoteAgentSubject_, *pUnitHandler_, publisher_, contextFactory_ ) )
-    , pRemoteAgentController_( new RemoteAgentController( remoteAgentSubject_, *pAutomatHandler_, *pUnitHandler_, dynamicModel_.Sides(), unitTypeResolver_ ) )
+    , pAutomatDisengager_    ( new AutomatDisengager( *pAutomatHandler_, publisher, contextFactory ) )
+    , pFormationCreater_     ( new FormationCreater( dynamicModel.Sides(), *pFormationHandler_ ) )
+    , pAutomatCreater_       ( new AutomatCreater( *pFormationHandler_, *pAutomatHandler_, staticModel.types_, dynamicModel.KnowledgeGroups() ) )
+    , pUnitTeleporter_       ( new UnitTeleporter( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory ) )
+    , pRemoteAgentController_( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, dynamicModel.Sides(), unitTypeResolver ) )
 {
     // NOTHING
 }
