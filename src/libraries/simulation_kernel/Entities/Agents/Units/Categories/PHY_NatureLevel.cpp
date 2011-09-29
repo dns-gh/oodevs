@@ -22,9 +22,9 @@ PHY_NatureLevel::T_NatureLevelMap PHY_NatureLevel::natureLevels_;
 void PHY_NatureLevel::Initialize()
 {
     natureLevels_[ "none"  ] = new PHY_NatureLevel( "none" , eNatureLevel_none , sword::none_naturelevel  );
-    natureLevels_[ "b"     ] = new PHY_NatureLevel( "b"    , eNatureLevel_o    , sword::b     );
+    natureLevels_[ "b"     ] = new PHY_NatureLevel( "b"    , eNatureLevel_b    , sword::b     );
     natureLevels_[ "o"     ] = new PHY_NatureLevel( "o"    , eNatureLevel_o    , sword::o     );
-    natureLevels_[ "c"     ] = new PHY_NatureLevel( "c"    , eNatureLevel_o    , sword::c     );
+    natureLevels_[ "c"     ] = new PHY_NatureLevel( "c"    , eNatureLevel_c    , sword::c     );
     natureLevels_[ "oo"    ] = new PHY_NatureLevel( "oo"   , eNatureLevel_oo   , sword::oo    );
     natureLevels_[ "ooo"   ] = new PHY_NatureLevel( "ooo"  , eNatureLevel_ooo  , sword::ooo   );
     natureLevels_[ "i"     ] = new PHY_NatureLevel( "i"    , eNatureLevel_i    , sword::i     );
