@@ -101,10 +101,14 @@ ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attri
     : obstacle_      ( ( sword::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
     , bActivated_    ( attributes.list( 2 ).booleanvalue() )
     , activationTime_( attributes.list( 3 ).quantity() )
-    , activityTime_  ( attributes.list( 4 ).quantity() )
-    , endActivity_   ( activationTime_ + activityTime_ )
+    , activityTime_  ( 0 )
+    , endActivity_   ( 0 )
 {
-    // NOTHING
+    if( attributes.list_size() > 4 )
+        activityTime_  = attributes.list( 4 ).quantity();
+    if( activationTime_ != 0 && activityTime_ == 0 )  // $$$$ _RC_ LGY 2011-08-31: default 6h
+        activityTime_ = 21600;
+    endActivity_ = activationTime_ + activationTime_;
 }
 
 // -----------------------------------------------------------------------------
