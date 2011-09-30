@@ -83,7 +83,7 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_entity_type_attribute_and
 
 BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_silent_entities_attribute_and_notifies_listener_for_each_entity, Fixture )
 {
-    const uint32 numberOfSilentEntities = 2;
+    const uint16 numberOfSilentEntities = 2;
     serializer << numberOfSilentEntities;
     aggregate.Deserialize( "NumberOfSilentEntities", Deserialize() );
     serializer = ::hla::Serializer();
