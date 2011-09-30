@@ -49,7 +49,7 @@ private:
     //@{
     virtual void SendCreation() const;
     virtual void SendDestruction();
-    void LocalUpdate( const sword::MissionParameters& msg );
+    void LocalUpdate( const sword::MissionParameters& msg, bool isCreation = false );
     //@}
 
 private:
