@@ -20,10 +20,17 @@ namespace dispatcher
     class Agent_ABC;
 }
 
+namespace rpr
+{
+    class EntityTypeResolver_ABC;
+}
+
 namespace plugins
 {
 namespace hla
 {
+    class ComponentTypes_ABC;
+
 // =============================================================================
 /** @class  AgentProxy
     @brief  Agent proxy
@@ -37,7 +44,7 @@ class AgentProxy : public Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentProxy( dispatcher::Agent_ABC& agent );
+             AgentProxy( dispatcher::Agent_ABC& agent, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver );
     virtual ~AgentProxy();
     //@}
 
@@ -64,6 +71,8 @@ private:
     //! @name Member data
     //@{
     const dispatcher::Agent_ABC& agent_;
+    const ComponentTypes_ABC& componentTypes_;
+    const rpr::EntityTypeResolver_ABC& componentTypeResolver_;
     T_Listeners listeners_;
     //@}
 };

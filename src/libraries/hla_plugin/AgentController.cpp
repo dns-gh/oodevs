@@ -27,8 +27,10 @@ using namespace plugins::hla;
 // Name: AgentController constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentController::AgentController( const rpr::EntityTypeResolver_ABC& resolver )
-    : resolver_( resolver )
+AgentController::AgentController( const rpr::EntityTypeResolver_ABC& aggregatesResolver, const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes )
+    : aggregatesResolver_   ( aggregatesResolver )
+    , componentTypeResolver_( componentTypeResolver )
+    , componentTypes_       ( componentTypes )
 {
     // NOTHING
 }
@@ -68,10 +70,10 @@ void AgentController::Visit( dispatcher::Model_ABC& model )
         dispatcher::Agent_ABC& agent = const_cast< dispatcher::Agent_ABC& >( it.NextElement() ); // $$$$ _RC_ SLI 2011-09-28: erk...
         if( !boost::algorithm::starts_with( agent.GetName().toStdString(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
         {
-            agents_.push_back( T_Agent( new AgentProxy( agent ) ) );
+            agents_.push_back( T_Agent( new AgentProxy( agent, componentTypes_, componentTypeResolver_ ) ) );
             const std::string type = agent.GetType().GetName();
             for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-                (*it)->Created( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), GetForce( agent ), resolver_.Find( type ) );
+                (*it)->Created( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), GetForce( agent ), aggregatesResolver_.Find( type ) );
         }
     }
 }

@@ -18,7 +18,6 @@
 #include "Dimension.h"
 #include "AttributesSerializer.h"
 #include "rpr/EntityIdentifier.h"
-#include "rpr/EntityType.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 
@@ -78,9 +77,10 @@ void AggregateEntity::Deserialize( const ::hla::AttributeIdentifier& /*identifie
 
 namespace
 {
-    bool Find( unsigned int type, const std::pair< unsigned int, unsigned int >& value )
+    template< typename T >
+    bool Find( unsigned int type, const T& value )
     {
-        return value.first == type;
+        return value.type_ == type;
     }
 }
 
@@ -88,17 +88,17 @@ namespace
 // Name: AggregateEntity::EquipmentChanged
 // Created: SLI 2011-02-07
 // -----------------------------------------------------------------------------
-void AggregateEntity::EquipmentChanged( unsigned int type, unsigned int available )
+void AggregateEntity::EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available )
 {
-    IT_Equipments result = std::find_if( equipments_.begin(), equipments_.end(), boost::bind( &::Find, type, _1 ) );
+    IT_Equipments result = std::find_if( equipments_.begin(), equipments_.end(), boost::bind( &::Find< T_Equipment >, type, _1 ) );
     if( result == equipments_.end() )
-        equipments_.push_back( std::make_pair( type, available ) );
+        equipments_.push_back( T_Equipment( type, available, entityType ) );
     else
-        result->second = available;
+        result->available_ = available;
     attributes_->Update( "NumberOfSilentEntities", Wrapper< unsigned short >( static_cast< unsigned short >( equipments_.size() ) ) );
     std::vector< SilentEntity > entities;
     BOOST_FOREACH( const T_Equipment& equipment, equipments_ )
-        entities.push_back( SilentEntity( rpr::EntityType ( "1 1 225 1" ), static_cast< unsigned short >( equipment.second ) ) ); // $$$$ _RC_ SLI 2011-06-16: resolve platform types
+        entities.push_back( SilentEntity( equipment.entityType_, static_cast< unsigned short >( equipment.available_ ) ) );
     attributes_->Update( "SilentEntities", Wrapper< std::vector< SilentEntity > >( entities ) );
 }
 

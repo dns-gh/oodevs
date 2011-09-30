@@ -67,7 +67,7 @@ public:
              SimulationFacade( const ContextFactory_ABC& contextFactory, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
                                const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
-                               RemoteAgentSubject_ABC& remoteAgentSubject );
+                               RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes );
     virtual ~SimulationFacade();
     //@}
 
@@ -84,7 +84,6 @@ private:
     std::auto_ptr< ContextHandler_ABC< sword::FormationCreation > > pFormationHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::AutomatCreation > > pAutomatHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::UnitCreation > > pUnitHandler_;
-    std::auto_ptr< ComponentTypes_ABC > pComponentTypes_;
     std::auto_ptr< AutomatDisengager > pAutomatDisengager_;
     std::auto_ptr< FormationCreater > pFormationCreater_;
     std::auto_ptr< AutomatCreater > pAutomatCreater_;

@@ -31,6 +31,7 @@ namespace plugins
 namespace hla
 {
     class Agent_ABC;
+    class ComponentTypes_ABC;
 
 // =============================================================================
 /** @class  AgentController
@@ -43,7 +44,7 @@ class AgentController : public AgentSubject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentController( const rpr::EntityTypeResolver_ABC& resolver );
+             AgentController( const rpr::EntityTypeResolver_ABC& aggregatesResolver, const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes );
     virtual ~AgentController();
     //@}
 
@@ -66,7 +67,9 @@ private:
 private:
     //! @name Member data
     //@{
-    const rpr::EntityTypeResolver_ABC& resolver_;
+    const rpr::EntityTypeResolver_ABC& aggregatesResolver_;
+    const rpr::EntityTypeResolver_ABC& componentTypeResolver_;
+    const ComponentTypes_ABC& componentTypes_;
     T_Listeners listeners_;
     T_Agents agents_;
     //@}

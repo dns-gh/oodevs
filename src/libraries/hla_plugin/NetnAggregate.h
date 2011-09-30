@@ -48,7 +48,7 @@ private:
     //@{
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
     virtual void FormationChanged( bool isOnRoad );
-    virtual void EquipmentChanged( unsigned int type, unsigned int available );
+    virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available );
     virtual void EmbarkmentChanged( bool mounted );
     //@}
 

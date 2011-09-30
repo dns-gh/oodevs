@@ -17,7 +17,6 @@
 #include "RemoteAgentController.h"
 #include "UnitTeleporter.h"
 #include "EquipmentUpdater.h"
-#include "ComponentTypes.h"
 #include "protocol/Simulation.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/StaticModel.h"
@@ -67,16 +66,15 @@ namespace
 SimulationFacade::SimulationFacade( const ContextFactory_ABC& contextFactory, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
                                     dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
                                     const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
-                                    RemoteAgentSubject_ABC& remoteAgentSubject )
+                                    RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes )
     : pFormationHandler_     ( new FormationContextHandler( messageController, contextFactory, publisher ) )
     , pAutomatHandler_       ( new AutomatContextHandler( messageController, contextFactory, publisher ) )
     , pUnitHandler_          ( new UnitContextHandler( messageController, contextFactory, publisher ) )
-    , pComponentTypes_       ( new ComponentTypes( staticModel.types_ ) )
     , pAutomatDisengager_    ( new AutomatDisengager( *pAutomatHandler_, publisher, contextFactory ) )
     , pFormationCreater_     ( new FormationCreater( dynamicModel.Sides(), *pFormationHandler_ ) )
     , pAutomatCreater_       ( new AutomatCreater( *pFormationHandler_, *pAutomatHandler_, staticModel.types_, dynamicModel.KnowledgeGroups() ) )
     , pUnitTeleporter_       ( new UnitTeleporter( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory ) )
-    , pEquipmentUpdater_     ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, *pComponentTypes_ ) )
+    , pEquipmentUpdater_     ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes ) )
     , pRemoteAgentController_( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, dynamicModel.Sides(), unitTypeResolver ) )
 {
     // NOTHING

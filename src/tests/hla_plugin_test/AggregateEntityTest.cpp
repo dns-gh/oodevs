@@ -36,6 +36,7 @@ namespace
         MockAgent agent;
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
+        rpr::EntityType entityType;
     };
     class RegisteredFixture : public Fixture
     {
@@ -157,8 +158,8 @@ BOOST_FIXTURE_TEST_CASE( agent_updates_already_known_equipment, RegisteredFixtur
 {
     const unsigned short numberOfSilentEntity = 1;
     BOOST_REQUIRE( listener );
-    listener->EquipmentChanged( 1u, 1u );
-    listener->EquipmentChanged( 1u, 2u );
+    listener->EquipmentChanged( 1u, entityType, 1u );
+    listener->EquipmentChanged( 1u, entityType, 2u );
     MOCK_EXPECT( functor, Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
     MOCK_EXPECT( functor, Visit ).once().with( "SilentEntities", boost::bind( &CheckSize, _1, 1 * SILENT_ENTITY_SIZE ) );
     MOCK_EXPECT( functor, Visit );
@@ -169,8 +170,8 @@ BOOST_FIXTURE_TEST_CASE( agent_serializes_silent_entities_number, RegisteredFixt
 {
     const unsigned short numberOfSilentEntity = 2;
     BOOST_REQUIRE( listener );
-    listener->EquipmentChanged( 1u, 1u );
-    listener->EquipmentChanged( 2u, 2u );
+    listener->EquipmentChanged( 1u, entityType, 1u );
+    listener->EquipmentChanged( 2u, entityType, 2u );
     MOCK_EXPECT( functor, Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
     MOCK_EXPECT( functor, Visit ).once().with( "SilentEntities", boost::bind( &CheckSize, _1, 2 * SILENT_ENTITY_SIZE ) );
     MOCK_EXPECT( functor, Visit );
@@ -200,7 +201,7 @@ BOOST_FIXTURE_TEST_CASE( formation_changed_event_is_serialized, RegisteredFixtur
 BOOST_FIXTURE_TEST_CASE( equipment_changed_event_is_serialized, RegisteredFixture )
 {
     BOOST_REQUIRE( listener );
-    listener->EquipmentChanged( 1u, 2u );
+    listener->EquipmentChanged( 1u, entityType, 2u );
     mock::sequence s;
     MOCK_EXPECT( functor, Visit ).once().in( s ).with( "NumberOfSilentEntities", mock::any );
     MOCK_EXPECT( functor, Visit ).once().in( s ).with( "SilentEntities", mock::any );

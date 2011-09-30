@@ -85,7 +85,7 @@ void NetnAggregate::FormationChanged( bool /*isOnRoad*/ )
 // Name: NetnAggregate::EquipmentChanged
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void NetnAggregate::EquipmentChanged( unsigned int /*type*/, unsigned int /*available*/ )
+void NetnAggregate::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/ )
 {
     // NOTHING
 }

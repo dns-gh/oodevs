@@ -12,6 +12,11 @@
 
 #include <boost/noncopyable.hpp>
 
+namespace rpr
+{
+    class EntityType;
+}
+
 namespace plugins
 {
 namespace hla
@@ -35,7 +40,7 @@ public:
     //@{
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction ) = 0;
     virtual void FormationChanged( bool isOnRoad ) = 0;
-    virtual void EquipmentChanged( unsigned int type, unsigned int available ) = 0;
+    virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available ) = 0;
     virtual void EmbarkmentChanged( bool mounted ) = 0;
     //@}
 };

@@ -56,6 +56,7 @@ namespace hla
     class MunitionTypeResolver_ABC;
     class LocalAgentResolver_ABC;
     class RemoteAgentResolver_ABC;
+    class ComponentTypes_ABC;
     class ContextFactory_ABC;
     class SimulationFacade;
     class InteractionsFacade;
@@ -103,6 +104,7 @@ private:
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pAggregateTypeResolver_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pComponentTypeResolver_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityMunitionTypeResolver_;
+    std::auto_ptr< ComponentTypes_ABC > pComponentTypes_;
     std::auto_ptr< UnitTypeResolver_ABC > pUnitTypeResolver_;
     std::auto_ptr< MunitionTypeResolver_ABC > pMunitionTypeResolver_;
     std::auto_ptr< LocalAgentResolver_ABC > pLocalAgentResolver_;

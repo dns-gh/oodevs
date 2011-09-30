@@ -13,6 +13,7 @@
 #include "Aggregate_ABC.h"
 #include "EventListener_ABC.h"
 #include "rpr/ForceIdentifier.h"
+#include "rpr/EntityType.h"
 #include <vector>
 
 namespace hla
@@ -62,14 +63,25 @@ private:
     //@{
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
     virtual void FormationChanged( bool isOnRoad );
-    virtual void EquipmentChanged( unsigned int type, unsigned int available );
+    virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available );
     virtual void EmbarkmentChanged( bool mounted );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::pair< unsigned int, unsigned int > T_Equipment;
+    struct T_Equipment
+    {
+        T_Equipment(){}
+        T_Equipment( unsigned int type, unsigned int available, const rpr::EntityType& entityType )
+            : type_      ( type )
+            , available_ ( available )
+            , entityType_( entityType )
+        {}
+        unsigned int type_;
+        unsigned int available_;
+        rpr::EntityType entityType_;
+    };
     typedef std::vector< T_Equipment >  T_Equipments;
     typedef T_Equipments::iterator     IT_Equipments;
     //@}
