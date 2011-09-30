@@ -133,7 +133,7 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
 // -----------------------------------------------------------------------------
 unsigned long MIL_ObjectManager::Count() const
 {
-    return static_cast< unsigned long >( objects_.size() );
+    return static_cast< unsigned long >( objects_.size() - urbanObjects_.size() );
 }
 
 // -----------------------------------------------------------------------------
