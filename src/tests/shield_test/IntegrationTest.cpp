@@ -34,7 +34,7 @@ namespace
     };
 
     template< typename C, typename F >
-    void wait( C condition, F flush, int timeout = 1000, int sleep = 100 )
+    void wait( C condition, F flush, int timeout = 10000, int sleep = 100 )
     {
         while( !condition() && timeout > 0 )
         {
