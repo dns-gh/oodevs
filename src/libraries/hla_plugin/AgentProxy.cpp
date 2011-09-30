@@ -15,6 +15,7 @@
 #include "rpr/EntityTypeResolver_ABC.h"
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Equipment.h"
+#include "clients_kernel/AgentType.h"
 #include <spatialcontainer/TerrainData.h> // $$$$ _RC_ SLI 2011-02-07: dependency on pathfind!!!
 #include <algorithm>
 #include <boost/foreach.hpp>
@@ -35,7 +36,7 @@ namespace
         {
             // NOTHING
         }
-        virtual void NotifyEquipment( unsigned int typeIdentifier, const std::string& typeName, unsigned int number )
+        virtual void NotifyEquipment( unsigned int typeIdentifier, const std::string& typeName, unsigned int /*number*/ )
         {
             if( typeIdentifier == componentTypeIdentifier_ )
             {
@@ -49,10 +50,10 @@ namespace
         const rpr::EntityTypeResolver_ABC& componentTypeResolver_;
         EventListener_ABC& listener_;
     };
-    void NotifyEquipment( EventListener_ABC& listener, const dispatcher::Equipment& equipment, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver, unsigned int agentIdentifier )
+    void NotifyEquipment( EventListener_ABC& listener, const dispatcher::Equipment& equipment, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver, unsigned long agentTypeIdentifier )
     {
         ComponentVisitor visitor( equipment.nEquipmentType_, equipment.nNbrAvailable_, componentTypeResolver, listener );
-        componentTypes.Apply( agentIdentifier, visitor );
+        componentTypes.Apply( agentTypeIdentifier, visitor );
     }
 }
 
@@ -88,7 +89,7 @@ void AgentProxy::Register( EventListener_ABC& listener )
     listeners_.push_back( &listener );
     listener.SpatialChanged( agent_.GetPosition().X(), agent_.GetPosition().Y(),
                              agent_.GetAltitude(), agent_.GetSpeed(), agent_.GetDirection() );
-    agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( listener ), _1, boost::cref( componentTypes_ ), boost::cref( componentTypeResolver_ ), agent_.GetId() ) );
+    agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( listener ), _1, boost::cref( componentTypes_ ), boost::cref( componentTypeResolver_ ), agent_.GetType().GetId() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +113,7 @@ void AgentProxy::Notify( const sword::UnitAttributes& attributes )
                                       agent_.GetAltitude(), agent_.GetSpeed(), agent_.GetDirection() );
     if( attributes.has_equipment_dotations() )
         BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-            agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( *listener ), _1, boost::cref( componentTypes_ ), boost::cref( componentTypeResolver_ ), agent_.GetId() ) );
+            agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( *listener ), _1, boost::cref( componentTypes_ ), boost::cref( componentTypeResolver_ ), agent_.GetType().GetId() ) );
     if( attributes.has_embarked() )
         BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
             listener->EmbarkmentChanged( agent_.IsMounted() );
