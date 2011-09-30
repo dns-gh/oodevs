@@ -65,17 +65,10 @@ void Socket::Send( unsigned long tag, const Message& message )
 // -----------------------------------------------------------------------------
 void Socket::Sent( const Message& , const boost::system::error_code& error )
 {
-    if( error && error != previous_)
+    if( error && error != boost::asio::error::operation_aborted && error != previous_)
     {
-        if( error != boost::asio::error::operation_aborted  )
-        {
-            previous_ = error;
-            message_->OnError( endpoint_, error.message() );
-        }
-        else
-        {
-            message_->OnError( endpoint_, error.message() );
-        }
+        previous_ = error;
+        message_->OnError( endpoint_, error.message() );
     }
 }
 
@@ -101,7 +94,7 @@ void Socket::HeaderRead( Message& header, const boost::system::error_code& error
     {
         unsigned long size;
         header >> size;
-        static const unsigned long limit = 1024 * 1024; // 1024 kB
+        static const unsigned long limit = 32 * 1024; // 32 kB
         if( size > limit )
             message_->OnError( endpoint_,
                 "Message size too large : " + boost::lexical_cast< std::string >( size ) );
