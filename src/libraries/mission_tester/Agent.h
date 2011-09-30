@@ -11,6 +11,7 @@
 #define __Agent_h_
 
 #include "Entity.h"
+#include "Model.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "tools/Resolver_ABC.h"
 #pragma warning( push, 0 )

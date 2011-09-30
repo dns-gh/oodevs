@@ -11,7 +11,9 @@
 #define __Scheduler_h_
 
 #include "Scheduler_ABC.h"
-#pragma warning( push, 0 )
+#include "Model.h"
+#pragma warning( push )
+#pragma warning( disable : 4244 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 #include <vector>
@@ -31,14 +33,14 @@ class Scheduler : public Scheduler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Scheduler( std::auto_ptr< Filter_ABC > filter, unsigned int delta, bool withFragOrders );
+             Scheduler( std::auto_ptr< Filter_ABC > filter, unsigned int delta, bool withFragOrders, unsigned int recompletionFreq );
     virtual ~Scheduler();
     //@}
 
     //! @name Operations
     //@{
     virtual void Schedule( boost::shared_ptr< Schedulable_ABC > schedulable );
-    virtual void Step( Exercise& exercise );
+    virtual void Step( Exercise& exercise, Model& model );
     //@}
 
 private:
@@ -56,6 +58,8 @@ private:
     boost::posix_time::ptime last_;
     unsigned int delta_;
     bool withFragOrders_;
+    unsigned int recompletionFreq_;
+    unsigned int recompletionCountDown_;
     //@}
 };
 

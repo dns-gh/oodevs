@@ -10,6 +10,7 @@
 #ifndef __ParameterFactory_h_
 #define __ParameterFactory_h_
 
+#include "Model.h"
 #include <boost/noncopyable.hpp>
 #include <vector>
 
@@ -65,7 +66,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ParameterFactory( const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller,
-                               const kernel::EntityResolver_ABC& entityResolver, xml::xistream& xis );
+                               const kernel::EntityResolver_ABC& entityResolver, xml::xistream& xis, const Model& model );
     virtual ~ParameterFactory();
     //@}
 
@@ -89,11 +90,12 @@ private:
     std::auto_ptr< actions::Parameter_ABC > CreatePhaselineParameter( const kernel::OrderParameter& parameter ) const;
     std::auto_ptr< actions::Parameter_ABC > CreateLimitParameter( const kernel::OrderParameter& parameter ) const;
     std::auto_ptr< actions::Parameter_ABC > CreatePointParameter( const kernel::OrderParameter& parameter ) const;
-    std::auto_ptr< actions::Parameter_ABC > CreatePathParameter( const kernel::OrderParameter& parameter ) const;
+    std::auto_ptr< actions::Parameter_ABC > CreatePathParameter( const kernel::OrderParameter& parameter/*, const Entity_ABC& target*/ ) const;
     std::auto_ptr< actions::Parameter_ABC > CreateAgentParameter( const kernel::OrderParameter& parameter ) const;
     std::auto_ptr< actions::Parameter_ABC > CreateAutomatParameter( const kernel::OrderParameter& parameter ) const;
     std::auto_ptr< actions::Parameter_ABC > CreatePolygonParameter( const kernel::OrderParameter& parameter ) const;
-    //@}
+    std::auto_ptr< actions::Parameter_ABC > CreateLocationCompositeParameter( const kernel::OrderParameter& parameter ) const;
+	//@}
 
 private:
     //! @name Member data
@@ -103,6 +105,7 @@ private:
     const kernel::EntityResolver_ABC& entityResolver_;
     Coordinates upperLeft_;
     Coordinates lowerRight_;
+    const Model& model_;
     //@}
 };
 

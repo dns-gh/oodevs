@@ -63,6 +63,7 @@ public:
     virtual bool Start( Exercise& exercise, bool withFragOrders );
     bool StartMission( Exercise& exercise );
     bool StartFragOrder( Exercise& exercise );
+    //bool Recomplete( Exercise& exercise );
 
     virtual QString GetTypeName() const;
     //@}
@@ -72,6 +73,7 @@ private:
     //@{
     const unsigned long id_;
     const QString name_;
+    unsigned int recompletionCountDown_;
     std::auto_ptr< tools::Iterator_ABC< const kernel::Mission& > > currentMission_;
     std::auto_ptr< tools::Iterator_ABC< const kernel::FragOrder& > > currentFragOrder_;
     //@}

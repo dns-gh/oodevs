@@ -10,6 +10,7 @@
 #ifndef __Scheduler_ABC_h_
 #define __Scheduler_ABC_h_
 
+#include "Model.h"
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -36,7 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual void Schedule( boost::shared_ptr< Schedulable_ABC > schedulable ) = 0;
-    virtual void Step( Exercise& exercise ) = 0;
+    virtual void Step( Exercise& exercise, Model& model ) = 0;
     //@}
 };
 

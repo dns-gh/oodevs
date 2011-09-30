@@ -10,6 +10,8 @@
 #ifndef mission_tester_exercise_h
 #define mission_tester_exercise_h
 
+#include "Model.h"
+#include "clients_kernel/MagicActionType.h"
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -62,14 +64,16 @@ class Exercise : private boost::noncopyable
 public:
     //! @name Constructors / Destructors
     //@{
-             Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher, xml::xistream& xis );
+             Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher, xml::xistream& xis, const Model& model );
     virtual ~Exercise();
     //@}
 
     //! @name operations
     //@{
+    bool CreateMagicAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& mission );
     bool CreateFragOrder( const kernel::Entity_ABC& target, const kernel::FragOrderType& mission );
     bool CreateMission( const kernel::Entity_ABC& target, const kernel::MissionType& mission );
+    //bool CreateMagicAction( const kernel::Entity_ABC& target, const kernel::MagicActionType& mission, const QString magicAction );
     bool CreateOrder( const kernel::Entity_ABC& target, const kernel::OrderType& order, actions::Action_ABC* action ) const;
     void Register( Listener_ABC& listener );
     //@}
@@ -78,6 +82,7 @@ private:
     //! @name Helpers
     //@{
     void NotifyInvalidParameter( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const;
+    void NotifyMagicActionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     void NotifyMissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     void NotifyFragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     //@}

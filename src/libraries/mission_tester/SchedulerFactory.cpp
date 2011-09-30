@@ -20,9 +20,10 @@ using namespace mission_tester;
 // Created: PHC 2011-04-04
 // -----------------------------------------------------------------------------
 SchedulerFactory::SchedulerFactory( unsigned int delta, bool withFragOrders )
-    : filterFactory_ ( new FilterFactory() )
-    , delta_         ( delta )
-    , withFragOrders_( withFragOrders )
+    : filterFactory_   ( new FilterFactory() )
+    , delta_           ( delta )
+    , withFragOrders_  ( withFragOrders )
+    , recompletionFreq_( 10 )
 {
     // NOTHING
 }
@@ -42,7 +43,7 @@ SchedulerFactory::~SchedulerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< Scheduler_ABC > SchedulerFactory::CreateAgentScheduler() const
 {
-    return std::auto_ptr< Scheduler_ABC >( new Scheduler( filterFactory_->Create( "agent" ), delta_, withFragOrders_ ) );
+    return std::auto_ptr< Scheduler_ABC >( new Scheduler( filterFactory_->Create( "agent" ), delta_, withFragOrders_, recompletionFreq_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,5 +52,5 @@ std::auto_ptr< Scheduler_ABC > SchedulerFactory::CreateAgentScheduler() const
 // -----------------------------------------------------------------------------
 std::auto_ptr< Scheduler_ABC > SchedulerFactory::CreateAutomatScheduler() const
 {
-    return std::auto_ptr< Scheduler_ABC >( new Scheduler( filterFactory_->Create( "automat" ), delta_, withFragOrders_ ) );
+    return std::auto_ptr< Scheduler_ABC >( new Scheduler( filterFactory_->Create( "automat" ), delta_, withFragOrders_, recompletionFreq_ ) );
 }

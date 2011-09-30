@@ -61,7 +61,7 @@ public:
     virtual std::auto_ptr< Client > CreateClient( SwordMessageHandler_ABC& handler ) const;
     virtual std::auto_ptr< SchedulerFactory > CreateSchedulerFactory() const;
     virtual std::auto_ptr< Timeout > CreateTimeout() const;
-    virtual std::auto_ptr< Exercise > CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher ) const;
+    virtual std::auto_ptr< Exercise > CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher, const Model& model ) const;
     virtual std::auto_ptr< Scheduler_ABC > CreateScheduler( SchedulerFactory& factory ) const;
     //@}
 

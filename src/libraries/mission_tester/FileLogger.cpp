@@ -86,6 +86,16 @@ void FileLogger::WriteHeader()
 }
 
 // -----------------------------------------------------------------------------
+// Name: FileLogger::MagicActionCreated
+// Created: RCD 2011-06-09
+// -----------------------------------------------------------------------------
+void FileLogger::MagicActionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission )
+{
+    UpdateLogger();
+    logger_->MagicActionCreated( target, mission );
+}
+
+// -----------------------------------------------------------------------------
 // Name: FileLogger::MissionCreated
 // Created: PHC 2011-05-23
 // -----------------------------------------------------------------------------
@@ -133,6 +143,16 @@ void FileLogger::MissionErrorAck( const sword::Tasker& tasker )
 {
     UpdateLogger();
     logger_->MissionErrorAck( tasker );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileLogger::MagicActionErrorAck
+// Created: RCD 2011-06-07
+// -----------------------------------------------------------------------------
+void FileLogger::MagicActionErrorAck( const sword::Tasker& tasker )
+{
+    UpdateLogger();
+    logger_->MagicActionErrorAck( tasker );
 }
 
 // -----------------------------------------------------------------------------

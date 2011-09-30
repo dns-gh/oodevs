@@ -22,6 +22,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/MissionType.h"
+#include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
@@ -65,7 +66,7 @@ namespace
 // Name: Exercise constructor
 // Created: PHC 2011-03-21
 // -----------------------------------------------------------------------------
-Exercise::Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher, xml::xistream& xis )
+Exercise::Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher, xml::xistream& xis, const Model& model )
     : publisher_               ( publisher )
     , controller_              ( new kernel::Controller() )
     , time_                    ( new SimulationTime() )
@@ -74,9 +75,10 @@ Exercise::Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticMo
     , parameterFactory_        ( new actions::ActionParameterFactory( staticModel.coordinateConverter_, entities, staticModel,
                                                                       *agentKnowledgeConverter_, *objectKnowledgeConverter_, *controller_ ) )
     , actionFactory_           ( new actions::ActionFactory( *controller_, *parameterFactory_, entities, staticModel, *time_ ) )
-    , factory_                 ( new ParameterFactory( staticModel.coordinateConverter_, *controller_, entities, xis/*, staticModel.objectTypes_*/ ) )
+    , factory_                 ( new ParameterFactory( staticModel.coordinateConverter_, *controller_, entities, xis, model ) )
 {
-    // NOTHING
+	std::cout << "exe" << std::endl;
+	// NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -126,6 +128,23 @@ bool Exercise::CreateMission( const kernel::Entity_ABC& target, const kernel::Mi
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::CreateMagicAction
+// Created: RCD 2011-05-30
+// -----------------------------------------------------------------------------
+/*bool Exercise::CreateMagicAction( const kernel::Entity_ABC& target, const kernel::MagicActionType& mission, const QString magicAction )
+{
+    std::auto_ptr< actions::Action_ABC > action( actionFactory_->CreateAction( target, mission, magicAction ) );
+    if( CreateOrder( target, mission, action.get() ) )
+    { 
+        NotifyMagicActionCreated( target, mission );
+        return true;
+    }
+    return false;
+}*/
+
+
 
 // -----------------------------------------------------------------------------
 // Name: Exercise::CreateFragOrder
@@ -185,6 +204,18 @@ void Exercise::NotifyInvalidParameter( const kernel::Entity_ABC& target, const k
     BOOST_FOREACH( Listener_ABC* listener, listeners_ )
         listener->ParameterCreationFailed( target, mission, parameter );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::NotifyMagicActionCreated
+// Created: RCD 2011-05-30
+// -----------------------------------------------------------------------------
+void Exercise::NotifyMagicActionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission )
+{
+    BOOST_FOREACH( Listener_ABC* listener, listeners_ )
+        listener->MagicActionCreated( target, mission );
+}
+
+
 
 // -----------------------------------------------------------------------------
 // Name: Exercise::NotifyMissionCreated

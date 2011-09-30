@@ -35,6 +35,7 @@ namespace mission_tester
    class Scheduler_ABC;
    class SchedulerFactory;
    class Timeout;
+   class Model;
 
 // =============================================================================
 /** @class  MainFactory_ABC
@@ -57,7 +58,7 @@ public:
     virtual std::auto_ptr< SchedulerFactory > CreateSchedulerFactory() const = 0;
     virtual void ConfigureLogging( Facade& facade ) const = 0;
     virtual std::auto_ptr< Timeout > CreateTimeout() const = 0;
-    virtual std::auto_ptr< Exercise > CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher ) const = 0;
+    virtual std::auto_ptr< Exercise > CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher, const Model& model ) const = 0;
     virtual std::auto_ptr< Scheduler_ABC > CreateScheduler( SchedulerFactory& factory ) const = 0;
     //@}
 };

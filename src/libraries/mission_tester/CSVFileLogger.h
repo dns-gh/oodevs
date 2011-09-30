@@ -34,10 +34,12 @@ public:
     //@{
     virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     virtual void FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
+    virtual void MagicActionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     virtual void MissionAcknowledged( const sword::Tasker& tasker );
     virtual void FragOrderAcknowledged( const sword::Tasker& tasker );
     virtual void MissionErrorAck( const sword::Tasker& tasker );
     virtual void FragOrderErrorAck( const sword::Tasker& tasker );
+    virtual void MagicActionErrorAck( const sword::Tasker& tasker );
     virtual void ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter );
     virtual void ConnectionSucceeded( const std::string& endpoint );
     virtual void AuthenticationSucceeded( const std::string& profile );

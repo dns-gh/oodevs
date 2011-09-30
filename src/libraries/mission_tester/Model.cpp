@@ -9,6 +9,7 @@
 
 #include "mission_tester_pch.h"
 #include "Agent.h"
+#include "AgentKnowledge.h"
 #include "Automat.h"
 #include "Listener_ABC.h"
 #include "Model.h"
@@ -47,8 +48,10 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::OnReceiveMessage( const sword::SimToClient& message )
 {
+    if( message.message().has_unit_knowledge_creation() )
+        CreateAgentKnowledge( message.message().unit_knowledge_creation() );
     if( message.message().has_unit_creation() )
-         CreateAgent( message.message().unit_creation() );
+        CreateAgent( message.message().unit_creation() );
     if( message.message().has_automat_creation() )
          CreateAutomat( message.message().automat_creation() );
     if( message.message().has_frag_order_ack() )
@@ -107,6 +110,16 @@ void Model::CreateAgent( const sword::UnitCreation& message )
     boost::shared_ptr< Agent > agent( new Agent( message, staticModel_.types_ ) );
     agents_[ message.unit().id() ] = agent;
     scheduler_.Schedule( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::CreateAgentKnowledge
+// Created: RCD 2011-08-25
+// -----------------------------------------------------------------------------
+void Model::CreateAgentKnowledge( const sword::UnitKnowledgeCreation& message )
+{
+  //  boost::shared_ptr< actions::parameters::AgentKnowledge > agentKnowledge( new actions::parameters::AgentKnowledge( message ) );
+//    agentKnowledges_[ message.knowledge().id() ] = agentKnowledge;
 }
 
 // -----------------------------------------------------------------------------

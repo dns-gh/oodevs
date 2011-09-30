@@ -53,6 +53,7 @@ public:
     //@{
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder ) const;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MagicActionType& fragOrder, const QString& name ) const;
     virtual Action_ABC* CreateAction( xml::xistream& xis, bool readonly = false ) const;
     virtual Action_ABC* CreateStubAction( xml::xistream& xis ) const;
 

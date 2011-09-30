@@ -55,8 +55,8 @@ void Facade::Run()
 {
     boost::shared_ptr< Scheduler_ABC > scheduler( mainFactory_.CreateScheduler( *factory_ ) );
     Model model( *staticModel_, *scheduler );
-    std::auto_ptr< Client > client = mainFactory_.CreateClient( model );
-    std::auto_ptr< Exercise > exercise = mainFactory_.CreateExercise( model, *staticModel_, *client );
+	std::auto_ptr< Client > client = mainFactory_.CreateClient( model );
+    std::auto_ptr< Exercise > exercise = mainFactory_.CreateExercise( model, *staticModel_, *client, model );
     exercise->Register( *this );
     client->Register( *this );
     model.Register( *this );
@@ -69,7 +69,7 @@ void Facade::Run()
     while( client->IsConnected() )
     {
         client->Update();
-        scheduler->Step( *exercise );
+        scheduler->Step( *exercise, model );
     }
 }
 
@@ -93,6 +93,16 @@ void Facade::MissionCreated( const kernel::Entity_ABC& target, const kernel::Ord
 }
 
 // -----------------------------------------------------------------------------
+// Name: Facade::MagicActionCreated
+// Created: RCD 2011-08-04
+// -----------------------------------------------------------------------------
+void Facade::MagicActionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission )
+{
+    BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
+        listener->MagicActionCreated( target, mission );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Facade::FragOrderCreated
 // Created: PHC 2011-05-19
 // -----------------------------------------------------------------------------
@@ -103,7 +113,7 @@ void Facade::FragOrderCreated( const kernel::Entity_ABC& target, const kernel::O
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade::MissionAknowledged
+// Name: Facade::MissionAcknowledged
 // Created: PHC 2011-04-08
 // -----------------------------------------------------------------------------
 void Facade::MissionAcknowledged( const sword::Tasker& tasker )

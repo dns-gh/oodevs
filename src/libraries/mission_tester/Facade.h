@@ -56,6 +56,7 @@ public:
     //! @name Listener
     //@{
     virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
+    virtual void MagicActionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     virtual void FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     virtual void MissionAcknowledged( const sword::Tasker& tasker );
     virtual void FragOrderAcknowledged( const sword::Tasker& tasker );

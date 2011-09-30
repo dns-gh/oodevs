@@ -143,6 +143,19 @@ actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& targ
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateAction
+// Created: RCD 2011-07-06
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& target, const kernel::MagicActionType& magicAction, const QString& name ) const
+{
+    std::auto_ptr< actions::Action_ABC > action( new actions::MagicAction( magicAction, controller_, name, true ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    action->Attach( *new ActionTasker( &target, false ) );
+    action->Polish();
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis, bool readonly /* = false*/ ) const

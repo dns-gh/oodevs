@@ -19,11 +19,13 @@ using namespace mission_tester;
 // Name: Scheduler constructor
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-Scheduler::Scheduler( std::auto_ptr< Filter_ABC > filter, unsigned int delta, bool withFragOrders )
-    : filter_        ( filter )
-    , last_          ( bpt::second_clock::local_time() )
-    , delta_         ( delta )
-    , withFragOrders_( withFragOrders )
+Scheduler::Scheduler( std::auto_ptr< Filter_ABC > filter, unsigned int delta, bool withFragOrders, unsigned int recompletionFreq )
+    : filter_               ( filter )
+    , last_                 ( bpt::second_clock::local_time() )
+    , delta_                ( delta )
+    , withFragOrders_       ( withFragOrders )
+    , recompletionFreq_     ( recompletionFreq )
+    , recompletionCountDown_( recompletionFreq )
 {
     // NOTHING
 }
@@ -54,7 +56,7 @@ void Scheduler::Schedule( boost::shared_ptr< Schedulable_ABC > schedulable )
 // Name: Scheduler::Step
 // Created: PHC 2011-03-30
 // -----------------------------------------------------------------------------
-void Scheduler::Step( Exercise& exercise )
+void Scheduler::Step( Exercise& exercise, Model& model )
 {
     bpt::ptime current( bpt::microsec_clock::local_time() );
     if( last_ + bpt::milliseconds( delta_ ) < current )
@@ -65,7 +67,13 @@ void Scheduler::Step( Exercise& exercise )
                 next_ = schedulables_.begin();
             if( (*next_)->Start( exercise, withFragOrders_ ) )
                 last_ = current;
+            /*if( --recompletionCountDown_ == 0 )
+            {
+                recompletionCountDown_ = recompletionFreq_;
+                (*next_)->Recomplete( exercise );
+            }*/
             ++next_;
         }
     }
+    
 }

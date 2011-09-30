@@ -10,6 +10,7 @@
 #ifndef __Schedulable_ABC_h_
 #define __Schedulable_ABC_h_
 
+#include "Model.h"
 #include <boost/noncopyable.hpp>
 
 namespace mission_tester
@@ -36,6 +37,7 @@ public:
     //@{
     virtual bool Matches( const Filter_ABC& filter ) const = 0;
     virtual bool Start( Exercise& exercise, bool withFragOrders ) = 0;
+    //virtual bool Recomplete( Exercise& exercise ) = 0;
     //@}
 };
 

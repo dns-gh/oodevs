@@ -23,6 +23,7 @@ namespace kernel
 namespace sword
 {
     class UnitCreation;
+    class UnitKnowledgeCreation;
     class AutomatCreation;
 }
 
@@ -85,6 +86,7 @@ private:
     //! @name Helpers
     //@{
     void CreateAgent( const sword::UnitCreation& message );
+    void CreateAgentKnowledge( const sword::UnitKnowledgeCreation& message );
     void CreateAutomat( const sword::AutomatCreation& message );
     //@}
 

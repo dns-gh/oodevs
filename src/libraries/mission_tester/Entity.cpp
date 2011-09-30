@@ -18,6 +18,7 @@
 #include "clients_kernel/DecisionalModel.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/MissionType.h"
+#include "clients_kernel/MagicActionType.h"
 #include <stdlib.h>
 
 using namespace mission_tester;
@@ -67,10 +68,11 @@ namespace
 // Created: PHC 2011-05-17
 // -----------------------------------------------------------------------------
 Entity::Entity( const unsigned long id, const QString& name, const kernel::DecisionalModel& decisionalModel )
-    : id_              ( id )
-    , name_            ( name )
-    , currentFragOrder_( new InfiniteIterator< kernel::FragOrder >( decisionalModel ) )
-    , currentMission_  ( new InfiniteIterator< kernel::Mission >( decisionalModel ) )
+    : id_                    ( id )
+    , name_                  ( name )
+    , currentFragOrder_      ( new InfiniteIterator< kernel::FragOrder >( decisionalModel ) )
+    , currentMission_        ( new InfiniteIterator< kernel::Mission >( decisionalModel ) )
+    , recompletionCountDown_ ( 0 )
 {
     // NOTHING
 }
@@ -135,7 +137,7 @@ void Entity::Activate( kernel::ActionController& /*controller*/ ) const
 // -----------------------------------------------------------------------------
 bool Entity::Start( Exercise& exercise, bool withFragOrders )
 {
-    if( withFragOrders && ( rand() % 10 ) > 5 )
+    if( withFragOrders && ( rand() % 10 ) > 5 ) 
         return StartFragOrder( exercise );
     return StartMission( exercise );
 }
@@ -156,6 +158,16 @@ bool Entity::StartMission( Exercise& exercise )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::Recomplete
+// Created: RCD 2011-05-31
+// -----------------------------------------------------------------------------
+/*bool Entity::Recomplete( Exercise& exercise )
+{
+    const kernel::MagicActionType magicActionType( "recover_all" );
+    return exercise.CreateMagicAction( *this, magicActionType, "recover_all" );
+}*/
+
+// -----------------------------------------------------------------------------
 // Name: Agent::StartFragOrder
 // Created: PHC 2011-05-17
 // -----------------------------------------------------------------------------
@@ -165,7 +177,10 @@ bool Entity::StartFragOrder( Exercise& exercise )
     {
         const kernel::FragOrder& fragOrder( currentFragOrder_->NextElement() );
         const kernel::FragOrderType& fragOrderType( fragOrder.GetType() );
-        return exercise.CreateFragOrder( *this, fragOrderType );
+        if( !fragOrderType.IsMissionRequired() )
+            return exercise.CreateFragOrder( *this, fragOrderType );
+        else
+            return false;
     }
     return false;
 }

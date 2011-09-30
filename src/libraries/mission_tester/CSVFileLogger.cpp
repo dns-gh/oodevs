@@ -93,6 +93,17 @@ void CSVFileLogger::FragOrderCreated( const kernel::Entity_ABC& target, const ke
     Created( target, mission, "fragorder", missions_, *this );
 }
 
+
+
+// -----------------------------------------------------------------------------
+// Name: Logger::MagicActionCreated
+// Created: RCD 2011-06-08
+// -----------------------------------------------------------------------------
+void CSVFileLogger::MagicActionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission )
+{
+    Created( target, mission, "magicaction", missions_, *this );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Logger::MissionAknowledged
 // Created: PHC 2011-04-08
@@ -133,6 +144,15 @@ void CSVFileLogger::MissionErrorAck( const sword::Tasker& tasker )
 void CSVFileLogger::FragOrderErrorAck( const sword::Tasker& tasker )
 {
     ErrorAck( tasker, "FragOrder" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Logger::MagicActionErrorAck
+// Created: RCD 2011-06-08
+// -----------------------------------------------------------------------------
+void CSVFileLogger::MagicActionErrorAck( const sword::Tasker& tasker )
+{
+    ErrorAck( tasker, "MagicAction" );
 }
 
 // -----------------------------------------------------------------------------

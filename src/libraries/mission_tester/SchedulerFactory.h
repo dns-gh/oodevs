@@ -45,6 +45,7 @@ private:
     std::auto_ptr< FilterFactory_ABC > filterFactory_;
     const unsigned int delta_;
     bool withFragOrders_;
+    unsigned int recompletionFreq_;
     //@}
 };
 

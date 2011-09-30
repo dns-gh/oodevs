@@ -64,6 +64,16 @@ void Logger::MissionCreated( const kernel::Entity_ABC& target, const kernel::Ord
     Created( target, mission, "mission" );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: Logger::MagicActionCreated
+// Created: RCD 2011-07-24
+// -----------------------------------------------------------------------------
+void Logger::MagicActionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission )
+{
+    Created( target, mission, "MagicAction" );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Logger::FragOrderCreated
 // Created: PHC 2011-05-19
@@ -142,6 +152,15 @@ void Logger::MissionErrorAck( const sword::Tasker& tasker )
 void Logger::FragOrderErrorAck( const sword::Tasker& tasker )
 {
     Write( ErrorAck( tasker, "FragOrder" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Logger::MagicActionErrorAck
+// Created: RCD 2011-06-08
+// -----------------------------------------------------------------------------
+void Logger::MagicActionErrorAck( const sword::Tasker& tasker )
+{
+    Write( ErrorAck( tasker, "MagicAction" ) );
 }
 
 // -----------------------------------------------------------------------------

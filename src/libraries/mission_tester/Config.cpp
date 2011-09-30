@@ -49,7 +49,8 @@ Config::Config( int argc, char** argv )
 {
     bpo::options_description desc( "Tester options" );
     desc.add_options()
-        ( "configuration", bpo::value< std::string >( &configurationFile_ ) , "set configuration file" );
+        ( "configuration", bpo::value< std::string >( &configurationFile_ ) , "set configuration file" )
+        ( "log-dir", bpo::value< std::string >( &logFile_ ) , "set log file" );
     AddOptions( desc );
     Parse( argc, argv );
     xml::xifstream xis( configurationFile_, xml::internal_grammar() );
@@ -58,7 +59,6 @@ Config::Config( int argc, char** argv )
             >> xml::attribute( "host", host_ )
             >> xml::attribute( "port", port_ )
             >> xml::attribute( "login", login_ )
-            >> xml::attribute( "output", logFile_ )
             >> xml::attribute( "scheduler", scheduler_ )
             >> xml::attribute( "timeout", timeout_ )
             >> xml::optional >> xml::attribute( "password", password_ )
@@ -126,9 +126,9 @@ std::auto_ptr< Timeout > Config::CreateTimeout() const
 // Name: Config::CreateExercise
 // Created: PHC 2011-04-22
 // -----------------------------------------------------------------------------
-std::auto_ptr< Exercise > Config::CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher ) const
+std::auto_ptr< Exercise > Config::CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher, const Model& model ) const
 {
-    return std::auto_ptr< Exercise >( new Exercise( entities, staticModel, publisher, *xibs_ ) );
+    return std::auto_ptr< Exercise >( new Exercise( entities, staticModel, publisher, *xibs_, model ) );
 }
 
 // -----------------------------------------------------------------------------
