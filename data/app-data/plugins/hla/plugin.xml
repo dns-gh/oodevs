@@ -98,6 +98,12 @@
                         <description lang="fr" name="Mapping des aggregats"><![CDATA[]]>Mapping des types d'aggrégat.</description>
                     </descriptions>
                 </setting>
+                <setting attribute="@component" type="string" default="component.xml">
+                    <descriptions>
+                        <description lang="en" name="Component mapping"><![CDATA[]]>Component types mapping.</description>
+                        <description lang="fr" name="Mapping des composantes"><![CDATA[]]>Mapping des types de composantes.</description>
+                    </descriptions>
+                </setting>
                 <setting attribute="@munition" type="string" default="munition.xml">
                     <descriptions>
                         <description lang="en" name="Munitions mapping"><![CDATA[]]>Munition types mapping.</description>

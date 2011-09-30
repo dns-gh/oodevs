@@ -100,7 +100,8 @@ private:
     std::auto_ptr< RtiAmbassadorFactory_ABC > pDebugRtiFactory_;
     std::auto_ptr< FederateAmbassadorFactory_ABC > pFederateFactory_;
     std::auto_ptr< FederateAmbassadorFactory_ABC > pDebugFederateFactory_;
-    std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityTypeResolver_;
+    std::auto_ptr< rpr::EntityTypeResolver_ABC > pAggregateTypeResolver_;
+    std::auto_ptr< rpr::EntityTypeResolver_ABC > pComponentTypeResolver_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityMunitionTypeResolver_;
     std::auto_ptr< UnitTypeResolver_ABC > pUnitTypeResolver_;
     std::auto_ptr< MunitionTypeResolver_ABC > pMunitionTypeResolver_;
