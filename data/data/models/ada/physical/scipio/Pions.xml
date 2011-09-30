@@ -19662,6 +19662,8 @@
     <equipments>
       <equipment count="1" crew="2" major="true" type="VTC P4"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -19805,4 +19807,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3143681545" -->
+<!-- signature="1487884145" -->
