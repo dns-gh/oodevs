@@ -62,17 +62,17 @@ int GenerateDump(EXCEPTION_POINTERS* pExceptionPointers)
 }
 
 #define WATCHED_FIXTURE_TEST_CASE( test_name, F )                         \
-struct test_name : public F { void test_method(); \
-    void test_method_hook() { \
-        __try { test_method(); } \
-        __except( GenerateDump(GetExceptionInformation()) ) {} \
-    } \
-};                    \
+struct test_name : public F { void test_method(); }; \
+void test_name##_hook() \
+{ \
+    test_name t; \
+    t.test_method(); \
+} \
                                                                         \
 static void BOOST_AUTO_TC_INVOKER( test_name )()                        \
 {                                                                       \
-    test_name t;                                                        \
-    t.test_method_hook(); \
+    __try { test_name##_hook(); } \
+    __except( GenerateDump(GetExceptionInformation()) ) {} \
 }                                                                       \
                                                                         \
 struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
