@@ -11,6 +11,8 @@
 #define plugins_hla_RemoteAggregate_h
 
 #include "Aggregate_ABC.h"
+#include <map>
+#include <boost/function.hpp>
 
 namespace plugins
 {
@@ -40,10 +42,18 @@ public:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef boost::function< void( ::hla::Deserializer&, const std::string&, RemoteAgentListener_ABC& ) > T_Notification;
+    typedef std::map< std::string, T_Notification > T_Notifications;
+    //@}
+
+private:
     //! @name Member data
     //@{
     const std::string identifier_;
     RemoteAgentListener_ABC& listener_;
+    const T_Notifications notifications_;
     unsigned int numberOfSilentEntities_;
     //@}
 };

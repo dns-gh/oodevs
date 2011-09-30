@@ -17,8 +17,53 @@
 #include "RemoteAgentListener_ABC.h"
 #include <hla/AttributeIdentifier.h>
 #include <hla/Deserializer.h>
+#include <boost/bind.hpp>
+#include <boost/assign.hpp>
 
 using namespace plugins::hla;
+
+namespace
+{
+    void ReadSpatial( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    {
+        Spatial spatial;
+        spatial.Deserialize( deserializer );
+        listener.Moved( identifier, spatial.worldLocation_.Latitude(), spatial.worldLocation_.Longitude() );
+    }
+    void ReadForceIdentifier( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    {
+        int8 force;
+        deserializer >> force;
+        listener.SideChanged( identifier, static_cast< rpr::ForceIdentifier >( force ) );
+    }
+    void ReadAggregateMarking( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    {
+        AggregateMarking marking;
+        marking.Deserialize( deserializer );
+        listener.NameChanged( identifier, marking.str() );
+    }
+    void ReadEntityType( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    {
+        rpr::EntityType type;
+        type.Deserialize( deserializer );
+        listener.TypeChanged( identifier, type );
+    }
+    void ReadNumberOfSilentEntities( ::hla::Deserializer& deserializer, const std::string& /*identifier*/, RemoteAgentListener_ABC& /*listener*/, unsigned int& numberOfSilentEntities )
+    {
+        uint16 number = 0;
+        deserializer >> number;
+        numberOfSilentEntities = number;
+    }
+    void ReadSilentEntities( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener, unsigned int numberOfSilentEntities )
+    {
+        for( unsigned int i = 0; i < numberOfSilentEntities; ++i )
+        {
+            SilentEntity entity;
+            entity.Deserialize( deserializer );
+            listener.EquipmentUpdated( identifier, entity.entityType_, entity.numberOfEntitiesOfThisType_ );
+        }
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: RemoteAggregate constructor
@@ -28,6 +73,13 @@ RemoteAggregate::RemoteAggregate( const std::string& identifier, RemoteAgentList
     : identifier_            ( identifier )
     , listener_              ( listener )
     , numberOfSilentEntities_( 0 )
+    , notifications_         ( boost::assign::list_of< std::pair< std::string, T_Notification > >
+                              ( "Spatial"               , boost::bind( &ReadSpatial               , _1, _2, _3 ) )
+                              ( "ForceIdentifier"       , boost::bind( &ReadForceIdentifier       , _1, _2, _3 ) )
+                              ( "AggregateMarking"      , boost::bind( &ReadAggregateMarking      , _1, _2, _3 ) )
+                              ( "EntityType"            , boost::bind( &ReadEntityType            , _1, _2, _3 ) )
+                              ( "NumberOfSilentEntities", boost::bind( &ReadNumberOfSilentEntities, _1, _2, _3, boost::ref( numberOfSilentEntities_ ) ) )
+                              ( "SilentEntities"        , boost::bind( &ReadSilentEntities        , _1, _2, _3, boost::ref( numberOfSilentEntities_ ) ) ) )
 {
     // NOTHING
 }
@@ -56,43 +108,7 @@ void RemoteAggregate::Serialize( ::hla::UpdateFunctor_ABC& /*functor*/, bool /*u
 // -----------------------------------------------------------------------------
 void RemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer deserializer )
 {
-    if( identifier == "Spatial" )
-    {
-        Spatial spatial;
-        spatial.Deserialize( deserializer );
-        listener_.Moved( identifier_, spatial.worldLocation_.Latitude(), spatial.worldLocation_.Longitude() );
-    }
-    else if( identifier == "ForceIdentifier" )
-    {
-        int8 force;
-        deserializer >> force;
-        listener_.SideChanged( identifier_, static_cast< rpr::ForceIdentifier >( force ) );
-    }
-    else if( identifier == "AggregateMarking" )
-    {
-        AggregateMarking marking;
-        marking.Deserialize( deserializer );
-        listener_.NameChanged( identifier_, marking.str() );
-    }
-    else if( identifier == "EntityType" )
-    {
-        rpr::EntityType type;
-        type.Deserialize( deserializer );
-        listener_.TypeChanged( identifier_, type );
-    }
-    else if( identifier == "NumberOfSilentEntities" )
-    {
-        uint32 number = 0;
-        deserializer >> number;
-        numberOfSilentEntities_ = number;
-    }
-    else if( identifier == "SilentEntities" )
-    {
-        for( unsigned int i = 0; i < numberOfSilentEntities_; ++i )
-        {
-            SilentEntity entity;
-            entity.Deserialize( deserializer );
-            listener_.EquipmentUpdated( identifier_, entity.entityType_, entity.numberOfEntitiesOfThisType_ );
-        }
-    }
+    T_Notifications::const_iterator notification = notifications_.find( identifier.ToString() );
+    if( notification != notifications_.end() )
+        notification->second( deserializer, identifier_, listener_ );
 }
