@@ -116,6 +116,15 @@ void RemoteAgentResolver::TypeChanged( const std::string& /*identifier*/, const 
 }
 
 // -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::EquipmentUpdated
+// Created: SLI 2011-09-29
+// -----------------------------------------------------------------------------
+void RemoteAgentResolver::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: RemoteAgentResolver::Notify
 // Created: SLI 2011-09-22
 // -----------------------------------------------------------------------------

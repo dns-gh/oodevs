@@ -44,6 +44,7 @@ public:
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side ) = 0;
     virtual void NameChanged( const std::string& identifier, const std::string& name ) = 0;
     virtual void TypeChanged( const std::string& identifier, const rpr::EntityType& type ) = 0;
+    virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number ) = 0;
     //@}
 };
 

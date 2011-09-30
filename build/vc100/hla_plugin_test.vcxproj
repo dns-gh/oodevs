@@ -146,6 +146,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\DirectFireReceiverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\DirectFireSenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\EntityTypeResolverTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\EquipmentUpdaterTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FederateFacadeTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FormationCreaterTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FormationTest.cpp" />
@@ -181,8 +182,10 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAggregateFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAttributeFunctor.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClassBuilder.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockComponentTypes.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextHandler.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockEntityTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederate.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederateAmbassadorFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionHandler.h" />

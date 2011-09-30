@@ -144,3 +144,12 @@ void DirectFireSender::TypeChanged( const std::string& /*identifier*/, const rpr
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::EquipmentUpdated
+// Created: SLI 2011-09-29
+// -----------------------------------------------------------------------------
+void DirectFireSender::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+{
+    // NOTHING
+}

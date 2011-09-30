@@ -98,6 +98,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\ContextFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireSender.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\FormationCreater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -157,12 +158,15 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatDisengager.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypes_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypeVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ContextFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ContextFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ContextHandler.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ContextHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireSender.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FormationCreater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaPlugin.h" />

@@ -158,6 +158,15 @@ void RemoteAgentController::TypeChanged( const std::string& identifier, const rp
 }
 
 // -----------------------------------------------------------------------------
+// Name: RemoteAgentController::EquipmentUpdated
+// Created: SLI 2011-09-29
+// -----------------------------------------------------------------------------
+void RemoteAgentController::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: RemoteAgentController::Send
 // Created: SLI 2011-09-14
 // -----------------------------------------------------------------------------

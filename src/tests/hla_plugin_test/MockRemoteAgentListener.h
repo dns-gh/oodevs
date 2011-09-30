@@ -24,12 +24,13 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockRemoteAgentListener, RemoteAgentListener_ABC )
 {
-    MOCK_METHOD( Created, 1 );
-    MOCK_METHOD( Destroyed, 1 );
-    MOCK_METHOD( Moved, 3 );
-    MOCK_METHOD( SideChanged, 2 );
-    MOCK_METHOD( NameChanged, 2 );
-    MOCK_METHOD( TypeChanged, 2 );
+    MOCK_METHOD( Created, 1 )
+    MOCK_METHOD( Destroyed, 1 )
+    MOCK_METHOD( Moved, 3 )
+    MOCK_METHOD( SideChanged, 2 )
+    MOCK_METHOD( NameChanged, 2 )
+    MOCK_METHOD( TypeChanged, 2 )
+    MOCK_METHOD( EquipmentUpdated, 3 )
 };
 
 }

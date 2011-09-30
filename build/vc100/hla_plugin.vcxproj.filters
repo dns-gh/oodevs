@@ -199,6 +199,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\InteractionsFacade.cpp">
       <Filter>Source Files\Interactions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.cpp">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -434,6 +437,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionsFacade.h">
       <Filter>Source Files\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypes_ABC.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.h">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypeVisitor_ABC.h">
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,21 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_UnitTeleporter_h
-#define plugins_hla_UnitTeleporter_h
+#ifndef plugins_hla_EquipmentUpdater_h
+#define plugins_hla_EquipmentUpdater_h
 
-#include "RemoteAgentListener_ABC.h"
 #include "ResponseObserver_ABC.h"
+#include "RemoteAgentListener_ABC.h"
 #include <map>
+
+namespace dispatcher
+{
+    class SimulationPublisher_ABC;
+}
 
 namespace sword
 {
     class UnitCreation;
 }
 
-namespace dispatcher
+namespace rpr
 {
-    class SimulationPublisher_ABC;
+    class EntityTypeResolver_ABC;
 }
 
 namespace plugins
@@ -29,29 +34,32 @@ namespace plugins
 namespace hla
 {
     class RemoteAgentSubject_ABC;
-    class ContextFactory_ABC;
     template< typename ResponseMessage > class ContextHandler_ABC;
+    class ContextFactory_ABC;
+    class ComponentTypes_ABC;
 
 // =============================================================================
-/** @class  UnitTeleporter
-    @brief  Unit teleporter
+/** @class  EquipmentUpdater
+    @brief  Equipment updater
 */
-// Created: SLI 2011-09-13
+// Created: SLI 2011-09-29
 // =============================================================================
-class UnitTeleporter : private RemoteAgentListener_ABC
-                     , private ResponseObserver_ABC< sword::UnitCreation >
+class EquipmentUpdater : private RemoteAgentListener_ABC
+                       , private ResponseObserver_ABC< sword::UnitCreation >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitTeleporter( RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& contextHandler,
-                             dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& contextFactory );
-    virtual ~UnitTeleporter();
+             EquipmentUpdater( RemoteAgentSubject_ABC& subject, ContextHandler_ABC< sword::UnitCreation >& handler,
+                               dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& factory,
+                               const rpr::EntityTypeResolver_ABC& resolver, const ComponentTypes_ABC& componentTypes );
+    virtual ~EquipmentUpdater();
     //@}
 
 private:
     //! @name Operations
     //@{
+    virtual void Notify( const sword::UnitCreation& message, const std::string& identifier );
     virtual void Created( const std::string& identifier );
     virtual void Destroyed( const std::string& identifier );
     virtual void Moved( const std::string& identifier, double latitude, double longitude );
@@ -61,29 +69,37 @@ private:
     virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number );
     //@}
 
-    //! @name Operations
+private:
+    //! @name Helpers
     //@{
-    virtual void Notify( const sword::UnitCreation& message, const std::string& identifier );
+    void SendUpdate( const std::string& identifier );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, unsigned long > T_Identifiers;
+    typedef std::pair< unsigned int, unsigned int > T_Component;
+    typedef std::map< std::string, T_Component > T_Components;
+    typedef std::map< std::string, T_Components > T_Agents;
+    typedef std::map< std::string, unsigned int > T_Identifiers;
     //@}
 
 private:
     //! @name Member data
     //@{
-    RemoteAgentSubject_ABC& agentSubject_;
-    ContextHandler_ABC< sword::UnitCreation >& contextHandler_;
+    RemoteAgentSubject_ABC& subject_;
+    ContextHandler_ABC< sword::UnitCreation >& handler_;
     dispatcher::SimulationPublisher_ABC& publisher_;
-    const ContextFactory_ABC& contextFactory_;
+    const ContextFactory_ABC& factory_;
+    const rpr::EntityTypeResolver_ABC& resolver_;
     T_Identifiers identifiers_;
+    T_Agents remoteAgents_;
+    T_Agents agentTypes_;
+    const ComponentTypes_ABC& componentTypes_;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_UnitTeleporter_h
+#endif // plugins_hla_EquipmentUpdater_h
