@@ -422,9 +422,7 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateLocationComposit
         return CreateAgentParameter( parameter );
     if( choice == "point" )
         return CreatePointParameter( parameter );
-    if( choice == "polygon" )
-        return CreatePolygonParameter( parameter );
-    return 0;
+    return CreatePolygonParameter( parameter );
 }
 
 // -----------------------------------------------------------------------------
