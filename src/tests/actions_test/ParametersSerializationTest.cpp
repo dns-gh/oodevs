@@ -58,7 +58,9 @@ namespace
         xis >> xml::start( "parameter" );
         std::auto_ptr< actions::Parameter_ABC > parameter( creator( definition, xis ) );
         std::auto_ptr< sword::MissionParameter > message( new sword::MissionParameter() );
-        parameter->CommitTo( *message );
+        parameter->CommitTo( *message );        
+        xml::xostringstream xos;
+        ((actions::Parameter_ABC*)parameter.get())->Serialize( xos );
         return message;
     }
 
@@ -417,6 +419,9 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Enumeration )
     parameter.CommitTo( *message );
     CheckSet( *message );
     BOOST_CHECK_EQUAL( 2, message->value().Get( 0 ).enumeration() );
+    xml::xostringstream xos;
+    ((actions::Parameter_ABC&)parameter).Serialize( xos );
+    // $$$$ LDC TODO check xos == xis... most important is to check that it does not crash on vc100 on the server.
 }
 
 // -----------------------------------------------------------------------------
@@ -452,6 +457,8 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Lima )
     CheckCoordinate( converter, "31TCN8594043967", lima.line().location().coordinates().elem( 2 ) );
     CheckCoordinate( converter, "31TCN9106845579", lima.line().location().coordinates().elem( 3 ) );
     CheckCoordinate( converter, "31TCN9737753024", lima.line().location().coordinates().elem( 4 ) );
+    xml::xostringstream xos;
+    ((actions::Parameter_ABC&)parameter).Serialize( xos );
 }
 
 // -----------------------------------------------------------------------------

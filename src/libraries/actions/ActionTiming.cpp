@@ -97,7 +97,7 @@ ActionTiming::~ActionTiming()
 void ActionTiming::SerializeAttributes( xml::xostream& xos ) const
 {
     if( !time_.isNull() )
-        xos << xml::attribute( "time", time_.toString( Qt::ISODate ) );
+        xos << xml::attribute( "time", time_.toString( Qt::ISODate ).ascii() );
 }
 
 // -----------------------------------------------------------------------------

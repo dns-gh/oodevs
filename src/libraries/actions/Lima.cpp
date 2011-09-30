@@ -92,7 +92,7 @@ void Lima::Serialize( xml::xostream& xos ) const
         functions[i] = tools::LimaTypeShortToXmlString( functions[i] );
     Parameter< QString >::Serialize( xos );
     xos << xml::attribute( "type", "lima" )
-        << xml::attribute( "value", functions.join( ", " ) );
+        << xml::attribute( "value", functions.join( ", " ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
