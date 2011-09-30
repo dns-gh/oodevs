@@ -84,6 +84,8 @@ private slots:
     void closeEvent( QCloseEvent* /*pEvent*/ );
     void AddWaypoint();
     void DeleteWaypoint();
+    void MoveUpWaypoint();
+    void MoveDownWaypoint();
     void OnRecipientValueChanged( int row, int /*col*/ );
     void OnRecipientSelectionChanged( int row, int /*col*/ );
     void OnResourcesValueChanged( int row, int col );
@@ -202,6 +204,8 @@ private:
     Q3Table* carriersTable_;
     QListView* waypointList_;
     QCheckBox* carriersUseCheck_;
+    QPushButton* moveUpButton_;
+    QPushButton* moveDownButton_;
     QPushButton* delWaypointButton_;
     QPushButton* addWaypointButton_;
 

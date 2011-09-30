@@ -1443,6 +1443,22 @@ Motivo: %3
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Move waypoint up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move waypoint down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Waypoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Waypoint</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticConsignsWidget_ABC</name>
@@ -1528,14 +1544,6 @@ Motivo: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add Waypoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete Waypoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Log Supply Pull Flow</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1555,15 +1563,7 @@ Motivo: %3
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Add Waypoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Log Supply Push Flow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete Waypoint</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

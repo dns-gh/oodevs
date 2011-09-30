@@ -1443,6 +1443,22 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Type</source>
         <translation>Type</translation>
     </message>
+    <message>
+        <source>Move waypoint up</source>
+        <translation>Monter le point de passage</translation>
+    </message>
+    <message>
+        <source>Move waypoint down</source>
+        <translation>Descendre le point de passage</translation>
+    </message>
+    <message>
+        <source>Delete Waypoint</source>
+        <translation>Supprimer le point de passage</translation>
+    </message>
+    <message>
+        <source>Add Waypoint</source>
+        <translation>Ajouter le point de passage</translation>
+    </message>
 </context>
 <context>
     <name>LogisticConsignsWidget_ABC</name>
@@ -1528,14 +1544,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Add Waypoint</source>
-        <translation>Ajouter point de passage</translation>
-    </message>
-    <message>
-        <source>Delete Waypoint</source>
-        <translation>Supprimer le point de passage</translation>
-    </message>
-    <message>
         <source>Log Supply Pull Flow</source>
         <translation>Ravitaillement Tirer Flux</translation>
     </message>
@@ -1555,16 +1563,8 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Add Waypoint</source>
-        <translation>Ajouter point de passage</translation>
-    </message>
-    <message>
         <source>Log Supply Push Flow</source>
         <translation>Ravitaillement Pousser Flux</translation>
-    </message>
-    <message>
-        <source>Delete Waypoint</source>
-        <translation>Supprimer le point de passage</translation>
     </message>
 </context>
 <context>

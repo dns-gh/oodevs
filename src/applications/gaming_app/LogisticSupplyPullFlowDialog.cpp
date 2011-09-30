@@ -40,6 +40,7 @@
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/ParametersLayer.h"
+#include "clients_gui/resources.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/noncopyable.hpp>
 #include <boost/foreach.hpp>
@@ -94,31 +95,43 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Con
 
     tabs_ = new QTabWidget( this );
     tabs_->setMargin( 5 );
-    QGridLayout* tabLayout = new QGridLayout( this, 3, 2 );
+    QGridLayout* tabLayout = new QGridLayout( this, 1, 2 );
     tabLayout->addWidget( tabs_, 0, 0, 1, 3 );
 
     QWidget* resourcesTab = new QWidget( tabs_ );
     QWidget* carriersTab = new QWidget( tabs_ );
     QWidget* routeTab = new QWidget( tabs_ );
+    QGroupBox* upDownGroup = new QGroupBox( routeTab );
+    upDownGroup->setFlat( true );
     tabs_->addTab( resourcesTab, tools::translate( "Logistic : Pull supply flow", "Resources" ) );
     tabs_->addTab( carriersTab, tools::translate( "Logistic : Pull supply flow", "Carriers" ) );
     tabs_->addTab( routeTab, tools::translate( "Logistic : Pull supply flow", "Route" ) );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), tabs_ );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), tabs_ );
-    addWaypointButton_ = new QPushButton( tr( "Add Waypoint" ), tabs_ );
-    delWaypointButton_ = new QPushButton( tr( "Delete Waypoint" ), tabs_ );
-    delWaypointButton_->setEnabled( false );
-    addWaypointButton_->setVisible( false );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
     connect( okButton, SIGNAL( clicked() ), SLOT( Validate() ) );
-    connect( addWaypointButton_, SIGNAL( clicked() ), SLOT( AddWaypoint() ) );
+    moveUpButton_ = new QPushButton( upDownGroup );
+    moveDownButton_ = new QPushButton( upDownGroup );
+    addWaypointButton_ = new QPushButton( upDownGroup );
+    delWaypointButton_ = new QPushButton( upDownGroup );       
+    moveUpButton_->setIcon( MAKE_ICON( arrow_up ) );
+    moveDownButton_->setIcon( MAKE_ICON( arrow_down ) );
+    delWaypointButton_->setIcon( MAKE_ICON( trash ) );
+    addWaypointButton_->setIcon( MAKE_ICON( add_point ) );
+    moveUpButton_->setToolTip( tools::translate( "Logistic : Push supply flow", "Move waypoint up" ) );
+    moveDownButton_->setToolTip( tools::translate( "Logistic : Push supply flow", "Move waypoint down" ) );
+    delWaypointButton_->setToolTip( tools::translate( "Logistic : Push supply flow", "Delete Waypoint") );
+    addWaypointButton_->setToolTip( tools::translate( "Logistic : Push supply flow", "Add Waypoint") );
+    connect( moveUpButton_, SIGNAL( clicked() ), SLOT( MoveUpWaypoint() ) );
+    connect( moveDownButton_, SIGNAL( clicked() ), SLOT( MoveDownWaypoint() ) );
     connect( delWaypointButton_, SIGNAL( clicked() ), SLOT( DeleteWaypoint() ) );
+    connect( addWaypointButton_, SIGNAL( clicked() ), SLOT( AddWaypoint() ) );
     connect( tabs_, SIGNAL( currentChanged( int ) ), SLOT( OnTabChanged( int ) ) );
 
+
     tabLayout->addWidget( okButton, 1, 0, 1, 1 );
-    tabLayout->addWidget( addWaypointButton_, 1, 1, 1, 1 );
     tabLayout->addWidget( cancelButton, 1, 2, 1, 1 );
-    this->setFixedSize( 320, 420 );
+    this->setFixedSize( 340, 420 );
     tabLayout->setMargin( 5 );
     tabLayout->setSpacing( 5 );
 
@@ -167,17 +180,25 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Con
     waypointList_->setDragDropMode( QAbstractItemView::InternalMove );
     waypointList_->setDragDropOverwriteMode( false );
     waypointList_->setModel( new customStringListModel( QStringList() ) );
-    waypointList_->setFixedSize( 270, 300 );
+    waypointList_->setMinimumSize( 235, 300 );
     connect( waypointList_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnWaypointSelect() ) );
     connect( waypointList_->model(), SIGNAL( modelReset() ), this, SLOT( OnWaypointRowChanged() ) );
     connect( waypointList_->model(), SIGNAL( dataChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( OnWaypointRowChanged() ) );
     connect( waypointList_->model(), SIGNAL( rowsInserted( const QModelIndex&, int, int ) ), this, SLOT( OnWaypointRowChanged() ) );
     connect( waypointList_->model(), SIGNAL( rowsMoved( const QModelIndex&, int, int, const QModelIndex&, int ) ), this, SLOT( OnWaypointRowChanged() ) );
     connect( waypointList_->model(), SIGNAL( rowsRemoved ( const QModelIndex&, int, int ) ), this, SLOT( OnWaypointRowChanged() ) );
-    QVBoxLayout* waypointLayout = new QVBoxLayout( routeTab );
-    waypointLayout->setSizeConstraint( QLayout::SetMaximumSize );
-    waypointLayout->addWidget( waypointList_ );
-    waypointLayout->addWidget( delWaypointButton_ );
+    QGridLayout* waypointLayout = new QGridLayout( routeTab, 2, 2 );
+    QVBoxLayout* boxLayout = new QVBoxLayout();
+    boxLayout->addWidget( moveUpButton_ );
+    boxLayout->addWidget( moveDownButton_ );
+    boxLayout->addWidget( delWaypointButton_ );
+    boxLayout->addWidget( addWaypointButton_ );
+    boxLayout->setAlignment( Qt::AlignBottom );
+    upDownGroup->setLayout( boxLayout );
+    waypointLayout->addWidget( waypointList_, 0, 0, 1, 1 );
+    waypointLayout->addWidget( upDownGroup, 0, 1, 1, 1 );
+    waypointLayout->setSpacing( 5 );
+    waypointLayout->setMargin( 10 );
 
     controllers_.Register( *this );
     hide();
@@ -222,6 +243,7 @@ void LogisticSupplyPullFlowDialog::Show()
 
     AddCarrierItem();
     tabs_->setCurrentPage( 0 );
+    delWaypointButton_->setEnabled( false );
 
     ComputeAvailableSuppliers();
 
@@ -537,6 +559,52 @@ void LogisticSupplyPullFlowDialog::DeleteWaypoint()
         waypoints.remove( waypoint );
         pModel->setStringList( waypoints );
     }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPullFlowDialog::DeleteWaypoint
+// Created: MMC 2011-09-28
+// -----------------------------------------------------------------------------
+void LogisticSupplyPullFlowDialog::MoveUpWaypoint()
+{
+    QString waypoint = GetSelectedWaypoint();
+    if ( !waypoint.isEmpty() )
+    {
+        customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
+        QStringList waypoints = pModel->stringList();
+        int index = waypoints.indexOf( waypoint );
+        if ( index > 0 )
+        {
+            waypoints.swap( index, index-1 );
+            pModel->setStringList( waypoints );
+            waypointList_->selectionModel()->select( pModel->index( index-1, 0 ), QItemSelectionModel::Select );            
+        }
+    }
+    waypointList_->setFocus();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPullFlowDialog::DeleteWaypoint
+// Created: MMC 2011-09-28
+// -----------------------------------------------------------------------------
+void LogisticSupplyPullFlowDialog::MoveDownWaypoint()
+{
+    QString waypoint = GetSelectedWaypoint();
+    if ( !waypoint.isEmpty() )
+    {
+        customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
+        QStringList waypoints = pModel->stringList();
+        int index = waypoints.indexOf( waypoint );
+        if ( index < waypoints.size()-1 )
+        {
+            QModelIndexList curSelection = waypointList_->selectionModel()->selectedIndexes();
+            waypoints.swap( index, index+1 );
+            pModel->setStringList( waypoints );
+            waypointList_->selectionModel()->select( pModel->index( index+1, 0 ), QItemSelectionModel::Select ); 
+        }
+    }
+    waypointList_->setFocus();
 }
 
 // -----------------------------------------------------------------------------
@@ -911,6 +979,18 @@ void LogisticSupplyPullFlowDialog::OnWaypointSelect()
 {
     QString waypoint = GetSelectedWaypoint();
     delWaypointButton_->setEnabled( points_.find( waypoint ) != points_.end() );
+
+    if ( !waypoint.isEmpty() )
+    {
+        QStringList waypointsList = static_cast< customStringListModel* >( waypointList_->model() )->stringList();        
+        moveUpButton_->setEnabled( waypoint != waypointsList.first() );
+        moveDownButton_->setEnabled( waypoint != waypointsList.last() );
+    }
+    else
+    {
+        moveUpButton_->setEnabled( false );
+        moveDownButton_->setEnabled( false );
+    }
 }
 
 // -----------------------------------------------------------------------------
