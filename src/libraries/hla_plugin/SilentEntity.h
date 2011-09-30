@@ -27,6 +27,7 @@ class SilentEntity
 public:
     //! @name Constructors/Destructor
     //@{
+             SilentEntity();
              SilentEntity( const rpr::EntityType& type, unsigned short number );
     virtual ~SilentEntity();
     //@}
@@ -40,9 +41,16 @@ public:
         entityType_.Serialize( archive );
         archive << entityAppearance_;
     }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        archive >> numberOfEntitiesOfThisType_ >> numberOfAppearanceRecords_;
+        entityType_.Deserialize( archive );
+        archive >> entityAppearance_;
+    }
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     unsigned short numberOfEntitiesOfThisType_;

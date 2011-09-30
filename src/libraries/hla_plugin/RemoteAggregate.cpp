@@ -12,6 +12,7 @@
 #include "SerializationTools.h"
 #include "Spatial.h"
 #include "AggregateMarking.h"
+#include "SilentEntity.h"
 #include "rpr/EntityType.h"
 #include "RemoteAgentListener_ABC.h"
 #include <hla/AttributeIdentifier.h>
@@ -24,8 +25,9 @@ using namespace plugins::hla;
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
 RemoteAggregate::RemoteAggregate( const std::string& identifier, RemoteAgentListener_ABC& listener )
-    : identifier_( identifier )
-    , listener_  ( listener )
+    : identifier_            ( identifier )
+    , listener_              ( listener )
+    , numberOfSilentEntities_( 0 )
 {
     // NOTHING
 }
@@ -45,7 +47,7 @@ RemoteAggregate::~RemoteAggregate()
 // -----------------------------------------------------------------------------
 void RemoteAggregate::Serialize( ::hla::UpdateFunctor_ABC& /*functor*/, bool /*updateAll*/ ) const
 {
-    throw std::runtime_error( "NETN remote aggregate can not be serialized" );
+    throw std::runtime_error( "RPR remote aggregate can not be serialized" );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,5 +79,20 @@ void RemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier,
         rpr::EntityType type;
         type.Deserialize( deserializer );
         listener_.TypeChanged( identifier_, type );
+    }
+    else if( identifier == "NumberOfSilentEntities" )
+    {
+        uint32 number = 0;
+        deserializer >> number;
+        numberOfSilentEntities_ = number;
+    }
+    else if( identifier == "SilentEntities" )
+    {
+        for( unsigned int i = 0; i < numberOfSilentEntities_; ++i )
+        {
+            SilentEntity entity;
+            entity.Deserialize( deserializer );
+            listener_.EquipmentUpdated( identifier_, entity.entityType_, entity.numberOfEntitiesOfThisType_ );
+        }
     }
 }

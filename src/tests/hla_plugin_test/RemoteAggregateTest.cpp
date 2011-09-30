@@ -12,6 +12,7 @@
 #include "hla_plugin/Spatial.h"
 #include "hla_plugin/AggregateMarking.h"
 #include "hla_plugin/SerializationTools.h"
+#include "hla_plugin/SilentEntity.h"
 #include "rpr/EntityType.h"
 #include "MockUpdateFunctor.h"
 #include "MockRemoteAgentListener.h"
@@ -78,4 +79,20 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_entity_type_attribute_and
     type.Serialize( serializer );
     MOCK_EXPECT( listener, TypeChanged ).once().with( "identifier", rpr::EntityType( "1 2 3 0 0 0 0" ) );
     aggregate.Deserialize( "EntityType", Deserialize() );
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_silent_entities_attribute_and_notifies_listener_for_each_entity, Fixture )
+{
+    const uint32 numberOfSilentEntities = 2;
+    serializer << numberOfSilentEntities;
+    aggregate.Deserialize( "NumberOfSilentEntities", Deserialize() );
+    serializer = ::hla::Serializer();
+    const SilentEntity firstSilentEntity( rpr::EntityType( "1 2 3" ), 42 );
+    const SilentEntity secondSilentEntity( rpr::EntityType( "4 5 6" ), 43 );
+    firstSilentEntity.Serialize( serializer );
+    secondSilentEntity.Serialize( serializer );
+    mock::sequence s;
+    MOCK_EXPECT( listener, EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "1 2 3" ), 42u );
+    MOCK_EXPECT( listener, EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "4 5 6" ), 43u );
+    aggregate.Deserialize( "SilentEntities", Deserialize() );
 }

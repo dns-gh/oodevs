@@ -44,6 +44,7 @@ private:
     //@{
     const std::string identifier_;
     RemoteAgentListener_ABC& listener_;
+    unsigned int numberOfSilentEntities_;
     //@}
 };
 

@@ -14,6 +14,15 @@ using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: SilentEntity constructor
+// Created: SLI 2011-09-30
+// -----------------------------------------------------------------------------
+SilentEntity::SilentEntity()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SilentEntity constructor
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
 SilentEntity::SilentEntity( const rpr::EntityType& type, unsigned short number )
