@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<svg style="stroke:rgb(0,0,0);stroke-width:2;fill:currentColor">
+    <polyline class="border" points="200,373 373,200 200,27 27,200 200,373"/>
+	<ellipse cx="200" cy="140" rx="30" ry="30" style="fill:none;"/>
+	<line style="fill:none;" x1="200" x2="200" y1="170" y2="320"/>
+</svg>

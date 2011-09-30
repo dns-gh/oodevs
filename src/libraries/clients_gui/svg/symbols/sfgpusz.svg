@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<svg style="stroke:rgb(0,0,0);stroke-width:2">
+	<rect height="240" class="border" width="360" x="20" y="80"/>
+	<ellipse cx="200" cy="140" rx="30" ry="30" style="fill:none;"/>
+	<line style="fill:none;" x1="200" x2="200" y1="170" y2="320"/>
+</svg>

@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<svg style="stroke:rgb(0,0,0);stroke-width:2">
+	<path d="M115 285 C115 400 285 400 285 285 C400 285 400 115 285 115 C285 0 115 0 115 115 C0     115 0 285 115 285 z" class="border"/>
+	<line style="fill:none;" x1="100" x2="300" y1="200" y2="200"/>
+	<line style="fill:none;" x1="230" x2="300" y1="130" y2="200"/>
+	<line style="fill:none;" x1="300" x2="230" y1="200" y2="270"/>
+</svg>

@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<svg style="stroke:rgb(0,0,0);stroke-width:2"><path d="M115 285 C115 400 285 400 285 285 C400 285 400 115 285 115 C285 0 115 0 115 115 C0     115 0 285 115 285 z" class="border"/>
+<g transform="translate(20 -5) scale(0.9 0.9)">
+<line style="fill:none;" x1="200" x2="200" y1="155" y2="225"/>
+<line style="fill:none;" x1="110" x2="110" y1="155" y2="255"/>
+<line style="fill:none;" x1="290" x2="290" y1="155" y2="255"/>
+<line style="fill:none;" x1="105" x2="295" y1="155" y2="155"/>
+</g>
+<line style="fill:none;" x1="160" x2="240" y1="250" y2="250"/>
+<line style="fill:none;" x1="160" x2="240" y1="280" y2="280"/>
+<line style="fill:none;" x1="145" x2="160" y1="235" y2="250"/>
+<line style="fill:none;" x1="240" x2="255" y1="250" y2="235"/>
+<line style="fill:none;" x1="255" x2="240" y1="295" y2="280"/>
+<line style="fill:none;" x1="160" x2="145" y1="280" y2="295"/>
+</svg>
