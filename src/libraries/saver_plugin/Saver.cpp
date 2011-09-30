@@ -176,19 +176,26 @@ void Saver::EndFrame( const Savable_ABC& message )
 // -----------------------------------------------------------------------------
 void Saver::SaveKeyFrame( const Savable_ABC& message )
 {
-    dispatcher::KeyFrame frame;
-    frame.offset_ = static_cast< unsigned >( key_.tellp() );
-    frame.frameNumber_ = frameCount_;
+    try
     {
-        tools::OutputBinaryWrapper wrapper( key_ );
-        message.Serialize( wrapper );
-        frame.size_ = static_cast< unsigned >( key_.tellp() ) - frame.offset_;
+        dispatcher::KeyFrame frame;
+        frame.offset_ = static_cast< unsigned >( key_.tellp() );
+        frame.frameNumber_ = frameCount_;
+        {
+            tools::OutputBinaryWrapper wrapper( key_ );
+            message.Serialize( wrapper );
+            frame.size_ = static_cast< unsigned >( key_.tellp() ) - frame.offset_;
+        }
+        {
+            tools::OutputBinaryWrapper wrapper( keyIndex_ );
+            wrapper << frame.frameNumber_;
+            wrapper << frame.offset_;
+            wrapper << frame.size_;
+        }
     }
+    catch( std::exception& exception )
     {
-        tools::OutputBinaryWrapper wrapper( keyIndex_ );
-        wrapper << frame.frameNumber_;
-        wrapper << frame.offset_;
-        wrapper << frame.size_;
+        MT_LOG_ERROR_MSG( "Saver plugin : " << exception.what() << " : " << ( bfs::path( recorderDirectory_ ) / currentFolderName_ / "key") );
     }
 }
 
@@ -209,7 +216,7 @@ void Saver::Flush()
     }
     catch( std::exception& exception )
     {
-        MT_LOG_ERROR_MSG( "Saver plugin : " << exception.what() << " : " << (bfs::path( recorderDirectory_ ) / currentFolderName_ / "index") );
+        MT_LOG_ERROR_MSG( "Saver plugin : " << exception.what() << " : " << ( bfs::path( recorderDirectory_ ) / currentFolderName_ / "index") );
     }
     GenerateInfoFile();
 }
@@ -267,7 +274,7 @@ void Saver::GenerateInfoFile() const
         tools::OutputBinaryWrapper wrapper( info );
         info.seekp( 0, std::ios_base::beg );
         wrapper << fragmentFirstFrame_;
-        wrapper << frameCount_ - 1;
+        wrapper << std::max( fragmentFirstFrame_, frameCount_ - 1 );
         info.seekp( 0, std::ios_base::end );
         wrapper << realTime_;
         wrapper << localTime;

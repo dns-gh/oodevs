@@ -35,15 +35,6 @@ SaverFacade::SaverFacade( dispatcher::ClientPublisher_ABC& client, dispatcher::M
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: SaverFacade destructor
-// Created: AGE 2007-04-10
-// -----------------------------------------------------------------------------
-SaverFacade::~SaverFacade()
-{
-    // NOTHING
-}
-
 namespace
 {
     class Message : public Savable_ABC
@@ -132,6 +123,16 @@ namespace
         std::string& buffer_;
         bool firstFrame_;
     };
+}
+
+// -----------------------------------------------------------------------------
+// Name: SaverFacade destructor
+// Created: AGE 2007-04-10
+// -----------------------------------------------------------------------------
+SaverFacade::~SaverFacade()
+{
+    if( firstTick_ == true )
+        saver_->SaveKeyFrame( ModelMessage( model_, encodingBuffer_, firstTick_ ) );
 }
 
 // -----------------------------------------------------------------------------
