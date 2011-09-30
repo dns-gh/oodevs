@@ -110,7 +110,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
                                                   config_.BuildPluginDirectory( "hla" ) ) );
-            pSimulationFacade_.reset( new SimulationFacade( *pContextFactory_, *pMessageController_, publisher_, dynamicModel_, staticModel_, *pUnitTypeResolver_, *pFederate_ ) );
+            pSimulationFacade_.reset( new SimulationFacade( *pContextFactory_, *pMessageController_, publisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pInteractionsFacade_.reset( new InteractionsFacade( *pFederate_, publisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ) ) );
             pStepper_.reset( new Stepper( *pXis_, *pMessageController_, publisher_ ) );

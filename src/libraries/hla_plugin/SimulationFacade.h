@@ -33,6 +33,11 @@ namespace dispatcher
     class StaticModel;
 }
 
+namespace rpr
+{
+    class EntityTypeResolver_ABC;
+}
+
 namespace plugins
 {
 namespace hla
@@ -40,10 +45,12 @@ namespace hla
     class UnitTypeResolver_ABC;
     class RemoteAgentSubject_ABC;
     class ContextFactory_ABC;
+    class ComponentTypes_ABC;
     class AutomatDisengager;
     class FormationCreater;
     class AutomatCreater;
     class UnitTeleporter;
+    class EquipmentUpdater;
     class RemoteAgentController;
 
 // =============================================================================
@@ -58,7 +65,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              SimulationFacade( const ContextFactory_ABC& contextFactory, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
-                               dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel,
+                               dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
                                const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
                                RemoteAgentSubject_ABC& remoteAgentSubject );
     virtual ~SimulationFacade();
@@ -77,10 +84,12 @@ private:
     std::auto_ptr< ContextHandler_ABC< sword::FormationCreation > > pFormationHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::AutomatCreation > > pAutomatHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::UnitCreation > > pUnitHandler_;
+    std::auto_ptr< ComponentTypes_ABC > pComponentTypes_;
     std::auto_ptr< AutomatDisengager > pAutomatDisengager_;
     std::auto_ptr< FormationCreater > pFormationCreater_;
     std::auto_ptr< AutomatCreater > pAutomatCreater_;
     std::auto_ptr< UnitTeleporter > pUnitTeleporter_;
+    std::auto_ptr< EquipmentUpdater > pEquipmentUpdater_;
     std::auto_ptr< RemoteAgentController > pRemoteAgentController_;
     //@}
 };

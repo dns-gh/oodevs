@@ -95,6 +95,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatCreater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatDisengager.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ClassBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ComponentTypes.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ContextFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireSender.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatDisengager.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypes.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypes_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypeVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ContextFactory.h" />
