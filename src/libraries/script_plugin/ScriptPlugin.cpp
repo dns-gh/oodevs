@@ -37,7 +37,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include <directia/brain/Brain.h>
 #include <boost/filesystem.hpp>
-#include <boost/apply.hpp>
+#include <boost/bind/apply.hpp>
 
 namespace bfs = boost::filesystem;
 using namespace plugins::script;
