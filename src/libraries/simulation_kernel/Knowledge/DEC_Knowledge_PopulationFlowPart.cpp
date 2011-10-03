@@ -28,8 +28,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlowPart )
 DEC_Knowledge_PopulationFlowPart::DEC_Knowledge_PopulationFlowPart()
     : rRelevance_        ( 1. )
     , rLastRelevanceSent_( 1. )
-    , bPerceived_        ( true )
     , nTimeLastUpdate_   ( 0 )
+    , bPerceived_        ( true )
 {
     // NOTHING
 }
@@ -42,8 +42,8 @@ DEC_Knowledge_PopulationFlowPart::DEC_Knowledge_PopulationFlowPart( const DEC_Kn
     : shape_             ( part.shape_ )
     , rRelevance_        ( part.rRelevance_ )
     , rLastRelevanceSent_( part.rLastRelevanceSent_ )
-    , bPerceived_        ( part.bPerceived_ )
     , nTimeLastUpdate_   ( part.nTimeLastUpdate_ )
+    , bPerceived_        ( part.bPerceived_ )
 {
     // NOTHING
 }
@@ -66,7 +66,8 @@ void DEC_Knowledge_PopulationFlowPart::load( MIL_CheckPointInArchive& file, cons
     file >> shape_
          >> rRelevance_
          >> rLastRelevanceSent_
-         >> nTimeLastUpdate_;
+         >> nTimeLastUpdate_
+         >> bPerceived_;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +79,8 @@ void DEC_Knowledge_PopulationFlowPart::save( MIL_CheckPointOutArchive& file, con
     file << shape_
          << rRelevance_
          << rLastRelevanceSent_
-         << nTimeLastUpdate_;
+         << nTimeLastUpdate_
+         << bPerceived_;
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +162,7 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const double rMaxLifeTim
 // Name: DEC_Knowledge_PopulationFlowPart::Serialize
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationFlowPart::Serialize( sword::FlowPart& asn )
+void DEC_Knowledge_PopulationFlowPart::Serialize( sword::FlowPart& asn ) const
 {
     NET_ASN_Tools::WritePath( shape_, *asn.mutable_shape() );
     asn.set_pertinence( static_cast< int >( rRelevance_ * 100 ) );

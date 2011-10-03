@@ -67,6 +67,7 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
     , nID_                     ( idManager_.GetFreeId() )
     , direction_               ( knowledge.direction_ )
     , rSpeed_                  ( knowledge.rSpeed_ )
+    , flowParts_               ( knowledge.flowParts_ )
     , nNbrAliveHumans_         ( knowledge.nNbrAliveHumans_ )
     , nNbrDeadHumans_          ( knowledge.nNbrDeadHumans_ )
     , pAttitude_               ( knowledge.pAttitude_ )
@@ -80,8 +81,6 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
     , pCurrentPerceptionLevel_ ( knowledge.pCurrentPerceptionLevel_ )
     , bReconAttributesValid_   ( knowledge.bReconAttributesValid_ )
 {
-    for( CIT_FlowPartMap it = knowledge.flowParts_.begin(); it != knowledge.flowParts_.end(); ++it )
-        flowParts_[ it->first ] = new DEC_Knowledge_PopulationFlowPart( *it->second );
     SendMsgCreation();
 }
 
@@ -118,42 +117,6 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
 DEC_Knowledge_PopulationFlow::~DEC_Knowledge_PopulationFlow()
 {
     SendMsgDestruction();
-}
-
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, DEC_Knowledge_PopulationFlow::T_FlowPartMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-        template< typename Archive >
-        void save( Archive& file, const DEC_Knowledge_PopulationFlow::T_FlowPartMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            file << size;
-            for ( DEC_Knowledge_PopulationFlow::CIT_FlowPartMap it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first
-                     << it->second;
-            }
-        }
-        template< typename Archive >
-        void load( Archive& file, DEC_Knowledge_PopulationFlow::T_FlowPartMap& map, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                MIL_AgentPion* pPion;
-                file >> pPion;
-                file >> map[ pPion ];
-            }
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -215,8 +178,7 @@ void DEC_Knowledge_PopulationFlow::Prepare()
 {
     pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
     pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::notSeen_;
-    for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it )
-        ( *it->second ).Prepare();
+    flowParts_.Prepare();
 }
 
 // -----------------------------------------------------------------------------
@@ -226,13 +188,7 @@ void DEC_Knowledge_PopulationFlow::Prepare()
 void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPerception& perception )
 {
     pCurrentPerceptionLevel_ = &perception.GetCurrentPerceptionLevel();
-    DEC_Knowledge_PopulationFlowPart*& pFlowPart = flowParts_[ &perception.GetKnowledge().GetAgentPerceiving() ];
-    if( !pFlowPart )
-    {
-        bFlowPartsUpdated_ = true;
-        pFlowPart = new DEC_Knowledge_PopulationFlowPart();
-    }
-    if( pFlowPart->Update( perception ) )
+    if( flowParts_.Update( perception ) )
         bFlowPartsUpdated_ = true;
     if( direction_ != perception.GetDirection() )
     {
@@ -272,14 +228,7 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPer
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationCollision& collision  )
 {
-    DEC_Knowledge_PopulationFlowPart*& pFlowPart = flowParts_[ &collision.GetAgentColliding() ];
-    if( !pFlowPart )
-    {
-        bFlowPartsUpdated_ = true;
-        pFlowPart = new DEC_Knowledge_PopulationFlowPart();
-        pFlowPart->Prepare();
-    }
-    if( pFlowPart->Update( collision ) )
+    if( flowParts_.Update( collision ) )
         bFlowPartsUpdated_ = true;
 }
 
@@ -292,9 +241,8 @@ void DEC_Knowledge_PopulationFlow::UpdateRelevance()
     double rMaxLifeTime = pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
     if( pFlowKnown_ && pFlowKnown_->GetPopulation().HasDoneMagicMove() )
         rMaxLifeTime = 0.;
-    for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it )
-        if( (*it->second).UpdateRelevance( rMaxLifeTime ) )
-            bFlowPartsUpdated_ = true;
+    if( flowParts_.UpdateRelevance( rMaxLifeTime ) )
+        bFlowPartsUpdated_ = true;
     // L'objet réel va être détruit
     if( pFlowKnown_ && !pFlowKnown_->IsValid() )
     {
@@ -315,17 +263,7 @@ bool DEC_Knowledge_PopulationFlow::Clean()
     bFlowPartsUpdated_ = false;
     bSpeedUpdated_ = false;
     bDirectionUpdated_ = false;
-    for( IT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); )
-    {
-        if( (*it->second).Clean() )
-        {
-            delete it->second;
-            it = flowParts_.erase( it );
-        }
-        else
-            ++it;
-    }
-    return flowParts_.empty();
+    return flowParts_.Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -343,12 +281,7 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
     asnMsg().set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
-    if( !flowParts_.empty() )
-    {
-        unsigned int i = 0;
-        for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it, ++i )
-            (*it->second).Serialize( *asnMsg().mutable_parts()->add_elem() );
-    }
+    flowParts_.Serialize( *asnMsg().mutable_parts()->add_elem() );
     if( bReconAttributesValid_ )
     {
         assert( pAttitude_ );
@@ -387,14 +320,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     if( bSpeedUpdated_ )
         asnMsg().set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     if( bFlowPartsUpdated_ )
-    {
-        if( !flowParts_.empty() )
-        {
-            unsigned int i = 0;
-            for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it, ++i )
-                (*it->second).Serialize( *asnMsg().mutable_parts()->add_elem() );
-        }
-    }
+        flowParts_.Serialize( *asnMsg().mutable_parts()->add_elem() );
     if( bReconAttributesValid_ )
     {
         assert( pAttitude_ );

@@ -14,10 +14,10 @@
 
 #include "MIL.h"
 #include "Tools/MIL_IDManager.h"
+#include "DEC_Knowledge_PopulationFlowPart.h"
 
 class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationFlowPerception;
-class DEC_Knowledge_PopulationFlowPart;
 class DEC_Knowledge_PopulationCollision;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
@@ -86,7 +86,7 @@ private:
     const unsigned int nID_;
     MT_Vector2D direction_;
     double rSpeed_;
-    T_FlowPartMap flowParts_;
+    DEC_Knowledge_PopulationFlowPart flowParts_;
     unsigned int nNbrAliveHumans_;
     unsigned int nNbrDeadHumans_;
     const MIL_PopulationAttitude* pAttitude_;

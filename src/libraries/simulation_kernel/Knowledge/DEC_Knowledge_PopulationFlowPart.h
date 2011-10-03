@@ -56,7 +56,7 @@ public:
 
     //! @name Network operations
     //@{
-    void Serialize( sword::FlowPart& asn );
+    void Serialize( sword::FlowPart& asn ) const;
     //@}
 
 private:
@@ -70,9 +70,9 @@ private:
     //@{
     T_PointVector shape_;
     double rRelevance_;
-    double rLastRelevanceSent_;
-    bool bPerceived_;
+    mutable double rLastRelevanceSent_;
     unsigned int nTimeLastUpdate_;
+    bool bPerceived_;
     //@}
 };
 
