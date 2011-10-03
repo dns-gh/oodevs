@@ -74,7 +74,7 @@ SimulationFacade::SimulationFacade( const ContextFactory_ABC& contextFactory, to
     , pFormationCreater_     ( new FormationCreater( dynamicModel.Sides(), *pFormationHandler_ ) )
     , pAutomatCreater_       ( new AutomatCreater( *pFormationHandler_, *pAutomatHandler_, staticModel.types_, dynamicModel.KnowledgeGroups() ) )
     , pUnitTeleporter_       ( new UnitTeleporter( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory ) )
-    , pEquipmentUpdater_     ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes ) )
+    , pEquipmentUpdater_     ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes, messageController ) )
     , pRemoteAgentController_( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, dynamicModel.Sides(), unitTypeResolver ) )
 {
     // NOTHING

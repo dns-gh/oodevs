@@ -17,6 +17,7 @@
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "rpr/EntityTypeResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
+#include "tools/MessageController_ABC.h"
 #include <boost/foreach.hpp>
 
 using namespace plugins::hla;
@@ -27,7 +28,8 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 EquipmentUpdater::EquipmentUpdater( RemoteAgentSubject_ABC& subject, ContextHandler_ABC< sword::UnitCreation >& handler,
                                     dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& factory,
-                                    const rpr::EntityTypeResolver_ABC& resolver, const ComponentTypes_ABC& componentTypes )
+                                    const rpr::EntityTypeResolver_ABC& resolver, const ComponentTypes_ABC& componentTypes,
+                                    tools::MessageController_ABC< sword::SimToClient_Content >& messageController )
     : subject_       ( subject )
     , handler_       ( handler )
     , publisher_     ( publisher )
@@ -37,6 +39,7 @@ EquipmentUpdater::EquipmentUpdater( RemoteAgentSubject_ABC& subject, ContextHand
 {
     subject_.Register( *this );
     handler_.Register( *this );
+    CONNECT( messageController, *this, unit_attributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,8 +82,37 @@ void EquipmentUpdater::Notify( const sword::UnitCreation& message, const std::st
 {
     ComponentTypeVisitor< T_Agents > visitor( identifier, agentTypes_ );
     componentTypes_.Apply( message.type().id(), visitor );
-    identifiers_[ identifier ] = message.unit().id();
+    identifiers_.left.insert( T_Identifiers::left_value_type( identifier, message.unit().id() ) );
     SendUpdate( identifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EquipmentUpdater::Notify
+// Created: VPR 2011-10-03
+// -----------------------------------------------------------------------------
+void EquipmentUpdater::Notify( const sword::UnitAttributes& message, int /*context*/ )
+{
+    if( !message.has_equipment_dotations() )
+        return;
+    T_Identifiers::right_const_iterator it = identifiers_.right.find( message.unit().id() );
+    if( it == identifiers_.right.end() )
+        return;
+    bool mustSend = false;
+    const std::string& identifier = it->second;
+    const T_Components& remoteComponents = remoteAgents_[ identifier ];
+    const T_Components& staticComponents = agentTypes_[ identifier ];
+    for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
+    {
+        const sword::EquipmentDotations::EquipmentDotation& dotation = message.equipment_dotations().elem( i );
+        std::string equipmentName;
+        BOOST_FOREACH( const T_Components::value_type& staticComponent, staticComponents )
+            if( staticComponent.second.first == dotation.type().id() )
+                equipmentName = staticComponent.first;
+        const T_Components::const_iterator remoteComponent = remoteComponents.find( equipmentName );
+        mustSend = mustSend || ( remoteComponent != remoteComponents.end() && remoteComponent->second.second != dotation.available() );
+    }
+    if( mustSend )
+        SendUpdate( identifier );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +193,7 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
     T_Agents::const_iterator remoteAgent = remoteAgents_.find( identifier );
     if( agentType == agentTypes_.end() || remoteAgent == remoteAgents_.end() )
         return;
-    const unsigned int agentIdentifier = identifiers_[ identifier ];
+    const unsigned int agentIdentifier = identifiers_.left.at( identifier );
     simulation::UnitMagicAction message;
     message().mutable_tasker()->mutable_unit()->set_id( agentIdentifier );
     message().set_type( sword::UnitMagicAction::change_equipment_state );
@@ -173,7 +205,7 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
         const unsigned int componentTypeIdentifier = component.second.first;
         const unsigned int componentStaticNumber = component.second.second;
         const T_Components::const_iterator remoteComponent = remoteAgent->second.find( componentTypeName );
-        if( remoteComponent != remoteAgent->second.end() && remoteComponent->second.second < componentStaticNumber )
+        if( remoteComponent != remoteAgent->second.end() && remoteComponent->second.second <= componentStaticNumber )
         {
             const unsigned int remoteComponentAvailable = remoteComponent->second.second;
             const int remoteComponentDead = componentStaticNumber - remoteComponentAvailable;

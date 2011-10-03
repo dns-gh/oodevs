@@ -15,7 +15,9 @@
 #include "MockContextFactory.h"
 #include "MockSimulationPublisher.h"
 #include "MockComponentTypes.h"
+#include "MockMessageController.h"
 #include "MockEntityTypeResolver.h"
+#include "tools/MessageHandler_ABC.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace plugins::hla;
@@ -26,14 +28,17 @@ namespace
     {
     public:
         Fixture()
-            : remoteAgentListener( 0 )
-            , responseObserver   ( 0 )
+            : remoteAgentListener  ( 0 )
+            , responseObserver     ( 0 )
+            , unitAttributesHandler( 0 )
         {
             MOCK_EXPECT( factory, Create ).returns( 888 );
             MOCK_EXPECT( subject, Register ).once().with( mock::retrieve( remoteAgentListener ) );
             MOCK_EXPECT( subject, Unregister );
             MOCK_EXPECT( handler, Register ).once().with( mock::retrieve( responseObserver ) );
             MOCK_EXPECT( handler, Unregister );
+            MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( unitAttributesHandler ) );
+            MOCK_EXPECT( messageController, Unregister );
         }
         RemoteAgentListener_ABC* remoteAgentListener;
         ResponseObserver_ABC< sword::UnitCreation >* responseObserver;
@@ -43,13 +48,15 @@ namespace
         MockContextFactory factory;
         rpr::MockEntityTypeResolver resolver;
         MockComponentTypes componentTypes;
+        tools::MockMessageController< sword::SimToClient_Content > messageController;
+        tools::MessageHandler_ABC< sword::SimToClient_Content >* unitAttributesHandler;
         sword::ClientToSim message;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : updater            ( subject, handler, publisher, factory, resolver, componentTypes )
+            : updater            ( subject, handler, publisher, factory, resolver, componentTypes, messageController )
             , componentEntityType( "1 1 2 0 0 0 0" )
             , componentTypeName  ( "component type name" )
             , unitId             ( 1337 )
@@ -58,6 +65,7 @@ namespace
         {
             BOOST_REQUIRE( remoteAgentListener );
             BOOST_REQUIRE( responseObserver );
+            BOOST_REQUIRE( unitAttributesHandler );
         }
         sword::UnitCreation MakeMessage( unsigned int agentTypeId, unsigned int unitId )
         {
@@ -154,16 +162,6 @@ BOOST_FIXTURE_TEST_CASE( equipment_updater_does_not_send_message_if_remote_numbe
     remoteAgentListener->EquipmentUpdated( "remote", rpr::EntityType( componentEntityType ), undamaged );
 }
 
-BOOST_FIXTURE_TEST_CASE( equipment_updater_does_not_send_message_if_remote_number_is_equal_to_static_number, RegisteredFixture )
-{
-    const int undamaged = 4;
-    const int componentNumber = 4;
-    MOCK_EXPECT( componentTypes, Apply ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
-    responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "remote" );
-    MOCK_EXPECT( resolver, Resolve ).returns( componentTypeName );
-    remoteAgentListener->EquipmentUpdated( "remote", rpr::EntityType( componentEntityType ), undamaged );
-}
-
 BOOST_FIXTURE_TEST_CASE( equipment_updater_sends_only_mapped_components, RegisteredFixture )
 {
     const int undamaged = 2;
@@ -177,4 +175,70 @@ BOOST_FIXTURE_TEST_CASE( equipment_updater_sends_only_mapped_components, Registe
     MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
     remoteAgentListener->EquipmentUpdated( "remote", rpr::EntityType( componentEntityType ), undamaged );
     CheckMessage( message, unitId, componentTypeId, undamaged, destroyed );
+}
+
+namespace
+{
+    class SendFixture : public RegisteredFixture
+    {
+    public:
+        SendFixture()
+            : undamaged      ( 2 )
+            , componentNumber( 10 )
+            , destroyed      ( componentNumber - undamaged )
+        {
+            MOCK_EXPECT( componentTypes, Apply ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
+            responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "remote" );
+            MOCK_EXPECT( resolver, Resolve ).once().returns( componentTypeName );
+            MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
+            remoteAgentListener->EquipmentUpdated( "remote", rpr::EntityType( componentEntityType ), undamaged );
+            CheckMessage( message, unitId, componentTypeId, undamaged, destroyed );
+            mock::verify();
+        }
+        sword::SimToClient_Content MakeUnitAttributesMessage( int available, int destroyed, unsigned int unitId, unsigned int componentTypeId )
+        {
+            sword::SimToClient_Content unitAttributesMessage;
+            sword::UnitAttributes* attributesMessage = unitAttributesMessage.mutable_unit_attributes();
+            attributesMessage->mutable_unit()->set_id( unitId );
+            sword::EquipmentDotations::EquipmentDotation* equipmentMessage = attributesMessage->mutable_equipment_dotations()->add_elem();
+            equipmentMessage->mutable_type()->set_id( componentTypeId );
+            equipmentMessage->set_available( available );
+            equipmentMessage->set_unavailable( destroyed );
+            return unitAttributesMessage;
+        }
+        const int undamaged;
+        const int componentNumber;
+        const int destroyed;
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( equipment_updater_resends_components_state_if_destroyed_from_simulation, SendFixture )
+{
+    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
+    unitAttributesHandler->Notify( MakeUnitAttributesMessage( undamaged - 1, destroyed + 1, unitId, componentTypeId ), 42 );
+    CheckMessage( message, unitId, componentTypeId, undamaged, destroyed );
+}
+
+BOOST_FIXTURE_TEST_CASE( equipment_updater_resends_components_state_if_recompleted_from_simulation, SendFixture )
+{
+    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
+    unitAttributesHandler->Notify( MakeUnitAttributesMessage( undamaged + 1, destroyed - 1, unitId, componentTypeId ), 42 );
+    CheckMessage( message, unitId, componentTypeId, undamaged, destroyed );
+}
+
+BOOST_FIXTURE_TEST_CASE( equipment_updater_resends_nothing_if_no_change, SendFixture )
+{
+    unitAttributesHandler->Notify( MakeUnitAttributesMessage( undamaged, destroyed, unitId, componentTypeId ), 42 );
+}
+
+BOOST_FIXTURE_TEST_CASE( equipment_updater_resends_nothing_if_unit_is_not_remote, SendFixture )
+{
+    const unsigned int notRemoteId = 888;
+    unitAttributesHandler->Notify( MakeUnitAttributesMessage( undamaged - 1, destroyed + 1, notRemoteId, componentTypeId ), 42 );
+}
+
+BOOST_FIXTURE_TEST_CASE( equipment_updater_resends_nothing_if_component_is_unknown, SendFixture )
+{
+    const unsigned int unknownComponentTypeId = 888;
+    unitAttributesHandler->Notify( MakeUnitAttributesMessage( undamaged + 1, destroyed - 1, unitId, unknownComponentTypeId ), 42 );
 }
