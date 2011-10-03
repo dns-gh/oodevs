@@ -149,16 +149,16 @@ WATCHED_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
 // -----------------------------------------------------------------------------
 WATCHED_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
 {
-    sword::SessionCommandExecutionResponse launcherResponse;
-    client::ControlResumeAck dispatcherResponse;
     // send resume request
     exercise->Resume( session );
     VerifySendRequest( "context: 2 message { control_resume { } }" );
 
     // retrieve resume response
+    client::ControlResumeAck dispatcherResponse;
     dispatcherResponse().set_error_code( sword::ControlAck::error_not_paused );
     dispatcherResponse.Send( dispatcher, 2 );
 
+    sword::SessionCommandExecutionResponse launcherResponse;
     MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
 
     Wait( launcherResponse );
