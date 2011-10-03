@@ -13,6 +13,7 @@
 #include "ObjectMessageCallback_ABC.h"
 #include "MessageCallback_ABC.h"
 #include <google/protobuf/descriptor.h>
+#include <boost/lexical_cast.hpp>
 #include <boost/function.hpp>
 #include <vector>
 
