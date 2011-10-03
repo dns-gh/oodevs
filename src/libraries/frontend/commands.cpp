@@ -143,9 +143,7 @@ namespace frontend
 
         bool IsValidCheckpoint( const bfs::path& record )
         {
-            return bfs::is_directory( record )
-                && bfs::exists( record / "data" )
-                && bfs::exists( record / "MetaData.xml" );
+            return bfs::is_directory( record );
         }
 
         QStringList ListCheckpoints( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
