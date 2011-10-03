@@ -87,12 +87,12 @@ namespace
         Fixture()
             : shield( PORT, "localhost:" + boost::lexical_cast< std::string >( PORT + 1 ), listener, true )
         {
-            MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy received connection from" ) );
-            MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy connected to" ) );
-            int connected = 0;
-            MOCK_EXPECT( server, ConnectionSucceeded ).once().with( mock::retrieve( server.host ) ).calls( ++bl::var( connected ) );
-            MOCK_EXPECT( client, ConnectionSucceeded ).once().with( mock::retrieve( client.host ) ).calls( ++bl::var( connected ) );
-            wait( bl::var( connected ) == 2, boost::bind( &Fixture::Update, this ) );
+            int notified = 4;
+            MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy received connection from" ) ).calls( --bl::var( notified ) );
+            MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy connected to" ) ).calls( --bl::var( notified ) );
+            MOCK_EXPECT( server, ConnectionSucceeded ).once().with( mock::retrieve( server.host ) ).calls( --bl::var( notified ) );
+            MOCK_EXPECT( client, ConnectionSucceeded ).once().with( mock::retrieve( client.host ) ).calls( --bl::var( notified ) );
+            wait( bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
             mock::verify();
             mock::reset();
         }
