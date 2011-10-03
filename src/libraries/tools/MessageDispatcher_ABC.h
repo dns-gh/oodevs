@@ -13,6 +13,7 @@
 #include "ObjectMessageCallback.h"
 #include "MessageIdentifierFactory.h"
 #include <boost/function.hpp>
+#include <boost/bind.hpp>
 
 namespace tools
 {
