@@ -154,15 +154,37 @@ BOOST_FIXTURE_TEST_CASE( unsupported_message_sent_from_client_is_detected_by_pro
     wait( bl::var( notified ), boost::bind( &Fixture::Update, this ) );
 }
 
+BOOST_FIXTURE_TEST_CASE( message_a_bit_long_sent_from_client_is_detected_by_proxy, Fixture )
+{
+    {
+        MsgsClientToSim::MsgClientToSim msg;
+        msg.set_context( 77 );
+        std::string name( 32 * 1024, 'a' ); // 32 kB
+        msg.mutable_message()->mutable_control_checkpoint_save_now()->set_name( name );
+        MOCK_EXPECT( listener, Debug ).once();
+        client.Send( client.host, msg );
+    }
+    int notified = 2;
+    MOCK_EXPECT( server, ConnectionWarning ).once().calls( --bl::var( notified ) );
+    MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
+                                                mock::contain( "warning" ) &&
+                                                mock::contain( "Message size larger than" ) ).calls( --bl::var( notified ) );
+    bool received = false;
+    MOCK_EXPECT( listener, Debug ).once();
+    MOCK_EXPECT( server, Receive ).once().calls( bl::var( received ) = true );
+    wait( bl::var( received ) && bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
+}
+
 BOOST_FIXTURE_TEST_CASE( message_too_long_sent_from_client_is_detected_by_proxy, Fixture )
 {
     {
-        tools::Message msg( 32 * 1024 + 12 ); // 32 kB + margin for header and stuff
+        tools::Message msg( 1000 * 1024 + 12 ); // 1 MB + margin for header and stuff
         client.Send( client.host, 1, msg );
     }
     int notified = 3;
     MOCK_EXPECT( server, ConnectionError ).once().calls( --bl::var( notified ) );
     MOCK_EXPECT( client, ConnectionError ).once().calls( --bl::var( notified ) );
+    MOCK_EXPECT( client, ConnectionError );
     MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
                                                 mock::contain( "aborted" ) &&
                                                 mock::contain( "Message size too large" ) ).calls( --bl::var( notified ) );

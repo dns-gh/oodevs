@@ -120,8 +120,4 @@ void BufferedMessageCallback::Commit( MessageCallback_ABC& callback, const std::
     {
         callback.OnWarning( endpoint, e.what() );
     }
-    catch( ... )
-    {
-        callback.OnWarning( endpoint, "unknown exception" );
-    }
 }

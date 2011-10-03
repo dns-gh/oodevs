@@ -11,9 +11,9 @@
 #include "Protocol.h"
 #include "MessageHelpers.h"
 #include "tools/asio.h"
-#include "tools/MessageDecoder.h"
-#include "tools/MessageEncoder.h"
+#include "tools/Message.h"
 #include "tools/MessageIdentifierFactory.h"
+#include <boost/shared_array.hpp>
 
 namespace
 {
@@ -73,12 +73,15 @@ namespace
     void Verify( const M& message )
     {
         BOOST_REQUIRE( message.IsInitialized() );
-        const tools::MessageEncoder< M > encoder( message );
-        const tools::Message& encodedMessage = encoder;
+        boost::shared_array< google::protobuf::uint8 > buffer( new google::protobuf::uint8[ message.ByteSize() ] );
+        BOOST_REQUIRE( message.SerializeWithCachedSizesToArray( buffer.get() ) );
+        tools::Message encodedMessage;
+        encodedMessage.Write( (const char*)buffer.get(), message.GetCachedSize() );
         CheckOutputBuffer( encodedMessage );
         tools::Message encodedCopy = encodedMessage;
-        const tools::MessageDecoder< M > decoder( StripHeader( encodedCopy ) );
-        const M& decodedMessage = decoder;
+        tools::Message stripped = StripHeader( encodedCopy );
+        M decodedMessage;
+        BOOST_REQUIRE( decodedMessage.ParseFromArray( stripped.Data(), static_cast< int >( stripped.Size() ) ) );
         BOOST_CHECK( message == decodedMessage );
         static const unsigned long headerSize = 2 * sizeof( unsigned long );
         BOOST_CHECK_EQUAL( static_cast< unsigned long >( message.ByteSize() ), encodedMessage.Size() - headerSize );
@@ -176,14 +179,4 @@ BOOST_AUTO_TEST_CASE( EncodingTest_EncodeExtendable )
     Verify( message );
     message.MutableExtension( zero )->set_value( 0 );
     Verify( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EncodingTest_ErrorChecking
-// Created: SEB 2009-10-25
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( EncodingTest_ErrorChecking )
-{
-    Composite message;
-    BOOST_CHECK_THROW( tools::MessageEncoder< Composite > encoder( message ), std::runtime_error );
 }

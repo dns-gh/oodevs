@@ -30,6 +30,8 @@
 #include "tools/BufferedMessageCallback.h"
 #include "tools/BufferedConnectionCallback.h"
 #include "tools/ObjectMessageService.h"
+#include <boost/bind.hpp>
+#include <boost/bind/apply.hpp>
 
 #pragma warning( disable: 4355 )
 

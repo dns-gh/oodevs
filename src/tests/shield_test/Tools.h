@@ -13,6 +13,7 @@
 #include "shield/Client_ABC.h"
 #include "shield/Server_ABC.h"
 #include "shield/ClientListener_ABC.h"
+#include "shield/DebugInfo_ABC.h"
 #include "shield/Converter.h"
 #pragma warning( push, 0 )
 #include "shield/proto/AarToClient.pb.h"

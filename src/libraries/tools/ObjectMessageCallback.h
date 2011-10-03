@@ -10,37 +10,14 @@
 #ifndef __ObjectMessageCallback_h_
 #define __ObjectMessageCallback_h_
 
-#include "MessageDecoder.h"
+#include "ObjectMessageCallback_ABC.h"
+#include "MessageCallback_ABC.h"
+#include <google/protobuf/descriptor.h>
 #include <boost/function.hpp>
-#include <boost/bind.hpp>
-#include <boost/bind/apply.hpp>
-#include <string>
 #include <vector>
 
 namespace tools
 {
-
-// =============================================================================
-/** @class  ObjectMessageCallback_ABC
-    @brief  ObjectMessageCallback_ABC
-*/
-// Created: AGE 2007-03-07
-// =============================================================================
-class ObjectMessageCallback_ABC
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             ObjectMessageCallback_ABC() {}
-    virtual ~ObjectMessageCallback_ABC() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void OnMessage( const std::string& link, Message& input ) = 0;
-    //@}
-};
-
 // =============================================================================
 /** @class  ObjectMessageCallback
     @brief  Callback wrapper
@@ -53,7 +30,7 @@ class ObjectMessageCallback : public ObjectMessageCallback_ABC
 public:
     //! @name Types
     //@{
-    typedef boost::function2< void, const std::string& , const T& > T_Callback;
+    typedef boost::function< void( const std::string&, const T& ) > T_Callback;
     //@}
 
 public:
@@ -69,21 +46,23 @@ public:
     {
         callbacks_.push_back( callback );
     }
-    virtual void OnMessage( const std::string& link, Message& input )
+    virtual void OnMessage( const std::string& link, Message& message, MessageCallback_ABC& callback )
     {
-        MessageDecoder< T > decoder( input );
+        T t;
+        if( ! t.ParseFromArray( message.Data(), static_cast< int >( message.Size() ) ) )
+            throw std::runtime_error( "Error deserializing message of type \"" + t.GetDescriptor()->full_name() + '"' );
+        static const unsigned long threshold = 32 * 1024; // 32 kB
+        if( message.Size() > threshold )
+            callback.OnWarning( link,
+                "Message size larger than " + boost::lexical_cast< std::string >( threshold ) + " detected" + " " + t.ShortDebugString() );
         try
         {
-            for( std::vector< T_Callback >::const_iterator it = callbacks_.begin(); it != callbacks_.end(); ++it )
-                (*it)( link, decoder );
+            for( CIT_Callbacks it = callbacks_.begin(); it != callbacks_.end(); ++it )
+                (*it)( link, t );
         }
         catch( std::exception& e )
         {
-            throw std::runtime_error( e.what() + (" " + decoder.DebugString()) );
-        }
-        catch( ... )
-        {
-            throw std::runtime_error( "Unknown exception " + decoder.DebugString() );
+            throw std::runtime_error( e.what() + (" " + t.ShortDebugString()) );
         }
     }
     //@}
@@ -96,9 +75,16 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::vector< T_Callback >              T_Callbacks;
+    typedef typename T_Callbacks::const_iterator CIT_Callbacks;
+    //@}
+
+private:
     //! @name Member data
     //@{
-    std::vector< T_Callback > callbacks_;
+    T_Callbacks callbacks_;
     //@}
 };
 

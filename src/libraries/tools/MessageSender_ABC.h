@@ -11,7 +11,9 @@
 #define __MessageSender_ABC_h_
 
 #include "MessageIdentifierFactory.h"
-#include "MessageEncoder.h"
+#include "Message.h"
+#include <google/protobuf/descriptor.h>
+#include <boost/shared_array.hpp>
 
 namespace tools
 {
@@ -19,7 +21,7 @@ namespace tools
 
 // =============================================================================
 /** @class  MessageSender_ABC
-    @brief  MessageSender_ABC
+    @brief  Message sender
 */
 // Created: AGE 2007-09-06
 // =============================================================================
@@ -35,11 +37,18 @@ public:
     //! @name Operations
     //@{
     template< typename T >
-    void Send( const std::string& link, const T& message )
+    void Send( const std::string& link, const T& t )
     {
+        if( !t.IsInitialized() )
+            throw std::runtime_error( "Message of type \"" + t.GetDescriptor()->full_name()
+                + "\" is missing required fields: " + t.InitializationErrorString() );
+        boost::shared_array< google::protobuf::uint8 > buffer( new google::protobuf::uint8[ t.ByteSize() ] );
+        if( !t.SerializeWithCachedSizesToArray( buffer.get() ) )
+            throw std::runtime_error( "Error serializing message of type \"" + t.GetDescriptor()->full_name() + '"' );
+        Message message;
+        message.Write( (const char*)buffer.get(), t.GetCachedSize() );
         static const unsigned long id = MessageIdentifierFactory::GetIdentifier< T >();
-        MessageEncoder< T > encoder( message );
-        Send( link, id, encoder );
+        Send( link, id, message );
     }
     template< typename T >
     void Send( const std::string& link, const T& , const Message& message )
