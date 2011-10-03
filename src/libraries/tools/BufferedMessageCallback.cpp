@@ -90,7 +90,6 @@ void BufferedMessageCallback::OnMessage( const std::string& endpoint, Message& m
 void BufferedMessageCallback::Commit( MessageCallback_ABC& callback )
 {
     T_Events events;
-    events.reserve( events_.size() );
     {
         boost::mutex::scoped_lock locker( mutex_ );
         std::swap( events_, events );
