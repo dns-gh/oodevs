@@ -2267,6 +2267,17 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\TerrainProfilerLayer.h" />
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_app6_en.ts">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lrelease -verbose "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lrelease -verbose "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lrelease -verbose "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lrelease -verbose "%(FullPath)"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./clients_gui_app6;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./clients_gui_app6;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./clients_gui_app6;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./clients_gui_app6;%(Outputs)</Outputs>
+    </CustomBuild>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl" />
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl" />
     <None Include="..\..\src\libraries\clients_gui\EntityLayer.inl" />
