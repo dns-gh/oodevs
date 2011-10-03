@@ -246,70 +246,6 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PlatoonTest">
-      <missions>
-        <mission name="TEST Advance"/>
-        <mission name="TEST AnimateObjects"/>
-        <mission name="TEST BuildObjects"/>
-        <mission name="TEST BypassObjects"/>
-        <mission name="TEST Control"/>
-        <mission name="TEST EngageAgents"/>
-        <mission name="TEST Flee"/>
-        <mission name="TEST GetDecon"/>
-        <mission name="TEST GuideAndLoad"/>
-        <mission name="TEST MoveAlongPointList"/>
-        <mission name="TEST MoveAlongPolygonList"/>
-        <mission name="TEST MoveAlongAgentKnowledgeList"/>
-        <mission name="TEST MoveAlongObjectKnowledgeList"/>
-        <mission name="TEST MoveToPointList"/>
-        <mission name="TEST MoveToPolygonList"/>
-        <mission name="TEST MoveToAgentList"/>
-        <mission name="TEST MoveToAgentKnowledgeList"/>
-        <mission name="TEST MoveToObjectKnowledgeList"/>
-        <mission name="TEST MoveToWithLima">
-          <fragorder name="Deboucher"/>
-        </mission>
-        <mission name="TEST Neutralize"/>
-        <mission name="TEST Open"/>
-        <mission name="TEST Observe"/>
-        <mission name="TEST Observe ligne"/>
-        <mission name="TEST Destroy"/>
-        <mission name="TEST Identify"/>
-        <mission name="TEST Reconnoiter"/>
-        <mission name="TEST Reinforce"/>
-        <mission name="TEST RemoveObstacle"/>
-        <mission name="TEST Search"/>
-        <mission name="TEST StayClose"/>
-        <mission name="TEST Support"/>
-        <mission name="TEST TakeCover"/>
-        <mission name="TEST ValorizeObjects"/>
-        <mission name="TEST WaitTransport"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Rejoindre"/>
-        <fragorder name="Embarquer"/>
-        <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-      </fragorders>
-    </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Artillerie">
       <missions>
         <mission name="ASS Assurer la Mise En Oeuvre">
@@ -15018,4 +14954,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3060045116" -->
+<!-- signature="2195824553" -->

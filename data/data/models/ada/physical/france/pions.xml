@@ -11819,41 +11819,7 @@
     <efficiencies combat="50" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PlatoonTest" id="439" name="Pion de tests" type="Pion INF">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
-    <equipments>
-      <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
-      <equipment count="9" crew="1" loadable="true" type="Fantassin"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin MINIMI"/>
-      <equipment count="2" crew="2" loadable="true" type="Equipe ERYX"/>
-      <equipment count="2" crew="1" loadable="true" type="Tireur Precision"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin Appui AC"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
-      <equipment count="1" crew="3" type="EBG"/>
-      <equipment count="1" crew="3" type="MPG"/>
-    </equipments>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="6" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="1800s"/>
-    </postures>
-    <nbc decontamination-delay="1350s"/>
-    <distance-before-points>
-      <distance-before-point type="forest" value="500"/>
-      <distance-before-point type="urban area" value="500"/>
-      <distance-before-point type="crossroad" value="500"/>
-      <distance-before-point type="bridge" value="500"/>
-    </distance-before-points>
-    <drill-blow length="300" width="300"/>
-    <efficiencies combat="100" combat-support="100" counter-mobility-support="100" engineering-support="100" mobility-support="100" protection-support="100" recon="100" urban-area="100"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Terroriste" id="440" name="Observateur virtuel" type="Pion INF">
+  <unit decisional-model="Terroriste" id="439" name="Observateur virtuel" type="Pion INF">
     <nature atlas-nature="PC" level="none" nature-app6="combat support/military intelligence/surveillance/sensor/scm"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Observateur virtuel"/>
@@ -11872,7 +11838,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PIA" id="441" name="PIA Dominante INF" type="Pion INF">
+  <unit decisional-model="Masalife.PIA" id="440" name="PIA Dominante INF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -11906,7 +11872,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PIA" id="442" name="PIA Dominante ABC" type="Pion ABC">
+  <unit decisional-model="Masalife.PIA" id="441" name="PIA Dominante ABC" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
@@ -11940,7 +11906,7 @@
     <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PIA" id="443" name="PIA Dominante Reco" type="Pion RENS">
+  <unit decisional-model="Masalife.PIA" id="442" name="PIA Dominante Reco" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VBL MILAN"/>
@@ -11969,7 +11935,7 @@
     <efficiencies combat="10" combat-support="10" counter-mobility-support="0" engineering-support="5" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.PC" id="444" name="PC SGTIA" type="Pion INF">
+  <unit decisional-model="Masalife.INF.PC" id="443" name="PC SGTIA" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -12001,7 +11967,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="445" name="Section . CBT INF VAB CDS SOFF" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="444" name="Section . CBT INF VAB CDS SOFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -12033,7 +11999,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Mortier" id="446" name="Groupe . MO81 VAB" type="Pion INF">
+  <unit decisional-model="Masalife.Mortier" id="445" name="Groupe . MO81 VAB" type="Pion INF">
     <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" major="true" type="Equipe Mortier 81"/>
@@ -12064,7 +12030,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="80"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.AMX" id="447" name="Peloton . LECLERC CDP SOFF" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="446" name="Peloton . LECLERC CDP SOFF" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
@@ -12091,7 +12057,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="10" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.AMX" id="448" name="Peloton . d appui direct" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="447" name="Peloton . d appui direct" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/light"/>
     <equipments>
       <equipment count="1" crew="2" type="VBL CDT"/>
@@ -12118,7 +12084,7 @@
     <efficiencies combat="50" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.PC" id="449" name="Peloton . LECLERC CDT ESC" type="Pion ABC">
+  <unit decisional-model="Masalife.INF.PC" id="448" name="Peloton . LECLERC CDT ESC" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VBL CDT"/>
@@ -12149,7 +12115,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Terroriste" id="450" name="Terroriste IED" type="Pion ASY">
+  <unit decisional-model="Masalife.Terroriste" id="449" name="Terroriste IED" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Terroriste IED"/>
@@ -12174,7 +12140,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ONG Intervention" id="451" name="ONG Intervention" type="Pion Organization">
+  <unit decisional-model="Masalife.ONG Intervention" id="450" name="ONG Intervention" type="Pion Organization">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="MPG"/>
@@ -12195,7 +12161,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Individu Isole" id="452" name="Individu Isole" type="Pion Civilian">
+  <unit decisional-model="Masalife.Individu Isole" id="451" name="Individu Isole" type="Pion Civilian">
     <nature atlas-nature="None" level="none" nature-app6="undefined"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Foule"/>
@@ -12215,7 +12181,7 @@
     <repartition children="0" female="0" male="1"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ONG LOG" id="453" name="ONG Soutien LOG" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.ONG LOG" id="452" name="ONG Soutien LOG" type="Pion LOG TC2">
     <nature atlas-nature="None" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="2" type="Camion Citerne Semi remorque 30m3"/>
@@ -12247,7 +12213,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="454" name="MILICE . CDT" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="453" name="MILICE . CDT" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Milicien VL MIT 14.5"/>
@@ -12274,7 +12240,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="455" name="MILICE . Miliciens" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="454" name="MILICE . Miliciens" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Milicien VL MIT 14.5"/>
@@ -12302,7 +12268,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Terroriste" id="456" name="Terroriste RPG" type="Pion INF">
+  <unit decisional-model="Masalife.Terroriste" id="455" name="Terroriste RPG" type="Pion INF">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Terroriste RPG"/>
@@ -12321,7 +12287,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Terroriste" id="457" name="Terroriste Sniper" type="Pion INF">
+  <unit decisional-model="Masalife.Terroriste" id="456" name="Terroriste Sniper" type="Pion INF">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Terroriste Sniper"/>
@@ -12340,7 +12306,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Terroriste" id="458" name="Terroriste Sniper et IED" type="Pion INF">
+  <unit decisional-model="Masalife.Terroriste" id="457" name="Terroriste Sniper et IED" type="Pion INF">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Terroriste Sniper et IED"/>
@@ -12359,7 +12325,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Individu Isole" id="459" name="Refugies" type="Pion REFUGIE">
+  <unit decisional-model="Masalife.Individu Isole" id="458" name="Refugies" type="Pion REFUGIE">
     <nature atlas-nature="PC" level="none" nature-app6="undefined"/>
     <equipments>
       <equipment count="1" crew="10" type="Foule"/>
@@ -12379,4 +12345,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0831486090" -->
+<!-- signature="2329035099" -->
