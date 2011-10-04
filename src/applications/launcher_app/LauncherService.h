@@ -10,6 +10,10 @@
 #ifndef __LauncherService_h_
 #define __LauncherService_h_
 
+#ifndef _WIN32_WINNT
+#   define _WIN32_WINNT 0x0501
+#endif
+
 #include <boost/noncopyable.hpp>
 #include <boost/filesystem.hpp>
 #include <windows.h>

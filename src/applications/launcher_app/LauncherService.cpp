@@ -11,13 +11,12 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "launcher_dll/LauncherFacade.h"
+#include <xeumeuleu/xml.hpp>
 #include <boost/assign/list_of.hpp>
-#pragma warning( push )
-#pragma warning( disable : 4244 )
+#pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <vector>
-#include <xeumeuleu/xml.hpp>
 
 LauncherService* LauncherService::pInstance_ = 0;
 

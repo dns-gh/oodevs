@@ -10,15 +10,10 @@
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "LauncherService.h"
-#include <iostream>
-#pragma warning( push )
-#pragma warning( disable: 4512 )
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
-#include <boost/filesystem.hpp>
-#ifndef _WIN32_WINNT
-#   define _WIN32_WINNT 0x0501
-#endif
+#include <iostream>
 
 namespace bpo = boost::program_options;
 namespace bfs = boost::filesystem;
