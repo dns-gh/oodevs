@@ -54,7 +54,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentController( xml::xisubstream xis, dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
-                              const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes );
+                              const rpr::EntityTypeResolver_ABC& surfaceVesselsResolver, const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes );
     virtual ~AgentController();
     //@}
 
@@ -93,6 +93,7 @@ private:
     //@{
     dispatcher::Model_ABC& model_;
     const rpr::EntityTypeResolver_ABC& aggregatesResolver_;
+    const rpr::EntityTypeResolver_ABC& surfaceVesselsResolver_;
     const rpr::EntityTypeResolver_ABC& componentTypeResolver_;
     const ComponentTypes_ABC& componentTypes_;
     T_SurfaceVessels surfaceVessels_;
