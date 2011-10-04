@@ -13,7 +13,9 @@
 #include "ObjectMessageCallback_ABC.h"
 #include "MessageCallback_ABC.h"
 #include "Message.h"
+#pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
+#pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 #include <boost/function.hpp>
 #include <vector>

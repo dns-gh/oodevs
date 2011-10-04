@@ -12,7 +12,9 @@
 
 #include "MessageIdentifierFactory.h"
 #include "Message.h"
+#pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
+#pragma warning( pop )
 #include <boost/shared_array.hpp>
 
 namespace tools
