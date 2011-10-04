@@ -79,7 +79,7 @@ bool UrbanPositions::IsInside( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawDecoratedPolygon( polygon_, color_, hasInfrastructure_ ? name_ : std::string(), height_, selected_ );
+    tools.DrawDecoratedPolygon( polygon_, color_, hasInfrastructure_ ? name_ : std::string(), 0, selected_ );
 }
 
 // -----------------------------------------------------------------------------

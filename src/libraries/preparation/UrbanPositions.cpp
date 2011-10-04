@@ -83,7 +83,7 @@ const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
     if( pColor_ )
-        tools.DrawDecoratedPolygon( object_.Get< urban::GeometryAttribute >().Geometry(), *pColor_, hasInfrastructure_ ? object_.GetName() : std::string(), height_, selected_ );
+        tools.DrawDecoratedPolygon( object_.Get< urban::GeometryAttribute >().Geometry(), *pColor_, hasInfrastructure_ ? object_.GetName() : std::string(), 0, selected_ );
 }
 
 // -----------------------------------------------------------------------------
