@@ -33,11 +33,11 @@ NetnRemoteAggregateFactory::~NetnRemoteAggregateFactory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnRemoteAggregateFactory::Create
+// Name: NetnRemoteAggregateFactory::CreateAggregate
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-std::auto_ptr< HlaObject_ABC > NetnRemoteAggregateFactory::Create( const std::string& name, RemoteAgentListener_ABC& listener ) const
+std::auto_ptr< HlaObject_ABC > NetnRemoteAggregateFactory::CreateAggregate( const std::string& name, RemoteAgentListener_ABC& listener ) const
 {
-    std::auto_ptr< HlaObject_ABC > remote = factory_.Create( name, listener );
+    std::auto_ptr< HlaObject_ABC > remote = factory_.CreateAggregate( name, listener );
     return std::auto_ptr< HlaObject_ABC >( new NetnRemoteAggregate( remote ) );
 }

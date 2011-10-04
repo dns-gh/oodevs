@@ -83,7 +83,7 @@ void AggregateEntityClass::SurfaceVesselCreated( Agent_ABC& /*agent*/, unsigned 
 HlaObject_ABC& AggregateEntityClass::Create( const ::hla::ObjectIdentifier& objectID, const std::string& /*objectName*/ )
 {
     T_Entity& entity = remoteEntities_[ objectID.ToString() ];
-    entity.reset( remoteFactory_.Create( objectID.ToString(), *pListeners_ ).release() );
+    entity.reset( remoteFactory_.CreateAggregate( objectID.ToString(), *pListeners_ ).release() );
     pListeners_->Created( objectID.ToString() );
     return *entity;
 }

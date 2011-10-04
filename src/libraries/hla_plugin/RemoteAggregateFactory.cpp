@@ -32,10 +32,10 @@ RemoteAggregateFactory::~RemoteAggregateFactory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteAggregateFactory::Create
+// Name: RemoteAggregateFactory::CreateAggregate
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-std::auto_ptr< HlaObject_ABC > RemoteAggregateFactory::Create( const std::string& name, RemoteAgentListener_ABC& listener ) const
+std::auto_ptr< HlaObject_ABC > RemoteAggregateFactory::CreateAggregate( const std::string& name, RemoteAgentListener_ABC& listener ) const
 {
     return std::auto_ptr< HlaObject_ABC >( new RemoteAggregate( name, listener ) );
 }

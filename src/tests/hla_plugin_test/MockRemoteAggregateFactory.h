@@ -25,7 +25,7 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockRemoteAggregateFactory, RemoteAggregateFactory_ABC )
 {
-    MOCK_METHOD( Create, 2 )
+    MOCK_METHOD( CreateAggregate, 2 )
 };
 
 }
