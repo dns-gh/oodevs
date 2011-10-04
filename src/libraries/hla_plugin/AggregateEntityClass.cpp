@@ -60,7 +60,7 @@ AggregateEntityClass::~AggregateEntityClass()
 // -----------------------------------------------------------------------------
 void AggregateEntityClass::AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
-    T_Entity localEntity( factory_.Create( agent, name, ++id_, force, type ).release() );
+    T_Entity localEntity( factory_.CreateAggregate( agent, name, ++id_, force, type ).release() );
     ::hla::ObjectIdentifier objectId = hlaClass_->Register( *localEntity, boost::lexical_cast< std::string >( identifier ) );
     localEntities_[ objectId.ToString() ] = localEntity;
     resolver_.Add( identifier, objectId.ToString() );

@@ -33,11 +33,11 @@ NetnHlaObjectFactory::~NetnHlaObjectFactory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnHlaObjectFactory::Create
+// Name: NetnHlaObjectFactory::CreateAggregate
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-std::auto_ptr< HlaObject_ABC > NetnHlaObjectFactory::Create( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+std::auto_ptr< HlaObject_ABC > NetnHlaObjectFactory::CreateAggregate( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
 {
-    std::auto_ptr< HlaObject_ABC > aggregate = factory_.Create( agent, name, identifier, force, type );
+    std::auto_ptr< HlaObject_ABC > aggregate = factory_.CreateAggregate( agent, name, identifier, force, type );
     return std::auto_ptr< HlaObject_ABC >( new NetnAggregate( aggregate, agent, name, identifier ) );
 }

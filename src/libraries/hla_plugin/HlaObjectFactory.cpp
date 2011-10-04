@@ -32,10 +32,10 @@ HlaObjectFactory::~HlaObjectFactory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: HlaObjectFactory::Create
+// Name: HlaObjectFactory::CreateAggregate
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-std::auto_ptr< HlaObject_ABC > HlaObjectFactory::Create( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+std::auto_ptr< HlaObject_ABC > HlaObjectFactory::CreateAggregate( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
 {
     return std::auto_ptr< HlaObject_ABC >( new AggregateEntity( agent, identifier, name, force, type ) );
 }
