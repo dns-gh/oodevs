@@ -5735,7 +5735,10 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Preparer bascule"/>
-        <mission name="PION LOGISTIQUE Reparer"/>
+        <mission name="PION LOGISTIQUE Reparer">
+          <fragorder name="Modifier Priorites Reparations"/>
+          <fragorder name="Modifier Priorites Tactiques Reparations"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9843,4 +9846,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1833484606" -->
+<!-- signature="3096507669" -->
