@@ -45,6 +45,7 @@ namespace hla
     class RemoteAggregateFactory_ABC;
     class ClassBuilder_ABC;
     class LocalAgentResolver_ABC;
+    class ContextFactory_ABC;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -116,6 +117,7 @@ private:
     std::auto_ptr< RemoteAggregateFactory_ABC > pNetnRemoteAggregateFactory_;
     std::auto_ptr< ClassBuilder_ABC > pClassBuilder_;
     std::auto_ptr< ClassBuilder_ABC > pNetnClassBuilder_;
+    std::auto_ptr< ContextFactory_ABC > pIdentifierFactory_;
     std::auto_ptr< RemoteAgentSubject_ABC > agentClass_;
     //@}
 };

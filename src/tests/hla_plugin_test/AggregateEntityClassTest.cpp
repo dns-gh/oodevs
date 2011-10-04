@@ -21,6 +21,7 @@
 #include "MockLocalAgentResolver.h"
 #include "MockRemoteAgentListener.h"
 #include "MockObjectIdentifierFactory.h"
+#include "MockContextFactory.h"
 #include "rpr/EntityType.h"
 #include "rpr/ForceIdentifier.h"
 #include <hla/Class.h>
@@ -42,6 +43,7 @@ namespace
         {
             MOCK_EXPECT( subject, Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( builder, BuildAggregate ).once().with( mock::any, mock::retrieve( hlaClass ), true, true );
+            MOCK_EXPECT( identifierFactory, Create ).returns( 42 );
         }
         MockFederate federate;
         MockAgentSubject subject;
@@ -52,6 +54,7 @@ namespace
         MockRemoteAggregateFactory remoteFactory;
         MockRemoteAgentListener remoteListener;
         MockLocalAgentResolver localResolver;
+        MockContextFactory identifierFactory;
         AgentListener_ABC* listener;
         hla::Class< HlaObject_ABC >* hlaClass;
     };
@@ -59,7 +62,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : entity( federate, subject, localResolver, hlaObjectFactory, remoteFactory, builder )
+            : entity( federate, subject, localResolver, hlaObjectFactory, remoteFactory, builder, identifierFactory )
         {
             BOOST_REQUIRE( listener );
             BOOST_REQUIRE( hlaClass );

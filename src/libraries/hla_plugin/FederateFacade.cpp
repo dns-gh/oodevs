@@ -19,6 +19,7 @@
 #include "NetnRemoteAggregateFactory.h"
 #include "ClassBuilder.h"
 #include "NetnClassBuilder.h"
+#include "ContextFactory.h"
 #include "protocol/Simulation.h"
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
@@ -96,10 +97,11 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , pNetnRemoteAggregateFactory_( new NetnRemoteAggregateFactory( *pRemoteAggregateFactory_ ) )
     , pClassBuilder_              ( new ClassBuilder() )
     , pNetnClassBuilder_          ( new NetnClassBuilder( *pClassBuilder_ ) )
+    , pIdentifierFactory_         ( new ContextFactory() )
     , agentClass_                 ( new AggregateEntityClass( *federate_, subject, resolver,
                                                               xis.attribute< bool >( "netn", true ) ? *pNetnAggregateFactory_ : *pAggregateFactory_,
                                                               xis.attribute< bool >( "netn", true ) ? *pNetnRemoteAggregateFactory_ : *pRemoteAggregateFactory_,
-                                                              xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_ ) )
+                                                              xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_, *pIdentifierFactory_ ) )
 {
     CONNECT( controller, *this, control_end_tick );
 }

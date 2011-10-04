@@ -18,6 +18,7 @@
 #include "RemoteAgentListenerComposite.h"
 #include "LocalAgentResolver_ABC.h"
 #include "ClassBuilder_ABC.h"
+#include "ContextFactory_ABC.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
 #include <hla/ObjectRegistration_ABC.h>
@@ -32,14 +33,14 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
                                             const HlaObjectFactory_ABC& factory, const RemoteAggregateFactory_ABC& remoteFactory,
-                                            const ClassBuilder_ABC& builder )
-    : id_           ( 1 )
-    , subject_      ( subject )
-    , resolver_     ( resolver )
-    , factory_      ( factory )
-    , remoteFactory_( remoteFactory )
-    , pListeners_   ( new RemoteAgentListenerComposite() )
-    , hlaClass_     ( new ::hla::Class< HlaObject_ABC >( *this, true ) )
+                                            const ClassBuilder_ABC& builder, const ContextFactory_ABC& identifierFactory )
+    : subject_          ( subject )
+    , resolver_         ( resolver )
+    , factory_          ( factory )
+    , remoteFactory_    ( remoteFactory )
+    , identifierFactory_( identifierFactory )
+    , pListeners_       ( new RemoteAgentListenerComposite() )
+    , hlaClass_         ( new ::hla::Class< HlaObject_ABC >( *this, true ) )
 {
     builder.BuildAggregate( federate, *hlaClass_, true, true );
     subject_.Register( *this );
@@ -60,7 +61,7 @@ AggregateEntityClass::~AggregateEntityClass()
 // -----------------------------------------------------------------------------
 void AggregateEntityClass::AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
-    T_Entity localEntity( factory_.CreateAggregate( agent, name, ++id_, force, type ).release() );
+    T_Entity localEntity( factory_.CreateAggregate( agent, name, static_cast< unsigned short >( identifierFactory_.Create() ), force, type ).release() );
     ::hla::ObjectIdentifier objectId = hlaClass_->Register( *localEntity, boost::lexical_cast< std::string >( identifier ) );
     localEntities_[ objectId.ToString() ] = localEntity;
     resolver_.Add( identifier, objectId.ToString() );

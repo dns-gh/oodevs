@@ -33,6 +33,7 @@ namespace hla
     class LocalAgentResolver_ABC;
     class RemoteAggregateFactory_ABC;
     class RemoteAgentListener_ABC;
+    class ContextFactory_ABC;
     class RemoteAgentListenerComposite;
 
 // =============================================================================
@@ -50,7 +51,7 @@ public:
     //@{
              AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
                                    const HlaObjectFactory_ABC& factory, const RemoteAggregateFactory_ABC& remoteFactory,
-                                   const ClassBuilder_ABC& builder );
+                                   const ClassBuilder_ABC& builder, const ContextFactory_ABC& identifierFactory );
     virtual ~AggregateEntityClass();
     //@}
 
@@ -83,11 +84,11 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned short id_;
     AgentSubject_ABC& subject_;
     LocalAgentResolver_ABC& resolver_;
     const HlaObjectFactory_ABC& factory_;
     const RemoteAggregateFactory_ABC& remoteFactory_;
+    const ContextFactory_ABC& identifierFactory_;
     T_Entities localEntities_;
     T_Entities remoteEntities_;
     std::auto_ptr< RemoteAgentListenerComposite > pListeners_;
