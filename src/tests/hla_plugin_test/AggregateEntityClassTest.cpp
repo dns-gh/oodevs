@@ -15,34 +15,28 @@
 #include "MockFederate.h"
 #include "MockAgent.h"
 #include "MockClassBuilder.h"
-#include "MockAggregateFactory.h"
+#include "MockHlaObjectFactory.h"
 #include "MockRemoteAggregateFactory.h"
 #include "MockAggregate.h"
 #include "MockLocalAgentResolver.h"
 #include "MockRemoteAgentListener.h"
+#include "MockObjectIdentifierFactory.h"
 #include "rpr/EntityType.h"
 #include "rpr/ForceIdentifier.h"
 #include <hla/Class.h>
 #include <hla/AttributeFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
 #include <hla/ClassIdentifier.h>
-#include <hla/ObjectIdentifier.h>
-#include <hla/ObjectIdentifierFactory_ABC.h>
 
 using namespace plugins::hla;
 
 namespace
 {
-    MOCK_BASE_CLASS( MockObjectIdentifierFactory, ::hla::ObjectIdentifierFactory_ABC )
-    {
-        MOCK_METHOD( CreateIdentifier, 1 );
-        MOCK_METHOD( ReleaseIdentifier, 1 );
-    };
     class Fixture
     {
     public:
         Fixture()
-            : factory( new MockObjectIdentifierFactory() ) // $$$$ _RC_ SLI 2011-06-10: wtf hla library?
+            : factory( new ::hla::MockObjectIdentifierFactory() ) // $$$$ _RC_ SLI 2011-06-10: wtf hla library?
             , listener( 0 )
             , hlaClass( 0 )
         {
@@ -51,10 +45,10 @@ namespace
         }
         MockFederate federate;
         MockAgentSubject subject;
-        MockObjectIdentifierFactory* factory;
+        ::hla::MockObjectIdentifierFactory* factory;
         MockAgent agent;
         MockClassBuilder builder;
-        MockAggregateFactory aggregateFactory;
+        MockHlaObjectFactory aggregateFactory;
         MockRemoteAggregateFactory remoteFactory;
         MockRemoteAgentListener remoteListener;
         MockLocalAgentResolver localResolver;
@@ -107,4 +101,9 @@ BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_destroys_remote_instances, Regis
     entity.Register( remoteListener );
     MOCK_EXPECT( remoteListener, Destroyed ).once().with( "42" );
     hlaClass->Destroy( 42u );
+}
+
+BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_does_nothing_when_surface_vessel_is_created, RegisteredFixture )
+{
+    listener->SurfaceVesselCreated( agent, 123, "name", rpr::Friendly, rpr::EntityType() );
 }

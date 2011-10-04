@@ -179,7 +179,6 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAgent.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAgentSubject.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAggregate.h" />
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAggregateFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAttributeFunctor.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClassBuilder.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockComponentTypes.h" />
@@ -188,6 +187,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockEntityTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederate.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederateAmbassadorFactory.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockHlaObjectFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionHandler.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionNotification.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionSender.h" />
@@ -196,6 +196,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMessageController.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockModel.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMunitionTypeResolver.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectIdentifierFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectRegistration.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentListener.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentResolver.h" />

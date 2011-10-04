@@ -153,9 +153,6 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAggregate.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAggregateFactory.h">
-      <Filter>Source Files\mock</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAttributeFunctor.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
@@ -220,6 +217,12 @@
       <Filter>Source Files\mock</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockEntityTypeResolver.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectIdentifierFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockHlaObjectFactory.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
   </ItemGroup>

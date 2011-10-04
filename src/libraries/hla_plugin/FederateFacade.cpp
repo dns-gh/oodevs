@@ -13,8 +13,8 @@
 #include "Federate_ABC.h"
 #include "FederateAmbassadorFactory_ABC.h"
 #include "RtiAmbassadorFactory_ABC.h"
-#include "AggregateFactory.h"
-#include "NetnAggregateFactory.h"
+#include "HlaObjectFactory.h"
+#include "NetnHlaObjectFactory.h"
 #include "RemoteAggregateFactory.h"
 #include "NetnRemoteAggregateFactory.h"
 #include "ClassBuilder.h"
@@ -90,8 +90,8 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , ambassador_                 ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
     , federate_                   ( CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
     , destructor_                 ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
-    , pAggregateFactory_          ( new AggregateFactory() )
-    , pNetnAggregateFactory_      ( new NetnAggregateFactory( *pAggregateFactory_ ) )
+    , pAggregateFactory_          ( new HlaObjectFactory() )
+    , pNetnAggregateFactory_      ( new NetnHlaObjectFactory( *pAggregateFactory_ ) )
     , pRemoteAggregateFactory_    ( new RemoteAggregateFactory() )
     , pNetnRemoteAggregateFactory_( new NetnRemoteAggregateFactory( *pRemoteAggregateFactory_ ) )
     , pClassBuilder_              ( new ClassBuilder() )

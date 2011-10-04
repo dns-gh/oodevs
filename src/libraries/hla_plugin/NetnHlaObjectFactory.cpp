@@ -8,34 +8,36 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "AggregateFactory.h"
-#include "AggregateEntity.h"
+#include "NetnHlaObjectFactory.h"
+#include "NetnAggregate.h"
 
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
-// Name: AggregateFactory constructor
+// Name: NetnHlaObjectFactory constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-AggregateFactory::AggregateFactory()
+NetnHlaObjectFactory::NetnHlaObjectFactory( const HlaObjectFactory_ABC& factory )
+    : factory_( factory )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AggregateFactory destructor
+// Name: NetnHlaObjectFactory destructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-AggregateFactory::~AggregateFactory()
+NetnHlaObjectFactory::~NetnHlaObjectFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AggregateFactory::Create
+// Name: NetnHlaObjectFactory::Create
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-std::auto_ptr< Aggregate_ABC > AggregateFactory::Create( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+std::auto_ptr< Aggregate_ABC > NetnHlaObjectFactory::Create( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
 {
-    return std::auto_ptr< Aggregate_ABC >( new AggregateEntity( agent, identifier, name, force, type ) );
+    std::auto_ptr< Aggregate_ABC > aggregate = factory_.Create( agent, name, identifier, force, type );
+    return std::auto_ptr< Aggregate_ABC >( new NetnAggregate( aggregate, agent, name, identifier ) );
 }

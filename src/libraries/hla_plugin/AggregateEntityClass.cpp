@@ -12,7 +12,7 @@
 #include "Aggregate_ABC.h"
 #include "AgentSubject_ABC.h"
 #include "Agent_ABC.h"
-#include "AggregateFactory_ABC.h"
+#include "HlaObjectFactory_ABC.h"
 #include "RemoteAggregateFactory_ABC.h"
 #include "RemoteAgentListener_ABC.h"
 #include "RemoteAgentListenerComposite.h"
@@ -31,7 +31,7 @@ using namespace plugins::hla;
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
 AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
-                                            const AggregateFactory_ABC& factory, const RemoteAggregateFactory_ABC& remoteFactory,
+                                            const HlaObjectFactory_ABC& factory, const RemoteAggregateFactory_ABC& remoteFactory,
                                             const ClassBuilder_ABC& builder )
     : id_           ( 1 )
     , subject_      ( subject )
@@ -64,6 +64,15 @@ void AggregateEntityClass::AggregateCreated( Agent_ABC& agent, unsigned int iden
     ::hla::ObjectIdentifier objectId = hlaClass_->Register( *localEntity, boost::lexical_cast< std::string >( identifier ) );
     localEntities_[ objectId.ToString() ] = localEntity;
     resolver_.Add( identifier, objectId.ToString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntityClass::SurfaceVesselCreated
+// Created: SLI 2011-10-04
+// -----------------------------------------------------------------------------
+void AggregateEntityClass::SurfaceVesselCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/ )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

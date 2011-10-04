@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_AggregateFactory_ABC_h
-#define plugins_hla_AggregateFactory_ABC_h
+#ifndef plugins_hla_HlaObjectFactory_ABC_h
+#define plugins_hla_HlaObjectFactory_ABC_h
 
 #include "rpr/ForceIdentifier.h"
 #include <boost/noncopyable.hpp>
@@ -28,18 +28,18 @@ namespace hla
     class Agent_ABC;
 
 // =============================================================================
-/** @class  AggregateFactory_ABC
-    @brief  Aggregate factory definition
+/** @class  HlaObjectFactory_ABC
+    @brief  Hla object factory definition
 */
 // Created: SLI 2011-07-26
 // =============================================================================
-class AggregateFactory_ABC : private boost::noncopyable
+class HlaObjectFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateFactory_ABC() {}
-    virtual ~AggregateFactory_ABC() {}
+             HlaObjectFactory_ABC() {}
+    virtual ~HlaObjectFactory_ABC() {}
     //@}
 
     //! @name Operations
@@ -51,4 +51,4 @@ public:
 }
 }
 
-#endif // __AggregateFactory_ABC_h_
+#endif // __HlaObjectFactory_ABC_h_

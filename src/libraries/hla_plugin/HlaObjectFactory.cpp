@@ -8,36 +8,34 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "NetnAggregateFactory.h"
-#include "NetnAggregate.h"
+#include "HlaObjectFactory.h"
+#include "AggregateEntity.h"
 
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
-// Name: NetnAggregateFactory constructor
+// Name: HlaObjectFactory constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-NetnAggregateFactory::NetnAggregateFactory( const AggregateFactory_ABC& factory )
-    : factory_( factory )
+HlaObjectFactory::HlaObjectFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnAggregateFactory destructor
+// Name: HlaObjectFactory destructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-NetnAggregateFactory::~NetnAggregateFactory()
+HlaObjectFactory::~HlaObjectFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnAggregateFactory::Create
+// Name: HlaObjectFactory::Create
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-std::auto_ptr< Aggregate_ABC > NetnAggregateFactory::Create( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+std::auto_ptr< Aggregate_ABC > HlaObjectFactory::Create( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
 {
-    std::auto_ptr< Aggregate_ABC > aggregate = factory_.Create( agent, name, identifier, force, type );
-    return std::auto_ptr< Aggregate_ABC >( new NetnAggregate( aggregate, agent, name, identifier ) );
+    return std::auto_ptr< Aggregate_ABC >( new AggregateEntity( agent, identifier, name, force, type ) );
 }

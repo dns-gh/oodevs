@@ -91,7 +91,6 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatCreater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatDisengager.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ClassBuilder.cpp" />
@@ -101,6 +100,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\FormationCreater.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\HlaObjectFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -117,8 +117,8 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregateFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnHlaObjectFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregateFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
@@ -152,8 +152,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateFactory.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Aggregate_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatCreater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatDisengager.h" />
@@ -170,6 +168,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FormationCreater.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObjectFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObjectFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaPlugin.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateMarking.h" />
@@ -185,8 +185,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregateFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnHlaObjectFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregateFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h" />

@@ -118,16 +118,10 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp">
       <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregateFactory.cpp">
-      <Filter>Source Files\Classes\netn</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.cpp">
       <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntity.cpp">
-      <Filter>Source Files\Classes\rpr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateFactory.cpp">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\ClassBuilder.cpp">
@@ -204,6 +198,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\ComponentTypes.cpp">
       <Filter>Source Files\Resolvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\HlaObjectFactory.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnHlaObjectFactory.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -309,25 +309,16 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h">
       <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregateFactory.h">
-      <Filter>Source Files\Classes\netn</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.h">
       <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateEntity.h">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateFactory.h">
-      <Filter>Source Files\Classes\rpr</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder.h">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\Aggregate_ABC.h">
-      <Filter>Source Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateFactory_ABC.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h">
@@ -452,6 +443,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypes.h">
       <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObjectFactory_ABC.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObjectFactory.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnHlaObjectFactory.h">
+      <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

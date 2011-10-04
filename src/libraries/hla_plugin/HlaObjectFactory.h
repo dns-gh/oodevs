@@ -7,28 +7,28 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_AggregateFactory_h
-#define plugins_hla_AggregateFactory_h
+#ifndef plugins_hla_HlaObjectFactory_h
+#define plugins_hla_HlaObjectFactory_h
 
-#include "AggregateFactory_ABC.h"
+#include "HlaObjectFactory_ABC.h"
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  AggregateFactory
-    @brief  Aggregate factory
+/** @class  HlaObjectFactory
+    @brief  Hla object factory
 */
 // Created: SLI 2011-07-26
 // =============================================================================
-class AggregateFactory : public AggregateFactory_ABC
+class HlaObjectFactory : public HlaObjectFactory_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateFactory();
-    virtual ~AggregateFactory();
+             HlaObjectFactory();
+    virtual ~HlaObjectFactory();
     //@}
 
     //! @name Operations
@@ -40,4 +40,4 @@ public:
 }
 }
 
-#endif // plugins_hla_AggregateFactory_h
+#endif // plugins_hla_HlaObjectFactory_h

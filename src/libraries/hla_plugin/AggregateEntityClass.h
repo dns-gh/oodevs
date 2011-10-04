@@ -26,7 +26,7 @@ namespace plugins
 namespace hla
 {
     class Aggregate_ABC;
-    class AggregateFactory_ABC;
+    class HlaObjectFactory_ABC;
     class AgentSubject_ABC;
     class Federate_ABC;
     class ClassBuilder_ABC;
@@ -49,7 +49,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
-                                   const AggregateFactory_ABC& factory, const RemoteAggregateFactory_ABC& remoteFactory,
+                                   const HlaObjectFactory_ABC& factory, const RemoteAggregateFactory_ABC& remoteFactory,
                                    const ClassBuilder_ABC& builder );
     virtual ~AggregateEntityClass();
     //@}
@@ -64,6 +64,7 @@ private:
     //! @name Operations
     //@{
     virtual void AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
+    virtual void SurfaceVesselCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
     //@}
 
     //! @name Operations
@@ -85,7 +86,7 @@ private:
     unsigned short id_;
     AgentSubject_ABC& subject_;
     LocalAgentResolver_ABC& resolver_;
-    const AggregateFactory_ABC& factory_;
+    const HlaObjectFactory_ABC& factory_;
     const RemoteAggregateFactory_ABC& remoteFactory_;
     T_Entities localEntities_;
     T_Entities remoteEntities_;
