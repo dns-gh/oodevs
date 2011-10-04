@@ -22,13 +22,15 @@
 // Name: PHY_RoleAction_Objects_CapabilityComputer constructor
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Objects_CapabilityComputer::PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_ObjectType_ABC& objectType, bool bWithLoaded )
+PHY_RoleAction_Objects_CapabilityComputer::PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation,
+                                                                                      const MIL_ObjectType_ABC& objectType, bool bWithLoaded,
+                                                                                      bool bWithReinforcement )
     : nOperation_    ( nOperation )
     , objectType_    ( objectType )
     , bHasCapability_( false )
-    , bWithLoaded_( bWithLoaded )
+    , bWithLoaded_   ( bWithLoaded )
 {
-    CollectData( pion );
+    CollectData( pion, bWithReinforcement );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +46,7 @@ PHY_RoleAction_Objects_CapabilityComputer::~PHY_RoleAction_Objects_CapabilityCom
 // Name: PHY_RoleAction_Objects_CapabilityComputer::CollectData
 // Created: NLD 2007-02-13
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects_CapabilityComputer::CollectData( const MIL_AgentPion& pion )
+void PHY_RoleAction_Objects_CapabilityComputer::CollectData( const MIL_AgentPion& pion, bool bWithReinforcement )
 {
     MIL_AgentPion& pionT = const_cast< MIL_AgentPion& >( pion );
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( pionT.GetAlgorithms().onComponentFunctorComputerFactory_->Create( *this ) );
@@ -52,9 +54,12 @@ void PHY_RoleAction_Objects_CapabilityComputer::CollectData( const MIL_AgentPion
 
     if( bHasCapability_ )
         return;
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
-        CollectData( **itReinforcement );
+    if( bWithReinforcement )
+    {
+        const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+        for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
+            CollectData( **itReinforcement, true );
+    }
 }
 
 // -----------------------------------------------------------------------------

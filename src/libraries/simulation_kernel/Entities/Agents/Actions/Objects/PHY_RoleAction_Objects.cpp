@@ -610,6 +610,17 @@ bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& s
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::CanConstructWithoutReinforcement
+// Created: LGY 2011-10-04
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Objects::CanConstructWithoutReinforcement( const std::string& objectType, bool bWithLoaded ) const
+{
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( objectType );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eConstruct, type, bWithLoaded, bWithLoaded, false );
+    return capabilityComputer.HasCapability();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::CanBypassWithReinforcement
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------

@@ -288,6 +288,15 @@ bool DEC_AgentFunctions::CanConstructObject( const MIL_Agent_ABC& callerAgent, c
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanConstructWithoutReinforcement
+// Created: LGY 2011-10-04
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanConstructWithoutReinforcement( const MIL_Agent_ABC& callerAgent, const std::string& type )
+{
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithoutReinforcement( type, false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanConstructObjectWithLoaded
 // Created: MGD 2010-11-02
 // -----------------------------------------------------------------------------

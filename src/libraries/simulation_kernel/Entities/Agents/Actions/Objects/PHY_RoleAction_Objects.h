@@ -87,6 +87,7 @@ public:
     //! @name Capabilities
     //@{
     bool CanConstructWithReinforcement( const std::string& objectType, bool bWithLoaded ) const;
+    bool CanConstructWithoutReinforcement( const std::string& objectType, bool bWithLoaded ) const;
     bool CanBypassWithReinforcement( const MIL_ObjectType_ABC& object ) const;
     bool CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object ) const;
     bool CanMineWithReinforcement( const MIL_ObjectType_ABC& object ) const;

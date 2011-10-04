@@ -52,6 +52,7 @@ public:
     static std::string GetMilPionType( DEC_Decision_ABC* pion );
 
     static bool CanConstructObject( const MIL_Agent_ABC& callerAgent, const std::string& type );
+    static bool CanConstructWithoutReinforcement( const MIL_Agent_ABC& callerAgent, const std::string& type );
     static bool CanConstructObjectWithLoaded( const MIL_Agent_ABC& callerAgent, const std::string& type );
     static bool HasDotationForBuilding( MIL_Agent_ABC& callerAgent, const std::string& type );
     static bool CanBypassObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
