@@ -55,8 +55,8 @@ private:
     const kernel::AccommodationTypes& accommodationTypes_;
     float livingSpace_;
     T_Usages usages_;
-    T_Occupations occupations;
-    static const std::string defaultStr;
+    T_Occupations occupations_;
+    static const std::string defaultStr_;
     //@}
 };
 

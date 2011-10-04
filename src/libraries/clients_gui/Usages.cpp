@@ -16,7 +16,7 @@
 
 using namespace gui;
 
-const std::string Usages::defaultStr = "default";
+const std::string Usages::defaultStr_ = "default";
 
 // -----------------------------------------------------------------------------
 // Name: Usages constructor
@@ -27,15 +27,15 @@ Usages::Usages( kernel::PropertiesDictionary& dictionary, const kernel::Accommod
     , accommodationTypes_( accommodationTypes)
     , livingSpace_       ( livingSpace )
 {
-    usages_[ defaultStr ] = 100;
-    CIT_Usages it = usages_.find( defaultStr );
+    usages_[ defaultStr_ ] = 100;
+    CIT_Usages it = usages_.find( defaultStr_ );
     static const QString defaultString = tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + tools::translate( "Block", "Default" );
-    dictionary_.Register( *this, defaultString + tools::translate( "Block", "/Percentage" ), it->second );
-    kernel::AccommodationType* accommodation = accommodationTypes_.Find( defaultStr );
-    occupations[ defaultStr ].first = static_cast< unsigned int >( livingSpace_ * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
-    occupations[ defaultStr ].second = static_cast< unsigned int >( livingSpace_ * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
-    dictionary_.Register( *this, defaultString + tools::translate( "Block", "/Nominal capacity" ), occupations[ defaultStr ].first );
-    dictionary_.Register( *this, defaultString + tools::translate( "Block", "/Maximal capacity" ), occupations[ defaultStr ].second );
+    dictionary_.Register( *static_cast< const Usages* >( this ), defaultString + tools::translate( "Block", "/Percentage" ), static_cast< const unsigned int &>( it->second ) );
+    kernel::AccommodationType* accommodation = accommodationTypes_.Find( defaultStr_ );
+    occupations_[ defaultStr_ ].first = static_cast< unsigned int >( livingSpace_ * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
+    occupations_[ defaultStr_ ].second = static_cast< unsigned int >( livingSpace_ * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
+    dictionary_.Register( *static_cast< const Usages* >( this ), defaultString + tools::translate( "Block", "/Nominal capacity" ), static_cast< const unsigned int &>( occupations_[ defaultStr_ ].first ) );
+    dictionary_.Register( *static_cast< const Usages* >( this ), defaultString + tools::translate( "Block", "/Maximal capacity" ), static_cast< const unsigned int &>( occupations_[ defaultStr_ ].second ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,22 +55,22 @@ void Usages::Add( const std::string& usage, unsigned int proportion )
 {
     usages_[ usage ] = proportion;
     const QString motivationString = tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + usage.c_str();
-    dictionary_.Register( *this, motivationString + tools::translate( "Block", "/Percentage" ), usages_[ usage ] );
+    dictionary_.Register( *static_cast< const Usages* >( this ), motivationString + tools::translate( "Block", "/Percentage" ), static_cast< const unsigned int &>( usages_[ usage ] ) );
 
     float occupation = livingSpace_ * proportion * 0.01f;
     kernel::AccommodationType* accommodation = accommodationTypes_.Find( usage );
-    occupations[ usage ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
-    occupations[ usage ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
-    dictionary_.Register( *this, motivationString + tools::translate( "Block", "/Nominal capacity" ), occupations[ usage ].first );
-    dictionary_.Register( *this, motivationString + tools::translate( "Block", "/Maximal capacity" ), occupations[ usage ].second );
+    occupations_[ usage ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
+    occupations_[ usage ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
+    dictionary_.Register( *static_cast< const Usages* >( this ), motivationString + tools::translate( "Block", "/Nominal capacity" ), static_cast< const unsigned int &>( occupations_[ usage ].first ) );
+    dictionary_.Register( *static_cast< const Usages* >( this ), motivationString + tools::translate( "Block", "/Maximal capacity" ), static_cast< const unsigned int &>( occupations_[ usage ].second ) );
 
-    usages_[ defaultStr ] -= proportion;
-    if( usages_[ defaultStr ] )
+    usages_[ defaultStr_ ] -= proportion;
+    if( usages_[ defaultStr_ ] )
     {
-        occupation = livingSpace_ * usages_[ defaultStr ] * 0.01f;
-        accommodation = accommodationTypes_.Find( defaultStr );
-        occupations[ defaultStr ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
-        occupations[ defaultStr ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
+        occupation = livingSpace_ * usages_[ defaultStr_ ] * 0.01f;
+        accommodation = accommodationTypes_.Find( defaultStr_ );
+        occupations_[ defaultStr_ ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
+        occupations_[ defaultStr_ ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
     }
     else
     {
