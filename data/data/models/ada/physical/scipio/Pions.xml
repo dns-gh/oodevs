@@ -13422,7 +13422,7 @@
   <unit decisional-model="Masalife.Individu Isole" id="474" name="Individu Isole" type="Pion Civilian">
     <nature atlas-nature="None" level="none" nature-app6="combat"/>
     <equipments>
-      <equipment count="1" crew="1" loadable="true" major="true" type="Foule"/>
+      <equipment count="1" crew="1" loadable="true" major="true" type="Individu"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="5000"/>
@@ -15983,7 +15983,7 @@
   <unit decisional-model="Masalife.Individu Isole" id="562" name="Notable" type="Pion Notable">
     <nature atlas-nature="None" level="none" nature-app6="mootw/individual"/>
     <equipments>
-      <equipment count="1" crew="1" loadable="true" major="true" type="Foule"/>
+      <equipment count="1" crew="1" loadable="true" major="true" type="Individu"/>
       <equipment count="1" crew="1" type="VL FORD"/>
     </equipments>
     <sensors-range range="5000"/>
@@ -16091,7 +16091,7 @@
   <unit decisional-model="Masalife.Individu Isole" id="566" name="Civil" type="Pion Civilian">
     <nature atlas-nature="None" level="none" nature-app6="mootw/individual"/>
     <equipments>
-      <equipment count="1" crew="1" loadable="true" major="true" type="Foule"/>
+      <equipment count="1" crew="1" loadable="true" major="true" type="Individu"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="5000"/>
@@ -19805,4 +19805,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3143681545" -->
+<!-- signature="4147681759" -->

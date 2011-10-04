@@ -216,7 +216,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="4" max-slope="0.6" name="Foule" protection="Combattant" size="Personnel" weight="0.5">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="4" max-slope="0.6" name="Individu" protection="Combattant" size="Personnel" weight="0.5">
     <speeds max="8">
       <speed terrain="unknown" value="6"/>
       <speed terrain="forest" value="6"/>
@@ -36856,4 +36856,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0800165688" -->
+<!-- signature="1284247046" -->
