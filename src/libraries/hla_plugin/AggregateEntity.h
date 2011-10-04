@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_AgentExtension_h
-#define plugins_hla_AgentExtension_h
+#ifndef plugins_hla_AggregateEntity_h
+#define plugins_hla_AggregateEntity_h
 
 #include "HlaObject_ABC.h"
 #include "EventListener_ABC.h"
@@ -98,4 +98,4 @@ private:
 }
 }
 
-#endif // plugins_hla_AgentExtension_h
+#endif // plugins_hla_AggregateEntity_h
