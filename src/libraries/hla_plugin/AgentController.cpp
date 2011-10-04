@@ -20,6 +20,7 @@
 #include "rpr/EntityTypeResolver_ABC.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
 
@@ -27,12 +28,15 @@ using namespace plugins::hla;
 // Name: AgentController constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentController::AgentController( const rpr::EntityTypeResolver_ABC& aggregatesResolver, const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes )
-    : aggregatesResolver_   ( aggregatesResolver )
+AgentController::AgentController( xml::xisubstream xis, dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver, const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes )
+    : model_                ( model )
+    , aggregatesResolver_   ( aggregatesResolver )
     , componentTypeResolver_( componentTypeResolver )
     , componentTypes_       ( componentTypes )
 {
-    // NOTHING
+    xis >> xml::start( "surfaceVessels" )
+            >> xml::list( "unit", *this, &AgentController::ReadSurfaceVessel );
+    model_.RegisterFactory( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +45,7 @@ AgentController::AgentController( const rpr::EntityTypeResolver_ABC& aggregatesR
 // -----------------------------------------------------------------------------
 AgentController::~AgentController()
 {
-    // NOTHING
+    model_.UnregisterFactory( *this );
 }
 
 namespace
@@ -68,13 +72,38 @@ void AgentController::Visit( dispatcher::Model_ABC& model )
     for( tools::Iterator< const dispatcher::Agent_ABC& > it = model.Agents().CreateIterator(); it.HasMoreElements(); )
     {
         dispatcher::Agent_ABC& agent = const_cast< dispatcher::Agent_ABC& >( it.NextElement() ); // $$$$ _RC_ SLI 2011-09-28: erk...
-        if( !boost::algorithm::starts_with( agent.GetName().toStdString(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
-        {
-            agents_.push_back( T_Agent( new AgentProxy( agent, componentTypes_, componentTypeResolver_ ) ) );
-            const std::string type = agent.GetType().GetName();
-            for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-                (*it)->AggregateCreated( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), GetForce( agent ), aggregatesResolver_.Find( type ) );
-        }
+        CreateAgent( agent );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentController::Create
+// Created: SLI 2011-10-04
+// -----------------------------------------------------------------------------
+void AgentController::Create( dispatcher::Agent& entity )
+{
+    CreateAgent( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentController::CreateAgent
+// Created: SLI 2011-10-04
+// -----------------------------------------------------------------------------
+void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
+{
+    if( !boost::algorithm::starts_with( agent.GetName().toStdString(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
+    {
+        agents_.push_back( T_Agent( new AgentProxy( agent, componentTypes_, componentTypeResolver_ ) ) );
+        const kernel::AgentType& agentType = agent.GetType();
+        const std::string typeName = agentType.GetName();
+        const rpr::EntityType entityType = aggregatesResolver_.Find( typeName );
+        const rpr::ForceIdentifier forceIdentifier = GetForce( agent );
+        const bool isSurfaceVessel = surfaceVessels_.find( typeName ) != surfaceVessels_.end();
+        for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
+            if( isSurfaceVessel )
+                (*it)->SurfaceVesselCreated( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType );
+            else
+                (*it)->AggregateCreated( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType );
     }
 }
 
@@ -94,4 +123,15 @@ void AgentController::Register( AgentListener_ABC& listener )
 void AgentController::Unregister( AgentListener_ABC& listener )
 {
     listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentController::ReadSurfaceVessel
+// Created: SLI 2011-10-04
+// -----------------------------------------------------------------------------
+void AgentController::ReadSurfaceVessel( xml::xistream& xis )
+{
+    std::string unit;
+    xis >> unit;
+    surfaceVessels_.insert( unit );
 }

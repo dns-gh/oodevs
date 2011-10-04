@@ -49,6 +49,11 @@ namespace
                     >> xml::attribute( "step", step );
         return step;
     }
+    std::string ReadMapping( xml::xisubstream xis, const std::string& mapping )
+    {
+        xis >> xml::start( "mappings" );
+        return xis.content< std::string >( mapping );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -62,23 +67,25 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , staticModel_                ( staticModel )
     , publisher_                  ( publisher )
     , config_                     ( config )
-    , pXis_                       ( new xml::xibufferstream( xis ) )
+    , pXisSession_                ( new xml::xibufferstream( xis ) )
+    , pXisConfiguration_          ( new xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "configuration", "configuration.xml" ) ) )
+    , pXis_                       ( new xml::ximultistream( *pXisSession_, *pXisConfiguration_ >> xml::start( "configuration" ) ) )
     , logger_                     ( logger )
     , pContextFactory_            ( new ContextFactory() )
     , pObjectResolver_            ( new ObjectResolver() )
-    , pRtiFactory_                ( new RtiAmbassadorFactory( xis, xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/protocols.xml" ) ) )
+    , pRtiFactory_                ( new RtiAmbassadorFactory( *pXis_, xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/protocols.xml" ) ) )
     , pDebugRtiFactory_           ( new DebugRtiAmbassadorFactory( *pRtiFactory_, logger, *pObjectResolver_ ) )
     , pFederateFactory_           ( new FederateAmbassadorFactory( ReadTimeStep( config.GetSessionFile() ) ) )
     , pDebugFederateFactory_      ( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger, *pObjectResolver_ ) )
-    , pAggregateTypeResolver_     ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "aggregate", "aggregate.xml" ) ) ) )
-    , pComponentTypeResolver_     ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "component", "component.xml" ) ) ) )
-    , pEntityMunitionTypeResolver_( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "munition", "munition.xml" ) ) ) )
+    , pAggregateTypeResolver_     ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "aggregate" ) ) ) )
+    , pComponentTypeResolver_     ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "component" ) ) ) )
+    , pEntityMunitionTypeResolver_( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "munition" ) ) ) )
     , pComponentTypes_            ( new ComponentTypes( staticModel.types_ ) )
     , pUnitTypeResolver_          ( new UnitTypeResolver( *pAggregateTypeResolver_, staticModel.types_ ) )
     , pMunitionTypeResolver_      ( new MunitionTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , pLocalAgentResolver_        ( new LocalAgentResolver() )
     , pMessageController_         ( new tools::MessageController< sword::SimToClient_Content >() )
-    , pSubject_                   ( new AgentController( *pAggregateTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_ ) )
+    , pSubject_                   ( 0 )
     , pFederate_                  ( 0 )
     , pSimulationFacade_          ( 0 )
     , pRemoteAgentResolver_       ( 0 )
@@ -108,6 +115,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
         pMessageController_->Dispatch( message.message(), message.has_context() ? message.context() : -1 );
         if( message.message().has_control_end_tick() && !pSimulationFacade_.get() )
         {
+            pSubject_.reset( new AgentController( *pXis_, dynamicModel_, *pAggregateTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_ ) );
             pFederate_.reset( new FederateFacade( *pXis_, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,

@@ -16,6 +16,7 @@
 namespace xml
 {
     class xistream;
+    class ximultistream;
 }
 
 namespace dispatcher
@@ -93,7 +94,9 @@ private:
     const dispatcher::StaticModel& staticModel_;
     dispatcher::SimulationPublisher_ABC& publisher_;
     const dispatcher::Config& config_;
-    std::auto_ptr< xml::xistream > pXis_;
+    std::auto_ptr< xml::xistream > pXisSession_;
+    std::auto_ptr< xml::xistream > pXisConfiguration_;
+    std::auto_ptr< xml::ximultistream > pXis_;
     dispatcher::Logger_ABC& logger_;
     std::auto_ptr< ContextFactory_ABC > pContextFactory_;
     std::auto_ptr< ObjectResolver_ABC > pObjectResolver_;

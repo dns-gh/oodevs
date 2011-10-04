@@ -24,8 +24,9 @@
     ${File} "${RUNDIR}\plugins\hla\" "libFedTime1516e.dll"
     ${File} "${RUNDIR}\plugins\hla\" "aggregate.xml"
     ${File} "${RUNDIR}\plugins\hla\" "component.xml"
-	${File} "${RUNDIR}\plugins\hla\" "munition.xml"
+    ${File} "${RUNDIR}\plugins\hla\" "munition.xml"
     ${File} "${RUNDIR}\plugins\hla\" "ASI_FOM_v2.0.8_2010.xml"
     ${File} "${RUNDIR}\plugins\hla\" "protocols.xml"
+    ${File} "${RUNDIR}\plugins\hla\" "configuration.xml"
     ${File} "${RUNDIR}\plugins\hla\" "plugin.xml"
 !macroend

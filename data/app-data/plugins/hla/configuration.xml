@@ -1,0 +1,16 @@
+<configuration>
+    <mappings>
+        <aggregate>aggregate.xml</aggregate>
+        <component>component.xml</component>
+        <munition>munition.xml</munition>
+    </mappings>
+    <surfaceVessels>
+        <unit>Marine CP</unit>
+        <unit>Aircraft Carrier</unit>
+        <unit>HS - Helivac</unit>
+        <unit>Landing Craft</unit>
+        <unit>CDIC + 2 CTM</unit>
+        <unit>2 CTM</unit>
+        <unit>PC Marine</unit>
+    </surfaceVessels>
+</configuration>

@@ -92,22 +92,10 @@
                         <description lang="fr" name="Protocole"><![CDATA[]]>Sélectionne le protocole HLA.</description>
                     </descriptions>
                 </setting>
-                <setting attribute="@aggregate" type="string" default="aggregate.xml">
+                <setting attribute="@configuration" type="string" default="configuration.xml">
                     <descriptions>
-                        <description lang="en" name="Aggregates mapping"><![CDATA[]]>Aggregate types mapping.</description>
-                        <description lang="fr" name="Mapping des aggregats"><![CDATA[]]>Mapping des types d'aggrégat.</description>
-                    </descriptions>
-                </setting>
-                <setting attribute="@component" type="string" default="component.xml">
-                    <descriptions>
-                        <description lang="en" name="Component mapping"><![CDATA[]]>Component types mapping.</description>
-                        <description lang="fr" name="Mapping des composantes"><![CDATA[]]>Mapping des types de composantes.</description>
-                    </descriptions>
-                </setting>
-                <setting attribute="@munition" type="string" default="munition.xml">
-                    <descriptions>
-                        <description lang="en" name="Munitions mapping"><![CDATA[]]>Munition types mapping.</description>
-                        <description lang="fr" name="Mapping des munitions"><![CDATA[]]>Mapping des types de munition.</description>
+                        <description lang="en" name="Configuration"><![CDATA[]]>Mapping definitions.</description>
+                        <description lang="fr" name="Configuration"><![CDATA[]]>Définition des mapping.</description>
                     </descriptions>
                 </setting>
                 <setting attribute="@debug" type="boolean" default="false">
