@@ -56,7 +56,7 @@ Section "!${PRODUCT_NAME}"
     File "${OUTDIR}\release\applications\selftraining_app\*.exe"
     File "${OUTDIR}\release\applications\package_app\*.exe"
     File "${OUTDIR}\release\applications\launcher_app\*.exe"
-	File "${OUTDIR}\release\applications\mission_tester_app\*.exe"
+    File "${OUTDIR}\release\applications\mission_tester_app\*.exe"
     File "${RUNDIR}\gradients.xml"
     File "${RUNDIR}\style.qss"
     File "${RUNDIR}\preferences.xml"
@@ -173,7 +173,7 @@ SectionEnd
 Function .onInit
     !insertmacro OT.CheckAdmin
     !insertmacro OT.CheckRunning
-	!insertmacro MULTIUSER_INIT
+    !insertmacro MULTIUSER_INIT
     !insertmacro OT.ParseCommandLine
     !insertmacro OT.ChooseLanguage
 
