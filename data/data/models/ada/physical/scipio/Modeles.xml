@@ -7498,9 +7498,10 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
-        <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
-        <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE COMMUNES Franchir"/>
+        <mission name="AUTOMATE LOGISTIQUE Transporter"/>
+        <mission name="AUTOMATE LOGISTIQUE Transporter Foule"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7529,9 +7530,11 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
-        <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
-        <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE COMMUNES Franchir"/>
+        <mission name="AUTOMATE MELEE Escorter"/>
+        <mission name="AUTOMATE MELEE Reconnaitre"/>
+        <mission name="AUTOMATE MELEE Surveiller"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -9860,4 +9863,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3501859286" -->
+<!-- signature="2819454801" -->
