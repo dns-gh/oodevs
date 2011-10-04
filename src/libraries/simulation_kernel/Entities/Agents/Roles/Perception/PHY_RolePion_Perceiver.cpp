@@ -30,6 +30,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionAlat.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -652,8 +653,7 @@ double PHY_RolePion_Perceiver::GetMaxObjectPerceptionDistance() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::CanPerceive() const
 {
-    return !pion_.IsDead()
-        && bExternalCanPerceive_;
+    return !pion_.IsDead() && !pion_.GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() && bExternalCanPerceive_;
 }
 
 // =============================================================================
