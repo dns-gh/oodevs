@@ -10,6 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "FederateFacade.h"
 #include "AggregateEntityClass.h"
+#include "SurfaceVesselClass.h"
 #include "Federate_ABC.h"
 #include "FederateAmbassadorFactory_ABC.h"
 #include "RtiAmbassadorFactory_ABC.h"
@@ -102,6 +103,9 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
                                                               xis.attribute< bool >( "netn", true ) ? *pNetnAggregateFactory_ : *pAggregateFactory_,
                                                               xis.attribute< bool >( "netn", true ) ? *pNetnRemoteAggregateFactory_ : *pRemoteAggregateFactory_,
                                                               xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_, *pIdentifierFactory_ ) )
+    , surfaceVesselClass_         ( new SurfaceVesselClass( *federate_, subject, resolver,
+                                                            xis.attribute< bool >( "netn", true ) ? *pNetnAggregateFactory_ : *pAggregateFactory_,
+                                                            xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_, *pIdentifierFactory_ ) )
 {
     CONNECT( controller, *this, control_end_tick );
 }

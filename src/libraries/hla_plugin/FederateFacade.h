@@ -46,6 +46,7 @@ namespace hla
     class ClassBuilder_ABC;
     class LocalAgentResolver_ABC;
     class ContextFactory_ABC;
+    class SurfaceVesselClass;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -119,6 +120,7 @@ private:
     std::auto_ptr< ClassBuilder_ABC > pNetnClassBuilder_;
     std::auto_ptr< ContextFactory_ABC > pIdentifierFactory_;
     std::auto_ptr< RemoteAgentSubject_ABC > agentClass_;
+    std::auto_ptr< SurfaceVesselClass > surfaceVesselClass_;
     //@}
 };
 
