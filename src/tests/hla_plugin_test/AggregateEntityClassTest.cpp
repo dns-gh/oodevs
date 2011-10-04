@@ -84,7 +84,7 @@ BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_creates_instance_when_notified, 
     MOCK_EXPECT( aggregateFactory, Create ).once().returns( std::auto_ptr< Aggregate_ABC >( new MockAggregate() ) );
     MOCK_EXPECT( factory, CreateIdentifier ).once().with( "123" ).returns( hla::ObjectIdentifier( 42u ) );
     MOCK_EXPECT( localResolver, Add ).once().with( 123u, "42" );
-    listener->Created( agent, 123, "name", rpr::Friendly, rpr::EntityType() );
+    listener->AggregateCreated( agent, 123, "name", rpr::Friendly, rpr::EntityType() );
     mock::verify();
     MOCK_EXPECT( factory, ReleaseIdentifier ).once().with( 42u );
 }

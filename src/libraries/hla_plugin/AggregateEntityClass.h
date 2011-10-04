@@ -63,7 +63,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void Created( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
+    virtual void AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
     //@}
 
     //! @name Operations

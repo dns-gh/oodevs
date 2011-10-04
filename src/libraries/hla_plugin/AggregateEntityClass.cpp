@@ -55,10 +55,10 @@ AggregateEntityClass::~AggregateEntityClass()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AggregateEntityClass::Created
+// Name: AggregateEntityClass::AggregateCreated
 // Created: SLI 2011-01-10
 // -----------------------------------------------------------------------------
-void AggregateEntityClass::Created( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
+void AggregateEntityClass::AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
     T_Entity localEntity( factory_.Create( agent, name, ++id_, force, type ).release() );
     ::hla::ObjectIdentifier objectId = hlaClass_->Register( *localEntity, boost::lexical_cast< std::string >( identifier ) );

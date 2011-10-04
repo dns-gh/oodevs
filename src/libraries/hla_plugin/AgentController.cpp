@@ -73,7 +73,7 @@ void AgentController::Visit( dispatcher::Model_ABC& model )
             agents_.push_back( T_Agent( new AgentProxy( agent, componentTypes_, componentTypeResolver_ ) ) );
             const std::string type = agent.GetType().GetName();
             for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-                (*it)->Created( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), GetForce( agent ), aggregatesResolver_.Find( type ) );
+                (*it)->AggregateCreated( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), GetForce( agent ), aggregatesResolver_.Find( type ) );
         }
     }
 }
