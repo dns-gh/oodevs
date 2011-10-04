@@ -34,6 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual void BuildAggregate( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const;
+    virtual void BuildSurfaceVessel( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const;
     //@}
 };
 

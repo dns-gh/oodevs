@@ -69,3 +69,17 @@ void NetnClassBuilder::BuildAggregate( Federate_ABC& federate, ::hla::Class< Hla
     hlaClass.ActivateUpdates( true );
     federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity.NETN_Aggregate" ), hlaClass, publish, subscribe );
 }
+
+// -----------------------------------------------------------------------------
+// Name: NetnClassBuilder::BuildSurfaceVessel
+// Created: SLI 2011-10-04
+// -----------------------------------------------------------------------------
+void NetnClassBuilder::BuildSurfaceVessel( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const
+{
+    EmptyFederate empty;
+    builder_.BuildSurfaceVessel( empty, hlaClass, publish, subscribe );
+    hlaClass.Register( ::hla::AttributeIdentifier( "UniqueID" ) );           // static
+    hlaClass.Register( ::hla::AttributeIdentifier( "Callsign" ) );           // static
+    hlaClass.ActivateUpdates( true );
+    federate.Register( ::hla::ClassIdentifier( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel" ), hlaClass, publish, subscribe );
+}

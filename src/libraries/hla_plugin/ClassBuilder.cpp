@@ -57,3 +57,17 @@ void ClassBuilder::BuildAggregate( Federate_ABC& federate, ::hla::Class< HlaObje
     hlaClass.ActivateUpdates( true );
     federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity" ), hlaClass, publish, subscribe );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ClassBuilder::BuildSurfaceVessel
+// Created: SLI 2011-10-04
+// -----------------------------------------------------------------------------
+void ClassBuilder::BuildSurfaceVessel( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const
+{
+    hlaClass.Register( ::hla::AttributeIdentifier( "EntityType" ) );              // static
+    hlaClass.Register( ::hla::AttributeIdentifier( "EntityIdentifier" ) );        // static
+    hlaClass.Register( ::hla::AttributeIdentifier( "ForceIdentifier" ) );         // static
+    hlaClass.Register( ::hla::AttributeIdentifier( "Spatial" ) );                 // dynamic
+    hlaClass.ActivateUpdates( true );
+    federate.Register( ::hla::ClassIdentifier( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel" ), hlaClass, publish, subscribe );
+}

@@ -62,3 +62,26 @@ BOOST_FIXTURE_TEST_CASE( netn_builder_registers_only_aggregate_netn_attributes, 
         MOCK_EXPECT( visitor, Visit ).once().in( s ).with( attribute );
     hlaClass.Apply( visitor );
 }
+
+BOOST_FIXTURE_TEST_CASE( netn_builder_registers_netn_surface_vessel_class_identifier_and_forwards_subscriptions, Fixture )
+{
+    mock::sequence s;
+    MOCK_EXPECT( mockBuilder, BuildSurfaceVessel ).once().in( s );
+    MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", mock::any, true, false );
+    builder.BuildSurfaceVessel( federate, hlaClass, true, false );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_builder_registers_only_surface_vessel_netn_attributes, Fixture )
+{
+    MOCK_EXPECT( mockBuilder, BuildSurfaceVessel );
+    MOCK_EXPECT( federate, RegisterClass );
+    builder.BuildSurfaceVessel( federate, hlaClass, true, true );
+    mock::verify();
+    const std::vector< std::string > attributes = boost::assign::list_of( "UniqueID" )
+                                                                        ( "Callsign" );
+    mock::sequence s;
+    ::hla::MockAttributeFunctor visitor;
+    BOOST_FOREACH( const std::string& attribute, attributes )
+        MOCK_EXPECT( visitor, Visit ).once().in( s ).with( attribute );
+    hlaClass.Apply( visitor );
+}

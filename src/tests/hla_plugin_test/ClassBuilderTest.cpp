@@ -64,3 +64,25 @@ BOOST_FIXTURE_TEST_CASE( builder_registers_only_rpr_aggregate_attributes, Fixtur
         MOCK_EXPECT( visitor, Visit ).once().in( s ).with( attribute );
     hlaClass.Apply( visitor );
 }
+
+BOOST_FIXTURE_TEST_CASE( builder_registers_rpr_surface_vessel_class_identifier_and_forwards_subscriptions, Fixture )
+{
+    MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", mock::any, true, false );
+    builder.BuildSurfaceVessel( federate, hlaClass, true, false );
+}
+
+BOOST_FIXTURE_TEST_CASE( builder_registers_only_rpr_surface_vessel_attributes, Fixture )
+{
+    MOCK_EXPECT( federate, RegisterClass );
+    builder.BuildSurfaceVessel( federate, hlaClass, true, false );
+    mock::verify();
+    const std::vector< std::string > attributes = boost::assign::list_of( "EntityType" )
+                                                                        ( "EntityIdentifier" )
+                                                                        ( "ForceIdentifier" )
+                                                                        ( "Spatial" );
+    mock::sequence s;
+    ::hla::MockAttributeFunctor visitor;
+    BOOST_FOREACH( const std::string& attribute, attributes )
+        MOCK_EXPECT( visitor, Visit ).once().in( s ).with( attribute );
+    hlaClass.Apply( visitor );
+}
