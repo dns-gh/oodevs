@@ -79,6 +79,7 @@ BOOST_FIXTURE_TEST_CASE( builder_registers_only_rpr_surface_vessel_attributes, F
     const std::vector< std::string > attributes = boost::assign::list_of( "EntityType" )
                                                                         ( "EntityIdentifier" )
                                                                         ( "ForceIdentifier" )
+                                                                        ( "Marking" )
                                                                         ( "Spatial" );
     mock::sequence s;
     ::hla::MockAttributeFunctor visitor;

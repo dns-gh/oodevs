@@ -162,6 +162,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnClassBuilderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnSurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\Omt13StringTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentControllerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentResolverTest.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SilentEntityTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SpatialTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselClassTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnicodeStringTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UniqueIdTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnitTeleporterTest.cpp" />

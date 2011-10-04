@@ -83,7 +83,7 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_class_creates_instance_when_notified, Re
     MOCK_EXPECT( factory, ReleaseIdentifier ).once().with( 42u );
 }
 
-BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_does_nothing_when_aggregate_is_created, RegisteredFixture )
+BOOST_FIXTURE_TEST_CASE( surface_vessel_does_nothing_when_aggregate_is_created, RegisteredFixture )
 {
     listener->AggregateCreated( agent, 123, "name", rpr::Friendly, rpr::EntityType() );
 }

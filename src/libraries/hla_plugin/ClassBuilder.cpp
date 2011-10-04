@@ -67,6 +67,7 @@ void ClassBuilder::BuildSurfaceVessel( Federate_ABC& federate, ::hla::Class< Hla
     hlaClass.Register( ::hla::AttributeIdentifier( "EntityType" ) );              // static
     hlaClass.Register( ::hla::AttributeIdentifier( "EntityIdentifier" ) );        // static
     hlaClass.Register( ::hla::AttributeIdentifier( "ForceIdentifier" ) );         // static
+    hlaClass.Register( ::hla::AttributeIdentifier( "Marking" ) );                 // static
     hlaClass.Register( ::hla::AttributeIdentifier( "Spatial" ) );                 // dynamic
     hlaClass.ActivateUpdates( true );
     federate.Register( ::hla::ClassIdentifier( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel" ), hlaClass, publish, subscribe );

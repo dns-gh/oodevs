@@ -49,9 +49,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaPlugin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateMarking.cpp">
-      <Filter>Source Files\Types</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\Dimension.cpp">
       <Filter>Source Files\Types</Filter>
     </ClCompile>
@@ -207,6 +204,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVesselClass.cpp">
       <Filter>Source Files\Dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVessel.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -458,6 +461,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVesselClass.h">
       <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.h">
+      <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

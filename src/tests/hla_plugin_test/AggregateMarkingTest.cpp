@@ -51,3 +51,12 @@ BOOST_FIXTURE_TEST_CASE( aggregate_marking_deserializes_to_string, Serialization
     deserializedMarking.Deserialize( deserializer );
     BOOST_CHECK_EQUAL( "name", deserializedMarking.str() );
 }
+
+BOOST_FIXTURE_TEST_CASE( marking_truncates_name_over_11_characters, SerializationFixture )
+{
+    const Marking marking( "big_name_too_long_for_a_small_buffer" );
+    ::hla::Deserializer deserializer = Serialize( marking, 12 * sizeof( int8 ) );
+    for( unsigned int i = 0; i < 11; ++i )
+        Read< int8 >( deserializer );
+    BOOST_CHECK_EQUAL( 'o', Read< int8 >( deserializer ) );
+}

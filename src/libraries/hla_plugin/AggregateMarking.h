@@ -15,19 +15,35 @@ namespace plugins
 namespace hla
 {
 // =============================================================================
-/** @class  AggregateMarking
-    @brief  Aggregate marking
+/** @class  RprMarking
+    @brief  rpr marking
 */
 // Created: AGE 2008-02-21
 // =============================================================================
-class AggregateMarking
+template< int Number >
+class RprMarking
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateMarking();
-    explicit AggregateMarking( const std::string& name );
-    virtual ~AggregateMarking();
+    RprMarking()
+        : markingType_( 1 ) // ASCII
+    {
+        // NOTHING
+    }
+
+    explicit RprMarking( const std::string& name )
+        : markingType_( 1 ) // ASCII
+    {
+        ::memset( markingData_, 0, sizeof( markingData_ ) );
+        const std::size_t length = std::min( sizeof( markingData_ ), name.length() );
+        ::memcpy( markingData_, name.c_str(), length );
+    }
+
+    virtual ~RprMarking()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -44,16 +60,22 @@ public:
         archive >> markingType_
                 >> markingData_;
     }
-    std::string str() const;
+    std::string str() const
+    {
+        return std::string( reinterpret_cast< const char* >( markingData_ ) );
+    }
     //@}
 
 private:
     //! @name Member data
     //@{
     unsigned char markingType_;
-    unsigned char markingData_[31];
+    unsigned char markingData_[Number];
     //@}
 };
+
+typedef RprMarking< 31 > AggregateMarking;
+typedef RprMarking< 11 > Marking;
 
 }
 }

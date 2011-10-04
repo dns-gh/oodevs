@@ -108,7 +108,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaPlugin.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateMarking.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Dimension.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Formation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.cpp" />
@@ -121,6 +120,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnHlaObjectFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregateFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.cpp" />
@@ -130,6 +130,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\SilentEntity.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SimulationFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Spatial.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVesselClass.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnicodeString.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UniqueId.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnHlaObjectFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregateFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.h" />
@@ -205,6 +207,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\SilentEntity.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SimulationFacade.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Spatial.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVesselClass.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnicodeString.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UniqueId.h" />
