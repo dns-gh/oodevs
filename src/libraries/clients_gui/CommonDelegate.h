@@ -11,7 +11,6 @@
 #define __gui_CommonDelegate_h_
 
 #include <boost/noncopyable.hpp>
-#include <Qt/QItemDelegate.h>
 
 namespace gui
 {
@@ -101,7 +100,6 @@ template< typename T >
 void CommonDelegate::AddComboBox( int column, T enumMax )
 {
     assert( spinBoxs_.find( column ) == spinBoxs_.end() && doubleSpinBoxs_.find( column ) == doubleSpinBoxs_.end() && comboBoxs_.find( column ) == comboBoxs_.end() );
-    // $$$$ ABR 2011-10-03: TODO
     QStringList stringList;
     Populate( enumMax, stringList );
     comboBoxs_[ column ] = stringList;
