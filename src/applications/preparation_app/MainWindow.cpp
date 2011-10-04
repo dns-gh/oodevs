@@ -437,9 +437,9 @@ void MainWindow::New()
 // -----------------------------------------------------------------------------
 void MainWindow::DoLoad( QString filename )
 {
-    SetProgression( 0, tr( "Initialize data ..." ) );
     if( filename.isEmpty() )
         return;
+    SetProgression( 0, tr( "Initialize data ..." ) );
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
     config_.LoadExercise( filename.ascii() );

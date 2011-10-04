@@ -514,20 +514,20 @@
         <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
-        <source>Days of supply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Supply stocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Categories</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ok</source>
         <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Days</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

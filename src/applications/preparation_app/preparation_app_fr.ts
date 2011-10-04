@@ -514,20 +514,20 @@
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Days of supply</source>
-        <translation>Jours de ravitaillement</translation>
-    </message>
-    <message>
         <source>Supply stocks</source>
         <translation>Ravitailler les stocks</translation>
     </message>
     <message>
-        <source>Categories</source>
-        <translation>Catégories</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation>Catégorie</translation>
+    </message>
+    <message>
+        <source>Days</source>
+        <translation>Jours</translation>
     </message>
 </context>
 <context>
