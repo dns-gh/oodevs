@@ -10,6 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "HlaObjectFactory.h"
 #include "AggregateEntity.h"
+#include "SurfaceVessel.h"
 
 using namespace plugins::hla;
 
@@ -46,5 +47,5 @@ std::auto_ptr< HlaObject_ABC > HlaObjectFactory::CreateAggregate( Agent_ABC& age
 // -----------------------------------------------------------------------------
 std::auto_ptr< HlaObject_ABC > HlaObjectFactory::CreateSurfaceVessel( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
 {
-    return std::auto_ptr< HlaObject_ABC >( 0 );
+    return std::auto_ptr< HlaObject_ABC >( new SurfaceVessel( agent, identifier, name, force, type ) );
 }

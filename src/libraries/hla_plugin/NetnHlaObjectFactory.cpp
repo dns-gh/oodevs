@@ -10,6 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "NetnHlaObjectFactory.h"
 #include "NetnAggregate.h"
+#include "NetnSurfaceVessel.h"
 
 using namespace plugins::hla;
 
@@ -48,5 +49,6 @@ std::auto_ptr< HlaObject_ABC > NetnHlaObjectFactory::CreateAggregate( Agent_ABC&
 // -----------------------------------------------------------------------------
 std::auto_ptr< HlaObject_ABC > NetnHlaObjectFactory::CreateSurfaceVessel( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
 {
-    return factory_.CreateSurfaceVessel( agent, name, identifier, force, type );
+    std::auto_ptr< HlaObject_ABC > aggregate = factory_.CreateSurfaceVessel( agent, name, identifier, force, type );
+    return std::auto_ptr< HlaObject_ABC >( new NetnSurfaceVessel( aggregate, name, identifier ) );
 }
