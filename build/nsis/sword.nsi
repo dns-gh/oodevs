@@ -171,6 +171,10 @@ SectionEnd
 
 ; ------------------------------------------------------------------------------
 Function .onInit
+!if ${PLATFORM} == "vc100_x64"
+    SetRegView 64
+!endif
+
     !insertmacro OT.CheckAdmin
     !insertmacro OT.CheckRunning
     !insertmacro MULTIUSER_INIT
