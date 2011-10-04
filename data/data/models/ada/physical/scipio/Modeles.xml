@@ -6220,6 +6220,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION CIRCULATION Appuyer Mouvement"/>
         <mission name="PION CIRCULATION Bloquer Zone"/>
+        <mission name="PION CIRCULATION Mettre En Oeuvre Zone Stationnement"/>
         <mission name="PION LOGISTIQUE Appuyer Franchissement Sur Point"/>
         <mission name="PION LOGISTIQUE Transporter"/>
         <mission name="PION LOGISTIQUE Transporter Foule"/>
@@ -9859,4 +9860,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3840975053" -->
+<!-- signature="3501859286" -->

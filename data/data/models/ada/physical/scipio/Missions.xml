@@ -1826,6 +1826,13 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zone" name="Zone" optional="false" type="Polygon"/>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.circu.tasks.MettreEnOeuvreZoneStationnement" dia-type="france.military.platoon.combat.support.circu.tasks.MettreEnOeuvreZoneStationnement" id="2470" name="PION CIRCULATION Mettre En Oeuvre Zone Stationnement" package="defence">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="zone" name="Zone" optional="false" type="Polygon"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AUTOMATE ALAT Aller Se Recompleter" package="none">
@@ -3422,4 +3429,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Desengager" id="400" name="Pion Desengager"/>
   </fragorders>
 </missions>
-<!-- signature="3681065837" -->
+<!-- signature="4042014803" -->
