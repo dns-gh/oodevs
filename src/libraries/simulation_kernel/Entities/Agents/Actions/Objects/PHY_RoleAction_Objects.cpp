@@ -616,7 +616,7 @@ bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& s
 bool PHY_RoleAction_Objects::CanConstructWithoutReinforcement( const std::string& objectType, bool bWithLoaded ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( objectType );
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eConstruct, type, bWithLoaded, bWithLoaded, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eConstruct, type, bWithLoaded, false );
     return capabilityComputer.HasCapability();
 }
 
