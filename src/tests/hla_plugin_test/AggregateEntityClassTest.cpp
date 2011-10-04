@@ -48,7 +48,7 @@ namespace
         ::hla::MockObjectIdentifierFactory* factory;
         MockAgent agent;
         MockClassBuilder builder;
-        MockHlaObjectFactory aggregateFactory;
+        MockHlaObjectFactory hlaObjectFactory;
         MockRemoteAggregateFactory remoteFactory;
         MockRemoteAgentListener remoteListener;
         MockLocalAgentResolver localResolver;
@@ -59,7 +59,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : entity( federate, subject, localResolver, aggregateFactory, remoteFactory, builder )
+            : entity( federate, subject, localResolver, hlaObjectFactory, remoteFactory, builder )
         {
             BOOST_REQUIRE( listener );
             BOOST_REQUIRE( hlaClass );
@@ -75,7 +75,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_creates_instance_when_notified, RegisteredFixture )
 {
-    MOCK_EXPECT( aggregateFactory, Create ).once().returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
+    MOCK_EXPECT( hlaObjectFactory, Create ).once().returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
     MOCK_EXPECT( factory, CreateIdentifier ).once().with( "123" ).returns( hla::ObjectIdentifier( 42u ) );
     MOCK_EXPECT( localResolver, Add ).once().with( 123u, "42" );
     listener->AggregateCreated( agent, 123, "name", rpr::Friendly, rpr::EntityType() );
