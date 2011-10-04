@@ -1,6 +1,7 @@
 <configuration>
     <mappings>
         <aggregate>aggregate.xml</aggregate>
+        <surface-vessel>vessel.xml</surface-vessel>
         <component>component.xml</component>
         <munition>munition.xml</munition>
     </mappings>

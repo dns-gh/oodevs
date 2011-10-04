@@ -78,6 +78,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pFederateFactory_           ( new FederateAmbassadorFactory( ReadTimeStep( config.GetSessionFile() ) ) )
     , pDebugFederateFactory_      ( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger, *pObjectResolver_ ) )
     , pAggregateTypeResolver_     ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "aggregate" ) ) ) )
+    , pSurfaceVesselTypeResolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "surface-vessel" ) ) ) )
     , pComponentTypeResolver_     ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "component" ) ) ) )
     , pEntityMunitionTypeResolver_( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "munition" ) ) ) )
     , pComponentTypes_            ( new ComponentTypes( staticModel.types_ ) )
@@ -115,7 +116,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
         pMessageController_->Dispatch( message.message(), message.has_context() ? message.context() : -1 );
         if( message.message().has_control_end_tick() && !pSimulationFacade_.get() )
         {
-            pSubject_.reset( new AgentController( *pXis_, dynamicModel_, *pAggregateTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_ ) );
+            pSubject_.reset( new AgentController( *pXis_, dynamicModel_, *pAggregateTypeResolver_, *pSurfaceVesselTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_ ) );
             pFederate_.reset( new FederateFacade( *pXis_, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,

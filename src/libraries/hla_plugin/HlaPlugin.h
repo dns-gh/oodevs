@@ -105,6 +105,7 @@ private:
     std::auto_ptr< FederateAmbassadorFactory_ABC > pFederateFactory_;
     std::auto_ptr< FederateAmbassadorFactory_ABC > pDebugFederateFactory_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pAggregateTypeResolver_;
+    std::auto_ptr< rpr::EntityTypeResolver_ABC > pSurfaceVesselTypeResolver_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pComponentTypeResolver_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityMunitionTypeResolver_;
     std::auto_ptr< ComponentTypes_ABC > pComponentTypes_;
