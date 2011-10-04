@@ -16,7 +16,9 @@
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 #include <boost/filesystem.hpp>
-#define _WIN32_WINNT 0x0501
+#ifndef _WIN32_WINNT
+#   define _WIN32_WINNT 0x0501
+#endif
 
 namespace bpo = boost::program_options;
 namespace bfs = boost::filesystem;
