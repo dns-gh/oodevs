@@ -396,6 +396,44 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestIndirectFireInZone, Fixture )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Facade_TestIndirectFireFromZone
+// Created: JSR 2011-10-03
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestIndirectFireFromZone, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+        "    <extract function='indirect-fire-units' id='firers'/>"
+        "    <transform function='is-one-of' type='int' select='13' input='firers' id='tmp'/>"
+        "    <transform function='filter' type='unsigned' input='tmp,firers' id='selected-units'/>"
+        "    <extract function='positions' id='positions'/>"
+        "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='circle'/>"
+        "    <transform function='compose' type='position' input='positions,firers' id='fire-positions'/>"
+        "    <transform function='contains' input='circle,fire-positions' id='selected-fires'/>"
+        "    <transform function='filter' type='unsigned' input='selected-fires,selected-units' id='the-fires'/>"
+        "    <reduce type='unsigned int' function='count' input='the-fires' id='count'/>"
+        "    <result function='plot' input='count' type='unsigned'/>"
+        "</indicator>" );
+
+
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 13 ) ); // in zone
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 23 ) ); // out of zone
+    task->Receive( TestTools::CreateIndirectFire( 43, 13, "31TCM1543486826" ) );
+    task->Receive( TestTools::CreateIndirectFire( 44, 23, "31TCM1543486826" ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 43, 13 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 44, 23 ) );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 1. )( 0. );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Facade_TestNumberOfIndirectFiresWithUnitFilter
 // Created: FPO 2011-05-05
 // -----------------------------------------------------------------------------
