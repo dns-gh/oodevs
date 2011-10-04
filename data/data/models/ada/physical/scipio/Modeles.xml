@@ -6166,11 +6166,12 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.CIRCU.Peloton Transport Blindes">
       <missions>
+        <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Renforcer"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
-        <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Transporter"/>
@@ -6204,6 +6205,7 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.CIRCU.Patrouille Circulation">
       <missions>
+        <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
@@ -6211,12 +6213,19 @@
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="PION COMMUNES Renforcer"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Appuyer Franchissement Sur Point"/>
         <mission name="PION LOGISTIQUE Transporter"/>
+        <mission name="PION LOGISTIQUE Transporter Foule"/>
+        <mission name="PION MELEE Armer PIA"/>
+        <mission name="PION MELEE Escorter"/>
+        <mission name="PION MELEE Reconnaitre"/>
+        <mission name="PION MELEE Surveiller"/>
+        <mission name="PION NRBC Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -6247,9 +6256,11 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.CIRCU.PC Appui Mob">
       <missions>
+        <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Renforcer"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
@@ -9846,4 +9857,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3096507669" -->
+<!-- signature="2776241209" -->
