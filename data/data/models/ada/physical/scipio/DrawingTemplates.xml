@@ -100,6 +100,28 @@
             <marker-end unit='px'>
                 <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
             </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">RECO</text>
+                    </g>
+                </g>
+            </marker>
+        </template>
+        <template name='Eclairer' type="line">
+            <segment unit='%'>
+                <path fill='none' stroke='currentColor' stroke-width='4px' d='M0,0 L0.55,0.1 L0.45,-0.1 L1,0'/>
+            </segment>
+            <marker-end unit='px'>
+                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
+            </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">ECL</text>
+                    </g>
+                </g>
+            </marker>
         </template>
         <template name='Freiner' type="line">
             <marker-start unit='px'>
@@ -111,8 +133,26 @@
             <marker-end unit='px'>
                 <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
             </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">FRN</text>
+                    </g>
+                </g>
+            </marker>
         </template>
-        <template name='Suivre' type="line">
+        <template name='Jalonner' type="line">
+            <marker-start unit='px'>
+                <path fill='none' stroke='currentColor' stroke-width='3px' d='M0,-20 A11,10 0 0 0 0,0'/>
+            </marker-start>
+            <segment>
+                <line stroke='currentColor' stroke-width='4px' x2='1'/>
+            </segment>
+            <marker-end unit='px'>
+                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
+            </marker-end>
+        </template>
+        <template name='Soutenir' type="line">
             <marker-start unit='px'>
                 <path fill='currentColor' stroke='none' d='M0,8 V-8 H20 L28,0 20,8 H0z'/>
             </marker-start>
@@ -123,18 +163,52 @@
                 <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
             </marker-end>
         </template>
-        <template name='Appuyer' type="line">
-            <marker-start unit='px'>
-                <path fill='currentColor' stroke='none' d='M8,0 L0,-8 H20 L28,0 20,8 H0z'/>
-            </marker-start>
+        <template name='Raid' type="line">
             <segment>
                 <line stroke='currentColor' stroke-width='4px' x2='1'/>
             </segment>
             <marker-end unit='px'>
                 <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
             </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">RAID</text>
+                    </g>
+                </g>
+            </marker>
         </template>
-        <template name='Attaquer 1' type="line">
+        <template name='Renseigner' type="line">
+            <segment>
+                <line stroke='currentColor' stroke-width='4px' x2='1'/>
+            </segment>
+            <marker-end unit='px'>
+                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
+            </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">RENS</text>
+                    </g>
+                </g>
+            </marker>
+        </template>
+        <template name='Appuyer' type="line">
+            <segment>
+                <line stroke='currentColor' stroke-width='4px' x2='1'/>
+            </segment>
+            <marker-end unit='px'>
+                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
+            </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">APP</text>
+                    </g>
+                </g>
+            </marker>
+        </template>
+        <template name='Attaquer' type="line">
             <marker-start unit='px'>
                 <g fill='none' stroke='currentColor' stroke-width='3px'>
                     <path d='M-20,-30 A20,20 0 0 0 0,-10'/>
@@ -156,8 +230,15 @@
                     <path fill='currentColor' d='M10,0 L-10,-20 30,0 -10,20z'/>
                 </g>
             </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">ATK</text>
+                    </g>
+                </g>
+            </marker>
         </template>
-        <template name='Attaquer 2' type="line">
+        <template name='Contre-attaquer' type="line">
             <marker-start unit='px'>
                 <g fill='none' stroke='currentColor' stroke-width='3px'>
                     <path d='M-20,-30 A20,20 0 0 0 0,-10'/>
@@ -176,6 +257,70 @@
                     <path d='M0, 10 l-10, 10 L30,0'/>
                 </g>
             </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">CATK</text>
+                    </g>
+                </g>
+            </marker>
+        </template>
+        <template name='Defendre' type="polygon">
+            <segment unit="%">
+                <g fill="currentColor">
+                    <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
+                </g>
+            </segment>
+        </template>
+        <template name='Detruire' type="point">
+            <segment unit="%">
+                <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
+            </segment>
+            <marker-start>
+                <g stroke="currentColor" stroke-width="4px" stroke-dasharray="200,200">
+                    <line x1="-350" x2="350" y1="160" y2="-160"/>
+                    <line x1="-350" x2="350" y1="-160" y2="160"/>
+                </g>
+            </marker-start>
+        </template>
+        <template name='Interdire' type="point">
+            <segment unit="%">
+                <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
+            </segment>
+            <marker-start>
+                <g stroke="currentColor" stroke-width="4px">
+                    <line x1="-350" x2="350" y1="0" y2="0"/>
+                    <line x1="-200" x2="200" y1="-200" y2="200"/>
+                    <line x1="150" x2="200" y1="200" y2="200"/>
+                    <line x1="200" x2="200" y1="200" y2="150"/>
+                    <line x1="315" x2="350" y1="-35" y2="0"/>
+                    <line x1="350" x2="315" y1="0" y2="35"/>
+                </g>
+            </marker-start>
+        </template>
+        <template name='Controler' type="polygon">
+            <segment unit="%">
+                <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
+            </segment>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.35" y="0.1">CTR.Z</text>
+                    </g>
+                </g>
+            </marker>
+        </template>
+        <template name='Surveiller' type="polygon">
+            <segment unit="%">
+                <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
+            </segment>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.35" y="0.1">SURV</text>
+                    </g>
+                </g>
+            </marker>
         </template>
     </category>
     <category name="Marqueurs">
@@ -707,4 +852,4 @@
         </template>
     </category>
 </templates>
-<!-- signature="2362785112" -->
+<!-- signature="2896071408" -->
