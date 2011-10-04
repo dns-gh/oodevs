@@ -102,6 +102,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const dispatcher::Config&                   config_;
     dispatcher::Plugin_ABC&                     container_;
     dispatcher::LinkResolver_ABC&               base_;
     std::auto_ptr< dispatcher::ProfileManager > profiles_;

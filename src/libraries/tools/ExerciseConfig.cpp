@@ -209,6 +209,15 @@ std::string ExerciseConfig::BuildDecisionalChildFile( const std::string& file ) 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetTerrainName
+// Created: AGE 2011-10-04
+// -----------------------------------------------------------------------------
+const std::string& ExerciseConfig::GetTerrainName() const
+{
+    return terrain_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetTerrainFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------

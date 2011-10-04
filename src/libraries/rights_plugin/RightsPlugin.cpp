@@ -14,6 +14,7 @@
 #include "dispatcher/ProfileManager.h"
 #include "dispatcher/DefaultProfile.h"
 #include "dispatcher/Services.h"
+#include "dispatcher/Config.h"
 #include "protocol/AuthenticationSenders.h"
 #include "protocol/Version.h"
 #include "tools/MessageDispatcher_ABC.h"
@@ -26,7 +27,8 @@ using namespace dispatcher;
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
 RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base, dispatcher::CompositeRegistrable& registrables, int maxConnections )
-    : profiles_          ( new ProfileManager( model, clients, config ) )
+    : config_            ( config )
+    , profiles_          ( new ProfileManager( model, clients, config ) )
     , container_         ( container )
     , base_              ( base )
     , maxConnections_    ( maxConnections )
@@ -142,6 +144,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     }
     else
     {
+        ack().set_terrain_name( config_.GetTerrainName() );
         ack().set_error_code( sword::AuthenticationResponse::success );
         profile->Send( *ack().mutable_profile() );
         ack.Send( client );

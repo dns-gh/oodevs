@@ -51,6 +51,7 @@ public:
     virtual std::string GetDecisionalFile() const;
     virtual std::string BuildDecisionalChildFile( const std::string& file ) const;
 
+    virtual const std::string& GetTerrainName() const; // $$$$ MCO : no clue why it's all virtual methods in here, especially since they're not in GeneralConfig
     virtual std::string GetTerrainFile() const;
     virtual std::string BuildTerrainChildFile( const std::string& file ) const;
 
