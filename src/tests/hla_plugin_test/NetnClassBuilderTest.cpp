@@ -37,19 +37,19 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( netn_builder_registers_netn_class_identifier_and_forwards_subscriptions, Fixture )
+BOOST_FIXTURE_TEST_CASE( netn_builder_registers_netn_aggregate_class_identifier_and_forwards_subscriptions, Fixture )
 {
     mock::sequence s;
-    MOCK_EXPECT( mockBuilder, Build ).once().in( s );
+    MOCK_EXPECT( mockBuilder, BuildAggregate ).once().in( s );
     MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity.NETN_Aggregate", mock::any, true, false );
-    builder.Build( federate, hlaClass, true, false );
+    builder.BuildAggregate( federate, hlaClass, true, false );
 }
 
-BOOST_FIXTURE_TEST_CASE( netn_builder_registers_only_netn_attributes, Fixture )
+BOOST_FIXTURE_TEST_CASE( netn_builder_registers_only_aggregate_netn_attributes, Fixture )
 {
-    MOCK_EXPECT( mockBuilder, Build );
+    MOCK_EXPECT( mockBuilder, BuildAggregate );
     MOCK_EXPECT( federate, RegisterClass );
-    builder.Build( federate, hlaClass, true, true );
+    builder.BuildAggregate( federate, hlaClass, true, true );
     mock::verify();
     const std::vector< std::string > attributes = boost::assign::list_of( "Mounted" )
                                                                         ( "Echelon" )

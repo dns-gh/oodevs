@@ -54,13 +54,13 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnClassBuilder::Build
+// Name: NetnClassBuilder::BuildAggregate
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void NetnClassBuilder::Build( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const
+void NetnClassBuilder::BuildAggregate( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const
 {
     EmptyFederate empty;
-    builder_.Build( empty, hlaClass, publish, subscribe );
+    builder_.BuildAggregate( empty, hlaClass, publish, subscribe );
     hlaClass.Register( ::hla::AttributeIdentifier( "Mounted" ) );            // dynamic
     hlaClass.Register( ::hla::AttributeIdentifier( "Echelon" ) );            // static
     hlaClass.Register( ::hla::AttributeIdentifier( "UniqueID" ) );           // static

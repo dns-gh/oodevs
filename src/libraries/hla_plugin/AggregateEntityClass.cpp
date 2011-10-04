@@ -41,7 +41,7 @@ AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject
     , pListeners_   ( new RemoteAgentListenerComposite() )
     , hlaClass_     ( new ::hla::Class< HlaObject_ABC >( *this, true ) )
 {
-    builder.Build( federate, *hlaClass_, true, true );
+    builder.BuildAggregate( federate, *hlaClass_, true, true );
     subject_.Register( *this );
 }
 

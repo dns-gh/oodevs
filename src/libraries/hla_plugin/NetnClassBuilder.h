@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Build( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const;
+    virtual void BuildAggregate( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const;
     //@}
 
 private:
