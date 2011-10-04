@@ -215,7 +215,7 @@ void ADN_Weapons_GUI::Build()
     builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pParamHolder, tr( "Ammo" ), vInfosConnectors[eAmmo] );
     builder.SetEnabled( false );
 
-    builder.AddField<ADN_EditLine_Int>( pParamHolder, tr( "Rounds per burst" ), vInfosConnectors[eRoundsPerBurst], 0, eGreaterEqualZero );
+    builder.AddField<ADN_EditLine_Int>( pParamHolder, tr( "Rounds per burst" ), vInfosConnectors[eRoundsPerBurst], 0, eGreaterZero );
     ADN_TimeField* burst = builder.AddField<ADN_TimeField>( pParamHolder, tr( "Burst duration" ), vInfosConnectors[eBurstDuration], 0, eGreaterZero );
     burst->SetMinimumValueInSecond( 1 );
     builder.AddField<ADN_EditLine_Int>( pParamHolder, tr( "Rounds per reload" ), vInfosConnectors[eRoundsPerReload], 0, eGreaterZero );

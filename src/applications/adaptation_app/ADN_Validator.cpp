@@ -268,4 +268,10 @@ ADN_IntValidator::~ADN_IntValidator()
 
 void ADN_IntValidator::fixup( QString& strInput ) const
 {
+    bool ok = true;
+    int value = strInput.toInt( &ok );
+    if( !ok || value < bottom() )
+        strInput.setNum( bottom() );
+    else if( value > top() )
+        strInput.setNum( top() );
 }
