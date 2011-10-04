@@ -11,7 +11,7 @@
 #define hla_plugin_MockRemoteAggregateFactory_h
 
 #include "hla_plugin/RemoteAggregateFactory_ABC.h"
-#include "hla_plugin/Aggregate_ABC.h"
+#include "hla_plugin/HlaObject_ABC.h"
 
 namespace plugins
 {

@@ -11,7 +11,7 @@
 #define hla_plugin_MockHlaObjectFactory_h
 
 #include "hla_plugin/HlaObjectFactory_ABC.h"
-#include "hla_plugin/Aggregate_ABC.h"
+#include "hla_plugin/HlaObject_ABC.h"
 
 namespace plugins
 {

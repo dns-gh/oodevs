@@ -10,7 +10,7 @@
 #ifndef plugins_hla_NetnAggregate_h
 #define plugins_hla_NetnAggregate_h
 
-#include "Aggregate_ABC.h"
+#include "HlaObject_ABC.h"
 #include "EventListener_ABC.h"
 #include <memory>
 
@@ -27,13 +27,13 @@ namespace hla
 */
 // Created: SLI 2011-07-26
 // =============================================================================
-class NetnAggregate : public Aggregate_ABC
+class NetnAggregate : public HlaObject_ABC
                     , private EventListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnAggregate( std::auto_ptr< Aggregate_ABC > aggregate, Agent_ABC& agent, const std::string& name, short identifier );
+             NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& name, short identifier );
     virtual ~NetnAggregate();
     //@}
 
@@ -55,7 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Aggregate_ABC > aggregate_;
+    std::auto_ptr< HlaObject_ABC > aggregate_;
     Agent_ABC& agent_;
     std::auto_ptr< AttributesSerializer > attributes_;
     //@}

@@ -24,7 +24,7 @@ namespace plugins
 {
 namespace hla
 {
-    class Aggregate_ABC;
+    class HlaObject_ABC;
     class Agent_ABC;
 
 // =============================================================================
@@ -44,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< Aggregate_ABC > Create( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const = 0;
+    virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const = 0;
     //@}
 };
 

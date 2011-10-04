@@ -21,7 +21,7 @@ namespace plugins
 {
 namespace hla
 {
-    class Aggregate_ABC;
+    class HlaObject_ABC;
     class Federate_ABC;
 
 // =============================================================================
@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Build( Federate_ABC& federate, ::hla::Class< Aggregate_ABC >& hlaClass, bool publish, bool subscribe ) const = 0;
+    virtual void Build( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const = 0;
     //@}
 };
 

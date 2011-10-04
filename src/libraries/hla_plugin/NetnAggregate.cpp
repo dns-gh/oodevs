@@ -22,7 +22,7 @@ using namespace plugins::hla;
 // Name: NetnAggregate constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-NetnAggregate::NetnAggregate( std::auto_ptr< Aggregate_ABC > aggregate, Agent_ABC& agent, const std::string& name, short identifier )
+NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& name, short identifier )
     : aggregate_ ( aggregate )
     , agent_     ( agent )
     , attributes_( new AttributesSerializer() )

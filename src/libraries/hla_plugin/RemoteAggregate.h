@@ -10,7 +10,7 @@
 #ifndef plugins_hla_RemoteAggregate_h
 #define plugins_hla_RemoteAggregate_h
 
-#include "Aggregate_ABC.h"
+#include "HlaObject_ABC.h"
 #include <map>
 #include <boost/function.hpp>
 
@@ -26,7 +26,7 @@ namespace hla
 */
 // Created: SLI 2011-07-26
 // =============================================================================
-class RemoteAggregate : public Aggregate_ABC
+class RemoteAggregate : public HlaObject_ABC
 {
 public:
     //! @name Constructors/Destructor

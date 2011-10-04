@@ -18,7 +18,7 @@ namespace plugins
 {
 namespace hla
 {
-    class Aggregate_ABC;
+    class HlaObject_ABC;
     class RemoteAgentListener_ABC;
 
 // =============================================================================
@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< Aggregate_ABC > Create( const std::string& name, RemoteAgentListener_ABC& listener ) const = 0;
+    virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name, RemoteAgentListener_ABC& listener ) const = 0;
     //@}
 };
 

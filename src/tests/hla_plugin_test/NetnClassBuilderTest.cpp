@@ -9,7 +9,7 @@
 
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/NetnClassBuilder.h"
-#include "hla_plugin/Aggregate_ABC.h"
+#include "hla_plugin/HlaObject_ABC.h"
 #include <hla/Class.h>  // $$$$ _RC_ SLI 2011-07-26: not mockable
 #include "MockClassBuilder.h"
 #include "MockFederate.h"
@@ -32,8 +32,8 @@ namespace
         MockClassBuilder mockBuilder;
         NetnClassBuilder builder;
         MockFederate federate;
-        ::hla::MockObjectRegistration< Aggregate_ABC > objectRegistration;
-        ::hla::Class< Aggregate_ABC > hlaClass;
+        ::hla::MockObjectRegistration< HlaObject_ABC > objectRegistration;
+        ::hla::Class< HlaObject_ABC > hlaClass;
     };
 }
 

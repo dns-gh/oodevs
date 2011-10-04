@@ -10,7 +10,7 @@
 #ifndef plugins_hla_AgentExtension_h
 #define plugins_hla_AgentExtension_h
 
-#include "Aggregate_ABC.h"
+#include "HlaObject_ABC.h"
 #include "EventListener_ABC.h"
 #include "rpr/ForceIdentifier.h"
 #include "rpr/EntityType.h"
@@ -41,7 +41,7 @@ namespace hla
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class AggregateEntity : public Aggregate_ABC
+class AggregateEntity : public HlaObject_ABC
                       , private EventListener_ABC
 {
 public:

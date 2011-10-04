@@ -9,7 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "AggregateEntityClass.h"
-#include "Aggregate_ABC.h"
+#include "HlaObject_ABC.h"
 #include "AgentSubject_ABC.h"
 #include "Agent_ABC.h"
 #include "HlaObjectFactory_ABC.h"
@@ -39,7 +39,7 @@ AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject
     , factory_      ( factory )
     , remoteFactory_( remoteFactory )
     , pListeners_   ( new RemoteAgentListenerComposite() )
-    , hlaClass_     ( new ::hla::Class< Aggregate_ABC >( *this, true ) )
+    , hlaClass_     ( new ::hla::Class< HlaObject_ABC >( *this, true ) )
 {
     builder.Build( federate, *hlaClass_, true, true );
     subject_.Register( *this );
@@ -79,7 +79,7 @@ void AggregateEntityClass::SurfaceVesselCreated( Agent_ABC& /*agent*/, unsigned 
 // Name: AggregateEntityClass::Create
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-Aggregate_ABC& AggregateEntityClass::Create( const ::hla::ObjectIdentifier& objectID, const std::string& /*objectName*/ )
+HlaObject_ABC& AggregateEntityClass::Create( const ::hla::ObjectIdentifier& objectID, const std::string& /*objectName*/ )
 {
     T_Entity& entity = remoteEntities_[ objectID.ToString() ];
     entity.reset( remoteFactory_.Create( objectID.ToString(), *pListeners_ ).release() );
@@ -91,7 +91,7 @@ Aggregate_ABC& AggregateEntityClass::Create( const ::hla::ObjectIdentifier& obje
 // Name: AggregateEntityClass::Destroy
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void AggregateEntityClass::Destroy( Aggregate_ABC& object )
+void AggregateEntityClass::Destroy( HlaObject_ABC& object )
 {
     BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
         if( &*entity.second == &object )

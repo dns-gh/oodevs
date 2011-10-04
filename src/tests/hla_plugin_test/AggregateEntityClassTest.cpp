@@ -10,14 +10,14 @@
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/AggregateEntityClass.h"
 #include "hla_plugin/AgentListener_ABC.h"
-#include "hla_plugin/Aggregate_ABC.h"
+#include "hla_plugin/HlaObject_ABC.h"
 #include "MockAgentSubject.h"
 #include "MockFederate.h"
 #include "MockAgent.h"
 #include "MockClassBuilder.h"
 #include "MockHlaObjectFactory.h"
 #include "MockRemoteAggregateFactory.h"
-#include "MockAggregate.h"
+#include "MockHlaObject.h"
 #include "MockLocalAgentResolver.h"
 #include "MockRemoteAgentListener.h"
 #include "MockObjectIdentifierFactory.h"
@@ -53,7 +53,7 @@ namespace
         MockRemoteAgentListener remoteListener;
         MockLocalAgentResolver localResolver;
         AgentListener_ABC* listener;
-        hla::Class< Aggregate_ABC >* hlaClass;
+        hla::Class< HlaObject_ABC >* hlaClass;
     };
     class RegisteredFixture : public Fixture
     {
@@ -75,7 +75,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_creates_instance_when_notified, RegisteredFixture )
 {
-    MOCK_EXPECT( aggregateFactory, Create ).once().returns( std::auto_ptr< Aggregate_ABC >( new MockAggregate() ) );
+    MOCK_EXPECT( aggregateFactory, Create ).once().returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
     MOCK_EXPECT( factory, CreateIdentifier ).once().with( "123" ).returns( hla::ObjectIdentifier( 42u ) );
     MOCK_EXPECT( localResolver, Add ).once().with( 123u, "42" );
     listener->AggregateCreated( agent, 123, "name", rpr::Friendly, rpr::EntityType() );
@@ -86,7 +86,7 @@ BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_creates_instance_when_notified, 
 BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_creates_remote_instances, RegisteredFixture )
 {
     entity.Register( remoteListener );
-    MOCK_EXPECT( remoteFactory, Create ).once().with( "42", mock::any ).returns( std::auto_ptr< Aggregate_ABC >( new MockAggregate() ) );
+    MOCK_EXPECT( remoteFactory, Create ).once().with( "42", mock::any ).returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
     MOCK_EXPECT( remoteListener, Created ).once().with( "42" );
     hlaClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
     mock::verify();
@@ -95,7 +95,7 @@ BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_creates_remote_instances, Regist
 
 BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_destroys_remote_instances, RegisteredFixture )
 {
-    MOCK_EXPECT( remoteFactory, Create ).once().returns( std::auto_ptr< Aggregate_ABC >( new MockAggregate() ) );
+    MOCK_EXPECT( remoteFactory, Create ).once().returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
     hlaClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
     MOCK_EXPECT( remoteListener, Created ).once().with( "42" );
     entity.Register( remoteListener );

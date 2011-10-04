@@ -9,7 +9,7 @@
 
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/NetnRemoteAggregate.h"
-#include "MockAggregate.h"
+#include "MockHlaObject.h"
 #include "MockUpdateFunctor.h"
 #include <hla/Deserializer.h>
 
@@ -21,11 +21,11 @@ namespace
     {
     public:
         Fixture()
-            : rprRemote( new MockAggregate() )
-            , pRemote  ( static_cast< Aggregate_ABC* >( rprRemote ) )
+            : rprRemote( new MockHlaObject() )
+            , pRemote  ( static_cast< HlaObject_ABC* >( rprRemote ) )
         {}
-        MockAggregate* rprRemote;
-        std::auto_ptr< Aggregate_ABC > pRemote;
+        MockHlaObject* rprRemote;
+        std::auto_ptr< HlaObject_ABC > pRemote;
     };
 }
 

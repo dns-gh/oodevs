@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_Aggregate_ABC_h
-#define plugins_hla_Aggregate_ABC_h
+#ifndef plugins_hla_HlaObject_ABC_h
+#define plugins_hla_HlaObject_ABC_h
 
 #include <boost/noncopyable.hpp>
 
@@ -24,18 +24,18 @@ namespace plugins
 namespace hla
 {
 // =============================================================================
-/** @class  Aggregate_ABC
-    @brief  Aggregate definition
+/** @class  HlaObject_ABC
+    @brief  Hla object definition
 */
 // Created: SLI 2011-07-26
 // =============================================================================
-class Aggregate_ABC : private boost::noncopyable
+class HlaObject_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Aggregate_ABC() {}
-    virtual ~Aggregate_ABC() {}
+             HlaObject_ABC() {}
+    virtual ~HlaObject_ABC() {}
     //@}
 
     //! @name Operations
@@ -48,4 +48,4 @@ public:
 }
 }
 
-#endif // plugins_hla_Aggregate_ABC_h
+#endif // plugins_hla_HlaObject_ABC_h

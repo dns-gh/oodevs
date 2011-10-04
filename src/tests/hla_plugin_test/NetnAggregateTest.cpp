@@ -9,7 +9,7 @@
 
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/NetnAggregate.h"
-#include "MockAggregate.h"
+#include "MockHlaObject.h"
 #include "MockAgent.h"
 #include "MockUpdateFunctor.h"
 #include <hla/Deserializer.h>
@@ -27,13 +27,13 @@ namespace
     public:
         Fixture()
             : listener ( 0 )
-            , aggregate( new MockAggregate() )
+            , aggregate( new MockHlaObject() )
         {
             MOCK_EXPECT( agent, Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( agent, Unregister ).once();
         }
         MockAgent agent;
-        MockAggregate* aggregate;
+        MockHlaObject* aggregate;
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
     };
@@ -41,7 +41,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : entity( std::auto_ptr< Aggregate_ABC >( aggregate ), agent, "name", 1u )
+            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), agent, "name", 1u )
         {}
         NetnAggregate entity;
     };

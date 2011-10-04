@@ -25,7 +25,7 @@ namespace plugins
 {
 namespace hla
 {
-    class Aggregate_ABC;
+    class HlaObject_ABC;
     class HlaObjectFactory_ABC;
     class AgentSubject_ABC;
     class Federate_ABC;
@@ -43,7 +43,7 @@ namespace hla
 // =============================================================================
 class AggregateEntityClass : public RemoteAgentSubject_ABC
                            , private AgentListener_ABC
-                           , private ::hla::ObjectRegistration_ABC< Aggregate_ABC >
+                           , private ::hla::ObjectRegistration_ABC< HlaObject_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -69,14 +69,14 @@ private:
 
     //! @name Operations
     //@{
-    virtual Aggregate_ABC& Create( const ::hla::ObjectIdentifier& objectID, const std::string& objectName );
-    virtual void Destroy( Aggregate_ABC& object );
+    virtual HlaObject_ABC& Create( const ::hla::ObjectIdentifier& objectID, const std::string& objectName );
+    virtual void Destroy( HlaObject_ABC& object );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef boost::shared_ptr< Aggregate_ABC > T_Entity;
+    typedef boost::shared_ptr< HlaObject_ABC > T_Entity;
     typedef std::map< std::string, T_Entity > T_Entities;
     //@}
 
@@ -91,7 +91,7 @@ private:
     T_Entities localEntities_;
     T_Entities remoteEntities_;
     std::auto_ptr< RemoteAgentListenerComposite > pListeners_;
-    std::auto_ptr< ::hla::Class< Aggregate_ABC > > hlaClass_;
+    std::auto_ptr< ::hla::Class< HlaObject_ABC > > hlaClass_;
     //@}
 };
 

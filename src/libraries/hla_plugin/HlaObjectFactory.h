@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< Aggregate_ABC > Create( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const;
+    virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const;
     //@}
 };
 

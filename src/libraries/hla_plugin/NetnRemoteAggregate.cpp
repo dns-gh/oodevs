@@ -17,7 +17,7 @@ using namespace plugins::hla;
 // Name: NetnRemoteAggregate constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-NetnRemoteAggregate::NetnRemoteAggregate( std::auto_ptr< Aggregate_ABC > aggregate )
+NetnRemoteAggregate::NetnRemoteAggregate( std::auto_ptr< HlaObject_ABC > aggregate )
     : aggregate_( aggregate )
 {
     // NOTHING

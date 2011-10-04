@@ -9,7 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "ClassBuilder.h"
-#include "Aggregate_ABC.h"
+#include "HlaObject_ABC.h"
 #include "Federate_ABC.h"
 #include <hla/Class.h>
 #include <hla/AttributeIdentifier.h>
@@ -39,7 +39,7 @@ ClassBuilder::~ClassBuilder()
 // Name: ClassBuilder::Build
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void ClassBuilder::Build( Federate_ABC& federate, ::hla::Class< Aggregate_ABC >& hlaClass, bool publish, bool subscribe ) const
+void ClassBuilder::Build( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const
 {
     hlaClass.Register( ::hla::AttributeIdentifier( "EntityType" ) );              // static
     hlaClass.Register( ::hla::AttributeIdentifier( "EntityIdentifier" ) );        // static

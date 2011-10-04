@@ -10,7 +10,7 @@
 #ifndef plugins_hla_NetnRemoteAggregate_h
 #define plugins_hla_NetnRemoteAggregate_h
 
-#include "Aggregate_ABC.h"
+#include "HlaObject_ABC.h"
 
 namespace plugins
 {
@@ -22,12 +22,12 @@ namespace hla
 */
 // Created: SLI 2011-07-26
 // =============================================================================
-class NetnRemoteAggregate : public Aggregate_ABC
+class NetnRemoteAggregate : public HlaObject_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NetnRemoteAggregate( std::auto_ptr< Aggregate_ABC > aggregate );
+    explicit NetnRemoteAggregate( std::auto_ptr< HlaObject_ABC > aggregate );
     virtual ~NetnRemoteAggregate();
     //@}
 
@@ -40,7 +40,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Aggregate_ABC > aggregate_;
+    std::auto_ptr< HlaObject_ABC > aggregate_;
     //@}
 };
 

@@ -10,7 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "NetnClassBuilder.h"
 #include "Federate_ABC.h"
-#include "Aggregate_ABC.h"
+#include "HlaObject_ABC.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
 #include <hla/AttributeIdentifier.h>
@@ -57,7 +57,7 @@ namespace
 // Name: NetnClassBuilder::Build
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void NetnClassBuilder::Build( Federate_ABC& federate, ::hla::Class< Aggregate_ABC >& hlaClass, bool publish, bool subscribe ) const
+void NetnClassBuilder::Build( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const
 {
     EmptyFederate empty;
     builder_.Build( empty, hlaClass, publish, subscribe );
