@@ -32,6 +32,7 @@ CommunicationListView::CommunicationListView( QWidget* parent, Controllers& cont
     , modelBuilder_( modelBuilder )
 {
     controllers_.Register( *this );
+    setResizeMode( Q3ListView::AllColumns );
     connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
 }
 

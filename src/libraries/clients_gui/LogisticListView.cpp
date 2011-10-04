@@ -41,7 +41,7 @@ LogisticListView::LogisticListView( QWidget* pParent, Controllers& controllers, 
     , droppedUnit_( 0 )
     , renamable_  ( renamable )
 {
-    addColumn( tools::translate( "gui::LogisticListView", "Units" ) );
+    setResizeMode( Q3ListView::AllColumns );
 }
 
 // -----------------------------------------------------------------------------
