@@ -26,6 +26,7 @@ namespace hla
 MOCK_BASE_CLASS( MockHlaObjectFactory, HlaObjectFactory_ABC )
 {
     MOCK_METHOD( CreateAggregate, 5 )
+    MOCK_METHOD( CreateSurfaceVessel, 5 )
 };
 
 }

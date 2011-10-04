@@ -205,6 +205,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnHlaObjectFactory.cpp">
       <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVesselClass.cpp">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -317,9 +320,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder.h">
       <Filter>Source Files\Classes\rpr</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\Aggregate_ABC.h">
-      <Filter>Source Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h">
       <Filter>Source Files\Classes</Filter>
@@ -452,6 +452,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnHlaObjectFactory.h">
       <Filter>Source Files\Classes\netn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObject_ABC.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVesselClass.h">
+      <Filter>Source Files\Dispatcher</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

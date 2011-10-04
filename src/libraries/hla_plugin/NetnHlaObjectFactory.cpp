@@ -36,8 +36,17 @@ NetnHlaObjectFactory::~NetnHlaObjectFactory()
 // Name: NetnHlaObjectFactory::CreateAggregate
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-std::auto_ptr< HlaObject_ABC > NetnHlaObjectFactory::CreateAggregate( Agent_ABC& agent, const std::string& name, short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+std::auto_ptr< HlaObject_ABC > NetnHlaObjectFactory::CreateAggregate( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
 {
     std::auto_ptr< HlaObject_ABC > aggregate = factory_.CreateAggregate( agent, name, identifier, force, type );
     return std::auto_ptr< HlaObject_ABC >( new NetnAggregate( aggregate, agent, name, identifier ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnHlaObjectFactory::CreateSurfaceVessel
+// Created: SLI 2011-10-04
+// -----------------------------------------------------------------------------
+std::auto_ptr< HlaObject_ABC > NetnHlaObjectFactory::CreateSurfaceVessel( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+{
+    return factory_.CreateSurfaceVessel( agent, name, identifier, force, type );
 }

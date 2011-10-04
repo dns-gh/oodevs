@@ -170,6 +170,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprSerializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SilentEntityTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SpatialTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselClassTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnicodeStringTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UniqueIdTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnitTeleporterTest.cpp" />
