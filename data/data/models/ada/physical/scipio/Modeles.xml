@@ -56,6 +56,7 @@
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Controler foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION MELEE Armer PIA"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9863,4 +9864,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2819454801" -->
+<!-- signature="2585118379" -->
