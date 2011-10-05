@@ -7598,6 +7598,7 @@
         <mission name="AUTOMATE CIRCULATION Appuyer Mouvement"/>
         <mission name="AUTOMATE CIRCULATION Armer PIA"/>
         <mission name="AUTOMATE CIRCULATION Bloquer Zone"/>
+        <mission name="AUTOMATE CIRCULATION Mettre En Oeuvre Zone Stationnement"/>
         <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
@@ -9929,4 +9930,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2313461869" -->
+<!-- signature="3854284105" -->
