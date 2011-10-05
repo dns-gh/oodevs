@@ -29,7 +29,7 @@ public:
     RprMarking()
         : markingType_( 1 ) // ASCII
     {
-        // NOTHING
+        ::memset( markingData_, 0, sizeof( markingData_ ) );
     }
 
     explicit RprMarking( const std::string& name )
@@ -62,7 +62,14 @@ public:
     }
     std::string str() const
     {
-        return std::string( reinterpret_cast< const char* >( markingData_ ) );
+        std::string result;
+        for( unsigned int i = 0; i < Number; ++i )
+        {
+            if( !markingData_[ i ] )
+                return result;
+            result.push_back( markingData_[ i ] );
+        }
+        return result;
     }
     //@}
 

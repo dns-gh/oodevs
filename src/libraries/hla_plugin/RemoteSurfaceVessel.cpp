@@ -58,10 +58,10 @@ RemoteSurfaceVessel::RemoteSurfaceVessel( const std::string& identifier, RemoteA
     : identifier_   ( identifier )
     , listener_     ( listener )
     , notifications_( boost::assign::list_of< std::pair< std::string, T_Notification > >
-                       ( "Spatial"        , boost::bind( &ReadSpatial               , _1, _2, _3 ) )
-                       ( "ForceIdentifier", boost::bind( &ReadForceIdentifier       , _1, _2, _3 ) )
-                       ( "Marking"        , boost::bind( &ReadMarking      , _1, _2, _3 ) )
-                       ( "EntityType"     , boost::bind( &ReadEntityType            , _1, _2, _3 ) ) )
+                       ( "Spatial"        , boost::bind( &ReadSpatial         , _1, _2, _3 ) )
+                       ( "ForceIdentifier", boost::bind( &ReadForceIdentifier , _1, _2, _3 ) )
+                       ( "Marking"        , boost::bind( &ReadMarking         , _1, _2, _3 ) )
+                       ( "EntityType"     , boost::bind( &ReadEntityType      , _1, _2, _3 ) ) )
 {
     // NOTHING
 }
