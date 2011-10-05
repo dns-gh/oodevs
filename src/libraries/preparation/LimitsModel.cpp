@@ -16,6 +16,7 @@
 #include "TacticalLines.h"
 #include "TacticalLineHierarchies.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -27,7 +28,7 @@ LimitsModel::LimitsModel( kernel::Controllers& controllers, const kernel::Coordi
     , converter_( converter )
     , idManager_( idManager )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,6 +38,7 @@ LimitsModel::LimitsModel( kernel::Controllers& controllers, const kernel::Coordi
 LimitsModel::~LimitsModel()
 {
     Purge();
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,23 +111,10 @@ void LimitsModel::CreateLima( xml::xistream& xis, kernel::Entity_ABC& superior )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LimitsModel::DeleteLimit
-// Created: AGE 2006-02-15
+// Name: LimitsModel::NotifyDeleted
+// Created: ABR 2011-10-05
 // -----------------------------------------------------------------------------
-void LimitsModel::DeleteLimit( unsigned long id )
+void LimitsModel::NotifyDeleted( const kernel::TacticalLine_ABC& line )
 {
-    TacticalLine_ABC* line = Find( id );
-    Remove( id );
-    delete line;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsModel::DeleteLima
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-void LimitsModel::DeleteLima( unsigned long id )
-{
-    TacticalLine_ABC* line = Find( id );
-    Remove( id );
-    delete line;
+    Remove( line.GetId() );
 }

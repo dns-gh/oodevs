@@ -11,12 +11,14 @@
 #define __LimitsModel_h_
 
 #include "tools/Resolver.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
     class Controllers;
     class CoordinateConverter_ABC;
     class Entity_ABC;
+    class TacticalLine_ABC;
 }
 
 namespace xml
@@ -33,7 +35,9 @@ class IdManager;
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class LimitsModel : public tools::Resolver< TacticalLine_ABC >
+class LimitsModel : public tools::Resolver< ::TacticalLine_ABC >
+                  , public tools::Observer_ABC
+                  , public tools::ElementObserver_ABC< kernel::TacticalLine_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -48,9 +52,6 @@ public:
     void CreateLima ( const T_PointVector& points, kernel::Entity_ABC& superior );
     void CreateLimit( xml::xistream& xis, kernel::Entity_ABC& superior );
     void CreateLima ( xml::xistream& xis, kernel::Entity_ABC& superior );
-
-    void DeleteLimit( unsigned long id );
-    void DeleteLima ( unsigned long id );
     void Purge();
     //@}
 
@@ -59,6 +60,11 @@ private:
     //@{
     LimitsModel( const LimitsModel& );            //!< Copy constructor
     LimitsModel& operator=( const LimitsModel& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void NotifyDeleted( const kernel::TacticalLine_ABC& line );
     //@}
 
 private:
