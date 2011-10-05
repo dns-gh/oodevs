@@ -1401,7 +1401,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestHumansLossFromDirectFire, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestHumansLossFromCrowdFire, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='fire-human-loss-by-crowd-fires' id='damages' states='dead'/>"
+                             "    <extract function='fire-human-loss-by-crowd-fires' id='damages' states='dead' crowd='12,17'/>"
                              "    <transform function='domain' type='int' select='13,23' input='damages' id='domained-damages'/>"
                              "    <reduce type='float' function='sum' input='domained-damages' id='sum'/>"
                              "    <result function='plot' input='sum' type='float'/>"
@@ -1410,12 +1410,15 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestHumansLossFromCrowdFire, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeUnitDamagesByCrowd( 12, 13, 0, 2 ) );
     task->Receive( TestTools::MakeUnitDamagesByCrowd( 12, 23, 3, 5 ) );
+    task->Receive( TestTools::MakeUnitDamagesByCrowd( 15, 13, 0, 2 ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeUnitDamagesByCrowd( 17, 25, 0, 1 ) );
     task->Receive( TestTools::MakeUnitDamagesByCrowd( 12, 23, 8, 5 ) );
+    task->Receive( TestTools::MakeUnitDamagesByCrowd( 15, 25, 0, 1 ) );
+    task->Receive( TestTools::MakeUnitDamagesByCrowd( 15, 23, 8, 5 ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );

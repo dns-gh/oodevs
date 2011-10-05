@@ -32,8 +32,10 @@ CrowdHumanDamages::~CrowdHumanDamages()
 
 namespace
 {
-    const unsigned nHumanDamageStates = 6;
+    const unsigned int nHumanDamageStates = 6;
+
     typedef google::protobuf::int32( UnitHumanFireDamage::*UnitHumanFireDamageMemberFn )()const;
+
     UnitHumanFireDamageMemberFn humanDamageData[ nHumanDamageStates ] =
     {
         &UnitHumanFireDamage::alive,
@@ -43,6 +45,7 @@ namespace
         &UnitHumanFireDamage::wounded_u3,
         &UnitHumanFireDamage::wounded_ue,
     };
+
     const char* humanDamageStates[ nHumanDamageStates ] =
     {
         "alive",
@@ -52,6 +55,7 @@ namespace
         "wounded_u3",
         "wounded_ue",
     };
+
     int ReadMask( xml::xistream& xis, const char* attribute, const char** names, unsigned int count )
     {
         if( !xis.has_attribute( attribute ) )
@@ -59,10 +63,11 @@ namespace
         FilterHelper< std::string > states( xis, attribute );
         int result = 0;
         for( unsigned int i = 0; i < count; ++i )
-            if( states.IsAllowed( names[i] ) )
+            if( states.IsAllowed( names[ i ] ) )
                 result |= ( 1 << i );
         return result;
     }
+
     int ReadStates( xml::xistream& xis )
     {
         return ReadMask( xis, "states", humanDamageStates, nHumanDamageStates );
@@ -74,6 +79,7 @@ namespace
         "sub-officer",
         "troopers"
     };
+
     int ReadRanks( xml::xistream& xis )
     {
         return ReadMask( xis, "ranks", ranks, 3 );
@@ -85,9 +91,10 @@ namespace
 // Created: FPO 2011-05-26
 // -----------------------------------------------------------------------------
 CrowdHumanDamages::CrowdHumanDamages( xml::xistream& xis )
-    : rankMask_ ( ReadRanks( xis ) )
-    , stateMask_( ReadStates( xis ) )
+    : rankMask_   ( ReadRanks( xis ) )
+    , stateMask_  ( ReadStates( xis ) )
     , partyFilter_( xis, "party" )
+    , crowdFilter_( xis, "crowd" )
 {
     // NOTHING
 }
@@ -96,12 +103,14 @@ CrowdHumanDamages::CrowdHumanDamages( xml::xistream& xis )
 // Name: CrowdHumanDamages::Extract
 // Created: FPO 2011-05-26
 // -----------------------------------------------------------------------------
-int CrowdHumanDamages::Extract( const sword::SimToClient& wrapper ) const
+int CrowdHumanDamages::Extract( const SimToClient& wrapper ) const
 {
-    const sword::UnitDamagedByCrowdFire& damages = wrapper.message().unit_damaged_by_crowd_fire();
-    int result = 0;
+    const UnitDamagedByCrowdFire& damages = wrapper.message().unit_damaged_by_crowd_fire();
     if( !partyFilter_.IsAllowed( damages.party().id() ) )
         return 0;
+    if( !crowdFilter_.IsAllowed( damages.firer().id() ) )
+        return 0;
+    int result = 0;
     for( int e = 0; e < damages.humans().elem_size(); ++e )
     {
         const UnitHumanFireDamage& damage = damages.humans().elem( e );

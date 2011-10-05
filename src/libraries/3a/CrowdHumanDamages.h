@@ -53,6 +53,7 @@ private:
     int rankMask_;
     int stateMask_;
     FilterHelper< int > partyFilter_;
+    FilterHelper< int > crowdFilter_;
     //@}
 };
 
