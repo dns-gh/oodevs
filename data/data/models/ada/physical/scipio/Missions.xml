@@ -3196,6 +3196,13 @@
       <parameter dia-name="destination" name="Destination" optional="false" type="Point"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.circu.tasks.AppuyerFranchissementDansZone" dia-type="france.military.company.combat.support.circu.tasks.AppuyerFranchissementDansZone" id="28751" mrt-dia-behavior="france.military.company.combat.support.circu.tasks.AppuyerFranchissementDansZone" name="AUTOMATE CIRCULATION Appuyer Franchissement Sur Zone" package="move">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="zone" name="Zone" optional="false" type="Polygon"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="335" name="FOULES Deteriorer" package="attack">
@@ -3429,4 +3436,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Desengager" id="400" name="Pion Desengager"/>
   </fragorders>
 </missions>
-<!-- signature="4042014803" -->
+<!-- signature="4177776775" -->

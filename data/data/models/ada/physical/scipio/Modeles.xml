@@ -7533,6 +7533,7 @@
         <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
+        <mission name="AUTOMATE CIRCULATION Appuyer Franchissement Sur Zone"/>
         <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
@@ -9864,4 +9865,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2585118379" -->
+<!-- signature="1782125950" -->
