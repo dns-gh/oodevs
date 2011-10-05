@@ -597,6 +597,7 @@ void MainWindow::LoadExercise()
             QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
                 , tr( "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() );
         EnableWorkspace( true );
+        CheckConsistency();
     }
     catch( std::exception& e )
     {
