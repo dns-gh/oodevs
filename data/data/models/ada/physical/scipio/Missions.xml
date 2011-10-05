@@ -3215,6 +3215,12 @@
         </choice>
       </parameter>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.circu.tasks.ArmerPIA" dia-type="france.military.company.combat.support.circu.tasks.ArmerPIA" id="28753" mrt-dia-behavior="france.military.company.combat.support.circu.tasks.ArmerPIA" name="AUTOMATE CIRCULATION Armer PIA" package="support">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="335" name="FOULES Deteriorer" package="attack">
@@ -3448,4 +3454,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Desengager" id="400" name="Pion Desengager"/>
   </fragorders>
 </missions>
-<!-- signature="2255808084" -->
+<!-- signature="2558205281" -->
