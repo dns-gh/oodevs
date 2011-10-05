@@ -50,7 +50,10 @@ CreateTerrain::CreateTerrain( const tools::GeneralConfig& config, const QString&
     bfs::create_directories( directory );
 
     AddArgument( QString( "--out=\"%1\"" ).arg( directory.c_str() ) );
-    SetWorkingDirectory( GetDirectory() );
+    QString qdirectory = GetDirectory();
+    std::string rundirectory = qdirectory.ascii();
+    if( rundirectory != "noValue" )
+        SetWorkingDirectory( qdirectory );
 }
 
 // -----------------------------------------------------------------------------

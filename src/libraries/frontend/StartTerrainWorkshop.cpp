@@ -45,7 +45,10 @@ namespace
 StartTerrainWorkshop::StartTerrainWorkshop( const tools::GeneralConfig& config, bool attach /* = false*/ )
     : SpawnCommand( config, GetExecutable().c_str(), attach, "" )
 {
-    SetWorkingDirectory( GetDirectory() );
+    QString qdirectory = GetDirectory();
+    std::string directory = qdirectory.ascii();
+    if( directory != "noValue" )
+        SetWorkingDirectory( qdirectory );
 }
 
 // -----------------------------------------------------------------------------
