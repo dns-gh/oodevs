@@ -18,7 +18,7 @@
           <description name="Export d'OdB simplifié" lang="fr"><![CDATA[Extrait les camps, automates, unités, populations et objets de l'OdB.<br>Le résultat est un fichier XML.]]></description>
         </descriptions>
       </filter>
-      <filter command="ExportDQP.exe">
+      <filter command="ExportDQP.exe" directory="D:\THALES\SCIPIO\PrepaSE\bin">
         <arguments>
           <argument name="0"/>
           <argument name="-exercise" value="$exercise$"/>
@@ -29,7 +29,7 @@
           <description name="Test d'export DQP" lang="fr">HTML Description</description>
         </descriptions>
       </filter>
-      <filter command="ExportDQP.exe">
+      <filter command="ExportDQP.exe" directory="D:\THALES\SCIPIO\PrepaSE\bin">
         <arguments>
           <argument name="1"/>
           <argument name="-exercise" value="$exercise$"/>
@@ -48,7 +48,7 @@
       <description name="Importer..." lang="fr"/>
     </descriptions>
     <filters>
-      <filter command="ImportDQP.exe" reload-exercise="true">
+      <filter command="ImportDQP.exe" reload-exercise="true" directory="D:\THALES\SCIPIO\PrepaSE\bin">
         <arguments>
           <argument name="-exercise" value="$exercise$"/>
           <argument name="-root-dir" value="$rootdir$"/>
@@ -58,7 +58,7 @@
           <description name="Importer DQP" lang="fr">HTML Description</description>
         </descriptions>
       </filter>
-      <filter command="Melmil.exe" reload-exercise="true">
+      <filter command="Melmil.exe" reload-exercise="true" directory="D:\THALES\SCIPIO\PrepaSE\bin">
         <arguments>
           <argument name="-exercise" value="$exercise$"/>
           <argument name="-root-dir" value="$rootdir$"/>
@@ -71,4 +71,4 @@
     </filters>
   </section>
 </sections>
-<!-- signature="3905147345" -->
+<!-- signature="1103784214" -->
