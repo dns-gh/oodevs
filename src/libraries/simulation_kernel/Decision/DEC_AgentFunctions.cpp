@@ -44,12 +44,13 @@
 #include "Entities/Objects/BypassAttribute.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army.h"
-#include "Network/NET_Publisher_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "simulation_terrain/TER_AgentManager.h"
+#include "MT_Tools/MT_Logger.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "simulation_terrain/TER_AgentManager.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsNeutralized
@@ -963,7 +964,8 @@ bool DEC_AgentFunctions::IsImmobilized( DEC_Decision_ABC* pAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, const TER_Localisation* location )
 {
-    assert( location );
+    if( !location )
+        MT_LOG_ERROR_MSG( "Identifying agent in nil zone" );
     TER_Agent_ABC::T_AgentPtrVector agentsDetected;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( *location, agentsDetected );
     PHY_RoleInterface_Perceiver& perceiver = callerAgent.GetRole< PHY_RoleInterface_Perceiver >();
