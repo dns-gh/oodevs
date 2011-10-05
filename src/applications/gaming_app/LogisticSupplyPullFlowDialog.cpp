@@ -244,6 +244,8 @@ void LogisticSupplyPullFlowDialog::Show()
     AddCarrierItem();
     tabs_->setCurrentPage( 0 );
     delWaypointButton_->setEnabled( false );
+    moveUpButton_->setEnabled( false );
+    moveDownButton_->setEnabled( false );
 
     ComputeAvailableSuppliers();
 
@@ -559,6 +561,9 @@ void LogisticSupplyPullFlowDialog::DeleteWaypoint()
         waypoints.remove( waypoint );
         pModel->setStringList( waypoints );
     }
+
+    moveUpButton_->setEnabled( false );
+    moveDownButton_->setEnabled( false );
 }
 
 
@@ -854,6 +859,9 @@ void LogisticSupplyPullFlowDialog::OnResourcesValueChanged( int row, int col )
     QString selection;
     if( item )
         selection = item->currentText();
+    if( selection.isEmpty() && ( row + 1 == resourcesTable_->numRows() ) )
+        return;
+
     Q3TableItem& itemAVailable = *resourcesTable_->item( row, 1 );
     Q3TableItem& itemValue = *resourcesTable_->item( row, 2 );
     int newValue = itemValue.text().toInt();
@@ -1017,6 +1025,8 @@ void LogisticSupplyPullFlowDialog::Handle( kernel::Location_ABC& location )
         points_[ locationName ] = selectedPoint_;
         waypoints.append( locationName );
         pModel->setStringList( waypoints );
+        moveUpButton_->setEnabled( false );
+        moveDownButton_->setEnabled( false );
     }
     if( startWaypointLocation_ )
     {

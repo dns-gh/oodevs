@@ -1420,10 +1420,6 @@ Motivo: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Recipients</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Resource</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1564,6 +1560,14 @@ Motivo: %3
     </message>
     <message>
         <source>Log Supply Push Flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add recipient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove recipient</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

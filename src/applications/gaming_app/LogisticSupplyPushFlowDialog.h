@@ -86,8 +86,8 @@ private slots:
     void DeleteWaypoint();
     void MoveUpWaypoint();
     void MoveDownWaypoint();
-    void OnRecipientValueChanged( int row, int /*col*/ );
-    void OnRecipientSelectionChanged( int row, int /*col*/ );
+    void OnRecipientContextMenu( Q3ListViewItem* item, const QPoint& point, int /*column*/ );
+    void OnRecipientSelectionChanged( Q3ListViewItem* item );
     void OnResourcesValueChanged( int row, int col );
     void OnCarriersUseCheckStateChanged();
     void OnCarriersValueChanged( int row, int col );
@@ -108,13 +108,14 @@ private:
     void AddDotation( const SupplyStates& states );
     void InsertMenuEntry( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
 
-    void AddRecipientItem();
+    void AddRecipient( const QString& recipientName );
+    void RemoveRecipient( Q3ListViewItem& item );
     void AddResourceItem();
-    void AddResourceItem( QString dotationName, int Available, int qtySupply );
+    void AddResourceItem( const QString& dotationName, int Available, int qtySupply );
     void AddCarrierItem();
-    void AddCarrierItem( QString dotationName, int Available, int qtySupply );
+    void AddCarrierItem( const QString& dotationName, int Available, int qtySupply );
 
-    void ClearRecipientsTable();
+    void Clear();
     void ClearRecipientsData();
     void ClearResourcesTable();
     void ClearResourcesData();
@@ -122,8 +123,9 @@ private:
     void ClearCarriersData();
     void ClearRouteList();
     void ClearRouteData();
-    void ComputeAvailableRecipients( QStringList& recipientsNames );
-    void InsertNewRecipientData( int index, const kernel::Automat_ABC* pRecipient );
+    void ComputeRecipients();
+    void ComputeAvailableRecipients( QStringList& displayRecipientsNames );
+    void EraseRecipientData( const QString& recipient );
     void EraseRecipientData( int index );
     void ComputeAvailableCarriers( QStringList& carriersNames );
     void AddCarryingEquipment( const kernel::Entity_ABC& entity );
@@ -199,7 +201,7 @@ private:
     T_CarriersName carriersTypeNames_;
 
     QTabWidget* tabs_;
-    Q3Table* recipientsTable_;
+    Q3ListView* recipientsList_;
     Q3Table* resourcesTable_;
     Q3Table* carriersTable_;
     QListView* waypointList_;

@@ -111,11 +111,11 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     QPushButton* okButton = new QPushButton( tr( "Ok" ), tabs_ );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
     connect( okButton, SIGNAL( clicked() ), SLOT( Validate() ) );
-        
+    
     moveUpButton_ = new QPushButton( upDownGroup );
     moveDownButton_ = new QPushButton( upDownGroup );
     addWaypointButton_ = new QPushButton( upDownGroup );
-    delWaypointButton_ = new QPushButton( upDownGroup );       
+    delWaypointButton_ = new QPushButton( upDownGroup );
     moveUpButton_->setIcon( MAKE_ICON( arrow_up ) );
     moveDownButton_->setIcon( MAKE_ICON( arrow_down ) );
     delWaypointButton_->setIcon( MAKE_ICON( trash ) );
@@ -135,15 +135,13 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     tabLayout->setMargin( 5 );
     tabLayout->setSpacing( 5 );
 
-    recipientsTable_ = new Q3Table( 0, 1, resourcesTab );
-    recipientsTable_->horizontalHeader()->setLabel( 0, tools::translate( "Logistic : Push supply flow", "Recipients" ) );
-    recipientsTable_->setMargin( 5 );
-    recipientsTable_->setLeftMargin( 0 );
-    recipientsTable_->setColumnWidth( 0 , 260 );
-    recipientsTable_->setNumRows( 0 );
-    connect( recipientsTable_, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnRecipientValueChanged( int, int ) ) );
-    connect( recipientsTable_, SIGNAL( currentChanged( int, int ) ), this, SLOT( OnRecipientSelectionChanged( int, int ) ) );
-
+    recipientsList_ = new Q3ListView( this );
+    recipientsList_->addColumn( "recipient" );
+    recipientsList_->header()->hide();
+    recipientsList_->setResizeMode( Q3ListView::LastColumn );
+    connect( recipientsList_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRecipientContextMenu( Q3ListViewItem*, const QPoint&, int ) ) );
+    connect( recipientsList_, SIGNAL( selectionChanged( Q3ListViewItem * ) ), this, SLOT( OnRecipientSelectionChanged( Q3ListViewItem * ) ) );
+    
     resourcesTable_ = new Q3Table( 0, 3, resourcesTab );
     resourcesTable_->horizontalHeader()->setLabel( 0, tools::translate( "Logistic : Push supply flow", "Resource" ) );
     resourcesTable_->horizontalHeader()->setLabel( 1, tools::translate( "Logistic : Push supply flow", "Available" ) );
@@ -156,7 +154,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     resourcesTable_->setColumnWidth( 2 , 70 );
     connect( resourcesTable_, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnResourcesValueChanged( int, int ) ) );
     QVBoxLayout* resourcesLayout = new QVBoxLayout( resourcesTab );
-    resourcesLayout->addWidget( recipientsTable_ );
+    resourcesLayout->addWidget( recipientsList_ );
     resourcesLayout->addWidget( resourcesTable_ );
     
     carriersUseCheck_ = new QCheckBox( tools::translate( "Logistic : Push supply flow", "Manual selection of transport carriers" ), carriersTab );
@@ -218,6 +216,33 @@ LogisticSupplyPushFlowDialog::~LogisticSupplyPushFlowDialog()
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog OnRecipientContextMenu
+// Created: MMC 2011-10-03
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::OnRecipientContextMenu( Q3ListViewItem* item, const QPoint& point, int /*column*/ )
+{
+    Q3PopupMenu menu( this );
+    Q3PopupMenu subMenu( &menu );
+    menu.insertItem( tr( "Add recipient" ), &subMenu );
+
+    QString recipient;
+    Q3ListViewItem* pSelectedItem = recipientsList_->selectedItem();
+    if ( pSelectedItem )
+        menu.insertItem( tr( "Remove recipient" ), 1000 );
+
+    QStringList recipientsList;
+    ComputeAvailableRecipients( recipientsList );
+    for( int i = 0; i < recipientsList.size(); ++i )
+        subMenu.insertItem( recipientsList[i], i );
+
+    int menuIndex = menu.exec( point );
+    if( menuIndex == 1000 && item )
+        RemoveRecipient( *item );
+    else if( 0 <= menuIndex && menuIndex < recipientsList.size() )
+        AddRecipient( recipientsList[ menuIndex ] );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog::NotifyContextMenu
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
@@ -259,10 +284,12 @@ void LogisticSupplyPushFlowDialog::Show()
     controllers_.Update( *routeLocationCreator_ );
     routeLocationCreator_->StartLine();
 
-    AddRecipientItem();
+    ComputeRecipients();
     AddCarrierItem();
     tabs_->setCurrentPage( 0 );
     delWaypointButton_->setEnabled( false );
+    moveUpButton_->setEnabled( false );
+    moveDownButton_->setEnabled( false );
 
     show();
 }
@@ -323,14 +350,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     action->Attach( *new ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );
 
-    ClearRecipientsTable();
-    ClearRecipientsData();
-    ClearResourcesTable();
-    ClearResourcesData();
-    ClearCarriersTable();
-    ClearCarriersData();
-    ClearRouteList();
-    ClearRouteData();
+    Clear();
     selected_ = 0;
 }
 
@@ -345,14 +365,7 @@ void LogisticSupplyPushFlowDialog::Reject()
     controllers_.Unregister( *waypointLocationCreator_ );
     controllers_.Unregister( *routeLocationCreator_ );
 
-    ClearRecipientsTable();
-    ClearRecipientsData();
-    ClearResourcesTable();
-    ClearResourcesData();
-    ClearCarriersTable();
-    ClearCarriersData();
-    ClearRouteList();
-    ClearRouteData();
+    Clear();
     selected_ = 0;
 }
 
@@ -409,27 +422,43 @@ void LogisticSupplyPushFlowDialog::AddDotation( const SupplyStates& states )
 // Name: LogisticSupplyPushFlowDialog::AddRecipientItem
 // Created: MMC 2011-09-19
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::AddRecipientItem()
+void LogisticSupplyPushFlowDialog::AddRecipient( const QString& recipientName )
 {
-    ExclusiveComboTableItem* curItem = 0;
-    int current = 0;
-    int row = recipientsTable_->numRows();
-    if( row > 0 )
-    {
-        curItem = static_cast< ExclusiveComboTableItem* >( recipientsTable_->item( row-1, 0 ) );
-        if( curItem )
-            current = curItem->currentItem();
-    }
+    Q3ListViewItem* pListViewItem = new Q3ListViewItem( recipientsList_ );
+    pListViewItem->setText( 0 , recipientName );
+    recipientsList_->insertItem( pListViewItem );
 
-    QStringList recipientsList;
-    ComputeAvailableRecipients( recipientsList );
-    const unsigned int rows = recipientsTable_->numRows();
-    recipientsTable_->setNumRows( rows + 1 );
-    recipientsTable_->setItem( rows, 0, new ExclusiveComboTableItem( recipientsTable_, recipientsList ) );
-    recipientsTable_->setCurrentCell( rows, 0 );
+    const kernel::Automat_ABC* pRecipient = recipientsNames_[ recipientName ];
+    if ( !pRecipient )
+        return;
+    if( recipientSupplies_.find( pRecipient ) == recipientSupplies_.end() )
+        recipientSupplies_[ pRecipient ];
+    if ( std::find( recipients_.begin(), recipients_.end(), pRecipient ) ==  recipients_.end() )
+        recipients_.push_back( pRecipient );
 
-    if( curItem )
-        curItem->setCurrentItem( current );
+    customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
+    QStringList waypoints = pModel->stringList();
+    waypoints.append( recipientName );
+    pModel->setStringList( waypoints );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::RemoveRecipient
+// Created: MMC 2011-09-19
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::RemoveRecipient( Q3ListViewItem& item )
+{
+    QString recipient = item.text( 0 );
+    EraseRecipientData( recipient );
+    recipientsList_->removeItem( &item );
+
+    customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
+    QStringList waypoints = pModel->stringList();
+    waypoints.removeAll( recipient );
+    pModel->setStringList( waypoints );
+
+    pRecipientSelected_ = 0;
+    ClearResourcesTable();
 }
 
 // -----------------------------------------------------------------------------
@@ -471,7 +500,7 @@ void LogisticSupplyPushFlowDialog::AddResourceItem()
 // Name: LogisticSupplyPushFlowDialog::AddResourceItem
 // Created: MMC 2011-09-19
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::AddResourceItem( QString dotationName, int Available, int qtySupply )
+void LogisticSupplyPushFlowDialog::AddResourceItem( const QString& dotationName, int Available, int qtySupply )
 {
     AddResourceItem();
 
@@ -518,7 +547,7 @@ void LogisticSupplyPushFlowDialog::AddCarrierItem()
 // Name: LogisticSupplyPushFlowDialog::AddCarrierItem
 // Created: MMC 2011-09-19
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::AddCarrierItem( QString dotationName, int Available, int qtySupply )
+void LogisticSupplyPushFlowDialog::AddCarrierItem( const QString& dotationName, int Available, int qtySupply )
 {
     AddCarrierItem();
 
@@ -576,6 +605,9 @@ void LogisticSupplyPushFlowDialog::DeleteWaypoint()
         waypoints.remove( waypoint );
         pModel->setStringList( waypoints );
     }
+
+    moveUpButton_->setEnabled( false );
+    moveDownButton_->setEnabled( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -623,15 +655,22 @@ void LogisticSupplyPushFlowDialog::MoveDownWaypoint()
     waypointList_->setFocus();
 }
 
+
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::clearRecipientsTable
+// Name: LogisticSupplyPushFlowDialog::Clear
 // Created: MMC 2011-09-19
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::ClearRecipientsTable()
+void LogisticSupplyPushFlowDialog::Clear()
 {
-    if( recipientsTable_->numRows() > 0 )
-        for( int i=recipientsTable_->numRows()-1; i>=0; --i )
-            recipientsTable_->removeRow( i );
+    recipientsList_->clear();
+    pRecipientSelected_ = 0;
+    ClearRecipientsData();
+    ClearResourcesTable();
+    ClearResourcesData();
+    ClearCarriersTable();
+    ClearCarriersData();
+    ClearRouteList();
+    ClearRouteData();
 }
 
 // -----------------------------------------------------------------------------
@@ -707,7 +746,25 @@ void LogisticSupplyPushFlowDialog::ClearRouteData()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::clearRecipientsTable
+// Name: LogisticSupplyPushFlowDialog::EraseRecipientData
+// Created: MMC 2011-09-19
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::EraseRecipientData( const QString& recipient )
+{
+    const kernel::Automat_ABC* pRecipient = recipientsNames_[ recipient ];
+    std::remove( recipients_.begin(), recipients_.end(), pRecipient );
+
+    T_RecipientSupplies::iterator itSupplies = recipientSupplies_.begin();
+    while( itSupplies != recipientSupplies_.end() )
+    {
+        T_RecipientSupplies::iterator curItSupplies = itSupplies++;
+        if ( curItSupplies->first == pRecipient )
+            recipientSupplies_.erase( curItSupplies );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::EraseRecipientData
 // Created: MMC 2011-09-19
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::EraseRecipientData( int index )
@@ -773,114 +830,46 @@ void LogisticSupplyPushFlowDialog::ComputeAvailableCarriers( QStringList& carrie
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::clearRecipientsTable
-// Created: MMC 2011-09-19
-// -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::InsertNewRecipientData( int index, const kernel::Automat_ABC* pRecipient )
-{
-    T_SuppliesVector emptySupplies;
-    if( recipientSupplies_.find( pRecipient ) == recipientSupplies_.end() )
-        recipientSupplies_[ pRecipient ] = emptySupplies;
-    recipients_.insert( recipients_.begin() + index, pRecipient );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyChangeQuotasDialog::OnRecipientValueChanged
-// Created: MMC 2011-09-19
-// -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::OnRecipientValueChanged( int row, int /*col*/ )
-{
-    customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
-    QStringList waypoints = pModel->stringList();
-    if( row < recipients_.size() )
-        waypoints.removeAll( recipients_[ row ]->GetName() );
-    pModel->setStringList( waypoints );
-
-    ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( recipientsTable_->item( row, 0 ) );
-    QString selection;
-    if( item )
-        selection = item->currentText();
-    if( selection.isEmpty() )
-    {
-        if( recipientsTable_->numRows() > 1 )
-            recipientsTable_->removeRow( row );
-        EraseRecipientData( row );
-    }
-    else
-    {
-        EraseRecipientData( row );
-        const kernel::Automat_ABC* pRecipient = recipientsNames_[ selection ];
-        if( pRecipient )
-        {
-            QStringList waypoints = pModel->stringList();
-            waypoints.append( pRecipient->GetName() );
-            pModel->setStringList( waypoints );
-            InsertNewRecipientData( row, pRecipient );
-        }
-        if( row + 1 == recipientsTable_->numRows() )      
-            AddRecipientItem();
-    }
-
-    OnRecipientSelectionChanged( row , 0 );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog::OnRecipientSelectionChanged
 // Created: MMC 2011-09-19
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::OnRecipientSelectionChanged( int row, int /*col*/ )
+void LogisticSupplyPushFlowDialog::OnRecipientSelectionChanged( Q3ListViewItem* item )
 {
-    ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( recipientsTable_->item( row, 0 ) );
-    QString selection;
-    if( item )
-        selection = item->currentText();
-    if( selection.isEmpty() )
-        pRecipientSelected_ = 0;
-    else
-        pRecipientSelected_ = recipientsNames_[ selection ];
+    supplies_.clear();
+    ClearResourcesTable();
 
+    pRecipientSelected_ = item? recipientsNames_[ item->text( 0 ) ] : 0;
     if( !pRecipientSelected_ )
+        return;
+
+    T_RecipientSupplies::iterator it = recipientSupplies_.find( pRecipientSelected_ );
+    if( it == recipientSupplies_.end() )
+        return;
+
+    SupplyStatesVisitor visitor( *this, &LogisticSupplyPushFlowDialog::AddDotation );
+    selected_->Get< kernel::TacticalHierarchies >().Accept< SupplyStates >( visitor );
+
+    T_SuppliesVector& supplies = it->second;
+    for( int i=0; i < supplies.size(); ++i )
     {
-        supplies_.clear();
-        ClearResourcesTable();
+        const QString& dotationName = supplies[i].objectName_;
+        int available = 0;
+        T_Supplies::iterator itDotation = supplies_.find( dotationName );
+        if( itDotation != supplies_.end() )
+            available = itDotation->second.quantity_;
+        AddResourceItem( dotationName, available, supplies[i].quantity_ );
     }
-    else
-    {
-        T_RecipientSupplies::iterator it = recipientSupplies_.find( pRecipientSelected_ );
-        if( it != recipientSupplies_.end() )
-        {
-            supplies_.clear();
-            ClearResourcesTable();
 
-            SupplyStatesVisitor visitor( *this, &LogisticSupplyPushFlowDialog::AddDotation );
-            selected_->Get< kernel::TacticalHierarchies >().Accept< SupplyStates >( visitor );
-
-            T_SuppliesVector& supplies = it->second;
-            for( int i=0; i < supplies.size(); ++i )
-            {
-                const QString& dotationName = supplies[i].objectName_;
-                int available = 0;
-                T_Supplies::iterator itDotation = supplies_.find( dotationName );
-                if( itDotation != supplies_.end() )
-                    available = itDotation->second.quantity_;
-                AddResourceItem( dotationName, available, supplies[i].quantity_ );
-            }
-
-            AddResourceItem();
-        }
-    }
+    AddResourceItem();
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::computeAvailableRecipients
+// Name: LogisticSupplyPushFlowDialog::ComputeRecipients
 // Created: MMC 2011-09-19
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::ComputeAvailableRecipients( QStringList& recipientsNames )
+void LogisticSupplyPushFlowDialog::ComputeRecipients()
 {
     recipientsNames_.clear();
-    recipientsNames.clear(); 
-    recipientsNames.append( QString() );
-    
     tools::Iterator< const Automat_ABC& > it = automats_.CreateIterator();
     const kernel::Entity_ABC& team = selected_->Get< kernel::TacticalHierarchies >().GetTop();
     while( it.HasMoreElements() )
@@ -890,12 +879,21 @@ void LogisticSupplyPushFlowDialog::ComputeAvailableRecipients( QStringList& reci
         {
             const kernel::AutomatType& type = automat.GetType();
             if( type.IsLogisticSupply() && &automat.Get< kernel::TacticalHierarchies >().GetTop() == &team )
-            {
                 recipientsNames_[ automat.GetName() ] = &automat;
-                recipientsNames.append( automat.GetName() );
-            }
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::computeAvailableRecipients
+// Created: MMC 2011-09-19
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::ComputeAvailableRecipients( QStringList& displayRecipientsNames )
+{
+    displayRecipientsNames.clear();
+    for ( T_RecipientsNames::iterator it = recipientsNames_.begin(); it != recipientsNames_.end(); ++it )
+        if ( std::find( recipients_.begin(), recipients_.end(), it.value() ) == recipients_.end() )
+            displayRecipientsNames.append( it.key() );
 }
 
 // -----------------------------------------------------------------------------
@@ -915,6 +913,8 @@ void LogisticSupplyPushFlowDialog::OnResourcesValueChanged( int row, int col )
     QString selection;
     if( item )
         selection = item->currentText();
+    if( selection.isEmpty() && ( row + 1 == resourcesTable_->numRows() ) )
+        return;
     Q3TableItem& itemAVailable = *resourcesTable_->item( row, 1 );
     Q3TableItem& itemValue = *resourcesTable_->item( row, 2 );
     int newValue = itemValue.text().toInt();
@@ -1079,6 +1079,8 @@ void LogisticSupplyPushFlowDialog::Handle( kernel::Location_ABC& location )
         points_[ locationName ] = selectedPoint_;
         waypoints.append( locationName );
         pModel->setStringList( waypoints );
+        moveUpButton_->setEnabled( false );
+        moveDownButton_->setEnabled( false );
     }
     if( startWaypointLocation_ )
     {

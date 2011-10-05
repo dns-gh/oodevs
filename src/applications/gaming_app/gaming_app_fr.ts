@@ -1420,10 +1420,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Itinéraire</translation>
     </message>
     <message>
-        <source>Recipients</source>
-        <translation>Destinataires</translation>
-    </message>
-    <message>
         <source>Resource</source>
         <translation>Dotation</translation>
     </message>
@@ -1565,6 +1561,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Log Supply Push Flow</source>
         <translation>Ravitaillement Pousser Flux</translation>
+    </message>
+    <message>
+        <source>Add recipient</source>
+        <translation>Ajouter destinataire</translation>
+    </message>
+    <message>
+        <source>Remove recipient</source>
+        <translation>Enlever destinataire</translation>
     </message>
 </context>
 <context>
@@ -2926,19 +2930,19 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Recipients</source>
-        <translation type="unfinished">Destinataires</translation>
+        <translation>Destinataires</translation>
     </message>
     <message>
         <source>Recipient %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinataire %1</translation>
     </message>
     <message>
         <source>Resources requested/granted/convoyed</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotations demandées/accordées/convoyées</translation>
     </message>
     <message>
         <source>Current state end :</source>
-        <translation type="unfinished"></translation>
+        <translation>Fin état courant :</translation>
     </message>
 </context>
 <context>
