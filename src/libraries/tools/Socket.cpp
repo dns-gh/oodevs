@@ -63,7 +63,7 @@ void Socket::Send( unsigned long tag, const Message& message )
 // Name: Socket::Sent
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
-void Socket::Sent( const Message& message , const boost::system::error_code& error )
+void Socket::Sent( const Message&, const boost::system::error_code& error )
 {
     if( error && error != boost::asio::error::operation_aborted && error != previous_)
     {
