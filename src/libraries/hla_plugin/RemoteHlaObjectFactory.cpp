@@ -8,36 +8,34 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "NetnRemoteAggregateFactory.h"
-#include "NetnRemoteAggregate.h"
+#include "RemoteHlaObjectFactory.h"
+#include "RemoteAggregate.h"
 
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
-// Name: NetnRemoteAggregateFactory constructor
+// Name: RemoteHlaObjectFactory constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-NetnRemoteAggregateFactory::NetnRemoteAggregateFactory( const RemoteAggregateFactory_ABC& factory )
-    : factory_( factory )
+RemoteHlaObjectFactory::RemoteHlaObjectFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnRemoteAggregateFactory destructor
+// Name: RemoteHlaObjectFactory destructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-NetnRemoteAggregateFactory::~NetnRemoteAggregateFactory()
+RemoteHlaObjectFactory::~RemoteHlaObjectFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnRemoteAggregateFactory::CreateAggregate
+// Name: RemoteHlaObjectFactory::CreateAggregate
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-std::auto_ptr< HlaObject_ABC > NetnRemoteAggregateFactory::CreateAggregate( const std::string& name, RemoteAgentListener_ABC& listener ) const
+std::auto_ptr< HlaObject_ABC > RemoteHlaObjectFactory::CreateAggregate( const std::string& name, RemoteAgentListener_ABC& listener ) const
 {
-    std::auto_ptr< HlaObject_ABC > remote = factory_.CreateAggregate( name, listener );
-    return std::auto_ptr< HlaObject_ABC >( new NetnRemoteAggregate( remote ) );
+    return std::auto_ptr< HlaObject_ABC >( new RemoteAggregate( name, listener ) );
 }

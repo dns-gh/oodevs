@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef hla_plugin_MockRemoteAggregateFactory_h
-#define hla_plugin_MockRemoteAggregateFactory_h
+#ifndef hla_plugin_MockRemoteHlaObjectFactory_h
+#define hla_plugin_MockRemoteHlaObjectFactory_h
 
-#include "hla_plugin/RemoteAggregateFactory_ABC.h"
+#include "hla_plugin/RemoteHlaObjectFactory_ABC.h"
 #include "hla_plugin/HlaObject_ABC.h"
 
 namespace plugins
@@ -18,12 +18,12 @@ namespace plugins
 namespace hla
 {
 // =============================================================================
-/** @class  MockRemoteAggregateFactory
-    @brief  Mock remote aggregate factory
+/** @class  MockRemoteHlaObjectFactory
+    @brief  Mock remote hla object factory
 */
 // Created: SLI 2011-07-26
 // =============================================================================
-MOCK_BASE_CLASS( MockRemoteAggregateFactory, RemoteAggregateFactory_ABC )
+MOCK_BASE_CLASS( MockRemoteHlaObjectFactory, RemoteHlaObjectFactory_ABC )
 {
     MOCK_METHOD( CreateAggregate, 2 )
 };
@@ -31,4 +31,4 @@ MOCK_BASE_CLASS( MockRemoteAggregateFactory, RemoteAggregateFactory_ABC )
 }
 }
 
-#endif // hla_plugin_MockRemoteAggregateFactory_h
+#endif // hla_plugin_MockRemoteHlaObjectFactory_h

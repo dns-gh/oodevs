@@ -31,7 +31,7 @@ namespace hla
     class Federate_ABC;
     class ClassBuilder_ABC;
     class LocalAgentResolver_ABC;
-    class RemoteAggregateFactory_ABC;
+    class RemoteHlaObjectFactory_ABC;
     class RemoteAgentListener_ABC;
     class ContextFactory_ABC;
     class RemoteAgentListenerComposite;
@@ -50,7 +50,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
-                                   const HlaObjectFactory_ABC& factory, const RemoteAggregateFactory_ABC& remoteFactory,
+                                   const HlaObjectFactory_ABC& factory, const RemoteHlaObjectFactory_ABC& remoteFactory,
                                    const ClassBuilder_ABC& builder, const ContextFactory_ABC& identifierFactory );
     virtual ~AggregateEntityClass();
     //@}
@@ -87,7 +87,7 @@ private:
     AgentSubject_ABC& subject_;
     LocalAgentResolver_ABC& resolver_;
     const HlaObjectFactory_ABC& factory_;
-    const RemoteAggregateFactory_ABC& remoteFactory_;
+    const RemoteHlaObjectFactory_ABC& remoteFactory_;
     const ContextFactory_ABC& identifierFactory_;
     T_Entities localEntities_;
     T_Entities remoteEntities_;

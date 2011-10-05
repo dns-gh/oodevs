@@ -42,7 +42,7 @@ namespace hla
     class Federate_ABC;
     class RtiAmbassadorFactory_ABC;
     class HlaObjectFactory_ABC;
-    class RemoteAggregateFactory_ABC;
+    class RemoteHlaObjectFactory_ABC;
     class ClassBuilder_ABC;
     class LocalAgentResolver_ABC;
     class ContextFactory_ABC;
@@ -112,10 +112,10 @@ private:
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
     std::auto_ptr< Federate_ABC > federate_;
     std::auto_ptr< FederationDestructor > destructor_;
-    std::auto_ptr< HlaObjectFactory_ABC > pAggregateFactory_;
-    std::auto_ptr< HlaObjectFactory_ABC > pNetnAggregateFactory_;
-    std::auto_ptr< RemoteAggregateFactory_ABC > pRemoteAggregateFactory_;
-    std::auto_ptr< RemoteAggregateFactory_ABC > pNetnRemoteAggregateFactory_;
+    std::auto_ptr< HlaObjectFactory_ABC > pHlaObjectFactory_;
+    std::auto_ptr< HlaObjectFactory_ABC > pNetnHlaObjectFactory_;
+    std::auto_ptr< RemoteHlaObjectFactory_ABC > pRemoteHlaObjectFactory_;
+    std::auto_ptr< RemoteHlaObjectFactory_ABC > pNetnRemoteHlaObjectFactory_;
     std::auto_ptr< ClassBuilder_ABC > pClassBuilder_;
     std::auto_ptr< ClassBuilder_ABC > pNetnClassBuilder_;
     std::auto_ptr< ContextFactory_ABC > pIdentifierFactory_;

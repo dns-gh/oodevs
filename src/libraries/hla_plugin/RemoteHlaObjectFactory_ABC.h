@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_RemoteAggregateFactory_ABC_h
-#define plugins_hla_RemoteAggregateFactory_ABC_h
+#ifndef plugins_hla_RemoteHlaObjectFactory_ABC_h
+#define plugins_hla_RemoteHlaObjectFactory_ABC_h
 
 #include <boost/noncopyable.hpp>
 #include <string>
@@ -22,18 +22,18 @@ namespace hla
     class RemoteAgentListener_ABC;
 
 // =============================================================================
-/** @class  RemoteAggregateFactory_ABC
-    @brief  RemoteAggregate factory definition
+/** @class  RemoteHlaObjectFactory_ABC
+    @brief  Remote hla object factory definition
 */
 // Created: SLI 2011-07-26
 // =============================================================================
-class RemoteAggregateFactory_ABC : private boost::noncopyable
+class RemoteHlaObjectFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             RemoteAggregateFactory_ABC() {}
-    virtual ~RemoteAggregateFactory_ABC() {}
+             RemoteHlaObjectFactory_ABC() {}
+    virtual ~RemoteHlaObjectFactory_ABC() {}
     //@}
 
     //! @name Operations
@@ -45,4 +45,4 @@ public:
 }
 }
 
-#endif // __RemoteAggregateFactory_ABC_h_
+#endif // plugins_hla_RemoteHlaObjectFactory_ABC_h

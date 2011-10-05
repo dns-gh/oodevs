@@ -7,28 +7,28 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnRemoteAggregateFactory_h
-#define plugins_hla_NetnRemoteAggregateFactory_h
+#ifndef plugins_hla_NetnRemoteHlaObjectFactory_h
+#define plugins_hla_NetnRemoteHlaObjectFactory_h
 
-#include "RemoteAggregateFactory_ABC.h"
+#include "RemoteHlaObjectFactory_ABC.h"
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  NetnRemoteAggregateFactory
+/** @class  NetnRemoteHlaObjectFactory
     @brief  Netn remote aggregate factory
 */
 // Created: SLI 2011-07-26
 // =============================================================================
-class NetnRemoteAggregateFactory : public RemoteAggregateFactory_ABC
+class NetnRemoteHlaObjectFactory : public RemoteHlaObjectFactory_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NetnRemoteAggregateFactory( const RemoteAggregateFactory_ABC& factory );
-    virtual ~NetnRemoteAggregateFactory();
+    explicit NetnRemoteHlaObjectFactory( const RemoteHlaObjectFactory_ABC& factory );
+    virtual ~NetnRemoteHlaObjectFactory();
     //@}
 
     //! @name Operations
@@ -39,11 +39,11 @@ public:
 private:
     //! @name Member data
     //@{
-    const RemoteAggregateFactory_ABC& factory_;
+    const RemoteHlaObjectFactory_ABC& factory_;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_NetnRemoteAggregateFactory_h
+#endif // plugins_hla_NetnRemoteHlaObjectFactory_h

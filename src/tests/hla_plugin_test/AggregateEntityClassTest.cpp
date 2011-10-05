@@ -16,7 +16,7 @@
 #include "MockAgent.h"
 #include "MockClassBuilder.h"
 #include "MockHlaObjectFactory.h"
-#include "MockRemoteAggregateFactory.h"
+#include "MockRemoteHlaObjectFactory.h"
 #include "MockHlaObject.h"
 #include "MockLocalAgentResolver.h"
 #include "MockRemoteAgentListener.h"
@@ -51,7 +51,7 @@ namespace
         MockAgent agent;
         MockClassBuilder builder;
         MockHlaObjectFactory hlaObjectFactory;
-        MockRemoteAggregateFactory remoteFactory;
+        MockRemoteHlaObjectFactory remoteFactory;
         MockRemoteAgentListener remoteListener;
         MockLocalAgentResolver localResolver;
         MockContextFactory identifierFactory;

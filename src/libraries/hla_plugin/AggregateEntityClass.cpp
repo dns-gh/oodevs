@@ -13,7 +13,7 @@
 #include "AgentSubject_ABC.h"
 #include "Agent_ABC.h"
 #include "HlaObjectFactory_ABC.h"
-#include "RemoteAggregateFactory_ABC.h"
+#include "RemoteHlaObjectFactory_ABC.h"
 #include "RemoteAgentListener_ABC.h"
 #include "RemoteAgentListenerComposite.h"
 #include "LocalAgentResolver_ABC.h"
@@ -32,7 +32,7 @@ using namespace plugins::hla;
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
 AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
-                                            const HlaObjectFactory_ABC& factory, const RemoteAggregateFactory_ABC& remoteFactory,
+                                            const HlaObjectFactory_ABC& factory, const RemoteHlaObjectFactory_ABC& remoteFactory,
                                             const ClassBuilder_ABC& builder, const ContextFactory_ABC& identifierFactory )
     : subject_          ( subject )
     , resolver_         ( resolver )

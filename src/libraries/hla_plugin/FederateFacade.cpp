@@ -16,8 +16,8 @@
 #include "RtiAmbassadorFactory_ABC.h"
 #include "HlaObjectFactory.h"
 #include "NetnHlaObjectFactory.h"
-#include "RemoteAggregateFactory.h"
-#include "NetnRemoteAggregateFactory.h"
+#include "RemoteHlaObjectFactory.h"
+#include "NetnRemoteHlaObjectFactory.h"
 #include "ClassBuilder.h"
 #include "NetnClassBuilder.h"
 #include "ContextFactory.h"
@@ -92,19 +92,19 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , ambassador_                 ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
     , federate_                   ( CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
     , destructor_                 ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
-    , pAggregateFactory_          ( new HlaObjectFactory() )
-    , pNetnAggregateFactory_      ( new NetnHlaObjectFactory( *pAggregateFactory_ ) )
-    , pRemoteAggregateFactory_    ( new RemoteAggregateFactory() )
-    , pNetnRemoteAggregateFactory_( new NetnRemoteAggregateFactory( *pRemoteAggregateFactory_ ) )
+    , pHlaObjectFactory_          ( new HlaObjectFactory() )
+    , pNetnHlaObjectFactory_      ( new NetnHlaObjectFactory( *pHlaObjectFactory_ ) )
+    , pRemoteHlaObjectFactory_    ( new RemoteHlaObjectFactory() )
+    , pNetnRemoteHlaObjectFactory_( new NetnRemoteHlaObjectFactory( *pRemoteHlaObjectFactory_ ) )
     , pClassBuilder_              ( new ClassBuilder() )
     , pNetnClassBuilder_          ( new NetnClassBuilder( *pClassBuilder_ ) )
     , pIdentifierFactory_         ( new ContextFactory() )
     , agentClass_                 ( new AggregateEntityClass( *federate_, subject, resolver,
-                                                              xis.attribute< bool >( "netn", true ) ? *pNetnAggregateFactory_ : *pAggregateFactory_,
-                                                              xis.attribute< bool >( "netn", true ) ? *pNetnRemoteAggregateFactory_ : *pRemoteAggregateFactory_,
+                                                              xis.attribute< bool >( "netn", true ) ? *pNetnHlaObjectFactory_ : *pHlaObjectFactory_,
+                                                              xis.attribute< bool >( "netn", true ) ? *pNetnRemoteHlaObjectFactory_ : *pRemoteHlaObjectFactory_,
                                                               xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_, *pIdentifierFactory_ ) )
     , surfaceVesselClass_         ( new SurfaceVesselClass( *federate_, subject, resolver,
-                                                            xis.attribute< bool >( "netn", true ) ? *pNetnAggregateFactory_ : *pAggregateFactory_,
+                                                            xis.attribute< bool >( "netn", true ) ? *pNetnHlaObjectFactory_ : *pHlaObjectFactory_,
                                                             xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_, *pIdentifierFactory_ ) )
 {
     CONNECT( controller, *this, control_end_tick );

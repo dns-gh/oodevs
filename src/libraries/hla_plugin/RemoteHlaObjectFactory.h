@@ -7,28 +7,28 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_RemoteAggregateFactory_h
-#define plugins_hla_RemoteAggregateFactory_h
+#ifndef plugins_hla_RemoteHlaObjectFactory_h
+#define plugins_hla_RemoteHlaObjectFactory_h
 
-#include "RemoteAggregateFactory_ABC.h"
+#include "RemoteHlaObjectFactory_ABC.h"
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  RemoteAggregateFactory
-    @brief  Remote aggregate factory
+/** @class  RemoteHlaObjectFactory
+    @brief  Remote hla object factory
 */
 // Created: SLI 2011-07-26
 // =============================================================================
-class RemoteAggregateFactory : public RemoteAggregateFactory_ABC
+class RemoteHlaObjectFactory : public RemoteHlaObjectFactory_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             RemoteAggregateFactory();
-    virtual ~RemoteAggregateFactory();
+             RemoteHlaObjectFactory();
+    virtual ~RemoteHlaObjectFactory();
     //@}
 
     //! @name Operations
@@ -40,4 +40,4 @@ public:
 }
 }
 
-#endif // plugins_hla_RemoteAggregateFactory_h
+#endif // plugins_hla_RemoteHlaObjectFactory_h

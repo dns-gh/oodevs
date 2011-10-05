@@ -119,14 +119,14 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnHlaObjectFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregateFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteHlaObjectFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregate.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteHlaObjectFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SilentEntity.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SimulationFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Spatial.cpp" />
@@ -190,7 +190,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnHlaObjectFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregateFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteHlaObjectFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />
@@ -200,9 +200,9 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentSubject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregate.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateListener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteHlaObjectFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteHlaObjectFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ResponseObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SilentEntity.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SimulationFacade.h" />

@@ -162,11 +162,13 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnClassBuilderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteSurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnSurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\Omt13StringTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentControllerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentResolverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAggregateTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteSurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprDeserializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprSerializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SilentEntityTest.cpp" />
