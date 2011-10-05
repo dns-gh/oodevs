@@ -299,10 +299,10 @@ void ModelConsistencyChecker::CheckProfileUniqueness()
 // -----------------------------------------------------------------------------
 void ModelConsistencyChecker::CheckProfileInitialization()
 {
-    Iterator< const Agent_ABC& > it = model_.GetAgentResolver().CreateIterator();
+    Iterator< const Automat_ABC& > it = model_.GetAutomatResolver().CreateIterator();
     while( it.HasMoreElements() )
     {
-        const Agent_ABC& agent = it.NextElement();
+        const Automat_ABC& agent = it.NextElement(); 
         if( filters_ & eProfileUnwritable && !model_.profiles_.IsWriteable( agent ) )
             AddError( eProfileUnwritable, &agent );
         if( filters_ & eProfileUnreadable && !model_.profiles_.IsReadable( agent ) )
