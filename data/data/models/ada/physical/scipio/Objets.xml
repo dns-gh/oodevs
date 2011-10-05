@@ -42,23 +42,6 @@
     <population-filter density="0.1"/>
     <time-limited/>
   </object>
-  <object geometry="polygon" name="zone minee par dispersion" symbol="G*MPOFA---****X" type="mined area (scattered)">
-    <activable/>
-    <attrition category="mine classique"/>
-    <avoidable distance="500"/>
-    <bypassable bypass-speed="10"/>
-    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
-      <buildable>
-        <resources>
-          <resource count="10" name="mine classique"/>
-        </resources>
-      </buildable>
-    </constructor>
-    <interact-with-enemy/>
-    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
-    <population-filter density="0.1"/>
-    <time-limited/>
-  </object>
   <object geometry="polygon" name="fosse anti char" symbol="G*MPOADC--****X" type="anti tank obstacle">
     <attrition category="mine classique"/>
     <avoidable distance="500"/>
@@ -403,7 +386,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
-  <object geometry="polygon" name="bloc urbain" symbol="" type="urban block">
+  <object geometry="polygon" name="bloc urbain" symbol="G*MPOGZ---****X" type="urban block">
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable/>
     </constructor>
@@ -418,7 +401,7 @@
     <population-filter density="0"/>
     <workable max-animator="10"/>
   </object>
-  <object geometry="point" name="incendie" point-size="50" symbol="O*VPA-----*****" type="fire">
+  <object geometry="point" name="incendie" symbol="O*VPA-----*****" type="fire">
     <burn/>
   </object>
   <object geometry="polygon" name="mouvement population" symbol="" type="population moving"/>
@@ -428,48 +411,7 @@
     <underground-network/>
     <universal/>
   </object>
-  <object geometry="point" name="mines" symbol="" type="mined (scattered)">
-    <activable/>
-    <attrition category="mine classique"/>
-    <avoidable distance="250"/>
-    <bypassable bypass-speed="10"/>
-    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
-      <buildable>
-        <resources>
-          <resource count="10" name="mine classique"/>
-        </resources>
-      </buildable>
-    </constructor>
-    <heuristic>
-      <terrain type="secondary road" value="3"/>
-      <terrain type="main road" value="10"/>
-      <terrain type="highway" value="2"/>
-      <terrain type="crossroad" value="5"/>
-      <terrain type="bridge" value="8"/>
-      <terrain type="railroad" value="7"/>
-    </heuristic>
-    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
-    <population-filter density="0.1"/>
-  </object>
-  <object geometry="polygon" name="controle de zone" symbol="" type="controle de zone"/>
-  <object geometry="polygon" name="zone minee lineaire retardee" symbol="G*MPOFA---****X" type="zone minee lineaire retardee">
-    <activable/>
-    <attrition category="mine classique"/>
-    <avoidable distance="500"/>
-    <bypassable bypass-speed="10"/>
-    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
-      <buildable>
-        <resources>
-          <resource count="10" name="mine classique"/>
-        </resources>
-      </buildable>
-    </constructor>
-    <delay/>
-    <interact-with-enemy/>
-    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
-    <population-filter density="0.1"/>
-    <time-limited/>
-  </object>
+  <object geometry="polygon" name="controle de zone" symbol="G*MPOGZ---****X" type="controle de zone"/>
   <object geometry="point" name="noeud de reseau de ressource" symbol="G*SPPR----****X" type="ressource network element">
     <constructor default-consumption-mode="ArretMoteurAllume" unit-type="raw"/>
     <resources/>
@@ -481,31 +423,31 @@
     <underground-network/>
     <universal/>
   </object>
-  <object geometry="line" name="autoroute" symbol="G*SPLRM---****X" type="motorway">
+  <object geometry="line" name="autoroute" symbol="Route" type="motorway">
     <bridging type="highway"/>
     <universal/>
   </object>
-  <object geometry="line" name="chemin" symbol="G*SPLRM---****X" type="small road">
+  <object geometry="line" name="chemin" symbol="Route" type="small road">
     <bridging type="country road"/>
     <universal/>
   </object>
-  <object geometry="line" name="route departementale" symbol="G*SPLRM---****X" type="medium road">
+  <object geometry="line" name="route departementale" symbol="Route" type="medium road">
     <bridging type="secondary road"/>
     <universal/>
   </object>
-  <object geometry="line" name="route nationale" symbol="G*SPLRM---****X" type="large road">
+  <object geometry="line" name="route nationale" symbol="Route" type="large road">
     <bridging type="main road"/>
     <universal/>
   </object>
-  <object geometry="polygon" name="terrain mouille" symbol="" type="wet terrain">
+  <object geometry="polygon" name="terrain mouille" symbol="G*MPOGZ---****X" type="wet terrain">
     <mobility default-speed="80" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <universal/>
   </object>
-  <object geometry="polygon" name="terrain enneige" symbol="" type="snowed terrain">
+  <object geometry="polygon" name="terrain enneige" symbol="G*MPOGZ---****X" type="snowed terrain">
     <mobility default-speed="50" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <universal/>
   </object>
-  <object geometry="polygon" name="terrain gele" symbol="" type="iced terrain">
+  <object geometry="polygon" name="terrain gele" symbol="G*MPOGZ---****X" type="iced terrain">
     <mobility default-speed="30" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <universal/>
   </object>
@@ -513,4 +455,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="3898784694" -->
+<!-- signature="1042663395" -->
