@@ -570,5 +570,6 @@
   <report category="operational" id="400" message="Etat désengagé"/>
   <report category="operational" id="401" message="Unité déjà engagée"/>
   <report category="operational" id="402" message="Unité déjà désengagée"/>
+  <report category="operational" id="403" message="Aucune unité ne peut effectuer la mission principale"/>
 </reports>
-<!-- signature="3993758624" -->
+<!-- signature="3487670486" -->

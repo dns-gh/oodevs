@@ -570,5 +570,6 @@
   <report category="operational" id="400" message="Disengaged"/>
   <report category="operational" id="401" message="Already engaged"/>
   <report category="operational" id="402" message="Already disengaged"/>
+  <report category="operational" id="403" message="No platoon can do the main effect"/>
 </reports>
-<!-- signature="1298836406" -->
+<!-- signature="1455386328" -->

@@ -540,6 +540,11 @@ public:
 		eRC_TheTargetCannotBeReconnoitre,
 		eRC_TargetIsNotAccessible,
 		eRC_NoKeyPositionsFoundInArea,
+		eRC_Engaged,
+		eRC_Disengaged,
+		eRC_AlreadyEngaged,
+		eRC_AlreadyDisengaged,
+		eRC_NoPEInAutomat,
         eLast
     };
     //@}
