@@ -994,10 +994,6 @@ Voulez-vous le supprimer?</translation>
 </context>
 <context>
     <name>gui::LogisticListView</name>
-    <message id="false">
-        <source>Units</source>
-        <translation>Unités</translation>
-    </message>
     <message>
         <source>Unsupported units</source>
         <translation>Unités non soutenues</translation>
