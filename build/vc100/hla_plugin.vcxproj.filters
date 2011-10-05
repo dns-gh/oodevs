@@ -199,6 +199,12 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp">
       <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteSurfaceVessel.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -446,6 +452,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaFactories.h">
       <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteSurfaceVessel.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.h">
+      <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
