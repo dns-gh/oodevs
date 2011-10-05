@@ -5735,8 +5735,13 @@
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION LOGISTIQUE Preparer bascule"/>
+        <mission name="PION LOGISTIQUE Preparer bascule">
+          <fragorder name="Modifier Regime Travail Maintenance"/>
+          <fragorder name="Modifier Priorites Reparations"/>
+          <fragorder name="Modifier Priorites Tactiques Reparations"/>
+        </mission>
         <mission name="PION LOGISTIQUE Reparer">
+          <fragorder name="Modifier Regime Travail Maintenance"/>
           <fragorder name="Modifier Priorites Reparations"/>
           <fragorder name="Modifier Priorites Tactiques Reparations"/>
         </mission>
@@ -5776,10 +5781,18 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Se Deployer">
-          <fragorder name="Modifier Priorites Blesses"/>
-          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Regime Travail Maintenance"/>
+          <fragorder name="Modifier Priorites Reparations"/>
+          <fragorder name="Modifier Priorites Tactiques Reparations"/>
+          <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
+          <fragorder name="Pion Transferer Remorqueurs"/>
+          <fragorder name="Pion Renforcer En Remorqueurs"/>
         </mission>
-        <mission name="PION LOGISTIQUE Preparer bascule"/>
+        <mission name="PION LOGISTIQUE Preparer bascule">
+          <fragorder name="Modifier Regime Travail Maintenance"/>
+          <fragorder name="Modifier Priorites Reparations"/>
+          <fragorder name="Modifier Priorites Tactiques Reparations"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -5927,7 +5940,20 @@
         <mission name="PION COMMUNES Renforcer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION LOGISTIQUE Preparer bascule"/>
+        <mission name="PION LOGISTIQUE Preparer bascule">
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Transferer VSRAM"/>
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
+        <mission name="PION LOGISTIQUE Se Deployer">
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Transferer VSRAM"/>
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -5961,8 +5987,15 @@
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION LOGISTIQUE Trier Blesses"/>
+        <mission name="PION LOGISTIQUE Trier Blesses">
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
         <mission name="PION LOGISTIQUE Traiter Blesses">
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
+        <mission name="PION LOGISTIQUE Preparer bascule">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
           <fragorder name="Modifier Priorites Blesses"/>
         </mission>
@@ -5999,7 +6032,14 @@
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION LOGISTIQUE Prendre en Compte Reactions Mentales"/>
+        <mission name="PION LOGISTIQUE Prendre en Compte Reactions Mentales">
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
+        <mission name="PION LOGISTIQUE Preparer bascule">
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -6037,6 +6077,10 @@
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
           <fragorder name="Modifier Priorites Blesses"/>
         </mission>
+        <mission name="PION LOGISTIQUE Preparer bascule">
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -6070,7 +6114,14 @@
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION LOGISTIQUE Decontaminer Blesses"/>
+        <mission name="PION LOGISTIQUE Decontaminer Blesses">
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
+        <mission name="PION LOGISTIQUE Preparer bascule">
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -6104,7 +6155,14 @@
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION LOGISTIQUE Trier et Traiter Blesses"/>
+        <mission name="PION LOGISTIQUE Trier et Traiter Blesses">
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
+        <mission name="PION LOGISTIQUE Preparer bascule">
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -6137,8 +6195,11 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Se Deployer">
-          <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Modifier Regime Travail Maintenance"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Tactiques Reparations"/>
+          <fragorder name="Modifier Priorites Reparations"/>
+          <fragorder name="Modifier Priorites Blesses"/>
         </mission>
         <mission name="PION Produire et alimenter"/>
       </missions>
@@ -9865,4 +9926,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1782125950" -->
+<!-- signature="3687446282" -->
