@@ -61,9 +61,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AutomatDisengagerTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\ClassBuilderTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\ContextHandlerTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,9 +71,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnClassBuilderTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp">
@@ -125,6 +119,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteSurfaceVesselTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\ClassBuildersTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

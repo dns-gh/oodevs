@@ -38,20 +38,21 @@ namespace
     public:
         Fixture()
             : factory         ( new ::hla::MockObjectIdentifierFactory() ) // $$$$ _RC_ SLI 2011-06-10: wtf hla library?
+            , builder         ( new MockClassBuilder() )
             , hlaObjectFactory( new MockHlaObjectFactory() )
             , remoteFactory   ( new MockRemoteHlaObjectFactory() )
             , listener        ( 0 )
             , hlaClass        ( 0 )
         {
             MOCK_EXPECT( subject, Register ).once().with( mock::retrieve( listener ) );
-            MOCK_EXPECT( builder, BuildSurfaceVessel ).once().with( mock::any, mock::retrieve( hlaClass ), true, true );
+            MOCK_EXPECT( builder, Build ).once().with( mock::any, mock::retrieve( hlaClass ), true, true );
             MOCK_EXPECT( identifierFactory, Create ).returns( 42 );
         }
         MockFederate federate;
         MockAgentSubject subject;
         ::hla::MockObjectIdentifierFactory* factory;
         MockAgent agent;
-        MockClassBuilder builder;
+        MockClassBuilder* builder;
         MockHlaObjectFactory* hlaObjectFactory;
         MockRemoteHlaObjectFactory* remoteFactory;
         MockLocalAgentResolver localResolver;
@@ -64,8 +65,10 @@ namespace
     {
     public:
         RegisteredFixture()
-            : surfaceVessel( federate, subject, localResolver, std::auto_ptr< HlaObjectFactory_ABC >( hlaObjectFactory ),
-                             std::auto_ptr< RemoteHlaObjectFactory_ABC >( remoteFactory ), builder, identifierFactory )
+            : surfaceVessel( federate, subject, localResolver,
+                             std::auto_ptr< HlaObjectFactory_ABC >( hlaObjectFactory ),
+                             std::auto_ptr< RemoteHlaObjectFactory_ABC >( remoteFactory ),
+                             std::auto_ptr< ClassBuilder_ABC >( builder ), identifierFactory )
         {
             BOOST_REQUIRE( listener );
             BOOST_REQUIRE( hlaClass );

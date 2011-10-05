@@ -115,13 +115,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp">
       <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.cpp">
-      <Filter>Source Files\Classes\netn</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntity.cpp">
-      <Filter>Source Files\Classes\rpr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\ClassBuilder.cpp">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.cpp">
@@ -309,13 +303,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h">
       <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.h">
-      <Filter>Source Files\Classes\netn</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateEntity.h">
-      <Filter>Source Files\Classes\rpr</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder.h">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h">
@@ -458,6 +446,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.h">
       <Filter>Source Files\Classes\netn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilders.h">
+      <Filter>Source Files\Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

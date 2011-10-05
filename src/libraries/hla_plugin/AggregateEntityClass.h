@@ -51,7 +51,7 @@ public:
     //@{
              AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
                                    std::auto_ptr< HlaObjectFactory_ABC > factory, std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory,
-                                   const ClassBuilder_ABC& builder, const ContextFactory_ABC& identifierFactory );
+                                   std::auto_ptr< ClassBuilder_ABC > builder, const ContextFactory_ABC& identifierFactory );
     virtual ~AggregateEntityClass();
     //@}
 

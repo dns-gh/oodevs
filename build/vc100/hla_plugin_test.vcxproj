@@ -140,7 +140,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateMarkingTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AutomatCreaterTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AutomatDisengagerTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\ClassBuilderTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\ClassBuildersTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\ContextHandlerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\DimensionTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\DirectFireReceiverTest.cpp" />
@@ -160,7 +160,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\IndirectFireSenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\MunitionDetonationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnClassBuilderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteSurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnSurfaceVesselTest.cpp" />

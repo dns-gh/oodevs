@@ -41,8 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void BuildAggregate( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const = 0;
-    virtual void BuildSurfaceVessel( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const = 0;
+    virtual void Build( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const = 0;
     //@}
 };
 

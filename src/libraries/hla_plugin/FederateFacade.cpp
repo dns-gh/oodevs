@@ -15,8 +15,7 @@
 #include "FederateAmbassadorFactory_ABC.h"
 #include "RtiAmbassadorFactory_ABC.h"
 #include "HlaFactories.h"
-#include "ClassBuilder.h"
-#include "NetnClassBuilder.h"
+#include "ClassBuilders.h"
 #include "ContextFactory.h"
 #include "AggregateEntity.h"
 #include "NetnAggregate.h"
@@ -73,6 +72,13 @@ namespace
             return std::auto_ptr< RemoteHlaObjectFactory_ABC >( new NetnRemoteHlaObjectFactory< Netn >( result ) );
         return result;
     }
+    template< typename Rpr, typename Netn >
+    std::auto_ptr< ClassBuilder_ABC > CreateClassBuilder( xml::xisubstream xis )
+    {
+        if( xis.attribute< bool >( "netn", true ) )
+            return std::auto_ptr< ClassBuilder_ABC >( new Netn() );
+        return std::auto_ptr< ClassBuilder_ABC >( new Rpr() );
+    }
 }
 
 struct FederateFacade::FederationDestructor : private boost::noncopyable
@@ -108,18 +114,22 @@ private:
 FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                 AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
                                 const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory )
-    : timeFactory_                ( new ::hla::SimpleTimeFactory() )
-    , intervalFactory_            ( new ::hla::SimpleTimeIntervalFactory() )
-    , ambassador_                 ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
-    , federate_                   ( CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
-    , destructor_                 ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
-    , pClassBuilder_              ( new ClassBuilder() )
-    , pNetnClassBuilder_          ( new NetnClassBuilder( *pClassBuilder_ ) )
-    , pIdentifierFactory_         ( new ContextFactory() )
-    , agentClass_                 ( new AggregateEntityClass( *federate_, subject, resolver, CreateFactory< AggregateEntity, NetnAggregate >( xis ), CreateRemoteFactory< RemoteAggregate, NetnRemoteAggregate >( xis ),
-                                                              xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_, *pIdentifierFactory_ ) )
-    , surfaceVesselClass_         ( new SurfaceVesselClass( *federate_, subject, resolver, CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis ), CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( xis ),
-                                                            xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_, *pIdentifierFactory_ ) )
+    : timeFactory_       ( new ::hla::SimpleTimeFactory() )
+    , intervalFactory_   ( new ::hla::SimpleTimeIntervalFactory() )
+    , ambassador_        ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
+    , federate_          ( CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
+    , destructor_        ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
+    , pIdentifierFactory_( new ContextFactory() )
+    , agentClass_        ( new AggregateEntityClass( *federate_, subject, resolver,
+                                                     CreateFactory< AggregateEntity, NetnAggregate >( xis ),
+                                                     CreateRemoteFactory< RemoteAggregate, NetnRemoteAggregate >( xis ),
+                                                     CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( xis ),
+                                                     *pIdentifierFactory_ ) )
+    , surfaceVesselClass_( new SurfaceVesselClass( *federate_, subject, resolver,
+                                                   CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis ),
+                                                   CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( xis ),
+                                                   CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( xis ),
+                                                   *pIdentifierFactory_ ) )
 {
     CONNECT( controller, *this, control_end_tick );
 }

@@ -32,7 +32,7 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
                                             std::auto_ptr< HlaObjectFactory_ABC > factory, std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory,
-                                            const ClassBuilder_ABC& builder, const ContextFactory_ABC& identifierFactory )
+                                            std::auto_ptr< ClassBuilder_ABC > builder, const ContextFactory_ABC& identifierFactory )
     : subject_          ( subject )
     , resolver_         ( resolver )
     , factory_          ( factory )
@@ -41,7 +41,7 @@ AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject
     , pListeners_       ( new RemoteAgentListenerComposite() )
     , hlaClass_         ( new ::hla::Class< HlaObject_ABC >( *this, true ) )
 {
-    builder.BuildAggregate( federate, *hlaClass_, true, true );
+    builder->Build( federate, *hlaClass_, true, true );
     subject_.Register( *this );
 }
 
