@@ -142,7 +142,7 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
 // Name: PHY_RoleAction_DirectFiring::FirePion
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, PHY_DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
+int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, PHY_DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, bool mustReport, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
 {
     MIL_Agent_ABC* pTarget = pEnemy && pEnemy->IsValid() ? &pEnemy->GetAgentKnown() : 0;
     if( !pTarget )
@@ -164,8 +164,8 @@ int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agen
             return eTemporarilyBlocked;
         return eNoCapacity;
     }
-    pion_.NotifyAttacking ( *pTarget );
-    pTarget->NotifyAttackedBy( pion_  );
+    pion_.NotifyAttacking ( *pTarget, mustReport );
+    pTarget->NotifyAttackedBy( pion_, mustReport );
     // Targets
     const bool bFireOnlyOnMajorComposantes = ( nComposanteFiredType == PHY_DirectFireData::eFireOnlyOnMajorComposantes );
     std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > componentAbleToBeFiredComputer = pion_.GetAlgorithms().composantesAbleToBeFiredComputerFactory_->Create( bFireOnlyOnMajorComposantes );
@@ -184,10 +184,10 @@ int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agen
 // Name: PHY_RoleAction_DirectFiring::FirePionSuspended
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_DirectFiring::FirePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy )
+void PHY_RoleAction_DirectFiring::FirePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, bool mustReport )
 {
     if( pEnemy && pEnemy->IsValid() )
-        pEnemy->GetAgentKnown().NotifyAttackedBy( pion_ );
+        pEnemy->GetAgentKnown().NotifyAttackedBy( pion_, mustReport );
 }
 
 // -----------------------------------------------------------------------------

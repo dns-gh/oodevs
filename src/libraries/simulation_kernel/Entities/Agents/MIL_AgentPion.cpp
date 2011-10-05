@@ -1080,16 +1080,19 @@ void MIL_AgentPion::ChangeSuperior( MIL_Automate& newAutomate )
 // Name: MIL_AgentPion::NotifyAttackedBy
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::NotifyAttackedBy( MIL_AgentPion& attacker )
+void MIL_AgentPion::NotifyAttackedBy( MIL_AgentPion& attacker, bool mustReport )
 {
-    if( attacker.GetType().IsRefugee() )
-        MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByCivilian );
-    else if( GetArmy().IsNeutral( attacker.GetArmy() ) == eTristate_True )
-        MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByNeutralSide );
-    else if( GetArmy().IsAFriend( attacker.GetArmy() ) == eTristate_True )
-        MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByFriendSide );
-    else if( GetArmy().IsAnEnemy( attacker.GetArmy() ) == eTristate_True )
-        MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByEnemySide );
+    if( mustReport )
+    {
+        if( attacker.GetType().IsRefugee() )
+            MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByCivilian );
+        else if( GetArmy().IsNeutral( attacker.GetArmy() ) == eTristate_True )
+            MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByNeutralSide );
+        else if( GetArmy().IsAFriend( attacker.GetArmy() ) == eTristate_True )
+            MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByFriendSide );
+        else if( GetArmy().IsAnEnemy( attacker.GetArmy() ) == eTristate_True )
+            MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByEnemySide );
+    }
     GetKnowledge().GetKsFire().NotifyAttackedBy( attacker );
 }
 
@@ -1107,8 +1110,10 @@ void MIL_AgentPion::NotifyAttackedBy( MIL_Population& attacker )
 // Name: MIL_AgentPion::NotifyAttacking
 // Created: NLD 2005-03-30
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::NotifyAttacking( MIL_Agent_ABC& target ) const
+void MIL_AgentPion::NotifyAttacking( MIL_Agent_ABC& target, bool mustReport ) const
 {
+    if( !mustReport )
+        return;
     if( target.GetType().IsRefugee() )
         MIL_Report::PostEvent( *this, MIL_Report::eReport_FireOnCivilian );
     else if( GetArmy().IsNeutral( target.GetArmy() ) == eTristate_True )

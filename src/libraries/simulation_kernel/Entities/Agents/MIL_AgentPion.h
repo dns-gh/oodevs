@@ -156,9 +156,9 @@ public:
     //! @name Misc operations
     //@{
     virtual void MagicMove( const MT_Vector2D& vNewPos );
-    void NotifyAttacking( MIL_Agent_ABC& target ) const;
+    void NotifyAttacking( MIL_Agent_ABC& target, bool mustReport ) const;
     void NotifyAttacking( MIL_Population& target ) const;
-    virtual void NotifyAttackedBy( MIL_AgentPion& pion );
+    virtual void NotifyAttackedBy( MIL_AgentPion& pion, bool mustReport );
     virtual void NotifyAttackedBy( MIL_Population& population );
     void ChangeSuperior( MIL_Automate& newAutomate );
 

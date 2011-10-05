@@ -81,7 +81,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyAttackedBy( MIL_AgentPion& pion ) = 0;
+    virtual void NotifyAttackedBy( MIL_AgentPion& pion, bool mustReport ) = 0;
     virtual void NotifyAttackedBy( MIL_Population& population ) = 0;
     virtual void MagicMove( const MT_Vector2D& ) = 0;
     virtual double Distance( const MIL_Agent_ABC& pion ) const = 0;

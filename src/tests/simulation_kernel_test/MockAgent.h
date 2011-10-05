@@ -49,7 +49,7 @@ MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
 
     MOCK_METHOD( ChangeSuperior, 1 );
 
-    MOCK_METHOD_EXT( NotifyAttackedBy, 1, void( MIL_AgentPion& ), NotifyAttackedByAgent );
+    MOCK_METHOD_EXT( NotifyAttackedBy, 2, void( MIL_AgentPion&, bool ), NotifyAttackedByAgent );
     MOCK_METHOD_EXT( NotifyAttackedBy, 1, void( MIL_Population& ), NotifyAttackedByPopulation );
 
     MOCK_METHOD( MagicMove, 1 );

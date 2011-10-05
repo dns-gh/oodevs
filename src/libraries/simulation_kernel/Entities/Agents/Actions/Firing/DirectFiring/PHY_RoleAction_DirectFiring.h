@@ -59,8 +59,8 @@ public:
     int  FirePopulation         ( unsigned int nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* dotationClass );
     void FirePopulationSuspended( unsigned int nTargetKnowledgeID );
 
-    int  FirePion               ( boost::shared_ptr< DEC_Knowledge_Agent > pAgent, PHY_DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
-    void FirePionSuspended      ( boost::shared_ptr< DEC_Knowledge_Agent > pAgent );
+    int  FirePion               ( boost::shared_ptr< DEC_Knowledge_Agent > pAgent, PHY_DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, bool mustReport, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
+    void FirePionSuspended      ( boost::shared_ptr< DEC_Knowledge_Agent > pAgent, bool mustReport );
     int  IlluminatePion         ( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
     void IlluminatePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
 

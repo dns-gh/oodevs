@@ -49,6 +49,7 @@ private:
     const firing::PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType_;
     const PHY_AmmoDotationClass* pAmmoDotationClass_;
     PHY_FireResults_Pion* pFireResult_;
+    bool mustReport_;
 };
 
 #endif // __PHY_ActionDirectFirePion_ABC_h_

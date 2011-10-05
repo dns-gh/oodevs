@@ -77,5 +77,5 @@ void PHY_ActionIllumination::Execute()
 // -----------------------------------------------------------------------------
 void PHY_ActionIllumination::ExecuteSuspended()
 {
-    role_.FirePionSuspended( pEnemy_ );
+    role_.FirePionSuspended( pEnemy_, false );
 }

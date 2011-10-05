@@ -33,6 +33,7 @@ PHY_ActionDirectFirePion_ABC::PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion,
     , nComposanteFiredType_       ( nComposanteFiredType  )
     , pAmmoDotationClass_         ( 0 )
     , pFireResult_                ( 0 )
+    , mustReport_                 ( true )
 {
     if( ammoDotationClass != -1 ) // $$$$ LDC FIXME Varargs hidden here...
        pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( ammoDotationClass );
@@ -71,11 +72,12 @@ void PHY_ActionDirectFirePion_ABC::StopAction()
 void PHY_ActionDirectFirePion_ABC::Execute()
 {
     bool bMustRefResult = ( pFireResult_ == 0 );
-    int nResult = role_.FirePion( pEnemy_, nFiringMode_, rPercentageComposantesToUse_, nComposanteFiringType_, nComposanteFiredType_, pFireResult_, pAmmoDotationClass_ );
+    int nResult = role_.FirePion( pEnemy_, nFiringMode_, rPercentageComposantesToUse_, nComposanteFiringType_, nComposanteFiredType_, pFireResult_, mustReport_, pAmmoDotationClass_ );
     Callback( nResult );
 
     if( pFireResult_ && bMustRefResult )
         pFireResult_->IncRef();
+    mustReport_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -84,5 +86,6 @@ void PHY_ActionDirectFirePion_ABC::Execute()
 // -----------------------------------------------------------------------------
 void PHY_ActionDirectFirePion_ABC::ExecuteSuspended()
 {
-    role_.FirePionSuspended( pEnemy_ );
+    role_.FirePionSuspended( pEnemy_, !mustReport_ );
+    mustReport_ = true;
 }
