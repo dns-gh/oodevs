@@ -10,6 +10,7 @@
 #include "tools_test_pch.h"
 #include "tools/ServerNetworker.h"
 #include "tools/ClientNetworker.h"
+#include <boost/lexical_cast.hpp>
 
 namespace
 {
@@ -32,7 +33,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( client_networker_destroyed_during_connection_does_not_deadlock )
 {
-    tools::ServerNetworker server( 7777 );
+    tools::ServerNetworker server( PORT );
     server.AllowConnections();
-    ClientNetworker client( "localhost:7777" );
+    ClientNetworker client( "localhost:" + boost::lexical_cast< std::string >( PORT ) );
 }
