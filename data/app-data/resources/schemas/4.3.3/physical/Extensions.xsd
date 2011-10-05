@@ -73,12 +73,6 @@
     <xs:attribute name="dictionary-kind" type="LabelKind" use="optional"/>
     <xs:attribute name="dictionary-language" type="xs:language" use="optional"/>
   </xs:complexType>
-  <xs:simpleType name="LabelKind">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="short"/>
-      <xs:enumeration value="long"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="ExtendableList">
     <xs:restriction base="xs:string">
       <xs:pattern value="(party|formation|automat|unit|crowd|population)(;(party|formation|automat|unit|crowd|population))*"/>

@@ -5072,11 +5072,6 @@
         <label language="fr" text="Type SIOC"/>
       </labels>
     </attribute>
-    <attribute extends="unit;formation" name="PC" type="boolean">
-      <labels>
-        <label language="fr" text="PC"/>
-      </labels>
-    </attribute>
     <attribute dictionary="T_SIC_TypePC" dictionary-kind="short" extends="unit;formation" name="TypePC" type="dictionary">
       <labels>
         <label language="fr" text="Type PC"/>
@@ -5144,4 +5139,4 @@
     </attribute>
   </profile-attributes>
 </extensions>
-<!-- signature="4030084271" -->
+<!-- signature="0365717110" -->
