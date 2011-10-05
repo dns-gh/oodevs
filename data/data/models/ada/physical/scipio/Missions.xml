@@ -360,7 +360,7 @@
       <parameter dia-name="automatePourBascule_" name="Automate pour bascule" optional="false" type="Automat"/>
       <parameter dia-name="resterSurPlace_" name="Rester sur place" optional="false" type="Boolean"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_LOG_AppuyerMouvement" dia-type="T_Mission_Pion_LOG_AppuyerMouvement" id="121" name="PION LOG Appuyer Mouvement" package="support">
+    <mission dia-behavior="MIS_Pion_LOG_AppuyerMouvement" dia-type="T_Mission_Pion_LOG_AppuyerMouvement" id="121" name="PION LOG Appuyer Mouvement" package="move">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -3203,6 +3203,18 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="zone" name="Zone" optional="false" type="Polygon"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.circu.tasks.AppuyerMouvement" dia-type="france.military.company.combat.support.circu.tasks.AppuyerMouvement" id="28752" mrt-dia-behavior="france.military.company.combat.support.circu.tasks.AppuyerMouvement" name="AUTOMATE CIRCULATION Appuyer Mouvement" package="move">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Unites ou automate a appuyer" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Automat"/>
+          <parameter type="Agent"/>
+        </choice>
+      </parameter>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="335" name="FOULES Deteriorer" package="attack">
@@ -3436,4 +3448,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Desengager" id="400" name="Pion Desengager"/>
   </fragorders>
 </missions>
-<!-- signature="4177776775" -->
+<!-- signature="2255808084" -->

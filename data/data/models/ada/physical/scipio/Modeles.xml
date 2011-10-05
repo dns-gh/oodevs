@@ -7595,6 +7595,7 @@
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE CIRCULATION Appuyer Franchissement Sur Zone"/>
+        <mission name="AUTOMATE CIRCULATION Appuyer Mouvement"/>
         <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
@@ -9926,4 +9927,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3687446282" -->
+<!-- signature="0768950879" -->
