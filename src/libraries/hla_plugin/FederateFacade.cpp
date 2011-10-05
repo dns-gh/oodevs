@@ -102,6 +102,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
                                                               xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_, *pIdentifierFactory_ ) )
     , surfaceVesselClass_         ( new SurfaceVesselClass( *federate_, subject, resolver,
                                                             xis.attribute< bool >( "netn", true ) ? *pNetnHlaObjectFactory_ : *pHlaObjectFactory_,
+                                                            xis.attribute< bool >( "netn", true ) ? *pNetnRemoteHlaObjectFactory_ : *pRemoteHlaObjectFactory_,
                                                             xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_, *pIdentifierFactory_ ) )
 {
     CONNECT( controller, *this, control_end_tick );

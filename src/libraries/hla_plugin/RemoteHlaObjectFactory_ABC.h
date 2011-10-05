@@ -39,6 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual std::auto_ptr< HlaObject_ABC > CreateAggregate( const std::string& name, RemoteAgentListener_ABC& listener ) const = 0;
+    virtual std::auto_ptr< HlaObject_ABC > CreateSurfaceVessel( const std::string& name, RemoteAgentListener_ABC& listener ) const = 0;
     //@}
 };
 

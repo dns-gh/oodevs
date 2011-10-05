@@ -13,10 +13,13 @@
 #include "AgentSubject_ABC.h"
 #include "HlaObject_ABC.h"
 #include "HlaObjectFactory_ABC.h"
+#include "RemoteHlaObjectFactory_ABC.h"
 #include "ContextFactory_ABC.h"
 #include "LocalAgentResolver_ABC.h"
+#include "RemoteAgentListenerComposite.h"
 #include <hla/Class.h>
 #include <boost/lexical_cast.hpp>
+#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -25,14 +28,17 @@ using namespace plugins::hla;
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
 SurfaceVesselClass::SurfaceVesselClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
-                                        const HlaObjectFactory_ABC& factory, const ClassBuilder_ABC& builder, const ContextFactory_ABC& identifierFactory )
+                                        const HlaObjectFactory_ABC& factory, const RemoteHlaObjectFactory_ABC& remoteFactory,
+                                        const ClassBuilder_ABC& builder, const ContextFactory_ABC& identifierFactory )
     : subject_          ( subject )
     , resolver_         ( resolver )
     , factory_          ( factory )
+    , remoteFactory_    ( remoteFactory )
     , identifierFactory_( identifierFactory )
+    , pListeners_       ( new RemoteAgentListenerComposite() )
     , hlaClass_         ( new ::hla::Class< HlaObject_ABC >( *this, true ) )
 {
-    builder.BuildSurfaceVessel( federate, *hlaClass_, true, false );
+    builder.BuildSurfaceVessel( federate, *hlaClass_, true, true );
     subject_.Register( *this );
 }
 
@@ -70,16 +76,45 @@ void SurfaceVesselClass::SurfaceVesselCreated( Agent_ABC& agent, unsigned int id
 // Name: SurfaceVesselClass::Create
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
-HlaObject_ABC& SurfaceVesselClass::Create( const ::hla::ObjectIdentifier& /*objectID*/, const std::string& /*objectName*/ )
+HlaObject_ABC& SurfaceVesselClass::Create( const ::hla::ObjectIdentifier& objectID, const std::string& /*objectName*/ )
 {
-    throw std::runtime_error( std::string( "unimplemented method " ) + __FUNCTION__ );
+    T_Entity& entity = remoteEntities_[ objectID.ToString() ];
+    entity.reset( remoteFactory_.CreateSurfaceVessel( objectID.ToString(), *pListeners_ ).release() );
+    pListeners_->Created( objectID.ToString() );
+    return *entity;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SurfaceVesselClass::Destroy
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
-void SurfaceVesselClass::Destroy( HlaObject_ABC& /*object*/ )
+void SurfaceVesselClass::Destroy( HlaObject_ABC& object )
 {
-    throw std::runtime_error( std::string( "unimplemented method " ) + __FUNCTION__ );
+    BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
+        if( &*entity.second == &object )
+        {
+            pListeners_->Destroyed( entity.first );
+            remoteEntities_.erase( entity.first );
+            return;
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SurfaceVesselClass::Register
+// Created: SLI 2011-10-05
+// -----------------------------------------------------------------------------
+void SurfaceVesselClass::Register( RemoteAgentListener_ABC& listener )
+{
+    pListeners_->Register( listener );
+    BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
+        listener.Created( entity.first );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SurfaceVesselClass::Unregister
+// Created: SLI 2011-10-05
+// -----------------------------------------------------------------------------
+void SurfaceVesselClass::Unregister( RemoteAgentListener_ABC& listener )
+{
+    pListeners_->Unregister( listener );
 }
