@@ -451,9 +451,9 @@ QString tools::ToString( E_LogMaintenanceHandlingStatus nType )
 // Name: tools::ToString
 // Created: AGE 2008-02-05
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_DotationFamily nType )
+QString tools::ToString( E_DotationFamily nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToSim */ )
 {
-    return ENT_Tr::ConvertFromDotationFamily( nType ).c_str();
+    return ENT_Tr::ConvertFromDotationFamily( nType, conversion ).c_str();
 }
 
 // -----------------------------------------------------------------------------

@@ -20,16 +20,17 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 DotationType::DotationType( xml::xistream& xis, const tools::Resolver_ABC< LogisticSupplyClass, std::string >& resolver )
 {
+    std::string category;
     std::string strLogisticSupplyClass;
     xis >> xml::attribute( "id", id_ )
         >> xml::attribute( "name", name_ )
-        >> xml::attribute( "category", category_ )
+        >> xml::attribute( "category", category )
         >> xml::attribute( "logistic-supply-class", strLogisticSupplyClass )
         >> xml::optional >> xml::attribute( "type", type_ );
     logisticSupplyClass_ = &resolver.Get( strLogisticSupplyClass );
-    categoryId_ = tools::DotationFamilyFromString( category_ );
-    gaz_        = ( category_ == "carburant" );
-    ammunition_ = ( category_ == "munition" );
+    categoryId_ = tools::DotationFamilyFromString( category );
+    gaz_        = ( category == "carburant" );
+    ammunition_ = ( category == "munition" );
     indirectFireAmmunition_ = xis.has_child( "indirect-fire" );
 }
 
@@ -64,9 +65,9 @@ const std::string& DotationType::GetName() const
 // Name: DotationType::GetCategory
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-const std::string& DotationType::GetCategory() const
+const std::string DotationType::GetCategory() const
 {
-    return category_;
+    return tools::ToString( static_cast< E_DotationFamily >( categoryId_ ), ENT_Tr_ABC::eToTr ).ascii();
 }
 
 // -----------------------------------------------------------------------------

@@ -53,8 +53,8 @@ namespace tools
     QString ToString( E_LogSupplyHandlingStatus nType );
     QString ToString( E_LogMedicalHandlingStatus nType );
     QString ToString( E_LogMaintenanceHandlingStatus nType );
-    QString ToString( E_DotationFamily nType );
     QString ToString( E_LocationType nType );
+    QString ToString( E_DotationFamily nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToSim );
     QString ToString( E_EquipmentState nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
     QString ToString( E_HumanRank nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
     QString ToString( E_HumanState nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
