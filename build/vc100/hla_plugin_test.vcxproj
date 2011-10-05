@@ -206,7 +206,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentListener.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentSubject.h" />
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAggregateFactory.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteHlaObjectFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockResponseObserver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassador.h" />
