@@ -55,7 +55,6 @@ MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& contro
         buttons_->setInsideMargin( 5 );
         buttons_->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
         buttons_->hide();
-        connect( buttons_, SIGNAL( clicked( int ) ), this, SLOT( OnButtonPressed( int ) ) );
     }
     setWidget( box );
     hide();
@@ -121,7 +120,9 @@ void MessagePanel::Display( const QString& message )
 // -----------------------------------------------------------------------------
 void MessagePanel::AddButton( const QString& title )
 {
-    buttons_->insert( new QPushButton( title, buttons_ ) );
+    QPushButton* button = new QPushButton( title, buttons_ );
+    buttons_->insert( button );
+    connect( button, SIGNAL( clicked( bool ) ), this, SLOT( OnButtonPressed() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,13 +142,12 @@ void MessagePanel::Clear()
 // -----------------------------------------------------------------------------
 void MessagePanel::ClearButtons()
 {
-    const int count = buttons_->count();
-    for( int i = 0; i < count; ++i )
-        if( QAbstractButton* button = buttons_->find( i ) )
-        {
-            buttons_->remove( button );
-            button->deleteLater();
-        }
+    QList< QAbstractButton* > children = buttons_->findChildren< QAbstractButton* >( QString() );
+    for( QList< QAbstractButton* >::const_iterator it = children.begin(); it != children.end(); ++it )
+    {
+        buttons_->remove( *it );
+        (*it)->deleteLater();
+    }
     buttons_->hide();
 }
 
@@ -155,9 +155,10 @@ void MessagePanel::ClearButtons()
 // Name: MessagePanel::OnButtonPressed
 // Created: SBO 2009-03-05
 // -----------------------------------------------------------------------------
-void MessagePanel::OnButtonPressed( int id )
+void MessagePanel::OnButtonPressed()
 {
-    if( QAbstractButton* button = buttons_->find( id ) )
+    QAbstractButton* button = dynamic_cast< QAbstractButton* >( QObject::sender() );
+    if( button )
     {
         const std::string message = "/choose " + activePrompt_ + " \"" + button->text().ascii() + "\"";
         publisher_->Send( "", message );

@@ -48,7 +48,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnButtonPressed( int id );
+    void OnButtonPressed();
     //@}
 
 private:
