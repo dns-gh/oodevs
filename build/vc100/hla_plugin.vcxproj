@@ -100,7 +100,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\FormationCreater.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\HlaObjectFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -117,7 +116,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnHlaObjectFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
@@ -167,7 +165,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FormationCreater.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObjectFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaFactories.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObjectFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h" />
@@ -186,7 +184,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnClassBuilder.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnHlaObjectFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h" />

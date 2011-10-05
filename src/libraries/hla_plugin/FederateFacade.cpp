@@ -14,14 +14,10 @@
 #include "Federate_ABC.h"
 #include "FederateAmbassadorFactory_ABC.h"
 #include "RtiAmbassadorFactory_ABC.h"
-#include "HlaObjectFactory.h"
-#include "NetnHlaObjectFactory.h"
+#include "HlaFactories.h"
 #include "ClassBuilder.h"
 #include "NetnClassBuilder.h"
 #include "ContextFactory.h"
-#include "RemoteHlaObjectFactory_ABC.h"
-#include "RemoteAggregate.h"
-#include "NetnRemoteAggregate.h"
 #include "protocol/Simulation.h"
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
@@ -53,28 +49,6 @@ namespace
         }
         return federate;
     }
-    class RemoteHlaObjectFactory : public RemoteHlaObjectFactory_ABC
-    {
-    public:
-        std::auto_ptr< HlaObject_ABC > CreateAggregate( const std::string& name, RemoteAgentListener_ABC& listener ) const
-        {
-            return std::auto_ptr< HlaObject_ABC >( new RemoteAggregate( name, listener ) );
-        }
-    };
-    class NetnRemoteHlaObjectFactory : public RemoteHlaObjectFactory_ABC
-    {
-    public:
-        explicit NetnRemoteHlaObjectFactory( const RemoteHlaObjectFactory_ABC& factory )
-            : factory_( factory )
-        {}
-        std::auto_ptr< HlaObject_ABC > CreateAggregate( const std::string& name, RemoteAgentListener_ABC& listener ) const
-        {
-            std::auto_ptr< HlaObject_ABC > remote = factory_.CreateAggregate( name, listener );
-            return std::auto_ptr< HlaObject_ABC >( new NetnRemoteAggregate( remote ) );
-        }
-    private:
-        const RemoteHlaObjectFactory_ABC& factory_;
-    };
 }
 
 struct FederateFacade::FederationDestructor : private boost::noncopyable
