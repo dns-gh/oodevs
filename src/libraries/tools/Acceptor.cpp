@@ -57,7 +57,10 @@ void Acceptor::AllowConnections()
     accept_ = true;
     boost::asio::ip::tcp::endpoint endpoint( boost::asio::ip::tcp::v4(), port_ );
     acceptor_.open( endpoint.protocol() );
-    acceptor_.bind( endpoint );
+    boost::system::error_code error;
+    acceptor_.bind( endpoint, error );
+    if( error )
+        throw std::runtime_error( error.message() + " (port : " + boost::lexical_cast< std::string >( port_ ) + ")" );
     acceptor_.listen( 0 );
     Listen();
 }
