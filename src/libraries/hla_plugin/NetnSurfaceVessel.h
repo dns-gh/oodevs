@@ -32,7 +32,7 @@ class NetnSurfaceVessel : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > aggregate, const std::string& name, short identifier );
+             NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& name, short identifier );
     virtual ~NetnSurfaceVessel();
     //@}
 

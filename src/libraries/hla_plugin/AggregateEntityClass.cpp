@@ -21,7 +21,6 @@
 #include "ContextFactory_ABC.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
-#include <hla/ObjectRegistration_ABC.h>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -32,7 +31,7 @@ using namespace plugins::hla;
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
 AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
-                                            const HlaObjectFactory_ABC& factory, const RemoteHlaObjectFactory_ABC& remoteFactory,
+                                            std::auto_ptr< HlaObjectFactory_ABC > factory, std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory,
                                             const ClassBuilder_ABC& builder, const ContextFactory_ABC& identifierFactory )
     : subject_          ( subject )
     , resolver_         ( resolver )
@@ -61,7 +60,7 @@ AggregateEntityClass::~AggregateEntityClass()
 // -----------------------------------------------------------------------------
 void AggregateEntityClass::AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
-    T_Entity localEntity( factory_.CreateAggregate( agent, name, static_cast< unsigned short >( identifierFactory_.Create() ), force, type ).release() );
+    T_Entity localEntity( factory_->Create( agent, name, static_cast< unsigned short >( identifierFactory_.Create() ), force, type ).release() );
     ::hla::ObjectIdentifier objectId = hlaClass_->Register( *localEntity, boost::lexical_cast< std::string >( identifier ) );
     localEntities_[ objectId.ToString() ] = localEntity;
     resolver_.Add( identifier, objectId.ToString() );
@@ -83,7 +82,7 @@ void AggregateEntityClass::SurfaceVesselCreated( Agent_ABC& /*agent*/, unsigned 
 HlaObject_ABC& AggregateEntityClass::Create( const ::hla::ObjectIdentifier& objectID, const std::string& /*objectName*/ )
 {
     T_Entity& entity = remoteEntities_[ objectID.ToString() ];
-    entity.reset( remoteFactory_.CreateAggregate( objectID.ToString(), *pListeners_ ).release() );
+    entity.reset( remoteFactory_->Create( objectID.ToString(), *pListeners_ ).release() );
     pListeners_->Created( objectID.ToString() );
     return *entity;
 }

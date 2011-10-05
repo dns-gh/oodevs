@@ -18,6 +18,14 @@
 #include "ClassBuilder.h"
 #include "NetnClassBuilder.h"
 #include "ContextFactory.h"
+#include "AggregateEntity.h"
+#include "NetnAggregate.h"
+#include "RemoteAggregate.h"
+#include "NetnRemoteAggregate.h"
+#include "SurfaceVessel.h"
+#include "NetnSurfaceVessel.h"
+#include "RemoteSurfaceVessel.h"
+#include "NetnRemoteSurfaceVessel.h"
 #include "protocol/Simulation.h"
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
@@ -48,6 +56,22 @@ namespace
                 throw std::runtime_error( "Could not join the federation '" + name + "'" );
         }
         return federate;
+    }
+    template< typename Rpr, typename Netn >
+    std::auto_ptr< HlaObjectFactory_ABC > CreateFactory( xml::xisubstream xis )
+    {
+        std::auto_ptr< HlaObjectFactory_ABC > result( new HlaObjectFactory< Rpr >() );
+        if( xis.attribute< bool >( "netn", true ) )
+            return std::auto_ptr< HlaObjectFactory_ABC >( new NetnHlaObjectFactory< Netn >( result ) );
+        return result;
+    }
+    template< typename Rpr, typename Netn >
+    std::auto_ptr< RemoteHlaObjectFactory_ABC > CreateRemoteFactory( xml::xisubstream xis )
+    {
+        std::auto_ptr< RemoteHlaObjectFactory_ABC > result( new RemoteHlaObjectFactory< Rpr >() );
+        if( xis.attribute< bool >( "netn", true ) )
+            return std::auto_ptr< RemoteHlaObjectFactory_ABC >( new NetnRemoteHlaObjectFactory< Netn >( result ) );
+        return result;
     }
 }
 
@@ -89,20 +113,12 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , ambassador_                 ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
     , federate_                   ( CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
     , destructor_                 ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
-    , pHlaObjectFactory_          ( new HlaObjectFactory() )
-    , pNetnHlaObjectFactory_      ( new NetnHlaObjectFactory( *pHlaObjectFactory_ ) )
-    , pRemoteHlaObjectFactory_    ( new RemoteHlaObjectFactory() )
-    , pNetnRemoteHlaObjectFactory_( new NetnRemoteHlaObjectFactory( *pRemoteHlaObjectFactory_ ) )
     , pClassBuilder_              ( new ClassBuilder() )
     , pNetnClassBuilder_          ( new NetnClassBuilder( *pClassBuilder_ ) )
     , pIdentifierFactory_         ( new ContextFactory() )
-    , agentClass_                 ( new AggregateEntityClass( *federate_, subject, resolver,
-                                                              xis.attribute< bool >( "netn", true ) ? *pNetnHlaObjectFactory_ : *pHlaObjectFactory_,
-                                                              xis.attribute< bool >( "netn", true ) ? *pNetnRemoteHlaObjectFactory_ : *pRemoteHlaObjectFactory_,
+    , agentClass_                 ( new AggregateEntityClass( *federate_, subject, resolver, CreateFactory< AggregateEntity, NetnAggregate >( xis ), CreateRemoteFactory< RemoteAggregate, NetnRemoteAggregate >( xis ),
                                                               xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_, *pIdentifierFactory_ ) )
-    , surfaceVesselClass_         ( new SurfaceVesselClass( *federate_, subject, resolver,
-                                                            xis.attribute< bool >( "netn", true ) ? *pNetnHlaObjectFactory_ : *pHlaObjectFactory_,
-                                                            xis.attribute< bool >( "netn", true ) ? *pNetnRemoteHlaObjectFactory_ : *pRemoteHlaObjectFactory_,
+    , surfaceVesselClass_         ( new SurfaceVesselClass( *federate_, subject, resolver, CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis ), CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( xis ),
                                                             xis.attribute< bool >( "netn", true ) ? *pNetnClassBuilder_ : *pClassBuilder_, *pIdentifierFactory_ ) )
 {
     CONNECT( controller, *this, control_end_tick );
@@ -133,6 +149,7 @@ void FederateFacade::Notify( const sword::ControlEndTick& /*message*/, int /*con
 void FederateFacade::Register( RemoteAgentListener_ABC& listener )
 {
     agentClass_->Register( listener );
+    surfaceVesselClass_->Register( listener );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,6 +158,7 @@ void FederateFacade::Register( RemoteAgentListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void FederateFacade::Unregister( RemoteAgentListener_ABC& listener )
 {
+    surfaceVesselClass_->Unregister( listener );
     agentClass_->Unregister( listener );
 }
 

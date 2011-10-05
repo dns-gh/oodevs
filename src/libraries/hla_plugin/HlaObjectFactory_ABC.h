@@ -44,8 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< HlaObject_ABC > CreateAggregate( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const = 0;
-    virtual std::auto_ptr< HlaObject_ABC > CreateSurfaceVessel( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const = 0;
+    virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const = 0;
     //@}
 };
 

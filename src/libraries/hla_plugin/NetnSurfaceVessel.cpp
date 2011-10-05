@@ -22,7 +22,7 @@ using namespace plugins::hla;
 // Name: NetnSurfaceVessel constructor
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
-NetnSurfaceVessel::NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > aggregate, const std::string& name, short identifier )
+NetnSurfaceVessel::NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& /*agent*/, const std::string& name, short identifier )
     : aggregate_ ( aggregate )
     , attributes_( new AttributesSerializer() )
 {

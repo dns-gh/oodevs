@@ -25,8 +25,7 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockRemoteHlaObjectFactory, RemoteHlaObjectFactory_ABC )
 {
-    MOCK_METHOD( CreateAggregate, 2 )
-    MOCK_METHOD( CreateSurfaceVessel, 2 )
+    MOCK_METHOD( Create, 2 )
 };
 
 }

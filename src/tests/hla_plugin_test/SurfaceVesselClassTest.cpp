@@ -37,9 +37,11 @@ namespace
     {
     public:
         Fixture()
-            : factory( new ::hla::MockObjectIdentifierFactory() ) // $$$$ _RC_ SLI 2011-06-10: wtf hla library?
-            , listener( 0 )
-            , hlaClass( 0 )
+            : factory         ( new ::hla::MockObjectIdentifierFactory() ) // $$$$ _RC_ SLI 2011-06-10: wtf hla library?
+            , hlaObjectFactory( new MockHlaObjectFactory() )
+            , remoteFactory   ( new MockRemoteHlaObjectFactory() )
+            , listener        ( 0 )
+            , hlaClass        ( 0 )
         {
             MOCK_EXPECT( subject, Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( builder, BuildSurfaceVessel ).once().with( mock::any, mock::retrieve( hlaClass ), true, true );
@@ -50,8 +52,8 @@ namespace
         ::hla::MockObjectIdentifierFactory* factory;
         MockAgent agent;
         MockClassBuilder builder;
-        MockHlaObjectFactory hlaObjectFactory;
-        MockRemoteHlaObjectFactory remoteFactory;
+        MockHlaObjectFactory* hlaObjectFactory;
+        MockRemoteHlaObjectFactory* remoteFactory;
         MockLocalAgentResolver localResolver;
         MockRemoteAgentListener remoteListener;
         MockContextFactory identifierFactory;
@@ -62,7 +64,8 @@ namespace
     {
     public:
         RegisteredFixture()
-            : surfaceVessel( federate, subject, localResolver, hlaObjectFactory, remoteFactory, builder, identifierFactory )
+            : surfaceVessel( federate, subject, localResolver, std::auto_ptr< HlaObjectFactory_ABC >( hlaObjectFactory ),
+                             std::auto_ptr< RemoteHlaObjectFactory_ABC >( remoteFactory ), builder, identifierFactory )
         {
             BOOST_REQUIRE( listener );
             BOOST_REQUIRE( hlaClass );
@@ -78,7 +81,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( surface_vessel_class_creates_instance_when_notified, RegisteredFixture )
 {
-    MOCK_EXPECT( hlaObjectFactory, CreateSurfaceVessel ).once().returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
+    MOCK_EXPECT( hlaObjectFactory, Create ).once().returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
     MOCK_EXPECT( factory, CreateIdentifier ).once().with( "123" ).returns( hla::ObjectIdentifier( 42u ) );
     MOCK_EXPECT( localResolver, Add ).once().with( 123u, "42" );
     listener->SurfaceVesselCreated( agent, 123, "name", rpr::Friendly, rpr::EntityType() );
@@ -89,7 +92,7 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_class_creates_instance_when_notified, Re
 BOOST_FIXTURE_TEST_CASE( surface_vessel_class_creates_remote_instances, RegisteredFixture )
 {
     surfaceVessel.Register( remoteListener );
-    MOCK_EXPECT( remoteFactory, CreateSurfaceVessel ).once().with( "42", mock::any ).returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
+    MOCK_EXPECT( remoteFactory, Create ).once().with( "42", mock::any ).returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
     MOCK_EXPECT( remoteListener, Created ).once().with( "42" );
     hlaClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
     mock::verify();
@@ -98,7 +101,7 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_class_creates_remote_instances, Register
 
 BOOST_FIXTURE_TEST_CASE( surface_vessel_class_destroys_remote_instances, RegisteredFixture )
 {
-    MOCK_EXPECT( remoteFactory, CreateSurfaceVessel ).once().returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
+    MOCK_EXPECT( remoteFactory, Create ).once().returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
     hlaClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
     MOCK_EXPECT( remoteListener, Created ).once().with( "42" );
     surfaceVessel.Register( remoteListener );

@@ -11,6 +11,7 @@
 #include "hla_plugin/NetnSurfaceVessel.h"
 #include "MockHlaObject.h"
 #include "MockUpdateFunctor.h"
+#include "MockAgent.h"
 #include <hla/Deserializer.h>
 #include <hla/Serializer.h>
 #include <hla/AttributeIdentifier.h>
@@ -29,6 +30,7 @@ namespace
             , aggregate( new MockHlaObject() )
         {}
         MockHlaObject* aggregate;
+        MockAgent agent;
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
     };
@@ -36,7 +38,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), "name", 1u )
+            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), agent, "name", 1u )
         {}
         NetnSurfaceVessel entity;
     };

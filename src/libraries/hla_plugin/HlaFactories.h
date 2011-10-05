@@ -12,79 +12,57 @@
 
 #include "HlaObjectFactory_ABC.h"
 #include "RemoteHlaObjectFactory_ABC.h"
-#include "AggregateEntity.h"
-#include "NetnAggregate.h"
-#include "RemoteAggregate.h"
-#include "NetnRemoteAggregate.h"
-#include "SurfaceVessel.h"
-#include "NetnSurfaceVessel.h"
-#include "RemoteSurfaceVessel.h"
-#include "NetnRemoteSurfaceVessel.h"
 
 namespace plugins
 {
 namespace hla
 {
+    template< typename T >
     class HlaObjectFactory : public HlaObjectFactory_ABC
     {
-        virtual std::auto_ptr< HlaObject_ABC > CreateAggregate( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
         {
-            return std::auto_ptr< HlaObject_ABC >( new AggregateEntity( agent, identifier, name, force, type ) );
-        }
-        virtual std::auto_ptr< HlaObject_ABC > CreateSurfaceVessel( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
-        {
-            return std::auto_ptr< HlaObject_ABC >( new SurfaceVessel( agent, identifier, name, force, type ) );
+            return std::auto_ptr< HlaObject_ABC >( new T( agent, identifier, name, force, type ) );
         }
     };
+    template< typename T >
     class NetnHlaObjectFactory : public HlaObjectFactory_ABC
     {
     public:
-        explicit NetnHlaObjectFactory( const HlaObjectFactory_ABC& factory )
+        explicit NetnHlaObjectFactory( std::auto_ptr< HlaObjectFactory_ABC > factory )
             : factory_( factory )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > CreateAggregate( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
         {
-            std::auto_ptr< HlaObject_ABC > aggregate = factory_.CreateAggregate( agent, name, identifier, force, type );
-            return std::auto_ptr< HlaObject_ABC >( new NetnAggregate( aggregate, agent, name, identifier ) );
-        }
-        virtual std::auto_ptr< HlaObject_ABC > CreateSurfaceVessel( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
-        {
-            std::auto_ptr< HlaObject_ABC > aggregate = factory_.CreateSurfaceVessel( agent, name, identifier, force, type );
-            return std::auto_ptr< HlaObject_ABC >( new NetnSurfaceVessel( aggregate, name, identifier ) );
+            std::auto_ptr< HlaObject_ABC > object = factory_->Create( agent, name, identifier, force, type );
+            return std::auto_ptr< HlaObject_ABC >( new T( object, agent, name, identifier ) );
         }
     private:
-        const HlaObjectFactory_ABC& factory_;
+        std::auto_ptr< HlaObjectFactory_ABC > factory_;
     };
+    template< typename T >
     class RemoteHlaObjectFactory : public RemoteHlaObjectFactory_ABC
     {
     public:
-        virtual std::auto_ptr< HlaObject_ABC > CreateAggregate( const std::string& name, RemoteAgentListener_ABC& listener ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name, RemoteAgentListener_ABC& listener ) const
         {
-            return std::auto_ptr< HlaObject_ABC >( new RemoteAggregate( name, listener ) );
-        }
-        virtual std::auto_ptr< HlaObject_ABC > CreateSurfaceVessel( const std::string& name, RemoteAgentListener_ABC& listener ) const
-        {
-            return std::auto_ptr< HlaObject_ABC >( new RemoteSurfaceVessel( name, listener ) );
+            return std::auto_ptr< HlaObject_ABC >( new T( name, listener ) );
         }
     };
+    template< typename T >
     class NetnRemoteHlaObjectFactory : public RemoteHlaObjectFactory_ABC
     {
     public:
-        explicit NetnRemoteHlaObjectFactory( const RemoteHlaObjectFactory_ABC& factory )
+        explicit NetnRemoteHlaObjectFactory( std::auto_ptr< RemoteHlaObjectFactory_ABC > factory )
             : factory_( factory )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > CreateAggregate( const std::string& name, RemoteAgentListener_ABC& listener ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name, RemoteAgentListener_ABC& listener ) const
         {
-            std::auto_ptr< HlaObject_ABC > remote = factory_.CreateAggregate( name, listener );
-            return std::auto_ptr< HlaObject_ABC >( new NetnRemoteAggregate( remote ) );
-        }
-        virtual std::auto_ptr< HlaObject_ABC > CreateSurfaceVessel( const std::string& name, RemoteAgentListener_ABC& listener ) const
-        {
-            std::auto_ptr< HlaObject_ABC > remote = factory_.CreateAggregate( name, listener );
-            return std::auto_ptr< HlaObject_ABC >( new NetnRemoteAggregate( remote ) );
+            std::auto_ptr< HlaObject_ABC > remote = factory_->Create( name, listener );
+            return std::auto_ptr< HlaObject_ABC >( new T( remote ) );
         }
     private:
-        const RemoteHlaObjectFactory_ABC& factory_;
+        std::auto_ptr< RemoteHlaObjectFactory_ABC > factory_;
     };
 }
 }

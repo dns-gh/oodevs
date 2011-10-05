@@ -28,7 +28,7 @@ using namespace plugins::hla;
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
 SurfaceVesselClass::SurfaceVesselClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
-                                        const HlaObjectFactory_ABC& factory, const RemoteHlaObjectFactory_ABC& remoteFactory,
+                                       std::auto_ptr< HlaObjectFactory_ABC > factory, std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory,
                                         const ClassBuilder_ABC& builder, const ContextFactory_ABC& identifierFactory )
     : subject_          ( subject )
     , resolver_         ( resolver )
@@ -66,7 +66,7 @@ void SurfaceVesselClass::AggregateCreated( Agent_ABC& /*agent*/, unsigned int /*
 // -----------------------------------------------------------------------------
 void SurfaceVesselClass::SurfaceVesselCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
-    T_Entity localEntity( factory_.CreateSurfaceVessel( agent, name, static_cast< unsigned short >( identifierFactory_.Create() ), force, type ).release() );
+    T_Entity localEntity( factory_->Create( agent, name, static_cast< unsigned short >( identifierFactory_.Create() ), force, type ).release() );
     ::hla::ObjectIdentifier objectId = hlaClass_->Register( *localEntity, boost::lexical_cast< std::string >( identifier ) );
     localEntities_[ objectId.ToString() ] = localEntity;
     resolver_.Add( identifier, objectId.ToString() );
@@ -79,7 +79,7 @@ void SurfaceVesselClass::SurfaceVesselCreated( Agent_ABC& agent, unsigned int id
 HlaObject_ABC& SurfaceVesselClass::Create( const ::hla::ObjectIdentifier& objectID, const std::string& /*objectName*/ )
 {
     T_Entity& entity = remoteEntities_[ objectID.ToString() ];
-    entity.reset( remoteFactory_.CreateSurfaceVessel( objectID.ToString(), *pListeners_ ).release() );
+    entity.reset( remoteFactory_->Create( objectID.ToString(), *pListeners_ ).release() );
     pListeners_->Created( objectID.ToString() );
     return *entity;
 }

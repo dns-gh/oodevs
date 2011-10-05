@@ -49,7 +49,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              SurfaceVesselClass( Federate_ABC& federate, AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver,
-                                 const HlaObjectFactory_ABC& factory, const RemoteHlaObjectFactory_ABC& remoteFactory,
+                                 std::auto_ptr< HlaObjectFactory_ABC > factory, std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory,
                                  const ClassBuilder_ABC& builder, const ContextFactory_ABC& identifierFactory );
     virtual ~SurfaceVesselClass();
     //@}
@@ -85,8 +85,8 @@ private:
     //@{
     AgentSubject_ABC& subject_;
     LocalAgentResolver_ABC& resolver_;
-    const HlaObjectFactory_ABC& factory_;
-    const RemoteHlaObjectFactory_ABC& remoteFactory_;
+    std::auto_ptr< HlaObjectFactory_ABC > factory_;
+    std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory_;
     const ContextFactory_ABC& identifierFactory_;
     T_Entities localEntities_;
     T_Entities remoteEntities_;
