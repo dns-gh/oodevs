@@ -106,9 +106,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesSerializer.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntityClass.cpp">
-      <Filter>Source Files\Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionDetonation.cpp">
       <Filter>Source Files\Interactions</Filter>
     </ClCompile>
@@ -184,9 +181,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\ComponentTypes.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVesselClass.cpp">
-      <Filter>Source Files\Dispatcher</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVessel.cpp">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClCompile>
@@ -198,6 +192,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.cpp">
       <Filter>Source Files\Classes\netn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\HlaClass.cpp">
+      <Filter>Source Files\Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -290,9 +287,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\SerializationTools.h">
       <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateEntityClass.h">
-      <Filter>Source Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\EventListener_ABC.h">
       <Filter>Source Files\Classes</Filter>
@@ -426,9 +420,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObject_ABC.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVesselClass.h">
-      <Filter>Source Files\Dispatcher</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClInclude>
@@ -448,6 +439,9 @@
       <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilders.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaClass.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
   </ItemGroup>

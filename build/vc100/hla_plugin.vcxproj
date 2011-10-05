@@ -99,6 +99,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\FormationCreater.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\HlaClass.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -127,7 +128,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\SimulationFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Spatial.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVessel.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVesselClass.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnicodeString.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UniqueId.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AgentController.cpp" />
@@ -144,7 +144,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\ObjectResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesSerializer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntity.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntityClass.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionDetonation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTeleporter.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.cpp" />
@@ -165,6 +164,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FormationCreater.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaClass.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaFactories.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObjectFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObject_ABC.h" />
@@ -202,7 +202,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\SimulationFacade.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Spatial.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVesselClass.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnicodeString.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UniqueId.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Agent_ABC.h" />
@@ -227,7 +226,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesSerializer.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SerializationTools.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateEntity.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateEntityClass.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EventListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionDetonation.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTeleporter.h" />

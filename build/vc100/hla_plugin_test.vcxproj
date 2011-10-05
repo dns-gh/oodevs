@@ -135,7 +135,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateEntityClassTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateEntityTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateMarkingTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AutomatCreaterTest.cpp" />
@@ -150,6 +149,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FederateFacadeTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FormationCreaterTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FormationTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\HlaClassTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -172,7 +172,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprSerializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SilentEntityTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SpatialTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselClassTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnicodeStringTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UniqueIdTest.cpp" />

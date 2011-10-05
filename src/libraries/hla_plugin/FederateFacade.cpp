@@ -9,11 +9,11 @@
 
 #include "hla_plugin_pch.h"
 #include "FederateFacade.h"
-#include "AggregateEntityClass.h"
-#include "SurfaceVesselClass.h"
+#include "HlaClass.h"
 #include "Federate_ABC.h"
 #include "FederateAmbassadorFactory_ABC.h"
 #include "RtiAmbassadorFactory_ABC.h"
+#include "AgentSubject_ABC.h"
 #include "HlaFactories.h"
 #include "ClassBuilders.h"
 #include "ContextFactory.h"
@@ -114,23 +114,23 @@ private:
 FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                 AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
                                 const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory )
-    : timeFactory_       ( new ::hla::SimpleTimeFactory() )
+    : subject_           ( subject )
+    , timeFactory_       ( new ::hla::SimpleTimeFactory() )
     , intervalFactory_   ( new ::hla::SimpleTimeIntervalFactory() )
     , ambassador_        ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
     , federate_          ( CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
     , destructor_        ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
     , pIdentifierFactory_( new ContextFactory() )
-    , agentClass_        ( new AggregateEntityClass( *federate_, subject, resolver,
-                                                     CreateFactory< AggregateEntity, NetnAggregate >( xis ),
-                                                     CreateRemoteFactory< RemoteAggregate, NetnRemoteAggregate >( xis ),
-                                                     CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( xis ),
-                                                     *pIdentifierFactory_ ) )
-    , surfaceVesselClass_( new SurfaceVesselClass( *federate_, subject, resolver,
-                                                   CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis ),
-                                                   CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( xis ),
-                                                   CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( xis ),
-                                                   *pIdentifierFactory_ ) )
+    , aggregateClass_    ( new HlaClass( *federate_, resolver, *pIdentifierFactory_,
+                                         CreateFactory< AggregateEntity, NetnAggregate >( xis ),
+                                         CreateRemoteFactory< RemoteAggregate, NetnRemoteAggregate >( xis ),
+                                         CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( xis ) ) )
+    , surfaceVesselClass_( new HlaClass( *federate_, resolver, *pIdentifierFactory_,
+                                         CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis ),
+                                         CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( xis ),
+                                         CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( xis ) ) )
 {
+    subject_.Register( *this );
     CONNECT( controller, *this, control_end_tick );
 }
 
@@ -140,7 +140,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
 // -----------------------------------------------------------------------------
 FederateFacade::~FederateFacade()
 {
-    // NOTHING
+    subject_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +158,7 @@ void FederateFacade::Notify( const sword::ControlEndTick& /*message*/, int /*con
 // -----------------------------------------------------------------------------
 void FederateFacade::Register( RemoteAgentListener_ABC& listener )
 {
-    agentClass_->Register( listener );
+    aggregateClass_->Register( listener );
     surfaceVesselClass_->Register( listener );
 }
 
@@ -169,7 +169,7 @@ void FederateFacade::Register( RemoteAgentListener_ABC& listener )
 void FederateFacade::Unregister( RemoteAgentListener_ABC& listener )
 {
     surfaceVesselClass_->Unregister( listener );
-    agentClass_->Unregister( listener );
+    aggregateClass_->Unregister( listener );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,4 +260,22 @@ void FederateFacade::Register( const ::hla::InteractionIdentifier& interactionID
 void FederateFacade::Register( ::hla::FederateAmbassador_ABC& listener )
 {
     federate_->Register( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::AggregateCreated
+// Created: SLI 2011-10-05
+// -----------------------------------------------------------------------------
+void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
+{
+    aggregateClass_->Created( agent, identifier, name, force, type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::SurfaceVesselCreated
+// Created: SLI 2011-10-05
+// -----------------------------------------------------------------------------
+void FederateFacade::SurfaceVesselCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
+{
+    surfaceVesselClass_->Created( agent, identifier, name, force, type );
 }

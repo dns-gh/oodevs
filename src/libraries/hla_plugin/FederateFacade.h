@@ -12,6 +12,7 @@
 
 #include "RemoteAgentSubject_ABC.h"
 #include "Federate_ABC.h"
+#include "AgentListener_ABC.h"
 #include "tools/MessageObserver.h"
 #include <memory>
 
@@ -43,7 +44,7 @@ namespace hla
     class RtiAmbassadorFactory_ABC;
     class LocalAgentResolver_ABC;
     class ContextFactory_ABC;
-    class SurfaceVesselClass;
+    class HlaClass;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -53,6 +54,7 @@ namespace hla
 // =============================================================================
 class FederateFacade : public RemoteAgentSubject_ABC
                      , public Federate_ABC
+                     , private AgentListener_ABC
                      , private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
@@ -95,6 +97,12 @@ private:
     virtual void Notify( const sword::ControlEndTick& message, int context );
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
+    virtual void SurfaceVesselCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
+    //@}
+
 private:
     //! @name Types
     //@{
@@ -104,14 +112,15 @@ private:
 private:
     //! @name Member data
     //@{
+    AgentSubject_ABC& subject_;
     std::auto_ptr< ::hla::TimeFactory_ABC > timeFactory_;
     std::auto_ptr< ::hla::TimeIntervalFactory_ABC > intervalFactory_;
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
     std::auto_ptr< Federate_ABC > federate_;
     std::auto_ptr< FederationDestructor > destructor_;
     std::auto_ptr< ContextFactory_ABC > pIdentifierFactory_;
-    std::auto_ptr< RemoteAgentSubject_ABC > agentClass_;
-    std::auto_ptr< SurfaceVesselClass > surfaceVesselClass_;
+    std::auto_ptr< HlaClass > aggregateClass_;
+    std::auto_ptr< HlaClass > surfaceVesselClass_;
     //@}
 };
 

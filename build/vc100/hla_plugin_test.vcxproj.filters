@@ -13,9 +13,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateEntityClassTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateEntityTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -106,9 +103,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\EquipmentUpdaterTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselClassTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -122,6 +116,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\ClassBuildersTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\HlaClassTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
