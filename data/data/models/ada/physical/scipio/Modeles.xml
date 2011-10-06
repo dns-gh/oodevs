@@ -7599,6 +7599,7 @@
         <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
+        <mission name="AUTOMATE NRBC Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -9927,4 +9928,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0668596960" -->
+<!-- signature="0527611406" -->
