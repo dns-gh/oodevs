@@ -5696,10 +5696,7 @@
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Preparer bascule"/>
-        <mission name="PION LOGISTIQUE Se Deployer">
-          <fragorder name="Modifier Priorites Blesses"/>
-          <fragorder name="Modifier Priorites Tactiques Blesses"/>
-        </mission>
+        <mission name="PION LOGISTIQUE Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9930,4 +9927,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3854284105" -->
+<!-- signature="0668596960" -->
