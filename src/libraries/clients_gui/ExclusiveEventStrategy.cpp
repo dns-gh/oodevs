@@ -64,6 +64,15 @@ void ExclusiveEventStrategy::HandleKeyPress( QKeyEvent* key )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExclusiveEventStrategy::HandleKeyRelease
+// Created: LGY 2011-10-06
+// -----------------------------------------------------------------------------
+void ExclusiveEventStrategy::HandleKeyRelease( QKeyEvent* /*key*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExclusiveEventStrategy::HandleMousePress
 // Created: AGE 2006-09-04
 // -----------------------------------------------------------------------------

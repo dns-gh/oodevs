@@ -179,6 +179,15 @@ void CircularEventStrategy::HandleKeyPress( QKeyEvent* key )
 }
 
 // -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::HandleKeyRelease
+// Created: LGY 2011-10-06
+// -----------------------------------------------------------------------------
+void CircularEventStrategy::HandleKeyRelease( QKeyEvent* /*key*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: CircularEventStrategy::HandleMousePress
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
