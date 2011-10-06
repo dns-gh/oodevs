@@ -61,6 +61,7 @@ public:
     {
         handler_.BeginTick();
         keys_.clear();
+        set_ = false;
     }
     virtual void SetKey( const K& key )
     {
