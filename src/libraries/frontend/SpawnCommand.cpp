@@ -37,6 +37,8 @@ SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe,
     , jobName_                  ( jobName )
 {
     AddArgument( exe );
+    if( jobName_ == "launcher-job" )
+        AddArgument( "--silent" );
 }
 
 // -----------------------------------------------------------------------------
