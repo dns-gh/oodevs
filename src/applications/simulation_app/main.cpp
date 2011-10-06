@@ -17,6 +17,10 @@
 #include <new.h>
 #include <dbghelp.h>
 #include <direct.h>
+#pragma warning( push )
+#pragma warning( disable: 4512 )
+#include <boost/program_options.hpp>
+#pragma warning( pop )
 
 int __cdecl NoMoreMemoryHandler( std::size_t nSize )
 {
@@ -47,20 +51,7 @@ void SetLowFragmentationHeapAlgorithm()
 //-----------------------------------------------------------------------------
 int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
 {
-    int maxConnections = 10;
-#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f ) );
-    try
-    {
-        FlexLmLicense license( "sword-dispatcher", 1.0f );
-        maxConnections = license.GetAuthorisedUsers();
-    }
-    catch( FlexLmLicense::LicenseError& )
-    {
-        maxConnections = 10;
-    }
-#endif
-
+    // Init logger
     _mkdir( "./Debug" );
     MT_FileLogger           fileLogger     ( "./Debug/Sim.log" );
     const std::string filename = "./Debug/Crash Version " + std::string( tools::AppVersion() ) + ".log";
@@ -68,24 +59,42 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     MT_LOG_REGISTER_LOGGER( fileLogger );
     MT_LOG_REGISTER_LOGGER( crashFileLogger );
 
-    SetLowFragmentationHeapAlgorithm();
-
-    // Float exceptions
-    unsigned int control_word;
-    _controlfp_s( &control_word, _EM_OVERFLOW | _EM_UNDERFLOW | _EM_INEXACT | _EM_INVALID, _MCW_EM ); // Exception raised for _EM_DENORMAL and _EM_ZERODIVIDE
-
-    // Memory handlers
-    _set_new_mode   ( 1 );
-    _set_new_handler( NoMoreMemoryHandler );
-
-    // Init the console window size and appearance
-    // InitConsole();
-
     SIM_App* app = 0;
-
     int nResult = EXIT_FAILURE;
+    bool silentMode = false;
+    int maxConnections = 10;
     try
     {
+        // Silent mode
+        std::vector< std::string > argv = boost::program_options:: split_winmain( lpCmdLine );
+        silentMode = ( std::find( argv.begin(), argv.end(), "--silent" ) != argv.end() );
+
+        // Check license
+#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+        std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f, silentMode ) );
+        FlexLmLicense license_dispatch( "sword-dispatcher", 1.0f );
+        try
+        {
+            maxConnections = license_dispatch.GetAuthorisedUsers();
+        }
+        catch( FlexLmLicense::LicenseError& )
+        {
+            maxConnections = 10;
+        }
+#endif
+
+        // Fragmentation heap
+        SetLowFragmentationHeapAlgorithm();
+
+        // Float exceptions
+        unsigned int control_word;
+        _controlfp_s( &control_word, _EM_OVERFLOW | _EM_UNDERFLOW | _EM_INEXACT | _EM_INVALID, _MCW_EM ); // Exception raised for _EM_DENORMAL and _EM_ZERODIVIDE
+
+        // Memory handlers
+        _set_new_mode   ( 1 );
+        _set_new_handler( NoMoreMemoryHandler );
+
+        // Execute simulation
         GOOGLE_PROTOBUF_VERIFY_VERSION;
         app = new SIM_App( hinstance, hPrevInstance, lpCmdLine, nCmdShow, maxConnections );
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
@@ -100,29 +109,30 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
                << "Message : "     << exception.GetMsg()         << std::endl
                << "Description : " << exception.GetDescription() << std::endl;
         MT_LOG_ERROR_MSG( strMsg.str().c_str() );
-        MessageBox( 0, strMsg.str().c_str(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
+        if( !silentMode )
+            MessageBox( 0, strMsg.str().c_str(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
     catch( xml::exception& exception )
     {
         MT_LOG_ERROR_MSG( exception.what() );
-        MessageBox ( 0, exception.what(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
+        if( !silentMode )
+            MessageBox ( 0, exception.what(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
     catch( std::bad_alloc& /*exception*/ )
     {
         MT_LOG_ERROR_MSG( "Bad alloc" );
-        MessageBox( 0, "Allocation error : not enough memory", "Simulation - Memory error", MB_ICONERROR | MB_OK | MB_TOPMOST );
+        if( !silentMode )
+            MessageBox( 0, "Allocation error : not enough memory", "Simulation - Memory error", MB_ICONERROR | MB_OK | MB_TOPMOST );
     }
     catch( std::exception& exception )
     {
         MT_LOG_ERROR_MSG( exception.what() );
-        MessageBox( 0, exception.what(), "SWORD - Exception standard", MB_ICONERROR | MB_OK | MB_TOPMOST );
+        if( !silentMode )
+            MessageBox( 0, exception.what(), "SWORD - Exception standard", MB_ICONERROR | MB_OK | MB_TOPMOST );
     }
 
     google::protobuf::ShutdownProtobufLibrary();
-
-    if( app )
-        delete app;
-
+    delete app;
     MT_LOG_UNREGISTER_LOGGER( crashFileLogger );
     MT_LOG_UNREGISTER_LOGGER( fileLogger );
 

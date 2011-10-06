@@ -14,6 +14,10 @@
 #include "tools/WinArguments.h"
 #include "tools/win32/FlexLm.h"
 #include <windows.h>
+#pragma warning( push )
+#pragma warning( disable: 4512 )
+#include <boost/program_options.hpp>
+#pragma warning( pop )
 
 //-----------------------------------------------------------------------------
 // Name: Run()
@@ -21,26 +25,34 @@
 //-----------------------------------------------------------------------------
 int Run( LPSTR lpCmdLine )
 {
-    int maxConnections = 10;
-#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f ) );
-    try
-    {
-        std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword-dispatcher", 1.0f ) );
-        maxConnections = license->GetAuthorisedUsers();
-    }
-    catch( FlexLmLicense::LicenseError& /*error*/ )
-    {
-        maxConnections = 1;
-    }
-#endif
-
+    // Init logger
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
 
-    int nResult = 0;
+    bool silentMode = false;
+    int maxConnections = 10;
+    int nResult = EXIT_FAILURE;
     try
     {
+        // Silent mode
+        std::vector< std::string > argv = boost::program_options:: split_winmain( lpCmdLine );
+        silentMode = ( std::find( argv.begin(), argv.end(), "--silent" ) != argv.end() );
+
+#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+        // Check license
+        std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f, silentMode ) );
+        std::auto_ptr< FlexLmLicense > license_dispatch( FlexLmLicense::CheckLicense( "sword-dispatcher", 1.0f, silentMode ) );
+        try
+        {
+            maxConnections = license_dispatch->GetAuthorisedUsers();
+        }
+        catch( FlexLmLicense::LicenseError& )
+        {
+            maxConnections = 1;
+        }
+#endif
+
+        // Execute dispatcher
         tools::WinArguments winArgs( lpCmdLine );
         Application app( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ), maxConnections );
         nResult = app.Execute();
