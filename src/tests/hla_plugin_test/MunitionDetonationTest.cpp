@@ -19,7 +19,7 @@
 
 using namespace plugins::hla;
 
-BOOST_AUTO_TEST_CASE( munition_detonation_registration_publish_only )
+BOOST_AUTO_TEST_CASE( munition_detonation_registration_publish_and_suscribe )
 {
     MockFederate federate;
     hla::MockInteractionHandler* handler = new hla::MockInteractionHandler(); // $$$$ _RC_ SLI 2011-06-24: wtf hla library?
@@ -55,7 +55,7 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( munition_detonation_is_sent_when_receiving_start_and_stop_unit_fire_messages, RegisteredFixture )
+BOOST_FIXTURE_TEST_CASE( munition_detonation_is_sent_with_attributes, RegisteredFixture )
 {
     const std::vector< std::string > parameters = boost::assign::list_of( "ArticulatedPartData" )
                                                                         ( "DetonationLocation" )
