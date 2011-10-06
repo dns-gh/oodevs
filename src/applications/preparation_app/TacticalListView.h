@@ -15,9 +15,9 @@
 
 namespace kernel
 {
-    class Formation_ABC;
-    class Automat_ABC;
     class Agent_ABC;
+    class Automat_ABC;
+    class Formation_ABC;
     class FormationLevels;
     class HierarchyLevel_ABC;
 }
@@ -40,7 +40,7 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
                        , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -90,8 +90,9 @@ private:
     gui::ItemFactory_ABC& factory_;
     ModelBuilder& modelBuilder_;
     const kernel::FormationLevels& levels_;
-    QPixmap lock_, commandPost_;
+    QPixmap lock_;
+    QPixmap commandPost_;
     //@}
 };
 
-#endif // __AgentListView_h_
+#endif // __TacticalListView_h_

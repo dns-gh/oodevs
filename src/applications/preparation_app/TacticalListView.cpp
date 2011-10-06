@@ -12,7 +12,6 @@
 #include "moc_TacticalListView.cpp"
 #include "ModelBuilder.h"
 #include "PreparationProfile.h"
-#include "preparation/Team.h"
 #include "preparation/AutomatDecisions.h"
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/EntityCommunications.h"
@@ -22,6 +21,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "icons.h"
 
 using namespace gui;
@@ -31,13 +31,13 @@ using namespace kernel;
 // Name: TacticalListView constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ModelBuilder& modelBuilder, const FormationLevels& levels )
-    : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, PreparationProfile::GetProfile(), icons )
-    , factory_( factory )
+TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, EntitySymbols& icons, ModelBuilder& modelBuilder, const FormationLevels& levels )
+    : HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, PreparationProfile::GetProfile(), icons )
+    , factory_     ( factory )
     , modelBuilder_( modelBuilder )
-    , levels_( levels )
-    , lock_( MAKE_PIXMAP( lock ) )
-    , commandPost_( MAKE_PIXMAP( commandpost ) )
+    , levels_      ( levels )
+    , lock_        ( MAKE_PIXMAP( lock ) )
+    , commandPost_ ( MAKE_PIXMAP( commandpost ) )
 {
     controllers_.Register( *this );
     addColumn( "HiddenPuce", 15 );
@@ -78,7 +78,7 @@ void TacticalListView::setColumnWidth( int column, int w )
 // Name: TacticalListView::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void TacticalListView::Display( const Entity_ABC& entity, gui::ValuedListItem* item )
+void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
     item->setRenameEnabled( 0, true );
     if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
@@ -96,7 +96,7 @@ void TacticalListView::Display( const Entity_ABC& entity, gui::ValuedListItem* i
 void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
 {
     const Entity_ABC* agent = & decisions.GetAgent();
-    gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
+    ValuedListItem* item = FindItem( agent, firstChild() );
     if( item )
         item->setPixmap( 1, decisions.IsEmbraye() ? lock_ : QPixmap() );
 }
@@ -105,9 +105,9 @@ void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
 // Name: TacticalListView::NotifyUpdated
 // Created: SBO 2006-09-28
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyUpdated( const kernel::Entity_ABC& entity )
+void TacticalListView::NotifyUpdated( const Entity_ABC& entity )
 {
-    if( gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() ) )
+    if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
     {
         item->SetNamed( entity );
         if( entity.Retrieve< CommandPostAttributes >() )
@@ -146,7 +146,7 @@ void TacticalListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoin
 // Name: TacticalListView::NotifyContextMenu
 // Created: SBO 2007-11-09
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyContextMenu( const Entity_ABC&, kernel::ContextMenu& menu )
+void TacticalListView::NotifyContextMenu( const Entity_ABC&, ContextMenu& menu )
 {
     if( !isVisible() )
         return;
@@ -159,9 +159,8 @@ void TacticalListView::NotifyContextMenu( const Entity_ABC&, kernel::ContextMenu
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
 {
-    if( const kernel::HierarchyLevel_ABC* root = levels_.GetRoot() )
+    if( const HierarchyLevel_ABC* root = levels_.GetRoot() )
         AddFormationMenu( menu, *root );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +169,7 @@ void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, ContextMenu& menu )
 {
-    if( const kernel::HierarchyLevel_ABC* root = formation.GetLevel().GetNext() )
+    if( const HierarchyLevel_ABC* root = formation.GetLevel().GetNext() )
         AddFormationMenu( menu, *root );
 }
 
@@ -178,14 +177,13 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
 // Name: TacticalListView::AddFormationMenu
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
-void TacticalListView::AddFormationMenu( kernel::ContextMenu& menu, const kernel::HierarchyLevel_ABC& root )
+void TacticalListView::AddFormationMenu( ContextMenu& menu, const HierarchyLevel_ABC& root )
 {
     if( !isVisible() )
         return;
     Q3PopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
-    for( const kernel::HierarchyLevel_ABC* level = &root; level; level = level->GetNext() )
+    for( const HierarchyLevel_ABC* level = &root; level; level = level->GetNext() )
         subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().ascii() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -219,7 +217,7 @@ void TacticalListView::NotifyContextMenu( const Automat_ABC& agent, ContextMenu&
 // -----------------------------------------------------------------------------
 void TacticalListView::Engage()
 {
-    if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() ) )
+    if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) )
     {
         Entity_ABC& entity = *valuedItem->GetValue< Entity_ABC >();
         if( AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
@@ -233,7 +231,7 @@ void TacticalListView::Engage()
 // -----------------------------------------------------------------------------
 void TacticalListView::Disengage()
 {
-    if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() ) )
+    if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) )
     {
         Entity_ABC& entity = *valuedItem->GetValue< Entity_ABC >();
         if( AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
@@ -265,7 +263,7 @@ namespace
 {
     Entity_ABC& GetFirstCommunicationChild( const Entity_ABC& entity )
     {
-        tools::Iterator< const Entity_ABC& > it = entity.Get< kernel::CommunicationHierarchies >().CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > it = entity.Get< CommunicationHierarchies >().CreateSubordinateIterator();
         if( it.HasMoreElements() )
             return const_cast< Entity_ABC& >( it.NextElement() );
         throw std::runtime_error( "No communication child found" );
@@ -274,7 +272,7 @@ namespace
     void UpdateCommunicationHierarchies( Entity_ABC& entity, const Entity_ABC& superior )
     {
         const Entity_ABC& tacticalTop = superior.Get< kernel::TacticalHierarchies >().GetTop();
-        kernel::CommunicationHierarchies* com = entity.Retrieve< kernel::CommunicationHierarchies >();
+        CommunicationHierarchies* com = entity.Retrieve< CommunicationHierarchies >();
 
         if( com && &com->GetTop() != &tacticalTop )
             static_cast< ::EntityCommunications* >( com )->ChangeSuperior( GetFirstCommunicationChild( tacticalTop ) );
@@ -307,7 +305,7 @@ bool TacticalListView::Drop( const Agent_ABC& item, const Entity_ABC& target )
     if( automat )
     {
         bool superiorChange = ChangeSuperior( item, target );
-        kernel::CommunicationHierarchies* com = const_cast< Agent_ABC& >( item ).Retrieve< kernel::CommunicationHierarchies >();
+        CommunicationHierarchies* com = const_cast< Agent_ABC& >( item ).Retrieve< CommunicationHierarchies >();
         if( com )
             static_cast< ::EntityCommunications* >( com )->ChangeSuperior( const_cast< Entity_ABC& >( target ) );
         return superiorChange;
@@ -319,7 +317,7 @@ bool TacticalListView::Drop( const Agent_ABC& item, const Entity_ABC& target )
 // Name: TacticalListView::Drop
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target )
+bool TacticalListView::Drop( const Automat_ABC& item, const Entity_ABC& target )
 {
     const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &target );
     if( formation )
@@ -345,5 +343,4 @@ bool TacticalListView::Drop( const Formation_ABC& formation, const Entity_ABC& t
     if( team )
         return ChangeSuperior( formation, target );
     return false;
-
 }
