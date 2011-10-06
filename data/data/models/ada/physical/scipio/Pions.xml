@@ -13372,7 +13372,7 @@
   <unit decisional-model="Masalife.Terroriste" id="472" name="Terroriste IED" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
-      <equipment count="1" crew="1" major="true" type="Terroriste IED"/>
+      <equipment count="1" crew="1" loadable="true" major="true" type="Terroriste IED"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="5000"/>
@@ -15879,7 +15879,7 @@
   <unit decisional-model="Masalife.Terroriste" id="558" name="Terroriste Sniper" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
-      <equipment count="1" crew="1" major="true" type="Terroriste Sniper"/>
+      <equipment count="1" crew="1" loadable="true" major="true" type="Terroriste Sniper"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="5000"/>
@@ -15906,7 +15906,7 @@
   <unit decisional-model="Masalife.Terroriste" id="559" name="Terroriste Sniper et IED" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
-      <equipment count="1" crew="1" major="true" type="Terroriste Sniper et IED"/>
+      <equipment count="1" crew="1" loadable="true" major="true" type="Terroriste Sniper et IED"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="5000"/>
@@ -15933,7 +15933,7 @@
   <unit decisional-model="Masalife.Terroriste" id="560" name="Terroriste RPG" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
-      <equipment count="1" crew="1" major="true" type="Terroriste RPG"/>
+      <equipment count="1" crew="1" loadable="true" major="true" type="Terroriste RPG"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="5000"/>
@@ -19807,4 +19807,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0315273087" -->
+<!-- signature="3072942041" -->
