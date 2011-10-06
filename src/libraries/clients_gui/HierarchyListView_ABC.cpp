@@ -52,7 +52,7 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     setRootIsDecorated( true );
     setAcceptDrops( true );
     setDragAutoScroll( true );
-//    viewport()->setAcceptDrops( true ); // $$$$ SBO 2010-08-12: needed to enable autoscroll
+    viewport()->setAcceptDrops( true );
     header()->hide();
 
     connect( this,   SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ) );
@@ -341,6 +341,7 @@ void HierarchyListView_ABC::focusInEvent( QFocusEvent* event )
 // -----------------------------------------------------------------------------
 Q3DragObject* HierarchyListView_ABC::dragObject()
 {
+    ListView< HierarchyListView_ABC >::dragObject();
     ValuedListItem* pItem = static_cast< ValuedListItem* >( selectedItem() );
     if( !pItem )
         return 0;
@@ -348,29 +349,32 @@ Q3DragObject* HierarchyListView_ABC::dragObject()
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::dragEnterEvent
+// Name: HierarchyListView_ABC::viewportDragEnterEvent
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::dragEnterEvent( QDragEnterEvent* pEvent )
+void HierarchyListView_ABC::viewportDragEnterEvent( QDragEnterEvent* pEvent )
 {
+    ListView< HierarchyListView_ABC >::viewportDragEnterEvent( pEvent );
     pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::dragMoveEvent
+// Name: HierarchyListView_ABC::viewportDragMoveEvent
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::dragMoveEvent( QDragMoveEvent* pEvent )
+void HierarchyListView_ABC::viewportDragMoveEvent( QDragMoveEvent* pEvent )
 {
+    ListView< HierarchyListView_ABC >::viewportDragMoveEvent( pEvent );
     pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::dropEvent
+// Name: HierarchyListView_ABC::viewportDropEvent
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::dropEvent( QDropEvent* pEvent )
+void HierarchyListView_ABC::viewportDropEvent( QDropEvent* pEvent )
 {
+    ListView< HierarchyListView_ABC >::viewportDropEvent( pEvent );
     const Entity_ABC* entity = ValuedDragObject::GetValue< const Entity_ABC >( pEvent );
     if( entity )
     {

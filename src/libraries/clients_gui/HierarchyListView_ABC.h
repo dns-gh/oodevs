@@ -98,9 +98,9 @@ private:
     //@{
     ValuedListItem* FindOrCreate( const kernel::Entity_ABC* entity );
     virtual Q3DragObject* dragObject();
-    virtual void dropEvent( QDropEvent* pEvent );
-    virtual void dragMoveEvent( QDragMoveEvent *pEvent );
-    virtual void dragEnterEvent( QDragEnterEvent* pEvent );
+    virtual void viewportDropEvent( QDropEvent* pEvent );
+    virtual void viewportDragMoveEvent( QDragMoveEvent *pEvent );
+    virtual void viewportDragEnterEvent( QDragEnterEvent* pEvent );
     virtual bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     bool HasAnyChildVisible( gui::ValuedListItem* item, boost::function< bool ( gui::ValuedListItem* ) > func );
