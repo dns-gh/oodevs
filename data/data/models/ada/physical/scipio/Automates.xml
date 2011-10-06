@@ -1502,13 +1502,29 @@
   <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="1046" name="CIRCU . Train" type="Automate SGTIA">
     <unit command-post="true" min-occurs="1" type="Train"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="1047" name="CIV . DPRE femmes et enfants" type="Automate REFUGIE">
+  <automat decisional-model="Masalife.Automate.NRBC.Section reco" id="1047" name="NRBC . Reco" type="Automate NBC">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="NRBC . PC Reco"/>
+    <unit max-occurs="3" min-occurs="3" type="NRBC . Patrouille Reco"/>
+  </automat>
+  <automat decisional-model="Masalife.Automate.NRBC.Section RE" id="1048" name="NRBC . Reco ROTA" type="Automate NBC">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="NRBC . PC Reco ROTA"/>
+    <unit max-occurs="3" min-occurs="3" type="NRBC . Equipe Reco ROTA"/>
+  </automat>
+  <automat decisional-model="Masalife.Automate.NRBC.Section dec" id="1049" name="NRBC . Section Decontamination" type="Automate NBC">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="NRBC . PC deconta"/>
+    <unit max-occurs="3" min-occurs="3" type="NRBC . Equipe decontamination"/>
+  </automat>
+  <automat decisional-model="Masalife.Automate.NRBC.Section reco" id="1050" name="NRBC . Section Reco" type="Automate NBC">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="NRBC . PC Section Reco"/>
+    <unit max-occurs="1" min-occurs="1" type="NRBC . Patrouille Reco"/>
+  </automat>
+  <automat decisional-model="Masalife.Automate.MonoPion" id="1051" name="CIV . DPRE femmes et enfants" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="1" type="Refugiés femmes et enfants"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="1048" name="CIV . DPRE hommes femmes et enfants" type="Automate REFUGIE">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="1052" name="CIV . DPRE hommes femmes et enfants" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="1" type="Réfugiés hommes femmes et enfants"/>
   </automat>
-  <automat decisional-model="Masalife.SGTIA" id="1049" name="SGTIA INF dominante roues" type="Automate SGTIA">
+  <automat decisional-model="Masalife.SGTIA" id="1053" name="SGTIA INF dominante roues" type="Automate SGTIA">
     <unit min-occurs="1" type="INF . Section CBT quaternaire VAB CDS OFF"/>
     <unit min-occurs="2" type="INF . Section CBT quaternaire VAB CDS SOFF"/>
     <unit min-occurs="1" type="INF . Groupe INF MO81 Section quaternaire"/>
@@ -1516,7 +1532,7 @@
     <unit min-occurs="1" type="GEN . Section CBT renforce MPG"/>
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire VAB"/>
   </automat>
-  <automat decisional-model="Masalife.SGTIA" id="1050" name="SGTIA INF dominante lourde" type="Automate SGTIA">
+  <automat decisional-model="Masalife.SGTIA" id="1054" name="SGTIA INF dominante lourde" type="Automate SGTIA">
     <unit min-occurs="1" type="GEN . Section CBT renforce EBG"/>
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire AMX10P"/>
     <unit min-occurs="1" type="ABC . Peloton LECLERC CDP SOFF"/>
@@ -1524,7 +1540,7 @@
     <unit min-occurs="2" type="INF . Section CBT quaternaire AMX10P CDS SOFF"/>
     <unit min-occurs="1" type="INF . Groupe INF MO81 AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.SGTIA" id="1051" name="SGTIA ABC XL" type="Automate SGTIA">
+  <automat decisional-model="Masalife.SGTIA" id="1055" name="SGTIA ABC XL" type="Automate SGTIA">
     <unit min-occurs="1" type="GEN . Section CBT renforce EBG"/>
     <unit min-occurs="2" type="ABC . Peloton LECLERC CDP SOFF"/>
     <unit min-occurs="1" type="ABC . Peloton LECLERC CDP OFF"/>
@@ -1532,7 +1548,7 @@
     <unit min-occurs="1" type="INF . Section CBT AMX10P CDS SOFF"/>
     <unit min-occurs="1" type="ABC . Patrouille EI MILAN"/>
   </automat>
-  <automat decisional-model="Masalife.SGTIA" id="1052" name="SGTIA ABC AMX10RC" type="Automate SGTIA">
+  <automat decisional-model="Masalife.SGTIA" id="1056" name="SGTIA ABC AMX10RC" type="Automate SGTIA">
     <unit min-occurs="1" type="ABC . Patrouille EI 12,7"/>
     <unit min-occurs="1" type="ABC . PLT AMX 10 RC CDP OFF"/>
     <unit min-occurs="2" type="ABC . PLT AMX 10 RC CDP SOFF"/>
@@ -1541,4 +1557,4 @@
     <unit min-occurs="1" type="GEN . Section CBT renforce MPG"/>
   </automat>
 </automats>
-<!-- signature="0819625101" -->
+<!-- signature="3779650625" -->
