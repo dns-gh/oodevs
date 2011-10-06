@@ -25,6 +25,7 @@ class UnicodeString
 public:
     //! @name Constructors/Destructor
     //@{
+             UnicodeString();
     explicit UnicodeString( const std::string& data );
     virtual ~UnicodeString();
     //@}
@@ -38,6 +39,20 @@ public:
         for( std::wstring::size_type i = 0; i < data_.size(); ++i )
             archive << static_cast< uint16 >( data_[ i ] );
     }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        uint32 size;
+        archive >> size;
+        data_.resize( size );
+        for( unsigned int i = 0; i < size; ++i )
+        {
+            uint16 character;
+            archive >> character;
+            data_[ i ] = character;
+        }
+    }
+    std::string str() const;
     //@}
 
 private:
