@@ -82,6 +82,7 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\3a\Carriers.h" />
     <ClInclude Include="..\..\src\libraries\3a\DPRESatisfaction.h" />
     <ClInclude Include="..\..\src\libraries\3a\FilterHelper.h" />
     <ClInclude Include="..\..\src\libraries\3a\Indicator.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="..\..\src\libraries\3a\Zone_ABC.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\3a\Carriers.cpp" />
     <ClCompile Include="..\..\src\libraries\3a\DPRESatisfaction.cpp" />
     <ClCompile Include="..\..\src\libraries\3a\ModelFunctionComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\3a\PowerIndicator.cpp" />

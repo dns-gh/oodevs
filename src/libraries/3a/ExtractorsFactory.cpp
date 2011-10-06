@@ -70,6 +70,7 @@ namespace
         std::map< Key, Value > extractors = boost::assign::list_of< std::pair< Key, Value > >
             ( "ambulances"                            , BuildExtractor< Value, attributes::LogMedicalEquipments >() )
             ( "close-combat-power"                    , BuildExtractor< Value, attributes::CloseCombatPower >( model ) )
+            ( "carriers"                              , BuildExtractor< Value, existences::Carriers >() )
             ( "crowd-states"                          , BuildExtractor< Value, attributes::CrowdStates >() )
             ( "damage-indirect-fires"                 , BuildExtractor< Value, events::DamageIndirectFire >() )
             ( "detecting-unit"                        , BuildExtractor< Value, attributes::Detections >() )

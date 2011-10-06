@@ -69,6 +69,10 @@ public:
     static sword::SimToClient UpdateStructuralState( unsigned long objectId, int stateValue );
     static sword::SimToClient UpdateResourceState( unsigned long objectId, float stateValue );
     static sword::SimToClient ChangeUnitRatio( unsigned long unitId, sword::ForceRatio_Value state );
+    static sword::SimToClient CreateCarrier( unsigned long requestId, unsigned int carrierId );
+    static sword::SimToClient SetupCarrier( unsigned long requestId, unsigned int carrierId, unsigned int dotationId );
+    static sword::SimToClient MoveCarrier( unsigned long requestId, unsigned int carrierId );
+    static sword::SimToClient FinishCarrier( unsigned long requestId, unsigned int carrierId );
     //@}
 
 private:

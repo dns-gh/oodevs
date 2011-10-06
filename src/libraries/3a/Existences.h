@@ -12,6 +12,7 @@
 
 #include "Values.h"
 #include "Extractors.h"
+#include "Carriers.h"
 
 // =============================================================================
 /** @namespace  Existences
@@ -28,6 +29,8 @@ namespace existences
 
         explicit Existence( const Extractor& extractor = Extractor() )
             : extractor_( extractor ) {}
+        explicit Existence( xml::xistream& xis )
+            : extractor_( xis ) {}
         void Receive( const sword::SimToClient& message )
         {
             if( extractor_.IsCreation( message ) )
@@ -43,6 +46,7 @@ typedef Existence< extractors::DirectFireTargetsId >          DirectFireTargetsI
 typedef Existence< extractors::IndirectFireTargetsPositions > IndirectFireTargetsPositions;
 typedef Existence< extractors::DirectFireUnitsId >            DirectFireUnitsId;
 typedef Existence< extractors::IndirectFireUnitsId >          IndirectFireUnitsId;
+typedef Existence< extractors::Carriers >                     Carriers;
 }
 
 #endif // __Existences_h_

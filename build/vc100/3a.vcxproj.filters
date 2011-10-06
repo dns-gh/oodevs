@@ -277,6 +277,9 @@
     <ClInclude Include="..\..\src\libraries\3a\DPRESatisfaction.h">
       <Filter>Source Files\model\values</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Carriers.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\3a\ModelFunctionComposite.cpp">
@@ -388,6 +391,9 @@
       <Filter>Source Files\types</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\3a\DPRESatisfaction.cpp">
+      <Filter>Source Files\model\values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\3a\Carriers.cpp">
       <Filter>Source Files\model\values</Filter>
     </ClCompile>
   </ItemGroup>

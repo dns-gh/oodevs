@@ -515,3 +515,66 @@ sword::SimToClient TestTools::ChangeUnitRatio( unsigned long unitId, sword::Forc
     attributes.set_force_ratio( state );
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: 3aTestTools::CreateCarrier
+// Created: JSR 2011-10-05
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::CreateCarrier( unsigned long requestId, unsigned int carrierId )
+{
+    SimToClient result;
+    LogSupplyHandlingUpdate& update = *result.mutable_message()->mutable_log_supply_handling_update();
+    update.mutable_request()->set_id( requestId );
+    update.mutable_convoyer()->set_id( carrierId );
+    update.set_state( sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: 3aTestTools::SetupCarrier
+// Created: JSR 2011-10-05
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::SetupCarrier( unsigned long requestId, unsigned int carrierId, unsigned int dotationId )
+{
+    SimToClient result;
+    LogSupplyHandlingUpdate& update = *result.mutable_message()->mutable_log_supply_handling_update();
+    update.mutable_request()->set_id( requestId );
+    update.mutable_convoyer()->set_id( carrierId );
+    update.set_state( sword::LogSupplyHandlingUpdate::convoy_setup );
+    sword::SupplyRecipientResourcesRequest* req = update.mutable_requests()->add_requests();
+    req->mutable_recipient()->set_id( 42 );
+    SupplyResourceRequest* supply = req->add_resources();
+    supply->mutable_resource()->set_id( dotationId );
+    supply->set_requested( 42 );
+    supply->set_granted( 42 );
+    supply->set_convoyed( 42 );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: 3aTestTools::MoveCarrier
+// Created: JSR 2011-10-05
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::MoveCarrier( unsigned long requestId, unsigned int carrierId )
+{
+    SimToClient result;
+    LogSupplyHandlingUpdate& update = *result.mutable_message()->mutable_log_supply_handling_update();
+    update.mutable_request()->set_id( requestId );
+    update.mutable_convoyer()->set_id( carrierId );
+    update.set_state( sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: 3aTestTools::FinishCarrier
+// Created: JSR 2011-10-05
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::FinishCarrier( unsigned long requestId, unsigned int carrierId )
+{
+    SimToClient result;
+    LogSupplyHandlingUpdate& update = *result.mutable_message()->mutable_log_supply_handling_update();
+    update.mutable_request()->set_id( requestId );
+    update.mutable_convoyer()->set_id( carrierId );
+    update.set_state( sword::LogSupplyHandlingUpdate::convoy_finished );
+    return result;
+}

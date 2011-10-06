@@ -2142,6 +2142,66 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestForceRatioInZone, Fixture )
     task->Commit();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Facade_TestCarriers
+// Created: JSR 2011-10-06
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestCarriers, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='carriers' id='carriers' dotations='21,22'/>"
+                             "    <extract function='positions' id='positions'/>"
+                             "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='circle'/>"
+                             "    <transform function='compose' type='position' input='positions,carriers' id='carriers-positions'/>"
+                             "    <transform function='contains' input='circle,carriers-positions' id='selected-carriers'/>"
+                             "    <transform function='filter' type='int' input='selected-carriers,carriers' id='the-carriers'/>"
+                             "    <reduce type='int' function='count' input='the-carriers' id='count'/>"
+                             "    <result function='plot' input='count' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    // 13 -> in zone, good dotation
+    // 14 -> in zone, good dotation
+    // 15 -> in zone, bad dotation
+    // 16 -> out of zone, good dotation
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateCarrier( 40, 13 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 13 ) ); // in zone
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 14 ) ); // in zone
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 15 ) ); // in zone
+    task->Receive( TestTools::MakePosition( "31TCM1543486826", 16 ) ); // out of zone
+    task->Receive( TestTools::CreateCarrier( 41, 14 ) );
+    task->Receive( TestTools::CreateCarrier( 42, 15 ) );
+    task->Receive( TestTools::CreateCarrier( 43, 16 ) );
+    task->Receive( TestTools::SetupCarrier( 41, 14, 21 ) );
+    task->Receive( TestTools::SetupCarrier( 43, 16, 21 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::SetupCarrier( 40, 13, 22 ) );
+    task->Receive( TestTools::SetupCarrier( 42, 15, 23 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MoveCarrier( 40, 13 ) );
+    task->Receive( TestTools::MoveCarrier( 41, 14 ) );
+    task->Receive( TestTools::MoveCarrier( 42, 15 ) );
+    task->Receive( TestTools::MoveCarrier( 43, 16 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MoveCarrier( 41, 14 ) );
+    task->Receive( TestTools::MoveCarrier( 43, 16 ) );
+    task->Receive( TestTools::FinishCarrier( 40, 13 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::FinishCarrier( 41, 14 ) );
+    task->Receive( TestTools::FinishCarrier( 43, 16 ) );
+    task->Receive( TestTools::FinishCarrier( 42, 15 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 2. )( 2. )( 2. )( 1. )( 0. );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]
 //(
