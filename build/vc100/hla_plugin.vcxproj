@@ -128,6 +128,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\SimulationFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Spatial.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVessel.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnicodeString.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UniqueId.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AgentController.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionsFacade.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
@@ -202,6 +204,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\SimulationFacade.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Spatial.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationController.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnicodeString.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UniqueId.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Agent_ABC.h" />

@@ -41,6 +41,9 @@
     <Filter Include="Source Files\Resolvers">
       <UniqueIdentifier>{d197b6f9-447b-4645-aeb5-a591705436eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Transportation">
+      <UniqueIdentifier>{0c58d9fa-3e3a-4144-a91c-fadb18fc4654}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
@@ -195,6 +198,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaClass.cpp">
       <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationController.cpp">
+      <Filter>Source Files\Transportation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -443,6 +449,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaClass.h">
       <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver_ABC.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationController.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationListener_ABC.h">
+      <Filter>Source Files\Transportation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

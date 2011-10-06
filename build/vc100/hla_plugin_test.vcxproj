@@ -173,6 +173,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SilentEntityTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SpatialTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationControllerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnicodeStringTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UniqueIdTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnitTeleporterTest.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockKnowledgeGroup.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockLocalAgentResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMessageController.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMissionResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockModel.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMunitionTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectIdentifierFactory.h" />
@@ -211,6 +213,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassadorFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSimulationPublisher.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTeam.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationListener.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUnitTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUpdateFunctor.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\DeserializationTools.h" />
