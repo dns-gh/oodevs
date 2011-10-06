@@ -377,8 +377,9 @@ FunctionEnd
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
         WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}" "RootDirectory" "$INSTDIR\${ComponentName}\applications"
         nsisunz::Unzip "$INSTDIR\installation files\terraintools_${PLATFORM}.zip" "$INSTDIR\${ComponentName}"
-        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_WKP).lnk" "$INSTDIR\Terrain\applications\terrain_workshop_app.exe"
-        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_GEN).lnk" "$INSTDIR\Terrain\applications\generation_app.exe"
+        SetOutPath "$INSTDIR\Terrain\applications"
+        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_WKP).lnk" "$INSTDIR\Terrain\applications\terrain_workshop_app.exe" ""
+        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_GEN).lnk" "$INSTDIR\Terrain\applications\generation_app.exe" ""
     SectionEnd
 
 !macroend
