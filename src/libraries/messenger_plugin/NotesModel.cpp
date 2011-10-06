@@ -15,6 +15,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/MessengerSenders.h"
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
@@ -62,6 +63,9 @@ void NotesModel::HandleRequest( const sword::MarkerCreationRequest& message, uns
 {
     if( currentTime_.empty() )
         return;
+    messenger::MarkerCreationRequestAck ack;
+    ack().set_error_code( sword::MarkerRequestAck::no_error );
+    ack.Send( clients_, context );
     std::auto_ptr< Note > note( new Note( idManager_.NextId(), message, currentTime_ ) );
     Register( note->GetId(), *note );
     if( note->GetParent() )
@@ -81,6 +85,9 @@ void NotesModel::HandleRequest( const sword::MarkerCreationRequest& message, uns
 void NotesModel::HandleRequest( const sword::MarkerDestructionRequest& message )
 {
     Note* note = Find( message.marker().id() );
+    messenger::MarkerDestructionRequestAck ack;
+    ack().set_error_code( note ? sword::MarkerRequestAck::no_error : sword::MarkerRequestAck::error_invalid_id );
+    ack.Send( clients_ );
     if( note )
     {
         if( message.delete_all() )
@@ -88,7 +95,7 @@ void NotesModel::HandleRequest( const sword::MarkerDestructionRequest& message )
         else
             HandleRequestDestructSingle( note );
         SaveNotes();
-   }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -98,24 +105,36 @@ void NotesModel::HandleRequest( const sword::MarkerDestructionRequest& message )
 void NotesModel::HandleRequest( const sword::MarkerUpdateRequest& message )
 {
     Note* note = Find( message.marker().id() );
-    if( note )
+    messenger::MarkerUpdateRequestAck ack;
+    if( !note )
     {
-        if( message.has_parent() )
-        {
-            Note* oldParent = Find( note->GetParent() );
-            Note* newParent = Find( message.parent().id() );
-            if( newParent != oldParent )
-            {
-                if( oldParent )
-                    oldParent->RemoveChild( note->GetId() );
-                if( newParent )
-                    newParent->AddChild( note->GetId() );
-            }
-        }
-        note->Update( message, currentTime_ );
-        note->SendUpdate( clients_, false );
-        SaveNotes();
+        ack().set_error_code( sword::MarkerRequestAck::error_invalid_id );
+        ack.Send( clients_ );
+        return;
     }
+    if( message.has_parent() )
+    {
+        Note* newParent = Find( message.parent().id() );
+        if( !newParent )
+        {
+            ack().set_error_code( sword::MarkerRequestAck::error_invalid_parent );
+            ack.Send( clients_ );
+            return;
+        }
+        Note* oldParent = Find( note->GetParent() );
+        if( newParent != oldParent )
+        {
+            if( oldParent )
+                oldParent->RemoveChild( note->GetId() );
+            if( newParent )
+                newParent->AddChild( note->GetId() );
+        }
+    }
+    ack().set_error_code( sword::MarkerRequestAck::no_error );
+    ack.Send( clients_ );
+    note->Update( message, currentTime_ );
+    note->SendUpdate( clients_, false );
+    SaveNotes();
 }
 
 // -----------------------------------------------------------------------------

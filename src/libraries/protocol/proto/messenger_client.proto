@@ -647,7 +647,6 @@ message MarkerRequestAck {
     @brief A marker creation request acknowledgement message.
 
     This message is sent when a marker is created in response to a client request.
-    @bug not registered into MessengerToClient, never sent
 */
 message MarkerCreationRequestAck {
     /** @property error_code
@@ -663,7 +662,6 @@ message MarkerCreationRequestAck {
     @brief A marker update request acknowledgement message.
 
     This message is sent when a marker is updated in response to a client request.
-    @bug not registered into MessengerToClient, never sent
 */
 message MarkerUpdateRequestAck {
     /** @property error_code
@@ -678,7 +676,6 @@ message MarkerUpdateRequestAck {
     @brief A marker destruction request acknowledgement message.
 
     This message is sent when a marker is destroyed in response to a client request.
-    @bug not registered into MessengerToClient, never sent
 */
 message MarkerDestructionRequestAck {
     /** @property error_code
@@ -889,6 +886,9 @@ message MessengerToClient {
         optional ClientObjectCreationRequestAck    client_object_creation_ack           = 32; //!< @copybrief ClientObjectCreationRequestAck @see ClientObjectCreationRequestAck
         optional ClientObjectUpdateRequestAck      client_object_update_ack             = 33; //!< @copybrief ClientObjectUpdateRequestAck @see ClientObjectUpdateRequestAck
         optional ClientObjectDestructionRequestAck client_object_destruction_ack        = 34; //!< @copybrief ClientObjectDestructionRequestAck @see ClientObjectDestructionRequestAck
+        optional MarkerCreationRequestAck          marker_creation_request_ack          = 35; //!< @copybrief MarkerCreationRequestAck @see MarkerCreationRequestAck
+        optional MarkerUpdateRequestAck            marker_update_request_ack            = 36; //!< @copybrief MarkerUpdateRequestAck @see MarkerUpdateRequestAck
+        optional MarkerDestructionRequestAck       marker_destruction_request_ack       = 37; //!< @copybrief MarkerDestructionRequestAck @see MarkerDestructionRequestAck
     }
     /** @property context
         @brief Identifies the request matching the response.

@@ -127,6 +127,45 @@ void MessengerToClient::Convert( const sword::MarkerDestruction& from, MsgsMesse
     CONVERT_ID( marker );
 }
 
+namespace
+{
+    template< typename From, typename To >
+    void ConvertMarkerRequestAckErrorCode( const From& from, To* to )
+    {
+        CONVERT_ENUM( error_code, ( sword::MarkerRequestAck::no_error, MsgsMessengerToClient::MarkerRequestAck::no_error )
+            ( sword::MarkerRequestAck::error_invalid_id, MsgsMessengerToClient::MarkerRequestAck::error_invalid_id )
+            ( sword::MarkerRequestAck::error_invalid_parent, MsgsMessengerToClient::MarkerRequestAck::error_invalid_parent ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessengerToClient::Convert
+// Created: JSR 2011-10-06
+// -----------------------------------------------------------------------------
+void MessengerToClient::Convert( const sword::MarkerCreationRequestAck& from, MsgsMessengerToClient::MsgMarkerCreationRequestAck* to )
+{
+    ConvertMarkerRequestAckErrorCode( from, to );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessengerToClient::Convert
+// Created: JSR 2011-10-06
+// -----------------------------------------------------------------------------
+void MessengerToClient::Convert( const sword::MarkerUpdateRequestAck& from, MsgsMessengerToClient::MsgMarkerUpdateRequestAck* to )
+{
+    if( from.has_error_code() )
+        ConvertMarkerRequestAckErrorCode( from, to );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessengerToClient::Convert
+// Created: JSR 2011-10-06
+// -----------------------------------------------------------------------------
+void MessengerToClient::Convert( const sword::MarkerDestructionRequestAck& from, MsgsMessengerToClient::MsgMarkerDestructionRequestAck* to )
+{
+    ConvertMarkerRequestAckErrorCode( from, to );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MessengerToClient::Convert
 // Created: MCO 2010-11-08

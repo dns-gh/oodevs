@@ -41,6 +41,9 @@ public:
     static void Convert( const sword::MarkerCreation& from, MsgsMessengerToClient::MsgMarkerCreation* to );
     static void Convert( const sword::MarkerUpdate& from, MsgsMessengerToClient::MsgMarkerUpdate* to );
     static void Convert( const sword::MarkerDestruction& from, MsgsMessengerToClient::MsgMarkerDestruction* to );
+    static void Convert( const sword::MarkerCreationRequestAck& from, MsgsMessengerToClient::MsgMarkerCreationRequestAck* to );
+    static void Convert( const sword::MarkerUpdateRequestAck& from, MsgsMessengerToClient::MsgMarkerUpdateRequestAck* to );
+    static void Convert( const sword::MarkerDestructionRequestAck& from, MsgsMessengerToClient::MsgMarkerDestructionRequestAck* to );
 
     static void Convert( const sword::ClientObjectCreation& from, MsgsMessengerToClient::MsgClientObjectCreation* to );
     static void Convert( const sword::ClientObjectUpdate& from, MsgsMessengerToClient::MsgClientObjectUpdate* to );
