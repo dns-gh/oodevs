@@ -7692,6 +7692,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
+        <mission name="AUTOMATE NRBC Armer un Site de Decontamination"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -10020,4 +10021,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3101295712" -->
+<!-- signature="1651283042" -->
