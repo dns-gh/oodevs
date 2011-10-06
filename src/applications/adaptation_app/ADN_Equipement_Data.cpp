@@ -365,6 +365,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDotation )
     : CategoryInfo( parentDotation )
+    , bIED_                 ( false )
     , bDirect_              ( false )
     , bIndirect_            ( false )
     , bIlluminating_        ( false )
@@ -387,6 +388,7 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
 {
     AmmoCategoryInfo* pCopy = new AmmoCategoryInfo( parentResource_ );
     pCopy->nType_ = nType_.GetData();
+    pCopy->bIED_ = bIED_.GetData();
     pCopy->bDirect_ = bDirect_.GetData();
     pCopy->bIndirect_ = bIndirect_.GetData();
 
@@ -464,6 +466,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
 
     std::string type;
     input >> xml::optional >> xml::attribute( "type", type );
+    input >> xml::optional >> xml::attribute( "ied", bIED_ );
     if( !type.empty() )
     {
         nType_ = ADN_Tr::ConvertToMunitionType( type );
@@ -508,13 +511,14 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
     output << xml::start( "resource" );
     CategoryInfo::WriteContent( output );
     output << xml::attribute( "type", ADN_Tr::ConvertFromMunitionType( nType_.GetData() ) );
+    if( bIED_.GetData() == true )
+        output << xml::attribute( "ied", bIED_.GetData() );
     if( bIlluminating_.GetData() == true )
     {
         output << xml::start( "illuminating" )
                 << xml::attribute( "range", fRange_.GetData() )
                 << xml::attribute( "maintain", bMaintainIllumination_.GetData() )
                 << xml::end;
-
     }
     if( bGuided_.GetData() == true )
     {
@@ -522,7 +526,6 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
                 << xml::attribute( "maintain", bMaintainGuidance_.GetData() )
                 << xml::attribute( "range", fGuidanceRange_.GetData() )
                << xml::end;
-
     }
     if( bDirect_.GetData() == true )
     {

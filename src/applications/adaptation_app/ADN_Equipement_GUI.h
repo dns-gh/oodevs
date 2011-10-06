@@ -74,6 +74,7 @@ public:
         eMaintainGuidance,
         eGuidanceRange,
         eLogisticSupplyClass,
+        eIsIED,
         eNbrAmmoGuiElements
     };
 

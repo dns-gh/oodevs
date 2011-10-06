@@ -1616,6 +1616,10 @@ Arrêt moteur allumé</translation>
         <source>Logistic supply class</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Improvised explosive device</source>
+        <translation>Engin explosif improvisé</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>

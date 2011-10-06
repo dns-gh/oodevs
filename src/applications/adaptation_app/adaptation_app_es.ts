@@ -1614,6 +1614,10 @@ estacionado con motor encendido</translation>
         <source>Logistic supply class</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Improvised explosive device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>

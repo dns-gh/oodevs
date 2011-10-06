@@ -260,6 +260,12 @@
 								<xs:documentation>Id de la nature de la dotation</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
+						<xs:attribute name="ied" type="xs:boolean" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Used for explosions (terrorist attack, etc.)</xs:documentation>
+								<xs:documentation xml:lang="fr">Utilisé pour les explosions (attaques terroristes, etc.)</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
 						<xs:attribute name="codeEMAT6" type="xs:string" use="optional">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">TODO</xs:documentation>

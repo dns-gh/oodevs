@@ -164,6 +164,7 @@ public:
         ADN_Type_Bool bIlluminating_;
         ADN_Type_Bool bMaintainIllumination_;
         ADN_Type_Double fRange_;
+        ADN_Type_Bool bIED_;
 
         IndirectAmmoInfos indirectAmmoInfos_;
 

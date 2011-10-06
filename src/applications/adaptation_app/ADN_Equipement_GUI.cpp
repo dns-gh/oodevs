@@ -162,6 +162,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddEnumField< E_MunitionType >( pHolder, tr( "Type" ), vConnectors[ eType ], ADN_Tr::ConvertFromMunitionType );
     builder.AddField< ADN_ComboBox_Equipment_Nature >( pHolder, tr( "Nature" ), vConnectors[ eNature ] );
     builder.AddField< ADN_ComboBox_Equipment_LogisticSupplyClass >( pHolder, tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );
+    builder.AddField<ADN_CheckBox>( pHolder, tr( "Improvised explosive device" ), vConnectors[ eIsIED ] );
 
     // Packaging
     Q3GroupBox* pPackagingGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox );
