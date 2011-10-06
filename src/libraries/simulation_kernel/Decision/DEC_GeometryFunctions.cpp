@@ -1056,7 +1056,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeTrafficableLocalisation
-// @return a position which the agent can reach when the point is in an urban block
+// @return positions which the agent can reach when the point is in an urban block
 // Created: LMT 2010-11-03
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTrafficableLocalisation( const MT_Vector2D& point )
@@ -1064,7 +1064,14 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTr
     if( const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
     {
         UrbanObjectWrapper& wrapper = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *terrainObject );
-        return wrapper.ComputeLocalisationsInsideBlock();
+		std::vector< boost::shared_ptr< MT_Vector2D > > points = wrapper.ComputeLocalisationsInsideBlock();
+		std::vector< boost::shared_ptr< MT_Vector2D > > trafficablePoints;
+		for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
+		{
+			if( ! DEC_GeometryFunctions::IsPointInUrbanBlock( **it, &wrapper ) )
+				trafficablePoints.push_back( *it );
+		}
+        return trafficablePoints;
     }
     else
 	{
@@ -1102,12 +1109,12 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlock( const MT_Vector2D& point, const
 // Name: DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable
 // Created: LMT 2010-10-18
 // -----------------------------------------------------------------------------
-bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point, bool loadedWeight )
+bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point )
 {
     if( const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
     {
         const UrbanObjectWrapper& terrainObject = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object );
-            return terrainObject.GetTrafficability() >= pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( loadedWeight );
+            return terrainObject.GetTrafficability() >= pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true );
     }
     return true;
 }
