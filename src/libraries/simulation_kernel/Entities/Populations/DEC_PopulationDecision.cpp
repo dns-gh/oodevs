@@ -169,6 +169,10 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     brain[ "DEC_Agent_EstDansFoule" ] =
         boost::function< bool(  DEC_Decision_ABC* ) >( boost::bind( &DEC_PopulationFunctions::IsAgentInside, boost::ref( GetPopulation() ), _1 ) );
 
+    // Orders
+    brain[ "DEC_AssignMissionCrowdParameter" ] = 
+        boost::function< void( boost::shared_ptr< MIL_Mission_ABC >, const std::string&, int ) >( boost::bind( &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter, this, _1, _2, _3 ) );
+
     // Knowledge agents
     brain[ "DEC_ConnaissanceAgent_RoePopulation" ] =
         boost::function< int ( int ) > ( boost::bind(&DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation, _1 ) );

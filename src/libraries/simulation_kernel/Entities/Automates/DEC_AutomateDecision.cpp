@@ -307,6 +307,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
             boost::function< bool (unsigned int)> ( boost::bind( &DEC_OrdersFunctions::GetMissionLimaFlag < MIL_Automate >, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_SetMissionLimaFlagHoraire" ] =
             boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag, boost::ref( GetAutomate() ), _1, _2 ) );
+    brain[ "DEC_AssignMissionCrowdParameter" ] = 
+            boost::function< void( boost::shared_ptr< MIL_Mission_ABC >, const std::string&, int ) >( boost::bind( &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter, this, _1, _2, _3 ) );
 
     // MRT / conduite
     brain[ "DEC_MRT_CreerMissionPion" ] =

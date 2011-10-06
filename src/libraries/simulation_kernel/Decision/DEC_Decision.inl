@@ -44,7 +44,7 @@ DEC_Decision< T >::~DEC_Decision()
 
 namespace DEC_DecisionImpl
 {
-    void RegisterCommonUserFunctions( directia::brain::Brain& brain , bool isMasalife, DEC_Decision_ABC* decision );
+    void RegisterCommonUserFunctions( directia::brain::Brain& brain , bool isMasalife );
     void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
     bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type, bool reload );
 }
@@ -79,7 +79,7 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
 
     if( newBrain )
     {
-        DEC_DecisionImpl::RegisterCommonUserFunctions( *pArchetypeBrain, isMasalife_, this );
+        DEC_DecisionImpl::RegisterCommonUserFunctions( *pArchetypeBrain, isMasalife_ );
         RegisterUserArchetypeFunctions( *pArchetypeBrain );
     }
 
