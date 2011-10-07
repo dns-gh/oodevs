@@ -17,6 +17,7 @@
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/DictionaryType.h"
+#include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "tools/SchemaWriter.h"
@@ -69,11 +70,25 @@ void ProfileManager::Receive( const sword::SimToClient& wrapper )
         Reset();
     if( wrapper.message().has_control_checkpoint_save_end() )
     {
-        std::string strPath = config_.GetCheckpointDirectory( wrapper.message().control_checkpoint_save_end().name() );
-        const bfs::path p( strPath, bfs::native );
-        if ( !bfs::exists( p ) )
-            bfs::create_directories( p );
-        Save( strPath );
+        try
+        {            
+            std::string strPath = config_.GetCheckpointDirectory( wrapper.message().control_checkpoint_save_end().name() );
+            MT_LOG_INFO_MSG( "Begin save checkpoint " << strPath );
+            const bfs::path p( strPath, bfs::native );
+            if ( !bfs::exists( p ) )
+                bfs::create_directories( p );
+            Save( strPath );
+        }
+        catch( std::exception& exception )
+        {
+            MT_LOG_ERROR_MSG( MT_FormatString( "Can't save checkpoint ( '%s' )", exception.what() ) );
+        }
+        catch( ... )
+        {
+            _clearfp();
+            MT_LOG_ERROR_MSG( "Can't save checkpoint ( Unknown error )" );
+        }
+        MT_LOG_INFO_MSG( "End save checkpoint" );
     }
 }
 
