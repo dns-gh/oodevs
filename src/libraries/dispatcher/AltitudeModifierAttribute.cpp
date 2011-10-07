@@ -18,8 +18,7 @@ using namespace dispatcher;
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute::AltitudeModifierAttribute( const sword::ObjectAttributes& msg )
-    : readFromODB_( false )
-    , height_     ( 0 )
+    : height_     ( 0 )
 {
     Update( msg );
 }
@@ -40,10 +39,7 @@ AltitudeModifierAttribute::~AltitudeModifierAttribute()
 void AltitudeModifierAttribute::Update( const sword::ObjectAttributes& msg )
 {
     if( msg.has_altitude_modifier() )
-    {
         height_ = msg.altitude_modifier().height();
-        readFromODB_ = msg.altitude_modifier().from_preparation();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -53,5 +49,4 @@ void AltitudeModifierAttribute::Update( const sword::ObjectAttributes& msg )
 void AltitudeModifierAttribute::Send( sword::ObjectAttributes& msg ) const
 {
     msg.mutable_altitude_modifier()->set_height( height_ );
-    msg.mutable_altitude_modifier()->set_from_preparation( readFromODB_ );
 }

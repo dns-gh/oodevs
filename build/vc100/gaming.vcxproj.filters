@@ -811,6 +811,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\TrafficabilityAttribute.cpp">
       <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\FloodProxy.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1529,6 +1532,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\TrafficabilityAttribute.h">
       <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\FloodProxy.h">
+      <Filter>Source Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

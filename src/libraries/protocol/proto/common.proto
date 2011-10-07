@@ -1203,7 +1203,6 @@ message ObjectAttributeSupplyRoute {
 message ObjectAttributeFlood {
    required int32 depth              = 1; //!< The depth in meters
    required int32 reference_distance = 2; //!< The flood maximum radius in meters
-   required bool  from_preparation   = 3; //!< True if the object was created during preparation
 }
 
 /** @struct LocatedQuantity
@@ -1338,7 +1337,6 @@ message ObjectAttributeNBCType {
 */
 message ObjectAttributeAltitudeModifier {
    required int32 height           = 1; //!< The height in meters
-   required bool  from_preparation = 2; //!< True if the object was created during preparation
 }
 
 /** @struct ObjectAttributeUnderground

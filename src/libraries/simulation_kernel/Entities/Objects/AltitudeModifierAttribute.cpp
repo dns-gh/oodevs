@@ -25,8 +25,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< Alt
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute::AltitudeModifierAttribute()
-    : readFromODB_( false )
-    , height_     ( 0 )
+    : height_     ( 0 )
 {
     // NOTHING
 }
@@ -36,8 +35,7 @@ AltitudeModifierAttribute::AltitudeModifierAttribute()
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute::AltitudeModifierAttribute( const xml::xistream& xis )
-    : readFromODB_( true )
-    , height_     ( xis.attribute< int >( "height" ) )
+    : height_     ( xis.attribute< int >( "height" ) )
 {
     if( height_ < 0 )
         xis.error( "height_ is not greater than or equal to 0" );
@@ -48,8 +46,7 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( const xml::xistream& xis )
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute::AltitudeModifierAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& localisation )
-    : readFromODB_( false )
-    , height_     ( attributes.list( 1 ).quantity() )
+    : height_     ( attributes.list( 1 ).quantity() )
 {
     ModifyAltitude( localisation );
 }
@@ -71,7 +68,6 @@ template< typename Archive >
 void AltitudeModifierAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & readFromODB_
          & height_;
 }
 
@@ -111,7 +107,6 @@ void AltitudeModifierAttribute::WriteODB( xml::xostream& xos ) const
 void AltitudeModifierAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_altitude_modifier()->set_height( height_ );
-    asn.mutable_altitude_modifier()->set_from_preparation( readFromODB_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +130,6 @@ bool AltitudeModifierAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute& AltitudeModifierAttribute::operator=( const AltitudeModifierAttribute& from )
 {
-    readFromODB_ = from.readFromODB_;
     height_ = from.height_;
     return *this;
 }
@@ -149,26 +143,32 @@ bool AltitudeModifierAttribute::Update( const AltitudeModifierAttribute& rhs )
     if( height_ != rhs.height_ )
     {
         NotifyAttributeUpdated( eOnUpdate );
-        readFromODB_ = false;
         height_ = rhs.height_;
     }
     return NeedUpdate( eOnUpdate );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AltitudeModifierAttribute::ReadFromODB
-// Created: JSR 2011-05-20
-// -----------------------------------------------------------------------------
-bool AltitudeModifierAttribute::ReadFromODB() const
+namespace
 {
-    return readFromODB_;
+    PHY_RawVisionData& GetRawVisionData()
+    {
+        return const_cast< PHY_RawVisionData& >( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() );
+    }
 }
-
 // -----------------------------------------------------------------------------
 // Name: AltitudeModifierAttribute::ModifyAltitude
 // Created: JSR 2011-05-19
 // -----------------------------------------------------------------------------
 void AltitudeModifierAttribute::ModifyAltitude( const TER_Localisation& localisation ) const
 {
-    const_cast< PHY_RawVisionData& >( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() ).ModifyAltitude( localisation, static_cast< short >( height_ ) );
+    GetRawVisionData().ModifyAltitude( localisation, static_cast< short >( height_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AltitudeModifierAttribute::ResetAltitude
+// Created: JSR 2011-10-07
+// -----------------------------------------------------------------------------
+void AltitudeModifierAttribute::ResetAltitude( const TER_Localisation& localisation ) const
+{
+    GetRawVisionData().ModifyAltitude( localisation, - static_cast< short >( height_ ) );
 }

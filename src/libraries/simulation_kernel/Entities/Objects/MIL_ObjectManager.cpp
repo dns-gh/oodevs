@@ -18,7 +18,6 @@
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectLoader.h"
 #include "MIL_ObjectManipulator_ABC.h"
-#include "MIL_Singletons.h"
 #include "UrbanObjectWrapper.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
@@ -51,8 +50,7 @@ MIL_ObjectManager::MIL_ObjectManager()
 MIL_ObjectManager::~MIL_ObjectManager()
 {
     for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
-        if( it->second )
-            delete it->second;
+        delete it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -98,6 +96,15 @@ void MIL_ObjectManager::UpdateStates()
         MIL_Object_ABC& object = *it->second;
         if( object.IsReadyForDeletion() )
         {
+            if( const AltitudeModifierAttribute* altitude = object.RetrieveAttribute< AltitudeModifierAttribute >() )
+            {
+                const TER_Localisation& localisation = object.GetLocalisation();
+                altitude->ResetAltitude( localisation );
+                for( IT_ObjectMap obj = objects_.begin(); obj != objects_.end(); ++obj )
+                    if( FloodAttribute* flood = obj->second->RetrieveAttribute< FloodAttribute >() )
+                        if( localisation.IsIntersecting( flood->GetLocalisation() ) )
+                            flood->GenerateFlood( true );
+            }
             object.SendDestruction();
             if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object ) )
                 urbanObjects_.erase( &wrapper->GetObject() );
@@ -187,21 +194,30 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
 sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies )
-{  //@TODO MGD Try to externalize ASN when protobuff will be merged
-   //@HBD : Verify later that conversion from MIL_Army to MIL_Army_ABC was right
+{
     if( !( message.elem_size() == 4 || message.elem_size() == 5 ) ) // type, location, name, team, attributes
         return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
 
     MIL_Army_ABC* pArmy = 0;
-    if ( message.elem( 3 ).value().Get( 0 ).has_identifier() )
-        pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).identifier() );
-    else if ( message.elem( 3 ).value().Get( 0 ).has_party() )
-        pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).party().id() );
+    const sword::MissionParameter_Value& value = message.elem( 3 ).value( 0 );
+    if( value.has_identifier() )
+        pArmy = armies.Find( value.identifier() );
+    else if( value.has_party() )
+        pArmy = armies.Find( value.party().id() );
     if( !pArmy )
         return sword::ObjectMagicActionAck::error_invalid_party;
-    sword::ObjectMagicActionAck_ErrorCode value = sword::ObjectMagicActionAck::no_error;
-    RegisterObject( builder_->BuildObject( message, *pArmy, value ) );
-    return value;
+    sword::ObjectMagicActionAck_ErrorCode errorCode = sword::ObjectMagicActionAck::no_error;
+    MIL_Object_ABC* pObject = builder_->BuildObject( message, *pArmy, errorCode );
+    if( pObject && pObject->RetrieveAttribute< AltitudeModifierAttribute >() )
+    {
+        const TER_Localisation& localisation = pObject->GetLocalisation();
+        for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+            if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )
+                if( localisation.IsIntersecting( flood->GetLocalisation() ) )
+                    flood->GenerateFlood( true );
+    }
+    RegisterObject( pObject );
+    return errorCode;
 }
 
 // -----------------------------------------------------------------------------
@@ -287,26 +303,11 @@ void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
 void MIL_ObjectManager::FinalizeObjects()
 {
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
-    {
-        AltitudeModifierAttribute* altitude = it->second->RetrieveAttribute< AltitudeModifierAttribute >();
-        if( altitude && altitude->ReadFromODB() )
+        if( AltitudeModifierAttribute* altitude = it->second->RetrieveAttribute< AltitudeModifierAttribute >() )
             altitude->ModifyAltitude( it->second->GetLocalisation() );
-    }
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
-    {
-        FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >();
-        if( flood && flood->ReadFromODB() )
+        if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )
             flood->GenerateFlood();
-    }
-    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
-    {
-        AltitudeModifierAttribute* altitude = it->second->RetrieveAttribute< AltitudeModifierAttribute >();
-        FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >();
-        if( altitude && !altitude->ReadFromODB() )
-            altitude->ModifyAltitude( it->second->GetLocalisation() );
-        if( flood && !flood->ReadFromODB() )
-            flood->GenerateFlood();
-    }
 }
 
 // -----------------------------------------------------------------------------

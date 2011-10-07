@@ -29,7 +29,6 @@ using namespace geometry;
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute()
     : floodModel_ ( new flood::FloodModel( *this ) )
-    , readFromODB_( false )
     , depth_      ( 0 )
     , refDist_    ( 0 )
 {
@@ -42,7 +41,6 @@ FloodAttribute::FloodAttribute()
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute( xml::xistream& xis, const TER_Localisation& objectLocation )
     : floodModel_ ( new flood::FloodModel( *this ) )
-    , readFromODB_( true )
     , depth_      ( xis.attribute< int >( "depth" ) )
     , refDist_    ( xis.attribute< int >( "reference-distance" ) )
     , location_   ( objectLocation.ComputeBarycenter(), refDist_ )
@@ -56,7 +54,6 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const TER_Localisation& obje
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& objectLocation )
     : floodModel_ ( new flood::FloodModel( *this ) )
-    , readFromODB_( false )
     , depth_      ( attributes.list( 1 ).quantity() )
     , refDist_    ( attributes.list( 2 ).quantity() )
     , location_   ( objectLocation.ComputeBarycenter(), refDist_ )
@@ -79,7 +76,6 @@ FloodAttribute::~FloodAttribute()
 // -----------------------------------------------------------------------------
 FloodAttribute& FloodAttribute::operator=( const FloodAttribute& from )
 {
-    readFromODB_ = from.readFromODB_;
     depth_ = from.depth_;
     refDist_ = from.refDist_;
     location_.Reset( from.location_ );
@@ -96,7 +92,6 @@ bool FloodAttribute::Update( const FloodAttribute& rhs )
     if( depth_ != rhs.depth_ || refDist_ != rhs.refDist_ || !( location_ == rhs.location_ ) )
     {
         NotifyAttributeUpdated( eOnUpdate );
-        readFromODB_ = false;
         depth_ = rhs.depth_;
         refDist_ = rhs.refDist_;
         location_.Reset( rhs.location_ );
@@ -105,30 +100,18 @@ bool FloodAttribute::Update( const FloodAttribute& rhs )
     return NeedUpdate( eOnUpdate );
 }
 
-// -----------------------------------------------------------------------------
-// Name: FloodAttribute::load
-// Created: JSR 2010-12-21
-// -----------------------------------------------------------------------------
-void FloodAttribute::load( MIL_CheckPointInArchive& file, const unsigned int )
-{
-    file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         >> readFromODB_
-         >> depth_
-         >> refDist_
-         >> location_;
-}
 
 // -----------------------------------------------------------------------------
-// Name: FloodAttribute::save
-// Created: JSR 2010-12-21
+// Name: FloodAttribute::serialize
+// Created: JSR 2011-10-07
 // -----------------------------------------------------------------------------
-void FloodAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+template< typename Archive >
+void FloodAttribute::serialize( Archive& file, const unsigned int )
 {
-    file << boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         << readFromODB_
-         << depth_
-         << refDist_
-         << location_;
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
+         & depth_
+         & refDist_
+         & location_;
 }
 
 // -----------------------------------------------------------------------------
@@ -188,7 +171,6 @@ void FloodAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_flood()->set_depth( depth_ );
     asn.mutable_flood()->set_reference_distance( refDist_ );
-    asn.mutable_flood()->set_from_preparation( readFromODB_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,15 +196,6 @@ void FloodAttribute::GenerateFlood( bool force )
 {
     MT_Vector2D center = location_.ComputeBarycenter();
     floodModel_->GenerateFlood( Point2d( center.rX_, center.rY_ ), depth_, refDist_, force );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FloodAttribute::ReadFromODB
-// Created: JSR 2011-05-20
-// -----------------------------------------------------------------------------
-bool FloodAttribute::ReadFromODB() const
-{
-    return readFromODB_;
 }
 
 // -----------------------------------------------------------------------------

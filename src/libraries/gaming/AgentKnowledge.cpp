@@ -258,7 +258,7 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewpor
 // Name: AgentKnowledge::ElementsToKeep
 // Created: AGE 2006-10-25
 // -----------------------------------------------------------------------------
-unsigned int AgentKnowledge::ElementsToKeep( E_PerceptionResult perception ) const
+std::size_t AgentKnowledge::ElementsToKeep( E_PerceptionResult perception ) const
 {
     switch( perception )
     {
@@ -284,7 +284,7 @@ const kernel::Karma& AgentKnowledge::TeamKarma( E_PerceptionResult perception ) 
 
 namespace
 {
-    std::string Strip( const std::string& nature, unsigned int keep )
+    std::string Strip( const std::string& nature, std::size_t keep )
     {
         QStringList list = QStringList::split( '/',  nature.c_str() );
         while( list.size() > keep )
@@ -301,7 +301,7 @@ namespace
 void AgentKnowledge::UpdateSymbol()
 {
     E_PerceptionResult perception = nMaxPerceptionLevel_.IsSet() ? nMaxPerceptionLevel_ : eDetection;
-    const unsigned int toKeep = ElementsToKeep( perception );
+    const std::size_t toKeep = ElementsToKeep( perception );
 
     currentSymbol_ = fullSymbol_;
     App6Symbol::SetKarma( currentSymbol_, TeamKarma( perception ) );

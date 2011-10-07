@@ -18,8 +18,7 @@ using namespace dispatcher;
 // Created: JSR 2010-12-16
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute( const sword::ObjectAttributes& msg )
-    : readFromODB_( false )
-    , depth_      ( 0 )
+    : depth_      ( 0 )
     , refDist_    ( 0 )
 {
     Update( msg );
@@ -44,7 +43,6 @@ void FloodAttribute::Update( const sword::ObjectAttributes& msg )
     {
         depth_ = msg.flood().depth();
         refDist_ = msg.flood().reference_distance();
-        readFromODB_ = msg.flood().from_preparation();
     }
 }
 
@@ -56,5 +54,4 @@ void FloodAttribute::Send( sword::ObjectAttributes& msg ) const
 {
     msg.mutable_flood()->set_depth( depth_ );
     msg.mutable_flood()->set_reference_distance( refDist_ );
-    msg.mutable_flood()->set_from_preparation( readFromODB_ );
 }

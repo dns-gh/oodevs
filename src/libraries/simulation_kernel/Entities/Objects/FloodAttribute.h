@@ -55,9 +55,8 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive&, const unsigned int );
-    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    template< typename Archive >
+    void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name From ObjectAttribute_ABC
@@ -86,7 +85,6 @@ public:
     //! @name Operations
     //@{
     void GenerateFlood( bool force = false );
-    bool ReadFromODB() const;
     const TER_Localisation& GetLocalisation() const;
     const std::vector< geometry::Polygon2f* >& GetDeepAreas() const;
     const std::vector< geometry::Polygon2f* >& GetLowAreas() const;
@@ -102,7 +100,6 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< flood::FloodModel > floodModel_;
-    bool readFromODB_;
     int depth_;
     int refDist_;
     TER_Localisation location_;

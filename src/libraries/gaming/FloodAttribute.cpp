@@ -9,30 +9,25 @@
 
 #include "gaming_pch.h"
 #include "FloodAttribute.h"
+#include "FloodProxy.h"
 #include "Tools.h"
 #include "clients_kernel/AltitudeModified.h"
-#include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Positions.h"
-#include "flood/FloodDrawer.h"
-#include "flood/FloodModel.h"
-
-#pragma warning( disable : 4355 )
 
 // -----------------------------------------------------------------------------
 // Name: FloodAttribute constructor
 // Created: JSR 2010-12-15
 // -----------------------------------------------------------------------------
-FloodAttribute::FloodAttribute( kernel::Controller& controller, const kernel::DetectionMap& detection, const kernel::Positions& positions )
+FloodAttribute::FloodAttribute( kernel::Controller& controller, FloodProxy& proxy, const kernel::Positions& positions )
     : controller_ ( controller )
-    , detection_  ( detection )
     , positions_  ( positions )
-    , floodModel_ ( new flood::FloodModel( *this ) )
-    , floodDrawer_( new flood::FloodDrawer( *floodModel_ ) )
-    , readFromODB_( false )
+    , proxy_      ( proxy )
+    , floodId_    ( 0 )
+    , isReal_     ( false )
     , depth_      ( 0 )
     , refDist_    ( 0 )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +36,9 @@ FloodAttribute::FloodAttribute( kernel::Controller& controller, const kernel::De
 // -----------------------------------------------------------------------------
 FloodAttribute::~FloodAttribute()
 {
-    // NOTHING
+    if( isReal_ )
+        proxy_.Remove( floodId_ );
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,37 +76,17 @@ void FloodAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& /*tools*/ ) const
 {
-    floodDrawer_->Draw();
+    proxy_.Draw( floodId_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodAttribute::GetElevationAt
-// Created: JSR 2010-12-15
+// Name: FloodAttribute::NotifyUpdated
+// Created: JSR 2011-10-04
 // -----------------------------------------------------------------------------
-short FloodAttribute::GetElevationAt( const geometry::Point2f& point ) const
+void FloodAttribute::NotifyUpdated( const kernel::AltitudeModified& attribute )
 {
-    if( detection_.Extent().IsOutside( point ) )
-        return std::numeric_limits< short >::max();
-    return detection_.ElevationAt( point );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FloodAttribute::ReadFromODB
-// Created: JSR 2011-05-20
-// -----------------------------------------------------------------------------
-bool FloodAttribute::ReadFromODB() const
-{
-    return readFromODB_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FloodAttribute::GenerateFlood
-// Created: JSR 2011-05-20
-// -----------------------------------------------------------------------------
-void FloodAttribute::GenerateFlood( bool force )
-{
-    floodModel_->GenerateFlood( positions_.GetPosition(), depth_, refDist_, force );
-    floodDrawer_->ResetTexture();
+    if( isReal_ && attribute.polygon_.Intersect( positions_.GetPosition(), static_cast< float >( refDist_ ) ) )
+        proxy_.GenerateFlood( floodId_, positions_.GetPosition(), depth_, refDist_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +95,7 @@ void FloodAttribute::GenerateFlood( bool force )
 // -----------------------------------------------------------------------------
 void FloodAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes() );
+    UpdateData( message.attributes(), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,9 +104,7 @@ void FloodAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 // -----------------------------------------------------------------------------
 void FloodAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
-    UpdateData( message.attributes() );
-    if( message.attributes().has_flood() )
-        GenerateFlood( true );
+    UpdateData( message.attributes(), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,13 +112,17 @@ void FloodAttribute::DoUpdate( const sword::ObjectUpdate& message )
 // Created: JSR 2010-12-15
 // -----------------------------------------------------------------------------
 template< typename T >
-void FloodAttribute::UpdateData( const T& message )
+void FloodAttribute::UpdateData( const T& message, bool isReal )
 {
     if( message.has_flood() )
     {
-        readFromODB_ = message.flood().from_preparation();
+        isReal_ = isReal;
         depth_ = message.flood().depth();
         refDist_ = message.flood().reference_distance();
         controller_.Update( *static_cast< FloodAttribute_ABC* >( this ) );
+        if( isReal )
+            floodId_ = proxy_.GenerateFlood( floodId_, positions_.GetPosition(), depth_, refDist_ );
+        else
+            floodId_ = proxy_.FindFlood( positions_.GetPosition(), depth_, refDist_ );
     }
 }

@@ -39,7 +39,6 @@ public:
 private:
     //! @name Member data
     //@{
-    bool readFromODB_;
     unsigned int height_;
     //@}
 };

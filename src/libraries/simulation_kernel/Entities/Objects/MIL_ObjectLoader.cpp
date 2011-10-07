@@ -11,6 +11,7 @@
 #include "MIL_ObjectLoader.h"
 #include "AttributeFactory.h"
 #include "CapacityFactory.h"
+#include "MIL_ObjectManipulator_ABC.h"
 #include "Object.h"
 #include "ObjectPrototype.h"
 #include "UrbanObjectWrapper.h"
@@ -185,6 +186,8 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& 
     }
 
     pObject->Finalize();
+    MIL_ObjectManipulator_ABC& obj = pObject->operator()();
+    obj.Construct();
     return pObject;
 }
 

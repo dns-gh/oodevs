@@ -11,7 +11,6 @@
 #include "MIL_ObjectFactory.h"
 #include "MIL_ObjectLoader.h"
 #include "MIL_Object_ABC.h"
-#include "MIL_ObjectManipulator_ABC.h"
 #include "protocol/Protocol.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -67,13 +66,7 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const sword::MissionParameters& msg, MIL_Army_ABC& army, sword::ObjectMagicActionAck_ErrorCode& value )
 {
-    MIL_Object_ABC* pObject = MIL_ObjectLoader::GetLoader().CreateObject( msg, army, value );
-    if( pObject )
-    {
-        MIL_ObjectManipulator_ABC& obj = pObject->operator()();
-        obj.Construct();
-    }
-    return pObject;
+    return MIL_ObjectLoader::GetLoader().CreateObject( msg, army, value );
 }
 
 // -----------------------------------------------------------------------------

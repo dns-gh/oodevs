@@ -74,8 +74,8 @@ public:
 
     //! @name Operations
     //@{
-    bool ReadFromODB() const;
     void ModifyAltitude( const TER_Localisation& localisation ) const;
+    void ResetAltitude( const TER_Localisation& localisation ) const;
     //@}
 
 private:
@@ -87,7 +87,6 @@ private:
 private:
     //! @name Member data
     //@{
-    bool readFromODB_;
     unsigned int height_;
     //@}
 };

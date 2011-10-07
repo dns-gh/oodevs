@@ -20,6 +20,7 @@
 #include "FireFactory.h"
 #include "FireResultFactory.h"
 #include "FiresModel.h"
+#include "FloodProxy.h"
 #include "FolkModel.h"
 #include "IntelligenceFactory.h"
 #include "IntelligencesModel.h"
@@ -108,6 +109,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , symbolsFactory_( *new kernel::SymbolFactory() )
     , notes_( *new NotesModel( controllers.controller_ ))
     , meteo_( *new MeteoModel( static_.coordinateConverter_, simulation, controllers.controller_ ) )
+    , floodProxy_( *new FloodProxy( static_.detection_ ) )
     , publisher_( publisher )
 {
     symbolsFactory_.Load( config );
@@ -209,6 +211,7 @@ kernel::Object_ABC& Model::GetUrbanObject( unsigned int id ) const
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &floodProxy_;
     delete &meteo_;
     delete &notes_;
     delete &symbolsFactory_;

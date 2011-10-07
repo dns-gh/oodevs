@@ -9,8 +9,6 @@
 
 #include "gaming_pch.h"
 #include "ObjectsModel.h"
-#include "AltitudeModifierAttribute.h"
-#include "FloodAttribute.h"
 #include "ObjectFactory_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 
@@ -42,62 +40,6 @@ ObjectsModel::~ObjectsModel()
 void ObjectsModel::Purge()
 {
     DeleteAll();
-}
-
-namespace
-{
-    class GenerateODBFloods : private boost::noncopyable
-    {
-    public:
-        explicit GenerateODBFloods() {}
-        virtual ~GenerateODBFloods() {}
-        void operator()( kernel::Object_ABC& object ) const
-        {
-            FloodAttribute* flood = static_cast< FloodAttribute* >( object.Retrieve< FloodAttribute_ABC >() );
-            if( flood && flood->ReadFromODB() )
-                flood->GenerateFlood( true );
-        }
-    };
-
-    class ModifyODBAltitudes : private boost::noncopyable
-    {
-    public:
-        explicit ModifyODBAltitudes() {}
-        virtual ~ModifyODBAltitudes() {}
-        void operator()( kernel::Object_ABC& object ) const
-        {
-            AltitudeModifierAttribute* altitude = static_cast< AltitudeModifierAttribute* >( object.Retrieve< AltitudeModifierAttribute_ABC >() );
-            if( altitude && altitude->ReadFromODB() )
-                altitude->ModifyAltitude();
-        }
-    };
-
-    class PostGenerateFloods : private boost::noncopyable
-    {
-    public:
-        explicit PostGenerateFloods() {}
-        virtual ~PostGenerateFloods() {}
-        void operator()( kernel::Object_ABC& object ) const
-        {
-            AltitudeModifierAttribute* altitude = static_cast< AltitudeModifierAttribute* >( object.Retrieve< AltitudeModifierAttribute_ABC >() );
-            if( altitude && !altitude->ReadFromODB() )
-                altitude->ModifyAltitude();
-            FloodAttribute* flood = static_cast< FloodAttribute* >( object.Retrieve< FloodAttribute_ABC >() );
-            if( flood && !flood->ReadFromODB() )
-                flood->GenerateFlood( true );
-        }
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectsModel::Initialize
-// Created: JSR 2011-05-20
-// -----------------------------------------------------------------------------
-void ObjectsModel::Initialize()
-{
-    Apply( ModifyODBAltitudes() );
-    Apply( GenerateODBFloods() );
-    Apply( PostGenerateFloods() );
 }
 
 // -----------------------------------------------------------------------------

@@ -39,7 +39,6 @@ public:
 private:
     //! @name Member data
     //@{
-    bool readFromODB_;
     int depth_;
     int refDist_;
     //@}

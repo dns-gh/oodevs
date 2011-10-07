@@ -12,20 +12,16 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "flood/ElevationGetter_ABC.h"
-
-namespace flood
-{
-    class FloodDrawer;
-    class FloodModel;
-}
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
+    class AltitudeModified;
     class Controller;
-    class DetectionMap;
     class Positions;
 }
+
+class FloodProxy;
 
 // =============================================================================
 /** @class  FloodAttribute
@@ -35,12 +31,14 @@ namespace kernel
 // =============================================================================
 class FloodAttribute : public kernel::FloodAttribute_ABC
                      , public kernel::Drawable_ABC
-                     , public flood::ElevationGetter_ABC
+                     , public tools::Observer_ABC
+                     , public tools::ElementObserver_ABC< kernel::AltitudeModified >
+                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             FloodAttribute( kernel::Controller& controller, const kernel::DetectionMap& detection, const kernel::Positions& positions );
+             FloodAttribute( kernel::Controller& controller, FloodProxy& proxy, const kernel::Positions& positions );
     virtual ~FloodAttribute();
     //@}
 
@@ -50,36 +48,27 @@ public:
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual short GetElevationAt( const geometry::Point2f& point ) const;
-    bool ReadFromODB() const;
-    void GenerateFlood( bool force = false );
+    virtual void NotifyUpdated( const kernel::AltitudeModified& attribute );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FloodAttribute( const FloodAttribute& );            //!< Copy constructor
-    FloodAttribute& operator=( const FloodAttribute& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
     virtual void DoUpdate( const sword::ObjectUpdate& message );
 
     template< typename T >
-    void UpdateData( const T& message );
+    void UpdateData( const T& message, bool isReal );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::DetectionMap& detection_;
     const kernel::Positions& positions_;
-    std::auto_ptr< flood::FloodModel > floodModel_;
-    std::auto_ptr< flood::FloodDrawer > floodDrawer_;
-    bool readFromODB_;
+    FloodProxy& proxy_;
+    unsigned int floodId_;
+    bool isReal_;
     int depth_;
     int refDist_;
     //@}

@@ -44,6 +44,7 @@ class DrawingsModel;
 class FireFactory;
 class FireResultFactory;
 class FiresModel;
+class FloodProxy;
 class FolkModel;
 class IntelligenceFactory;
 class IntelligencesModel;
@@ -157,6 +158,7 @@ public:
     kernel::SymbolFactory& symbolsFactory_;
     NotesModel& notes_;
     MeteoModel& meteo_;
+    FloodProxy& floodProxy_;
     Publisher_ABC& publisher_;
     //@}
 };

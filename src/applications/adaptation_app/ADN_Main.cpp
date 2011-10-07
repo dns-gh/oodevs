@@ -106,7 +106,7 @@ int main( uint nArgc, char** ppArgv )
 
     try
     {
-        bool nosymbols = vm.count( "nosymbols" );
+        bool nosymbols = vm.count( "nosymbols" ) != 0;
         if( app.Initialize( inputFile, outputFile, nosymbols, nArgc, ppArgv ) )
             app.exec();
     }

@@ -69,7 +69,6 @@ private slots:
     void StopConfine();
     void Evacuate();
     void StopEvacuate();
-    void GenerateFlood();
     void ActivateUndergroundExit();
     void DeactivateUndergroundExit();
 	void ChangeTrafficability();

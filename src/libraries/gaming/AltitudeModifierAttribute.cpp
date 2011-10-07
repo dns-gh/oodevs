@@ -11,6 +11,7 @@
 #include "AltitudeModifierAttribute.h"
 #include "Simulation.h"
 #include "Tools.h"
+#include "clients_kernel/AltitudeModified.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -65,8 +66,6 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( Controller& controller, ke
     : controller_      ( controller )
     , detection_       ( detection )
     , entity_          ( entity )
-    , altitudeModified_( false )
-    , readFromODB_     ( false )
     , height_          ( 0 )
 {
     controller_.Register( *this );
@@ -120,34 +119,6 @@ void AltitudeModifierAttribute::NotifyDeleted( const kernel::Object_ABC& entity 
 }
 
 // -----------------------------------------------------------------------------
-// Name: AltitudeModifierAttribute::NotifyUpdated
-// Created: JSR 2011-05-20
-// -----------------------------------------------------------------------------
-void AltitudeModifierAttribute::NotifyUpdated( const Simulation& simulation )
-{
-    if( !altitudeModified_ && simulation.IsInitialized() )
-        ModifyAltitude();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AltitudeModifierAttribute::ReadFromODB
-// Created: JSR 2011-05-20
-// -----------------------------------------------------------------------------
-bool AltitudeModifierAttribute::ReadFromODB() const
-{
-    return readFromODB_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AltitudeModifierAttribute::ModifyAltitude
-// Created: JSR 2011-05-20
-// -----------------------------------------------------------------------------
-void AltitudeModifierAttribute::ModifyAltitude()
-{
-    ModifyAltitude( height_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AltitudeModifierAttribute::DoUpdate
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
@@ -158,10 +129,10 @@ void AltitudeModifierAttribute::DoUpdate( const sword::ObjectUpdate& message )
     const sword::ObjectAttributes& attributes = message.attributes();
     if( attributes.has_altitude_modifier() )
     {
-        readFromODB_ = attributes.altitude_modifier().from_preparation();
         int height = attributes.altitude_modifier().height();
         if( height != height_ )
         {
+            ModifyAltitude( height - height_ );
             height_ = height;
             controller_.Update( *static_cast< AltitudeModifierAttribute_ABC* >( this ) );
         }
@@ -179,7 +150,6 @@ void AltitudeModifierAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& me
     const sword::ObjectAttributes& attributes = message.attributes();
     if( attributes.has_altitude_modifier() )
     {
-        altitudeModified_ = true;
         int height = attributes.altitude_modifier().height();
         if( height != height_ )
         {
@@ -195,10 +165,12 @@ void AltitudeModifierAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& me
 // -----------------------------------------------------------------------------
 void AltitudeModifierAttribute::ModifyAltitude( int heightOffset )
 {
-    altitudeModified_ = true;
     geometry::Polygon2f polygon;
     LocationVisitor visitor( polygon );
     entity_.Get< Positions >().Accept( visitor );
     if( !polygon.IsEmpty() )
+    {
         detection_.ModifyAltitude( polygon, static_cast< short >( heightOffset ) );
+        controller_.Update( AltitudeModified( polygon ) );
+    }
 }

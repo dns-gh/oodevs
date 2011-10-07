@@ -2454,10 +2454,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Fin de l&apos;évacuation</translation>
     </message>
     <message>
-        <source>Generate flood</source>
-        <translation>Générer l&apos;inondation</translation>
-    </message>
-    <message>
         <source>Deactivate exit</source>
         <translation>Désactiver l&apos;issue</translation>
     </message>
