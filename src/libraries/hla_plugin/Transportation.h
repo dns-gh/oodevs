@@ -190,6 +190,52 @@ public:
 };
 
 // =============================================================================
+/** @class  NetnDataEDStruct
+    @brief  Netn data ed struct
+*/
+// Created: SLI 2011-10-07
+// =============================================================================
+class NetnDataEDStruct
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             NetnDataEDStruct();
+             NetnDataEDStruct( const std::vector< NetnObjectDefinitionStruct >& objectToManage,
+                               const NetnAppointmentStruct& appointment );
+    virtual ~NetnDataEDStruct();
+    //@}
+
+    //! @name Operations
+    //@{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        const uint32 size = objectToManage.size();
+        archive << size
+                << objectToManage
+                << appointment;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        uint32 size = 0;
+        archive >> size;
+        objectToManage.resize( size );
+        archive >> objectToManage
+                >> appointment;
+    }
+    //@}
+
+public:
+    //! @name Member data
+    //@{
+    std::vector< NetnObjectDefinitionStruct > objectToManage;
+    NetnAppointmentStruct appointment;
+    //@}
+};
+
+// =============================================================================
 /** @class  NetnEventIdentifier
     @brief  Netn event identifier
 */
@@ -242,6 +288,7 @@ public:
     //@{
              NetnTransportStruct();
     explicit NetnTransportStruct( const NetnDataTStruct& dataTransport );
+             NetnTransportStruct( const NetnDataEDStruct& data, int32 convoyType );
     virtual ~NetnTransportStruct();
     //@}
 
@@ -250,8 +297,13 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        archive << convoyType
-                << dataTransport;
+        archive << convoyType;
+        if( convoyType == 0 )
+            archive << dataTransport;
+        if( convoyType == 1 )
+            archive << dataEmbarkment;
+        if( convoyType == 2 )
+            archive << dataDisembarkment;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
@@ -259,6 +311,10 @@ public:
         archive >> convoyType;
         if( convoyType == 0 )
             archive >> dataTransport;
+        if( convoyType == 1 )
+            archive >> dataEmbarkment;
+        if( convoyType == 2 )
+            archive >> dataDisembarkment;
     }
     //@}
 
@@ -267,6 +323,8 @@ public:
     //@{
     int32 convoyType;
     NetnDataTStruct dataTransport;
+    NetnDataEDStruct dataEmbarkment;
+    NetnDataEDStruct dataDisembarkment;
     //@}
 };
 }

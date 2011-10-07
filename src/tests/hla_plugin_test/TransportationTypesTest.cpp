@@ -72,6 +72,22 @@ BOOST_FIXTURE_TEST_CASE( netn_datat_struct_deserialization, SerializationFixture
     BOOST_CHECK_EQUAL( deserializedNetnDataTStruct.finalAppointment.dateTime, 0u );
 }
 
+BOOST_FIXTURE_TEST_CASE( netn_dataed_struct_deserialization, SerializationFixture )
+{
+    std::vector< NetnObjectDefinitionStruct > objectToManage;
+    objectToManage.push_back( NetnObjectDefinitionStruct() );
+    const NetnAppointmentStruct appointment;
+    const NetnDataEDStruct serializedNetnDataEDStruct( objectToManage, appointment );
+    const unsigned int objectToManageVectorSize = sizeof( int32 );
+    const unsigned int objectDefinitionStructSize = sizeof( int32 ) + 11 * sizeof( int8 ) + sizeof( int32 );
+    const unsigned int appointmentStructSize = sizeof( int64 ) + 3 * sizeof( real64 );
+    ::hla::Deserializer deserializer = Serialize( serializedNetnDataEDStruct, objectToManageVectorSize + 1 * objectDefinitionStructSize + appointmentStructSize );
+    NetnDataEDStruct deserializedNetnDataEDStruct;
+    deserializedNetnDataEDStruct.Deserialize( deserializer );
+    BOOST_CHECK_EQUAL( deserializedNetnDataEDStruct.objectToManage.size(), 1u );
+    BOOST_CHECK_EQUAL( deserializedNetnDataEDStruct.appointment.dateTime, 0u );
+}
+
 BOOST_FIXTURE_TEST_CASE( netn_event_identifier_deserialization, SerializationFixture )
 {
     const int32 eventCount = 42;
@@ -86,11 +102,35 @@ BOOST_FIXTURE_TEST_CASE( netn_event_identifier_deserialization, SerializationFix
     BOOST_CHECK_EQUAL( deserializedEventIdentifier.issuingObjectIdentifier.str(), callsign );
 }
 
-BOOST_FIXTURE_TEST_CASE( netn_transport_struct_deserialization, SerializationFixture )
+BOOST_FIXTURE_TEST_CASE( netn_transport_struct_transport_deserialization, SerializationFixture )
 {
-    const NetnTransportStruct serializedTransport;
+    const NetnDataTStruct dataTransport;
+    const NetnTransportStruct serializedTransport( dataTransport );
+    BOOST_CHECK_EQUAL( serializedTransport.convoyType, 0 );
     ::hla::Deserializer deserializer = Serialize( serializedTransport );
     NetnTransportStruct deserializedTransport;
     deserializedTransport.Deserialize( deserializer );
-    BOOST_CHECK_EQUAL( deserializedTransport.convoyType, serializedTransport.convoyType );
+    BOOST_CHECK_EQUAL( deserializedTransport.convoyType, 0 );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_transport_struct_embarkment_deserialization, SerializationFixture )
+{
+    const NetnDataEDStruct dataEmbarkment;
+    const NetnTransportStruct serializedTransport( dataEmbarkment, 1 );
+    BOOST_CHECK_EQUAL( serializedTransport.convoyType, 1 );
+    ::hla::Deserializer deserializer = Serialize( serializedTransport );
+    NetnTransportStruct deserializedTransport;
+    deserializedTransport.Deserialize( deserializer );
+    BOOST_CHECK_EQUAL( deserializedTransport.convoyType, 1 );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_transport_struct_disembarkment_deserialization, SerializationFixture )
+{
+    const NetnDataEDStruct dataDisembarkment;
+    const NetnTransportStruct serializedTransport( dataDisembarkment, 2 );
+    BOOST_CHECK_EQUAL( serializedTransport.convoyType, 2 );
+    ::hla::Deserializer deserializer = Serialize( serializedTransport );
+    NetnTransportStruct deserializedTransport;
+    deserializedTransport.Deserialize( deserializer );
+    BOOST_CHECK_EQUAL( deserializedTransport.convoyType, 2 );
 }

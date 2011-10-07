@@ -124,6 +124,36 @@ NetnDataTStruct::~NetnDataTStruct()
 }
 
 // -----------------------------------------------------------------------------
+// Name: NetnDataEDStruct::NetnDataEDStruct
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnDataEDStruct::NetnDataEDStruct()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnDataEDStruct::NetnDataEDStruct
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnDataEDStruct::NetnDataEDStruct( const std::vector< NetnObjectDefinitionStruct >& objectToManage,
+                                    const NetnAppointmentStruct& appointment )
+    : objectToManage( objectToManage.begin(), objectToManage.end() )
+    , appointment   ( appointment )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnDataEDStruct::~NetnDataEDStruct
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnDataEDStruct::~NetnDataEDStruct()
+{
+    // NOITHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: NetnEventIdentifier::NetnEventIdentifier
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
@@ -171,6 +201,19 @@ NetnTransportStruct::NetnTransportStruct( const NetnDataTStruct& dataTransport )
     , dataTransport( dataTransport )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Transportation::NetnTransportStruct
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnTransportStruct::NetnTransportStruct( const NetnDataEDStruct& data, int32 convoyType )
+    : convoyType       ( convoyType )
+{
+    if( convoyType == 1 )
+        dataEmbarkment = data;
+    if( convoyType == 2 )
+        dataDisembarkment = data;
 }
 
 // -----------------------------------------------------------------------------
