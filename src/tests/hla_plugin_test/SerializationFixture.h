@@ -35,6 +35,18 @@ namespace
             buffers_.push_back( buffer );
             return deserializer;
         }
+        template< typename T >
+        ::hla::Deserializer Serialize( const T& value )
+        {
+            ::hla::Serializer serializer;
+            value.Serialize( serializer );
+            boost::shared_ptr< T_Buffer > buffer( new T_Buffer( serializer.GetSize() ) );
+            if( !buffer->empty() )
+                serializer.CopyTo( &(*buffer)[0] );
+            ::hla::Deserializer deserializer( &(*buffer)[0], buffer->size() );
+            buffers_.push_back( buffer );
+            return deserializer;
+        }
     private:
         std::vector< boost::shared_ptr< T_Buffer > > buffers_;
     };

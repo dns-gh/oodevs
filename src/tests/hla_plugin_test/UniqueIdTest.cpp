@@ -34,3 +34,13 @@ BOOST_FIXTURE_TEST_CASE( unique_id_truncates_name_over_11_characters, Serializat
         Read< int8 >( deserializer );
     BOOST_CHECK_EQUAL( 'o', Read< int8 >( deserializer ) );
 }
+
+BOOST_FIXTURE_TEST_CASE( unique_id_deserializes, SerializationFixture )
+{
+    const std::string identifier = "SWORD1";
+    const UniqueId serializedId( identifier );
+    ::hla::Deserializer deserializer = Serialize( serializedId, 11 * sizeof( int8 ) );
+    UniqueId deserializedId;
+    deserializedId.Deserialize( deserializer );
+    BOOST_CHECK_EQUAL( identifier, deserializedId.str() );
+}

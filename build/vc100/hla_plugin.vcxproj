@@ -117,6 +117,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
@@ -128,6 +129,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\SimulationFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Spatial.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVessel.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Transportation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnicodeString.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UniqueId.cpp" />
@@ -187,6 +189,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />
@@ -204,6 +207,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\SimulationFacade.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Spatial.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Transportation.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationController.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnicodeString.h" />

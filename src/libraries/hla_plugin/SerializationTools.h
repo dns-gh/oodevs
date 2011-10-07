@@ -37,6 +37,25 @@ namespace hla
             it->Serialize( serializer );
         return serializer;
     }
+    template< typename T >
+    Deserializer& operator>>( Deserializer& deserializer, std::vector< T >& values )
+    {
+        for( std::vector< T >::iterator it = values.begin(); it != values.end(); ++it )
+            it->Deserialize( deserializer );
+        return deserializer;
+    }
+    template< typename T >
+    Serializer& operator<<( Serializer& serializer, const T& parameter )
+    {
+        parameter.Serialize( serializer );
+        return serializer;
+    }
+    template< typename T >
+    Deserializer& operator>>( Deserializer& deserializer, T& parameter )
+    {
+        parameter.Deserialize( deserializer );
+        return deserializer;
+    }
 }
 
 #endif // plugins_hla_SerializationTools_h

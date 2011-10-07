@@ -11,6 +11,8 @@
 #define plugins_hla_interactions_Interactions_h
 
 #include "Omt13String.h"
+#include "Transportation.h"
+#include "UnicodeString.h"
 #include "rpr/EntityType.h"
 #include "rpr/Coordinates.h"
 #include <hla/HLA_Types.h>
@@ -55,6 +57,16 @@ struct MunitionDetonation
     rpr::VelocityVector relativeDetonationLocation; // RelativePositionStruct
     Omt13String targetObjectIdentifier;
     int16 warheadType;
+};
+
+struct NetnRequestConvoy
+{
+    NetnEventIdentifier serviceId;
+    UnicodeString consumer;
+    UnicodeString provider;
+    int8 serviceType;
+    int64 requestTimeOut;
+    NetnTransportStruct transportData;
 };
 }
 }

@@ -25,6 +25,7 @@ class UniqueId
 public:
     //! @name Constructors/Destructor
     //@{
+             UniqueId();
     explicit UniqueId( const std::string& identifier );
     virtual ~UniqueId();
     //@}
@@ -37,6 +38,13 @@ public:
         for( unsigned i = 0; i < 11; ++i )
             archive << identifier_[ i ];
     }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        for( unsigned i = 0; i < 11; ++i )
+            archive >> identifier_[ i ];
+    }
+    std::string str() const;
     //@}
 
 private:

@@ -202,6 +202,12 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationController.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Transportation.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -458,6 +464,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationListener_ABC.h">
       <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Transportation.h">
+      <Filter>Source Files\Types</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

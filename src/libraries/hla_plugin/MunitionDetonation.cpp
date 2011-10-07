@@ -11,26 +11,11 @@
 #include "MunitionDetonation.h"
 #include "Federate_ABC.h"
 #include "Interactions.h"
+#include "SerializationTools.h"
 #include <cassert>
 #include <hla/Interaction.h>
 #include <hla/InteractionIdentifier.h>
 #include <hla/Parameter.h>
-
-namespace hla
-{
-    template< typename T >
-    Serializer& operator<<( Serializer& serializer, const T& parameter )
-    {
-        parameter.Serialize( serializer );
-        return serializer;
-    }
-    template< typename T >
-    Deserializer& operator>>( Deserializer& deserializer, T& parameter )
-    {
-        parameter.Deserialize( deserializer );
-        return deserializer;
-    }
-}
 
 using namespace plugins::hla;
 
@@ -39,7 +24,7 @@ using namespace plugins::hla;
 // Created: SLI 2011-06-24
 // -----------------------------------------------------------------------------
 MunitionDetonation::MunitionDetonation( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::MunitionDetonation >& notification )
-    : pInteraction_ ( new ::hla::Interaction< interactions::MunitionDetonation >( notification ) )
+    : pInteraction_( new ::hla::Interaction< interactions::MunitionDetonation >( notification ) )
 {
     pInteraction_->Register( "ArticulatedPartData"       , ::hla::CreateParameter( &interactions::MunitionDetonation::articulatedPartData ) );
     pInteraction_->Register( "DetonationLocation"        , ::hla::CreateParameter( &interactions::MunitionDetonation::detonationLocation ) );
