@@ -22,74 +22,14 @@
 #pragma warning( push, 0 )
 #include <QtGui/qapplication.h>
 #pragma warning( pop )
-#include <windows.h>
-#include <dbghelp.h>
-#include <shellapi.h>
-#include <shlobj.h>
-#include <strsafe.h>
-
-#pragma comment( lib, "Dbghelp.lib" )
 
 using namespace launcher_test;
-
-int GenerateDump(EXCEPTION_POINTERS* pExceptionPointers)
-{
-    BOOL bMiniDumpSuccessful;
-    CHAR szFileName[MAX_PATH];
-    HANDLE hDumpFile;
-    SYSTEMTIME stLocalTime;
-    MINIDUMP_EXCEPTION_INFORMATION ExpParam;
-
-    GetLocalTime( &stLocalTime );
-
-    StringCchPrintf( szFileName, MAX_PATH, "%04d%02d%02d-%02d%02d%02d-%ld-%ld.dmp", 
-               stLocalTime.wYear, stLocalTime.wMonth, stLocalTime.wDay, 
-               stLocalTime.wHour, stLocalTime.wMinute, stLocalTime.wSecond, 
-               GetCurrentProcessId(), GetCurrentThreadId());
-    hDumpFile = CreateFile(szFileName, GENERIC_READ|GENERIC_WRITE, 
-                FILE_SHARE_WRITE|FILE_SHARE_READ, 0, CREATE_ALWAYS, 0, 0);
-
-    ExpParam.ThreadId = GetCurrentThreadId();
-    ExpParam.ExceptionPointers = pExceptionPointers;
-    ExpParam.ClientPointers = TRUE;
-
-    bMiniDumpSuccessful = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), 
-                    hDumpFile, MiniDumpWithDataSegs, &ExpParam, NULL, NULL);
-
-    std::cout << "dumped " << szFileName << std::endl;
-
-    return EXCEPTION_CONTINUE_SEARCH;
-}
-
-#define WATCHED_FIXTURE_TEST_CASE( test_name, F )                         \
-struct test_name : public F { void test_method(); }; \
-void test_name##_hook() \
-{ \
-    test_name t; \
-    t.test_method(); \
-} \
-                                                                        \
-static void BOOST_AUTO_TC_INVOKER( test_name )()                        \
-{                                                                       \
-    __try { test_name##_hook(); } \
-    __except( GenerateDump(GetExceptionInformation()) ) {} \
-}                                                                       \
-                                                                        \
-struct BOOST_AUTO_TC_UNIQUE_ID( test_name ) {};                         \
-                                                                        \
-BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
-    boost::unit_test::make_test_case(                                   \
-        &BOOST_AUTO_TC_INVOKER( test_name ), #test_name ),              \
-    boost::unit_test::ut_detail::auto_tc_exp_fail<                      \
-        BOOST_AUTO_TC_UNIQUE_ID( test_name )>::instance()->value() );   \
-                                                                        \
-void test_name::test_method()                                           \
 
 // -----------------------------------------------------------------------------
 // Name: ClientCanConnectToServer
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( ClientCanConnectToServer, Fixture )
+BOOST_FIXTURE_TEST_CASE( ClientCanConnectToServer, Fixture )
 {
     BOOST_CHECK( client.Connected() );
 }
@@ -98,7 +38,7 @@ WATCHED_FIXTURE_TEST_CASE( ClientCanConnectToServer, Fixture )
 // Name: ClientCanListAvailableExercises
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( ClientCanListAvailableExercises, Fixture )
+BOOST_FIXTURE_TEST_CASE( ClientCanListAvailableExercises, Fixture )
 {
     BOOST_REQUIRE( client.Connected() );
     ExerciseListener listener( controllers ); // $$$$ MCO : use a mock
@@ -113,7 +53,7 @@ WATCHED_FIXTURE_TEST_CASE( ClientCanListAvailableExercises, Fixture )
 // Name: ClientCanStartExercise
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( ClientCanStartExercise, ExerciseFixture )
+BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, ExerciseFixture )
 {
     sword::ProfileListResponse launcherResponse;
     MOCK_EXPECT( handler, HandleProfileListResponse ).once().with( mock::retrieve( launcherResponse ) );
@@ -125,7 +65,7 @@ WATCHED_FIXTURE_TEST_CASE( ClientCanStartExercise, ExerciseFixture )
 // Name: ClientCanPauseExercise
 // Created: AHC 2011-05-19
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
+BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
 {
     // send pause request
     exercise->Pause( session );
@@ -147,7 +87,7 @@ WATCHED_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
 // Name: ClientCanResumeExercise
 // Created: AHC 2011-05-20
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
+BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
 {
     // send resume request
     exercise->Resume( session );
@@ -169,7 +109,7 @@ WATCHED_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
 // Name: ClientCanChangeDateTime
 // Created: LGY 2011-06-22
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( ClientCanChangeDateTime, ExerciseFixture )
+BOOST_FIXTURE_TEST_CASE( ClientCanChangeDateTime, ExerciseFixture )
 {
     // send resume request
     exercise->ChangeDateTime( session, "dateISO860" );
@@ -191,7 +131,7 @@ WATCHED_FIXTURE_TEST_CASE( ClientCanChangeDateTime, ExerciseFixture )
 // Name: ClientCanSaveCheckPoint
 // Created: AHC 2011-05-20
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( ClientCanSaveCheckPoint, ExerciseFixture )
+BOOST_FIXTURE_TEST_CASE( ClientCanSaveCheckPoint, ExerciseFixture )
 {
     // send checkpoint request
     exercise->SaveCheckpoint( session, "checkpoint" );
@@ -213,7 +153,7 @@ WATCHED_FIXTURE_TEST_CASE( ClientCanSaveCheckPoint, ExerciseFixture )
 // Name: NotifyUnitExtension
 // Created: LGY 2011-05-23
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( NotifyUnitExtension, ExerciseFixture )
+BOOST_FIXTURE_TEST_CASE( NotifyUnitExtension, ExerciseFixture )
 {
     client::UnitAttributes attributes;
     attributes().mutable_unit()->set_id( 42 );
@@ -233,7 +173,7 @@ WATCHED_FIXTURE_TEST_CASE( NotifyUnitExtension, ExerciseFixture )
 // Name: NotifyFormationExtension
 // Created: LGY 2011-05-23
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( NotifyFormationExtension, ExerciseFixture )
+BOOST_FIXTURE_TEST_CASE( NotifyFormationExtension, ExerciseFixture )
 {
     client::FormationUpdate attributes;
     attributes().mutable_formation()->set_id( 42 );
@@ -253,7 +193,7 @@ WATCHED_FIXTURE_TEST_CASE( NotifyFormationExtension, ExerciseFixture )
 // Name: NotifyProfileCreation
 // Created: LGY 2011-05-23
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( NotifyProfileCreation, ExerciseFixture )
+BOOST_FIXTURE_TEST_CASE( NotifyProfileCreation, ExerciseFixture )
 {
     authentication::ProfileCreation creation;
     creation().mutable_profile()->set_login( "login" );
@@ -272,7 +212,7 @@ WATCHED_FIXTURE_TEST_CASE( NotifyProfileCreation, ExerciseFixture )
 // Name: NotifyProfileUpdate
 // Created: LGY 2011-05-23
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( NotifyProfileUpdate, ExerciseFixture )
+BOOST_FIXTURE_TEST_CASE( NotifyProfileUpdate, ExerciseFixture )
 {
     authentication::ProfileUpdate update;
     update().set_login( "login" );
@@ -292,7 +232,7 @@ WATCHED_FIXTURE_TEST_CASE( NotifyProfileUpdate, ExerciseFixture )
 // Name: NotifyControlInformation
 // Created: LGY 2011-05-23
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( NotifyControlInformation, ExerciseFixture )
+BOOST_FIXTURE_TEST_CASE( NotifyControlInformation, ExerciseFixture )
 {
     client::ControlInformation information;
     information().set_current_tick( 42 );
@@ -322,7 +262,7 @@ WATCHED_FIXTURE_TEST_CASE( NotifyControlInformation, ExerciseFixture )
 // Name: ClientCanListConnectedProfiles
 // Created: AHC 2011-05-20
 // -----------------------------------------------------------------------------
-WATCHED_FIXTURE_TEST_CASE( ClientCanListConnectedProfiles, ExerciseFixture )
+BOOST_FIXTURE_TEST_CASE( ClientCanListConnectedProfiles, ExerciseFixture )
 {
     // send checkpoint request
     exercise->QueryConnectedProfileList( session );
