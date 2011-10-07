@@ -237,7 +237,7 @@
               <unit command-post="false" id="75" name="SD (Artillery SD)" position="30UXU3364745868" type="Artillery SD"/>
               <unit command-post="true" id="91" name="Battery CP" position="30UXU2042442264" type="Battery CP"/>
             </automat>
-            <automat engaged="false" id="242" knowledge-group="6" name="NBC [242]" type="NBC reconaissance platoon">
+            <automat engaged="false" id="242" knowledge-group="6" name="NBC [242]" type="NBC reconnaissance platoon">
               <unit command-post="true" id="61" name="NBC decontamination troop" position="30UXU4554850499" type="NBC decontamination troop"/>
               <unit command-post="false" id="62" name="NBC reconnaissance troop" position="30UXU4670250711" type="NBC reconnaissance troop"/>
               <unit command-post="false" id="63" name="NBC ROTA troop" position="30UXU4768850815" type="NBC ROTA troop"/>
@@ -431,7 +431,7 @@
                 <unit command-post="true" id="427" name="NBC decontamination troop" position="30UYU2220340624" type="NBC decontamination troop"/>
                 <unit command-post="false" id="428" name="NBC decontamination troop" position="30UYU2272240143" type="NBC decontamination troop"/>
               </automat>
-              <automat engaged="true" id="429" knowledge-group="6" name="NBC reconaissance platoon [429]" type="NBC reconaissance platoon">
+              <automat engaged="true" id="429" knowledge-group="6" name="NBC reconaissance platoon [429]" type="NBC reconnaissance platoon">
                 <unit command-post="true" id="430" name="NBC reconnaissance troop" position="31UBP7912842564" type="NBC reconnaissance troop"/>
                 <unit command-post="false" id="431" name="NBC reconnaissance troop" position="31UBP7960842044" type="NBC reconnaissance troop"/>
                 <unit command-post="false" id="432" name="NBC reconnaissance troop" position="31UBP7908641566" type="NBC reconnaissance troop"/>
@@ -979,4 +979,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="4246018408" -->
+<!-- signature="2201063745" -->

@@ -797,7 +797,7 @@
             <unit command-post="true" id="285" name="NBC decontamination troop" position="30TYT2001703471" type="NBC decontamination troop"/>
             <unit command-post="false" id="286" name="NBC decontamination troop" position="30TYT2053502989" type="NBC decontamination troop"/>
           </automat>
-          <automat engaged="true" id="287" knowledge-group="6" name="NBC reconaissance platoon [287]" type="NBC reconaissance platoon">
+          <automat engaged="true" id="287" knowledge-group="6" name="NBC reconaissance platoon [287]" type="NBC reconnaissance platoon">
             <unit command-post="true" id="288" name="NBC reconnaissance troop" position="30TYT2281703261" type="NBC reconnaissance troop"/>
             <unit command-post="false" id="289" name="NBC reconnaissance troop" position="30TYT2333502780" type="NBC reconnaissance troop"/>
             <unit command-post="false" id="290" name="NBC reconnaissance troop" position="30TYT2285202263" type="NBC reconnaissance troop"/>
@@ -1121,4 +1121,4 @@
     <party id="1"/>
   </diplomacy>
 </orbat>
-<!-- signature="0507816319" -->
+<!-- signature="3136237781" -->

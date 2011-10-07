@@ -132,16 +132,16 @@
             <unit command-post="false" id="75" name="Section de Tir AUF1 CDS OFF[75]" position="31TCM1423786671" type="Section de Tir . AUF1 CDS OFF"/>
             <unit command-post="false" id="76" name="Section de Tir AUF1 CDS SOFF[76]" position="31TCM1412986607" type="Section de Tir . AUF1 CDS OFF"/>
           </automat>
-          <automat engaged="true" id="81" knowledge-group="2" name="Section Decontamination [81]" type="NBC - Section Decontamination">
-            <unit command-post="true" id="82" name="Equipe CDT deconta NBC" position="31TCM1533688471" type="NBC - PC deconta"/>
-            <unit command-post="false" id="83" name="Equipe decontamination NBC" position="31TCM1582187957" type="NBC - Equipe decontamination"/>
-            <unit command-post="false" id="84" name="Equipe decontamination NBC" position="31TCM1530587473" type="NBC - Equipe decontamination"/>
-            <unit command-post="false" id="85" name="Equipe decontamination NBC" position="31TCM1482087988" type="NBC - Equipe decontamination"/>
+          <automat engaged="true" id="81" knowledge-group="2" name="Section Decontamination [81]" type="NRBC . Section Decontamination">
+            <unit command-post="true" id="82" name="Equipe CDT deconta NBC" position="31TCM1533688471" type="NRBC . PC deconta"/>
+            <unit command-post="false" id="83" name="Equipe decontamination NBC" position="31TCM1582187957" type="NRBC . Equipe decontamination"/>
+            <unit command-post="false" id="84" name="Equipe decontamination NBC" position="31TCM1530587473" type="NRBC . Equipe decontamination"/>
+            <unit command-post="false" id="85" name="Equipe decontamination NBC" position="31TCM1482087988" type="NRBC . Equipe decontamination"/>
           </automat>
-          <automat engaged="true" id="86" knowledge-group="2" name="Escadron Transport Blinde [86]" type="CIRCU - Escadron Transport Blinde">
-            <unit command-post="true" id="87" name="Peloton CDT ESC TRPT BLD" position="31TCM1590286880" type="CIRCU - Peloton CDT ESC TRPT BLD"/>
-            <unit command-post="false" id="88" name="Peloton Transport Blindes CL100" position="31TCM1638786365" type="LOG - Peloton Transport Blindes CL100"/>
-            <unit command-post="false" id="89" name="Peloton Transport Blindes CL50" position="31TCM1587085882" type="LOG - Peloton Transport Blindes CL50"/>
+          <automat engaged="true" id="86" knowledge-group="2" name="Escadron Transport Blinde [86]" type="CIRCU . Escadron Transport Blinde">
+            <unit command-post="true" id="87" name="Peloton CDT ESC TRPT BLD" position="31TCM1590286880" type="CIRCU . Peloton CDT ESC TRPT BLD"/>
+            <unit command-post="false" id="88" name="Peloton Transport Blindes CL100" position="31TCM1638786365" type="LOG . Peloton Transport Blindes CL100"/>
+            <unit command-post="false" id="89" name="Peloton Transport Blindes CL50" position="31TCM1587085882" type="LOG . Peloton Transport Blindes CL50"/>
           </automat>
           <automat engaged="false" id="200" knowledge-group="2" name="SGTIA PIA" type="SGTIA">
             <unit command-post="true" id="201" name="PC SGTIA" position="31TCM1027186842" type="PC SGTIA"/>
@@ -278,4 +278,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="4111685645" -->
+<!-- signature="1992552050" -->

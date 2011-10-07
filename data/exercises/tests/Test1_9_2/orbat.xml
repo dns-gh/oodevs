@@ -160,10 +160,10 @@
             <unit command-post="false" id="3566" name="ART - Section Mortier 120 OFF 2 pcs Pour SIC" position="30UYV1564209682" type="ART - Section Mortier 120 OFF 2 pcs Pour SIC"/>
             <unit command-post="false" id="3567" name="ART - Section Mortier 120 SOFF 2 pcs Pour SIC" position="30UYV1662110224" type="ART - Section Mortier 120 SOFF 2 pcs Pour SIC"/>
           </automat>
-          <automat engaged="true" id="3592" knowledge-group="2" name="CIRCU - Escadron Transport Blinde [3592]" type="CIRCU - Escadron Transport Blinde">
-            <unit command-post="true" id="3593" name="CIRCU - Peloton CDT ESC TRPT BLD" position="30UYV1826913982" type="CIRCU - Peloton CDT ESC TRPT BLD"/>
-            <unit command-post="false" id="3594" name="LOG - Peloton Transport Blindes CL100" position="30UYV1879113505" type="LOG - Peloton Transport Blindes CL100"/>
-            <unit command-post="false" id="3595" name="LOG - Peloton Transport Blindes CL50" position="30UYV1831212984" type="LOG - Peloton Transport Blindes CL50"/>
+          <automat engaged="true" id="3592" knowledge-group="2" name="CIRCU . Escadron Transport Blinde [3592]" type="CIRCU . Escadron Transport Blinde">
+            <unit command-post="true" id="3593" name="CIRCU . Peloton CDT ESC TRPT BLD" position="30UYV1826913982" type="CIRCU . Peloton CDT ESC TRPT BLD"/>
+            <unit command-post="false" id="3594" name="LOG . Peloton Transport Blindes CL100" position="30UYV1879113505" type="LOG . Peloton Transport Blindes CL100"/>
+            <unit command-post="false" id="3595" name="LOG . Peloton Transport Blindes CL50" position="30UYV1831212984" type="LOG . Peloton Transport Blindes CL50"/>
           </automat>
           <automat engaged="true" id="3610" knowledge-group="2" name="ART - Batterie de Tir TRF1 [3610]" type="ART - Batterie de Tir TRF1">
             <unit command-post="true" id="3611" name="ART - PC Batterie de Tir TRF1" position="31UBQ8474014119" type="ART - PC Batterie de Tir TRF1"/>
@@ -304,4 +304,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3755078373" -->
+<!-- signature="3965102053" -->

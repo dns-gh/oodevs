@@ -337,21 +337,6 @@
       <parameter dia-name="zoneAObserver_" name="Zone a observer" optional="false" type="Polygon"/>
       <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_LOG_SeDeployer" dia-type="T_Mission_Pion_LOG_SeDeployer" id="110" name="PION LOG Se Deployer" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="true" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_LOG_Renforcer" dia-type="T_Mission_Pion_LOG_Renforcer" id="112" name="PION LOG Renforcer" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="lieuRenforcement_" name="Lieu renforcement" optional="false" type="Point"/>
-      <parameter dia-name="automate_" name="Automat" optional="false" type="Automat"/>
-    </mission>
     <mission dia-behavior="MIS_Pion_LOG_PreparerBascule" dia-type="T_Mission_Pion_LOG_PreparerBascule" id="113" name="PION LOG Preparer Bascule" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -359,78 +344,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="automatePourBascule_" name="Automate pour bascule" optional="false" type="Automat"/>
       <parameter dia-name="resterSurPlace_" name="Rester sur place" optional="false" type="Boolean"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_LOG_AppuyerMouvement" dia-type="T_Mission_Pion_LOG_AppuyerMouvement" id="121" name="PION LOG Appuyer Mouvement" package="move">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="uniteAAppuyer_" name="Unite a appuyer" optional="false" type="Agent"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_LOG_ReconnaitreItineraire" dia-type="T_Mission_Pion_LOG_ReconnaitreItineraire" id="122" name="PION LOG Reconnaitre Itineraire" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="itineraireLog_" name="Itineraire log" optional="false" type="Path"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_LOG_TransporterUnite" dia-type="T_Mission_Pion_LOG_TransporterUnite" id="1001" name="PION LOG Transporter Unite" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="unitesATransporter_" max-occurs="unbounded" min-occurs="1" name="Unites a transporter_" optional="false" type="Agent"/>
-      <parameter dia-name="pointRendezVous_" name="Point de rendez-vous" optional="false" type="Point"/>
-      <parameter dia-name="pointDestination_" name="Point de destination" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_LOG_ReconnaitreZoneContaminee" dia-type="T_Mission_Pion_LOG_ReconnaitreZoneContaminee" id="123" name="PION LOG Reconnaitre Zone Contaminee" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_LOG_AppuyerMouvementDansZone" dia-type="T_Mission_Pion_LOG_AppuyerMouvementDansZone" id="124" name="PION LOG Appuyer Mouvement Dans Zone" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_LOG_MettreEnOeuvreZoneStationnement" dia-type="T_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement" id="125" name="PION LOG Mettre En Oeuvre Zone Stationnement" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_LOG_AppuyerFranchissementSurUnPoint" dia-type="T_Mission_Pion_LOG_AppuyerFranchissementSurUnPoint" id="126" name="PION LOG Appuyer Franchissement Sur Un Point" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="pontFlottant_" name="Pont flottant" optional="false" type="ObjectKnowledge"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_LOG_BloquerZone" dia-type="T_Mission_Pion_LOG_BloquerZone" id="127" name="PION LOG Bloquer Zone" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_LOG_ArmerPIA" dia-type="T_Mission_Pion_LOG_ArmerPIA" id="129" name="PION LOG Armer PIA" package="defence">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_LOG_Surveiller" dia-type="T_Mission_Pion_LOG_Surveiller" id="130" name="PION LOG Surveiller" package="control">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_FaireMouvement" dia-type="T_Mission_Pion_FaireMouvement" id="131" name="PION Faire Mouvement" package="move">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -630,41 +543,6 @@
       <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Point embarquement" optional="false" type="Point"/>
       <parameter dia-name="avecMateriel_" name="Avec materiel" optional="false" type="Boolean"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_NBC_AnimerUnPlotDeDecontamination" dia-type="T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination" id="152" name="PION NBC Animer Un Plot De Decontamination" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positionSiteDecontamination_" name="Position site decontamination" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_NBC_ReconnaitreItineraire" dia-type="T_Mission_Pion_NBC_ReconnaitreItineraire" id="153" name="PION NBC Reconnaitre Itineraire" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_NBC_ReconnaitreZone" dia-type="T_Mission_Pion_NBC_ReconnaitreZone" id="154" name="PION NBC Reconnaitre Zone" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_NBC_DecontaminerZone" dia-type="T_Mission_Pion_NBC_DecontaminerZone" id="155" name="PION NBC Decontaminer Zone" package="attack">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_NBC_ReconnaitreUnSiteROTA" dia-type="T_Mission_Pion_NBC_ReconnaitreUnSiteROTA" id="156" name="PION NBC Reconnaitre Un Site ROTA" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="siteROTA_" name="Site ROTA" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_RENS_ROHUM_RenseignerSur" dia-type="T_Mission_Pion_RENS_ROHUM_RenseignerSur" id="157" name="PION RENS ROHUM Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2145,75 +2023,6 @@
       <parameter dia-name="compagniesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="compagnies a appuyer" optional="false" type="Automat"/>
       <parameter dia-name="bMarcheRetrograde_" name="marche retrograde" optional="false" type="Boolean"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerMouvement" dia-type="T_Mission_Automate_LOG_AppuyerMouvement" id="287" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerMouvement" name="AUTOMATE LOG Appuyer Mouvement" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="Agent"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreItineraire" dia-type="T_Mission_Automate_LOG_ReconnaitreItineraire" id="288" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreItineraire" name="AUTOMATE LOG Reconnaitre Itineraire" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="itineraireLog_" name="Itineraire log" optional="false" type="Path"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerMouvementDansZone" dia-type="T_Mission_Automate_LOG_AppuyerMouvementDansZone" id="289" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerMouvementDansZone" name="AUTOMATE LOG Appuyer Mouvement Dans Zone" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement" dia-type="T_Mission_Automate_LOG_MettreEnOeuvreZoneStationnement" id="290" mrt-dia-behavior="MIS_Automate_MRT_LOG_MettreEnOeuvreZoneStationnement" name="AUTOMATE LOG Mettre En Oeuvre Zone Stationnement" package="none">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerFranchissementDansZone" dia-type="T_Mission_Automate_LOG_AppuyerFranchissementDansZone" id="291" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerFranchissementDansZone" name="AUTOMATE LOG Appuyer Franchissement Dans Zone" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_BloquerZone" dia-type="T_Mission_Automate_LOG_BloquerZone" id="292" mrt-dia-behavior="MIS_Automate_MRT_LOG_BloquerZone" name="AUTOMATE LOG Bloquer Zone" package="defence">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreZoneContaminee" dia-type="T_Mission_Automate_LOG_ReconnaitreZoneContaminee" id="293" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee" name="AUTOMATE LOG Reconnaitre Zone Contaminee" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreZoneDeDeploiement" dia-type="T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement" id="294" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreZoneDeDeploiement" name="AUTOMATE LOG Reconnaitre Zone De Deploiement" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_Surveiller" dia-type="T_Mission_Automate_LOG_Surveiller" id="295" mrt-dia-behavior="MIS_Automate_MRT_LOG_Surveiller" name="AUTOMATE LOG Surveiller" package="control">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ArmerPIAs" dia-type="T_Mission_Automate_LOG_ArmerPIAs" id="296" mrt-dia-behavior="MIS_Automate_MRT_LOG_ArmerPIAs" name="AUTOMATE LOG Armer PIAs" package="control">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-    </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_Decrocher" dia-type="T_Mission_Automate_Decrocher" id="297" mrt-dia-behavior="MIS_Automate_MRT_Decrocher" name="AUTOMATE Decrocher" package="move">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2331,40 +2140,6 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="points_" max-occurs="unbounded" min-occurs="1" name="Points" optional="false" type="Point"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUnAxe" dia-type="T_Mission_Automate_NBC_ReconnaitreUnAxe" id="315" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUnAxe" name="AUTOMATE NBC Reconnaitre Un Axe" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUneZone" dia-type="T_Mission_Automate_NBC_ReconnaitreUneZone" id="316" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUneZone" name="AUTOMATE NBC Reconnaitre Une Zone" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ArmerUnSiteDeDecontamination" dia-type="T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination" id="317" mrt-dia-behavior="MIS_Automate_MRT_NBC_ArmerUnSiteDeDecontamination" name="AUTOMATE NBC Armer Un Site De Decontamination" package="none">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="site_" name="Site" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_DecontaminerUneZone" dia-type="T_Mission_Automate_NBC_DecontaminerUneZone" id="318" mrt-dia-behavior="MIS_Automate_MRT_NBC_DecontaminerUneZone" name="AUTOMATE NBC Decontaminer Une Zone" package="none">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreDesSitesROTA" dia-type="T_Mission_Automate_NBC_ReconnaitreDesSitesROTA" id="319" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreDesSitesROTA" name="AUTOMATE NBC Reconnaitre Des Sites ROTA" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="sitesROTA_" max-occurs="unbounded" min-occurs="1" name="Sites ROTA" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROHUM_RenseignerSur" id="320" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_RenseignerSur" name="AUTOMATE RENS ROHUM Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -3497,4 +3272,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Desengager" id="400" name="Pion Desengager"/>
   </fragorders>
 </missions>
-<!-- signature="4261049823" -->
+<!-- signature="1704702653" -->
