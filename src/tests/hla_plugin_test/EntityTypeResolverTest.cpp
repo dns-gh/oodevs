@@ -13,14 +13,6 @@
 
 using namespace rpr;
 
-namespace rpr
-{
-    std::ostream& operator<<( std::ostream& os, const EntityType& type )
-    {
-        return os << type.str();
-    }
-}
-
 BOOST_AUTO_TEST_CASE( entity_type_operator_lower_than )
 {
     BOOST_CHECK_LE( EntityType(), EntityType( "1" ) );

@@ -77,6 +77,16 @@ namespace hla
     }
 }
 
+#include "rpr/EntityType.h"
+
+namespace rpr
+{
+    inline std::ostream& operator<<( std::ostream& os, const EntityType& type )
+    {
+        return os << type.str();
+    }
+}
+
 #undef max
 
 #endif // hla_plugin_test_pch_h

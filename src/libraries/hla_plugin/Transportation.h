@@ -14,12 +14,180 @@
 #include "UniqueId.h"
 #include "SerializationTools.h"
 #include "rpr/Coordinates.h"
+#include "rpr/EntityType.h"
 #include <hla/HLA_Types.h>
 
 namespace plugins
 {
 namespace hla
 {
+
+// =============================================================================
+/** @class  NetnObjectDescription
+    @brief  Netn object description
+*/
+// Created: SLI 2011-10-07
+// =============================================================================
+class NetnObjectDescription
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             NetnObjectDescription();
+             NetnObjectDescription( float weight, float volume, const std::string& type );
+    virtual ~NetnObjectDescription();
+    //@}
+
+    //! @name Operations
+    //@{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        archive << weight
+                << volume
+                << type;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        archive >> weight
+                >> volume
+                >> type;
+    }
+    //@}
+
+    //! @name Member data
+    //@{
+    real32 weight;
+    real32 volume;
+    std::string type;
+    //@}
+};
+
+// =============================================================================
+/** @class  NetnHumanDescription
+    @brief  Netn human description
+*/
+// Created: SLI 2011-10-07
+// =============================================================================
+class NetnHumanDescription
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             NetnHumanDescription();
+             NetnHumanDescription( const rpr::EntityType& humanType, short quantity, short injury );
+    virtual ~NetnHumanDescription();
+    //@}
+
+    //! @name Operations
+    //@{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        archive << humanType
+                << quantity
+                << injury;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        archive >> humanType
+                >> quantity
+                >> injury;
+    }
+    //@}
+
+    //! @name Member data
+    //@{
+    rpr::EntityType humanType;
+    int16 quantity;
+    int16 injury;
+    //@}
+};
+
+// =============================================================================
+/** @class  NetnEquipDescription
+    @brief  Netn equipment description
+*/
+// Created: SLI 2011-10-07
+// =============================================================================
+class NetnEquipDescription
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             NetnEquipDescription();
+             NetnEquipDescription( const rpr::EntityType& equipType, int quantity, int damageState );
+    virtual ~NetnEquipDescription();
+    //@}
+
+    //! @name Operations
+    //@{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        archive << equipType
+                << quantity
+                << damageState;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        archive >> equipType
+                >> quantity
+                >> damageState;
+    }
+    //@}
+
+    //! @name Member data
+    //@{
+    rpr::EntityType equipType;
+    int32 quantity;
+    int32 damageState;
+    //@}
+};
+
+// =============================================================================
+/** @class  NetnPlateformDescription
+    @brief  Netn plateform description
+*/
+// Created: SLI 2011-10-07
+// =============================================================================
+class NetnPlateformDescription
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             NetnPlateformDescription();
+             NetnPlateformDescription( const rpr::EntityType& plateformType, int damageState );
+    virtual ~NetnPlateformDescription();
+    //@}
+
+    //! @name Operations
+    //@{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        archive << plateformType
+                << damageState;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        archive >> plateformType
+                >> damageState;
+    }
+    //@}
+
+    //! @name Member data
+    //@{
+    rpr::EntityType plateformType;
+    int32 damageState;
+    //@}
+};
+
+class NetnObjectDefinitionStruct;
 
 // =============================================================================
 /** @class  NetnObjectFeatureStruct
@@ -33,6 +201,11 @@ public:
     //! @name Constructors/Destructor
     //@{
              NetnObjectFeatureStruct();
+    explicit NetnObjectFeatureStruct( const std::vector< NetnObjectDefinitionStruct >& subObjectList );
+    explicit NetnObjectFeatureStruct( const NetnObjectDescription& objectDetail );
+    explicit NetnObjectFeatureStruct( const NetnHumanDescription& humanDetail );
+    explicit NetnObjectFeatureStruct( const NetnEquipDescription& equipDetail );
+    explicit NetnObjectFeatureStruct( const NetnPlateformDescription& plateformDetail );
     virtual ~NetnObjectFeatureStruct();
     //@}
 
@@ -42,17 +215,51 @@ public:
     void Serialize( Archive& archive ) const
     {
         archive << featureLevel;
+        if( featureLevel == 1 )
+            archive << objectDetail;
+        if( featureLevel == 2 )
+            archive << humanDetail;
+        if( featureLevel == 3 )
+            archive << equipDetail;
+        if( featureLevel == 4 )
+            archive << plateformDetail;
+        if( featureLevel == 5 )
+        {
+            uint32 size = subObjectList.size();
+            archive << size
+                    << subObjectList;
+        }
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
         archive >> featureLevel;
+        if( featureLevel == 1 )
+            archive >> objectDetail;
+        if( featureLevel == 2 )
+            archive >> humanDetail;
+        if( featureLevel == 3 )
+            archive >> equipDetail;
+        if( featureLevel == 4 )
+            archive >> plateformDetail;
+        if( featureLevel == 5 )
+        {
+            uint32 size = 0;
+            archive >> size;
+            subObjectList.resize( size );
+            archive >> subObjectList;
+        }
     }
     //@}
 
     //! @name Member data
     //@{
     int32 featureLevel;
+    std::vector< NetnObjectDefinitionStruct > subObjectList;
+    NetnObjectDescription objectDetail;
+    NetnHumanDescription humanDetail;
+    NetnEquipDescription equipDetail;
+    NetnPlateformDescription plateformDetail;
     //@}
 };
 
@@ -68,7 +275,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              NetnObjectDefinitionStruct();
-             NetnObjectDefinitionStruct( const std::string& callsign, const std::string& uniqueId );
+             NetnObjectDefinitionStruct( const std::string& callsign, const std::string& uniqueId,
+                                         const NetnObjectFeatureStruct& objectFeature );
     virtual ~NetnObjectDefinitionStruct();
     //@}
 

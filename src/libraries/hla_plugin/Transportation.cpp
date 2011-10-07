@@ -13,11 +13,193 @@
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
+// Name: NetnObjectDescription::NetnObjectDescription
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnObjectDescription::NetnObjectDescription()
+    : weight( 0. )
+    , volume( 0. )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnObjectDescription::NetnObjectDescription
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnObjectDescription::NetnObjectDescription( float weight, float volume, const std::string& type )
+    : weight( weight )
+    , volume( volume )
+    , type  ( type )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnObjectDescription::~NetnObjectDescription
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnObjectDescription::~NetnObjectDescription()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnHumanDescription::NetnHumanDescription
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnHumanDescription::NetnHumanDescription()
+    : quantity( 0 )
+    , injury  ( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnHumanDescription::NetnHumanDescription
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnHumanDescription::NetnHumanDescription( const rpr::EntityType& humanType, short quantity, short injury )
+    : humanType( humanType )
+    , quantity ( quantity )
+    , injury   ( injury )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnHumanDescription::~NetnHumanDescription
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnHumanDescription::~NetnHumanDescription()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnEquipDescription::NetnEquipDescription
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnEquipDescription::NetnEquipDescription()
+    : quantity   ( 0 )
+    , damageState( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnEquipDescription::NetnEquipDescription
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnEquipDescription::NetnEquipDescription( const rpr::EntityType& equipType, int quantity, int damageState )
+    : equipType  ( equipType )
+    , quantity   ( quantity )
+    , damageState( damageState )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnEquipDescription::~NetnEquipDescription
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnEquipDescription::~NetnEquipDescription()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnPlateformDescription::NetnPlateformDescription
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnPlateformDescription::NetnPlateformDescription()
+    : damageState( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnPlateformDescription::NetnPlateformDescription
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnPlateformDescription::NetnPlateformDescription( const rpr::EntityType& plateformType, int damageState )
+    : plateformType( plateformType )
+    , damageState  ( damageState )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnPlateformDescription::~NetnPlateformDescription
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnPlateformDescription::~NetnPlateformDescription()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: NetnObjectFeatureStruct::NetnObjectFeatureStruct
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
 NetnObjectFeatureStruct::NetnObjectFeatureStruct()
     : featureLevel( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnObjectFeatureStruct::NetnObjectFeatureStruct
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnObjectFeatureStruct::NetnObjectFeatureStruct( const std::vector< NetnObjectDefinitionStruct >& subObjectList )
+    : featureLevel ( 5 )
+    , subObjectList( subObjectList.begin(), subObjectList.end() )
+{
+    // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: NetnObjectFeatureStruct::NetnObjectFeatureStruct
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnObjectFeatureStruct::NetnObjectFeatureStruct( const NetnObjectDescription& objectDetail )
+    : featureLevel( 1 )
+    , objectDetail( objectDetail )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnObjectFeatureStruct::NetnObjectFeatureStruct
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnObjectFeatureStruct::NetnObjectFeatureStruct( const NetnHumanDescription& humanDetail )
+    : featureLevel( 2 )
+    , humanDetail ( humanDetail )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnObjectFeatureStruct::NetnObjectFeatureStruct
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnObjectFeatureStruct::NetnObjectFeatureStruct( const NetnEquipDescription& equipDetail )
+    : featureLevel( 3 )
+    , equipDetail ( equipDetail )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnObjectFeatureStruct::NetnObjectFeatureStruct
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+NetnObjectFeatureStruct::NetnObjectFeatureStruct( const NetnPlateformDescription& plateformDetail )
+    : featureLevel   ( 4 )
+    , plateformDetail( plateformDetail )
 {
     // NOTHING
 }
@@ -44,15 +226,16 @@ NetnObjectDefinitionStruct::NetnObjectDefinitionStruct()
 // Name: NetnObjectDefinitionStruct::NetnObjectDefinitionStruct
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
-NetnObjectDefinitionStruct::NetnObjectDefinitionStruct( const std::string& callsign, const std::string& uniqueId )
-    : callsign( callsign )
-    , uniqueId( uniqueId )
+NetnObjectDefinitionStruct::NetnObjectDefinitionStruct( const std::string& callsign, const std::string& uniqueId, const NetnObjectFeatureStruct& objectFeature )
+    : callsign     ( callsign )
+    , uniqueId     ( uniqueId )
+    , objectFeature( objectFeature )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Transportation::~NetnObjectDefinitionStruct
+// Name: NetnObjectFeatureStruct::~NetnObjectDefinitionStruct
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
 NetnObjectDefinitionStruct::~NetnObjectDefinitionStruct()
@@ -72,7 +255,7 @@ NetnAppointmentStruct::NetnAppointmentStruct()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Transportation::NetnAppointmentStruct
+// Name: NetnObjectFeatureStruct::NetnAppointmentStruct
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
 NetnAppointmentStruct::NetnAppointmentStruct( int64 dateTime, const rpr::WorldLocation& location )
@@ -83,7 +266,7 @@ NetnAppointmentStruct::NetnAppointmentStruct( int64 dateTime, const rpr::WorldLo
 }
 
 // -----------------------------------------------------------------------------
-// Name: Transportation::~NetnAppointmentStruct
+// Name: NetnObjectFeatureStruct::~NetnAppointmentStruct
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
 NetnAppointmentStruct::~NetnAppointmentStruct()
@@ -204,7 +387,7 @@ NetnTransportStruct::NetnTransportStruct( const NetnDataTStruct& dataTransport )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Transportation::NetnTransportStruct
+// Name: NetnTransportStruct::NetnTransportStruct
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
 NetnTransportStruct::NetnTransportStruct( const NetnDataEDStruct& data, int32 convoyType )

@@ -13,7 +13,64 @@
 
 using namespace plugins::hla;
 
-BOOST_FIXTURE_TEST_CASE( netn_object_feature_struct_deserialization, SerializationFixture )
+BOOST_FIXTURE_TEST_CASE( netn_object_description_deserialization, SerializationFixture )
+{
+    const real32 weight = 1.;
+    const real32 volume = 2.;
+    const std::string type = "type";
+    NetnObjectDescription serializedDescription( weight, volume, type );
+    const unsigned int descriptionSize = sizeof( real32 ) + sizeof( real32 ) + sizeof( int32 ) + sizeof( int8 ) * type.size();
+    ::hla::Deserializer deserializer = Serialize( serializedDescription, descriptionSize );
+    NetnObjectDescription deserializedDescription;
+    deserializedDescription.Deserialize( deserializer );
+    BOOST_CHECK_EQUAL( deserializedDescription.volume, volume );
+    BOOST_CHECK_EQUAL( deserializedDescription.weight, weight );
+    BOOST_CHECK_EQUAL( deserializedDescription.type, type );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_human_description_deserialization, SerializationFixture )
+{
+    const rpr::EntityType humanType( "1 2 3 0 0" );
+    const int16 quantity = 1;
+    const int16 injury = 3;
+    NetnHumanDescription serializedDescription( humanType, quantity, injury );
+    const unsigned int descriptionSize = 6 * sizeof( char ) + sizeof( short ) + sizeof( int16 ) + sizeof( int16 );
+    ::hla::Deserializer deserializer = Serialize( serializedDescription, descriptionSize );
+    NetnHumanDescription deserializedDescription;
+    deserializedDescription.Deserialize( deserializer );
+    BOOST_CHECK_EQUAL( deserializedDescription.humanType, humanType );
+    BOOST_CHECK_EQUAL( deserializedDescription.quantity, quantity );
+    BOOST_CHECK_EQUAL( deserializedDescription.injury, injury );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_equip_description_deserialization, SerializationFixture )
+{
+    const rpr::EntityType equipType( "1 2 3 0 0" );
+    const int32 quantity = 1;
+    const int32 damageState = 3;
+    NetnEquipDescription serializedDescription( equipType, quantity, damageState );
+    const unsigned int descriptionSize = 6 * sizeof( char ) + sizeof( short ) + sizeof( int32 ) + sizeof( int32 );
+    ::hla::Deserializer deserializer = Serialize( serializedDescription, descriptionSize );
+    NetnEquipDescription deserializedDescription;
+    deserializedDescription.Deserialize( deserializer );
+    BOOST_CHECK_EQUAL( deserializedDescription.equipType, equipType );
+    BOOST_CHECK_EQUAL( deserializedDescription.damageState, damageState );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_platform_description_deserialization, SerializationFixture )
+{
+    const rpr::EntityType plateformType( "1 2 3 0 0" );
+    const int32 damageState = 3;
+    NetnPlateformDescription serializedDescription( plateformType, damageState );
+    const unsigned int descriptionSize = 6 * sizeof( char ) + sizeof( short ) + sizeof( int32 );
+    ::hla::Deserializer deserializer = Serialize( serializedDescription, descriptionSize );
+    NetnPlateformDescription deserializedDescription;
+    deserializedDescription.Deserialize( deserializer );
+    BOOST_CHECK_EQUAL( deserializedDescription.plateformType, plateformType );
+    BOOST_CHECK_EQUAL( deserializedDescription.damageState, damageState );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_object_feature_struct_no_detail_deserialization, SerializationFixture )
 {
     NetnObjectFeatureStruct serializedFeature;
     const unsigned int discriminantTypeSize = sizeof( int32 );
@@ -24,11 +81,41 @@ BOOST_FIXTURE_TEST_CASE( netn_object_feature_struct_deserialization, Serializati
     BOOST_CHECK_EQUAL( noDetail, deserializedFeature.featureLevel );
 }
 
+BOOST_FIXTURE_TEST_CASE( netn_object_feature_struct_with_aggregate_deserialization, SerializationFixture )
+{
+    std::vector< NetnObjectDefinitionStruct > subObjectList;
+    subObjectList.push_back( NetnObjectDefinitionStruct( "callsign", "uniqueid", NetnObjectFeatureStruct() ) );
+    NetnObjectFeatureStruct serializedFeature( subObjectList );
+    ::hla::Deserializer deserializer = Serialize( serializedFeature );
+    NetnObjectFeatureStruct deserializedFeature;
+    deserializedFeature.Deserialize( deserializer );
+    const int32 aggregateDetail = 5;
+    BOOST_CHECK_EQUAL( aggregateDetail, deserializedFeature.featureLevel );
+    BOOST_CHECK_EQUAL( 1u, deserializedFeature.subObjectList.size() );
+    BOOST_CHECK_EQUAL( "callsign", deserializedFeature.subObjectList.at( 0 ).callsign.str() );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_object_feature_constructors, SerializationFixture )
+{
+    const NetnObjectDescription objectDescription;
+    const NetnHumanDescription humanDescription;
+    const NetnEquipDescription equipDescription;
+    const NetnPlateformDescription plateformDescription;
+    NetnObjectFeatureStruct object( objectDescription );
+    NetnObjectFeatureStruct human( humanDescription );
+    NetnObjectFeatureStruct equipment( equipDescription );
+    NetnObjectFeatureStruct plateform( plateformDescription );
+    BOOST_CHECK_EQUAL( object.featureLevel, 1 );
+    BOOST_CHECK_EQUAL( human.featureLevel, 2 );
+    BOOST_CHECK_EQUAL( equipment.featureLevel, 3 );
+    BOOST_CHECK_EQUAL( plateform.featureLevel, 4 );
+}
+
 BOOST_FIXTURE_TEST_CASE( netn_object_definition_struct_deserialization, SerializationFixture )
 {
     const std::string callsign = "callsign";
     const std::string uniqueId = "uniqueid";
-    const NetnObjectDefinitionStruct serializedObjectDefinition( callsign, uniqueId );
+    const NetnObjectDefinitionStruct serializedObjectDefinition( callsign, uniqueId, NetnObjectFeatureStruct() );
     const unsigned int callsignSize = sizeof( uint32 ) + callsign.size() * sizeof( int16 );
     const unsigned int uniqueIdSize = 11 * sizeof( int8 );
     const unsigned int objectFeatureSize = sizeof( int32 );
