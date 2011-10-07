@@ -51,11 +51,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
     //! @name Member data
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
