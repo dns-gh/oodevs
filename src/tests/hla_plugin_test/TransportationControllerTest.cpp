@@ -27,9 +27,8 @@ BOOST_AUTO_TEST_CASE( transportation_controller_reads_transportation_mission_nam
     xis >> xml::start( "configuration" );
     tools::MessageController< sword::SimToClient_Content > messageController;
     MockMissionResolver resolver;
-    MockTransportationListener listener;
     MOCK_EXPECT( resolver, Resolve ).once().with( "transportation mission name" ).returns( 42 );
-    TransportationController controller( xis, resolver, messageController, listener );
+    TransportationController controller( xis, resolver, messageController );
 }
 
 namespace
@@ -65,14 +64,16 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mission_and_notifies_listener, Fixture )
 {
-    TransportationController controller( xis, resolver, messageController, listener );
+    TransportationController controller( xis, resolver, messageController );
+    controller.Register( listener );
     MOCK_EXPECT( listener, ConvoyRequested ).once();
     messageController.Dispatch( MakeTransportationMessage( transportId ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( transporation_controller_does_nothing_if_mission_is_not_transportation, Fixture )
 {
-    TransportationController controller( xis, resolver, messageController, listener );
+    TransportationController controller( xis, resolver, messageController );
+    controller.Register( listener );
     const unsigned int unknownMission = transportId + 1;
     messageController.Dispatch( MakeTransportationMessage( unknownMission ) );
 }

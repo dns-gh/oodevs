@@ -13,6 +13,7 @@
 #include "TransportationListener_ABC.h"
 #include "protocol/Simulation.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -32,10 +33,8 @@ namespace
 // Created: SLI 2011-10-06
 // -----------------------------------------------------------------------------
 TransportationController::TransportationController( xml::xisubstream xis, const MissionResolver_ABC& resolver,
-                                                    tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                                    TransportationListener_ABC& listener )
+                                                    tools::MessageController_ABC< sword::SimToClient_Content >& controller )
     : transportIdentifier_( ResolveMission( xis, resolver ) )
-    , listener_           ( listener )
 {
     CONNECT( controller, *this, automat_order );
 }
@@ -56,5 +55,24 @@ TransportationController::~TransportationController()
 void TransportationController::Notify(  const sword::AutomatOrder& message, int /*context*/ )
 {
     if( message.type().id() == transportIdentifier_ )
-        listener_.ConvoyRequested();
+        BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
+            listener->ConvoyRequested();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationController::Register
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+void TransportationController::Register( TransportationListener_ABC& listener )
+{
+    listeners_.push_back( &listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationController::Unregister
+// Created: SLI 2011-10-07
+// -----------------------------------------------------------------------------
+void TransportationController::Unregister( TransportationListener_ABC& listener )
+{
+    listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
 }

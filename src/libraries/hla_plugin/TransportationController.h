@@ -10,7 +10,9 @@
 #ifndef plugins_hla_TransportationController_h
 #define plugins_hla_TransportationController_h
 
+#include "TransportationController_ABC.h"
 #include "tools/MessageObserver.h"
+#include <vector>
 
 namespace xml
 {
@@ -33,7 +35,6 @@ namespace plugins
 namespace hla
 {
     class MissionResolver_ABC;
-    class TransportationListener_ABC;
 
 // =============================================================================
 /** @class  TransportationController
@@ -41,15 +42,22 @@ namespace hla
 */
 // Created: SLI 2011-10-06
 // =============================================================================
-class TransportationController : private tools::MessageObserver< sword::AutomatOrder >
+class TransportationController : public TransportationController_ABC
+                               , private tools::MessageObserver< sword::AutomatOrder >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              TransportationController( xml::xisubstream xis, const MissionResolver_ABC& resolver,
-                                       tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                       TransportationListener_ABC& listener );
+                                       tools::MessageController_ABC< sword::SimToClient_Content >& controller );
     virtual ~TransportationController();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual void Register( TransportationListener_ABC& listener );
+    virtual void Unregister( TransportationListener_ABC& listener );
     //@}
 
 private:
@@ -59,10 +67,16 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::vector< TransportationListener_ABC* > T_Listeners;
+    //@}
+
+private:
     //! @name Member data
     //@{
     const unsigned int transportIdentifier_;
-    TransportationListener_ABC& listener_;
+    T_Listeners listeners_;
     //@}
 };
 

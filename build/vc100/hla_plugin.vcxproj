@@ -209,6 +209,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Transportation.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationController.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationController_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnicodeString.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UniqueId.h" />
