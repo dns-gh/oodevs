@@ -34,7 +34,7 @@ class DEC_Model_ABC;
 class MIL_Automate;
 class MIL_AgentPion;
 class PHY_UnitType;
-
+class MIL_HumanRepartition;
 
 // =============================================================================
 // @class  MIL_AgentTypePion
@@ -73,6 +73,7 @@ public:
           double                            GetDistanceAvantPoint            ( const TerrainData& nType ) const;
           double                            GetDistanceAvantLima             () const;
           double                            GetRapForIncreasePerTimeStepValue() const;
+          const MIL_HumanRepartition&       GetHumanRepartition              () const;
     //@}
 
     //! @name Operators
@@ -128,8 +129,9 @@ private:
     const DEC_Model_ABC*    pModel_;
     const PHY_UnitType*     pUnitType_;
     T_DistanceAvantPointMap distancesAvantPoints_;
-    double                rDistanceAvantLimas_;
-    double                rRapForIncreasePerTimeStepValue_;
+    double                  rDistanceAvantLimas_;
+    double                  rRapForIncreasePerTimeStepValue_;
+    MIL_HumanRepartition*   pHumanRepartition_;
 
 private:
     static T_PionTypeAllocatorMap  pionTypeAllocators_;

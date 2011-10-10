@@ -127,7 +127,7 @@ void NET_RolePion_Dotations::SendChangedState( unsigned int context ) const
         if( bLastStateNeutralized_ != bIsNeutralized )
         {
             msg().set_neutralized( bIsNeutralized );
-            bLastStateNeutralized_              = bIsNeutralized;
+            bLastStateNeutralized_ = bIsNeutralized;
         }
         pion_.Apply( &network::NetworkUnitAttributesMessageSender_ABC::SendChangedState, msg );
         SendMsgUnitAttributes( msg, context );

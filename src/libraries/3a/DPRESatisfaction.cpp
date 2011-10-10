@@ -63,7 +63,7 @@ float DPRESatisfaction::Extract( const sword::SimToClient& wrapper )
 {
     float result = 0;
     int count = 0;
-    const sword::UnitAttributes::Satisfaction& satisfactions = wrapper.message().unit_attributes().refugees_satisfaction();
+    const sword::UnitAttributes::Satisfaction& satisfactions = wrapper.message().unit_attributes().satisfaction();
 
     if( lodging_.isAsked_ )
     {

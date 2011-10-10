@@ -60,9 +60,9 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
     , surrenderedTo_( 0 )
     , bRefugeesManaged_( false )
     , aggregated_( false )
-    , fRefugeesLodgingSatisfactionPercent_( 0.0f )
-    , fRefugeesSecuritySatisfactionPercent_( 0.0f )
-    , fRefugeesHealthSatisfactionPercent_( 0.0f )
+    , fLodgingSatisfactionPercent_( 0.0f )
+    , fSecuritySatisfactionPercent_( 0.0f )
+    , fHealthSatisfactionPercent_( 0.0f )
     , crowdTransported_( -1 )
 {
     CreateDictionary( dictionary );
@@ -102,9 +102,9 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
     dictionary.Register( *this, tools::translate( "Attributes", "Military state/Prisoner" ),              bPrisoner_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Military state/Surrender" ),             surrenderedTo_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Military state/Refugees picked up" ),    bRefugeesManaged_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Lodging" ),                 fRefugeesLodgingSatisfactionPercent_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Security" ),                fRefugeesSecuritySatisfactionPercent_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Health" ),                  fRefugeesHealthSatisfactionPercent_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Lodging" ),                 fLodgingSatisfactionPercent_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Security" ),                fSecuritySatisfactionPercent_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Health" ),                  fHealthSatisfactionPercent_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,16 +203,14 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_critical_intelligence() )
         criticalIntelligence_ = message.critical_intelligence();
 
-    if( message.has_refugees_satisfaction() )
+    if( message.has_satisfaction() )
     {
-        if( message.refugees_satisfaction().has_lodging() )
-            fRefugeesLodgingSatisfactionPercent_ = 100.0f * message.refugees_satisfaction().lodging();
-
-        if( message.refugees_satisfaction().has_safety() )
-            fRefugeesSecuritySatisfactionPercent_ = 100.0f * message.refugees_satisfaction().safety();
-
-        if( message.refugees_satisfaction().has_access_to_health_care() )
-            fRefugeesHealthSatisfactionPercent_ = 100.0f * message.refugees_satisfaction().access_to_health_care();
+        if( message.satisfaction().has_lodging() )
+            fLodgingSatisfactionPercent_ = 100.0f * message.satisfaction().lodging();
+        if( message.satisfaction().has_safety() )
+            fSecuritySatisfactionPercent_ = 100.0f * message.satisfaction().safety();
+        if( message.satisfaction().has_access_to_health_care() )
+            fHealthSatisfactionPercent_ = 100.0f * message.satisfaction().access_to_health_care();
     }
 
     if( message.has_transported_crowd() )
@@ -269,9 +267,9 @@ void Attributes::Display( Displayer_ABC& displayer ) const
             .Display( tools::translate( "Attributes", "Refugees picked up:" ), bRefugeesManaged_ );
 
     displayer.Group( tools::translate( "Attributes", "Satisfaction" ) )
-        .Display( tools::translate( "Attributes", "Lodging:" ), fRefugeesLodgingSatisfactionPercent_ )
-        .Display( tools::translate( "Attributes", "Security:" ), fRefugeesSecuritySatisfactionPercent_ )
-        .Display( tools::translate( "Attributes", "Health:" ), fRefugeesHealthSatisfactionPercent_ );
+        .Display( tools::translate( "Attributes", "Lodging:" ), fLodgingSatisfactionPercent_ )
+        .Display( tools::translate( "Attributes", "Security:" ), fSecuritySatisfactionPercent_ )
+        .Display( tools::translate( "Attributes", "Health:" ), fHealthSatisfactionPercent_ );
 }
 
 // -----------------------------------------------------------------------------

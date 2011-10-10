@@ -16,6 +16,7 @@
 #include "MIL_AgentServer.h"
 
 #include "Tools/MIL_Tools.h"
+#include "Tools/MIL_HumanRepartition.h"
 #include "Units/PHY_UnitType.h"
 
 #include "Decision/DEC_Representations.h"
@@ -195,6 +196,7 @@ MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, const std::str
     , pUnitType_                      ( new PHY_UnitType( xis ) )
     , rDistanceAvantLimas_            ( 0. )
     , rRapForIncreasePerTimeStepValue_( DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue() )
+    , pHumanRepartition_              ( new MIL_HumanRepartition( xis ) )
 {
     InitializeRapFor              ( xis );
     InitializeDistancesAvantPoints( xis );
@@ -209,6 +211,7 @@ MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, const std::str
 MIL_AgentTypePion::MIL_AgentTypePion( const DEC_Model_ABC* pModel )
     : pModel_   ( pModel )
     , pUnitType_( 0 )
+    , pHumanRepartition_( new MIL_HumanRepartition() )
 {
     // NOTHING
 }
@@ -220,6 +223,7 @@ MIL_AgentTypePion::MIL_AgentTypePion( const DEC_Model_ABC* pModel )
 MIL_AgentTypePion::~MIL_AgentTypePion()
 {
     delete pUnitType_;
+    delete pHumanRepartition_;
 }
 
 //-----------------------------------------------------------------------------

@@ -86,7 +86,12 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , pLogSupply_                 ( 0 )
     , order_                      ( 0 )
     , transportedCrowd_           ( -1 )
+    , statisfaction_              ( 0 )
+    , humanRepartition_           ( 0 )
 {
+    if ( msg.has_repartition() )
+        humanRepartition_.reset( new HumanRepartition( msg.repartition().male(), msg.repartition().female(), msg.repartition().children() ) );
+
     automat_->Register( *this );
     if( msg.has_color() )
         color_ = msg.color();
@@ -297,6 +302,15 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
 
     UPDATE_ASN_ATTRIBUTE( transported_crowd, transportedCrowd_ );
 
+    if( message.has_satisfaction() )
+    {
+        Satisfaction* pSatisfaction = new Satisfaction;
+        pSatisfaction->safety_ = message.satisfaction().safety();
+        pSatisfaction->lodging_ = message.satisfaction().lodging();
+        pSatisfaction->health_ = message.satisfaction().access_to_health_care();
+        statisfaction_.reset( pSatisfaction );
+    }
+
     Observable< sword::UnitAttributes >::Notify( message );
 }
 
@@ -315,8 +329,8 @@ void Agent::DoUpdate( const sword::DecisionalState& message )
 // -----------------------------------------------------------------------------
 void Agent::DoUpdate( const sword::LogMedicalState& message )
 {
-    if( !pLogMedical_ )
-        pLogMedical_ = new AgentLogMedical( model_, *this, message );
+    if( !pLogMedical_.get() )
+        pLogMedical_.reset( new AgentLogMedical( model_, *this, message ) );
     else
         pLogMedical_->Update( message );
 }
@@ -327,8 +341,8 @@ void Agent::DoUpdate( const sword::LogMedicalState& message )
 // -----------------------------------------------------------------------------
 void Agent::DoUpdate( const sword::LogMaintenanceState& message )
 {
-    if( !pLogMaintenance_ )
-        pLogMaintenance_ = new AgentLogMaintenance( model_, *this, message );
+    if( !pLogMaintenance_.get() )
+        pLogMaintenance_.reset( new AgentLogMaintenance( model_, *this, message ) );
     else
         pLogMaintenance_->Update( message );
 }
@@ -339,8 +353,8 @@ void Agent::DoUpdate( const sword::LogMaintenanceState& message )
 // -----------------------------------------------------------------------------
 void Agent::DoUpdate( const sword::LogSupplyState& message )
 {
-    if( !pLogSupply_ )
-        pLogSupply_ = new AgentLogSupply( *this, message );
+    if( !pLogSupply_.get() )
+        pLogSupply_.reset( new AgentLogSupply( *this, message ) );
     else
         pLogSupply_->Update( message );
 }
@@ -398,6 +412,12 @@ void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
     message().set_pc( bPC_ );
     if( color_.IsInitialized() )
         *message().mutable_color() = color_;
+    if ( humanRepartition_.get() )
+    {
+        message().mutable_repartition()->set_male( humanRepartition_->male_ );
+        message().mutable_repartition()->set_female( humanRepartition_->female_ );
+        message().mutable_repartition()->set_children( humanRepartition_->children_ );
+    }
     message.Send( publisher );
 }
 
@@ -503,6 +523,13 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         }
         if( transportedCrowd_ != -1 )
             asn().set_transported_crowd( transportedCrowd_ );
+        if( statisfaction_.get() )
+        {
+            asn().mutable_satisfaction()->set_lodging( statisfaction_->lodging_ );
+            asn().mutable_satisfaction()->set_safety ( statisfaction_->safety_ );
+            asn().mutable_satisfaction()->set_access_to_health_care ( statisfaction_->health_ );
+        }
+
         asn.Send( publisher );
     }
 
@@ -515,13 +542,13 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     }
 
     // Log
-    if( pLogMedical_ )
+    if( pLogMedical_.get() )
         pLogMedical_->Send( publisher );
 
-    if( pLogMaintenance_ )
+    if( pLogMaintenance_.get() )
         pLogMaintenance_->Send( publisher );
 
-    if( pLogSupply_ )
+    if( pLogSupply_.get() )
         pLogSupply_->Send( publisher );
 
     if( order_.get() )

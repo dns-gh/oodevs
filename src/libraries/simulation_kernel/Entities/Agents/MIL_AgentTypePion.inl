@@ -83,6 +83,16 @@ double MIL_AgentTypePion::GetRapForIncreasePerTimeStepValue() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::GetHumanRepartition
+// Created: MMC 2011-10-10
+// -----------------------------------------------------------------------------
+inline
+const MIL_HumanRepartition& MIL_AgentTypePion::GetHumanRepartition() const
+{
+    return *pHumanRepartition_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::operator==
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
@@ -99,6 +109,7 @@ bool MIL_AgentTypePion::operator==( const MIL_AgentTypePion& rhs ) const
 template< typename T >
 MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* )
     : MIL_AgentType_ABC( strName, xis )
+    , pHumanRepartition_( new MIL_HumanRepartition( xis ) )
 {
     pUnitType_ = new T( xis );
     InitializeRapFor              ( xis );

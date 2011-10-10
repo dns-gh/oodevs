@@ -898,9 +898,8 @@ message UnitAttributes {
     optional string                      critical_intelligence      = 47; //!< The current critical intelligence
     optional PartyAdhesions              adhesions                  = 48; //!< The party adhesions
     optional Extension                   extension                  = 49; //!< The extension fields
-    optional Satisfaction                refugees_satisfaction      = 50; //!< The refugees satisfaction
-    optional EnumUnitStress              stress                     = 53; //!< The stress @see EnumUnitStress
-    optional int32                       transported_crowd          = 54; //!< The number of transported humans from a crowd
+    optional EnumUnitStress              stress                     = 50; //!< The stress @see EnumUnitStress
+    optional int32                       transported_crowd          = 51; //!< The number of transported humans from a crowd
 }
 
 /** @struct UnitPathFind

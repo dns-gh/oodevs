@@ -71,6 +71,7 @@
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_Color.h"
+#include "Tools/MIL_HumanRepartition.h"
 #include "Tools/MIL_IDManager.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
@@ -96,6 +97,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pAffinities_         ( new MIL_AffinitiesMap( xis ) )
     , pExtensions_         ( new MIL_DictionaryExtensions( xis ) )
     , pColor_              ( new MIL_Color( xis ) )
+    , pHumanRepartition_   ( new MIL_HumanRepartition( type.GetHumanRepartition() ) )
 {
     automate.RegisterPion( *this, false );
     xis >> xml::optional
@@ -118,6 +120,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( new MIL_AffinitiesMap() )
     , pExtensions_         ( new MIL_DictionaryExtensions() )
+    , pHumanRepartition_   ( new MIL_HumanRepartition( type.GetHumanRepartition() ) )
 {
     pColor_.reset( new MIL_Color( automate.GetColor() ) );
     automate.RegisterPion( *this );
@@ -137,6 +140,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( new MIL_AffinitiesMap() )
     , pExtensions_         ( new MIL_DictionaryExtensions() )
+    , pHumanRepartition_   ( new MIL_HumanRepartition( type.GetHumanRepartition() ) )
 {
     pColor_.reset( new MIL_Color( automate.GetColor() ) );
     automate.RegisterPion( *this );
@@ -157,6 +161,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFac
     , pAffinities_         ( 0 )
     , pExtensions_         ( 0 )
     , pColor_              ( 0 )
+    , pHumanRepartition_   ( new MIL_HumanRepartition( type.GetHumanRepartition() ) )
 {
     // NOTHING
 }
@@ -212,6 +217,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     MIL_AffinitiesMap* pAffinities;
     MIL_DictionaryExtensions* pExtensions;
     MIL_Color* pColor;
+    MIL_HumanRepartition* pRepartition;
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file >> const_cast< bool& >( bIsPC_ )
          >> pAutomate_
@@ -219,7 +225,8 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pKnowledgeBlackBoard_
          >> pAffinities
          >> pExtensions
-         >> pColor;
+         >> pColor
+         >> pRepartition;
     LoadRole< network::NET_RolePion_Dotations >( file, *this );
     LoadRole< PHY_RolePion_Reinforcement >( file, *this );
     LoadRole< PHY_RolePion_Posture >( file, *this );
@@ -257,6 +264,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     pAffinities_.reset( pAffinities );
     pExtensions_.reset( pExtensions );
     pColor_.reset( pColor );
+    pHumanRepartition_.reset( pRepartition );
 }
 
 // -----------------------------------------------------------------------------
@@ -269,6 +277,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     const MIL_Color* const pColor = pColor_.get();
+    const MIL_HumanRepartition* const pRepartition = pHumanRepartition_.get();
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file << bIsPC_
         << pAutomate_
@@ -276,7 +285,8 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
         << pKnowledgeBlackBoard_
         << pAffinities
         << pExtensions
-        << pColor;
+        << pColor
+        << pRepartition;
     SaveRole< network::NET_RolePion_Dotations >( *this, file );
     SaveRole< PHY_RolePion_Reinforcement >( *this, file );
     SaveRole< PHY_RolePion_Posture >( *this, file );
@@ -339,6 +349,7 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
     }
     pAffinities_->WriteODB( xos );
     pExtensions_->WriteODB( xos );
+    pHumanRepartition_->WriteODB( xos );
     xos << xml::end;// unit
 }
 
@@ -643,6 +654,7 @@ void MIL_AgentPion::SendCreation( unsigned int nCtx ) const
     creationMsg().set_name( GetName() );
     creationMsg().mutable_automat()->set_id( GetAutomate().GetID() );
     creationMsg().set_pc( bIsPC_ );
+    pHumanRepartition_->SendFullState( creationMsg );
     pColor_->SendFullState( creationMsg );
     creationMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
@@ -1287,12 +1299,21 @@ float MIL_AgentPion::GetAffinity( unsigned long teamID ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetHumanRepartition
+// Created: MMC 2011-10-10
+// -----------------------------------------------------------------------------
+const MIL_HumanRepartition& MIL_AgentPion::GetHumanRepartition() const
+{
+    return *pHumanRepartition_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::IsImmobilized
 // Created: JSR 2011-09-15
 // -----------------------------------------------------------------------------
 bool MIL_AgentPion::IsImmobilized() const
 {
-    return  GetRole< PHY_RolePion_Composantes >().IsImmobilized();
+    return GetRole< PHY_RolePion_Composantes >().IsImmobilized();
 }
 
 // -----------------------------------------------------------------------------

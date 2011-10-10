@@ -41,9 +41,10 @@ class DEC_KnowledgeBlackBoard_AgentPion;
 class MIL_AffinitiesMap;
 class MIL_Army;
 class MIL_Automate;
-class MIL_DictionaryExtensions;
 class MIL_Color;
+class MIL_DictionaryExtensions;
 class MIL_EntityManager;
+class MIL_HumanRepartition;
 class PHY_Dotation;
 class PHY_DotationStock;
 
@@ -102,6 +103,7 @@ public:
     virtual double Distance( const MIL_Agent_ABC& pion ) const;
     virtual const std::string& GetCriticalIntelligence() const;
     virtual float GetAffinity( unsigned long teamID ) const;
+    virtual const MIL_HumanRepartition& GetHumanRepartition() const;
 
     bool IsImmobilized() const;
     bool IsAutonomous() const; // Drones
@@ -209,6 +211,7 @@ private:
     std::auto_ptr< MIL_AffinitiesMap >        pAffinities_;
     std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
     std::auto_ptr< MIL_Color >                pColor_;
+    std::auto_ptr< MIL_HumanRepartition >     pHumanRepartition_;
     //@}
 };
 

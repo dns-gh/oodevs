@@ -111,6 +111,20 @@ private:
 private:
     //! @name Types
     //@{
+    struct Satisfaction
+    {
+        float safety_;
+        float lodging_;
+        float health_;
+    };
+    struct HumanRepartition
+    {
+        float male_;
+        float female_;
+        float children_;
+
+        HumanRepartition( float male, float female, float children ) : male_( male ), female_( female ), children_( children ) {} 
+    };
     typedef std::map< unsigned long, float > T_Affinities;
     typedef T_Affinities::const_iterator   CIT_Affinities;
     //@}
@@ -171,15 +185,17 @@ private:
     tools::Resolver< Dotation >                dotations_;
     tools::Resolver< Loan >                    borrowings_;
     tools::Resolver< Loan >                    lendings_;
-    AgentLogMedical*                           pLogMedical_;
-    AgentLogMaintenance*                       pLogMaintenance_;
-    AgentLogSupply*                            pLogSupply_;
+    std::auto_ptr< AgentLogMedical >           pLogMedical_;
+    std::auto_ptr< AgentLogMaintenance >       pLogMaintenance_;
+    std::auto_ptr< AgentLogSupply >            pLogSupply_;
     std::auto_ptr< AgentOrder >                order_;
     std::map< std::string, std::string >       extensions_;
     std::string                                criticalIntelligence_;
     Localisation                               currentPath_;
     T_Affinities                               affinities_;
     int                                        transportedCrowd_;
+    std::auto_ptr< Satisfaction >              statisfaction_;
+    std::auto_ptr< HumanRepartition >          humanRepartition_;
 };
 
 }

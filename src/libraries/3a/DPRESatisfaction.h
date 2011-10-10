@@ -42,7 +42,7 @@ public:
     //@{
     bool HasValue( const sword::SimToClient& wrapper ) const
     {
-        return ( wrapper.message().has_unit_attributes() && wrapper.message().unit_attributes().has_refugees_satisfaction() );
+        return ( wrapper.message().has_unit_attributes() && wrapper.message().unit_attributes().has_satisfaction() );
     }
     float Extract( const sword::SimToClient& wrapper );
     //@}
