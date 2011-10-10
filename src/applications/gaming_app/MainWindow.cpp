@@ -20,6 +20,7 @@
 #include "ClientCommandFacade.h"
 #include "ClockDock.h"
 #include "CommandFacade.h"
+#include "Config.h"
 #include "CreationPanels.h"
 #include "Dialogs.h"
 #include "EventToolbar.h"
@@ -130,7 +131,6 @@
 #include "clients_gui/SimpleFilter.h"
 #include "clients_gui/UrbanFilter.h"
 #include "clients_gui/LogisticList.h"
-#include "tools/SessionConfig.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -146,7 +146,7 @@ using namespace kernel;
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation,
-                        Network& network, const Profile_ABC& p, tools::SessionConfig& config, LoggerProxy& logger,
+                        Network& network, const Profile_ABC& p, Config& config, LoggerProxy& logger,
                         const RcEntityResolver_ABC& rcResolver, const QString& license )
                         : QMainWindow()
     , controllers_     ( controllers )

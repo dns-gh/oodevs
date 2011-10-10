@@ -18,17 +18,13 @@ namespace kernel
     class Controllers;
 }
 
-namespace tools
-{
-    class SessionConfig;
-}
-
 namespace actions
 {
     class ActionsFilter_ABC;
     class ActionsModel;
 }
 
+class Config;
 class Services;
 
 // =============================================================================
@@ -48,7 +44,7 @@ class ActionsToolbar : public Q3HBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsToolbar( QWidget* parent, actions::ActionsModel& actions, const tools::SessionConfig& config, kernel::Controllers& controllers );
+             ActionsToolbar( QWidget* parent, actions::ActionsModel& actions, const Config& config, kernel::Controllers& controllers );
     virtual ~ActionsToolbar();
     //@}
 
@@ -70,6 +66,9 @@ private:
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Services& services );
     virtual void NotifyUpdated( const Simulation::sCheckPoint& checkPoint );
+
+    QToolButton* CreateToolButton( const QString label, const QPixmap& pixmap, const char* slot );
+    void DoLoad( const std::string filename );
     //@}
 
 private slots:
@@ -78,24 +77,24 @@ private slots:
     void Load();
     void Save();
     void Purge();
+    void Reload();
     //@}
 
 signals:
     void PlanificationModeChange();
+    void activeRefreshButton( bool );
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    actions::ActionsModel& actions_;
-    const tools::SessionConfig& config_;
+    kernel::Controllers&              controllers_;
+    actions::ActionsModel&            actions_;
+    const Config&                     config_;
     const actions::ActionsFilter_ABC* filter_;
-    QToolButton*  loadBtn_;
-    QToolButton*  saveBtn_;
-    QToolButton*  purgeBtn_;
-    QMessageBox*  confirmation_;
-    bool          initialized_;
-    bool          hasReplay_;
+    QMessageBox*                      confirmation_;
+    bool                              initialized_;
+    bool                              hasReplay_;
+    std::string                       filename_;
     //@}
 };
 

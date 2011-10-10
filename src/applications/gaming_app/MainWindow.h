@@ -21,11 +21,6 @@ namespace kernel
     class Profile_ABC;
 }
 
-namespace tools
-{
-    class SessionConfig;
-}
-
 namespace gui
 {
     class OptionsPanel;
@@ -48,6 +43,7 @@ namespace gui
     class LayerFilter_ABC;
 }
 
+class Config;
 class Services;
 class StatusBar;
 class Model;
@@ -81,7 +77,7 @@ public:
     //! @name Constructors/Destructor/Accessor
     //@{
              MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation,
-                         Network& network, const kernel::Profile_ABC& profile, tools::SessionConfig& config, LoggerProxy& logger,
+                         Network& network, const kernel::Profile_ABC& profile, Config& config, LoggerProxy& logger,
                          const RcEntityResolver_ABC& rcResolver, const QString& license );
     virtual ~MainWindow();
     //@}
@@ -135,7 +131,7 @@ private:
     Model& model_;
     Network& network_;
     QString profile_;
-    tools::SessionConfig& config_;
+    Config& config_;
     std::auto_ptr< gui::CircularEventStrategy >  forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
     std::auto_ptr< gui::Painter_ABC > pPainter_;

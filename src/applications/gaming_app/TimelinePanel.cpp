@@ -82,7 +82,7 @@ namespace
 // Name: TimelinePanel constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, const tools::SessionConfig& config, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
+TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, const Config& config, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
     : QDockWidget( "timeline", parent )
 {
     setObjectName( "timeLine" );

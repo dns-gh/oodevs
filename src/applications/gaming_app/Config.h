@@ -38,6 +38,7 @@ public:
     //@{
     void Connect( Network& network ) const;
     std::string GetLogin() const;
+    std::string GetOrderFile() const;
     bool IsLoginInCommandLine() const;
     //@}
 
@@ -52,6 +53,7 @@ private:
     //@{
     std::string host_;
     std::string login_;
+    std::string orderFile_;
     bool isLoginInCommandLine_;
     //@}
 };

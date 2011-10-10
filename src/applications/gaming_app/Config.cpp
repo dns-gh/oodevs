@@ -23,11 +23,13 @@ namespace po  = boost::program_options;
 // -----------------------------------------------------------------------------
 Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observer )
     : SessionConfig( observer )
+    , orderFile_( "" )
 {
     po::options_description desc( "Gaming options" );
     desc.add_options()
         ( "host",  po::value< std::string >( &host_ ), "specify host to join" )
-        ( "login", po::value< std::string >( &login_ ), "specify login" );
+        ( "login", po::value< std::string >( &login_ ), "specify login" )
+        ( "order-file", po::value< std::string >( &orderFile_ ), "specify an order file to load" );
     AddOptions( desc );
     Parse( argc, argv );
     isLoginInCommandLine_ = IsSet( "login" );
@@ -89,6 +91,15 @@ void Config::LoadSession( Network& network ) const
 std::string Config::GetLogin() const
 {
     return login_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetOrbatFile
+// Created: ABR 2011-10-10
+// -----------------------------------------------------------------------------
+std::string Config::GetOrderFile() const
+{
+    return orderFile_;
 }
 
 // -----------------------------------------------------------------------------

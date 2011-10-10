@@ -29,13 +29,9 @@ namespace gui
     class ItemFactory_ABC;
 }
 
-namespace tools
-{
-    class SessionConfig;
-}
-
 class ActionsScheduler;
 class ActionsToolbar;
+class Config;
 class TimelineWidget;
 
 // =============================================================================
@@ -51,7 +47,7 @@ class TimelinePanel : public QDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, const tools::SessionConfig& config, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
+             TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, const Config& config, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
     virtual ~TimelinePanel();
     //@}
 
@@ -79,8 +75,8 @@ private:
     //@{
     ActionsToolbar* toolbar_;
     TimelineWidget* timeline_;
-    QTabWidget* tabs_;
-    T_Filters filters_;
+    QTabWidget*     tabs_;
+    T_Filters       filters_;
     //@}
 };
 

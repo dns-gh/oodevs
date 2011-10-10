@@ -16,8 +16,8 @@
 #include "actions/ActionTasker.h"
 #include "clients_gui/BooleanOptionButton.h"
 #include "clients_kernel/Controllers.h"
+#include "Config.h"
 #include "gaming/Services.h"
-#include "tools/SessionConfig.h"
 #include "icons.h"
 #include "protocol/ReplaySenders.h"
 #include <boost/bind.hpp>
@@ -63,7 +63,7 @@ using namespace actions;
 // Name: ActionsToolbar constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const tools::SessionConfig& config, kernel::Controllers& controllers )
+ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const Config& config, kernel::Controllers& controllers )
     : Q3HBox       ( parent, "ActionsToolbar" )
     , controllers_( controllers )
     , actions_    ( actions )
@@ -75,35 +75,34 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const to
     setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
     setBackgroundMode( Qt::PaletteButton );
     setFrameStyle( Q3Frame::StyledPanel | Q3Frame::Raised );
-
     setMaximumHeight( 32 );
-    loadBtn_ = new QToolButton( this );
-    loadBtn_->setAutoRaise( true );
-    loadBtn_->setPixmap( MAKE_PIXMAP( open ) );
-    loadBtn_->setDisabled( false );
-    loadBtn_->setTextLabel( tr( "Load actions file" ) );
 
-    saveBtn_ = new QToolButton( this );
-    saveBtn_->setAutoRaise( true );
-    saveBtn_->setPixmap( MAKE_PIXMAP( save ) );
-    saveBtn_->setTextLabel( tr( "Save actions in active timeline to file" ) );
+    // Load
+    CreateToolButton( tr( "Load actions file" ), MAKE_PIXMAP( open ), SLOT( Load() ) );
+    // Save
+    CreateToolButton( tr( "Save actions in active timeline to file" ), MAKE_PIXMAP( save ), SLOT( Save() ) );
 
+    // Planning
     QToolButton* planningBtn = new gui::BooleanOptionButton( MakePixmap( "actions_designmode" ), tr( "Planning mode on/off" ), this, controllers.options_, "DesignMode" );
+    planningBtn->setAutoRaise( true );
     QAction* action = new QAction( this );
     planningBtn->addAction( action );
     action->setCheckable( true );
-    planningBtn->setAutoRaise( true );
-  //  connect( planningBtn, SIGNAL( QAction::triggered() ), this, SIGNAL( PlanificationModeChange() ) ); $$$$ FPT : stateChanged doesnt exists anymore
-    purgeBtn_ = new QToolButton( this );
-    purgeBtn_->setAutoRaise( true );
-    purgeBtn_->setPixmap( MAKE_PIXMAP( trash2 ) );
-    purgeBtn_->setTextLabel( tr( "Delete recorded actions" ) );
-    confirmation_ = new ConfirmationBox( tr( "Actions recorder" ), boost::bind( &ActionsToolbar::PurgeConfirmed, this, _1 ) );
-    controllers_.Register( *this );
+    connect( planningBtn, SIGNAL( QAction::triggered() ), this, SIGNAL( PlanificationModeChange() ) );
 
-    connect( loadBtn_ , SIGNAL( clicked() ), SLOT( Load()  ) );
-    connect( saveBtn_ , SIGNAL( clicked() ), SLOT( Save()  ) );
-    connect( purgeBtn_, SIGNAL( clicked() ), SLOT( Purge() ) );
+    // Purge
+    CreateToolButton( tr( "Delete recorded actions" ), MAKE_PIXMAP( trash2 ), SLOT( Purge() ) );
+    confirmation_ = new ConfirmationBox( tr( "Actions recorder" ), boost::bind( &ActionsToolbar::PurgeConfirmed, this, _1 ) );
+    // Reload
+    QToolButton* reloadButton = CreateToolButton( tr( "Reload" ), MAKE_PIXMAP( refresh ), SLOT( Reload() ) );
+    connect( this, SIGNAL( activeRefreshButton( bool ) ), reloadButton, SLOT( setEnabled( bool ) ) );
+
+    // Command line order file
+    if( !config_.GetOrderFile().empty() )
+        filename_ = ( bfs::path( config_.GetExerciseDir( config_.GetExerciseName() ) ) / bfs::path( config_.GetOrderFile() ) ).string();
+    emit activeRefreshButton( !filename_.empty() );
+
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,6 +112,20 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const to
 ActionsToolbar::~ActionsToolbar()
 {
     delete confirmation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsToolbar::CreateToolButton
+// Created: ABR 2011-10-10
+// -----------------------------------------------------------------------------
+QToolButton* ActionsToolbar::CreateToolButton( const QString label, const QPixmap& pixmap, const char* slot )
+{
+    QToolButton* button = new QToolButton( this );
+    button->setAutoRaise( true );
+    button->setPixmap( pixmap );
+    button->setTextLabel( label );
+    connect( button, SIGNAL( clicked() ), slot );
+    return button;
 }
 
 // -----------------------------------------------------------------------------
@@ -131,12 +144,22 @@ void ActionsToolbar::SetFilter( const actions::ActionsFilter_ABC& filter )
 void ActionsToolbar::Load()
 {
     const std::string rootDir = config_.BuildExerciseChildFile( "orders.ord" );
-    const QString filename = Q3FileDialog::getOpenFileName( rootDir.c_str(), tr( "Actions files (*.ord)" ), topLevelWidget(), 0, tr( "Load" ) );
-    if( filename.isEmpty() )
+    filename_ = Q3FileDialog::getOpenFileName( rootDir.c_str(), tr( "Actions files (*.ord)" ), topLevelWidget(), 0, tr( "Load" ) ).ascii();
+    DoLoad( filename_ );
+    emit activeRefreshButton( !filename_.empty() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsToolbar::DoLoad
+// Created: ABR 2011-10-10
+// -----------------------------------------------------------------------------
+void ActionsToolbar::DoLoad( const std::string filename )
+{
+    if( filename.empty() )
         return;
     try
     {
-        actions_.Load( filename.ascii(), config_.GetLoader(), hasReplay_ );
+        actions_.Load( filename, config_.GetLoader(), hasReplay_ );
     }
     catch( std::exception& e )
     {
@@ -156,7 +179,9 @@ void ActionsToolbar::Save()
         return;
     if( filename.right( 4 ) != ".ord" )
         filename += ".ord";
-    actions_.Save( filename.ascii(), filter_ );
+    filename_ = filename.ascii();
+    emit activeRefreshButton( !filename_.empty() );
+    actions_.Save( filename_, filter_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,6 +220,19 @@ void ActionsToolbar::PurgeConfirmed( int result )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: ActionsToolbar::Reload
+// Created: ABR 2011-10-10
+// -----------------------------------------------------------------------------
+void ActionsToolbar::Reload()
+{
+    PurgeFilter filter;
+    actions_.Purge( &filter );
+
+    assert( !filename_.empty() );
+    DoLoad( filename_ );
+}
+
 namespace
 {
     void GetOrdFilesList( bfs::path& path, std::vector< std::string >& list )
@@ -218,34 +256,28 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionsToolbar::NotifyUpdated( const Simulation& simulation )
 {
-    if( !hasReplay_ )
-        return;
-
     if( simulation.IsInitialized() != initialized_ )
     {
         initialized_ = simulation.IsInitialized();
         if( initialized_ )
         {
-            // todo charger
-            std::vector< std::string > files;
-            bfs::path path = bfs::path( config_.GetSessionDir(), bfs::native );
-            GetOrdFilesList( path, files );
-            for( std::vector< std::string >::const_iterator it = files.begin(); it != files.end(); ++it )
+            if( hasReplay_ )
             {
-                try
-                {
-                    actions_.Load( *it, config_.GetLoader(), hasReplay_ );
-                }
-                catch( std::exception& e )
-                {
-                    QMessageBox::critical( this, tr( "Error loading actions file" ), e.what() );
-                }
+                // todo charger
+                std::vector< std::string > files;
+                bfs::path path = bfs::path( config_.GetSessionDir(), bfs::native );
+                GetOrdFilesList( path, files );
+                for( std::vector< std::string >::const_iterator it = files.begin(); it != files.end(); ++it )
+                    DoLoad( *it );
             }
+            else
+                DoLoad( filename_ );
         }
         else
         {
             actions_.Purge();
-            initialized_ = false;
+            filename_.clear();
+            emit activeRefreshButton( !filename_.empty() );
         }
     }
 }
