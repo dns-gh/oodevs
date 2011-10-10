@@ -11,6 +11,7 @@
 #define __FloodProxy_h_
 
 #include "flood/ElevationGetter_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace flood
 {
@@ -50,9 +51,9 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::pair< std::auto_ptr< flood::FloodModel >, std::auto_ptr< flood::FloodDrawer > > T_Flood;
-    typedef std::map< unsigned int, T_Flood > T_Floods;
-    typedef T_Floods::const_iterator        CIT_Floods;
+    typedef std::pair< boost::shared_ptr< flood::FloodModel >, boost::shared_ptr< flood::FloodDrawer > > T_Flood;
+    typedef std::map< unsigned int, T_Flood >                                                            T_Floods;
+    typedef T_Floods::const_iterator                                                                   CIT_Floods;
     //@}
 
 private:
