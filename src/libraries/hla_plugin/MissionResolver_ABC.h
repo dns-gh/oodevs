@@ -11,6 +11,7 @@
 #define plugins_hla_MissionResolver_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <string>
 
 namespace plugins
 {

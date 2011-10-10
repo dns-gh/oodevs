@@ -115,6 +115,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\InteractionsFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\MissionResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionsFacade.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver_ABC.h" />

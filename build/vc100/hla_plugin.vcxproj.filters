@@ -226,6 +226,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationFacade.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\MissionResolver.cpp">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -521,6 +524,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationFacade.h">
       <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver.h">
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
