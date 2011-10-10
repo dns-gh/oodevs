@@ -136,6 +136,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transportation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationController.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnicodeString.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UniqueId.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AgentController.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\Transportation.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationController.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationController_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationFacade.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportedUnitsVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportedUnits_ABC.h" />
