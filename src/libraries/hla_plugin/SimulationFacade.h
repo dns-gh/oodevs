@@ -46,12 +46,14 @@ namespace hla
     class RemoteAgentSubject_ABC;
     class ContextFactory_ABC;
     class ComponentTypes_ABC;
+    class CallsignResolver_ABC;
     class AutomatDisengager;
     class FormationCreater;
     class AutomatCreater;
     class UnitTeleporter;
     class EquipmentUpdater;
     class RemoteAgentController;
+    class NetnRemoteCallsignListener;
 
 // =============================================================================
 /** @class  SimulationFacade
@@ -67,7 +69,7 @@ public:
              SimulationFacade( const ContextFactory_ABC& contextFactory, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
                                const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
-                               RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes );
+                               RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver );
     virtual ~SimulationFacade();
     //@}
 
@@ -90,6 +92,7 @@ private:
     std::auto_ptr< UnitTeleporter > pUnitTeleporter_;
     std::auto_ptr< EquipmentUpdater > pEquipmentUpdater_;
     std::auto_ptr< RemoteAgentController > pRemoteAgentController_;
+    std::auto_ptr< NetnRemoteCallsignListener > pNetnRemoteCallsignListener_;
     //@}
 };
 
