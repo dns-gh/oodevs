@@ -118,6 +118,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoySender.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoySender.h" />

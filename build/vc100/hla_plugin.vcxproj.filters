@@ -217,6 +217,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.cpp">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -503,6 +506,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.h">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
