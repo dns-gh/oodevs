@@ -132,6 +132,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\SilentEntity.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SimulationFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Spatial.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Subordinates.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transportation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationController.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\SilentEntity.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SimulationFacade.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Spatial.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Subordinates.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Subordinates_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Transportation.h" />

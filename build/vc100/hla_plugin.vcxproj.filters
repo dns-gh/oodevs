@@ -220,6 +220,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.cpp">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Subordinates.cpp">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -509,6 +512,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.h">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Subordinates.h">
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
