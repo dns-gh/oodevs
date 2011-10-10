@@ -38,10 +38,17 @@ public:
         eLogLevel_None       = 0x60,
         eLogLevel_All        = 0xFF
     };
+
+    enum E_Type
+    {
+        eSimulation = 0,
+        eDispatcher,
+        eLoggerPlugin
+    };
     //@}
 
 public:
-    explicit MT_Logger_ABC( int nLogLevels = eLogLevel_All );
+    explicit MT_Logger_ABC( int nLogLevels = eLogLevel_All, E_Type type = eSimulation );
     virtual ~MT_Logger_ABC();
 
     //-------------------------------------------------------------------------
@@ -81,6 +88,7 @@ protected:
     //-------------------------------------------------------------------------
     //@{
     const char* GetTimestampAsString();
+    const char* GetTypeAsString();
     const char* GetLogLevelAsString( E_LogLevel nLevel);
     //@}
 
@@ -92,6 +100,7 @@ private:
     bool        bPaused_;
     std::string strTimestamp_;
     int         nLogLevels_;
+    E_Type      type_;
     //@}
 };
 

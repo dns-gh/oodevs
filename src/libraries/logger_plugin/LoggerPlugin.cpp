@@ -20,9 +20,9 @@
 #include "dispatcher/Services.h"
 #include "tools/SessionConfig.h"
 #include "reports/ReportFactory.h"
+#include "MT_Tools/MT_FileLogger.h"
 #include <boost/lexical_cast.hpp>
 #pragma warning( disable: 4996 )
-#include <ctime>
 
 namespace replay
 {
@@ -37,7 +37,7 @@ using namespace plugins::logger;
 // -----------------------------------------------------------------------------
 LoggerPlugin::LoggerPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, const dispatcher::Services& services )
     : filename_    ( config.BuildSessionChildFile( "Messages.log" ).c_str() )
-    , file_        ( 0 )
+    , pLogger_     ( 0 )
     , resolver_    ( model )
     , factory_     ( resolver_, objectTypes_, objectTypes_, 0 )
     , model_       ( model )
@@ -59,8 +59,7 @@ LoggerPlugin::LoggerPlugin( const dispatcher::Model_ABC& model, const kernel::St
 // -----------------------------------------------------------------------------
 LoggerPlugin::~LoggerPlugin()
 {
-    if( file_ )
-        file_->close();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -110,29 +109,14 @@ bool LoggerPlugin::Initialize()
     {
         if( !services_.HasService< replay::Service >() )
         {
-            if( !file_ )
-            {
-                file_ = new std::ofstream( filename_.c_str() );
-                if( !file_ || !*file_ || !file_->is_open() )
-                    enabled_ = false;
-            }
+            if( !pLogger_.get() )
+                pLogger_.reset( new MT_FileLogger( filename_.c_str(), MT_Logger_ABC::eLogLevel_All, false, MT_Logger_ABC::eLoggerPlugin ) );
         }
         else
             enabled_ = false;
         initialized_ = true;
     }
     return enabled_;
-}
-
-namespace
-{
-    const char* GetTimestampAsString()
-    {
-        static char buffer[256];
-        time_t nTime = time( NULL );
-        strftime( buffer, 256, "%A %d - %H:%M:%S", localtime( &nTime ) );
-        return buffer;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -142,8 +126,12 @@ namespace
 void LoggerPlugin::FormatMessage( const std::string& message, const std::string& level, const std::string& entity,
                                   unsigned int id, const std::string& date )
 {
-    *file_ << "[" << GetTimestampAsString() << "] " << level << " - ***** Time tick "
-           << nCurrentTick_ << " - [" << date << "] - " << entity << "[" <<  id << "] : " << message << std::endl;
+    if( pLogger_.get() )
+    {
+        std::string information = "**** Time tick " + boost::lexical_cast< std::string >( nCurrentTick_ ) + " - [" + date + "] - "
+                                + level + " - " + entity +  "[" + boost::lexical_cast< std::string >( id ) + "] : " + message;
+        pLogger_->Log( MT_Logger_ABC::eLogLevel_Info, information.c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------

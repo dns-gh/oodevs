@@ -18,8 +18,8 @@
 // Name: MT_FileLogger constructor
 // Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
-MT_FileLogger::MT_FileLogger( const char* strFileName, int nLogLevels, bool bClearPreviousLog )
-    : MT_Logger_ABC( nLogLevels )
+MT_FileLogger::MT_FileLogger( const char* strFileName, int nLogLevels, bool bClearPreviousLog, E_Type type )
+    : MT_Logger_ABC( nLogLevels, type )
 {
     if( bClearPreviousLog )
         file_.open( strFileName, std::ios::out | std::ios::trunc );
@@ -45,10 +45,10 @@ void MT_FileLogger::LogString( E_LogLevel nLogLevel, const char* strMessage, con
     boost::mutex::scoped_lock locker( mutex_ );
 
     file_ << "[" << GetTimestampAsString() << "] ";
+    file_ << "<" << GetTypeAsString() << "> ";
 
     // Level name
-    if( nLogLevel != eLogLevel_None )
-        file_ << GetLogLevelAsString( nLogLevel ) << " - ";
+    file_ << "<" << GetLogLevelAsString( nLogLevel ) << "> ";
 
     // Msg
     if( strMessage )

@@ -15,10 +15,11 @@
 // Name: MT_Logger_ABC constructor
 // Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
-MT_Logger_ABC::MT_Logger_ABC( int nLogLevels )
+MT_Logger_ABC::MT_Logger_ABC( int nLogLevels, E_Type type )
     : bPaused_     ( false )
-    , strTimestamp_( "%A %d - %H:%M:%S" ) // Sample : "Thursday 23 - 11:38:52 "
+    , strTimestamp_( "%Y-%m-%d %H:%M:%S" )
     , nLogLevels_  ( nLogLevels )
+    , type_        ( type )
 {
     // NOTHING
 }
@@ -57,6 +58,26 @@ const char* MT_Logger_ABC::GetTimestampAsString()
     return buffer;
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MT_Logger_ABC::GetTypeAsString
+// Created: LGY 2011-10-07
+// -----------------------------------------------------------------------------
+const char* MT_Logger_ABC::GetTypeAsString()
+{
+    switch( type_ )
+    {
+    case eSimulation:
+        return "Simulation";
+    case eDispatcher:
+        return "Dispatcher";
+    case eLoggerPlugin:
+        return "Logger plugin";
+    default:
+        return "Unknown type";
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: MT_Logger_ABC::GetLogLevelAsString
 /**
@@ -69,21 +90,21 @@ const char* MT_Logger_ABC::GetLogLevelAsString( E_LogLevel nLevel )
     switch( nLevel )
     {
         case eLogLevel_FatalError:
-            return "Fatal";
+            return "fatalERR";
         case eLogLevel_Error:
-            return "Error";
+            return "functERR";
         case eLogLevel_Warning:
-            return "Warning";
+            return "warn";
         case eLogLevel_Message:
-            return "Message";
+            return "info";
         case eLogLevel_Info:
-            return "Info";
+            return "info";
         case eLogLevel_Verbose:
-            return "Verbose";
+            return "debug";
         case eLogLevel_Debug:
-            return "Debug";
+            return "debug";
         case eLogLevel_None:
-            return "";
+            return "info";
         default:
             return "Unknown log level";
     }

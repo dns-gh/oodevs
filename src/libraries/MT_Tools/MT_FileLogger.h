@@ -34,7 +34,7 @@ class MT_FileLogger : public MT_Logger_ABC
 {
 
 public:
-    explicit MT_FileLogger( const char* strFileName, int nLogLevels = eLogLevel_All, bool bClearPreviousLog = false );
+    explicit MT_FileLogger( const char* strFileName, int nLogLevels = eLogLevel_All, bool bClearPreviousLog = false, E_Type type = eSimulation );
 
     virtual ~MT_FileLogger();
 

@@ -32,6 +32,8 @@ namespace kernel
     class StaticModel;
 }
 
+class MT_FileLogger;
+
 namespace plugins
 {
 namespace logger
@@ -85,7 +87,7 @@ private:
     //! @name Member data
     //@{
     std::string                    filename_;
-    std::ofstream*                 file_;
+    std::auto_ptr< MT_FileLogger > pLogger_;
     kernel::ObjectTypes            objectTypes_;
     RcEntityResolver               resolver_;
     ReportFactory                  factory_;
