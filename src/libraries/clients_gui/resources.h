@@ -97,6 +97,7 @@ DECLARE_ICON( checkbox_on );
 DECLARE_ICON( checkbox_off );
 DECLARE_ICON( trash );
 DECLARE_ICON( copy );
+DECLARE_ICON( refresh );
 
 // cursors
 DECLARE_ICON( pen_cursor );

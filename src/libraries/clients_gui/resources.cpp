@@ -103,6 +103,7 @@
 #include "res/checkbox_off.xpm"
 #include "res/trash.xpm"
 #include "res/copy.xpm"
+#include "res/refresh.xpm"
 
 #include "cursors/pen_cursor.xpm"
 #include "cursors/point_cursor.xpm"

@@ -75,7 +75,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     addMenu( fileMenu_ );
     fileMenu_->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , Qt::CTRL + Qt::Key_N );
     fileMenu_->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), Qt::CTRL + Qt::Key_O );
-    Wrap( fileMenu_->insertItem( /*MAKE_ICON( refresh ),*/ tools::translate( "Menu", "&Reload" ), parent(), SLOT( ReloadExercise() ), Qt::CTRL + Qt::Key_R ) ); // $$$$ ABR 2011-06-24: Add a refresh icon
+    Wrap( fileMenu_->insertItem( MAKE_ICON( refresh ), tools::translate( "Menu", "&Reload" ), parent(), SLOT( ReloadExercise() ), Qt::CTRL + Qt::Key_R ) ); // $$$$ ABR 2011-06-24: Add a refresh icon
     Wrap( fileMenu_->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), Qt::CTRL + Qt::Key_W ) );
     fileMenu_->insertSeparator();
     // $$$$ ABR 2011-06-24: Filters dialogs insert themselves here
