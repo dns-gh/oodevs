@@ -6,7 +6,7 @@
         <munition>munition.xml</munition>
     </mappings>
     <missions>
-        <transport>Common - request tranport</transport>
+        <transport>Common - request transport</transport>
     </missions>
     <surfaceVessels>
         <unit>Marine CP</unit>
