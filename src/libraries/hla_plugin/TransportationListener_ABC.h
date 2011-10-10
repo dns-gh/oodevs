@@ -11,11 +11,13 @@
 #define plugins_hla_TransportationListener_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <geometry/Types.h>
 
 namespace plugins
 {
 namespace hla
 {
+    class TransportedUnits_ABC;
 
 // =============================================================================
 /** @class  TransportationListener_ABC
@@ -34,7 +36,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void ConvoyRequested() = 0;
+    virtual void ConvoyRequested( const std::string& carrier, long long embarkmentTime, const geometry::Point2d& embarkmentPoint,
+                                  long long disembarkmentTime, const geometry::Point2d& disembarkmentPoint,
+                                  const TransportedUnits_ABC& transportedUnits ) = 0;
     //@}
 };
 

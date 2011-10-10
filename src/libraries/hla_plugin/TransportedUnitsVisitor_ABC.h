@@ -7,38 +7,38 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_InteractionSender_ABC_h
-#define plugins_hla_InteractionSender_ABC_h
+#ifndef plugins_hla_TransportedUnitsVisitor_ABC_h
+#define plugins_hla_TransportedUnitsVisitor_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <string>
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  InteractionSender_ABC
-    @brief  Interaction sender definition
+/** @class  TransportedUnitsVisitor_ABC
+    @brief  Transported units visitor definition
 */
-// Created: SLI 2011-09-23
+// Created: SLI 2011-10-07
 // =============================================================================
-template< typename Interaction >
-class InteractionSender_ABC : private boost::noncopyable
+class TransportedUnitsVisitor_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InteractionSender_ABC() {}
-    virtual ~InteractionSender_ABC() {}
+             TransportedUnitsVisitor_ABC() {}
+    virtual ~TransportedUnitsVisitor_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const Interaction& interaction ) = 0;
+    virtual void Notify( const std::string& callsign, const std::string& uniqueId ) = 0;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_InteractionSender_ABC_h
+#endif // plugins_hla_TransportedUnitsVisitor_ABC_h

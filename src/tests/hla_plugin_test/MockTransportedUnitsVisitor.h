@@ -7,28 +7,27 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_MockTransportationListener_h
-#define plugins_hla_MockTransportationListener_h
+#ifndef plugins_hla_MockTransportedUnitsVisitor_h
+#define plugins_hla_MockTransportedUnitsVisitor_h
 
-#include "hla_plugin/TransportationListener_ABC.h"
+#include "hla_plugin/TransportedUnitsVisitor_ABC.h"
 
 namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
-/** @class  MockTransportationListener
-    @brief  Mock Transportation listener
+/** @class  MockTransportedUnitsVisitor
+    @brief  Mock Transported units visitor
 */
-// Created: SLI 2011-10-06
+// Created: SLI 2011-10-10
 // =============================================================================
-MOCK_BASE_CLASS( MockTransportationListener, TransportationListener_ABC )
+MOCK_BASE_CLASS( MockTransportedUnitsVisitor, TransportedUnitsVisitor_ABC )
 {
-    MOCK_METHOD( ConvoyRequested, 6 )
+    MOCK_METHOD( Notify, 2 )
 };
 
 }
 }
 
-#endif // plugins_hla_MockTransportationListener_h
+#endif // plugins_hla_MockTransportedUnitsVisitor_h

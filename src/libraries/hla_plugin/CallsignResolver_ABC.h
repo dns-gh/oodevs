@@ -7,38 +7,39 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_InteractionSender_ABC_h
-#define plugins_hla_InteractionSender_ABC_h
+#ifndef plugins_hla_CallsignResolver_ABC_h
+#define plugins_hla_CallsignResolver_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <string>
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  InteractionSender_ABC
-    @brief  Interaction sender definition
+/** @class  CallsignResolver_ABC
+    @brief  Callsign resolver definition
 */
-// Created: SLI 2011-09-23
+// Created: SLI 2011-10-10
 // =============================================================================
-template< typename Interaction >
-class InteractionSender_ABC : private boost::noncopyable
+class CallsignResolver_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InteractionSender_ABC() {}
-    virtual ~InteractionSender_ABC() {}
+             CallsignResolver_ABC() {}
+    virtual ~CallsignResolver_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const Interaction& interaction ) = 0;
+    virtual std::string ResolveCallsign( unsigned long simulationIdentifier ) const = 0;
+    virtual std::string ResolveUniqueId( unsigned long simulationIdentifier ) const = 0;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_InteractionSender_ABC_h
+#endif // plugins_hla_CallsignResolver_ABC_h

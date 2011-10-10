@@ -162,6 +162,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteSurfaceVesselTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRequestConvoySenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRequestConvoyTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnSurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\Omt13StringTest.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAgent.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAgentSubject.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAttributeFunctor.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockCallsignResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClassBuilder.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockComponentTypes.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextFactory.h" />
@@ -214,8 +216,12 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassador.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassadorFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSimulationPublisher.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSubordinates.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTeam.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationController.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationListener.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnits.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnitsVisitor.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUnitTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUpdateFunctor.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\DeserializationTools.h" />

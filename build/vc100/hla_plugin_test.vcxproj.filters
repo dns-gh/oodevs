@@ -130,6 +130,9 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationTypesTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRequestConvoySenderTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.h">
@@ -247,6 +250,21 @@
       <Filter>Source Files\mock</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationListener.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationController.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnits.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockCallsignResolver.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnitsVisitor.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSubordinates.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
   </ItemGroup>

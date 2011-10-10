@@ -7,28 +7,28 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_MockTransportationListener_h
-#define plugins_hla_MockTransportationListener_h
+#ifndef plugins_hla_MockCallsignResolver_h
+#define plugins_hla_MockCallsignResolver_h
 
-#include "hla_plugin/TransportationListener_ABC.h"
+#include "hla_plugin/CallsignResolver_ABC.h"
 
 namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
-/** @class  MockTransportationListener
-    @brief  Mock Transportation listener
+/** @class  MockCallsignResolver
+    @brief  Mock callsign resolver
 */
-// Created: SLI 2011-10-06
+// Created: SLI 2011-10-10
 // =============================================================================
-MOCK_BASE_CLASS( MockTransportationListener, TransportationListener_ABC )
+MOCK_BASE_CLASS( MockCallsignResolver, CallsignResolver_ABC )
 {
-    MOCK_METHOD( ConvoyRequested, 6 )
+    MOCK_METHOD( ResolveCallsign, 1 )
+    MOCK_METHOD( ResolveUniqueId, 1 )
 };
 
 }
 }
 
-#endif // plugins_hla_MockTransportationListener_h
+#endif // plugins_hla_MockCallsignResolver_h

@@ -208,6 +208,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transportation.cpp">
       <Filter>Source Files\Types</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoySender.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -473,6 +476,21 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationController_ABC.h">
       <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportedUnits_ABC.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportedUnitsVisitor_ABC.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoySender.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Subordinates_ABC.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\CallsignResolver_ABC.h">
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

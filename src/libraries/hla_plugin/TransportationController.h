@@ -35,6 +35,8 @@ namespace plugins
 namespace hla
 {
     class MissionResolver_ABC;
+    class CallsignResolver_ABC;
+    class Subordinates_ABC;
 
 // =============================================================================
 /** @class  TransportationController
@@ -48,8 +50,9 @@ class TransportationController : public TransportationController_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TransportationController( xml::xisubstream xis, const MissionResolver_ABC& resolver,
-                                       tools::MessageController_ABC< sword::SimToClient_Content >& controller );
+             TransportationController( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
+                                       tools::MessageController_ABC< sword::SimToClient_Content >& controller,
+                                       const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates );
     virtual ~TransportationController();
     //@}
 
@@ -76,6 +79,8 @@ private:
     //! @name Member data
     //@{
     const unsigned int transportIdentifier_;
+    const CallsignResolver_ABC& callsignResolver_;
+    const Subordinates_ABC& subordinates_;
     T_Listeners listeners_;
     //@}
 };

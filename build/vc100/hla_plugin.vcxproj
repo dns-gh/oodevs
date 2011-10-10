@@ -118,6 +118,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoySender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatCreater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatDisengager.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\CallsignResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilders.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypes.h" />
@@ -190,6 +192,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoySender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />
@@ -206,11 +209,14 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\SilentEntity.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SimulationFacade.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Spatial.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Subordinates_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Transportation.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationController.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationController_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationListener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportedUnitsVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportedUnits_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnicodeString.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UniqueId.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Agent_ABC.h" />
