@@ -46,7 +46,7 @@ ParamPath::ParamPath( QObject* parent, const kernel::OrderParameter& parameter, 
 // -----------------------------------------------------------------------------
 ParamPath::~ParamPath()
 {
-    // NOTHING
+    layer_.Reset();
 }
 
 // -----------------------------------------------------------------------------
