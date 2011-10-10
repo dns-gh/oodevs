@@ -99,7 +99,7 @@ void App6Symbol::Merge( const std::string& from, std::string& to )
     {
         unsigned i = 0;
         const std::size_t max = std::min( to.length(), from.length() );
-        while( i < max && to[ i ] == from[ i ] )
+        while( i < max && ( to[ i ] == from[ i ] || i == 9 ) )  // $$$$ _RC_ LGY 2011-10-10: i == 9 : karma
             ++i;
         to = to.substr( 0, i );
     }

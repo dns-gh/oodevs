@@ -270,7 +270,7 @@ void SymbolFactory::FillSymbols( const std::string& symbol, const std::string& k
     result.insert( base );
     if( !symbol.empty() )
     {
-        while( compare != base )
+        while( compare != base && compare.size() >= base.size() )
         {
             result.insert( compare );
             compare = compare.substr( 0, compare.length() - 1 );

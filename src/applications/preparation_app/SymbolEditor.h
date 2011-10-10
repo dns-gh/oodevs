@@ -18,6 +18,7 @@ namespace kernel
 {
     class Automat_ABC;
     class Entity_ABC;
+    class Team_ABC;
     class Controllers;
     class Formation_ABC;
     class ModelLoaded;
@@ -45,6 +46,7 @@ class SymbolEditor: public QObject
                   , public tools::Observer_ABC
                   , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                   , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                  , public tools::ElementObserver_ABC< kernel::Team_ABC >
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                   , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                   , private boost::noncopyable
@@ -63,6 +65,7 @@ public:
     //@{
     virtual void NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu );
+    virtual void NotifyUpdated( const kernel::Team_ABC& team );
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     //@}

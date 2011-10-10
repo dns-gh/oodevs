@@ -16,6 +16,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/SymbolFactory.h"
@@ -207,6 +208,16 @@ void SymbolEditor::Update()
             menu_->addAction( tr( "Default" ) );
         connect( menu_, SIGNAL( triggered( QAction* ) ), this, SLOT( OnChangeSymbol( QAction* ) ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolEditor::NotifyUpdated
+// Created: LGY 2011-10-10
+// -----------------------------------------------------------------------------
+void SymbolEditor::NotifyUpdated( const kernel::Team_ABC& team )
+{
+    selected_ = &team;
+    UpdateHierarchies();
 }
 
 // -----------------------------------------------------------------------------
