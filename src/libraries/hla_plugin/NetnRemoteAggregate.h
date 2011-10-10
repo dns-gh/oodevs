@@ -11,11 +11,15 @@
 #define plugins_hla_NetnRemoteAggregate_h
 
 #include "HlaObject_ABC.h"
+#include <memory>
 
 namespace plugins
 {
 namespace hla
 {
+    class AttributesDeserializer;
+    class RemoteAgentListener_ABC;
+
 // =============================================================================
 /** @class  NetnRemoteAggregate
     @brief  Netn remote aggregate
@@ -27,7 +31,7 @@ class NetnRemoteAggregate : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NetnRemoteAggregate( std::auto_ptr< HlaObject_ABC > aggregate );
+             NetnRemoteAggregate( std::auto_ptr< HlaObject_ABC > aggregate, RemoteAgentListener_ABC& listener, const std::string& identifier );
     virtual ~NetnRemoteAggregate();
     //@}
 
@@ -41,6 +45,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< HlaObject_ABC > aggregate_;
+    std::auto_ptr< AttributesDeserializer > attributes_;
     //@}
 };
 

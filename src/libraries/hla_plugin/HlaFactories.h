@@ -66,7 +66,7 @@ namespace hla
         virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name, RemoteAgentListener_ABC& listener ) const
         {
             std::auto_ptr< HlaObject_ABC > remote = factory_->Create( name, listener );
-            return std::auto_ptr< HlaObject_ABC >( new T( remote ) );
+            return std::auto_ptr< HlaObject_ABC >( new T( remote, listener, name ) );
         }
     private:
         std::auto_ptr< RemoteHlaObjectFactory_ABC > factory_;

@@ -125,3 +125,21 @@ void UnitTeleporter::EquipmentUpdated( const std::string& /*identifier*/, const 
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::UniqueIdChanged
+// Created: SLI 2011-10-10
+// -----------------------------------------------------------------------------
+void UnitTeleporter::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::CallsignChanged
+// Created: SLI 2011-10-10
+// -----------------------------------------------------------------------------
+void UnitTeleporter::CallsignChanged( const std::string& /*identifier*/, const std::string& /*callsign*/ )
+{
+    // NOTHING
+}

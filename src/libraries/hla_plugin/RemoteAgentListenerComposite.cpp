@@ -119,3 +119,23 @@ void RemoteAgentListenerComposite::EquipmentUpdated( const std::string& identifi
     BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
         listener->EquipmentUpdated( identifier, equipmentType, number );
 }
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentListenerComposite::UniqueIdChanged
+// Created: SLI 2011-10-10
+// -----------------------------------------------------------------------------
+void RemoteAgentListenerComposite::UniqueIdChanged( const std::string& identifier, const std::string& uniqueId )
+{
+    BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
+        listener->UniqueIdChanged( identifier, uniqueId );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentListenerComposite::CallsignChanged
+// Created: SLI 2011-10-10
+// -----------------------------------------------------------------------------
+void RemoteAgentListenerComposite::CallsignChanged( const std::string& identifier, const std::string& callsign )
+{
+    BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
+        listener->CallsignChanged( identifier, callsign );
+}

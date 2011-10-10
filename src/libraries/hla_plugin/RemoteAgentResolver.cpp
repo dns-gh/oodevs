@@ -125,6 +125,24 @@ void RemoteAgentResolver::EquipmentUpdated( const std::string& /*identifier*/, c
 }
 
 // -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::UniqueIdChanged
+// Created: SLI 2011-10-10
+// -----------------------------------------------------------------------------
+void RemoteAgentResolver::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::CallsignChanged
+// Created: SLI 2011-10-10
+// -----------------------------------------------------------------------------
+void RemoteAgentResolver::CallsignChanged( const std::string& /*identifier*/, const std::string& /*callsign*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: RemoteAgentResolver::Notify
 // Created: SLI 2011-09-22
 // -----------------------------------------------------------------------------

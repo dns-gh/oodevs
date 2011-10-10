@@ -9,18 +9,42 @@
 
 #include "hla_plugin_pch.h"
 #include "NetnRemoteSurfaceVessel.h"
+#include "AttributesDeserializer.h"
+#include "RemoteAgentListener_ABC.h"
+#include "UnicodeString.h"
+#include "UniqueId.h"
+#include <hla/AttributeIdentifier.h>
 #include <hla/Deserializer.h>
+#include <boost/bind.hpp>
 
 using namespace plugins::hla;
+
+namespace
+{
+    void ReadCallsign( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    {
+        UnicodeString callsign;
+        callsign.Deserialize( deserializer );
+        listener.CallsignChanged( identifier, callsign.str() );
+    }
+    void ReadUniqueId( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    {
+        UniqueId uniqueId;
+        uniqueId.Deserialize( deserializer );
+        listener.UniqueIdChanged( identifier, uniqueId.str() );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: NetnRemoteSurfaceVessel constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-NetnRemoteSurfaceVessel::NetnRemoteSurfaceVessel( std::auto_ptr< HlaObject_ABC > vessel )
-    : vessel_( vessel )
+NetnRemoteSurfaceVessel::NetnRemoteSurfaceVessel( std::auto_ptr< HlaObject_ABC > vessel, RemoteAgentListener_ABC& listener, const std::string& identifier )
+    : vessel_    ( vessel )
+    , attributes_( new AttributesDeserializer( identifier, listener ) )
 {
-    // NOTHING
+    attributes_->Register( "Callsign", boost::bind( &ReadCallsign, _1, _2, _3 ) );
+    attributes_->Register( "UniqueID", boost::bind( &ReadUniqueId, _1, _2, _3 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,4 +72,5 @@ void NetnRemoteSurfaceVessel::Serialize( ::hla::UpdateFunctor_ABC& /*functor*/, 
 void NetnRemoteSurfaceVessel::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer deserializer )
 {
     vessel_->Deserialize( identifier, deserializer );
+    attributes_->Deserialize( identifier.ToString(), deserializer );
 }

@@ -11,11 +11,15 @@
 #define plugins_hla_NetnRemoteSurfaceVessel_h
 
 #include "HlaObject_ABC.h"
+#include <memory>
 
 namespace plugins
 {
 namespace hla
 {
+    class AttributesDeserializer;
+    class RemoteAgentListener_ABC;
+
 // =============================================================================
 /** @class  NetnRemoteSurfaceVessel
     @brief  Netn remote surface vessel
@@ -27,7 +31,7 @@ class NetnRemoteSurfaceVessel : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NetnRemoteSurfaceVessel( std::auto_ptr< HlaObject_ABC > vessel );
+             NetnRemoteSurfaceVessel( std::auto_ptr< HlaObject_ABC > vessel, RemoteAgentListener_ABC& listener, const std::string& identifier );
     virtual ~NetnRemoteSurfaceVessel();
     //@}
 
@@ -41,6 +45,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< HlaObject_ABC > vessel_;
+    std::auto_ptr< AttributesDeserializer > attributes_;
     //@}
 };
 

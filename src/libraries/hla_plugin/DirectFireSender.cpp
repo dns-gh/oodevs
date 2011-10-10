@@ -153,3 +153,21 @@ void DirectFireSender::EquipmentUpdated( const std::string& /*identifier*/, cons
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::UniqueIdChanged
+// Created: SLI 2011-10-10
+// -----------------------------------------------------------------------------
+void DirectFireSender::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::CallsignChanged
+// Created: SLI 2011-10-10
+// -----------------------------------------------------------------------------
+void DirectFireSender::CallsignChanged( const std::string& /*identifier*/, const std::string& /*callsign*/ )
+{
+    // NOTHING
+}

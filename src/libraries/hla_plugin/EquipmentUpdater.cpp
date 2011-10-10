@@ -184,6 +184,24 @@ void EquipmentUpdater::EquipmentUpdated( const std::string& identifier, const rp
 }
 
 // -----------------------------------------------------------------------------
+// Name: EquipmentUpdater::UniqueIdChanged
+// Created: SLI 2011-10-10
+// -----------------------------------------------------------------------------
+void EquipmentUpdater::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EquipmentUpdater::CallsignChanged
+// Created: SLI 2011-10-10
+// -----------------------------------------------------------------------------
+void EquipmentUpdater::CallsignChanged( const std::string& /*identifier*/, const std::string& /*callsign*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: EquipmentUpdater::SendUpdate
 // Created: SLI 2011-09-30
 // -----------------------------------------------------------------------------

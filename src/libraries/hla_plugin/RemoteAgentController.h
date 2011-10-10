@@ -80,6 +80,8 @@ private:
     virtual void NameChanged( const std::string& identifier, const std::string& name );
     virtual void TypeChanged( const std::string& identifier, const rpr::EntityType& type );
     virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number );
+    virtual void UniqueIdChanged( const std::string& identifier, const std::string& uniqueId );
+    virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
     //@}
 
 private:

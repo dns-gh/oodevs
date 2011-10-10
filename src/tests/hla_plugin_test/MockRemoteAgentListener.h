@@ -31,6 +31,8 @@ MOCK_BASE_CLASS( MockRemoteAgentListener, RemoteAgentListener_ABC )
     MOCK_METHOD( NameChanged, 2 )
     MOCK_METHOD( TypeChanged, 2 )
     MOCK_METHOD( EquipmentUpdated, 3 )
+    MOCK_METHOD( UniqueIdChanged, 2 )
+    MOCK_METHOD( CallsignChanged, 2 )
 };
 
 }

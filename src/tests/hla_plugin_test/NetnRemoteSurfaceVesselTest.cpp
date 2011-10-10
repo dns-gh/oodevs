@@ -9,38 +9,72 @@
 
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/NetnRemoteSurfaceVessel.h"
+#include "hla_plugin/UnicodeString.h"
+#include "hla_plugin/UniqueId.h"
 #include "MockHlaObject.h"
 #include "MockUpdateFunctor.h"
+#include "MockRemoteAgentListener.h"
 #include <hla/Deserializer.h>
+#include <hla/Serializer.h>
 
 using namespace plugins::hla;
 
 namespace
 {
+    typedef std::vector< int8 > T_Buffer;
     class Fixture
     {
     public:
         Fixture()
-            : rprRemote( new MockHlaObject() )
-            , pRemote  ( static_cast< HlaObject_ABC* >( rprRemote ) )
+            : rprRemote ( new MockHlaObject() )
+            , pRemote   ( static_cast< HlaObject_ABC* >( rprRemote ) )
+            , netnRemote( pRemote, listener, "identifier" )
         {}
+        ::hla::Deserializer Deserialize()
+        {
+            buffer.resize( serializer.GetSize() );
+            serializer.CopyTo( &buffer[0] );
+            return ::hla::Deserializer( &buffer[0], buffer.size() );
+        }
         MockHlaObject* rprRemote;
         std::auto_ptr< HlaObject_ABC > pRemote;
+        MockRemoteAgentListener listener;
+        NetnRemoteSurfaceVessel netnRemote;
+        ::hla::Serializer serializer;
+        T_Buffer buffer;
     };
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_remote_vessel_deserialize_also_rpr_remote_vessel, Fixture )
 {
-    NetnRemoteSurfaceVessel netnRemote( pRemote );
     mock::sequence s;
     MOCK_EXPECT( rprRemote, Deserialize ).once().in( s );
     const int8 buffer = 0;
     const ::hla::Deserializer deserializer( &buffer );
     netnRemote.Deserialize( "attribute", deserializer );
 }
+
 BOOST_FIXTURE_TEST_CASE( netn_remote_vessel_cannot_be_serialized, Fixture )
 {
-    NetnRemoteSurfaceVessel netnRemote( pRemote );
     ::hla::MockUpdateFunctor functor;
     BOOST_CHECK_THROW( netnRemote.Serialize( functor, true ), std::runtime_error );
 }
+
+BOOST_FIXTURE_TEST_CASE( netn_remote_vessel_deserializes_callsign_attribute_and_notifies_listener, Fixture )
+{
+    const UnicodeString callsign( "callsign" );
+    callsign.Serialize( serializer );
+    MOCK_EXPECT( rprRemote, Deserialize );
+    MOCK_EXPECT( listener, CallsignChanged ).once().with( "identifier", "callsign" );
+    netnRemote.Deserialize( "Callsign", Deserialize() );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_remote_vessel_deserializes_unique_identifier_attribute_and_notifies_listener, Fixture )
+{
+    const UniqueId uniqueId( "unique" );
+    uniqueId.Serialize( serializer );
+    MOCK_EXPECT( rprRemote, Deserialize );
+    MOCK_EXPECT( listener, UniqueIdChanged ).once().with( "identifier", "unique" );
+    netnRemote.Deserialize( "UniqueID", Deserialize() );
+}
+

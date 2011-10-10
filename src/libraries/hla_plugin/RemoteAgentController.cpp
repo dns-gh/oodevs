@@ -167,6 +167,24 @@ void RemoteAgentController::EquipmentUpdated( const std::string& /*identifier*/,
 }
 
 // -----------------------------------------------------------------------------
+// Name: RemoteAgentController::UniqueIdChanged
+// Created: SLI 2011-10-10
+// -----------------------------------------------------------------------------
+void RemoteAgentController::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::CallsignChanged
+// Created: SLI 2011-10-10
+// -----------------------------------------------------------------------------
+void RemoteAgentController::CallsignChanged( const std::string& /*identifier*/, const std::string& /*callsign*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: RemoteAgentController::Send
 // Created: SLI 2011-09-14
 // -----------------------------------------------------------------------------
