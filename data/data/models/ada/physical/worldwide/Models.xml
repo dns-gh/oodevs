@@ -3125,6 +3125,7 @@
         <mission name="Infantry - monitor"/>
         <mission name="Infantry - block"/>
         <mission name="Common - follow"/>
+        <mission name="Common - request transport"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3255,6 +3256,7 @@
         </mission>
         <mission name="Common - cross"/>
         <mission name="Common - follow"/>
+        <mission name="Common - request transport"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3497,6 +3499,7 @@
         <mission name="OOTW - manage prisoners"/>
         <mission name="Asymetric - attack populations(in an area)"/>
         <mission name="Common - follow"/>
+        <mission name="Common - request transport"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3599,6 +3602,7 @@
         <mission name="Armor - escort units"/>
         <mission name="Armor - screen"/>
         <mission name="Armor - recon in force (a position)"/>
+        <mission name="Common - request transport"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3637,6 +3641,7 @@
         <mission name="Armor - escort units"/>
         <mission name="Armor - cover"/>
         <mission name="Common - follow"/>
+        <mission name="Common - request transport"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -4175,4 +4180,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1573274977" -->
+<!-- signature="2378024266" -->
