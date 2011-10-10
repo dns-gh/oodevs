@@ -12,12 +12,12 @@
 #include "SerializationTools.h"
 #include "Spatial.h"
 #include "AggregateMarking.h"
-#include "rpr/EntityType.h"
 #include "RemoteAgentListener_ABC.h"
+#include "AttributesDeserializer.h"
+#include "rpr/EntityType.h"
 #include <hla/AttributeIdentifier.h>
 #include <hla/Deserializer.h>
 #include <boost/bind.hpp>
-#include <boost/assign.hpp>
 
 using namespace plugins::hla;
 
@@ -55,15 +55,12 @@ namespace
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
 RemoteSurfaceVessel::RemoteSurfaceVessel( const std::string& identifier, RemoteAgentListener_ABC& listener )
-    : identifier_   ( identifier )
-    , listener_     ( listener )
-    , notifications_( boost::assign::list_of< std::pair< std::string, T_Notification > >
-                       ( "Spatial"        , boost::bind( &ReadSpatial         , _1, _2, _3 ) )
-                       ( "ForceIdentifier", boost::bind( &ReadForceIdentifier , _1, _2, _3 ) )
-                       ( "Marking"        , boost::bind( &ReadMarking         , _1, _2, _3 ) )
-                       ( "EntityType"     , boost::bind( &ReadEntityType      , _1, _2, _3 ) ) )
+    : attributes_( new AttributesDeserializer( identifier, listener ) )
 {
-    // NOTHING
+    attributes_->Register( "Spatial"        , boost::bind( &ReadSpatial         , _1, _2, _3 ) );
+    attributes_->Register( "ForceIdentifier", boost::bind( &ReadForceIdentifier , _1, _2, _3 ) );
+    attributes_->Register( "Marking"        , boost::bind( &ReadMarking         , _1, _2, _3 ) );
+    attributes_->Register( "EntityType"     , boost::bind( &ReadEntityType      , _1, _2, _3 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +87,5 @@ void RemoteSurfaceVessel::Serialize( ::hla::UpdateFunctor_ABC& /*functor*/, bool
 // -----------------------------------------------------------------------------
 void RemoteSurfaceVessel::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer deserializer )
 {
-    T_Notifications::const_iterator notification = notifications_.find( identifier.ToString() );
-    if( notification != notifications_.end() )
-        notification->second( deserializer, identifier_, listener_ );
+    attributes_->Deserialize( identifier.ToString(), deserializer );
 }

@@ -11,14 +11,14 @@
 #define plugins_hla_RemoteSurfaceVessel_h
 
 #include "HlaObject_ABC.h"
-#include <map>
-#include <boost/function.hpp>
+#include <memory>
 
 namespace plugins
 {
 namespace hla
 {
     class RemoteAgentListener_ABC;
+    class AttributesDeserializer;
 
 // =============================================================================
 /** @class  RemoteSurfaceVessel
@@ -42,18 +42,9 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef boost::function< void( ::hla::Deserializer&, const std::string&, RemoteAgentListener_ABC& ) > T_Notification;
-    typedef std::map< std::string, T_Notification > T_Notifications;
-    //@}
-
-private:
     //! @name Member data
     //@{
-    const std::string identifier_;
-    RemoteAgentListener_ABC& listener_;
-    const T_Notifications notifications_;
+    std::auto_ptr< AttributesDeserializer > attributes_;
     //@}
 };
 
