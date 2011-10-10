@@ -50,6 +50,10 @@
         <source>Delete recorded actions?</source>
         <translation>Supprimer les actions enregistrées ?</translation>
     </message>
+    <message>
+        <source>Reload</source>
+        <translation>Recharger</translation>
+    </message>
 </context>
 <context>
     <name>AffinitiesDialog</name>
