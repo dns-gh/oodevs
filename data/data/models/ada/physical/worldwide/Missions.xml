@@ -3248,6 +3248,17 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter2" id="4439" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="Common - request transport">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="zoneEmbarquement_" name="Embarking point" optional="false" type="Location"/>
+      <parameter dia-name="heureEmbarquement_" name="Embarking time" optional="false" type="DateTime"/>
+      <parameter dia-name="zoneDebarquement_" name="Debarking point" optional="false" type="Location"/>
+      <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
+      <parameter dia-name="uniteTransport_" name="Transporting unit" optional="false" type="Agent"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="342" name="Crowd - move">
@@ -3443,4 +3454,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3216124060" -->
+<!-- signature="2555730921" -->
