@@ -23,13 +23,13 @@ using namespace plugins::hla;
 // Name: SurfaceVessel constructor
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
-SurfaceVessel::SurfaceVessel( Agent_ABC& agent, unsigned short identifier,
+SurfaceVessel::SurfaceVessel( Agent_ABC& agent, unsigned int identifier,
                               const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
     : agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
     attributes_->Register( "EntityType", type );
-    attributes_->Register( "EntityIdentifier", rpr::EntityIdentifier( 1, 1, identifier ) );
+    attributes_->Register( "EntityIdentifier", rpr::EntityIdentifier( 1, 1, static_cast< unsigned short >( identifier ) ) );
     attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
     attributes_->Register( "Marking", Marking( name ) );
     attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );

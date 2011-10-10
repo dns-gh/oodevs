@@ -38,7 +38,6 @@ namespace hla
     class LocalAgentResolver_ABC;
     class RemoteHlaObjectFactory_ABC;
     class RemoteAgentListener_ABC;
-    class ContextFactory_ABC;
     class RemoteAgentListenerComposite;
 
 // =============================================================================
@@ -53,7 +52,7 @@ class HlaClass : public RemoteAgentSubject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HlaClass( Federate_ABC& federate, LocalAgentResolver_ABC& resolver, const ContextFactory_ABC& identifierFactory,
+             HlaClass( Federate_ABC& federate, LocalAgentResolver_ABC& resolver,
                        std::auto_ptr< HlaObjectFactory_ABC > factory, std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory,
                        std::auto_ptr< ClassBuilder_ABC > builder );
     virtual ~HlaClass();
@@ -86,7 +85,6 @@ private:
     LocalAgentResolver_ABC& resolver_;
     std::auto_ptr< HlaObjectFactory_ABC > factory_;
     std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory_;
-    const ContextFactory_ABC& identifierFactory_;
     T_Entities localEntities_;
     T_Entities remoteEntities_;
     std::auto_ptr< RemoteAgentListenerComposite > pListeners_;

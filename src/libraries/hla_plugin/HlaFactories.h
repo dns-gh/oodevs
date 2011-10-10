@@ -12,6 +12,8 @@
 
 #include "HlaObjectFactory_ABC.h"
 #include "RemoteHlaObjectFactory_ABC.h"
+#include "CallsignResolver_ABC.h"
+#include <boost/lexical_cast.hpp>
 
 namespace plugins
 {
@@ -20,7 +22,7 @@ namespace hla
     template< typename T >
     class HlaObjectFactory : public HlaObjectFactory_ABC
     {
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
         {
             return std::auto_ptr< HlaObject_ABC >( new T( agent, identifier, name, force, type ) );
         }
@@ -29,16 +31,21 @@ namespace hla
     class NetnHlaObjectFactory : public HlaObjectFactory_ABC
     {
     public:
-        explicit NetnHlaObjectFactory( std::auto_ptr< HlaObjectFactory_ABC > factory )
-            : factory_( factory )
+        NetnHlaObjectFactory( std::auto_ptr< HlaObjectFactory_ABC > factory, CallsignResolver_ABC& resolver )
+            : factory_ ( factory )
+            , resolver_( resolver )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned short identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
         {
             std::auto_ptr< HlaObject_ABC > object = factory_->Create( agent, name, identifier, force, type );
-            return std::auto_ptr< HlaObject_ABC >( new T( object, agent, name, identifier ) );
+            const std::string uniqueIdentifier( "SWORD" + boost::lexical_cast< std::string >( identifier ) );
+            const std::string callsign( name );
+            resolver_.Add( identifier, callsign, uniqueIdentifier );
+            return std::auto_ptr< HlaObject_ABC >( new T( object, agent, callsign, uniqueIdentifier ) );
         }
     private:
         std::auto_ptr< HlaObjectFactory_ABC > factory_;
+        CallsignResolver_ABC& resolver_;
     };
     template< typename T >
     class RemoteHlaObjectFactory : public RemoteHlaObjectFactory_ABC

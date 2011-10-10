@@ -57,6 +57,7 @@ namespace hla
     class MunitionTypeResolver_ABC;
     class LocalAgentResolver_ABC;
     class RemoteAgentResolver_ABC;
+    class CallsignResolver_ABC;
     class ComponentTypes_ABC;
     class ContextFactory_ABC;
     class SimulationFacade;
@@ -112,6 +113,7 @@ private:
     std::auto_ptr< UnitTypeResolver_ABC > pUnitTypeResolver_;
     std::auto_ptr< MunitionTypeResolver_ABC > pMunitionTypeResolver_;
     std::auto_ptr< LocalAgentResolver_ABC > pLocalAgentResolver_;
+    std::auto_ptr< CallsignResolver_ABC > pCallsignResolver_;
     std::auto_ptr< tools::MessageController< sword::SimToClient_Content > > pMessageController_;
     std::auto_ptr< AgentController > pSubject_;
     std::auto_ptr< FederateFacade > pFederate_;

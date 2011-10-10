@@ -17,7 +17,6 @@
 #include "RemoteAgentListenerComposite.h"
 #include "LocalAgentResolver_ABC.h"
 #include "ClassBuilder_ABC.h"
-#include "ContextFactory_ABC.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
 #include <boost/foreach.hpp>
@@ -29,13 +28,12 @@ using namespace plugins::hla;
 // Name: HlaClass constructor
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
-HlaClass::HlaClass( Federate_ABC& federate, LocalAgentResolver_ABC& resolver, const ContextFactory_ABC& identifierFactory,
+HlaClass::HlaClass( Federate_ABC& federate, LocalAgentResolver_ABC& resolver,
                     std::auto_ptr< HlaObjectFactory_ABC > factory, std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory,
                     std::auto_ptr< ClassBuilder_ABC > builder )
     : resolver_         ( resolver )
     , factory_          ( factory )
     , remoteFactory_    ( remoteFactory )
-    , identifierFactory_( identifierFactory )
     , pListeners_       ( new RemoteAgentListenerComposite() )
     , hlaClass_         ( new ::hla::Class< HlaObject_ABC >( *this, true ) )
 {
@@ -57,7 +55,7 @@ HlaClass::~HlaClass()
 // -----------------------------------------------------------------------------
 void HlaClass::Created( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
-    T_Entity localEntity( factory_->Create( agent, name, static_cast< unsigned short >( identifierFactory_.Create() ), force, type ).release() );
+    T_Entity localEntity( factory_->Create( agent, name, identifier, force, type ).release() );
     ::hla::ObjectIdentifier objectId = hlaClass_->Register( *localEntity, boost::lexical_cast< std::string >( identifier ) );
     localEntities_[ objectId.ToString() ] = localEntity;
     resolver_.Add( identifier, objectId.ToString() );

@@ -59,7 +59,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : hlaClass( federate, localResolver, identifierFactory,
+            : hlaClass( federate, localResolver,
                         std::auto_ptr< HlaObjectFactory_ABC >( hlaObjectFactory ),
                         std::auto_ptr< RemoteHlaObjectFactory_ABC >( remoteFactory ),
                         std::auto_ptr< ClassBuilder_ABC >( builder ) )

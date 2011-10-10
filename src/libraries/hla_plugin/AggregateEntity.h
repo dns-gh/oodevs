@@ -47,7 +47,7 @@ class AggregateEntity : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateEntity( Agent_ABC& agent, unsigned short identifier,
+             AggregateEntity( Agent_ABC& agent, unsigned int identifier,
                               const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
     virtual ~AggregateEntity();
     //@}

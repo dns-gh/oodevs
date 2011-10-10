@@ -25,6 +25,7 @@
 #include "SimulationFacade.h"
 #include "InteractionsFacade.h"
 #include "ComponentTypes.h"
+#include "CallsignResolver.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -85,6 +86,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pUnitTypeResolver_          ( new UnitTypeResolver( *pAggregateTypeResolver_, staticModel.types_ ) )
     , pMunitionTypeResolver_      ( new MunitionTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , pLocalAgentResolver_        ( new LocalAgentResolver() )
+    , pCallsignResolver_          ( new CallsignResolver() )
     , pMessageController_         ( new tools::MessageController< sword::SimToClient_Content >() )
     , pSubject_                   ( 0 )
     , pFederate_                  ( 0 )
@@ -120,7 +122,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pFederate_.reset( new FederateFacade( *pXis_, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
-                                                  config_.BuildPluginDirectory( "hla" ) ) );
+                                                  config_.BuildPluginDirectory( "hla" ), *pCallsignResolver_ ) );
             pSimulationFacade_.reset( new SimulationFacade( *pContextFactory_, *pMessageController_, publisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pInteractionsFacade_.reset( new InteractionsFacade( *pFederate_, publisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ) ) );

@@ -46,7 +46,7 @@ class SurfaceVessel : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SurfaceVessel( Agent_ABC& agent, unsigned short identifier,
+             SurfaceVessel( Agent_ABC& agent, unsigned int identifier,
                             const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
     virtual ~SurfaceVessel();
     //@}

@@ -14,7 +14,6 @@
 #include "UniqueId.h"
 #include "SerializationTools.h"
 #include "AttributesSerializer.h"
-#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
 
@@ -22,16 +21,16 @@ using namespace plugins::hla;
 // Name: NetnAggregate constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& name, short identifier )
+NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier )
     : aggregate_ ( aggregate )
     , agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
     attributes_->Register( "Mounted", Wrapper< double >( 0. ) ); // 0%
     attributes_->Register( "Echelon", Wrapper< unsigned char >( 14 ) ); // platoon
-    attributes_->Register( "UniqueID", UniqueId( "SWORD" + boost::lexical_cast< std::string >( identifier ) ) );
-    attributes_->Register( "HigherHeadquarters", UniqueId( "SWORD" + boost::lexical_cast< std::string >( identifier ) ) );
-    attributes_->Register( "Callsign", UnicodeString( name ) );
+    attributes_->Register( "UniqueID", UniqueId( uniqueIdentifier ) );
+    attributes_->Register( "HigherHeadquarters", UniqueId( uniqueIdentifier ) );
+    attributes_->Register( "Callsign", UnicodeString( callsign ) );
     agent_.Register( *this );
 }
 

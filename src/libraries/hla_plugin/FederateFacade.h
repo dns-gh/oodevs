@@ -39,11 +39,11 @@ namespace plugins
 namespace hla
 {
     class AgentSubject_ABC;
+    class CallsignResolver_ABC;
     class FederateAmbassadorFactory_ABC;
     class Federate_ABC;
     class RtiAmbassadorFactory_ABC;
     class LocalAgentResolver_ABC;
-    class ContextFactory_ABC;
     class HlaClass;
 
 // =============================================================================
@@ -62,7 +62,7 @@ public:
     //@{
              FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                              AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
-                             const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory );
+                             const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory, CallsignResolver_ABC& callsignResolver );
     virtual ~FederateFacade();
     //@}
 
@@ -118,7 +118,6 @@ private:
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
     std::auto_ptr< Federate_ABC > federate_;
     std::auto_ptr< FederationDestructor > destructor_;
-    std::auto_ptr< ContextFactory_ABC > pIdentifierFactory_;
     std::auto_ptr< HlaClass > aggregateClass_;
     std::auto_ptr< HlaClass > surfaceVesselClass_;
     //@}

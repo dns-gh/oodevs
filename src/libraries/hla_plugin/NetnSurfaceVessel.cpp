@@ -14,7 +14,6 @@
 #include "UniqueId.h"
 #include "SerializationTools.h"
 #include "AttributesSerializer.h"
-#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
 
@@ -22,12 +21,12 @@ using namespace plugins::hla;
 // Name: NetnSurfaceVessel constructor
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
-NetnSurfaceVessel::NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& /*agent*/, const std::string& name, short identifier )
+NetnSurfaceVessel::NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& /*agent*/, const std::string& callsign, const std::string& uniqueIdentifier )
     : aggregate_ ( aggregate )
     , attributes_( new AttributesSerializer() )
 {
-    attributes_->Register( "UniqueID", UniqueId( "SWORD" + boost::lexical_cast< std::string >( identifier ) ) );
-    attributes_->Register( "Callsign", UnicodeString( name ) );
+    attributes_->Register( "UniqueID", UniqueId( uniqueIdentifier ) );
+    attributes_->Register( "Callsign", UnicodeString( callsign ) );
 }
 
 // -----------------------------------------------------------------------------

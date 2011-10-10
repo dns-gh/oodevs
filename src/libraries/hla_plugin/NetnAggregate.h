@@ -33,7 +33,7 @@ class NetnAggregate : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& name, short identifier );
+             NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier );
     virtual ~NetnAggregate();
     //@}
 

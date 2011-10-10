@@ -34,6 +34,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Add( unsigned long simulationIdentifier, const std::string& callsign, const std::string& uniqueId ) = 0;
     virtual std::string ResolveCallsign( unsigned long simulationIdentifier ) const = 0;
     virtual std::string ResolveUniqueId( unsigned long simulationIdentifier ) const = 0;
     //@}
