@@ -27,10 +27,11 @@
 #include "MobilityCapacity.h"
 #include "ObstacleAttribute.h"
 #include "OccupantAttribute.h"
-#include "TrafficabilityAttribute.h"
+#include "UniversalCapacity.h"
 #include "ResourceNetworkCapacity.h"
 #include "SpawnCapacity.h"
 #include "StructuralCapacity.h"
+#include "TrafficabilityAttribute.h"
 #include "WorkableCapacity.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
@@ -135,6 +136,14 @@ void MIL_ObjectManipulator::Destroy()
     if( ResourceNetworkCapacity* resourceNetwork = object_.Retrieve< ResourceNetworkCapacity >() )
         MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().UnregisterNode( object_.GetID() );
     object_.MarkForDestruction();
+
+    if( object_.Retrieve< UniversalCapacity >() )
+    {
+        // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
+        const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
+        for( tools::Iterator< const MIL_Army_ABC& > it = armies.CreateIterator(); it.HasMoreElements(); )
+            it.NextElement().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( object_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
