@@ -84,7 +84,6 @@ public:
     //! @name Tools
     //@{
     virtual void InsertDecPoints();
-    double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     //@}
 
 private:

@@ -527,15 +527,6 @@ void DEC_Agent_Path::InsertDecPoints()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetSpeedWithReinforcement
-// Created: JSR 2010-10-07
-// -----------------------------------------------------------------------------
-double DEC_Agent_Path::GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const
-{
-    return queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( environment, object );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::CleanAfterComputation
 // Created: NLD 2006-01-23
 // -----------------------------------------------------------------------------
