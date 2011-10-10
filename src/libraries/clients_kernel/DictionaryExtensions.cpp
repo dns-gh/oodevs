@@ -139,35 +139,38 @@ std::string DictionaryExtensions::GetValueWithDictionnaryLink( const std::string
 // -----------------------------------------------------------------------------
 void DictionaryExtensions::SetValueWithDictionnaryLink( const std::string& name, std::string value )
 {
+    bool extensionFound = false;
     try
     {
         ExtensionType* type = resolver_.tools::StringResolver< ExtensionType >::Find( extensionType_ );
         if( type )
         {
             tools::Iterator< const AttributeType& > attributeIt = type->CreateIterator();
-            bool found = false;
-            while( !found && attributeIt.HasMoreElements() )
+            while( !extensionFound && attributeIt.HasMoreElements() )
             {
                 const AttributeType& attribute = attributeIt.NextElement();
-                if( attribute.GetType() == AttributeType::ETypeDictionary && attribute.GetName() == name )
+                if( attribute.GetName() == name )
                 {
-                    unsigned int id = boost::lexical_cast< unsigned int >( value );
-                    std::string dictionary;
-                    std::string kind;
-                    std::string language;
-                    attribute.GetDictionaryValues( dictionary, kind, language );
-                    DictionaryType* dico = resolver_.tools::StringResolver< DictionaryType >::Find( dictionary );
-                    if( !dico )
-                        continue;
-                    tools::Iterator< const DictionaryEntryType& > dicoIt = dico->CreateIterator();
-                    while( dicoIt.HasMoreElements() )
+                    extensionFound = true;
+                    if( attribute.GetType() == AttributeType::ETypeDictionary )
                     {
-                        const DictionaryEntryType& entry = dicoIt.NextElement();
-                        if( entry.GetId() == id )
+                        unsigned int id = boost::lexical_cast< unsigned int >( value );
+                        std::string dictionary;
+                        std::string kind;
+                        std::string language;
+                        attribute.GetDictionaryValues( dictionary, kind, language );
+                        DictionaryType* dico = resolver_.tools::StringResolver< DictionaryType >::Find( dictionary );
+                        if( !dico )
+                            continue;
+                        tools::Iterator< const DictionaryEntryType& > dicoIt = dico->CreateIterator();
+                        while( dicoIt.HasMoreElements() )
                         {
-                            value = entry.GetKey();
-                            found = true;
-                            break;
+                            const DictionaryEntryType& entry = dicoIt.NextElement();
+                            if( entry.GetId() == id )
+                            {
+                                value = entry.GetKey();
+                                break;
+                            }
                         }
                     }
                 }
@@ -178,7 +181,8 @@ void DictionaryExtensions::SetValueWithDictionnaryLink( const std::string& name,
     {
         // NOTHING
     }
-    extensions_[ name ] = value;
+    if( extensionFound )
+        extensions_[ name ] = value;
 }
 
 // -----------------------------------------------------------------------------
