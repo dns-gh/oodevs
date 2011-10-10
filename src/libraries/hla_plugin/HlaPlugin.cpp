@@ -25,13 +25,17 @@
 #include "SimulationFacade.h"
 #include "InteractionsFacade.h"
 #include "ComponentTypes.h"
+#include "TransportationFacade.h"
 #include "CallsignResolver.h"
+#include "Subordinates.h"
+#include "MissionResolver.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
 #include "dispatcher/StaticModel.h"
+#include "dispatcher/Model_ABC.h"
 #include "protocol/Simulation.h"
 #include "rpr/EntityTypeResolver.h"
 #include <hla/HLAException.h>
@@ -87,12 +91,15 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pMunitionTypeResolver_      ( new MunitionTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , pLocalAgentResolver_        ( new LocalAgentResolver() )
     , pCallsignResolver_          ( new CallsignResolver() )
+    , pMissionResolver_           ( new MissionResolver( staticModel.types_ ) )
+    , pSubordinates_              ( new Subordinates( *pCallsignResolver_, dynamicModel.Automats() ) )
     , pMessageController_         ( new tools::MessageController< sword::SimToClient_Content >() )
     , pSubject_                   ( 0 )
     , pFederate_                  ( 0 )
     , pSimulationFacade_          ( 0 )
     , pRemoteAgentResolver_       ( 0 )
     , pInteractionsFacade_        ( 0 )
+    , pTransportationFacade_      ( 0 )
     , pStepper_                   ( 0 )
 {
     // NOTHING
@@ -126,6 +133,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pSimulationFacade_.reset( new SimulationFacade( *pContextFactory_, *pMessageController_, publisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pInteractionsFacade_.reset( new InteractionsFacade( *pFederate_, publisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ) ) );
+            pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pFederate_, *pContextFactory_ ) : 0 );
             pStepper_.reset( new Stepper( *pXis_, *pMessageController_, publisher_ ) );
             pSubject_->Visit( dynamicModel_ );
         }

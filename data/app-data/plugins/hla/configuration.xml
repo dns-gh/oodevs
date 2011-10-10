@@ -5,6 +5,9 @@
         <component>component.xml</component>
         <munition>munition.xml</munition>
     </mappings>
+    <missions>
+        <transport>Common - request tranport</transport>
+    </missions>
     <surfaceVessels>
         <unit>Marine CP</unit>
         <unit>Aircraft Carrier</unit>

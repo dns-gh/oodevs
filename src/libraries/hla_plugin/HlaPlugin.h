@@ -60,8 +60,11 @@ namespace hla
     class CallsignResolver_ABC;
     class ComponentTypes_ABC;
     class ContextFactory_ABC;
+    class MissionResolver_ABC;
+    class Subordinates_ABC;
     class SimulationFacade;
     class InteractionsFacade;
+    class TransportationFacade;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -114,12 +117,15 @@ private:
     std::auto_ptr< MunitionTypeResolver_ABC > pMunitionTypeResolver_;
     std::auto_ptr< LocalAgentResolver_ABC > pLocalAgentResolver_;
     std::auto_ptr< CallsignResolver_ABC > pCallsignResolver_;
+    std::auto_ptr< MissionResolver_ABC > pMissionResolver_;
+    std::auto_ptr< Subordinates_ABC > pSubordinates_;
     std::auto_ptr< tools::MessageController< sword::SimToClient_Content > > pMessageController_;
     std::auto_ptr< AgentController > pSubject_;
     std::auto_ptr< FederateFacade > pFederate_;
     std::auto_ptr< SimulationFacade > pSimulationFacade_;
     std::auto_ptr< RemoteAgentResolver_ABC > pRemoteAgentResolver_;
     std::auto_ptr< InteractionsFacade > pInteractionsFacade_;
+    std::auto_ptr< TransportationFacade > pTransportationFacade_;
     std::auto_ptr< Stepper > pStepper_;
     //@}
 };
