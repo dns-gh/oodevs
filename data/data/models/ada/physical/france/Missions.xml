@@ -1990,13 +1990,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Unites" optional="false" type="Agent"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
-      <parameter dia-name="directionPoints" max-occurs="unbounded" min-occurs="1" name="Face a" optional="false" type="LocationComposite">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="Polygon"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Jalonner" dia-type="france.military.platoon.combat.tasks.Jalonner" id="2110" name="MELEE Jalonner" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2511,7 +2504,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="network" name="Reseau souterrain" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="network" name="Sortie de reseau souterrain" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.FaireMouvementViaReseauSouterrain" dia-type="france.military.platoon.tasks.FaireMouvementViaReseauSouterrain" id="2153" name="Faire mouvement via reseau souterrain">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2563,7 +2556,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="destinataire" name="Destinataire" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="destinataire" name="Unite" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.log.tasks.DecontaminerBlesses" dia-type="france.military.platoon.combat.support.log.tasks.DecontaminerBlesses" id="2158" name="LOGISTIQUE Decontaminer Blesses">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4311,7 +4304,6 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="entity" name="Compagnie a couvrir" optional="false" type="Automat"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
-      <parameter dia-name="directionPoints" max-occurs="unbounded" min-occurs="1" name="Face a" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.tasks.Surveiller" dia-type="france.military.company.combat.tasks.Surveiller" id="1036" mrt-dia-behavior="france.military.company.combat.tasks.Surveiller" name="MELEE Surveiller" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4928,4 +4920,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1995478882" -->
+<!-- signature="4176632516" -->
