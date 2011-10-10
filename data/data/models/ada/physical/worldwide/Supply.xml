@@ -2,7 +2,7 @@
 <supply model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Supply.xsd">
   <convoys mission="Logistics - convey" unit-type="Convoy">
     <type>
-      <dotation-supply type="virtual"/>
+      <dotation-supply type="real"/>
       <stock-supply type="real"/>
     </type>
     <constitution-times>
@@ -30,4 +30,4 @@
     <resource-availability-alert availability-threshold="0"/>
   </resource-availability-alerts>
 </supply>
-<!-- signature="2093357209" -->
+<!-- signature="0501404473" -->
