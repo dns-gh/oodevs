@@ -172,19 +172,19 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model, std::string& loadin
     Register( team->GetId(), *team );
 
     // $$$$ SBO 2006-10-05: forward to communications extension?
-    xis >> xml::start( "communication" )
+    xis >> xml::optional >> xml::start( "communication" )
             >> xml::list( "knowledge-group", model.knowledgeGroups_, &KnowledgeGroupsModel::Create, *team, model, loadingErrors )
         >> xml::end;
-    xis >> xml::start( "tactical" )
+    xis >> xml::optional >> xml::start( "tactical" )
             >> xml::list( "formation", model.formations_, &FormationModel::Create, *team, model, loadingErrors )
         >> xml::end;
-    xis >> xml::start( "logistics" )
+    xis >> xml::optional >> xml::start( "logistics" )
             >> xml::list( "logistic-base", *this, &TeamsModel::ReadLogistic, model )
         >> xml::end;
-    xis >> xml::start( "objects" )
+    xis >> xml::optional >> xml::start( "objects" )
             >> xml::list( "object", model.objects_, &ObjectsModel::CreateObject, *team, loadingErrors  )
         >> xml::end;
-    xis >> xml::start( "populations" )
+    xis >> xml::optional >> xml::start( "populations" )
             >> xml::list( "population", model.agents_, &AgentsModel::CreatePopulation, *team, loadingErrors )
         >> xml::end;
     xis >> xml::optional >> xml::start( "inhabitants" )
