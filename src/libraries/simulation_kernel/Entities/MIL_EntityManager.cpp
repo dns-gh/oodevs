@@ -1571,7 +1571,7 @@ void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const KnowledgeMagicAction&
                             || message.type() == sword::KnowledgeMagicAction::add_knowledge ) )
             pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
         else
-            throw NET_AsnException< KnowledgeGroupAck::ErrorCode >( KnowledgeGroupAck::error_invalid_type );        
+            throw NET_AsnException< KnowledgeGroupAck::ErrorCode >( KnowledgeGroupAck::error_invalid_type );
     }
     catch( NET_AsnException< KnowledgeGroupAck::ErrorCode >& e )
     {
