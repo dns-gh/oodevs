@@ -61,6 +61,7 @@ public:
     //@{
     typedef std::set< std::string >               T_Profiles;
     typedef std::map< unsigned long, T_Profiles > T_Units;
+    typedef T_Units::const_iterator             CIT_Units;
     //@}
 
     //! @name Operations

@@ -276,7 +276,10 @@ void ModelConsistencyChecker::CheckProfileUniqueness()
     ProfilesModel::T_Units units;
     model_.profiles_.Visit( units );
     QString result;
-    BOOST_FOREACH( const ProfilesModel::T_Units::value_type& element, units )
+
+    for( ProfilesModel::CIT_Units it = units.begin(); it != units.end(); ++it )
+    {
+        const ProfilesModel::T_Units::value_type& element = *it;
         if( element.second.size() > 1 )
         {
             const kernel::Entity_ABC* entity = model_.GetTeamResolver().Find( element.first );
@@ -291,6 +294,7 @@ void ModelConsistencyChecker::CheckProfileUniqueness()
                 optional += " '" + profile + "'";
             AddError( eProfileUniqueness, entity, optional );
         }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -303,10 +307,13 @@ void ModelConsistencyChecker::CheckProfileInitialization()
     while( it.HasMoreElements() )
     {
         const Automat_ABC& agent = it.NextElement(); 
-        if( filters_ & eProfileUnwritable && !model_.profiles_.IsWriteable( agent ) )
-            AddError( eProfileUnwritable, &agent );
-        if( filters_ & eProfileUnreadable && !model_.profiles_.IsReadable( agent ) )
-            AddError( eProfileUnreadable, &agent );
+        if( !model_.profiles_.IsWriteable( agent ) )
+        {
+            if( filters_ & eProfileUnwritable )
+                AddError( eProfileUnwritable, &agent );
+            if( filters_ & eProfileUnreadable && !model_.profiles_.IsReadable( agent ) )
+                AddError( eProfileUnreadable, &agent );
+        }
     }
 }
 
