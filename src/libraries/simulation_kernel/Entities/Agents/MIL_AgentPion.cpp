@@ -45,6 +45,7 @@
 #include "Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
@@ -60,6 +61,7 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Representations.h"
+#include "Decision/DEC_Workspace.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
@@ -1028,6 +1030,9 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
     case sword::UnitMagicAction::change_dotation:
         OnReceiveChangeDotation( msg.parameters() );
         break;
+    case sword::UnitMagicAction::create_direct_fire_order:
+        OnReceiveCreateDirectFireOrder( msg.parameters() );
+        break;
     default:
         assert( false );
         break;
@@ -1522,5 +1527,43 @@ void MIL_AgentPion::OnReceiveChangeDotation( const sword::MissionParameters& msg
         if( !pDotationCategory || number < 0 || thresholdPercentage < 0.f || thresholdPercentage > 100.f )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
         roleDotations.ChangeDotation( *pDotationCategory, static_cast< unsigned int >( number ), thresholdPercentage );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveCreateDirectFireOrder
+// Created: SLI 2011-09-23
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveCreateDirectFireOrder( const sword::MissionParameters& msg )
+{
+    // target
+    if( msg.elem_size() < 1 || msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value( 0 ).has_agent() )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    MIL_AgentPion* target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( msg.elem( 0 ).value( 0 ).agent().id() );
+    if( target == 0 )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = target->CreateKnowledge( GetKnowledgeGroup() );
+    // firing mode
+    firing::PHY_DirectFireData::E_FiringMode firingMode = firing::PHY_DirectFireData::eFiringModeNormal;
+    if( msg.elem_size() >= 2 && msg.elem( 1 ).value_size() == 1 && msg.elem( 1 ).value( 1 ).has_enumeration() )
+        firingMode = static_cast< firing::PHY_DirectFireData::E_FiringMode >( msg.elem( 1 ).value( 1 ).enumeration() );
+    // component percentage to use
+    double percentageToUse = 1.;
+    if( msg.elem_size() >= 3 && msg.elem( 2 ).value_size() == 1 && msg.elem( 2 ).value( 1 ).has_areal() )
+        percentageToUse = msg.elem( 2 ).value( 1 ).areal();
+    // component firing type
+    firing::PHY_DirectFireData::E_ComposanteFiringType firingType = firing::PHY_DirectFireData::eFireUsingAllComposantes;
+    if( msg.elem_size() >= 4 && msg.elem( 3 ).value_size() == 1 && msg.elem( 3 ).value( 1 ).has_enumeration() )
+        firingType = static_cast< firing::PHY_DirectFireData::E_ComposanteFiringType >( msg.elem( 3 ).value( 1 ).enumeration() );
+    // component fired type
+    firing::PHY_DirectFireData::E_ComposanteFiredType firedType = firing::PHY_DirectFireData::eFireOnAllComposantes;
+    if( msg.elem_size() >= 5 && msg.elem( 4 ).value_size() == 1 && msg.elem( 4 ).value( 1 ).has_enumeration() )
+        firedType = static_cast< firing::PHY_DirectFireData::E_ComposanteFiredType >( msg.elem( 4 ).value( 1 ).enumeration() );
+    PHY_FireResults_Pion* results = 0;
+    GetRole< firing::PHY_RoleAction_DirectFiring >().FirePion( pKnowledge, firingMode, percentageToUse, firingType, firedType, results, false );
+    if( results )
+    {
+        results->IncRef();
+        results->DecRef();
     }
 }

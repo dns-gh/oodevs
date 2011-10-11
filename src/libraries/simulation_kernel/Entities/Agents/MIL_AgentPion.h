@@ -190,6 +190,7 @@ private:
     void OnReceiveChangeEquipmentState( const sword::MissionParameters& msg );
     void OnReceiveChangeHumanState( const sword::MissionParameters& msg );
     void OnReceiveChangeDotation( const sword::MissionParameters& msg );
+    void OnReceiveCreateDirectFireOrder( const sword::MissionParameters& msg );
     //@}
 
     //! @name Serialization
