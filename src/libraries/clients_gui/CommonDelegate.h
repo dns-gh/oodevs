@@ -11,6 +11,7 @@
 #define __gui_CommonDelegate_h_
 
 #include <boost/noncopyable.hpp>
+#include "tools/Resolver.h"
 
 namespace gui
 {
@@ -32,89 +33,114 @@ public:
     virtual ~CommonDelegate();
     //@}
 
-    //! @name Operations
-    //@{
-    void AddSpinBox( int column, int min = 0, int max = 100, int gap = 1, int minLinkedColumn = -1, int maxLinkedColumn = -1 );
-    void AddDoubleSpinBox( int column, double min = 0., double max = 100., double gap = 1., int precision = 2, int minLinkedColumn = -1, int maxLinkedColumn = -1 );
-    void AddComboBox( int column, QStringList stringList );
-    template< typename T >
-    void AddComboBox( int column, T enumMax );
-    //@}
-
     //! @name QItemDelegate Operations
     //@{
     QWidget *createEditor( QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
     void setEditorData( QWidget* editor, const QModelIndex& index ) const;
     void setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const;
     void updateEditorGeometry( QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
+
+    void Purge();
+    //@}
+
+    //! @name Operations
+    //@{
+    unsigned int AddSpinBox( int fromRow, int toRow, int fromCol, int toCol,
+                             int min = 0, int max = 100, int gap = 1,
+                             int minLinkedRow = -1, int maxLinkedRow = -1, int minLinkedCol = -1, int maxLinkedCol = -1 );
+    unsigned int AddDoubleSpinBox( int fromRow, int toRow, int fromCol, int toCol,
+                                   double min = 0., double max = 100., double gap = 1., int precision = 2,
+                                   int minLinkedRow = -1, int maxLinkedRow = -1, int minLinkedCol = -1, int maxLinkedCol = -1 );
+
+    unsigned int AddComboBox( int fromRow, int toRow, int fromCol, int toCol,
+                              QStringList stringList );
+    template< typename T >
+    unsigned int AddComboBox( int fromRow, int toRow, int fromCol, int toCol,
+                              T enumMax );
+    //@}
+
+    //! @name Row operations
+    //@{
+    unsigned int AddSpinBoxOnRow( int row, int min = 0, int max = 100, int gap = 1, int minLinkedRow = -1, int maxLinkedRow = -1 );
+    unsigned int AddDoubleSpinBoxOnRow( int row, double min = 0., double max = 100., double gap = 1., int precision = 2, int minLinkedRow = -1, int maxLinkedRow = -1 );
+    unsigned int AddComboBoxOnRow( int row, QStringList stringList );
+    template< typename T >
+    unsigned int AddComboBoxOnRow( int row, T enumMax );
+    //@}
+
+    //! @name Column operations
+    //@{
+    unsigned int AddSpinBoxOnColumn( int column, int min = 0, int max = 100, int gap = 1, int minLinkedCol = -1, int maxLinkedCol = -1 );
+    unsigned int AddDoubleSpinBoxOnColumn( int column, double min = 0., double max = 100., double gap = 1., int precision = 2, int minLinkedCol = -1, int maxLinkedCol = -1 );
+    unsigned int AddComboBoxOnColumn( int column, QStringList stringList );
+    template< typename T >
+    unsigned int AddComboBoxOnColumn( int column, T enumMax );
     //@}
 
 private:
-
-    //! @name Helpers
-    //@{
-    template< typename Enum >
-    void Populate( Enum size, QStringList& content ) const;
-    //@}
-
     //! @name Types
     //@{
+    struct DelegatePosition
+    {
+        DelegatePosition() : id_( 0 ), fromRow_( 0 ), toRow_( 0 ), fromCol_( 0 ), toCol_( 0 ) {}
+        DelegatePosition( unsigned int id, int fromRow, int toRow, int fromCol, int toCol ) : id_( id ), fromRow_( fromRow ), toRow_( toRow ), fromCol_( fromCol ), toCol_( toCol ) {}
+
+        unsigned int id_;
+        int fromRow_;
+        int toRow_;
+        int fromCol_;
+        int toCol_;
+    };
+
     template< typename T >
     struct SpinBoxDescription
     {
         SpinBoxDescription() : min_( 0 ), max_( 0 ), gap_( 0 ), precision_( 0 ), minLinkedColumn_( 0 ), maxLinkedColumn_( 0 ) {}
-        SpinBoxDescription( T min, T max, T gap, int precision, int minLinkedColumn, int maxLinkedColumn )
-            : min_( min ), max_( max ), gap_( gap ), precision_( precision ), minLinkedColumn_( minLinkedColumn ), maxLinkedColumn_( maxLinkedColumn ) {}
+        SpinBoxDescription( T min, T max, T gap, int precision, int minLinkedRow, int maxLinkedRow, int minLinkedCol, int maxLinkedCol )
+            : min_( min ), max_( max ), gap_( gap ), precision_( precision ), minLinkedRow_( minLinkedRow ), maxLinkedRow_( maxLinkedRow ), minLinkedCol_( minLinkedCol ), maxLinkedCol_( maxLinkedCol ) {}
 
         T   min_;
         T   max_;
         T   gap_;
         int precision_;
-        int minLinkedColumn_;
-        int maxLinkedColumn_;
+        int minLinkedRow_;
+        int maxLinkedRow_;
+        int minLinkedCol_;
+        int maxLinkedCol_;
     };
+    typedef std::vector< DelegatePosition >         T_Positions;
+    typedef T_Positions::iterator                  IT_Positions;
+    typedef T_Positions::const_iterator           CIT_Positions;
+    //@}
 
-    typedef std::map< int, SpinBoxDescription< int > >    T_SpinBoxs;
-    typedef T_SpinBoxs::const_iterator                  CIT_SpinBoxs;
-    typedef std::map< int, SpinBoxDescription< double > > T_DoubleSpinBoxs;
-    typedef T_DoubleSpinBoxs::const_iterator            CIT_DoubleSpinBoxs;
-    typedef std::map< int, QStringList >                  T_ComboBoxs;
-    typedef T_ComboBoxs::const_iterator                 CIT_ComboBoxs;
+private:
+    //! @name Helpers
+    //@{
+    template< typename Enum >
+    void Populate( Enum size, QStringList& content ) const;
+
+    template< typename T >
+    std::pair< T, T > GetMinMax( const SpinBoxDescription< T >& spinbox, const QModelIndex& index ) const;
+
+    unsigned int GetNewId() const;
+    const DelegatePosition* IsInPosition( int row, int col ) const;
+    const DelegatePosition* FindPosition( int fromRow, int toRow, int fromCol, int toCol ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_SpinBoxs       spinBoxs_;
-    T_DoubleSpinBoxs doubleSpinBoxs_;
-    T_ComboBoxs      comboBoxs_;
+    tools::Resolver< SpinBoxDescription< int > >    spinBoxs_;
+    tools::Resolver< SpinBoxDescription< double > > doubleSpinBoxs_;
+    tools::Resolver< QStringList >                  comboBoxs_;
+
+    T_Positions                                     positions_;
+
+    static unsigned int                             currentId_;
     //@}
 };
 
-
-// -----------------------------------------------------------------------------
-// Name: CommonDelegate::AddComboBox
-// Created: ABR 2011-10-03
-// -----------------------------------------------------------------------------
-template< typename T >
-void CommonDelegate::AddComboBox( int column, T enumMax )
-{
-    assert( spinBoxs_.find( column ) == spinBoxs_.end() && doubleSpinBoxs_.find( column ) == doubleSpinBoxs_.end() && comboBoxs_.find( column ) == comboBoxs_.end() );
-    QStringList stringList;
-    Populate( enumMax, stringList );
-    comboBoxs_[ column ] = stringList;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CommonDelegate::Populate
-// Created: ABR 2011-10-03
-// -----------------------------------------------------------------------------
-template< typename Enum >
-void CommonDelegate::Populate( Enum size, QStringList& content ) const
-{
-    for( unsigned int i = 0; i < unsigned int( size ); ++i )
-        content << tools::ToString( static_cast< Enum >( i ) );
-}
+#include "CommonDelegate.inl"
 
 }
 

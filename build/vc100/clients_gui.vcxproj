@@ -2294,6 +2294,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./clients_gui_app6;%(Outputs)</Outputs>
       <SubType>Designer</SubType>
     </CustomBuild>
+    <None Include="..\..\src\libraries\clients_gui\CommonDelegate.inl" />
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl" />
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl" />
     <None Include="..\..\src\libraries\clients_gui\EntityLayer.inl" />

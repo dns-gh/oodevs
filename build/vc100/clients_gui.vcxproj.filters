@@ -1388,6 +1388,9 @@
     <None Include="..\..\src\libraries\clients_gui\EntityLayer.inl">
       <Filter>Source Files\gl\Layers</Filter>
     </None>
+    <None Include="..\..\src\libraries\clients_gui\CommonDelegate.inl">
+      <Filter>Source Files\Tools</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\clients_gui\HelpSystem.h">

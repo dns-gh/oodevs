@@ -48,7 +48,7 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, kernel::Controllers& 
     dataModel_ = new QStandardItemModel( this );
 
     delegate_ = new gui::CommonDelegate( this );
-    delegate_->AddSpinBox( eDays, 0, std::numeric_limits< int >::max() );
+    delegate_->AddSpinBoxOnColumn( eDays, 0, std::numeric_limits< int >::max() );
 
     tableView_ = new QTableView( this );
     tableView_->setModel( dataModel_ );
