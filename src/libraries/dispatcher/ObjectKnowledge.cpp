@@ -127,8 +127,7 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_party()->set_id( owner_.GetId() );
     if( knowledgeGroup_ )
         asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
-    if( optionals_.realObjectPresent )
-        asn().mutable_object()->set_id( entityId_ );
+    asn().mutable_object()->set_id( entityId_ );
     asn().mutable_type()->set_id( nType_ );  // $$$$ _RC_ PHC 2010-07-07: ???
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation
     asn.Send( publisher );
