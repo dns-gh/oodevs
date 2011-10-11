@@ -136,6 +136,7 @@ public:
         eReport_CiviliansEncountered,
         eReport_PrisonersUnsupplied,
         eReport_PrisonersCampFull,
+        eReport_ExplosionSurBouchonMine,
         eNbrReport
     };
 
@@ -532,19 +533,19 @@ public:
         eRc_CiviliansEncountered,
         eRc_PrisonersUnsupplied,
         eRc_PrisonersCampFull,
-		eRC_NoPositionsToDestroyTargets,
-		eRC_NoPositionsToNeutralizeTargets,
-		eRC_NoPositionsToGetCoverFromEntities,
-		eRC_NoPositionsToObserveTargets,
-		eRC_NoPositionsToReachTargets,
-		eRC_TheTargetCannotBeReconnoitre,
-		eRC_TargetIsNotAccessible,
-		eRC_NoKeyPositionsFoundInArea,
-		eRC_Engaged,
-		eRC_Disengaged,
-		eRC_AlreadyEngaged,
-		eRC_AlreadyDisengaged,
-		eRC_NoPEInAutomat,
+        eRC_NoPositionsToDestroyTargets,
+        eRC_NoPositionsToNeutralizeTargets,
+        eRC_NoPositionsToGetCoverFromEntities,
+        eRC_NoPositionsToObserveTargets,
+        eRC_NoPositionsToReachTargets,
+        eRC_TheTargetCannotBeReconnoitre,
+        eRC_TargetIsNotAccessible,
+        eRC_NoKeyPositionsFoundInArea,
+        eRC_Engaged,
+        eRC_Disengaged,
+        eRC_AlreadyEngaged,
+        eRC_AlreadyDisengaged,
+        eRC_NoPEInAutomat,
         eLast
     };
     //@}

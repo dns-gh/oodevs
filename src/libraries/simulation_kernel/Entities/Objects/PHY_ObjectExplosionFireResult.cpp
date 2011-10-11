@@ -43,7 +43,6 @@ PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 
-    // $$$ Merde pour VABF Popu
     const T_PopulationDamagesMap& populationDamages = GetPopulationDamages();
     for( CIT_PopulationDamagesMap it = populationDamages.begin(); it != populationDamages.end(); ++it )
     {

@@ -88,6 +88,7 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_EquipmentLoanGivenBack                      ] = eRC_MaterielRendu;
     diaEvents_[ eReport_InterventionAgainstPopulationStarted        ] = eRC_DebutInterventionFaceAPopulation;
     diaEvents_[ eReport_MineExplosionOnPopulation                   ] = eRC_PopulationVictimeExplosionMines;
+    diaEvents_[ eReport_ExplosionSurBouchonMine                     ] = eRC_ExplosionSurBouchonMine;
     diaEvents_[ eReport_ConfrontationWithPopulation                 ] = eRC_PopulationVictimeAffrontements;
     diaEvents_[ eReport_Blocked                                     ] = eRC_Bloquee;
     diaEvents_[ eReport_Filtered                                    ] = eRC_Filtree;
