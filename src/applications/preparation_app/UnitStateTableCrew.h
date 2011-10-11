@@ -28,12 +28,13 @@ class UnitStateTableCrew : public gui::UnitStateTableCrew
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableCrew( QWidget* parent, const char* name = 0 );
+    explicit UnitStateTableCrew( QWidget* parent );
     virtual ~UnitStateTableCrew();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Purge();
     virtual void Load( kernel::Entity_ABC& selected );
     virtual void Commit( kernel::Entity_ABC& selected ) const;
     virtual bool HasChanged( kernel::Entity_ABC& selected ) const;

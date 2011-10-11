@@ -32,7 +32,7 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
 {
     // Init dialog
     setCaption( tr( "Unit state" ) );
-    resize( 600, 600 );
+    resize( 800, 600 );
     // Main layout
     QVBoxLayout* mainLayout = new QVBoxLayout( this, 0, 5, "UnitStateDialog_VBoxLayout_MainLayout" );
     mainLayout->setMargin( 5 );
@@ -83,7 +83,7 @@ UnitStateDialog::~UnitStateDialog()
 bool UnitStateDialog::IsReadOnly() const
 {
     for( unsigned int i = 0; i < tabs_.size(); ++i )
-        if( tabs_[ i ]->isReadOnly() )
+        if( tabs_[ i ]->IsReadOnly() )
             return true;
     return false;
 }
@@ -149,7 +149,7 @@ void UnitStateDialog::Reset()
     bool readOnly = IsReadOnly();
     readOnly |= ( selected_ ) ? selected_->GetTypeName() != kernel::Agent_ABC::typeName_ : true;
     for( unsigned int i = 0; i < tabs_.size(); ++i )
-        tabs_[ i ]->setReadOnly( readOnly );
+        tabs_[ i ]->SetReadOnly( readOnly );
     resetButton_->setEnabled( !readOnly );
     validateButton_->setEnabled( !readOnly );
     // Exit if needed

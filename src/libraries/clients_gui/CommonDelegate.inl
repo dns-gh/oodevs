@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 
+
 // =============================================================================
 // OnRow
 // =============================================================================
@@ -53,6 +54,7 @@ unsigned int CommonDelegate::AddComboBoxOnRow( int row, T enumMax )
 {
     return AddComboBox( row, row, -1, -1, enumMax );
 }
+
 
 // =============================================================================
 // OnColumn
@@ -101,6 +103,7 @@ unsigned int CommonDelegate::AddComboBoxOnColumn( int col, T enumMax )
     return AddComboBox( -1, -1, col, col, enumMax );
 }
 
+
 // =============================================================================
 // Methods
 // =============================================================================
@@ -111,9 +114,8 @@ unsigned int CommonDelegate::AddComboBoxOnColumn( int col, T enumMax )
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-unsigned int CommonDelegate::AddComboBox( int fromRow, int toRow, int frowCol, int toCol, T enumMax )
+unsigned int CommonDelegate::AddComboBox( int fromRow, int toRow, int fromCol, int toCol, T enumMax )
 {
-    assert( spinBoxs_.find( col ) == spinBoxs_.end() && doubleSpinBoxs_.find( col ) == doubleSpinBoxs_.end() && comboBoxs_.find( col ) == comboBoxs_.end() );
     QStringList stringList;
     Populate( enumMax, stringList );
     return AddComboBox( fromRow, toRow, fromCol, toCol, stringList );
@@ -135,11 +137,26 @@ void CommonDelegate::Populate( Enum size, QStringList& content ) const
 // Created: ABR 2011-10-11
 // -----------------------------------------------------------------------------
 inline
-unsigned int CommonDelegate::GetNewId() const
+unsigned int CommonDelegate::GetNewId()
 {
     return currentId_++;
 }
 
+// -----------------------------------------------------------------------------
+// Name: CommonDelegate::GetIndexFromSource
+// Created: ABR 2011-10-11
+// -----------------------------------------------------------------------------
+inline
+QModelIndex CommonDelegate::GetIndexFromSource( const QModelIndex& index ) const
+{
+    QModelIndex newIndex = index;
+    if( dynamic_cast< const QSortFilterProxyModel* >( index.model() ) )
+    {
+        const QSortFilterProxyModel* proxyModel = static_cast< const QSortFilterProxyModel* >( index.model() );
+        newIndex = proxyModel->mapToSource( index );
+    }
+    return newIndex.isValid() ? newIndex : index;
+}
 
 // -----------------------------------------------------------------------------
 // Name: std::pair< T, T > CommonDelegate::GetMinMax
@@ -151,19 +168,111 @@ std::pair< T, T > CommonDelegate::GetMinMax( const SpinBoxDescription< T >& spin
 {
     T minimum = spinbox.min_;
     T maximum = spinbox.max_;
-    const QStandardItemModel* model = static_cast< const QStandardItemModel* >( index.model() );
-
+    QModelIndex newIndex = GetIndexFromSource( index );
+    const QStandardItemModel* model = static_cast< const QStandardItemModel* >( newIndex.model() );// GetDataModelFromSource( index );
     if( model )
     {
-        int minRow = ( spinbox.minLinkedRow_ == -1 ) ? index.row() : spinbox.minLinkedRow_;
-        int minCol = ( spinbox.minLinkedCol_ == -1 ) ? index.column() : spinbox.minLinkedCol_;
-        int maxRow = ( spinbox.maxLinkedRow_ == -1 ) ? index.row() : spinbox.maxLinkedRow_;
-        int maxCol = ( spinbox.maxLinkedCol_ == -1 ) ? index.column() : spinbox.maxLinkedCol_;
-
         if( spinbox.minLinkedRow_ != -1 || spinbox.minLinkedCol_ != -1 )
+        {
+            int minRow = ( spinbox.minLinkedRow_ == -1 ) ? newIndex.row() : spinbox.minLinkedRow_;
+            int minCol = ( spinbox.minLinkedCol_ == -1 ) ? newIndex.column() : spinbox.minLinkedCol_;
             minimum = static_cast< T >( model->item( minRow, minCol )->data( Qt::EditRole ).toDouble() );
+        }
         if( spinbox.maxLinkedRow_ != -1 || spinbox.maxLinkedCol_ != -1 )
-           maximum = static_cast< T >( model->item( maxRow, maxCol )->data( Qt::EditRole ).toDouble() );
+        {
+            int maxRow = ( spinbox.maxLinkedRow_ == -1 ) ? newIndex.row() : spinbox.maxLinkedRow_;
+            int maxCol = ( spinbox.maxLinkedCol_ == -1 ) ? newIndex.column() : spinbox.maxLinkedCol_;
+            maximum = static_cast< T >( model->item( maxRow, maxCol )->data( Qt::EditRole ).toDouble() );
+        }
     }
     return std::pair< T, T >( minimum, maximum );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommonDelegate::Purge
+// Created: ABR 2011-10-11
+// -----------------------------------------------------------------------------
+inline
+void CommonDelegate::Purge()
+{
+    positions_.clear();
+    spinBoxs_.DeleteAll();
+    doubleSpinBoxs_.DeleteAll();
+    comboBoxs_.DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommonDelegate::FindPosition
+// Created: ABR 2011-10-11
+// -----------------------------------------------------------------------------
+inline
+const CommonDelegate::DelegatePosition* CommonDelegate::FindPosition( int fromRow, int toRow, int fromCol, int toCol ) const
+{
+    for( CIT_Positions it = positions_.begin(); it != positions_.end(); ++it )
+        if( ( it->fromRow_ == -1 && fromRow == -1 || fromRow >= it->fromRow_ ) &&
+            ( it->toRow_ == -1   && toRow   == -1 || toRow <= it->toRow_     ) &&
+            ( it->fromCol_ == -1 && fromCol == -1 || fromCol >= it->fromCol_ ) &&
+            ( it->toCol_ == -1   && toCol   == -1 || toCol <= it->toCol_   ) )
+            return &*it;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommonDelegate::IsInPosition
+// Created: ABR 2011-10-11
+// -----------------------------------------------------------------------------
+inline
+const CommonDelegate::DelegatePosition* CommonDelegate::IsInPosition( int row, int col ) const
+{
+    for( CIT_Positions it = positions_.begin(); it != positions_.end(); ++it )
+        if( ( it->fromRow_ == -1 || row >= it->fromRow_ ) &&
+            ( it->toRow_ == -1   || row <= it->toRow_   ) &&
+            ( it->fromCol_ == -1 || col >= it->fromCol_ ) &&
+            ( it->toCol_ == -1   || col <= it->toCol_   ) )
+            return &*it;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommonDelegate::updateEditorGeometry
+// Created: ABR 2011-10-03
+// -----------------------------------------------------------------------------
+inline
+void CommonDelegate::updateEditorGeometry( QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& /*index */ ) const
+{
+    editor->setGeometry(option.rect);
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommonDelegate::SetReadOnly
+// Created: ABR 2011-10-11
+// -----------------------------------------------------------------------------
+inline
+void CommonDelegate::SetReadOnly( bool readOnly )
+{
+    readOnly_ = readOnly;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommonDelegate::IsReadOnly
+// Created: ABR 2011-10-11
+// -----------------------------------------------------------------------------
+inline
+bool CommonDelegate::IsReadOnly() const
+{
+    return readOnly_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommonDelegate::GetComboContent
+// Created: ABR 2011-10-11
+// -----------------------------------------------------------------------------
+inline
+const QStringList* CommonDelegate::GetComboContent( int row, int col ) const
+{
+    const CommonDelegate::DelegatePosition* position = IsInPosition( row, col );
+    QStringList* element = 0;
+    if( position )
+         element = comboBoxs_.Find( position->id_ );
+    return element;
 }

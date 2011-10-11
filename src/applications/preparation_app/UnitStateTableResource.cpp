@@ -59,11 +59,11 @@ namespace
 // Name: UnitStateTableResource constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableResource::UnitStateTableResource( const StaticModel& staticModel, QWidget* parent, const char* name /*= 0*/ )
-    : gui::UnitStateTableResource( parent, true, name )
+UnitStateTableResource::UnitStateTableResource( QWidget* parent, const StaticModel& staticModel )
+    : gui::UnitStateTableResource( parent, tools::translate( "UnitStateTableResource", "Default capacity" ) )
     , staticModel_( staticModel )
 {
-    connect( this, SIGNAL( contextMenuRequested( int, int, const QPoint& ) ), SLOT( OnRequestContextMenu( int, int, const QPoint& ) ) );
+    delegate_.AddSpinBoxOnColumn( eQuantity, 0, std::numeric_limits< int >::max(), 10 );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,54 +76,12 @@ UnitStateTableResource::~UnitStateTableResource()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitStateTableResource::keyPressEvent
-// Created: ABR 2011-07-06
+// Name: UnitStateTableResource::contextMenuEvent
+// Created: ABR 2011-10-04
 // -----------------------------------------------------------------------------
-void UnitStateTableResource::keyPressEvent( QKeyEvent * e )
+void UnitStateTableResource::contextMenuEvent( QContextMenuEvent* e )
 {
-    if( !isReadOnly() && e->key() == Qt::Key_Delete )
-        OnRemoveCurrentItem();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitStateTableResource::AddItem
-// Created: ABR 2011-07-06
-// -----------------------------------------------------------------------------
-void UnitStateTableResource::AddItem( int id )
-{
-    const kernel::DotationType* dotation = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Find( id );
-    assert( dotation != 0 );
-    AddLine( dotation->GetName().c_str(), dotation->GetCategory().c_str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitStateTableResource::IsDotationAlreadyPresent
-// Created: ABR 2011-07-06
-// -----------------------------------------------------------------------------
-bool UnitStateTableResource::IsDotationAlreadyPresent( const QString& name ) const
-{
-    for( int nRow = 0; nRow < numRows(); ++nRow )
-        if( item( nRow, eName )->text() == name )
-            return true;
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitStateTableResource::OnRemoveCurrentItem
-// Created: ABR 2011-07-06
-// -----------------------------------------------------------------------------
-void UnitStateTableResource::OnRemoveCurrentItem()
-{
-    removeRow( currentRow() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitStateTableResource::OnRequestContextMenu
-// Created: ABR 2011-07-06
-// -----------------------------------------------------------------------------
-void UnitStateTableResource::OnRequestContextMenu( int /*row*/, int /*col*/, const QPoint& pos )
-{
-    if( isReadOnly() )
+    if( IsReadOnly() )
         return;
     Q3PopupMenu menu( this );
     Q3PopupMenu targetMenu( &menu );
@@ -144,11 +102,60 @@ void UnitStateTableResource::OnRequestContextMenu( int /*row*/, int /*col*/, con
         SortMenu( *it->second );
         targetMenu.insertItem( it->first.c_str(), it->second );
     }
-    menu.insertItem( tr( "Add resource"), &targetMenu, 0 );
-    menu.insertItem( tr( "Remove resource" ), this, SLOT( OnRemoveCurrentItem() ) );
-    int nMenuResult = menu.exec( pos );
+    menu.insertItem( tools::translate( "UnitStateTableResource", "Add resource"), &targetMenu, 0 );
+    QModelIndex index = indexAt( e->pos() );
+    if( index.isValid() )
+    {
+        setCurrentIndex( index );
+        menu.insertItem( tools::translate( "UnitStateTableResource", "Remove resource" ), this, SLOT( OnRemoveCurrentItem() ) );
+    }
+    int nMenuResult = menu.exec( e->globalPos() );
     if( nMenuResult > 0 )
         AddItem( nMenuResult );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::keyPressEvent
+// Created: ABR 2011-10-04
+// -----------------------------------------------------------------------------
+void UnitStateTableResource::keyPressEvent( QKeyEvent * e )
+{
+    if( !IsReadOnly() && e->key() == Qt::Key_Delete && currentIndex().isValid() )
+        OnRemoveCurrentItem();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::OnRemoveCurrentItem
+// Created: ABR 2011-07-06
+// -----------------------------------------------------------------------------
+void UnitStateTableResource::OnRemoveCurrentItem()
+{
+    QModelIndex index = proxyModel_.mapToSource( currentIndex() );
+    if( index.isValid() )
+        dataModel_.removeRow( index.row() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::AddItem
+// Created: ABR 2011-07-06
+// -----------------------------------------------------------------------------
+void UnitStateTableResource::AddItem( int id )
+{
+    const kernel::DotationType* dotation = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Find( id );
+    assert( dotation != 0 );
+    AddLine( dotation->GetName().c_str(), dotation->GetCategory().c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::IsDotationAlreadyPresent
+// Created: ABR 2011-07-06
+// -----------------------------------------------------------------------------
+bool UnitStateTableResource::IsDotationAlreadyPresent( const QString& name ) const
+{
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
+        if( GetDisplayData( row, eName ) == name )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -161,17 +168,21 @@ bool UnitStateTableResource::HasChanged( kernel::Entity_ABC& selected ) const
         return false;
 
     InitialState& extension = selected.Get< InitialState >();
-    if( extension.resources_.size() != static_cast< unsigned int >( numRows() ) )
+    if( extension.resources_.size() != static_cast< unsigned int >( dataModel_.rowCount() ) )
         return true;
-    int nRow = 0;
-    for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end() && nRow < numRows(); ++it, ++nRow )
-        if( it->name_ != item( nRow, eName )->text() ||
-            it->category_ != item( nRow, eCategory )->text() ||
-            it->number_ != GetNumericValue< unsigned int >( nRow, eQuantity ) ||
-            it->maximum_ != GetNumericValue< unsigned int >( nRow, eMaximum ) ||
-            it->threshold_ != GetNumericValue< double >( nRow, eThreshold ) )
-        return true;
-
+    for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+    {
+        for( int row = 0; row < dataModel_.rowCount(); ++row )
+            if( GetDisplayData( row, eName ) == it->name_ &&
+                GetDisplayData( row, eCategory ) == it->category_ )
+            {
+                if( it->number_ != GetUserData( row, eQuantity ).toUInt() ||
+                    it->maximum_ != GetUserData( row, eMaximum ).toUInt() ||
+                    it->threshold_ != GetUserData( row, eThreshold ).toDouble() )
+                    return true;
+                break;
+            }
+    }
     return false;
 }
 
@@ -196,15 +207,12 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     InitialState& extension = selected.Get< InitialState >();
     extension.resources_.clear();
-    for( int nRow = 0; nRow < numRows(); ++nRow )
-    {
-        unsigned int number = GetNumericValue< unsigned int >( nRow, eQuantity );
-        if( !number )
-            continue;
-        extension.resources_.push_back( InitialStateResource( item( nRow, eName )->text(),
-                                                              item( nRow, eCategory )->text(),
-                                                              number,
-                                                              GetNumericValue< unsigned int >( nRow, eMaximum ),
-                                                              GetNumericValue< double >( nRow, eThreshold ) ) );
-    }
+
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
+        if( GetUserData( row, eQuantity ).toUInt() != 0 )
+            extension.resources_.push_back( InitialStateResource( GetDisplayData( row, eName ),
+                                                                  GetDisplayData( row, eCategory ),
+                                                                  GetUserData( row, eQuantity ).toUInt(),
+                                                                  GetUserData( row, eMaximum ).toUInt(),
+                                                                  GetUserData( row, eThreshold ).toDouble() ) );
 }

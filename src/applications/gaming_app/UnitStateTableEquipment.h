@@ -46,7 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UnitStateTableEquipment( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                      const kernel::Time_ABC& simulation, QWidget* parent, const char* name = 0 );
+                                      const kernel::Time_ABC& simulation, QWidget* parent );
     virtual ~UnitStateTableEquipment();
     //@}
 
@@ -61,7 +61,6 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Equipments& dotations );
-    void UpdateLines( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int > currentBreakdowns = std::vector< unsigned int >() );
     bool LineChanged( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int > currentBreakdowns = std::vector< unsigned int >() ) const;
     std::vector< unsigned int > BreakdownIDToComboIndex( const QStringList& breakdowns, const std::vector< int >& breakdownIDs ) const;
     int CountLines( const QString& name, int firstRow, E_EquipmentState state ) const;

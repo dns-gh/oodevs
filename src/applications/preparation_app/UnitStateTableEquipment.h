@@ -28,7 +28,7 @@ class UnitStateTableEquipment : public gui::UnitStateTableEquipment
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableEquipment( QWidget* parent, const char* name = 0 );
+    explicit UnitStateTableEquipment( QWidget* parent );
     virtual ~UnitStateTableEquipment();
     //@}
 

@@ -32,9 +32,9 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
 {
     setCaption( "Unit state" );
     assert( tabWidget_ );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableCrew >     ( new UnitStateTableCrew(      controllers, staticModel, actionsModel, simulation, tabWidget_, "UnitStateDialog_TableCrew" ) ) );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableEquipment >( new UnitStateTableEquipment( controllers, staticModel, actionsModel, simulation, tabWidget_, "UnitStateDialog_TableEquipment" ) ) );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableResource > ( new UnitStateTableResource(  controllers, staticModel, actionsModel, simulation, tabWidget_, "UnitStateDialog_TableResource" ) ) );
+    tabs_.push_back( boost::shared_ptr< UnitStateTableCrew >     ( new UnitStateTableCrew(      controllers, staticModel, actionsModel, simulation, tabWidget_ ) ) );
+    tabs_.push_back( boost::shared_ptr< UnitStateTableEquipment >( new UnitStateTableEquipment( controllers, staticModel, actionsModel, simulation, tabWidget_ ) ) );
+    tabs_.push_back( boost::shared_ptr< UnitStateTableResource > ( new UnitStateTableResource(  controllers, staticModel, actionsModel, simulation, tabWidget_ ) ) );
     tabWidget_->addTab( tabs_[ eCrew      ].get(), tr( "Crew" ) );
     tabWidget_->addTab( tabs_[ eEquipment ].get(), tr( "Equipments" ) );
     tabWidget_->addTab( tabs_[ eResources ].get(), tr( "Resources" ) );
@@ -208,9 +208,8 @@ void UnitStateDialog::NotifySelected( const kernel::Entity_ABC* element )
         return;
     bool readOnly = ( element ) ? !profile_.CanDoMagic( *element ) : true;
     for( unsigned int i = 0; i < tabs_.size(); ++i )
-        tabs_[ i ]->setReadOnly( readOnly );
+        tabs_[ i ]->SetReadOnly( readOnly );
     bool enabled = element && element->Retrieve< Equipments >() != 0 && element->Retrieve< kernel::Dotations_ABC >() != 0 && element->Retrieve< Troops >() != 0;
     emit Disabled( !enabled );
     gui::UnitStateDialog::NotifySelected( element );
 }
-

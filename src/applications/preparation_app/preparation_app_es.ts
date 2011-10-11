@@ -1778,6 +1778,21 @@ Do you want to save anyway?</source>
     </message>
 </context>
 <context>
+    <name>UnitStateTableResource</name>
+    <message>
+        <source>Default capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UserProfileControls</name>
     <message>
         <source>Control</source>

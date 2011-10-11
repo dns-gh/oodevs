@@ -29,9 +29,9 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
 {
     setCaption( tools::translate( "UnitStateDialog", "Initial state" ) );
     assert( tabWidget_ );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableCrew >      ( new UnitStateTableCrew(                  tabWidget_, "UnitStateDialog_TableCrew" ) ) );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableEquipment > ( new UnitStateTableEquipment(             tabWidget_, "UnitStateDialog_TableEquipment" ) ) );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableResource >  ( new UnitStateTableResource( staticModel, tabWidget_, "UnitStateDialog_TableResource" ) ) );
+    tabs_.push_back( boost::shared_ptr< UnitStateTableCrew >     ( new UnitStateTableCrew(      tabWidget_ ) ) );
+    tabs_.push_back( boost::shared_ptr< UnitStateTableEquipment >( new UnitStateTableEquipment( tabWidget_ ) ) );
+    tabs_.push_back( boost::shared_ptr< UnitStateTableResource > ( new UnitStateTableResource(  tabWidget_, staticModel ) ) );
     tabWidget_->addTab( tabs_[ eCrew      ].get(), tools::translate( "UnitStateDialog", "Crew" ) );
     tabWidget_->addTab( tabs_[ eEquipment ].get(), tools::translate( "UnitStateDialog", "Equipments" ) );
     tabWidget_->addTab( tabs_[ eResources ].get(), tools::translate( "UnitStateDialog", "Resources" ) );
@@ -75,7 +75,7 @@ void UnitStateDialog::Reset()
 void UnitStateDialog::NotifySelected( const kernel::Entity_ABC* element )
 {
     for( unsigned int i = 0; i < tabs_.size(); ++i )
-        tabs_[ i ]->setReadOnly( false );
+        tabs_[ i ]->SetReadOnly( false );
     gui::UnitStateDialog::NotifySelected( element );
 }
 

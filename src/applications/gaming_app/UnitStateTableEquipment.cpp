@@ -35,8 +35,8 @@
 // Created: ABR 2011-07-07
 // -----------------------------------------------------------------------------
 UnitStateTableEquipment::UnitStateTableEquipment( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                                  const kernel::Time_ABC& simulation, QWidget* parent, const char* name /*= 0*/ )
-    : gui::UnitStateTableEquipment( parent, name )
+                                                  const kernel::Time_ABC& simulation, QWidget* parent )
+    : gui::UnitStateTableEquipment( parent )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
@@ -56,30 +56,14 @@ UnitStateTableEquipment::~UnitStateTableEquipment()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitStateTableEquipment::UpdateLines
-// Created: ABR 2011-07-11
-// -----------------------------------------------------------------------------
-void UnitStateTableEquipment::UpdateLines( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int > currentBreakdowns /*= std::vector< unsigned int >()*/ )
-{
-    for( int i = 0; i < size && item( row, eName ) && item( row, eName )->text() == name && row < numRows(); ++i, ++row )
-    {
-        bool isReadOnly = state == eEquipmentState_InMaintenance || state == eEquipmentState_Prisonner;
-        const QStringList& breakdowns = static_cast< gui::ComboTableItem* >( item( row, eBreakdown ) )->GetTexts();
-        AddCombo< E_EquipmentState >( row, eState, state, isReadOnly ? readOnlyStates_ : ( breakdowns.size() <= 1 ) ? limitedStates_ : selectionableStates_, !isReadOnly );
-        static_cast< gui::ComboTableItem* >( item( row, eBreakdown ) )->SetCurrentItem( currentBreakdowns.empty() ? 0 : currentBreakdowns[ i ] );
-        OnValueChanged( row, eState );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: UnitStateTableEquipment::CountLines
 // Created: ABR 2011-08-09
 // -----------------------------------------------------------------------------
 int UnitStateTableEquipment::CountLines( const QString& name, int firstRow, E_EquipmentState state ) const
 {
     int result = 0;
-    for( int row = firstRow; row < numRows() && name == item( row, eName )->text(); ++row )
-        if( GetComboValue< E_EquipmentState >( row, eState ) == state )
+    for( int row = firstRow; row < dataModel_.rowCount() && name == GetDisplayData( row, eName ); ++row )
+        if( GetEnumData< E_EquipmentState >( row, eState ) == state )
             ++result;
     return result;
 }
@@ -90,9 +74,9 @@ int UnitStateTableEquipment::CountLines( const QString& name, int firstRow, E_Eq
 // -----------------------------------------------------------------------------
 bool UnitStateTableEquipment::LineChanged( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int > currentBreakdowns /*= std::vector< unsigned int >()*/ ) const
 {
-    for( int i = 0; row < numRows() && i < size && item( row, eName )->text() == name; ++i, ++row )
-        if( GetComboValue< E_EquipmentState >( row, eState ) != state ||
-            state == eEquipmentState_RepairableWithEvacuation && GetComboValue< unsigned int >( row, eBreakdown ) != ( currentBreakdowns.empty() ? 0 : currentBreakdowns[ i ] ) )
+    for( int i = 0; row < dataModel_.rowCount() && i < size && GetDisplayData( row, eName ) == name; ++i, ++row )
+        if( GetEnumData< E_EquipmentState >( row, eState ) != state ||
+            state == eEquipmentState_RepairableWithEvacuation && GetEnumData< unsigned int >( row, eBreakdown ) != ( currentBreakdowns.empty() ? 0 : currentBreakdowns[ i ] ) )
             return true;
     return false;
 }
@@ -154,14 +138,14 @@ bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
         const Equipment& equipment = itEquip.NextElement();
         const QString name = equipment.type_.GetName().c_str();
         int row = 0;
-        for( ; row < numRows(); ++row )
-            if( item( row, eName )->text() == name )
+        for( ; row < dataModel_.rowCount(); ++row )
+            if( GetDisplayData( row, eName ) == name )
                 break;
         int first_row = row;
-        const QStringList& breakdowns = static_cast< gui::ComboTableItem* >( item( row, eBreakdown ) )->GetTexts();
+        const QStringList* breakdowns = delegate_.GetComboContent( row, eBreakdown );
         if( LineChanged( name, row, equipment.available_,     eEquipmentState_Available ) ||
             LineChanged( name, row, equipment.unavailable_,   eEquipmentState_Destroyed ) ||
-            LineChanged( name, row, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, BreakdownIDToComboIndex( breakdowns, equipment.breakdowns_ ) ) ||
+            LineChanged( name, row, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.breakdowns_ ) : std::vector< unsigned int >() ) ||
             LineChanged( name, row, equipment.onSiteFixable_, eEquipmentState_OnSiteFixable ) ||
             LineChanged( name, row, equipment.inMaintenance_, eEquipmentState_InMaintenance ) ||
             LineChanged( name, row, equipment.prisonners_,    eEquipmentState_Prisonner ) )
@@ -185,8 +169,9 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
         const QString name = equipment.type_.GetName().c_str();
         // Breakdowns
         QStringList breakdowns;
-        breakdowns << tr( "Random" );
         tools::Iterator< const kernel::BreakdownOriginType& > itBreakdown = equipment.type_.CreateBreakdownsIterator();
+        if( itBreakdown.HasMoreElements() )
+            breakdowns << tr( "Random" );
         while( itBreakdown.HasMoreElements() )
             breakdowns << itBreakdown.NextElement().GetName().c_str();
         // States
@@ -197,8 +182,6 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
         AddLines( name, equipment.inMaintenance_, eEquipmentState_InMaintenance,            breakdowns );
         AddLines( name, equipment.prisonners_,    eEquipmentState_Prisonner,                breakdowns );
     }
-    for( int i = eName; i <= eBreakdown; ++i )
-        adjustColumn( i );
 }
 
 // -----------------------------------------------------------------------------
@@ -207,8 +190,8 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
 // -----------------------------------------------------------------------------
 void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
 {
-    assert( selected_ == &selected && selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
-
+    if( selected_ != &selected || selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
+        return;
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_equipment_state" );
     actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, tools::translate( "UnitStateTableEquipment", "Change equipment state" ), true );
 
@@ -221,7 +204,7 @@ void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
         actions::parameters::ParameterList& list = parameterList->AddList( "Equipment" );
         list.AddIdentifier( "ID", it->first );
 
-        const QString& name = item( it->second, eName )->text();
+        const QString& name = GetDisplayData( it->second, eName );
         list.AddQuantity( "NbAvailable",                CountLines( name, it->second, eEquipmentState_Available ) );
         list.AddQuantity( "NbDestroyed",                CountLines( name, it->second, eEquipmentState_Destroyed ) );
         list.AddQuantity( "NbRepairableWithEvacuation", CountLines( name, it->second, eEquipmentState_RepairableWithEvacuation ) );
@@ -229,12 +212,15 @@ void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
         list.AddQuantity( "NbInMaintenance",            CountLines( name, it->second, eEquipmentState_InMaintenance ) );
         list.AddQuantity( "NbPrisonner",                CountLines( name, it->second, eEquipmentState_Prisonner ) );
 
-        const QStringList& breakdowns = static_cast< gui::ComboTableItem* >( item( it->second, eBreakdown ) )->GetTexts();
+        const QStringList* breakdowns = delegate_.GetComboContent( it->second, eBreakdown );
         actions::parameters::ParameterList& breakdownList = list.AddList( "Breakdowns" );
         int i = 0;
-        for( int row = it->second; row < numRows() && name == item( row, eName )->text(); ++row )
-            if( GetComboValue< E_EquipmentState >( row, eState ) == eEquipmentState_RepairableWithEvacuation )
-                breakdownList.AddIdentifier( QString( "Breakdown %1" ).arg( ++i ).ascii(), BreakdownComboIndexToId( breakdowns, GetComboValue< unsigned int >( row, eBreakdown ) ) );
+        for( int row = it->second; row < dataModel_.rowCount() && name == GetDisplayData( row, eName ); ++row )
+            if( GetEnumData< E_EquipmentState >( row, eState ) == eEquipmentState_RepairableWithEvacuation )
+            {
+                assert( breakdowns );
+                breakdownList.AddIdentifier( QString( "Breakdown %1" ).arg( ++i ).ascii(), BreakdownComboIndexToId( *breakdowns, GetEnumData< unsigned int >( row, eBreakdown ) ) );
+            }
     }
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );

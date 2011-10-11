@@ -40,14 +40,15 @@
 // Created: ABR 2011-07-07
 // -----------------------------------------------------------------------------
 UnitStateTableResource::UnitStateTableResource( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                                const kernel::Time_ABC& simulation, QWidget* parent, const char* name /*= 0*/ )
-    : gui::UnitStateTableResource( parent, false, name )
+                                                const kernel::Time_ABC& simulation, QWidget* parent )
+    : gui::UnitStateTableResource( parent, tools::translate( "UnitStateTableResource", "Maximal capacity" ) )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
     , simulation_  ( simulation )
     , selected_    ( controllers )
 {
+    delegate_.AddSpinBoxOnColumn( eQuantity, 0, 0, 10, -1, eMaximum );
     controllers_.Register( *this );
 }
 
@@ -113,7 +114,7 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
     if( selected_ && selected_->Retrieve< kernel::Dotations_ABC >() == &dotations )
     {
         tools::Iterator< const Dotation& > dotationIterator = static_cast< const Dotations& >( dotations ).CreateIterator();
-        if( static_cast< const Dotations& >( dotations ).Count() != static_cast< unsigned long >( numRows() ) )
+        if( static_cast< const Dotations& >( dotations ).Count() != static_cast< unsigned long >( dataModel_.rowCount() ) )
         {
             Purge();
             Load( *selected_.ConstCast() );
@@ -123,12 +124,11 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
             {
                 const Dotation& dotation = dotationIterator.NextElement();
                 const QString name = dotation.type_->GetName().c_str();
-                for( int row = 0; row < numRows(); ++row )
-                    if( item( row, eName )->text() == name )
+                for( int row = 0; row < dataModel_.rowCount(); ++row )
+                    if( GetUserData( row, eName ).toString() == name )
                     {
-                        setText( row, eQuantity, QString::number( dotation.quantity_ ) );
-                        setText( row, eThreshold, QString::number( dotation.thresholdPercentage_, 'f', 2 ) );
-                        OnValueChanged( row, eQuantity );
+                        SetData( row, eQuantity, QString::number( dotation.quantity_ ), dotation.quantity_ );
+                        SetData( row, eThreshold, QString::number( dotation.thresholdPercentage_, 'f', 2 ), dotation.thresholdPercentage_ );
                         break;
                     }
             }
@@ -142,11 +142,11 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
 int UnitStateTableResource::HasDotationChanged( const Dotation& dotation ) const
 {
     const QString name = dotation.type_->GetName().c_str();
-    for( int row = 0; row < numRows(); ++row )
-        if( item( row, eName )->text() == name )
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
+        if( GetDisplayData( row, eName ) == name )
         {
-            int quantity = GetNumericValue< int >( row, eQuantity );
-            float threshold = GetNumericValue< float >( row, eThreshold );
+            int quantity = GetUserData( row, eQuantity ).toInt();
+            float threshold = GetUserData( row, eThreshold ).toFloat();
             if( quantity != dotation.quantity_ ||
                 abs( threshold - dotation.thresholdPercentage_ ) > EPSYLON )
                 return row;
@@ -199,8 +199,8 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
 // -----------------------------------------------------------------------------
 void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
 {
-    assert( selected_ == &selected && selected.GetTypeName() == kernel::Agent_ABC::typeName_ && !rowsChanged_.empty() );
-
+    if( selected_ != &selected || selected.GetTypeName() != kernel::Agent_ABC::typeName_ || rowsChanged_.empty() )
+        return;
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_dotation" );
     actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, tools::translate( "UnitStateTableResource", "Change dotations" ), true );
 
@@ -210,14 +210,13 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
 
     for( CIT_Changes it = rowsChanged_.begin(); it != rowsChanged_.end(); ++it )
     {
-        assert( it->second >=0 && it->second < numRows() );
+        assert( it->second >=0 && it->second < dataModel_.rowCount() );
         actions::parameters::ParameterList& list = parameterList->AddList( "Dotation" );
         list.AddIdentifier( "ID", it->first );
-        list.AddQuantity( "Quantity", GetNumericValue< int >( it->second, eQuantity ) );
-        list.AddNumeric( "Threshold", GetNumericValue< float >( it->second, eThreshold ) );
+        list.AddQuantity( "Quantity", GetUserData( it->second, eQuantity ).toInt() );
+        list.AddNumeric( "Threshold", GetUserData( it->second, eThreshold ).toFloat() );
     }
     rowsChanged_.clear();
-
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );

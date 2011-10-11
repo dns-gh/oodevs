@@ -30,18 +30,18 @@
 // Created: ABR 2011-07-07
 // -----------------------------------------------------------------------------
 UnitStateTableCrew::UnitStateTableCrew( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                       const kernel::Time_ABC& simulation, QWidget* parent, const char* name /*= 0*/ )
-    : gui::UnitStateTableCrew( parent, name )
+                                       const kernel::Time_ABC& simulation, QWidget* parent )
+    : gui::UnitStateTableCrew( parent )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
     , simulation_  ( simulation )
     , selected_    ( controllers )
 {
-    controllers_.Register( *this );
     PopulateEnumOrderParameters< E_HumanRank >( "HumanRank", "enumeration", eRank, eNbrHumanRank );
     PopulateEnumOrderParameters< E_HumanState >( "HumanState", "enumeration", eState, eNbrHumanState );
     PopulateEnumOrderParameters< E_InjuriesSeriousness >( "InjurySeriousness", "enumeration", eInjuries, eNbrInjuriesSeriousness );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,21 +87,21 @@ bool UnitStateTableCrew::HasChanged( kernel::Entity_ABC& selected ) const
     Troops& troops = selected.Get< Troops >();
 
     unsigned int nbFound = 0;
-    for( int nRow = 0; nRow < numRows(); ++nRow )
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
     {
-        int quantity = static_cast< int >( GetNumericValue< unsigned int >( nRow, eNumber ) );
+        int quantity = GetUserData( row, eNumber ).toInt();
         if( quantity )
             for( unsigned int i = 0; i < troops.elements_.size(); ++i)
             {
                 const HumanState& human = troops.elements_[ i ];
                 E_InjuriesSeriousness seriousness = ( human.injuries_.size() ) ? human.injuries_[ 0 ].second : eInjuriesSeriousness_U1; // $$$$ ABR 2011-07-25: Waiting story 660
                 if( human.quantity_     == quantity &&
-                    human.rank_         == GetComboValue< E_HumanRank >( nRow, eRank ) &&
-                    human.state_        == GetComboValue< E_HumanState >( nRow, eState ) &&
-                    human.location_     == GetComboValue< E_HumanLocation >( nRow, eLocation ) &&
-                    human.psyop_        == GetCheckboxValue( nRow, ePsy ) &&
-                    human.contaminated_ == GetCheckboxValue( nRow, eContaminated ) && 
-                    ( human.state_ != eHumanState_Injured || seriousness == GetComboValue< E_InjuriesSeriousness >( nRow, eInjuries ) ) )
+                    human.rank_         == GetEnumData< E_HumanRank >( row, eRank ) &&
+                    human.state_        == GetEnumData< E_HumanState >( row, eState ) &&
+                    human.location_     == GetEnumData< E_HumanLocation >( row, eLocation ) &&
+                    human.psyop_        == GetCheckedState( row, ePsy ) &&
+                    human.contaminated_ == GetCheckedState( row, eContaminated ) && 
+                    ( human.state_ != eHumanState_Injured || seriousness == GetEnumData< E_InjuriesSeriousness >( row, eInjuries ) ) )
                 {
                     ++nbFound;
                     break;
@@ -129,8 +129,6 @@ void UnitStateTableCrew::Load( kernel::Entity_ABC& selected )
         const HumanState& human = troops.elements_[ i ];
         MergeLine( human.rank_, human.state_, ( human.injuries_.size() ) ? human.injuries_[ 0 ].second : eInjuriesSeriousness_U1, human.psyop_, human.contaminated_, human.quantity_, human.location_ );
     }
-    for( int i = eRank; i <= eNumber; ++i )
-        adjustColumn( i );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,8 +137,8 @@ void UnitStateTableCrew::Load( kernel::Entity_ABC& selected )
 // -----------------------------------------------------------------------------
 void UnitStateTableCrew::Commit( kernel::Entity_ABC& selected ) const
 {
-    assert( selected_ == &selected && selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
-
+    if( selected_ != &selected || selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
+        return;
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_human_state" );
     actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, tools::translate( "UnitStateTableCrew", "Change human state" ), true );
 
@@ -148,25 +146,24 @@ void UnitStateTableCrew::Commit( kernel::Entity_ABC& selected ) const
     actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
     action->AddParameter( *parameterList );
 
-    for( int nRow = 0; nRow < numRows(); ++nRow )
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
     {
-        if( GetNumericValue< int >( nRow, eNumber ) == 0 )
+        if( GetUserData( row, eNumber ).toInt() == 0 )
             continue;
         actions::parameters::ParameterList& list = parameterList->AddList( "Human" );
-        list.AddQuantity( "Quantity", GetNumericValue< int >( nRow, eNumber ) );
-        list.AddParameter( *new actions::parameters::Enumeration( GetEnumOrderParameter( eRank ), GetComboValue< E_HumanRank >( nRow, eRank ) ) );
-        list.AddParameter( *new actions::parameters::Enumeration( GetEnumOrderParameter( eState ), GetComboValue< E_HumanState >( nRow, eState ) ) );
+        list.AddQuantity( "Quantity", GetUserData( row, eNumber ).toInt() );
+        list.AddParameter( *new actions::parameters::Enumeration( GetEnumOrderParameter( eRank ), GetEnumData< E_HumanRank >( row, eRank ) ) );
+        list.AddParameter( *new actions::parameters::Enumeration( GetEnumOrderParameter( eState ), GetEnumData< E_HumanState >( row, eState ) ) );
         actions::parameters::ParameterList& injuries = list.AddList( "Injuries" );
-        list.AddBool( "MentallyWounded", GetCheckboxValue( nRow, ePsy ) );
-        list.AddBool( "Contaminated", GetCheckboxValue( nRow, eContaminated ) );
-        if( GetComboValue< E_HumanState >( nRow, eState ) == eHumanState_Injured )
+        list.AddBool( "MentallyWounded", GetCheckedState( row, ePsy ) );
+        list.AddBool( "Contaminated", GetCheckedState( row, eContaminated ) );
+        if( GetEnumData< E_HumanState >( row, eState ) == eHumanState_Injured )
         {
             actions::parameters::ParameterList& currentInjury = injuries.AddList( "Injury 0" ); // $$$$ ABR 2011-07-25: Waiting story 660
             currentInjury.AddIdentifier( "ID", 0 );
-            currentInjury.AddParameter( *new actions::parameters::Enumeration( GetEnumOrderParameter( eInjuries ), GetComboValue< E_InjuriesSeriousness >( nRow, eInjuries ) ) );
+            currentInjury.AddParameter( *new actions::parameters::Enumeration( GetEnumOrderParameter( eInjuries ), GetEnumData< E_InjuriesSeriousness >( row, eInjuries ) ) );
         }
     }
-
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );

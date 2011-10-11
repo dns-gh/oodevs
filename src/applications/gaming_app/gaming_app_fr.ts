@@ -3211,6 +3211,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>UnitStateTableResource</name>
     <message>
+        <source>Maximal capacity</source>
+        <translation>Capacité maximale</translation>
+    </message>
+    <message>
         <source>Change dotations</source>
         <translation>Modifier les dotations</translation>
     </message>

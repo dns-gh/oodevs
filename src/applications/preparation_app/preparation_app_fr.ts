@@ -1778,6 +1778,21 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
+    <name>UnitStateTableResource</name>
+    <message>
+        <source>Default capacity</source>
+        <translation>Capacité initiale</translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation>Ajouter une ressource</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation>Supprimer la ressource</translation>
+    </message>
+</context>
+<context>
     <name>UserProfileControls</name>
     <message>
         <source>Control</source>

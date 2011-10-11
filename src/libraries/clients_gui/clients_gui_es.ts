@@ -1649,7 +1649,15 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::UnitStateTableCrew</name>
     <message>
+        <source>Rank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Injury seriousness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1657,7 +1665,15 @@ Voulez-vous le supprimer?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Mentally injured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Contaminated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1672,25 +1688,13 @@ Voulez-vous le supprimer?</translation>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Injury seriousness</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mentally injured</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rank</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>gui::UnitStateTableEquipment</name>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>State</source>
         <translation type="unfinished"></translation>
@@ -1699,13 +1703,13 @@ Voulez-vous le supprimer?</translation>
         <source>Breakdown</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Equipments</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>gui::UnitStateTableResource</name>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Category</source>
         <translation type="unfinished">Catégorie</translation>
@@ -1715,23 +1719,11 @@ Voulez-vous le supprimer?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Maximal capacity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Percentage (%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Logistic threshold (%)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default capacity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

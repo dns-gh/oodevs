@@ -19,24 +19,13 @@ using namespace gui;
 // Name: UnitStateTableEquipment constructor
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
-UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, const char* name /*= 0*/ )
-    : UnitStateTable_ABC( 0, 3, parent, name )
+UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent )
+    : UnitStateTable_ABC( parent, 3 )
 {
-    tr( "" ); // $$$$ ABR 2011-08-11: HACK: neccessaire sinon le premier appel a tr n'est pas traduit !??!?!?!?!?
-    horizontalHeader()->setLabel( eName,      tr( "Equipments" ) );
-    horizontalHeader()->setLabel( eState,     tr( "State" ) );
-    horizontalHeader()->setLabel( eBreakdown, tr( "Breakdown" ) );
-    setColumnReadOnly( eName, true );
-    setColumnStretchable( eName,      true );
-    setColumnStretchable( eBreakdown, true );
-    setSelectionMode( NoSelection );
-    setFocusStyle( FollowStyle );
-
-    Populate( eEquipmentState_RepairableWithEvacuation, limitedStates_ );
-    Populate( eEquipmentState_InMaintenance, selectionableStates_ );
-    Populate( eNbrEquipmentState, readOnlyStates_ );
-
-    connect( this, SIGNAL( valueChanged( int, int ) ), SLOT( OnValueChanged( int, int ) ) );
+    horizontalHeaders_ << tr( "Equipments" )
+                       << tr( "State" )
+                       << tr( "Breakdown" );
+    connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnItemChanged( QStandardItem* ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,13 +38,23 @@ UnitStateTableEquipment::~UnitStateTableEquipment()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitStateTableEquipment::onValueChanged
-// Created: ABR 2011-02-25
+// Name: UnitStateTableEquipment::Purge
+// Created: ABR 2011-10-11
 // -----------------------------------------------------------------------------
-void UnitStateTableEquipment::OnValueChanged( int row, int col )
+void UnitStateTableEquipment::Purge()
 {
-    if( col == eState )
-        item( row, eBreakdown )->setEnabled( GetComboValue< E_EquipmentState >( row, eState ) == eEquipmentState_RepairableWithEvacuation );
+    UnitStateTable_ABC::Purge();
+    delegate_.Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableEquipment::OnItemChanged
+// Created: ABR 2011-10-07
+// -----------------------------------------------------------------------------
+void UnitStateTableEquipment::OnItemChanged( QStandardItem* item )
+{
+    if( item && item->column() == eState )
+        SetEnabled( item->row(), eBreakdown, GetEnumData< E_EquipmentState >( item->row(), eState ) == eEquipmentState_RepairableWithEvacuation );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,14 +65,22 @@ void UnitStateTableEquipment::AddLines( const QString& name, int size, E_Equipme
 {
     if( !currentBreakdowns.empty() && ( state != eEquipmentState_RepairableWithEvacuation || static_cast< int >( currentBreakdowns.size() ) != size ) )
         throw std::runtime_error( __FUNCTION__ " Bad amount of breakdowns." );
+    if( !size )
+        return;
+    if( !breakdowns.empty() )
+        delegate_.AddComboBox( dataModel_.rowCount(), dataModel_.rowCount() + size - 1, eBreakdown, eBreakdown, breakdowns );
     for( int i = 0; i < size; ++i )
     {
-        unsigned int nRow = numRows();
-        insertRows( nRow );
-        setText( nRow, eName, name );
+        unsigned int row = dataModel_.rowCount();
+        AddItem( row, eName, name, name );
+
+        unsigned int currentIndex = currentBreakdowns.empty() ? 0 : currentBreakdowns[ i ];
+        if( currentIndex < static_cast< unsigned int >( breakdowns.size() ) )
+            AddItem( row, eBreakdown, breakdowns[ currentIndex ], currentIndex, Qt::ItemIsEditable );
+
         bool isReadOnly = state == eEquipmentState_InMaintenance || state == eEquipmentState_Prisonner;
-        AddCombo< E_EquipmentState >( nRow, eState, state, isReadOnly ? readOnlyStates_ : ( breakdowns.size() <= 1 ) ? limitedStates_ : selectionableStates_, !isReadOnly );
-        AddCombo< unsigned int >( nRow, eBreakdown, currentBreakdowns.empty() ? 0 : currentBreakdowns[ i ], breakdowns, !isReadOnly );
-        OnValueChanged( nRow, eState );
+        AddItem( row, eState, tools::ToString( state ), static_cast< int >( state ), Qt::ItemIsEditable );
+        if( !isReadOnly )
+            delegate_.AddComboBox( row, row, eState, eState, ( breakdowns.size() <= 1 ) ? eEquipmentState_RepairableWithEvacuation : eEquipmentState_InMaintenance );
     }
 }

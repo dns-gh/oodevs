@@ -11,9 +11,10 @@
 #define __gui_UnitStateTable_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include <Qt3Support/q3table.h>
+//#include <Qt3Support/q3table.h>
 #include "clients_kernel/Tools.h"
 #include "ComboTableItem.h"
+#include "CommonDelegate.h"
 
 namespace kernel
 {
@@ -22,19 +23,20 @@ namespace kernel
 
 namespace gui
 {
+
 // =============================================================================
 /** @class  UnitStateTable_ABC
     @brief  UnitStateTable_ABC
 */
 // Created: ABR 2011-07-05
 // =============================================================================
-class UnitStateTable_ABC : public Q3Table
+class UnitStateTable_ABC : public QTableView
                          , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateTable_ABC( int numRows, int numCols, QWidget* parent, const char* name = 0 );
+             UnitStateTable_ABC( QWidget* parent, int numCols );
     virtual ~UnitStateTable_ABC();
     //@}
 
@@ -49,64 +51,39 @@ public:
     //@{
     virtual void Purge();
     void RecursiveLoad( kernel::Entity_ABC& selected );
+    void SetReadOnly( bool readOnly );
+    bool IsReadOnly() const;
     //@}
 
 protected:
     //! @name Helpers
     //@{
-    template< typename Enum >
-    void Populate( Enum size, QStringList& content ) const;
+    template< typename T >
+    void AddItem( int row, int col, QString text, T value, Qt::ItemFlags flags = 0  );
 
     template< typename T >
-    void AddCombo( unsigned int nRow, unsigned int nColumn, T value, const QStringList& contents, bool editable = true );
+    void SetData( int row, int col, QString text, T value );
+    void SetEnabled( int row, int col, bool enabled );
+    void SetCheckedState( int row, int col, bool checked );
 
+    QVariant GetUserData( int row, int col ) const;
+    QString GetDisplayData( int row, int col ) const;
     template< typename T >
-    T GetComboValue( unsigned int nRow, unsigned int nColumn ) const;
-
-    template< typename T >
-    T GetNumericValue( unsigned int nRow, unsigned int nColumn ) const;
-
-    bool GetCheckboxValue( unsigned int nRow, unsigned int nColumn) const;
+    T GetEnumData( int row, int col ) const;
+    bool GetCheckedState( int row, int col ) const;
     //@}
 
 protected:
     //! @name Data Members
     //@{
-    bool readOnly_;
+    QStandardItemModel    dataModel_;
+    QSortFilterProxyModel proxyModel_;
+    CommonDelegate        delegate_;
+    QStringList           horizontalHeaders_;
     //@}
 };
 
-// -----------------------------------------------------------------------------
-// Name: UnitStateTable_ABC::Populate
-// Created: ABR 2011-07-20
-// -----------------------------------------------------------------------------
-template< typename Enum >
-void UnitStateTable_ABC::Populate( Enum size, QStringList& content ) const
-{
-    for( unsigned int i = 0; i < unsigned int( size ); ++i )
-        content << tools::ToString( static_cast< Enum >( i ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitStateTable_ABC::AddCombo
-// Created: ABR 2011-07-20
-// -----------------------------------------------------------------------------
-template< typename T >
-void UnitStateTable_ABC::AddCombo( unsigned int nRow, unsigned int nColumn, T value, const QStringList& contents, bool editable /*= true*/ )
-{
-    ComboTableItem* combo = new ComboTableItem( this, contents, ( !editable || readOnly_ ) ? Q3TableItem::Never : Q3TableItem::WhenCurrent , static_cast< int >( value ) );
-    setItem( nRow, nColumn, combo );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitStateTable_ABC::GetComboValue
-// Created: ABR 2011-07-20
-// -----------------------------------------------------------------------------
-template< typename T >
-T UnitStateTable_ABC::GetComboValue( unsigned int nRow, unsigned int nColumn ) const
-{
-    return static_cast< T >( static_cast< ComboTableItem* >( item( nRow, nColumn ) )->CurrentItem() );
-}
+#include "UnitStateTable_ABC.inl"
 
 }
 

@@ -32,7 +32,7 @@ class UnitStateTableResource : public gui::UnitStateTableResource
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableResource( const StaticModel& staticModel, QWidget* parent, const char* name = 0 );
+             UnitStateTableResource( QWidget* parent, const StaticModel& staticModel );
     virtual ~UnitStateTableResource();
     //@}
 
@@ -46,6 +46,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    virtual void contextMenuEvent( QContextMenuEvent* e );
     virtual void keyPressEvent( QKeyEvent * e );
     void AddItem( int id );
     bool IsDotationAlreadyPresent( const QString& name ) const;
@@ -55,7 +56,6 @@ private slots:
     //! @name Member data
     //@{
     void OnRemoveCurrentItem();
-    void OnRequestContextMenu( int row, int col, const QPoint& pos );
     //@}
 
 private:

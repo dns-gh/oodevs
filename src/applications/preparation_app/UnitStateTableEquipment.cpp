@@ -20,8 +20,8 @@
 // Name: UnitStateTableEquipment constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, const char* name /*= 0*/ )
-    : gui::UnitStateTableEquipment( parent, name )
+UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent )
+    : gui::UnitStateTableEquipment( parent )
 {
     // NOTHING
 }
@@ -46,12 +46,12 @@ bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
     InitialState& extension = selected.Get< InitialState >();
     if( extension.equipments_.size() == 0 )
         return false;
-    assert( extension.equipments_.size() == static_cast< unsigned int >( numRows() ) );
-    int nRow = 0;
-    for( InitialState::IT_Equipments it = extension.equipments_.begin(); it != extension.equipments_.end() && nRow < numRows(); ++it, ++nRow )
-        if( it->name_ != item( nRow, eName )->text() ||
-            it->state_ != GetComboValue< E_EquipmentState >( nRow, eState ) ||
-            it->currentBreakdown_ != GetComboValue< unsigned int >( nRow, eBreakdown ) )
+    assert( extension.equipments_.size() == static_cast< unsigned int >( dataModel_.rowCount() ) );
+    int row = 0;
+    for( InitialState::IT_Equipments it = extension.equipments_.begin(); it != extension.equipments_.end() && row < dataModel_.rowCount(); ++it, ++row )
+        if( it->name_ != GetDisplayData( row, eName ) ||
+            it->state_ != GetEnumData< E_EquipmentState >( row, eState ) ||
+            ( dataModel_.item( row, eBreakdown ) && it->currentBreakdown_ != GetUserData( row, eBreakdown ).toUInt() ) )
             return true;
     return false;
 }
@@ -65,14 +65,10 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     InitialState& extension = selected.Get< InitialState >();
     for( InitialState::CIT_Equipments it = extension.equipments_.begin(); it != extension.equipments_.end(); ++it )
-    {
-        //if( it->breakdowns_.empty() )
-        //    continue;
         if( it->state_ == eEquipmentState_RepairableWithEvacuation )
             AddLines( it->name_, 1, it->state_, it->breakdowns_, std::vector< unsigned int >( 1, it->currentBreakdown_ ) );
         else
             AddLines( it->name_, 1, it->state_, it->breakdowns_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -83,11 +79,11 @@ void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
 {
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     InitialState& extension = selected.Get< InitialState >();
-    assert( extension.equipments_.size() == static_cast< unsigned int >( numRows() ) );
-    int nRow = 0;
-    for( InitialState::IT_Equipments it = extension.equipments_.begin(); it != extension.equipments_.end(); ++it, ++nRow )
+    assert( extension.equipments_.size() == static_cast< unsigned int >( dataModel_.rowCount() ) );
+    int row = 0;
+    for( InitialState::IT_Equipments it = extension.equipments_.begin(); it != extension.equipments_.end(); ++it, ++row )
     {
-        it->state_ = GetComboValue< E_EquipmentState >( nRow, eState );
-        it->currentBreakdown_ = GetComboValue< unsigned int >( nRow, eBreakdown );
+        it->state_ = GetEnumData< E_EquipmentState >( row, eState );
+        it->currentBreakdown_ = ( dataModel_.item( row, eBreakdown ) ) ? GetUserData( row, eBreakdown ).toUInt() : 0;
     }
 }

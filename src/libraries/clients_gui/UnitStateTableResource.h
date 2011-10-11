@@ -27,7 +27,7 @@ class UnitStateTableResource : public UnitStateTable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableResource( QWidget* parent, bool forPreparation = false, const char* name = 0 );
+    explicit UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel );
     virtual ~UnitStateTableResource();
     //@}
 
@@ -46,15 +46,8 @@ protected:
 protected slots:
     //! @name Helpers
     //@{
-    void OnValueChanged( int row, int col );
+    void OnItemChanged( QStandardItem* item );
     //@}
-
-private:
-    //! @name Members Data
-    //@{
-    bool isPreparation_;
-    //@}
-
 };
 }
 

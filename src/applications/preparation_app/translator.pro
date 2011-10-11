@@ -58,6 +58,7 @@ TacticalListView.cpp \
 TemplateListView.cpp \
 TemplatesPanel.cpp \
 UnitStateDialog.cpp \
+UnitStateTableResource.cpp \
 UserProfileList.cpp \
 UserProfileControls_ABC.cpp \
 UserProfileRights_ABC.cpp \

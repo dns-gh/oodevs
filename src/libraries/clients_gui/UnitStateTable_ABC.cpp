@@ -23,12 +23,25 @@ using namespace gui;
 // Name: UnitStateTable_ABC constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTable_ABC::UnitStateTable_ABC( int numRows, int numCols, QWidget* parent, const char* name /*= 0*/ )
-    : Q3Table( numRows, numCols, parent, name )
-    , readOnly_( false )
+UnitStateTable_ABC::UnitStateTable_ABC( QWidget* parent, int numCols )
+    : QTableView( parent )
+    , dataModel_ ( parent )
+    , proxyModel_( parent )
+    , delegate_  ( parent )
 {
+    dataModel_.setColumnCount( numCols );
+    proxyModel_.setSourceModel( &dataModel_ );
+    proxyModel_.setSortRole( Qt::UserRole );
+    setModel( &proxyModel_ );
+    setItemDelegate( &delegate_ );
+
+    setSortingEnabled( true );
     setShowGrid( false );
-    setLeftMargin( 0 );
+    setAlternatingRowColors( true );
+    verticalHeader()->setVisible( false );
+    setSelectionMode( NoSelection );
+    setSelectionBehavior( SelectRows );
+    setEditTriggers( AllEditTriggers );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,8 +59,10 @@ UnitStateTable_ABC::~UnitStateTable_ABC()
 // -----------------------------------------------------------------------------
 void UnitStateTable_ABC::Purge()
 {
-    while( numRows() )
-        removeRow( numRows() - 1 );
+    dataModel_.clear();
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders_ );
+    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    horizontalHeader()->setResizeMode( 0, QHeaderView::Stretch );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,53 +82,4 @@ void UnitStateTable_ABC::RecursiveLoad( kernel::Entity_ABC& selected )
         while( it.HasMoreElements() )
             RecursiveLoad( const_cast< kernel::Entity_ABC& >( it.NextElement() ) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitStateTable_ABC::GetCheckboxValue
-// Created: ABR 2011-07-20
-// -----------------------------------------------------------------------------
-bool UnitStateTable_ABC::GetCheckboxValue( unsigned int nRow, unsigned int nColumn) const
-{
-    return static_cast< Q3CheckTableItem* >( item( nRow, nColumn ) )->isChecked();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitStateTable_ABC::GetNumericValue
-// Created: ABR 2011-07-20
-// -----------------------------------------------------------------------------
-template<>
-int UnitStateTable_ABC::GetNumericValue< int >( unsigned int nRow, unsigned int nColumn ) const
-{
-    return item( nRow, nColumn )->text().toInt();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitStateTable_ABC::GetNumericValue
-// Created: ABR 2011-07-20
-// -----------------------------------------------------------------------------
-template<>
-unsigned int UnitStateTable_ABC::GetNumericValue< unsigned int >( unsigned int nRow, unsigned int nColumn ) const
-{
-    return item( nRow, nColumn )->text().toUInt();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitStateTable_ABC::GetNumericValue
-// Created: ABR 2011-07-20
-// -----------------------------------------------------------------------------
-template<>
-float UnitStateTable_ABC::GetNumericValue< float >( unsigned int nRow, unsigned int nColumn ) const
-{
-    return item( nRow, nColumn )->text().toFloat();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitStateTable_ABC::GetNumericValue
-// Created: ABR 2011-07-20
-// -----------------------------------------------------------------------------
-template<>
-double UnitStateTable_ABC::GetNumericValue< double >( unsigned int nRow, unsigned int nColumn ) const
-{
-    return item( nRow, nColumn )->text().toDouble();
 }

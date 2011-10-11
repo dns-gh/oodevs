@@ -3211,6 +3211,11 @@ Motivo: %3
 <context>
     <name>UnitStateTableResource</name>
     <message>
+        <source>Maximal capacity</source>
+        <oldsource>Resources</oldsource>
+        <translation type="unfinished">Dotaciones</translation>
+    </message>
+    <message>
         <source>Change dotations</source>
         <translation type="unfinished"></translation>
     </message>

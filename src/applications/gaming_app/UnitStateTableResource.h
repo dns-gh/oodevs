@@ -53,7 +53,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UnitStateTableResource( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                     const kernel::Time_ABC& simulation, QWidget* parent, const char* name = 0 );
+                                     const kernel::Time_ABC& simulation, QWidget* parent );
     virtual ~UnitStateTableResource();
     //@}
 

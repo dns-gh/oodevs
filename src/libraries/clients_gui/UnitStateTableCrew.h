@@ -27,7 +27,7 @@ class UnitStateTableCrew : public UnitStateTable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableCrew( QWidget* parent, const char* name = 0 );
+    explicit UnitStateTableCrew( QWidget* parent );
     virtual ~UnitStateTableCrew();
     //@}
 
@@ -46,7 +46,7 @@ protected:
 private:
     //! @name Helpers
     //@{
-    virtual void paintCell( QPainter * p, int row, int col, const QRect & cr, bool selected, const QColorGroup & cg );
+    virtual void contextMenuEvent( QContextMenuEvent* e );
     virtual void keyPressEvent( QKeyEvent * e );
     void ComputeValues( E_HumanRank rank );
     void ComputeAllValues();
@@ -58,9 +58,8 @@ private slots:
     void AddLine( int number = 0, E_HumanRank rank = eHumanRank_Officier, E_HumanState state = eHumanState_Healthy, E_InjuriesSeriousness seriousness = eInjuriesSeriousness_U1,
                   bool psy = false, bool contaminated = false, E_HumanLocation location = eHumanLocation_Battlefield );
     void OnClearItems();
-    void OnRemoveItem();
-    void OnRequestContextMenu( int row, int col, const QPoint& pos );
-    void OnValueChanged( int row, int col );
+    void OnRemoveCurrentItem();
+    void OnItemChanged( QStandardItem* item );
     //@}
 
 private:
@@ -68,12 +67,7 @@ private:
     //@{
     std::map< E_HumanRank, int > nbrOfficersTotal_;
     std::map< E_HumanRank, int > nbrOfficersHealthy_;
-    int         currentRow_;
-
-    QStringList humanRanks_;
-    QStringList humanStates_;
-    QStringList humanLocations_;
-    QStringList injuriesSeriousness_;
+    bool                         updating_;
     //@}
 };
 

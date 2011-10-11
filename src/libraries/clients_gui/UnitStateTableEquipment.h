@@ -27,13 +27,14 @@ class UnitStateTableEquipment : public UnitStateTable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableEquipment( QWidget* parent, const char* name = 0 );
+    explicit UnitStateTableEquipment( QWidget* parent );
     virtual ~UnitStateTableEquipment();
     //@}
 
 protected:
     //! @name Helpers
     //@{
+    virtual void Purge();
     void AddLines( const QString& name, int size, E_EquipmentState state, const QStringList& breakdowns, const std::vector< unsigned int > currentBreakdowns = std::vector< unsigned int >() );
     //@}
 
@@ -46,15 +47,7 @@ protected:
 protected slots:
     //! @name Slots
     //@{
-    virtual void OnValueChanged( int row, int col );
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    QStringList limitedStates_;
-    QStringList selectionableStates_;
-    QStringList readOnlyStates_;
+    void OnItemChanged( QStandardItem* item );
     //@}
 };
 }

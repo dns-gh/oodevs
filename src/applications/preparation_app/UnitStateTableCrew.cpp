@@ -19,10 +19,10 @@
 // Name: UnitStateTableCrew constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableCrew::UnitStateTableCrew( QWidget* parent, const char* name /*= 0*/ )
-    : gui::UnitStateTableCrew( parent, name )
+UnitStateTableCrew::UnitStateTableCrew( QWidget* parent )
+    : gui::UnitStateTableCrew( parent )
 {
-    hideColumn( eLocation );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,6 +35,16 @@ UnitStateTableCrew::~UnitStateTableCrew()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UnitStateTableCrew::Purge
+// Created: ABR 2011-10-11
+// -----------------------------------------------------------------------------
+void UnitStateTableCrew::Purge()
+{
+    gui::UnitStateTableCrew::Purge();
+    hideColumn( eLocation );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UnitStateTableCrew::HasChanged
 // Created: ABR 2011-07-11
 // -----------------------------------------------------------------------------
@@ -42,21 +52,18 @@ bool UnitStateTableCrew::HasChanged( kernel::Entity_ABC& selected ) const
 {
     if( selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
         return false;
-
     InitialState& extension = selected.Get< InitialState >();
-    if( static_cast< int >( extension.crews_.size() ) != numRows() )
+    if( static_cast< int >( extension.crews_.size() ) != dataModel_.rowCount() )
         return true;
-
-    int nRow = 0;
-    for( InitialState::CIT_Crews it = extension.crews_.begin(); it != extension.crews_.end() && nRow < numRows(); ++it, ++nRow )
-        if( it->rank_ != GetComboValue< E_HumanRank >( nRow, eRank ) ||
-            it->state_ != GetComboValue< E_HumanState >( nRow, eState ) ||
-            it->currentSeriousness_ != GetComboValue< E_InjuriesSeriousness >( nRow, eInjuries ) || // $$$$ ABR 2011-07-20: Temporaire en attendant l'histoire 660
-            it->psyop_ != GetCheckboxValue( nRow, ePsy) ||
-            it->contaminated_ != GetCheckboxValue( nRow, eContaminated ) ||
-            it->number_ != GetNumericValue< unsigned int >( nRow, eNumber ) )
+    int row = 0;
+    for( InitialState::CIT_Crews it = extension.crews_.begin(); it != extension.crews_.end() && row < dataModel_.rowCount(); ++it, ++row )
+        if( it->rank_ != GetEnumData< E_HumanRank >( row, eRank ) ||
+            it->state_ != GetEnumData< E_HumanState >( row, eState ) ||
+            it->currentSeriousness_ != GetEnumData< E_InjuriesSeriousness >( row, eInjuries ) || // $$$$ ABR 2011-08-11: waiting story 660
+            it->psyop_ != GetCheckedState( row, ePsy ) ||
+            it->contaminated_ != GetCheckedState( row, eContaminated ) ||
+            it->number_ != GetUserData( row, eNumber ).toUInt() )
             return true;
-
     return false;
 }
 
@@ -71,8 +78,6 @@ void UnitStateTableCrew::Load( kernel::Entity_ABC& selected )
     assert( extension.crews_.size() > 2 );
     for( InitialState::CIT_Crews it = extension.crews_.begin(); it != extension.crews_.end(); ++it )
         MergeLine( it->rank_, it->state_, it->currentSeriousness_, it->psyop_, it->contaminated_, it->number_ );
-    for( int i = eRank; i <= eNumber; ++i )
-        adjustColumn( i );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,20 +89,20 @@ void UnitStateTableCrew::Commit( kernel::Entity_ABC& selected ) const
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     InitialState& extension = selected.Get< InitialState >();
     extension.crews_.clear();
-    for( int nRow = 0; nRow < eNbrHumanRank; ++nRow )
+    for( int row = 0; row < eNbrHumanRank; ++row )
     {
-        E_HumanRank rank = static_cast< E_HumanRank >( nRow );
-        unsigned int number = item( nRow, eNumber )->text().toUInt();
+        E_HumanRank rank = static_cast< E_HumanRank >( row );
+        unsigned int number = GetUserData( row, eNumber ).toUInt();
         extension.crews_.push_back( InitialStateCrew( rank, eHumanState_Healthy, eInjuriesSeriousness_U1, false, false, number ) );
     }
-    for( int nRow = eNbrHumanRank; nRow < numRows(); ++nRow )
+    for( int row = eNbrHumanRank; row < dataModel_.rowCount(); ++row )
     {
-        unsigned int number = GetNumericValue< unsigned int >( nRow, eNumber );
-        E_HumanRank rank = GetComboValue< E_HumanRank >( nRow, eRank );
-        E_HumanState state = GetComboValue< E_HumanState >( nRow, eState );
-        E_InjuriesSeriousness seriousness = GetComboValue< E_InjuriesSeriousness >( nRow, eInjuries );
-        bool psy = GetCheckboxValue( nRow, ePsy );
-        bool contaminated = GetCheckboxValue( nRow, eContaminated );
+        unsigned int number = GetUserData( row, eNumber ).toUInt();
+        E_HumanRank rank = GetEnumData< E_HumanRank >( row, eRank );
+        E_HumanState state = GetEnumData< E_HumanState >( row, eState );
+        E_InjuriesSeriousness seriousness = GetEnumData< E_InjuriesSeriousness >( row, eInjuries );
+        bool psy = GetCheckedState( row, ePsy );
+        bool contaminated = GetCheckedState( row, eContaminated );
         if( !number )
             continue;
         if( state == eHumanState_Healthy && !psy && !contaminated )

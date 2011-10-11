@@ -1649,6 +1649,10 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::UnitStateTableCrew</name>
     <message>
+        <source>Rank</source>
+        <translation>Grade</translation>
+    </message>
+    <message>
         <source>State</source>
         <translation>Etat</translation>
     </message>
@@ -1684,13 +1688,13 @@ Voulez-vous le supprimer?</translation>
         <source>Clear</source>
         <translation>Vider</translation>
     </message>
-    <message>
-        <source>Rank</source>
-        <translation>Grade</translation>
-    </message>
 </context>
 <context>
     <name>gui::UnitStateTableEquipment</name>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipements</translation>
+    </message>
     <message>
         <source>State</source>
         <translation>Etat</translation>
@@ -1699,13 +1703,13 @@ Voulez-vous le supprimer?</translation>
         <source>Breakdown</source>
         <translation>Panne</translation>
     </message>
-    <message>
-        <source>Equipments</source>
-        <translation>Equipements</translation>
-    </message>
 </context>
 <context>
     <name>gui::UnitStateTableResource</name>
+    <message>
+        <source>Resources</source>
+        <translation>Ressources</translation>
+    </message>
     <message>
         <source>Category</source>
         <translation>Catégorie</translation>
@@ -1715,24 +1719,12 @@ Voulez-vous le supprimer?</translation>
         <translation>Quantité</translation>
     </message>
     <message>
-        <source>Default capacity</source>
-        <translation>Capacité par défaut</translation>
-    </message>
-    <message>
-        <source>Maximal capacity</source>
-        <translation>Capacité maximale</translation>
-    </message>
-    <message>
         <source>Percentage (%)</source>
         <translation>Pourcentage (%)</translation>
     </message>
     <message>
         <source>Logistic threshold (%)</source>
         <translation>Seuil logistique (%)</translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
     </message>
 </context>
 <context>

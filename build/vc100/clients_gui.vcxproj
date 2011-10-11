@@ -2296,6 +2296,7 @@
     </CustomBuild>
     <None Include="..\..\src\libraries\clients_gui\CommonDelegate.inl" />
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl" />
+    <None Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.inl" />
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl" />
     <None Include="..\..\src\libraries\clients_gui\EntityLayer.inl" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_app6_es.ts">

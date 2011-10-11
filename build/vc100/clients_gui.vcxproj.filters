@@ -1391,6 +1391,9 @@
     <None Include="..\..\src\libraries\clients_gui\CommonDelegate.inl">
       <Filter>Source Files\Tools</Filter>
     </None>
+    <None Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.inl">
+      <Filter>Source Files\Dialogs\Unit state</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\clients_gui\HelpSystem.h">

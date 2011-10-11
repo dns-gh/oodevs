@@ -33,25 +33,34 @@ public:
     virtual ~CommonDelegate();
     //@}
 
-    //! @name QItemDelegate Operations
+    //! @name QItemDelegate operations
     //@{
     QWidget *createEditor( QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
     void setEditorData( QWidget* editor, const QModelIndex& index ) const;
     void setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const;
     void updateEditorGeometry( QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
-
-    void Purge();
     //@}
 
     //! @name Operations
     //@{
+    void Purge();
+    void SetReadOnly( bool readOnly );
+    bool IsReadOnly() const;
+    const QStringList* GetComboContent( int row, int col ) const;
+    template< typename T >
+    void SetSpinBoxMinMax( int row, int col, T min, T max );
+    //@}
+
+    //! @name Base operations
+    //@{
+    // FromRow/Col and ToRow/Col are used if value != -1
+    // LinkedRow/Col is used if value != -1
     unsigned int AddSpinBox( int fromRow, int toRow, int fromCol, int toCol,
                              int min = 0, int max = 100, int gap = 1,
                              int minLinkedRow = -1, int maxLinkedRow = -1, int minLinkedCol = -1, int maxLinkedCol = -1 );
     unsigned int AddDoubleSpinBox( int fromRow, int toRow, int fromCol, int toCol,
                                    double min = 0., double max = 100., double gap = 1., int precision = 2,
                                    int minLinkedRow = -1, int maxLinkedRow = -1, int minLinkedCol = -1, int maxLinkedCol = -1 );
-
     unsigned int AddComboBox( int fromRow, int toRow, int fromCol, int toCol,
                               QStringList stringList );
     template< typename T >
@@ -116,13 +125,15 @@ private:
 private:
     //! @name Helpers
     //@{
+    QModelIndex GetIndexFromSource( const QModelIndex& index ) const;
+
     template< typename Enum >
     void Populate( Enum size, QStringList& content ) const;
 
     template< typename T >
     std::pair< T, T > GetMinMax( const SpinBoxDescription< T >& spinbox, const QModelIndex& index ) const;
 
-    unsigned int GetNewId() const;
+    unsigned int GetNewId();
     const DelegatePosition* IsInPosition( int row, int col ) const;
     const DelegatePosition* FindPosition( int fromRow, int toRow, int fromCol, int toCol ) const;
     //@}
@@ -133,10 +144,10 @@ private:
     tools::Resolver< SpinBoxDescription< int > >    spinBoxs_;
     tools::Resolver< SpinBoxDescription< double > > doubleSpinBoxs_;
     tools::Resolver< QStringList >                  comboBoxs_;
-
     T_Positions                                     positions_;
+    bool                                            readOnly_;
 
-    static unsigned int                             currentId_;
+    unsigned int                                    currentId_;
     //@}
 };
 
