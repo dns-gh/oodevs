@@ -285,16 +285,22 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
+        const uint8 padding = 0;
         archive << callsign
-                << uniqueId
-                << objectFeature;
+                << uniqueId << padding;
+        if( callsign.str().size() % 2 )
+            archive << padding << padding;
+        archive << objectFeature;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
+        uint8 padding = 0;
         archive >> callsign
-                >> uniqueId
-                >> objectFeature;
+                >> uniqueId >> padding;
+        if( callsign.str().size() % 2 )
+            archive >> padding >> padding;
+        archive >> objectFeature;
     }
     //@}
 
@@ -505,7 +511,8 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        archive << convoyType;
+        const uint32 padding = 0;
+        archive << convoyType << padding;
         if( convoyType == 0 )
             archive << dataTransport;
         if( convoyType == 1 )
@@ -516,7 +523,8 @@ public:
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        archive >> convoyType;
+        uint32 padding = 0;
+        archive >> convoyType >> padding;
         if( convoyType == 0 )
             archive >> dataTransport;
         if( convoyType == 1 )

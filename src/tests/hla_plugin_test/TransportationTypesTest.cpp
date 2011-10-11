@@ -115,9 +115,10 @@ BOOST_FIXTURE_TEST_CASE( netn_object_definition_struct_deserialization, Serializ
 {
     const std::string callsign = "callsign";
     const std::string uniqueId = "uniqueid";
+    const unsigned int padding = sizeof( int8 );
     const NetnObjectDefinitionStruct serializedObjectDefinition( callsign, uniqueId, NetnObjectFeatureStruct() );
     const unsigned int callsignSize = sizeof( uint32 ) + callsign.size() * sizeof( int16 );
-    const unsigned int uniqueIdSize = 11 * sizeof( int8 );
+    const unsigned int uniqueIdSize = 11 * sizeof( int8 ) + padding;
     const unsigned int objectFeatureSize = sizeof( int32 );
     ::hla::Deserializer deserializer = Serialize( serializedObjectDefinition, callsignSize + uniqueIdSize + objectFeatureSize );
     NetnObjectDefinitionStruct deserializedObjectDefinition;
@@ -149,8 +150,9 @@ BOOST_FIXTURE_TEST_CASE( netn_datat_struct_deserialization, SerializationFixture
     const NetnAppointmentStruct appointment;
     const NetnAppointmentStruct finalAppointment;
     const NetnDataTStruct serializedNetnDataTStruct( objectToManage, appointment, finalAppointment );
+    const unsigned int padding = sizeof( int8 );
     const unsigned int objectToManageVectorSize = sizeof( int32 );
-    const unsigned int objectDefinitionStructSize = sizeof( int32 ) + 11 * sizeof( int8 ) + sizeof( int32 );
+    const unsigned int objectDefinitionStructSize = sizeof( int32 ) + 11 * sizeof( int8 ) + padding + sizeof( int32 );
     const unsigned int appointmentStructSize = sizeof( int64 ) + 3 * sizeof( real64 );
     ::hla::Deserializer deserializer = Serialize( serializedNetnDataTStruct, objectToManageVectorSize + 1 * objectDefinitionStructSize + 2 * appointmentStructSize );
     NetnDataTStruct deserializedNetnDataTStruct;
@@ -165,8 +167,9 @@ BOOST_FIXTURE_TEST_CASE( netn_dataed_struct_deserialization, SerializationFixtur
     objectToManage.push_back( NetnObjectDefinitionStruct() );
     const NetnAppointmentStruct appointment;
     const NetnDataEDStruct serializedNetnDataEDStruct( objectToManage, appointment );
+    const unsigned int padding = sizeof( int8 );
     const unsigned int objectToManageVectorSize = sizeof( int32 );
-    const unsigned int objectDefinitionStructSize = sizeof( int32 ) + 11 * sizeof( int8 ) + sizeof( int32 );
+    const unsigned int objectDefinitionStructSize = sizeof( int32 ) + 11 * sizeof( int8 ) + padding + sizeof( int32 );
     const unsigned int appointmentStructSize = sizeof( int64 ) + 3 * sizeof( real64 );
     ::hla::Deserializer deserializer = Serialize( serializedNetnDataEDStruct, objectToManageVectorSize + 1 * objectDefinitionStructSize + appointmentStructSize );
     NetnDataEDStruct deserializedNetnDataEDStruct;
