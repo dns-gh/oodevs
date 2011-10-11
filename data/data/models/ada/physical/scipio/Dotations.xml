@@ -1488,7 +1488,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="71" id-nature="3" logistic-supply-class="Unite tranche D" name="IED" nature="Solide" package-mass="0.05" package-size="1" package-volume="0.05" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="71" id-nature="3" ied="true" logistic-supply-class="Unite tranche D" name="IED" nature="Solide" package-mass="0.05" package-size="1" package-volume="0.05" type="Obus">
     <attritions>
       <attrition destruction="0.2" protection="CombattantProtege" repairable-with-evacuation="0.15" repairable-without-evacuation="0.25"/>
       <attrition destruction="0.1" protection="CharLourd" repairable-with-evacuation="0.05" repairable-without-evacuation="0.25"/>
@@ -2669,4 +2669,4 @@
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="148" id-nature="2" logistic-supply-class="Unite vivre" name="carburant" nature="Gasoil" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="149" id-nature="3" logistic-supply-class="Unite vivre" name="nourriture" nature="Solide" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="3449405501" -->
+<!-- signature="3709846342" -->
