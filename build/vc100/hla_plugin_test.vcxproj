@@ -160,6 +160,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\IndirectFireSenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\MunitionDetonationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoySenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoyTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteCallsignListenerTest.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationListener.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnits.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnitsVisitor.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransporters.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUnitTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUpdateFunctor.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\DeserializationTools.h" />

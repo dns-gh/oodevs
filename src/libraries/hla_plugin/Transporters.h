@@ -10,9 +10,9 @@
 #ifndef plugins_hla_Transporters_h
 #define plugins_hla_Transporters_h
 
+#include "Transporters_ABC.h"
 #include "AgentListener_ABC.h"
 #include "EventListener_ABC.h"
-#include <geometry/Types.h>
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
@@ -23,7 +23,6 @@ namespace hla
     class AgentSubject_ABC;
     class CallsignResolver_ABC;
     class SideChecker_ABC;
-    class TransportedUnitsVisitor_ABC;
 
 // =============================================================================
 /** @class  Transporters
@@ -31,7 +30,8 @@ namespace hla
 */
 // Created: SLI 2011-10-11
 // =============================================================================
-class Transporters : private AgentListener_ABC
+class Transporters : public Transporters_ABC
+                   , private AgentListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    void Apply( const std::string& transportedUnitUniqueId, const geometry::Point2d& embarkmentPoint, TransportedUnitsVisitor_ABC& visitor ) const;
+    virtual void Apply( const std::string& transportedUnitUniqueId, const geometry::Point2d& embarkmentPoint, TransportedUnitsVisitor_ABC& visitor ) const;
     //@}
 
 private:

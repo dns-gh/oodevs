@@ -18,7 +18,7 @@
 
 using namespace plugins::hla;
 
-BOOST_AUTO_TEST_CASE( netn_reques_convoy_sender_sends_request_when_receiving_convoy_event )
+BOOST_AUTO_TEST_CASE( netn_request_convoy_sender_sends_request_when_receiving_convoy_event )
 {
     MockContextFactory contextFactory;
     MockTransportationController controller;
