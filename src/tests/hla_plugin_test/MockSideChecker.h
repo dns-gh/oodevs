@@ -7,30 +7,27 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_MockCallsignResolver_h
-#define plugins_hla_MockCallsignResolver_h
+#ifndef plugins_hla_MockSideChecker_h
+#define plugins_hla_MockSideChecker_h
 
-#include "hla_plugin/CallsignResolver_ABC.h"
+#include "hla_plugin/SideChecker_ABC.h"
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  MockCallsignResolver
-    @brief  Mock callsign resolver
+/** @class  MockSideChecker
+    @brief  Mock Side checker
 */
-// Created: SLI 2011-10-10
+// Created: SLI 2011-10-11
 // =============================================================================
-MOCK_BASE_CLASS( MockCallsignResolver, CallsignResolver_ABC )
+MOCK_BASE_CLASS( MockSideChecker, SideChecker_ABC )
 {
-    MOCK_METHOD( Add, 3 )
-    MOCK_METHOD( ResolveCallsign, 1 )
-    MOCK_METHOD( ResolveUniqueId, 1 )
-    MOCK_METHOD( ResolveSimulationIdentifier, 1 )
+    MOCK_METHOD( AreSameSide, 2 )
 };
 
 }
 }
 
-#endif // plugins_hla_MockCallsignResolver_h
+#endif // plugins_hla_MockSideChecker_h

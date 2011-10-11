@@ -139,6 +139,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transportation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationFacade.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Transporters.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnicodeString.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UniqueId.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AgentController.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteHlaObjectFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ResponseObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SideChecker_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SilentEntity.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SimulationFacade.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Spatial.h" />
@@ -232,6 +234,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportedUnitsVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportedUnits_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Transporters.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnicodeString.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UniqueId.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Agent_ABC.h" />

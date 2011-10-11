@@ -38,6 +38,7 @@ CallsignResolver::~CallsignResolver()
 void CallsignResolver::Add( unsigned long simulationIdentifier, const std::string& callsign, const std::string& uniqueId )
 {
     identifiers_[ simulationIdentifier ] = std::make_pair( callsign, uniqueId );
+    simulationIdentifiers_[ uniqueId ] = simulationIdentifier;
 }
 
 // -----------------------------------------------------------------------------
@@ -62,4 +63,16 @@ std::string CallsignResolver::ResolveUniqueId( unsigned long simulationIdentifie
     if( identifier == identifiers_.end() )
         throw std::runtime_error( "Unknown simulation identifier '" + boost::lexical_cast< std::string >( simulationIdentifier ) + "'" );
     return identifier->second.second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CallsignResolver::ResolveSimulationIdentifier
+// Created: SLI 2011-10-11
+// -----------------------------------------------------------------------------
+unsigned long CallsignResolver::ResolveSimulationIdentifier( const std::string& uniqueId ) const
+{
+    T_SimulationIdentifiers::const_iterator identifier = simulationIdentifiers_.find( uniqueId );
+    if( identifier == simulationIdentifiers_.end() )
+        throw std::runtime_error( "Unknown unique identifier '" + uniqueId + "'" );
+    return identifier->second;
 }

@@ -179,6 +179,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationControllerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationTypesTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportersTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnicodeStringTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UniqueIdTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnitTeleporterTest.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockResponseObserver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassador.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassadorFactory.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSideChecker.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSimulationPublisher.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSubordinates.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTeam.h" />

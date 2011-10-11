@@ -37,6 +37,7 @@ public:
     virtual void Add( unsigned long simulationIdentifier, const std::string& callsign, const std::string& uniqueId );
     virtual std::string ResolveCallsign( unsigned long simulationIdentifier ) const;
     virtual std::string ResolveUniqueId( unsigned long simulationIdentifier ) const;
+    virtual unsigned long ResolveSimulationIdentifier( const std::string& uniqueId ) const;
     //@}
 
 private:
@@ -44,11 +45,13 @@ private:
     //@{
     typedef std::pair< std::string, std::string > T_NetnAttributes;
     typedef std::map< unsigned long, T_NetnAttributes > T_Identifiers;
+    typedef std::map< std::string, unsigned long > T_SimulationIdentifiers;
     //@}
 
     //! @name Member data
     //@{
     T_Identifiers identifiers_;
+    T_SimulationIdentifiers simulationIdentifiers_;
     //@}
 };
 

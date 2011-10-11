@@ -232,6 +232,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Transporters.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -536,6 +539,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SideChecker_ABC.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Transporters.h">
+      <Filter>Source Files\Transportation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
