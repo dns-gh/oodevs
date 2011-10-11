@@ -1882,9 +1882,10 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
         PHY_ComposantePion& composante = **it;
         if( &composante.GetType() == &composanteType )
         {
-            while( stateIt->second == 0 )
+            while( stateIt != repartition.end() && stateIt->second == 0 )
                 ++stateIt;
-
+            if( stateIt == repartition.end() )
+                return;
             if( stateIt->first == &PHY_ComposanteState::repairableWithEvacuation_ )
             {
                 if( !message.list( 7 ).list( stateIt->second - 1 ).has_identifier() )
