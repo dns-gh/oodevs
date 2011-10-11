@@ -40,9 +40,13 @@ namespace hla
     class TransportationController_ABC;
     template< typename T > class InteractionSender_ABC;
     class NetnRequestConvoySender;
+    class NetnOfferConvoySender;
+    class Transporters_ABC;
+
 namespace interactions
 {
     struct NetnRequestConvoy;
+    struct NetnOfferConvoy;
 }
 
 // =============================================================================
@@ -59,7 +63,7 @@ public:
              TransportationFacade( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
                                    tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                    const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
-                                   Federate_ABC& federate, const ContextFactory_ABC& contextFactory );
+                                   Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters );
     virtual ~TransportationFacade();
     //@}
 
@@ -69,6 +73,8 @@ private:
     std::auto_ptr< TransportationController_ABC > pTransportationController_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnRequestConvoy > > pNetnRequestConvoy_;
     std::auto_ptr< NetnRequestConvoySender > pNetnRequestConvoySender_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoy_;
+    std::auto_ptr< NetnOfferConvoySender > pNetnOfferConvoySender_;
     //@}
 };
 

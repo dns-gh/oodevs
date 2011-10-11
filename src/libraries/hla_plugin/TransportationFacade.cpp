@@ -12,6 +12,8 @@
 #include "TransportationController.h"
 #include "NetnRequestConvoy.h"
 #include "NetnRequestConvoySender.h"
+#include "NetnOfferConvoy.h"
+#include "NetnOfferConvoySender.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
@@ -23,10 +25,12 @@ using namespace plugins::hla;
 TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
                                             tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                             const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
-                                            Federate_ABC& federate, const ContextFactory_ABC& contextFactory )
+                                            Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters )
     : pTransportationController_( new TransportationController( xis, missionResolver, controller, callsignResolver, subordinates ) )
     , pNetnRequestConvoy_       ( new NetnRequestConvoy( federate ) )
     , pNetnRequestConvoySender_ ( new NetnRequestConvoySender( *pTransportationController_, *pNetnRequestConvoy_, contextFactory ) )
+    , pNetnOfferConvoy_         ( new NetnOfferConvoy( federate ) )
+    , pNetnOfferConvoySender_   ( new NetnOfferConvoySender( *pNetnOfferConvoy_, transporters ) )
 {
     // NOTHING
 }

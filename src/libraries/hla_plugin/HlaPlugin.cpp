@@ -29,6 +29,8 @@
 #include "CallsignResolver.h"
 #include "Subordinates.h"
 #include "MissionResolver.h"
+#include "SideChecker.h"
+#include "Transporters.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -99,6 +101,8 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pSimulationFacade_          ( 0 )
     , pRemoteAgentResolver_       ( 0 )
     , pInteractionsFacade_        ( 0 )
+    , pSideChecker_               ( 0 )
+    , pTransporters_              ( 0 )
     , pTransportationFacade_      ( 0 )
     , pStepper_                   ( 0 )
 {
@@ -133,7 +137,9 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, publisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pInteractionsFacade_.reset( new InteractionsFacade( *pFederate_, publisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ) ) );
-            pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pFederate_, *pContextFactory_ ) : 0 );
+            pSideChecker_.reset( new SideChecker( *pSubject_, *pFederate_, *pRemoteAgentResolver_ ) );
+            pTransporters_.reset( new Transporters( *pSubject_, *pCallsignResolver_, *pSideChecker_ ) );
+            pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pFederate_, *pContextFactory_, *pTransporters_ ) : 0 );
             pStepper_.reset( new Stepper( *pXis_, *pMessageController_, publisher_ ) );
             pSubject_->Visit( dynamicModel_ );
         }

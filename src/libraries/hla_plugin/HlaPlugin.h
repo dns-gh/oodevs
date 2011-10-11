@@ -58,10 +58,12 @@ namespace hla
     class LocalAgentResolver_ABC;
     class RemoteAgentResolver_ABC;
     class CallsignResolver_ABC;
+    class SideChecker_ABC;
     class ComponentTypes_ABC;
     class ContextFactory_ABC;
     class MissionResolver_ABC;
     class Subordinates_ABC;
+    class Transporters_ABC;
     class SimulationFacade;
     class InteractionsFacade;
     class TransportationFacade;
@@ -125,6 +127,8 @@ private:
     std::auto_ptr< SimulationFacade > pSimulationFacade_;
     std::auto_ptr< RemoteAgentResolver_ABC > pRemoteAgentResolver_;
     std::auto_ptr< InteractionsFacade > pInteractionsFacade_;
+    std::auto_ptr< SideChecker_ABC > pSideChecker_;
+    std::auto_ptr< Transporters_ABC > pTransporters_;
     std::auto_ptr< TransportationFacade > pTransportationFacade_;
     std::auto_ptr< Stepper > pStepper_;
     //@}
