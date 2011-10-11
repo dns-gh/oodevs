@@ -88,7 +88,7 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const Co
     QAction* action = new QAction( this );
     planningBtn->addAction( action );
     action->setCheckable( true );
-    connect( planningBtn, SIGNAL( QAction::triggered() ), this, SIGNAL( PlanificationModeChange() ) );
+    connect( action, SIGNAL( triggered() ), this, SIGNAL( PlanificationModeChange() ) );
 
     // Purge
     CreateToolButton( tr( "Delete recorded actions" ), MAKE_PIXMAP( trash2 ), SLOT( Purge() ) );
