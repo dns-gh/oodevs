@@ -41,6 +41,26 @@ struct EventIdentifierStruct
     Omt13String issuingObjectIdentifier;
 };
 
+struct ListOfTransporters
+{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        int32 size = listOfTransporters.size();
+        archive << size
+                << listOfTransporters;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        int32 size = 0;
+        archive >> size;
+        listOfTransporters.resize( size );
+        archive >> listOfTransporters;
+    }
+    std::vector< NetnObjectDefinitionStruct > listOfTransporters;
+};
+
 struct MunitionDetonation
 {
     uint32 articulatedPartData;
@@ -67,6 +87,19 @@ struct NetnRequestConvoy
     int8 serviceType;
     int64 requestTimeOut;
     NetnTransportStruct transportData;
+};
+
+struct NetnOfferConvoy
+{
+    int32 isOffering;
+    int64 requestTimeOut;
+    NetnEventIdentifier serviceId;
+    UnicodeString consumer;
+    UnicodeString provider;
+    int8 serviceType;
+    NetnTransportStruct transportData;
+    int32 offerType;
+    ListOfTransporters listOfTransporters;
 };
 }
 }

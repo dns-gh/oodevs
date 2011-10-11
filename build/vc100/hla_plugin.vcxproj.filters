@@ -235,6 +235,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transporters.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoy.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -544,6 +547,9 @@
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\Transporters.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoy.h">
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
   </ItemGroup>
