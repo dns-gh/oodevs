@@ -94,6 +94,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatCreater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatDisengager.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\CallsignResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ComponentTypes.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ContextFactory.cpp" />
@@ -162,6 +163,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatCreater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatDisengager.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\CallsignResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\CallsignResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilders.h" />

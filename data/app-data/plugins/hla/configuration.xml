@@ -5,6 +5,9 @@
         <component>component.xml</component>
         <munition>munition.xml</munition>
     </mappings>
+    <types>
+        <automat>MBT squadron</automat>
+    </types>
     <missions>
         <transport>Common - request transport</transport>
     </missions>

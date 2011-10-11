@@ -13,11 +13,13 @@
 #include "MockResolver.h"
 #include "MockTeam.h"
 #include "MockKnowledgeGroup.h"
+#include "MockAutomatTypeResolver.h"
 #include "protocol/Simulation.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
 
@@ -31,11 +33,17 @@ namespace
     {
     public:
         Fixture()
-            : formationCreationHandler( 0 )
+            : xis                     ( "<configuration>"
+                                        "    <types>"
+                                        "        <automat>automat type name</automat>"
+                                        "    </types>"
+                                        "</configuration>")
+            , formationCreationHandler( 0 )
             , party                   ( 42 )
             , formation               ( 43 )
             , team                    ( party )
         {
+            xis >> xml::start( "configuration" );
             MOCK_EXPECT( formationCreation, Register ).once().with( mock::retrieve( formationCreationHandler ) );
             MOCK_EXPECT( formationCreation, Unregister ).once();
         }
@@ -64,9 +72,10 @@ namespace
             message.mutable_formation()->set_id( formation );
             return message;
         }
+        xml::xistringstream xis;
         MockContextHandler< sword::FormationCreation > formationCreation;
         MockContextHandler< sword::AutomatCreation > automatCreation;
-        tools::MockResolver< kernel::AutomatType > automatResolver;
+        MockAutomatTypeResolver automatResolver;
         tools::MockResolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroupResolver;
         ResponseObserver_ABC< sword::FormationCreation >* formationCreationHandler;
         T_KnowledgeGroups groups;
@@ -79,15 +88,15 @@ namespace
 BOOST_FIXTURE_TEST_CASE( automat_creater_checks_remote_automat_type_id_existence, Fixture )
 {
     formationCreation.reset();
-    MOCK_EXPECT( automatResolver, Find ).once().returns( 0 );
-    BOOST_CHECK_THROW( AutomatCreater automatCreater( formationCreation, automatCreation, automatResolver, knowledgeGroupResolver ), std::runtime_error );
+    MOCK_EXPECT( automatResolver, Resolve ).once().returns( 0 );
+    BOOST_CHECK_THROW( AutomatCreater automatCreater( xis, formationCreation, automatCreation, automatResolver, knowledgeGroupResolver ), std::runtime_error );
 }
 
 BOOST_FIXTURE_TEST_CASE( automat_creater_sends_automat_creation_message_when_receiving_formation_creation, Fixture )
 {
-    MOCK_EXPECT( automatResolver, Find ).once().returns( reinterpret_cast< kernel::AutomatType* >( 1 ) );
+    MOCK_EXPECT( automatResolver, Resolve ).once().with( "automat type name" ).returns( 42u );
     ConfigureKnowledgeGroups();
-    AutomatCreater automatCreater( formationCreation, automatCreation, automatResolver, knowledgeGroupResolver );
+    AutomatCreater automatCreater( xis, formationCreation, automatCreation, automatResolver, knowledgeGroupResolver );
     BOOST_REQUIRE( formationCreationHandler );
     simulation::UnitMagicAction actual;
     MOCK_EXPECT( automatCreation, Send ).once().with( mock::retrieve( actual ), mock::any );
@@ -96,7 +105,7 @@ BOOST_FIXTURE_TEST_CASE( automat_creater_sends_automat_creation_message_when_rec
     BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::automat_creation );
     BOOST_CHECK_EQUAL( action.tasker().formation().id(), formation );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
-    BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), 230u );  // $$$$ _RC_ SLI 2011-09-07: hardcoded
+    BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), 42u );
     BOOST_CHECK_EQUAL( action.parameters().elem( 1 ).value( 0 ).identifier(), party );
     BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "HLA distant automat" );
 }

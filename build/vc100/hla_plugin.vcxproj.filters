@@ -229,6 +229,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\MissionResolver.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.cpp">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -526,6 +529,12 @@
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
   </ItemGroup>

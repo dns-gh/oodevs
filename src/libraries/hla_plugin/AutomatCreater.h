@@ -11,12 +11,11 @@
 #define plugins_hla_AutomatCreater_h
 
 #include "ResponseObserver_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include <map>
 
-namespace kernel
+namespace tools
 {
-    class AutomatType;
+    template< typename T, typename Identifier > class Resolver_ABC;
 }
 
 namespace dispatcher
@@ -30,11 +29,17 @@ namespace sword
     class AutomatCreation;
 }
 
+namespace xml
+{
+    class xisubstream;
+}
+
 namespace plugins
 {
 namespace hla
 {
     template< typename ResponseMessage > class ContextHandler_ABC;
+    class AutomatTypeResolver_ABC;
 
 // =============================================================================
 /** @class  AutomatCreater
@@ -47,10 +52,11 @@ class AutomatCreater : private ResponseObserver_ABC< sword::FormationCreation >
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatCreater( ContextHandler_ABC< sword::FormationCreation >& formationCreation,
+             AutomatCreater( xml::xisubstream xis,
+                             ContextHandler_ABC< sword::FormationCreation >& formationCreation,
                              ContextHandler_ABC< sword::AutomatCreation >& automatCreation,
-                             const tools::Resolver_ABC< kernel::AutomatType >& automatTypes,
-                             const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC >& knowledgeGroups );
+                             const AutomatTypeResolver_ABC& automatTypeResolver,
+                             const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC, unsigned long >& knowledgeGroups );
     virtual ~AutomatCreater();
     //@}
 
