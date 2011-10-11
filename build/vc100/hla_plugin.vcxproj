@@ -133,6 +133,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteSurfaceVessel.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\SideChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SilentEntity.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SimulationFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Spatial.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteHlaObjectFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ResponseObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SideChecker.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SideChecker_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SilentEntity.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SimulationFacade.h" />
