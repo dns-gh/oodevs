@@ -10,7 +10,7 @@
 #ifndef plugins_hla_TransportationFacade_h
 #define plugins_hla_TransportationFacade_h
 
-#include <boost/noncopyable.hpp>
+#include <hla/InteractionNotification_ABC.h>
 #include <memory>
 
 namespace xml
@@ -55,7 +55,7 @@ namespace interactions
 */
 // Created: SLI 2011-10-10
 // =============================================================================
-class TransportationFacade : private boost::noncopyable
+class TransportationFacade : private ::hla::InteractionNotification_ABC< interactions::NetnRequestConvoy >
 {
 public:
     //! @name Constructors/Destructor
@@ -65,6 +65,12 @@ public:
                                    const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
                                    Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters );
     virtual ~TransportationFacade();
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void Receive( interactions::NetnRequestConvoy& request );
     //@}
 
 private:

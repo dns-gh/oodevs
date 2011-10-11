@@ -23,8 +23,8 @@ using namespace plugins::hla;
 // Name: NetnRequestConvoy constructor
 // Created: SLI 2011-10-06
 // -----------------------------------------------------------------------------
-NetnRequestConvoy::NetnRequestConvoy( Federate_ABC& federate )
-    : pInteraction_( new ::hla::Interaction< interactions::NetnRequestConvoy >( *this ) )
+NetnRequestConvoy::NetnRequestConvoy( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnRequestConvoy >& receiver )
+    : pInteraction_( new ::hla::Interaction< interactions::NetnRequestConvoy >( receiver ) )
 {
     pInteraction_->Register( "ServiceID"     , ::hla::CreateParameter( &interactions::NetnRequestConvoy::serviceId ) );
     pInteraction_->Register( "Consumer"      , ::hla::CreateParameter( &interactions::NetnRequestConvoy::consumer ) );
@@ -32,7 +32,7 @@ NetnRequestConvoy::NetnRequestConvoy( Federate_ABC& federate )
     pInteraction_->Register( "ServiceType"   , ::hla::CreateParameter( &interactions::NetnRequestConvoy::serviceType ) );
     pInteraction_->Register( "RequestTimeOut", ::hla::CreateParameter( &interactions::NetnRequestConvoy::requestTimeOut ) );
     pInteraction_->Register( "TransportData" , ::hla::CreateParameter( &interactions::NetnRequestConvoy::transportData ) );
-    federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_RequestService.NETN_RequestConvoy" ), *pInteraction_, true, false );
+    federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_RequestService.NETN_RequestConvoy" ), *pInteraction_, true, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,13 +51,4 @@ NetnRequestConvoy::~NetnRequestConvoy()
 void NetnRequestConvoy::Send( const interactions::NetnRequestConvoy& interaction )
 {
     pInteraction_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnRequestConvoy::Receive
-// Created: SLI 2011-10-06
-// -----------------------------------------------------------------------------
-void NetnRequestConvoy::Receive( interactions::NetnRequestConvoy& /*interaction*/ )
-{
-    throw std::runtime_error( __FUNCTION__ " unimplemented function" );
 }

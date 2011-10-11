@@ -11,7 +11,6 @@
 #define plugins_hla_NetnRequestConvoy_h
 
 #include "InteractionSender_ABC.h"
-#include <hla/InteractionNotification_ABC.h>
 
 namespace hla
 {
@@ -37,24 +36,17 @@ namespace interactions
 // Created: SLI 2011-10-06
 // =============================================================================
 class NetnRequestConvoy : public InteractionSender_ABC< interactions::NetnRequestConvoy >
-                        , private ::hla::InteractionNotification_ABC< interactions::NetnRequestConvoy >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NetnRequestConvoy( Federate_ABC& federate );
+             NetnRequestConvoy( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnRequestConvoy >& receiver );
     virtual ~NetnRequestConvoy();
     //@}
 
     //! @name Operations
     //@{
     virtual void Send( const interactions::NetnRequestConvoy& interaction );
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void Receive( interactions::NetnRequestConvoy& interaction );
     //@}
 
 private:

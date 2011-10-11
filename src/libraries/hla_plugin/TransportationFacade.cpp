@@ -27,7 +27,7 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
                                             const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
                                             Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters )
     : pTransportationController_( new TransportationController( xis, missionResolver, controller, callsignResolver, subordinates ) )
-    , pNetnRequestConvoy_       ( new NetnRequestConvoy( federate ) )
+    , pNetnRequestConvoy_       ( new NetnRequestConvoy( federate, *this ) )
     , pNetnRequestConvoySender_ ( new NetnRequestConvoySender( *pTransportationController_, *pNetnRequestConvoy_, contextFactory ) )
     , pNetnOfferConvoy_         ( new NetnOfferConvoy( federate ) )
     , pNetnOfferConvoySender_   ( new NetnOfferConvoySender( *pNetnOfferConvoy_, transporters ) )
@@ -42,4 +42,13 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
 TransportationFacade::~TransportationFacade()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationFacade::Receive
+// Created: SLI 2011-10-11
+// -----------------------------------------------------------------------------
+void TransportationFacade::Receive( interactions::NetnRequestConvoy& request )
+{
+    pNetnOfferConvoySender_->Receive( request );
 }
