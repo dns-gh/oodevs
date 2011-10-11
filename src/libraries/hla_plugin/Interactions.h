@@ -101,6 +101,16 @@ struct NetnOfferConvoy
     int32 offerType;
     ListOfTransporters listOfTransporters;
 };
+
+struct NetnRejectOfferConvoy
+{
+    NetnEventIdentifier serviceId;
+    UnicodeString consumer;
+    UnicodeString provider;
+    int8 serviceType;
+    std::string reason;
+};
+
 }
 }
 }

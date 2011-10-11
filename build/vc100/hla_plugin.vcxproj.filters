@@ -244,6 +244,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\SideChecker.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRejectOfferConvoy.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -566,6 +569,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\SideChecker.h">
       <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRejectOfferConvoy.h">
+      <Filter>Source Files\Transportation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
