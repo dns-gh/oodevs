@@ -105,6 +105,9 @@ void ADN_Tools::CheckConnectorVector( const T_ConnectorVector& vConnectors, uint
     assert( vConnectors.size() == nExpectedSize );
     for( uint n = 0; n < nExpectedSize; ++n )
         assert( vConnectors[n] != 0 );
+#else
+    ( void )vConnectors;
+    ( void )nExpectedSize;
 #endif
     return;
 }

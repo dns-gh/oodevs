@@ -147,6 +147,8 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     ADN_Objects_Data::ADN_CapacityInfos_Attrition& attrition = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Attrition >( ADN_Objects_GUI::eAttritionCapacityPresent );
     vItemConnectors_[ ADN_Objects_GUI::eAttritionDotation ]->Connect( &attrition.ammoCategory_, bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eAttritionCapacityUseDotation ]->Connect( &attrition.useAmmo_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eAttritionCapacitySurface ]->Connect( &attrition.attritionSurface_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eAttritionCapacityPh ]->Connect( &attrition.ph_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction& urbanDestruction = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction >( ADN_Objects_GUI::eUrbanDestructionCapacityPresent );
     vItemConnectors_[ ADN_Objects_GUI::eUrbanDestructionCapacity_Data ]->Connect( &urbanDestruction.modifUrbanBlocks_, bConnect );

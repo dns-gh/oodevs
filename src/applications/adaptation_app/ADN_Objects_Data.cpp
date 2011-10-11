@@ -398,19 +398,25 @@ void ADN_Objects_Data::ADN_CapacityInfos_Trafficability::WriteArchive( xml::xost
 //@{
 
 ADN_Objects_Data::ADN_CapacityInfos_Attrition::ADN_CapacityInfos_Attrition()
-    : ammoCategory_( ( ADN_Equipement_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0, "" )
-    , useAmmo_     ( false )
+    : ammoCategory_    ( ( ADN_Equipement_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0, "" )
+    , useAmmo_         ( false )
+    , attritionSurface_( 0 )
+    , ph_              ( 0 )
 {
     category_.SetParentNode( *this );
     ammoCategory_.SetParentNode( *this );
     useAmmo_.SetParentNode( *this );
+    attritionSurface_.SetParentNode( *this );
+    ph_.SetParentNode( *this );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& xis )
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     std::string dotation( xis.attribute< std::string >( "category" ) );
-    if( dotation != "" )
+    if( dotation == "" )
+        useAmmo_ = false;
+    else
     {
         ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( dotation );
         if( pCategory == 0 )
@@ -420,18 +426,20 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
         ammoCategory_ = ptrAmmo;
         useAmmo_ = ( pCategory->strName_.GetData() == "munition" );
     }
-    else if ( xis.has_attribute( "category" ) )
-        useAmmo_ = false;       
+    attritionSurface_ = xis.attribute< double >( "attrition-surface", 0 );
+    ph_ = xis.attribute< double >( "ph", 0 );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream& xos )
 {
     if( useAmmo_.GetData() == true )
         xos << xml::attribute( "category", ammoCategory_.GetData()->strName_ );
-    else if ( category_.GetData() )
+    else if( category_.GetData() )
         xos << xml::attribute( "category", category_.GetData()->strName_ );
     else
         xos << xml::attribute( "category", "" );
+    xos << xml::attribute( "attrition-surface", attritionSurface_.GetData() )
+        << xml::attribute( "ph", ph_ );
 }
 //@}
 

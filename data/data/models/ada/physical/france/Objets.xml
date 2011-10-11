@@ -2,7 +2,7 @@
 <objects model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Objects.xsd">
   <object geometry="point" name="Bouchon de mines" symbol="G*MPOMC---****X" type="mines">
     <activable/>
-    <attrition category="mine classique"/>
+    <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -104,7 +104,7 @@
   </object>
   <object geometry="polygon" name="Abattis" symbol="G*MPOS----****X" type="abattis">
     <activable/>
-    <attrition category="mine classique"/>
+    <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="1000"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
@@ -155,7 +155,7 @@
   </object>
   <object geometry="polygon" name="Zone minée (linéaire)" symbol="G*MPOFA---****X" type="mined area (linear)">
     <activable/>
-    <attrition category="mine classique"/>
+    <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
@@ -173,7 +173,7 @@
   </object>
   <object geometry="polygon" name="Zone minée (par dispersion)" symbol="G*MPOFA---****X" type="mined area (scattered)">
     <activable/>
-    <attrition category="mine classique"/>
+    <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
@@ -396,4 +396,4 @@
     <workable max-animator="3"/>
   </object>
 </objects>
-<!-- signature="3559901967" -->
+<!-- signature="3878712004" -->

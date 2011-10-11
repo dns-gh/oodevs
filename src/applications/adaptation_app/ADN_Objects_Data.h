@@ -134,6 +134,8 @@ public:
         ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > category_;
         ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::AmmoCategoryInfo > ammoCategory_;
         ADN_Type_Bool useAmmo_;  // $$$$ LDC: Hack: No time to write a single category_ checkbox with all ammos available. Actually, the mines and explosives categories should vanish but no time to change the sim...
+        ADN_Type_Double attritionSurface_;
+        ADN_Type_Double ph_;
     };
 
     class ADN_CapacityInfos_UrbanDestruction

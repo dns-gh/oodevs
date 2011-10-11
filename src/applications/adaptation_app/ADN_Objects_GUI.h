@@ -44,6 +44,8 @@ public:
         eAttritionCapacityPresent,
         eAttritionCapacityUseDotation,
         eAttritionDotation,
+        eAttritionCapacitySurface,
+        eAttritionCapacityPh,
         eAvoidableCapacity_Distance,
         eAvoidableCapacityPresent,
         eBlinded,

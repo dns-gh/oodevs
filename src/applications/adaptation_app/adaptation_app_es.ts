@@ -3272,6 +3272,22 @@ tirador</translation>
         <source>Default Limitation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Attrition surface</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>m²</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PH</source>
+        <translation type="unfinished">PH</translation>
+    </message>
+    <message>
+        <source>Crowd attrition</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

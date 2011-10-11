@@ -147,7 +147,9 @@
 			<xs:element name="activable" minOccurs="0"/>
 			<xs:element name="attrition" minOccurs="0">
 				<xs:complexType>
+					<xs:attribute name="attrition-surface" type="T_NonNegativeDouble"/>
 					<xs:attribute name="category" type="xs:string"/>
+					<xs:attribute name="ph" type="T_ZeroToOneDouble"/>
 					<!-- resource name -->
 				</xs:complexType>
 			</xs:element>

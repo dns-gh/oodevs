@@ -34,6 +34,8 @@ AttritionCapacity::AttritionCapacity( xml::xistream& xis )
 {
     if( !dotation_ )
         throw std::runtime_error( "Unknown dotation category - " + category_ + " - " );
+    xis >> xml::attribute( "attrition-surface", population_.surface_ )
+        >> xml::attribute( "ph", population_.ph_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,8 +53,9 @@ AttritionCapacity::AttritionCapacity()
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 AttritionCapacity::AttritionCapacity( const AttritionCapacity& from )
-    : category_( from.category_ )
-    , dotation_( from.dotation_ )
+    : category_  ( from.category_ )
+    , dotation_  ( from.dotation_ )
+    , population_( from.population_)
 {
     // NOTHING
 }
@@ -74,7 +77,9 @@ void AttritionCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
        >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
-    ar >> category_;
+    ar >> category_
+       >> population_.surface_
+       >> population_.ph_;
     dotation_ = PHY_DotationType::FindDotationCategory( category_ );
     if( !dotation_ )
         throw std::runtime_error( "Unknown dotation category - " + category_ + " - " );
@@ -88,7 +93,9 @@ void AttritionCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int )
 {
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
        << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
-    ar << category_;
+    ar << category_
+       << population_.surface_
+       << population_.ph_;
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +152,7 @@ void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Ag
 
     unsigned int hits = fireResult.GetHits();
     if( hits > 0 )
-        construction->Build( - double( hits ) / double( construction->GetMaxDotation() ) );
+        construction->Build( - static_cast< double >( hits ) / construction->GetMaxDotation() );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +172,7 @@ void AttritionCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_Pop
             population.ApplyExplosion( *this, fireResult );
             unsigned int hits = fireResult.GetHits();
             if( hits > 0 )
-                construction->Build( - double( hits ) / double( construction->GetMaxDotation() ) );
+                construction->Build( - static_cast< double >( hits ) / construction->GetMaxDotation() );
         }
     }
 }

@@ -3274,6 +3274,22 @@ du tireur</translation>
         <source>Default Limitation</source>
         <translation>Limitation par défaut</translation>
     </message>
+    <message>
+        <source>Attrition surface</source>
+        <translation>Surface d'attrition</translation>
+    </message>
+    <message>
+        <source>m²</source>
+        <translation>m²</translation>
+    </message>
+    <message>
+        <source>PH</source>
+        <translation>PH</translation>
+    </message>
+    <message>
+        <source>Crowd attrition</source>
+        <translation>Attrition sur les foules</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

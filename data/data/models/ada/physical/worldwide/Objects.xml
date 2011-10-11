@@ -2,7 +2,7 @@
 <objects model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Objects.xsd">
   <object geometry="point" name="Mine Cluster" symbol="G*MPOMC---****X" type="mines">
     <activable/>
-    <attrition category="Standard Landmine"/>
+    <attrition attrition-surface="0" category="Standard Landmine" ph="0"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -96,7 +96,7 @@
   </object>
   <object geometry="polygon" name="Abatis" symbol="G*MPOS----****X" type="abattis">
     <activable/>
-    <attrition category="Standard Landmine"/>
+    <attrition attrition-surface="0" category="Standard Landmine" ph="0"/>
     <avoidable distance="1000"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
@@ -144,7 +144,7 @@
   </object>
   <object geometry="polygon" name="Mined Area (linear)" symbol="G*MPOFA---****X" type="mined area (linear)">
     <activable/>
-    <attrition category="Standard Landmine"/>
+    <attrition attrition-surface="0" category="Standard Landmine" ph="0"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
@@ -163,7 +163,7 @@
   </object>
   <object geometry="polygon" name="Mined Area (scattered)" symbol="G*MPOFA---****X" type="mined area (scattered)">
     <activable/>
-    <attrition category="Standard Landmine"/>
+    <attrition attrition-surface="0" category="Standard Landmine" ph="0"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
@@ -376,7 +376,7 @@
   </object>
   <object geometry="point" name="Dirty bomb" symbol="O*VPA-----*****" type="dirty bomb">
     <activable/>
-    <attrition category="Standard Landmine"/>
+    <attrition attrition-surface="0" category="Standard Landmine" ph="0"/>
     <contamination max-toxic="1"/>
     <interaction-height height="100"/>
     <intoxication max-toxic="1"/>
@@ -455,7 +455,7 @@
   </object>
   <object geometry="polygon" name="Mined Area (linear and destructible)" symbol="G*MPOFA---****X" type="mined area (linear and destructible)">
     <activable/>
-    <attrition category="Standard Landmine"/>
+    <attrition attrition-surface="0" category="Standard Landmine" ph="0"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
@@ -523,4 +523,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="2602398667" -->
+<!-- signature="3523885052" -->
