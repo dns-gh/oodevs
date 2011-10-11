@@ -93,7 +93,7 @@
         </template>
     </category>
     <category name='Taches' id="tasks">
-        <template name='Reconnaitre' type="line">
+        <template name='IdReconnaitre_Poly-ligne' type="line">
             <segment unit='%'>
                 <path fill='none' stroke='currentColor' stroke-width='4px' d='M0,0 L0.55,0.1 L0.45,-0.1 L1,0'/>
             </segment>
@@ -108,7 +108,7 @@
                 </g>
             </marker>
         </template>
-        <template name='Eclairer' type="line">
+        <template name='IdEclairer_Poly-ligne' type="line">
             <segment unit='%'>
                 <path fill='none' stroke='currentColor' stroke-width='4px' d='M0,0 L0.55,0.1 L0.45,-0.1 L1,0'/>
             </segment>
@@ -123,7 +123,7 @@
                 </g>
             </marker>
         </template>
-        <template name='Freiner' type="line">
+        <template name='IdFreiner_Poly-ligne' type="line">
             <marker-start unit='px'>
                 <path fill='none' stroke='currentColor' stroke-width='3px' d='M0,-20 A11,10 0 0 0 0,0'/>
             </marker-start>
@@ -141,7 +141,7 @@
                 </g>
             </marker>
         </template>
-        <template name='Jalonner' type="line">
+        <template name='IdJalonner_Poly-ligne' type="line">
             <marker-start unit='px'>
                 <path fill='none' stroke='currentColor' stroke-width='3px' d='M0,-20 A11,10 0 0 0 0,0'/>
             </marker-start>
@@ -163,7 +163,7 @@
                 <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
             </marker-end>
         </template>
-        <template name='Raid' type="line">
+        <template name='IdRaid_Poly-ligne' type="line">
             <segment>
                 <line stroke='currentColor' stroke-width='4px' x2='1'/>
             </segment>
@@ -178,7 +178,7 @@
                 </g>
             </marker>
         </template>
-        <template name='Renseigner' type="line">
+        <template name='IdRenseigner_Poly-ligne' type="line">
             <segment>
                 <line stroke='currentColor' stroke-width='4px' x2='1'/>
             </segment>
@@ -193,7 +193,7 @@
                 </g>
             </marker>
         </template>
-        <template name='Appuyer' type="line">
+        <template name='IdAppuyer_Poly-ligne' type="line">
             <segment>
                 <line stroke='currentColor' stroke-width='4px' x2='1'/>
             </segment>
@@ -208,7 +208,7 @@
                 </g>
             </marker>
         </template>
-        <template name='Attaquer' type="line">
+        <template name='IdAttaquer_Poly-ligne' type="line">
             <marker-start unit='px'>
                 <g fill='none' stroke='currentColor' stroke-width='3px'>
                     <path d='M-20,-30 A20,20 0 0 0 0,-10'/>
@@ -238,7 +238,7 @@
                 </g>
             </marker>
         </template>
-        <template name='Contre-attaquer' type="line">
+        <template name='IdContreAttaquer_Poly-ligne' type="line">
             <marker-start unit='px'>
                 <g fill='none' stroke='currentColor' stroke-width='3px'>
                     <path d='M-20,-30 A20,20 0 0 0 0,-10'/>
@@ -265,7 +265,7 @@
                 </g>
             </marker>
         </template>
-        <template name='Defendre' type="polygon">
+        <template name='IdDefendre_Polygone' type="polygon">
             <segment unit="%">
                 <g fill="currentColor">
                     <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
@@ -283,7 +283,7 @@
                 </g>
             </marker-start>
         </template>
-        <template name='Interdire' type="point">
+        <template name='IdInterdire_Point' type="point">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
             </segment>
@@ -298,7 +298,7 @@
                 </g>
             </marker-start>
         </template>
-        <template name='Controler' type="polygon">
+        <template name='IdControler_Polygone' type="polygon">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
             </segment>
@@ -310,7 +310,7 @@
                 </g>
             </marker>
         </template>
-        <template name='Surveiller' type="polygon">
+        <template name='IdSurveiller_Polygone' type="polygon">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
             </segment>
@@ -852,4 +852,4 @@
         </template>
     </category>
 </templates>
-<!-- signature="0146579871" -->
+<!-- signature="1321881892" -->

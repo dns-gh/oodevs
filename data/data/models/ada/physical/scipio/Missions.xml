@@ -766,7 +766,7 @@
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="meetingPoint" name="Destination" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Appuyer" dia-type="france.military.platoon.tasks.Appuyer" id="2062" name="PION MELEE Appuyer" package="support" symbol="Appuyer">
+    <mission dia-behavior="france.military.platoon.tasks.Appuyer" dia-type="france.military.platoon.tasks.Appuyer" id="2062" name="PION MELEE Appuyer" package="support" symbol="IdAppuyer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -779,7 +779,7 @@
       </parameter>
       <parameter dia-name="context" name="Contexte retrograde" optional="true" type="Integer"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.tasks.Detruire" dia-type="france.military.platoon.combat.tasks.Detruire" id="2013" name="PION MELEE Detruire" package="defence" symbol="Detruire">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Detruire" dia-type="france.military.platoon.combat.tasks.Detruire" id="2013" name="PION MELEE Detruire" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -793,7 +793,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Unite a escorter" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Surveiller" dia-type="france.military.platoon.tasks.Surveiller" id="2070" name="PION MELEE Surveiller" package="control" symbol="Surveiller">
+    <mission dia-behavior="france.military.platoon.tasks.Surveiller" dia-type="france.military.platoon.tasks.Surveiller" id="2070" name="PION MELEE Surveiller" package="control" symbol="IdSurveiller_Polygone">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -813,7 +813,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.RenseignerSur" dia-type="france.military.platoon.tasks.RenseignerSur" id="5002" name="PION MELEE Renseigner Sur" package="control" symbol="Renseigner">
+    <mission dia-behavior="france.military.platoon.tasks.RenseignerSur" dia-type="france.military.platoon.tasks.RenseignerSur" id="5002" name="PION MELEE Renseigner Sur" package="control" symbol="IdRenseigner_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -839,7 +839,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Controler" dia-type="france.military.platoon.tasks.Controler" id="2075" name="PION MELEE Controler" package="control" symbol="Controler">
+    <mission dia-behavior="france.military.platoon.tasks.Controler" dia-type="france.military.platoon.tasks.Controler" id="2075" name="PION MELEE Controler" package="control" symbol="IdControler_Polygone">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -881,7 +881,7 @@
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Interdire" dia-type="france.military.platoon.tasks.Interdire" id="2083" name="PION MELEE Interdire" package="defence" symbol="Interdire">
+    <mission dia-behavior="france.military.platoon.tasks.Interdire" dia-type="france.military.platoon.tasks.Interdire" id="2083" name="PION MELEE Interdire" package="defence" symbol="IdInterdire_Point">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -909,7 +909,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Defendre" dia-type="france.military.platoon.tasks.Defendre" id="2084" name="PION MELEE Defendre" package="defence" symbol="Defendre">
+    <mission dia-behavior="france.military.platoon.tasks.Defendre" dia-type="france.military.platoon.tasks.Defendre" id="2084" name="PION MELEE Defendre" package="defence" symbol="IdDefendre_Polygone">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -924,7 +924,7 @@
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.tasks.ContreAttaquer" dia-type="france.military.platoon.combat.tasks.ContreAttaquer" id="2089" name="PION MELEE Contre Attaquer" package="attack" symbol="Contre-attaquer">
+    <mission dia-behavior="france.military.platoon.combat.tasks.ContreAttaquer" dia-type="france.military.platoon.combat.tasks.ContreAttaquer" id="2089" name="PION MELEE Contre Attaquer" package="attack" symbol="IdContreAttaquer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -937,7 +937,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.tasks.Attaquer" dia-type="france.military.platoon.combat.tasks.Attaquer" id="2115" name="PION MELEE Attaquer" package="attack" symbol="Attaquer">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Attaquer" dia-type="france.military.platoon.combat.tasks.Attaquer" id="2115" name="PION MELEE Attaquer" package="attack" symbol="IdAttaquer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -957,7 +957,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Reconnaitre" dia-type="france.military.platoon.tasks.Reconnaitre" id="2099" name="PION MELEE Reconnaitre" package="intelligence" symbol="Reconnaitre">
+    <mission dia-behavior="france.military.platoon.tasks.Reconnaitre" dia-type="france.military.platoon.tasks.Reconnaitre" id="2099" name="PION MELEE Reconnaitre" package="intelligence" symbol="IdReconnaitre_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -971,7 +971,7 @@
       </parameter>
       <parameter dia-name="searchObjective" name="Fouille des objectifs" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.tasks.Eclairer" dia-type="france.military.platoon.combat.tasks.Eclairer" id="2093" name="PION MELEE Eclairer" package="intelligence" symbol="Eclairer">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Eclairer" dia-type="france.military.platoon.combat.tasks.Eclairer" id="2093" name="PION MELEE Eclairer" package="intelligence" symbol="IdEclairer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1057,14 +1057,14 @@
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Unites" optional="false" type="Agent"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.tasks.Jalonner" dia-type="france.military.platoon.combat.tasks.Jalonner" id="2110" name="PION MELEE Jalonner" package="defence" symbol="Jalonner">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Jalonner" dia-type="france.military.platoon.combat.tasks.Jalonner" id="2110" name="PION MELEE Jalonner" package="defence" symbol="IdJalonner_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.tasks.Freiner" dia-type="france.military.platoon.combat.tasks.Freiner" id="2111" name="PION MELEE Freiner" package="defence" symbol="Freiner">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Freiner" dia-type="france.military.platoon.combat.tasks.Freiner" id="2111" name="PION MELEE Freiner" package="defence" symbol="IdFreiner_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1242,7 +1242,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.AppuyerSurPosition" dia-type="france.military.platoon.tasks.AppuyerSurPosition" id="2125" name="PION MELEE Appuyer Sur Position" package="support" symbol="Appuyer">
+    <mission dia-behavior="france.military.platoon.tasks.AppuyerSurPosition" dia-type="france.military.platoon.tasks.AppuyerSurPosition" id="2125" name="PION MELEE Appuyer Sur Position" package="support" symbol="IdAppuyer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2301,7 +2301,7 @@
       <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="destination" name="Destination" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Interdire" dia-type="france.military.company.tasks.Interdire" id="1017" mrt-dia-behavior="france.military.company.tasks.Interdire" name="AUTOMATE MELEE Interdire" package="defence" symbol="Interdire">
+    <mission cdt-dia-behavior="france.military.company.tasks.Interdire" dia-type="france.military.company.tasks.Interdire" id="1017" mrt-dia-behavior="france.military.company.tasks.Interdire" name="AUTOMATE MELEE Interdire" package="defence" symbol="IdInterdire_Point">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2331,7 +2331,7 @@
       </parameter>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Reconnaitre" dia-type="france.military.company.tasks.Reconnaitre" id="1019" mrt-dia-behavior="france.military.company.tasks.Reconnaitre" name="AUTOMATE MELEE Reconnaitre" package="intelligence" symbol="Reconnaitre">
+    <mission cdt-dia-behavior="france.military.company.tasks.Reconnaitre" dia-type="france.military.company.tasks.Reconnaitre" id="1019" mrt-dia-behavior="france.military.company.tasks.Reconnaitre" name="AUTOMATE MELEE Reconnaitre" package="intelligence" symbol="IdReconnaitre_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2345,7 +2345,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Eclairer" dia-type="france.military.company.tasks.Eclairer" id="5000" mrt-dia-behavior="france.military.company.tasks.Eclairer" name="AUTOMATE MELEE Eclairer" package="intelligence" symbol="Eclairer">
+    <mission cdt-dia-behavior="france.military.company.tasks.Eclairer" dia-type="france.military.company.tasks.Eclairer" id="5000" mrt-dia-behavior="france.military.company.tasks.Eclairer" name="AUTOMATE MELEE Eclairer" package="intelligence" symbol="IdEclairer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2392,7 +2392,7 @@
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="objective" name="Destination" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Controler" dia-type="france.military.company.tasks.Controler" id="1024" mrt-dia-behavior="france.military.company.tasks.Controler" name="AUTOMATE MELEE Controler" package="control" symbol="Controler">
+    <mission cdt-dia-behavior="france.military.company.tasks.Controler" dia-type="france.military.company.tasks.Controler" id="1024" mrt-dia-behavior="france.military.company.tasks.Controler" name="AUTOMATE MELEE Controler" package="control" symbol="IdControler_Polygone">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2423,7 +2423,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.tasks.Detruire" dia-type="france.military.company.combat.tasks.Detruire" id="1025" mrt-dia-behavior="france.military.company.combat.tasks.Detruire" name="AUTOMATE MELEE Detruire" package="attack" symbol="Detruire">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Detruire" dia-type="france.military.company.combat.tasks.Detruire" id="1025" mrt-dia-behavior="france.military.company.combat.tasks.Detruire" name="AUTOMATE MELEE Detruire" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2482,14 +2482,14 @@
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.tasks.Attaquer" dia-type="france.military.company.combat.tasks.Attaquer" id="1030" mrt-dia-behavior="france.military.company.combat.tasks.Attaquer" name="AUTOMATE MELEE Attaquer" package="attack" symbol="Attaquer">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Attaquer" dia-type="france.military.company.combat.tasks.Attaquer" id="1030" mrt-dia-behavior="france.military.company.combat.tasks.Attaquer" name="AUTOMATE MELEE Attaquer" package="attack" symbol="IdAttaquer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.tasks.Appuyer" dia-type="france.military.company.combat.tasks.Appuyer" id="1031" mrt-dia-behavior="france.military.company.combat.tasks.Appuyer" name="AUTOMATE MELEE Appuyer" package="support" symbol="Appuyer">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Appuyer" dia-type="france.military.company.combat.tasks.Appuyer" id="1031" mrt-dia-behavior="france.military.company.combat.tasks.Appuyer" name="AUTOMATE MELEE Appuyer" package="support" symbol="IdAppuyer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2497,7 +2497,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Compagnie a soutenir" optional="false" type="Automat"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.tasks.AppuyerSurPosition" dia-type="france.military.company.combat.tasks.AppuyerSurPosition" id="5011" mrt-dia-behavior="france.military.company.combat.tasks.AppuyerSurPosition" name="AUTOMATE MELEE Appuyer Sur Position" package="support" symbol="Appuyer">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.AppuyerSurPosition" dia-type="france.military.company.combat.tasks.AppuyerSurPosition" id="5011" mrt-dia-behavior="france.military.company.combat.tasks.AppuyerSurPosition" name="AUTOMATE MELEE Appuyer Sur Position" package="support" symbol="IdAppuyer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2540,7 +2540,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.tasks.Defendre" dia-type="france.military.company.combat.tasks.Defendre" id="1033" mrt-dia-behavior="france.military.company.combat.tasks.Defendre" name="AUTOMATE MELEE Defendre" package="defence" symbol="Defendre">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Defendre" dia-type="france.military.company.combat.tasks.Defendre" id="1033" mrt-dia-behavior="france.military.company.combat.tasks.Defendre" name="AUTOMATE MELEE Defendre" package="defence" symbol="IdDefendre_Polygone">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2593,7 +2593,7 @@
       <parameter dia-name="entity" name="Compagnie a couvrir" optional="false" type="Automat"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.tasks.Surveiller" dia-type="france.military.company.combat.tasks.Surveiller" id="1036" mrt-dia-behavior="france.military.company.combat.tasks.Surveiller" name="AUTOMATE MELEE Surveiller" package="control" symbol="Surveiller">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Surveiller" dia-type="france.military.company.combat.tasks.Surveiller" id="1036" mrt-dia-behavior="france.military.company.combat.tasks.Surveiller" name="AUTOMATE MELEE Surveiller" package="control" symbol="IdSurveiller_Polygone">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2614,7 +2614,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.tasks.RenseignerSur" dia-type="france.military.company.combat.tasks.RenseignerSur" id="5003" mrt-dia-behavior="france.military.company.combat.tasks.RenseignerSur" name="AUTOMATE MELEE Renseigner Sur" package="control" symbol="Renseigner">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.RenseignerSur" dia-type="france.military.company.combat.tasks.RenseignerSur" id="5003" mrt-dia-behavior="france.military.company.combat.tasks.RenseignerSur" name="AUTOMATE MELEE Renseigner Sur" package="control" symbol="IdRenseigner_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2628,7 +2628,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Freiner" dia-type="france.military.company.tasks.Freiner" id="1037" mrt-dia-behavior="france.military.company.tasks.Freiner" name="AUTOMATE MELEE Freiner" package="defence" symbol="Freiner">
+    <mission cdt-dia-behavior="france.military.company.tasks.Freiner" dia-type="france.military.company.tasks.Freiner" id="1037" mrt-dia-behavior="france.military.company.tasks.Freiner" name="AUTOMATE MELEE Freiner" package="defence" symbol="IdFreiner_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2638,7 +2638,7 @@
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Jalonner" dia-type="france.military.company.tasks.Jalonner" id="5007" mrt-dia-behavior="france.military.company.tasks.Jalonner" name="AUTOMATE MELEE Jalonner" package="defence" symbol="Jalonner">
+    <mission cdt-dia-behavior="france.military.company.tasks.Jalonner" dia-type="france.military.company.tasks.Jalonner" id="5007" mrt-dia-behavior="france.military.company.tasks.Jalonner" name="AUTOMATE MELEE Jalonner" package="defence" symbol="IdJalonner_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2666,7 +2666,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Compagnie a relever" optional="false" type="Automat"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.tasks.EffectuerRaid" dia-type="france.military.company.combat.tasks.EffectuerRaid" id="1039" mrt-dia-behavior="france.military.company.combat.tasks.EffectuerRaid" name="AUTOMATE MELEE Effectuer un raid" package="attack" symbol="Raid">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.EffectuerRaid" dia-type="france.military.company.combat.tasks.EffectuerRaid" id="1039" mrt-dia-behavior="france.military.company.combat.tasks.EffectuerRaid" name="AUTOMATE MELEE Effectuer un raid" package="attack" symbol="IdRaid_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3264,4 +3264,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Desengager" id="400" name="Pion Desengager"/>
   </fragorders>
 </missions>
-<!-- signature="3319259048" -->
+<!-- signature="1907270275" -->
