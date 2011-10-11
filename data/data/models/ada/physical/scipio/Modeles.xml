@@ -7252,10 +7252,12 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE LOGISTIQUE Preparer bascule"/>
         <mission name="AUTOMATE LOGISTIQUE Se Deployer">
-          <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Modifier Regime Travail Maintenance"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Modifier Priorites Tactiques Reparations"/>
+          <fragorder name="Modifier Priorites Reparations"/>
+          <fragorder name="Modifier Priorites Blesses"/>
         </mission>
       </missions>
       <fragorders>
@@ -9575,4 +9577,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3710962878" -->
+<!-- signature="2271749951" -->
