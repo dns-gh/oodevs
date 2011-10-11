@@ -123,11 +123,12 @@ void DEC_PathWalker::InitializeEnvironment( const DEC_PathResult& path )
 // Name: DEC_PathWalker::SetCurrentPath
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-bool DEC_PathWalker::SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath )
+DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath )
 {
     if( pCurrentPath_.get() && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RolePion_Location >().HasDoneMagicMove()*/ )
-        return true;
-
+        return eRunning;
+	
+	DEC_PathWalker::E_ReturnCode rc = eRunning;
     bool bCanSendTerrainReport = pPath != pCurrentPath_;
     pCurrentPath_ = pPath;
     pPath->InsertDecPoints(); // $$$ HIDEUX
@@ -136,13 +137,16 @@ bool DEC_PathWalker::SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath )
     assert( !pPath->GetResult().empty() );
     itCurrentPathPoint_ = pPath->GetCurrentKeyOnPath( movingEntity_.GetPosition() );
     if( itCurrentPathPoint_ == pPath->GetResult().end() )
-        return false;
+        return eItineraireMustBeJoined;
     if( ( pCurrentPath_->GetState() == DEC_PathResult::ePartial ) && bCanSendTerrainReport )
+	{
         movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
+		rc = eNotAllowed;
+	}
     itNextPathPoint_ = itCurrentPathPoint_;
     ++itNextPathPoint_;
     InitializeEnvironment( *pPath );
-    return true;
+    return rc;
 }
 
 //-----------------------------------------------------------------------------
@@ -372,7 +376,8 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
         return eRunning;
     }
 
-    if( !SetCurrentPath( pPath ) )
+	DEC_PathWalker::E_ReturnCode pathSet = SetCurrentPath( pPath );
+    if( pathSet == eItineraireMustBeJoined )
         return eItineraireMustBeJoined;
 
     bHasMoved_ = true;
@@ -416,7 +421,7 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
         if( !TryToMoveTo( *pPath, ( *itNextPathPoint_ )->GetPos(), rTimeRemaining ) )
         {
             rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
-            return eRunning;
+            return pathSet;
         }
         bTerrainReportSent_ = false;
 
@@ -424,7 +429,7 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
 
         bool bStopOnInterestingPoint = GoToNextNavPoint( *pPath );
         if( bStopOnInterestingPoint )
-            return eRunning;
+            return pathSet;
 
         if( itNextPathPoint_ == pPath->GetResult().end() )
         {
@@ -437,7 +442,7 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
         if( ( *itNextPathPoint_ )->GetPos() != vNewPos_ )
             vNewDir_ = ( ( *itNextPathPoint_ )->GetPos() - vNewPos_ ).Normalize();
     }
-    return eRunning;
+    return pathSet;
 }
 
 // -----------------------------------------------------------------------------

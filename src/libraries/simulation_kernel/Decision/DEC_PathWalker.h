@@ -129,7 +129,7 @@ private:
     void ComputeCurrentSpeed();
     void InitializeEnvironment( const DEC_PathResult& path );
     bool GoToNextNavPoint( const DEC_PathResult& path );
-    bool SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath );
+    E_ReturnCode SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath );
      //@}
 
 private:
