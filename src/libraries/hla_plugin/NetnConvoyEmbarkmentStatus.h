@@ -7,11 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnServiceStarted_h
-#define plugins_hla_NetnServiceStarted_h
+#ifndef plugins_hla_NetnConvoyEmbarkmentStatus_h
+#define plugins_hla_NetnConvoyEmbarkmentStatus_h
 
 #include "InteractionSender_ABC.h"
-#include <hla/InteractionNotification_ABC.h>
 
 namespace hla
 {
@@ -27,36 +26,37 @@ namespace hla
 
 namespace interactions
 {
-    struct NetnServiceStarted;
+    struct NetnConvoyEmbarkmentStatus;
 }
+
 // =============================================================================
-/** @class  NetnServiceStarted
-    @brief  NetnServiceStarted
+/** @class  NetnConvoyEmbarkmentStatus
+    @brief  Netn convoy embarkment status
 */
-// Created: VPR 2011-10-12
+// Created: SLI 2011-10-11
 // =============================================================================
-class NetnServiceStarted : public InteractionSender_ABC< interactions::NetnServiceStarted >
+class NetnConvoyEmbarkmentStatus : public InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnServiceStarted( Federate_ABC& federate,::hla::InteractionNotification_ABC< interactions::NetnServiceStarted >& notification );
-    virtual ~NetnServiceStarted();
+             NetnConvoyEmbarkmentStatus( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnConvoyEmbarkmentStatus >& notification );
+    virtual ~NetnConvoyEmbarkmentStatus();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const interactions::NetnServiceStarted& interaction );
+    virtual void Send( const interactions::NetnConvoyEmbarkmentStatus& interaction );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::Interaction< interactions::NetnServiceStarted > > pInteraction_;
+    std::auto_ptr< ::hla::Interaction< interactions::NetnConvoyEmbarkmentStatus > > pInteraction_;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_NetnServiceStarted_h
+#endif // plugins_hla_NetnConvoyEmbarkmentStatus_h

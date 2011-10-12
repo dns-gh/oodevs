@@ -49,7 +49,7 @@ namespace
         {}
         virtual void Notify( const std::string& callsign, const std::string& uniqueId )
         {
-            listOfTransporters_.listOfTransporters.push_back( NetnObjectDefinitionStruct( callsign, uniqueId, NetnObjectFeatureStruct() ) );
+            listOfTransporters_.list.push_back( NetnObjectDefinitionStruct( callsign, uniqueId, NetnObjectFeatureStruct() ) );
         }
     private:
         interactions::ListOfTransporters& listOfTransporters_;
@@ -77,7 +77,7 @@ void NetnOfferConvoySender::Receive( interactions::NetnRequestConvoy& request )
         return;
     interactions::NetnOfferConvoy offer;
     FillTransporters( transporters_, offer.listOfTransporters, request.transportData.dataTransport );
-    if( offer.listOfTransporters.listOfTransporters.size() == 0u )
+    if( offer.listOfTransporters.list.size() == 0u )
         return;
     offer.isOffering = 1; // True
     offer.requestTimeOut = 0u; // No timeout

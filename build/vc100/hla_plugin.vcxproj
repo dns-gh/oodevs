@@ -121,6 +121,8 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAcceptOffer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatus.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatusReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoyReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoySender.cpp" />
@@ -215,6 +217,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAcceptOffer.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatus.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatusReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoyReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoySender.h" />

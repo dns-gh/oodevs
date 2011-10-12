@@ -26,7 +26,9 @@ MOCK_BASE_CLASS( MockTransportationController, TransportationController_ABC )
 {
     MOCK_METHOD( Register, 1 )
     MOCK_METHOD( Unregister, 1 )
-    MOCK_METHOD( OfferReceived, 3 )
+    MOCK_METHOD( OfferReceived, 4 )
+    MOCK_METHOD( ServiceStarted, 1 )
+    MOCK_METHOD( NotifyEmbarkationStatus, 3 )
 };
 
 }

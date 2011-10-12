@@ -8,50 +8,41 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "NetnOfferConvoyReceiver.h"
+#include "NetnServiceStartedReceiver.h"
 #include "TransportationController_ABC.h"
 #include "Interactions.h"
+#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
-// Name: NetnOfferConvoyReceiver constructor
+// Name: NetnServiceStartedReceiver constructor
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-NetnOfferConvoyReceiver::NetnOfferConvoyReceiver( TransportationController_ABC& controller )
+NetnServiceStartedReceiver::NetnServiceStartedReceiver( TransportationController_ABC& controller )
     : controller_( controller )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnOfferConvoyReceiver destructor
+// Name: NetnServiceStartedReceiver destructor
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-NetnOfferConvoyReceiver::~NetnOfferConvoyReceiver()
+NetnServiceStartedReceiver::~NetnServiceStartedReceiver()
 {
     // NOTHING
 }
 
-namespace
-{
-    bool CheckOffer( const interactions::NetnOfferConvoy& offer )
-    {
-        return offer.isOffering && offer.offerType == 1;
-    }
-}
-
 // -----------------------------------------------------------------------------
-// Name: NetnOfferConvoyReceiver::Receive
+// Name: NetnServiceStartedReceiver::Receive
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-void NetnOfferConvoyReceiver::Receive( interactions::NetnOfferConvoy& interaction )
+void NetnServiceStartedReceiver::Receive( interactions::NetnServiceStarted& interaction )
 {
     if( interaction.serviceType != 4 )
         return;
-    if( interaction.transportData.convoyType != 0 )
-        return;
     if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
         return;
-    controller_.OfferReceived( interaction.serviceId.eventCount, CheckOffer( interaction ), interaction.provider.str(), interaction.listOfTransporters );
+    controller_.ServiceStarted( interaction.serviceId.eventCount );
 }

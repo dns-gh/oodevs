@@ -46,19 +46,19 @@ struct ListOfTransporters
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        int32 size = listOfTransporters.size();
+        int32 size = list.size();
         archive << size
-                << listOfTransporters;
+                << list;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
         int32 size = 0;
         archive >> size;
-        listOfTransporters.resize( size );
-        archive >> listOfTransporters;
+        list.resize( size );
+        archive >> list;
     }
-    std::vector< NetnObjectDefinitionStruct > listOfTransporters;
+    std::vector< NetnObjectDefinitionStruct > list;
 };
 
 struct MunitionDetonation
@@ -135,6 +135,15 @@ struct NetnServiceStarted
     int8 serviceType;
 };
 
+struct NetnConvoyEmbarkmentStatus
+{
+    NetnEventIdentifier serviceId;
+    UnicodeString consumer;
+    UnicodeString provider;
+    int8 serviceType;
+    ListOfTransporters listOfObjectEmbarked;
+    UnicodeString transportUnitIdentifier;
+};
 }
 }
 }

@@ -42,7 +42,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_receiver_notifies_listener_if_offer_is_valid, Fixture )
 {
-    MOCK_EXPECT( controller, OfferReceived ).once().with( 42u, true, "provider" );
+    MOCK_EXPECT( controller, OfferReceived ).once().with( 42u, true, "provider", mock::any );
     interactions::NetnOfferConvoy offer = MakeOffer( 42, true, 1, 4, 0, "SWORD", "provider" );
     receiver.Receive( offer );
 }
@@ -50,17 +50,17 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_receiver_notifies_listener_if_offer_i
 BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_receiver_notifies_listener_with_partial, Fixture )
 {
     {
-        MOCK_EXPECT( controller, OfferReceived ).once().with( 42u, false, "provider" );
+        MOCK_EXPECT( controller, OfferReceived ).once().with( 42u, false, "provider", mock::any );
         interactions::NetnOfferConvoy offer = MakeOffer( 42, false, 1, 4, 0, "SWORD", "provider" );
         receiver.Receive( offer );
     }
     {
-        MOCK_EXPECT( controller, OfferReceived ).once().with( 42u, false, "provider" );
+        MOCK_EXPECT( controller, OfferReceived ).once().with( 42u, false, "provider", mock::any );
         interactions::NetnOfferConvoy offer = MakeOffer( 42, true, 0, 4, 0, "SWORD", "provider" );
         receiver.Receive( offer );
     }
     {
-        MOCK_EXPECT( controller, OfferReceived ).once().with( 42u, false, "provider" );
+        MOCK_EXPECT( controller, OfferReceived ).once().with( 42u, false, "provider", mock::any );
         interactions::NetnOfferConvoy offer = MakeOffer( 42, true, 2, 4, 0, "SWORD", "provider" );
         receiver.Receive( offer );
     }

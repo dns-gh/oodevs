@@ -28,6 +28,11 @@ namespace sword
     class SimToClient_Content;
 }
 
+namespace dispatcher
+{
+    class SimulationPublisher_ABC;
+}
+
 namespace hla
 {
     template< typename T > class InteractionNotification_ABC;
@@ -57,6 +62,7 @@ namespace interactions
     struct NetnRejectOfferConvoy;
     struct NetnReadyToReceiveService;
     struct NetnServiceStarted;
+    struct NetnConvoyEmbarkmentStatus;
 }
 
 // =============================================================================
@@ -73,7 +79,8 @@ public:
              TransportationFacade( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
                                    tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                    const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
-                                   Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters );
+                                   Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters,
+                                   dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~TransportationFacade();
     //@}
 
@@ -91,12 +98,15 @@ private:
     std::auto_ptr< NetnRequestConvoySender > pNetnRequestConvoySender_;
     std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoyReceiver_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoy_;
+    std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted > > pNetnServiceStartedReceiver_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnServiceStarted > > pNetnServiceStarted_;
     std::auto_ptr< NetnOfferConvoySender > pNetnOfferConvoySender_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnAcceptOffer > > pNetnAcceptOffer_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnRejectOfferConvoy > > pNetnRejectOfferConvoy_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnReadyToReceiveService > > pNetnReadyToReceiveService_;
     std::auto_ptr< NetnOfferResponseSender > pNetnOfferResponseSender_;
+    std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnConvoyEmbarkmentStatus > > pNetnConvoyEmbarkmentStatusReceiver_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus > > pNetnConvoyEmbarkmentStatus_;
     //@}
 };
 

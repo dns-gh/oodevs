@@ -20,6 +20,9 @@
 #include "NetnReadyToReceiveService.h"
 #include "NetnOfferResponseSender.h"
 #include "NetnServiceStarted.h"
+#include "NetnServiceStartedReceiver.h"
+#include "NetnConvoyEmbarkmentStatusReceiver.h"
+#include "NetnConvoyEmbarkmentStatus.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
@@ -31,18 +34,22 @@ using namespace plugins::hla;
 TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
                                             tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                             const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
-                                            Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters )
-    : pTransportationController_ ( new TransportationController( xis, missionResolver, controller, callsignResolver, subordinates, contextFactory ) )
-    , pNetnRequestConvoy_        ( new NetnRequestConvoy( federate, *this ) )
-    , pNetnRequestConvoySender_  ( new NetnRequestConvoySender( *pTransportationController_, *pNetnRequestConvoy_ ) )
-    , pNetnOfferConvoyReceiver_  ( new NetnOfferConvoyReceiver( *pTransportationController_ ) )
-    , pNetnOfferConvoy_          ( new NetnOfferConvoy( federate, *pNetnOfferConvoyReceiver_ ) )
-    , pNetnServiceStarted_       ( new NetnServiceStarted( federate ) )
-    , pNetnOfferConvoySender_    ( new NetnOfferConvoySender( *pNetnOfferConvoy_, *pNetnServiceStarted_, transporters ) )
-    , pNetnAcceptOffer_          ( new NetnAcceptOffer( federate, *pNetnOfferConvoySender_ ) )
-    , pNetnRejectOfferConvoy_    ( new NetnRejectOfferConvoy( federate ) )
-    , pNetnReadyToReceiveService_( new NetnReadyToReceiveService( federate, *pNetnOfferConvoySender_ ) )
-    , pNetnOfferResponseSender_  ( new NetnOfferResponseSender( *pTransportationController_, *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_, *pNetnReadyToReceiveService_ ) )
+                                            Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters,
+                                            dispatcher::SimulationPublisher_ABC& publisher )
+    : pTransportationController_          ( new TransportationController( xis, missionResolver, controller, callsignResolver, subordinates, contextFactory, publisher ) )
+    , pNetnRequestConvoy_                 ( new NetnRequestConvoy( federate, *this ) )
+    , pNetnRequestConvoySender_           ( new NetnRequestConvoySender( *pTransportationController_, *pNetnRequestConvoy_ ) )
+    , pNetnOfferConvoyReceiver_           ( new NetnOfferConvoyReceiver( *pTransportationController_ ) )
+    , pNetnOfferConvoy_                   ( new NetnOfferConvoy( federate, *pNetnOfferConvoyReceiver_ ) )
+    , pNetnServiceStartedReceiver_        ( new NetnServiceStartedReceiver( *pTransportationController_ ) )
+    , pNetnServiceStarted_                ( new NetnServiceStarted( federate, *pNetnServiceStartedReceiver_ ) )
+    , pNetnOfferConvoySender_             ( new NetnOfferConvoySender( *pNetnOfferConvoy_, *pNetnServiceStarted_, transporters ) )
+    , pNetnRejectOfferConvoy_             ( new NetnRejectOfferConvoy( federate ) )
+    , pNetnAcceptOffer_                   ( new NetnAcceptOffer( federate, *pNetnOfferConvoySender_ ) )
+    , pNetnReadyToReceiveService_         ( new NetnReadyToReceiveService( federate, *pNetnOfferConvoySender_ ) )
+    , pNetnOfferResponseSender_           ( new NetnOfferResponseSender( *pTransportationController_, *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_, *pNetnReadyToReceiveService_ ) )
+    , pNetnConvoyEmbarkmentStatusReceiver_( new NetnConvoyEmbarkmentStatusReceiver( *pTransportationController_ ) )
+    , pNetnConvoyEmbarkmentStatus_        ( new NetnConvoyEmbarkmentStatus( federate, *pNetnConvoyEmbarkmentStatusReceiver_ ) )
 {
     // NOTHING
 }

@@ -16,6 +16,8 @@
 #include "MockTransportedUnitsVisitor.h"
 #include "MockSubordinates.h"
 #include "MockContextFactory.h"
+#include "MockSimulationPublisher.h"
+#include "MockTransportedUnits.h"
 #include "tools/MessageController.h"
 #include "protocol/Simulation.h"
 #include <xeumeuleu/xml.hpp>
@@ -27,6 +29,7 @@ BOOST_AUTO_TEST_CASE( transportation_controller_reads_transportation_mission_nam
     xml::xistringstream xis( "<configuration>"
                              "    <missions>"
                              "        <transport>transportation mission name</transport>"
+                             "        <embarkment>embarkment mission name</embarkment>"
                              "    </missions>"
                              "    <reports>"
                              "        <mission-complete>1338</mission-complete>"
@@ -37,9 +40,11 @@ BOOST_AUTO_TEST_CASE( transportation_controller_reads_transportation_mission_nam
     MockMissionResolver resolver;
     MockCallsignResolver callsignResolver;
     MockSubordinates subordinates;
+    dispatcher::MockSimulationPublisher publisher;
     MockContextFactory factory;
     MOCK_EXPECT( resolver, Resolve ).once().with( "transportation mission name" ).returns( 42 );
-    TransportationController controller( xis, resolver, messageController, callsignResolver, subordinates, factory );
+    MOCK_EXPECT( resolver, Resolve ).once().with( "embarkment mission name" ).returns( 142 );
+    TransportationController controller( xis, resolver, messageController, callsignResolver, subordinates, factory, publisher );
 }
 
 namespace
@@ -50,17 +55,20 @@ namespace
         Fixture()
             : xis( "<configuration>"
                    "    <missions>"
-                   "        <transport>name</transport>"
+                   "        <transport>transport</transport>"
+                   "        <embarkment>embarkment</embarkment>"
                    "    </missions>"
                    "    <reports>"
                    "        <mission-complete>1338</mission-complete>"
                    "    </reports>"
                    "</configuration>" )
-            , transportId( 42 )
-            , automatId  ( 42 )
+            , transportId ( 42 )
+            , embarkmentId( 142 )
+            , automatId   ( 42 )
         {
             xis >> xml::start( "configuration" );
-            MOCK_EXPECT( missionResolver, Resolve ).once().returns( transportId );
+            MOCK_EXPECT( missionResolver, Resolve ).once().with( "transport" ).returns( transportId );
+            MOCK_EXPECT( missionResolver, Resolve ).once().with( "embarkment" ).returns( embarkmentId );
         }
         sword::SimToClient_Content MakeTransportationMessage( unsigned int missionType )
         {
@@ -71,15 +79,17 @@ namespace
         }
         xml::xistringstream xis;
         unsigned int transportId;
+        unsigned int embarkmentId;
         unsigned long automatId;
         MockMissionResolver missionResolver;
         MockTransportationListener listener;
+        dispatcher::MockSimulationPublisher publisher;
         tools::MessageController< sword::SimToClient_Content > messageController;
         MockCallsignResolver callsignResolver;
         MockSubordinates subordinates;
         MockContextFactory factory;
     };
-    bool CheckTransportedUnits( const TransportedUnits_ABC& visitable, const std::string& subordinateNetnUniqueId, const std::string& subordinateCallsign )
+    bool CheckTransportedUnits( const TransportedUnits_ABC& visitable, const std::string& subordinateCallsign, const std::string& subordinateNetnUniqueId )
     {
         MockTransportedUnitsVisitor visitor;
         MOCK_EXPECT( visitor, Notify ).once().with( subordinateCallsign, subordinateNetnUniqueId );
@@ -98,7 +108,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mission_and_notifies_listener, Fixture )
 {
-    TransportationController controller( xis, missionResolver, messageController, callsignResolver, subordinates, factory );
+    TransportationController controller( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher );
     controller.Register( listener );
     const geometry::Point2d embarkingPoint;
     const geometry::Point2d debarkingPoint;
@@ -122,7 +132,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mis
     parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000002" ); // debarking time
     parameters->add_elem()->add_value()->mutable_agent()->set_id( transportingUnitSimulationId );// transporting unit
     MOCK_EXPECT( callsignResolver, ResolveCallsign ).once().with( transportingUnitSimulationId ).returns( transportingUnitCallsign );
-    MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateNetnUniqueId, subordinateCallsign ) );
+    MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
     MOCK_EXPECT( listener, ConvoyRequested ).once().with( transportingUnitCallsign, embarkingTime, embarkingPoint, debarkingTime, debarkingPoint, boost::bind( &CheckTransportedUnits, _1, boost::cref( subordinateCallsign ), boost::cref( subordinateNetnUniqueId ) ), 1337u );
     MOCK_EXPECT( factory, Create ).once().returns( 1337 );
     messageController.Dispatch( message );
@@ -130,7 +140,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mis
 
 BOOST_FIXTURE_TEST_CASE( transporation_controller_does_nothing_if_mission_is_not_transportation, Fixture )
 {
-    TransportationController controller( xis, missionResolver, messageController, callsignResolver, subordinates, factory );
+    TransportationController controller( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher );
     controller.Register( listener );
     const unsigned int unknownMission = transportId + 1;
     messageController.Dispatch( MakeTransportationMessage( unknownMission ) );
@@ -142,9 +152,10 @@ namespace
     {
     public:
         RequestedFixture()
-            : controller                  ( xis, missionResolver, messageController, callsignResolver, subordinates, factory )
+            : controller                  ( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher )
             , context                     ( 1337 )
             , missionCompleteId           ( 1338u )
+            , embarkingPoint              ( 1., 2. )
             , embarkingTime               ( 1 )
             , debarkingTime               ( 2 )
             , automatId                   ( 42 )
@@ -152,7 +163,9 @@ namespace
             , subordinateNetnUniqueId     ( "143" )
             , transportingUnitSimulationId( 43 )
             , transportingUnitCallsign    ( "transporting callsign" )
+            , transportingUnitUniqueId    ( "77777" )
         {
+            listOfTransporters.list.push_back( NetnObjectDefinitionStruct( transportingUnitCallsign, transportingUnitUniqueId, NetnObjectFeatureStruct() ) );
             controller.Register( listener );
             sword::SimToClient_Content message = MakeTransportationMessage( transportId );
             sword::AutomatOrder* automatOrder = message.mutable_automat_order();
@@ -168,7 +181,7 @@ namespace
             parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000002" ); // debarking time
             parameters->add_elem()->add_value()->mutable_agent()->set_id( transportingUnitSimulationId );// transporting unit
             MOCK_EXPECT( callsignResolver, ResolveCallsign ).once().with( transportingUnitSimulationId ).returns( transportingUnitCallsign );
-            MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateNetnUniqueId, subordinateCallsign ) );
+            MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
             MOCK_EXPECT( listener, ConvoyRequested ).once().with( transportingUnitCallsign, embarkingTime, embarkingPoint, debarkingTime, debarkingPoint, boost::bind( &CheckTransportedUnits, _1, boost::cref( subordinateCallsign ), boost::cref( subordinateNetnUniqueId ) ), context );
             MOCK_EXPECT( factory, Create ).once().returns( context );
             messageController.Dispatch( message );
@@ -193,41 +206,43 @@ namespace
         const std::string subordinateNetnUniqueId;
         const unsigned long transportingUnitSimulationId;
         const std::string transportingUnitCallsign;
+        const std::string transportingUnitUniqueId;
+        interactions::ListOfTransporters listOfTransporters;
     };
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_controller_accepts_offer_if_offer_is_same_as_request_and_notifies_listener, RequestedFixture )
 {
     MOCK_EXPECT( listener, OfferAccepted ).once().with( context, "provider" );
-    controller.OfferReceived( context, true, "provider" );
+    controller.OfferReceived( context, true, "provider", listOfTransporters );
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_controller_rejects_offer_if_offer_is_partial_and_notifies_listener, RequestedFixture )
 {
     MOCK_EXPECT( listener, OfferRejected ).once().with( context, "provider", "Not offering service or partial offer" );
-    controller.OfferReceived( context, false, "provider" );
+    controller.OfferReceived( context, false, "provider", listOfTransporters );
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_controller_reject_all_good_offers_if_already_accepted, RequestedFixture )
 {
     MOCK_EXPECT( listener, OfferAccepted ).once().with( context, "provider" );
-    controller.OfferReceived( context, true, "provider" );
+    controller.OfferReceived( context, true, "provider", listOfTransporters );
     mock::verify();
     MOCK_EXPECT( listener, OfferRejected ).once().with( context, "provider2", "An other offer has already been accepted" );
-    controller.OfferReceived( context, true, "provider2" );
+    controller.OfferReceived( context, true, "provider2", listOfTransporters );
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_controller_does_nothing_when_report_mission_complete_but_offer_rejected, RequestedFixture )
 {
     MOCK_EXPECT( listener, OfferRejected ).once();
-    controller.OfferReceived( context, false, "provider" );
+    controller.OfferReceived( context, false, "provider", listOfTransporters );
     sword::SimToClient_Content message = MakeReportMessage( automatId, missionCompleteId );
     messageController.Dispatch( message );
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_controller_does_nothing_if_service_id_is_not_known, RequestedFixture )
 {
-    controller.OfferReceived( context + 1, true, "provider" );
+    controller.OfferReceived( context + 1, true, "provider", listOfTransporters );
 }
 
 namespace
@@ -238,7 +253,7 @@ namespace
         AcceptedFixture()
         {
             MOCK_EXPECT( listener, OfferAccepted ).once().with( context, "provider" );
-            controller.OfferReceived( context, true, "provider" );
+            controller.OfferReceived( context, true, "provider", listOfTransporters );
         }
     };
 }
@@ -260,4 +275,52 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_does_nothing_when_report_is_n
 {
     sword::SimToClient_Content message = MakeReportMessage( automatId + 1, missionCompleteId );
     messageController.Dispatch( message );
+}
+
+namespace
+{
+    class ReadyAndStartedFixture : public AcceptedFixture
+    {
+    public:
+        ReadyAndStartedFixture()
+        {
+            MOCK_EXPECT( listener, ReadyToReceiveService ).once();
+            sword::SimToClient_Content message = MakeReportMessage( automatId, missionCompleteId );
+            messageController.Dispatch( message );
+            controller.ServiceStarted( context );
+        }
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_controller_waits_for_all_troops_to_makes_vessel_embarkation, ReadyAndStartedFixture )
+{
+    const unsigned int vesselId = 888;
+    const unsigned int surbordinateId = 999;
+    MockTransportedUnits units;
+    MOCK_EXPECT( units, Apply ).once();
+    MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
+    controller.NotifyEmbarkationStatus( context, transportingUnitCallsign, units );
+    mock::verify();
+    MOCK_EXPECT( units, Apply ).once().calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _1, subordinateCallsign, subordinateNetnUniqueId ) );
+    sword::ClientToSim message;
+    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
+    MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
+    MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( transportingUnitUniqueId ).returns( vesselId );
+    MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
+    controller.NotifyEmbarkationStatus( context, transportingUnitCallsign, units );
+    mock::verify();
+    BOOST_CHECK( message.message().has_unit_order() );
+    const sword::UnitOrder& order = message.message().unit_order();
+    BOOST_CHECK_EQUAL( order.tasker().id(), vesselId );
+    BOOST_CHECK_EQUAL( order.type().id(), embarkmentId );
+    BOOST_CHECK_EQUAL( order.parameters().elem_size(), 6 );
+    BOOST_CHECK( order.parameters().elem( 0 ).value( 0 ).has_heading() );
+    BOOST_CHECK( order.parameters().elem( 1 ).null_value() );
+    BOOST_CHECK( order.parameters().elem( 2 ).null_value() );
+    BOOST_CHECK( order.parameters().elem( 3 ).null_value() );
+    BOOST_CHECK_EQUAL( order.parameters().elem( 4 ).value( 0 ).list_size(), 1 );
+    BOOST_CHECK_EQUAL( order.parameters().elem( 4 ).value( 0 ).list( 0 ).agent().id(), surbordinateId );
+    BOOST_CHECK_EQUAL( order.parameters().elem( 5 ).value( 0 ).point().location().type(), sword::Location::point );
+    BOOST_CHECK_CLOSE( order.parameters().elem( 5 ).value( 0 ).point().location().coordinates().elem( 0 ).latitude(), embarkingPoint.X(), 0.00001 );
+    BOOST_CHECK_CLOSE( order.parameters().elem( 5 ).value( 0 ).point().location().coordinates().elem( 0 ).longitude(), embarkingPoint.Y(), 0.00001 );
 }

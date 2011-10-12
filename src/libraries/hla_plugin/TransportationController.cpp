@@ -16,8 +16,9 @@
 #include "TransportedUnitsVisitor_ABC.h"
 #include "Subordinates_ABC.h"
 #include "ContextFactory_ABC.h"
-#include "protocol/Simulation.h"
-#include <geometry/Types.h>
+#include "protocol/SimulationSenders.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
+#include <set>
 #include <xeumeuleu/xml.hpp>
 #include <boost/foreach.hpp>
 #pragma warning( push, 1 )
@@ -29,11 +30,11 @@ namespace bpt = boost::posix_time;
 
 namespace
 {
-    unsigned int ResolveMission( xml::xisubstream xis, const MissionResolver_ABC& resolver )
+    unsigned int ResolveMission( xml::xisubstream xis, const MissionResolver_ABC& resolver, const std::string& mission )
     {
         std::string name;
         xis >> xml::start( "missions" )
-                >> xml::content( "transport", name );
+                >> xml::content( mission, name );
         return resolver.Resolve( name );
     }
     unsigned int ResolveReportId( xml::xisubstream xis )
@@ -52,12 +53,14 @@ namespace
 TransportationController::TransportationController( xml::xisubstream xis, const MissionResolver_ABC& resolver,
                                                     tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                                     const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
-                                                    const ContextFactory_ABC& contextFactory )
-    : transportIdentifier_    ( ResolveMission( xis, resolver ) )
+                                                    const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher )
+    : transportIdentifier_    ( ResolveMission( xis, resolver, "transport" ) )
+    , embarkmentIdentifier_   ( ResolveMission( xis, resolver, "embarkment" ) )
     , missionCompleteReportId_( ResolveReportId( xis ) )
     , callsignResolver_       ( callsignResolver )
     , subordinates_           ( subordinates )
     , contextFactory_         ( contextFactory )
+    , publisher_              ( publisher )
 {
     CONNECT( controller, *this, automat_order );
     CONNECT( controller, *this, report );
@@ -127,6 +130,8 @@ void TransportationController::Notify(  const sword::AutomatOrder& message, int 
         const SubordinatesVisitor visitor( subordinates_, message.tasker().id() );
         const unsigned int context = contextFactory_.Create();
         pendingRequests_.insert( T_Requests::value_type( context, message.tasker().id() ) );
+        contextRequests_[ context ].embarkmentPoint = embarkmentPoint;
+        contextRequests_[ context ].debarkmentPoint = debarkmentPoint;
         BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
             listener->ConvoyRequested( transportingUnitCallsign, embarkmentTime, embarkmentPoint, debarkmentTime, debarkmentPoint, visitor, context );
     }
@@ -148,7 +153,7 @@ void TransportationController::Notify( const sword::Report& message, int /*conte
         return;
     const unsigned int context = request->second;
     BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
-        listener->ReadyToReceiveService( context, contextProviders_[ context ] );
+        listener->ReadyToReceiveService( context, contextRequests_[ context ].provider );
     Transfer( acceptedRequests_, readyToReceiveRequests_, context );
 }
 
@@ -174,7 +179,7 @@ void TransportationController::Unregister( TransportationListener_ABC& listener 
 // Name: TransportationController::OfferReceived
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-void TransportationController::OfferReceived( unsigned int context, bool fullOffer, const std::string& provider )
+void TransportationController::OfferReceived( unsigned int context, bool fullOffer, const std::string& provider, const interactions::ListOfTransporters& listOfTransporters )
 {
     if( pendingRequests_.left.find( context ) == pendingRequests_.left.end() )
     {
@@ -187,12 +192,24 @@ void TransportationController::OfferReceived( unsigned int context, bool fullOff
     {
         BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
             listener->OfferAccepted( context, provider );
-        contextProviders_[ context ] = provider;
+        contextRequests_[ context ].provider = provider;
+        contextRequests_[ context ].listOfTransporters = listOfTransporters;
         Transfer( pendingRequests_, acceptedRequests_, context );
     }
     else
         BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
             listener->OfferRejected( context, provider, "Not offering service or partial offer" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationController::ServiceStarted
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void TransportationController::ServiceStarted( unsigned int context )
+{
+    if( readyToReceiveRequests_.left.find( context ) == readyToReceiveRequests_.left.end() )
+        return;
+    Transfer( readyToReceiveRequests_, serviceStartedRequests_, context );
 }
 
 // -----------------------------------------------------------------------------
@@ -204,4 +221,82 @@ void TransportationController::Transfer( T_Requests& from, T_Requests& to, unsig
     const unsigned int automatId = from.left.find( context )->second;
     from.left.erase( context );
     to.insert( T_Requests::value_type( context, automatId ) );
+}
+
+namespace
+{
+     class TransportedSubordinatesChecker : private TransportedUnitsVisitor_ABC
+    {
+    public:
+        TransportedSubordinatesChecker( const Subordinates_ABC& subordinates, const TransportedUnits_ABC& transportedUnits, unsigned long automatIdentifier )
+        {
+            filling_ = true;
+            subordinates.Apply( automatIdentifier, *this );
+            filling_ = false;
+            transportedUnits.Apply( *this );
+        }
+        bool AreAllSubordinatesEmbarked() const
+        {
+            return units_.empty();
+        }
+    private:
+        virtual void Notify( const std::string& /*callsign*/, const std::string& uniqueId )
+        {
+            if( filling_ )
+            {
+                units_.insert( uniqueId );
+                transportedUnits_.insert( uniqueId );
+            }
+            else
+                units_.erase( uniqueId );
+        }
+    public:
+        std::set< std::string > transportedUnits_;
+    private:
+        bool filling_;
+        std::set< std::string > units_;
+    };
+     std::string ResolveUniqueIdFromCallsign( const std::string& callsign, const interactions::ListOfTransporters& listOfTransporters )
+     {
+         BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, listOfTransporters.list )
+             if( unit.callsign.str() == callsign )
+                 return unit.uniqueId.str();
+         return "";
+     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationController::NotifyEmbarkationStatus
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void TransportationController::NotifyEmbarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits )
+{
+    T_Requests::left_const_iterator request = serviceStartedRequests_.left.find( context );
+    if( request == serviceStartedRequests_.left.end() )
+        return;
+    const TransportedSubordinatesChecker checker( subordinates_, transportedUnits, request->second ) ;
+    if( !checker.AreAllSubordinatesEmbarked() || checker.transportedUnits_.empty() )
+        return;
+    const T_Request& contextRequest = contextRequests_[ request->first ];
+    const std::string transporterUniqueId = ResolveUniqueIdFromCallsign( transporterCallsign, contextRequest.listOfTransporters );
+    const unsigned int transporterId = callsignResolver_.ResolveSimulationIdentifier( transporterUniqueId );
+    std::vector< unsigned int > transportedUnitsIdentifiers;
+    BOOST_FOREACH( const std::string& uniqueId, checker.transportedUnits_ )
+        transportedUnitsIdentifiers.push_back( callsignResolver_.ResolveSimulationIdentifier( uniqueId ) );
+    simulation::UnitOrder order;
+    order().mutable_tasker()->set_id( transporterId );
+    order().mutable_type()->set_id( embarkmentIdentifier_ );
+    order().mutable_parameters()->add_elem()->add_value()->mutable_heading()->set_heading( 0 );
+    order().mutable_parameters()->add_elem()->set_null_value( true );
+    order().mutable_parameters()->add_elem()->set_null_value( true );
+    order().mutable_parameters()->add_elem()->set_null_value( true );
+    sword::MissionParameter_Value* agentList = order().mutable_parameters()->add_elem()->add_value();
+    BOOST_FOREACH( const unsigned int id, transportedUnitsIdentifiers )
+        agentList->mutable_list()->Add()->mutable_agent()->set_id( id );
+    sword::Location* location = order().mutable_parameters()->add_elem()->add_value()->mutable_point()->mutable_location();
+    location->set_type( sword::Location::point );
+    sword::CoordLatLong* coord = location->mutable_coordinates()->add_elem();
+    coord->set_latitude( contextRequest.embarkmentPoint.X() );
+    coord->set_longitude( contextRequest.embarkmentPoint.Y() );
+    order.Send( publisher_ );
 }

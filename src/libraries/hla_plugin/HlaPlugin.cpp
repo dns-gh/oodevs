@@ -141,7 +141,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pInteractionsFacade_.reset( new InteractionsFacade( *pFederate_, publisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ) ) );
             pSideChecker_.reset( new SideChecker( *pSubject_, *pFederate_, *pRemoteAgentResolver_ ) );
             pTransporters_.reset( new Transporters( *pSubject_, *pCallsignResolver_, *pSideChecker_, *pAutomatChecker_ ) );
-            pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pFederate_, *pContextFactory_, *pTransporters_ ) : 0 );
+            pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pFederate_, *pContextFactory_, *pTransporters_, publisher_ ) : 0 );
             pStepper_.reset( new Stepper( *pXis_, *pMessageController_, publisher_ ) );
             pSubject_->Visit( dynamicModel_ );
         }

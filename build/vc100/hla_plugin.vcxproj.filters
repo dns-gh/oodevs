@@ -265,6 +265,12 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceStarted.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatus.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatusReceiver.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -610,6 +616,12 @@
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceStarted.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatus.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatusReceiver.h">
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
   </ItemGroup>

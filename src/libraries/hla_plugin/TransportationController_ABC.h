@@ -17,7 +17,12 @@ namespace plugins
 {
 namespace hla
 {
+namespace interactions
+{
+    struct ListOfTransporters; // $$$$ _RC_ SLI 2011-10-12: erk
+}
     class TransportationListener_ABC;
+    class TransportedUnits_ABC;
 
 // =============================================================================
 /** @class  TransportationController_ABC
@@ -38,7 +43,9 @@ public:
     //@{
     virtual void Register( TransportationListener_ABC& listener ) = 0;
     virtual void Unregister( TransportationListener_ABC& listener ) = 0;
-    virtual void OfferReceived( unsigned int context, bool fullOffer, const std::string& provider ) = 0;
+    virtual void OfferReceived( unsigned int context, bool fullOffer, const std::string& provider, const interactions::ListOfTransporters& listOfTransporters ) = 0;
+    virtual void ServiceStarted( unsigned int context ) = 0;
+    virtual void NotifyEmbarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits ) = 0;
     //@}
 };
 

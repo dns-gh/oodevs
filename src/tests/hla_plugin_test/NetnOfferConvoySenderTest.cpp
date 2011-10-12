@@ -59,9 +59,9 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_sender_sends_offer_when_receiving_req
     BOOST_CHECK_EQUAL( offer.provider.str()                   , request.provider.str() );
     BOOST_CHECK_EQUAL( offer.serviceType                      , request.serviceType );
     BOOST_CHECK_EQUAL( offer.offerType                        , 1 ); // RequestAcknowledgePositive
-    BOOST_CHECK_EQUAL( offer.listOfTransporters.listOfTransporters.size(), 1u );
-    BOOST_CHECK_EQUAL( offer.listOfTransporters.listOfTransporters[ 0 ].callsign.str(), "vessel" );
-    BOOST_CHECK_EQUAL( offer.listOfTransporters.listOfTransporters[ 0 ].uniqueId.str(), "uniqueV" );
+    BOOST_CHECK_EQUAL( offer.listOfTransporters.list.size(), 1u );
+    BOOST_CHECK_EQUAL( offer.listOfTransporters.list[ 0 ].callsign.str(), "vessel" );
+    BOOST_CHECK_EQUAL( offer.listOfTransporters.list[ 0 ].uniqueId.str(), "uniqueV" );
     BOOST_CHECK_EQUAL( offer.transportData.convoyType, request.transportData.convoyType );
     BOOST_CHECK_EQUAL( offer.transportData.dataTransport.objectToManage.size(),
                        request.transportData.dataTransport.objectToManage.size() );
