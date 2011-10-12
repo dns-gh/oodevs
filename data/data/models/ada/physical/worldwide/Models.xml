@@ -2536,7 +2536,7 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" masalife="false" name="Motorized Inf platoon">
+    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" masalife="false" name="Mechanized Inf platoon">
       <missions>
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
@@ -4180,4 +4180,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2378024266" -->
+<!-- signature="3652015826" -->

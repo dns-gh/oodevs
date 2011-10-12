@@ -229,7 +229,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry platoon" id="8" name="Infantry platoon" type="Pion INF">
+  <unit decisional-model="Mechanized Inf platoon" id="8" name="Mechanized infantry platoon" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="Light Armored Vehicle 12.7-mm"/>
@@ -3997,5 +3997,48 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="Infantry platoon" id="136" name="Infantry platoon" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="9" crew="1" loadable="true" type="Infantry Soldiers"/>
+      <equipment count="2" crew="2" loadable="true" type="SRAW soldier"/>
+      <equipment count="3" crew="1" loadable="true" type="VSRAW soldier"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="2000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="18" logistic-threshold="30" name="68-mm Rocket" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="2946880891" -->
+<!-- signature="3324372134" -->
