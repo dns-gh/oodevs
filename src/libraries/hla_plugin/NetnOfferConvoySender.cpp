@@ -20,10 +20,12 @@ using namespace plugins::hla;
 // Name: NetnOfferConvoySender constructor
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-NetnOfferConvoySender::NetnOfferConvoySender( InteractionSender_ABC< interactions::NetnOfferConvoy >& interactionSender,
+NetnOfferConvoySender::NetnOfferConvoySender( InteractionSender_ABC< interactions::NetnOfferConvoy >& offerInteractionSender,
+                                              InteractionSender_ABC< interactions::NetnServiceStarted >& serviceStartedInteractionSender,
                                               const Transporters_ABC& transporters )
-    : interactionSender_( interactionSender )
-    , transporters_     ( transporters )
+    : offerInteractionSender_         ( offerInteractionSender )
+    , serviceStartedInteractionSender_( serviceStartedInteractionSender )
+    , transporters_                   ( transporters )
 {
     // NOTHING
 }
@@ -86,5 +88,50 @@ void NetnOfferConvoySender::Receive( interactions::NetnRequestConvoy& request )
     offer.serviceType = request.serviceType;
     offer.offerType = 1; // RequestAcknowledgePositive
     offer.transportData = request.transportData;
-    interactionSender_.Send( offer );
+    pendingOffers_.insert( offer.serviceId.eventCount );
+    offerInteractionSender_.Send( offer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnOfferConvoySender::Receive
+// Created: VPR 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnOfferConvoySender::Receive( interactions::NetnAcceptOffer& accept )
+{
+    unsigned int eventCount = accept.serviceId.eventCount;
+    if( pendingOffers_.find( eventCount ) == pendingOffers_.end() )
+        return;
+    if( accept.serviceId.issuingObjectIdentifier.str() != "SWORD" )
+        return;
+    Transfer( pendingOffers_, acceptedOffers_, eventCount );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnOfferConvoySender::Receive
+// Created: VPR 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnOfferConvoySender::Receive( interactions::NetnReadyToReceiveService& readyToReceive )
+{
+    unsigned int eventCount = readyToReceive.serviceId.eventCount;
+    if( acceptedOffers_.find( eventCount ) == acceptedOffers_.end() )
+        return;
+    if( readyToReceive.serviceId.issuingObjectIdentifier.str() != "SWORD" )
+        return;
+    Transfer( acceptedOffers_, startedOffers_, eventCount );
+    interactions::NetnServiceStarted serviceStarted;
+    serviceStarted.serviceId = readyToReceive.serviceId;
+    serviceStarted.consumer = readyToReceive.consumer;
+    serviceStarted.provider = readyToReceive.provider;
+    serviceStarted.serviceType = readyToReceive.serviceType;
+    serviceStartedInteractionSender_.Send( serviceStarted );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnOfferConvoySender::Transfer
+// Created: VPR 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnOfferConvoySender::Transfer( T_Offers& from, T_Offers& to, unsigned int eventCount ) const
+{
+    from.erase( eventCount );
+    to.insert( eventCount );
 }

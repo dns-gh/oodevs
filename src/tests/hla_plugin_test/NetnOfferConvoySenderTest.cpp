@@ -25,9 +25,10 @@ namespace
     {
     public:
         Fixture()
-            : offerConvoySender( interactionSender, transporters )
+            : offerConvoySender( offerInteractionSender, serviceStartedInteractionSender, transporters )
         {}
-        MockInteractionSender< interactions::NetnOfferConvoy > interactionSender;
+        MockInteractionSender< interactions::NetnOfferConvoy > offerInteractionSender;
+        MockInteractionSender< interactions::NetnServiceStarted > serviceStartedInteractionSender;
         MockTransporters transporters;
         interactions::NetnOfferConvoy offer;
         interactions::NetnRequestConvoy request;
@@ -47,7 +48,7 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_sender_sends_offer_when_receiving_req
     request.transportData.dataTransport.finalAppointment = NetnAppointmentStruct( 2, rpr::WorldLocation( 4., 5., 6. ) );
     request.transportData.dataTransport.objectToManage.push_back( NetnObjectDefinitionStruct( "transported", "unique", NetnObjectFeatureStruct() ) );
     MOCK_EXPECT( transporters, Apply ).once().with( "unique", mock::any, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _3, "vessel", "uniqueV" ) );
-    MOCK_EXPECT( interactionSender, Send ).once().with( mock::retrieve( offer ) );
+    MOCK_EXPECT( offerInteractionSender, Send ).once().with( mock::retrieve( offer ) );
     offerConvoySender.Receive( request );
     mock::verify();
     BOOST_CHECK_EQUAL( offer.isOffering                       , 1 ); // true
@@ -104,4 +105,90 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_does_nothing_if_request_is_not_transp
     request.transportData.dataTransport.appointment.location = rpr::WorldLocation( 1., 2., 3. );
     request.transportData.dataTransport.objectToManage.push_back( NetnObjectDefinitionStruct( "transported", "unique", NetnObjectFeatureStruct() ) );
     offerConvoySender.Receive( request );
+}
+
+namespace
+{
+    class SentFixture : public Fixture
+    {
+    public:
+        SentFixture()
+        {
+            request.serviceType = 4; // Convoy
+            request.consumer = UnicodeString( "consumer" );
+            request.provider = UnicodeString( "provider" );
+            request.serviceId.eventCount = 42;
+            request.serviceId.issuingObjectIdentifier = UnicodeString( "SWORD" );
+            request.transportData.convoyType = 0; // Transport
+            request.transportData.dataTransport.appointment = NetnAppointmentStruct( 1, rpr::WorldLocation( 1., 2., 3. ) );
+            request.transportData.dataTransport.finalAppointment = NetnAppointmentStruct( 2, rpr::WorldLocation( 4., 5., 6. ) );
+            request.transportData.dataTransport.objectToManage.push_back( NetnObjectDefinitionStruct( "transported", "unique", NetnObjectFeatureStruct() ) );
+            MOCK_EXPECT( transporters, Apply ).once().with( "unique", mock::any, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _3, "vessel", "uniqueV" ) );
+            MOCK_EXPECT( offerInteractionSender, Send ).once().with( mock::retrieve( offer ) );
+            offerConvoySender.Receive( request );
+            mock::verify();
+        }
+        interactions::NetnAcceptOffer accept;
+        interactions::NetnReadyToReceiveService readyToReceive;
+        interactions::NetnServiceStarted serviceStarted;
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_sends_service_started_when_accept_offer_and_ready_to_receive_service_received, SentFixture )
+{
+    accept.serviceId = offer.serviceId;
+    readyToReceive.serviceId = offer.serviceId;
+    MOCK_EXPECT( serviceStartedInteractionSender, Send ).once().with( mock::retrieve( serviceStarted ) );
+    offerConvoySender.Receive( accept );
+    offerConvoySender.Receive( readyToReceive );
+    mock::verify();
+    BOOST_CHECK_EQUAL( serviceStarted.serviceId.eventCount, offer.serviceId.eventCount );
+    BOOST_CHECK_EQUAL( serviceStarted.serviceId.issuingObjectIdentifier.str(), offer.serviceId.issuingObjectIdentifier.str() );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_does_nothing_if_accept_offer_event_count_is_unkown, SentFixture )
+{
+    accept.serviceId.eventCount = offer.serviceId.eventCount + 1;
+    accept.serviceId.issuingObjectIdentifier = offer.serviceId.issuingObjectIdentifier;
+    offerConvoySender.Receive( accept );
+    readyToReceive.serviceId = offer.serviceId;
+    offerConvoySender.Receive( readyToReceive );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_does_nothing_if_ready_to_receive_service_event_count_is_unkown, SentFixture )
+{
+    accept.serviceId = offer.serviceId;
+    offerConvoySender.Receive( accept );
+    readyToReceive.serviceId.eventCount = offer.serviceId.eventCount + 1;
+    readyToReceive.serviceId.issuingObjectIdentifier = offer.serviceId.issuingObjectIdentifier;
+    offerConvoySender.Receive( readyToReceive );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_does_nothing_if_accept_offer_issuing_object_identifier_is_unkown, SentFixture )
+{
+    accept.serviceId.eventCount = offer.serviceId.eventCount;
+    accept.serviceId.issuingObjectIdentifier = UnicodeString( "unknown identifier" );
+    offerConvoySender.Receive( accept );
+    readyToReceive.serviceId = offer.serviceId;
+    offerConvoySender.Receive( readyToReceive );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_does_nothing_if_ready_to_receive_service_issuing_object_identifier_is_unkown, SentFixture )
+{
+    accept.serviceId = offer.serviceId;
+    offerConvoySender.Receive( accept );
+    readyToReceive.serviceId.eventCount = offer.serviceId.eventCount;
+    readyToReceive.serviceId.issuingObjectIdentifier = UnicodeString( "unknown identifier" );;
+    offerConvoySender.Receive( readyToReceive );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_does_not_resend_service_started_when_receiving_ready_to_receive_service, SentFixture )
+{
+    accept.serviceId = offer.serviceId;
+    readyToReceive.serviceId = offer.serviceId;
+    MOCK_EXPECT( serviceStartedInteractionSender, Send ).once().with( mock::retrieve( serviceStarted ) );
+    offerConvoySender.Receive( accept );
+    offerConvoySender.Receive( readyToReceive );
+    mock::verify();
+    offerConvoySender.Receive( readyToReceive );
 }

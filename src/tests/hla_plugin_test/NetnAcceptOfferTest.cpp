@@ -12,6 +12,7 @@
 #include "hla_plugin/Interactions.h"
 #include "MockFederate.h"
 #include "MockInteractionHandler.h"
+#include "MockInteractionNotification.h"
 #include <boost/bind.hpp>
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
@@ -21,9 +22,10 @@ using namespace plugins::hla;
 BOOST_AUTO_TEST_CASE( netn_accept_offer_registration_publish_only )
 {
     MockFederate federate;
+    ::hla::MockInteractionNotification< interactions::NetnAcceptOffer > notification;
     hla::MockInteractionHandler* handler = new hla::MockInteractionHandler(); // $$$$ _RC_ SLI 2011-06-24: wtf hla library?
-    MOCK_EXPECT( federate, RegisterInteraction ).once().with( "NETN_Service.NETN_AcceptOffer", mock::any, true, false ).calls( boost::bind( &hla::Interaction_ABC::SetHandler, _2, boost::ref( *handler ) ) );
-    NetnAcceptOffer interaction( federate );
+    MOCK_EXPECT( federate, RegisterInteraction ).once().with( "NETN_Service.NETN_AcceptOffer", mock::any, true, true ).calls( boost::bind( &hla::Interaction_ABC::SetHandler, _2, boost::ref( *handler ) ) );
+    NetnAcceptOffer interaction( federate, notification );
 }
 
 namespace
@@ -38,12 +40,13 @@ namespace
         }
         MockFederate federate;
         hla::MockInteractionHandler* handler;
+        ::hla::MockInteractionNotification< interactions::NetnAcceptOffer > notification;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : interaction( federate )
+            : interaction( federate, notification )
         {
             // NOTHING
         }

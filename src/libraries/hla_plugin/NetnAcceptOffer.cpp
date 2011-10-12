@@ -22,14 +22,14 @@ using namespace plugins::hla;
 // Name: NetnAcceptOffer constructor
 // Created: VPR 2011-10-11
 // -----------------------------------------------------------------------------
-NetnAcceptOffer::NetnAcceptOffer( Federate_ABC& federate )
-    : pInteraction_( new ::hla::Interaction< interactions::NetnAcceptOffer >( *this ) )
+NetnAcceptOffer::NetnAcceptOffer( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnAcceptOffer >& notification )
+    : pInteraction_(  new ::hla::Interaction< interactions::NetnAcceptOffer >( notification ) )
 {
     pInteraction_->Register( "ServiceID"  , ::hla::CreateParameter( &interactions::NetnAcceptOffer::serviceId ) );
     pInteraction_->Register( "Consumer"   , ::hla::CreateParameter( &interactions::NetnAcceptOffer::consumer ) );
     pInteraction_->Register( "Provider"   , ::hla::CreateParameter( &interactions::NetnAcceptOffer::provider ) );
     pInteraction_->Register( "ServiceType", ::hla::CreateParameter( &interactions::NetnAcceptOffer::serviceType ) );
-    federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_AcceptOffer" ), *pInteraction_, true, false );
+    federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_AcceptOffer" ), *pInteraction_, true, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,13 +48,4 @@ NetnAcceptOffer::~NetnAcceptOffer()
 void NetnAcceptOffer::Send( const interactions::NetnAcceptOffer& interaction )
 {
     pInteraction_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnAcceptOffer::Receive
-// Created: VPR 2011-10-11
-// -----------------------------------------------------------------------------
-void NetnAcceptOffer::Receive( interactions::NetnAcceptOffer& /*interaction*/ )
-{
-    throw std::runtime_error( __FUNCTION__ " unimplemented function" );
 }

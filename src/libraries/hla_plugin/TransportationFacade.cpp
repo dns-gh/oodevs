@@ -19,6 +19,7 @@
 #include "NetnRejectOfferConvoy.h"
 #include "NetnReadyToReceiveService.h"
 #include "NetnOfferResponseSender.h"
+#include "NetnServiceStarted.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
@@ -36,10 +37,11 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
     , pNetnRequestConvoySender_  ( new NetnRequestConvoySender( *pTransportationController_, *pNetnRequestConvoy_ ) )
     , pNetnOfferConvoyReceiver_  ( new NetnOfferConvoyReceiver( *pTransportationController_ ) )
     , pNetnOfferConvoy_          ( new NetnOfferConvoy( federate, *pNetnOfferConvoyReceiver_ ) )
-    , pNetnOfferConvoySender_    ( new NetnOfferConvoySender( *pNetnOfferConvoy_, transporters ) )
-    , pNetnAcceptOffer_          ( new NetnAcceptOffer( federate ) )
+    , pNetnServiceStarted_       ( new NetnServiceStarted( federate ) )
+    , pNetnOfferConvoySender_    ( new NetnOfferConvoySender( *pNetnOfferConvoy_, *pNetnServiceStarted_, transporters ) )
+    , pNetnAcceptOffer_          ( new NetnAcceptOffer( federate, *pNetnOfferConvoySender_ ) )
     , pNetnRejectOfferConvoy_    ( new NetnRejectOfferConvoy( federate ) )
-    , pNetnReadyToReceiveService_( new NetnReadyToReceiveService( federate ) )
+    , pNetnReadyToReceiveService_( new NetnReadyToReceiveService( federate, *pNetnOfferConvoySender_ ) )
     , pNetnOfferResponseSender_  ( new NetnOfferResponseSender( *pTransportationController_, *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_, *pNetnReadyToReceiveService_ ) )
 {
     // NOTHING

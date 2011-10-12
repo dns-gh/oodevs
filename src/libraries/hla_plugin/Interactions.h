@@ -127,6 +127,14 @@ struct NetnReadyToReceiveService
     int8 serviceType;
 };
 
+struct NetnServiceStarted
+{
+    NetnEventIdentifier serviceId;
+    UnicodeString consumer;
+    UnicodeString provider;
+    int8 serviceType;
+};
+
 }
 }
 }

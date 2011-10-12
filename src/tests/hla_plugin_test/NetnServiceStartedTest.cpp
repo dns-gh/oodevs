@@ -8,24 +8,22 @@
 // *****************************************************************************
 
 #include "hla_plugin_test_pch.h"
-#include "hla_plugin/NetnReadyToReceiveService.h"
+#include "hla_plugin/NetnServiceStarted.h"
 #include "hla_plugin/Interactions.h"
 #include "MockFederate.h"
 #include "MockInteractionHandler.h"
-#include "MockInteractionNotification.h"
 #include <boost/bind.hpp>
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
-BOOST_AUTO_TEST_CASE( netn_ready_to_receive_service_registration_publish_only )
+BOOST_AUTO_TEST_CASE( netn_service_started_registration_publish_only )
 {
     MockFederate federate;
-    ::hla::MockInteractionNotification< interactions::NetnReadyToReceiveService > notification;
     hla::MockInteractionHandler* handler = new hla::MockInteractionHandler(); // $$$$ _RC_ SLI 2011-06-24: wtf hla library?
-    MOCK_EXPECT( federate, RegisterInteraction ).once().with( "NETN_Service.NETN_ReadyToReceiveService", mock::any, true, true ).calls( boost::bind( &hla::Interaction_ABC::SetHandler, _2, boost::ref( *handler ) ) );
-    NetnReadyToReceiveService interaction( federate, notification );
+    MOCK_EXPECT( federate, RegisterInteraction ).once().with( "NETN_Service.NETN_ServiceStarted", mock::any, true, false ).calls( boost::bind( &hla::Interaction_ABC::SetHandler, _2, boost::ref( *handler ) ) );
+    NetnServiceStarted interaction( federate );
 }
 
 namespace
@@ -40,22 +38,21 @@ namespace
         }
         MockFederate federate;
         hla::MockInteractionHandler* handler;
-        ::hla::MockInteractionNotification< interactions::NetnReadyToReceiveService > notification;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : interaction( federate, notification )
+            : interaction( federate )
         {
             // NOTHING
         }
-        NetnReadyToReceiveService interaction;
+        NetnServiceStarted interaction;
         mock::sequence s;
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( netn_ready_to_receive_service_is_sent_with_attributes, RegisteredFixture )
+BOOST_FIXTURE_TEST_CASE( netn_service_started_is_sent_with_attributes, RegisteredFixture )
 {
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
                                                                         ( "Consumer" )
@@ -64,6 +61,8 @@ BOOST_FIXTURE_TEST_CASE( netn_ready_to_receive_service_is_sent_with_attributes, 
     BOOST_FOREACH( const std::string& parameter, parameters )
         MOCK_EXPECT( handler, Visit ).once().in( s ).with( parameter, mock::any );
     MOCK_EXPECT( handler, End ).once().in( s );
-    interactions::NetnReadyToReceiveService acceptOffer;
-    interaction.Send( acceptOffer );
+    interactions::NetnServiceStarted serviceStarted;
+    interaction.Send( serviceStarted );
 }
+
+

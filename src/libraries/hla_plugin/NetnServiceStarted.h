@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnAcceptOffer_h
-#define plugins_hla_NetnAcceptOffer_h
+#ifndef plugins_hla_NetnServiceStarted_h
+#define plugins_hla_NetnServiceStarted_h
 
 #include "InteractionSender_ABC.h"
 #include <hla/InteractionNotification_ABC.h>
@@ -27,36 +27,43 @@ namespace hla
 
 namespace interactions
 {
-    struct NetnAcceptOffer;
+    struct NetnServiceStarted;
 }
 // =============================================================================
-/** @class  NetnAcceptOffer
-    @brief  Netn accept offer
+/** @class  NetnServiceStarted
+    @brief  NetnServiceStarted
 */
-// Created: VPR 2011-10-11
+// Created: VPR 2011-10-12
 // =============================================================================
-class NetnAcceptOffer : public InteractionSender_ABC< interactions::NetnAcceptOffer >
+class NetnServiceStarted : public InteractionSender_ABC< interactions::NetnServiceStarted >
+                         , private ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnAcceptOffer( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnAcceptOffer >& notification );
-    virtual ~NetnAcceptOffer();
+             NetnServiceStarted( Federate_ABC& federate );
+    virtual ~NetnServiceStarted();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const interactions::NetnAcceptOffer& interaction );
+    virtual void Send( const interactions::NetnServiceStarted& interaction );
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void Receive( interactions::NetnServiceStarted& interaction );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::Interaction< interactions::NetnAcceptOffer > > pInteraction_;
+    std::auto_ptr< ::hla::Interaction< interactions::NetnServiceStarted > > pInteraction_;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_NetnAcceptOffer_h
+#endif // plugins_hla_NetnServiceStarted_h

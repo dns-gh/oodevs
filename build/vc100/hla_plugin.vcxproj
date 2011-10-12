@@ -132,6 +132,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoySender.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceStarted.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoySender.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceStarted.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />

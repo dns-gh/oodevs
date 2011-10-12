@@ -262,6 +262,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatChecker.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceStarted.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -605,6 +608,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceStarted.h">
+      <Filter>Source Files\Transportation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

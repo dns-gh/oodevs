@@ -166,6 +166,9 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnReadyToReceiveServiceTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnServiceStartedTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.h">

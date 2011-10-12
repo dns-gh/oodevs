@@ -22,14 +22,14 @@ using namespace plugins::hla;
 // Name: NetnReadyToReceiveService constructor
 // Created: VPR 2011-10-11
 // -----------------------------------------------------------------------------
-NetnReadyToReceiveService::NetnReadyToReceiveService( Federate_ABC& federate )
-    : pInteraction_( new ::hla::Interaction< interactions::NetnReadyToReceiveService >( *this ) )
+NetnReadyToReceiveService::NetnReadyToReceiveService( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnReadyToReceiveService >& notification )
+    : pInteraction_( new ::hla::Interaction< interactions::NetnReadyToReceiveService >( notification ) )
 {
     pInteraction_->Register( "ServiceID"  , ::hla::CreateParameter( &interactions::NetnReadyToReceiveService::serviceId ) );
     pInteraction_->Register( "Consumer"   , ::hla::CreateParameter( &interactions::NetnReadyToReceiveService::consumer ) );
     pInteraction_->Register( "Provider"   , ::hla::CreateParameter( &interactions::NetnReadyToReceiveService::provider ) );
     pInteraction_->Register( "ServiceType", ::hla::CreateParameter( &interactions::NetnReadyToReceiveService::serviceType ) );
-    federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_ReadyToReceiveService" ), *pInteraction_, true, false );
+    federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_ReadyToReceiveService" ), *pInteraction_, true, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,13 +48,4 @@ NetnReadyToReceiveService::~NetnReadyToReceiveService()
 void NetnReadyToReceiveService::Send( const interactions::NetnReadyToReceiveService& interaction )
 {
     pInteraction_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnReadyToReceiveService::Receive
-// Created: VPR 2011-10-11
-// -----------------------------------------------------------------------------
-void NetnReadyToReceiveService::Receive( interactions::NetnReadyToReceiveService& /*interaction*/ )
-{
-    throw std::runtime_error( __FUNCTION__ " unimplemented function" );
 }
