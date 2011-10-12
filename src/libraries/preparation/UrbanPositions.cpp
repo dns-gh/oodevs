@@ -11,6 +11,7 @@
 #include "UrbanPositions.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include <urban/GeometryAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/PhysicalAttribute.h>
@@ -80,9 +81,9 @@ const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 // Name: UrbanPositions::Draw
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( pColor_ )
+    if( pColor_ && viewport.IsHotpointVisible() )
         tools.DrawDecoratedPolygon( object_.Get< urban::GeometryAttribute >().Geometry(), *pColor_, hasInfrastructure_ ? object_.GetName() : std::string(), 0, selected_ );
 }
 

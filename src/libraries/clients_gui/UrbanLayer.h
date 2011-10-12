@@ -62,6 +62,7 @@ private:
     //! @name Member data
     //@{
     View_ABC& view_;
+    const kernel::Controllers& controllers_;
     const TerrainObjectProxy* selectedObject_;
     //@}
 };

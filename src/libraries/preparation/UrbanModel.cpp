@@ -246,14 +246,14 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
     if( pPhysical && pPhysical->GetArchitecture() )
         pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( *pPhysical->GetArchitecture(), std::auto_ptr< Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( urbanObject, std::auto_ptr< Usages_ABC >( new gui::Usages( dictionary, accommodationTypes_, pTerrainObject->GetLivingSpace() ) ) ) );
-    if( const urban::InfrastructureAttribute* infra = urbanObject.Retrieve< urban::InfrastructureAttribute >() )
+    const urban::InfrastructureAttribute* infra = urbanObject.Retrieve< urban::InfrastructureAttribute >();
+    if( infra && urbanPositions )
         if( const InfrastructureType* infraType = objectTypes_.StringResolver< InfrastructureType >::Find( infra->GetType() ) )
         {
-            pTerrainObject->Attach< Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, *infraType, dictionary ) );
+            pTerrainObject->Attach< Infrastructure_ABC >( *new InfrastructureAttribute( urbanPositions->Barycenter(), *infraType, dictionary ) );
             if( infraType->FindCapacity( "medical" ) )
                 pTerrainObject->Attach< MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( objectTypes_, dictionary ) );
-            if( urbanPositions )
-                urbanPositions->SetInfrastructurePresent();
+            urbanPositions->SetInfrastructurePresent();
         }
     pTerrainObject->Polish();
     if( !Resolver< gui::TerrainObjectProxy >::Find( urbanObject.GetId() ) )

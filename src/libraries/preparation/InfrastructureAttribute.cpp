@@ -9,15 +9,11 @@
 
 #include "preparation_pch.h"
 #include "InfrastructureAttribute.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
-#include "clients_kernel/Options.h"
-#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/UrbanPositions_ABC.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -28,13 +24,12 @@ using namespace kernel;
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( Controllers& controllers, const gui::TerrainObjectProxy& object, const InfrastructureType& infrastructureType, PropertiesDictionary& dico )
-    : controllers_( controllers )
-    , type_       ( infrastructureType )
+InfrastructureAttribute::InfrastructureAttribute( const geometry::Point2f& position, const InfrastructureType& infrastructureType, PropertiesDictionary& dico )
+    : type_       ( infrastructureType )
     , enabled_    ( true )
     , threshold_  ( DEFAULT_THRESHOLD )
     , role_       ( infrastructureType.GetName() )
-    , object_     ( object )
+    , position_   ( position )
 {
     CreateDictionary( dico );
 }
@@ -132,11 +127,10 @@ void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dico )
 // Name: InfrastructureAttribute::Draw
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Draw( const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
+void InfrastructureAttribute::Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( controllers_.options_.GetOption( "Infra", true ).To< bool >() )
-        if( const kernel::UrbanPositions_ABC* positions = object_.Retrieve< kernel::UrbanPositions_ABC >() )
-            tools.DrawApp6Symbol( type_.GetSymbol(), positions->Barycenter(), 0.1f, 0.1f );
+    if( viewport.IsHotpointVisible() )
+        tools.DrawApp6Symbol( type_.GetSymbol(), position_, 0.1f, 0.1f );
 }
 
 // -----------------------------------------------------------------------------

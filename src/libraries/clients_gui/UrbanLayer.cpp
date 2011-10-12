@@ -13,8 +13,11 @@
 #include "View_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include <graphics/extensions.h>
 #include <boost/noncopyable.hpp>
 
 using namespace gui;
@@ -27,6 +30,7 @@ UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_
                         View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
     : EntityLayer< TerrainObjectProxy >( controllers, tools, strategy, view, profile, filter )
     , view_          ( view )
+    , controllers_   ( controllers )
     , selectedObject_( 0 )
 {
     // NOTHING
@@ -45,22 +49,29 @@ namespace
 {
     struct DrawExtensionsFunctor : boost::noncopyable
     {
-        DrawExtensionsFunctor( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools )
-            : viewport_      ( viewport )
-            , tools_         ( tools )
+        DrawExtensionsFunctor( kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools, bool drawInfrastructure )
+            : viewport_          ( viewport )
+            , tools_             ( tools )
+            , drawInfrastructure_( drawInfrastructure )
         {}
 
         void operator()( const kernel::Entity_ABC& proxy )
         {
-            // dessin du réseau en dernier par dessus les blocs
-            if( const kernel::ResourceNetwork_ABC* resource = proxy.Retrieve< kernel::ResourceNetwork_ABC >() )
-                resource->Draw( viewport_, tools_ );
-            if( const kernel::Infrastructure_ABC* infra = proxy.Retrieve< kernel::Infrastructure_ABC >() )
-                infra->Draw( viewport_, tools_ );
+            if( const kernel::UrbanPositions_ABC* positions = proxy.Retrieve< kernel::UrbanPositions_ABC >() )
+            {
+                viewport_.SetHotpoint( positions->Barycenter() );
+                // dessin du réseau en dernier par dessus les blocs
+                if( const kernel::ResourceNetwork_ABC* resource = proxy.Retrieve< kernel::ResourceNetwork_ABC >() )
+                    resource->Draw( viewport_, tools_ );
+                if( drawInfrastructure_ )
+                    if( const kernel::Infrastructure_ABC* infra = proxy.Retrieve< kernel::Infrastructure_ABC >() )
+                        infra->Draw( viewport_, tools_ );
+            }
         }
 
-        const kernel::Viewport_ABC& viewport_;
+        kernel::Viewport_ABC& viewport_;
         const kernel::GlTools_ABC& tools_;
+        bool drawInfrastructure_;
     };
 }
 
@@ -70,10 +81,11 @@ namespace
 // -----------------------------------------------------------------------------
 void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
 {
+    gl::Initialize();
     // dessin des blocs urbains
     EntityLayer< TerrainObjectProxy >::Paint( viewport );
     // dessin des extensions(en deux temps pour les afficher par dessus les blocs)
-    DrawExtensionsFunctor functor( viewport, tools_ );
+    DrawExtensionsFunctor functor( viewport, tools_, controllers_.options_.GetOption( "Infra", true ).To< bool >() );
     Apply( functor );
 }
 

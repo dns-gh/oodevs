@@ -13,11 +13,10 @@
 #include "Overridable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
-#include <map>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
-    class Controllers;
     class Displayer_ABC;
     class InfrastructureType;
     class PropertiesDictionary;
@@ -42,11 +41,12 @@ namespace xml
 class InfrastructureAttribute : public kernel::Infrastructure_ABC
                               , public kernel::Serializable_ABC
                               , public Overridable_ABC
+                              , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InfrastructureAttribute( kernel::Controllers& controller, const gui::TerrainObjectProxy& object, const kernel::InfrastructureType& infrastructureType, kernel::PropertiesDictionary& dico );
+             InfrastructureAttribute( const geometry::Point2f& position, const kernel::InfrastructureType& infrastructureType, kernel::PropertiesDictionary& dico );
     virtual ~InfrastructureAttribute();
     //@}
 
@@ -67,12 +67,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InfrastructureAttribute( const InfrastructureAttribute& );            //!< Copy constructor
-    InfrastructureAttribute& operator=( const InfrastructureAttribute& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico );
@@ -81,12 +75,11 @@ private:
 public:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     const kernel::InfrastructureType& type_;
     bool enabled_;
     unsigned int threshold_;
     std::string role_;
-    const gui::TerrainObjectProxy& object_;
+    const geometry::Point2f position_;
     //@}
 };
 

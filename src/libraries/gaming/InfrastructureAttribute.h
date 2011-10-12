@@ -12,10 +12,12 @@
 
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
     class PropertiesDictionary;
     class InfrastructureType;
 }
@@ -32,32 +34,27 @@ namespace gui
 // Created: JSR 2010-09-01
 // =============================================================================
 class InfrastructureAttribute : public kernel::Infrastructure_ABC
+                              , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InfrastructureAttribute( kernel::Controllers& controllers, const gui::TerrainObjectProxy& object, const tools::StringResolver< kernel::InfrastructureType >& resolver, kernel::PropertiesDictionary& dictionary );
+             InfrastructureAttribute( kernel::Controllers& controllers, gui::TerrainObjectProxy& object, const tools::StringResolver< kernel::InfrastructureType >& resolver, kernel::PropertiesDictionary& dictionary );
     virtual ~InfrastructureAttribute();
     //@}
 
-	//! @name Accessors
+    //! @name Accessors
     //@{
     virtual bool IsEnabled() const;
     virtual unsigned int GetThreshold() const;
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InfrastructureAttribute( const InfrastructureAttribute& );            //!< Copy constructor
-    InfrastructureAttribute& operator=( const InfrastructureAttribute& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
@@ -74,7 +71,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const tools::StringResolver< kernel::InfrastructureType >& resolver_;
-    const gui::TerrainObjectProxy& object_;
+    kernel::Entity_ABC& object_;
+    const geometry::Point2f position_;
     bool enabled_;
     unsigned int threshold_;
     std::string role_;

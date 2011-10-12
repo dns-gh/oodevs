@@ -11,6 +11,7 @@
 #include "UrbanPositions.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -77,9 +78,10 @@ bool UrbanPositions::IsInside( const geometry::Point2f& point ) const
 // Name: UrbanPositions::Draw
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawDecoratedPolygon( polygon_, color_, hasInfrastructure_ ? name_ : std::string(), 0, selected_ );
+    if( viewport.IsHotpointVisible() )
+        tools.DrawDecoratedPolygon( polygon_, color_, hasInfrastructure_ ? name_ : std::string(), 0, selected_ );
 }
 
 // -----------------------------------------------------------------------------
