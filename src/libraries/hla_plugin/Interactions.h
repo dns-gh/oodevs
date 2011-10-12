@@ -111,6 +111,13 @@ struct NetnRejectOfferConvoy
     std::string reason;
 };
 
+struct NetnAcceptOffer
+{
+    NetnEventIdentifier serviceId;
+    UnicodeString consumer;
+    UnicodeString provider;
+    int8 serviceType;
+};
 }
 }
 }
