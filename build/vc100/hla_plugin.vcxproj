@@ -123,6 +123,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoyReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoySender.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferResponseSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRejectOfferConvoy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoyReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoySender.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferResponseSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRejectOfferConvoy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.h" />

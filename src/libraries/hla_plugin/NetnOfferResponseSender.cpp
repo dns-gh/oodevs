@@ -1,0 +1,78 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2011 MASA Group
+//
+// *****************************************************************************
+
+#include "hla_plugin_pch.h"
+#include "NetnOfferResponseSender.h"
+#include "TransportationController_ABC.h"
+#include "InteractionSender_ABC.h"
+#include "Interactions.h"
+
+using namespace plugins::hla;
+
+// -----------------------------------------------------------------------------
+// Name: NetnOfferResponseSender constructor
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+NetnOfferResponseSender::NetnOfferResponseSender( TransportationController_ABC& controller, InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptOfferSender,
+                                                  InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectOfferSender )
+    : controller_       ( controller )
+    , acceptOfferSender_( acceptOfferSender )
+    , rejectOfferSender_( rejectOfferSender )
+{
+    controller_.Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnOfferResponseSender destructor
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+NetnOfferResponseSender::~NetnOfferResponseSender()
+{
+    controller_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnOfferResponseSender::ConvoyRequested
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnOfferResponseSender::ConvoyRequested( const std::string& /*carrier*/, long long /*embarkmentTime*/, const geometry::Point2d& /*embarkmentPoint*/,
+                                               long long /*disembarkmentTime*/, const geometry::Point2d& /*disembarkmentPoint*/,
+                                               const TransportedUnits_ABC& /*transportedUnits*/, unsigned int /*context*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnOfferResponseSender::OfferAccepted
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnOfferResponseSender::OfferAccepted( unsigned int context, const std::string& provider )
+{
+    interactions::NetnAcceptOffer acceptation;
+    acceptation.serviceId = NetnEventIdentifier( context, "SWORD" );
+    acceptation.consumer = UnicodeString( "SWORD" );
+    acceptation.provider = UnicodeString( provider );
+    acceptation.serviceType = 4; // Convoy
+    acceptOfferSender_.Send( acceptation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnOfferResponseSender::OfferRejected
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnOfferResponseSender::OfferRejected( unsigned int context, const std::string& provider, const std::string& reason )
+{
+    interactions::NetnRejectOfferConvoy rejection;
+    rejection.serviceId = NetnEventIdentifier( context, "SWORD" );
+    rejection.consumer = UnicodeString( "SWORD" );
+    rejection.provider = UnicodeString( provider );
+    rejection.serviceType = 4; // Convoy
+    rejection.reason = reason;
+    rejectOfferSender_.Send( rejection );
+}

@@ -164,6 +164,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoyReceiverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoySenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoyTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferResponseSenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRejectOfferConvoyTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteCallsignListenerTest.cpp" />
