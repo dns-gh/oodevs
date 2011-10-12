@@ -11,6 +11,9 @@
     <missions>
         <transport>Common - request transport</transport>
     </missions>
+    <reports>
+        <mission-complete>12</mission-complete>
+    </reports>
     <surfaceVessels>
         <unit>Marine CP</unit>
         <unit>Aircraft Carrier</unit>
