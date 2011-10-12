@@ -256,6 +256,12 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferResponseSender.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnReadyToReceiveService.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatChecker.cpp">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -590,6 +596,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferResponseSender.h">
       <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnReadyToReceiveService.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker_ABC.h">
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

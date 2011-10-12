@@ -23,6 +23,7 @@ namespace hla
     class AgentSubject_ABC;
     class CallsignResolver_ABC;
     class SideChecker_ABC;
+    class AutomatChecker_ABC;
 
 // =============================================================================
 /** @class  Transporters
@@ -36,7 +37,8 @@ class Transporters : public Transporters_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Transporters( AgentSubject_ABC& agentSubject, const CallsignResolver_ABC& callsignResolver, const SideChecker_ABC& sideChecker );
+             Transporters( AgentSubject_ABC& agentSubject, const CallsignResolver_ABC& callsignResolver,
+                           const SideChecker_ABC& sideChecker, const AutomatChecker_ABC& automatChecker );
     virtual ~Transporters();
     //@}
 
@@ -77,6 +79,7 @@ private:
     AgentSubject_ABC& agentSubject_;
     const CallsignResolver_ABC& callsignResolver_;
     const SideChecker_ABC& sideChecker_;
+    const AutomatChecker_ABC& automatChecker_;
     T_Vessels vessels_;
     //@}
 };

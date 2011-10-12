@@ -14,6 +14,7 @@
 #include "MockAgent.h"
 #include "MockAgentSubject.h"
 #include "MockSideChecker.h"
+#include "MockAutomatChecker.h"
 
 using namespace plugins::hla;
 
@@ -36,6 +37,7 @@ namespace
         MockAgentSubject agentSubject;
         MockCallsignResolver callsignResolver;
         MockSideChecker sideChecker;
+        MockAutomatChecker automatChecker;
         MockAgent transporter;
         MockTransportedUnitsVisitor visitor;
         AgentListener_ABC* agentListener;
@@ -49,7 +51,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : transporters( agentSubject, callsignResolver, sideChecker )
+            : transporters( agentSubject, callsignResolver, sideChecker, automatChecker )
         {
             BOOST_REQUIRE( agentListener );
             MOCK_EXPECT( transporter, Register ).once().with( mock::retrieve( eventListener ) );
@@ -67,6 +69,7 @@ BOOST_FIXTURE_TEST_CASE( transporters_finds_transporter, RegisteredFixture )
     MOCK_EXPECT( callsignResolver, ResolveUniqueId ).once().with( transporterIdentifier ).returns( "unique vessel" );
     MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( transportedUnitUniqueId ).returns( transportedUnitSimulationIdentifier );
     MOCK_EXPECT( sideChecker, AreSameSide ).with( transporterIdentifier, transportedUnitSimulationIdentifier ).returns( true );
+    MOCK_EXPECT( automatChecker, IsAutomatDisengaged ).once().with( transporterIdentifier ).returns( true );
     MOCK_EXPECT( visitor, Notify ).once().with( "surface vessel", "unique vessel" );
     transporters.Apply( transportedUnitUniqueId, embarkmentPoint, visitor );
 }
@@ -79,21 +82,32 @@ BOOST_FIXTURE_TEST_CASE( transporters_does_not_find_transporter_on_different_sid
     transporters.Apply( transportedUnitUniqueId, embarkmentPoint, visitor );
 }
 
+BOOST_FIXTURE_TEST_CASE( transporters_does_not_find_transporter_with_not_disengaged_transporter, RegisteredFixture )
+{
+    eventListener->SpatialChanged( 1., 2., 3., 4., 5. );
+    MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( transportedUnitUniqueId ).returns( transportedUnitSimulationIdentifier );
+    MOCK_EXPECT( sideChecker, AreSameSide ).with( transporterIdentifier, transportedUnitSimulationIdentifier ).returns( true );
+    MOCK_EXPECT( automatChecker, IsAutomatDisengaged ).once().with( transporterIdentifier ).returns( false );
+    transporters.Apply( transportedUnitUniqueId, embarkmentPoint, visitor );
+}
+
 BOOST_FIXTURE_TEST_CASE( transporters_finds_closest_transporter, RegisteredFixture )
 {
     eventListener->SpatialChanged( 1., 2., 3., 4., 5. );
     MockAgent closestTransporter;
     EventListener_ABC* closestListener = 0;
-    const unsigned int closesTransporterIdentifier = 142u;
+    const unsigned int closestTransporterIdentifier = 142u;
     MOCK_EXPECT( closestTransporter, Register ).once().with( mock::retrieve( closestListener ) );
-    agentListener->SurfaceVesselCreated( closestTransporter, closesTransporterIdentifier, "closest transporter", rpr::Friendly, rpr::EntityType() );
+    agentListener->SurfaceVesselCreated( closestTransporter, closestTransporterIdentifier, "closest transporter", rpr::Friendly, rpr::EntityType() );
     BOOST_REQUIRE( closestListener );
     closestListener->SpatialChanged( 6., 7., 3., 4., 5. );
-    MOCK_EXPECT( callsignResolver, ResolveCallsign ).once().with( closesTransporterIdentifier ).returns( "closest vessel" );
-    MOCK_EXPECT( callsignResolver, ResolveUniqueId ).once().with( closesTransporterIdentifier ).returns( "unique closest" );
+    MOCK_EXPECT( callsignResolver, ResolveCallsign ).once().with( closestTransporterIdentifier ).returns( "closest vessel" );
+    MOCK_EXPECT( callsignResolver, ResolveUniqueId ).once().with( closestTransporterIdentifier ).returns( "unique closest" );
     MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( transportedUnitUniqueId ).returns( transportedUnitSimulationIdentifier );
     MOCK_EXPECT( sideChecker, AreSameSide ).with( transporterIdentifier, transportedUnitSimulationIdentifier ).returns( true );
-    MOCK_EXPECT( sideChecker, AreSameSide ).with( closesTransporterIdentifier, transportedUnitSimulationIdentifier ).returns( true );
+    MOCK_EXPECT( automatChecker, IsAutomatDisengaged ).once().with( transporterIdentifier ).returns( true );
+    MOCK_EXPECT( sideChecker, AreSameSide ).with( closestTransporterIdentifier, transportedUnitSimulationIdentifier ).returns( true );
+    MOCK_EXPECT( automatChecker, IsAutomatDisengaged ).once().with( closestTransporterIdentifier ).returns( true );
     MOCK_EXPECT( visitor, Notify ).once().with( "closest vessel", "unique closest" );
     transporters.Apply( transportedUnitUniqueId, embarkmentPoint, visitor );
 }

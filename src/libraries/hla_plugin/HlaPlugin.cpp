@@ -30,6 +30,7 @@
 #include "Subordinates.h"
 #include "MissionResolver.h"
 #include "SideChecker.h"
+#include "AutomatChecker.h"
 #include "Transporters.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
@@ -96,6 +97,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pMissionResolver_           ( new MissionResolver( staticModel.types_ ) )
     , pSubordinates_              ( new Subordinates( *pCallsignResolver_, dynamicModel.Automats() ) )
     , pMessageController_         ( new tools::MessageController< sword::SimToClient_Content >() )
+    , pAutomatChecker_            ( new AutomatChecker( dynamicModel.Agents() ) )
     , pSubject_                   ( 0 )
     , pFederate_                  ( 0 )
     , pSimulationFacade_          ( 0 )
@@ -138,7 +140,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pInteractionsFacade_.reset( new InteractionsFacade( *pFederate_, publisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ) ) );
             pSideChecker_.reset( new SideChecker( *pSubject_, *pFederate_, *pRemoteAgentResolver_ ) );
-            pTransporters_.reset( new Transporters( *pSubject_, *pCallsignResolver_, *pSideChecker_ ) );
+            pTransporters_.reset( new Transporters( *pSubject_, *pCallsignResolver_, *pSideChecker_, *pAutomatChecker_ ) );
             pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pFederate_, *pContextFactory_, *pTransporters_ ) : 0 );
             pStepper_.reset( new Stepper( *pXis_, *pMessageController_, publisher_ ) );
             pSubject_->Visit( dynamicModel_ );

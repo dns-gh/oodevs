@@ -14,6 +14,7 @@
 #include "SideChecker_ABC.h"
 #include "TransportedUnitsVisitor_ABC.h"
 #include "Agent_ABC.h"
+#include "AutomatChecker_ABC.h"
 #include <limits>
 #include <boost/foreach.hpp>
 
@@ -23,10 +24,12 @@ using namespace plugins::hla;
 // Name: Transporters constructor
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-Transporters::Transporters( AgentSubject_ABC& agentSubject, const CallsignResolver_ABC& callsignResolver, const SideChecker_ABC& sideChecker )
+Transporters::Transporters( AgentSubject_ABC& agentSubject, const CallsignResolver_ABC& callsignResolver,
+                            const SideChecker_ABC& sideChecker, const AutomatChecker_ABC& automatChecker )
     : agentSubject_    ( agentSubject )
     , callsignResolver_( callsignResolver )
     , sideChecker_     ( sideChecker )
+    , automatChecker_  ( automatChecker )
 {
     agentSubject_.Register( *this );
 }
@@ -50,7 +53,8 @@ void Transporters::Apply( const std::string& transportedUnitUniqueId, const geom
     unsigned int transporter = 0;
     double minimalDistance = std::numeric_limits< double >::max();
     BOOST_FOREACH( const boost::shared_ptr< T_Vessel > vessel, vessels_ )
-        if( sideChecker_.AreSameSide( vessel->identifier_, transportedUnitSimulationIdentifier ) )
+        if( sideChecker_.AreSameSide( vessel->identifier_, transportedUnitSimulationIdentifier )
+         && automatChecker_.IsAutomatDisengaged( vessel->identifier_ ) )
         {
             const double distance = vessel->position_.Distance( embarkmentPoint );
             if( distance < minimalDistance )

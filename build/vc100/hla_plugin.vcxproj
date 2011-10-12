@@ -92,6 +92,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatCreater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatDisengager.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.cpp" />
@@ -124,6 +125,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoyReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoySender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferResponseSender.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnReadyToReceiveService.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRejectOfferConvoy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.cpp" />
@@ -169,6 +171,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatCreater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatDisengager.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.h" />
@@ -214,6 +218,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoyReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoySender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferResponseSender.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnReadyToReceiveService.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRejectOfferConvoy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.h" />

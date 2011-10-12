@@ -62,6 +62,7 @@ namespace hla
     class ComponentTypes_ABC;
     class ContextFactory_ABC;
     class MissionResolver_ABC;
+    class AutomatChecker_ABC;
     class Subordinates_ABC;
     class Transporters_ABC;
     class SimulationFacade;
@@ -122,6 +123,7 @@ private:
     std::auto_ptr< MissionResolver_ABC > pMissionResolver_;
     std::auto_ptr< Subordinates_ABC > pSubordinates_;
     std::auto_ptr< tools::MessageController< sword::SimToClient_Content > > pMessageController_;
+    std::auto_ptr< AutomatChecker_ABC > pAutomatChecker_;
     std::auto_ptr< AgentController > pSubject_;
     std::auto_ptr< FederateFacade > pFederate_;
     std::auto_ptr< SimulationFacade > pSimulationFacade_;
