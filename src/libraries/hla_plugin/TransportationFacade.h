@@ -28,6 +28,11 @@ namespace sword
     class SimToClient_Content;
 }
 
+namespace hla
+{
+    template< typename T > class InteractionNotification_ABC;
+}
+
 namespace plugins
 {
 namespace hla
@@ -79,6 +84,7 @@ private:
     std::auto_ptr< TransportationController_ABC > pTransportationController_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnRequestConvoy > > pNetnRequestConvoy_;
     std::auto_ptr< NetnRequestConvoySender > pNetnRequestConvoySender_;
+    std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoyReceiver_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoy_;
     std::auto_ptr< NetnOfferConvoySender > pNetnOfferConvoySender_;
     //@}

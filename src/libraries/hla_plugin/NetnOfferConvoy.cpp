@@ -23,8 +23,8 @@ using namespace plugins::hla;
 // Name: NetnOfferConvoy constructor
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-NetnOfferConvoy::NetnOfferConvoy( Federate_ABC& federate )
-    : pInteraction_( new ::hla::Interaction< interactions::NetnOfferConvoy >( *this ) )
+NetnOfferConvoy::NetnOfferConvoy( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnOfferConvoy >& notification )
+    : pInteraction_( new ::hla::Interaction< interactions::NetnOfferConvoy >( notification ) )
 {
     pInteraction_->Register( "IsOffering"        , ::hla::CreateParameter( &interactions::NetnOfferConvoy::isOffering ) );
     pInteraction_->Register( "RequestTimeOut"    , ::hla::CreateParameter( &interactions::NetnOfferConvoy::requestTimeOut ) );
@@ -35,7 +35,7 @@ NetnOfferConvoy::NetnOfferConvoy( Federate_ABC& federate )
     pInteraction_->Register( "TransportData"     , ::hla::CreateParameter( &interactions::NetnOfferConvoy::transportData ) );
     pInteraction_->Register( "OfferType"         , ::hla::CreateParameter( &interactions::NetnOfferConvoy::offerType ) );
     pInteraction_->Register( "ListOfTransporters", ::hla::CreateParameter( &interactions::NetnOfferConvoy::listOfTransporters ) );
-    federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_OfferService.NETN_OfferConvoy" ), *pInteraction_, true, false );
+    federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_OfferService.NETN_OfferConvoy" ), *pInteraction_, true, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,13 +54,4 @@ NetnOfferConvoy::~NetnOfferConvoy()
 void NetnOfferConvoy::Send( const interactions::NetnOfferConvoy& interaction )
 {
     pInteraction_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnOfferConvoy::Receive
-// Created: SLI 2011-10-11
-// -----------------------------------------------------------------------------
-void NetnOfferConvoy::Receive( interactions::NetnOfferConvoy& /*interaction*/ )
-{
-    throw std::runtime_error( __FUNCTION__ " unimplemented function" );
 }
