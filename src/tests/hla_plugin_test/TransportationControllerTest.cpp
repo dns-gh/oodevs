@@ -28,6 +28,9 @@ BOOST_AUTO_TEST_CASE( transportation_controller_reads_transportation_mission_nam
                              "    <missions>"
                              "        <transport>transportation mission name</transport>"
                              "    </missions>"
+                             "    <reports>"
+                             "        <mission-complete>1338</mission-complete>"
+                             "    </reports>"
                              "</configuration>" );
     xis >> xml::start( "configuration" );
     tools::MessageController< sword::SimToClient_Content > messageController;
@@ -49,8 +52,12 @@ namespace
                    "    <missions>"
                    "        <transport>name</transport>"
                    "    </missions>"
+                   "    <reports>"
+                   "        <mission-complete>1338</mission-complete>"
+                   "    </reports>"
                    "</configuration>" )
             , transportId( 42 )
+            , automatId  ( 42 )
         {
             xis >> xml::start( "configuration" );
             MOCK_EXPECT( missionResolver, Resolve ).once().returns( transportId );
@@ -64,6 +71,7 @@ namespace
         }
         xml::xistringstream xis;
         unsigned int transportId;
+        unsigned long automatId;
         MockMissionResolver missionResolver;
         MockTransportationListener listener;
         tools::MessageController< sword::SimToClient_Content > messageController;
@@ -96,7 +104,6 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mis
     const geometry::Point2d debarkingPoint;
     const long long embarkingTime = 1;
     const long long debarkingTime = 2;
-    const unsigned long automatId = 42;
     const std::string subordinateCallsign = "subordinate callsign";
     const std::string subordinateNetnUniqueId = "143";
     const unsigned long transportingUnitSimulationId = 43;
@@ -137,6 +144,7 @@ namespace
         RequestedFixture()
             : controller                  ( xis, missionResolver, messageController, callsignResolver, subordinates, factory )
             , context                     ( 1337 )
+            , missionCompleteId           ( 1338u )
             , embarkingTime               ( 1 )
             , debarkingTime               ( 2 )
             , automatId                   ( 42 )
@@ -165,8 +173,17 @@ namespace
             MOCK_EXPECT( factory, Create ).once().returns( context );
             messageController.Dispatch( message );
         }
+        sword::SimToClient_Content MakeReportMessage( unsigned int automatId, unsigned int reportType )
+        {
+            sword::SimToClient_Content message;
+            sword::Report* report = message.mutable_report();
+            report->mutable_source()->mutable_automat()->set_id( automatId );
+            report->mutable_type()->set_id( reportType );
+            return message;
+        }
         TransportationController controller;
         const unsigned int context;
+        const unsigned int missionCompleteId;
         const geometry::Point2d embarkingPoint;
         const geometry::Point2d debarkingPoint;
         const long long embarkingTime;
@@ -200,7 +217,47 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_reject_all_good_offers_if_alr
     controller.OfferReceived( context, true, "provider2" );
 }
 
+BOOST_FIXTURE_TEST_CASE( transportation_controller_does_nothing_when_report_mission_complete_but_offer_rejected, RequestedFixture )
+{
+    MOCK_EXPECT( listener, OfferRejected ).once();
+    controller.OfferReceived( context, false, "provider" );
+    sword::SimToClient_Content message = MakeReportMessage( automatId, missionCompleteId );
+    messageController.Dispatch( message );
+}
+
 BOOST_FIXTURE_TEST_CASE( transportation_controller_does_nothing_if_service_id_is_not_known, RequestedFixture )
 {
     controller.OfferReceived( context + 1, true, "provider" );
+}
+
+namespace
+{
+    class AcceptedFixture : public RequestedFixture
+    {
+    public:
+        AcceptedFixture()
+        {
+            MOCK_EXPECT( listener, OfferAccepted ).once().with( context, "provider" );
+            controller.OfferReceived( context, true, "provider" );
+        }
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_controller_notifies_ready_to_receive_service_when_receiving_mission_complete_report, AcceptedFixture )
+{
+    MOCK_EXPECT( listener, ReadyToReceiveService ).once().with( context, "provider" );
+    sword::SimToClient_Content message = MakeReportMessage( automatId, missionCompleteId );
+    messageController.Dispatch( message );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_controller_does_nothing_when_report_is_not_mission_complete_report, AcceptedFixture )
+{
+    sword::SimToClient_Content message = MakeReportMessage( automatId, missionCompleteId + 1 );
+    messageController.Dispatch( message );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_controller_does_nothing_when_report_is_not_for_transported_automat, AcceptedFixture )
+{
+    sword::SimToClient_Content message = MakeReportMessage( automatId + 1, missionCompleteId );
+    messageController.Dispatch( message );
 }

@@ -97,3 +97,12 @@ void NetnRequestConvoySender::OfferRejected( unsigned int /*context*/, const std
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: NetnRequestConvoySender::ReadyToReceiveService
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnRequestConvoySender::ReadyToReceiveService( unsigned int /*context*/, const std::string& /*provider*/ )
+{
+    // NOTHING
+}

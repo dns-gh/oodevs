@@ -36,6 +36,13 @@ namespace
                 >> xml::content( "transport", name );
         return resolver.Resolve( name );
     }
+    unsigned int ResolveReportId( xml::xisubstream xis )
+    {
+        unsigned int reportType = 0;
+        xis >> xml::start( "reports" )
+                >> xml::content( "mission-complete", reportType );
+        return reportType;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -46,12 +53,14 @@ TransportationController::TransportationController( xml::xisubstream xis, const 
                                                     tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                                     const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
                                                     const ContextFactory_ABC& contextFactory )
-    : transportIdentifier_( ResolveMission( xis, resolver ) )
-    , callsignResolver_   ( callsignResolver )
-    , subordinates_       ( subordinates )
-    , contextFactory_     ( contextFactory )
+    : transportIdentifier_    ( ResolveMission( xis, resolver ) )
+    , missionCompleteReportId_( ResolveReportId( xis ) )
+    , callsignResolver_       ( callsignResolver )
+    , subordinates_           ( subordinates )
+    , contextFactory_         ( contextFactory )
 {
     CONNECT( controller, *this, automat_order );
+    CONNECT( controller, *this, report );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,10 +126,30 @@ void TransportationController::Notify(  const sword::AutomatOrder& message, int 
         const std::string transportingUnitCallsign = callsignResolver_.ResolveCallsign( ReadAgent( message.parameters().elem( 8 ) ) );
         const SubordinatesVisitor visitor( subordinates_, message.tasker().id() );
         const unsigned int context = contextFactory_.Create();
-        pendingRequests_.insert( context );
+        pendingRequests_.insert( T_Requests::value_type( context, message.tasker().id() ) );
         BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
             listener->ConvoyRequested( transportingUnitCallsign, embarkmentTime, embarkmentPoint, debarkmentTime, debarkmentPoint, visitor, context );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationController::Notify
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void TransportationController::Notify( const sword::Report& message, int /*context*/ )
+{
+    if( !message.source().has_automat() )
+        return;
+    if( message.type().id() != missionCompleteReportId_ )
+        return;
+    const unsigned int automatId = message.source().automat().id();
+    T_Requests::right_const_iterator request = acceptedRequests_.right.find( automatId );
+    if( request == acceptedRequests_.right.end() )
+        return;
+    const unsigned int context = request->second;
+    BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
+        listener->ReadyToReceiveService( context, contextProviders_[ context ] );
+    Transfer( acceptedRequests_, readyToReceiveRequests_, context );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,9 +176,9 @@ void TransportationController::Unregister( TransportationListener_ABC& listener 
 // -----------------------------------------------------------------------------
 void TransportationController::OfferReceived( unsigned int context, bool fullOffer, const std::string& provider )
 {
-    if( pendingRequests_.find( context ) == pendingRequests_.end() )
+    if( pendingRequests_.left.find( context ) == pendingRequests_.left.end() )
     {
-        if( acceptedRequests_.find( context ) != acceptedRequests_.end() )
+        if( acceptedRequests_.left.find( context ) != acceptedRequests_.left.end() )
             BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
                 listener->OfferRejected( context, provider, "An other offer has already been accepted" );
         return;
@@ -158,10 +187,21 @@ void TransportationController::OfferReceived( unsigned int context, bool fullOff
     {
         BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
             listener->OfferAccepted( context, provider );
-        pendingRequests_.erase( context );
-        acceptedRequests_.insert( context );
+        contextProviders_[ context ] = provider;
+        Transfer( pendingRequests_, acceptedRequests_, context );
     }
     else
         BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
             listener->OfferRejected( context, provider, "Not offering service or partial offer" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationController::Transfer
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void TransportationController::Transfer( T_Requests& from, T_Requests& to, unsigned int context ) const
+{
+    const unsigned int automatId = from.left.find( context )->second;
+    from.left.erase( context );
+    to.insert( T_Requests::value_type( context, automatId ) );
 }

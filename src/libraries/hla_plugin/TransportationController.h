@@ -13,7 +13,10 @@
 #include "TransportationController_ABC.h"
 #include "tools/MessageObserver.h"
 #include <vector>
-#include <set>
+#include <map>
+#pragma warning( push, 0 )
+#include <boost/bimap.hpp>
+#pragma warning( pop )
 
 namespace xml
 {
@@ -29,6 +32,7 @@ namespace sword
 {
     class SimToClient_Content;
     class AutomatOrder;
+    class Report;
 }
 
 namespace plugins
@@ -48,6 +52,7 @@ namespace hla
 // =============================================================================
 class TransportationController : public TransportationController_ABC
                                , private tools::MessageObserver< sword::AutomatOrder >
+                               , private tools::MessageObserver< sword::Report >
 {
 public:
     //! @name Constructors/Destructor
@@ -70,26 +75,37 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void Notify(  const sword::AutomatOrder& message, int context );
+    virtual void Notify( const sword::AutomatOrder& message, int context );
+    virtual void Notify( const sword::Report& message, int context );
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::vector< TransportationListener_ABC* > T_Listeners;
-    typedef std::set< unsigned int > T_Requests;
+    typedef boost::bimap< unsigned int, unsigned int > T_Requests;
+    typedef std::map< unsigned int, std::string > T_ContextProviders;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void Transfer( T_Requests& from, T_Requests& to, unsigned int context ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const unsigned int transportIdentifier_;
+    const unsigned int missionCompleteReportId_;
     const CallsignResolver_ABC& callsignResolver_;
     const Subordinates_ABC& subordinates_;
     const ContextFactory_ABC& contextFactory_;
     T_Listeners listeners_;
     T_Requests pendingRequests_;
     T_Requests acceptedRequests_;
+    T_Requests readyToReceiveRequests_;
+    T_ContextProviders contextProviders_;
     //@}
 };
 

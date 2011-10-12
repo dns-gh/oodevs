@@ -49,6 +49,7 @@ private:
                                   const TransportedUnits_ABC& transportedUnits, unsigned int context );
     virtual void OfferAccepted( unsigned int context, const std::string& provider );
     virtual void OfferRejected( unsigned int context, const std::string& provider, const std::string& reason );
+    virtual void ReadyToReceiveService( unsigned int context, const std::string& provider );
     //@}
 
 private:

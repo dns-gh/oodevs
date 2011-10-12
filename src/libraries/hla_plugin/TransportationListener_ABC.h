@@ -42,6 +42,7 @@ public:
                                   const TransportedUnits_ABC& transportedUnits, unsigned int context ) = 0;
     virtual void OfferAccepted( unsigned int context, const std::string& provider ) = 0;
     virtual void OfferRejected( unsigned int context, const std::string& provider, const std::string& reason ) = 0;
+    virtual void ReadyToReceiveService( unsigned int context, const std::string& provider ) = 0;
     //@}
 };
 

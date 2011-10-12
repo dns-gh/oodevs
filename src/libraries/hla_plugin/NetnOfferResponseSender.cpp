@@ -76,3 +76,12 @@ void NetnOfferResponseSender::OfferRejected( unsigned int context, const std::st
     rejection.reason = reason;
     rejectOfferSender_.Send( rejection );
 }
+
+// -----------------------------------------------------------------------------
+// Name: NetnOfferResponseSender::ReadyToReceiveService
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnOfferResponseSender::ReadyToReceiveService( unsigned int /*context*/, const std::string& /*provider*/ )
+{
+    // NOTHING
+}
