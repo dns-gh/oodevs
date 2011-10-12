@@ -70,6 +70,7 @@ void DEC_CommunicationFunctions::Register( directia::brain::Brain& brain )
     brain[ "F_Pion_SetNewEscorted" ] = &F_Pion_SetNewEscorted;
     brain[ "F_Pion_GetNeedReinforcement" ] = &F_Pion_GetNeedReinforcement;
     brain[ "F_Pion_SetNeedReinforcement" ] = &F_Pion_SetNeedReinforcement;
+    brain[ "F_Pion_GetEnemyAttackedBy" ] = &F_Pion_GetEnemyAttackedBy;
     brain[ "F_Pion_GetpionEnEscorte" ] = &F_Pion_GetpionEnEscorte;
     brain[ "F_Pion_SetpionEnEscorte" ] = &F_Pion_SetpionEnEscorte;
     brain[ "F_Pion_GetitMvt" ] = &F_Pion_GetitMvt;
@@ -649,6 +650,15 @@ bool DEC_CommunicationFunctions::F_Pion_GetNeedReinforcement( DEC_Decision_ABC* 
 void DEC_CommunicationFunctions::F_Pion_SetNeedReinforcement( DEC_Decision_ABC* pPion, bool value )
 {
     pPion->SetVariable( "g_needReinforcement" ,value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_CommunicationFunctions::F_Pion_GetEnemyAttackedBy
+// Created: DDA 2011-10-12
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_CommunicationFunctions::F_Pion_GetEnemyAttackedBy( DEC_Decision_ABC* pPion )
+{
+    return pPion->GetVariable< boost::shared_ptr< DEC_Knowledge_Agent > >( "g_myEnemy");
 }
 
 // -----------------------------------------------------------------------------
