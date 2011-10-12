@@ -49,6 +49,9 @@ public:
 
     virtual const boost::shared_ptr< LogisticLink_ABC > FindSuperiorLink( const MIL_AutomateLOG& superior ) const = 0;
 
+    virtual void SwitchToHierarchy( const LogisticHierarchy_ABC& hierarchy ) = 0;
+    virtual void SwitchBackToNominalHierarchy() = 0;
+
     virtual void ChangeLinks( const std::vector< MIL_AutomateLOG* >& superiors ) = 0;
     //@}
 

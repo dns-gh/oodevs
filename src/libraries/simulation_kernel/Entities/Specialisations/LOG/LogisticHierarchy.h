@@ -41,8 +41,8 @@ public:
     //! @name Operations
     //@{
     void DisconnectFromHierarchy     ();
-    void SwitchToHierarchy           ( const LogisticHierarchy_ABC& hierarchy );
-    void SwitchBackToNominalHierarchy();
+    virtual void SwitchToHierarchy           ( const LogisticHierarchy_ABC& hierarchy );
+    virtual void SwitchBackToNominalHierarchy();
 
     virtual bool             HasSuperior() const;
     virtual MIL_AutomateLOG* GetPrimarySuperior() const;

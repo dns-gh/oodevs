@@ -21,6 +21,7 @@
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -469,4 +470,27 @@ void DEC_KnowledgeAgentFunctions::ShareKnowledgesWith( DEC_Decision_ABC& callerA
 {
     if( pKnowledge )
         DEC_KnowledgeFunctions::ShareKnowledgesWith< MIL_AgentPion >( callerAgent.GetPion(), &( pKnowledge->GetAgentKnown().GetDecision() ), minutes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::GetAgent
+// Created: DDA 2011-10-11
+// -----------------------------------------------------------------------------
+DEC_Decision_ABC* DEC_KnowledgeAgentFunctions::GetAgent( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if( pKnowledge )
+        return &pKnowledge->GetAgentKnown().GetDecision();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::DisableAutomateLogistic
+// Created: DDA 2011-10-11
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeAgentFunctions::SwitchAutomateLogistic( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if( pKnowledge )
+    {   logistic::LogisticHierarchy_ABC* logHierarchy = &pKnowledge->GetAgentKnown().GetAutomate().GetLogisticHierarchy();
+        logHierarchy->SwitchToHierarchy( callerAgent.GetAutomate().GetLogisticHierarchy() );
+    }
 }

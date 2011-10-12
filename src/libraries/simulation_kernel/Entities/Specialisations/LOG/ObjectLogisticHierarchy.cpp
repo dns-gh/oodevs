@@ -170,6 +170,26 @@ void ObjectLogisticHierarchy::ChangeLinks( const std::vector< MIL_AutomateLOG* >
         superiorLink_.reset( new ObjectLogisticLink( *superiors.back() ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ObjectLogisticHierarchy::ChangeLinks
+// Created: NLD 2011-01-12
+// -----------------------------------------------------------------------------
+void ObjectLogisticHierarchy::SwitchToHierarchy( const LogisticHierarchy_ABC& )
+{
+    //$$$ TODO
+    assert( false) ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectLogisticHierarchy::ChangeLinks
+// Created: NLD 2011-01-12
+// -----------------------------------------------------------------------------
+void ObjectLogisticHierarchy::SwitchBackToNominalHierarchy()
+{
+    //$$$ TODO
+    assert( false) ;
+}
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================
