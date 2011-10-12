@@ -40,5 +40,5 @@ AutomatChecker::~AutomatChecker()
 // -----------------------------------------------------------------------------
 bool AutomatChecker::IsAutomatDisengaged( unsigned int unitIdentifier ) const
 {
-    return resolver_.Get( unitIdentifier ).GetSuperior().IsEngaged();
+    return !resolver_.Get( unitIdentifier ).GetSuperior().IsEngaged();
 }
