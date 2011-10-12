@@ -203,7 +203,7 @@ void UserProfileWidget::OnLoginChanged()
         if( profile_ )
         {
             QString login = login_->text();
-            if( checker_.Exists( profile_->GetLogin(), login ) )
+            if( profile_->GetLogin() != login && checker_.Exists( profile_->GetLogin(), login ) )
                 throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).ascii() );
             if( profile_->GetLogin() != login && model_.profiles_.Exists( login ) && !checker_.Exists( login ) )
                 throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).ascii() );
