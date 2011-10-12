@@ -20,6 +20,8 @@
 #include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/Team_ABC.h"
+#include "tools/ExerciseConfig.h"
+#include "tools/NullFileLoaderObserver.h"
 #include "XmlChecks.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
@@ -149,7 +151,9 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupTest )
     KnowledgeGroupsModel kgModel( controllers, factory );
 
     StaticModel staticModel( controllers );
-    Model model( controllers, staticModel);
+    tools::NullFileLoaderObserver observer;
+    tools::ExerciseConfig config( observer );
+    Model model( controllers, staticModel, config );
     MockTeam team;
     MockKnowledgeGroup group;
     std::string errors;
@@ -177,7 +181,9 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupCompositeTest )
     KnowledgeGroupsModel kgModel( controllers, factory );
 
     StaticModel staticModel( controllers );
-    Model model( controllers, staticModel);
+    tools::NullFileLoaderObserver observer;
+    tools::ExerciseConfig config( observer );
+    Model model( controllers, staticModel, config );
     MockTeam team;
     MockKnowledgeGroup group;
     std::string errors;
@@ -209,7 +215,9 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupMultiTest )
     KnowledgeGroupsModel kgModel( controllers, factory );
 
     StaticModel staticModel( controllers );
-    Model model( controllers, staticModel);
+    tools::NullFileLoaderObserver observer;
+    tools::ExerciseConfig config( observer );
+    Model model( controllers, staticModel, config );
     MockTeam team;
     MockKnowledgeGroup group;
     std::string errors;
