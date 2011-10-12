@@ -72,6 +72,16 @@ public:
             fct( knowledge );
         }
     }
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesPopulation( UnaryFunction& fct, int currentTimeStep ) const
+    {
+        for( auto itKnowledge = knowledgePopulationMap_.begin(); itKnowledge != knowledgePopulationMap_.end(); )
+        {
+            DEC_Knowledge_Population& knowledge = *itKnowledge->second;
+            ++itKnowledge;
+            fct( knowledge, currentTimeStep );
+        }
+    }
     //@}
 
 private:

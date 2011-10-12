@@ -121,12 +121,16 @@ public:
             fct( knowledge );
         }
     }
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesObjectRef( UnaryFunction& fct, int currentTimeStep ) const
+    {
+        for( auto it = objectMap_.begin(); it != objectMap_.end(); )
+        {
+            DEC_Knowledge_Object& knowledge = *it->second;
+            ++it;
+            fct( knowledge, currentTimeStep );
+        }
+    }
     //@}
 
 private:
