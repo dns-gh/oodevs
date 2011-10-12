@@ -498,10 +498,10 @@ void MainWindow::MigrateExercises()
 // -----------------------------------------------------------------------------
 void MainWindow::Open()
 {
-    if( model_.IsLoaded() && !CheckSaving())
-        return;
     // Open exercise file dialog
     QString filename = Q3FileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (exercise.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
+    if( filename.isEmpty() || !Close() )
+        return;
     // Load exercise
     DoLoad( filename );
 }
@@ -546,10 +546,10 @@ bool MainWindow::Load()
 // Name: MainWindow::Close
 // Created: SBO 2006-05-24
 // -----------------------------------------------------------------------------
-void MainWindow::Close()
+bool MainWindow::Close()
 {
     if( model_.IsLoaded() && !CheckSaving() )
-        return;
+        return false;
     if( logisticListView_ )
         logisticListView_->Purge();
     model_.Purge();
@@ -558,6 +558,7 @@ void MainWindow::Close()
     filterDialogs_->Purge();
     SetWindowTitle( false );
     EnableWorkspace( false );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -620,8 +621,8 @@ void MainWindow::LoadExercise()
 // -----------------------------------------------------------------------------
 void MainWindow::ReloadExercise()
 {
-    Close();
-    DoLoad( config_.GetExerciseFile().c_str() );
+    if( Close() )
+        DoLoad( config_.GetExerciseFile().c_str() );
 }
 
 // -----------------------------------------------------------------------------

@@ -97,7 +97,7 @@ public slots:
     //@{
     void New();
     void Open();
-    void Close();
+    bool Close();
     bool Save();
     void SaveAs();
     void ToggleFullScreen();
