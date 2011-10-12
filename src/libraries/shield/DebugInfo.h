@@ -16,8 +16,8 @@
 namespace shield
 {
 // =============================================================================
-/** @class  Logger
-    @brief  Logs received messages
+/** @class  DebugInfo
+    @brief  Debug info implementation
 */
 // Created: MCO 2011-07-06
 // =============================================================================

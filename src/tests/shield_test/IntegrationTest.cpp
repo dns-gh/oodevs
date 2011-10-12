@@ -10,6 +10,7 @@
 #include "shield_test_pch.h"
 #include "shield/Server.h"
 #include "shield/Listener_ABC.h"
+#include "shield/DebugInfo_ABC.h"
 #pragma warning( push, 0 )
 #include "shield/proto/ClientToSim.pb.h"
 #include "shield/proto/SimToClient.pb.h"
@@ -106,6 +107,19 @@ namespace
         Server server;
         Client client;
     };
+
+    struct start_with
+    {
+        start_with( const std::string& s )
+            : s_( s )
+        {}
+        template< typename T >
+        friend bool operator==( const T& lhs, const start_with& rhs )
+        {
+            return boost::lexical_cast< std::string >( lhs ).find( rhs.s_ ) == 0;
+        }
+        std::string s_;
+    };
 }
 
 BOOST_AUTO_TEST_CASE( non_existing_dispatcher_is_detected_by_proxy_when_a_client_connects )
@@ -131,11 +145,10 @@ BOOST_FIXTURE_TEST_CASE( message_sent_from_client_is_received_on_simulation, Fix
         MsgsClientToSim::MsgClientToSim msg;
         msg.set_context( 77 );
         msg.mutable_message()->mutable_control_checkpoint_set_frequency()->set_frequency( 12 );
-        MOCK_EXPECT( listener, Debug ).once();
+        MOCK_EXPECT( listener, Debug ).once().with( start_with( "Shield received" ) );
         client.Send( client.host, msg );
     }
     bool received = false;
-    MOCK_EXPECT( listener, Debug ).once();
     MOCK_EXPECT( server, Receive ).once().calls( bl::var( received ) = true );
     wait( bl::var( received ), boost::bind( &Fixture::Update, this ) );
 }
@@ -161,7 +174,7 @@ BOOST_FIXTURE_TEST_CASE( message_a_bit_long_sent_from_client_is_detected_by_prox
         msg.set_context( 77 );
         std::string name( 32 * 1024, 'a' ); // 32 kB
         msg.mutable_message()->mutable_control_checkpoint_save_now()->set_name( name );
-        MOCK_EXPECT( listener, Debug ).once();
+        MOCK_EXPECT( listener, Debug ).once().with( start_with( "Shield received" ) );
         client.Send( client.host, msg );
     }
     int notified = 2;
@@ -170,7 +183,6 @@ BOOST_FIXTURE_TEST_CASE( message_a_bit_long_sent_from_client_is_detected_by_prox
                                                 mock::contain( "warning" ) &&
                                                 mock::contain( "Message size larger than" ) ).calls( --bl::var( notified ) );
     bool received = false;
-    MOCK_EXPECT( listener, Debug ).once();
     MOCK_EXPECT( server, Receive ).once().calls( bl::var( received ) = true );
     wait( bl::var( received ) && bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
 }
@@ -202,7 +214,7 @@ BOOST_FIXTURE_TEST_CASE( message_sent_from_simulation_is_received_on_client, Fix
     }
     bool received = false;
     MOCK_EXPECT( client, Receive ).once().calls( bl::var( received ) = true );
-    MOCK_EXPECT( listener, Debug ).once();
+    MOCK_EXPECT( listener, Debug ).once().with( start_with( "Shield sent" ) );
     wait( bl::var( received ), boost::bind( &Fixture::Update, this ) );
 }
 
@@ -227,10 +239,9 @@ BOOST_FIXTURE_TEST_CASE( invalid_message_sent_from_client_is_logged_on_simulatio
         MsgsClientToSim::MsgClientToSim msg;
         msg.set_context( 77 );
         msg.mutable_message()->mutable_control_checkpoint_set_frequency()->set_frequency( 12 );
-        MOCK_EXPECT( listener, Debug ).once();
+        MOCK_EXPECT( listener, Debug ).once().with( start_with( "Shield received" ) );
         client.Send( client.host, msg );
     }
-    MOCK_EXPECT( listener, Debug ).once();
     MOCK_EXPECT( server, Receive ).once().throws( std::runtime_error( "Something is wrong" ) );
     bool notified = false;
     MOCK_EXPECT( server, ConnectionWarning ).once().with( mock::any,

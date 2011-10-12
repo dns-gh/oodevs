@@ -9,8 +9,8 @@
 
 #include "Client.h"
 #include "ClientListener_ABC.h"
-#include "Logger.h"
 #include "Utf8Converter.h"
+#include "DebugInfo.h"
 #pragma warning( push, 0 )
 #include "proto/ClientToAar.pb.h"
 #include "proto/ClientToAuthentication.pb.h"
@@ -37,17 +37,6 @@
 
 using namespace shield;
 
-namespace
-{
-    template< typename C, typename T >
-    boost::function< void( const std::string&, const T& ) > MakeLogger(
-        ClientListener_ABC& listener,
-        C& instance, void (C::*callback)( const T& ) )
-    {
-        return Logger< T >( listener, boost::bind( callback, &instance, _2 ) );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Client constructor
 // Created: MCO 2010-09-30
@@ -67,13 +56,13 @@ Client::Client( boost::asio::io_service& service, const std::string& from,
 {
     messageService_->RegisterErrorCallback( boost::bind( &Client::ConnectionError, this, _1, _2 ) );
     messageService_->RegisterWarningCallback( boost::bind( &Client::ConnectionWarning, this, _1, _2 ) );
-    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveSimToClient ) );
-    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveAuthenticationToClient ) );
-    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveDispatcherToClient ) );
-    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveMessengerToClient ) );
-    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveReplayToClient ) );
-    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveAarToClient ) );
-    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveLauncherToAdmin ) );
+    RegisterMessage( converter_, &Converter::ReceiveSimToClient );
+    RegisterMessage( converter_, &Converter::ReceiveAuthenticationToClient );
+    RegisterMessage( converter_, &Converter::ReceiveDispatcherToClient );
+    RegisterMessage( converter_, &Converter::ReceiveMessengerToClient );
+    RegisterMessage( converter_, &Converter::ReceiveReplayToClient );
+    RegisterMessage( converter_, &Converter::ReceiveAarToClient );
+    RegisterMessage( converter_, &Converter::ReceiveLauncherToAdmin );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,7 +247,6 @@ void Client::ConnectionWarning( const std::string& host, const std::string& warn
 template< typename T >
 void Client::DoSend( T& message )
 {
-    listener_.Debug( DebugInfo< T >( "Shield sent : ", message ) );
     if( encodeStringsInUtf8_ )
         Utf8Converter::ConvertUtf8StringsToCP1252( message );
     if( host_.empty() )
@@ -322,6 +310,16 @@ void Client::Send( sword::AdminToLauncher& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Client::Notify
+// Created: MCO 2011-10-12
+// -----------------------------------------------------------------------------
+template< typename T >
+void Client::Notify( const T& message ) const
+{
+    listener_.Debug( DebugInfo< T >( "Shield sent : ", message ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
@@ -330,6 +328,7 @@ void Client::Send( MsgsSimToClient::MsgSimToClient& message )
     if( encodeStringsInUtf8_ )
         Utf8Converter::ConvertCP1252StringsToUtf8( message );
     sender_.Send( from_, message );
+    Notify( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -341,6 +340,7 @@ void Client::Send( MsgsAuthenticationToClient::MsgAuthenticationToClient& messag
     if( encodeStringsInUtf8_ )
         Utf8Converter::ConvertCP1252StringsToUtf8( message );
     sender_.Send( from_, message );
+    Notify( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -352,6 +352,7 @@ void Client::Send( MsgsReplayToClient::MsgReplayToClient& message )
     if( encodeStringsInUtf8_ )
         Utf8Converter::ConvertCP1252StringsToUtf8( message );
     sender_.Send( from_, message );
+    Notify( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -363,6 +364,7 @@ void Client::Send( MsgsAarToClient::MsgAarToClient& message )
     if( encodeStringsInUtf8_ )
         Utf8Converter::ConvertCP1252StringsToUtf8( message );
     sender_.Send( from_, message );
+    Notify( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -374,6 +376,7 @@ void Client::Send( MsgsMessengerToClient::MsgMessengerToClient& message )
     if( encodeStringsInUtf8_ )
         Utf8Converter::ConvertCP1252StringsToUtf8( message );
     sender_.Send( from_, message );
+    Notify( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -385,6 +388,7 @@ void Client::Send( MsgsDispatcherToClient::MsgDispatcherToClient& message )
     if( encodeStringsInUtf8_ )
         Utf8Converter::ConvertCP1252StringsToUtf8( message );
     sender_.Send( from_, message );
+    Notify( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -396,4 +400,5 @@ void Client::Send( MsgsLauncherToAdmin::MsgLauncherToAdmin& message )
     if( encodeStringsInUtf8_ )
         Utf8Converter::ConvertCP1252StringsToUtf8( message );
     sender_.Send( from_, message );
+    Notify( message );
 }

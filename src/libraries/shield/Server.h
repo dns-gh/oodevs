@@ -54,6 +54,9 @@ namespace shield
 // =============================================================================
 /** @class  Server
     @brief  Server
+
+    This is the server part of the proxy : it accepts connection from external
+    systems and instanciates a Client for each one of them.
 */
 // Created: MCO 2010-11-29
 // =============================================================================

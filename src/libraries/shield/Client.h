@@ -43,6 +43,8 @@ namespace shield
 // =============================================================================
 /** @class  Client
     @brief  Client
+
+    This is the client part of the proxy : it connects to the 'real' dispatcher.
 */
 // Created: MCO 2010-09-30
 // =============================================================================
@@ -120,6 +122,9 @@ private:
 
     template< typename T >
     void DoSend( T& message );
+
+    template< typename T >
+    void Notify( const T& message ) const;
     //@}
 
 private:

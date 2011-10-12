@@ -39,6 +39,11 @@ public:
     {
         RegisterMessage< T >( boost::bind( callback, &instance, _1, _2 ) );
     }
+    template< typename C, typename T >
+    void RegisterMessage( C& instance, void (C::*callback)( const T& object ) )
+    {
+        RegisterMessage< T >( boost::bind( callback, &instance, _2 ) );
+    }
     template< typename T >
     void RegisterMessage( boost::function< void( const std::string&, const T& ) > callback )
     {
