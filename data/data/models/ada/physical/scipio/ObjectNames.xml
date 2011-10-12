@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<objects model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/ObjectNames.xsd">
+<objects model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/ObjectNames.xsd">
   <object id="0" type="mines"/>
   <object id="1" type="mined area (linear)"/>
   <object id="2" type="mined area (scattered)"/>
@@ -44,4 +44,4 @@
   <object id="41" type="underground exit"/>
   <object id="42" type="resource production node"/>
 </objects>
-<!-- signature="1430785965" -->
+<!-- signature="2225562201" -->

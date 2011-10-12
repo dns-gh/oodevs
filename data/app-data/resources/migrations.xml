@@ -139,4 +139,6 @@
     <upgrade schema="schemas/4.3.2/physical/Units.xsd" apply="schemas/4.3.3/xsl/units_4.3.2-4.3.3.xsl"/>
     <upgrade schema="schemas/4.3.2/physical/Objects.xsd" apply="schemas/4.3.3/xsl/objects_4.3.2-4.3.3.xsl"/>
   </migration>
+  <migration from="4.3.3" to="4.3.4">
+  </migration>
 </migrations>

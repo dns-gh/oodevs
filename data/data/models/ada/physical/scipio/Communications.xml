@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<communications model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Communications.xsd">
+<communications model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/Communications.xsd">
   <communication-breakdown reloading-time-modifier="1.5" speed-modifier="0.8"/>
 </communications>
-<!-- signature="0548720410" -->
+<!-- signature="2357296782" -->

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<populations model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Inhabitants.xsd">
+<populations model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/Inhabitants.xsd">
   <population associated-crowd="Manifestants" id="0" name="popManifestant">
     <repartition children="0.4" female="0.3" male="0.3"/>
     <schedule transfer-time="40m">
@@ -163,4 +163,4 @@
     </consumption>
   </population>
 </populations>
-<!-- signature="2506519857" -->
+<!-- signature="0671752477" -->

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<resource-networks model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/ResourceNetworks.xsd">
+<resource-networks model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/ResourceNetworks.xsd">
   <resource-network name="electricite">
     <resource id="137"/>
     <color rgb="0xffff7f"/>
@@ -21,4 +21,4 @@
     <defaults production="900000"/>
   </resource-network>
 </resource-networks>
-<!-- signature="0107647568" -->
+<!-- signature="2792374507" -->

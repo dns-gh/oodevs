@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<natures model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/ResourceNatures.xsd">
+<natures model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/ResourceNatures.xsd">
   <nature id="6" type="Electric"/>
   <nature id="5" type="Liquid"/>
   <nature id="4" type="Gaseous"/>
@@ -7,4 +7,4 @@
   <nature id="2" type="Gasoil"/>
   <nature id="3" type="Solide"/>
 </natures>
-<!-- signature="1187207906" -->
+<!-- signature="4173825776" -->

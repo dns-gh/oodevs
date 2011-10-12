@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<logistic-supply-classes model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/LogisticSupplyClasses.xsd">
+<logistic-supply-classes model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/LogisticSupplyClasses.xsd">
   <logistic-supply-class id="11" type="Unite essence"/>
   <logistic-supply-class id="10" type="Unite vivre"/>
   <logistic-supply-class id="9" type="Unite tranche D"/>
   <logistic-supply-class id="8" type="Unite non tranche D"/>
   <logistic-supply-class id="7" type="Pieces"/>
 </logistic-supply-classes>
-<!-- signature="2727229960" -->
+<!-- signature="2558128389" -->

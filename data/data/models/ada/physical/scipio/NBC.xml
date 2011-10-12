@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<nbc model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/NBC.xsd">
+<nbc model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/NBC.xsd">
   <propagation contamination-distance="300" contamination-quantity-given="0.5" wind-speed-limit="5"/>
   <nbc-suit max-speed-modifier="0.4" reloading-time-modifier="1.5"/>
   <agents>
@@ -158,4 +158,4 @@
     </agent>
   </agents>
 </nbc>
-<!-- signature="3591031379" -->
+<!-- signature="0630948898" -->

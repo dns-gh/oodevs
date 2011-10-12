@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<maintenance model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Maintenance.xsd">
+<maintenance model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/Maintenance.xsd">
   <working-schemes>
     <working-scheme type="Regime1" working-time="8"/>
     <working-scheme time-before-warning="48h" type="Regime2" working-time="16"/>
@@ -12,4 +12,4 @@
     <resource-availability-alert availability-threshold="0" resource="AlerteDisponibiliteRemorqueurs"/>
   </resource-availability-alerts>
 </maintenance>
-<!-- signature="1340211890" -->
+<!-- signature="2601832964" -->
