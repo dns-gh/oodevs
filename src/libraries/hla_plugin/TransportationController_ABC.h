@@ -11,6 +11,7 @@
 #define plugins_hla_TransportationController_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <string>
 
 namespace plugins
 {
@@ -37,6 +38,7 @@ public:
     //@{
     virtual void Register( TransportationListener_ABC& listener ) = 0;
     virtual void Unregister( TransportationListener_ABC& listener ) = 0;
+    virtual void OfferReceived( unsigned int context, bool fullOffer, const std::string& provider ) = 0;
     //@}
 };
 

@@ -26,9 +26,9 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
                                             tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                             const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
                                             Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters )
-    : pTransportationController_( new TransportationController( xis, missionResolver, controller, callsignResolver, subordinates ) )
+    : pTransportationController_( new TransportationController( xis, missionResolver, controller, callsignResolver, subordinates, contextFactory ) )
     , pNetnRequestConvoy_       ( new NetnRequestConvoy( federate, *this ) )
-    , pNetnRequestConvoySender_ ( new NetnRequestConvoySender( *pTransportationController_, *pNetnRequestConvoy_, contextFactory ) )
+    , pNetnRequestConvoySender_ ( new NetnRequestConvoySender( *pTransportationController_, *pNetnRequestConvoy_ ) )
     , pNetnOfferConvoy_         ( new NetnOfferConvoy( federate ) )
     , pNetnOfferConvoySender_   ( new NetnOfferConvoySender( *pNetnOfferConvoy_, transporters ) )
 {

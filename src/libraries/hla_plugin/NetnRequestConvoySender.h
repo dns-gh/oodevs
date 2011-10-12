@@ -18,7 +18,6 @@ namespace hla
 {
     class TransportationController_ABC;
     template< typename Interaction > class InteractionSender_ABC;
-    class ContextFactory_ABC;
 
 namespace interactions
 {
@@ -37,8 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              NetnRequestConvoySender( TransportationController_ABC& controller,
-                                      InteractionSender_ABC< interactions::NetnRequestConvoy >& interactionSender,
-                                      const ContextFactory_ABC& contextFactory );
+                                      InteractionSender_ABC< interactions::NetnRequestConvoy >& interactionSender );
     virtual ~NetnRequestConvoySender();
     //@}
 
@@ -47,7 +45,9 @@ private:
     //@{
     virtual void ConvoyRequested( const std::string& carrier, long long embarkmentTime, const geometry::Point2d& embarkmentPoint,
                                   long long disembarkmentTime, const geometry::Point2d& disembarkmentPoint,
-                                  const TransportedUnits_ABC& transportedUnits );
+                                  const TransportedUnits_ABC& transportedUnits, unsigned int context );
+    virtual void OfferAccepted( unsigned int context, const std::string& provider );
+    virtual void OfferRejected( unsigned int context, const std::string& provider, const std::string& reason );
     //@}
 
 private:
@@ -55,7 +55,6 @@ private:
     //@{
     TransportationController_ABC& controller_;
     InteractionSender_ABC< interactions::NetnRequestConvoy >& interactionSender_;
-    const ContextFactory_ABC& contextFactory_;
     //@}
 };
 

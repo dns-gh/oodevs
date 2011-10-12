@@ -13,6 +13,7 @@
 #include "TransportationController_ABC.h"
 #include "tools/MessageObserver.h"
 #include <vector>
+#include <set>
 
 namespace xml
 {
@@ -37,6 +38,7 @@ namespace hla
     class MissionResolver_ABC;
     class CallsignResolver_ABC;
     class Subordinates_ABC;
+    class ContextFactory_ABC;
 
 // =============================================================================
 /** @class  TransportationController
@@ -52,7 +54,8 @@ public:
     //@{
              TransportationController( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
                                        tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                       const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates );
+                                       const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
+                                       const ContextFactory_ABC& contextFactory );
     virtual ~TransportationController();
     //@}
 
@@ -61,6 +64,7 @@ public:
     //@{
     virtual void Register( TransportationListener_ABC& listener );
     virtual void Unregister( TransportationListener_ABC& listener );
+    virtual void OfferReceived( unsigned int context, bool fullOffer, const std::string& provider );
     //@}
 
 private:
@@ -73,6 +77,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< TransportationListener_ABC* > T_Listeners;
+    typedef std::set< unsigned int > T_Requests;
     //@}
 
 private:
@@ -81,7 +86,10 @@ private:
     const unsigned int transportIdentifier_;
     const CallsignResolver_ABC& callsignResolver_;
     const Subordinates_ABC& subordinates_;
+    const ContextFactory_ABC& contextFactory_;
     T_Listeners listeners_;
+    T_Requests pendingRequests_;
+    T_Requests acceptedRequests_;
     //@}
 };
 

@@ -15,6 +15,7 @@
 #include "TransportedUnits_ABC.h"
 #include "TransportedUnitsVisitor_ABC.h"
 #include "Subordinates_ABC.h"
+#include "ContextFactory_ABC.h"
 #include "protocol/Simulation.h"
 #include <geometry/Types.h>
 #include <xeumeuleu/xml.hpp>
@@ -43,10 +44,12 @@ namespace
 // -----------------------------------------------------------------------------
 TransportationController::TransportationController( xml::xisubstream xis, const MissionResolver_ABC& resolver,
                                                     tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                                    const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates )
+                                                    const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
+                                                    const ContextFactory_ABC& contextFactory )
     : transportIdentifier_( ResolveMission( xis, resolver ) )
     , callsignResolver_   ( callsignResolver )
     , subordinates_       ( subordinates )
+    , contextFactory_     ( contextFactory )
 {
     CONNECT( controller, *this, automat_order );
 }
@@ -113,8 +116,10 @@ void TransportationController::Notify(  const sword::AutomatOrder& message, int 
         const long long debarkmentTime = ReadTime( message.parameters().elem( 7 ) );
         const std::string transportingUnitCallsign = callsignResolver_.ResolveCallsign( ReadAgent( message.parameters().elem( 8 ) ) );
         const SubordinatesVisitor visitor( subordinates_, message.tasker().id() );
+        const unsigned int context = contextFactory_.Create();
+        pendingRequests_.insert( context );
         BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
-            listener->ConvoyRequested( transportingUnitCallsign, embarkmentTime, embarkmentPoint, debarkmentTime, debarkmentPoint, visitor );
+            listener->ConvoyRequested( transportingUnitCallsign, embarkmentTime, embarkmentPoint, debarkmentTime, debarkmentPoint, visitor, context );
     }
 }
 
@@ -134,4 +139,29 @@ void TransportationController::Register( TransportationListener_ABC& listener )
 void TransportationController::Unregister( TransportationListener_ABC& listener )
 {
     listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationController::OfferReceived
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void TransportationController::OfferReceived( unsigned int context, bool fullOffer, const std::string& provider )
+{
+    if( pendingRequests_.find( context ) == pendingRequests_.end() )
+    {
+        if( acceptedRequests_.find( context ) != acceptedRequests_.end() )
+            BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
+                listener->OfferRejected( context, provider, "An other offer has already been accepted" );
+        return;
+    }
+    if( fullOffer )
+    {
+        BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
+            listener->OfferAccepted( context, provider );
+        pendingRequests_.erase( context );
+        acceptedRequests_.insert( context );
+    }
+    else
+        BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
+            listener->OfferRejected( context, provider, "Not offering service or partial offer" );
 }

@@ -13,23 +13,20 @@
 #include "hla_plugin/TransportedUnitsVisitor_ABC.h"
 #include "MockTransportationController.h"
 #include "MockInteractionSender.h"
-#include "MockContextFactory.h"
 #include "MockTransportedUnits.h"
 
 using namespace plugins::hla;
 
 BOOST_AUTO_TEST_CASE( netn_request_convoy_sender_sends_request_when_receiving_convoy_event )
 {
-    MockContextFactory contextFactory;
     MockTransportationController controller;
     MockInteractionSender< interactions::NetnRequestConvoy > interactionSender;
     TransportationListener_ABC* listener = 0;
     MOCK_EXPECT( controller, Register ).once().with( mock::retrieve( listener ) );
     MOCK_EXPECT( controller, Unregister );
-    NetnRequestConvoySender sender( controller, interactionSender, contextFactory );
+    NetnRequestConvoySender sender( controller, interactionSender );
     BOOST_REQUIRE( listener );
     interactions::NetnRequestConvoy convoy;
-    MOCK_EXPECT( contextFactory, Create ).once().returns( 42 );
     MOCK_EXPECT( interactionSender, Send ).once().with( mock::retrieve( convoy ) );
     const long long embarkmentTime = 1337;
     const long long disembarkmentTime = 1338;
@@ -39,7 +36,7 @@ BOOST_AUTO_TEST_CASE( netn_request_convoy_sender_sends_request_when_receiving_co
     const std::string callsign = "callsign";
     const std::string uniqueId = "uniqueId";
     MOCK_EXPECT( transportedUnits, Apply ).once().calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _1, callsign, uniqueId ) );
-    listener->ConvoyRequested( "carrier-identifier", embarkmentTime, embarkmentPoint, disembarkmentTime, disembarkmentPoint, transportedUnits );
+    listener->ConvoyRequested( "carrier-identifier", embarkmentTime, embarkmentPoint, disembarkmentTime, disembarkmentPoint, transportedUnits, 42 );
     mock::verify();
     const int convoyServiceType = 4;
     const unsigned int noTimeout = 0;

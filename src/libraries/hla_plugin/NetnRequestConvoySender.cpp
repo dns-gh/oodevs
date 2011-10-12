@@ -13,7 +13,6 @@
 #include "InteractionSender_ABC.h"
 #include "TransportedUnitsVisitor_ABC.h"
 #include "TransportedUnits_ABC.h"
-#include "ContextFactory_ABC.h"
 #include "Interactions.h"
 #include "Transportation.h"
 #include "rpr/Coordinates.h"
@@ -25,11 +24,9 @@ using namespace plugins::hla;
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
 NetnRequestConvoySender::NetnRequestConvoySender( TransportationController_ABC& controller,
-                                                  InteractionSender_ABC< interactions::NetnRequestConvoy >& interactionSender,
-                                                  const ContextFactory_ABC& contextFactory )
+                                                  InteractionSender_ABC< interactions::NetnRequestConvoy >& interactionSender )
     : controller_       ( controller )
     , interactionSender_( interactionSender )
-    , contextFactory_   ( contextFactory )
 {
     controller_.Register( *this );
 }
@@ -66,10 +63,10 @@ namespace
 // -----------------------------------------------------------------------------
 void NetnRequestConvoySender::ConvoyRequested( const std::string& carrier, long long embarkmentTime, const geometry::Point2d& embarkmentPoint,
                                                long long disembarkmentTime, const geometry::Point2d& disembarkmentPoint,
-                                               const TransportedUnits_ABC& transportedUnits )
+                                               const TransportedUnits_ABC& transportedUnits, unsigned int context )
 {
     interactions::NetnRequestConvoy convoy;
-    convoy.serviceId = NetnEventIdentifier( contextFactory_.Create(), "SWORD" );
+    convoy.serviceId = NetnEventIdentifier( context, "SWORD" );
     convoy.consumer = UnicodeString( "SWORD" );
     convoy.provider = UnicodeString( carrier );
     convoy.serviceType = 4; // convoy
@@ -81,4 +78,22 @@ void NetnRequestConvoySender::ConvoyRequested( const std::string& carrier, long 
     transportedUnits.Apply( visitor );
     convoy.transportData = NetnTransportStruct( transport );
     interactionSender_.Send( convoy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnRequestConvoySender::OfferAccepted
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnRequestConvoySender::OfferAccepted( unsigned int /*context*/, const std::string& /*provider*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnRequestConvoySender::OfferRejected
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnRequestConvoySender::OfferRejected( unsigned int /*context*/, const std::string& /*provider*/, const std::string& /*reason*/ )
+{
+    // NOTHING
 }

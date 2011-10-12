@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <geometry/Types.h>
+#include <string>
 
 namespace plugins
 {
@@ -38,7 +39,9 @@ public:
     //@{
     virtual void ConvoyRequested( const std::string& carrier, long long embarkmentTime, const geometry::Point2d& embarkmentPoint,
                                   long long disembarkmentTime, const geometry::Point2d& disembarkmentPoint,
-                                  const TransportedUnits_ABC& transportedUnits ) = 0;
+                                  const TransportedUnits_ABC& transportedUnits, unsigned int context ) = 0;
+    virtual void OfferAccepted( unsigned int context, const std::string& provider ) = 0;
+    virtual void OfferRejected( unsigned int context, const std::string& provider, const std::string& reason ) = 0;
     //@}
 };
 
