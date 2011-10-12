@@ -107,6 +107,7 @@ namespace hla
                                     ( "UniqueID" )
                                     ( "HigherHeadquarters" )
                                     ( "Callsign" )
+                                    ( "Status" )
             , std::auto_ptr< ClassBuilder_ABC >( new AggregateEntityBuilder() ) )
         {}
     };

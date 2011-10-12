@@ -31,6 +31,7 @@ NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_AB
     attributes_->Register( "UniqueID", UniqueId( uniqueIdentifier ) );
     attributes_->Register( "HigherHeadquarters", UniqueId( uniqueIdentifier ) );
     attributes_->Register( "Callsign", UnicodeString( callsign ) );
+    attributes_->Register( "Status", Wrapper< int8 >( 1 ) ); // Active
     agent_.Register( *this );
 }
 
@@ -96,4 +97,5 @@ void NetnAggregate::EquipmentChanged( unsigned int /*type*/, const rpr::EntityTy
 void NetnAggregate::EmbarkmentChanged( bool mounted )
 {
     attributes_->Update( "Mounted", Wrapper< double >( mounted ? 100. : 0. ) );
+    attributes_->Update( "Status", Wrapper< int8 >( mounted ? 2 : 1 ) );
 }

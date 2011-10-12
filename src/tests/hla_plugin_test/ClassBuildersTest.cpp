@@ -84,7 +84,8 @@ BOOST_FIXTURE_TEST_CASE( netn_aggegate_entity_builder_registers_attributes, Fixt
                                        ( "Echelon" )
                                        ( "UniqueID" )
                                        ( "HigherHeadquarters" )
-                                       ( "Callsign" );
+                                       ( "Callsign" )
+                                       ( "Status" );
     Check( builder, "BaseEntity.AggregateEntity.NETN_Aggregate" );
 }
 

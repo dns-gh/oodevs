@@ -65,7 +65,8 @@ BOOST_FIXTURE_TEST_CASE( netn_agregate_entity_serializes_all_its_attributes_but_
                                                                         ( "Echelon" )
                                                                         ( "UniqueID" )
                                                                         ( "HigherHeadquarters" )
-                                                                        ( "Callsign" );
+                                                                        ( "Callsign" )
+                                                                        ( "Status" );
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;
@@ -147,7 +148,9 @@ BOOST_FIXTURE_TEST_CASE( agent_echelon_is_platoon, AggregateFixture )
 BOOST_FIXTURE_TEST_CASE( agent_not_mounted_serializes_0_percent, AggregateFixture )
 {
     const double percentMounted = 0.;
+    const int8 active = 1;
     MOCK_EXPECT( functor, Visit ).once().with( "Mounted", boost::bind( &CheckSerialization< double >, _1, percentMounted ) );
+    MOCK_EXPECT( functor, Visit ).once().with( "Status", boost::bind( &CheckSerialization< int8 >, _1, active ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
 }
@@ -155,9 +158,11 @@ BOOST_FIXTURE_TEST_CASE( agent_not_mounted_serializes_0_percent, AggregateFixtur
 BOOST_FIXTURE_TEST_CASE( mounted_agent_serializes_100_percent, AggregateFixture )
 {
     const double percentMounted = 100.;
+    const int8 inactive = 2;
     BOOST_REQUIRE( listener );
     listener->EmbarkmentChanged( true );
     MOCK_EXPECT( functor, Visit ).once().with( "Mounted", boost::bind( &CheckSerialization< double >, _1, percentMounted ) );
+    MOCK_EXPECT( functor, Visit ).once().with( "Status", boost::bind( &CheckSerialization< int8 >, _1, inactive ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
 }
