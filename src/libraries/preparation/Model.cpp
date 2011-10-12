@@ -62,7 +62,7 @@ using namespace kernel;
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model( Controllers& controllers, const StaticModel& staticModel )
+Model::Model( Controllers& controllers, const StaticModel& staticModel, const tools::ExerciseConfig& config )
     : EntityResolverFacade( static_cast< Model_ABC& >( *this ) )
     , controllers_          ( controllers )
     , idManager_            ( *new IdManager() )
@@ -77,7 +77,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , drawingFactory_       ( *new gui::DrawerFactory( controllers, staticModel.drawings_, staticModel.coordinateConverter_ ) )
     , resourceObserver_     ( *new ResourceNetworkSelectionObserver( controllers ) )
     , loaded_               ( false )
-    , exercise_             ( *new Exercise( controllers.controller_ ) )
+    , exercise_             ( *new Exercise( controllers.controller_, config ) )
     , teams_                ( *new TeamsModel( controllers, teamFactory_ ) )
     , objects_              ( *new ObjectsModel( controllers, objectFactory_ ) )
     , knowledgeGroups_      ( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) ) // LTO

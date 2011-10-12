@@ -68,7 +68,7 @@ class Model : public kernel::Model_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( kernel::Controllers& controllers, const StaticModel& staticModel );
+             Model( kernel::Controllers& controllers, const StaticModel& staticModel, const tools::ExerciseConfig& config );
     virtual ~Model();
     //@}
 

@@ -23,6 +23,7 @@ namespace xml
 
 namespace tools
 {
+    class ExerciseConfig;
     class SchemaWriter_ABC;
 }
 
@@ -46,7 +47,7 @@ class Exercise
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Exercise( kernel::Controller& controller );
+    explicit Exercise( kernel::Controller& controller, const tools::ExerciseConfig& config );
     virtual ~Exercise();
     //@}
 
@@ -91,6 +92,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    const tools::ExerciseConfig& config_;
     QString name_;
     T_Resources briefings_;
     T_Resources resources_;

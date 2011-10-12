@@ -82,7 +82,7 @@ bool Application::Initialize( int argc, char** argv )
     config_.reset( new Config( argc, argv, *observer_ ) );
     controllers_.reset( new kernel::Controllers() );
     staticModel_.reset( new StaticModel( *controllers_ ) );
-    model_.reset( new Model( *controllers_, *staticModel_ ) );
+    model_.reset( new Model( *controllers_, *staticModel_, *config_ ) );
     mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *config_, license_ );
     if( config_->HasGenerateScores() || !config_->GetFolderToMigrate().empty() )
         return false;

@@ -10,16 +10,22 @@
 #include "preparation_pch.h"
 #include "Exercise.h"
 #include "clients_kernel/Controller.h"
+#include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <boost/bind.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <xeumeuleu/xml.hpp>
+
+namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: Exercise constructor
 // Created: SBO 2010-03-08
 // -----------------------------------------------------------------------------
-Exercise::Exercise( kernel::Controller& controller )
+Exercise::Exercise( kernel::Controller& controller, const tools::ExerciseConfig& config )
     : controller_( controller )
+    , config_    ( config )
 {
     // NOTHING
 }
@@ -94,7 +100,7 @@ namespace
 {
     void CopyNode( const std::string& name, xml::xistream& xis, xml::xostream& xos )
     {
-        if( name != "meta" )
+        if( name != "meta" && name != "action-planning" )
             xos << xml::content( name, xis );
     }
     void CopyFromFile( const std::string& file, xml::xostream& xos )
@@ -122,6 +128,8 @@ void Exercise::Serialize( const std::string& file, const tools::SchemaWriter_ABC
     SerializeResources( xos );
     xos     << xml::end;
     CopyFromFile( file, xos );
+    if( bfs::exists( bfs::path( config_.GetExerciseDir( config_.GetExerciseName() ) ) / "melmil.xml" ) )
+        xos << xml::start( "action-planning" ) << xml::attribute( "file", "melmil.xml" ) << xml::end;
     xos << xml::end;
 }
 
