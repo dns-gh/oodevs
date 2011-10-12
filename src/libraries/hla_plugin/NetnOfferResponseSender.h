@@ -20,6 +20,7 @@ namespace interactions
 {
     struct NetnAcceptOffer;
     struct NetnRejectOfferConvoy;
+    struct NetnReadyToReceiveService;
 }
 
     class TransportationController_ABC;
@@ -36,8 +37,10 @@ class NetnOfferResponseSender : private TransportationListener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnOfferResponseSender( TransportationController_ABC& controller, InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptOfferSender,
-                                      InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectOfferSender );
+             NetnOfferResponseSender( TransportationController_ABC& controller,
+                                      InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptOfferSender,
+                                      InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectOfferSender,
+                                      InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readyToReceiveServiceSender );
     virtual ~NetnOfferResponseSender();
     //@}
 
@@ -58,6 +61,7 @@ private:
     TransportationController_ABC& controller_;
     InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptOfferSender_;
     InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectOfferSender_;
+    InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readyToReceiveServiceSender_;
     //@}
 };
 

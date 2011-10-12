@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "NetnAcceptOffer.h"
+#include "NetnReadyToReceiveService.h"
 #include "Federate_ABC.h"
 #include "Interactions.h"
 #include <cassert>
@@ -19,42 +19,42 @@
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
-// Name: NetnAcceptOffer constructor
+// Name: NetnReadyToReceiveService constructor
 // Created: VPR 2011-10-11
 // -----------------------------------------------------------------------------
-NetnAcceptOffer::NetnAcceptOffer( Federate_ABC& federate )
-    : pInteraction_( new ::hla::Interaction< interactions::NetnAcceptOffer >( *this ) )
+NetnReadyToReceiveService::NetnReadyToReceiveService( Federate_ABC& federate )
+    : pInteraction_( new ::hla::Interaction< interactions::NetnReadyToReceiveService >( *this ) )
 {
-    pInteraction_->Register( "ServiceID"  , ::hla::CreateParameter( &interactions::NetnAcceptOffer::serviceId ) );
-    pInteraction_->Register( "Consumer"   , ::hla::CreateParameter( &interactions::NetnAcceptOffer::consumer ) );
-    pInteraction_->Register( "Provider"   , ::hla::CreateParameter( &interactions::NetnAcceptOffer::provider ) );
-    pInteraction_->Register( "ServiceType", ::hla::CreateParameter( &interactions::NetnAcceptOffer::serviceType ) );
-    federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_AcceptOffer" ), *pInteraction_, true, false );
+    pInteraction_->Register( "ServiceID"  , ::hla::CreateParameter( &interactions::NetnReadyToReceiveService::serviceId ) );
+    pInteraction_->Register( "Consumer"   , ::hla::CreateParameter( &interactions::NetnReadyToReceiveService::consumer ) );
+    pInteraction_->Register( "Provider"   , ::hla::CreateParameter( &interactions::NetnReadyToReceiveService::provider ) );
+    pInteraction_->Register( "ServiceType", ::hla::CreateParameter( &interactions::NetnReadyToReceiveService::serviceType ) );
+    federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_ReadyToReceiveService" ), *pInteraction_, true, false );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnAcceptOffer destructor
+// Name: NetnReadyToReceiveService destructor
 // Created: VPR 2011-10-11
 // -----------------------------------------------------------------------------
-NetnAcceptOffer::~NetnAcceptOffer()
+NetnReadyToReceiveService::~NetnReadyToReceiveService()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnAcceptOffer::Send
+// Name: NetnReadyToReceiveService::Send
 // Created: VPR 2011-10-11
 // -----------------------------------------------------------------------------
-void NetnAcceptOffer::Send( const interactions::NetnAcceptOffer& interaction )
+void NetnReadyToReceiveService::Send( const interactions::NetnReadyToReceiveService& interaction )
 {
     pInteraction_->Send( interaction );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnAcceptOffer::Receive
+// Name: NetnReadyToReceiveService::Receive
 // Created: VPR 2011-10-11
 // -----------------------------------------------------------------------------
-void NetnAcceptOffer::Receive( interactions::NetnAcceptOffer& /*interaction*/ )
+void NetnReadyToReceiveService::Receive( interactions::NetnReadyToReceiveService& /*interaction*/ )
 {
     throw std::runtime_error( __FUNCTION__ " unimplemented function" );
 }

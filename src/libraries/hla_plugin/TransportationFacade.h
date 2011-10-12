@@ -55,6 +55,7 @@ namespace interactions
     struct NetnOfferConvoy;
     struct NetnAcceptOffer;
     struct NetnRejectOfferConvoy;
+    struct NetnReadyToReceiveService;
 }
 
 // =============================================================================
@@ -91,7 +92,8 @@ private:
     std::auto_ptr< InteractionSender_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoy_;
     std::auto_ptr< NetnOfferConvoySender > pNetnOfferConvoySender_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnAcceptOffer > > pNetnAcceptOffer_;
-    std::auto_ptr< InteractionSender_ABC< interactions::NetnRejectOfferConvoy >  > pNetnRejectOfferConvoy_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnRejectOfferConvoy > > pNetnRejectOfferConvoy_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnReadyToReceiveService > > pNetnReadyToReceiveService_;
     std::auto_ptr< NetnOfferResponseSender > pNetnOfferResponseSender_;
     //@}
 };

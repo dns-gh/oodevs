@@ -19,11 +19,14 @@ using namespace plugins::hla;
 // Name: NetnOfferResponseSender constructor
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-NetnOfferResponseSender::NetnOfferResponseSender( TransportationController_ABC& controller, InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptOfferSender,
-                                                  InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectOfferSender )
-    : controller_       ( controller )
-    , acceptOfferSender_( acceptOfferSender )
-    , rejectOfferSender_( rejectOfferSender )
+NetnOfferResponseSender::NetnOfferResponseSender( TransportationController_ABC& controller,
+                                                  InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptOfferSender,
+                                                  InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectOfferSender,
+                                                  InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readyToReceiveServiceSender )
+    : controller_                 ( controller )
+    , acceptOfferSender_          ( acceptOfferSender )
+    , rejectOfferSender_          ( rejectOfferSender )
+    , readyToReceiveServiceSender_( readyToReceiveServiceSender )
 {
     controller_.Register( *this );
 }
@@ -81,7 +84,12 @@ void NetnOfferResponseSender::OfferRejected( unsigned int context, const std::st
 // Name: NetnOfferResponseSender::ReadyToReceiveService
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-void NetnOfferResponseSender::ReadyToReceiveService( unsigned int /*context*/, const std::string& /*provider*/ )
+void NetnOfferResponseSender::ReadyToReceiveService( unsigned int context, const std::string& provider )
 {
-    // NOTHING
+    interactions::NetnReadyToReceiveService ready;
+    ready.serviceId = NetnEventIdentifier( context, "SWORD" );
+    ready.consumer = UnicodeString( "SWORD" );
+    ready.provider = UnicodeString( provider );
+    ready.serviceType = 4; // Convoy
+    readyToReceiveServiceSender_.Send( ready );
 }

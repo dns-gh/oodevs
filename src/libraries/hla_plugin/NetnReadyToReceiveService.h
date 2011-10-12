@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnAcceptOffer_h
-#define plugins_hla_NetnAcceptOffer_h
+#ifndef plugins_hla_NetnReadyToReceiveService_h
+#define plugins_hla_NetnReadyToReceiveService_h
 
 #include "InteractionSender_ABC.h"
 #include <hla/InteractionNotification_ABC.h>
@@ -27,43 +27,43 @@ namespace hla
 
 namespace interactions
 {
-    struct NetnAcceptOffer;
+    struct NetnReadyToReceiveService;
 }
 // =============================================================================
-/** @class  NetnAcceptOffer
-    @brief  Netn accept offer
+/** @class  NetnReadyToReceiveService
+    @brief  Netn ready to receive service
 */
 // Created: VPR 2011-10-11
 // =============================================================================
-class NetnAcceptOffer : public InteractionSender_ABC< interactions::NetnAcceptOffer >
-                      , private ::hla::InteractionNotification_ABC< interactions::NetnAcceptOffer >
+class NetnReadyToReceiveService : public InteractionSender_ABC< interactions::NetnReadyToReceiveService >
+                                , private ::hla::InteractionNotification_ABC< interactions::NetnReadyToReceiveService >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnAcceptOffer( Federate_ABC& federate );
-    virtual ~NetnAcceptOffer();
+             NetnReadyToReceiveService( Federate_ABC& federate );
+    virtual ~NetnReadyToReceiveService();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const interactions::NetnAcceptOffer& interaction );
+    virtual void Send( const interactions::NetnReadyToReceiveService& interaction );
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void Receive( interactions::NetnAcceptOffer& interaction );
+    virtual void Receive( interactions::NetnReadyToReceiveService& interaction );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::Interaction< interactions::NetnAcceptOffer > > pInteraction_;
+    std::auto_ptr< ::hla::Interaction< interactions::NetnReadyToReceiveService > > pInteraction_;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_NetnAcceptOffer_h
+#endif // plugins_hla_NetnReadyToReceiveService_h

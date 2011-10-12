@@ -118,6 +118,15 @@ struct NetnAcceptOffer
     UnicodeString provider;
     int8 serviceType;
 };
+
+struct NetnReadyToReceiveService
+{
+    NetnEventIdentifier serviceId;
+    UnicodeString consumer;
+    UnicodeString provider;
+    int8 serviceType;
+};
+
 }
 }
 }
