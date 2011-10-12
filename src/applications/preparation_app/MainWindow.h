@@ -32,6 +32,8 @@ namespace gui
     class ExclusiveEventStrategy;
     class LightingProxy;
     class GlSelector;
+    template< typename T >
+    class LogisticList;
     class PreferencesDialog;
     class TerrainLayer;
     class Layer_ABC;
@@ -46,6 +48,7 @@ class CreationPanels;
 class FileToolbar;
 class FilterDialogs;
 class InhabitantCreationPanel;
+class LogisticListView;
 class MapLayer_ABC;
 class Menu;
 class Model;
@@ -155,6 +158,7 @@ private:
     Menu* menu_;
     FileToolbar* fileToolBar_;
     QDockWidget* pExtensionsPanel_;
+    gui::LogisticList< ::LogisticListView >* logisticListView_;
     bool loading_;
     bool needsSaving_;
     QString savedState_;

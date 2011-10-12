@@ -35,6 +35,8 @@ namespace gui
     class PreferencesDialog;
     class LightingProxy;
     class GlSelector;
+    template< typename T >
+    class LogisticList;
     class TerrainLayer;
     class Layer_ABC;
     class Picker;
@@ -52,6 +54,7 @@ class Profile;
 class Network;
 class MissionPanel;
 class CreationPanels;
+class LogisticListView;
 class LoginDialog;
 class Publisher_ABC;
 class LoggerProxy;
@@ -132,7 +135,7 @@ private:
     Network& network_;
     QString profile_;
     Config& config_;
-    std::auto_ptr< gui::CircularEventStrategy >  forward_;
+    std::auto_ptr< gui::CircularEventStrategy > forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
     std::auto_ptr< gui::Painter_ABC > pPainter_;
     std::auto_ptr< gui::LayerFilter_ABC > simpleFilter_;
@@ -145,6 +148,7 @@ private:
     gui::OptionsPanel* pOptionsPanel_;
     gui::ParametersLayer* parameters_;
     gui::AgentsLayer* agents_;
+    gui::LogisticList< ::LogisticListView >* logisticListView_;
     StatusBar* pStatus_;
     QByteArray docks_;
     QByteArray toolbars_;

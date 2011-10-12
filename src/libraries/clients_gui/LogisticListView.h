@@ -43,6 +43,11 @@ public:
     virtual ~LogisticListView();
     //@}
 
+    //! @name Operations
+    //@{
+    void Purge();
+    //@}
+
 protected:
     //! @name Protected helpers
     //@{

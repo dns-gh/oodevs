@@ -260,7 +260,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     pListsTabWidget->addTab( new TacticalList( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Tactical" ) );
     pListsTabWidget->addTab( new AgentList( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Communication" ) );
-    pListsTabWidget->addTab( new gui::LogisticList< ::LogisticListView >( controllers, *factory, profile, *icons, model_.actions_, staticModel, simulation ), tr( "Logistic" ) );
+    logisticListView_ = new gui::LogisticList< ::LogisticListView >( controllers, *factory, profile, *icons, model_.actions_, staticModel, simulation );
+    pListsTabWidget->addTab( logisticListView_, tr( "Logistic" ) );
     pListsTabWidget->addTab( new gui::ObjectList( controllers, *factory, profile ), tr( "Objects" ) );
     pListsTabWidget->addTab( new gui::PopulationList( controllers, *factory, profile ), tr( "Crowds" ) );
     pListsTabWidget->addTab( new gui::InhabitantList( controllers, *factory, profile ), tr( "Populations" ) );
@@ -514,6 +515,8 @@ void MainWindow::Load()
     try
     {
         WriteOptions();
+        if( logisticListView_ )
+            logisticListView_->Purge();
         model_.Purge();
         selector_->Close();
         selector_->Load();
@@ -537,6 +540,8 @@ void MainWindow::Close()
 {
     network_.Disconnect();
     selector_->Close();
+    if( logisticListView_ )
+        logisticListView_->Purge();
     model_.Purge();
     staticModel_.Purge();
 }

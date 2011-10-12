@@ -54,6 +54,15 @@ LogisticListView::~LogisticListView()
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticListView::Purge
+// Created: JSR 2011-10-12
+// -----------------------------------------------------------------------------
+void LogisticListView::Purge()
+{
+    DeleteTail( static_cast< ValuedListItem *>( firstChild() ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticListView::FindOrCreateOrReplace
 // Created: ABR 2011-09-14
 // -----------------------------------------------------------------------------

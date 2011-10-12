@@ -54,6 +54,17 @@ public:
                            const ::StaticModel& staticModel, const kernel::Time_ABC& simulation );
     virtual ~LogisticList();
     //@}
+
+    //! @name Operations
+    //@{
+    void Purge();
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    CurrentLogisticListView* listView_;
+    //@}
 };
 
 // -----------------------------------------------------------------------------
@@ -65,7 +76,7 @@ LogisticList< CurrentLogisticListView >::LogisticList( kernel::Controllers& cont
                                                        const EntitySymbols& symbols, ModelBuilder& modelBuilder )
 {
     new EntitySearchBox< kernel::Entity_ABC >( this, controllers );
-    new CurrentLogisticListView( this, controllers, factory, profile, symbols, modelBuilder );
+    listView_ = new CurrentLogisticListView( this, controllers, factory, profile, symbols, modelBuilder );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +89,7 @@ LogisticList< CurrentLogisticListView >::LogisticList( kernel::Controllers& cont
                                                        const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
 {
     new EntitySearchBox< kernel::Entity_ABC >( this, controllers );
-    new CurrentLogisticListView( this, controllers, factory, profile, symbols, actionsModel, staticModel, simulation );
+    listView_ = new CurrentLogisticListView( this, controllers, factory, profile, symbols, actionsModel, staticModel, simulation );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,6 +100,17 @@ template< typename CurrentLogisticListView >
 LogisticList< CurrentLogisticListView >::~LogisticList()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticList::Purge
+// Created: JSR 2011-10-12
+// -----------------------------------------------------------------------------
+template< typename CurrentLogisticListView >
+inline
+void LogisticList< CurrentLogisticListView >::Purge()
+{
+    listView_->Purge();
 }
 
 }

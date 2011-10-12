@@ -220,7 +220,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         new ::CommunicationListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_ );
         pAgentsTabWidget->addTab( listsTabBox, tr( "Communication" ) );
 
-        pAgentsTabWidget->addTab( new gui::LogisticList< ::LogisticListView >( controllers, *factory, PreparationProfile::GetProfile(), *icons, *modelBuilder_ ), tr( "Logistic" ) );
+        logisticListView_ = new gui::LogisticList< ::LogisticListView >( controllers, *factory, PreparationProfile::GetProfile(), *icons, *modelBuilder_ );
+        pAgentsTabWidget->addTab( logisticListView_, tr( "Logistic" ) );
         pListsTabWidget->addTab( pAgentsTabWidget, tr( "Units" ) );
     }
     {
@@ -515,6 +516,8 @@ bool MainWindow::Load()
     {
         SetProgression( 10, tr( "Loading configuration ..." ) );
         WriteOptions();
+        if( logisticListView_ )
+            logisticListView_->Purge();
         model_.Purge();
         selector_->Close();
         selector_->Load();
@@ -547,6 +550,8 @@ void MainWindow::Close()
 {
     if( model_.IsLoaded() && !CheckSaving() )
         return;
+    if( logisticListView_ )
+        logisticListView_->Purge();
     model_.Purge();
     staticModel_.Purge();
     selector_->Close();
