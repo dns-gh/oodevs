@@ -5,6 +5,8 @@
     <equipments>
       <equipment count="1" crew="30" major="true" type="Cruiser"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -38,6 +40,8 @@
     <equipments>
       <equipment count="4" crew="8" major="true" type="Engineer VPC"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
@@ -82,6 +86,8 @@
       <equipment count="1" crew="1" type="Motocycle"/>
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="3" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -112,6 +118,8 @@
       <equipment count="2" crew="2" type="Theater Low Altitude Radar Vehicle"/>
       <equipment count="2" crew="2" type="Theater High Altitude Radar Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="9" type="SousOfficier"/>
@@ -139,6 +147,8 @@
     <equipments>
       <equipment count="3" crew="6" major="true" type="Antitank Helicopter"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
@@ -166,6 +176,8 @@
     <equipments>
       <equipment count="3" crew="6" major="true" type="20-mm Chain Gun Helicopter"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
@@ -193,6 +205,8 @@
     <equipments>
       <equipment count="3" crew="3" major="true" type="Transport helicopter"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -223,6 +237,8 @@
       <equipment count="2" crew="2" loadable="true" type="SRAW soldier"/>
       <equipment count="3" crew="1" loadable="true" type="VSRAW soldier"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
@@ -270,6 +286,8 @@
       <equipment count="1" crew="4" major="true" type="7.62-mm Armoured Personnel Carrier"/>
       <equipment count="1" crew="3" major="true" type="20-mm Armoured Personnel Carrier"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="2" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -307,6 +325,8 @@
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical Vehicle"/>
       <equipment count="2" crew="2" type="Light Armored Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
@@ -360,6 +380,8 @@
       <equipment count="7" crew="2" major="true" type="MBT mobility repairs team"/>
       <equipment count="5" crew="2" major="true" type="MBT repairs team"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="7" type="Officier"/>
       <crew-rank count="57" type="SousOfficier"/>
@@ -399,6 +421,8 @@
   <unit decisional-model="Truck convoy" id="12" name="Convoy" type="Pion LOG Convoi">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat service support/transportation"/>
     <equipments/>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -425,6 +449,8 @@
       <equipment count="2" crew="3" major="true" type="VAB RATAC"/>
       <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
@@ -459,6 +485,8 @@
       <equipment count="1" crew="5" major="true" type="Artillery Firefinder Radar"/>
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
@@ -492,6 +520,8 @@
     <equipments>
       <equipment count="4" crew="3" major="true" type="Artillery Recce Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -528,6 +558,8 @@
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>
       <equipment convoyer="true" count="1" crew="2" type="Load Carrying Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="7" type="SousOfficier"/>
@@ -547,6 +579,8 @@
     <equipments>
       <equipment count="100" crew="1" loadable="true" major="true" type="Refugee"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -567,6 +601,8 @@
       <equipment count="4" crew="1" loadable="true" major="true" type="Long Range Surveillance Detachment Soldier"/>
       <equipment convoyer="true" count="1" crew="1" type="Light Medium Tactical Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -600,6 +636,8 @@
     <equipments>
       <equipment count="4" crew="3" major="true" type="Armoured Personnel Carrier Command Post"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -619,6 +657,8 @@
     <equipments>
       <equipment count="16" crew="1" loadable="true" major="true" type="Commando"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
@@ -671,6 +711,8 @@
       <equipment count="10" crew="2" major="true" type="CP mobility repairs team"/>
       <equipment count="1" crew="2" type="CP repairs team"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="50" type="SousOfficier"/>
@@ -710,6 +752,8 @@
     <equipments>
       <equipment count="5" crew="2" major="true" type="Light Armored Vehicle 12.7-mm"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
@@ -737,6 +781,8 @@
     <equipments>
       <equipment count="5" crew="2" major="true" type="Light Armored Vehicle 12.7-mm"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
@@ -768,6 +814,8 @@
       <equipment count="1" crew="1" type="Motocycle"/>
       <equipment convoyer="true" count="2" crew="3" type="Load Carrying Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="2" type="Officier"/>
       <crew-rank count="8" type="SousOfficier"/>
@@ -800,6 +848,8 @@
       <equipment count="5" crew="2" major="true" type="CP mobility repairs team"/>
       <equipment count="1" crew="2" type="CP repairs team"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="29" type="SousOfficier"/>
@@ -840,6 +890,8 @@
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical Vehicle"/>
       <equipment count="2" crew="2" major="true" type="12.7-mm Armoured Personnel Carrier"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="3" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
@@ -874,6 +926,8 @@
     <equipments>
       <equipment count="2" crew="10" major="true" type="Landing Craft"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -913,6 +967,8 @@
       <equipment count="3" crew="2" major="true" type="CP failure reapairs team"/>
       <equipment count="6" crew="2" type="CP repairs team"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="10" type="Officier"/>
       <crew-rank count="81" type="SousOfficier"/>
@@ -954,6 +1010,8 @@
       <equipment count="1" crew="3" type="Light Armored Vehicle 7.62-mm"/>
       <equipment count="2" crew="4" major="true" type="Armoured Personnel Carrier Command Post"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="10" type="SousOfficier"/>
@@ -990,6 +1048,8 @@
       <equipment count="1" crew="3" major="true" type="Light Armored Vehicle 7.62-mm"/>
       <equipment count="1" crew="4" type="Armoured Personnel Carrier Command Post"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -1026,6 +1086,8 @@
       <equipment count="1" crew="3" type="Light Armored Vehicle Rocket"/>
       <equipment count="2" crew="4" type="Armoured Personnel Carrier Command Post"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
@@ -1060,6 +1122,8 @@
     <equipments>
       <equipment count="1" crew="4" major="true" type="Armoured Personnel Carrier Artillery"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -1085,6 +1149,8 @@
     <equipments>
       <equipment count="5" crew="2" major="true" type="Light Armored Vehicle 12.7-mm"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
@@ -1112,6 +1178,8 @@
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Load Carrying Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
@@ -1144,6 +1212,8 @@
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Load Carrying Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
@@ -1176,6 +1246,8 @@
     <equipments>
       <equipment count="1" crew="2" type="Load Carrying Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -1207,6 +1279,8 @@
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Load Carrying Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
@@ -1239,6 +1313,8 @@
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Load Carrying Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
@@ -1271,6 +1347,8 @@
     <equipments>
       <equipment convoyer="true" count="2" crew="3" type="Load Carrying Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
@@ -1295,6 +1373,8 @@
       <equipment convoyer="true" count="6" crew="2" major="true" type="10m3 Gasoil Tank Trunk"/>
       <equipment convoyer="true" count="3" crew="2" type="5m3 Kerosene Tank Trunk"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -1322,6 +1402,8 @@
       <equipment count="3" crew="1" type="Motocycle"/>
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="7" type="SousOfficier"/>
@@ -1352,6 +1434,8 @@
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>
       <equipment convoyer="true" count="1" crew="2" type="12.7-mm Armed Load Carrying Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
@@ -1375,6 +1459,8 @@
     <equipments>
       <equipment count="5" crew="2" major="true" type="VAB SAN"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -1403,6 +1489,8 @@
     <equipments>
       <equipment count="1" crew="6" major="true" type="Medical Evacuation Helicopter"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
@@ -1425,6 +1513,8 @@
       <equipment count="1" crew="1" major="true" type="Operative Field"/>
       <equipment convoyer="true" count="4" crew="2" type="Load Carrying Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="3" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
@@ -1445,6 +1535,8 @@
     <equipments>
       <equipment count="3" crew="1" major="true" type="Medical and Psychological Staff"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -1468,6 +1560,8 @@
       <equipment convoyer="true" count="7" crew="3" type="Load Carrying Vehicle"/>
       <equipment count="2" crew="1" type="Operative Field"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="8" type="Officier"/>
       <crew-rank count="25" type="SousOfficier"/>
@@ -1489,6 +1583,8 @@
       <equipment count="2" crew="1" major="true" type="Logistic decontamination team"/>
       <equipment convoyer="true" count="6" crew="7" type="Load Carrying Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="8" type="SousOfficier"/>
@@ -1522,6 +1618,8 @@
       <equipment count="1" crew="1" type="Operative Field"/>
       <equipment count="2" crew="1" type="Medical triage team"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="15" type="Officier"/>
       <crew-rank count="20" type="SousOfficier"/>
@@ -1544,6 +1642,8 @@
       <equipment convoyer="true" count="9" crew="6" type="Load Carrying Vehicle"/>
       <equipment count="1" crew="2" type="Ambulance"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="16" type="Officier"/>
       <crew-rank count="16" type="SousOfficier"/>
@@ -1566,6 +1666,8 @@
       <equipment convoyer="true" count="2" crew="2" type="12.7-mm Armed Load Carrying Vehicle"/>
       <equipment count="2" crew="3" type="MTV CLD"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="13" type="SousOfficier"/>
@@ -1588,6 +1690,8 @@
       <equipment count="11" crew="2" major="true" type="Repairs team (division)"/>
       <equipment convoyer="true" count="3" crew="2" type="Load Carrying Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="36" type="SousOfficier"/>
@@ -1611,6 +1715,8 @@
       <equipment convoyer="true" count="3" crew="3" type="Command and Control Vehicle"/>
       <equipment count="1" crew="3" type="Ambulance"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="2" type="Officier"/>
       <crew-rank count="12" type="SousOfficier"/>
@@ -1632,6 +1738,8 @@
       <equipment count="1" crew="3" type="MTV CLD"/>
       <equipment count="6" crew="2" type="Firing mobility repairs team (division)"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="14" type="SousOfficier"/>
@@ -1654,6 +1762,8 @@
       <equipment convoyer="true" count="1" crew="2" type="Load Carrying Vehicle"/>
       <equipment count="15" crew="2" type="Heavy Equipment Transporter System"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="7" type="SousOfficier"/>
@@ -1675,6 +1785,8 @@
       <equipment count="1" crew="3" type="MTV CLD"/>
       <equipment count="6" crew="2" type="Firing mobility repairs team (corps)"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="14" type="SousOfficier"/>
@@ -1697,6 +1809,8 @@
       <equipment count="2" crew="3" type="MTV CLD"/>
       <equipment count="5" crew="2" type="Mobility repairs team (corps)"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="13" type="SousOfficier"/>
@@ -1719,6 +1833,8 @@
       <equipment convoyer="true" count="3" crew="2" type="Load Carrying Vehicle"/>
       <equipment count="11" crew="2" type="Repairs team (corps)"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="36" type="SousOfficier"/>
@@ -1741,6 +1857,8 @@
       <equipment convoyer="true" count="1" crew="2" type="12.7-mm Armed Load Carrying Vehicle"/>
       <equipment convoyer="true" count="18" crew="2" type="MTV 2Pers 12.7"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="7" type="SousOfficier"/>
@@ -1765,6 +1883,8 @@
       <equipment convoyer="true" count="1" crew="2" major="true" type="10m3 Gasoil Tank Trunk"/>
       <equipment convoyer="true" count="1" crew="2" type="5m3 Kerosene Tank Trunk"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -1790,6 +1910,8 @@
       <equipment convoyer="true" count="6" crew="2" major="true" type="30m3 Semi-Trailer Gasoil Tank Trunk"/>
       <equipment convoyer="true" count="6" crew="2" type="5m3 Kerosene Tank Trunk"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -1814,6 +1936,8 @@
     <equipments>
       <equipment count="1" crew="1" major="true" type="Terrorist"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -1840,6 +1964,8 @@
       <equipment count="1" crew="2" major="true" type="Militia 14.5mm Armed Vehicle"/>
       <equipment count="5" crew="1" loadable="true" type="Militia 5.56mm Pistol Armed Man"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -1881,6 +2007,8 @@
     <equipments>
       <equipment count="4" crew="3" major="true" type="Main Battle Tank"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
@@ -1910,6 +2038,8 @@
       <equipment count="1" crew="3" type="Light Armored Vehicle 12.7-mm"/>
       <equipment count="2" crew="3" type="Light Armored Vehicle 7.62-mm"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
@@ -1938,6 +2068,8 @@
       <equipment count="2" crew="4" major="true" type="Armoured Personnel Carrier Command Post"/>
       <equipment count="2" crew="2" type="Light Armored Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -1971,6 +2103,8 @@
     <equipments>
       <equipment count="2" crew="3" major="true" type="Light Armored Vehicle Antitiank"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -1990,6 +2124,8 @@
     <equipments>
       <equipment count="2" crew="3" major="true" type="Light Armored Vehicle 12.7-mm"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -2009,6 +2145,8 @@
     <equipments>
       <equipment count="4" crew="8" major="true" type="Engineer VPC"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
@@ -2051,6 +2189,8 @@
     <equipments>
       <equipment count="4" crew="8" major="true" type="Engineer VPC"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
@@ -2093,6 +2233,8 @@
     <equipments>
       <equipment count="2" crew="1" major="true" type="Engineer Bridge Vehicule"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -2126,6 +2268,8 @@
     <equipments>
       <equipment count="2" crew="3" major="true" type="Light Armored Vehicle 7.62-mm"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -2152,6 +2296,8 @@
     <equipments>
       <equipment count="1" crew="0" major="true" type="Real Time Drone"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -2177,6 +2323,8 @@
     <equipments>
       <equipment count="4" crew="2" major="true" type="RSV"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="8" type="SousOfficier"/>
@@ -2208,6 +2356,8 @@
       <equipment count="5" crew="3" major="true" type="Listening Vehicle"/>
       <equipment convoyer="true" count="1" crew="3" type="Light Medium Tactical Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="18" type="SousOfficier"/>
@@ -2238,6 +2388,8 @@
     <equipments>
       <equipment count="4" crew="3" type="Jammer"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
@@ -2269,6 +2421,8 @@
       <equipment count="3" crew="3" major="true" type="Radar Detection Vehicle"/>
       <equipment convoyer="true" count="1" crew="1" type="Light Medium Tactical Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="10" type="SousOfficier"/>
@@ -2299,6 +2453,8 @@
     <equipments>
       <equipment count="1" crew="4" major="true" type="Light Medium Tactical Vehicle (RASIT)"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -2329,6 +2485,8 @@
     <equipments>
       <equipment count="2" crew="4" major="true" type="RSV reconnaissance NBC"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="7" type="SousOfficier"/>
@@ -2355,6 +2513,8 @@
     <equipments>
       <equipment count="2" crew="4" major="true" type="RSV reconnaissance NBC"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -2381,6 +2541,8 @@
     <equipments>
       <equipment count="2" crew="3" major="true" type="RSV decontamination NBC"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -2406,6 +2568,8 @@
     <equipments>
       <equipment count="4" crew="4" major="true" type="155-mm Artillery Tank"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="10" type="SousOfficier"/>
@@ -2445,6 +2609,8 @@
       <equipment count="1" crew="3" major="true" type="Artillery Recce Vehicle"/>
       <equipment count="2" crew="2" type="Light Armored Vehicle 12.7-mm"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
@@ -2482,6 +2648,8 @@
       <equipment count="4" crew="3" major="true" type="Multiple Launch Rocket System"/>
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="9" type="SousOfficier"/>
@@ -2517,6 +2685,8 @@
     <equipments>
       <equipment count="2" crew="6" major="true" type="Artillery Recce Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -2551,6 +2721,8 @@
     <equipments>
       <equipment count="4" crew="6" loadable="true" major="true" type="Mortar Launcher 120mm"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -2585,6 +2757,8 @@
     <equipments>
       <equipment count="2" crew="6" major="true" type="Artillery Recce Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -2619,6 +2793,8 @@
     <equipments>
       <equipment count="1" crew="3" major="true" type="Transport helicopter"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -2646,6 +2822,8 @@
     <equipments>
       <equipment count="3" crew="6" major="true" type="Air Defence Helicopter"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
@@ -2678,6 +2856,8 @@
     <equipments>
       <equipment count="3" crew="6" major="true" type="Tigre helicopter"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
@@ -2705,6 +2885,8 @@
     <equipments>
       <equipment count="1" crew="3" major="true" type="Transport helicopter"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -2732,6 +2914,8 @@
     <equipments>
       <equipment count="3" crew="6" major="true" type="Strategic Bomber"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
@@ -2759,6 +2943,8 @@
     <equipments>
       <equipment count="3" crew="6" major="true" type="Strategic Bomber"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
@@ -2786,6 +2972,8 @@
     <equipments>
       <equipment count="1" crew="1" type="Journalist"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -2825,6 +3013,8 @@
       <equipment count="3" crew="2" major="true" type="CP failure reapairs team"/>
       <equipment count="6" crew="2" type="CP repairs team"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="10" type="Officier"/>
       <crew-rank count="81" type="SousOfficier"/>
@@ -2864,6 +3054,8 @@
     <equipments>
       <equipment count="1" crew="1" major="true" type="Terrorist Bombmaker"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -2889,6 +3081,8 @@
     <equipments>
       <equipment count="4" crew="4" major="true" type="Destroyer"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="10" type="SousOfficier"/>
@@ -2921,6 +3115,8 @@
     <equipments>
       <equipment count="1" crew="100" major="true" type="Aircraft Carrier"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="10" type="Officier"/>
       <crew-rank count="50" type="SousOfficier"/>
@@ -2946,6 +3142,8 @@
     <equipments>
       <equipment count="3" crew="2" major="true" type="Police Car"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -2966,6 +3164,8 @@
       <equipment count="3" crew="1" loadable="true" major="true" type="Team Dog Handler / Dog"/>
       <equipment convoyer="true" count="1" crew="1" type="Dog Handler Tansport Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -2985,6 +3185,8 @@
     <equipments>
       <equipment count="3" crew="3" major="true" type="Fire Vehicle (Generic)"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3004,6 +3206,8 @@
     <equipments>
       <equipment count="4" crew="1" major="true" type="Local Police Officer"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3025,6 +3229,8 @@
       <equipment count="1" crew="1" type="Commercial Vehicle"/>
       <equipment count="1" crew="2" type="Transporter Van Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3049,6 +3255,8 @@
     <equipments>
       <equipment count="4" crew="1" major="true" type="Red Cross Social &amp; Psy Support Team"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3068,6 +3276,8 @@
     <equipments>
       <equipment count="4" crew="1" major="true" type="Red Cross Social &amp; Psy Support Team"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3087,6 +3297,8 @@
     <equipments>
       <equipment count="2" crew="2" major="true" type="Police Car"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3107,6 +3319,8 @@
       <equipment count="2" crew="2" major="true" type="Police Car"/>
       <equipment count="1" crew="1" type="Police Motorcycle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -3128,6 +3342,8 @@
       <equipment count="1" crew="1" type="Portable Engine-Driven Fire Pump"/>
       <equipment count="1" crew="3" type="Emergency Rescue Vehicle - Ambulance"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3149,6 +3365,8 @@
       <equipment count="1" crew="1" loadable="true" type="Firefighter Medical Assistant"/>
       <equipment count="1" crew="3" type="Emergency Rescue Vehicle - Ambulance"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3169,6 +3387,8 @@
       <equipment count="1" crew="2" major="true" type="Mobile Emergency Shelter"/>
       <equipment count="1" crew="2" type="Electric Generator Truck"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3190,6 +3410,8 @@
       <equipment count="1" crew="2" type="Electric Generator Truck"/>
       <equipment count="1" crew="1" type="Transporter Van Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3211,6 +3433,8 @@
       <equipment count="1" crew="2" type="Electric Generator Truck"/>
       <equipment count="1" crew="1" type="Transporter Van Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3230,6 +3454,8 @@
     <equipments>
       <equipment count="2" crew="2" major="true" type="PPV Fan (Truck)"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3249,6 +3475,8 @@
     <equipments>
       <equipment count="1" crew="2" major="true" type="Water-Bomber Aircraft"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3268,6 +3496,8 @@
     <equipments>
       <equipment count="3" crew="1" major="true" type="Transport Truck 33T"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3288,6 +3518,8 @@
       <equipment count="3" crew="1" loadable="true" major="true" type="Team Dog Handler / Dog"/>
       <equipment convoyer="true" count="1" crew="1" type="Dog Handler Tansport Vehicle"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3307,6 +3539,8 @@
     <equipments>
       <equipment count="1" crew="3" major="true" type="Rescue Helicopter (EC 145)"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3326,6 +3560,8 @@
     <equipments>
       <equipment count="1" crew="4" major="true" type="Emergency Rescue Vehicle - Ambulance"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3345,6 +3581,8 @@
     <equipments>
       <equipment count="1" crew="4" major="true" type="Emergency Rescue Vehicle - Ambulance"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3366,6 +3604,8 @@
       <equipment count="1" crew="1" loadable="true" type="Emergency Surgeon Triage"/>
       <equipment count="1" crew="1" loadable="true" type="Medical Nurse"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3385,6 +3625,8 @@
     <equipments>
       <equipment count="4" crew="1" major="true" type="Individu Potentiel Emeutes"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3404,6 +3646,8 @@
     <equipments>
       <equipment count="2" crew="2" type="Police Car"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3421,6 +3665,8 @@
   <unit decisional-model="Security - Police" id="123" name="Anti-Riot Police" type="Pion Emergency">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat"/>
     <equipments/>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3438,6 +3684,8 @@
   <unit decisional-model="Combat engineer platoon" id="124" name="Military - Combat Engineer Platoon" type="Pion GEN">
     <nature atlas-nature="PC" level="none" nature-app6="combat"/>
     <equipments/>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3457,6 +3705,8 @@
     <equipments>
       <equipment count="2" crew="3" major="true" type="RSV reconnaissance NBC"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3482,6 +3732,8 @@
     <equipments>
       <equipment count="1" crew="3" major="true" type="RSV decontamination NBC"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3507,6 +3759,8 @@
     <equipments>
       <equipment count="1" crew="2" type="Electrical Service Agent"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3526,6 +3780,8 @@
     <equipments>
       <equipment count="2" crew="2" major="true" type="Police Car Megaphone"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -3548,6 +3804,8 @@
       <equipment count="1" crew="1" major="true" type="Fire Engine"/>
       <equipment count="1" crew="2" type="Fire Truck"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3569,6 +3827,8 @@
       <equipment count="1" crew="2" type="Off-Road Fire-Fighting Vehicle"/>
       <equipment count="1" crew="2" major="true" type="Fire Truck"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3589,6 +3849,8 @@
       <equipment count="1" crew="1" loadable="true" type="Firefighter Officer"/>
       <equipment count="1" crew="1" type="Emergency Rescue Vehicle - Ambulance"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -3608,6 +3870,8 @@
     <equipments>
       <equipment count="2" crew="2" type="Ambulance"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
@@ -3650,6 +3914,8 @@
     <equipments>
       <equipment count="3" crew="3" major="true" type="Transport helicopter"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -3677,6 +3943,8 @@
     <equipments>
       <equipment count="1" crew="4" major="true" type="Light Medium Tactical Vehicle (RASIT)"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -3707,6 +3975,8 @@
     <equipments>
       <equipment count="4" crew="3" major="true" type="Light Armored Vehicle 20-mm"/>
     </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -3728,4 +3998,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1021928876" -->
+<!-- signature="2946880891" -->
