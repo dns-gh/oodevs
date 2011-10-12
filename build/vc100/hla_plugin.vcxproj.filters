@@ -247,7 +247,10 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRejectOfferConvoy.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
-	<ClCompile Include="..\..\src\libraries\hla_plugin\NetnAcceptOffer.cpp">
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAcceptOffer.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoyReceiver.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
   </ItemGroup>
@@ -576,7 +579,10 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRejectOfferConvoy.h">
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
-	<ClInclude Include="..\..\src\libraries\hla_plugin\NetnAcceptOffer.h">
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAcceptOffer.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoyReceiver.h">
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
   </ItemGroup>
