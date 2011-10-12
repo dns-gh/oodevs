@@ -37,7 +37,7 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Control
     time_->setDateTime( QDateTime::currentDateTime() );
 
     // Ephemerides
- 	Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tr( "Ephemerides" ), headerLayout_ );
+     Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tr( "Ephemerides" ), headerLayout_ );
     new QLabel( tr( "Sunrise:" ), group );
     sunrise_ = new Q3TimeEdit( group );
     new QLabel( tr( "Sunset:" ), group );

@@ -154,5 +154,5 @@ bool InfrastructureAttribute::IsEnabled() const
 // -----------------------------------------------------------------------------
 unsigned int InfrastructureAttribute::GetThreshold() const
 {
-	return threshold_;
+    return threshold_;
 }

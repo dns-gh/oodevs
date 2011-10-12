@@ -122,7 +122,7 @@ private:
     void ReadOptions();
     void DoLoad( QString filename );
     void MigrateExercises();
-    
+
     virtual void NotifyCreated();
     virtual void NotifyUpdated();
     virtual void NotifyDeleted();

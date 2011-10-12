@@ -49,7 +49,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
         while( it.HasMoreElements() )
         {
             const Automat_ABC& automat = it.NextElement();
-            if  (   ( bObject && automat.GetLogisticLevel() != LogisticLevel::none_ )
+            if( ( bObject && automat.GetLogisticLevel() != LogisticLevel::none_ )
                 ||  ( !bObject && IsValidSuperior( automat ) ) )
                 AddItem( GetDisplayName( automat ), &automat );
         }
@@ -60,7 +60,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
         while( it.HasMoreElements() )
         {
             const Formation_ABC& formation = it.NextElement();
-            if  (   ( bObject && formation.GetLogisticLevel() != LogisticLevel::none_ )
+            if( ( bObject && formation.GetLogisticLevel() != LogisticLevel::none_ )
                 ||  ( !bObject && IsValidSuperior( formation ) ) )
                 AddItem( GetDisplayName( formation ), &formation );
         }

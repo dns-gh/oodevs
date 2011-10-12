@@ -69,11 +69,11 @@ void Stocks::ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< Dotati
 // -----------------------------------------------------------------------------
 void Stocks::AddDotation( Dotation* pNewDotation )
 {
-    if ( !pNewDotation )
+    if( !pNewDotation )
         return;
 
     Dotation* pDotation = Find( pNewDotation->type_->GetId() );
-    if ( pDotation )
+    if( pDotation )
     {
         *pDotation = *pNewDotation;
         delete pNewDotation;

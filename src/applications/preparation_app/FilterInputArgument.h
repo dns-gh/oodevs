@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     QWidget* CreateWidget( QWidget* parent );
-    QString GetText() const; 
+    QString GetText() const;
     //@}
 
 private:

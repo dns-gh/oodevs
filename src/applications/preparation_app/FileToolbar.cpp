@@ -26,7 +26,7 @@ FileToolbar::FileToolbar( QMainWindow* parent, kernel::Controllers& controllers 
     setLabel( tr( "Standard" ) );
     addWidget( new QToolButton( MAKE_ICON( new ), tr( "New"  ), tr( "File" ), parent, SLOT( New() ), this ) );
     addWidget( new QToolButton( MAKE_ICON( open ), tr( "Open" ), tr( "File" ), parent, SLOT( Open() ), this ) );
-    
+
     addWidget( saveButton_ = new QToolButton( MAKE_ICON( save ), tr( "Save" ), tr( "File" ), parent, SLOT( Save() ), this ) );
     addWidget( saveAsButton_ = new QToolButton( MAKE_ICON( saveas ), tr( "Save As" ), tr( "File" ), parent, SLOT( SaveAs() ), this ) );
     controllers_.Register( *this );

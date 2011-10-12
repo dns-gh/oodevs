@@ -306,7 +306,7 @@ void ModelConsistencyChecker::CheckProfileInitialization()
     Iterator< const Automat_ABC& > it = model_.GetAutomatResolver().CreateIterator();
     while( it.HasMoreElements() )
     {
-        const Automat_ABC& agent = it.NextElement(); 
+        const Automat_ABC& agent = it.NextElement();
         if( !model_.profiles_.IsWriteable( agent ) )
         {
             if( filters_ & eProfileUnwritable )

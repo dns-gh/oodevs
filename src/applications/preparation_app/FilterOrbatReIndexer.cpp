@@ -169,8 +169,8 @@ void FilterOrbatReIndexer::ReadField( const std::string& name, xml::xistream& xi
     }
 
     xos << xml::start( name );
-    if( !( name == "logistics" && !logisticLinksCheckBox_->isChecked() || 
-           name == "diplomacy" && !diplomacyCheckBox_->isChecked() || 
+    if( !( name == "logistics" && !logisticLinksCheckBox_->isChecked() ||
+           name == "diplomacy" && !diplomacyCheckBox_->isChecked() ||
            name == "inhabitants" && !populationsCheckBox_->isChecked() ) )
     {
         isUrbanBlock_ = name == "urban-block";

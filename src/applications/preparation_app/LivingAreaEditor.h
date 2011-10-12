@@ -86,7 +86,6 @@ private:
     bool CheckValidity() const;
     //@}
 
-
 private:
     //! @name Member data
     //@{
