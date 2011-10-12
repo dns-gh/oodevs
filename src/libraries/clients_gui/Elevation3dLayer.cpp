@@ -32,12 +32,12 @@ using namespace gui;
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
 Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& elevation, Lighting_ABC& lighting )
-    : controller_( controller )
-    , elevation_( elevation )
-    , lighting_ ( lighting )
-    , zRatio_( 5.f )
-    , reset_( false )
-    , ignoreShader_( false )
+    : controller_    ( controller )
+    , elevation_     ( elevation )
+    , lighting_      ( lighting )
+    , zRatio_        ( 5.f )
+    , reset_         ( false )
+    , ignoreShader_  ( false )
     , ignoreTextures_( false )
 {
     controller_.Register( *this );
@@ -206,6 +206,7 @@ void Elevation3dLayer::CreateTextures()
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::Reset()
 {
+    Purge();
     lastFrustum_ = ViewFrustum();
     usrp_.reset();
     normals_.reset();

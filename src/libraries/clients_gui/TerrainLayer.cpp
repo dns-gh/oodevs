@@ -138,6 +138,7 @@ void TerrainLayer::OptionChanged( const std::string& name, const OptionVariant& 
 // -----------------------------------------------------------------------------
 void TerrainLayer::Reset()
 {
+    parameters_.Purge();
     layer_.reset();
     noVBOlayer_.reset();
 }

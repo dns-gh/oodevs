@@ -118,6 +118,7 @@ void ContourLinesLayer::Paint( const geometry::Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 void ContourLinesLayer::Reset()
 {
+    parameters_.Purge();
     layer_.reset();
     noVBOlayer_.reset();
     modelLoaded_ = false;

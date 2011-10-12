@@ -23,10 +23,10 @@ using namespace tools;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 WorldParameters::WorldParameters()
-    : latitude_( 0 )
+    : latitude_ ( 0 )
     , longitude_( 0 )
-    , width_( 0 )
-    , height_( 0 )
+    , width_    ( 0 )
+    , height_   ( 0 )
 {
     // NOTHING
 }
@@ -59,6 +59,31 @@ void WorldParameters::Load( const tools::ExerciseConfig& config )
     config.GetLoader().LoadFile( config.GetTerrainFile(), boost::bind( &WorldParameters::ReadTerrain, this, boost::ref( config ), _1 ) );
     if( !config.GetPopulationFile().empty() )
         config.GetLoader().LoadFile( config.GetPopulationFile(), boost::bind( &WorldParameters::ReadPopulation, this, boost::ref( config ), _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WorldParameters::Purge
+// Created: JSR 2011-10-12
+// -----------------------------------------------------------------------------
+void WorldParameters::Purge()
+{
+    latitude_ = 0;
+    longitude_ = 0;
+    width_ = 0;
+    height_ = 0;
+    graphicsDirectory_.clear();
+    detectionDirectory_.clear();
+    pathfindGraph_.clear();
+    pathfindLinks_.clear();
+    pathfindNodes_.clear();
+    detection_.clear();
+    urban_.clear();
+    populationGraph_.clear();
+    xMin_.clear();
+    xMax_.clear();
+    yMin_.clear();
+    yMax_.clear();
+    utmZones_.clear();
 }
 
 // -----------------------------------------------------------------------------

@@ -22,7 +22,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 RasterLayer::RasterLayer( kernel::Controller& controller )
     : controller_( controller )
-    , ignore_( false )
+    , ignore_    ( false )
 {
     controller_.Register( *this );
 }
@@ -60,8 +60,8 @@ void RasterLayer::Paint( const geometry::Rectangle2f& viewport )
         Visitor2d visitor;
         textures_->Accept( visitor, 0, viewport );
         glBindTexture( GL_TEXTURE_2D, 0 );
-        glDisable(GL_TEXTURE_GEN_S);
-        glDisable(GL_TEXTURE_GEN_T);
+        glDisable( GL_TEXTURE_GEN_S );
+        glDisable( GL_TEXTURE_GEN_T );
     }
 }
 
@@ -80,6 +80,7 @@ void RasterLayer::NotifyUpdated( const kernel::ModelLoaded& modelLoaded )
 // -----------------------------------------------------------------------------
 void RasterLayer::Reset()
 {
+    Purge();
     textures_.reset();
     ignore_ = false;
 }

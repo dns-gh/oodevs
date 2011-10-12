@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     void Load( const tools::ExerciseConfig& config );
+    void Purge();
 
     geometry::Point2f Clip( const geometry::Point2f& point ) const;
     //@}
