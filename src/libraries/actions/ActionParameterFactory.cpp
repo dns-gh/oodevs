@@ -102,7 +102,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         else
             return new parameters::String( parameter, "0" );
     }
-    else if( !parameter.IsList() && message.value_size() == 1 )
+    else if( ( !parameter.IsList() && message.value_size() == 1 ) || ( message.value_size() == 1 && message.value().Get( 0 ).has_phaseline() ) )
         return CreateParameter( parameter, message.value().Get( 0 ), entity );
     else
         return new parameters::ParameterList( parameter, message.value(), *this, entity );
