@@ -43,13 +43,13 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
     , pNetnOfferConvoy_                   ( new NetnOfferConvoy( federate, *pNetnOfferConvoyReceiver_ ) )
     , pNetnServiceStartedReceiver_        ( new NetnServiceStartedReceiver( *pTransportationController_ ) )
     , pNetnServiceStarted_                ( new NetnServiceStarted( federate, *pNetnServiceStartedReceiver_ ) )
-    , pNetnOfferConvoySender_             ( new NetnOfferConvoySender( *pNetnOfferConvoy_, *pNetnServiceStarted_, transporters ) )
+    , pNetnConvoyEmbarkmentStatusReceiver_( new NetnConvoyEmbarkmentStatusReceiver( *pTransportationController_ ) )
+    , pNetnConvoyEmbarkmentStatus_        ( new NetnConvoyEmbarkmentStatus( federate, *pNetnConvoyEmbarkmentStatusReceiver_ ) )
+    , pNetnOfferConvoySender_             ( new NetnOfferConvoySender( *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_, transporters, controller, callsignResolver ) )
     , pNetnRejectOfferConvoy_             ( new NetnRejectOfferConvoy( federate ) )
     , pNetnAcceptOffer_                   ( new NetnAcceptOffer( federate, *pNetnOfferConvoySender_ ) )
     , pNetnReadyToReceiveService_         ( new NetnReadyToReceiveService( federate, *pNetnOfferConvoySender_ ) )
     , pNetnOfferResponseSender_           ( new NetnOfferResponseSender( *pTransportationController_, *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_, *pNetnReadyToReceiveService_ ) )
-    , pNetnConvoyEmbarkmentStatusReceiver_( new NetnConvoyEmbarkmentStatusReceiver( *pTransportationController_ ) )
-    , pNetnConvoyEmbarkmentStatus_        ( new NetnConvoyEmbarkmentStatus( federate, *pNetnConvoyEmbarkmentStatusReceiver_ ) )
 {
     // NOTHING
 }

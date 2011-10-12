@@ -13,6 +13,8 @@
 #include "Transporters_ABC.h"
 #include "Interactions.h"
 #include "TransportedUnitsVisitor_ABC.h"
+#include "CallsignResolver_ABC.h"
+#include "protocol/Simulation.h"
 
 using namespace plugins::hla;
 
@@ -22,12 +24,17 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 NetnOfferConvoySender::NetnOfferConvoySender( InteractionSender_ABC< interactions::NetnOfferConvoy >& offerInteractionSender,
                                               InteractionSender_ABC< interactions::NetnServiceStarted >& serviceStartedInteractionSender,
-                                              const Transporters_ABC& transporters )
+                                              InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus >& convoyEmbarkmentStatusSender,
+                                              const Transporters_ABC& transporters, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
+                                              const CallsignResolver_ABC& callsignRevoler )
     : offerInteractionSender_         ( offerInteractionSender )
     , serviceStartedInteractionSender_( serviceStartedInteractionSender )
+    , convoyEmbarkmentStatusSender_   ( convoyEmbarkmentStatusSender )
     , transporters_                   ( transporters )
+    , messageController_              ( messageController )
+    , callsignRevoler_                ( callsignRevoler )
 {
-    // NOTHING
+    CONNECT( messageController, *this, unit_attributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +84,7 @@ void NetnOfferConvoySender::Receive( interactions::NetnRequestConvoy& request )
         return;
     interactions::NetnOfferConvoy offer;
     FillTransporters( transporters_, offer.listOfTransporters, request.transportData.dataTransport );
-    if( offer.listOfTransporters.list.size() == 0u )
+    if( offer.listOfTransporters.list.empty() )
         return;
     offer.isOffering = 1; // True
     offer.requestTimeOut = 0u; // No timeout
@@ -89,6 +96,11 @@ void NetnOfferConvoySender::Receive( interactions::NetnRequestConvoy& request )
     offer.offerType = 1; // RequestAcknowledgePositive
     offer.transportData = request.transportData;
     pendingOffers_.insert( offer.serviceId.eventCount );
+    const std::string transporterUniqueId = offer.listOfTransporters.list[ 0 ].uniqueId.str();
+    const unsigned int transporterId = callsignRevoler_.ResolveSimulationIdentifier( transporterUniqueId );
+    pendingTransporters_[ transporterId ].offer = offer;
+    pendingTransporters_[ transporterId ].uniqueId = transporterUniqueId;
+    pendingTransporters_[ transporterId ].callsign = offer.listOfTransporters.list[ 0 ].callsign.str();
     offerInteractionSender_.Send( offer );
 }
 
@@ -134,4 +146,28 @@ void NetnOfferConvoySender::Transfer( T_Offers& from, T_Offers& to, unsigned int
 {
     from.erase( eventCount );
     to.insert( eventCount );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnOfferConvoySender::Notify
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnOfferConvoySender::Notify( const sword::UnitAttributes& message, int /*context*/ )
+{
+    if( !message.has_transported_units() )
+        return;
+    T_Transporters::const_iterator transporter = pendingTransporters_.find( message.unit().id() );
+    if( transporter == pendingTransporters_.end() )
+        return;
+    interactions::NetnConvoyEmbarkmentStatus status;
+    status.consumer = transporter->second.offer.consumer;
+    status.provider = transporter->second.offer.provider;
+    status.serviceId = transporter->second.offer.serviceId;
+    status.serviceType = transporter->second.offer.serviceType;
+    status.transportUnitIdentifier = UnicodeString( transporter->second.callsign );
+    for( int i = 0; i < message.transported_units().elem_size(); ++i )
+        status.listOfObjectEmbarked.list.push_back( NetnObjectDefinitionStruct( 
+        callsignRevoler_.ResolveCallsign( message.transported_units().elem( i ).id() ),
+        callsignRevoler_.ResolveUniqueId( message.transported_units().elem( i ).id() ), NetnObjectFeatureStruct() ) );
+    convoyEmbarkmentStatusSender_.Send( status );
 }

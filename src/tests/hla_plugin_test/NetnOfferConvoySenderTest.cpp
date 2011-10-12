@@ -16,6 +16,9 @@
 #include "MockContextFactory.h"
 #include "MockTransportedUnits.h"
 #include "MockTransporters.h"
+#include "MockCallsignResolver.h"
+#include "tools/MessageController.h"
+#include "protocol/Simulation.h"
 
 using namespace plugins::hla;
 
@@ -25,13 +28,17 @@ namespace
     {
     public:
         Fixture()
-            : offerConvoySender( offerInteractionSender, serviceStartedInteractionSender, transporters )
+            : offerConvoySender( offerInteractionSender, serviceStartedInteractionSender,
+                                 convoyEmbarkmentStatusInteractionSender, transporters, messageController, callsignResolver )
         {}
         MockInteractionSender< interactions::NetnOfferConvoy > offerInteractionSender;
         MockInteractionSender< interactions::NetnServiceStarted > serviceStartedInteractionSender;
+        MockInteractionSender< interactions::NetnConvoyEmbarkmentStatus > convoyEmbarkmentStatusInteractionSender;
         MockTransporters transporters;
         interactions::NetnOfferConvoy offer;
         interactions::NetnRequestConvoy request;
+        tools::MessageController< sword::SimToClient_Content > messageController;
+        MockCallsignResolver callsignResolver;
         NetnOfferConvoySender offerConvoySender;
     };
 }
@@ -47,6 +54,7 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_sender_sends_offer_when_receiving_req
     request.transportData.dataTransport.appointment = NetnAppointmentStruct( 1, rpr::WorldLocation( 1., 2., 3. ) );
     request.transportData.dataTransport.finalAppointment = NetnAppointmentStruct( 2, rpr::WorldLocation( 4., 5., 6. ) );
     request.transportData.dataTransport.objectToManage.push_back( NetnObjectDefinitionStruct( "transported", "unique", NetnObjectFeatureStruct() ) );
+    MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( "uniqueV" ).returns( 111 );
     MOCK_EXPECT( transporters, Apply ).once().with( "unique", mock::any, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _3, "vessel", "uniqueV" ) );
     MOCK_EXPECT( offerInteractionSender, Send ).once().with( mock::retrieve( offer ) );
     offerConvoySender.Receive( request );
@@ -123,6 +131,7 @@ namespace
             request.transportData.dataTransport.appointment = NetnAppointmentStruct( 1, rpr::WorldLocation( 1., 2., 3. ) );
             request.transportData.dataTransport.finalAppointment = NetnAppointmentStruct( 2, rpr::WorldLocation( 4., 5., 6. ) );
             request.transportData.dataTransport.objectToManage.push_back( NetnObjectDefinitionStruct( "transported", "unique", NetnObjectFeatureStruct() ) );
+            MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( "uniqueV" ).returns( 111 );
             MOCK_EXPECT( transporters, Apply ).once().with( "unique", mock::any, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _3, "vessel", "uniqueV" ) );
             MOCK_EXPECT( offerInteractionSender, Send ).once().with( mock::retrieve( offer ) );
             offerConvoySender.Receive( request );
@@ -191,4 +200,43 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_does_not_resend_service_started_when_
     offerConvoySender.Receive( readyToReceive );
     mock::verify();
     offerConvoySender.Receive( readyToReceive );
+}
+
+namespace
+{
+    class StartedFixture : public SentFixture
+    {
+    public:
+        StartedFixture()
+        {
+            accept.serviceId = offer.serviceId;
+            readyToReceive.serviceId = offer.serviceId;
+            MOCK_EXPECT( serviceStartedInteractionSender, Send ).once();
+            offerConvoySender.Receive( accept );
+            offerConvoySender.Receive( readyToReceive );
+        }
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_sends_convoy_embarkment_status_when_transporting_unit_embark_units, StartedFixture )
+{
+    const unsigned int transporterId = 111;
+    const unsigned int transportedId = 222;
+    sword::SimToClient_Content message;
+    sword::UnitAttributes* attributes = message.mutable_unit_attributes();
+    attributes->mutable_unit()->set_id( transporterId );
+    attributes->mutable_transported_units()->add_elem()->set_id( transportedId );
+    interactions::NetnConvoyEmbarkmentStatus status;
+    MOCK_EXPECT( callsignResolver, ResolveCallsign ).once().with( transportedId ).returns( "transported" );
+    MOCK_EXPECT( callsignResolver, ResolveUniqueId ).once().with( transportedId ).returns( "unique" );
+    MOCK_EXPECT( convoyEmbarkmentStatusInteractionSender, Send ).once().with( mock::retrieve( status ) );
+    messageController.Dispatch( message );
+    BOOST_CHECK_EQUAL( status.serviceId.eventCount, 42 );
+    BOOST_CHECK_EQUAL( status.listOfObjectEmbarked.list.size(), 1u );
+    BOOST_CHECK_EQUAL( status.listOfObjectEmbarked.list[ 0 ].callsign.str(), "transported" );
+    BOOST_CHECK_EQUAL( status.listOfObjectEmbarked.list[ 0 ].uniqueId.str(), "unique" );
+    BOOST_CHECK_EQUAL( status.transportUnitIdentifier.str(), "vessel" );
+    mock::verify();
+    attributes->mutable_unit()->set_id( transporterId + 1 );
+    messageController.Dispatch( message );
 }
