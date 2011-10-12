@@ -3276,7 +3276,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Attrition surface</source>
-        <translation>Surface d'attrition</translation>
+        <translation>Surface d&apos;attrition</translation>
     </message>
     <message>
         <source>m²</source>

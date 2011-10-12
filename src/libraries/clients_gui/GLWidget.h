@@ -162,8 +162,6 @@ private:
     IconLayout& iconLayout_;
     T_RenderPasses passes_;
     std::string currentPass_;
-    T_Fonts fonts_;
-    int baseFont_;
     QFont currentFont_;
     //@}
 };

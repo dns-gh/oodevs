@@ -50,7 +50,6 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const tools::Exe
     , iconLayout_  ( iconLayout )
     , passes_      ( passLess( "" ) )
     , currentPass_ ()
-    , baseFont_    ( 0 )
 {
     setAcceptDrops( true );
     if( context() != context_ || ! context_->isValid() )
@@ -64,8 +63,6 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const tools::Exe
 GlWidget::~GlWidget()
 {
     glDeleteLists( circle_, 1 );
-    for( CIT_Fonts it = fonts_.begin(); it != fonts_.end(); ++it )
-        glDeleteLists( it->second, 256 );
 }
 
 // -----------------------------------------------------------------------------
