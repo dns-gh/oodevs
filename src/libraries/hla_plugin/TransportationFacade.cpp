@@ -15,6 +15,9 @@
 #include "NetnOfferConvoy.h"
 #include "NetnOfferConvoySender.h"
 #include "NetnOfferConvoyReceiver.h"
+#include "NetnAcceptOffer.h"
+#include "NetnRejectOfferConvoy.h"
+#include "NetnOfferResponseSender.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
@@ -33,6 +36,9 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
     , pNetnOfferConvoyReceiver_ ( new NetnOfferConvoyReceiver( *pTransportationController_ ) )
     , pNetnOfferConvoy_         ( new NetnOfferConvoy( federate, *pNetnOfferConvoyReceiver_ ) )
     , pNetnOfferConvoySender_   ( new NetnOfferConvoySender( *pNetnOfferConvoy_, transporters ) )
+    , pNetnAcceptOffer_         ( new NetnAcceptOffer( federate ) )
+    , pNetnRejectOfferConvoy_   ( new NetnRejectOfferConvoy( federate ) )
+    , pNetnOfferResponseSender_ ( new NetnOfferResponseSender( *pTransportationController_, *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_ ) )
 {
     // NOTHING
 }

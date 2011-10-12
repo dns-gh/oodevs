@@ -47,11 +47,14 @@ namespace hla
     class NetnRequestConvoySender;
     class NetnOfferConvoySender;
     class Transporters_ABC;
+    class NetnOfferResponseSender;
 
 namespace interactions
 {
     struct NetnRequestConvoy;
     struct NetnOfferConvoy;
+    struct NetnAcceptOffer;
+    struct NetnRejectOfferConvoy;
 }
 
 // =============================================================================
@@ -87,6 +90,9 @@ private:
     std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoyReceiver_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoy_;
     std::auto_ptr< NetnOfferConvoySender > pNetnOfferConvoySender_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnAcceptOffer > > pNetnAcceptOffer_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnRejectOfferConvoy >  > pNetnRejectOfferConvoy_;
+    std::auto_ptr< NetnOfferResponseSender > pNetnOfferResponseSender_;
     //@}
 };
 
