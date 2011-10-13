@@ -33,7 +33,7 @@ namespace gui
 */
 // Created: SBO 2008-04-08
 // =============================================================================
-class PropertiesPanel : public Q3ScrollView
+class PropertiesPanel : public QScrollArea
                       , public tools::Observer_ABC
                       , public tools::SelectionObserver< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
@@ -66,7 +66,6 @@ private:
     gui::PropertiesWidget* table_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     gui::TableItemDisplayer& displayer_;
-    Q3VBox* box_;
     //@}
 };
 

@@ -26,16 +26,14 @@ using namespace gui;
 // Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------
 PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory, gui::TableItemDisplayer& displayer )
-    : Q3ScrollView( parent )
+    : QScrollArea( parent )
     , controllers_( controllers )
     , selected_( controllers )
     , displayer_( displayer )
 {
-    setResizePolicy( Q3ScrollView::AutoOneFit );
-    box_ = new Q3VBox( this );
-    box_->layout()->setAlignment( Qt::AlignTop );
-    table_ = new gui::PropertiesWidget( controllers_.controller_, box_, tools::translate( "gui::PropertiesPanel", "Properties" ), factory, displayer_ );
-    addChild( box_ );
+    table_ = new gui::PropertiesWidget( controllers_.controller_, this, tools::translate( "gui::PropertiesPanel", "Properties" ), factory, displayer_ );
+    setWidget( table_ );
+    setWidgetResizable( true );
     controllers_.Register( *this );
 }
 
@@ -71,12 +69,9 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
         selected_ = element;
         if( selected_ && isVisible() )
             if( kernel::PropertiesDictionary* dico = const_cast< kernel::Entity_ABC* >( element )->Retrieve< kernel::PropertiesDictionary >() )
-            {
                 dico->Display( *table_ );
-                table_->adjustSize();
-            }
     }
-    addChild( box_ );
+    setWidget( table_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,6 +83,6 @@ void PropertiesPanel::NotifyDeleted( const kernel::Entity_ABC& element )
     if( selected_ = &element )
     {
         NotifySelected( 0 );
-        addChild( box_ );
+        setWidget( table_ );
     }
 }
