@@ -508,6 +508,21 @@
     </message>
 </context>
 <context>
+    <name>LogisticLinksEditor</name>
+    <message>
+        <source>Assign logistic subordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate logistic links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticStockEditor</name>
     <message>
         <source>Cancel</source>
@@ -527,6 +542,10 @@
     </message>
     <message>
         <source>Days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

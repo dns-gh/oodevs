@@ -91,6 +91,7 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\preparation\LinkGenerator.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ModelConsistencyChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\preparation_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -235,6 +236,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\preparation\InhabitantPositions_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\LinkGenerator.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LogisticHierarchiesBase.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ModelConsistencyChecker.h" />
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h" />

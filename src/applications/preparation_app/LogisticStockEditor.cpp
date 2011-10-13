@@ -66,7 +66,7 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, kernel::Controllers& 
     layout->addWidget( validateButton_, 1, 0 );
     layout->addWidget( cancelButton_, 1, 1 );
 
-    connect( dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnValueChanged( QStandardItem* ) ) ); 
+    connect( dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnValueChanged( QStandardItem* ) ) );
     connect( validateButton_, SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelButton_, SIGNAL( clicked() ), SLOT( Reject() ) );
     hide();
@@ -201,7 +201,8 @@ void LogisticStockEditor::NotifyContextMenu( const kernel::Formation_ABC& format
 void LogisticStockEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
-    menu.InsertItem( "Command", tools::translate( "LogisticStockEditor", "Supply stocks" ), this, SLOT( show() ) );
+    Q3PopupMenu* pSubMenu = menu.SubMenu( "Logistic", tr( "Logistic" ) );
+    pSubMenu->insertItem( tools::translate( "LogisticStockEditor", "Supply stocks" ), this, SLOT( show() ) );
 }
 
 // -----------------------------------------------------------------------------

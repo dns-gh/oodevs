@@ -53,7 +53,7 @@ LogisticBaseStates::~LogisticBaseStates()
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& entity )
 {
-    dico.Register( *(const LogisticHierarchiesBase*)this, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetSuperior );
+    dico.Register( *(const LogisticHierarchiesBase*)this, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetLogisticSuperior );
     if( canHaveQuotas_ )
     {
         item_ = new DotationsItem( controller_, entity, dico, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), *(Resolver< Dotation >*)this );
@@ -87,7 +87,7 @@ void LogisticBaseStates::Draw( const geometry::Point2f& where, const kernel::Vie
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::Load( xml::xistream& xis, const kernel::Entity_ABC* superior )
 {
-    SetSuperior( superior );
+    SetLogisticSuperior( superior );
     xis >> xml::optional >> xml::start( "quotas" )
             >> xml::list( "resource", *this, &LogisticBaseStates::ReadDotation )
         >> xml::end;
@@ -116,10 +116,10 @@ void LogisticBaseStates::SetSuperiorInternal( kernel::Entity_ABC* superior )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceStates::SetSuperior&
-// Created: AHC 2010-09-29
+// Name: MaintenanceStates::SetLogisticSuperior
+// Created: LGY 2011-10-12
 // -----------------------------------------------------------------------------
-void LogisticBaseStates::SetSuperior( const LogisticBaseSuperior& superior )
+void LogisticBaseStates::SetLogisticSuperior( const LogisticBaseSuperior& superior )
 {
     const kernel::Entity_ABC* tmp = superior;
     kernel::EntityHierarchies< LogisticHierarchiesBase >::SetSuperior( const_cast< kernel::Entity_ABC* >( tmp ) );

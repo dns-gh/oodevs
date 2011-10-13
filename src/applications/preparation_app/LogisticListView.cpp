@@ -89,7 +89,7 @@ const Entity_ABC* LogisticListView::RetrieveSuperior( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void LogisticListView::SetSuperior( const Entity_ABC& entity, const Entity_ABC* superior )
 {
-    LogisticBaseStates* hierarchy = const_cast< LogisticBaseStates* >( dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() ) );
+    LogisticHierarchiesBase* hierarchy = const_cast< Entity_ABC& >( entity ).Retrieve< LogisticHierarchiesBase >();
     assert( hierarchy );
-    hierarchy->SetSuperior( ( superior ) ? superior : LogisticBaseSuperior() );
+    hierarchy->SetLogisticSuperior( ( superior ) ? superior : LogisticBaseSuperior() );
 }
