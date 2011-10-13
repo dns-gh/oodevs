@@ -37,9 +37,7 @@ PropertiesTable::PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& fa
     setColumnStretchable( 0, true );
     setColumnStretchable( 1, true );
     setHScrollBarMode( Q3ScrollView::AlwaysOff );
-    setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Fixed );
     setFrameStyle( QFrame::StyledPanel );
-    setResizePolicy( Q3ScrollView::AutoOne );
 
     connect( this, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
 }
@@ -118,7 +116,6 @@ Displayer_ABC& PropertiesTable::SubItem( const QString& name )
         rows_[name] = row_;
         setText( row_, 0, name );
         setFixedHeight( contentsHeight () + 4 );
-        parentWidget()->adjustSize();
     }
     else
         row_ = it->second;

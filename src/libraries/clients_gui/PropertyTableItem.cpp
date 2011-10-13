@@ -45,13 +45,7 @@ PropertyTableItem::~PropertyTableItem()
 // -----------------------------------------------------------------------------
 QWidget* PropertyTableItem::createEditor() const
 {
-    QWidget* editor = property_.CreateEditor( table(), factory_ );
-    if( editor )
-    {
-        table()->setRowHeight( row(), std::max( table()->rowHeight( row() ), editor->height() ) );
-        table()->updateGeometry();
-    }
-    return editor;
+    return property_.CreateEditor( table(), factory_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,11 +57,6 @@ void PropertyTableItem::setContentFromEditor( QWidget* w )
     property_.SetValueFromEditor( w );
     displayer_.SetItem( this );
     property_.Display( displayer_ );
-    table()->adjustRow( row() );
-    table()->updateGeometry();
-// $$$$ >>>> MODIF SYD 2009-11-23 Plan a table repaint because other table values can be affected
-    table()->updateContents();
-// $$$$ <<<< MODIF SYD 2009-11-23
 }
 
 // -----------------------------------------------------------------------------

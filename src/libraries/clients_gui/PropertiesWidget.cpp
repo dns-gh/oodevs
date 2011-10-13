@@ -87,12 +87,14 @@ void PropertiesWidget::FillUp( const QString& name, bool root /*= false*/ )
         layout_ = new QGridLayout( this, 1, 1 );
         table_ = new PropertiesTable( this, factory_, displayer_ );
         layout_->addWidget( table_, 0, 0, Qt::AlignTop );
+        layout_->setAlignment( Qt::AlignTop );
         table_->hide();
         return;
     }
     layout_ = new QGridLayout( this, 2, 2 );
     layout_->setColStretch( 0, 0 );
     layout_->setColStretch( 1, 1 );
+    layout_->setAlignment( Qt::AlignTop );
     {
         Q3HBox* box = new Q3HBox( this );
         button_ = new MyButton( box, MAKE_PIXMAP( minus ), MAKE_PIXMAP( plus ) );
@@ -115,11 +117,11 @@ void PropertiesWidget::FillUp( const QString& name, bool root /*= false*/ )
     spacer->setFixedWidth( 5 );
     spacer->setPaletteBackgroundColor( background );
     spacer->setAutoFillBackground( true );
-    layout_->addMultiCellWidget( spacer, 1, 100, 0, 0 );
+    layout_->addWidget( spacer, 1, 0, Qt::AlignTop );
 
     table_ = new PropertiesTable( this, factory_, displayer_ );
     connect( button_, SIGNAL( toggled( bool ) ), table_, SLOT( Show( bool ) ) );
-    layout_->addWidget( table_, 1, 1 );
+    layout_->addWidget( table_, 1, 1, Qt::AlignTop );
     table_->hide();
 }
 
@@ -188,8 +190,7 @@ PropertiesWidget* PropertiesWidget::CreateWidget( const QString& subItem )
         connect( button_, SIGNAL( toggled( bool ) ), subWidget, SLOT( setShown( bool ) ) );
     subWidgets_.push_back( subWidget );
     categories_[ subItem ] = subWidgets_.size() - 1;
-    layout_->addWidget( subWidget, static_cast< int >( subWidgets_.size() + 1 ), 1 );
-    parentWidget()->adjustSize();
+    layout_->addWidget( subWidget, static_cast< int >( subWidgets_.size() + 1 ), 1, Qt::AlignTop );
     subWidget->show();
     if( ! table_->numRows() )
         table_->hide();
