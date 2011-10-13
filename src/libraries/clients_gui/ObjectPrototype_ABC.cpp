@@ -40,41 +40,56 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
                                          const kernel::CoordinateConverter_ABC& coordinateConverter,
                                          const tools::Resolver_ABC< ObjectType, std::string >& resolver,
                                          ParametersLayer& layer, std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory )
-    : Q3GroupBox( 2, Qt::Horizontal, tr( "Information" ), parent )
+    : QWidget( parent )
     , coordinateConverter_( coordinateConverter )
     , controllers_( controllers )
     , resolver_  ( resolver )
     , location_  ( 0 )
-    , attributes_( new ObjectAttributePrototypeContainer( resolver, factory, new Q3GroupBox( 1, Qt::Horizontal, tr( "Attributes" ), parent ) ) )
 {
-    new QLabel( tr( "Name:" ), this );
-    name_ = new LoadableLineEdit( this, "NAME" );
+    QBoxLayout* layout = new QBoxLayout( this, QBoxLayout::TopToBottom, 0, 5 );
 
-    new QLabel( tr( "Side:" ), this );
-    teams_ = new ValuedComboBox< const Team_ABC* >( this );
+    // Information box
+    {
+        Q3GroupBox* infoBox = new Q3GroupBox( 2, Qt::Horizontal, tr( "Information" ), parent );
+        layout->setAlignment( Qt::AlignTop );
+        layout->addWidget( infoBox );
 
-    new QLabel( tr( "Type:" ), this );
-    objectTypes_ = new ValuedComboBox< const ObjectType* >( this );
-    objectTypes_->setSorting( true );
+        new QLabel( tr( "Name:" ), infoBox );
+        name_ = new LoadableLineEdit( infoBox, "NAME" );
 
-    position_ = new RichLabel( tr( "Location:" ), this );
-    locationLabel_ = new QLabel( tr( "---" ), this );
-    locationLabel_->setMinimumWidth( 100 );
-    locationLabel_->setAlignment( Qt::AlignCenter );
-    locationLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
+        new QLabel( tr( "Side:" ), infoBox );
+        teams_ = new ValuedComboBox< const Team_ABC* >( infoBox );
 
-    locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );
+        new QLabel( tr( "Type:" ), infoBox );
+        objectTypes_ = new ValuedComboBox< const ObjectType* >( infoBox );
+        objectTypes_->setSorting( true );
+        connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 
-    loadFromFileButton_ = new QPushButton(  tr( "Load from file" ), this );
-    loadFromFileButton_->setToggleButton( true );
-    connect( loadFromFileButton_, SIGNAL( toggled(bool) ), this, SLOT( LoadFromFile(bool) ) );
-    loadFromFilePathLabel_ = new QLabel( this );
+        position_ = new RichLabel( tr( "Location:" ), infoBox );
+        locationLabel_ = new QLabel( tr( "---" ), infoBox );
+        locationLabel_->setMinimumWidth( 100 );
+        locationLabel_->setAlignment( Qt::AlignCenter );
+        locationLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
 
-    // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
+        locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );
+
+        new QWidget( infoBox );
+        loadFromFileButton_ = new QPushButton(  tr( "Load from file" ), infoBox );
+        loadFromFileButton_->setToggleButton( true );
+        connect( loadFromFileButton_, SIGNAL( toggled( bool ) ), this, SLOT( LoadFromFile( bool ) ) );
+        new QWidget( infoBox );
+        loadFromFilePathLabel_ = new QLabel( infoBox );
+    }
+
+    // Attribute box
+    {
+        Q3GroupBox* attributBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Attributes" ), parent );
+        layout->addWidget( attributBox );
+        attributes_.reset( new ObjectAttributePrototypeContainer( resolver, factory, attributBox ) );
+        // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
+    }
 
     controllers_.Register( *this );
-
-    connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +131,7 @@ void ObjectPrototype_ABC::showEvent( QShowEvent* e )
     FillObjectTypes();
     OnTypeChanged();
     controllers_.Register( *locationCreator_ );
-    Q3GroupBox::showEvent( e );
+    QWidget::showEvent( e );
 }
 
 // -----------------------------------------------------------------------------

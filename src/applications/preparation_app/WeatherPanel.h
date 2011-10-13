@@ -73,9 +73,9 @@ private:
     kernel::Controllers& controllers_;
     WeatherModel* currentModel_;
 
-    Q3DateTimeEdit* time_;
-    Q3TimeEdit* sunrise_;
-    Q3TimeEdit* sunset_;
+    QDateTimeEdit* time_;
+    QTimeEdit* sunrise_;
+    QTimeEdit* sunset_;
     gui::ValuedComboBox< kernel::E_DayLightingType >* dayLighting_;
     gui::ValuedComboBox< kernel::E_NightLightingType >* nightLighting_;
     QDateTimeEdit* endTime_;

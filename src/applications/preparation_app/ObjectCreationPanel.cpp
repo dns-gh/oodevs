@@ -25,13 +25,18 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& 
     , controllers_( controllers )
     , tools_      ( tools )
 {
-    Q3VBox* vbox = new Q3VBox( this );
+    QWidget* box = new QWidget( this );
+    QBoxLayout* layout = new QBoxLayout( box, QBoxLayout::TopToBottom, 0, 5 );
+    layout->setMargin( 5 );
+    layout->setAlignment( Qt::AlignTop );
     {
-        created_ = new ObjectPrototype( vbox, controllers, model, objectsModel, urbanModel, layer, config );
-        QPushButton* ok = new QPushButton( tr( "Create" ), vbox );
+        created_ = new ObjectPrototype( this, controllers, model, objectsModel, urbanModel, layer, config );
+        layout->addWidget( created_ );
+        QPushButton* ok = new QPushButton( tr( "Create" ), this );
+        layout->addWidget( ok );
         connect( ok, SIGNAL( clicked() ), created_, SLOT( Commit() ) );
     }
-    setWidget( vbox );
+    setWidget( box );
     controllers_.Register( *this );
 }
 

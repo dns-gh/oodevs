@@ -23,9 +23,12 @@ Panels::Panels( QWidget* pParent )
     : Q3VBox( pParent )
 {
     setMinimumSize( 1, 1 );
+    layout()->setMargin( 5 );
 
     Q3HBox* box = new Q3HBox( this );
-    box->setMaximumHeight( 20 );
+    box->layout()->setMargin( 5 );
+    box->layout()->setSpacing( 5 );
+    box->setMaximumHeight( 30 );
     previous_ = new QPushButton( box );
     previous_->setPixmap( MAKE_PIXMAP( left_arrow ) );
     previous_->setMaximumSize( 20, 20 );

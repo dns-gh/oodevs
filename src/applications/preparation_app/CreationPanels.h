@@ -57,7 +57,6 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::ExerciseConfig& config );
     ObjectCreationPanel& GetObjectCreationPanel() const;
     InhabitantCreationPanel& GetInhabitantCreationPanel() const;
     //@}
@@ -65,7 +64,6 @@ public:
 private:
     //! @name Member data
     //@{
-    gui::IntelligencesPanel* intelligencesPanel_;
     ObjectCreationPanel* objectCreationPanel_;
     InhabitantCreationPanel* inhabitantCreationPanel_;
     //@}

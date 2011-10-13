@@ -43,6 +43,8 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
     , controllers_( controllers )
 {
     Q3VBox* vbox = new Q3VBox( this );
+    vbox->setMargin( 5 );
+    vbox->setSpacing( 5 );
     {
         Q3HBox* box = new Q3HBox( vbox );
         QPushButton* openAll  = new QPushButton( "+", box );
