@@ -12045,7 +12045,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie" id="421" name="Groupe GEN . EBG" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.MPG - EBG" id="421" name="Groupe GEN . EBG" type="Pion GEN">
     <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="EBG"/>
@@ -12066,7 +12066,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie" id="422" name="Groupe GEN . MPG" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.MPG - EBG" id="422" name="Groupe GEN . MPG" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="MPG"/>
@@ -15260,7 +15260,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Individu Isole" id="532" name="Journalistes" type="Pion Journalist">
+  <unit decisional-model="Masalife.Individu Isole.Journaliste" id="532" name="Journalistes" type="Pion Journalist">
     <nature atlas-nature="None" level="none" nature-app6="mootw/individual"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Camionnette"/>
@@ -19110,4 +19110,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="4209758406" -->
+<!-- signature="1385694781" -->

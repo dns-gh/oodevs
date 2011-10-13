@@ -698,7 +698,7 @@
     <unit max-occurs="1" min-occurs="1" type="TRANS - GTIA - MR - 3+1"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS - GTIA - AV - 3+1"/>
   </automat>
-  <automat decisional-model="Masalife.SGTIA" id="843" name="SGTIA" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.INF" id="843" name="SGTIA" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Section . CDT CIE INF VAB"/>
     <unit max-occurs="2" min-occurs="2" type="Section . CBT INF VAB CDS OFF"/>
     <unit max-occurs="2" type="Section de Tir . AUF1 CDS OFF"/>
@@ -932,14 +932,14 @@
   <automat decisional-model="Masalife.Automate.MonoPion" id="890" name="Tireurs" type="Automate ASY">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Tireur"/>
   </automat>
-  <automat decisional-model="Masalife.SGTIA" id="891" name="SGTIA PIA" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.INF" id="891" name="SGTIA PIA" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC SGTIA"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante ABC"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante INF"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante Reco"/>
     <unit max-occurs="1" type="Patrouille . EI 12,7"/>
   </automat>
-  <automat decisional-model="Masalife.SGTIA" id="892" name="SGTIA INF" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.INF" id="892" name="SGTIA INF" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Section . CDT CIE INF VAB"/>
     <unit max-occurs="2" min-occurs="2" type="Section . CBT INF VAB CDS SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="Section . CBT INF VAB CDS OFF"/>
@@ -951,7 +951,7 @@
     <unit max-occurs="3" type="PIA Dominante Reco"/>
     <unit max-occurs="1" type="Patrouille . EI 12,7"/>
   </automat>
-  <automat decisional-model="Masalife.SGTIA" id="893" name="SGTIA ABC" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.ABC" id="893" name="SGTIA ABC" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton . LECLERC CDT ESC"/>
     <unit max-occurs="2" min-occurs="2" type="ABC . Peloton LECLERC CDP SOFF"/>
     <unit max-occurs="2" min-occurs="1" type="ABC . Peloton LECLERC CDP OFF"/>
@@ -1128,7 +1128,7 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="MILICE . CDT SUZUKI 14.5"/>
     <unit type="MILICE . Miliciens SUZUKI 14.5"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="934" name="ASY . Terroristes" type="Automate ASY">
+  <automat decisional-model="Masalife.Automate.Terroriste" id="934" name="ASY . Terroristes" type="Automate ASY">
     <unit type="Terroriste IED"/>
     <unit type="Terroriste Sniper"/>
     <unit command-post="true" min-occurs="1" type="Terroriste Sniper et IED"/>
@@ -1476,7 +1476,7 @@
   <automat decisional-model="Masalife.Automate.MonoPion" id="1013" name="CIV . DPRE hommes femmes et enfants" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="1" type="Réfugiés hommes femmes et enfants"/>
   </automat>
-  <automat decisional-model="Masalife.SGTIA" id="1014" name="SGTIA INF dominante roues" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.INF" id="1014" name="SGTIA INF dominante roues" type="Automate SGTIA">
     <unit min-occurs="1" type="INF . Section CBT quaternaire VAB CDS OFF"/>
     <unit min-occurs="2" type="INF . Section CBT quaternaire VAB CDS SOFF"/>
     <unit min-occurs="1" type="INF . Groupe INF MO81 Section quaternaire"/>
@@ -1484,7 +1484,7 @@
     <unit min-occurs="1" type="GEN . Section CBT renforce MPG"/>
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire VAB"/>
   </automat>
-  <automat decisional-model="Masalife.SGTIA" id="1015" name="SGTIA INF dominante lourde" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.INF" id="1015" name="SGTIA INF dominante lourde" type="Automate SGTIA">
     <unit min-occurs="1" type="GEN . Section CBT renforce EBG"/>
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire AMX10P"/>
     <unit min-occurs="1" type="ABC . Peloton LECLERC CDP SOFF"/>
@@ -1492,7 +1492,7 @@
     <unit min-occurs="2" type="INF . Section CBT quaternaire AMX10P CDS SOFF"/>
     <unit min-occurs="1" type="INF . Groupe INF MO81 AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.SGTIA" id="1016" name="SGTIA ABC XL" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.ABC" id="1016" name="SGTIA ABC XL" type="Automate SGTIA">
     <unit min-occurs="1" type="GEN . Section CBT renforce EBG"/>
     <unit min-occurs="2" type="ABC . Peloton LECLERC CDP SOFF"/>
     <unit min-occurs="1" type="ABC . Peloton LECLERC CDP OFF"/>
@@ -1500,7 +1500,7 @@
     <unit min-occurs="1" type="INF . Section CBT AMX10P CDS SOFF"/>
     <unit min-occurs="1" type="ABC . Patrouille EI MILAN"/>
   </automat>
-  <automat decisional-model="Masalife.SGTIA" id="1017" name="SGTIA ABC AMX10RC" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.ABC" id="1017" name="SGTIA ABC AMX10RC" type="Automate SGTIA">
     <unit min-occurs="1" type="ABC . Patrouille EI 12,7"/>
     <unit min-occurs="1" type="ABC . PLT AMX 10 RC CDP OFF"/>
     <unit min-occurs="2" type="ABC . PLT AMX 10 RC CDP SOFF"/>
@@ -1509,4 +1509,4 @@
     <unit min-occurs="1" type="GEN . Section CBT renforce MPG"/>
   </automat>
 </automats>
-<!-- signature="0118117840" -->
+<!-- signature="0935721594" -->
