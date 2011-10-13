@@ -1172,7 +1172,7 @@
           <fragorder name="Modifier Priorites Blesses"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
         </mission>
-        <mission name="PION LOGISTIQUE Transporter"/>
+        <mission name="PION LOGISTIQUE Transporter Unites"/>
         <mission name="PION LOGISTIQUE Transporter Foule"/>
         <mission name="PION Produire et alimenter"/>
       </missions>
@@ -5963,7 +5963,7 @@
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION LOGISTIQUE Transporter"/>
+        <mission name="PION LOGISTIQUE Transporter Unites"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -6011,7 +6011,7 @@
         <mission name="PION CIRCULATION Bloquer Zone"/>
         <mission name="PION CIRCULATION Mettre En Oeuvre Zone Stationnement"/>
         <mission name="PION LOGISTIQUE Appuyer Franchissement Sur Point"/>
-        <mission name="PION LOGISTIQUE Transporter"/>
+        <mission name="PION LOGISTIQUE Transporter Unites"/>
         <mission name="PION LOGISTIQUE Transporter Foule"/>
         <mission name="PION MELEE Armer PIA"/>
         <mission name="PION MELEE Escorter"/>
@@ -6057,7 +6057,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION LOGISTIQUE Transporter"/>
+        <mission name="PION LOGISTIQUE Transporter Unites"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -6088,7 +6088,7 @@
     </unit>
   </units>
   <automats>
-    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.SGTIA">
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.SGTIA.INF">
       <missions>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
@@ -6114,10 +6114,8 @@
         <mission name="AUTOMATE MELEE Detruire"/>
         <mission name="AUTOMATE MELEE Donner Coup Arret"/>
         <mission name="AUTOMATE MELEE Eclairer"/>
-        <mission name="AUTOMATE MELEE Effectuer un raid"/>
         <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Fixer"/>
-        <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Freiner">
           <fragorder name="Decrocher"/>
         </mission>
@@ -6125,14 +6123,10 @@
         <mission name="AUTOMATE MELEE Intercepter"/>
         <mission name="AUTOMATE MELEE Interdire"/>
         <mission name="AUTOMATE MELEE Jalonner"/>
-        <mission name="AUTOMATE MELEE Neutraliser"/>
-        <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
-        <mission name="AUTOMATE MELEE Proteger PC"/>
         <mission name="AUTOMATE MELEE Ratisser"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
         <mission name="AUTOMATE MELEE Recueillir"/>
         <mission name="AUTOMATE MELEE Relever"/>
-        <mission name="AUTOMATE MELEE Renseigner Sur"/>
         <mission name="AUTOMATE MELEE S'emparer"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
         <mission name="AUTOMATE MELEE Tenir"/>
@@ -6140,6 +6134,7 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
         <mission name="AUTOMATE MELEE Controler foule"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
+        <mission name="AUTOMATE MELEE Maintenir Le Contact"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -6315,6 +6310,7 @@
         <mission name="AUTOMATE MELEE Harceler"/>
         <mission name="AUTOMATE MELEE Interdire"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
+        <mission name="AUTOMATE MELEE Freiner"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -6554,7 +6550,6 @@
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
-        <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Position"/>
@@ -6573,7 +6568,6 @@
         <mission name="AUTOMATE MELEE Donner Coup Arret"/>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Effectuer un raid"/>
-        <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Freiner">
@@ -6586,7 +6580,6 @@
         <mission name="AUTOMATE MELEE Ratisser"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
         <mission name="AUTOMATE MELEE Recueillir"/>
-        <mission name="AUTOMATE MELEE Relever"/>
         <mission name="AUTOMATE MELEE Renseigner Sur"/>
         <mission name="AUTOMATE MELEE S'emparer"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
@@ -6696,7 +6689,6 @@
         <mission name="AUTOMATE MELEE Ratisser"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
         <mission name="AUTOMATE MELEE Recueillir"/>
-        <mission name="AUTOMATE MELEE Relever"/>
         <mission name="AUTOMATE MELEE Renseigner Sur"/>
         <mission name="AUTOMATE MELEE S'emparer"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
@@ -7079,12 +7071,13 @@
         <mission name="AUTOMATE COMMUNES Suivre"/>
         <mission name="AUTOMATE GENIE Franchir de vive force"/>
         <mission name="AUTOMATE GENIE Reconnaitre"/>
-        <mission name="AUTOMATE Produire et alimenter"/>
         <mission name="AUTOMATE GENIE Degager Obstacles"/>
         <mission name="AUTOMATE GENIE Ouvrir Itineraire"/>
         <mission name="AUTOMATE GENIE Realiser Travaux"/>
         <mission name="AUTOMATE GENIE Reparer"/>
         <mission name="AUTOMATE GENIE Retablir Itineraire"/>
+        <mission name="AUTOMATE Desactiver Point Du Reseau"/>
+        <mission name="AUTOMATE GENIE Retablir Point Du Reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -7115,10 +7108,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
-        <mission name="AUTOMATE GENIE Reconnaitre"/>
-        <mission name="AUTOMATE Produire et alimenter"/>
         <mission name="AUTOMATE GENIE Se Deployer"/>
-        <mission name="AUTOMATE GENIE Retablir Point Du Reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -7137,30 +7127,22 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ONG">
       <missions>
-        <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
-        <mission name="AUTOMATE COMMUNES Franchir"/>
-        <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
-        <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
-        <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
-        <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
         <mission name="AUTOMATE GENIE Retablir Itineraire"/>
         <mission name="AUTOMATE GENIE Reparer"/>
         <mission name="AUTOMATE Produire et alimenter"/>
-        <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
         <mission name="AUTOMATE LOGISTIQUE Se Deployer">
           <fragorder name="Modifier Priorites Blesses"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
         </mission>
-        <mission name="AUTOMATE LOGISTIQUE Transporter"/>
+        <mission name="AUTOMATE LOGISTIQUE Transporter Unites"/>
         <mission name="AUTOMATE LOGISTIQUE Transporter Foule"/>
-        <mission name="AUTOMATE GENIE Realiser Camps"/>
         <mission name="AUTOMATE GENIE Retablir Point Du Reseau"/>
+        <mission name="AUTOMATE GENIE Realiser Travaux"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -7211,16 +7193,9 @@
     </automat>
     <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.MonoPion">
       <missions>
-        <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
-        <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
-        <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
-        <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
-        <mission name="AUTOMATE COMMUNES Se Recompleter"/>
-        <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
       </missions>
       <fragorders>
@@ -7291,7 +7266,7 @@
         <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
-        <mission name="AUTOMATE LOGISTIQUE Transporter"/>
+        <mission name="AUTOMATE LOGISTIQUE Transporter Unites"/>
         <mission name="AUTOMATE LOGISTIQUE Transporter Foule"/>
       </missions>
       <fragorders>
@@ -7325,13 +7300,13 @@
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE CIRCULATION Appuyer Franchissement Sur Zone"/>
         <mission name="AUTOMATE CIRCULATION Appuyer Mouvement"/>
-        <mission name="AUTOMATE CIRCULATION Armer PIA"/>
+        <mission name="AUTOMATE MELEE Armer PIAs"/>
         <mission name="AUTOMATE CIRCULATION Bloquer Zone"/>
         <mission name="AUTOMATE CIRCULATION Mettre En Oeuvre Zone Stationnement"/>
         <mission name="AUTOMATE MELEE Escorter"/>
-        <mission name="AUTOMATE MELEE Reconnaitre"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
         <mission name="AUTOMATE NRBC Reconnaitre"/>
+        <mission name="AUTOMATE CIRCULATION Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -9515,7 +9490,6 @@
         <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
-        <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Position"/>
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
@@ -9524,7 +9498,6 @@
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE MELEE Detruire"/>
         <mission name="AUTOMATE MELEE Harceler"/>
-        <mission name="AUTOMATE MELEE Surveiller"/>
         <mission name="AUTOMATE MELEE Controler"/>
         <mission name="AUTOMATE MILICE Appui contre mobilite"/>
         <mission name="AUTOMATE Desactiver Point Du Reseau"/>
@@ -9543,6 +9516,99 @@
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.SGTIA.ABC">
+      <missions>
+        <mission name="AUTOMATE COMMUNES Decrocher"/>
+        <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
+        <mission name="AUTOMATE COMMUNES Franchir"/>
+        <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
+        <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
+        <mission name="AUTOMATE COMMUNES Se Recompleter"/>
+        <mission name="AUTOMATE COMMUNES Stationner"/>
+        <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Position"/>
+        <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
+        <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
+        <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
+        <mission name="AUTOMATE MELEE Attaquer">
+          <fragorder name="Deboucher"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Boucler"/>
+        <mission name="AUTOMATE MELEE Couvrir"/>
+        <mission name="AUTOMATE MELEE Controler"/>
+        <mission name="AUTOMATE MELEE Defendre"/>
+        <mission name="AUTOMATE MELEE Detruire"/>
+        <mission name="AUTOMATE MELEE Donner Coup Arret"/>
+        <mission name="AUTOMATE MELEE Eclairer"/>
+        <mission name="AUTOMATE MELEE Effectuer un raid"/>
+        <mission name="AUTOMATE MELEE Escorter"/>
+        <mission name="AUTOMATE MELEE Fixer"/>
+        <mission name="AUTOMATE MELEE Flanc-Garder"/>
+        <mission name="AUTOMATE MELEE Freiner">
+          <fragorder name="Decrocher"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Intercepter"/>
+        <mission name="AUTOMATE MELEE Interdire"/>
+        <mission name="AUTOMATE MELEE Jalonner"/>
+        <mission name="AUTOMATE MELEE Neutraliser"/>
+        <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
+        <mission name="AUTOMATE MELEE Ratisser"/>
+        <mission name="AUTOMATE MELEE Reconnaitre"/>
+        <mission name="AUTOMATE MELEE Recueillir"/>
+        <mission name="AUTOMATE MELEE Renseigner Sur"/>
+        <mission name="AUTOMATE MELEE S'emparer"/>
+        <mission name="AUTOMATE MELEE Surveiller"/>
+        <mission name="AUTOMATE MELEE Tenir"/>
+        <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
+        <mission name="AUTOMATE MELEE Controler foule"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Terroriste">
+      <missions>
+        <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
+        <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Position"/>
+        <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
+        <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
+        <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
   </automats>
@@ -9577,4 +9643,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2271749951" -->
+<!-- signature="2220379574" -->
