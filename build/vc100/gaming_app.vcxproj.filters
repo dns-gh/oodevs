@@ -367,9 +367,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\InfoDialog.cpp">
       <Filter>Source Files\Panels\Info\dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\InfoLendingsDialog.cpp">
-      <Filter>Source Files\Panels\Info\dialogs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\InfoMaintenanceDialog.cpp">
       <Filter>Source Files\Panels\Info\dialogs</Filter>
     </ClCompile>
@@ -784,6 +781,12 @@
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticListView.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.cpp">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoFuneralDialog.cpp">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -874,9 +877,6 @@
       <Filter>Source Files\Panels\Info\tabs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\InfoCompositionDialog.h">
-      <Filter>Source Files\Panels\Info\dialogs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\InfoLendingsDialog.h">
       <Filter>Source Files\Panels\Info\dialogs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\InfoMaintenanceDialog.h">
@@ -1139,6 +1139,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticListView.h">
       <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.h">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoFuneralDialog.h">
+      <Filter>Source Files\Panels\Info\dialogs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

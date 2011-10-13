@@ -814,6 +814,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\FloodProxy.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LogFuneralConsign.cpp">
+      <Filter>Source Files\Model\Logistique</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1535,6 +1538,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\FloodProxy.h">
       <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogFuneralConsign.h">
+      <Filter>Source Files\Model\Logistique</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -99,6 +99,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignFuneral.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyRecipientResourcesRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyResourceRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\PluginFactory.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\Config.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Dispatcher.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\dispatcher_pch.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignFuneral.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyRecipientResourcesRequest.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyResourceRequest.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\MemoryLogger_ABC.h" />

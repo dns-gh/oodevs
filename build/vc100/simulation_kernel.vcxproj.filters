@@ -520,6 +520,9 @@
     <Filter Include="Source Files\Entities\Agents\Roles\Logistic\Supply\Resource">
       <UniqueIdentifier>{04c855a0-0bd0-4f42-aa3b-cc9a8b4ad0ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Entities\Agents\Roles\Logistic\Funeral">
+      <UniqueIdentifier>{d2ec778d-f5f9-491f-8ddc-4cf76c6a0570}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp">
@@ -2510,6 +2513,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_HumanRepartition.cpp">
       <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConfig.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Funeral</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConsign.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Funeral</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralPackagingResource.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Funeral</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralRequest.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Funeral</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4921,6 +4936,30 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_HumanRepartition.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConfig.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Funeral</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConsign.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Funeral</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConsign_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Funeral</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralHandler_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Funeral</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralPackagingResource.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Funeral</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralRequest.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Funeral</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralRequest_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Funeral</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoysObserver_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

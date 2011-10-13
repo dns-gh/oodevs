@@ -147,12 +147,14 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\gaming_app\Application.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\Config.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\gaming_app_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoFuneralDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LoggerProxy.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticListView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\main.cpp" />
@@ -237,7 +239,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\InfoReportsTab.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoCompositionDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoDialog.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\InfoLendingsDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoMaintenanceDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoMedicalDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoSupplyDialog.cpp" />
@@ -378,7 +379,9 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h" />
+    <ClInclude Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\gaming_app_pch.h" />
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoFuneralDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\LoggerProxy.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\MainWindow.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
@@ -1284,7 +1287,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\gaming_app\InfoLendingsDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\InfoMaintenanceDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\InfoMedicalDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\InfoSupplyDialog.h" />
