@@ -74,6 +74,7 @@
     <added-file filename="symbols.xml" assign-file="schemas/4.3.1/added-files/symbols.xml"/>
     <added-file filename="UrbanTemplates.xml" assign-file="schemas/4.3.3/added-files/UrbanTemplates.xml"/>
     <added-file filename="LogisticSupplyClasses.xml" assign-file="schemas/4.3.3/added-files/LogisticSupplyClasses.xml"/>
+    <added-file filename="Funeral.xml" assign-file="schemas/4.3.4/added-files/Funeral.xml"/>
   </added-files>
 
   <migration from="3.0" to="4.2.0">
@@ -140,5 +141,6 @@
     <upgrade schema="schemas/4.3.2/physical/Objects.xsd" apply="schemas/4.3.3/xsl/objects_4.3.2-4.3.3.xsl"/>
   </migration>
   <migration from="4.3.3" to="4.3.4">
+	<upgrade schema="schemas/4.3.3/physical/Physical.xsd" apply="schemas/4.3.4/xsl/Physical_4.3.3-4.3.4.xsl"/>
   </migration>
 </migrations>
