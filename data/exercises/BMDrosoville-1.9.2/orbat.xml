@@ -100,7 +100,6 @@
             <unit command-post="false" id="12" name="ABC 2" position="31TCM1063688220" type="ABC . Peloton LECLERC CDP OFF"/>
             <unit command-post="false" id="47" name="GEN EBG" position="31TCM1063688220" type="Groupe GEN . EBG"/>
             <unit command-post="false" id="48" name="GEN MPG" position="31TCM1063688220" type="Groupe GEN . MPG"/>
-            <unit command-post="false" id="49" name="Unit test" position="31TCM1063688220" type="Pion de tests"/>
             <unit command-post="false" id="122" name="Section de Tir AUF1 CDS SOFF[76]" position="31TCM1063688220" type="Section de Tir . AUF1 CDS OFF"/>
           </automat>
           <automat engaged="true" id="29" knowledge-group="2" name="SGTIA Engaged" type="SGTIA">
@@ -133,7 +132,7 @@
             <unit command-post="false" id="76" name="Section de Tir AUF1 CDS SOFF[76]" position="31TCM1412986607" type="Section de Tir . AUF1 CDS OFF"/>
           </automat>
           <automat engaged="true" id="81" knowledge-group="2" name="Section Decontamination [81]" type="NRBC . Section Decontamination">
-            <unit command-post="true" id="82" name="Equipe CDT deconta NBC" position="31TCM1533688471" type="NRBC . PC deconta"/>
+            <unit command-post="true" id="82" name="Equipe CDT deconta NBC" position="31TCM1533088497" type="NRBC . PC deconta"/>
             <unit command-post="false" id="83" name="Equipe decontamination NBC" position="31TCM1582187957" type="NRBC . Equipe decontamination"/>
             <unit command-post="false" id="84" name="Equipe decontamination NBC" position="31TCM1530587473" type="NRBC . Equipe decontamination"/>
             <unit command-post="false" id="85" name="Equipe decontamination NBC" position="31TCM1482087988" type="NRBC . Equipe decontamination"/>
@@ -278,4 +277,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1992552050" -->
+<!-- signature="3053157792" -->

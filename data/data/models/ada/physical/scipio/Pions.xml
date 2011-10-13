@@ -4401,7 +4401,7 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="10000" logistic-threshold="1" name="ROQ EXPL 298 M26" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="1" name="ROQ GMLRS" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -7550,8 +7550,12 @@
         <resource capacity="88" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="0"/>
         <resource capacity="32" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
-        <resource capacity="20" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F1 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F2 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F4 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F5 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="ACED 155 CAESAR" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -7591,8 +7595,12 @@
         <resource capacity="88" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="0"/>
         <resource capacity="32" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
-        <resource capacity="20" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F1 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F2 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F4 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F5 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="ACED 155 CAESAR" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -11709,6 +11717,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="9" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="96" logistic-threshold="10" name="ROQ GMLRS" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -11770,6 +11783,20 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="4" logistic-threshold="30" name="O 155 F1 AC EF DR" normalized-consumption="0"/>
+        <resource capacity="88" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="0"/>
+        <resource capacity="32" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
+        <resource capacity="8" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
+        <resource capacity="8" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F1 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F2 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F4 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F5 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="ACED 155 CAESAR" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -12268,43 +12295,7 @@
     <efficiencies combat="50" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PlatoonTest" id="430" name="Pion de tests" type="Pion INF">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
-    <equipments>
-      <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
-      <equipment count="9" crew="1" loadable="true" type="Fantassin"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin MINIMI"/>
-      <equipment count="2" crew="2" loadable="true" type="Equipe ERYX"/>
-      <equipment count="2" crew="1" loadable="true" type="Tireur Precision"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin Appui AC"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
-      <equipment count="1" crew="3" type="EBG"/>
-      <equipment count="1" crew="3" type="MPG"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="6" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="1800s"/>
-    </postures>
-    <nbc decontamination-delay="1350s"/>
-    <distance-before-points>
-      <distance-before-point type="forest" value="500"/>
-      <distance-before-point type="urban area" value="500"/>
-      <distance-before-point type="crossroad" value="500"/>
-      <distance-before-point type="bridge" value="500"/>
-    </distance-before-points>
-    <drill-blow length="300" width="300"/>
-    <efficiencies combat="100" combat-support="100" counter-mobility-support="100" engineering-support="100" mobility-support="100" protection-support="100" recon="100" urban-area="100"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Masalife.PIA" id="431" name="PIA Dominante INF" type="Pion INF">
+  <unit decisional-model="Masalife.PIA" id="430" name="PIA Dominante INF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -12340,7 +12331,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PIA" id="432" name="PIA Dominante ABC" type="Pion ABC">
+  <unit decisional-model="Masalife.PIA" id="431" name="PIA Dominante ABC" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
@@ -12376,7 +12367,7 @@
     <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PIA" id="433" name="PIA Dominante Reco" type="Pion ABC">
+  <unit decisional-model="Masalife.PIA" id="432" name="PIA Dominante Reco" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VBL 12,7"/>
@@ -12408,7 +12399,7 @@
     <efficiencies combat="10" combat-support="10" counter-mobility-support="0" engineering-support="5" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.PC" id="434" name="PC SGTIA" type="Pion INF">
+  <unit decisional-model="Masalife.INF.PC" id="433" name="PC SGTIA" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -12442,7 +12433,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="435" name="Section . CBT INF VAB CDS SOFF" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="434" name="Section . CBT INF VAB CDS SOFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -12476,7 +12467,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Mortier" id="436" name="Groupe . MO81 VAB" type="Pion INF">
+  <unit decisional-model="Masalife.Mortier" id="435" name="Groupe . MO81 VAB" type="Pion INF">
     <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" major="true" type="Eqp Mortier 81"/>
@@ -12509,7 +12500,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="80"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.AMX" id="437" name="Peloton . LECLERC CDP SOFF" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="436" name="Peloton . LECLERC CDP SOFF" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
@@ -12538,7 +12529,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="10" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.AMX" id="438" name="Peloton . d appui direct" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="437" name="Peloton . d appui direct" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/light"/>
     <equipments>
       <equipment count="1" crew="2" type="VBL CDT"/>
@@ -12567,7 +12558,7 @@
     <efficiencies combat="50" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.PC" id="439" name="Peloton . LECLERC CDT ESC" type="Pion ABC">
+  <unit decisional-model="Masalife.INF.PC" id="438" name="Peloton . LECLERC CDT ESC" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VBL CDT"/>
@@ -12600,7 +12591,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.EI" id="440" name="ABC . Patrouille EI PAD" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.EI" id="439" name="ABC . Patrouille EI PAD" type="Pion ABC">
     <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VBL 12,7"/>
@@ -12622,7 +12613,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.EI" id="441" name="Patrouille . EI 12,7" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.EI" id="440" name="Patrouille . EI 12,7" type="Pion ABC">
     <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VBL 12,7"/>
@@ -12643,36 +12634,7 @@
     <efficiencies combat="10" combat-support="10" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.PlatoonTest" id="442" name="pion de tests ABC" type="Pion ABC">
-    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
-    <equipments>
-      <equipment count="4" crew="4" major="true" type="Char LECLERC"/>
-      <equipment count="1" crew="1" type="VBL 12,7"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="0" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="1800s"/>
-    </postures>
-    <nbc decontamination-delay="1350s"/>
-    <distance-before-points>
-      <distance-before-point type="forest" value="500"/>
-      <distance-before-point type="urban area" value="500"/>
-      <distance-before-point type="crossroad" value="500"/>
-      <distance-before-point type="bridge" value="500"/>
-    </distance-before-points>
-    <drill-blow length="300" width="300"/>
-    <efficiencies combat="100" combat-support="100" counter-mobility-support="100" engineering-support="100" mobility-support="100" protection-support="100" recon="100" urban-area="100"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Masalife.Terroriste" id="443" name="Terroriste IED" type="Pion ASY">
+  <unit decisional-model="Masalife.Terroriste" id="441" name="Terroriste IED" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Terroriste IED"/>
@@ -12699,7 +12661,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ONG Intervention" id="444" name="ONG Intervention" type="Pion Organization">
+  <unit decisional-model="Masalife.ONG Intervention" id="442" name="ONG Intervention" type="Pion Organization">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="MPG"/>
@@ -12722,7 +12684,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Individu Isole" id="445" name="Individu Isole" type="Pion Civilian">
+  <unit decisional-model="Masalife.Individu Isole" id="443" name="Individu Isole" type="Pion Civilian">
     <nature atlas-nature="None" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Individu"/>
@@ -12744,7 +12706,7 @@
     <repartition children="0" female="0" male="1"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ONG LOG" id="446" name="ONG Soutien LOG" type="Pion Organization">
+  <unit decisional-model="Masalife.ONG LOG" id="444" name="ONG Soutien LOG" type="Pion Organization">
     <nature atlas-nature="None" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="2" type="SRQ CITERN 30M3 11"/>
@@ -12773,7 +12735,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="447" name="MILICE . CDT" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="445" name="MILICE . CDT" type="Pion MILICE">
     <nature atlas-nature="None" level="i" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="LAND ROVER 14.5"/>
@@ -12802,7 +12764,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="448" name="MILICE . Miliciens" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="446" name="MILICE . Miliciens" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="LAND ROVER 14.5"/>
@@ -12832,7 +12794,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="449" name="MILICE . VL AUVERLAND" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="447" name="MILICE . VL AUVERLAND" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -12861,7 +12823,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="450" name="MILICE . VL JEEP" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="448" name="MILICE . VL JEEP" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -12890,7 +12852,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="451" name="MILICE . VL MAZDA" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="449" name="MILICE . VL MAZDA" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -12919,7 +12881,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="452" name="MILICE . VL FORD" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="450" name="MILICE . VL FORD" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -12948,7 +12910,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="453" name="MILICE . VL FIAT" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="451" name="MILICE . VL FIAT" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -12977,7 +12939,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="454" name="MILICE . VL KIA" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="452" name="MILICE . VL KIA" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -13006,7 +12968,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="455" name="MILICE . VOLKSWAGEN" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="453" name="MILICE . VOLKSWAGEN" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -13035,7 +12997,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="456" name="MILICE . VL SUBARU" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="454" name="MILICE . VL SUBARU" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -13064,7 +13026,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="457" name="MILICE . VL SUZUKI" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="455" name="MILICE . VL SUZUKI" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -13093,7 +13055,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="458" name="MILICE . VL ISUZU" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="456" name="MILICE . VL ISUZU" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -13122,7 +13084,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="459" name="MILICE . VL DAEWOO" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="457" name="MILICE . VL DAEWOO" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -13151,7 +13113,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="460" name="MILICE . VL LADA" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="458" name="MILICE . VL LADA" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -13180,7 +13142,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="461" name="MILICE . VL DAEWOO AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="459" name="MILICE . VL DAEWOO AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13209,7 +13171,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="462" name="MILICE . VL AUVERLAND AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="460" name="MILICE . VL AUVERLAND AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL AUVERLAND"/>
@@ -13238,7 +13200,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="463" name="MILICE . VL FIAT AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="461" name="MILICE . VL FIAT AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL FIAT"/>
@@ -13267,7 +13229,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="464" name="MILICE . VL FORD AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="462" name="MILICE . VL FORD AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL FORD"/>
@@ -13296,7 +13258,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="465" name="MILICE . VL ISUZU AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="463" name="MILICE . VL ISUZU AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL ISUZU"/>
@@ -13325,7 +13287,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="466" name="MILICE . VL KIA AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="464" name="MILICE . VL KIA AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13354,7 +13316,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="467" name="MILICE . VL LADA AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="465" name="MILICE . VL LADA AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL LADA"/>
@@ -13383,7 +13345,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="468" name="MILICE . VL MAZDA AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="466" name="MILICE . VL MAZDA AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL MAZDA"/>
@@ -13412,7 +13374,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="469" name="MILICE . VL SUBARU AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="467" name="MILICE . VL SUBARU AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL SUBARU"/>
@@ -13441,7 +13403,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="470" name="MILICE . VL SUZUKI AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="468" name="MILICE . VL SUZUKI AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL SUZUKI"/>
@@ -13470,7 +13432,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="471" name="MILICE . VOLKSWAGEN AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="469" name="MILICE . VOLKSWAGEN AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL VOLKSWAGEN"/>
@@ -13499,7 +13461,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="472" name="MILICE . VL JEEP AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="470" name="MILICE . VL JEEP AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL JEEP"/>
@@ -13528,7 +13490,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="473" name="MILICE . Miliciens FORD 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="471" name="MILICE . Miliciens FORD 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13558,7 +13520,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="474" name="MILICE . Miliciens AUVERLAND 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="472" name="MILICE . Miliciens AUVERLAND 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13588,7 +13550,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="475" name="MILICE . Miliciens DAEWOO 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="473" name="MILICE . Miliciens DAEWOO 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13618,7 +13580,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="476" name="MILICE . Miliciens FIAT 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="474" name="MILICE . Miliciens FIAT 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13648,7 +13610,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="477" name="MILICE . Miliciens ISUZU 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="475" name="MILICE . Miliciens ISUZU 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13678,7 +13640,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="478" name="MILICE . Miliciens JEEP 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="476" name="MILICE . Miliciens JEEP 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13708,7 +13670,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="479" name="MILICE . Miliciens LADA 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="477" name="MILICE . Miliciens LADA 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13738,7 +13700,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="480" name="MILICE . Miliciens KIA 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="478" name="MILICE . Miliciens KIA 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL KIA 14.5"/>
@@ -13768,7 +13730,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="481" name="MILICE . Miliciens SUBARU 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="479" name="MILICE . Miliciens SUBARU 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13798,7 +13760,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="482" name="MILICE . Miliciens MAZDA 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="480" name="MILICE . Miliciens MAZDA 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13828,7 +13790,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="483" name="MILICE . Miliciens SUZUKI 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="481" name="MILICE . Miliciens SUZUKI 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13858,7 +13820,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="484" name="MILICE . Miliciens VOLKSWAGEN 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="482" name="MILICE . Miliciens VOLKSWAGEN 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13888,7 +13850,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="485" name="MILICE . CDT AUVERLAND 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="483" name="MILICE . CDT AUVERLAND 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13918,7 +13880,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="486" name="MILICE . CDT AUVERLAND AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="484" name="MILICE . CDT AUVERLAND AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL AUVERLAND"/>
@@ -13947,7 +13909,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="487" name="MILICE . CDT DAEWOO 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="485" name="MILICE . CDT DAEWOO 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -13977,7 +13939,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="488" name="MILICE . CDT DAEWOO AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="486" name="MILICE . CDT DAEWOO AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -14006,7 +13968,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="489" name="MILICE . CDT DAEWOO" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="487" name="MILICE . CDT DAEWOO" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -14035,7 +13997,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="490" name="MILICE . CDT AUVERLAND" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="488" name="MILICE . CDT AUVERLAND" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -14064,7 +14026,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="491" name="MILICE . CDT FIAT 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="489" name="MILICE . CDT FIAT 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -14094,7 +14056,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="492" name="MILICE . CDT FIAT AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="490" name="MILICE . CDT FIAT AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL FIAT"/>
@@ -14123,7 +14085,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="493" name="MILICE . CDT FIAT" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="491" name="MILICE . CDT FIAT" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -14152,7 +14114,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="494" name="MILICE . CDT FORD 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="492" name="MILICE . CDT FORD 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -14182,7 +14144,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="495" name="MILICE . CDT FORD AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="493" name="MILICE . CDT FORD AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL FORD"/>
@@ -14211,7 +14173,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="496" name="MILICE . CDT FORD" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="494" name="MILICE . CDT FORD" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -14240,7 +14202,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="497" name="MILICE . CDT ISUZU 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="495" name="MILICE . CDT ISUZU 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -14270,7 +14232,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="498" name="MILICE . CDT ISUZU AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="496" name="MILICE . CDT ISUZU AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL ISUZU"/>
@@ -14299,7 +14261,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="499" name="MILICE . CDT ISUZU" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="497" name="MILICE . CDT ISUZU" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -14328,7 +14290,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="500" name="MILICE . CDT JEEP 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="498" name="MILICE . CDT JEEP 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -14358,7 +14320,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="501" name="MILICE . CDT JEEP AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="499" name="MILICE . CDT JEEP AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL JEEP"/>
@@ -14387,7 +14349,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="502" name="MILICE . CDT JEEP" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="500" name="MILICE . CDT JEEP" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -14416,7 +14378,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="503" name="MILICE . CDT KIA 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="501" name="MILICE . CDT KIA 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL KIA 14.5"/>
@@ -14446,7 +14408,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="504" name="MILICE . CDT KIA AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="502" name="MILICE . CDT KIA AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -14475,7 +14437,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="505" name="MILICE . CDT KIA" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="503" name="MILICE . CDT KIA" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -14504,7 +14466,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="506" name="MILICE . CDT LADA 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="504" name="MILICE . CDT LADA 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -14534,7 +14496,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="507" name="MILICE . CDT LADA AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="505" name="MILICE . CDT LADA AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL LADA"/>
@@ -14563,7 +14525,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="508" name="MILICE . CDT LADA" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="506" name="MILICE . CDT LADA" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -14592,7 +14554,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="509" name="MILICE . CDT LAND ROVER" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="507" name="MILICE . CDT LAND ROVER" type="Pion MILICE">
     <nature atlas-nature="None" level="i" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="LAND ROVER 14.5"/>
@@ -14621,7 +14583,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="510" name="MILICE . CDT MAZDA 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="508" name="MILICE . CDT MAZDA 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -14651,7 +14613,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="511" name="MILICE . CDT MAZDA AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="509" name="MILICE . CDT MAZDA AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL MAZDA"/>
@@ -14680,7 +14642,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="512" name="MILICE . CDT MAZDA" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="510" name="MILICE . CDT MAZDA" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -14709,7 +14671,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="513" name="MILICE . CDT NISSAN" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="511" name="MILICE . CDT NISSAN" type="Pion MILICE">
     <nature atlas-nature="None" level="i" nature-app6="combat"/>
     <equipments>
       <equipment count="5" crew="1" loadable="true" type="Milicien AK47"/>
@@ -14738,7 +14700,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="514" name="MILICE . CDT SUBARU 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="512" name="MILICE . CDT SUBARU 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -14768,7 +14730,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="515" name="MILICE . CDT SUBARU AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="513" name="MILICE . CDT SUBARU AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL SUBARU"/>
@@ -14797,7 +14759,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="516" name="MILICE . CDT SUBARU" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="514" name="MILICE . CDT SUBARU" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -14826,7 +14788,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="517" name="MILICE . CDT SUZUKI 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="515" name="MILICE . CDT SUZUKI 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Milicien AK47"/>
@@ -14856,7 +14818,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="518" name="MILICE . CDT SUZUKI AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="516" name="MILICE . CDT SUZUKI AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL SUZUKI"/>
@@ -14885,7 +14847,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="519" name="MILICE . CDT SUZUKI" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="517" name="MILICE . CDT SUZUKI" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -14914,7 +14876,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="520" name="MILICE . CDT TOYOTA" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="518" name="MILICE . CDT TOYOTA" type="Pion MILICE">
     <nature atlas-nature="None" level="i" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="LAND ROVER 14.5"/>
@@ -14944,7 +14906,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="521" name="MILICE . CDT VOLKSWAGEN" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="519" name="MILICE . CDT VOLKSWAGEN" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="Passager"/>
@@ -14973,7 +14935,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="522" name="MILICE . CDT VOLKSWAGEN AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="520" name="MILICE . CDT VOLKSWAGEN AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="VL VOLKSWAGEN"/>
@@ -15002,7 +14964,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="523" name="MILICE . Miliciens armees AK47 LAND ROVER" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="521" name="MILICE . Miliciens armees AK47 LAND ROVER" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="LAND ROVER 14.5"/>
@@ -15031,7 +14993,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="524" name="MILICE . Miliciens armees AK47 TOYOTA" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="522" name="MILICE . Miliciens armees AK47 TOYOTA" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="5" crew="1" loadable="true" type="Milicien AK47"/>
@@ -15060,7 +15022,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="525" name="MILICE . Miliciens armees RPG TOYOTA" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="523" name="MILICE . Miliciens armees RPG TOYOTA" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="LAND ROVER 14.5"/>
@@ -15090,7 +15052,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="526" name="MILICE . Miliciens armees RPG NISSAN" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="524" name="MILICE . Miliciens armees RPG NISSAN" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="LAND ROVER 14.5"/>
@@ -15120,7 +15082,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="527" name="MILICE . Miliciens armees RPG LAND ROVER" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="525" name="MILICE . Miliciens armees RPG LAND ROVER" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="LAND ROVER 14.5"/>
@@ -15150,7 +15112,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="528" name="MILICE . Miliciens armees AK47 NISSAN" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="526" name="MILICE . Miliciens armees AK47 NISSAN" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="5" crew="1" loadable="true" type="Milicien AK47"/>
@@ -15179,7 +15141,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Terroriste" id="529" name="Terroriste Sniper" type="Pion ASY">
+  <unit decisional-model="Masalife.Terroriste" id="527" name="Terroriste Sniper" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Terroriste Sniper"/>
@@ -15206,7 +15168,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Terroriste" id="530" name="Terroriste Sniper et IED" type="Pion ASY">
+  <unit decisional-model="Masalife.Terroriste" id="528" name="Terroriste Sniper et IED" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Terroriste Sniper et IED"/>
@@ -15233,7 +15195,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Terroriste" id="531" name="Terroriste RPG" type="Pion ASY">
+  <unit decisional-model="Masalife.Terroriste" id="529" name="Terroriste RPG" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Terroriste RPG"/>
@@ -15260,7 +15222,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Individu Isole.Journaliste" id="532" name="Journalistes" type="Pion Journalist">
+  <unit decisional-model="Masalife.Individu Isole.Journaliste" id="530" name="Journalistes" type="Pion Journalist">
     <nature atlas-nature="None" level="none" nature-app6="mootw/individual"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Camionnette"/>
@@ -15283,7 +15245,7 @@
     <repartition children="0" female="0.5" male="0.5"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Individu Isole" id="533" name="Notable" type="Pion Notable">
+  <unit decisional-model="Masalife.Individu Isole" id="531" name="Notable" type="Pion Notable">
     <nature atlas-nature="None" level="none" nature-app6="mootw/individual"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Individu"/>
@@ -15306,7 +15268,7 @@
     <repartition children="0" female="0" male="1"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.DPRE" id="534" name="Refugies" type="Pion REFUGIE">
+  <unit decisional-model="Masalife.DPRE" id="532" name="Refugies" type="Pion REFUGIE">
     <nature atlas-nature="None" level="ooo" nature-app6="mootw/refugees"/>
     <equipments>
       <equipment count="10" crew="10" major="true" type="Foule 100"/>
@@ -15328,7 +15290,7 @@
     <repartition children="0.4" female="0.4" male="0.2"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie" id="535" name="Section GEN . CBT" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie" id="533" name="Section GEN . CBT" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="4" crew="1" major="true" type="VAB GEN 12,7"/>
@@ -15358,7 +15320,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.PC" id="536" name="PC CIE GEN . CBT" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.PC" id="534" name="PC CIE GEN . CBT" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="4" crew="2" type="VTC P4"/>
@@ -15391,7 +15353,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Individu Isole" id="537" name="Civil" type="Pion Civilian">
+  <unit decisional-model="Masalife.Individu Isole" id="535" name="Civil" type="Pion Civilian">
     <nature atlas-nature="None" level="none" nature-app6="mootw/individual"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Individu"/>
@@ -15413,7 +15375,7 @@
     <repartition children="0" female="0" male="1"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Convoi" id="538" name="LOG . Convoi" type="Pion LOG Convoi">
+  <unit decisional-model="Masalife.LOG.Convoi" id="536" name="LOG . Convoi" type="Pion LOG Convoi">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat service support/transportation"/>
     <equipments/>
     <sensors-range range="5000"/>
@@ -15439,7 +15401,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="539" name="LOG . PC BLD Ravitaillerment" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.PC" id="537" name="LOG . PC BLD Ravitaillerment" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="VAB 12,7"/>
@@ -15461,7 +15423,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="540" name="LOG . PC LOG BLD Secteur Sante" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.PC" id="538" name="LOG . PC LOG BLD Secteur Sante" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
@@ -15482,7 +15444,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="541" name="LOG . PC LOG BLD Secteur Transport" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.PC" id="539" name="LOG . PC LOG BLD Secteur Transport" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
@@ -15504,7 +15466,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="542" name="LOG . PC LOG BLD Secteur Maintenance" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.PC" id="540" name="LOG . PC LOG BLD Secteur Maintenance" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
@@ -15526,7 +15488,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="543" name="LOG . PC LOG BLD Secteur Ravitaillement" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.PC" id="541" name="LOG . PC LOG BLD Secteur Ravitaillement" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
@@ -15548,7 +15510,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="544" name="LOG . PC BLD Sante" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.PC" id="542" name="LOG . PC BLD Sante" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="VAB 12,7"/>
@@ -15569,7 +15531,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="545" name="LOG . PC BLD Maintenance" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.PC" id="543" name="LOG . PC BLD Maintenance" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="VAB 12,7"/>
@@ -15591,7 +15553,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="546" name="LOG . Masalife.LOG.PC BLD Secteur Maintenance" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.PC" id="544" name="LOG . Masalife.LOG.PC BLD Secteur Maintenance" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
@@ -15613,7 +15575,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="547" name="LOG . PC LOG BLD secteur appro" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.PC" id="545" name="LOG . PC LOG BLD secteur appro" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="VAB 12,7"/>
@@ -15635,7 +15597,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="548" name="LOG . PC BLD secteur sh" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.PC" id="546" name="LOG . PC BLD secteur sh" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
@@ -15657,7 +15619,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="549" name="LOG . PC LOG BLD secteur sea" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.PC" id="547" name="LOG . PC LOG BLD secteur sea" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
@@ -15679,7 +15641,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="550" name="LOG . PC LOG BLD secteur munition" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.PC" id="548" name="LOG . PC LOG BLD secteur munition" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
@@ -15701,7 +15663,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="551" name="LOG . Masalife.LOG.PC BLD Secteur Ravitaillement" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.PC" id="549" name="LOG . Masalife.LOG.PC BLD Secteur Ravitaillement" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
@@ -15723,7 +15685,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="552" name="LOG . Masalife.LOG.PC BLD Secteur Sante" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.PC" id="550" name="LOG . Masalife.LOG.PC BLD Secteur Sante" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
@@ -15744,7 +15706,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="553" name="LOG . Masalife.LOG.PC BLD Secteur Transport" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.PC" id="551" name="LOG . Masalife.LOG.PC BLD Secteur Transport" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
@@ -15766,7 +15728,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="554" name="GLAISE . PC PL" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.PC" id="552" name="GLAISE . PC PL" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="1" crew="2" loadable="true" major="true" type="UAZ 469"/>
@@ -15788,7 +15750,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="555" name="LOG . Section Reparation Mob Feu BLIAT SRMF" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="553" name="LOG . Section Reparation Mob Feu BLIAT SRMF" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="2" crew="2" type="GBC 8 KT 12.7"/>
@@ -15813,7 +15775,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="556" name="LOG . Section Reparation EA BLIAT SREAT" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="554" name="LOG . Section Reparation EA BLIAT SREAT" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="4" crew="3" type="TRM 10000 12,7"/>
@@ -15838,7 +15800,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="557" name="LOG . Section Reparation Mob BLD  MOB" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="555" name="LOG . Section Reparation Mob BLD  MOB" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Eqp Rep MOB BLD"/>
@@ -15863,7 +15825,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="558" name="LOG . Section Reparation EA BLD SREAT" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="556" name="LOG . Section Reparation EA BLD SREAT" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="4" crew="3" type="TRM 10000 12,7"/>
@@ -15888,7 +15850,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="559" name="LOG . Section Reparation Mob Feu BLD  SRMF" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="557" name="LOG . Section Reparation Mob Feu BLD  SRMF" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="2" crew="2" type="GBC 8 KT 12.7"/>
@@ -15913,7 +15875,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="560" name="LOG . Section Reparation Mob Feu BLT SRMF" type="Pion LOG BLT Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="558" name="LOG . Section Reparation Mob Feu BLT SRMF" type="Pion LOG BLT Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="2" crew="2" type="GBC 8 KT 12.7"/>
@@ -15938,7 +15900,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="561" name="LOG . Section Reparation Mob BLT MOB" type="Pion LOG BLT Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="559" name="LOG . Section Reparation Mob BLT MOB" type="Pion LOG BLT Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="2" crew="2" type="GBC 8 KT 12.7"/>
@@ -15963,7 +15925,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="562" name="LOG . Section Reparation EA BLT SREAT" type="Pion LOG BLT Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="560" name="LOG . Section Reparation EA BLT SREAT" type="Pion LOG BLT Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="4" crew="3" type="TRM 10000 12,7"/>
@@ -15988,7 +15950,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="563" name="LOG . Section Reparation Mob BLIAT MOB" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="561" name="LOG . Section Reparation Mob BLIAT MOB" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Eqp Rep BLIAT"/>
@@ -16013,7 +15975,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="564" name="GLAISE - LOG . Section Reparation Mob BLD" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="562" name="GLAISE - LOG . Section Reparation Mob BLD" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="2" crew="3" type="KrAZ 255B"/>
@@ -16038,7 +16000,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="565" name="GLAISE - LOG . Section Reparation EA BLD" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="563" name="GLAISE - LOG . Section Reparation EA BLD" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="4" crew="3" type="Kraz 255B-atelier"/>
@@ -16063,7 +16025,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="566" name="GLAISE - LOG . Section Reparation MOB FEU BLD" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="564" name="GLAISE - LOG . Section Reparation MOB FEU BLD" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="2" crew="3" type="KrAZ 255B"/>
@@ -16088,7 +16050,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="567" name="LOG . Section Reparation BLIAT" type="Pion LOG BLT Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="565" name="LOG . Section Reparation BLIAT" type="Pion LOG BLT Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Eqp Rep BLIAT"/>
@@ -16113,7 +16075,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="568" name="GLAISE - LOG . Section Reparation EA BLT SREAT" type="Pion LOG BLT Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="566" name="GLAISE - LOG . Section Reparation EA BLT SREAT" type="Pion LOG BLT Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="11" crew="2" major="true" type="Eqp Rep EA BLT Glaise"/>
@@ -16138,7 +16100,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="569" name="GLAISE - LOG . Section Reparation Mob BLT MOB" type="Pion LOG BLT Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="567" name="GLAISE - LOG . Section Reparation Mob BLT MOB" type="Pion LOG BLT Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Eqp Rep MOB BLT glaise"/>
@@ -16163,7 +16125,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Section Maintenance" id="570" name="GLAISE - LOG . Section Reparation Mob Feu BLT SRMF" type="Pion LOG BLT Maintenance">
+  <unit decisional-model="Masalife.LOG.Section Maintenance" id="568" name="GLAISE - LOG . Section Reparation Mob Feu BLT SRMF" type="Pion LOG BLT Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="6" crew="2" major="true" type="Eqp Rep MOB FEU BLT glaise"/>
@@ -16188,7 +16150,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Groupe Maintenance Evacuation" id="571" name="LOG . Section CDT CMM (EVAC)" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.Groupe Maintenance Evacuation" id="569" name="LOG . Section CDT CMM (EVAC)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="4" crew="2" type="VTC P4"/>
@@ -16214,7 +16176,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Groupe Maintenance Evacuation" id="572" name="LOG . Section Evacuation BLIAT" type="Pion LOG BLT Maintenance">
+  <unit decisional-model="Masalife.LOG.Groupe Maintenance Evacuation" id="570" name="LOG . Section Evacuation BLIAT" type="Pion LOG BLT Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="40" crew="2" major="true" type="TRM 10000 CLD"/>
@@ -16236,7 +16198,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Groupe Maintenance Evacuation" id="573" name="GLAISE - LOG . Section CDT CMM (EVA)" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.Groupe Maintenance Evacuation" id="571" name="GLAISE - LOG . Section CDT CMM (EVA)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="KAMAZ 5320"/>
@@ -16262,7 +16224,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="574" name="LOG . Groupe Munitions OFF TT- D" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="572" name="LOG . Groupe Munitions OFF TT- D" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -16286,7 +16248,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="575" name="LOG . Groupe Munitions SOFF TT - D" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="573" name="LOG . Groupe Munitions SOFF TT - D" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -16310,7 +16272,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="576" name="LOG . Groupe Appro Vivre Eau" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="574" name="LOG . Groupe Appro Vivre Eau" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class ii"/>
     <equipments>
       <equipment convoyer="true" count="4" crew="2" major="true" type="VTL R"/>
@@ -16333,7 +16295,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="577" name="LOG . Groupe Munitions OFF TD" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="575" name="LOG . Groupe Munitions OFF TD" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -16357,7 +16319,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="578" name="LOG . Groupe Munitions SOFF TD" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="576" name="LOG . Groupe Munitions SOFF TD" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -16381,7 +16343,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="579" name="LOG . Section Magasin CAP" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="577" name="LOG . Section Magasin CAP" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply/class ii"/>
     <equipments>
       <equipment convoyer="true" count="10" crew="2" major="true" type="VTL R"/>
@@ -16405,7 +16367,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="580" name="LOG . Groupe Munitions BLIAT" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="578" name="LOG . Groupe Munitions BLIAT" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment convoyer="true" count="50" crew="2" major="true" type="GBC 8 KT"/>
@@ -16427,7 +16389,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="581" name="LOG . Section Magasin CAP BLIAT" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="579" name="LOG . Section Magasin CAP BLIAT" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply/class ii"/>
     <equipments>
       <equipment convoyer="true" count="100" crew="2" major="true" type="VTL R"/>
@@ -16449,7 +16411,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="582" name="LOG . Groupe Appro Vivre Eau BLIAT" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="580" name="LOG . Groupe Appro Vivre Eau BLIAT" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class ii"/>
     <equipments>
       <equipment convoyer="true" count="40" crew="2" major="true" type="VTL R"/>
@@ -16471,7 +16433,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="583" name="GLAISE - LOG . Groupe Munitions SOFF TT - D" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="581" name="GLAISE - LOG . Groupe Munitions SOFF TT - D" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment count="1" crew="7" type="UAZ 469"/>
@@ -16495,7 +16457,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="584" name="GLAISE - LOG . Groupe Munitions OFF TT - D" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="582" name="GLAISE - LOG . Groupe Munitions OFF TT - D" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment count="1" crew="7" type="UAZ 469"/>
@@ -16519,7 +16481,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="585" name="GLAISE - LOG . Groupe Appro Vivre Eau" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="583" name="GLAISE - LOG . Groupe Appro Vivre Eau" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class ii"/>
     <equipments>
       <equipment convoyer="true" count="4" crew="3" major="true" type="KAMAZ 5320"/>
@@ -16542,7 +16504,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="586" name="GLAISE - LOG . Groupe Munitions OFF TD" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="584" name="GLAISE - LOG . Groupe Munitions OFF TD" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment count="1" crew="7" type="UAZ 469"/>
@@ -16566,7 +16528,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="587" name="GLAISE - LOG . Groupe Munitions SOFF TD" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="585" name="GLAISE - LOG . Groupe Munitions SOFF TD" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment count="1" crew="7" type="UAZ 469"/>
@@ -16590,7 +16552,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Stock" id="588" name="GLAISE - LOG . Section Magasin CAP" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Stock" id="586" name="GLAISE - LOG . Section Magasin CAP" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class ii"/>
     <equipments>
       <equipment convoyer="true" count="10" crew="3" major="true" type="KAMAZ 5320"/>
@@ -16614,7 +16576,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="589" name="LOG . Peloton Transport VTLR (PT)" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="587" name="LOG . Peloton Transport VTLR (PT)" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="1" crew="2" type="TRM 2000 12,7"/>
@@ -16639,7 +16601,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="590" name="LOG . Escouade Trspt CARB 60m3" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="588" name="LOG . Escouade Trspt CARB 60m3" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="6" crew="2" major="true" type="CCP 10M3 RAV SCANI1"/>
@@ -16662,7 +16624,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="591" name="LOG . Peloton Ravitaillement (PR)" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="589" name="LOG . Peloton Ravitaillement (PR)" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="TRM 2000 12,7"/>
@@ -16688,7 +16650,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="592" name="LOG . Masalife.LOG.Transport VTLR (PT)" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="590" name="LOG . Masalife.LOG.Transport VTLR (PT)" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="1" crew="2" type="TRM 2000 12,7"/>
@@ -16713,7 +16675,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="593" name="LOG . Masalife.LOG.Transport TRM 10000" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="591" name="LOG . Masalife.LOG.Transport TRM 10000" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="1" crew="2" type="TRM 2000 12,7"/>
@@ -16738,7 +16700,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="594" name="LOG . Peloton Transport TRM 10000" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="592" name="LOG . Peloton Transport TRM 10000" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="1" crew="2" type="TRM 2000 12,7"/>
@@ -16763,7 +16725,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="595" name="LOG . Escouade Trspt CARB 35m3" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="593" name="LOG . Escouade Trspt CARB 35m3" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="5" crew="2" major="true" type="CCT GBC TD5 11"/>
@@ -16787,7 +16749,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="596" name="LOG . Escouade Trspt CARB180m3" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="594" name="LOG . Escouade Trspt CARB180m3" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="6" crew="2" major="true" type="SRQ CITERN 30M3 11"/>
@@ -16810,7 +16772,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="597" name="LOG . Escouade Trspt CARB BLIAT" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="595" name="LOG . Escouade Trspt CARB BLIAT" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="60" crew="2" major="true" type="SRQ CITERN 30M3 11"/>
@@ -16833,7 +16795,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="598" name="LOG . Peloton Transport BLIAT" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="596" name="LOG . Peloton Transport BLIAT" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="200" crew="2" major="true" type="VTL R"/>
@@ -16855,7 +16817,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="599" name="LOG . Masalife.LOG.Transport BLIAT" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="597" name="LOG . Masalife.LOG.Transport BLIAT" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="200" crew="2" major="true" type="VTL R"/>
@@ -16877,7 +16839,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="600" name="GLAISE - LOG . Escouade Trspt CARB 35 m3" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="598" name="GLAISE - LOG . Escouade Trspt CARB 35 m3" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="5" crew="2" major="true" type="ZIL 151 citerne"/>
@@ -16900,7 +16862,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="601" name="GLAISE - LOG . Escouade Trspt CARB 180 m3" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="599" name="GLAISE - LOG . Escouade Trspt CARB 180 m3" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="6" crew="2" major="true" type="Camion Citerne Semi remorque 30m3 glaise"/>
@@ -16923,7 +16885,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="602" name="GLAISE - LOG . Peloton transport Kamaz 5320" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="600" name="GLAISE - LOG . Peloton transport Kamaz 5320" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="1" crew="2" type="GAZ 66"/>
@@ -16948,7 +16910,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="603" name="GLAISE - LOG . Peloton Ravitaillement" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="601" name="GLAISE - LOG . Peloton Ravitaillement" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="7" crew="2" major="true" type="GAZ 66"/>
@@ -16972,7 +16934,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="604" name="GLAISE - LOG . Escouade Trspt CARB 60 m3" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.Transport" id="602" name="GLAISE - LOG . Escouade Trspt CARB 60 m3" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="6" crew="2" major="true" type="ZIL 151 citerne"/>
@@ -16995,7 +16957,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="605" name="LOG . Groupe VS J5" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="603" name="LOG . Groupe VS J5" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -17018,7 +16980,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="606" name="LOG . Groupe VS VAB" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="604" name="LOG . Groupe VS VAB" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -17041,7 +17003,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="607" name="LOG . Equipe HM EVASAN" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="605" name="LOG . Equipe HM EVASAN" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="o" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="6" major="true" type="SA330 EVASAN"/>
@@ -17063,7 +17025,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="608" name="LOG . Groupe VS J5 BLIAT" type="Pion LOG BLT Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="606" name="LOG . Groupe VS J5 BLIAT" type="Pion LOG BLT Sante">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -17086,7 +17048,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="609" name="LOG . Equipe HM EVASAN BLIAT" type="Pion LOG BLT Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="607" name="LOG . Equipe HM EVASAN BLIAT" type="Pion LOG BLT Sante">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="10" crew="6" major="true" type="SA330 EVASAN"/>
@@ -17108,7 +17070,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="610" name="GLAISE - LOG . Groupe VS 469 SAN" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="608" name="GLAISE - LOG . Groupe VS 469 SAN" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="7" type="UAZ 469"/>
@@ -17131,7 +17093,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="611" name="GLAISE - LOG . Groupe VS SAN" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="609" name="GLAISE - LOG . Groupe VS SAN" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="7" type="UAZ 469"/>
@@ -17154,7 +17116,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="612" name="GLAISE - LOG . Equipe HM EVASAN" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="610" name="GLAISE - LOG . Equipe HM EVASAN" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="MI 8 EVASAN"/>
@@ -17176,7 +17138,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.ACA" id="613" name="LOG . Antenne Chirurgicale" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.ACA" id="611" name="LOG . Antenne Chirurgicale" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="2" crew="1" type="Eqp Triage Medical"/>
@@ -17201,7 +17163,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.ACA" id="614" name="GLAISE - LOG . Antenne Chirurgicale" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.ACA" id="612" name="GLAISE - LOG . Antenne Chirurgicale" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="2" crew="1" type="Eqp Triage Medical"/>
@@ -17226,7 +17188,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.PSY" id="615" name="LOG . Section Medico Psychologique" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.PSY" id="613" name="LOG . Section Medico Psychologique" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="3" crew="1" major="true" type="Eqp Med Psy"/>
@@ -17249,7 +17211,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.PSY" id="616" name="LOG . Section Medico Psychologique BLIAT" type="Pion LOG BLT Sante">
+  <unit decisional-model="Masalife.LOG.Sante.PSY" id="614" name="LOG . Section Medico Psychologique BLIAT" type="Pion LOG BLT Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="30" crew="1" major="true" type="Eqp Med Psy"/>
@@ -17272,7 +17234,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.PSY" id="617" name="GLAISE - LOG . Section Medico PSY" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.PSY" id="615" name="GLAISE - LOG . Section Medico PSY" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="3" crew="1" major="true" type="Eqp Med Psy"/>
@@ -17295,7 +17257,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Soin" id="618" name="LOG . Section Chirurgicale Modulaire" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Soin" id="616" name="LOG . Section Chirurgicale Modulaire" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -17322,7 +17284,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Soin" id="619" name="LOG . Section Chirurgicale HMC" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Soin" id="617" name="LOG . Section Chirurgicale HMC" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Champ Operatoire"/>
@@ -17346,7 +17308,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Soin" id="620" name="LOG . Section Chirurgicale HMC BLIAT" type="Pion LOG BLT Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Soin" id="618" name="LOG . Section Chirurgicale HMC BLIAT" type="Pion LOG BLT Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="20" crew="1" major="true" type="Champ Operatoire"/>
@@ -17370,7 +17332,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Soin" id="621" name="LOG . SAN GTSA 240" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Soin" id="619" name="LOG . SAN GTSA 240" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="20" crew="2" major="true" type="Eqp GTSA"/>
@@ -17392,7 +17354,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Soin" id="622" name="GLAISE - LOG . Section Chirurgicale Modulaire" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Soin" id="620" name="GLAISE - LOG . Section Chirurgicale Modulaire" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Champ Operatoire"/>
@@ -17418,7 +17380,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Soin" id="623" name="GLAISE - LOG . Section Chirurgicale HMC" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Soin" id="621" name="GLAISE - LOG . Section Chirurgicale HMC" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Champ Operatoire"/>
@@ -17442,7 +17404,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Decontamination" id="624" name="LOG . Section Decontamination Medicale NBC" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Decontamination" id="622" name="LOG . Section Decontamination Medicale NBC" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat support/nbc/decontamination"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Gpe Deconta Med NBC"/>
@@ -17466,7 +17428,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Decontamination" id="625" name="GLAISE - LOG . Section Deconta Medicale NBC" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Decontamination" id="623" name="GLAISE - LOG . Section Deconta Medicale NBC" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat support/nbc/decontamination"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Gpe Deconta Med NBC"/>
@@ -17490,7 +17452,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Triage" id="626" name="LOG . Section Triage modulaire" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Triage" id="624" name="LOG . Section Triage modulaire" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
@@ -17519,7 +17481,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Sante.Triage" id="627" name="GLAISE - LOG . Section Triage Modulaire" type="Pion LOG BLD Sante">
+  <unit decisional-model="Masalife.LOG.Sante.Triage" id="625" name="GLAISE - LOG . Section Triage Modulaire" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="1" type="Champ Operatoire"/>
@@ -17547,7 +17509,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="628" name="LOG . ABC . TC2 GE40 LECLERC" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="626" name="LOG . ABC . TC2 GE40 LECLERC" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="14" crew="2" type="VTC P4"/>
@@ -17588,7 +17550,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="629" name="LOG . ALAT . TC2 SGAM" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="627" name="LOG . ALAT . TC2 SGAM" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="4" crew="2" type="VTC P4"/>
@@ -17622,7 +17584,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="630" name="LOG . TC2 RG BIA" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="628" name="LOG . TC2 RG BIA" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Lot 7"/>
@@ -17660,7 +17622,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="631" name="LOG . ART . TC2 BAT 32AUF1" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="629" name="LOG . ART . TC2 BAT 32AUF1" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="4" crew="3" type="Poste Secours"/>
@@ -17699,7 +17661,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="632" name="LOG . TC2 10RC" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="630" name="LOG . TC2 10RC" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="6" crew="2" major="true" type="Lot 7"/>
@@ -17736,7 +17698,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="633" name="LOG . ABC . TC2 RB ERC90" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="631" name="LOG . ABC . TC2 RB ERC90" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="12" crew="2" type="VTC P4"/>
@@ -17769,7 +17731,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="634" name="LOG . TC2" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="632" name="LOG . TC2" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="9" crew="2" type="VTC P4"/>
@@ -17806,7 +17768,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="635" name="LOG . INF . TC2 GTIA  AMX 10P" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="633" name="LOG . INF . TC2 GTIA  AMX 10P" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="X30 DEPANNAGE AP M1"/>
@@ -17843,7 +17805,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="636" name="LOG . ABC . TC2 RGT AMX30B2 BRENNUS" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="634" name="LOG . ABC . TC2 RGT AMX30B2 BRENNUS" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="Lot 7"/>
@@ -17883,7 +17845,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="637" name="LOG . INF . TC2 GTIA  VAB" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="635" name="LOG . INF . TC2 GTIA  VAB" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="8" crew="2" type="TRM 2000"/>
@@ -17920,7 +17882,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="638" name="LOG . ART . TC2 BAT 32TRF1" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="636" name="LOG . ART . TC2 BAT 32TRF1" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="3" type="Poste Secours"/>
@@ -17956,7 +17918,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="639" name="LOG . ART . TC2 BON 24LRM" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="637" name="LOG . ART . TC2 BON 24LRM" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="TRM 10000 CLD"/>
@@ -17990,7 +17952,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="640" name="LOG . TC2 GAM604" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="638" name="LOG . TC2 GAM604" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="16" crew="1" type="TRM 4000 12.7"/>
@@ -18028,7 +17990,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="641" name="LOG . TC2 GAM603" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="639" name="LOG . TC2 GAM603" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="1" crew="3" type="Poste Secours"/>
@@ -18068,7 +18030,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="642" name="LOG . TC2 GAM602" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="640" name="LOG . TC2 GAM602" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="6" crew="2" major="true" type="GBC SA TITAN CIA 11"/>
@@ -18106,7 +18068,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="643" name="LOG . ABC . TC2 RC53 LECLERC" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="641" name="LOG . ABC . TC2 RC53 LECLERC" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="15" crew="2" type="VTC P4"/>
@@ -18147,7 +18109,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="644" name="LOG . ART . TC2 Groupement RLD Mistral" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="642" name="LOG . ART . TC2 Groupement RLD Mistral" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" major="true" type="CCT GBC TD5 11"/>
@@ -18184,7 +18146,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="645" name="LOG . Section CDT et  URB" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="643" name="LOG . Section CDT et  URB" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="2" crew="1" type="VTC P4"/>
@@ -18216,7 +18178,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="646" name="LOG . TC2 GTIA  AMX 10P" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="644" name="LOG . TC2 GTIA  AMX 10P" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="X30 DEPANNAGE AP M1"/>
@@ -18253,7 +18215,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="647" name="LOG . TC2 GTIA  VAB" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="645" name="LOG . TC2 GTIA  VAB" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="8" crew="2" type="TRM 2000"/>
@@ -18290,7 +18252,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="648" name="LOG . TC2 GE40 LECLERC" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="646" name="LOG . TC2 GE40 LECLERC" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="14" crew="2" type="VTC P4"/>
@@ -18331,7 +18293,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="649" name="LOG . TC2 RB ERC90" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="647" name="LOG . TC2 RB ERC90" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="12" crew="2" type="VTC P4"/>
@@ -18364,7 +18326,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="650" name="LOG . TC2 RC53 LECLERC" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="648" name="LOG . TC2 RC53 LECLERC" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="15" crew="2" type="VTC P4"/>
@@ -18405,7 +18367,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="651" name="LOG . TC2 RGT AMX30B2 BRENNUS" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="649" name="LOG . TC2 RGT AMX30B2 BRENNUS" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="Lot 7"/>
@@ -18445,7 +18407,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="652" name="GLAISE - LOG . TC2" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="650" name="GLAISE - LOG . TC2" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="14" crew="7" type="UAZ 469"/>
@@ -18484,7 +18446,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="653" name="GLAISE - LOG . TC2 ART" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="651" name="GLAISE - LOG . TC2 ART" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="14" crew="7" type="UAZ 469"/>
@@ -18522,7 +18484,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="654" name="GLAISE - LOG . TC2 ALAT" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="652" name="GLAISE - LOG . TC2 ALAT" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="5" crew="1" type="Eqp diagnostic"/>
@@ -18558,7 +18520,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="655" name="LOG . Peloton Transport Blindes CL100" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="653" name="LOG . Peloton Transport Blindes CL100" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="15" crew="2" major="true" type="TRM 700 100"/>
@@ -18582,7 +18544,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="656" name="CIRCU . Patrouille P4" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="654" name="CIRCU . Patrouille P4" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VTC P4 Circu CDT"/>
@@ -18606,7 +18568,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.PC Appui Mob" id="657" name="CIRCU . Peloton CDT ESC TRPT BLD" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.PC Appui Mob" id="655" name="CIRCU . Peloton CDT ESC TRPT BLD" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VTC P4"/>
@@ -18633,7 +18595,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="658" name="CIRCU . PC sur P4" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="656" name="CIRCU . PC sur P4" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VTC P4 Circu"/>
@@ -18656,7 +18618,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="659" name="CIRCU . PC sur VAB" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="657" name="CIRCU . PC sur VAB" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VTC P4 Circu CDT"/>
@@ -18680,7 +18642,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="660" name="CIRCU . Patrouille VAB" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="658" name="CIRCU . Patrouille VAB" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VAB CIRCU"/>
@@ -18702,7 +18664,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="661" name="LOG . Peloton Transport Blindes CL50" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="659" name="LOG . Peloton Transport Blindes CL50" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="4" crew="2" type="VTC P4 7,62"/>
@@ -18726,7 +18688,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="662" name="CIRCU . Peloton Bus Renault" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="660" name="CIRCU . Peloton Bus Renault" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="6" crew="1" major="true" type="BUS Renault R312"/>
@@ -18747,7 +18709,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="663" name="CIRCU . Peloton Bus Mercedes" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="661" name="CIRCU . Peloton Bus Mercedes" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="6" crew="1" major="true" type="BUS Mercedes"/>
@@ -18768,7 +18730,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="664" name="CIRCU . Peloton Bus Volvo" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="662" name="CIRCU . Peloton Bus Volvo" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="6" crew="1" major="true" type="BUS Volvo"/>
@@ -18789,7 +18751,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="665" name="CIRCU . PC ESC TRANSP BUS" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="663" name="CIRCU . PC ESC TRANSP BUS" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="VTC P4"/>
@@ -18810,7 +18772,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="666" name="CIRCU . Peloton Bus IVECO" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="664" name="CIRCU . Peloton Bus IVECO" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="6" crew="1" major="true" type="Bus IVECO"/>
@@ -18831,7 +18793,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="667" name="CIRCU . Peloton Bus MAN" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="665" name="CIRCU . Peloton Bus MAN" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="6" crew="1" major="true" type="Bus MAN"/>
@@ -18852,7 +18814,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="668" name="Train" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="666" name="Train" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation/railhead/corps"/>
     <equipments>
       <equipment count="1" crew="10" major="true" type="Train"/>
@@ -18873,7 +18835,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="669" name="ALAT . ECL PROTERRE" type="Pion INF">
+  <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="667" name="ALAT . ECL PROTERRE" type="Pion INF">
     <nature atlas-nature="Helicoptere" level="i" nature-app6="combat/infantry"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" major="true" type="Fantassin"/>
@@ -18904,7 +18866,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="670" name="INF . Fantassin oeil" type="Pion INF">
+  <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="668" name="INF . Fantassin oeil" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Fantassin Oeil"/>
@@ -18932,7 +18894,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="671" name="INF . Fantassin lunette" type="Pion INF">
+  <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="669" name="INF . Fantassin lunette" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Fantassin lunettes"/>
@@ -18960,7 +18922,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="672" name="ONG PC" type="Pion INF">
+  <unit decisional-model="Masalife.LOG.PC" id="670" name="ONG PC" type="Pion INF">
     <nature atlas-nature="PC" level="none" nature-app6="mootw/ong"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="VTC P4"/>
@@ -18981,7 +18943,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ONG LOG" id="673" name="ONG Transport" type="Pion Organization">
+  <unit decisional-model="Masalife.ONG LOG" id="671" name="ONG Transport" type="Pion Organization">
     <nature atlas-nature="None" level="ooo" nature-app6="mootw/ong"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="BUS Volvo"/>
@@ -19003,7 +18965,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.DPRE" id="674" name="Refugiés femmes et enfants" type="Pion REFUGIE">
+  <unit decisional-model="Masalife.DPRE" id="672" name="Refugiés femmes et enfants" type="Pion REFUGIE">
     <nature atlas-nature="None" level="ooo" nature-app6="mootw/refugees"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Foule 100"/>
@@ -19025,7 +18987,7 @@
     <repartition children="0.6" female="0.4" male="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.DPRE" id="675" name="Réfugiés hommes femmes et enfants" type="Pion REFUGIE">
+  <unit decisional-model="Masalife.DPRE" id="673" name="Réfugiés hommes femmes et enfants" type="Pion REFUGIE">
     <nature atlas-nature="None" level="ooo" nature-app6="mootw/refugees"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Foule 100"/>
@@ -19047,7 +19009,7 @@
     <repartition children="0.1" female="0.45" male="0.45"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie" id="676" name="GEN . Section CBT renforce MPG" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie" id="674" name="GEN . Section CBT renforce MPG" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="4" crew="1" major="true" type="VAB GEN 12,7"/>
@@ -19078,7 +19040,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie" id="677" name="GEN . Section CBT renforce EBG" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie" id="675" name="GEN . Section CBT renforce EBG" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="4" crew="1" major="true" type="VAB GEN 12,7"/>
@@ -19110,4 +19072,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1385694781" -->
+<!-- signature="1149470040" -->
