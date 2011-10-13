@@ -33,28 +33,42 @@ WeatherPanel::WeatherPanel( QWidget* parent, PanelStack_ABC& panel, WeatherLayer
     , currentType_  ( eWeatherGlobal )
 {
     // Layouts
+    QWidget* box = new QWidget( this );
+    QBoxLayout* layout = new QBoxLayout( box, QBoxLayout::TopToBottom, 0, 5 );
+    layout->setMargin( 5 );
+    layout->setAlignment( Qt::AlignTop );
+
     Q3VBox* mainLayout = new Q3VBox( this );
-    headerLayout_ = new Q3VBox( mainLayout );
-    Q3VBox* contentLayout = new Q3VBox( mainLayout );
-    Q3HBox* buttonsLayout = new Q3HBox( mainLayout );
+    mainLayout->layout()->setAlignment( Qt::AlignTop );
+
+    headerLayout_ = new Q3VBox( box );
+    layout->addWidget( headerLayout_ );
+    Q3VBox* contentLayout = new Q3VBox( box );
+    layout->addWidget( contentLayout );
+    Q3HBox* buttonsLayout = new Q3HBox( box );
+    buttonsLayout->layout()->setSpacing( 5 );
+
+    layout->addWidget( buttonsLayout );
     buttonsLayout->setMinimumHeight( 30 );
     buttonsLayout->setMaximumHeight( 30 );
     // Weather
     Q3GroupBox* group = new Q3GroupBox( 1, Qt::Horizontal, tr( "Weather" ), contentLayout );
     {
-        Q3HBox* box = new Q3HBox( group );
-        new QLabel( tr( "Weather type:" ), box );
-        gui::ValuedComboBox< E_WeatherType >* weatherTypeCombo = new gui::ValuedComboBox< E_WeatherType >( box );
+        Q3HBox* hbox = new Q3HBox( group );
+        new QLabel( tr( "Weather type:" ), hbox );
+        gui::ValuedComboBox< E_WeatherType >* weatherTypeCombo = new gui::ValuedComboBox< E_WeatherType >( hbox );
         weatherTypeCombo->AddItem( tr( "Global weather" ), eWeatherGlobal );
         weatherTypeCombo->AddItem( tr( "Local weather" ), eWeatherLocal );
         connect( weatherTypeCombo, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged( int ) ) );
     }
     // Global weather layout
     globalLayout_ = new Q3VBox( group );
+    globalLayout_->layout()->setSpacing( 5 );
     // Local weather layout
     localLayout_ = new Q3VBox( group );
+    localLayout_->layout()->setSpacing( 5 );
     // Buttons
-    setWidget( mainLayout );
+    setWidget( box );
     QPushButton* okBtn     = new QPushButton( tr( "Validate" ) , buttonsLayout );
     QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), buttonsLayout );
     connect( okBtn,     SIGNAL( clicked() ), this, SLOT( Commit() ) );

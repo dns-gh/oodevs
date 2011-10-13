@@ -30,6 +30,7 @@ PopulationTypesListView::PopulationTypesListView( QWidget* parent, kernel::Contr
     , controllers_( controllers )
     , types_( types )
 {
+    setResizeMode( Q3ListView::AllColumns );
     setMinimumSize( 1, 1 );
     addColumn( tools::translate( "gui::PopulationTypesListView", "Crowd type" ) );
     setRootIsDecorated( true );

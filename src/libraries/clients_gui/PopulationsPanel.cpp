@@ -33,13 +33,16 @@ PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel,
     , selected_   ( 0 )
 {
     Q3VBox* vbox = new Q3VBox( this );
+    vbox->setMargin( 5 );
+    vbox->setSpacing( 5 );
     {
-        list_ = new PopulationTypesListView( vbox, controllers_, types, factory );
-        connect( list_, SIGNAL( StartDrag( const kernel::PopulationType* ) ), this, SLOT( OnStartDrag( const kernel::PopulationType* ) ) );
         Q3HBox* box = new Q3HBox( vbox );
+        box->setSpacing( 5 );
         new QLabel( tools::translate( "gui::PopulationsPanel", "Healthy number:" ), box );
         number_ = new QLineEdit( QString::number( 1000 ), box );
         number_->setValidator( new QIntValidator( 1, 1000000, number_ ) );
+        list_ = new PopulationTypesListView( vbox, controllers_, types, factory );
+        connect( list_, SIGNAL( StartDrag( const kernel::PopulationType* ) ), this, SLOT( OnStartDrag( const kernel::PopulationType* ) ) );
     }
     setWidget( vbox );
     controllers_.Register( *this );

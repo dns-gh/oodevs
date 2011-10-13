@@ -28,12 +28,17 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& 
     , simulation_( simulation )
     , tools_( tools )
 {
-    Q3VBox* box = new Q3VBox( this );
-    box->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-    created_ = new ObjectPrototype( box, controllers, staticModel, layer );
-    QPushButton* ok = new QPushButton( tools::translate( "ObjectCreationPanel", "Create" ), box );
-    setWidget( box );
+    QWidget* box = new QWidget( this );
+    QBoxLayout* layout = new QBoxLayout( box, QBoxLayout::TopToBottom, 0, 5 );
+    layout->setMargin( 5 );
+    layout->setAlignment( Qt::AlignTop );
+
+    created_ = new ObjectPrototype( this, controllers, staticModel, layer );
+    layout->addWidget( created_ );
+    QPushButton* ok = new QPushButton( tools::translate( "ObjectCreationPanel", "Create" ), this );
+    layout->addWidget( ok );
     connect( ok, SIGNAL( clicked() ), this, SLOT( Commit() ) );
+    setWidget( box );
     controllers_.Register( *this );
 }
 

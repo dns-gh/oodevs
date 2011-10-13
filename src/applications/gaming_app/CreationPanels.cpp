@@ -39,12 +39,11 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     Q3VBox* box = new Q3VBox( parent );
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     AddPanel( units_ = new UnitsPanel( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
+    AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_, factory ) );
     AddPanel( objects_ = new ObjectCreationPanel( box, *this, controllers, actionsModel, staticModel, simulation, paramLayer, tools ) );
-    AddPanel( intel_ = new IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons, &config ) );
     AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, drawings, config ) );
     AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, actionsModel, simulation, staticModel, paramLayer, tools ) );
     AddPanel( weather_ = new ::WeatherPanel( this, *this, controllers, actionsModel, staticModel, simulation, weatherLayer ) );
-    AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_, factory ) );
     controllers_.Register( *this );
 }
 
@@ -75,7 +74,6 @@ void CreationPanels::NotifyUpdated( const ModelLoaded& )
 {
     Add( units_ );
     Add( objects_ );
-    Add( intel_ );
     Add( crowds_ );
     Add( weather_ );
     Add( drawings_ );
@@ -90,7 +88,6 @@ void CreationPanels::NotifyUpdated( const ModelUnLoaded& )
 {
     Remove( units_ );
     Remove( objects_ );
-    Remove( intel_ );
     Remove( crowds_ );
     Remove( weather_ );
     Remove( drawings_ );

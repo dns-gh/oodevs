@@ -32,24 +32,27 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Control
 {
     // Current date & Time
     Q3HBox* timeBox = new Q3HBox( headerLayout_ );
+    timeBox->layout()->setMargin( 5 );
     new QLabel( tr( "Exercise date:" ), timeBox );
-    time_ = new Q3DateTimeEdit( timeBox );
+    time_ = new QDateTimeEdit( timeBox );
     time_->setDateTime( QDateTime::currentDateTime() );
 
     // Ephemerides
-     Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tr( "Ephemerides" ), headerLayout_ );
-    new QLabel( tr( "Sunrise:" ), group );
-    sunrise_ = new Q3TimeEdit( group );
-    new QLabel( tr( "Sunset:" ), group );
-    sunset_ = new Q3TimeEdit( group );
-    new QLabel( tr( "Day lighting:" ), group );
-    dayLighting_ = new gui::ValuedComboBox< E_DayLightingType >( group );
-    for( int i = 0; i < static_cast< int >( eNbrDayLightingType ); ++i )
-        dayLighting_->AddItem( tools::ToDisplayedString( static_cast< E_DayLightingType>( i ) ), static_cast< E_DayLightingType>( i ) );
-    new QLabel( tr( "Night lighting:" ), group );
-    nightLighting_ = new gui::ValuedComboBox< E_NightLightingType >( group );
-    for( int i = 0; i < static_cast< int >( eNbrNightLightingType ); ++i )
-        nightLighting_->AddItem( tools::ToDisplayedString( static_cast< E_NightLightingType>( i ) ), static_cast< E_NightLightingType>( i ) );
+    {
+        Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tr( "Ephemerides" ), headerLayout_ );
+        new QLabel( tr( "Sunrise:" ), group );
+        sunrise_ = new QTimeEdit( group );
+        new QLabel( tr( "Sunset:" ), group );
+        sunset_ = new QTimeEdit( group );
+        new QLabel( tr( "Day lighting:" ), group );
+        dayLighting_ = new gui::ValuedComboBox< E_DayLightingType >( group );
+        for( int i = 0; i < static_cast< int >( eNbrDayLightingType ); ++i )
+            dayLighting_->AddItem( tools::ToDisplayedString( static_cast< E_DayLightingType>( i ) ), static_cast< E_DayLightingType>( i ) );
+        new QLabel( tr( "Night lighting:" ), group );
+        nightLighting_ = new gui::ValuedComboBox< E_NightLightingType >( group );
+        for( int i = 0; i < static_cast< int >( eNbrNightLightingType ); ++i )
+            nightLighting_->AddItem( tools::ToDisplayedString( static_cast< E_NightLightingType>( i ) ), static_cast< E_NightLightingType>( i ) );
+    }
 
     // Global Weather
     globalWidget_ = new gui::WeatherWidget( globalLayout_, tr( "Weather parameters" ) );

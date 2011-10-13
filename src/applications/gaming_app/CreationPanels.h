@@ -32,7 +32,6 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class DrawerPanel;
-    class IntelligencesPanel;
     class ItemFactory_ABC;
     class ParametersLayer;
     class PopulationsPanel;
@@ -90,7 +89,6 @@ private:
     kernel::Controllers&     controllers_;
     gui::UnitsPanel*         units_;
     ObjectCreationPanel*     objects_;
-    gui::IntelligencesPanel* intel_;
     WeatherPanel*            weather_;
     gui::PopulationsPanel*   crowds_;
     gui::DrawerPanel*        drawings_;

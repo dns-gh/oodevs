@@ -445,7 +445,6 @@ void MainWindow::DoLoad( QString filename )
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
     config_.LoadExercise( filename.ascii() );
-    pCreationPanel_->Load( config_ );
     pScoreDialog_->Load();
     if( Load() )
     {

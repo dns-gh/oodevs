@@ -28,20 +28,25 @@ WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
 {
     new QLabel( tools::translate( "gui::WeatherWidget", "Wind speed/direction:" ), this );
     Q3HBox* box = new Q3HBox( this );
+    box->layout()->setSpacing( 5 );
     windSpeed_ = new QSpinBox( 0, 300, 5, box );
     windSpeed_->setSuffix( Units::kilometersPerHour.AsString() );
     windDirection_ = new QSpinBox( 0, 359, 1, box );
     windDirection_->setSuffix( Units::degrees.AsString() );
+
     new QLabel( tools::translate( "gui::WeatherWidget", "Temperature:" ), this );
     temperature_ = new QSpinBox( -20, 40, 1, this );
     temperature_->setSuffix( "°C" );
+
     new QLabel( tools::translate( "gui::WeatherWidget", "Clouds floor/ceiling/density:" ), this );
     box = new Q3HBox( this );
+    box->layout()->setSpacing( 5 );
     cloudFloor_   = new QSpinBox( 0, 100000, 100, box );
     cloudFloor_->setSuffix( Units::meters.AsString() );
     cloudCeiling_ = new QSpinBox( 0, 100000, 100, box );
     cloudCeiling_->setSuffix( Units::meters.AsString() );
     cloudDensity_ = new QSpinBox( 0, 10, 1, box );
+
     new QLabel( tools::translate( "gui::WeatherWidget", "Weather type:" ), this );
     type_ = new gui::ValuedComboBox< E_WeatherType >( this );
     assert( eNbrWeatherType > 0 );

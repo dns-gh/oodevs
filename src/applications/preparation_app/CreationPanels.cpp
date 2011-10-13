@@ -37,16 +37,13 @@ CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controller
 {
     AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
     AddPanel( new gui::PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ), factory ) );
+    inhabitantCreationPanel_ = new InhabitantCreationPanel( this, *this, controllers, staticModel.types_, model.agents_, paramLayer, glProxy );
+    AddPanel( inhabitantCreationPanel_ );
+    objectCreationPanel_ = new ObjectCreationPanel( this, *this, controllers, staticModel, model.objects_, model.urban_, paramLayer, glProxy, config );
+    AddPanel( objectCreationPanel_ );
     AddPanel( new TemplatesPanel( this, *this, controllers, model.agents_, model.formations_, staticModel.types_ ) );
     AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, model.drawings_, config ) );
     AddPanel( new WeatherPanel( this, *this, controllers, staticModel.coordinateConverter_, weatherLayer ) );
-
-    intelligencesPanel_ = new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons );
-    AddPanel( intelligencesPanel_ );
-    objectCreationPanel_ = new ObjectCreationPanel( this, *this, controllers, staticModel, model.objects_, model.urban_, paramLayer, glProxy, config );
-    AddPanel( objectCreationPanel_ );
-    inhabitantCreationPanel_ = new InhabitantCreationPanel( this, *this, controllers, staticModel.types_, model.agents_, paramLayer, glProxy );
-    AddPanel( inhabitantCreationPanel_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,15 +53,6 @@ CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controller
 CreationPanels::~CreationPanels()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: CreationPanels::Load
-// Created: ABR 2011-05-25
-// -----------------------------------------------------------------------------
-void CreationPanels::Load( const tools::ExerciseConfig& config )
-{
-    intelligencesPanel_->Load( config );
 }
 
 // -----------------------------------------------------------------------------
