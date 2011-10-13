@@ -43,6 +43,7 @@ MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )
     MOCK_METHOD( LogConsignsMaintenance, 0 );
     MOCK_METHOD( LogConsignsSupply, 0 );
     MOCK_METHOD( LogConsignsMedical, 0 );
+    MOCK_METHOD( LogConsignsFuneral, 0 );
     MOCK_METHOD( Fires, 0 );
     MOCK_METHOD( PopulationFires, 0 );
     MOCK_METHOD( FireEffects, 0 );
