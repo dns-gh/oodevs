@@ -5590,8 +5590,6 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Se Deployer"/>
-          <fragorder name="Modifier Priorites Blesses"/>
-          <fragorder name="Modifier Priorites Tactiques Blesses"/>
         <mission name="PION Produire et alimenter"/>
       </missions>
       <fragorders>
