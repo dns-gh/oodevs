@@ -24,6 +24,7 @@
   <knowledge-groups file="KnowledgeGroups.xml"/>
   <maintenance file="Maintenance.xml"/>
   <supply file="Supply.xml"/>
+  <funeral file="Funeral.xml"/>
   <communications file="Communications.xml"/>
   <pathfinder file="Pathfind.xml"/>
   <populations file="Crowds.xml"/>
@@ -41,4 +42,4 @@
   <filters file="Filters/Filters.xml"/>
   <urban-templates file="UrbanTemplates.xml"/>
 </physical>
-<!-- signature="3445640229" -->
+<!-- signature="0213454563" -->
