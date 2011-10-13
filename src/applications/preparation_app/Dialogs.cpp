@@ -19,6 +19,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "preparation/StaticModel.h"
 #include "LogisticStockEditor.h"
+#include "LogisticLinksEditor.h"
 
 using namespace kernel;
 
@@ -37,6 +38,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const StaticModel& 
     new PeopleAffinitiesDialog( parent, controllers );
     new ColorEditor( parent, controllers, colorStrategy, colorEditor );
     new SymbolEditor( parent, controllers, symbols, config );
+    new LogisticLinksEditor( parent, controllers );
     new LogisticStockEditor( parent, controllers, model );
     new LongNameEditor( parent, controllers, model );
 }

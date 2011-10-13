@@ -96,9 +96,8 @@ void LogisticLevelAttritube::SetLogisticLevel( const kernel::EntityLogisticLevel
                 while( children.HasMoreElements() )
                 {
                     const kernel::Entity_ABC& entity = children.NextElement();
-                    LogisticBaseStates* logEntityHierarchy = const_cast< LogisticBaseStates* >( dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() ) );
-                    if( logEntityHierarchy )
-                        logEntityHierarchy->SetSuperior( kernel::LogisticBaseSuperior() );
+                    if( LogisticHierarchiesBase* logEntityHierarchy = const_cast< kernel::Entity_ABC& >( entity ).Retrieve< LogisticHierarchiesBase >() )
+                        logEntityHierarchy->SetLogisticSuperior( kernel::LogisticBaseSuperior() );
                 }
             }
         }

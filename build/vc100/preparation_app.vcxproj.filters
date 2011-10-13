@@ -451,6 +451,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\FilterDescription.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LogisticLinksEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -825,6 +828,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\FilterCommand.h">
       <Filter>Source Files\Dialogs\Filter</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\LogisticLinksEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

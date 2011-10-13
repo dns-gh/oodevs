@@ -25,6 +25,7 @@ InitialStateTableCrew.cpp \
 InitialStateTableEquipments.cpp \
 InitialStateTableResources.cpp \
 LivingAreaEditor.cpp \
+LogisticLinksEditor.cpp \
 LongNameEditor.cpp\
 LogisticStockEditor.cpp \
 MainWindow.cpp \
