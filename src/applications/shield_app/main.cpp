@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-#include <stdexcept>
-#include <iostream>
 #include "tools/ClientNetworker.h"
 #pragma warning( push, 0 )
 #include "shield/proto/ClientToAar.pb.h"
@@ -24,6 +22,8 @@
 #include "shield/proto/SimToClient.pb.h"
 #include "shield/proto/LauncherToAdmin.pb.h"
 #pragma warning( pop )
+#include <stdexcept>
+#include <iostream>
 
 #pragma warning( disable: 4127 )
 
@@ -34,9 +34,8 @@ namespace
     public:
         explicit Client( const std::string& host, const std::string& profile, const std::string& password )
             : tools::ClientNetworker( host )
-            , profile_ (profile)
-            , password_ (password)
-
+            , profile_ ( profile )
+            , password_( password )
         {
             RegisterMessage( *this, &Client::ReceiveSimToClient );
             RegisterMessage( *this, &Client::ReceiveAuthenticationToClient );
@@ -130,53 +129,41 @@ namespace
 
 int main( int argc, char* argv[] )
 {
-
-    // default configuration
     std::string host = "localhost";
     std::string port = "30001";
     std::string profile = "Supervisor";
     std::string password = "";
-
+    if( argc == 2 && std::string( argv[1] ) == "--help" )
+    {
+        std::cout << "Usage: shield_app.exe [-h host] [-p port] [-u profile] [-a password]" << std::endl;
+        return EXIT_SUCCESS;
+    }
+    for( int i = 1; i < argc - 1; ++i )
+    {
+        const std::string argument( argv[i] );
+        if( argument == "-h" )
+            host = argv[i + 1]; // $$$$ MCO : this could crash : use Boost.CommandLine !
+        else if( argument == "-p" )
+            port = argv[i + 1];
+        else if( argument == "-u" )
+            profile = argv[i + 1];
+        else if( argument == "-a" )
+            password = argv[i + 1];
+    }
     try
     {
-        // read command line arguments
-        if( argc == 2 && std::string( argv[1] ) == "--help" )
-        {
-            std::cout << "Usage: shield_app.exe [-h host] [-p port] [-u profile] [-a password]" << std::endl;
-            return EXIT_SUCCESS;
-        }
-        for( int i = 1; i < argc - 1; ++i )
-        {
-            const std::string argument( argv[i] );
-            if( argument == "-h" )
-                host = argv[i + 1];
-            else if( argument == "-p" )
-                port = argv[i + 1];
-            else if( argument == "-u" )
-                profile = argv[i + 1];
-            else if( argument == "-a" )
-                password = argv[i + 1];
-        }
+        Client client( host + ":" + port, profile, password );
+        while( true )
+            client.Update();
     }
     catch( std::exception& e )
     {
         std::cerr << e.what() << std::endl;
         return EXIT_FAILURE;
     }
-
-    try
-    {
-        Client client( host+":"+port, profile, password );
-        while( true )
-            client.Update();
-    }
-    catch( std::exception& e )
-    {
-        std::cout << e.what() << std::endl;
-    }
     catch( ... )
     {
-        std::cout << "unknown error" << std::endl;
+        std::cerr << "unknown exception" << std::endl;
     }
-    return 0;
+    return EXIT_FAILURE;
 }
