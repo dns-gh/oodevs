@@ -35,6 +35,7 @@ LodgingAttribute.cpp \
 LogMaintenanceConsign.cpp \
 LogMedicalConsign.cpp \
 LogSupplyConsign.cpp \
+LogFuneralConsign.cpp \
 LogisticAttribute.cpp \
 LogisticLinks.cpp \
 MaintenanceStates.cpp \

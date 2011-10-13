@@ -22,6 +22,9 @@
 #include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestManualDispatcher.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestContainer.h"
+#include "Entities/Agents/Roles/Logistic/FuneralConsign_ABC.h"
+#include "Entities/Agents/Roles/Logistic/FuneralPackagingResource.h"
+#include "ConsumeDotationNotificationHandler_ABC.h"
 #include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -397,7 +400,7 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter
+// Name: MIL_AutomateLOG::OnReceiveLogSupplyPushFlow
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameters& parameters, const tools::Resolver_ABC< MIL_Automate >& automateResolver )
@@ -409,8 +412,87 @@ void MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameter
     supplyRequests_.push_back( requestContainer );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::OnSupplyConvoyArriving
+// Created: NLD 2011-07-20
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+{
+    T_SupplyConvoysObservers tmp = supplyConvoysObserver_;
+    std::for_each( tmp.begin(), tmp.end(), boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyArriving, _1, supplyConsign ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::OnSupplyConvoyLeaving
+// Created: NLD 2011-07-20
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::OnSupplyConvoyLeaving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+{
+    T_SupplyConvoysObservers tmp = supplyConvoysObserver_;
+    std::for_each( tmp.begin(), tmp.end(), boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyLeaving, _1, supplyConsign ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Created: NLD 2011-07-20
+// -----------------------------------------------------------------------------
+bool MIL_AutomateLOG::BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const
+{
+    return &logisticBase == this;
+}
+
 // =============================================================================
-// UPDATE
+// Funeral
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Created: NLD 2011-07-20
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::AddSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer )
+{
+    supplyConvoysObserver_.insert( &observer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Created: NLD 2011-07-20
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::RemoveSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer )
+{
+    supplyConvoysObserver_.erase( &observer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Created: NLD 2011-07-20
+// -----------------------------------------------------------------------------
+bool MIL_AutomateLOG::FuneralHandleConsign( boost::shared_ptr< logistic::FuneralConsign_ABC > consign )
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Created: NLD 2011-07-20
+// -----------------------------------------------------------------------------
+const logistic::FuneralPackagingResource* MIL_AutomateLOG::FuneralGetNextPackagingResource( const logistic::FuneralPackagingResource* currentPackaging )
+{
+    FuneralPackagingResourceVisitor visitor( currentPackaging );
+    Visit( visitor );
+    if( visitor.nextPackagingResource_ )
+    {
+        assert( visitor.pSelected_ );
+        double quantity = 1;
+        visitor.pSelected_->Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, visitor.nextPackagingResource_->GetDotationCategory(), quantity );
+        return visitor.nextPackagingResource_;
+    }
+    else 
+        return 0;
+}
+
+// =============================================================================
+// Update
 // =============================================================================
 
 // -----------------------------------------------------------------------------

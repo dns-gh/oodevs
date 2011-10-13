@@ -232,12 +232,44 @@ void MIL_DotationSupplyManager::OnSupplyDone()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::OnSupplyConvoyArriving
+// Created: NLD 2011-09-13
+// -----------------------------------------------------------------------------
+void MIL_DotationSupplyManager::OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+{
+    MIL_AutomateLOG* logisticBase = pAutomate_->FindLogisticManager();
+    if( logisticBase )
+        logisticBase->OnSupplyConvoyArriving( supplyConsign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::OnSupplyConvoyLeaving
+// Created: NLD 2011-09-13
+// -----------------------------------------------------------------------------
+void MIL_DotationSupplyManager::OnSupplyConvoyLeaving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+{
+    MIL_AutomateLOG* logisticBase = pAutomate_->FindLogisticManager();
+    if( logisticBase )
+        logisticBase->OnSupplyConvoyLeaving( supplyConsign );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::Serialize
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::Serialize( sword::AutomatId& msg ) const
 {
     msg.set_id( pAutomate_->GetID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::BelongsToLogisticBase
+// Created: NLD 2005-01-25
+// -----------------------------------------------------------------------------
+bool MIL_DotationSupplyManager::BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const
+{
+    const MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
+    return logisticManager && logisticManager == &logisticBase;
 }
 
 // =============================================================================

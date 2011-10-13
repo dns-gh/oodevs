@@ -271,6 +271,13 @@ message MaintenanceRequestId {
     required uint32 id = 1; //!< The identifier
 }
 
+/** @struct FuneralRequestId
+    @brief Defines a funeral request identifier
+*/
+message FuneralRequestId {
+    required uint32 id = 1; //!< The identifier
+}
+
 /** @struct MedicalRequestId
     @brief Defines a medical request identifier
 */

@@ -51,7 +51,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const SupplySupplier_ABC& GetTransportersProvider() const = 0;
+    virtual SupplySupplier_ABC& GetTransportersProvider() const = 0;
     //@}
 
     //! @name Network

@@ -18,6 +18,10 @@
 class HumansComposante_ABC;
 class MIL_Time_ABC;
 
+namespace logistic {
+    class FuneralConsign_ABC;
+}
+
 //$$$ Clarifier l'interface (trop de trucs différents pour trop de fonctionnalités proches) (Log vs Magic vs attrition)
 
 // =============================================================================
@@ -55,7 +59,7 @@ public:
     void ApplyFlood( const MIL_FloodEffectManipulator& flood );
     void ApplyMentalDisease();
     void ForceMentalDisease();
-    void CancelLogisticRequest();
+    void CancelLogisticRequests();
     void SetState( const PHY_HumanWound& newWound, bool mentalDisease, bool contaminated );
     //@}
 
@@ -71,11 +75,20 @@ public:
     bool IsContaminated() const;
     bool IsMentalDiseased() const;
     bool IsAnEmergency() const;
+    const MIL_Agent_ABC& GetPion() const;
     //@}
 
     //! @name Main
     //@{
+    bool NeedUpdate() const;
     void Update();
+    void Clean();
+    //@}
+
+     //! @name Network
+    //@{
+    virtual void SendFullState( unsigned int context ) const;
+    virtual void SendChangedState() const;
     //@}
 
     //! @name Medical logistic
@@ -90,6 +103,12 @@ public:
     void HealMentalDisease();
     void HealWound();
     void HealContamination();
+    //@}
+
+    //! @name Funeral logistic
+    //@{
+    virtual void NotifyHandledByFuneral();
+    virtual void NotifyBackFromFuneral ();
     //@}
 
     //! @name Composante maintenance
@@ -107,6 +126,7 @@ private:
     //! @name Tools
     //@{
     void NotifyHumanChanged( const Human_ABC& oldHumanState );
+    void CancelMedicalLogisticRequest();
     //@}
 
 private:
@@ -118,6 +138,7 @@ private:
     bool bContamined_;
     E_Location nLocation_;
     PHY_MedicalHumanState* pMedicalState_;
+    boost::shared_ptr< logistic::FuneralConsign_ABC > funeralConsign_;
     unsigned int nDeathTimeStep_;
 };
 

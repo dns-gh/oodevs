@@ -21,6 +21,7 @@ namespace kernel
 class LogSupplyConsign;
 class LogMaintenanceConsign;
 class LogMedicalConsign;
+class LogFuneralConsign;
 
 // =============================================================================
 /** @class  LogisticConsigns_ABC
@@ -97,6 +98,14 @@ class LogSupplyConsigns : public LogisticConsigns_ABC< LogSupplyConsigns, LogSup
 public:
     explicit LogSupplyConsigns( kernel::Controller& controller )
         : LogisticConsigns_ABC< LogSupplyConsigns, LogSupplyConsign >( controller, COLOR_ORANGE )
+    {}
+};
+
+class LogFuneralConsigns : public LogisticConsigns_ABC< LogFuneralConsigns, LogFuneralConsign >
+{
+public:
+    explicit LogFuneralConsigns( kernel::Controller& controller )
+        : LogisticConsigns_ABC< LogFuneralConsigns, LogFuneralConsign >( controller, COLOR_AQUA )
     {}
 };
 

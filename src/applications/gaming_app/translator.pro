@@ -47,9 +47,9 @@ InfoCompositionDialog.cpp \
 InfoDock.cpp \
 InfoDotationsDialog.cpp \
 InfoEventsWidget.cpp \
-InfoLendingsDialog.cpp \
 InfoMaintenanceDialog.cpp \
 InfoMedicalDialog.cpp \
+InfoFuneralDialog.cpp \
 InfoStancesWidget.cpp \
 InfoStatusWidget.cpp \
 InfoSupplyDialog.cpp \

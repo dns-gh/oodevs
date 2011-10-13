@@ -307,6 +307,12 @@ struct Formatter< E_HumanWound >
 };
 
 template< >
+struct Formatter< E_HumanRank >
+{
+    void operator()( const E_HumanRank& e, Displayer_ABC& displayer ) const;
+};
+
+template< >
 struct Formatter< E_LogSupplyHandlingStatus >
 {
     void operator()( const E_LogSupplyHandlingStatus& e, Displayer_ABC& displayer ) const;
@@ -322,6 +328,12 @@ template< >
 struct Formatter< E_LogMaintenanceHandlingStatus >
 {
     void operator()( const E_LogMaintenanceHandlingStatus& e, Displayer_ABC& displayer ) const;
+};
+
+template< >
+struct Formatter< E_LogFuneralHandlingStatus >
+{
+    void operator()( const E_LogFuneralHandlingStatus& e, Displayer_ABC& displayer ) const;
 };
 
 template< >

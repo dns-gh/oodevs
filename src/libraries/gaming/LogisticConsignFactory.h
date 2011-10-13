@@ -41,6 +41,7 @@ public:
     virtual LogMaintenanceConsign* CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message );
     virtual LogSupplyConsign*      CreateSupplyConsign     ( const sword::LogSupplyHandlingCreation& message );
     virtual LogMedicalConsign*     CreateMedicalConsign    ( const sword::LogMedicalHandlingCreation& message );
+    virtual LogFuneralConsign*     CreateFuneralConsign    ( const sword::LogFuneralHandlingCreation& message );
     //@}
 
 private:

@@ -221,7 +221,7 @@ void SupplyConvoy::Finish()
 // Name: SupplyConvoy::Finish
 // Created: NLD 2011-08-01
 // -----------------------------------------------------------------------------
-const SupplySupplier_ABC& SupplyConvoy::GetTransportersProvider() const
+SupplySupplier_ABC& SupplyConvoy::GetTransportersProvider() const
 {
     return transportersProvider_;
 }

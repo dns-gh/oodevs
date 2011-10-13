@@ -63,6 +63,7 @@
 #include "Agents/Roles/Logistic/PHY_MaintenanceResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_MedicalResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_SupplyResourcesAlarms.h"
+#include "Agents/Roles/Logistic/FuneralConfig.h"
 #include "Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
@@ -236,6 +237,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
 MIL_EntityManager::~MIL_EntityManager()
 {
     // Types
+    logistic::FuneralConfig       ::Terminate();
     MIL_PopulationAttitude        ::Terminate();
     MIL_AutomateType              ::Terminate();
     MIL_AgentTypePion             ::Terminate();

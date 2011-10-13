@@ -22,6 +22,7 @@
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
 #include "LogSupplyConsign.h"
+#include "LogFuneralConsign.h"
 #include "LogTools.h"
 #include "MeteoModel.h"
 #include "Model.h"
@@ -479,6 +480,33 @@ void AgentServerMsgMgr::OnReceiveLogMedicalHandlingUpdate( const sword::LogMedic
 void AgentServerMsgMgr::OnReceiveLogMedicalState( const sword::LogMedicalState& message )
 {
     GetModel().agents_.GetAgent( message.unit().id() ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveLogFuneralHandlingCreation
+// Created: AGE 2005-04-01
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveLogFuneralHandlingCreation( const sword::LogFuneralHandlingCreation& message )
+{
+    GetModel().logistics_.CreateFuneralConsign( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveLogFuneralHandlingDestruction
+// Created: AGE 2005-04-01
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveLogFuneralHandlingDestruction( const sword::LogFuneralHandlingDestruction& message )
+{
+    GetModel().logistics_.DeleteFuneralConsign( message.request().id() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveLogFuneralHandlingUpdate
+// Created: AGE 2005-04-01
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveLogFuneralHandlingUpdate( const sword::LogFuneralHandlingUpdate& message )
+{
+    GetModel().logistics_.GetFuneralConsign( message.request().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1908,6 +1936,12 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
         OnReceiveLogSupplyHandlingDestruction( wrapper.message().log_supply_handling_destruction() );
     else if( wrapper.message().has_log_supply_handling_update() )
         OnReceiveLogSupplyHandlingUpdate( wrapper.message().log_supply_handling_update() );
+    else if( wrapper.message().has_log_funeral_handling_creation() )
+        OnReceiveLogFuneralHandlingCreation( wrapper.message().log_funeral_handling_creation() );
+    else if( wrapper.message().has_log_funeral_handling_destruction() )
+        OnReceiveLogFuneralHandlingDestruction( wrapper.message().log_funeral_handling_destruction() );
+    else if( wrapper.message().has_log_funeral_handling_update() )
+        OnReceiveLogFuneralHandlingUpdate( wrapper.message().log_funeral_handling_update() );
     else if( wrapper.message().has_log_supply_state() )
         OnReceiveLogSupplyState( wrapper.message().log_supply_state() );
     else if( wrapper.message().has_log_supply_quotas() )

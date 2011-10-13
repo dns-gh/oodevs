@@ -13,10 +13,12 @@
 #include <boost/enable_shared_from_this.hpp>
 
 class PHY_DotationCategory;
+class MIL_AutomateLOG;
 
 namespace logistic {
     class SupplyRequest_ABC;
     class SupplyRecipient_ABC;
+    class SupplyConvoy_ABC;
 
 // =============================================================================
 /** @class  SupplyConsign_ABC
@@ -41,6 +43,14 @@ public:
     virtual bool Update    () = 0;
     virtual bool IsSupplying( const PHY_DotationCategory& dotationCategory ) const = 0;
     virtual bool IsFinished() const = 0;
+    //@}
+
+    //! @name TMP - A remonter dans une autre interface ?
+    //$$$$ Pour chaine mortuaire
+    //@{
+    virtual bool WillGoTo( const MIL_AutomateLOG& destination ) const = 0;
+    virtual bool IsAt    ( const MIL_AutomateLOG& destination ) const = 0;
+    virtual boost::shared_ptr< SupplyConvoy_ABC > GetConvoy() const = 0;
     //@}
 
     //! @name Network - A refactorer

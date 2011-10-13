@@ -99,6 +99,7 @@ public:
     virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const { return logConsignsMaintenance_; }
     virtual const tools::Resolver_ABC< LogConsignSupply >&      LogConsignsSupply() const { return logConsignsSupply_; }
     virtual const tools::Resolver_ABC< LogConsignMedical >&     LogConsignsMedical() const { return logConsignsMedical_; }
+    virtual const tools::Resolver_ABC< LogConsignFuneral >&     LogConsignsFuneral() const { return logConsignsFuneral_; }
     virtual const tools::Resolver_ABC< Fire >&                  Fires() const { return fires_; }
     virtual const tools::Resolver_ABC< PopulationFire >&        PopulationFires() const { return populationFires_; }
     virtual const tools::Resolver_ABC< FireEffect >&            FireEffects() const { return fireEffects_; }
@@ -172,6 +173,7 @@ private:
     tools::Resolver< LogConsignMaintenance > logConsignsMaintenance_;
     tools::Resolver< LogConsignSupply >      logConsignsSupply_;
     tools::Resolver< LogConsignMedical >     logConsignsMedical_;
+    tools::Resolver< LogConsignFuneral >     logConsignsFuneral_;
     tools::Resolver< Fire >                  fires_;
     tools::Resolver< PopulationFire >        populationFires_;
     tools::Resolver< FireEffect >            fireEffects_;

@@ -70,6 +70,8 @@
 #include "ADN_Sensors_GUI.h"
 #include "ADN_Supply_Data.h"
 #include "ADN_Supply_GUI.h"
+#include "ADN_Funeral_Data.h"
+#include "ADN_Funeral_GUI.h"
 #include "ADN_Symbols_Data.h"
 #include "ADN_Symbols_GUI.h"
 #include "ADN_Units_Data.h"
@@ -156,6 +158,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[eKnowledgeGroups]   = new ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI>( tr( "Knowledge groups" ) );
     elements_[eHealth]            = new ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI>( tr( "Health" ) );
     elements_[eSupply]            = new ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>( tr( "Supply" ) );
+    elements_[eFuneral]           = new ADN_WorkspaceElement< ADN_Funeral_Data, ADN_Funeral_GUI>( tr( "Funeral" ) );
     elements_[ePopulation]        = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Crowds" ) );
     elements_[ePeople]            = new ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >( tr( "Populations" ) );
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >( tr( "Reports" ) );
@@ -217,9 +220,11 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     elements_[eMaintenance]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
     elements_[eSupply]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
     elements_[eHealth]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
+    elements_[eFuneral]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
     pLayout->addWidget( elements_[eMaintenance]->GetGuiABC().GetMainWidget() );
     pLayout->addWidget( elements_[eSupply]->GetGuiABC().GetMainWidget() );
     pLayout->addWidget( elements_[eHealth]->GetGuiABC().GetMainWidget() );
+    pLayout->addWidget( elements_[eFuneral]->GetGuiABC().GetMainWidget() );
     ADN_GuiBuilder builder;
     builder.AddStretcher( pLayout, Qt::Vertical );
     mainWindow.AddPage( tr( "Log" ), *pLogPage );

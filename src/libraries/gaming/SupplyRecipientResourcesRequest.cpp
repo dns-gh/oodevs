@@ -36,7 +36,7 @@ SupplyRecipientResourcesRequest::~SupplyRecipientResourcesRequest()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogSupplyConsign::Update
+// Name: SupplyRecipientResourcesRequest::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
 void SupplyRecipientResourcesRequest::Update( const sword::SupplyRecipientResourcesRequest& msg )

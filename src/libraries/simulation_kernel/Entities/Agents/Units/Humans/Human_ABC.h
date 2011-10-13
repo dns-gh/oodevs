@@ -17,6 +17,7 @@ class MIL_FloodEffectManipulator;
 class PHY_HumanRank;
 class PHY_HumanWound;
 class PHY_MedicalHumanState;
+class MIL_Agent_ABC;
 
 // =============================================================================
 // @class  Human_ABC
@@ -31,7 +32,8 @@ public:
     {
         eBattleField,
         eMaintenance,
-        eMedical
+        eMedical,
+        eFuneral
     };
 
 public:
@@ -53,7 +55,7 @@ public:
     virtual void ApplyFlood( const MIL_FloodEffectManipulator& flood ) = 0;
     virtual void ApplyMentalDisease() = 0;
     virtual void ForceMentalDisease() = 0;
-    virtual void CancelLogisticRequest() = 0;
+    virtual void CancelLogisticRequests() = 0;
     virtual void SetState( const PHY_HumanWound& newWound, bool mentalDisease, bool contaminated ) = 0;
     //@}*/
 
@@ -69,11 +71,20 @@ public:
     virtual bool IsContaminated() const = 0;
     virtual bool IsMentalDiseased() const = 0;
     virtual bool IsAnEmergency() const = 0;
+    virtual const MIL_Agent_ABC& GetPion() const = 0;
     //@}
 
     //! @name Main
     //@{
+    virtual bool NeedUpdate() const = 0;
     virtual void Update() = 0;
+    virtual void Clean() = 0;
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendFullState( unsigned int context ) const = 0;
+    virtual void SendChangedState() const = 0;
     //@}
 
     //! @name Medical logistic
@@ -88,6 +99,12 @@ public:
     virtual void HealMentalDisease() = 0;
     virtual void HealWound() = 0;
     virtual void HealContamination() = 0;
+    //@}
+
+    //! @name Funeral logistic
+    //@{
+    virtual void NotifyHandledByFuneral() = 0;
+    virtual void NotifyBackFromFuneral () = 0;
     //@}
 
     //! @name Composante maintenance

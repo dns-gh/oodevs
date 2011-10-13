@@ -960,6 +960,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Humans</source>
         <translation>Personnel</translation>
     </message>
+    <message>
+        <source>Lent equipment(s)</source>
+        <translation type="unfinished">Equipement(s) prêté(s)</translation>
+    </message>
+    <message>
+        <source>Borrowed equipment(s)</source>
+        <translation type="unfinished">Equipement(s) emprunté(s)</translation>
+    </message>
 </context>
 <context>
     <name>InfoDock</name>
@@ -1008,18 +1016,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>InfoLendingsDialog</name>
+    <name>InfoFuneralDialog</name>
     <message>
-        <source>Lendings</source>
-        <translation>Prêts d&apos;équipements</translation>
+        <source>Funeral system</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Lent equipment(s)</source>
-        <translation>Equipement(s) prêté(s)</translation>
-    </message>
-    <message>
-        <source>Borrowed equipment(s)</source>
-        <translation>Equipement(s) emprunté(s)</translation>
+        <source>Consigns</source>
+        <translation type="unfinished">Consignes</translation>
     </message>
 </context>
 <context>

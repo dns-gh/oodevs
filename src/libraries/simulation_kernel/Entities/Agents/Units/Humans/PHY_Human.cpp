@@ -16,6 +16,8 @@
 #include "PHY_HumanWound.h"
 #include "MIL_Singletons.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
+#include "Entities/Agents/Roles/Logistic/FuneralConsign.h"
+#include "Entities/Agents/Roles/Logistic/FuneralRequest.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "Entities/Objects/MIL_BurnEffectManipulator.h"
@@ -146,17 +148,29 @@ void PHY_Human::NotifyHumanChanged( const Human_ABC& oldHumanState )
         pMedicalState_->NotifyHumanChanged();
 }
 
+
 // -----------------------------------------------------------------------------
-// Name: PHY_Human::CancelLogisticRequest
+// Name: PHY_Human::CancelLogisticRequests
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-void PHY_Human::CancelLogisticRequest()
+void PHY_Human::CancelLogisticRequests()
+{
+    CancelMedicalLogisticRequest();
+    funeralConsign_->Cancel();
+    funeralConsign_.reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::CancelMedicalLogisticRequest
+// Created: NLD 2005-01-10
+// -----------------------------------------------------------------------------
+void PHY_Human::CancelMedicalLogisticRequest()
 {
     assert( pComposante_ );
     if( pMedicalState_ )
     {
         PHY_Human oldHumanState( *this );
-        const_cast< MIL_Agent_ABC& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanBackFromMedical, *pMedicalState_ );
+        const_cast< MIL_Agent_ABC& >( GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanBackFromMedical, *pMedicalState_ );
         if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::maintenance_ )
             nLocation_ = eMaintenance;
         else
@@ -175,7 +189,7 @@ void PHY_Human::CancelLogisticRequest()
 void PHY_Human::Evacuate( MIL_AutomateLOG& destinationTC2 )
 {
     if( NeedEvacuation() )
-        const_cast< MIL_Agent_ABC& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanEvacuatedByThirdParty, *this, destinationTC2 );
+        const_cast< MIL_Agent_ABC& >( GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanEvacuatedByThirdParty, *this, destinationTC2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,7 +198,7 @@ void PHY_Human::Evacuate( MIL_AutomateLOG& destinationTC2 )
 // -----------------------------------------------------------------------------
 void PHY_Human::Heal()
 {
-    CancelLogisticRequest();
+    CancelMedicalLogisticRequest();
     HealMentalDisease();
     HealContamination();
     SetWound( PHY_HumanWound::notWounded_ ); //$$$ NB : don't use HealWound() => 'cause it don't heal deads ...
@@ -349,7 +363,7 @@ bool PHY_Human::SetWound( const PHY_HumanWound& newWound )
     NotifyHumanChanged( oldHumanState );
     // !!!! $$$ Must be called after NotifyHumanChanged() (CancelLogisticRequest() call NotifyHumanChanged() too
     if( !NeedMedical() )
-        CancelLogisticRequest();
+        CancelMedicalLogisticRequest();
     return true;
 }
 
@@ -364,8 +378,8 @@ bool PHY_Human::NotifyBackToWar()
     //$$$ BOF - PB gestion interrogation état composante quand modif état humain (doit être fait par composante, ou par humain ?) (fait par composante tout le temps, sauf dans ce cas ...)
     if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::dead_ )
         return false;
-    CancelLogisticRequest();
-    MIL_Report::PostEvent( pComposante_->GetComposante().GetRole().GetPion(), MIL_Report::eReport_HumanBackFromMedical );
+    CancelMedicalLogisticRequest();
+    MIL_Report::PostEvent( GetPion(), MIL_Report::eReport_HumanBackFromMedical );
     return true;
 }
 
@@ -411,6 +425,32 @@ void PHY_Human::NotifyComposanteBackFromMaintenance()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Human::NotifyComposanteBackFromMaintenance
+// Created: NLD 2005-01-14
+// -----------------------------------------------------------------------------
+void PHY_Human::NotifyHandledByFuneral()
+{
+    PHY_Human oldHumanState( *this );
+    nLocation_ = eFuneral;
+    NotifyHumanChanged( oldHumanState );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::NotifyComposanteBackFromMaintenance
+// Created: NLD 2005-01-14
+// -----------------------------------------------------------------------------
+void PHY_Human::NotifyBackFromFuneral()
+{
+    PHY_Human oldHumanState( *this );
+    assert( pComposante_ );
+    if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::maintenance_ )
+        nLocation_ = eMaintenance;
+    else
+        nLocation_ = eBattleField;
+    NotifyHumanChanged( oldHumanState );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Human::Update
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
@@ -428,14 +468,30 @@ void PHY_Human::Update()
             nReportID = MIL_Report::eReport_WoundedManDeathDuringHospitalization;
         if( SetWound( PHY_HumanWound::killed_ ) )
         {
-            MIL_Report::PostEvent( pComposante_->GetComposante().GetRole().GetPion(), nReportID );
+            MIL_Report::PostEvent( GetPion(), nReportID );
             if( pMedicalState_ )
-                MIL_Report::PostEvent( pComposante_->GetComposante().GetRole().GetPion(), MIL_Report::eReport_WoundedManDeath );
+                MIL_Report::PostEvent( GetPion(), MIL_Report::eReport_WoundedManDeath );
         }
     }
-    // Demande santé
+    // Logistic requests - $$$ A refactorer...
     if( NeedMedical() && !pMedicalState_ )
-        const_cast< MIL_Agent_ABC& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );
+        const_cast< MIL_Agent_ABC& >( GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );
+    
+    // Funeral
+    if( IsDead() && !funeralConsign_ )
+    {
+        boost::shared_ptr< logistic::FuneralRequest_ABC > request( new logistic::FuneralRequest( *this ) );
+        funeralConsign_.reset( new logistic::FuneralConsign( request ) );
+    }
+    else if( funeralConsign_ && !IsDead() )
+    {
+        funeralConsign_->Cancel();
+        funeralConsign_.reset();
+    }
+
+    //$$$ A déplacer dans une action logistique (ou un truc mieux ...)
+    if( funeralConsign_ )
+        funeralConsign_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -534,6 +590,15 @@ bool PHY_Human::IsAnEmergency() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Human::NeedUpdate
+// Created: NLD 2005-01-10
+// -----------------------------------------------------------------------------
+bool PHY_Human::NeedUpdate() const
+{
+    return IsDead() || NeedMedical() || funeralConsign_ || pMedicalState_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Human::NeedMedical
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
@@ -560,6 +625,16 @@ void PHY_Human::SetMedicalState( PHY_MedicalHumanState* pMedicalState )
     pMedicalState_ = pMedicalState;
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::GetPion
+// Created: NLD 2009-10-01
+// -----------------------------------------------------------------------------
+const MIL_Agent_ABC& PHY_Human::GetPion() const
+{
+    return pComposante_->GetComposante().GetRole().GetPion();
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::SetState
 // Created: ABR 2011-08-29
@@ -584,6 +659,42 @@ void PHY_Human::SetState( const PHY_HumanWound& newWound, bool mentalDisease, bo
 
     NotifyHumanChanged( oldHumanState );
     // !!!! $$$ Must be called after NotifyHumanChanged() (CancelLogisticRequest() call NotifyHumanChanged() too
-    if( !NeedMedical() )
-        CancelLogisticRequest();
+    if( !NeedMedical() ) //$$$$ NLD 2011-10-03 - Quelle merde ! à faire dans l'Update
+        CancelMedicalLogisticRequest();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::Clean
+// Created: ABR 2011-08-29
+// -----------------------------------------------------------------------------
+void PHY_Human::Clean()
+{
+    if( funeralConsign_ )
+        funeralConsign_->Clean();
+    if( pMedicalState_ )
+        pMedicalState_->Clean();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::SendFullsState
+// Created: ABR 2011-08-29
+// -----------------------------------------------------------------------------
+void PHY_Human::SendFullState( unsigned int context ) const
+{
+    if( funeralConsign_ )
+        funeralConsign_->SendFullState( context );
+    if( pMedicalState_ )
+        pMedicalState_->SendFullState( context );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::SendChangedState
+// Created: ABR 2011-08-29
+// -----------------------------------------------------------------------------
+void PHY_Human::SendChangedState() const
+{
+    if( funeralConsign_ )
+        funeralConsign_->SendChangedState();
+    if( pMedicalState_ )
+        pMedicalState_->SendChangedState();
 }

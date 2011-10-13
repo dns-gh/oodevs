@@ -960,6 +960,14 @@ Motivo: %3
         <source>Humans</source>
         <translation>Humanos</translation>
     </message>
+    <message>
+        <source>Lent equipment(s)</source>
+        <translation type="unfinished">Equipo(s) cedido(s) en préstamo(s)</translation>
+    </message>
+    <message>
+        <source>Borrowed equipment(s)</source>
+        <translation type="unfinished">Equipo(s) prestados(s)</translation>
+    </message>
 </context>
 <context>
     <name>InfoDock</name>
@@ -1008,18 +1016,14 @@ Motivo: %3
     </message>
 </context>
 <context>
-    <name>InfoLendingsDialog</name>
+    <name>InfoFuneralDialog</name>
     <message>
-        <source>Lendings</source>
-        <translation>Préstamos</translation>
+        <source>Funeral system</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Lent equipment(s)</source>
-        <translation>Equipo(s) cedido(s) en préstamo(s)</translation>
-    </message>
-    <message>
-        <source>Borrowed equipment(s)</source>
-        <translation>Equipo(s) prestados(s)</translation>
+        <source>Consigns</source>
+        <translation type="unfinished">Consignas</translation>
     </message>
 </context>
 <context>
@@ -2918,15 +2922,19 @@ Motivo: %3
     <name>SupplyConsignsWidget</name>
     <message>
         <source>Supplier:</source>
-        <translation>Proveedor:</translation>
+        <translation type="unfinished">Proveedor:</translation>
     </message>
     <message>
         <source>Convoyer:</source>
-        <translation>Convoyer:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>State:</source>
-        <translation>Estado:</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current state end :</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Recipients</source>
@@ -2938,10 +2946,6 @@ Motivo: %3
     </message>
     <message>
         <source>Resources requested/granted/convoyed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current state end :</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

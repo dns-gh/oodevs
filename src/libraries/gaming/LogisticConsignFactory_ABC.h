@@ -15,11 +15,13 @@ namespace sword
     class LogMaintenanceHandlingCreation;
     class LogSupplyHandlingCreation;
     class LogMedicalHandlingCreation;
+    class LogFuneralHandlingCreation;
 }
 
 class LogMaintenanceConsign;
 class LogSupplyConsign;
 class LogMedicalConsign;
+class LogFuneralConsign;
 
 // =============================================================================
 /** @class  LogisticConsignFactory_ABC
@@ -41,6 +43,7 @@ public:
     virtual LogMaintenanceConsign* CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message ) = 0;
     virtual LogSupplyConsign*      CreateSupplyConsign     ( const sword::LogSupplyHandlingCreation& message ) = 0;
     virtual LogMedicalConsign*     CreateMedicalConsign    ( const sword::LogMedicalHandlingCreation& message ) = 0;
+    virtual LogFuneralConsign*     CreateFuneralConsign    ( const sword::LogFuneralHandlingCreation& message ) = 0;
     //@}
 };
 

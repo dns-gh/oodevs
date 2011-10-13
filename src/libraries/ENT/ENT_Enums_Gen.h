@@ -198,6 +198,18 @@ enum E_WeatherType
     eNbrWeatherType
 };
 
+enum E_LogFuneralHandlingStatus
+{
+    eLogFuneralHandlingStatus_WaitingForHandling,
+    eLogFuneralHandlingStatus_TransportingUnpackaged,
+    eLogFuneralHandlingStatus_WaitingForPackaging,
+    eLogFuneralHandlingStatus_Packaging,
+    eLogFuneralHandlingStatus_WaitingForTransporter,
+    eLogFuneralHandlingStatus_TransportingPackaged,
+    eLogFuneralHandlingStatus_Finished,
+    eNbrLogFuneralHandlingStatus
+};
+
 enum E_LogMaintenanceHandlingStatus
 {
     eLogMaintenanceHandlingStatus_DeplacementVersChaine,

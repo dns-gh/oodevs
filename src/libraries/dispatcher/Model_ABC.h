@@ -35,6 +35,7 @@ namespace dispatcher
     class LogConsignMaintenance;
     class LogConsignMedical;
     class LogConsignSupply;
+    class LogConsignFuneral;
     class Object_ABC;
     class Object_ABC;
     class ObjectKnowledge_ABC;
@@ -93,6 +94,7 @@ public:
     virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const = 0;
     virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const = 0;
     virtual const tools::Resolver_ABC< LogConsignSupply >&      LogConsignsSupply() const = 0;
+    virtual const tools::Resolver_ABC< LogConsignFuneral >&     LogConsignsFuneral() const = 0;
     virtual const tools::Resolver_ABC< LogConsignMedical >&     LogConsignsMedical() const = 0;
     virtual const tools::Resolver_ABC< Fire >&                  Fires() const = 0;
     virtual const tools::Resolver_ABC< PopulationFire >&        PopulationFires() const = 0;

@@ -12,6 +12,7 @@
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
 #include "LogSupplyConsign.h"
+#include "LogFuneralConsign.h"
 #include "LogisticConsignFactory_ABC.h"
 #include "protocol/Protocol.h"
 
@@ -45,6 +46,7 @@ void LogisticsModel::Purge()
     tools::Resolver< LogMaintenanceConsign >::DeleteAll();
     tools::Resolver< LogMedicalConsign >::DeleteAll();
     tools::Resolver< LogSupplyConsign >::DeleteAll();
+    tools::Resolver< LogFuneralConsign >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -137,4 +139,31 @@ LogSupplyConsign& LogisticsModel::GetSupplyConsign( unsigned long id )
 void LogisticsModel::DeleteSupplyConsign( unsigned long id )
 {
     Delete< LogSupplyConsign >( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsModel::CreateFuneralConsign
+// Created: AGE 2006-02-10
+// -----------------------------------------------------------------------------
+void LogisticsModel::CreateFuneralConsign( const sword::LogFuneralHandlingCreation& message )
+{
+    tools::Resolver< LogFuneralConsign >::Register(  message.request().id(), *factory_.CreateFuneralConsign( message ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsModel::GetFuneralConsign
+// Created: AGE 2006-02-10
+// -----------------------------------------------------------------------------
+LogFuneralConsign& LogisticsModel::GetFuneralConsign( unsigned long id )
+{
+    return tools::Resolver< LogFuneralConsign >::Get( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsModel::DeleteFuneralConsign
+// Created: AGE 2006-02-10
+// -----------------------------------------------------------------------------
+void LogisticsModel::DeleteFuneralConsign( unsigned long id )
+{
+    Delete< LogFuneralConsign >( id );
 }

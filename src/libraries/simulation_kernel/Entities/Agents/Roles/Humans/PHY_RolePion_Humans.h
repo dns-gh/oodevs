@@ -143,9 +143,6 @@ private:
 
     typedef std::set< Human_ABC* >                    T_HumanSet;
     typedef T_HumanSet::const_iterator              CIT_HumanSet;
-
-    typedef std::set< PHY_MedicalHumanState* >        T_MedicalHumanStateSet;
-    typedef T_MedicalHumanStateSet::const_iterator  CIT_MedicalHumanStateSet;
     //@}
 
 private:
@@ -157,7 +154,6 @@ private:
     bool                hasChanged_;
     unsigned int        nNbrUsableHumans_;
     // Medical
-    T_MedicalHumanStateSet medicalHumanStates_;
     unsigned int           nTickRcMedicalQuerySent_;
     E_EvacuationMode       nEvacuationMode_;
     //@}

@@ -149,6 +149,11 @@ void  Formatter< E_HumanWound >::operator()( const E_HumanWound& e, Displayer_AB
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
+void  Formatter< E_HumanRank >::operator()( const E_HumanRank& e, Displayer_ABC& displayer ) const
+{
+    displayer.AddToDisplay( tools::ToString( e ) );
+}
+
 void  Formatter< E_LogSupplyHandlingStatus >::operator()( const E_LogSupplyHandlingStatus& e, Displayer_ABC& displayer ) const
 {
     displayer.AddToDisplay( tools::ToString( e ) );
@@ -160,6 +165,11 @@ void  Formatter< E_LogMedicalHandlingStatus >::operator()( const E_LogMedicalHan
 }
 
 void  Formatter< E_LogMaintenanceHandlingStatus >::operator()( const E_LogMaintenanceHandlingStatus& e, Displayer_ABC& displayer ) const
+{
+    displayer.AddToDisplay( tools::ToString( e ) );
+}
+
+void  Formatter< E_LogFuneralHandlingStatus >::operator()( const E_LogFuneralHandlingStatus& e, Displayer_ABC& displayer ) const
 {
     displayer.AddToDisplay( tools::ToString( e ) );
 }

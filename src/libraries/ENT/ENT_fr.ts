@@ -767,5 +767,29 @@
         <source>Prisoner</source>
         <translation>Prisonnier</translation>
     </message>
+    <message>
+        <source>waiting for handling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transporting unpackaged</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waiting for packaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>packaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waiting for transporter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transporting packaged</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

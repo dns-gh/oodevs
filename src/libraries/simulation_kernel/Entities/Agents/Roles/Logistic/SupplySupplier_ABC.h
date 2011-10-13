@@ -15,6 +15,7 @@ class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
 class MIL_AgentPion;
 class MIL_AgentTypePion;
+class MIL_AutomateLOG;
 
 namespace sword {
     class ParentEntity;
@@ -41,8 +42,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual const MT_Vector2D&   GetPosition() const = 0;
-    virtual const MIL_AgentPion* GetPC      () const = 0; //$$$ Bullshit
+    virtual const MT_Vector2D&   GetPosition          () const = 0;
+    virtual const MIL_AgentPion* GetPC                () const = 0; //$$$ Bullshit
+    virtual       bool           BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const = 0;
 
     virtual bool   SupplyHasStock                     ( const PHY_DotationCategory& dotationCategory ) const = 0;
     virtual double SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double quantity ) const = 0;
@@ -53,6 +55,12 @@ public:
     
     virtual MIL_AgentPion* SupplyCreateConvoyPion     ( const MIL_AgentTypePion& type, boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy ) = 0;
     virtual void           SupplyDestroyConvoyPion    ( MIL_AgentPion& convoyPion ) = 0;
+    //@}
+
+    //! @name Events
+    //@{
+    virtual void OnSupplyConvoyArriving( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
     //@}
 
     //! @name Network

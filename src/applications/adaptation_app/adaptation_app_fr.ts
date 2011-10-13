@@ -5989,6 +5989,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>UnitSymbols</source>
         <translation>Symboles de pion</translation>
     </message>
+    <message>
+        <source>Funeral</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActiveProtections_Data</name>

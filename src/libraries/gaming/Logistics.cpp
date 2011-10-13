@@ -82,3 +82,4 @@ void Logistics::DoUpdate( const sword::LogSupplyState& message )
         ext->DoUpdate( message );
     }
 }
+

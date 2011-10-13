@@ -15,6 +15,10 @@
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
+#include "Entities/Agents/Roles/Logistic/FuneralConfig.h"
+#include "Entities/Agents/Roles/Logistic/FuneralPackagingResource.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include <boost/foreach.hpp>
 
 class MIL_AutomateLOG;
 
@@ -484,9 +488,45 @@ class PCVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
         const MIL_AgentPion*  pSelected_;
 };
 
+// =============================================================================
+// FUNERAL
+// =============================================================================
+
+class FuneralPackagingResourceVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+{
+    public:
+        FuneralPackagingResourceVisitor( const logistic::FuneralPackagingResource* currentPackagingResource )
+            : pSelected_                    ( 0 )
+            , packagingResourcesToSearchFor_()
+            , nextPackagingResource_        ( 0 )
+        {
+            logistic::FuneralConfig::GetOrderedPackagingResources( packagingResourcesToSearchFor_, currentPackagingResource );
+        }
+
+        void Visit( const MIL_AgentPion& pion )
+        {
+            if( nextPackagingResource_ )
+                return;
+            BOOST_FOREACH( const logistic::FuneralPackagingResource* packagingResource, packagingResourcesToSearchFor_ )
+            {
+                if( pion.GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationNumber( packagingResource->GetDotationCategory() ) > 1 )
+                {
+                    pSelected_ = const_cast< MIL_AgentPion* >( &pion );
+                    nextPackagingResource_ = packagingResource;
+                    break;
+                }
+            }
+        }
+
+    public:
+        MIL_AgentPion* pSelected_;
+        const logistic::FuneralPackagingResource* nextPackagingResource_;
+        std::vector< const logistic::FuneralPackagingResource* > packagingResourcesToSearchFor_;
+};
+
 
 //$$$$$ TODO pour remplacer le bExternalTransfert
-
+/*
 template< typename T >
 class LogisticVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 {
@@ -522,9 +562,9 @@ public:
 private:
     int score_;
 };
+*/
 
-
-class TestLogisticVisitor : public LogisticVisitor< PHY_RoleInterface_Maintenance >
+/*class TestLogisticVisitor : public LogisticVisitor< PHY_RoleInterface_Maintenance >
 {
 public:
     TestLogisticVisitor( const PHY_ComposantePion& composante )
@@ -540,7 +580,7 @@ private:
 
 private:
     const PHY_ComposantePion& composante_;
-};
+};*/
 
 
 #endif // __MIL_LogisticVisitor_h_

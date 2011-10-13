@@ -254,6 +254,18 @@ ENT_Tr::T_ConverterLogMedicalHandlingStatus ENT_Tr::LogMedicalHandlingStatusConv
     T_ConverterLogMedicalHandlingStatus( "", "", (E_LogMedicalHandlingStatus)-1 )
 };
 
+ENT_Tr::T_ConverterLogFuneralHandlingStatus ENT_Tr::LogFuneralHandlingStatusConverter_[] =
+{
+    T_ConverterLogFuneralHandlingStatus( "waiting for handling", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for handling" ), eLogFuneralHandlingStatus_WaitingForHandling ),
+    T_ConverterLogFuneralHandlingStatus( "transporting unpackaged", QT_TRANSLATE_NOOP( "ENT_Tr", "transporting unpackaged" ), eLogFuneralHandlingStatus_TransportingUnpackaged ),
+    T_ConverterLogFuneralHandlingStatus( "waiting for packaging", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for packaging" ), eLogFuneralHandlingStatus_WaitingForPackaging ),
+    T_ConverterLogFuneralHandlingStatus( "packaging", QT_TRANSLATE_NOOP( "ENT_Tr", "packaging" ), eLogFuneralHandlingStatus_Packaging ),
+    T_ConverterLogFuneralHandlingStatus( "waiting for transporter", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for transporter" ), eLogFuneralHandlingStatus_WaitingForTransporter ),
+    T_ConverterLogFuneralHandlingStatus( "transporting packaged", QT_TRANSLATE_NOOP( "ENT_Tr", "transporting packaged" ), eLogFuneralHandlingStatus_TransportingPackaged ),
+    T_ConverterLogFuneralHandlingStatus( "finished", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogFuneralHandlingStatus_Finished ),
+    T_ConverterLogFuneralHandlingStatus( "", "", (E_LogFuneralHandlingStatus)-1 )
+};
+
 ENT_Tr::T_ConverterDemolitionTargetType ENT_Tr::DemolitionTargetTypeConverter_[] =
 {
     T_ConverterDemolitionTargetType( "preliminary", QT_TRANSLATE_NOOP( "ENT_Tr", "preliminary" ), eDemolitionTargetType_Preliminary ),
@@ -404,6 +416,7 @@ void ENT_Tr::InitTranslations()
     InitTr( LogMaintenanceHandlingStatusConverter_, "ENT_Tr" );
     InitTr( LogSupplyHandlingStatusConverter_, "ENT_Tr" );
     InitTr( LogMedicalHandlingStatusConverter_, "ENT_Tr" );
+    InitTr( LogFuneralHandlingStatusConverter_, "ENT_Tr" );
     InitTr( DemolitionTargetTypeConverter_, "ENT_Tr" );
     InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
     InitTr( LocationConverter_, "ENT_Tr" );
@@ -604,6 +617,15 @@ const std::string& ENT_Tr::ConvertFromLogSupplyHandlingStatus( E_LogSupplyHandli
 const std::string& ENT_Tr::ConvertFromLogMedicalHandlingStatus( E_LogMedicalHandlingStatus nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( LogMedicalHandlingStatusConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromLogFuneralHandlingStatus
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromLogFuneralHandlingStatus( E_LogFuneralHandlingStatus nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( LogFuneralHandlingStatusConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -883,6 +905,15 @@ E_LogSupplyHandlingStatus ENT_Tr::ConvertToLogSupplyHandlingStatus( const std::s
 E_LogMedicalHandlingStatus ENT_Tr::ConvertToLogMedicalHandlingStatus( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( LogMedicalHandlingStatusConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToLogFuneralHandlingStatus
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_LogFuneralHandlingStatus ENT_Tr::ConvertToLogFuneralHandlingStatus( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( LogFuneralHandlingStatusConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

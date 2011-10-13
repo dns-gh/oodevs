@@ -96,6 +96,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "knowledge-groups", szKnowledgeGroups_);
     ReadFile( input, "maintenance", szMaintenance_);
     ReadFile( input, "supply", szSupply_);
+    ReadFile( input, "funeral", szFuneral_ );
     ReadFile( input, "communications", szCom_);
     ReadFile( input, "populations", szPopulation_);
     ReadFile( input, "inhabitants", szPeople_);
@@ -147,6 +148,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "knowledge-groups", szKnowledgeGroups_ );
     WriteFile( output, "maintenance", szMaintenance_ );
     WriteFile( output, "supply", szSupply_ );
+    WriteFile( output, "funeral", szFuneral_ );
     WriteFile( output, "communications", szCom_ );
     WriteFile( output, "pathfinder", szPathfinder_ );
     WriteFile( output, "populations", szPopulation_ );

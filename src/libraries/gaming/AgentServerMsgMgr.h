@@ -114,6 +114,9 @@ namespace sword
     class LogMedicalHandlingDestruction;
     class LogMedicalHandlingUpdate;
     class LogMedicalState;
+    class LogFuneralHandlingCreation;
+    class LogFuneralHandlingDestruction;
+    class LogFuneralHandlingUpdate;
     class LogSupplyChangeQuotasAck;
     class LogSupplyHandlingCreation;
     class LogSupplyHandlingDestruction;
@@ -351,6 +354,11 @@ private:
     void OnReceiveMsgLogRavitaillementChangeQuotaAck ( const sword::LogSupplyChangeQuotasAck&       message, unsigned long nCtx );
     void OnReceiveLogSupplyPushFlowAck               ( const sword::LogSupplyPushFlowAck&           message, unsigned long nCtx );
     void OnReceiveLogSupplyPullFlowAck               ( const sword::LogSupplyPullFlowAck&           message, unsigned long nCtx);
+
+    // Log funeral
+    void OnReceiveLogFuneralHandlingCreation          ( const sword::LogFuneralHandlingCreation&      message );
+    void OnReceiveLogFuneralHandlingDestruction       ( const sword::LogFuneralHandlingDestruction&   message );
+    void OnReceiveLogFuneralHandlingUpdate            ( const sword::LogFuneralHandlingUpdate&        message );
 
     // Limas / Limits
     void OnReceiveLimitCreationRequestAck    ( const sword::LimitCreationRequestAck&    message);
