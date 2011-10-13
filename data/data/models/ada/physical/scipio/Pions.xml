@@ -4401,7 +4401,7 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="10000" logistic-threshold="1" name="ROQ EXPL 298 M26" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="1" name="ROQ GMLRS" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -7550,8 +7550,12 @@
         <resource capacity="88" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="0"/>
         <resource capacity="32" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
-        <resource capacity="20" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F1 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F2 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F4 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F5 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="ACED 155 CAESAR" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -7591,8 +7595,12 @@
         <resource capacity="88" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="0"/>
         <resource capacity="32" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
-        <resource capacity="20" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F1 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F2 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F4 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F5 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="ACED 155 CAESAR" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -11709,6 +11717,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="9" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="96" logistic-threshold="10" name="ROQ GMLRS" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -11770,6 +11783,20 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="4" logistic-threshold="30" name="O 155 F1 AC EF DR" normalized-consumption="0"/>
+        <resource capacity="88" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="0"/>
+        <resource capacity="32" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
+        <resource capacity="8" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
+        <resource capacity="8" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F1 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F2 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F4 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="OE F5 155 CAESAR" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="ACED 155 CAESAR" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -19045,4 +19072,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3498580570" -->
+<!-- signature="0859429596" -->
