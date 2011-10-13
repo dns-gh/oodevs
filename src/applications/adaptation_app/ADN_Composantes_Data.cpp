@@ -2071,6 +2071,13 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
         bMaxSlope_ = true;
         rMaxSlope_ =  rMaxSlope_.GetData() * 100.0;
     }
+
+    input >> xml::optional >> xml::start( "operational-information" )
+            >> xml::optional >> xml::attribute( "native-country", strNativeCountry_ )
+            >> xml::optional >> xml::attribute( "starting-country", strStartingCountry_ )
+            >> xml::optional >> xml::attribute( "starting-date", strStartingDate_ )
+            >> xml::optional >> xml::attribute( "information-origin", strInformationOrigin_ )
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -2203,6 +2210,20 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
 
     if( !equipmentCategory_.GetData().empty() )
         output << xml::content( "equipment-category", equipmentCategory_ );
+
+    if( !( strNativeCountry_.GetData().empty() && strStartingCountry_.GetData().empty() && strStartingDate_.GetData().empty() && strInformationOrigin_.GetData().empty() ) )
+    {
+        output << xml::start( "operational-information" );
+        if( !strNativeCountry_.GetData().empty() )
+            output << xml::attribute( "native-country", strNativeCountry_ );
+        if( !strStartingCountry_.GetData().empty() )
+            output << xml::attribute( "starting-country", strStartingCountry_ );
+        if( !strStartingDate_.GetData().empty() )
+            output << xml::attribute( "starting-date", strStartingDate_ );
+        if( !strInformationOrigin_.GetData().empty() )
+            output << xml::attribute( "information-origin", strInformationOrigin_ );
+        output << xml::end;
+    }
 
     output << xml::end;
 }

@@ -1202,6 +1202,26 @@ estacionado con motor encendido</translation>
         <source>Crowd transport</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Operational Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Native country:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting country:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting date:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Information origin:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>

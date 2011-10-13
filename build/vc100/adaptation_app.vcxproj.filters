@@ -1279,6 +1279,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClass.cpp">
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DateEdit.cpp">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -2344,6 +2347,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Template_Usages.h">
       <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_DateEdit.h">
+      <Filter>Source Files\Common widgets</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
