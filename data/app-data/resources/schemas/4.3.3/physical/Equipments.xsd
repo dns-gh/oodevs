@@ -43,6 +43,14 @@
 					<xs:attribute name="engineering" type="xs:nonNegativeInteger" use="required"/>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="operational-information" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="native-country" type="xs:string"/>
+					<xs:attribute name="starting-country" type="xs:string"/>
+					<xs:attribute name="starting-date" type="xs:date"/>
+					<xs:attribute name="information-origin" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
 		</xs:all>
 		<xs:attribute name="comment" type="xs:string" use="required"/>
 		<xs:attribute name="name" type="xs:string" use="required"/>

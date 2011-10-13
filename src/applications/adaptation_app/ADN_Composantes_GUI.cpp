@@ -29,13 +29,13 @@
 #include "ADN_Composantes_BreakdownsTable.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_ComboBox_Equipment_Nature.h"
+#include "ADN_DateEdit.h"
 #include "ADN_GroupBox.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Tr.h"
 #include "ADN_MainWindow.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_TimeField.h"
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_GUI constructor
@@ -137,6 +137,14 @@ void ADN_Composantes_GUI::Build()
     builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code EMAT6:" ), vInfosConnectors[eEMAT6Code] );
     builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code EMAT8:" ), vInfosConnectors[eEMAT8Code] );
     builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code LFRIL:" ), vInfosConnectors[eLFRILCode] );
+
+    // Operational information groupbox
+    Q3GroupBox* pInfoGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Operational Information" ), pDataPage );
+
+    builder.AddField< ADN_EditLine_String >( pInfoGroupBox, tr( "Native country:" )    , vInfosConnectors[eNativeCountry] );
+    builder.AddField< ADN_EditLine_String >( pInfoGroupBox, tr( "Starting country:" )  , vInfosConnectors[eStartingCountry] );
+    builder.AddField< ADN_DateEdit >       ( pInfoGroupBox, tr( "Starting date:" )     , vInfosConnectors[eStartingDate] );
+    builder.AddField< ADN_EditLine_String >( pInfoGroupBox, tr( "Information origin:" ), vInfosConnectors[eInformationOrigin] );
 
     // Breakdowns
     pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ), pDataPage );
@@ -260,23 +268,24 @@ void ADN_Composantes_GUI::Build()
     pMainLayout->addWidget( pComposanteList_, 1 );
     pMainLayout->addWidget( pGroup, 6 );
 
-    Q3GridLayout* pDataPageLayout = new Q3GridLayout( pDataPage, 6, 4, 5 );
+    Q3GridLayout* pDataPageLayout = new Q3GridLayout( pDataPage, 7, 4, 5 );
     pDataPageLayout->setAlignment( Qt::AlignTop );
 
     pDataPageLayout->addMultiCellWidget( pParamHolder      , 0, 0, 0, 0 );
     pDataPageLayout->addMultiCellWidget( pIdGroupBox       , 1, 1, 0, 0 );
-    pDataPageLayout->addMultiCellWidget( pSpeedGroup       , 2, 4, 0, 0 );
+    pDataPageLayout->addMultiCellWidget( pInfoGroupBox     , 2, 2, 0, 0 );
+    pDataPageLayout->addMultiCellWidget( pSpeedGroup       , 3, 5, 0, 0 );
 
-    pDataPageLayout->addMultiCellWidget( pTroopGroupBox          , 0, 2, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pSensorsGroup           , 2, 2, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pRadarsGroup            , 3, 3, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pWeaponsGroup           , 4, 4, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pActiveProtectionsGroup , 5, 5, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pConsumptionsGroup      , 5, 5, 0, 0 );
+    pDataPageLayout->addMultiCellWidget( pTroopGroupBox          , 0, 3, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pSensorsGroup           , 3, 3, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pRadarsGroup            , 4, 4, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pWeaponsGroup           , 5, 5, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pActiveProtectionsGroup , 6, 6, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pConsumptionsGroup      , 6, 6, 0, 0 );
 
-    pDataPageLayout->addMultiCellWidget( pBreakdownsGroup_ , 0, 1, 2, 2 );
-    pDataPageLayout->addMultiCellWidget( pDotationGroup    , 2, 3, 2, 2 );
-    pDataPageLayout->addMultiCellWidget( pObjectsGroup     , 4, 5, 2, 2 );
+    pDataPageLayout->addMultiCellWidget( pBreakdownsGroup_ , 0, 2, 2, 2 );
+    pDataPageLayout->addMultiCellWidget( pDotationGroup    , 3, 4, 2, 2 );
+    pDataPageLayout->addMultiCellWidget( pObjectsGroup     , 5, 6, 2, 2 );
 }
 
 

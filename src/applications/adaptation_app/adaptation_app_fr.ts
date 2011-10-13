@@ -1204,6 +1204,26 @@ Arrêt moteur allumé</translation>
         <source>Crowd transport</source>
         <translation>Transport de foules</translation>
     </message>
+    <message>
+        <source>Operational Information</source>
+        <translation>Données opérationnelles</translation>
+    </message>
+    <message>
+        <source>Native country:</source>
+        <translation>Pays d&apos;origine</translation>
+    </message>
+    <message>
+        <source>Starting country:</source>
+        <translation>Pays de mise en service</translation>
+    </message>
+    <message>
+        <source>Starting date:</source>
+        <translation>Date de mise en service</translation>
+    </message>
+    <message>
+        <source>Information origin:</source>
+        <translation>Origine des données</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>
