@@ -17,9 +17,10 @@
 // Name: ObjectPrototype constructor
 // Created: JCR 2008-05-23
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( const std::string& type, unsigned int id, double pointSize )
-    : type_ ( type )
-    , id_ ( id )
+ObjectPrototype::ObjectPrototype( const std::string& name, const std::string& type, unsigned int id, double pointSize )
+    : name_     ( name )
+    , type_     ( type )
+    , id_       ( id )
     , pointSize_( pointSize )
 {
     // NOTHING
@@ -41,6 +42,15 @@ ObjectPrototype::~ObjectPrototype()
 const std::string& ObjectPrototype::GetName() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype::GetRealName
+// Created: LGY 2011-10-14
+// -----------------------------------------------------------------------------
+const std::string& ObjectPrototype::GetRealName() const
+{
+    return name_;
 }
 
 // -----------------------------------------------------------------------------

@@ -32,6 +32,7 @@ public:
     //@{
     virtual unsigned int GetID() const = 0;
     virtual const std::string& GetName() const = 0;
+    virtual const std::string& GetRealName() const = 0;
     virtual double GetPointSize() const = 0;
     template< typename Capacity >
     const Capacity* GetCapacity() const;

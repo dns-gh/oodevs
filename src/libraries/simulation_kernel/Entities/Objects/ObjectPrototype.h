@@ -27,7 +27,7 @@ class ObjectPrototype : public MIL_ObjectType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( const std::string& type, unsigned int id, double pointSize );
+             ObjectPrototype( const std::string& name, const std::string& type, unsigned int id, double pointSize );
     virtual ~ObjectPrototype();
     //@}
 
@@ -41,9 +41,10 @@ public:
     //! @name Accessors
     //@{
     const MIL_ObjectType_ABC& GetType() const;
-    unsigned int GetID() const;
-    const std::string& GetName() const;
-    double GetPointSize() const;
+    virtual unsigned int GetID() const;
+    virtual const std::string& GetName() const;
+    virtual const std::string& GetRealName() const;
+    virtual double GetPointSize() const;
     //@}
 
 private:
@@ -56,6 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const std::string name_;
     const std::string type_;
     unsigned int id_;
     double pointSize_;

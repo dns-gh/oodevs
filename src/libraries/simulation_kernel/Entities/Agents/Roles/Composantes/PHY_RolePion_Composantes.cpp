@@ -808,7 +808,6 @@ void PHY_RolePion_Composantes::ApplyExplosion( const AttritionCapacity& capacity
     PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
     MIL_Random::random_shuffle( composantes, MIL_Random::eWounds );
     PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
-    MIL_Report::PostEvent( pion_, MIL_Report::eReport_ExplosionSurBouchonMine );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;

@@ -17,8 +17,11 @@
 #include "Entities\Agents\Roles\Composantes\PHY_RoleInterface_Composantes.h"
 #include "Entities\Populations\MIL_PopulationElement_ABC.h"
 #include "Entities\MIL_Army.h"
+#include "Entities\Orders\MIL_Report.h"
+#include "Entities\Objects\MIL_ObjectType_ABC.h"
 #include "ObstacleAttribute.h"
 #include "BypassAttribute.h"
+#include "MIL_ObjectLoader.h"
 #include "ConstructionAttribute.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -149,10 +152,13 @@ void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Ag
         return;
     PHY_ObjectExplosionFireResult fireResult( object );
     agent.GetRole< PHY_RoleInterface_Composantes >().ApplyExplosion( *this, fireResult );
-
     unsigned int hits = fireResult.GetHits();
     if( hits > 0 )
+    {
+        const std::string name = MIL_ObjectLoader::GetLoader().GetType(  object.GetType().GetName() ).GetRealName();
+        MIL_Report::PostEvent( agent, MIL_Report::eReport_ExplosionSurBouchonMine, name );
         construction->Build( - static_cast< double >( hits ) / construction->GetMaxDotation() );
+    }
 }
 
 // -----------------------------------------------------------------------------

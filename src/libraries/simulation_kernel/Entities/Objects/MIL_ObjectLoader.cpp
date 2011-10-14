@@ -98,12 +98,13 @@ void MIL_ObjectLoader::Initialize( xml::xistream& xis )
 void MIL_ObjectLoader::ReadObjectPrototype( xml::xistream& xis )
 {
     const std::string type( xis.attribute< std::string >( "type" ) );
+    const std::string name( xis.attribute< std::string >( "name", "" ) );
     boost::shared_ptr< ObjectPrototype >& prototype = prototypes_[ type ];
     if( prototype.get() )
         throw std::runtime_error( __FUNCTION__ " - Object type redefinition: " + type );
     double pointSize = 250.;
     xis >> xml::optional >> xml::attribute( "point-size", pointSize );
-    prototype.reset( new ObjectPrototype( type, static_cast< unsigned int >( prototypes_.size() ), pointSize ) );
+    prototype.reset( new ObjectPrototype( name, type, static_cast< unsigned int >( prototypes_.size() ), pointSize ) );
     xis >> xml::list( *this, &MIL_ObjectLoader::ReadCapacity, *prototype );
     factory_->FinalizeCreate( *prototype );
 }
