@@ -37,7 +37,7 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const sword::ObjectKno
     , typename_                      ( "objectKnowledge" )
     , attributes_                    ( model )
 {
-    optionals_.realObjectPresent = entityId_ != 0;
+    optionals_.realObjectPresent = ( entityId_ != 0 );
     optionals_.relevancePresent = 0;
     optionals_.locationPresent = 0;
     optionals_.perceivedPresent = 0;
@@ -95,7 +95,7 @@ void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
     if( message.has_object() )
     {
         entityId_ = message.object().id();
-        optionals_.realObjectPresent = ( entityId_ != 0 );
+        optionals_.realObjectPresent = 1;
     }
 
     attributes_.Update( message.attributes() );
@@ -112,7 +112,8 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_party()->set_id( owner_.GetId() );
     if( knowledgeGroup_ )
         asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
-    asn().mutable_object()->set_id( entityId_ );
+    if( optionals_.realObjectPresent )
+        asn().mutable_object()->set_id( entityId_ );
     asn().mutable_type()->set_id( nType_ );  // $$$$ _RC_ PHC 2010-07-07: ???
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation
     asn.Send( publisher );
