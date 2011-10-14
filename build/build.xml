@@ -1486,6 +1486,7 @@
             <include name="exercises/exercisesVA/Poseidon VA Automates/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Acteurs Civils/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Soutien/**"/>
+            <include name="exercises/exercisesVA/Poseidon VA Mix/**"/>
             <include name="data/terrains/PortoV3Lite/**"/>
         </pack>
     </target>
