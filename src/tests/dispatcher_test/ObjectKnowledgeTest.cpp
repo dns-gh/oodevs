@@ -119,7 +119,6 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
     {
         sword::ObjectKnowledgeUpdate& message = *expected.mutable_message()->mutable_object_knowledge_update();
         message.mutable_knowledge()->set_id( 1 );
-        message.mutable_object()->set_id( 0 );
         message.mutable_attributes();
         message.set_relevance( 99 );
         message.mutable_location()->set_type( sword::Location::point );
