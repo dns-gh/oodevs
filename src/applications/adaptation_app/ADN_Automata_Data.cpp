@@ -172,6 +172,12 @@ void ADN_Automata_Data::AutomatonInfos::ReadUnit( xml::xistream& input )
     input >> xml::optional >> xml::attribute( "command-post", cp );
     if( cp )
         ptrUnit_ = spNew->ptrUnit_.GetData();
+    else if( spNew->ptrUnit_.GetData()->eNatureLevel_.GetData() >= ptrUnit_.GetData()->eNatureLevel_.GetData() )
+    {
+        std::stringstream str;
+        str << ptrUnit_.GetData()->strName_ << " <= " << spNew->ptrUnit_.GetData()->strName_ << " ( level )" ;
+        MT_LOG_ERROR_MSG( str.str() );
+    }
     vSubUnits_.AddItem( spNew.release() );
 }
 
