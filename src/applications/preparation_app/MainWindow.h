@@ -40,6 +40,8 @@ namespace gui
     class Painter_ABC;
     class TerrainPicker;
     class LayerFilter_ABC;
+    class AutomatsLayer;
+    class FormationLayer;
 }
 
 class AgentsLayer;
@@ -119,7 +121,7 @@ private:
     void CreateLayers( const CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locations,
                        gui::Layer_ABC& weather, AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
                        gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker,
-                       LivingAreaEditor& livingAreaEditor );
+                       LivingAreaEditor& livingAreaEditor, gui::AutomatsLayer& automats, gui::FormationLayer& formation );
     void closeEvent( QCloseEvent* pEvent );
     void WriteOptions();
     void ReadOptions();

@@ -2476,20 +2476,12 @@ Motivo: %3
 <context>
     <name>OrbatToolbar</name>
     <message>
-        <source>Aggregate all automats</source>
-        <translation>Agrupar todos los autómatas</translation>
-    </message>
-    <message>
         <source>Remove filter</source>
         <translation>Eliminar filtro</translation>
     </message>
     <message>
         <source>Filter view</source>
         <translation>Filtrar vista</translation>
-    </message>
-    <message>
-        <source>Disaggregate all</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -17,8 +17,6 @@
 namespace kernel
 {
     class Controllers;
-    class Automat_ABC;
-    class Formation_ABC;
     class Entity_ABC;
 }
 
@@ -26,6 +24,7 @@ namespace gui
 {
     class AutomatsLayer;
     class FormationLayer;
+    class AggregateToolbar;
 }
 
 class Simulation;
@@ -39,8 +38,6 @@ class ProfileFilter;
 // =============================================================================
 class OrbatToolbar : public Q3HBox
                    , public tools::Observer_ABC
-                   , public tools::ElementObserver_ABC< kernel::Automat_ABC >
-                   , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                    , public tools::ElementObserver_ABC< Simulation >
                    , public tools::ElementObserver_ABC< ProfileFilter >
@@ -60,9 +57,6 @@ private slots:
     //@{
     void OnSetFilter();
     void OnClearFilter();
-    void Aggregate();
-    void DisaggregateAll();
-    void Aggregate( int id );
     //@}
 
 private:
@@ -76,25 +70,10 @@ private:
     //@{
     virtual QSize minimumSizeHint() const;
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
-    virtual void NotifyCreated( const kernel::Automat_ABC& );
-    virtual void NotifyDeleted( const kernel::Automat_ABC& );
-    virtual void NotifyCreated( const kernel::Formation_ABC& );
-    virtual void NotifyDeleted( const kernel::Formation_ABC& );
     virtual void NotifyUpdated( const Simulation& simu );
     virtual void NotifyUpdated( const ProfileFilter& filter );
 
     void Filter( const kernel::Entity_ABC& entity );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< const kernel::Automat_ABC* > T_Automats;
-    typedef T_Automats::iterator                     IT_Automats;
-    typedef T_Automats::const_iterator              CIT_Automats;
-
-    typedef std::vector< const kernel::Formation_ABC* > T_Formations;
-    typedef T_Formations::iterator                     IT_Formations;
-    typedef T_Formations::const_iterator              CIT_Formations;
     //@}
 
 private:
@@ -103,12 +82,8 @@ private:
     kernel::Controllers& controllers_;
     ProfileFilter& filter_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
-    gui::AutomatsLayer& automatsLayer_;
-    gui::FormationLayer& formationsLayer_;
-    T_Automats automats_;
-    T_Formations formations_;
+    gui::AggregateToolbar* pAggregateToolbar_;
     QToolButton* filterBtn_;
-    Q3PopupMenu* menu_;
     //@}
 };
 

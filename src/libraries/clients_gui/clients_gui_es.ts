@@ -2,6 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>AggregateToolbar</name>
+    <message>
+        <source>Aggregate all automats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disaggregate all</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
@@ -744,33 +755,6 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Mesure Ct</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::IntelligencesPanel</name>
-    <message>
-        <source>Intelligence description</source>
-        <translation>Description du renseignement</translation>
-    </message>
-    <message>
-        <source>Superior:</source>
-        <translation>Supérieur:</translation>
-    </message>
-    <message>
-        <source>Level: </source>
-        <translation>Niveau: </translation>
-    </message>
-    <message>
-        <source>Karma: </source>
-        <translation>Karma: </translation>
-    </message>
-    <message>
-        <source>Mounted combat: </source>
-        <translation>Combat embarqué: </translation>
-    </message>
-    <message>
-        <source>Drag and drop symbol to map to create a new intelligence unit.</source>
-        <translation>Glissez/déposez le symbole sur la carte pour créer un nouveau renseignement.</translation>
     </message>
 </context>
 <context>
