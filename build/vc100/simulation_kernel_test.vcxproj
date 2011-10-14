@@ -119,6 +119,7 @@
     <PostBuildEvent />
     <ClCompile>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
@@ -141,6 +142,7 @@
     <PostBuildEvent />
     <ClCompile>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
@@ -151,6 +153,7 @@
     <PostBuildEvent />
     <ClCompile>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
