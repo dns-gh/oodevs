@@ -96,7 +96,6 @@ private:
     //@{
     const Model_ABC& model_;
     const kernel::Team_ABC& owner_;
-    const kernel::Object_ABC* pObject_;
     unsigned long entityId_;
     const std::string nType_;
     const kernel::KnowledgeGroup_ABC* knowledgeGroup_;
