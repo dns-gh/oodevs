@@ -16,7 +16,6 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Population_ABC.h"
@@ -133,15 +132,6 @@ void BaseDisplayer::Call( const EquipmentType& value )
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const Object_ABC& value )
-{
-    AddToDisplay( InternalLinks::CreateLink( value, value.GetName() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: BaseDisplayer::Call
-// Created: SBO 2007-10-29
-// -----------------------------------------------------------------------------
-void BaseDisplayer::Call( const Intelligence_ABC& value )
 {
     AddToDisplay( InternalLinks::CreateLink( value, value.GetName() ) );
 }

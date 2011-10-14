@@ -41,7 +41,6 @@ namespace indicators
     class Primitives;
 }
 
-class IntelligenceKarmas;
 class SuccessFactorActionTypes;
 class TeamKarmas;
 
@@ -84,7 +83,6 @@ public:
     kernel::AccommodationTypes&      accommodationTypes_;
     kernel::ExtensionTypes&          extensions_;
     TeamKarmas&                      teamKarmas_;
-    IntelligenceKarmas&              intelligenceKarmas_;
     gui::DrawingTypes&               drawings_;
     indicators::Primitives&          indicators_;
     indicators::GaugeTypes&          gaugeTypes_;

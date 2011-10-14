@@ -54,12 +54,10 @@ public:
     virtual void SelectColor( const kernel::Knowledge_ABC& knowledge );
     virtual void SelectColor( const kernel::TacticalLine_ABC& line );
     virtual void SelectColor( const kernel::Team_ABC& team );
-    virtual void SelectColor( const kernel::Intelligence_ABC& intelligence );
     virtual void SelectColor( const Drawing_ABC& drawing );
     virtual void SelectColor( const TerrainObjectProxy& proxy );
     virtual QColor FindColor( const kernel::Entity_ABC& entity );
     virtual QColor FindBaseColor( const kernel::Entity_ABC& entity );
-    virtual QColor FindColor( const kernel::Intelligence_ABC& intelligence );
     virtual QColor FindColor( const kernel::Knowledge_ABC& knowledge );
     //@}
 

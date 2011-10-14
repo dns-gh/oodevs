@@ -26,8 +26,6 @@ Formation.cpp \
 HumanFactors.cpp \
 InfrastructureAttribute.cpp \
 Inhabitant.cpp \
-Intelligence.cpp \
-IntelligenceFactory.cpp \
 KnowledgeGroup.cpp \
 Lima.cpp \
 Limit.cpp \

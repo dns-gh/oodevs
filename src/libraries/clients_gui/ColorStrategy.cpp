@@ -19,7 +19,6 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/Object_ABC.h"
@@ -173,15 +172,6 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy::FindColor
-// Created: SBO 2007-10-17
-// -----------------------------------------------------------------------------
-QColor ColorStrategy::FindColor( const Intelligence_ABC& intelligence )
-{
-    return GetKarmaColor( intelligence.GetKarma() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::FindColor
 // Created: SBO 2007-02-26
 // -----------------------------------------------------------------------------
 QColor ColorStrategy::FindColor( const Knowledge_ABC& knowledge )
@@ -261,14 +251,6 @@ void ColorStrategy::SelectColor( const kernel::Team_ABC& )
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::SelectColor
-// Created: SBO 2007-10-12
-// -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const Intelligence_ABC& intelligence )
-{
-    ApplyColor( ApplyModifiers( intelligence, GetKarmaColor( intelligence.GetKarma() ) ) );
-}
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor

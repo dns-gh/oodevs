@@ -10,7 +10,6 @@
 #include "messenger_plugin_pch.h"
 #include "Model.h"
 #include "IdManager.h"
-#include "IntelligencesModel.h"
 #include "TacticalLinesModel.h"
 #include "DrawingsModel.h"
 #include "NotesModel.h"
@@ -40,7 +39,6 @@ Model::Model( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC&
     , idManager_    ( new IdManager() )
     , converter_    ( new kernel::CoordinateConverter( config ) )
     , tacticalLines_( *new TacticalLinesModel( clients, *idManager_, *converter_ ) )
-    , intelligences_( *new IntelligencesModel( clients, *idManager_, *converter_ ) )
     , drawings_     ( *new DrawingsModel( config, clients, *idManager_, *converter_ ) )
     , notes_        ( *new NotesModel( config, clients, *idManager_ , config_.BuildSessionChildFile( "notes.csv" ) ) )
     , clientObjects_( *new ClientObjectsModel( clients, *idManager_ ) )
@@ -58,7 +56,6 @@ Model::~Model()
 {
     delete &notes_;
     delete &drawings_;
-    delete &intelligences_;
     delete &tacticalLines_;
     delete &clientObjects_;
 }
@@ -70,7 +67,6 @@ Model::~Model()
 void Model::SendStateToNewClient( dispatcher::ClientPublisher_ABC& client )
 {
     tacticalLines_.SendStateToNewClient( client );
-    intelligences_.SendStateToNewClient( client );
     drawings_     .SendStateToNewClient( client );
     notes_        .SendStateToNewClient( client );
     clientObjects_.SendStateToNewClient( client );
@@ -101,7 +97,6 @@ void Model::Save( const std::string& name ) const
 
         tacticalLines_.CollectAutomats( automats );
         tacticalLines_.CollectFormations( formations );
-        intelligences_.CollectFormations( formations );
 
         xos << xml::start( "messenger" );
         for( TacticalLinesModel::T_FormationMap::iterator it = formations.begin(); it != formations.end(); ++it )
@@ -195,7 +190,6 @@ void Model::ReadFormation( xml::xistream& xis )
     diffusion.mutable_formation()->set_id( id ) ;
     xis >> xml::list( "lima"        , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion )
         >> xml::list( "limit"       , tacticalLines_, &TacticalLinesModel::ReadLimit, diffusion )
-        >> xml::list( "intelligence", intelligences_, &IntelligencesModel::ReadIntelligence, formation )
         >> xml::list( "automat"     , *this, &Model::ReadAutomat )
         >> xml::list( "formation"   , *this, &Model::ReadFormation );
 }

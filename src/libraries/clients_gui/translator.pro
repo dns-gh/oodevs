@@ -37,7 +37,6 @@ HighlightColorModifier.cpp \
 InhabitantListView.cpp \
 InhabitantPanel.cpp \
 InputPropagationPrototype_ABC.cpp \
-IntelligencesPanel.cpp \
 LayersPanel.cpp \
 LightingPanel.cpp \
 LocationCreator.cpp \

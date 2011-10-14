@@ -587,10 +587,6 @@
         <translation>Charger un fichier de définition d&apos;exercice (exercise.xml)</translation>
     </message>
     <message>
-        <source>Intelligence</source>
-        <translation>Renseignement</translation>
-    </message>
-    <message>
         <source>
 Do you want to save anyway?</source>
         <translation>
@@ -619,10 +615,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Crowds</source>
         <translation>Foules</translation>
-    </message>
-    <message>
-        <source>Intelligences</source>
-        <translation>Renseignements</translation>
     </message>
     <message>
         <source>Formations</source>

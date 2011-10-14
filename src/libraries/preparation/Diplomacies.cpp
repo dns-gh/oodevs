@@ -16,7 +16,6 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/IntelligenceHierarchies.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -151,7 +150,6 @@ void Diplomacies::SetKarma( const TeamKarma& karma )
     // $$$$ SBO 2008-12-10: use notifications somehow
     Team_ABC& that = const_cast< Team_ABC& >( team_ );
     that.Get< TacticalHierarchies >().UpdateSymbol( false );
-    that.Get< IntelligenceHierarchies >().UpdateSymbol( false );
     controller_.Update( *static_cast< const Diplomacies_ABC* >( this ) );
     controller_.Update( team_ );
 }

@@ -1758,9 +1758,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireResults_Default.cpp">
       <Filter>Source Files\Entities\Actions\Fire</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntelligenceOrder.cpp">
-      <Filter>Source Files\Entities\Orders</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_OrderContext.cpp">
       <Filter>Source Files\Entities\Orders</Filter>
     </ClCompile>
@@ -2350,9 +2347,6 @@
       <Filter>Source Files\Decision\Functions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_GeometryFunctions.cpp">
-      <Filter>Source Files\Decision\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_IntelligenceFunctions.cpp">
       <Filter>Source Files\Decision\Functions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeAgentFunctions.cpp">
@@ -4097,12 +4091,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireResults_Default.h">
       <Filter>Source Files\Entities\Actions\Fire</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntelligenceOrder.h">
-      <Filter>Source Files\Entities\Orders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntelligenceOrdersVisitor_ABC.h">
-      <Filter>Source Files\Entities\Orders</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_Report.h">
       <Filter>Source Files\Entities\Orders</Filter>
     </ClInclude>
@@ -4737,9 +4725,6 @@
       <Filter>Source Files\Decision\Functions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_GeometryFunctions.h">
-      <Filter>Source Files\Decision\Functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_IntelligenceFunctions.h">
       <Filter>Source Files\Decision\Functions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeAgentFunctions.h">

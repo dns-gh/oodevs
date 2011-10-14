@@ -13,7 +13,6 @@
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
@@ -29,7 +28,6 @@ ProfileFilter::ProfileFilter( Controllers& controllers, const Profile_ABC& forwa
      , entity_      ( controllers )
      , tHierarchies_( 0 )
      , cHierarchies_( 0 )
-     , iHierarchies_( 0 )
 {
     // NOTHING
 }
@@ -131,7 +129,6 @@ void ProfileFilter::SetFilter( const Entity_ABC& entity )
     entity_ = & entity;
     tHierarchies_ = entity.Retrieve< TacticalHierarchies >();
     cHierarchies_ = entity.Retrieve< CommunicationHierarchies >();
-    iHierarchies_ = entity.Retrieve< IntelligenceHierarchies >();
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
     controller_.Update( *this );
 }
@@ -145,7 +142,6 @@ void ProfileFilter::RemoveFilter()
     entity_ = 0;
     tHierarchies_ = 0;
     cHierarchies_ = 0;
-    iHierarchies_ = 0;
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
     controller_.Update( *this );
 }
@@ -169,14 +165,12 @@ bool ProfileFilter::IsInHierarchy( const Entity_ABC& entity ) const
         return true;
     const TacticalHierarchies* t = entity.Retrieve< TacticalHierarchies >();
     const CommunicationHierarchies* c = entity.Retrieve< CommunicationHierarchies >();
-    const IntelligenceHierarchies* i = entity.Retrieve< IntelligenceHierarchies >();
     if( ( t && t->IsSubordinateOf( *entity_ ) && !( c && c->IsJammed() ) )
-     || ( c && c->IsSubordinateOf( *entity_ ) )
-     || ( i && i->IsSubordinateOf( *entity_ ) ) )
+     || ( c && c->IsSubordinateOf( *entity_ ) ) )
         return true;
     if( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) )
          return true;
-    return IsKnown( t, c, i, entity );
+    return IsKnown( t, c, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,17 +194,14 @@ bool ProfileFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
 // Name: ProfileFilter::IsKnown
 // Created: LDC 2010-03-25
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsKnown( const TacticalHierarchies* t, const CommunicationHierarchies* c, const IntelligenceHierarchies* i, const Entity_ABC& entity ) const
+bool ProfileFilter::IsKnown( const TacticalHierarchies* t, const CommunicationHierarchies* c, const Entity_ABC& entity ) const
 {
-    if( ( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
-     || ( iHierarchies_ && iHierarchies_->IsSubordinateOf( entity ) ) )
+    if( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
         return true;
     if( !t && tHierarchies_ )
-        return ( c && IsChildSubordinateOf( *c, *tHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *tHierarchies_ ) );
+        return ( c && IsChildSubordinateOf( *c, *tHierarchies_ ) );
     if( !c && cHierarchies_ )
-        return ( t && IsChildSubordinateOf( *t, *cHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *cHierarchies_ ) );
-    if( !i && iHierarchies_ )
-        return ( t && IsChildSubordinateOf( *t, *iHierarchies_ ) ) || ( c && IsChildSubordinateOf( *c, *iHierarchies_ ) );
+        return ( t && IsChildSubordinateOf( *t, *cHierarchies_ ) );
     return false;
 }
 

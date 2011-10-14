@@ -66,7 +66,6 @@ class MIL_Config;
 class MIL_Entity_ABC;
 class MIL_Formation;
 class MIL_IDManager;
-class MIL_Intelligence;
 class MIL_KnowledgeGroup;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
@@ -224,11 +223,6 @@ private:
     void ProcessTransferEquipmentRequest    ( const sword::UnitMagicAction&      message, MIL_AgentPion& pion );
     //@}
 
-    //! @name types
-    //@{
-    typedef std::map< unsigned int, MIL_Intelligence* > T_IntelligenceMap;
-    typedef T_IntelligenceMap::const_iterator         CIT_IntelligenceMap;
-    //@}
 
 private:
     //! @name Init
@@ -280,7 +274,6 @@ private:
 
     std::auto_ptr< MIL_IDManager > idManager_;
     std::auto_ptr< MIL_ObjectManager > pObjectManager_;
-    T_IntelligenceMap intelligences_;
 
     // Factories
     std::auto_ptr< PopulationFactory_ABC >     populationFactory_;

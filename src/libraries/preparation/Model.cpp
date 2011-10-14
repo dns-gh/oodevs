@@ -30,7 +30,6 @@
 #include "ScoreFactory.h"
 #include "SuccessFactorsModel.h"
 #include "SuccessFactorFactory.h"
-#include "IntelligencesModel.h"
 #include "UrbanModel.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Controllers.h"
@@ -88,7 +87,6 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const to
     , profiles_             ( *new ProfilesModel( controllers, profileFactory_ ) )
     , scores_               ( *new ScoresModel( scoreFactory_, teams_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , successFactors_       ( *new SuccessFactorsModel( successFactorFactory_ ) )
-    , intelligences_        ( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_, symbolsFactory_ ) )
     , urban_                ( *new UrbanModel( controllers, staticModel, objects_ ) )
     , drawings_             ( *new gui::DrawerModel( controllers, drawingFactory_, *this ) )
     , symbolsFactory_       ( *new SymbolFactory() )
@@ -103,7 +101,6 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const to
 Model::~Model()
 {
     delete &profiles_;
-    delete &intelligences_;
     delete &successFactors_;
     delete &successFactorFactory_;
     delete &scores_;
@@ -225,7 +222,6 @@ void Model::Purge()
     UpdateName( "orbat" );
     profiles_.Purge();
     urban_.Purge();
-    intelligences_.Purge();
     successFactors_.Purge();
     scores_.Purge();
     weather_.Purge();

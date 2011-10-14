@@ -33,7 +33,6 @@ namespace messenger
 {
     class IdManager;
     class TacticalLinesModel;
-    class IntelligencesModel;
     class DrawingsModel;
     class NotesModel;
     class ClientObjectsModel;
@@ -89,7 +88,6 @@ public:
     //@{
     const dispatcher::Config& config_;
     TacticalLinesModel& tacticalLines_;
-    IntelligencesModel& intelligences_;
     DrawingsModel& drawings_;
     NotesModel& notes_;
     ClientObjectsModel& clientObjects_;

@@ -56,9 +56,6 @@
     <Filter Include="Source Files\Model\Entities">
       <UniqueIdentifier>{9a7bcdd0-d4f8-4f9a-8016-ea5e13216eef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Model\Entities\Intelligence">
-      <UniqueIdentifier>{21e588ff-cb89-4d29-8ee2-cd56671ffb5d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model\Entities\Population">
       <UniqueIdentifier>{4948de49-3c0c-459a-a964-acfe665f4a3d}</UniqueIdentifier>
     </Filter>
@@ -417,12 +414,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.cpp">
       <Filter>Source Files\Model\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Intelligence_ABC.cpp">
-      <Filter>Source Files\Model\Entities\Intelligence</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\IntelligencePrototype.cpp">
-      <Filter>Source Files\Model\Entities\Intelligence</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Population_ABC.cpp">
       <Filter>Source Files\Model\Entities\Population</Filter>
@@ -894,9 +885,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Infrastructure_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligenceHierarchies.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\LivingArea_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
@@ -998,15 +986,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.h">
       <Filter>Source Files\Model\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Intelligence_ABC.h">
-      <Filter>Source Files\Model\Entities\Intelligence</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligenceFactory_ABC.h">
-      <Filter>Source Files\Model\Entities\Intelligence</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligencePrototype.h">
-      <Filter>Source Files\Model\Entities\Intelligence</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Population_ABC.h">
       <Filter>Source Files\Model\Entities\Population</Filter>

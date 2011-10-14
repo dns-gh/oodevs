@@ -21,7 +21,6 @@
 #include "FilterDialog.h"
 #include "FilterDialogs.h"
 #include "FilterOrbatReIndexer.h"
-#include "IntelligencesLayer.h"
 #include "LimitsLayer.h"
 #include "LogisticListView.h"
 #include "Menu.h"
@@ -64,7 +63,6 @@
 #include "clients_gui/GridLayer.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/HighlightColorModifier.h"
-#include "clients_gui/IntelligenceList.h"
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/LogisticList.h"
@@ -106,7 +104,6 @@
 #include "frontend/commands.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/FormationModel.h"
-#include "preparation/IntelligencesModel.h"
 #include "preparation/Model.h"
 #include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
@@ -241,7 +238,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         new EntitySearchBox< Inhabitant_ABC >( listsTabBox, controllers );
         new ::InhabitantListView( listsTabBox, controllers, *factory, *modelBuilder_ );
         pListsTabWidget->addTab( listsTabBox, tr( "Populations" ) );
-        pListsTabWidget->addTab( new IntelligenceList( controllers, *factory, *icons, PreparationProfile::GetProfile() ), tr( "Intelligences" ) );
     }
     pListDockWnd_->setWindowTitle( tr( "ORBAT" ) );
     pListDockWnd_->setWidget( pListsTabWidget );
@@ -361,7 +357,6 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     Layer_ABC& urbanLayer               = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
     Layer_ABC& grid                     = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics                  = *new MetricsLayer( staticModel_.detection_, *glProxy_ );
-    Layer_ABC& intelligences            = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligences_, *simpleFilter_ );
     Layer_ABC& limits                   = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile, *simpleFilter_ );
     Layer_ABC& objectsLayer             = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker, *urbanFilter_ );
     Layer_ABC& populations              = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
@@ -384,7 +379,6 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main" );
     glProxy_->Register( indicatorCreationLayer );
     glProxy_->Register( livingAreaEditorLayer );                                                                    livingAreaEditorLayer.SetPasses( "main" );
-    glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );    intelligences       .SetPasses( "main" );
     glProxy_->Register( inhabitantLayer );          preferences.AddLayer( tr( "Populations" ), inhabitantLayer );   inhabitantLayer     .SetPasses( "main" );
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main" );
     glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowd" ), populations );             populations         .SetPasses( "main" );
@@ -408,7 +402,6 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     forward_->Register( formation );
     forward_->Register( populations );
     forward_->Register( objectsLayer );
-    forward_->Register( intelligences );
     forward_->Register( weather );
     forward_->Register( inhabitantLayer );
     forward_->Register( limits );

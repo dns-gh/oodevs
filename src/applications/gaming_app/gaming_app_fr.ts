@@ -1728,10 +1728,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Intelligences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation type="unfinished">Propriétés</translation>
     </message>
@@ -1773,10 +1769,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Watershed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Intelligence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

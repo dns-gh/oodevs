@@ -23,7 +23,6 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Population_ABC.h"
@@ -326,11 +325,10 @@ bool Profile::IsInHierarchy( const Entity_ABC& entityToTest, const T_Entities& e
         return true;
     const TacticalHierarchies* tactical = entityToTest.Retrieve< TacticalHierarchies >();
     const CommunicationHierarchies* communication = entityToTest.Retrieve< CommunicationHierarchies >();
-    const IntelligenceHierarchies* intelligence = entityToTest.Retrieve< IntelligenceHierarchies >();
-    if( !tactical && !communication && !intelligence )
+    if( !tactical && !communication )
         return true;
     if( ( IsInSpecificHierarchy( entityToTest, tactical, entities, childOnly ) && !( communication && communication->IsJammed() ) ) ||
-        IsInSpecificHierarchy( entityToTest, intelligence, entities, childOnly ) )
+        IsInSpecificHierarchy( entityToTest, 0, entities, childOnly ) )
         return true;
     if( childOnly )
         return IsInSpecificHierarchy( entityToTest, communication, entities, childOnly );

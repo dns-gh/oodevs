@@ -30,7 +30,6 @@
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 
-class MIL_Intelligence;
 
 namespace
 {
@@ -179,41 +178,6 @@ void load_construct_data( Archive& archive, MIL_Formation* formation, const unsi
     std::string name;
     archive >> name;
     ::new( formation )MIL_Formation( name );
-}
-
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, std::map< unsigned int, MIL_Intelligence* >& map, const unsigned int version )
-        {
-            split_free( file, map, version );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const std::map< unsigned int, MIL_Intelligence* >& map, const unsigned int )
-        {
-            unsigned int size = map.size();
-            file << size;
-            for( std::map< unsigned int, MIL_Intelligence* >::const_iterator it = map.begin(); it != map.end(); ++it )
-                file << it->first << it->second;
-        }
-
-        template< typename Archive >
-        void load( Archive& file, std::map< unsigned int, MIL_Intelligence* >& map, const unsigned int )
-        {
-            unsigned int count;
-            file >> count;
-            while( count-- )
-            {
-                unsigned int element;
-                file >> element;
-                file >> map[ element ];
-            }
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------

@@ -44,7 +44,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Karma( const kernel::OrderParameter& parameter, const kernel::Karma& karma, const kernel::Entity_ABC& parent );
+             Karma( const kernel::OrderParameter& parameter, const kernel::Karma& karma );
              Karma( const kernel::OrderParameter& parameter, const sword::EnumDiplomacy& message );
              Karma( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~Karma();

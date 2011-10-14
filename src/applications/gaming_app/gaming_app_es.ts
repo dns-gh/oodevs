@@ -1728,10 +1728,6 @@ Motivo: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Intelligences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation type="unfinished">Propiedades</translation>
     </message>
@@ -1773,10 +1769,6 @@ Motivo: %3
     </message>
     <message>
         <source>Watershed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Intelligence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

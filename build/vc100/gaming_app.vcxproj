@@ -290,7 +290,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\AutomatsLayer.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\FogLayer.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\FormationLayer.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\IntelligencesLayer.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LimitsLayer.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ObjectKnowledgesLayer.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ObjectsLayer.cpp" />
@@ -1827,7 +1826,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\AutomatsLayer.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\FogLayer.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\FormationLayer.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\IntelligencesLayer.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\KnowledgeLayer.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\LimitsLayer.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">

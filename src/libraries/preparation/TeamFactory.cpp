@@ -21,7 +21,6 @@
 #include "Objects.h"
 #include "Color.h"
 #include "Populations.h"
-#include "EntityIntelligences.h"
 #include "ProfileHierarchies.h"
 #include "ProfileHierarchies_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -65,7 +64,6 @@ Team_ABC* TeamFactory::CreateTeam()
     result->Attach< Diplomacies_ABC >( *new Diplomacies( controllers_.controller_, model_.GetTeamResolver(), *result, dico, staticModel_.teamKarmas_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
-    result->Attach< IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::Color_ABC >( *new Color() );
     result->Attach( *new Populations() );
     result->Attach( *new Inhabitants() );
@@ -87,7 +85,6 @@ Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
     result->Attach< Diplomacies_ABC >( *new Diplomacies( xis, controllers_.controller_, model_.GetTeamResolver(), *result, dico, staticModel_.teamKarmas_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
-    result->Attach< IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
     result->Attach( *new Populations() );
     result->Attach( *new Inhabitants() );

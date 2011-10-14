@@ -27,7 +27,6 @@ namespace kernel
     DECLARE_SUBTYPE( LogisticBaseSuperior, const Entity_ABC* );
 
     DECLARE_SUBTYPE( TeamKarma, const Karma* );
-    DECLARE_SUBTYPE( IntelligenceKarma, const Karma* );
 
     DECLARE_SUBTYPE( EntityLogisticLevel, const LogisticLevel* );
 }

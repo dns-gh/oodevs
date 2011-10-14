@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "StaticModel.h"
-#include "IntelligenceKarmas.h"
 #include "SuccessFactorActionTypes.h"
 #include "TeamKarmas.h"
 #include "LogisticLevel.h"
@@ -49,7 +48,6 @@ StaticModel::StaticModel( Controllers& controllers )
     , accommodationTypes_      ( *new AccommodationTypes() )
     , extensions_              ( *new ExtensionTypes() )
     , teamKarmas_              ( *new TeamKarmas() )
-    , intelligenceKarmas_      ( *new IntelligenceKarmas() )
     , drawings_                ( *new gui::DrawingTypes( controllers.controller_ ) )
     , indicators_              ( *new indicators::Primitives() )
     , gaugeTypes_              ( *new indicators::GaugeTypes() )
@@ -69,7 +67,6 @@ StaticModel::~StaticModel()
     delete &gaugeTypes_;
     delete &indicators_;
     delete &drawings_;
-    delete &intelligenceKarmas_;
     delete &teamKarmas_;
     delete &extensions_;
     delete &levels_;

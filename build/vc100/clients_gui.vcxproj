@@ -119,8 +119,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantList.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantListView.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\IntelligenceList.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\IntelligenceListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectList.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PopulationList.cpp" />
@@ -180,7 +178,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\FormationLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\GridLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantLayer.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\IntelligencesLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LogoLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\MetricsLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectsLayer.cpp" />
@@ -261,8 +258,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitPreviewIcon.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitsPanel.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\IntelligencesPanel.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\NatureSelectionWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawerShape.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Drawing_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SvgLocationDrawer.cpp" />
@@ -600,25 +595,6 @@
       </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
-    </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\IntelligenceList.h" />
-    <CustomBuild Include="..\..\src\libraries\clients_gui\IntelligenceListView.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\ObjectList.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\ObjectListView.h">
@@ -1015,7 +991,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\GridLayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\InhabitantLayer.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\IntelligencesLayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LogoLayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\MetricsLayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ObjectsLayer.h" />
@@ -1499,42 +1474,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\UnitsPanel.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\IntelligencesPanel.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\NatureSelectionWidget.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp

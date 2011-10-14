@@ -62,12 +62,6 @@
     <Filter Include="Source Files\Model\Templates">
       <UniqueIdentifier>{b38ad855-b40e-458b-aaec-29c993e1f9ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Model\Intelligence">
-      <UniqueIdentifier>{5b4bef07-1cd3-4de0-8aed-526f5541d726}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Model\Intelligence\Extensions">
-      <UniqueIdentifier>{027d8898-5b4a-4864-a43e-44b08b2cce62}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model\Scores">
       <UniqueIdentifier>{f46e5c0b-d37b-4467-8fbb-ca119ef9b43b}</UniqueIdentifier>
     </Filter>
@@ -134,9 +128,6 @@
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\EntityCommunications.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\EntityIntelligences.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\IdManager.cpp">
@@ -333,18 +324,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\HierarchyTemplate.cpp">
       <Filter>Source Files\Model\Templates</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\Intelligence.cpp">
-      <Filter>Source Files\Model\Intelligence</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\IntelligenceKarmas.cpp">
-      <Filter>Source Files\Model\Intelligence</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\IntelligencesModel.cpp">
-      <Filter>Source Files\Model\Intelligence</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\IntelligencePositions.cpp">
-      <Filter>Source Files\Model\Intelligence\Extensions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\Score.cpp">
       <Filter>Source Files\Model\Scores</Filter>
@@ -547,9 +526,6 @@
       <Filter>Source Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\EntityCommunications.h">
-      <Filter>Source Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\EntityIntelligences.h">
       <Filter>Source Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\EnumTypes.h">
@@ -770,18 +746,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\TemplateElement_ABC.h">
       <Filter>Source Files\Model\Templates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\Intelligence.h">
-      <Filter>Source Files\Model\Intelligence</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\IntelligenceKarmas.h">
-      <Filter>Source Files\Model\Intelligence</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\IntelligencesModel.h">
-      <Filter>Source Files\Model\Intelligence</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\IntelligencePositions.h">
-      <Filter>Source Files\Model\Intelligence\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\Score.h">
       <Filter>Source Files\Model\Scores</Filter>

@@ -520,9 +520,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\FormationLayer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\IntelligencesLayer.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\LimitsLayer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
@@ -949,9 +946,6 @@
       <Filter>Source Files\Layers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\FormationLayer.h">
-      <Filter>Source Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\IntelligencesLayer.h">
       <Filter>Source Files\Layers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\KnowledgeLayer.h">

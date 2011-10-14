@@ -15,7 +15,6 @@
 #include "DrawingsModel.h"
 #include "FiresModel.h"
 #include "FolkModel.h"
-#include "IntelligencesModel.h"
 #include "KnowledgeGroupsModel.h"
 #include "LimitsModel.h"
 #include "LogisticsModel.h"
@@ -1456,60 +1455,6 @@ void AgentServerMsgMgr::OnReceiveFolkGraphUpdate( const sword::FolkGraphUpdate& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveIntelligenceCreation
-// Created: SBO 2007-10-18
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveIntelligenceCreation( const sword::IntelligenceCreation& message )
-{
-    GetModel().intelligences_.Create( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveIntelligenceUpdate
-// Created: SBO 2007-10-23
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveIntelligenceUpdate( const sword::IntelligenceUpdate& message )
-{
-    GetModel().intelligences_.Get( message.id().id() ).Update( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveIntelligenceDestruction
-// Created: SBO 2007-10-18
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveIntelligenceDestruction( const sword::IntelligenceDestruction& message )
-{
-    GetModel().intelligences_.Delete( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveIntelligenceCreationRequestAck
-// Created: SBO 2007-10-19
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveIntelligenceCreationRequestAck( const sword::IntelligenceCreationRequestAck& message )
-{
-    CheckAcknowledge( logger_, message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveIntelligenceUpdateRequestAck
-// Created: SBO 2007-10-23
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveIntelligenceUpdateRequestAck( const sword::IntelligenceUpdateRequestAck& message )
-{
-    CheckAcknowledge( logger_, message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveIntelligenceDestructionRequestAck
-// Created: SBO 2007-10-19
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveIntelligenceDestructionRequestAck( const sword::IntelligenceDestructionRequestAck& message )
-{
-    CheckAcknowledge( logger_, message );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveShapeCreation
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
@@ -2161,18 +2106,6 @@ void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const
         OnReceiveLimaUpdate      ( wrapper.message().phase_line_update() );
     else if( wrapper.message().has_phase_line_destruction() )
         OnReceiveLimaDestruction ( wrapper.message().phase_line_destruction() );
-    else if( wrapper.message().has_intelligence_creation_request_ack() )
-        OnReceiveIntelligenceCreationRequestAck   ( wrapper.message().intelligence_creation_request_ack() );
-    else if( wrapper.message().has_intelligence_update_request_ack() )
-        OnReceiveIntelligenceUpdateRequestAck     ( wrapper.message().intelligence_update_request_ack() );
-    else if( wrapper.message().has_intelligence_destruction_request_ack() )
-        OnReceiveIntelligenceDestructionRequestAck( wrapper.message().intelligence_destruction_request_ack() );
-    else if( wrapper.message().has_intelligence_creation() )
-        OnReceiveIntelligenceCreation             ( wrapper.message().intelligence_creation() );
-    else if( wrapper.message().has_intelligence_update() )
-        OnReceiveIntelligenceUpdate               ( wrapper.message().intelligence_update() );
-    else if( wrapper.message().has_intelligence_destruction() )
-        OnReceiveIntelligenceDestruction          ( wrapper.message().intelligence_destruction() );
     else if( wrapper.message().has_shape_creation_request_ack() )
         OnReceiveShapeCreationRequestAck   ( wrapper.message().shape_creation_request_ack() );
     else if( wrapper.message().has_shape_update_request_ack() )

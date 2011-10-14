@@ -37,7 +37,6 @@ public:
     //@{
     virtual void SerializeAttributes    ( xml::xostream& ) const {};
     virtual void SerializeLogistics     ( xml::xostream& ) const {};
-    virtual void SerializeIntelligences ( xml::xostream& ) const {};
     //@}
 };
 

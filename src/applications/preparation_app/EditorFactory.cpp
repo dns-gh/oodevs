@@ -18,7 +18,6 @@
 #include "preparation/FormationModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamKarmas.h"
-#include "preparation/IntelligenceKarmas.h"
 #include "preparation/LogisticLevel.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/Karma.h"
@@ -125,17 +124,6 @@ void EditorFactory::Call( kernel::KnowledgeGroupType** const& value )
 void EditorFactory::Call( kernel::TeamKarma* const& value )
 {
     SimpleResolverEditor< kernel::Karma, TeamKarmas, kernel::TeamKarma >* editor = new SimpleResolverEditor< kernel::Karma, TeamKarmas, kernel::TeamKarma >( parent_, staticModel_.teamKarmas_ );
-    editor->SetCurrentItem( *value );
-    result_ = editor;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EditorFactory::Call
-// Created: SBO 2007-11-02
-// -----------------------------------------------------------------------------
-void EditorFactory::Call( kernel::IntelligenceKarma* const& value )
-{
-    SimpleResolverEditor< kernel::Karma, IntelligenceKarmas, kernel::IntelligenceKarma >* editor = new SimpleResolverEditor< kernel::Karma, IntelligenceKarmas, kernel::IntelligenceKarma >( parent_, staticModel_.intelligenceKarmas_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }

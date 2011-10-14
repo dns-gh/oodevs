@@ -11,7 +11,6 @@
 #include "MessengerPlugin.h"
 #include "Model.h"
 #include "TacticalLinesModel.h"
-#include "IntelligencesModel.h"
 #include "DrawingsModel.h"
 #include "NotesModel.h"
 #include "ClientObjectsModel.h"
@@ -109,13 +108,6 @@ void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, con
         model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().phase_line_destruction_request() );
     if( wrapper.message().has_phase_line_update_request() )
         model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().phase_line_update_request() );
-    // Intelligence
-    if( wrapper.message().has_intelligence_creation_request() )
-        model_->intelligences_.HandleRequest( publisher, wrapper.message().intelligence_creation_request() );
-    if( wrapper.message().has_intelligence_update_request() )
-        model_->intelligences_.HandleRequest( publisher, wrapper.message().intelligence_update_request() );
-    if( wrapper.message().has_intelligence_destruction_request() )
-        model_->intelligences_.HandleRequest( publisher, wrapper.message().intelligence_destruction_request() );
     // Drawings
     if( wrapper.message().has_shape_creation_request() )
         model_->drawings_.HandleRequest( publisher, wrapper.message().shape_creation_request(), nCtx );

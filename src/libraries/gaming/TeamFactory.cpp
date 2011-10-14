@@ -15,7 +15,6 @@
 #include "DictionaryExtensions.h"
 #include "Diplomacies.h"
 #include "Dotations.h"
-#include "EntityIntelligences.h"
 #include "Equipments.h"
 #include "Formation.h"
 #include "FormationHierarchy.h"
@@ -79,7 +78,6 @@ kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
     result->Attach< kernel::Diplomacies_ABC > ( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >     ( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
-    result->Attach< kernel::IntelligenceHierarchies > ( *new EntityIntelligences    ( controllers_.controller_, *result, 0, model_.teams_ ) );
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new TroopsCompatibilityVersion( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
@@ -107,7 +105,6 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( message.has_symbol() ? message.symbol() : std::string() ) );
     result->Attach< kernel::TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior, model_.symbolsFactory_ ) );
-    result->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, superior, model_.teams_ ) );
     if( result->GetLogisticLevel() != kernel::LogisticLevel::none_ )
         result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dico, *result ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );

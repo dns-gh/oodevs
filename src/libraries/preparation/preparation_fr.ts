@@ -217,37 +217,6 @@
     </message>
 </context>
 <context>
-    <name>Intelligence</name>
-    <message>
-        <source>Intelligence [%1]</source>
-        <translation>Renseignement [%1]</translation>
-    </message>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
-        <source>Info/Nature</source>
-        <translation>Info/Nature</translation>
-    </message>
-    <message>
-        <source>Info/Mounted</source>
-        <translation>Info/Embarqué</translation>
-    </message>
-    <message>
-        <source>Info/Level</source>
-        <translation>Info/Niveau</translation>
-    </message>
-    <message>
-        <source>Info/Karma</source>
-        <translation>Info/Affiliation</translation>
-    </message>
-</context>
-<context>
     <name>KnowledgeGroup</name>
     <message>
         <source>Info/Identifier</source>
@@ -654,7 +623,7 @@
     </message>
     <message>
         <source>Living Area/%1</source>
-        <translation>Zone de vie/%1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

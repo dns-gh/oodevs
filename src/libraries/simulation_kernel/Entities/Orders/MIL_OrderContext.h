@@ -20,8 +20,7 @@ namespace sword
 }
 
 class MIL_LimaFunction;
-class MIL_IntelligenceOrder;
-class MIL_IntelligenceOrdersVisitor_ABC;
+
 
 // =============================================================================
 /** @class  MIL_OrderContext

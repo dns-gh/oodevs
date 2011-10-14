@@ -224,8 +224,6 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
         return "phaseline";
     if( type == "direction" )
         return "heading";
-    if( type == "intelligencelist" )
-        return "intelligence";
     if( type == "location" && type_ == "polygon" )
         return "polygon";
     if( type == "integer" && type_ == "numeric" )

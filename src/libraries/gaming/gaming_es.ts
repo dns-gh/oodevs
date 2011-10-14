@@ -710,49 +710,6 @@
     </message>
 </context>
 <context>
-    <name>Intelligence</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
-    </message>
-    <message>
-        <source>Info/Type</source>
-        <translation>Info/Tipo</translation>
-    </message>
-    <message>
-        <source>Info/Mounted</source>
-        <translation>Info/Embarcado</translation>
-    </message>
-    <message>
-        <source>Info/Level</source>
-        <translation>Info/Nivel</translation>
-    </message>
-    <message>
-        <source>Info/Karma</source>
-        <translation>Info/Karma</translation>
-    </message>
-    <message>
-        <source>Intelligence [%1]</source>
-        <translation>Inteligencia [%1]</translation>
-    </message>
-    <message>
-        <source>Level:</source>
-        <translation>Nivel:</translation>
-    </message>
-    <message>
-        <source>Mounted:</source>
-        <translation>Embarcado:</translation>
-    </message>
-    <message>
-        <source>Karma:</source>
-        <translation>Karma:</translation>
-    </message>
-</context>
-<context>
     <name>KnowledgeGroup</name>
     <message>
         <source>Group %1</source>

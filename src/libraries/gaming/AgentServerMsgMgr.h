@@ -462,14 +462,6 @@ private:
     void OnReceiveFolkCreation               ( const sword::FolkCreation&    message );
     void OnReceiveFolkGraphUpdate            ( const sword::FolkGraphUpdate& message );
 
-    // Intelligence
-    void OnReceiveIntelligenceCreation             ( const sword::IntelligenceCreation&              message );
-    void OnReceiveIntelligenceUpdate               ( const sword::IntelligenceUpdate&                message );
-    void OnReceiveIntelligenceDestruction          ( const sword::IntelligenceDestruction&           message );
-    void OnReceiveIntelligenceCreationRequestAck   ( const sword::IntelligenceCreationRequestAck&    message );
-    void OnReceiveIntelligenceUpdateRequestAck     ( const sword::IntelligenceUpdateRequestAck&      message );
-    void OnReceiveIntelligenceDestructionRequestAck( const sword::IntelligenceDestructionRequestAck& message );
-
     // Drawings
     void OnReceiveShapeCreation             ( const sword::ShapeCreation&              message );
     void OnReceiveShapeUpdate               ( const sword::ShapeUpdate&                message );

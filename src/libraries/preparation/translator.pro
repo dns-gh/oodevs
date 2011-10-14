@@ -18,7 +18,6 @@ InfrastructureAttribute.cpp \
 Inhabitant.cpp \
 InhabitantPositions.cpp \
 InputToxicCloudAttribute.cpp \
-Intelligence.cpp \
 KnowledgeGroup.cpp \
 Lima.cpp \
 Limit.cpp \

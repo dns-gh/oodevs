@@ -217,37 +217,6 @@
     </message>
 </context>
 <context>
-    <name>Intelligence</name>
-    <message>
-        <source>Intelligence [%1]</source>
-        <translation>Inteligencia [%1]</translation>
-    </message>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
-    </message>
-    <message>
-        <source>Info/Nature</source>
-        <translation>Info/Naturaleza</translation>
-    </message>
-    <message>
-        <source>Info/Mounted</source>
-        <translation>Info/Embarcada</translation>
-    </message>
-    <message>
-        <source>Info/Level</source>
-        <translation>Info/Nivel</translation>
-    </message>
-    <message>
-        <source>Info/Karma</source>
-        <translation>Info/Karma</translation>
-    </message>
-</context>
-<context>
     <name>KnowledgeGroup</name>
     <message>
         <source>Info/Identifier</source>

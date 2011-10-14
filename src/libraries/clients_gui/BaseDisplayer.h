@@ -31,7 +31,6 @@ namespace kernel
     class CoordinateConverter_ABC;
     class PopulationConcentration_ABC;
     class Entity_ABC;
-    class Intelligence_ABC;
     class Formation_ABC;
     class AgentType;
     class AutomatType;
@@ -66,7 +65,6 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public tools::Caller< kernel::Agent_ABC >
                     , public tools::Caller< kernel::Automat_ABC >
                     , public tools::Caller< kernel::Object_ABC >
-                    , public tools::Caller< kernel::Intelligence_ABC >
                     , public tools::Caller< kernel::Formation_ABC >
                     , public tools::Caller< kernel::Team_ABC >
                     , public tools::Caller< kernel::Entity_ABC >
@@ -115,7 +113,6 @@ private:
     virtual void Call( const kernel::Inhabitant_ABC& value );
     virtual void Call( const kernel::PopulationConcentration_ABC& value );
     virtual void Call( const kernel::Object_ABC& value );
-    virtual void Call( const kernel::Intelligence_ABC& value );
     virtual void Call( const kernel::Team_ABC& value );
     virtual void Call( const kernel::Entity_ABC& value );
     virtual void Call( const kernel::Formation_ABC& value );

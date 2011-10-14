@@ -21,7 +21,6 @@ class MIL_Mission_ABC;
 class MIL_Fuseau;
 class MIL_LimaFunction;
 class MIL_MissionType_ABC;
-class MIL_IntelligenceOrdersVisitor_ABC;
 class MissionController_ABC;
 
 //=============================================================================

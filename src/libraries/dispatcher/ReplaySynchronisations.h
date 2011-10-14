@@ -25,7 +25,6 @@ namespace sword
     class CrowdFlowKnowledgeCreation;
     class CrowdKnowledgeCreation;
     class FormationCreation;
-    class IntelligenceCreation;
     class KnowledgeGroupCreation;
     class LimitCreation;
     class LogMaintenanceHandlingCreation;
@@ -76,7 +75,6 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< sword::CrowdFlowKnowledgeCreation >
                              , public kernel::Updatable_ABC< sword::CrowdKnowledgeCreation >
                              , public kernel::Updatable_ABC< sword::FormationCreation >
-                             , public kernel::Updatable_ABC< sword::IntelligenceCreation >
                              , public kernel::Updatable_ABC< sword::KnowledgeGroupCreation >
                              , public kernel::Updatable_ABC< sword::LimitCreation >
                              , public kernel::Updatable_ABC< sword::LogMaintenanceHandlingCreation >
@@ -119,7 +117,6 @@ public:
     virtual void DoUpdate( const sword::CrowdFlowCreation& msg );
     virtual void DoUpdate( const sword::CrowdFlowKnowledgeCreation& msg );
     virtual void DoUpdate( const sword::FormationCreation& msg );
-    virtual void DoUpdate( const sword::IntelligenceCreation& msg );
     virtual void DoUpdate( const sword::KnowledgeGroupCreation& msg );
     virtual void DoUpdate( const sword::LimitCreation& msg );
     virtual void DoUpdate( const sword::LogMaintenanceHandlingCreation& msg );
