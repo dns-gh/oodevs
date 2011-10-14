@@ -28,8 +28,7 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const sword::ObjectKno
     : ObjectKnowledge_ABC( message.knowledge().id() )
     , model_                         ( model )
     , owner_                         ( model.Sides().Get( message.party().id() ) )
-    , pObject_                       ( model.Objects().Find( message.object().id() ) )
-    , entityId_                      ( 0 )
+    , entityId_                      ( message.object().id() )
     , nType_                         ( message.type().id() )
     , knowledgeGroup_                ( message.has_knowledge_group() ? &model.KnowledgeGroups().Get( message.knowledge_group().id() ) : 0 )
     , localisation_                  ()
@@ -38,12 +37,7 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const sword::ObjectKno
     , typename_                      ( "objectKnowledge" )
     , attributes_                    ( model )
 {
-    if( !pObject_ )
-        pObject_ = model.UrbanBlocks().Find( message.object().id() );
-    if( pObject_ )
-        entityId_ = pObject_->GetId();
-
-    optionals_.realObjectPresent = pObject_ != 0;
+    optionals_.realObjectPresent = entityId_ != 0;
     optionals_.relevancePresent = 0;
     optionals_.locationPresent = 0;
     optionals_.perceivedPresent = 0;
@@ -67,12 +61,7 @@ ObjectKnowledge::~ObjectKnowledge()
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeCreation& message )
 {
-    if( ( message.object().id() && ! pObject_ ) || ( pObject_ && pObject_->GetId() != ( unsigned int )message.object().id() ) )
-    {
-        pObject_ = model_.Objects().Find( message.object().id() );
-        if( !pObject_ )
-            pObject_ = model_.UrbanBlocks().Find( message.object().id() );
-    }
+    entityId_ = message.object().id();
 }
 
 // -----------------------------------------------------------------------------
@@ -105,12 +94,8 @@ void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
     }
     if( message.has_object() )
     {
-        pObject_ = model_.Objects().Find( message.object().id() );
-        if( !pObject_ )
-            pObject_ = model_.UrbanBlocks().Find( message.object().id() );
-        if( pObject_ )
-            entityId_ = pObject_->GetId();
-        optionals_.realObjectPresent = 1;
+        entityId_ = message.object().id();
+        optionals_.realObjectPresent = ( entityId_ != 0 );
     }
 
     attributes_.Update( message.attributes() );
@@ -145,7 +130,7 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( knowledgeGroup_ )
         message().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
     if( optionals_.realObjectPresent )
-        message().mutable_object()->set_id( pObject_ ? pObject_->GetId() : 0 );
+        message().mutable_object()->set_id( entityId_ );
     if( optionals_.locationPresent )
         localisation_.Send( *message().mutable_location() );
     if( optionals_.perceivedPresent )
@@ -199,7 +184,10 @@ const kernel::Team_ABC* ObjectKnowledge::GetTeam() const
 // -----------------------------------------------------------------------------
 const kernel::Object_ABC* ObjectKnowledge::GetEntity() const
 {
-    return pObject_;
+    const kernel::Object_ABC* object = model_.Objects().Find( entityId_ );
+    if( !object )
+        object = model_.UrbanBlocks().Find( entityId_ );
+    return object;
 }
 
 // -----------------------------------------------------------------------------
@@ -208,7 +196,7 @@ const kernel::Object_ABC* ObjectKnowledge::GetEntity() const
 // -----------------------------------------------------------------------------
 unsigned long ObjectKnowledge::GetEntityId() const
 {
-    return pObject_ ? pObject_->GetId() : 0;
+    return entityId_;
 }
 
 // -----------------------------------------------------------------------------
