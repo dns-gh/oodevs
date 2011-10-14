@@ -42,6 +42,23 @@
     <population-filter density="0.1"/>
     <time-limited/>
   </object>
+  <object geometry="polygon" name="zone minee par dispersion" symbol="G*MPOFA---****X" type="mined area (scattered)">
+    <activable/>
+    <attrition attrition-surface="0" category="mine classique" ph="0"/>
+    <avoidable distance="500"/>
+    <bypassable bypass-speed="10"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <resource count="10" name="mine classique"/>
+        </resources>
+      </buildable>
+    </constructor>
+    <interact-with-enemy/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.1"/>
+    <time-limited/>
+  </object>
   <object geometry="polygon" name="fosse anti char" symbol="G*MPOADC--****X" type="anti tank obstacle">
     <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="500"/>
@@ -455,4 +472,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="3483294706" -->
+<!-- signature="3171234838" -->
