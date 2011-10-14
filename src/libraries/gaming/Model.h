@@ -46,8 +46,6 @@ class FireResultFactory;
 class FiresModel;
 class FloodProxy;
 class FolkModel;
-class IntelligenceFactory;
-class IntelligencesModel;
 class KnowledgeGroupFactory_ABC;
 class KnowledgeGroupsModel;
 class LimitsModel;
@@ -133,7 +131,6 @@ public:
     UserProfileFactory_ABC& userProfileFactory_;
     actions::ParameterFactory_ABC& actionParameterFactory_;
     actions::ActionFactory_ABC& actionFactory_;
-    IntelligenceFactory& intelligenceFactory_;
     DrawingFactory& drawingFactory_;
     AgentsModel& agents_;
     ObjectsModel& objects_;
@@ -147,7 +144,6 @@ public:
     actions::ActionsModel& actions_;
     FolkModel& folk_;
     AfterActionModel& aar_;
-    IntelligencesModel& intelligences_;
     DrawingsModel& drawings_;
     ScoreDefinitions& scoreDefinitions_;
     ScoreModel& scores_;

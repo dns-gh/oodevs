@@ -214,8 +214,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLine_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Team_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Intelligence_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\IntelligencePrototype.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Population_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationConcentration_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationFlow_ABC.cpp" />
@@ -378,7 +376,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Extension_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Hierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Infrastructure_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligenceHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LivingArea_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LivingAreaVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\MergingTacticalHierarchies.h" />
@@ -413,9 +410,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLine_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Team_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Intelligence_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligenceFactory_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\IntelligencePrototype.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Population_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationConcentration_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationFlow_ABC.h" />

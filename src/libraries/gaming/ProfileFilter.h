@@ -19,7 +19,6 @@ namespace kernel
     class Controllers;
     class TacticalHierarchies;
     class CommunicationHierarchies;
-    class IntelligenceHierarchies;
     class Knowledge_ABC;
 }
 
@@ -66,7 +65,7 @@ private:
     bool IsObjectOfSameTeam( const kernel::Entity_ABC& entity ) const;
     template< typename D, typename U >
     bool IsChildSubordinateOf( const D& down, const U& up ) const;
-    bool IsKnown( const kernel::TacticalHierarchies* t, const kernel::CommunicationHierarchies* c, const kernel::IntelligenceHierarchies* i, const kernel::Entity_ABC& entity ) const;
+    bool IsKnown( const kernel::TacticalHierarchies* t, const kernel::CommunicationHierarchies* c, const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -77,7 +76,6 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     const kernel::TacticalHierarchies* tHierarchies_;
     const kernel::CommunicationHierarchies* cHierarchies_;
-    const kernel::IntelligenceHierarchies* iHierarchies_;
     //@}
 };
 

@@ -215,13 +215,6 @@ message DrawingId {
     required uint32 id = 1; //!< The identifier
 }
 
-/** @struct IntelligenceId
-    @brief Defines an intelligence identifier
-*/
-message IntelligenceId {
-    required uint32 id = 1; //!< The identifier
-}
-
 /** @struct TacticalLineId
     @brief Defines a tactical line identifier
 */
@@ -731,26 +724,6 @@ message PhaseLinesOrder {
    repeated PhaseLineOrder elem = 1; //!< The phase line orders
 }
 
-/** @struct Intelligence
-    @brief Defines an intelligence
-*/
-message Intelligence {
-   required string          name      = 1; //!< The name
-   required string          nature    = 2; //!< The nature
-   required EnumNatureLevel level     = 3; //!< The nature level
-   required bool            embarked  = 4; //!< Whether it is embarked or not
-   required CoordLatLong    location  = 5; //!< The location
-   required EnumDiplomacy   diplomacy = 6; //!< The diplomacy
-   required FormationId     formation = 7; //!< The formation
-}
-
-/** @struct IntelligenceList
-    @brief Lists several intelligences
-*/
-message IntelligenceList {
-   repeated Intelligence elem = 1; //!< The intelligences
-}
-
 /** @struct Nature
     @brief Encapsulates the nature flags
 */
@@ -900,7 +873,6 @@ message MissionParameter {
         optional string                   aCharStr                 = 36; //!< A string
         optional MissionObjective         missionObjective         = 37; //!< A mission objective
         optional MissionObjectiveList     missionObjectiveList     = 38; //!< A mission objective list
-        optional IntelligenceList         intelligenceList         = 39; //!< An intelligence list
         optional ObjectId                 object                   = 40; //!< An object identifier
         optional PartyId                  party                    = 41; //!< A party identifier
         optional FormationId              formation                = 42; //!< A formation identifier

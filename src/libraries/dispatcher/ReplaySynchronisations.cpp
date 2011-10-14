@@ -108,7 +108,6 @@ DO_UPDATE( sword::CrowdFlowCreation );
 DO_UPDATE( sword::CrowdFlowKnowledgeCreation );
 DO_UPDATE( sword::CrowdKnowledgeCreation );
 DO_UPDATE( sword::FormationCreation );
-DO_UPDATE( sword::IntelligenceCreation );
 DO_UPDATE( sword::KnowledgeGroupCreation );
 DO_UPDATE( sword::LimitCreation );
 DO_UPDATE( sword::LogMaintenanceHandlingCreation );

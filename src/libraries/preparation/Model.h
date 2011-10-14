@@ -46,7 +46,6 @@ class LimitsModel;
 class WeatherModel;
 class ProfilesModel;
 class ProfileFactory_ABC;
-class IntelligencesModel;
 class ModelChecker_ABC;
 class ObjectsModel;
 class ObjectFactory_ABC;
@@ -139,7 +138,6 @@ public:
     ProfilesModel& profiles_;
     ScoresModel& scores_;
     SuccessFactorsModel& successFactors_;
-    IntelligencesModel& intelligences_;
     UrbanModel& urban_;
     gui::DrawerModel& drawings_;
     //@}

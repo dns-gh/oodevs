@@ -12,7 +12,6 @@
 #include "Formation.h"
 #include "FormationHierarchies.h"
 #include "TacticalLines.h"
-#include "EntityIntelligences.h"
 #include "LogisticBaseStates.h"
 #include "LogisticLevelAttritube.h"
 #include "FormationPositions.h"
@@ -62,7 +61,6 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
         formation->Rename( name );
     formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
-    formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
     formation->Attach< LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
     formation->Attach( *new TacticalLines() );
@@ -83,7 +81,6 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
     PropertiesDictionary& dico = formation->Get< PropertiesDictionary >();
     formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
-    formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
     formation->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
     formation->Attach( *new TacticalLines() );

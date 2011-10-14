@@ -270,11 +270,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\UserProfilesModel.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\ActionPublisher.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\ActionsScheduler.cpp" />
-    <ClCompile Include="..\..\src\libraries\gaming\Intelligence.cpp" />
-    <ClCompile Include="..\..\src\libraries\gaming\IntelligenceFactory.cpp" />
-    <ClCompile Include="..\..\src\libraries\gaming\IntelligencesModel.cpp" />
-    <ClCompile Include="..\..\src\libraries\gaming\EntityIntelligences.cpp" />
-    <ClCompile Include="..\..\src\libraries\gaming\IntelligencePositions.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Drawing.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\DrawingFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\DrawingsModel.cpp" />
@@ -509,11 +504,6 @@
     <ClInclude Include="..\..\src\libraries\gaming\UserProfilesModel.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ActionPublisher.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ActionsScheduler.h" />
-    <ClInclude Include="..\..\src\libraries\gaming\Intelligence.h" />
-    <ClInclude Include="..\..\src\libraries\gaming\IntelligenceFactory.h" />
-    <ClInclude Include="..\..\src\libraries\gaming\IntelligencesModel.h" />
-    <ClInclude Include="..\..\src\libraries\gaming\EntityIntelligences.h" />
-    <ClInclude Include="..\..\src\libraries\gaming\IntelligencePositions.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Drawing.h" />
     <ClInclude Include="..\..\src\libraries\gaming\DrawingFactory.h" />
     <ClInclude Include="..\..\src\libraries\gaming\DrawingsModel.h" />

@@ -79,45 +79,6 @@ message LimitDestructionRequest {
     required TacticalLineId id = 1; //!< The identifier of the limit to destroy @see TacticalLineId
 }
 
-/** @struct IntelligenceCreationRequest
-    @brief A message to request the creation of an intelligence
-
-    @see IntelligenceCreationRequestAck
-    @see IntelligenceCreation
-*/
-message IntelligenceCreationRequest {
-    required Intelligence intelligence = 1; //!< The intelligence data to use for creation @see Intelligence
-}
-
-/** @struct IntelligenceUpdateRequest
-    @brief A message to request the update of an intelligence
-
-    Only data to update need to be sent.
-
-    @see IntelligenceUpdateRequestAck
-    @see IntelligenceUpdate
-*/
-message IntelligenceUpdateRequest {
-    required IntelligenceId  intelligence = 1; //!< The identifier of the intelligence to update @see IntelligenceId @todo should be named "id" instead of "intelligence" (coherence)
-    optional FormationId     formation    = 2; //!< The new identifier of the parent formation of the intelligence
-    optional string          name         = 3; //!< The new name of the intelligence
-    optional string          nature       = 4; //!< The new nature (MIL2525B APP-6 string) of the intelligence
-    optional EnumNatureLevel level        = 5; //!< The new hierarchical level/echelon of the intelligence
-    optional bool            embarked     = 6; //!< The new embarkment state of the intelligence @note Only needs to be set if data has changed.
-    optional CoordLatLong    location     = 7; //!< The new location of the intelligence
-    optional EnumDiplomacy   diplomacy    = 8; //!< The new diplomacy/alignment of the intelligence
-}
-
-/** @struct IntelligenceDestructionRequest
-    @brief A message to request the destruction of an intelligence
-
-    @see IntelligenceDestructionRequestAck
-    @see IntelligenceDestruction
-*/
-message IntelligenceDestructionRequest {
-    required IntelligenceId id = 1; //!< The identifier of the intelligence to destroy @see IntelligenceId
-}
-
 /** @struct ShapeCreationRequest
     @brief A message to request the creation of a shape
 
@@ -311,9 +272,6 @@ message ClientToMessenger {
         optional PhaseLineCreationRequest       phase_line_creation_request       = 4;  //!< @copybrief PhaseLineCreationRequest @see PhaseLineCreationRequest
         optional PhaseLineDestructionRequest    phase_line_destruction_request    = 5;  //!< @copybrief PhaseLineDestructionRequest @see PhaseLineDestructionRequest
         optional PhaseLineUpdateRequest         phase_line_update_request         = 6;  //!< @copybrief PhaseLineUpdateRequest @see PhaseLineUpdateRequest
-        optional IntelligenceCreationRequest    intelligence_creation_request     = 7;  //!< @copybrief IntelligenceCreationRequest @see IntelligenceCreationRequest
-        optional IntelligenceUpdateRequest      intelligence_update_request       = 8;  //!< @copybrief IntelligenceUpdateRequest @see IntelligenceUpdateRequest
-        optional IntelligenceDestructionRequest intelligence_destruction_request  = 9;  //!< @copybrief IntelligenceDestructionRequest @see IntelligenceDestructionRequest
         optional ShapeCreationRequest           shape_creation_request            = 10; //!< @copybrief ShapeCreationRequest @see ShapeCreationRequest @todo rename into drawings/graphics_creation_request
         optional ShapeDestructionRequest        shape_destruction_request         = 11; //!< @copybrief ShapeDestructionRequest @see ShapeDestructionRequest @todo rename into drawings/graphics_destruction_request
         optional ShapeUpdateRequest             shape_update_request              = 12; //!< @copybrief ShapeUpdateRequest @see ShapeUpdateRequest @todo rename into drawings/graphics_update_request

@@ -591,10 +591,6 @@
         <translation>Cargar archivo de definición de ejercicio (exercise.xml)</translation>
     </message>
     <message>
-        <source>Intelligence</source>
-        <translation>Inteligencia</translation>
-    </message>
-    <message>
         <source>
 Do you want to save anyway?</source>
         <translation>
@@ -618,10 +614,6 @@ Do you want to save anyway?</source>
     </message>
     <message>
         <source>Crowds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Intelligences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

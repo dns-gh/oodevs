@@ -206,7 +206,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\PopulationListView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\TacticalListView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\AgentsLayer.cpp" />
-    <ClCompile Include="..\..\src\applications\preparation_app\IntelligencesLayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LimitsLayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ObjectsLayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\PopulationsLayer.cpp" />
@@ -661,7 +660,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\AgentsLayer.h" />
-    <ClInclude Include="..\..\src\applications\preparation_app\IntelligencesLayer.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\LimitsLayer.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
       </Message>

@@ -68,9 +68,6 @@
     <Filter Include="Source Files\Creation\Units">
       <UniqueIdentifier>{df6c3494-83a4-4a06-8408-46e67d4a980e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Creation\Intelligence">
-      <UniqueIdentifier>{7011e47b-9571-41bf-8148-29d0d171fcdf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Creation\Drawings">
       <UniqueIdentifier>{b289161d-de29-42c6-b310-812ed9648468}</UniqueIdentifier>
     </Filter>
@@ -191,12 +188,6 @@
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\IntelligenceList.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\IntelligenceListView.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectList.cpp">
@@ -356,9 +347,6 @@
       <Filter>Source Files\gl\Layers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantLayer.cpp">
-      <Filter>Source Files\gl\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\IntelligencesLayer.cpp">
       <Filter>Source Files\gl\Layers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\LogoLayer.cpp">
@@ -600,12 +588,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitsPanel.cpp">
       <Filter>Source Files\Creation\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\IntelligencesPanel.cpp">
-      <Filter>Source Files\Creation\Intelligence</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\NatureSelectionWidget.cpp">
-      <Filter>Source Files\Creation\Intelligence</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawerShape.cpp">
       <Filter>Source Files\Creation\Drawings</Filter>
@@ -888,9 +870,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\InhabitantList.h">
       <Filter>Source Files\Lists</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\IntelligenceList.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\ObjectList.h">
       <Filter>Source Files\Lists</Filter>
     </ClInclude>
@@ -1036,9 +1015,6 @@
       <Filter>Source Files\gl\Layers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\InhabitantLayer.h">
-      <Filter>Source Files\gl\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\IntelligencesLayer.h">
       <Filter>Source Files\gl\Layers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\LogoLayer.h">
@@ -1432,9 +1408,6 @@
     <CustomBuild Include="..\..\src\libraries\clients_gui\InhabitantListView.h">
       <Filter>Source Files\Lists</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\IntelligenceListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ObjectListView.h">
       <Filter>Source Files\Lists</Filter>
     </CustomBuild>
@@ -1551,12 +1524,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\UnitsPanel.h">
       <Filter>Source Files\Creation\Units</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\IntelligencesPanel.h">
-      <Filter>Source Files\Creation\Intelligence</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\NatureSelectionWidget.h">
-      <Filter>Source Files\Creation\Intelligence</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\DrawerPanel.h">
       <Filter>Source Files\Creation\Drawings\Widgets</Filter>

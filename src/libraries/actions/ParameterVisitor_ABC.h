@@ -17,7 +17,6 @@ namespace actions
         class EngineerConstruction;
         class Objective;
         class Lima;
-        class Intelligence;
         class Location;
         class Path;
         class PathPoint;
@@ -57,7 +56,6 @@ public:
     virtual void Visit( const parameters::EngineerConstruction&) {}
     virtual void Visit( const parameters::Objective&           ) {}
     virtual void Visit( const parameters::Lima&                ) {}
-    virtual void Visit( const parameters::Intelligence&        ) {}
     virtual void Visit( const parameters::Path&                ) {}
     virtual void Visit( const parameters::PathPoint&           ) {}
     virtual void Visit( const parameters::Location&            ) {}

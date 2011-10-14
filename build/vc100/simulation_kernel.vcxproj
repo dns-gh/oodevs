@@ -599,7 +599,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireDamages_Population.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireResults_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireResults_Default.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntelligenceOrder.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_OrderContext.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_Report.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\orders\MIL_Fuseau.cpp" />
@@ -797,7 +796,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FireFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FunctionsTools.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_GeometryFunctions.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_IntelligenceFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeAgentFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeObjectFunctions.cpp" />
@@ -1388,8 +1386,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireDamages_Population.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireResults_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_FireResults_Default.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntelligenceOrder.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntelligenceOrdersVisitor_ABC.h" />
     <CustomBuildStep Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_OrderContext.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_Report.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\orders\MIL_Fuseau.h" />
@@ -1609,7 +1605,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FireFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FunctionsTools.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_GeometryFunctions.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_IntelligenceFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeAgentFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeObjectFunctions.h" />

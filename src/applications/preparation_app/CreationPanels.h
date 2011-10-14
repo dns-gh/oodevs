@@ -25,7 +25,6 @@ namespace kernel
 namespace gui
 {
     class ColorStrategy_ABC;
-    class IntelligencesPanel;
     class ItemFactory_ABC;
     class GlProxy;
     class ParametersLayer;

@@ -32,7 +32,6 @@
 #include "IndicatorPlotFactory.h"
 #include "InfoDock.h"
 #include "InfoPanels.h"
-#include "IntelligencesLayer.h"
 #include "LimitsLayer.h"
 #include "LinkInterpreter.h"
 #include "LoggerProxy.h"
@@ -79,7 +78,6 @@
 #include "gaming/ProfileFilter.h"
 #include "gaming/VisionConesToggler.h"
 #include "gaming/ActionsScheduler.h"
-#include "gaming/IntelligencesModel.h"
 #include "gaming/Tools.h"
 #include "gaming/ColorController.h"
 #include "clients_gui/DisplayToolbar.h"
@@ -119,7 +117,6 @@
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/LocationsLayer.h"
-#include "clients_gui/IntelligenceList.h"
 #include "clients_gui/TooltipsLayer.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/GisToolbar.h"
@@ -265,7 +262,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pListsTabWidget->addTab( new gui::ObjectList( controllers, *factory, profile ), tr( "Objects" ) );
     pListsTabWidget->addTab( new gui::PopulationList( controllers, *factory, profile ), tr( "Crowds" ) );
     pListsTabWidget->addTab( new gui::InhabitantList( controllers, *factory, profile ), tr( "Populations" ) );
-    pListsTabWidget->addTab( new gui::IntelligenceList( controllers, *factory, *icons, profile ), tr( "Intelligences" ) );
     pListDockWnd_->setWidget( box );
     pListDockWnd_->setWindowTitle( tr( "Orbat" ) );
 
@@ -422,7 +418,6 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     gui::Layer_ABC& urbanLayer           = *new gui::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
     gui::Layer_ABC& grid                 = *new gui::GridLayer( controllers_, *glProxy_ );
     gui::Layer_ABC& metrics              = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
-    gui::Layer_ABC& intelligences        = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligenceFactory_, *simpleFilter_ );
     gui::Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile, *simpleFilter_ );
     gui::Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, picker, *urbanFilter_ );
     gui::Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
@@ -450,7 +445,6 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( grid );                                                                                     grid                .SetPasses( "main,miniviews" );
     glProxy_->Register( weather );                                                                                  weather             .SetPasses( "main,miniviews" );
     glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main,miniviews" );
-    glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );    intelligences       .SetPasses( "main,miniviews" );
     glProxy_->Register( objectKnowledges );                                                                         objectKnowledges    .SetPasses( "main,miniviews" );
     glProxy_->Register( populationKnowledges );                                                                     populationKnowledges.SetPasses( "main,miniviews" );
     glProxy_->Register( agentKnowledges );                                                                          agentKnowledges     .SetPasses( "main,miniviews" );
@@ -483,7 +477,6 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( populations );
     forward_->Register( inhabitants );
     forward_->Register( objectsLayer );
-    forward_->Register( intelligences );
     forward_->Register( agentKnowledges );
     forward_->Register( populationKnowledges );
     forward_->Register( objectKnowledges );

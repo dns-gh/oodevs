@@ -13,7 +13,6 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/DrawerPanel.h"
-#include "clients_gui/IntelligencesPanel.h"
 #include "clients_gui/PopulationsPanel.h"
 #include "clients_gui/UnitsPanel.h"
 #include "gaming/DrawingsModel.h"

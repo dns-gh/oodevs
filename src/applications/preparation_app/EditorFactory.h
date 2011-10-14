@@ -45,7 +45,6 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< kernel::LogisticBaseSuperior* >
                     , public tools::Caller< kernel::KnowledgeGroupType** >
                     , public tools::Caller< kernel::TeamKarma* >
-                    , public tools::Caller< kernel::IntelligenceKarma* >
                     , public tools::Caller< kernel::NBCAgent** >
                     , public tools::Caller< std::vector< kernel::NBCAgent* >* >
                     , public tools::Caller< kernel::LogisticLevel** >
@@ -68,7 +67,6 @@ public:
     virtual void Call( kernel::LogisticBaseSuperior* const& value );
     virtual void Call( kernel::KnowledgeGroupType** const& value );
     virtual void Call( kernel::TeamKarma* const& value );
-    virtual void Call( kernel::IntelligenceKarma* const& value );
     virtual void Call( kernel::NBCAgent** const& value );
     virtual void Call( std::vector< kernel::NBCAgent* >* const& value );
     virtual void Call( Enum_PopulationAttitude* const& value );

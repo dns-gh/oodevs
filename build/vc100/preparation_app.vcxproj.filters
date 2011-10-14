@@ -220,9 +220,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\AgentsLayer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\IntelligencesLayer.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\LimitsLayer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
@@ -541,9 +538,6 @@
       <Filter>Source Files\Lists</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\AgentsLayer.h">
-      <Filter>Source Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\IntelligencesLayer.h">
       <Filter>Source Files\Layers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\ObjectsLayer.h">

@@ -22,8 +22,6 @@
 #include "FiresModel.h"
 #include "FloodProxy.h"
 #include "FolkModel.h"
-#include "IntelligenceFactory.h"
-#include "IntelligencesModel.h"
 #include "KnowledgeGroupFactory.h"
 #include "KnowledgeGroupsModel.h"
 #include "LimitsModel.h"
@@ -84,7 +82,6 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , userProfileFactory_( *new UserProfileFactory( *this, controllers, publisher ) )
     , actionParameterFactory_( *new actions::ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, agentKnowledgeConverter_, objectKnowledgeConverter_, controllers_.controller_ ) )
     , actionFactory_( *new actions::ActionFactory( controllers.controller_, actionParameterFactory_, *this, staticModel, simulation ) )
-    , intelligenceFactory_( *new IntelligenceFactory( controllers, staticModel.coordinateConverter_, *this, staticModel.levels_, publisher ) )
     , drawingFactory_( *new DrawingFactory( controllers, staticModel.drawings_, publisher, staticModel.coordinateConverter_, *this ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
@@ -98,7 +95,6 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , actions_( *new actions::ActionsModel( actionFactory_, *new ActionPublisher( publisher, controllers_ ), publisher  ) )
     , folk_( *new FolkModel( controllers.controller_ ) )
     , aar_( *new AfterActionModel( controllers.controller_, publisher ) )
-    , intelligences_( *new IntelligencesModel( intelligenceFactory_ ) )
     , drawings_( *new DrawingsModel( controllers, drawingFactory_, *this ) )
     , scoreDefinitions_( *new ScoreDefinitions( staticModel.indicators_, staticModel.gaugeTypes_ ) )
     , scores_( *new ScoreModel( controllers, publisher, scoreDefinitions_ ) )
@@ -222,7 +218,6 @@ Model::~Model()
     delete &scores_;
     delete &scoreDefinitions_;
     delete &drawings_;
-    delete &intelligences_;
     delete &aar_;
     delete &folk_;
     delete &actions_;
@@ -236,7 +231,6 @@ Model::~Model()
     delete &objects_;
     delete &agents_;
     delete &drawingFactory_;
-    delete &intelligenceFactory_;
     delete &actionFactory_;
     delete &actionParameterFactory_;
     delete &userProfileFactory_;
@@ -263,7 +257,6 @@ void Model::Purge()
     scores_.Purge();
     scoreDefinitions_.Purge();
     drawings_.Purge();
-    intelligences_.Purge();
     aar_.Purge();
     actions_.Purge();
     profiles_.Purge();

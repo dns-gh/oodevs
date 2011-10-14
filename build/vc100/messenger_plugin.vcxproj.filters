@@ -11,9 +11,6 @@
     <Filter Include="Source Files\Model\Drawings">
       <UniqueIdentifier>{72aab5c8-b725-4652-ba2e-0af5823a9492}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Model\Intelligences">
-      <UniqueIdentifier>{19456545-a215-42e5-a0e0-a70e206b22f1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model\Tactical lines">
       <UniqueIdentifier>{bd6f86a3-9ae9-4e5b-bb10-d90d2ff19885}</UniqueIdentifier>
     </Filter>
@@ -51,12 +48,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\messenger_plugin\DrawingsModel.cpp">
       <Filter>Source Files\Model\Drawings</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\messenger_plugin\Intelligence.cpp">
-      <Filter>Source Files\Model\Intelligences</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\messenger_plugin\IntelligencesModel.cpp">
-      <Filter>Source Files\Model\Intelligences</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\messenger_plugin\Lima.cpp">
       <Filter>Source Files\Model\Tactical lines</Filter>
@@ -110,12 +101,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\messenger_plugin\DrawingsModel.h">
       <Filter>Source Files\Model\Drawings</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\messenger_plugin\Intelligence.h">
-      <Filter>Source Files\Model\Intelligences</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\messenger_plugin\IntelligencesModel.h">
-      <Filter>Source Files\Model\Intelligences</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Lima.h">
       <Filter>Source Files\Model\Tactical lines</Filter>

@@ -12,10 +12,8 @@
 #include "SymbolIcons.h"
 #include "ColorStrategy_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/IntelligenceHierarchies.h"
 
 using namespace gui;
 
@@ -46,22 +44,6 @@ EntitySymbols::~EntitySymbols()
 const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ ) const
 {
     const kernel::Symbol_ABC* symbol = entity.Retrieve< kernel::TacticalHierarchies >();
-    if( !symbol )
-        return icons_.GetDefaultSymbol();
-    const std::string symbolName = symbol->GetSymbol();
-    const std::string levelName  = symbol->GetLevel();
-    if( symbolName.empty() && levelName.empty() )
-        return icons_.GetDefaultSymbol();
-    return GetSymbol( entity, symbolName, levelName, size );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntitySymbols::GetSymbol
-// Created: SBO 2007-10-17
-// -----------------------------------------------------------------------------
-const QPixmap& EntitySymbols::GetSymbol( const kernel::Intelligence_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ ) const
-{
-    const kernel::Symbol_ABC* symbol = entity.Retrieve< kernel::IntelligenceHierarchies >();
     if( !symbol )
         return icons_.GetDefaultSymbol();
     const std::string symbolName = symbol->GetSymbol();

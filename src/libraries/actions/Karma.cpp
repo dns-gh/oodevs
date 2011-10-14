@@ -11,7 +11,6 @@
 #include "Karma.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -48,22 +47,15 @@ namespace
         else
             return sword::unknown;
     }
-
-    // Reverts diplomacy effect applied on karma => "diplomacy" karma
-    const kernel::Karma& ComputeKarma( const kernel::Karma& karma, const kernel::Entity_ABC& parent )
-    {
-        const kernel::Karma& parentKarma = parent.Get< kernel::IntelligenceHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
-        return parentKarma.RelativeTo( karma );
-    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Karma constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-Karma::Karma( const kernel::OrderParameter& parameter, const kernel::Karma& karma, const kernel::Entity_ABC& parent )
+Karma::Karma( const kernel::OrderParameter& parameter, const kernel::Karma& karma )
     : Parameter< QString >( parameter )
-    , karma_( ComputeKarma( karma, parent ) )
+    , karma_( karma )
 {
     SetValue( karma_.GetName() );
 }

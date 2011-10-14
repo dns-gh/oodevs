@@ -102,8 +102,6 @@
     <ClCompile Include="..\..\src\libraries\messenger_plugin\Drawing.cpp" />
     <ClCompile Include="..\..\src\libraries\messenger_plugin\DrawingProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\messenger_plugin\DrawingsModel.cpp" />
-    <ClCompile Include="..\..\src\libraries\messenger_plugin\Intelligence.cpp" />
-    <ClCompile Include="..\..\src\libraries\messenger_plugin\IntelligencesModel.cpp" />
     <ClCompile Include="..\..\src\libraries\messenger_plugin\Lima.cpp" />
     <ClCompile Include="..\..\src\libraries\messenger_plugin\Limit.cpp" />
     <ClCompile Include="..\..\src\libraries\messenger_plugin\TacticalLine_ABC.cpp" />
@@ -123,8 +121,6 @@
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Drawing.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\DrawingProxy.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\DrawingsModel.h" />
-    <ClInclude Include="..\..\src\libraries\messenger_plugin\Intelligence.h" />
-    <ClInclude Include="..\..\src\libraries\messenger_plugin\IntelligencesModel.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Lima.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Limit.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\TacticalLine_ABC.h" />

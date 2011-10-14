@@ -42,7 +42,6 @@ void TeamHierarchies::SerializeAttributes( xml::xostream& xos ) const
     {
         xos << xml::start( "formation" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
-        it->second->Interface().Apply( & Serializable_ABC::SerializeIntelligences, xos );
         xos << xml::end;
     }
     xos << xml::end;

@@ -25,7 +25,6 @@
 #include "Decision/DEC_MiscFunctions.h"
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
-#include "Decision/DEC_IntelligenceFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/vector.hpp>
@@ -229,26 +228,6 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     brain[ "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion" ] =
         boost::function< T_ConstKnowledgeAgentVector( const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) );
     brain[ "DEC_Connaissances_Populations" ] = boost::bind( &DEC_KnowledgeFunctions::GetPopulations< MIL_Automate >, boost::cref( GetAutomate() ) );
-
-    // Intelligence
-    brain[ "DEC_Rens_PourcentageEnnemisDebarquesDansZone" ] =
-        boost::function< float( const TER_Localisation* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeUnloadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) );
-    brain[ "DEC_Rens_PourcentageEnnemisEmbarquesDansZone" ] =
-        boost::function< float( const TER_Localisation* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeLoadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) );
-    brain[ "DEC_Rens_PourcentageEnnemisDebarquesDansFuseau" ] =
-        boost::function< float( const MIL_Fuseau* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeFuseauUnloadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) );
-    brain[ "DEC_Rens_PourcentageEnnemisEmbarquesDansFuseau" ] =
-        boost::function< float( const MIL_Fuseau* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeFuseauLoadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) );
-    brain[ "DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques" ] =
-        boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const std::vector< boost::shared_ptr< TER_Localisation > >& ) >( boost::bind( &DEC_IntelligenceFunctions::SortZonesAccordingToUnloadedEnemies, boost::cref( GetAutomate() ), _1 ) );
-    brain[ "DEC_Rens_TrierFuseauxSelonPresenceEnnemisDebarques" ] =
-        boost::function< std::vector< boost::shared_ptr< MIL_Fuseau > >( const std::vector< boost::shared_ptr< MIL_Fuseau > >& ) >( boost::bind( &DEC_IntelligenceFunctions::SortAccordingToUnloadedEnemies, boost::cref( GetAutomate() ), _1 ) );
-    brain[ "DEC_Rens_TrierFuseauxSelonPresenceEnnemisEmbarques" ] =
-        boost::function< std::vector< boost::shared_ptr< MIL_Fuseau > >( const std::vector< boost::shared_ptr< MIL_Fuseau > >& ) >( boost::bind( &DEC_IntelligenceFunctions::SortAccordingToLoadedEnemies, boost::cref( GetAutomate() ), _1 ) );
-    brain[ "DEC_Rens_AmiSurFlanc" ] =
-        boost::function< bool( const MIL_Fuseau* ) >( boost::bind( &DEC_IntelligenceFunctions::IsFriendOnFlank, boost::cref( GetAutomate() ), _1 ) );
-    brain[ "DEC_Rens_CalculerDirectionCouverture" ] =
-        boost::function< boost::shared_ptr< MT_Vector2D >( const MT_Vector2D*, const MIL_Fuseau* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeCoverDirection, boost::cref( GetAutomate() ), _1, _2 ) );
 
     // Geometry
     brain[ "DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau" ] =

@@ -14,7 +14,6 @@
 #include "Model.h"
 #include "LimitsModel.h"
 #include "StaticModel.h"
-#include "IntelligencesModel.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
@@ -76,8 +75,7 @@ void FormationModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, Mod
     xis >> xml::list( "formation"   , *this               , &FormationModel::Create    , *(Entity_ABC*)formation, model, loadingErrors )
         >> xml::list( "automat"     , model.agents_       , &AgentsModel::CreateAutomat, *formation, model.limits_, loadingErrors )
         >> xml::list( "lima"        , model.limits_       , &LimitsModel::CreateLima   , *(Entity_ABC*)formation )
-        >> xml::list( "limit"       , model.limits_       , &LimitsModel::CreateLimit  , *(Entity_ABC*)formation )
-        >> xml::list( "intelligence", model.intelligences_, &IntelligencesModel::Create, *(Entity_ABC*)formation );
+        >> xml::list( "limit"       , model.limits_       , &LimitsModel::CreateLimit  , *(Entity_ABC*)formation );
 }
 
 // -----------------------------------------------------------------------------

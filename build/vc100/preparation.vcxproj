@@ -103,7 +103,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\ColorController.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\DiamondFormation.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\EntityCommunications.cpp" />
-    <ClCompile Include="..\..\src\libraries\preparation\EntityIntelligences.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\IdManager.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\Model.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ProfileHierarchies.cpp" />
@@ -173,10 +172,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\AutomatTemplateElement.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\FormationTemplateElement.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\HierarchyTemplate.cpp" />
-    <ClCompile Include="..\..\src\libraries\preparation\Intelligence.cpp" />
-    <ClCompile Include="..\..\src\libraries\preparation\IntelligenceKarmas.cpp" />
-    <ClCompile Include="..\..\src\libraries\preparation\IntelligencesModel.cpp" />
-    <ClCompile Include="..\..\src\libraries\preparation\IntelligencePositions.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\Score.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ScoreFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ScoresModel.cpp" />
@@ -244,7 +239,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\ColorController.h" />
     <ClInclude Include="..\..\src\libraries\preparation\DiamondFormation.h" />
     <ClInclude Include="..\..\src\libraries\preparation\EntityCommunications.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\EntityIntelligences.h" />
     <ClInclude Include="..\..\src\libraries\preparation\EnumTypes.h" />
     <ClInclude Include="..\..\src\libraries\preparation\IdManager.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Model.h" />
@@ -323,10 +317,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\FormationTemplateElement.h" />
     <ClInclude Include="..\..\src\libraries\preparation\HierarchyTemplate.h" />
     <ClInclude Include="..\..\src\libraries\preparation\TemplateElement_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\Intelligence.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\IntelligenceKarmas.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\IntelligencesModel.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\IntelligencePositions.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Score.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Score_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ScoreFactory.h" />
