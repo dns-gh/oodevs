@@ -1477,36 +1477,36 @@
     <unit command-post="true" min-occurs="1" type="Réfugiés hommes femmes et enfants"/>
   </automat>
   <automat decisional-model="Masalife.Automate.SGTIA.INF" id="1012" name="SGTIA INF dominante roues" type="Automate SGTIA">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire VAB"/>
     <unit min-occurs="1" type="INF . Section CBT quaternaire VAB CDS OFF"/>
     <unit min-occurs="2" type="INF . Section CBT quaternaire VAB CDS SOFF"/>
     <unit min-occurs="1" type="INF . Groupe INF MO81 Section quaternaire"/>
     <unit min-occurs="1" type="ABC . PLT AMX 10 RC CDP SOFF"/>
     <unit min-occurs="1" type="GEN . Section CBT renforce MPG"/>
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire VAB"/>
   </automat>
   <automat decisional-model="Masalife.Automate.SGTIA.INF" id="1013" name="SGTIA INF dominante lourde" type="Automate SGTIA">
-    <unit min-occurs="1" type="GEN . Section CBT renforce EBG"/>
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire AMX10P"/>
+    <unit min-occurs="1" type="GEN . Section CBT renforce EBG"/>
     <unit min-occurs="1" type="ABC . Peloton LECLERC CDP SOFF"/>
     <unit min-occurs="1" type="INF . Section CBT quaternaire AMX10P CDS OFF"/>
     <unit min-occurs="2" type="INF . Section CBT quaternaire AMX10P CDS SOFF"/>
     <unit min-occurs="1" type="INF . Groupe INF MO81 AMX10P"/>
   </automat>
   <automat decisional-model="Masalife.Automate.SGTIA.ABC" id="1014" name="SGTIA ABC XL" type="Automate SGTIA">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Peloton LECLERC CDT ESC"/>
     <unit min-occurs="1" type="GEN . Section CBT renforce EBG"/>
     <unit min-occurs="2" type="ABC . Peloton LECLERC CDP SOFF"/>
     <unit min-occurs="1" type="ABC . Peloton LECLERC CDP OFF"/>
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Peloton LECLERC CDT ESC"/>
     <unit min-occurs="1" type="INF . Section CBT AMX10P CDS SOFF"/>
     <unit min-occurs="1" type="ABC . Patrouille EI MILAN"/>
   </automat>
   <automat decisional-model="Masalife.Automate.SGTIA.ABC" id="1015" name="SGTIA ABC AMX10RC" type="Automate SGTIA">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC"/>
     <unit min-occurs="1" type="ABC . Patrouille EI 12,7"/>
     <unit min-occurs="1" type="ABC . PLT AMX 10 RC CDP OFF"/>
     <unit min-occurs="2" type="ABC . PLT AMX 10 RC CDP SOFF"/>
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC"/>
     <unit min-occurs="1" type="INF . Section CBT VAB CDS SOFF"/>
     <unit min-occurs="1" type="GEN . Section CBT renforce MPG"/>
   </automat>
 </automats>
-<!-- signature="1157086834" -->
+<!-- signature="1267216212" -->
