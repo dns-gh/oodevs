@@ -84,6 +84,9 @@ SectionEnd
 
 ;--------------------------------
 Function .onInit
+!if ${PLATFORM} == "vc100_x64"
+    SetRegView 64
+!endif
     System::Call 'kernel32::CreateMutexA(i 0, i 0, t "${PRODUCT_NAME}") i .r1 ?e'
     
     ; Check that WISE is installed

@@ -193,6 +193,10 @@ SectionEnd
 
 ;--------------------------------
 Function .onInit
+!if ${PLATFORM} == "vc100_x64"
+    SetRegView 64
+!endif
+
     System::Call 'kernel32::CreateMutexA(i 0, i 0, t "${APP_NAME}") i .r1 ?e'
     Pop $R0
     StrCmp $R0 0 +3

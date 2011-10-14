@@ -42,6 +42,10 @@ SectionEnd
 
 ;--------------------------------
 Function .onInit
+!if ${PLATFORM} == "vc100_x64"
+    SetRegView 64
+!endif
+
     !insertmacro OT.CheckRunning
     !insertmacro OT.ChooseLanguage
     
