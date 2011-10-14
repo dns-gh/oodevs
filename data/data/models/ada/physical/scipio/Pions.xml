@@ -8150,7 +8150,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.MILAN" id="286" name="INF . Groupe ACMP AMX10P" type="Pion INF">
@@ -8178,7 +8178,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.MILAN" id="287" name="INF . Groupe ACMP VAB" type="Pion INF">
@@ -8206,7 +8206,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.MILAN" id="288" name="INF . Section CDT AC VAB HOT" type="Pion INF">
@@ -8235,7 +8235,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.MILAN" id="289" name="INF . Section AC AMX10P" type="Pion INF">
@@ -8265,7 +8265,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.MILAN" id="290" name="INF . Groupe AC VBL MILAN" type="Pion INF">
@@ -8294,7 +8294,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.MILAN" id="291" name="INF . Groupe AC VAB MILAN" type="Pion INF">
@@ -8323,7 +8323,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.MILAN" id="292" name="INF . Groupe  de tir MILAN SAC AMX 10P" type="Pion INF">
@@ -8352,7 +8352,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF" id="293" name="INF . Section CBT quaternaire VAB CDS OFF" type="Pion INF">
@@ -8386,7 +8386,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF" id="294" name="INF . Section CBT quaternaire AMX10P CDS OFF" type="Pion INF">
@@ -8420,7 +8420,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF" id="295" name="INF . Section CBT quaternaire VAB CDS SOFF" type="Pion INF">
@@ -8454,7 +8454,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF" id="296" name="INF . Section CBT quaternaire AMX10P CDS SOFF" type="Pion INF">
@@ -8488,7 +8488,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF" id="297" name="INF . Section CBT VAB CDS OFF" type="Pion INF">
@@ -8522,7 +8522,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF" id="298" name="INF . Section CBT VAB CDS SOFF" type="Pion INF">
@@ -8556,7 +8556,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF" id="299" name="INF . Section CBT AMX10P CDS OFF" type="Pion INF">
@@ -8590,7 +8590,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF" id="300" name="INF . Section CBT AMX10P CDS SOFF" type="Pion INF">
@@ -8624,7 +8624,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF" id="301" name="INF . Section CBT quaternaire CDS  X10 OFF" type="Pion INF">
@@ -8658,7 +8658,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF" id="302" name="INF . Section CBT quaternaire CDS X10 SOFF" type="Pion INF">
@@ -8692,7 +8692,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.PC" id="303" name="INF . Section CDT CIE VAB" type="Pion INF">
@@ -8724,7 +8724,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.PC" id="304" name="INF . PC Cie CAC" type="Pion INF">
@@ -8755,7 +8755,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.PC" id="305" name="ABC . Patrouille SRR CDT" type="Pion INF">
@@ -8782,7 +8782,7 @@
       <distance-before-point type="crossroad" value="100"/>
       <distance-before-point type="bridge" value="100"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.PC" id="306" name="INF . PC AC MILAN" type="Pion INF">
@@ -8810,7 +8810,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.PC" id="307" name="INF . Section CDT PROTERRE" type="Pion INF">
@@ -8841,7 +8841,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.PC" id="308" name="INF .  PC Section PROTERRE" type="Pion INF">
@@ -8870,7 +8870,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.PC" id="309" name="INF . Section CDT CIE VAB HOT" type="Pion INF">
@@ -8905,7 +8905,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.PC" id="310" name="INF . Section CDT CIE quaternaire VAB" type="Pion INF">
@@ -8938,7 +8938,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.PC" id="311" name="INF . Section CDT CIE quaternaire AMX10P" type="Pion INF">
@@ -8971,7 +8971,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.PC" id="312" name="INF . PC Section TE" type="Pion INF">
@@ -8999,7 +8999,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.HOT" id="313" name="INF . Section Antichar HOT CDP OFF" type="Pion INF">
@@ -9029,7 +9029,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="70" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.HOT" id="314" name="INF . Section Antichar HOT CDP SOFF" type="Pion INF">
@@ -9059,7 +9059,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="70" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.HOT" id="315" name="INF . Groupe AC VAB HOT" type="Pion INF">
@@ -9087,7 +9087,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="70" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Commando" id="316" name="INF . Groupe Commando" type="Pion INF">
@@ -9115,7 +9115,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="1000" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Commando" id="317" name="INF . PC Commando" type="Pion INF">
@@ -9143,7 +9143,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="1000" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Commando" id="318" name="GLAISE - INF . Groupe commando" type="Pion INF">
@@ -9171,7 +9171,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="1000" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Commando" id="319" name="GLAISE - INF . PC Commando" type="Pion INF">
@@ -9199,7 +9199,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="1000" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC TAC" id="320" name="TRANS - PC 1 GTIA  AMX10P" type="Pion TRANS">
@@ -9436,7 +9436,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Mortier" id="328" name="INF . Groupe INF MO81 VAB" type="Pion INF">
@@ -9467,7 +9467,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Mortier" id="329" name="INF . Groupe INF MO81 Section quaternaire" type="Pion INF">
@@ -9497,7 +9497,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Mortier" id="330" name="INF . Groupe INF MO81 section quaternaire X10" type="Pion INF">
@@ -9528,7 +9528,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Section.PROTERRE" id="331" name="INF . Section PROTERRE" type="Pion INF">
@@ -9560,7 +9560,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="10" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="332" name="INF . Groupe PROTERRE 12.7" type="Pion INF">
@@ -9590,7 +9590,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="10" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="333" name="INF . Groupe PROTERRE 7.62" type="Pion INF">
@@ -9619,7 +9619,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="10" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="334" name="INF . Groupe PROTERRE FAMAS" type="Pion INF">
@@ -9648,7 +9648,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="10" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.TE" id="335" name="INF . Groupe TE" type="Pion INF">
@@ -9677,7 +9677,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="10" combat-support="10" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.PC" id="336" name="Section . CDT CIE INF VAB" type="Pion INF">
@@ -9709,7 +9709,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.XL" id="337" name="ABC . Peloton LECLERC CDP OFF" type="Pion ABC">
@@ -9738,7 +9738,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.XL" id="338" name="ABC . Peloton LECLERC CDP SOFF" type="Pion ABC">
@@ -9767,7 +9767,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.XL" id="339" name="ABC . Peloton LECLERC 3X3" type="Pion ABC">
@@ -9798,7 +9798,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.AMX" id="340" name="ABC . PLT AMX 10 RC CDP OFF" type="Pion ABC">
@@ -9829,7 +9829,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="80" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="20" urban-area="10"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.AMX" id="341" name="ABC . Peloton ERC 90 CDP OFF" type="Pion ABC">
@@ -9860,7 +9860,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="80" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="20" urban-area="10"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.AMX" id="342" name="ABC . PLT AMX 10 RC CDP SOFF" type="Pion ABC">
@@ -9891,7 +9891,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="80" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="20" urban-area="10"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.AMX" id="343" name="ABC . Peloton ERC 90 CDP SOFF" type="Pion ABC">
@@ -9922,7 +9922,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="80" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="20" urban-area="10"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.AMX" id="344" name="ABC . PLT AMX 10 RC CDP OFF Eclairage" type="Pion ABC">
@@ -9953,7 +9953,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="80" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="20" urban-area="10"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.AMX" id="345" name="ABC . Peloton AMX30B2 BRENNUS CDP OFF" type="Pion ABC">
@@ -9983,7 +9983,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="80" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="20" urban-area="10"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.AMX" id="346" name="ABC . Peloton AMX30B2 BRENNUS CDP SOFF" type="Pion ABC">
@@ -10013,7 +10013,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="80" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="20" urban-area="10"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.AD" id="347" name="ABC . Peloton d appui direct" type="Pion ABC">
@@ -10042,7 +10042,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="30"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.EI" id="348" name="ABC . Patrouille Eclairage Regimentaire CP SOFF" type="Pion ABC">
@@ -10070,7 +10070,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="40" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.EI" id="349" name="ABC . Patrouille Eclairage Regimentaire CP OFF" type="Pion ABC">
@@ -10098,7 +10098,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="40" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.EI" id="350" name="ABC . Patrouille CDT PEI OFF" type="Pion ABC">
@@ -10119,7 +10119,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="40" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.EI" id="351" name="ABC . Patrouille EI APILAS" type="Pion ABC">
@@ -10140,7 +10140,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="40" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.EI" id="352" name="ABC . Patrouille EI 12,7" type="Pion ABC">
@@ -10161,7 +10161,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="40" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.EI" id="353" name="ABC . Patrouille CDT PEI SOFF" type="Pion ABC">
@@ -10182,7 +10182,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="40" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.EI" id="354" name="ABC . PC CDT LOG ERIAC" type="Pion ABC">
@@ -10214,7 +10214,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="40" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.EI" id="355" name="ABC . PC Patrouille Eclairage Regimentaire CP SOFF" type="Pion ABC">
@@ -10242,7 +10242,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="40" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.Milan" id="356" name="ABC . Groupe Appui Direct EEI" type="Pion ABC">
@@ -10271,7 +10271,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.Milan" id="357" name="ABC . Patrouille SRR ACMP" type="Pion ABC">
@@ -10299,7 +10299,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.Milan" id="358" name="ABC . Patrouille SRR 2SOFF" type="Pion ABC">
@@ -10328,7 +10328,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.Milan" id="359" name="ABC . Patrouille SRR 1SOFF" type="Pion ABC">
@@ -10357,7 +10357,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.Milan" id="360" name="ABC . Patrouille EI MILAN" type="Pion ABC">
@@ -10378,7 +10378,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.Milan" id="361" name="ABC . Peloton ERIAC OFF" type="Pion ABC">
@@ -10402,7 +10402,7 @@
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.Milan" id="362" name="ABC . Peloton ERIAC S/OFF" type="Pion ABC">
@@ -10426,7 +10426,7 @@
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.PIR" id="363" name="ABC . Peloton Protection PC" type="Pion ABC">
@@ -10456,7 +10456,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="50" combat-support="75" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.PC" id="364" name="ABC . Groupe CDT Appui Direct EEI" type="Pion ABC">
@@ -10485,7 +10485,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.PC" id="365" name="ABC . PC" type="Pion ABC">
@@ -10513,7 +10513,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.PC" id="366" name="ABC . Peloton LECLERC CDT ESC" type="Pion ABC">
@@ -10546,7 +10546,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.PC" id="367" name="ABC . PC Eclairage" type="Pion ABC">
@@ -10575,7 +10575,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.PC" id="368" name="ABC . Groupe CDT RASIT" type="Pion ABC">
@@ -10602,7 +10602,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.PC" id="369" name="ABC . Peloton CDT ESC AMX30B2 BRENNUS" type="Pion ABC">
@@ -10634,7 +10634,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.RASIT" id="370" name="ABC . Groupe RASIT" type="Pion ABC">
@@ -10662,7 +10662,7 @@
       <distance-before-point type="crossroad" value="100"/>
       <distance-before-point type="bridge" value="100"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="10" combat-support="10" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.ERIAC" id="371" name="ABC . PC PLT ERIAC" type="Pion ABC">
@@ -10684,7 +10684,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="10" combat-support="10" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille Tigre" id="372" name="ALAT - Patrouille Tigre 2HAD" type="Pion ALAT">
@@ -12526,10 +12526,10 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
-    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="10" urban-area="0"/>
+    <efficiencies combat="80" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="20" urban-area="10"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.AMX" id="437" name="Peloton . d appui direct" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AD" id="437" name="Peloton . d appui direct" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/light"/>
     <equipments>
       <equipment count="1" crew="2" type="VBL CDT"/>
@@ -12555,7 +12555,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
+    <efficiencies combat="50" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="10" urban-area="30"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.PC" id="438" name="Peloton . LECLERC CDT ESC" type="Pion ABC">
@@ -12610,7 +12610,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="40" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.EI" id="440" name="Patrouille . EI 12,7" type="Pion ABC">
@@ -12631,7 +12631,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="10" combat-support="10" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
+    <efficiencies combat="30" combat-support="40" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Terroriste" id="441" name="Terroriste IED" type="Pion ASY">
@@ -15350,7 +15350,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="10" engineering-support="10" mobility-support="10" protection-support="10" recon="0" urban-area="10"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Individu Isole" id="535" name="Civil" type="Pion Civilian">
@@ -18863,7 +18863,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="10" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="668" name="INF . Fantassin oeil" type="Pion INF">
@@ -18891,7 +18891,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="10" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="669" name="INF . Fantassin lunette" type="Pion INF">
@@ -18919,7 +18919,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="10" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.LOG.PC" id="670" name="ONG PC" type="Pion INF">
@@ -19072,4 +19072,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0287950377" -->
+<!-- signature="4016872533" -->
