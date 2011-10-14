@@ -93,6 +93,7 @@
 #include "clients_gui/ContourLinesLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/ElevationPainter.h"
+#include "clients_gui/AggregateToolbar.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
@@ -200,11 +201,17 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_, staticModel_.extensions_ );
     ProfileWizardDialog* profileWizardDialog = new ProfileWizardDialog( this, model_, model_.profiles_ );
 
+    AutomatsLayer& automats = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
+    FormationLayer& formation = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
+
     // Agent list panel
     QDockWidget* pListDockWnd_ = new QDockWidget( "orbat", this );
     pListDockWnd_->setObjectName( "Orbat" );
     addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd_ );
-    QTabWidget* pListsTabWidget = new QTabWidget( this );
+    Q3VBox* box = new Q3VBox( pListDockWnd_ );
+    new gui::AggregateToolbar( box, controllers.controller_, automats, formation );
+
+    QTabWidget* pListsTabWidget = new QTabWidget( box );
     {
         QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
         Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
@@ -240,7 +247,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         pListsTabWidget->addTab( listsTabBox, tr( "Populations" ) );
     }
     pListDockWnd_->setWindowTitle( tr( "ORBAT" ) );
-    pListDockWnd_->setWidget( pListsTabWidget );
+    pListDockWnd_->setWidget( box );
 
     // Properties panel
     {
@@ -304,7 +311,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // Layers
     CreateLayers( *pCreationPanel_, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer,
-                  *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker, *pLivingAreaEditor );
+                  *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker, *pLivingAreaEditor, automats, formation );
 
     // Status bar
     StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
@@ -341,11 +348,9 @@ MainWindow::~MainWindow()
 void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locations, 
                                gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
                                PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker,
-                               LivingAreaEditor& livingAreaEditor )
+                               LivingAreaEditor& livingAreaEditor, gui::AutomatsLayer& automats, gui::FormationLayer& formation )
 {
     TooltipsLayer_ABC& tooltipLayer     = *new TooltipsLayer( *glProxy_ );
-    AutomatsLayer& automats             = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
-    Layer_ABC& formation                = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
     Layer_ABC& objectCreationLayer      = *new MiscLayer< ObjectCreationPanel >( creationPanels.GetObjectCreationPanel() );
     Layer_ABC& inhabitantCreationLayer  = *new MiscLayer< InhabitantCreationPanel >( creationPanels.GetInhabitantCreationPanel() );
     Layer_ABC& indicatorCreationLayer   = *new MiscLayer< ScoreDialog >( *pScoreDialog_ );
