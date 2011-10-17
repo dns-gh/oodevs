@@ -118,6 +118,8 @@ message UnitMagicAction {
         change_human_state                = 46; //!< A change human state magic action
         change_dotation                   = 47; //!< A create dotation magic action
         create_direct_fire_order          = 48; //!< A direct fire order creation magic action
+        load_unit                         = 49; //!< A unit loading magic action
+        unload_unit                       = 50; //!< A unit unloading magic action
     }
     required Tasker            tasker     = 1; //!< The tasker @todo Explain what is a "tasker"
     required Type              type       = 2; //!< The magic action typ
