@@ -14,9 +14,9 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "MT_Tools/MT_Logger.h"
 #include "MIL_Singletons.h"
 #include <directia/brain/Brain.h>
-//#include "MT_Tools/MT_Logger.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision constructor

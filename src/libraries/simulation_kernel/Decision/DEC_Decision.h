@@ -12,7 +12,6 @@
 
 #include "MIL.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include "MT_Tools/MT_Logger.h"
 
 class DEC_Knowledge_Object;
 class DEC_Model_ABC;
