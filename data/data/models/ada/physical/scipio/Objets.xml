@@ -302,9 +302,7 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="piste" symbol="G*GPGAZ---****X" type="trail">
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="90" unit-speed-impact-mode="VitesseMaxAgent"/>
   </object>
   <object geometry="polygon" name="plate-forme" symbol="G*PLATFORM*****" type="platform">
     <bypassable bypass-speed="-1"/>
@@ -317,9 +315,7 @@
     <mobility default-speed="-1" max-unit-percentage-speed="100" unit-speed-impact-mode="VitesseMaxAgent"/>
   </object>
   <object geometry="polygon" name="zone poser helicoptere" symbol="G*GPGAL---****X" type="landing area (helicopter)">
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="aire logistique" symbol="G*SPAR----****X" type="logistic area">
     <bypassable bypass-speed="-1"/>
@@ -399,9 +395,7 @@
     <trafficability default="false"/>
   </object>
   <object geometry="point" name="installation" symbol="S*GPI-----*****" type="installation">
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="bloc urbain" symbol="G*MPOGZ---****X" type="urban block">
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
@@ -472,4 +466,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="3171234838" -->
+<!-- signature="1419253303" -->
