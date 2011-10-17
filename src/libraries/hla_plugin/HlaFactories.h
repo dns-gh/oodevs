@@ -39,7 +39,7 @@ namespace hla
         {
             std::auto_ptr< HlaObject_ABC > object = factory_->Create( agent, name, identifier, force, type, symbol );
             const std::string uniqueIdentifier( "SWORD" + boost::lexical_cast< std::string >( identifier ) );
-            const std::string callsign( name );
+            const std::string callsign( name + boost::lexical_cast< std::string >( identifier ) );
             resolver_.Add( identifier, callsign, uniqueIdentifier );
             return std::auto_ptr< HlaObject_ABC >( new T( object, agent, callsign, uniqueIdentifier, symbol ) );
         }
