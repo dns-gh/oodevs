@@ -363,10 +363,10 @@ enum EnumLogisticLevel {
 }
 
 enum EnumBurningCellPhase {
-	pre_ignition = 0;
-	combustion = 1;
-	decline = 2;
-	extinguished = 3;
+    pre_ignition = 0;
+    combustion = 1;
+    decline = 2;
+    extinguished = 3;
 }
 
 // Control messages
@@ -838,28 +838,28 @@ message ObjectAttributeBurn {
 }
 
 message ObjectAttributeBurnSurface {
-	message BurningCell {
-		message PreIgnition {
-			required int32 ignition_energy = 1;
-			required int32 ignition_threshold = 2;
-		}
-		message Combustion {
-		   required int32 current_heat = 1;
-		   required int32 combustion_energy = 2;
-		   required int32 max_combustion_energy = 3;
-		}
-		message Decline {
-		   required int32 current_heat = 1;
-		}		
-		required int32 origin_x = 1;
-		required int32 origin_y = 2;
-		required EnumBurningCellPhase phase = 3;
-		optional PreIgnition pre_ignition = 4;
-		optional Combustion combustion = 5;
-		optional Decline decline = 6;
-	}
-	required int32 cell_size = 1;
-	repeated BurningCell burning_cells = 2;
+    message BurningCell {
+        message PreIgnition {
+            required int32 ignition_energy = 1;
+            required int32 ignition_threshold = 2;
+        }
+        message Combustion {
+           required int32 current_heat = 1;
+           required int32 combustion_energy = 2;
+           required int32 max_combustion_energy = 3;
+        }
+        message Decline {
+           required int32 current_heat = 1;
+        }		
+        required int32 origin_x = 1;
+        required int32 origin_y = 2;
+        required EnumBurningCellPhase phase = 3;
+        optional PreIgnition pre_ignition = 4;
+        optional Combustion combustion = 5;
+        optional Decline decline = 6;
+    }
+    required int32 cell_size = 1;
+    repeated BurningCell burning_cells = 2;
 }
 
 message ObjectAttributeTrafficability {

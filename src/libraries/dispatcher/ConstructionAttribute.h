@@ -39,7 +39,8 @@ public:
 private:
     //! @name Member data
     //@{
-    unsigned     dotation_;
+    bool hasDotation_;
+    unsigned int dotation_;
     unsigned int nPercentageConstruction_;
     unsigned int nNbrDotationForConstruction_;
     //@}

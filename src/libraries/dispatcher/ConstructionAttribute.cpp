@@ -18,9 +18,10 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 ConstructionAttribute::ConstructionAttribute( const sword::ObjectAttributes& asnMsg )
-    : dotation_ ( 0 )
+    : hasDotation_                ( false )
+    , dotation_                   ( 0 )
     , nNbrDotationForConstruction_( 0 )
-    , nPercentageConstruction_( 0 )
+    , nPercentageConstruction_    ( 0 )
 {
     Update( asnMsg );
 }
@@ -43,7 +44,10 @@ void ConstructionAttribute::Update( const sword::ObjectAttributes& asnMsg )
     if( asnMsg.has_construction()  )
     {
         if ( asnMsg.construction().has_resource() )
+        {
+            hasDotation_ = true;
             dotation_ = asnMsg.construction().resource().id();
+        }
         if( asnMsg.construction().has_dotation() )
             nNbrDotationForConstruction_ = asnMsg.construction().dotation();
         if( asnMsg.construction().has_percentage() )
@@ -57,7 +61,10 @@ void ConstructionAttribute::Update( const sword::ObjectAttributes& asnMsg )
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
-    asnMsg.mutable_construction()->mutable_resource()->set_id( dotation_ );
-    asnMsg.mutable_construction()->set_dotation( nNbrDotationForConstruction_ );
+    if( hasDotation_ )
+    {
+        asnMsg.mutable_construction()->mutable_resource()->set_id( dotation_ );
+        asnMsg.mutable_construction()->set_dotation( nNbrDotationForConstruction_ );
+    }
     asnMsg.mutable_construction()->set_percentage( nPercentageConstruction_ );
 }
