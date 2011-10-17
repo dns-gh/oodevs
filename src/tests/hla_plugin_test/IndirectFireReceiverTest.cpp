@@ -25,7 +25,6 @@ namespace
     public:
         Fixture()
             : receiver        ( publisher, factory, munitionResolver )
-            , groundImpact    ( 3 )
             , latitude        ( 1. )
             , longitude       ( 2. )
             , munitionType    ( "1 2 3 0 0 0 0" )
@@ -39,7 +38,6 @@ namespace
         MockMunitionTypeResolver munitionResolver;
         IndirectFireReceiver receiver;
         interactions::MunitionDetonation parameters;
-        const int8 groundImpact;
         const double latitude;
         const double longitude;
         const std::string munitionType;
@@ -53,7 +51,6 @@ BOOST_FIXTURE_TEST_CASE( indirect_fire_receiver_sends_create_fire_order_on_locat
     sword::ClientToSim message;
     MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
     MOCK_EXPECT( munitionResolver, ResolveType ).once().with( rpr::EntityType( munitionType ) ).returns( munitionId );
-    parameters.detonationResultCode = groundImpact;
     parameters.detonationLocation = rpr::WorldLocation( latitude, longitude, 0. );
     parameters.munitionType = rpr::EntityType( munitionType );
     receiver.Receive( parameters );
@@ -71,8 +68,8 @@ BOOST_FIXTURE_TEST_CASE( indirect_fire_receiver_sends_create_fire_order_on_locat
     BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).areal(), interventionType );
 }
 
-BOOST_FIXTURE_TEST_CASE( indirect_fire_receiver_does_nothing_when_receiving_not_ground_impact_munition_detonation, Fixture )
+BOOST_FIXTURE_TEST_CASE( indirect_fire_receiver_does_nothing_if_target_is_defined, Fixture )
 {
-    parameters.detonationResultCode = 0;
+    parameters.targetObjectIdentifier = Omt13String( "local target" );
     receiver.Receive( parameters );
 }
