@@ -51,11 +51,6 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_receiver_notifies_listener_with_parti
 {
     {
         MOCK_EXPECT( controller, OfferReceived ).once().with( 42u, false, "provider", mock::any );
-        interactions::NetnOfferConvoy offer = MakeOffer( 42, false, 1, 4, 0, "SWORD", "provider" );
-        receiver.Receive( offer );
-    }
-    {
-        MOCK_EXPECT( controller, OfferReceived ).once().with( 42u, false, "provider", mock::any );
         interactions::NetnOfferConvoy offer = MakeOffer( 42, true, 0, 4, 0, "SWORD", "provider" );
         receiver.Receive( offer );
     }

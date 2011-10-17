@@ -37,7 +37,7 @@ namespace
 {
     bool CheckOffer( const interactions::NetnOfferConvoy& offer )
     {
-        return offer.isOffering && offer.offerType == 1;
+        return offer.offerType == 1;
     }
 }
 
@@ -52,6 +52,8 @@ void NetnOfferConvoyReceiver::Receive( interactions::NetnOfferConvoy& interactio
     if( interaction.transportData.convoyType != 0 )
         return;
     if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
+        return;
+    if( !interaction.isOffering )
         return;
     controller_.OfferReceived( interaction.serviceId.eventCount, CheckOffer( interaction ), interaction.provider.str(), interaction.listOfTransporters );
 }
