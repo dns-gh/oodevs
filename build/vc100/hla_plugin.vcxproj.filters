@@ -271,6 +271,18 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatusReceiver.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAircraft.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Aircraft.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAircraft.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAircraft.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -623,6 +635,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatusReceiver.h">
       <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAircraft.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Aircraft.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAircraft.h">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAircraft.h">
+      <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

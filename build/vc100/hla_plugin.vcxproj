@@ -91,6 +91,7 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Aircraft.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatCreater.cpp" />
@@ -121,6 +122,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAcceptOffer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAircraft.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatus.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatusReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoy.cpp" />
@@ -130,6 +132,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnReadyToReceiveService.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRejectOfferConvoy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAircraft.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.cpp" />
@@ -141,6 +144,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregate.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAircraft.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SideChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SilentEntity.cpp" />
@@ -173,6 +177,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Aircraft.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker_ABC.h" />
@@ -217,6 +222,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAcceptOffer.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAircraft.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatus.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatusReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoy.h" />
@@ -226,6 +232,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnReadyToReceiveService.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRejectOfferConvoy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAircraft.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.h" />
@@ -241,6 +248,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentSubject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateListener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAircraft.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteHlaObjectFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ResponseObserver_ABC.h" />
