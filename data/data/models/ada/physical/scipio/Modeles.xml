@@ -480,6 +480,7 @@
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION GENIE Equiper Exploiter Site Franchissement"/>
         <mission name="PION Desactiver Point Du Reseau"/>
+        <mission name="PION GENIE Executer Variantement"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9614,4 +9615,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2114000887" -->
+<!-- signature="3828649920" -->
