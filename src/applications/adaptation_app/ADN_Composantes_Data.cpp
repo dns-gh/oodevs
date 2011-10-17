@@ -2078,6 +2078,27 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
             >> xml::optional >> xml::attribute( "starting-date", strStartingDate_ )
             >> xml::optional >> xml::attribute( "information-origin", strInformationOrigin_ )
           >> xml::end;
+
+    for( CIT_WeaponInfos_Vector it = vWeapons_.begin(); it != vWeapons_.end(); ++it )
+    {
+        std::string name( (*it)->strName_.GetData() );
+        bool ok = false;
+        for( CIT_CategoryInfos_Vector itc = resources_.categories_.begin(); itc != resources_.categories_.end(); ++itc )
+        {
+            std::string resourcename = (*itc)->ptrCategory_.GetData()->strName_.GetData();
+            if( name.find( resourcename ) != std::string::npos )
+            {
+                ok = true;
+                break;
+            }
+        }
+        if( !ok )
+        {
+            std::stringstream str;
+            str << strName_ << " lacks ammo: " << name;
+            MT_LOG_ERROR_MSG( str.str() );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
