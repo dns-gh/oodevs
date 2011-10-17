@@ -291,7 +291,6 @@ void TransportationController::SendTransportMagicAction( unsigned int context, c
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: TransportationController::ServiceComplete
 // Created: SLI 2011-10-17
