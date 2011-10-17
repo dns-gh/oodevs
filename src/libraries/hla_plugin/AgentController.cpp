@@ -105,7 +105,7 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
             if( isSurfaceVessel )
                 (*it)->SurfaceVesselCreated( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType );
             else
-                (*it)->AggregateCreated( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType );
+                (*it)->AggregateCreated( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType, agentType.GetSymbol() );
     }
 }
 

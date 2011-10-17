@@ -41,7 +41,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), agent, "name", "identifier" )
+            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), agent, "name", "identifier", "symbol" )
         {}
         NetnAggregate entity;
     };
@@ -66,7 +66,8 @@ BOOST_FIXTURE_TEST_CASE( netn_agregate_entity_serializes_all_its_attributes_but_
                                                                         ( "UniqueID" )
                                                                         ( "HigherHeadquarters" )
                                                                         ( "Callsign" )
-                                                                        ( "Status" );
+                                                                        ( "Status" )
+                                                                        ( "Symbol" );
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;
@@ -118,6 +119,13 @@ namespace
 BOOST_FIXTURE_TEST_CASE( agent_unique_id_is_sword_plus_identifier, AggregateFixture )
 {
     MOCK_EXPECT( functor, Visit ).once().with( "UniqueID", boost::bind( &CheckSize, _1, 11u ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_serializes_app6_symbol_with_unicode_string, AggregateFixture )
+{
+    MOCK_EXPECT( functor, Visit ).once().with( "Symbol", boost::bind( &CheckSize, _1, sizeof( int32 ) + 6 * sizeof( uint16 ) ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
 }

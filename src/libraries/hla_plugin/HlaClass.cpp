@@ -53,9 +53,9 @@ HlaClass::~HlaClass()
 // Name: HlaClass::Created
 // Created: SLI 2011-01-10
 // -----------------------------------------------------------------------------
-void HlaClass::Created( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
+void HlaClass::Created( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol )
 {
-    T_Entity localEntity( factory_->Create( agent, name, identifier, force, type ).release() );
+    T_Entity localEntity( factory_->Create( agent, name, identifier, force, type, symbol ).release() );
     ::hla::ObjectIdentifier objectId = hlaClass_->Register( *localEntity, boost::lexical_cast< std::string >( identifier ) );
     localEntities_[ objectId.ToString() ] = localEntity;
     resolver_.Add( identifier, objectId.ToString() );

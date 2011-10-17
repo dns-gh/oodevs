@@ -75,7 +75,7 @@ int SideChecker::Find( unsigned int identifier ) const
 // Name: SideChecker::AggregateCreated
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-void SideChecker::AggregateCreated( Agent_ABC& /*agent*/, unsigned int identifier, const std::string& /*name*/, rpr::ForceIdentifier force, const rpr::EntityType& /*type*/ )
+void SideChecker::AggregateCreated( Agent_ABC& /*agent*/, unsigned int identifier, const std::string& /*name*/, rpr::ForceIdentifier force, const rpr::EntityType& /*type*/, const std::string& /*symbol*/ )
 {
     localSides_[ identifier ] = force;
 }

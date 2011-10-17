@@ -264,9 +264,9 @@ void FederateFacade::Register( ::hla::FederateAmbassador_ABC& listener )
 // Name: FederateFacade::AggregateCreated
 // Created: SLI 2011-10-05
 // -----------------------------------------------------------------------------
-void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
+void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol )
 {
-    aggregateClass_->Created( agent, identifier, name, force, type );
+    aggregateClass_->Created( agent, identifier, name, force, type, symbol );
 }
 
 // -----------------------------------------------------------------------------
@@ -275,5 +275,5 @@ void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned int identifier
 // -----------------------------------------------------------------------------
 void FederateFacade::SurfaceVesselCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
-    surfaceVesselClass_->Created( agent, identifier, name, force, type );
+    surfaceVesselClass_->Created( agent, identifier, name, force, type, "" );
 }

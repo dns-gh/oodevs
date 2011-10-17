@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE( side_checker_checks_sides )
     const unsigned int remoteFriendly = 44u;
     const unsigned int unknown = 45u;
     MockAgent agent;
-    agentListener->AggregateCreated( agent, friendly, "friendly", rpr::Friendly, rpr::EntityType() );
+    agentListener->AggregateCreated( agent, friendly, "friendly", rpr::Friendly, rpr::EntityType(), "symbol" );
     agentListener->SurfaceVesselCreated( agent, enemyVessel, "enemy vessel", rpr::Opposing, rpr::EntityType() );
     remoteAgentListener->SideChanged( "remote friendly", rpr::Friendly );
     BOOST_CHECK( checker.AreSameSide( friendly, friendly ) );

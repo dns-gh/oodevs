@@ -108,6 +108,7 @@ namespace hla
                                     ( "HigherHeadquarters" )
                                     ( "Callsign" )
                                     ( "Status" )
+                                    ( "Symbol" )
             , std::auto_ptr< ClassBuilder_ABC >( new AggregateEntityBuilder() ) )
         {}
     };

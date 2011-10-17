@@ -71,7 +71,7 @@ void Transporters::Apply( const std::string& transportedUnitUniqueId, const geom
 // Name: Transporters::AggregateCreated
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-void Transporters::AggregateCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/ )
+void Transporters::AggregateCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/ )
 {
     // NOTHING
 }

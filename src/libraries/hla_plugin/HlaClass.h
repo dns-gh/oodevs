@@ -62,7 +62,7 @@ public:
     //@{
     virtual void Register( RemoteAgentListener_ABC& listener );
     virtual void Unregister( RemoteAgentListener_ABC& listener );
-    void Created( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
+    void Created( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol );
     //@}
 
 private:
