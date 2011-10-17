@@ -1242,7 +1242,8 @@ namespace
     void ConvertObjectAttributes( const From& from, To* to )
     {
         CONVERT_CB( construction, ConvertObjectAttributeConstruction );
-        ConvertObjectAttributeObstacle( from, to );
+        if( from.has_obstacle() )
+            ConvertObjectAttributeObstacle( from, to );
         CONVERT_CB_TO( mine, valorisation, ConvertObjectAttributeMine );
         if( from.has_bypass() )
             to->mutable_bypass()->set_percentage( from.bypass().percentage() );
@@ -1260,16 +1261,6 @@ namespace
             if( from.fire().has_max_combustion_energy() )
                 to->mutable_fire()->set_max_combustion_energy( from.fire().max_combustion_energy() );
         }
-        if( from.has_burn() )
-        {
-            to->mutable_burn()->set_current_heat( from.burn().current_heat() );
-            to->mutable_burn()->set_combustion_energy( from.burn().combustion_energy() );
-        }
-        if( from.has_burn_surface() )
-        {
-            to->mutable_burn_surface()->set_cell_size( from.burn_surface().cell_size() );
-            CONVERT_LIST( burn_surface, burning_cells, ConvertBurnSurfaceBurningCell );
-        }
         if( from.has_medical_treatment() )
         {
             ConvertObjectAttributeMedicalTreatment( from.medical_treatment(), to->mutable_medical_treatment() );
@@ -1282,6 +1273,29 @@ namespace
         if( from.has_effect_delay() )
             to->mutable_effect_delay()->set_value( from.effect_delay().value() );
         CONVERT_LIST( resource_networks, network, ConvertResourceNetwork );
+        if( from.has_burn() )
+        {
+            to->mutable_burn()->set_current_heat( from.burn().current_heat() );
+            to->mutable_burn()->set_combustion_energy( from.burn().combustion_energy() );
+        }
+        if( from.has_burn_surface() )
+        {
+            to->mutable_burn_surface()->set_cell_size( from.burn_surface().cell_size() );
+            CONVERT_LIST( burn_surface, burning_cells, ConvertBurnSurfaceBurningCell );
+        }
+        if( from.has_lodging() )
+        {
+            to->mutable_lodging();
+            if( from.lodging().has_capacity() )
+                to->mutable_lodging()->set_capacity( from.lodging().capacity() );
+        }
+        if( from.has_trafficability() )
+            to->mutable_trafficability()->set_value( from.trafficability().value() );
+        if( from.has_underground() )
+        {
+            to->mutable_underground()->set_network_name( from.underground().network_name() );
+            to->mutable_underground()->set_available( from.underground().available() );
+        }
     }
 }
 
