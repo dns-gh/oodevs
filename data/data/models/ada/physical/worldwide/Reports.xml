@@ -545,7 +545,9 @@
   <report category="operational" id="375" message="Invalid underground network issue"/>
   <report category="operational" id="376" message="Underground network issue is not operationnal(state inactivated) or the unit is already underground"/>
   <report category="operational" id="377" message="Cannot reach objective"/>
-  <report category="operational" id="378" message="Explosion on a mine cluster"/>
+  <report category="operational" id="378" message="Explosion on %1">
+    <parameter type="String"/>
+  </report>
   <report category="operational" id="379" message="Pathfind - Warning"/>
   <report category="operational" id="380" message="Unavailable dotation"/>
   <report category="operational" id="381" message="Indirect fire effect observation"/>
@@ -572,4 +574,4 @@
   <report category="operational" id="402" message="Already disengaged"/>
   <report category="operational" id="403" message="No platoon can do the main effect"/>
 </reports>
-<!-- signature="1455386328" -->
+<!-- signature="3162467361" -->
