@@ -26,7 +26,6 @@ namespace
     public:
         Fixture()
             : receiver        ( publisher, remoteResolver, localResolver, factory )
-            , entityImpact    ( 1 )
             , sourceIdentifier( 42 )
             , targetIdentifier( 43 )
         {
@@ -38,7 +37,6 @@ namespace
         MockContextFactory factory;
         DirectFireReceiver receiver;
         interactions::MunitionDetonation parameters;
-        const int8 entityImpact;
         const unsigned int sourceIdentifier;
         const unsigned int targetIdentifier;
     };
@@ -50,7 +48,6 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_sends_create_direct_fire_order_whe
     MOCK_EXPECT( remoteResolver, ResolveName ).once().with( "remote source" ).returns( sourceIdentifier );
     MOCK_EXPECT( localResolver, ResolveName ).once().with( "local target" ).returns( targetIdentifier );
     MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
-    parameters.detonationResultCode = entityImpact;
     parameters.firingObjectIdentifier = Omt13String( "remote source" );
     parameters.targetObjectIdentifier = Omt13String( "local target" );
     receiver.Receive( parameters );
