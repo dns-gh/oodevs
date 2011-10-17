@@ -41,6 +41,7 @@ FilterDialog::FilterDialog( QWidget* parent, xml::xistream& xis, const tools::Ex
         Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterDialog", "Description:" ), this, "FilterDialog_DescriptionGroupBox" );
         box->setMinimumHeight( 80 );
         description_ = new QLabel( box, "FilterDialog_DescriptionLabel" );
+        description_->setWordWrap( true );
         mainLayout->addWidget( box );
     }
     // Parameters
