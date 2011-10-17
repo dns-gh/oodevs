@@ -143,10 +143,12 @@ message MsgSessionStatus{
         running     = 1;
         paused      = 2;
         not_running = 3;
+        breakdown   = 4;
     }
-    required string     exercise   = 1;
-    required string     session    = 2;
-    required Status     status = 3;
+    required string     exercise              = 1;
+    required string     session               = 2;
+    required Status     status                = 3;
+    optional string     breakdown_information = 4;
 }
 
 // response to session parameter change request
@@ -214,7 +216,7 @@ message MsgSessionNotification {
        required UnitId    unit       = 1;
        optional Extension extensions = 2;
     }
-    message FormationUpdate {
+    message FormationUpdate { 
        required FormationId formation  = 1;
        optional Extension   extensions = 2;
     }
@@ -222,7 +224,7 @@ message MsgSessionNotification {
         required Profile profile = 1;
     }
     message ProfileUpdate { 
-        required Profile profile = 1;
+        required Profile    profile = 1;
     }
     message ExportCreation { 
         required string    export_directory = 1;
@@ -249,7 +251,7 @@ message MsgControlInformation {
 
 message MsgClientConnectionNotification {
     message ClientConnection {
-       required string login = 1;
+       required string login     = 1;
        required bool   connected = 2;
     }
     required string           exercise   = 1;

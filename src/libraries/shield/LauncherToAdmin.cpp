@@ -142,9 +142,11 @@ void LauncherToAdmin::Convert( const sword::SessionStatus& from, MsgsLauncherToA
     CONVERT_ENUM( status, ( sword::SessionStatus::starting, MsgsLauncherToAdmin::MsgSessionStatus::starting )
                               ( sword::SessionStatus::running, MsgsLauncherToAdmin::MsgSessionStatus::running )
                               ( sword::SessionStatus::paused, MsgsLauncherToAdmin::MsgSessionStatus::paused )
+                              ( sword::SessionStatus::breakdown, MsgsLauncherToAdmin::MsgSessionStatus::breakdown )
                               ( sword::SessionStatus::not_running, MsgsLauncherToAdmin::MsgSessionStatus::not_running ) );
     CONVERT( exercise );
     CONVERT( session );
+    CONVERT( breakdown_information );
 }
 
 // -----------------------------------------------------------------------------

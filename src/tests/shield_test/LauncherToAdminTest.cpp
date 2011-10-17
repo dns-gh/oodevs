@@ -92,6 +92,16 @@ BOOST_FIXTURE_TEST_CASE( session_status_from_launcher_is_converted, ContextFixtu
     converter.ReceiveLauncherToAdmin( msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( session_status_with_breakdown_from_launcher_is_converted, ContextFixture< sword::LauncherToAdmin > )
+{
+    content.mutable_session_status()->set_status( sword::SessionStatus::breakdown );
+    content.mutable_session_status()->set_exercise("name") ;
+    content.mutable_session_status()->set_session("session") ;
+    content.mutable_session_status()->set_breakdown_information("breakdown!") ;
+    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { session_status { exercise: \"name\" session: \"session\" status: breakdown breakdown_information: \"breakdown!\" } }" ) );
+    converter.ReceiveLauncherToAdmin( msg );
+}
+
 BOOST_FIXTURE_TEST_CASE( session_parameter_change_response_from_launcher_is_converted, ContextFixture< sword::LauncherToAdmin > )
 {
     content.mutable_session_parameter_change_response()->set_error_code( sword::SessionParameterChangeResponse::session_not_running );
