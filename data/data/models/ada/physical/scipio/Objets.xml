@@ -265,7 +265,6 @@
   <object geometry="point polygon" name="plot ravitaillement" symbol="G*SPPR----****X" type="logistic support area">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <supply/>
   </object>
   <object geometry="point polygon" name="site decontamination" symbol="G*MPNDP---****X" type="decontamination site">
@@ -297,30 +296,22 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="aire poser" symbol="G*GPGAL---****X" type="landing area">
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="piste" symbol="G*GPGAZ---****X" type="trail">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
   </object>
   <object geometry="polygon" name="plate-forme" symbol="G*PLATFORM*****" type="platform">
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="zone mobilite amelioree" symbol="G*MPSP----****X" type="mobility enhanced area">
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="100" unit-speed-impact-mode="VitesseMaxAgent"/>
   </object>
   <object geometry="polygon" name="zone poser helicoptere" symbol="G*GPGAL---****X" type="landing area (helicopter)">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
   </object>
   <object geometry="polygon" name="aire logistique" symbol="G*SPAR----****X" type="logistic area">
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="line" name="itineraire logistique" symbol="G*SPLRM---****X" type="logistic route">
     <bypassable bypass-speed="-1"/>
@@ -466,4 +457,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="1419253303" -->
+<!-- signature="3545011224" -->
