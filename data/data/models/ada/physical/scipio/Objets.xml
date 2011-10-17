@@ -300,6 +300,7 @@
   </object>
   <object geometry="polygon" name="piste" symbol="G*GPGAZ---****X" type="trail">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="90" unit-speed-impact-mode="VitesseMaxAgent"/>
   </object>
   <object geometry="polygon" name="plate-forme" symbol="G*PLATFORM*****" type="platform">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
@@ -458,4 +459,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="0938599563" -->
+<!-- signature="2646407262" -->
