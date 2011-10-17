@@ -470,62 +470,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_MILICE_PrendreEtTenir" dia-type="T_Mission_Pion_MILICE_PrendreEtTenir" id="149" name="PION MILICE Prendre Et Tenir" package="attack">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="pointAPrendre_" name="Point a prendre" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_MILICE_DetruireEmbuscade" dia-type="T_Mission_Pion_MILICE_DetruireEmbuscade" id="150" name="PION MILICE Detruire Embuscade" package="attack">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positionEmbuscade_" name="Position embuscade" optional="false" type="Point"/>
-      <parameter dia-name="positionRegroupement_" name="Position regroupement" optional="false" type="Point"/>
-      <parameter dia-name="natureObstacle_" name="Nature obstacle" optional="false" type="Enumeration">
-        <value id="0" name="bouchon_mines"/>
-        <value id="1" name="zone_minee_lineaire"/>
-        <value id="2" name="zone_minee_par_dispersion"/>
-        <value id="3" name="fosse_anti_char"/>
-        <value id="4" name="abattis"/>
-        <value id="5" name="barricade"/>
-        <value id="6" name="eboulement"/>
-        <value id="7" name="destruction_route"/>
-        <value id="8" name="destruction_pont"/>
-        <value id="9" name="pont_flottant_continu"/>
-        <value id="10" name="poste_tir"/>
-        <value id="11" name="zone_protegee"/>
-        <value id="12" name="zone_implantation_canon"/>
-        <value id="13" name="zone_implantation_cobra"/>
-        <value id="14" name="zone_implantation_lrm"/>
-        <value id="15" name="site_franchissement"/>
-        <value id="16" name="nuage_nbc"/>
-        <value id="17" name="plot_ravitaillement"/>
-        <value id="18" name="site_decontamination"/>
-        <value id="19" name="zone_brouillage_brod"/>
-        <value id="20" name="rota"/>
-        <value id="21" name="zone_nbc"/>
-        <value id="22" name="zone_brouillage_bromure"/>
-        <value id="23" name="aire_poser"/>
-        <value id="24" name="piste"/>
-        <value id="25" name="plateforme"/>
-        <value id="26" name="zone_mobilite_amelioree"/>
-        <value id="27" name="zone_poser_helicoptere"/>
-        <value id="28" name="aire_logistique"/>
-        <value id="29" name="itineraire_logistique"/>
-        <value id="30" name="camp_prisonniers"/>
-        <value id="31" name="camp_refugies"/>
-        <value id="32" name="poste_controle"/>
-        <value id="33" name="terrain_largage"/>
-        <value id="34" name="zone_interdite_mouvement"/>
-        <value id="35" name="zone_interdite_tir"/>
-        <value id="36" name="zone_implantation_mortier"/>
-        <value id="37" name="pont_flottant_discontinu"/>
-        <value id="38" name="installation"/>
-      </parameter>
-    </mission>
     <mission dia-behavior="MIS_Pion_JOINT_AIR_EffectuerRaid" dia-type="T_Mission_Pion_JOINT_AIR_EffectuerRaid" id="151" name="PION JOINT AIR Effectuer Raid" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -3062,7 +3006,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Reconnaitre" dia-type="france.military.company.tasks.CircuReconnaitre" id="3006" mrt-dia-behavior="france.military.company.tasks.Reconnaitre" name="AUTOMATE CIRCULATION Reconnaitre" symbol="IdReconnaitre_Poly-ligne">
+    <mission cdt-dia-behavior="france.military.company.combat.support.circu.tasks.Reconnaitre" dia-type="france.military.company.combat.support.circu.tasks.Reconnaitre" id="3006" mrt-dia-behavior="france.military.company.combat.support.circu.tasks.Reconnaitre" name="AUTOMATE CIRCULATION Reconnaitre" symbol="IdReconnaitre_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3321,4 +3265,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Desengager" id="400" name="Pion Desengager"/>
   </fragorders>
 </missions>
-<!-- signature="4046583987" -->
+<!-- signature="3630287272" -->
