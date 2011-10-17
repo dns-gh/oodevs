@@ -29,6 +29,8 @@ MOCK_BASE_CLASS( MockTransportationController, TransportationController_ABC )
     MOCK_METHOD( OfferReceived, 4 )
     MOCK_METHOD( ServiceStarted, 1 )
     MOCK_METHOD( NotifyEmbarkationStatus, 3 )
+    MOCK_METHOD( NotifyDisembarkationStatus, 3 )
+    MOCK_METHOD( ServiceComplete, 2 )
 };
 
 }

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnServiceStarted_h
-#define plugins_hla_NetnServiceStarted_h
+#ifndef plugins_hla_NetnServiceReceived_h
+#define plugins_hla_NetnServiceReceived_h
 
 #include "InteractionSender_ABC.h"
 #include <hla/InteractionNotification_ABC.h>
@@ -27,36 +27,43 @@ namespace hla
 
 namespace interactions
 {
-    struct NetnServiceStarted;
+    struct NetnServiceReceived;
 }
 // =============================================================================
-/** @class  NetnServiceStarted
+/** @class  NetnServiceReceived
     @brief  Netn service started
 */
 // Created: VPR 2011-10-12
 // =============================================================================
-class NetnServiceStarted : public InteractionSender_ABC< interactions::NetnServiceStarted >
+class NetnServiceReceived : public InteractionSender_ABC< interactions::NetnServiceReceived >
+                          , private ::hla::InteractionNotification_ABC< interactions::NetnServiceReceived >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnServiceStarted( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted >& notification );
-    virtual ~NetnServiceStarted();
+    explicit NetnServiceReceived( Federate_ABC& federate );
+    virtual ~NetnServiceReceived();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const interactions::NetnServiceStarted& interaction );
+    virtual void Send( const interactions::NetnServiceReceived& interaction );
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void Receive( interactions::NetnServiceReceived& interaction );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::Interaction< interactions::NetnServiceStarted > > pInteraction_;
+    std::auto_ptr< ::hla::Interaction< interactions::NetnServiceReceived > > pInteraction_;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_NetnServiceStarted_h
+#endif // plugins_hla_NetnServiceReceived_h

@@ -46,6 +46,8 @@ public:
     virtual void OfferReceived( unsigned int context, bool fullOffer, const std::string& provider, const interactions::ListOfTransporters& listOfTransporters ) = 0;
     virtual void ServiceStarted( unsigned int context ) = 0;
     virtual void NotifyEmbarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits ) = 0;
+    virtual void NotifyDisembarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits ) = 0;
+    virtual void ServiceComplete( unsigned int context, const std::string& provider ) = 0;
     //@}
 };
 

@@ -11,6 +11,7 @@
     <missions>
         <transport>Common - request transport</transport>
         <embarkment>Common - transport embark</embarkment>
+        <disembarkment>Common - transport disembark</disembarkment>
     </missions>
     <reports>
         <mission-complete>12</mission-complete>

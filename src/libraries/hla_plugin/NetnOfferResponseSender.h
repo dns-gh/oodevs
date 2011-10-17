@@ -21,6 +21,7 @@ namespace interactions
     struct NetnAcceptOffer;
     struct NetnRejectOfferConvoy;
     struct NetnReadyToReceiveService;
+    struct NetnServiceReceived;
 }
 
     class TransportationController_ABC;
@@ -40,7 +41,8 @@ public:
              NetnOfferResponseSender( TransportationController_ABC& controller,
                                       InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptOfferSender,
                                       InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectOfferSender,
-                                      InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readyToReceiveServiceSender );
+                                      InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readyToReceiveServiceSender,
+                                      InteractionSender_ABC< interactions::NetnServiceReceived >& serviceReceivedSender );
     virtual ~NetnOfferResponseSender();
     //@}
 
@@ -53,6 +55,7 @@ private:
     virtual void OfferAccepted( unsigned int context, const std::string& provider );
     virtual void OfferRejected( unsigned int context, const std::string& provider, const std::string& reason );
     virtual void ReadyToReceiveService( unsigned int context, const std::string& provider );
+    virtual void ServiceReceived( unsigned int context, const std::string& provider );
     //@}
 
 private:
@@ -62,6 +65,7 @@ private:
     InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptOfferSender_;
     InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectOfferSender_;
     InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readyToReceiveServiceSender_;
+    InteractionSender_ABC< interactions::NetnServiceReceived >& serviceReceivedSender_;
     //@}
 };
 

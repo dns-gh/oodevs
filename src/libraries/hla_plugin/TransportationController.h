@@ -79,6 +79,8 @@ public:
     virtual void OfferReceived( unsigned int context, bool fullOffer, const std::string& provider, const interactions::ListOfTransporters& listOfTransporters );
     virtual void ServiceStarted( unsigned int context );
     virtual void NotifyEmbarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits );
+    virtual void NotifyDisembarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits );
+    virtual void ServiceComplete( unsigned int context, const std::string& provider );
     //@}
 
 private:
@@ -114,6 +116,7 @@ private:
     //@{
     const unsigned int transportIdentifier_;
     const unsigned int embarkmentIdentifier_;
+    const unsigned int disembarkmentIdentifier_;
     const unsigned int missionCompleteReportId_;
     const CallsignResolver_ABC& callsignResolver_;
     const Subordinates_ABC& subordinates_;
@@ -124,6 +127,9 @@ private:
     T_Requests acceptedRequests_;
     T_Requests readyToReceiveRequests_;
     T_Requests serviceStartedRequests_;
+    T_Requests embarkedRequests_;
+    T_Requests debarkedRequests_;
+    T_Requests completeRequests_;
     T_ContextRequests contextRequests_;
     //@}
 };

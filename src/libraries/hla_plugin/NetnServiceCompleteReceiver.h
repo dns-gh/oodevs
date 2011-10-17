@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnServiceStartedReceiver_h
-#define plugins_hla_NetnServiceStartedReceiver_h
+#ifndef plugins_hla_NetnServiceCompleteReceiver_h
+#define plugins_hla_NetnServiceCompleteReceiver_h
 
 #include <hla/InteractionNotification_ABC.h>
 
@@ -18,28 +18,28 @@ namespace hla
 {
 namespace interactions
 {
-    struct NetnServiceStarted;
+    struct NetnServiceComplete;
 }
     class TransportationController_ABC;
 
 // =============================================================================
-/** @class  NetnServiceStartedReceiver
+/** @class  NetnServiceCompleteReceiver
     @brief  Netn service started receiver
 */
 // Created: SLI 2011-10-12
 // =============================================================================
-class NetnServiceStartedReceiver : public ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted >
+class NetnServiceCompleteReceiver : public ::hla::InteractionNotification_ABC< interactions::NetnServiceComplete >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NetnServiceStartedReceiver( TransportationController_ABC& controller );
-    virtual ~NetnServiceStartedReceiver();
+    explicit NetnServiceCompleteReceiver( TransportationController_ABC& controller );
+    virtual ~NetnServiceCompleteReceiver();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Receive( interactions::NetnServiceStarted& interaction );
+    virtual void Receive( interactions::NetnServiceComplete& interaction );
     //@}
 
 private:
@@ -52,4 +52,4 @@ private:
 }
 }
 
-#endif // plugins_hla_NetnServiceStartedReceiver_h
+#endif // plugins_hla_NetnServiceCompleteReceiver_h

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnServiceStarted_h
-#define plugins_hla_NetnServiceStarted_h
+#ifndef plugins_hla_NetnConvoyDestroyedEntities_h
+#define plugins_hla_NetnConvoyDestroyedEntities_h
 
 #include "InteractionSender_ABC.h"
 #include <hla/InteractionNotification_ABC.h>
@@ -27,36 +27,43 @@ namespace hla
 
 namespace interactions
 {
-    struct NetnServiceStarted;
+    struct NetnConvoyDestroyedEntities;
 }
 // =============================================================================
-/** @class  NetnServiceStarted
+/** @class  NetnConvoyDestroyedEntities
     @brief  Netn service started
 */
 // Created: VPR 2011-10-12
 // =============================================================================
-class NetnServiceStarted : public InteractionSender_ABC< interactions::NetnServiceStarted >
+class NetnConvoyDestroyedEntities : public InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities >
+                                  , private ::hla::InteractionNotification_ABC< interactions::NetnConvoyDestroyedEntities >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnServiceStarted( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted >& notification );
-    virtual ~NetnServiceStarted();
+    explicit NetnConvoyDestroyedEntities( Federate_ABC& federate );
+    virtual ~NetnConvoyDestroyedEntities();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const interactions::NetnServiceStarted& interaction );
+    virtual void Send( const interactions::NetnConvoyDestroyedEntities& interaction );
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void Receive( interactions::NetnConvoyDestroyedEntities& interaction );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::Interaction< interactions::NetnServiceStarted > > pInteraction_;
+    std::auto_ptr< ::hla::Interaction< interactions::NetnConvoyDestroyedEntities > > pInteraction_;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_NetnServiceStarted_h
+#endif // plugins_hla_NetnConvoyDestroyedEntities_h

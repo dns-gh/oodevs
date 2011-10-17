@@ -30,6 +30,7 @@ namespace
         MockInteractionSender< interactions::NetnAcceptOffer > acceptOfferSender;
         MockInteractionSender< interactions::NetnRejectOfferConvoy > rejectOfferSender;
         MockInteractionSender< interactions::NetnReadyToReceiveService > readyToReceiveServiceSender;
+        MockInteractionSender< interactions::NetnServiceReceived > serviceReceivedSender;
         MockTransportationController controller;
         TransportationListener_ABC* transportationListener;
         const int context;
@@ -38,7 +39,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( netn_offer_response_sender_sends_accept_offer_when_notified, Fixture )
 {
-    NetnOfferResponseSender sender( controller, acceptOfferSender, rejectOfferSender, readyToReceiveServiceSender );
+    NetnOfferResponseSender sender( controller, acceptOfferSender, rejectOfferSender, readyToReceiveServiceSender, serviceReceivedSender );
     BOOST_REQUIRE( transportationListener );
     interactions::NetnAcceptOffer acceptation;
     MOCK_EXPECT( acceptOfferSender, Send ).once().with( mock::retrieve( acceptation ) );
@@ -52,7 +53,7 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_response_sender_sends_accept_offer_when_noti
 
 BOOST_FIXTURE_TEST_CASE( netn_offer_response_sender_sends_reject_offer_when_notified, Fixture )
 {
-    NetnOfferResponseSender sender( controller, acceptOfferSender, rejectOfferSender, readyToReceiveServiceSender );
+    NetnOfferResponseSender sender( controller, acceptOfferSender, rejectOfferSender, readyToReceiveServiceSender, serviceReceivedSender );
     BOOST_REQUIRE( transportationListener );
     interactions::NetnRejectOfferConvoy rejection;
     MOCK_EXPECT( rejectOfferSender, Send ).once().with( mock::retrieve( rejection ) );
@@ -67,7 +68,7 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_response_sender_sends_reject_offer_when_noti
 
 BOOST_FIXTURE_TEST_CASE( netn_offer_response_sender_sends_ready_to_receive_service_when_notified, Fixture )
 {
-    NetnOfferResponseSender sender( controller, acceptOfferSender, rejectOfferSender, readyToReceiveServiceSender );
+    NetnOfferResponseSender sender( controller, acceptOfferSender, rejectOfferSender, readyToReceiveServiceSender, serviceReceivedSender );
     BOOST_REQUIRE( transportationListener );
     interactions::NetnReadyToReceiveService ready;
     MOCK_EXPECT( readyToReceiveServiceSender, Send ).once().with( mock::retrieve( ready ) );
@@ -77,4 +78,18 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_response_sender_sends_ready_to_receive_servi
     BOOST_CHECK_EQUAL( ready.consumer.str(), "SWORD" );
     BOOST_CHECK_EQUAL( ready.provider.str(), "provider" );
     BOOST_CHECK_EQUAL( ready.serviceType, 4 );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_offer_response_sender_sends_service_received_when_notified, Fixture )
+{
+    NetnOfferResponseSender sender( controller, acceptOfferSender, rejectOfferSender, readyToReceiveServiceSender, serviceReceivedSender );
+    BOOST_REQUIRE( transportationListener );
+    interactions::NetnServiceReceived received;
+    MOCK_EXPECT( serviceReceivedSender, Send ).once().with( mock::retrieve( received ) );
+    transportationListener->ServiceReceived( context, "provider" );
+    BOOST_CHECK_EQUAL( received.serviceId.eventCount, context );
+    BOOST_CHECK_EQUAL( received.serviceId.issuingObjectIdentifier.str(), "SWORD" );
+    BOOST_CHECK_EQUAL( received.consumer.str(), "SWORD" );
+    BOOST_CHECK_EQUAL( received.provider.str(), "provider" );
+    BOOST_CHECK_EQUAL( received.serviceType, 4 );
 }

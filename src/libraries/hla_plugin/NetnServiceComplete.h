@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnServiceStarted_h
-#define plugins_hla_NetnServiceStarted_h
+#ifndef plugins_hla_NetnServiceComplete_h
+#define plugins_hla_NetnServiceComplete_h
 
 #include "InteractionSender_ABC.h"
 #include <hla/InteractionNotification_ABC.h>
@@ -27,36 +27,36 @@ namespace hla
 
 namespace interactions
 {
-    struct NetnServiceStarted;
+    struct NetnServiceComplete;
 }
 // =============================================================================
-/** @class  NetnServiceStarted
+/** @class  NetnServiceComplete
     @brief  Netn service started
 */
 // Created: VPR 2011-10-12
 // =============================================================================
-class NetnServiceStarted : public InteractionSender_ABC< interactions::NetnServiceStarted >
+class NetnServiceComplete : public InteractionSender_ABC< interactions::NetnServiceComplete >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnServiceStarted( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted >& notification );
-    virtual ~NetnServiceStarted();
+             NetnServiceComplete( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnServiceComplete >& notification );
+    virtual ~NetnServiceComplete();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const interactions::NetnServiceStarted& interaction );
+    virtual void Send( const interactions::NetnServiceComplete& interaction );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::Interaction< interactions::NetnServiceStarted > > pInteraction_;
+    std::auto_ptr< ::hla::Interaction< interactions::NetnServiceComplete > > pInteraction_;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_NetnServiceStarted_h
+#endif // plugins_hla_NetnServiceComplete_h

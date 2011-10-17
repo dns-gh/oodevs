@@ -22,11 +22,13 @@ using namespace plugins::hla;
 NetnOfferResponseSender::NetnOfferResponseSender( TransportationController_ABC& controller,
                                                   InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptOfferSender,
                                                   InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectOfferSender,
-                                                  InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readyToReceiveServiceSender )
+                                                  InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readyToReceiveServiceSender,
+                                                  InteractionSender_ABC< interactions::NetnServiceReceived >& serviceReceivedSender )
     : controller_                 ( controller )
     , acceptOfferSender_          ( acceptOfferSender )
     , rejectOfferSender_          ( rejectOfferSender )
     , readyToReceiveServiceSender_( readyToReceiveServiceSender )
+    , serviceReceivedSender_      ( serviceReceivedSender )
 {
     controller_.Register( *this );
 }
@@ -92,4 +94,18 @@ void NetnOfferResponseSender::ReadyToReceiveService( unsigned int context, const
     ready.provider = UnicodeString( provider );
     ready.serviceType = 4; // Convoy
     readyToReceiveServiceSender_.Send( ready );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnOfferResponseSender::ServiceReceived
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnOfferResponseSender::ServiceReceived( unsigned int context, const std::string& provider )
+{
+    interactions::NetnServiceReceived received;
+    received.serviceId = NetnEventIdentifier( context, "SWORD" );
+    received.consumer = UnicodeString( "SWORD" );
+    received.provider = UnicodeString( provider );
+    received.serviceType = 4; // Convoy
+    serviceReceivedSender_.Send( received );
 }

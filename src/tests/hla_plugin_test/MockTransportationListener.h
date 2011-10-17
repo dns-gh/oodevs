@@ -29,6 +29,7 @@ MOCK_BASE_CLASS( MockTransportationListener, TransportationListener_ABC )
     MOCK_METHOD( OfferAccepted, 2 )
     MOCK_METHOD( OfferRejected, 3 )
     MOCK_METHOD( ReadyToReceiveService, 2 )
+    MOCK_METHOD( ServiceReceived, 2 )
 };
 
 }

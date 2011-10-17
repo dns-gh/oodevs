@@ -43,6 +43,7 @@ public:
     virtual void OfferAccepted( unsigned int context, const std::string& provider ) = 0;
     virtual void OfferRejected( unsigned int context, const std::string& provider, const std::string& reason ) = 0;
     virtual void ReadyToReceiveService( unsigned int context, const std::string& provider ) = 0;
+    virtual void ServiceReceived( unsigned int context, const std::string& provider ) = 0;
     //@}
 };
 

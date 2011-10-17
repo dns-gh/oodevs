@@ -58,11 +58,16 @@ namespace interactions
 {
     struct NetnRequestConvoy;
     struct NetnOfferConvoy;
+    struct NetnCancelConvoy;
     struct NetnAcceptOffer;
     struct NetnRejectOfferConvoy;
     struct NetnReadyToReceiveService;
     struct NetnServiceStarted;
+    struct NetnServiceComplete;
+    struct NetnServiceReceived;
     struct NetnConvoyEmbarkmentStatus;
+    struct NetnConvoyDisembarkmentStatus;
+    struct NetnConvoyDestroyedEntities;
 }
 
 // =============================================================================
@@ -102,11 +107,18 @@ private:
     std::auto_ptr< InteractionSender_ABC< interactions::NetnServiceStarted > > pNetnServiceStarted_;
     std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnConvoyEmbarkmentStatus > > pNetnConvoyEmbarkmentStatusReceiver_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus > > pNetnConvoyEmbarkmentStatus_;
+    std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnConvoyDisembarkmentStatus > > pNetnConvoyDisembarkmentStatusReceiver_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus > > pNetnConvoyDisembarkmentStatus_;
     std::auto_ptr< NetnOfferConvoySender > pNetnOfferConvoySender_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnAcceptOffer > > pNetnAcceptOffer_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnRejectOfferConvoy > > pNetnRejectOfferConvoy_;
     std::auto_ptr< InteractionSender_ABC< interactions::NetnReadyToReceiveService > > pNetnReadyToReceiveService_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnServiceReceived > > pNetnServiceReceived_;
     std::auto_ptr< NetnOfferResponseSender > pNetnOfferResponseSender_;
+    std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnServiceComplete > > pNetnServiceCompleteReceiver_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnServiceComplete > > pNetnServiceComplete_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnCancelConvoy > > pNetnCancelConvoy_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities > > pNetnConvoyDestroyedEntities_;
     //@}
 };
 

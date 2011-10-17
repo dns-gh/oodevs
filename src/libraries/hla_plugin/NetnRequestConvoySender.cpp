@@ -106,3 +106,12 @@ void NetnRequestConvoySender::ReadyToReceiveService( unsigned int /*context*/, c
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: NetnRequestConvoySender::ServiceReceived
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void NetnRequestConvoySender::ServiceReceived( unsigned int /*context*/, const std::string& /*provider*/ )
+{
+    // NOTHING
+}

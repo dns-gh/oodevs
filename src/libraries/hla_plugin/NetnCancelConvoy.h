@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnServiceStarted_h
-#define plugins_hla_NetnServiceStarted_h
+#ifndef plugins_hla_NetnCancelConvoy_h
+#define plugins_hla_NetnCancelConvoy_h
 
 #include "InteractionSender_ABC.h"
 #include <hla/InteractionNotification_ABC.h>
@@ -27,36 +27,40 @@ namespace hla
 
 namespace interactions
 {
-    struct NetnServiceStarted;
+    struct NetnCancelConvoy;
 }
 // =============================================================================
-/** @class  NetnServiceStarted
+/** @class  NetnCancelConvoy
     @brief  Netn service started
 */
 // Created: VPR 2011-10-12
 // =============================================================================
-class NetnServiceStarted : public InteractionSender_ABC< interactions::NetnServiceStarted >
+class NetnCancelConvoy : public InteractionSender_ABC< interactions::NetnCancelConvoy >
+                       , private ::hla::InteractionNotification_ABC< interactions::NetnCancelConvoy >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnServiceStarted( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted >& notification );
-    virtual ~NetnServiceStarted();
+    explicit NetnCancelConvoy( Federate_ABC& federate );
+    virtual ~NetnCancelConvoy();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const interactions::NetnServiceStarted& interaction );
+    virtual void Send( const interactions::NetnCancelConvoy& interaction );
     //@}
+
+private:
+    virtual void Receive( interactions::NetnCancelConvoy& interaction );
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::Interaction< interactions::NetnServiceStarted > > pInteraction_;
+    std::auto_ptr< ::hla::Interaction< interactions::NetnCancelConvoy > > pInteraction_;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_NetnServiceStarted_h
+#endif // plugins_hla_NetnCancelConvoy_h

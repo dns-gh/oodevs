@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnServiceStarted_h
-#define plugins_hla_NetnServiceStarted_h
+#ifndef plugins_hla_NetnConvoyDisembarkmentStatus_h
+#define plugins_hla_NetnConvoyDisembarkmentStatus_h
 
 #include "InteractionSender_ABC.h"
 #include <hla/InteractionNotification_ABC.h>
@@ -27,36 +27,36 @@ namespace hla
 
 namespace interactions
 {
-    struct NetnServiceStarted;
+    struct NetnConvoyDisembarkmentStatus;
 }
 // =============================================================================
-/** @class  NetnServiceStarted
+/** @class  NetnConvoyDisembarkmentStatus
     @brief  Netn service started
 */
 // Created: VPR 2011-10-12
 // =============================================================================
-class NetnServiceStarted : public InteractionSender_ABC< interactions::NetnServiceStarted >
+class NetnConvoyDisembarkmentStatus : public InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnServiceStarted( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted >& notification );
-    virtual ~NetnServiceStarted();
+             NetnConvoyDisembarkmentStatus( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnConvoyDisembarkmentStatus >& notification );
+    virtual ~NetnConvoyDisembarkmentStatus();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send( const interactions::NetnServiceStarted& interaction );
+    virtual void Send( const interactions::NetnConvoyDisembarkmentStatus& interaction );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::Interaction< interactions::NetnServiceStarted > > pInteraction_;
+    std::auto_ptr< ::hla::Interaction< interactions::NetnConvoyDisembarkmentStatus > > pInteraction_;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_NetnServiceStarted_h
+#endif // plugins_hla_NetnConvoyDisembarkmentStatus_h

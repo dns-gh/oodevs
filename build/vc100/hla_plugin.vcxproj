@@ -123,6 +123,10 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAcceptOffer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAircraft.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnCancelConvoy.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyDestroyedEntities.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyDisembarkmentStatus.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyDisembarkmentStatusReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatus.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatusReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoy.cpp" />
@@ -137,6 +141,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoySender.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceComplete.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceCompleteReceiver.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceReceived.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceStarted.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
@@ -223,6 +230,10 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAcceptOffer.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAircraft.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnCancelConvoy.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyDestroyedEntities.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyDisembarkmentStatus.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyDisembarkmentStatusReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatus.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatusReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoy.h" />
@@ -237,6 +248,9 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoySender.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceComplete.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceCompleteReceiver.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceReceived.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceStarted.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h" />

@@ -43,11 +43,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
     //! @name Member data
     //@{
     TransportationController_ABC& controller_;

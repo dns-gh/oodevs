@@ -56,6 +56,7 @@ TransportationController::TransportationController( xml::xisubstream xis, const 
                                                     const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher )
     : transportIdentifier_    ( ResolveMission( xis, resolver, "transport" ) )
     , embarkmentIdentifier_   ( ResolveMission( xis, resolver, "embarkment" ) )
+    , disembarkmentIdentifier_( ResolveMission( xis, resolver, "disembarkment" ) )
     , missionCompleteReportId_( ResolveReportId( xis ) )
     , callsignResolver_       ( callsignResolver )
     , subordinates_           ( subordinates )
@@ -198,7 +199,7 @@ void TransportationController::OfferReceived( unsigned int context, bool fullOff
     }
     else
         BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
-            listener->OfferRejected( context, provider, "Not offering service or partial offer" );
+            listener->OfferRejected( context, provider, "Offering only partial offer" );
 }
 
 // -----------------------------------------------------------------------------
@@ -299,4 +300,53 @@ void TransportationController::NotifyEmbarkationStatus( unsigned int context, co
     coord->set_latitude( contextRequest.embarkmentPoint.X() );
     coord->set_longitude( contextRequest.embarkmentPoint.Y() );
     order.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationController::NotifyDisembarkationStatus
+// Created: SLI 2011-10-17
+// -----------------------------------------------------------------------------
+void TransportationController::NotifyDisembarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits )
+{
+    T_Requests::left_const_iterator request = serviceStartedRequests_.left.find( context );
+    if( request == serviceStartedRequests_.left.end() )
+        return;
+    const TransportedSubordinatesChecker checker( subordinates_, transportedUnits, request->second ) ;
+    if( !checker.AreAllSubordinatesEmbarked() || checker.transportedUnits_.empty() )
+        return;
+    const T_Request& contextRequest = contextRequests_[ context ];
+    const std::string transporterUniqueId = ResolveUniqueIdFromCallsign( transporterCallsign, contextRequest.listOfTransporters );
+    const unsigned int transporterId = callsignResolver_.ResolveSimulationIdentifier( transporterUniqueId );
+    std::vector< unsigned int > transportedUnitsIdentifiers;
+    BOOST_FOREACH( const std::string& uniqueId, checker.transportedUnits_ )
+        transportedUnitsIdentifiers.push_back( callsignResolver_.ResolveSimulationIdentifier( uniqueId ) );
+    simulation::UnitOrder order;
+    order().mutable_tasker()->set_id( transporterId );
+    order().mutable_type()->set_id( disembarkmentIdentifier_ );
+    order().mutable_parameters()->add_elem()->add_value()->mutable_heading()->set_heading( 0 );
+    order().mutable_parameters()->add_elem()->set_null_value( true );
+    order().mutable_parameters()->add_elem()->set_null_value( true );
+    order().mutable_parameters()->add_elem()->set_null_value( true );
+    sword::MissionParameter_Value* agentList = order().mutable_parameters()->add_elem()->add_value();
+    BOOST_FOREACH( const unsigned int id, transportedUnitsIdentifiers )
+        agentList->mutable_list()->Add()->mutable_agent()->set_id( id );
+    sword::Location* location = order().mutable_parameters()->add_elem()->add_value()->mutable_point()->mutable_location();
+    location->set_type( sword::Location::point );
+    sword::CoordLatLong* coord = location->mutable_coordinates()->add_elem();
+    coord->set_latitude( contextRequest.debarkmentPoint.X() );
+    coord->set_longitude( contextRequest.debarkmentPoint.Y() );
+    order.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationController::ServiceComplete
+// Created: SLI 2011-10-17
+// -----------------------------------------------------------------------------
+void TransportationController::ServiceComplete( unsigned int context, const std::string& provider )
+{
+    if( serviceStartedRequests_.left.find( context ) == serviceStartedRequests_.left.end() )
+        return;
+    Transfer( serviceStartedRequests_, completeRequests_, context );
+    BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
+        listener->ServiceReceived( context, provider );
 }

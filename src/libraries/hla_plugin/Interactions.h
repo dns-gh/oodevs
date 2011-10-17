@@ -111,6 +111,15 @@ struct NetnRejectOfferConvoy
     std::string reason;
 };
 
+struct NetnCancelConvoy
+{
+    NetnEventIdentifier serviceId;
+    UnicodeString consumer;
+    UnicodeString provider;
+    int8 serviceType;
+    std::string reason;
+};
+
 struct NetnAcceptOffer
 {
     NetnEventIdentifier serviceId;
@@ -135,6 +144,22 @@ struct NetnServiceStarted
     int8 serviceType;
 };
 
+struct NetnServiceComplete
+{
+    NetnEventIdentifier serviceId;
+    UnicodeString consumer;
+    UnicodeString provider;
+    int8 serviceType;
+};
+
+struct NetnServiceReceived
+{
+    NetnEventIdentifier serviceId;
+    UnicodeString consumer;
+    UnicodeString provider;
+    int8 serviceType;
+};
+
 struct NetnConvoyEmbarkmentStatus
 {
     NetnEventIdentifier serviceId;
@@ -144,6 +169,26 @@ struct NetnConvoyEmbarkmentStatus
     ListOfTransporters listOfObjectEmbarked;
     UnicodeString transportUnitIdentifier;
 };
+
+struct NetnConvoyDisembarkmentStatus
+{
+    NetnEventIdentifier serviceId;
+    UnicodeString consumer;
+    UnicodeString provider;
+    int8 serviceType;
+    ListOfTransporters listOfObjectDisembarked;
+    UnicodeString transportUnitIdentifier;
+};
+
+struct NetnConvoyDestroyedEntities
+{
+    NetnEventIdentifier serviceId;
+    UnicodeString consumer;
+    UnicodeString provider;
+    int8 serviceType;
+    ListOfTransporters listOfEmbarkedObjectDestroyed;
+};
+
 }
 }
 }
