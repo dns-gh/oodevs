@@ -21,7 +21,7 @@
         <effect percentage="0.05" wound="dead"/>
       </effects>
     </agent>
-    <agent category="chemical" id="2" name="Biologique">
+    <agent category="biological" id="2" name="Biologique">
       <effects affliction="true" type="liquid">
         <effect percentage="0" wound="healthy"/>
         <effect percentage="0.2" wound="u1"/>
@@ -78,7 +78,7 @@
         <effect percentage="0.2" wound="dead"/>
       </effects>
     </agent>
-    <agent category="chemical" id="6" name="Nucleaire">
+    <agent category="nuclear" id="6" name="Nucleaire">
       <effects affliction="true" contamination="true" type="liquid">
         <effect percentage="0" wound="healthy"/>
         <effect percentage="0.2" wound="u1"/>
@@ -158,4 +158,4 @@
     </agent>
   </agents>
 </nbc>
-<!-- signature="3591031379" -->
+<!-- signature="3216931242" -->
