@@ -1805,6 +1805,26 @@ double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau( MIL_AgentPion& 
     return pion.GetOrderManager().GetFuseau().ComputeAdvance( *point );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseauAutomat
+// Created: DDA 2011-10-17
+// -----------------------------------------------------------------------------
+double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseauAutomat( MIL_Automate& callerAutomate, MT_Vector2D* point )
+{
+    if( !point)
+        return 0.;
+    return callerAutomate.GetOrderManager().GetFuseau().ComputeAdvance( *point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetPointAlongFuseau
+// Created: LDC 2010-10-18
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetPointAlongFuseau( const MIL_Fuseau* pFuseau, double advance )
+{
+    return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( pFuseau->GetPositionAtAdvance( advance ) ) );
+}
+
 namespace
 {
     bool SortPredicate( const std::vector< boost::shared_ptr< MT_Vector2D > >& d1, const std::vector< boost::shared_ptr< MT_Vector2D > >& d2, const MT_Vector2D& direction )

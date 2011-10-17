@@ -43,6 +43,7 @@ public:
     //@{
     const TER_LimitData& CreateLimitData ( const T_PointVector& points );
     void  DestroyLimitData( const TER_LimitData& data );
+    static MIL_TacticalLineManager& GetSingleton();
     //@}
 
 private:

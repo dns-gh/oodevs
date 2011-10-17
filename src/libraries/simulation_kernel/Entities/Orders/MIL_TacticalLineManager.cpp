@@ -14,6 +14,11 @@
 #include "TER_LimitData.h"
 #include "MT_Tools/MT_ScipioException.h"
 
+namespace
+{
+    MIL_TacticalLineManager* singleton = 0;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_TacticalLineManager constructor
 // Created: NLD 2006-11-13
@@ -21,7 +26,7 @@
 MIL_TacticalLineManager::MIL_TacticalLineManager()
     : limitsData_()
 {
-    // NOTHING
+    singleton = this;
 }
 
 // -----------------------------------------------------------------------------
@@ -32,6 +37,7 @@ MIL_TacticalLineManager::~MIL_TacticalLineManager()
 {
     for( CIT_LimitDataMap it = limitsData_.begin(); it != limitsData_.end(); ++it )
         delete it->second;
+    singleton = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -55,4 +61,15 @@ void MIL_TacticalLineManager::DestroyLimitData( const TER_LimitData& data )
     if( limitsData_.erase( data.GetPoints() ) != 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     delete &data;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_TacticalLineManager::GetSingleton
+// Created: LDC 2011-10-13
+// -----------------------------------------------------------------------------
+MIL_TacticalLineManager& MIL_TacticalLineManager::GetSingleton()
+{
+    if( !singleton )
+        new MIL_TacticalLineManager();
+    return *singleton;
 }

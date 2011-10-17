@@ -59,6 +59,7 @@ public:
     double ComputeAverageDistanceFromLima     ( const MIL_LimaOrder& lima     , const MT_Vector2D& refPoint ) const;
     double ComputeAverageDistanceFromObjective( const DEC_Objective& objective, const MT_Vector2D& refPoint ) const;
     double ComputeAdvance                     ( const MT_Vector2D& position ) const;
+    MT_Vector2D GetPositionAtAdvance          ( double advance ) const;
 
     float ComputeOpenTerrainRatio  () const;
     float ComputeClosedTerrainRatio() const;

@@ -13,6 +13,7 @@
 class MIL_Time_ABC;
 class MIL_EntityManager_ABC;
 class MIL_ProfilerMgr;
+class MIL_TacticalLineManager;
 
 // =============================================================================
 /** @class  MIL_Singletons
@@ -28,6 +29,7 @@ public:
     static MIL_Time_ABC& GetTime();
     static MIL_EntityManager_ABC& GetEntityManager();
     static MIL_ProfilerMgr& GetProfiler();
+    static MIL_TacticalLineManager& GetTacticalLineManager();
 
     static void RegisterTime( MIL_Time_ABC& time );
     static void UnregisterTime( MIL_Time_ABC& time );

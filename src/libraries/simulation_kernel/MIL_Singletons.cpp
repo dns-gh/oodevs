@@ -12,6 +12,7 @@
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Orders/MIL_TacticalLineManager.h"
 
 namespace
 {
@@ -65,4 +66,9 @@ MIL_EntityManager_ABC& MIL_Singletons::GetEntityManager()
 MIL_ProfilerMgr& MIL_Singletons::GetProfiler()
 {
     return MIL_AgentServer::GetWorkspace().GetProfilerManager();
+}
+
+MIL_TacticalLineManager& MIL_Singletons::GetTacticalLineManager()
+{
+    return MIL_TacticalLineManager::GetSingleton();
 }
