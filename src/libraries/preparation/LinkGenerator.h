@@ -38,14 +38,19 @@ public:
     void GenerateFromAutomat( const kernel::Entity_ABC& automat );
     void GenerateFromFormation( const kernel::Entity_ABC& formation );
     void Generate( const kernel::Entity_ABC& entity );
+    void RemoveFromAutomat( const kernel::Entity_ABC& automat );
+    void RemoveFromFormation( const kernel::Entity_ABC& formation );
+    void Remove( const kernel::Entity_ABC& entity );
     //@}
 
 private:
     //! @name Helpers
     //@{
     bool IsLogisticBase( const kernel::Entity_ABC& entity ) const;
-    void SetLogisticSuperior( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior );
+    void AddLogisticSuperior( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior );
+    void RemoveLogisticSuperior( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior );
     void CreateLink( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& base, boost::function< bool( const kernel::Entity_ABC& ) > fun );
+    void DeleteLink( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& base );
     //@}
 };
 

@@ -85,6 +85,67 @@ void LinkGenerator::Generate( const kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LinkGenerator::RemoveFromAutomat
+// Created: LGY 2011-10-17
+// -----------------------------------------------------------------------------
+void LinkGenerator::RemoveFromAutomat( const kernel::Entity_ABC& automat )
+{
+    const kernel::Entity_ABC& formation = automat.Get< kernel::TacticalHierarchies >().GetUp();
+    DeleteLink( formation, automat );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LinkGenerator::RemoveFromFormation
+// Created: LGY 2011-10-17
+// -----------------------------------------------------------------------------
+void LinkGenerator::RemoveFromFormation( const kernel::Entity_ABC& formation )
+{
+    DeleteLink( formation, formation );
+    const kernel::Entity_ABC& superior = formation.Get< kernel::TacticalHierarchies >().GetUp();
+    if( !IsLogisticBase( superior ) )
+    {
+        tools::Iterator< const kernel::Entity_ABC& > children = superior.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+        while( children.HasMoreElements() )
+        {
+            kernel::Entity_ABC& child = const_cast< kernel::Entity_ABC& >( children.NextElement() );
+            DeleteLink( child, formation );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LinkGenerator::Remove
+// Created: LGY 2011-10-17
+// -----------------------------------------------------------------------------
+void LinkGenerator::Remove( const kernel::Entity_ABC& entity )
+{
+    tools::Iterator< const kernel::Entity_ABC& > children = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    while( children.HasMoreElements() )
+    {
+        kernel::Entity_ABC& child = const_cast< kernel::Entity_ABC& >( children.NextElement() );
+        if( LogisticHierarchiesBase* pHierarchy = child.Retrieve< LogisticHierarchiesBase >() )
+            if( pHierarchy->GetSuperior() )
+                pHierarchy->SetLogisticSuperior( kernel::LogisticBaseSuperior() );
+        Remove( child );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LinkGenerator::DeleteLink
+// Created: LGY 2011-10-17
+// -----------------------------------------------------------------------------
+void LinkGenerator::DeleteLink( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& base )
+{
+    tools::Iterator< const kernel::Entity_ABC& > children = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    while( children.HasMoreElements() )
+    {
+        kernel::Entity_ABC& child = const_cast< kernel::Entity_ABC& >( children.NextElement() );
+        RemoveLogisticSuperior( child, base );
+        DeleteLink( child, base );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: LinkGenerator::CreateLink
 // Created: LGY 2011-10-12
 // -----------------------------------------------------------------------------
@@ -95,7 +156,7 @@ void LinkGenerator::CreateLink( const kernel::Entity_ABC& entity, const kernel::
     {
         kernel::Entity_ABC& child = const_cast< kernel::Entity_ABC& >( children.NextElement() );
         if( fun( child ) && child.GetId() != base.GetId() )
-            SetLogisticSuperior( child, base );
+            AddLogisticSuperior( child, base );
         else
             CreateLink( child, base, fun );
     }
@@ -114,11 +175,22 @@ bool LinkGenerator::IsLogisticBase( const kernel::Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LinkGenerator::SetLogisticSuperior
+// Name: LinkGenerator::AddLogisticSuperior
 // Created: LGY 2011-10-12
 // -----------------------------------------------------------------------------
-void LinkGenerator::SetLogisticSuperior( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
+void LinkGenerator::AddLogisticSuperior( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
 {
     if( LogisticHierarchiesBase* pHierarchy = entity.Retrieve< LogisticHierarchiesBase >() )
         pHierarchy->SetLogisticSuperior( &superior );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LinkGenerator::RemoveLogisticSuperior
+// Created: LGY 2011-10-17
+// -----------------------------------------------------------------------------
+void LinkGenerator::RemoveLogisticSuperior( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
+{
+    if( LogisticHierarchiesBase* pHierarchy = entity.Retrieve< LogisticHierarchiesBase >() )
+        if( pHierarchy->GetSuperior() && pHierarchy->GetSuperior()->GetId() == superior.GetId() )
+            pHierarchy->SetLogisticSuperior( kernel::LogisticBaseSuperior() );
 }
