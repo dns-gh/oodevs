@@ -16,6 +16,7 @@ MOCK_BASE_CLASS( MockMIL_ObjectType_ABC, MIL_ObjectType_ABC )
 {
     MOCK_METHOD( GetID, 0 );
     MOCK_METHOD( GetName, 0 );
+    MOCK_METHOD( GetRealName, 0 );
     MOCK_METHOD( GetPointSize, 0 );
 };
 
