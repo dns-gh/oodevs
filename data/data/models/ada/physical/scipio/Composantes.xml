@@ -624,7 +624,7 @@
     <composition>
       <category name="munition">
         <resource capacity="4" logistic-threshold="10" name="CHARGE A BILLE" normalized-consumption="2"/>
-        <resource capacity="960" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="120"/>
+        <resource capacity="960" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="120"/>
       </category>
       <category name="carburant">
         <resource capacity="440" logistic-threshold="30" name="F-63 1" normalized-consumption="23"/>
@@ -743,7 +743,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="1200" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="150"/>
+        <resource capacity="960" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="120"/>
         <resource capacity="10" logistic-threshold="10" name="MIS S/A ROLAND F1" normalized-consumption="2"/>
       </category>
       <category name="carburant">
@@ -866,7 +866,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="720" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="90"/>
+        <resource capacity="720" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="90"/>
       </category>
       <category name="carburant">
         <resource capacity="440" logistic-threshold="30" name="F-63 1" normalized-consumption="23"/>
@@ -1193,7 +1193,7 @@
         <resource capacity="4" logistic-threshold="0" name="CHARGE A BILLE" normalized-consumption="4"/>
         <resource capacity="68" logistic-threshold="0" name="ROQ 68 FL CH F3" normalized-consumption="34"/>
         <resource capacity="450" logistic-threshold="0" name="CART 30/550  OSPEI" normalized-consumption="250"/>
-        <resource capacity="480" logistic-threshold="0" name="CART 5.56 BAL ORD F1" normalized-consumption="60"/>
+        <resource capacity="480" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="1360" logistic-threshold="1" name="F-35 1" normalized-consumption="1360"/>
@@ -1524,7 +1524,8 @@
     <composition>
       <category name="munition">
         <resource capacity="27" logistic-threshold="0" name="CART 9 BAL ORD F3" normalized-consumption="9"/>
-        <resource capacity="480" logistic-threshold="0" name="CART 5.56 BAL ORD F1" normalized-consumption="60"/>
+        <resource capacity="920" logistic-threshold="30" name="CART 7,62 BD HOM" normalized-consumption="278"/>
+        <resource capacity="480" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="1550" logistic-threshold="1" name="F-35 1" normalized-consumption="1550"/>
@@ -1628,7 +1629,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="480" logistic-threshold="0" name="CART 5.56 BAL ORD F1" normalized-consumption="60"/>
+        <resource capacity="480" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="1550" logistic-threshold="1" name="F-35 1" normalized-consumption="1500"/>
@@ -1845,7 +1846,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="480" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="60"/>
+        <resource capacity="480" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="240" logistic-threshold="30" name="F-63 1" normalized-consumption="40"/>
@@ -2433,7 +2434,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="480" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="60"/>
+        <resource capacity="480" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="150" logistic-threshold="30" name="F-63 1" normalized-consumption="50"/>
@@ -2545,7 +2546,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="480" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="60"/>
+        <resource capacity="480" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="570" logistic-threshold="30" name="F-63 1" normalized-consumption="70"/>
@@ -2660,7 +2661,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="720" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="90"/>
+        <resource capacity="720" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="90"/>
       </category>
       <category name="carburant">
         <resource capacity="240" logistic-threshold="30" name="F-63 1" normalized-consumption="40"/>
@@ -2772,7 +2773,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="240" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="30"/>
+        <resource capacity="240" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="30"/>
       </category>
       <category name="carburant">
         <resource capacity="888" logistic-threshold="30" name="F-63 1" normalized-consumption="200"/>
@@ -2891,7 +2892,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="240" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="30"/>
+        <resource capacity="240" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="90"/>
       </category>
       <category name="carburant">
         <resource capacity="300" logistic-threshold="30" name="F-63 1" normalized-consumption="40"/>
@@ -3012,7 +3013,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="480" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="60"/>
+        <resource capacity="480" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="540" logistic-threshold="30" name="F-63 1" normalized-consumption="480"/>
@@ -6459,8 +6460,8 @@
     <composition>
       <category name="munition">
         <resource capacity="700" logistic-threshold="10" name="CART 12.7 SBP" normalized-consumption="110"/>
-        <resource capacity="6" logistic-threshold="10" name="ROQ EXPL 298 M26" normalized-consumption="36"/>
-        <resource capacity="720" logistic-threshold="10" name="CART 5.56 F1A F1" normalized-consumption="90"/>
+        <resource capacity="6" logistic-threshold="10" name="ROQ GMLRS" normalized-consumption="36"/>
+        <resource capacity="480" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="617" logistic-threshold="30" name="F-63 1" normalized-consumption="300"/>
@@ -7186,7 +7187,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="240" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="30"/>
+        <resource capacity="240" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="90"/>
       </category>
       <category name="carburant">
         <resource capacity="30" logistic-threshold="10" name="F-57 1" normalized-consumption="6"/>
@@ -8067,7 +8068,7 @@
         <resource capacity="14" logistic-threshold="10" name="CART 90 F2 OE F1" normalized-consumption="2"/>
         <resource capacity="8" logistic-threshold="10" name="CART 90 F1 OFLE F1" normalized-consumption="2"/>
         <resource capacity="8" logistic-threshold="10" name="ART FUM DREB" normalized-consumption="8"/>
-        <resource capacity="720" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="90"/>
+        <resource capacity="720" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="90"/>
         <resource capacity="5" logistic-threshold="10" name="CART 90 F2 OFUM" normalized-consumption="1"/>
       </category>
       <category name="carburant">
@@ -8276,7 +8277,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="240" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="30"/>
+        <resource capacity="240" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="30"/>
       </category>
       <category name="carburant">
         <resource capacity="540" logistic-threshold="30" name="F-63 1" normalized-consumption="55"/>
@@ -8744,7 +8745,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="240" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="30"/>
+        <resource capacity="240" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="30"/>
       </category>
       <category name="carburant">
         <resource capacity="300" logistic-threshold="30" name="F-63 1" normalized-consumption="11"/>
@@ -11325,7 +11326,7 @@
     <composition>
       <category name="munition">
         <resource capacity="3" logistic-threshold="30" name="MIS AAH HAWK EXPL NP" normalized-consumption="2"/>
-        <resource capacity="480" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="60"/>
+        <resource capacity="480" logistic-threshold="10" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="90" logistic-threshold="30" name="F-63 1" normalized-consumption="90"/>
@@ -11435,7 +11436,7 @@
     <composition>
       <category name="munition">
         <resource capacity="2000" logistic-threshold="10" name="CART 12.7 SBP" normalized-consumption="110"/>
-        <resource capacity="1440" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="180"/>
+        <resource capacity="1440" logistic-threshold="10" name="CART 5.56 F1A F1" normalized-consumption="180"/>
       </category>
       <category name="carburant">
         <resource capacity="240" logistic-threshold="30" name="F-63 1" normalized-consumption="40"/>
@@ -12989,7 +12990,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="480" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="60"/>
+        <resource capacity="480" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="240" logistic-threshold="30" name="F-63 1" normalized-consumption="40"/>
@@ -21849,7 +21850,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="10000" logistic-threshold="1" name="ROQ EXPL 298 M26" normalized-consumption="2500"/>
+        <resource capacity="10000" logistic-threshold="30" name="ROQ GMLRS" normalized-consumption="2500"/>
       </category>
     </composition>
     <sensors>
@@ -21956,7 +21957,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="10000" logistic-threshold="1" name="ROQ EXPL 298 M26" normalized-consumption="2500"/>
+        <resource capacity="10000" logistic-threshold="1" name="ROQ GMLRS" normalized-consumption="2500"/>
       </category>
     </composition>
     <sensors>
@@ -22064,7 +22065,7 @@
     <composition>
       <category name="munition">
         <resource capacity="27" logistic-threshold="0" name="CART 9 BAL ORD F3" normalized-consumption="9"/>
-        <resource capacity="480" logistic-threshold="0" name="CART 5.56 BAL ORD F1" normalized-consumption="60"/>
+        <resource capacity="480" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="1550" logistic-threshold="1" name="F-35 1" normalized-consumption="1550"/>
@@ -25056,6 +25057,7 @@
       <category name="munition">
         <resource capacity="720" logistic-threshold="10" name="Charg 7,62" normalized-consumption="90"/>
         <resource capacity="2000" logistic-threshold="10" name="CART 7.62" normalized-consumption="300"/>
+        <resource capacity="480" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="460" logistic-threshold="30" name="F-63 1" normalized-consumption="105"/>
@@ -27542,9 +27544,9 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="7" logistic-threshold="0" name="MIS 150 F3 HOT" normalized-consumption="2"/>
+        <resource capacity="750" logistic-threshold="30" name="CART 12.7 SBP" normalized-consumption="750"/>
         <resource capacity="480" logistic-threshold="0" name="CART 5.56 BAL ORD F1" normalized-consumption="60"/>
-        <resource capacity="750" logistic-threshold="1" name="CART 12.7 MLE 47" normalized-consumption="750"/>
+        <resource capacity="750" logistic-threshold="1" name="MIS 150 F3 HOT" normalized-consumption="750"/>
       </category>
       <category name="carburant">
         <resource capacity="540" logistic-threshold="1" name="F-35 1" normalized-consumption="540"/>
@@ -28301,7 +28303,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="480" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="60"/>
+        <resource capacity="480" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="60"/>
       </category>
       <category name="carburant">
         <resource capacity="570" logistic-threshold="30" name="F-63 1" normalized-consumption="70"/>
@@ -33493,7 +33495,7 @@
     <composition>
       <category name="munition">
         <resource capacity="4" logistic-threshold="50" name="CHARGE A BILLE" normalized-consumption="2"/>
-        <resource capacity="960" logistic-threshold="50" name="CART 5.56 BAL ORD F1" normalized-consumption="120"/>
+        <resource capacity="960" logistic-threshold="50" name="CART 5.56 F1A F1" normalized-consumption="120"/>
       </category>
       <category name="carburant">
         <resource capacity="440" logistic-threshold="30" name="F-63 1" normalized-consumption="23"/>
@@ -33558,7 +33560,7 @@
     <composition>
       <category name="munition">
         <resource capacity="36" logistic-threshold="10" name="Obus 152 OE" normalized-consumption="4"/>
-        <resource capacity="2000" logistic-threshold="10" name="CART 7.62" normalized-consumption="300"/>
+        <resource capacity="2000" logistic-threshold="30" name="Charg 7,62" normalized-consumption="300"/>
         <resource capacity="12" logistic-threshold="10" name="Obus 152 OE MPA" normalized-consumption="12"/>
       </category>
       <category name="carburant">
@@ -33644,7 +33646,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="2000" logistic-threshold="10" name="CART 7.62" normalized-consumption="300"/>
+        <resource capacity="2000" logistic-threshold="10" name="Charg 7,62" normalized-consumption="300"/>
         <resource capacity="36" logistic-threshold="10" name="Obus 203" normalized-consumption="4"/>
         <resource capacity="12" logistic-threshold="10" name="Obus 203 OE MPA" normalized-consumption="12"/>
       </category>
@@ -34287,10 +34289,14 @@
         <resource capacity="12" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="20"/>
         <resource capacity="1920" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="240"/>
         <resource capacity="1" logistic-threshold="30" name="O 155 F1 AC EF DR" normalized-consumption="2"/>
-        <resource capacity="6" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="11"/>
+        <resource capacity="6" logistic-threshold="30" name="ACED 155 CAESAR" normalized-consumption="11"/>
         <resource capacity="30" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="52"/>
         <resource capacity="3" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="5"/>
         <resource capacity="4" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="6"/>
+        <resource capacity="12" logistic-threshold="30" name="OE F1 155 CAESAR" normalized-consumption="24"/>
+        <resource capacity="12" logistic-threshold="30" name="OE F2 155 CAESAR" normalized-consumption="24"/>
+        <resource capacity="12" logistic-threshold="30" name="OE F4 155 CAESAR" normalized-consumption="24"/>
+        <resource capacity="12" logistic-threshold="30" name="OE F5 155 CAESAR" normalized-consumption="24"/>
       </category>
       <category name="carburant">
         <resource capacity="970" logistic-threshold="30" name="F-63 1" normalized-consumption="70"/>
@@ -34408,6 +34414,7 @@
     <composition>
       <category name="munition">
         <resource capacity="480" logistic-threshold="10" name="Charg 7,62" normalized-consumption="60"/>
+        <resource capacity="4" logistic-threshold="30" name="Missile SA 7" normalized-consumption="1"/>
       </category>
       <category name="carburant">
         <resource capacity="95" logistic-threshold="30" name="F-63 1" normalized-consumption="14"/>
@@ -36100,7 +36107,7 @@
     <composition>
       <category name="munition">
         <resource capacity="700" logistic-threshold="10" name="CART 12.7 SBP" normalized-consumption="110"/>
-        <resource capacity="6" logistic-threshold="10" name="ROQ EXPL 298 M26" normalized-consumption="36"/>
+        <resource capacity="12" logistic-threshold="30" name="ROQ GMLRS" normalized-consumption="36"/>
         <resource capacity="720" logistic-threshold="10" name="CART 5.56 F1A F1" normalized-consumption="90"/>
       </category>
       <category name="carburant">
@@ -37109,4 +37116,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0564438982" -->
+<!-- signature="3417372506" -->
