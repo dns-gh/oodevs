@@ -9,7 +9,9 @@
 
 #include "simulation_kernel_test_pch.h"
 #include "simulation_kernel/Tools/MIL_Geometry.h"
+#include "simulation_kernel/entities/orders/MIL_Fuseau.h"
 #include "simulation_terrain/TER_Polygon.h"
+#include "StubTER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: TestComputePolygonHull
@@ -75,4 +77,68 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonScale )
     result.push_back( Point7 );
     result.push_back( Point6 );
     BOOST_CHECK_EQUAL( true, output.GetBorderPoints() == result );
+}
+
+
+BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )
+{
+    WorldInitialize( "Paris" );
+    {
+        MT_Vector2D result;
+        MT_Vector2D orientation( 1, 1 );
+        std::vector< MT_Vector2D > leftLimit;
+        leftLimit.push_back( MT_Vector2D(10,10) );
+        leftLimit.push_back( MT_Vector2D(20,10) );
+        std::vector< MT_Vector2D > rightLimit;
+        rightLimit.push_back( MT_Vector2D(10,20) );
+        rightLimit.push_back( MT_Vector2D(15,20) );
+        rightLimit.push_back( MT_Vector2D(20,30) );
+        MIL_Fuseau fuseau( orientation, leftLimit, rightLimit, 0, 0 );
+        result = fuseau.GetPositionAtAdvance( 7 );
+        BOOST_CHECK_EQUAL( result.rX_, 17 );
+        BOOST_CHECK_EQUAL( result.rY_, 15 );
+        result = fuseau.GetPositionAtAdvance( -1 );
+        BOOST_CHECK_EQUAL( result.rX_, 10 );
+        BOOST_CHECK_EQUAL( result.rY_, 15 );
+        result = fuseau.GetPositionAtAdvance( 70 );
+        BOOST_CHECK_EQUAL( result.rX_, 20 );
+        BOOST_CHECK_EQUAL( result.rY_, 20 );
+    }    
+    {
+        MT_Vector2D result;
+        MT_Vector2D orientation( 1, 1 );
+        std::vector< MT_Vector2D > leftLimit;
+        leftLimit.push_back( MT_Vector2D(100,100) );
+        leftLimit.push_back( MT_Vector2D(200,100) );
+        std::vector< MT_Vector2D > rightLimit;
+        rightLimit.push_back( MT_Vector2D(100,200) );
+        rightLimit.push_back( MT_Vector2D(150,200) );
+        rightLimit.push_back( MT_Vector2D(200,300) );
+        MIL_Fuseau fuseau( orientation, leftLimit, rightLimit, 0, 0 );
+        result = fuseau.GetPositionAtAdvance( 70 );
+        BOOST_CHECK_EQUAL( result.rX_, 170 );
+        BOOST_CHECK_EQUAL( result.rY_, 150 );
+        result = fuseau.GetPositionAtAdvance( -1 );
+        BOOST_CHECK_EQUAL( result.rX_, 100 );
+        BOOST_CHECK_EQUAL( result.rY_, 150 );
+        result = fuseau.GetPositionAtAdvance( 700 );
+        BOOST_CHECK_EQUAL( result.rX_, 200 );
+        BOOST_CHECK_EQUAL( result.rY_, 200 );
+    }
+    {
+        MT_Vector2D result;
+        MT_Vector2D orientation( 1, 1 );
+        std::vector< MT_Vector2D > leftLimit;
+        leftLimit.push_back( MT_Vector2D(10,10) );
+        leftLimit.push_back( MT_Vector2D(30,10) );
+        std::vector< MT_Vector2D > rightLimit;
+        rightLimit.push_back( MT_Vector2D(10,30) );
+        rightLimit.push_back( MT_Vector2D(30,30) );
+        MIL_Fuseau fuseau( orientation, leftLimit, rightLimit, 0, 0 );
+        result = fuseau.GetPositionAtAdvance( 6 );
+        BOOST_CHECK_EQUAL( result.rX_, 16 );
+        BOOST_CHECK_EQUAL( result.rY_, 20 );
+    }
+
+    TER_World::DestroyWorld(); 
 }

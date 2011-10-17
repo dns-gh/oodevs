@@ -17,6 +17,7 @@
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_AnalyzerManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
+#include "MIL_Singletons.h"
 
 // -----------------------------------------------------------------------------
 // Name: TER_LimitData::DistanceData constructor
@@ -132,7 +133,7 @@ void TER_LimitData::DecRef( const MIL_Fuseau& /*fuseau*/ ) const
     assert( nNbRefs_ > 0 );
     --nNbRefs_;
     if( nNbRefs_ == 0 )
-        MIL_AgentServer::GetWorkspace().GetTacticalLineManager().DestroyLimitData( *this );
+        MIL_Singletons::GetTacticalLineManager().DestroyLimitData( *this );
     // delete this ...
 }
 

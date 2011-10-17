@@ -133,6 +133,8 @@ public:
     template< typename T > static float ComputeDelayFromScheduleAndObjectives( const T& caller, const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, const std::vector< DEC_Objective* >& objectives );
     static double ComputeAdvanceAlongFuseau( MIL_Automate& callerAutomate, DEC_Decision_ABC* pion );
     static double ComputePositionAdvanceAlongFuseau( MIL_AgentPion& pion, MT_Vector2D* point );
+    static double ComputePositionAdvanceAlongFuseauAutomat( MIL_Automate& callerAutomate, MT_Vector2D* point );
+    static boost::shared_ptr< MT_Vector2D > GetPointAlongFuseau( const MIL_Fuseau* pFuseau, double advance );
     static std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > GetPointsOnLimasInFuseau( MIL_Automate& callerAutomate, int limaType, int divider );
 
     // ASA

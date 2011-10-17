@@ -12,13 +12,14 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Fuseau.h"
 #include "MIL_LimaOrder.h"
-#include "TER_LimitData.h"
+#include "MIL_Singletons.h"
 #include "MIL_TacticalLineManager.h"
+#include "TER_LimitData.h"
+#include "Decision/DEC_Objective.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
-#include "Decision/DEC_Objective.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
 #include "MT_Tools/MT_Polyline.h"
@@ -384,7 +385,7 @@ void MIL_Fuseau::InitializeMiddleLimit()
         middle.push_back( leftPointVectorTmp[j] + ( rightPointVectorTmp[j] - leftPointVectorTmp[j] ) / 2 );
 
     assert( !pMiddleLimit_ );
-    pMiddleLimit_ = &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( middle );
+    pMiddleLimit_ = &MIL_Singletons::GetTacticalLineManager().CreateLimitData( middle );
     pMiddleLimit_ ->AddRef( *this );
 }
 
@@ -408,8 +409,8 @@ void MIL_Fuseau::Reset( const MT_Vector2D& vOrientationRefPos, const T_PointVect
 
     TruncateAndReorientLimits( leftLimitTmp, rightLimitTmp, pBeginMissionLima, pEndMissionLima  );
 
-    pLeftLimit_  = &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( leftLimitTmp  );
-    pRightLimit_ = &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( rightLimitTmp );
+    pLeftLimit_  = &MIL_Singletons::GetTacticalLineManager().CreateLimitData( leftLimitTmp  );
+    pRightLimit_ = &MIL_Singletons::GetTacticalLineManager().CreateLimitData( rightLimitTmp );
     pLeftLimit_ ->AddRef( *this );
     pRightLimit_->AddRef( *this );
 
@@ -604,7 +605,7 @@ bool MIL_Fuseau::Split( unsigned int nNbrSubFuseau, T_PointVectorVector& interme
 //    limitVector.reserve( 2 + limitsPoints.size() );
 //    limitVector.push_back( pLeftLimit_ );
 //    for( CIT_PointVectorVector it = limitsPoints.begin(); it != limitsPoints.end(); ++it )
-//        limitVector.push_back( &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( *it ) );
+//        limitVector.push_back( &MIL_Singletons::GetTacticalLineManager().CreateLimitData( *it ) );
 //    limitVector.push_back( pRightLimit_ );
     return true;
 }
@@ -995,9 +996,9 @@ double MIL_Fuseau::ComputeAverageDistanceFromObjective( const DEC_Objective& obj
 double MIL_Fuseau::ComputeAdvance( const MT_Vector2D& position ) const
 {
     double result = 0.;
-    if( pLeftLimit_ && pRightLimit_ )
+    if( pMiddleLimit_ )
     {
-        const T_PointVector& points = pLeftLimit_->GetPoints().size() > pRightLimit_->GetPoints().size() ? pRightLimit_->GetPoints() : pLeftLimit_->GetPoints();
+        const T_PointVector& points = pMiddleLimit_->GetPoints();
 
         double currentAdvance  = 0.;
         double totalDistances = 0.;
@@ -1033,12 +1034,36 @@ double MIL_Fuseau::ComputeAdvance( const MT_Vector2D& position ) const
         {
             for( unsigned int i = 0; i < length; ++i )
                 result += advances[i] * (totalDistances - distances[i])/totalDistances;
-            result /= length;
+            result /= (length-1);
         }
         else if( length )
             result = advances[0];
     }
     return result;
+}
+
+MT_Vector2D MIL_Fuseau::GetPositionAtAdvance( double advance ) const
+{
+    MT_Vector2D result;
+    if( !pMiddleLimit_ )
+        throw std::runtime_error( "Unable to compute point on middle fuseau" );
+    const T_PointVector& points = pMiddleLimit_->GetPoints();
+    MT_Vector2D firstPoint = points.front();
+    result = firstPoint;
+    if( advance <= 0 )
+        return result;
+    CIT_PointVector it = points.begin();
+    ++it;
+    for( ; ++it != points.end(); )
+    {
+        advance -= firstPoint.Distance( *it );
+        if( advance <= 0 )
+        {    
+            return *it + ( *it - firstPoint ).Normalize() * advance ;
+        }
+        firstPoint = *it;
+    }
+    return firstPoint;
 }
 
 // =============================================================================
@@ -1291,8 +1316,8 @@ void MIL_Fuseau::load( MIL_CheckPointInArchive& file, const unsigned int )
     globalDirectionLine_ = MT_Line( vStartGlobalDirection_, vEndGlobalDirection_ );
     if( !pLeftLimit.empty() && !pRightLimit.empty() )
     {
-        pLeftLimit_  = &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( pLeftLimit  );
-        pRightLimit_ = &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( pRightLimit );
+        pLeftLimit_  = &MIL_Singletons::GetTacticalLineManager().CreateLimitData( pLeftLimit  );
+        pRightLimit_ = &MIL_Singletons::GetTacticalLineManager().CreateLimitData( pRightLimit );
         pLeftLimit_ ->AddRef( *this );
         pRightLimit_->AddRef( *this );
         InitializeMiddleLimit();
