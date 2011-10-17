@@ -159,7 +159,6 @@ NetnObjectFeatureStruct::NetnObjectFeatureStruct( const std::vector< NetnObjectD
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: NetnObjectFeatureStruct::NetnObjectFeatureStruct
 // Created: SLI 2011-10-07
@@ -242,7 +241,6 @@ NetnObjectDefinitionStruct::~NetnObjectDefinitionStruct()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NetnAppointmentStruct::NetnAppointmentStruct
