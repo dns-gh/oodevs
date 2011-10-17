@@ -156,8 +156,11 @@ void PHY_Human::NotifyHumanChanged( const Human_ABC& oldHumanState )
 void PHY_Human::CancelLogisticRequests()
 {
     CancelMedicalLogisticRequest();
-    funeralConsign_->Cancel();
-    funeralConsign_.reset();
+    if( funeralConsign_ )
+    {
+        funeralConsign_->Cancel();
+        funeralConsign_.reset();
+    }
 }
 
 // -----------------------------------------------------------------------------
