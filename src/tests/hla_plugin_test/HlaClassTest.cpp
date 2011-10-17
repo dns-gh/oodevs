@@ -84,19 +84,19 @@ BOOST_FIXTURE_TEST_CASE( hla_class_creates_instance_when_notified, RegisteredFix
 BOOST_FIXTURE_TEST_CASE( hla_class_creates_remote_instances, RegisteredFixture )
 {
     hlaClass.Register( remoteListener );
-    MOCK_EXPECT( remoteFactory, Create ).once().with( "42", mock::any ).returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
-    MOCK_EXPECT( remoteListener, Created ).once().with( "42" );
+    MOCK_EXPECT( remoteFactory, Create ).once().with( "name", mock::any ).returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
+    MOCK_EXPECT( remoteListener, Created ).once().with( "name" );
     hlaObjectClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
     mock::verify();
-    MOCK_EXPECT( remoteListener, Destroyed ).once().with( "42" );
+    MOCK_EXPECT( remoteListener, Destroyed ).once().with( "name" );
 }
 
 BOOST_FIXTURE_TEST_CASE( hla_class_destroys_remote_instances, RegisteredFixture )
 {
     MOCK_EXPECT( remoteFactory, Create ).once().returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
     hlaObjectClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
-    MOCK_EXPECT( remoteListener, Created ).once().with( "42" );
+    MOCK_EXPECT( remoteListener, Created ).once().with( "name" );
     hlaClass.Register( remoteListener );
-    MOCK_EXPECT( remoteListener, Destroyed ).once().with( "42" );
+    MOCK_EXPECT( remoteListener, Destroyed ).once().with( "name" );
     hlaObjectClass->Destroy( 42u );
 }
