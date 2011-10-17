@@ -67,5 +67,3 @@ BOOST_FIXTURE_TEST_CASE( netn_service_started_is_sent_with_attributes, Registere
     interactions::NetnServiceStarted serviceStarted;
     interaction.Send( serviceStarted );
 }
-
-

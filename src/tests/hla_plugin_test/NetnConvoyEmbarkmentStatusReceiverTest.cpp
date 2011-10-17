@@ -48,7 +48,7 @@ BOOST_FIXTURE_TEST_CASE( netn_convoy_embarkment_status_receiver_notifies_listene
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_convoy_embarkment_status_receiver_does_nothing_if_issuing_object_identifier_is_not_sword, Fixture )
-{    
+{
     interactions::NetnConvoyEmbarkmentStatus offer;
     offer.serviceId = NetnEventIdentifier( 42, "ORQUE" );
     offer.serviceType = 4;

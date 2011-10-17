@@ -109,14 +109,13 @@ private:
     //! @name Helpers
     //@{
     void Transfer( T_Requests& from, T_Requests& to, unsigned int context ) const;
+    void SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits, unsigned int actionType );
     //@}
 
 private:
     //! @name Member data
     //@{
     const unsigned int transportIdentifier_;
-    const unsigned int embarkmentIdentifier_;
-    const unsigned int disembarkmentIdentifier_;
     const unsigned int missionCompleteReportId_;
     const CallsignResolver_ABC& callsignResolver_;
     const Subordinates_ABC& subordinates_;

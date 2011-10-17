@@ -55,8 +55,6 @@ TransportationController::TransportationController( xml::xisubstream xis, const 
                                                     const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
                                                     const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher )
     : transportIdentifier_    ( ResolveMission( xis, resolver, "transport" ) )
-    , embarkmentIdentifier_   ( ResolveMission( xis, resolver, "embarkment" ) )
-    , disembarkmentIdentifier_( ResolveMission( xis, resolver, "disembarkment" ) )
     , missionCompleteReportId_( ResolveReportId( xis ) )
     , callsignResolver_       ( callsignResolver )
     , subordinates_           ( subordinates )
@@ -227,36 +225,20 @@ void TransportationController::Transfer( T_Requests& from, T_Requests& to, unsig
 
 namespace
 {
-     class TransportedSubordinatesChecker : private TransportedUnitsVisitor_ABC
+     class TransportedSubordinates : private TransportedUnitsVisitor_ABC
     {
     public:
-        TransportedSubordinatesChecker( const Subordinates_ABC& subordinates, const TransportedUnits_ABC& transportedUnits, unsigned long automatIdentifier )
+        TransportedSubordinates( const TransportedUnits_ABC& transportedUnits )
         {
-            filling_ = true;
-            subordinates.Apply( automatIdentifier, *this );
-            filling_ = false;
             transportedUnits.Apply( *this );
-        }
-        bool AreAllSubordinatesEmbarked() const
-        {
-            return units_.empty();
         }
     private:
         virtual void Notify( const std::string& /*callsign*/, const std::string& uniqueId )
         {
-            if( filling_ )
-            {
-                units_.insert( uniqueId );
-                transportedUnits_.insert( uniqueId );
-            }
-            else
-                units_.erase( uniqueId );
+            transportedUnits_.insert( uniqueId );
         }
     public:
         std::set< std::string > transportedUnits_;
-    private:
-        bool filling_;
-        std::set< std::string > units_;
     };
      std::string ResolveUniqueIdFromCallsign( const std::string& callsign, const interactions::ListOfTransporters& listOfTransporters )
      {
@@ -273,34 +255,7 @@ namespace
 // -----------------------------------------------------------------------------
 void TransportationController::NotifyEmbarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits )
 {
-    T_Requests::left_const_iterator request = serviceStartedRequests_.left.find( context );
-    if( request == serviceStartedRequests_.left.end() )
-        return;
-    const TransportedSubordinatesChecker checker( subordinates_, transportedUnits, request->second ) ;
-    if( !checker.AreAllSubordinatesEmbarked() || checker.transportedUnits_.empty() )
-        return;
-    const T_Request& contextRequest = contextRequests_[ request->first ];
-    const std::string transporterUniqueId = ResolveUniqueIdFromCallsign( transporterCallsign, contextRequest.listOfTransporters );
-    const unsigned int transporterId = callsignResolver_.ResolveSimulationIdentifier( transporterUniqueId );
-    std::vector< unsigned int > transportedUnitsIdentifiers;
-    BOOST_FOREACH( const std::string& uniqueId, checker.transportedUnits_ )
-        transportedUnitsIdentifiers.push_back( callsignResolver_.ResolveSimulationIdentifier( uniqueId ) );
-    simulation::UnitOrder order;
-    order().mutable_tasker()->set_id( transporterId );
-    order().mutable_type()->set_id( embarkmentIdentifier_ );
-    order().mutable_parameters()->add_elem()->add_value()->mutable_heading()->set_heading( 0 );
-    order().mutable_parameters()->add_elem()->set_null_value( true );
-    order().mutable_parameters()->add_elem()->set_null_value( true );
-    order().mutable_parameters()->add_elem()->set_null_value( true );
-    sword::MissionParameter_Value* agentList = order().mutable_parameters()->add_elem()->add_value();
-    BOOST_FOREACH( const unsigned int id, transportedUnitsIdentifiers )
-        agentList->mutable_list()->Add()->mutable_agent()->set_id( id );
-    sword::Location* location = order().mutable_parameters()->add_elem()->add_value()->mutable_point()->mutable_location();
-    location->set_type( sword::Location::point );
-    sword::CoordLatLong* coord = location->mutable_coordinates()->add_elem();
-    coord->set_latitude( contextRequest.embarkmentPoint.X() );
-    coord->set_longitude( contextRequest.embarkmentPoint.Y() );
-    order.Send( publisher_ );
+    SendTransportMagicAction( context, transporterCallsign, transportedUnits, sword::UnitMagicAction::load_unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -309,35 +264,33 @@ void TransportationController::NotifyEmbarkationStatus( unsigned int context, co
 // -----------------------------------------------------------------------------
 void TransportationController::NotifyDisembarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits )
 {
+    SendTransportMagicAction( context, transporterCallsign, transportedUnits, sword::UnitMagicAction::unload_unit );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationController::SendTransportMagicAction
+// Created: SLI 2011-10-17
+// -----------------------------------------------------------------------------
+void TransportationController::SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits, unsigned int actionType )
+{
     T_Requests::left_const_iterator request = serviceStartedRequests_.left.find( context );
     if( request == serviceStartedRequests_.left.end() )
         return;
-    const TransportedSubordinatesChecker checker( subordinates_, transportedUnits, request->second ) ;
-    if( !checker.AreAllSubordinatesEmbarked() || checker.transportedUnits_.empty() )
-        return;
+    const TransportedSubordinates subordinates( transportedUnits ) ;
     const T_Request& contextRequest = contextRequests_[ context ];
     const std::string transporterUniqueId = ResolveUniqueIdFromCallsign( transporterCallsign, contextRequest.listOfTransporters );
     const unsigned int transporterId = callsignResolver_.ResolveSimulationIdentifier( transporterUniqueId );
-    std::vector< unsigned int > transportedUnitsIdentifiers;
-    BOOST_FOREACH( const std::string& uniqueId, checker.transportedUnits_ )
-        transportedUnitsIdentifiers.push_back( callsignResolver_.ResolveSimulationIdentifier( uniqueId ) );
-    simulation::UnitOrder order;
-    order().mutable_tasker()->set_id( transporterId );
-    order().mutable_type()->set_id( disembarkmentIdentifier_ );
-    order().mutable_parameters()->add_elem()->add_value()->mutable_heading()->set_heading( 0 );
-    order().mutable_parameters()->add_elem()->set_null_value( true );
-    order().mutable_parameters()->add_elem()->set_null_value( true );
-    order().mutable_parameters()->add_elem()->set_null_value( true );
-    sword::MissionParameter_Value* agentList = order().mutable_parameters()->add_elem()->add_value();
-    BOOST_FOREACH( const unsigned int id, transportedUnitsIdentifiers )
-        agentList->mutable_list()->Add()->mutable_agent()->set_id( id );
-    sword::Location* location = order().mutable_parameters()->add_elem()->add_value()->mutable_point()->mutable_location();
-    location->set_type( sword::Location::point );
-    sword::CoordLatLong* coord = location->mutable_coordinates()->add_elem();
-    coord->set_latitude( contextRequest.debarkmentPoint.X() );
-    coord->set_longitude( contextRequest.debarkmentPoint.Y() );
-    order.Send( publisher_ );
+    BOOST_FOREACH( const std::string& uniqueId, subordinates.transportedUnits_ )
+    {
+        const unsigned int id = callsignResolver_.ResolveSimulationIdentifier( uniqueId );
+        simulation::UnitMagicAction message;
+        message().mutable_tasker()->mutable_unit()->set_id( transporterId );
+        message().set_type( static_cast< sword::UnitMagicAction_Type >( actionType ) );
+        message().mutable_parameters()->add_elem()->add_value()->mutable_agent()->set_id( id );
+        message.Send( publisher_ );
+    }
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: TransportationController::ServiceComplete
