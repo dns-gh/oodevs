@@ -306,6 +306,7 @@
   </object>
   <object geometry="polygon" name="zone mobilite amelioree" symbol="G*MPSP----****X" type="mobility enhanced area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="100" unit-speed-impact-mode="VitesseMaxAgent"/>
   </object>
   <object geometry="polygon" name="zone poser helicoptere" symbol="G*GPGAL---****X" type="landing area (helicopter)">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
@@ -457,4 +458,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="3545011224" -->
+<!-- signature="3459656947" -->
