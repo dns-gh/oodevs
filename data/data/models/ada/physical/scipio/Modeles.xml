@@ -7039,6 +7039,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE GENIE Faire Franchir"/>
         <mission name="AUTOMATE GENIE Franchir de vive force"/>
         <mission name="AUTOMATE GENIE Reconnaitre"/>
         <mission name="AUTOMATE GENIE Degager Obstacles"/>
@@ -9613,4 +9614,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1777133384" -->
+<!-- signature="2114000887" -->
