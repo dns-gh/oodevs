@@ -521,6 +521,14 @@
         <source>Logistic</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Remove logistic subordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove logistic links</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticStockEditor</name>

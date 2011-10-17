@@ -68,6 +68,9 @@ private slots:
     void Generate();
     void GenerateFromAutomat();
     void GenerateFromFormation();
+    void Remove();
+    void RemoveFromAutomat();
+    void RemoveFromFormation();
     //@}
 
 private:
@@ -76,9 +79,12 @@ private:
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     std::auto_ptr< LinkGenerator > pGenerator_;
-    std::auto_ptr< QSignalMapper > pTeamMapper_;
-    std::auto_ptr< QSignalMapper > pFormationMapper_;
-    std::auto_ptr< QSignalMapper > pAutomatMapper_;
+    std::auto_ptr< QSignalMapper > pAddTeamMapper_;
+    std::auto_ptr< QSignalMapper > pAddFormationMapper_;
+    std::auto_ptr< QSignalMapper > pAddAutomatMapper_;
+    std::auto_ptr< QSignalMapper > pRemoveTeamMapper_;
+    std::auto_ptr< QSignalMapper > pRemoveFormationMapper_;
+    std::auto_ptr< QSignalMapper > pRemoveAutomatMapper_;
     //@}
 };
 
