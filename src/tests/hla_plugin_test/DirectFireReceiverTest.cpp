@@ -44,7 +44,7 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_sends_create_direct_fire_order_when_receiving_entity_impact_munition_detonation, Fixture )
+BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_sends_create_direct_fire_order_when_receiving_munition_detonation_with_valid_source_and_target, Fixture )
 {
     sword::ClientToSim message;
     MOCK_EXPECT( remoteResolver, ResolveName ).once().with( "remote source" ).returns( sourceIdentifier );
@@ -63,21 +63,13 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_sends_create_direct_fire_order_whe
     BOOST_CHECK_EQUAL( targetIdentifier, action.parameters().elem( 0 ).value( 0 ).agent().id() );
 }
 
-BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_does_nothing_when_receiving_not_entity_impact_munition_detonation, Fixture )
-{
-    parameters.detonationResultCode = 0;
-    receiver.Receive( parameters );
-}
-
 BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_does_nothing_when_receiving_mal_formed_entity_impact_munition_detonation, Fixture )
 {
-    parameters.detonationResultCode = entityImpact;
     receiver.Receive( parameters );
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_does_nothing_when_receiving_mal_formed_entity_impact_munition_detonation_2, Fixture )
 {
-    parameters.detonationResultCode = entityImpact;
     parameters.firingObjectIdentifier = Omt13String( "unknown" );
     parameters.targetObjectIdentifier = Omt13String( "local target" );
     MOCK_EXPECT( remoteResolver, ResolveName ).once().with( "unknown" ).returns( 0 );
@@ -86,7 +78,6 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_does_nothing_when_receiving_mal_fo
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_does_nothing_when_receiving_mal_formed_entity_impact_munition_detonation_3, Fixture )
 {
-    parameters.detonationResultCode = entityImpact;
     parameters.firingObjectIdentifier = Omt13String( "remote source" );
     parameters.targetObjectIdentifier = Omt13String( "unknown" );
     MOCK_EXPECT( remoteResolver, ResolveName ).once().with( "remote source" ).returns( sourceIdentifier );

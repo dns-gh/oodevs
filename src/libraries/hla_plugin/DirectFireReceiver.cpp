@@ -47,8 +47,6 @@ DirectFireReceiver::~DirectFireReceiver()
 // -----------------------------------------------------------------------------
 void DirectFireReceiver::Receive( interactions::MunitionDetonation& interaction )
 {
-    if( interaction.detonationResultCode != 1 ) // entity impact
-        return;
     const std::string source = interaction.firingObjectIdentifier.str();
     const std::string target = interaction.targetObjectIdentifier.str();
     if( source.empty() || target.empty() )
