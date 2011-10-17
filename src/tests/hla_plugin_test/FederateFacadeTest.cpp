@@ -51,9 +51,9 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
     MOCK_EXPECT( federateFactory, Create ).once().in( s ).with( mock::any, "SWORD", -1 ).returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate, Connect ).once().in( s ).returns( true );
     MOCK_EXPECT( federate, Join ).once().in( s ).with( "Federation", true, true ).returns( true );
-    MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity.NETN_Aggregate", mock::any, mock::any, mock::any );
-    MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", mock::any, mock::any, mock::any );
-    MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", mock::any, mock::any, mock::any );
+    MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity.NETN_Aggregate", mock::any, true, true );
+    MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", mock::any, true, true );
+    MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", mock::any, false, true );
     MOCK_EXPECT( subject, Register ).once();
     MOCK_EXPECT( controller, Register ).once().in( s );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
@@ -69,9 +69,9 @@ BOOST_FIXTURE_TEST_CASE( netn_use_can_be_desactivated, Fixture )
     MOCK_EXPECT( federateFactory, Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate, Connect ).once().returns( true );
     MOCK_EXPECT( federate, Join ).once().returns( true );
-    MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.AggregateEntity", mock::any, mock::any, mock::any );
-    MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", mock::any, mock::any, mock::any );
-    MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.Aircraft", mock::any, mock::any, mock::any );
+    MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.AggregateEntity", mock::any, true, true );
+    MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", mock::any, true, true );
+    MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.Aircraft", mock::any, false, true );
     MOCK_EXPECT( subject, Register ).once();
     MOCK_EXPECT( controller, Register ).once();
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );

@@ -37,7 +37,7 @@ HlaClass::HlaClass( Federate_ABC& federate, LocalAgentResolver_ABC& resolver,
     , pListeners_       ( new RemoteAgentListenerComposite() )
     , hlaClass_         ( new ::hla::Class< HlaObject_ABC >( *this, true ) )
 {
-    builder->Build( federate, *hlaClass_, true, true );
+    builder->Build( federate, *hlaClass_ );
 }
 
 // -----------------------------------------------------------------------------

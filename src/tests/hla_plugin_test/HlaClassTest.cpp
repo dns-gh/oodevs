@@ -41,7 +41,7 @@ namespace
             , remoteFactory   ( new MockRemoteHlaObjectFactory() )
             , hlaObjectClass  ( 0 )
         {
-            MOCK_EXPECT( builder, Build ).once().with( mock::any, mock::retrieve( hlaObjectClass ), true, true );
+            MOCK_EXPECT( builder, Build ).once().with( mock::any, mock::retrieve( hlaObjectClass ) );
             MOCK_EXPECT( identifierFactory, Create ).returns( 42 );
         }
         MockFederate federate;
