@@ -307,6 +307,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceReceived.cpp">
       <Filter>Source Files\Transportation\Interactions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceStartedReceiver.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -692,6 +695,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceReceived.h">
       <Filter>Source Files\Transportation\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceStartedReceiver.h">
+      <Filter>Source Files\Transportation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

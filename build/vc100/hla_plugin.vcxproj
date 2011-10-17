@@ -145,6 +145,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceCompleteReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceReceived.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceStarted.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceStartedReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceCompleteReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceReceived.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceStarted.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceStartedReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />
