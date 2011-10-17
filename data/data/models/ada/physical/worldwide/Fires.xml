@@ -66,7 +66,7 @@
       <surface ignition-threshold="100000" max-combustion-energy="100000" type="mountain edge"/>
     </surfaces>
   </fire>
-  <fire decrease-rate="1" increase-rate="5" initial-heat="100" max-heat="500" name="Class B">
+  <fire decrease-rate="1" increase-rate="5" initial-heat="100" max-heat="500" name="Wild Fire Class B">
     <extinguisher-agents>
       <extinguisher-agent agent="Extinguisher Agent - Foam" heat-decrease-rate="30"/>
       <extinguisher-agent agent="Extinguisher Agent - Sprayed water" heat-decrease-rate="0"/>
@@ -131,7 +131,7 @@
       <surface ignition-threshold="100000" max-combustion-energy="100000" type="mountain edge"/>
     </surfaces>
   </fire>
-  <fire decrease-rate="1" increase-rate="5" initial-heat="100" max-heat="500" name="Class C">
+  <fire decrease-rate="1" increase-rate="5" initial-heat="100" max-heat="500" name="Wild Fire Class C">
     <extinguisher-agents>
       <extinguisher-agent agent="Extinguisher Agent - Foam" heat-decrease-rate="0"/>
       <extinguisher-agent agent="Extinguisher Agent - Sprayed water" heat-decrease-rate="0"/>
@@ -196,5 +196,40 @@
       <surface ignition-threshold="100000" max-combustion-energy="100000" type="mountain edge"/>
     </surfaces>
   </fire>
+  <fire decrease-rate="10" increase-rate="20" initial-heat="100" max-heat="1000" name="Fire Class A">
+    <extinguisher-agents>
+      <extinguisher-agent agent="Extinguisher Agent - Foam" heat-decrease-rate="5"/>
+      <extinguisher-agent agent="Extinguisher Agent - Sprayed water" heat-decrease-rate="30"/>
+      <extinguisher-agent agent="Extinguisher Agent - CO2" heat-decrease-rate="0"/>
+      <extinguisher-agent agent="Extinguisher Agent - Sand" heat-decrease-rate="0"/>
+      <extinguisher-agent agent="Extinguisher Agent - Powder" heat-decrease-rate="0"/>
+      <extinguisher-agent agent="Extinguisher Agent - Hydrocarbures Halogenes" heat-decrease-rate="5"/>
+    </extinguisher-agents>
+    <weather-effects>
+      <weather-effect heat-decrease-rate="0" weather="PasDePrecipitation"/>
+      <weather-effect heat-decrease-rate="0" weather="TempeteDeSable"/>
+      <weather-effect heat-decrease-rate="0" weather="Brouillard"/>
+      <weather-effect heat-decrease-rate="8" weather="Crachin"/>
+      <weather-effect heat-decrease-rate="30" weather="Pluie"/>
+      <weather-effect heat-decrease-rate="30" weather="Neige"/>
+      <weather-effect heat-decrease-rate="0" weather="Fumigene"/>
+    </weather-effects>
+    <injuries>
+      <injury percentage="0.1" type="u1"/>
+      <injury percentage="0.3" type="u2"/>
+      <injury percentage="0.3" type="u3"/>
+      <injury percentage="0.2" type="ue"/>
+      <injury percentage="0.1" type="dead"/>
+    </injuries>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.5"/>
+      <urban-modifier material-type="Concrete" value="0.2"/>
+      <urban-modifier material-type="Brick" value="0.2"/>
+      <urban-modifier material-type="Metal" value="0.2"/>
+      <urban-modifier material-type="Cob" value="0.2"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.5"/>
+    </urban-modifiers>
+  </fire>
 </fires>
-<!-- signature="2040861659" -->
+<!-- signature="1978030177" -->

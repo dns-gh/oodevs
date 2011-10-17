@@ -449,8 +449,8 @@
   <object geometry="polygon" name="Firebreak" symbol="G*GPGAL---****X" type="firebreak area">
     <fire-propagation-modifier>
       <modifier fire-class="Wild Fire Class A" ignition-threshold="5000" max-combustion-energy="500"/>
-      <modifier fire-class="Class B" ignition-threshold="4000" max-combustion-energy="600"/>
-      <modifier fire-class="Class C" ignition-threshold="3000" max-combustion-energy="700"/>
+      <modifier fire-class="Wild Fire Class B" ignition-threshold="4000" max-combustion-energy="600"/>
+      <modifier fire-class="Wild Fire Class C" ignition-threshold="3000" max-combustion-energy="700"/>
     </fire-propagation-modifier>
   </object>
   <object geometry="polygon" name="Mined Area (linear and destructible)" symbol="G*MPOFA---****X" type="mined area (linear and destructible)">
@@ -523,4 +523,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="3976749584" -->
+<!-- signature="0491403441" -->
