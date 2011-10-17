@@ -130,6 +130,7 @@ void TransportationController::Notify(  const sword::AutomatOrder& message, int 
         const std::string transportingUnitCallsign = callsignResolver_.ResolveCallsign( ReadAgent( message.parameters().elem( 8 ) ) );
         const SubordinatesVisitor visitor( subordinates_, message.tasker().id() );
         const unsigned int context = contextFactory_.Create();
+        pendingRequests_.right.erase( message.tasker().id() );
         pendingRequests_.insert( T_Requests::value_type( context, message.tasker().id() ) );
         contextRequests_[ context ].embarkmentPoint = embarkmentPoint;
         contextRequests_[ context ].debarkmentPoint = debarkmentPoint;
