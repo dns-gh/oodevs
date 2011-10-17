@@ -61,8 +61,11 @@ public:
     //@{
     virtual const MT_Vector2D&   GetPosition() const;
     virtual const MIL_AgentPion& GetPC      () const;
+    virtual bool                 BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
     virtual void OnSupplyCanceled();
     virtual void OnSupplyDone    ();
+    virtual void OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
+    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     virtual void Serialize( sword::AutomatId& msg ) const;
     //@}
 

@@ -16,6 +16,7 @@
 #include "Entities/Actions/PHY_Actor.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchyOwner_ABC.h"
 #include "Entities/Agents/Roles/Logistic/SupplySupplier_ABC.h"
+#include "Entities/Agents/Roles/Logistic/FuneralHandler_ABC.h"
 #include "tools/Resolver.h"
 
 namespace xml
@@ -37,6 +38,7 @@ namespace logistic
     class LogisticHierarchy;
     class LogisticHierarchy_ABC;
     class SupplyRequestContainer;
+    class SupplyConsign_ABC;
 }
 
 class MIL_Agent_ABC;
@@ -66,6 +68,7 @@ template < typename T > class PHY_ActionLogistic;
 class MIL_AutomateLOG : public PHY_Actor
                       , public logistic::LogisticHierarchyOwner_ABC
                       , public logistic::SupplySupplier_ABC
+                      , public logistic::FuneralHandler_ABC
 {
 public:
              MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLevel& level);
@@ -125,10 +128,23 @@ public:
     virtual bool           SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, double quantity ) const;
     virtual MIL_AgentPion* SupplyCreateConvoyPion             ( const MIL_AgentTypePion& type, boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy );
     virtual void           SupplyDestroyConvoyPion            ( MIL_AgentPion& convoyPion );    
+
+    virtual void           OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
+    virtual void           OnSupplyConvoyLeaving ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     
     virtual const MT_Vector2D& GetPosition() const;
+    virtual       bool         BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
     
     void           OnReceiveLogSupplyPushFlow         ( const sword::PushFlowParameters& parameters, const tools::Resolver_ABC< MIL_Automate >& automateResolver );
+    //@}
+
+    //! @name Funeral
+    //@{
+    virtual void AddSupplyConvoysObserver   ( logistic::SupplyConvoysObserver_ABC& observer );
+    virtual void RemoveSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer );
+
+    virtual bool                            FuneralHandleConsign           ( boost::shared_ptr< logistic::FuneralConsign_ABC > consign );
+    virtual const logistic::FuneralPackagingResource* FuneralGetNextPackagingResource( const logistic::FuneralPackagingResource* currentPackaging );
     //@}
 
     //! @name Quotas
@@ -151,8 +167,9 @@ protected:
 private:
     //! @name Types
     //@{
-    typedef std::list< boost::shared_ptr < logistic::SupplyConsign_ABC > >  T_SupplyConsigns;
+    typedef std::list< boost::shared_ptr < logistic::SupplyConsign_ABC > >       T_SupplyConsigns;
     typedef std::list< boost::shared_ptr < logistic::SupplyRequestContainer > >  T_SupplyRequests;
+    typedef std::set< logistic::SupplyConvoysObserver_ABC* > T_SupplyConvoysObservers;
     //@}
 
 private:
@@ -171,6 +188,7 @@ private:
     // Supply
     T_SupplyConsigns supplyConsigns_;
     T_SupplyRequests supplyRequests_; // Pushed flows
+    T_SupplyConvoysObservers supplyConvoysObserver_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AutomateLOG* pion, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AutomateLOG* pion, const unsigned int /*version*/ );

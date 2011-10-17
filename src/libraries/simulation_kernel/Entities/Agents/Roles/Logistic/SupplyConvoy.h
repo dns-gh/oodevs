@@ -55,7 +55,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const SupplySupplier_ABC& GetTransportersProvider() const;
+    virtual SupplySupplier_ABC& GetTransportersProvider() const;
     //@}
 
 protected:

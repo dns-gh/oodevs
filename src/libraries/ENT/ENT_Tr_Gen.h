@@ -47,6 +47,7 @@ public:
     static const std::string& ConvertFromLogMaintenanceHandlingStatus( E_LogMaintenanceHandlingStatus, E_Conversion = eToSim );
     static const std::string& ConvertFromLogSupplyHandlingStatus( E_LogSupplyHandlingStatus, E_Conversion = eToSim );
     static const std::string& ConvertFromLogMedicalHandlingStatus( E_LogMedicalHandlingStatus, E_Conversion = eToSim );
+    static const std::string& ConvertFromLogFuneralHandlingStatus( E_LogFuneralHandlingStatus, E_Conversion = eToSim );
     static const std::string& ConvertFromDemolitionTargetType( E_DemolitionTargetType, E_Conversion = eToSim );
     static const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
     static const std::string& ConvertFromLocation( E_Location, E_Conversion = eToSim );
@@ -80,6 +81,7 @@ public:
     static E_LogMaintenanceHandlingStatus ConvertToLogMaintenanceHandlingStatus( const std::string& );
     static E_LogSupplyHandlingStatus ConvertToLogSupplyHandlingStatus( const std::string& );
     static E_LogMedicalHandlingStatus ConvertToLogMedicalHandlingStatus( const std::string& );
+    static E_LogFuneralHandlingStatus ConvertToLogFuneralHandlingStatus( const std::string& );
     static E_DemolitionTargetType ConvertToDemolitionTargetType( const std::string& );
     static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
     static E_Location ConvertToLocation( const std::string& );
@@ -115,6 +117,7 @@ private:
     typedef ENT_Tr::converter<E_LogMaintenanceHandlingStatus> T_ConverterLogMaintenanceHandlingStatus;
     typedef ENT_Tr::converter<E_LogSupplyHandlingStatus> T_ConverterLogSupplyHandlingStatus;
     typedef ENT_Tr::converter<E_LogMedicalHandlingStatus> T_ConverterLogMedicalHandlingStatus;
+    typedef ENT_Tr::converter<E_LogFuneralHandlingStatus> T_ConverterLogFuneralHandlingStatus;
     typedef ENT_Tr::converter<E_DemolitionTargetType> T_ConverterDemolitionTargetType;
     typedef ENT_Tr::converter<E_PopulationAttitude> T_ConverterPopulationAttitude;
     typedef ENT_Tr::converter<E_Location> T_ConverterLocation;
@@ -149,6 +152,7 @@ private:
     static T_ConverterLogMaintenanceHandlingStatus LogMaintenanceHandlingStatusConverter_ [];
     static T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_ [];
     static T_ConverterLogMedicalHandlingStatus LogMedicalHandlingStatusConverter_ [];
+    static T_ConverterLogFuneralHandlingStatus LogFuneralHandlingStatusConverter_ [];
     static T_ConverterDemolitionTargetType DemolitionTargetTypeConverter_ [];
     static T_ConverterPopulationAttitude PopulationAttitudeConverter_ [];
     static T_ConverterLocation LocationConverter_ [];

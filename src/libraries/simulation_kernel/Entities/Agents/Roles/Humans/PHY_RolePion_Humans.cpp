@@ -151,7 +151,6 @@ PHY_RolePion_Humans::PHY_RolePion_Humans( MIL_AgentPion& pion )
     , humansStates_           ()
     , nNbrUsableHumans_       ( 0 )
     , humansToUpdate_         ()
-    , medicalHumanStates_     ()
     , nTickRcMedicalQuerySent_( 0 )
     , nEvacuationMode_        ( eEvacuationMode_Auto )
     , hasChanged_             ( true )
@@ -184,7 +183,6 @@ void PHY_RolePion_Humans::serialize( Archive& file, const unsigned int )
          & humansStates_
          & nNbrUsableHumans_
          & humansToUpdate_
-         & medicalHumanStates_
          & nTickRcMedicalQuerySent_;
 }
 
@@ -284,7 +282,7 @@ void PHY_RolePion_Humans::NotifyHumanAdded( Human_ABC& human )
 {
     hasChanged_ = true;
     UpdateDataWhenHumanAdded( human );
-    if( human.NeedMedical() )
+    if( human.NeedUpdate() )
         humansToUpdate_.insert( &human );
 }
 
@@ -309,8 +307,8 @@ void PHY_RolePion_Humans::NotifyHumanChanged( Human_ABC& human, const Human_ABC&
     UpdateDataWhenHumanRemoved( copyOfOldHumanState );
     UpdateDataWhenHumanAdded  ( human );
 
-    const bool bOldHumanNeedUpdate = copyOfOldHumanState.NeedMedical();
-    const bool bNewHumanNeedUpdate = human              .NeedMedical();
+    const bool bOldHumanNeedUpdate = copyOfOldHumanState.NeedUpdate();
+    const bool bNewHumanNeedUpdate = human              .NeedUpdate();
 
     if( bOldHumanNeedUpdate && !bNewHumanNeedUpdate )
         humansToUpdate_.erase( &human );
@@ -351,13 +349,6 @@ bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MIL_AutomateLOG& destinationTC2 )
 {
     PHY_MedicalHumanState* pMedicalHumanState = destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( pion_, human );
-    if( !pMedicalHumanState )
-    {
-        human.SetMedicalState( 0 );
-        return;
-    }
-    if( ! medicalHumanStates_.insert( pMedicalHumanState ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     human.SetMedicalState( pMedicalHumanState );
 }
 
@@ -367,6 +358,7 @@ void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MI
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
 {
+    //$$$ Ne devrait contenir que la partie RC, et déléguer la gestion de la consign à l'Human
     MIL_AutomateLOG* pTC2 = pion_.GetLogisticHierarchy().GetPrimarySuperior();
     if( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
     {
@@ -380,14 +372,6 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
     nTickRcMedicalQuerySent_ = nCurrentTick;
 
     PHY_MedicalHumanState* pMedicalHumanState = pTC2->MedicalHandleHumanForEvacuation( pion_, human );
-    if( !pMedicalHumanState )
-    {
-        human.SetMedicalState( 0 );
-        return;
-    }
-
-    if( ! medicalHumanStates_.insert( pMedicalHumanState ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     human.SetMedicalState( pMedicalHumanState );
 }
 
@@ -397,8 +381,6 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::NotifyHumanBackFromMedical( PHY_MedicalHumanState& humanState )
 {
-    if( medicalHumanStates_.erase( &humanState ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
 
@@ -464,6 +446,9 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
         case Human_ABC::eMedical:
             personnel.set_location( sword::medical );
             break;
+        case Human_ABC::eFuneral: 
+            personnel.set_location( sword::medical ); //$$$ NLD 2011-10-03 TEMPORAIRE EN ATTENDANT SCIPIO, remplacer par sword::funeral
+            break;
         }
         // Psyop && contaminated
         if( state.psyop_ )
@@ -495,8 +480,7 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::SendChangedState() const
 {
-    for( CIT_MedicalHumanStateSet it = medicalHumanStates_.begin(); it != medicalHumanStates_.end(); ++it )
-        (**it).SendChangedState();
+    std::for_each( humansToUpdate_.begin(), humansToUpdate_.end(), boost::bind( &Human_ABC::SendChangedState, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -505,8 +489,7 @@ void PHY_RolePion_Humans::SendChangedState() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::SendFullState( unsigned int context ) const
 {
-    for( CIT_MedicalHumanStateSet it = medicalHumanStates_.begin(); it != medicalHumanStates_.end(); ++it )
-        (**it).SendFullState( context );
+    std::for_each( humansToUpdate_.begin(), humansToUpdate_.end(), boost::bind( &Human_ABC::SendFullState, _1, context ) );
 }
 
 
@@ -569,8 +552,7 @@ void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
 void PHY_RolePion_Humans::Clean()
 {
     hasChanged_ = false;
-    for( CIT_MedicalHumanStateSet it = medicalHumanStates_.begin(); it != medicalHumanStates_.end(); ++it )
-        (**it).Clean();
+    std::for_each( humansToUpdate_.begin(), humansToUpdate_.end(), boost::bind( &Human_ABC::Clean, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

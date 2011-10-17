@@ -21,6 +21,7 @@
 #include "LogConsignMaintenance.h"
 #include "LogConsignSupply.h"
 #include "LogConsignMedical.h"
+#include "LogConsignFuneral.h"
 #include "MeteoModel.h"
 #include "Object.h"
 #include "ObjectKnowledge.h"
@@ -338,6 +339,12 @@ void Model::Update( const sword::SimToClient& wrapper )
         logConsignsMedical_.Get( wrapper.message().log_medical_handling_update().request().id() ).Update( wrapper.message().log_medical_handling_update() );
     else if( wrapper.message().has_log_medical_state() )
         agents_.Get( wrapper.message().log_medical_state().unit().id() ).Update( wrapper.message().log_medical_state() );
+    else if( wrapper.message().has_log_funeral_handling_creation() )
+        CreateUpdate< LogConsignFuneral >( logConsignsFuneral_, wrapper.message().log_funeral_handling_creation().request().id(),  wrapper.message().log_funeral_handling_creation() );
+    else if( wrapper.message().has_log_funeral_handling_destruction() )
+        Destroy( logConsignsFuneral_, wrapper.message().log_funeral_handling_destruction().request().id(), wrapper.message().log_funeral_handling_destruction() );
+    else if( wrapper.message().has_log_funeral_handling_update() )
+        logConsignsFuneral_.Get( wrapper.message().log_funeral_handling_update().request().id() ).Update( wrapper.message().log_funeral_handling_update() );
 
     else if( wrapper.message().has_population_creation() )
         CreateUpdate< Inhabitant >( inhabitants_, wrapper.message().population_creation().id().id(), wrapper.message().population_creation() );
@@ -546,6 +553,7 @@ void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
     logConsignsMaintenance_.Apply( boost::bind( &LogConsignMaintenance::Accept, _1, boost::ref( visitor ) ) );
     logConsignsSupply_     .Apply( boost::bind( &LogConsignSupply::Accept, _1, boost::ref( visitor ) ) );
     logConsignsMedical_    .Apply( boost::bind( &LogConsignMedical::Accept, _1, boost::ref( visitor ) ) );
+    logConsignsFuneral_    .Apply( boost::bind( &LogConsignFuneral::Accept, _1, boost::ref( visitor ) ) );
     fires_                 .Apply( boost::bind( &Fire::Accept, _1, boost::ref( visitor ) ) );
     populationFires_       .Apply( boost::bind( &PopulationFire::Accept, _1, boost::ref( visitor ) ) );
     fireEffects_           .Apply( boost::bind( &FireEffect::Accept, _1, boost::ref( visitor ) ) );

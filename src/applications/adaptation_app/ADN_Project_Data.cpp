@@ -112,6 +112,11 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "urban-templates", szUrbanTemplates_ );
     ReadOptionalFile( input, "extensions", szExtensions_ );
     ReadOptionalFile( input, "filters", szFilters_ );
+    
+    //$$$ NLD - 20011017 - SCIPIO STUPID THALES ICD - TO BE REMOVED IN 4.3.4
+    szFuneral_ = "Funeral.xml";
+    //$$$
+    
     input >> xml::end;
 }
 

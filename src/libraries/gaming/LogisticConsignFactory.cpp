@@ -13,6 +13,7 @@
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
 #include "LogSupplyConsign.h"
+#include "LogFuneralConsign.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "TeamsModel.h"
@@ -67,4 +68,13 @@ LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const sword::LogS
 LogMedicalConsign* LogisticConsignFactory::CreateMedicalConsign( const sword::LogMedicalHandlingCreation& message )
 {
     return new LogMedicalConsign( controllers_.controller_, model_.agents_, message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticConsignFactory::CreateFuneralConsign
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+LogFuneralConsign* LogisticConsignFactory::CreateFuneralConsign( const sword::LogFuneralHandlingCreation& message )
+{
+    return new LogFuneralConsign( controllers_.controller_, message, model_.agents_, model_.agents_, model_.teams_, static_.objectTypes_, simulation_);
 }

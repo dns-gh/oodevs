@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<funeral model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Funeral.xsd">
+  <fake-transporter speed="60"/>
+  <packagings/>
+</funeral>
+<!-- signature="2501974574" -->

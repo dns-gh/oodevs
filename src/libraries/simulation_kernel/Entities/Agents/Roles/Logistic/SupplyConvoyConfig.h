@@ -41,7 +41,7 @@ private:
     static void InitializeInterpolatedTime ( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction< double >& data );
     static void InitializeSpeedModificators( xml::xistream& xis );
     static void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< double >& data, std::pair< unsigned int, double >& upperBound );
-    static void ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, double >& upperBound );
+    static void ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, double >& upperBound );   
     static const SupplyConvoyFactory_ABC& GetConvoyFactory( xml::xistream& xis, const std::string& type );
     //@}
 

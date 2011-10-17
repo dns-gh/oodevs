@@ -74,6 +74,7 @@
     <added-file filename="symbols.xml" assign-file="schemas/4.3.1/added-files/symbols.xml"/>
     <added-file filename="UrbanTemplates.xml" assign-file="schemas/4.3.3/added-files/UrbanTemplates.xml"/>
     <added-file filename="LogisticSupplyClasses.xml" assign-file="schemas/4.3.3/added-files/LogisticSupplyClasses.xml"/>
+    <added-file filename="Funeral.xml" assign-file="schemas/4.3.3/added-files/Funeral.xml"/>
   </added-files>
 
   <migration from="3.0" to="4.2.0">

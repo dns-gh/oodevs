@@ -1425,6 +1425,50 @@ message UrbanKnowledgeDestruction {
     required PartyId                party     = 2; //!< The party identifier
 }
 
+
+/** @struct LogFuneralHandlingCreation
+    @brief Notifies of the creation of a funeral handling
+*/                    
+message LogFuneralHandlingCreation {
+    required FuneralRequestId request          = 1; //!< The funeral request identifier
+    required UnitId           unit             = 2; //!< The requesting unit identifier
+    required int32            tick             = 3; //!< The creation tick number
+    required EnumHumanRank    rank             = 4; //!< The rank of the human associated to the request
+}
+
+/** @struct LogFuneralHandlingUpdate
+    @brief Notifies of the update of a funeral handling
+*/
+message LogFuneralHandlingUpdate {
+    /** @enum EnumLogFuneralHandlingStatus
+        @brief Defines the funeral handling states
+    */
+    enum EnumLogFuneralHandlingStatus {
+        waiting_for_handling     = 0; //!< Waiting to be handled by logistic superior
+        transporting_unpackaged  = 1; //!< Transporting the unpackaged body from the requesting unit to the first logistic base
+        waiting_for_packaging    = 2; //!< Waiting for packaging resource to be available
+        packaging                = 3; //!< Packaging the body
+        waiting_for_transporter  = 4; //!< Waiting for a transporter (supply logistic) to arrive to the current logistic base
+        transporting_packaged    = 5; //!< Transporting the packaged body between logistic bases
+        finished                 = 6; //!< Finished
+ 
+    }
+    required FuneralRequestId              request                = 1; //!< The request identifier
+    optional ParentEntity                  handling_unit          = 2; //!< The current logistic base handling the request
+    optional UnitId                        convoying_unit         = 3; //!< The current unit transporting the body
+    optional EnumLogFuneralHandlingStatus  state                  = 4; //!< The current status
+    optional int32                         current_state_end_tick = 5; //!< When set, the tick when the current state will be finished
+    optional ResourceType                  packaging_resource     = 6; //!< The packaging type    
+}
+
+/** @struct LogFuneralHandlingDestruction
+    @brief Notifies of the destruction of a funeral handling
+*/
+message LogFuneralHandlingDestruction {
+    required FuneralRequestId request = 1; //!< The request identifier
+}
+
+
 /** @struct LogMedicalHandlingCreation
     @brief Notifies of the creation of a medical handling
 */                    
@@ -2530,6 +2574,10 @@ message SimToClient {
         optional BurningCellRequestAck                  burning_cell_request_ack                  = 140; //!< @copybrief BurningCellRequestAck
         optional FormationUpdate                        formation_update                          = 141; //!< @copybrief FormationUpdate
         optional ControlCheckPointSaveDelete            control_checkpoint_save_delete            = 142; //!< @copybrief ControlCheckPointSaveDelete
+        optional LogFuneralHandlingCreation             log_funeral_handling_creation             = 143;  //!< @copybrief LogFuneralHandlingCreation
+        optional LogFuneralHandlingUpdate               log_funeral_handling_update               = 144;  //!< @copybrief LogLogFuneralHandlingUpdateMedicalHandlingUpdate
+        optional LogFuneralHandlingDestruction          log_funeral_handling_destruction          = 145;  //!< @copybrief LogFuneralHandlingDestruction
+//        optional LogFuneralState                        log_funeral_state                         = 146;  //!< @copybrief LogFuneralState
     }
     /** @property context
         @brief Identifies the request matching the response

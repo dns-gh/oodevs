@@ -17,11 +17,13 @@ namespace sword
     class LogMaintenanceHandlingCreation;
     class LogMedicalHandlingCreation;
     class LogSupplyHandlingCreation;
+    class LogFuneralHandlingCreation;
 }
 
 class LogMaintenanceConsign;
 class LogSupplyConsign;
 class LogMedicalConsign;
+class LogFuneralConsign;
 class LogisticConsignFactory_ABC;
 
 // =============================================================================
@@ -33,6 +35,7 @@ class LogisticConsignFactory_ABC;
 class LogisticsModel : public tools::Resolver< LogMaintenanceConsign >
                      , public tools::Resolver< LogMedicalConsign >
                      , public tools::Resolver< LogSupplyConsign >
+                     , public tools::Resolver< LogFuneralConsign >
 {
 public:
     //! @name Constructors/Destructor
@@ -56,6 +59,10 @@ public:
     void CreateSupplyConsign( const sword::LogSupplyHandlingCreation& message );
     LogSupplyConsign& GetSupplyConsign( unsigned long id );
     void DeleteSupplyConsign( unsigned long id );
+
+    void CreateFuneralConsign( const sword::LogFuneralHandlingCreation& message );
+    LogFuneralConsign& GetFuneralConsign( unsigned long id );
+    void DeleteFuneralConsign( unsigned long id );
     //@}
 
 private:

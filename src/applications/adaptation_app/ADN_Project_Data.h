@@ -71,6 +71,7 @@ public:
         ADN_Type_String szMissions_;
         ADN_Type_String szResourceNetworks_;
         ADN_Type_String szFireClasses_;
+        ADN_Type_String szFuneral_;
         // $$$$ NLD 2007-01-15: files not loaded!
         ADN_Type_String szPathfinder_;
         ADN_Type_String szObjectNames_;

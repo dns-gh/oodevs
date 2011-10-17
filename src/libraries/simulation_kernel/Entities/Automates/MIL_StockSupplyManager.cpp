@@ -71,7 +71,7 @@ MIL_StockSupplyManager::~MIL_StockSupplyManager()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::serialize
+// Name: MIL_StockSupplyManager::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned int )
@@ -87,7 +87,7 @@ void MIL_StockSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::serialize
+// Name: MIL_StockSupplyManager::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
@@ -210,12 +210,44 @@ void MIL_StockSupplyManager::OnSupplyDone()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::OnSupplyConvoyArriving
+// Created: NLD 2011-09-13
+// -----------------------------------------------------------------------------
+void MIL_StockSupplyManager::OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+{
+    MIL_AutomateLOG* logisticBase = pAutomate_->FindLogisticManager();
+    if( logisticBase )
+        logisticBase->OnSupplyConvoyArriving( supplyConsign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::OnSupplyConvoyLeaving
+// Created: NLD 2011-09-13
+// -----------------------------------------------------------------------------
+void MIL_StockSupplyManager::OnSupplyConvoyLeaving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+{
+    MIL_AutomateLOG* logisticBase = pAutomate_->FindLogisticManager();
+    if( logisticBase )
+        logisticBase->OnSupplyConvoyLeaving( supplyConsign );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::Serialize
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::Serialize( sword::AutomatId& msg ) const
 {
     msg.set_id( pAutomate_->GetID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::BelongsToLogisticBase
+// Created: NLD 2005-01-25
+// -----------------------------------------------------------------------------
+bool MIL_StockSupplyManager::BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const
+{
+    const MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
+    return logisticManager && logisticManager == &logisticBase;
 }
 
 // =============================================================================

@@ -186,6 +186,7 @@ private:
         ePopulation,
         ePeople,
         eReports,
+        eFuneral,
         eNbrWorkspaceElements
     };
 

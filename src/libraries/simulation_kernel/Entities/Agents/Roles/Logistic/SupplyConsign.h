@@ -46,6 +46,13 @@ public:
     virtual bool IsSupplying( const PHY_DotationCategory& dotationCategory ) const;
     virtual bool IsFinished() const;
     //@}
+
+    //! @name TEST
+    //@{
+    virtual bool WillGoTo( const MIL_AutomateLOG& destination ) const;
+    virtual bool IsAt    ( const MIL_AutomateLOG& destination ) const;
+    virtual boost::shared_ptr< SupplyConvoy_ABC > GetConvoy() const;
+    //@}
     
     //! @name SupplyConvoyEventsObserver_ABC
     //@{
@@ -96,9 +103,13 @@ private:
 
     //! @name FSM
     //@{
-    void EnterStateConvoyWaitingForTransporters();
-    bool WaitForTransporters();
-    void EnterStateConvoyForming();
+    void DoConvoyReserveTransporters();
+    void DoConvoySetup();
+    void DoConvoyMoveToSupplier();
+    void DoConvoyLoad();
+    void DoConvoyMoveToSupplyRecipient();
+    void DoConvoyUnload();
+    void DoConvoyMoveToTransportersProvider();
     //@}
 
     //! @name Network

@@ -12,6 +12,7 @@
 #include "LogSupplyConsign.h"
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
+#include "LogFuneralConsign.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticConsigns_ABC::LogisticConsigns_ABC

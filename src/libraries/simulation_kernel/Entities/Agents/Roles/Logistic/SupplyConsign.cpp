@@ -128,7 +128,7 @@ SupplyRecipient_ABC* SupplyConsign::GetCurrentSupplyRecipient() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::GetCurrentSupplyRecipient
+// Name: SupplyConsign::SupplyCurrentRecipient
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
 void SupplyConsign::SupplyCurrentRecipient()
@@ -148,7 +148,7 @@ void SupplyConsign::SupplyCurrentRecipient()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::GetCurrentSupplyRecipient
+// Name: SupplyConsign::IsSupplying
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
 bool SupplyConsign::IsSupplying( const PHY_DotationCategory& dotationCategory ) const
@@ -166,7 +166,7 @@ bool SupplyConsign::IsFinished() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::GetCurrentSupplyRecipient
+// Name: SupplyConsign::SetState
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
 void SupplyConsign::SetState( E_State newState )
@@ -184,7 +184,7 @@ void SupplyConsign::SetState( E_State newState )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::EnterStateConvoyForming
+// Name: SupplyConsign::IsActionDone
 // Created: NLD 2005-12-14
 // -----------------------------------------------------------------------------
 bool SupplyConsign::IsActionDone( unsigned timeRemaining )
@@ -211,6 +211,96 @@ void SupplyConsign::SupplyAndProceedWithNextRecipient()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SupplyConsign::DoConvoyReserveTransporters
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+void SupplyConsign::DoConvoyReserveTransporters()
+{
+    if( IsActionDone( convoy_->ReserveTransporters( resources_ ) ) )
+        SetState( eConvoySetup );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign::DoConvoySetup
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+void SupplyConsign::DoConvoySetup()
+{
+    if( IsActionDone( convoy_->Setup() ) )
+    {
+        SetState( eConvoyGoingToLoadingPoint ); 
+        convoy_->GetTransportersProvider().OnSupplyConvoyLeaving( shared_from_this() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign::DoConvoyMoveToSupplier
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+void SupplyConsign::DoConvoyMoveToSupplier()
+{
+    if( IsActionDone( convoy_->MoveToSupplier() ) )
+    {
+        SetState( eConvoyLoading );
+        supplier_.OnSupplyConvoyArriving( shared_from_this() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign::DoConvoyLoad
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+void SupplyConsign::DoConvoyLoad()
+{
+    if( IsActionDone( convoy_->Load() ) )
+    {
+        supplier_.OnSupplyConvoyLeaving( shared_from_this() );
+        SupplyAndProceedWithNextRecipient();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign::DoConvoyMoveToSupplyRecipient
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+void SupplyConsign::DoConvoyMoveToSupplyRecipient()
+{
+    assert( currentRecipient_ );
+    if( IsActionDone( convoy_->MoveToSupplyRecipient( ) ) )
+    {
+        currentRecipient_->OnSupplyConvoyArriving( shared_from_this() );
+        SetState( eConvoyUnloading );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign::DoConvoyUnload
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+void SupplyConsign::DoConvoyUnload()
+{
+    assert( currentRecipient_ );
+    if( IsActionDone( convoy_->Unload() ) )
+    {
+        currentRecipient_->OnSupplyConvoyLeaving( shared_from_this() );
+        SupplyAndProceedWithNextRecipient();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign::DoConvoyMoveToTransportersProvider
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+void SupplyConsign::DoConvoyMoveToTransportersProvider()
+{
+    if( IsActionDone( convoy_->MoveToTransportersProvider() ) )
+    {
+        SetState( eFinished ); 
+        convoy_->GetTransportersProvider().OnSupplyConvoyArriving( shared_from_this() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: SupplyConsign::Update
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
@@ -218,14 +308,14 @@ bool SupplyConsign::Update()
 {
     switch( state_ )
     {
-        case eConvoyWaitingForTransporters  : if( IsActionDone( convoy_->ReserveTransporters( resources_ ) ) )  SetState( eConvoySetup );               break;
-        case eConvoySetup                   : if( IsActionDone( convoy_->Setup() ) )                            SetState( eConvoyGoingToLoadingPoint ); break;
-        case eConvoyGoingToLoadingPoint     : if( IsActionDone( convoy_->MoveToSupplier() ) )                   SetState( eConvoyLoading );             break;
-        case eConvoyLoading                 : if( IsActionDone( convoy_->Load() ) )                             SupplyAndProceedWithNextRecipient();    break;
-        case eConvoyGoingToUnloadingPoint   : if( IsActionDone( convoy_->MoveToSupplyRecipient( ) ) )           SetState( eConvoyUnloading );           break;
-        case eConvoyUnloading               : if( IsActionDone( convoy_->Unload() ) )                           SupplyAndProceedWithNextRecipient();    break;
-        case eConvoyGoingBackToFormingPoint : if( IsActionDone( convoy_->MoveToTransportersProvider() ) )       SetState( eFinished );                  break;
-        case eFinished                      : convoy_->Finish();                                                                                        break;
+        case eConvoyWaitingForTransporters  : DoConvoyReserveTransporters(); break;
+        case eConvoySetup                   : DoConvoySetup(); break;
+        case eConvoyGoingToLoadingPoint     : DoConvoyMoveToSupplier(); break;
+        case eConvoyLoading                 : DoConvoyLoad(); break; 
+        case eConvoyGoingToUnloadingPoint   : DoConvoyMoveToSupplyRecipient(); break;
+        case eConvoyUnloading               : DoConvoyUnload(); break;
+        case eConvoyGoingBackToFormingPoint : DoConvoyMoveToTransportersProvider(); break;
+        case eFinished                      : convoy_->Finish(); break;
         default:
             assert( false );
     }
@@ -379,5 +469,79 @@ void SupplyConsign::SendMsgDestruction() const
     client::LogSupplyHandlingDestruction msg;
     msg().mutable_request()->set_id( id_ );
     msg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+
+// =============================================================================
+// TEST
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign::WillGoTo
+// Created: NLD 2004-12-29
+// -----------------------------------------------------------------------------
+bool SupplyConsign::WillGoTo( const MIL_AutomateLOG& destination ) const
+{
+    enum 
+    {
+        eCheckSupplier = 0x01,
+        eCheckRecipients = 0x02,
+        eCheckTransportersProvider = 0x04
+    };
+    unsigned check = 0;
+    switch( state_ )
+    {
+        case eConvoyWaitingForTransporters  : check = eCheckSupplier | eCheckRecipients | eCheckTransportersProvider; break;
+        case eConvoySetup                   : check = eCheckSupplier | eCheckRecipients | eCheckTransportersProvider; break;
+        case eConvoyGoingToLoadingPoint     : check = eCheckSupplier | eCheckRecipients | eCheckTransportersProvider; break;
+        case eConvoyLoading                 : check = eCheckRecipients | eCheckTransportersProvider; break;
+        case eConvoyGoingToUnloadingPoint   : check = eCheckRecipients | eCheckTransportersProvider; break;
+        case eConvoyUnloading               : check = eCheckRecipients | eCheckTransportersProvider; break;
+        case eConvoyGoingBackToFormingPoint : check = eCheckTransportersProvider; break;
+        case eFinished                      : break;
+    }
+
+    if( (check & eCheckSupplier) && supplier_.BelongsToLogisticBase( destination ) )
+        return true;
+
+    if( (check & eCheckTransportersProvider) && convoy_->GetTransportersProvider().BelongsToLogisticBase( destination ) )
+        return true;
+
+    if( check & eCheckRecipients )
+    {
+        BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
+        {
+            if( data.first->BelongsToLogisticBase( destination ) )
+                return true;
+        }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign::WillGoTo
+// Created: NLD 2004-12-29
+// -----------------------------------------------------------------------------
+bool SupplyConsign::IsAt( const MIL_AutomateLOG& destination ) const
+{
+    if( state_ == eConvoyLoading )
+        return supplier_.BelongsToLogisticBase( destination );
+    else if( state_ == eConvoyUnloading )
+    {
+        assert( currentRecipient_ );
+        return currentRecipient_->BelongsToLogisticBase( destination );
+    }
+    else if( state_ == eFinished )
+        return convoy_->GetTransportersProvider().BelongsToLogisticBase( destination );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign::GetConvoy
+// Created: NLD 2004-12-29
+// -----------------------------------------------------------------------------
+boost::shared_ptr< SupplyConvoy_ABC > SupplyConsign::GetConvoy() const
+{
+    return convoy_;
 }
 

@@ -33,6 +33,7 @@
 #include "Agents/Roles/Logistic/PHY_MaintenanceResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_MedicalResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_SupplyResourcesAlarms.h"
+#include "Agents/Roles/Logistic/FuneralConfig.h"
 #include "Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Agents/Units/Categories/PHY_RoePopulation.h"
@@ -183,6 +184,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< MIL_PopulationType             >( config, "populations"        );
     InitializeType< MIL_InhabitantType             >( config, "inhabitants"        );
     InitializeMedical( config );
+    InitializeFuneral( config, time );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,6 +196,18 @@ void MIL_EntityManagerStaticMethods::InitializeSensors( MIL_Config& config, cons
     MT_LOG_INFO_MSG( "Initializing sensor types" );
     const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "sensors", boost::bind( &MIL_EntityManagerStaticMethods::LoadSensors, _1, boost::cref( time ) ) );
     config.AddFileToCRC( fileLoaded );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManagerStaticMethods::InitializeFuneral
+// Created: RPD 2010-02-07
+// -----------------------------------------------------------------------------
+void MIL_EntityManagerStaticMethods::InitializeFuneral( MIL_Config& config, const MIL_Time_ABC& time )
+{
+    //$$$ NLD - 20011017 - SCIPIO STUPID THALES ICD - TO BE REMOVED IN 4.3.4
+    const std::string childFileName( config.BuildPhysicalChildFile( "Funeral.xml" ) );
+    config.GetLoader().LoadFile( childFileName, boost::bind( &logistic::FuneralConfig::Initialize, _1, time.GetTickDuration() ) );
+    config.AddFileToCRC( childFileName );
 }
 
 // -----------------------------------------------------------------------------

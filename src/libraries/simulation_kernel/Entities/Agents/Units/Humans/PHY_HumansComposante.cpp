@@ -325,7 +325,7 @@ void PHY_HumansComposante::NotifyComposanteTransfered( PHY_RoleInterface_Composa
 {
     for ( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
     {
-        ( **it ).CancelLogisticRequest();
+        ( **it ).CancelLogisticRequests();
         const_cast< MIL_Agent_ABC& >( src.GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanRemoved, **it );
         const_cast< MIL_Agent_ABC& >( dest.GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanAdded, **it );
     }
