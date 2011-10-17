@@ -24,6 +24,10 @@
 #include "NetnSurfaceVessel.h"
 #include "RemoteSurfaceVessel.h"
 #include "NetnRemoteSurfaceVessel.h"
+#include "Aircraft.h"
+#include "NetnAircraft.h"
+#include "RemoteAircraft.h"
+#include "NetnRemoteAircraft.h"
 #include "protocol/Simulation.h"
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
@@ -127,6 +131,10 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
                                          CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis, callsignResolver ),
                                          CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( xis ),
                                          CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( xis ) ) )
+    , aircraftClass_     ( new HlaClass( *federate_, resolver,
+                                         CreateFactory< Aircraft, NetnAircraft >( xis, callsignResolver ),
+                                         CreateRemoteFactory< RemoteAircraft, NetnRemoteAircraft >( xis ),
+                                         CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( xis ) ) )
 {
     subject_.Register( *this );
     CONNECT( controller, *this, control_end_tick );
@@ -158,6 +166,7 @@ void FederateFacade::Register( RemoteAgentListener_ABC& listener )
 {
     aggregateClass_->Register( listener );
     surfaceVesselClass_->Register( listener );
+    aircraftClass_->Register( listener );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,6 +175,7 @@ void FederateFacade::Register( RemoteAgentListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void FederateFacade::Unregister( RemoteAgentListener_ABC& listener )
 {
+    aircraftClass_->Unregister( listener );
     surfaceVesselClass_->Unregister( listener );
     aggregateClass_->Unregister( listener );
 }

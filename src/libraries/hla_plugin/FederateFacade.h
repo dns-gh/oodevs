@@ -120,6 +120,7 @@ private:
     std::auto_ptr< FederationDestructor > destructor_;
     std::auto_ptr< HlaClass > aggregateClass_;
     std::auto_ptr< HlaClass > surfaceVesselClass_;
+    std::auto_ptr< HlaClass > aircraftClass_;
     //@}
 };
 

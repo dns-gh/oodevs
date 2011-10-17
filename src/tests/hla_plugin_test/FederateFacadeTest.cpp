@@ -53,6 +53,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
     MOCK_EXPECT( federate, Join ).once().in( s ).with( "Federation", true, true ).returns( true );
     MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity.NETN_Aggregate", mock::any, mock::any, mock::any );
     MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", mock::any, mock::any, mock::any );
+    MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", mock::any, mock::any, mock::any );
     MOCK_EXPECT( subject, Register ).once();
     MOCK_EXPECT( controller, Register ).once().in( s );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
@@ -70,6 +71,7 @@ BOOST_FIXTURE_TEST_CASE( netn_use_can_be_desactivated, Fixture )
     MOCK_EXPECT( federate, Join ).once().returns( true );
     MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.AggregateEntity", mock::any, mock::any, mock::any );
     MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", mock::any, mock::any, mock::any );
+    MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.Aircraft", mock::any, mock::any, mock::any );
     MOCK_EXPECT( subject, Register ).once();
     MOCK_EXPECT( controller, Register ).once();
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
@@ -88,7 +90,7 @@ namespace
             MOCK_EXPECT( subject, Unregister );
             MOCK_EXPECT( controller, Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( controller, Unregister ).once();
-            MOCK_EXPECT( federate, RegisterClass ).exactly( 2 );
+            MOCK_EXPECT( federate, RegisterClass ).exactly( 3 );
             MOCK_EXPECT( federate, Connect ).once().returns( true );
         }
     };

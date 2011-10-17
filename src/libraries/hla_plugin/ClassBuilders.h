@@ -134,6 +134,28 @@ namespace hla
             , std::auto_ptr< ClassBuilder_ABC >( new SurfaceVesselBuilder() ) )
         {}
     };
+    class AircraftBuilder : public ClassBuilder
+    {
+    public:
+        AircraftBuilder()
+            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.Aircraft"
+            , boost::assign::list_of( "EntityType" )
+                                    ( "EntityIdentifier" )
+                                    ( "ForceIdentifier" )
+                                    ( "Marking" )
+                                    ( "Spatial" ) )
+        {}
+    };
+    class NetnAircraftBuilder : public NetnClassBuilder
+    {
+    public:
+        NetnAircraftBuilder()
+            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft"
+            , boost::assign::list_of( "UniqueID" )
+                                    ( "Callsign" )
+            , std::auto_ptr< ClassBuilder_ABC >( new AircraftBuilder() ) )
+        {}
+    };
 }
 }
 
