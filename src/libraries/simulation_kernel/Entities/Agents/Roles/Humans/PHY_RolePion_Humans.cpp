@@ -379,7 +379,7 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
 // Name: PHY_RolePion_Humans::NotifyHumanBackFromMedical
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::NotifyHumanBackFromMedical( PHY_MedicalHumanState& humanState )
+void PHY_RolePion_Humans::NotifyHumanBackFromMedical( PHY_MedicalHumanState& )
 {
 }
 
