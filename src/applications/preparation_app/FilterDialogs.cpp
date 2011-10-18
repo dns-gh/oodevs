@@ -13,6 +13,7 @@
 #include "FilterDialog.h"
 #include "FilterOrbatReIndexer.h"
 #include "Menu.h"
+#include "FilterCsv.h"
 #include "clients_kernel/Tools.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
@@ -23,11 +24,13 @@
 // Name: FilterDialogs constructor
 // Created: ABR 2011-06-21
 // -----------------------------------------------------------------------------
-FilterDialogs::FilterDialogs( QWidget* parent, const tools::ExerciseConfig& config, Model& model, Menu& menu )
-    : parent_( parent )
-    , config_( config )
-    , model_ ( model )
-    , menu_  ( menu )
+FilterDialogs::FilterDialogs( QWidget* parent, const tools::ExerciseConfig& config, Model& model,
+                              Menu& menu, const kernel::CoordinateConverter_ABC& converter )
+    : parent_   ( parent )
+    , config_   ( config )
+    , model_    ( model )
+    , menu_     ( menu )
+    , converter_( converter )
 {
     // NOTHING
 }
@@ -51,6 +54,9 @@ void FilterDialogs::Load()
     config_.GetLoader().LoadOptionalPhysicalFile( "filters", boost::bind( &FilterDialogs::Load, this, _1 ) );
     if( !Find( "import" ) )
         CreateImportDialog();
+    if( !Find( "export" ) )
+        CreateExportDialog();
+    Get( "export" ).AddFilter( *new FilterCsv( config_, model_, converter_ ) );
     Get( "import" ).AddFilter( *new FilterOrbatReIndexer( parent_, config_, model_ ) );
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->InsertMenuEntry( menu_ );
@@ -105,5 +111,15 @@ void FilterDialogs::ReadSection( xml::xistream& xis )
 void FilterDialogs::CreateImportDialog()
 {
     xml::xistringstream xis( "<sections><section id=\"import\"><descriptions><description xml:lang=\"en\" name=\"Import...\"/><description xml:lang=\"fr\" name=\"Importer...\"/></descriptions><filters></filters> </section></sections>" );
+    Load( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterDialogs::CreateExportDialog
+// Created: LGY 2011-10-17
+// -----------------------------------------------------------------------------
+void FilterDialogs::CreateExportDialog()
+{
+    xml::xistringstream xis( "<sections><section id=\"export\"><descriptions><description xml:lang=\"en\" name=\"Export...\"/><description xml:lang=\"fr\" name=\"Exporter...\"/></descriptions><filters></filters> </section></sections>" );
     Load( xis );
 }

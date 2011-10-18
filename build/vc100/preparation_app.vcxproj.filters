@@ -451,6 +451,12 @@
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticLinksEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FilterCsv.cpp">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\CsvExport.cpp">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -620,6 +626,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\FilterDescription.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\CsvExport.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -825,6 +834,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\LogisticLinksEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\FilterCsv.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

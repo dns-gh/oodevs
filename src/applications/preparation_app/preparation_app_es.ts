@@ -82,6 +82,113 @@
     </message>
 </context>
 <context>
+    <name>CsvExport</name>
+    <message>
+        <source>Automat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIDE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CATEGORY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NAME</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TYPE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>POSITION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inhabitant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>orbat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ENTITY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QUANTITY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WIND SPEED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TEMPERATURE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CLOUDS FLOOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CLOUDS CEILING</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DENSITY CEILING</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WEATHER TYPE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>START TIME</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>END TIME</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WIND DIRECTION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diplomacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DotationsEditor</name>
     <message>
         <source>Resources editor</source>
@@ -261,6 +368,33 @@
     </message>
     <message>
         <source>Argument &apos;%1&apos;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilterCsv</name>
+    <message>
+        <source>CSV export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select output directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter output directory here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

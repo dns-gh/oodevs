@@ -6,12 +6,14 @@ Application.cpp \
 ColorEditor.cpp \
 CommunicationListView.cpp \
 ControlsChecker.cpp \
+CsvExport.cpp \
 DotationsEditor.cpp \
 ExerciseCreationDialog.cpp \
 ExerciseDialog.cpp \
 FileLoaderObserver.cpp \
 FileToolbar.cpp \
 FilterCommand.cpp \
+FilterCsv.cpp \
 FilterDescription.cpp \
 FilterDialog.cpp \
 FilterDialogs.cpp \
