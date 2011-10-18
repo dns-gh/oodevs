@@ -40,7 +40,8 @@ public:
         eNotEnoughFuel,
         eNotAllowed, // Neutralized
         eAlreadyMoving,
-        eItineraireMustBeJoined
+        eItineraireMustBeJoined,
+        ePartialPath
     };
     //@}
 
