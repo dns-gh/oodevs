@@ -1151,16 +1151,6 @@ namespace
         CONVERT_LIST( quantities, elem, ConvertLocatedQuantity );
     }
     template< typename From, typename To >
-    void ConvertObjectAttributeMedicalTreatment( const From& from, To* to )
-    {
-        CONVERT( external_reference_id );
-        CONVERT_ENUM( facility_status, ( sword::ObjectAttributeMedicalTreatment::normal, Common::ObjectAttributeMedicalTreatment::normal )
-                                          ( sword::ObjectAttributeMedicalTreatment::on_divert, Common::ObjectAttributeMedicalTreatment::on_divert )
-                                          ( sword::ObjectAttributeMedicalTreatment::closed, Common::ObjectAttributeMedicalTreatment::closed ) );
-        CONVERT( doctors );
-        CONVERT( available_doctors );
-    }
-    template< typename From, typename To >
     void ConvertMedicalTreatmentBedCapacity( const From& from, To* to )
     {
         CONVERT( type_id );
@@ -1260,11 +1250,6 @@ namespace
                 to->mutable_fire()->set_class_name( from.fire().class_name() );
             if( from.fire().has_max_combustion_energy() )
                 to->mutable_fire()->set_max_combustion_energy( from.fire().max_combustion_energy() );
-        }
-        if( from.has_medical_treatment() )
-        {
-            ConvertObjectAttributeMedicalTreatment( from.medical_treatment(), to->mutable_medical_treatment() );
-            CONVERT_LIST( medical_treatment, bed_capacities, ConvertMedicalTreatmentBedCapacity );
         }
         if( from.has_interaction_height() )
             to->mutable_interaction_height()->set_height( from.interaction_height().height() );

@@ -878,19 +878,6 @@ message MedicalTreatmentBedCapacity {
     optional uint32 emergency_count = 4;
 }
 
-message ObjectAttributeMedicalTreatment {
-    enum EnumMedicalTreatmentStatus {
-        normal = 0;
-        on_divert = 1;
-        closed = 2;
-    }
-    optional string external_reference_id = 1;
-    repeated MedicalTreatmentBedCapacity bed_capacities = 2;
-    optional EnumMedicalTreatmentStatus facility_status = 3;
-    optional uint32 doctors = 4;
-    optional uint32 available_doctors = 5;
-}
-
 message ObjectAttributeNBCType {
    required NBCAgentType agent = 1;
    required int32        concentration = 2;
@@ -909,7 +896,6 @@ message ObjectAttributes {
    optional ObjectAttributeSupplyRoute       supply_route        = 9;
    optional ObjectAttributeToxicCloud        toxic_cloud         = 10;
    optional ObjectAttributeFire              fire                = 11;
-   optional ObjectAttributeMedicalTreatment  medical_treatment   = 12;
    optional ObjectAttributeInteractionHeight interaction_height  = 13;
    optional ObjectAttributeStock             stock               = 14;
    optional ObjectAttributeNBCType           nbc_agent           = 15;   
