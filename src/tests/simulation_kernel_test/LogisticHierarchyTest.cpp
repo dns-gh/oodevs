@@ -17,7 +17,6 @@
 #include "Entities/Specialisations/LOG/ObjectLogisticHierarchy.h"
 #include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationLogisticType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "protocol/ClientSenders.h"
 #include <tools/iterator.h>
@@ -38,16 +37,10 @@ namespace {
                 "</natures>" );
             PHY_DotationNature::Initialize( xisNat );
 
-            xml::xistringstream xisLogClass(
-                "<logistic-supply-classes>"
-                "   <logistic-supply-class id=\"12\" type=\"whatever\"/>"
-                "</logistic-supply-classes>" );
-            PHY_DotationLogisticType::Initialize( xisLogClass );
-
             xml::xistringstream xis(
                 "<resources>"
-                "   <resource name='Food' id='42' category='ration' nature='Solid' logistic-supply-class='whatever' id-nature='1' package-mass='0.015' package-size='10' package-volume='0.01'/>"
-                "   <resource name='Bidule' id='43' category='carburant' nature='Liquid' id-nature='2' logistic-supply-class='whatever' package-mass='0.015' package-size='10' package-volume='0.01'/>"
+                "   <resource name='Food' id='42' category='ration' nature='Solid' id-nature='1' package-mass='0.015' package-size='10' package-volume='0.01'/>"
+                "   <resource name='Bidule' id='43' category='carburant' nature='Liquid' id-nature='2' package-mass='0.015' package-size='10' package-volume='0.01'/>"
                 "</resources>" );
             PHY_DotationType::Initialize( xis );
         }
@@ -55,8 +48,8 @@ namespace {
         ~DotationsFixture()
         {
             PHY_DotationType::Terminate();
-            PHY_DotationLogisticType::Terminate();
             PHY_DotationNature::Terminate();
+//            UrbanType::Terminate();
         }
     };
 

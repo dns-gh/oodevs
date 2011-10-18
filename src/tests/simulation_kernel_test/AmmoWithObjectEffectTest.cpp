@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         MockMIL_EntityManager_ABC entityManager;
         MIL_EffectManager effectManager;
 
-        const std::string dotations( "<resources><resource name='ammo' category='munition' id='1' logistic-supply-class='whatever' nature='Solide' id-nature='1' package-size='1' package-mass='1' package-volume='1'><indirect-fire type='effect' life-time='300s' intervention-type='1' x-dispersion='1' y-dispersion='1' object-type='Zone brouillage'/></resource></resources>" );
+        const std::string dotations( "<resources><resource name='ammo' category='munition' id='1' nature='Solide' id-nature='1' package-size='1' package-mass='1' package-volume='1'><indirect-fire type='effect' life-time='300s' intervention-type='1' x-dispersion='1' y-dispersion='1' object-type='Zone brouillage'/></resource></resources>" );
 
         MockAgent pion;
         MOCK_EXPECT( pion, GetID ).once().returns( 1u );

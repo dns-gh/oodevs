@@ -86,17 +86,6 @@ void Stocks::AddDotation( Dotation* pNewDotation )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Stocks::DeleteAll
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void Stocks::DeleteAll()
-{
-    item_->Clear();
-    tools::Resolver< Dotation >::Clear();
-    controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Stocks::SerializeAttributes
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------

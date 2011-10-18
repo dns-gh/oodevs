@@ -25,12 +25,12 @@
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/LogisticSupplyClass.h"
 #include "clients_kernel/tools.h"
 #include "preparation/Dotation.h"
 #include "preparation/LogisticHierarchiesBase.h"
 #include "preparation/StaticModel.h"
 #include "preparation/Stocks.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticStockEditor constructor
@@ -94,17 +94,16 @@ void LogisticStockEditor::NotifyUpdated( const kernel::ModelLoaded& )
     dataModel_->setHorizontalHeaderLabels( horizontalHeaders );
     tableView_->horizontalHeader()->setResizeMode( eCategory, QHeaderView::ResizeToContents );
     tableView_->horizontalHeader()->setResizeMode( eDays, QHeaderView::Stretch );
-    tools::Iterator< const kernel::LogisticSupplyClass& > itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
+    
     unsigned int row = 0;
     QStandardItem* item = 0;
-    while( itLogClass.HasMoreElements() )
+    for( int i = 0; i < eNbrStockCategory; ++i )
     {
-        const kernel::LogisticSupplyClass& logClass = itLogClass.NextElement();
         item = new QStandardItem();
         item->setEditable( false );
         item->setCheckable( true );
         item->setCheckState( Qt::Checked );
-        item->setText( logClass.GetName().c_str() );
+        item->setText( QString( ENT_Tr::ConvertFromStockCategory( static_cast< E_StockCategory >( i ), ENT_Tr::eToTr ).c_str() ) );
         dataModel_->setItem( row, eCategory, item );
 
         item = new QStandardItem();
@@ -237,12 +236,10 @@ void LogisticStockEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_A
         std::set< const kernel::Agent_ABC* > entStocks;
         FindStocks( *entity, *entity, entStocks );
         T_Requirements requirements;
-        tools::Iterator< const kernel::LogisticSupplyClass& > itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
-        for( int row = 0; itLogClass.HasMoreElements(); ++row )
+        for( int i = 0; i < eNbrStockCategory; ++i )
         {
-            const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
-            if( dataModel_->item( row )->checkState() == Qt::Checked )
-                SupplyLogisticBaseStocks( pLogHierarchy->GetEntity(), supplyClass, requirements );
+            if( dataModel_->item( i )->checkState() == Qt::Checked )
+                SupplyLogisticBaseStocks( pLogHierarchy->GetEntity(), (E_StockCategory)i, requirements );
         }
         SupplyStocks( entStocks, requirements );
     }
@@ -252,7 +249,7 @@ void LogisticStockEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_A
 // Name: LogisticStockEditor::FillSupplyRequirements
 // Created: MMC 2011-08-31
 // -----------------------------------------------------------------------------
-void LogisticStockEditor::FillSupplyRequirements( const kernel::Entity_ABC& entity, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
+void LogisticStockEditor::FillSupplyRequirements( const kernel::Entity_ABC& entity, const E_StockCategory logType, T_Requirements& requirements )
 {
     const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity );
     if( pAgent )
@@ -273,7 +270,7 @@ void LogisticStockEditor::FillSupplyRequirements( const kernel::Entity_ABC& enti
 // Name: LogisticStockEditor::SupplyLogisticBaseStocks
 // Created: MMC 2011-08-31
 // -----------------------------------------------------------------------------
-void LogisticStockEditor::SupplyLogisticBaseStocks( const kernel::Entity_ABC& blLogBase, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
+void LogisticStockEditor::SupplyLogisticBaseStocks( const kernel::Entity_ABC& blLogBase, const E_StockCategory logType, T_Requirements& requirements )
 {
     tools::Iterator< const kernel::Entity_ABC& > logChildren = blLogBase.Get< LogisticHierarchiesBase >().CreateSubordinateIterator();
     while( logChildren.HasMoreElements() )
@@ -328,7 +325,7 @@ void LogisticStockEditor::FindStocks( const kernel::Entity_ABC& rootEntity , con
 // Name: LogisticStockEditor::ComputeRequirements
 // Created: MMC 2011-08-10
 // -----------------------------------------------------------------------------
-void LogisticStockEditor::ComputeRequirements( const kernel::Agent_ABC& agent, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
+void LogisticStockEditor::ComputeRequirements( const kernel::Agent_ABC& agent, const E_StockCategory logType, T_Requirements& requirements )
 {
     kernel::AgentType& agentType = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( agent.GetType().GetId() );
     tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agentType.CreateIterator();
@@ -341,7 +338,7 @@ void LogisticStockEditor::ComputeRequirements( const kernel::Agent_ABC& agent, c
         {
             const kernel::DotationCapacityType& dotationCapacity = resourcesIterator.NextElement();
             const kernel::DotationType& category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( dotationCapacity.GetName() );
-            if( &category.GetLogisticSupplyClass() == &logType )
+            if( logType == GetDotationLogisticType( category ) )
             {
                 const double normConso = dotationCapacity.GetNormalizedConsumption();
                 requirements[ &category ] += normConso * agentComposition.GetCount();
@@ -356,28 +353,31 @@ void LogisticStockEditor::ComputeRequirements( const kernel::Agent_ABC& agent, c
 // -----------------------------------------------------------------------------
 void LogisticStockEditor::SupplyStocks( std::set< const kernel::Agent_ABC* >& entStocks, const T_Requirements& requirements )
 {
-    T_DaysMap days;
-    tools::Iterator< const kernel::LogisticSupplyClass& > itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
-    for( int row = 0; itLogClass.HasMoreElements(); ++row )
+    std::map< const E_StockCategory, int > days;
+    for( int i = 0; i < eNbrStockCategory; ++i )
     {
-        const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
-        if( dataModel_->item( row )->checkState() == Qt::Checked )
-            days[ &supplyClass ] = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
+        if( dataModel_->item( i )->checkState() == Qt::Checked )
+            days[ (E_StockCategory)i ] = dataModel_->item( i, 1 )->data( Qt::EditRole ).asInt();
     }
 
     for( CIT_Requirements itRequired = requirements.begin(); itRequired != requirements.end(); ++itRequired )
     {
         const kernel::DotationType& dotationType = *itRequired->first;
-        CIT_DaysMap itDays = days.find( &dotationType.GetLogisticSupplyClass() );
+        
+        std::map< const E_StockCategory, int >::const_iterator itDays = days.find( GetDotationLogisticType( dotationType ) );
         if( itDays != days.end() )
         {
-            const double quantity = itDays->second * itRequired->second / CountAvailableStockBases( entStocks, dotationType );
-            for( std::set< const kernel::Agent_ABC* >::iterator itEnt = entStocks.begin(); itEnt != entStocks.end(); ++itEnt )
+            const unsigned int nbStockUnits = CountAvailableStockBases( entStocks, dotationType );
+            if( nbStockUnits )
             {
-                if( IsStockValid( **itEnt, dotationType ) )
+                const double quantity = itDays->second * itRequired->second / nbStockUnits;
+                for( std::set< const kernel::Agent_ABC* >::iterator itEnt = entStocks.begin(); itEnt != entStocks.end(); ++itEnt )
                 {
-                    Stocks& stocks = const_cast< Stocks& >( (*itEnt)->Get< Stocks >() );
-                    stocks.AddDotation( new Dotation( dotationType, static_cast< unsigned int >( quantity ) ) );
+                    if( IsStockValid( **itEnt, dotationType ) )
+                    {
+                        Stocks& stocks = const_cast< Stocks& >( (*itEnt)->Get< Stocks >() );
+                        stocks.AddDotation( new Dotation( dotationType, static_cast< unsigned int >( quantity ) ) );
+                    }
                 }
             }
         }
@@ -391,7 +391,7 @@ void LogisticStockEditor::SupplyStocks( std::set< const kernel::Agent_ABC* >& en
 bool LogisticStockEditor::IsStockValid( const kernel::Agent_ABC& stockUnit, const kernel::DotationType& dotation )
 {
     kernel::AgentType& agentType = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( stockUnit.GetType().GetId() );
-    return agentType.IsStockCategoryDefined( dotation.GetLogisticSupplyClass() );
+    return agentType.IsStockCategoryDefined( GetDotationLogisticType( dotation ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -405,4 +405,36 @@ unsigned int LogisticStockEditor::CountAvailableStockBases( const std::set< cons
         if( IsStockValid( **itEnt, requirement ) )
             ++count;
     return count;
+}
+
+// =============================================================================
+// Tools
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: LogisticStockEditor::GetDotationLogisticType
+// Created: MMC 2011-08-10
+// -----------------------------------------------------------------------------
+E_StockCategory LogisticStockEditor::GetDotationLogisticType( const kernel::DotationType& dotationType )
+{
+    switch( dotationType.GetFamily() )
+    {
+        case eDotationFamily_Munition :
+            if ( dotationType.IsDType() )
+                return eStockCategory_UniteFieldArtyAmmo;
+        case eDotationFamily_Explosif :
+        case eDotationFamily_Mine :
+        case eDotationFamily_Barbele :
+            return eStockCategory_UniteNotFieldArtyAmmo;
+        case eDotationFamily_Carburant :
+            return eStockCategory_UniteFuel;
+        case eDotationFamily_Piece :
+            return eStockCategory_Piece;
+        case eDotationFamily_Ration :
+        case eDotationFamily_AgentExtincteur :
+        case eDotationFamily_Energy :
+            return eStockCategory_UniteSupply;
+        default :
+            throw std::runtime_error( "Unknown category : resource '" + dotationType.GetName() + "' " );
+    }
 }

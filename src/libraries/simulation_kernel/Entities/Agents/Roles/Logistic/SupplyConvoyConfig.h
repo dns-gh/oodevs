@@ -17,7 +17,6 @@ class MIL_MissionType_ABC;
 
 namespace logistic
 {
-class SupplyConvoyFactory_ABC;
 
 class SupplyConvoyConfig
 {
@@ -26,9 +25,6 @@ public:
     //@{
     static void Initialize( xml::xistream& xis );
     static void Terminate ();
-
-    static const SupplyConvoyFactory_ABC& GetStockSupplyConvoyFactory();
-    static const SupplyConvoyFactory_ABC& GetDotationSupplyConvoyFactory();
     //@}
 
 private:
@@ -37,12 +33,10 @@ private:
     struct LoadingWrapper;
     static void InitializeConvoyUnitType( xml::xistream& xis );
     static void InitializeConvoyMission ( xml::xistream& xis );
-    static void InitializeConvoyType    ( xml::xistream& xis );
     static void InitializeInterpolatedTime ( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction< double >& data );
     static void InitializeSpeedModificators( xml::xistream& xis );
     static void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< double >& data, std::pair< unsigned int, double >& upperBound );
     static void ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, double >& upperBound );   
-    static const SupplyConvoyFactory_ABC& GetConvoyFactory( xml::xistream& xis, const std::string& type );
     //@}
 
 public:
@@ -52,9 +46,6 @@ public:
     static MT_InterpolatedFunction< double > coefSpeedModificator_;
     static const MIL_AgentTypePion* convoyAgentType_;
     static const MIL_MissionType_ABC* convoyMissionType_;
-
-    static const SupplyConvoyFactory_ABC* stockSupplyConvoyFactory_;
-    static const SupplyConvoyFactory_ABC* dotationSupplyConvoyFactory_;
 };
 
 } // end namespace logistic

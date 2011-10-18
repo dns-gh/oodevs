@@ -47,7 +47,6 @@ public:
              Stocks( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~Stocks();
     void AddDotation( Dotation* pNewDotation );
-    void DeleteAll();
     bool HasDotations() const;
     //@}
 

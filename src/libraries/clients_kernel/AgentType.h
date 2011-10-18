@@ -12,6 +12,8 @@
 
 #include <boost/noncopyable.hpp>
 
+enum E_StockCategory;
+
 namespace xml { class xistream; };
 
 namespace tools
@@ -28,7 +30,6 @@ namespace kernel
     class DecisionalModel;
     class DotationCapacityType;
     class SymbolFactory;
-    class LogisticSupplyClass;
 
 // =============================================================================
 /** @class  AgentType
@@ -69,7 +70,8 @@ public:
     bool IsLogisticMaintenance() const;
     bool IsLogisticMedical() const;
 
-    bool IsStockCategoryDefined( const LogisticSupplyClass& logClass ) const;
+    bool IsStockCategoryDefined( E_StockCategory category ) const;
+    unsigned int GetStockCategoryThreshold( E_StockCategory category ) const;
     //@}
 
 private:
@@ -79,13 +81,13 @@ private:
     typedef T_Components::const_iterator        CIT_Components;
     typedef std::vector< DotationCapacityType* >  T_Resources;
     typedef T_Resources::const_iterator         CIT_Resources;
-    typedef std::map< std::string, unsigned int > T_StocksThresholds;
+    typedef std::map< E_StockCategory, unsigned int > T_StocksThresholds;
     typedef T_StocksThresholds::const_iterator  CIT_StocksThresholds;
     //@}
 
     //! @name Helpers
     //@{
-    void ReadEquipment( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& resolver  );
+    void ReadEquipment( xml::xistream& xis, const  tools::Resolver_ABC< ComponentType, std::string >& resolver  );
     void ReadCrewRank( xml::xistream& xis );
     void ReadResourcesCategory( xml::xistream& xis );
     void ReadResources( xml::xistream& xis );

@@ -34,7 +34,6 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo()
     , ADN_DataTreeNode_ABC()
     , parentResource_   ( *gpDummyDotationInfos )
     , ptrResourceNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
-    , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
 {
     assert( 0 );
 }
@@ -55,7 +54,6 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
     , strCodeLFRIL_     ()
     , strCodeNNO_       ()
     , ptrResourceNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
-    , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
     , rNbrInPackage_    ( 1. )
     , rPackageVolume_   ( 1. )
     , rPackageWeight_   ( 1. )
@@ -93,7 +91,6 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::CategoryInfo::CreateCopy
     pCopy->rPackageVolume_ = rPackageVolume_.GetData();
     pCopy->rPackageWeight_ = rPackageWeight_.GetData();
     pCopy->ptrResourceNature_ = ptrResourceNature_.GetData();
-    pCopy->ptrLogisticSupplyClass_ = ptrLogisticSupplyClass_.GetData();
     pCopy->strCodeEMAT6_ = strCodeEMAT6_.GetData();
     pCopy->strCodeEMAT8_ = strCodeEMAT8_.GetData();
     pCopy->strCodeLFRIL_ = strCodeLFRIL_.GetData();
@@ -113,7 +110,7 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
     strCodeLFRIL_ = strName_.GetData();
     strCodeNNO_   = strName_.GetData();
     input >> xml::attribute( "category", category_ );
-    std::string dotationNature, logisticSupplyClass;
+    std::string dotationNature;
     input >> xml::optional >> xml::attribute( "codeEMAT6", strCodeEMAT6_ )
           >> xml::optional >> xml::attribute( "codeEMAT8", strCodeEMAT8_ )
           >> xml::optional >> xml::attribute( "codeLFRIL", strCodeLFRIL_ )
@@ -121,16 +118,11 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "package-size", rNbrInPackage_ )
           >> xml::attribute( "package-mass", rPackageWeight_ )
           >> xml::attribute( "package-volume", rPackageVolume_ )
-          >> xml::attribute( "nature", dotationNature )
-          >> xml::attribute( "logistic-supply-class", logisticSupplyClass );
+          >> xml::attribute( "nature", dotationNature );
     helpers::ResourceNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( dotationNature );
     if( !pNature )
         throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).ascii(), tools::translate( "Equipment_Data", "Equipment - Invalid resource nature '%1'" ).arg( dotationNature.c_str() ).ascii() );
     ptrResourceNature_ = pNature;
-    helpers::LogisticSupplyClass* pClass = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindLogisticSupplyClass( logisticSupplyClass );
-    if( !pClass )
-        throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).ascii(), tools::translate( "Equipment_Data", "Equipment - Invalid resource logistic supply class '%1'" ).arg( logisticSupplyClass.c_str() ).ascii() );
-    ptrLogisticSupplyClass_ = pClass;
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +149,6 @@ void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output ) co
            << xml::attribute( "package-mass", rPackageWeight_ )
            << xml::attribute( "package-volume", rPackageVolume_ )
            << xml::attribute( "nature", ptrResourceNature_.GetData()->GetData() )
-           << xml::attribute( "logistic-supply-class", ptrLogisticSupplyClass_.GetData()->GetData() )
            << xml::attribute( "id-nature", ptrResourceNature_.GetData()->GetId() )
            << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
            << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
@@ -367,6 +358,7 @@ ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDo
     : CategoryInfo( parentDotation )
     , bIED_                 ( false )
     , bDirect_              ( false )
+    , bTrancheD_            ( false )
     , bIndirect_            ( false )
     , bIlluminating_        ( false )
     , fRange_               ( 0 )
@@ -387,13 +379,13 @@ ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDo
 ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::CreateCopy()
 {
     AmmoCategoryInfo* pCopy = new AmmoCategoryInfo( parentResource_ );
+    pCopy->bTrancheD_ = bTrancheD_.GetData();
     pCopy->nType_ = nType_.GetData();
     pCopy->bIED_ = bIED_.GetData();
     pCopy->bDirect_ = bDirect_.GetData();
     pCopy->bIndirect_ = bIndirect_.GetData();
 
     pCopy->ptrResourceNature_ = ptrResourceNature_.GetData();
-    pCopy->ptrLogisticSupplyClass_ = ptrLogisticSupplyClass_.GetData();
 
     pCopy->rNbrInPackage_  = rNbrInPackage_ .GetData();
     pCopy->rPackageVolume_ = rPackageVolume_.GetData();
@@ -465,6 +457,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
     CategoryInfo::ReadArchive( input );
 
     std::string type;
+    input >> xml::optional >> xml::attribute( "d-type", bTrancheD_ );
     input >> xml::optional >> xml::attribute( "type", type );
     input >> xml::optional >> xml::attribute( "ied", bIED_ );
     if( !type.empty() )
@@ -513,6 +506,8 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
     output << xml::attribute( "type", ADN_Tr::ConvertFromMunitionType( nType_.GetData() ) );
     if( bIED_.GetData() == true )
         output << xml::attribute( "ied", bIED_.GetData() );
+    if( bTrancheD_.GetData() )
+        output << xml::attribute( "d-type", bTrancheD_ );
     if( bIlluminating_.GetData() == true )
     {
         output << xml::start( "illuminating" )

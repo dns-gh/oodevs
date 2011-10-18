@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.0">
 <context>
     <name>ADNDatabaseWarnings</name>
     <message>
@@ -218,7 +218,7 @@ Voulez vous sauvegarder malgré tout ?</translation>
     </message>
     <message>
         <source>Norm. Consumption</source>
-        <translation>Conso. normalisée</translation>
+        <translation>Conso. normale</translation>
     </message>
     <message>
         <source>Consumption
@@ -281,7 +281,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Norm. Consumption</source>
-        <translation>Conso. normalisée</translation>
+        <translation>Conso. normale</translation>
     </message>
     <message>
         <source>Consumption
@@ -619,14 +619,6 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Resource natures</source>
         <translation>Nature de ressource</translation>
-    </message>
-    <message>
-        <source>Logistic resource categories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic resource category</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1633,8 +1625,8 @@ Arrêt moteur allumé</translation>
         <translation>PKs</translation>
     </message>
     <message>
-        <source>Logistic supply class</source>
-        <translation type="unfinished"></translation>
+        <source>FieldArtyAmmo</source>
+        <translation>Tranche D</translation>
     </message>
     <message>
         <source>Improvised explosive device</source>
@@ -4334,18 +4326,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Conveyors availability warnings</source>
         <translation>Alertes de disponibilité des convois</translation>
     </message>
-    <message>
-        <source>Convoy type</source>
-        <translation>Types de convoi</translation>
-    </message>
-    <message>
-        <source>Between logistic bases</source>
-        <translation>Entre bases logistiques</translation>
-    </message>
-    <message>
-        <source>For final unit supply </source>
-        <translation>Vers unités TTA</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Supply_TrucksDoubleTable</name>
@@ -5113,14 +5093,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>ResourceNetwork</source>
         <translation>reseau de ressource</translation>
     </message>
-    <message>
-        <source>Real</source>
-        <translation>Réel</translation>
-    </message>
-    <message>
-        <source>Virtual</source>
-        <translation>Virtuel</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
@@ -5392,20 +5364,12 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
     <message>
+        <source>Category</source>
+        <translation>Catégorie</translation>
+    </message>
+    <message>
         <source>Log threshold (%)</source>
         <translation>Seuil logistique (%)</translation>
-    </message>
-    <message>
-        <source>Logistic supply class</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add class</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove class</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6104,10 +6068,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
         <translation>Pannes - Type de panne invalide &apos;%1&apos; </translation>
     </message>
-    <message>
-        <source>Logistic supply system - Invalid supply convoy type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Categories_Data</name>
@@ -6142,14 +6102,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Categories - Invalid resource nature</source>
         <translation>Catégories - Nature de ressource invalide</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated logistic resource category</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6231,10 +6183,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
         <translation>Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6450,6 +6398,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Le pion n&apos;a pas d&apos;équipage dans l&apos;équipement &quot;%1&quot;</translation>
     </message>
     <message>
+        <source>Unit types - Invalid resource &apos;%1&apos;</source>
+        <translation>Type de pion - ressource &quot;%1&quot; invalide</translation>
+    </message>
+    <message>
         <source>Unit types - Invalid stance &apos;%1&apos;</source>
         <translation>Type de pion - Posture &quot;%1&quot; invalide</translation>
     </message>
@@ -6476,10 +6428,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Units</source>
         <translation>Pions</translation>
-    </message>
-    <message>
-        <source>Unit - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

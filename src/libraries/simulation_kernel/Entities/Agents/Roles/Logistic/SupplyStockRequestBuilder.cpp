@@ -11,7 +11,7 @@
 #include "SupplyStockRequestBuilder.h"
 #include "SupplyRequestContainer_ABC.h"
 #include "SupplyResourceStock.h"
-#include "SupplyConvoyConfig.h"
+#include "SupplyConvoyRealFactory.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Automates/MIL_Automate.h" //$$$ A GICLER
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
@@ -48,7 +48,7 @@ void SupplyStockRequestBuilder::Process( SupplyRequestContainer_ABC& container )
 {
     automate_.Apply2( (boost::function< void( PHY_DotationStock& ) >)boost::bind( &SupplyStockRequestBuilder::VisitStock, this, _1, boost::ref( container ) ) );
     container.SetTransportersProvider( automate_.FindLogisticManager() );
-    container.SetConvoyFactory( SupplyConvoyConfig::GetStockSupplyConvoyFactory() );
+    container.SetConvoyFactory( SupplyConvoyRealFactory::Instance() );
 }
 
 // -----------------------------------------------------------------------------

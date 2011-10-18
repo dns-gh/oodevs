@@ -18,7 +18,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationLogisticType.h"
 #include "Entities/Agents/Units/Weapons/PHY_LauncherType.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
@@ -40,8 +39,6 @@ public:
     {
         xml::xistringstream xisProtection( "<protections><protection name='protection1' type='humain'><neutralization average-time='10s' variance='1s'/></protection></protections>" );
         PHY_Protection::Initialize( xisProtection );
-        xml::xistringstream xisLogisticSupplyClasses( "<logistic-supply-classes><logistic-supply-class id='12' type='whatever'/></logistic-supply-classes>" );
-        PHY_DotationLogisticType::Initialize( xisLogisticSupplyClasses );
         xml::xistringstream xisDotationNature( "<natures><nature type='Solide' id='1'/></natures>" );
         PHY_DotationNature::Initialize( xisDotationNature );
         xml::xistringstream xisDotations( dotations );
@@ -64,7 +61,6 @@ public:
         PHY_Protection::Terminate();
         PHY_Volume::Terminate();
         PHY_DotationNature::Terminate();
-        PHY_DotationLogisticType::Terminate();
         PHY_DotationType::Terminate();
     }
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algo ) const

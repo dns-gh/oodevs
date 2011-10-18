@@ -15,16 +15,24 @@
 
 PHY_DotationLogisticType::T_DotationLogisticTypeMap PHY_DotationLogisticType::dotationLogisticTypes_;
 
+PHY_DotationLogisticType PHY_DotationLogisticType::uniteEssence_  ( "Unite essence", eUniteEssence   );
+PHY_DotationLogisticType PHY_DotationLogisticType::uniteFeuTD_    ( "Unite tranche D" , eUniteFeuTD     );
+PHY_DotationLogisticType PHY_DotationLogisticType::uniteFeuSansTD_( "Unite non tranche D", eUniteFeuSansTD );
+PHY_DotationLogisticType PHY_DotationLogisticType::uniteVivre_    ( "Unite vivre"  , eUniteVivre     );
+PHY_DotationLogisticType PHY_DotationLogisticType::pieces_        ( "Pieces"       , ePieces         );
+
 //-----------------------------------------------------------------------------
 // Name: PHY_DotationLogisticType::Initialize
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-void PHY_DotationLogisticType::Initialize( xml::xistream& xis )
+void PHY_DotationLogisticType::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing logistic dotation types" );
-    xis >> xml::start( "logistic-supply-classes" )
-            >> xml::list( "logistic-supply-class", &PHY_DotationLogisticType::ReadDotationLogisticType )
-        >> xml::end;
+    dotationLogisticTypes_[ uniteEssence_  .GetName() ] = &uniteEssence_;
+    dotationLogisticTypes_[ uniteFeuTD_    .GetName() ] = &uniteFeuTD_;
+    dotationLogisticTypes_[ uniteFeuSansTD_.GetName() ] = &uniteFeuSansTD_;
+    dotationLogisticTypes_[ uniteVivre_    .GetName() ] = &uniteVivre_;
+    dotationLogisticTypes_[ pieces_        .GetName() ] = &pieces_;
 }
 
 //-----------------------------------------------------------------------------
@@ -37,30 +45,12 @@ void PHY_DotationLogisticType::Terminate()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationLogisticType::ReadDotationLogisticType
-// Created: ABL 2007-07-19
-// -----------------------------------------------------------------------------
-void PHY_DotationLogisticType::ReadDotationLogisticType( xml::xistream& xis )
-{
-    unsigned int id;
-    std::string type;
-
-    xis >> xml::attribute( "id", id )
-        >> xml::attribute( "type", type );
-
-    const PHY_DotationLogisticType*& pData = dotationLogisticTypes_[ type ];
-    if( pData )
-        xis.error( "Logistic supply class '" + type + "' already registered" );
-    pData = new PHY_DotationLogisticType( id, type );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_DotationLogisticType constructor
 // Created: NLD 2006-01-03
 // -----------------------------------------------------------------------------
-PHY_DotationLogisticType::PHY_DotationLogisticType( unsigned int id, const std::string& type )
-    : id_  ( id )
-    , type_( type )
+PHY_DotationLogisticType::PHY_DotationLogisticType( const std::string& strName, E_DotationLogisticType nType )
+    : strName_( strName )
+    , nType_  ( nType   )
 {
     // NOTHING
 }
@@ -78,9 +68,9 @@ PHY_DotationLogisticType::~PHY_DotationLogisticType()
 // Name: PHY_DotationLogisticType::Find
 // Created: NLD 2006-01-03
 // -----------------------------------------------------------------------------
-const PHY_DotationLogisticType* PHY_DotationLogisticType::Find( const std::string& type )
+const PHY_DotationLogisticType* PHY_DotationLogisticType::Find( const std::string& strName )
 {
-    CIT_DotationLogisticTypeMap it = dotationLogisticTypes_.find( type );
+    CIT_DotationLogisticTypeMap it = dotationLogisticTypes_.find( strName );
     if( it == dotationLogisticTypes_.end() )
         return 0;
     return it->second;
@@ -113,14 +103,14 @@ const PHY_DotationLogisticType::T_DotationLogisticTypeMap& PHY_DotationLogisticT
 // -----------------------------------------------------------------------------
 unsigned int PHY_DotationLogisticType::GetID() const
 {
-    return id_;
+    return nType_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationLogisticType::GetType
+// Name: PHY_DotationLogisticType::GetName
 // Created: NLD 2006-01-03
 // -----------------------------------------------------------------------------
-const std::string& PHY_DotationLogisticType::GetType() const
+const std::string& PHY_DotationLogisticType::GetName() const
 {
-    return type_;
+    return strName_;
 }

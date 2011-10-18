@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <supply model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Supply.xsd">
   <convoys mission="Logistics - convey" unit-type="Convoy">
-    <type>
-      <dotation-supply type="real"/>
-      <stock-supply type="real"/>
-    </type>
     <constitution-times>
       <unit-time time="10m" truck-count="1"/>
       <unit-time time="10m" truck-count="10"/>
@@ -30,4 +26,4 @@
     <resource-availability-alert availability-threshold="0"/>
   </resource-availability-alerts>
 </supply>
-<!-- signature="0484176287" -->
+<!-- signature="2976462980" -->

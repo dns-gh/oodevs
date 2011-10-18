@@ -29,7 +29,6 @@
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationLogisticType.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_AgentKnowledgeParameter.h"
@@ -319,12 +318,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter )
                                 "   <nature type='Solid' id='1'/>"
                                 "</natures>" );
     PHY_DotationNature::Initialize( xisNat );
-    xml::xistringstream xisLogClass( "<logistic-supply-classes>"
-                                     "   <logistic-supply-class id='12' type='whatever'/>"
-                                     "</logistic-supply-classes>" );
-    PHY_DotationLogisticType::Initialize( xisLogClass );
     xml::xistringstream xis( "<resources>"
-                             "   <resource name='Food' id='42' category='ration' nature='Solid' logistic-supply-class='whatever' id-nature='1' package-mass='0.015' package-size='10' package-volume='0.01'/>"
+                             "   <resource name='Food' id='42' category='ration' nature='Solid' id-nature='1' package-mass='0.015' package-size='10' package-volume='0.01'/>"
                              "</resources>" );
     MockMIL_EntityManager_ABC entityManager;
     PHY_DotationType::Initialize( xis );
@@ -335,10 +330,6 @@ BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter )
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );
     BOOST_CHECK_EQUAL( true, out.has_resourcetype() );
     BOOST_CHECK_EQUAL( 42u, out.resourcetype().id() );
-
-    PHY_DotationType::Terminate();
-    PHY_DotationNature::Terminate();
-    PHY_DotationLogisticType::Terminate();
 }
 
 // -----------------------------------------------------------------------------

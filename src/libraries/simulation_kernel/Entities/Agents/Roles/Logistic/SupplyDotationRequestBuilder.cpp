@@ -12,7 +12,7 @@
 #include "SupplyRequestContainer_ABC.h"
 #include "SupplyRequest.h"
 #include "SupplyResourceDotation.h"
-#include "SupplyConvoyConfig.h"
+#include "SupplyConvoyRealFactory.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 
@@ -47,7 +47,7 @@ SupplyDotationRequestBuilder::~SupplyDotationRequestBuilder()
 void SupplyDotationRequestBuilder::Process( SupplyRequestContainer_ABC& container )
 {
     automate_.Apply2( (boost::function< void( PHY_Dotation& ) >)boost::bind( &SupplyDotationRequestBuilder::VisitDotation, this, _1, boost::ref( container ) ) );
-    container.SetConvoyFactory( SupplyConvoyConfig::GetDotationSupplyConvoyFactory() );
+    //container.SetConvoyFactory( SupplyConvoyRealFactory::Instance() );
 }
 
 // -----------------------------------------------------------------------------

@@ -45,6 +45,7 @@ public:
         eAmmoPackageVolume,
         eType,
         eNature,
+        eTrancheD,
         eEMAT6Code,
         eEMAT8Code,
         eLFRILCode,
@@ -73,7 +74,6 @@ public:
         eGuided,
         eMaintainGuidance,
         eGuidanceRange,
-        eLogisticSupplyClass,
         eIsIED,
         eNbrAmmoGuiElements
     };
@@ -89,7 +89,6 @@ public:
         eGenLFRILCode,
         eGenNNOCode,
         eGenNature,
-        eGenLogisticSupplyClass,
         eNbrGenericGuiElements
     };
 

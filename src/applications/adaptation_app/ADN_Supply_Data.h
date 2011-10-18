@@ -80,8 +80,6 @@ public:
         T_ConvoyTimeInfoVector   vConvoyUnloadingInfos_;
         T_ConvoyDoubleInfoVector vConvoySpeedModificatorInfos_;
         T_AvailabilityWarning_Vector vVectorWarnings_;
-        ADN_Type_Enum<E_SupplyConvoyType, eNbrSupplyConvoy> dotationSupplyConvoyType_;
-        ADN_Type_Enum<E_SupplyConvoyType, eNbrSupplyConvoy> stockSupplyConvoyType_;
     };
 
 // *****************************************************************************

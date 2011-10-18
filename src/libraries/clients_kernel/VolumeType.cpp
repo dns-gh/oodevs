@@ -36,7 +36,7 @@ VolumeType::~VolumeType()
 // Name: VolumeType::GetName
 // Created: JSR 2010-06-07
 // -----------------------------------------------------------------------------
-const std::string& VolumeType::GetName() const
+std::string VolumeType::GetName() const
 {
     return name_;
 }

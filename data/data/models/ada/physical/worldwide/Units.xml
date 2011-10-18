@@ -399,13 +399,11 @@
       </category>
     </logistics>
     <stocks>
-      <stock logistic-supply-class="Class III - Petroleum, oil and lubricants" threshold="10"/>
-      <stock logistic-supply-class="Class I - Items of subsistence (food and forage)" threshold="10"/>
-      <stock logistic-supply-class="Class V.D - Ground to ground artillery shells" threshold="10"/>
-      <stock logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" threshold="10"/>
-      <stock logistic-supply-class="Class II - Spare parts" threshold="10"/>
-      <stock logistic-supply-class="Class IIIa - Aviation fuel and lubricants" threshold="10"/>
-      <stock logistic-supply-class="Class IV - Fortification and construction materials, and additional items" threshold="10"/>
+      <stock category="Unite essence" threshold="10"/>
+      <stock category="Unite tranche D" threshold="10"/>
+      <stock category="Unite non tranche D" threshold="10"/>
+      <stock category="Unite vivre" threshold="10"/>
+      <stock category="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -728,13 +726,11 @@
       </category>
     </logistics>
     <stocks>
-      <stock logistic-supply-class="Class IIIa - Aviation fuel and lubricants" threshold="10"/>
-      <stock logistic-supply-class="Class IV - Fortification and construction materials, and additional items" threshold="10"/>
-      <stock logistic-supply-class="Class III - Petroleum, oil and lubricants" threshold="10"/>
-      <stock logistic-supply-class="Class I - Items of subsistence (food and forage)" threshold="10"/>
-      <stock logistic-supply-class="Class V.D - Ground to ground artillery shells" threshold="10"/>
-      <stock logistic-supply-class="Class II - Spare parts" threshold="10"/>
-      <stock logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" threshold="10"/>
+      <stock category="Unite essence" threshold="10"/>
+      <stock category="Unite tranche D" threshold="10"/>
+      <stock category="Unite non tranche D" threshold="10"/>
+      <stock category="Unite vivre" threshold="10"/>
+      <stock category="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -864,13 +860,11 @@
       </category>
     </logistics>
     <stocks>
-      <stock logistic-supply-class="Class III - Petroleum, oil and lubricants" threshold="30"/>
-      <stock logistic-supply-class="Class V.D - Ground to ground artillery shells" threshold="30"/>
-      <stock logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" threshold="30"/>
-      <stock logistic-supply-class="Class I - Items of subsistence (food and forage)" threshold="30"/>
-      <stock logistic-supply-class="Class II - Spare parts" threshold="30"/>
-      <stock logistic-supply-class="Class IIIa - Aviation fuel and lubricants" threshold="10"/>
-      <stock logistic-supply-class="Class IV - Fortification and construction materials, and additional items" threshold="10"/>
+      <stock category="Unite essence" threshold="30"/>
+      <stock category="Unite tranche D" threshold="30"/>
+      <stock category="Unite non tranche D" threshold="30"/>
+      <stock category="Unite vivre" threshold="30"/>
+      <stock category="Pieces" threshold="30"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -983,13 +977,11 @@
       </category>
     </logistics>
     <stocks>
-      <stock logistic-supply-class="Class IIIa - Aviation fuel and lubricants" threshold="10"/>
-      <stock logistic-supply-class="Class IV - Fortification and construction materials, and additional items" threshold="10"/>
-      <stock logistic-supply-class="Class III - Petroleum, oil and lubricants" threshold="10"/>
-      <stock logistic-supply-class="Class I - Items of subsistence (food and forage)" threshold="10"/>
-      <stock logistic-supply-class="Class V.D - Ground to ground artillery shells" threshold="10"/>
-      <stock logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" threshold="10"/>
-      <stock logistic-supply-class="Class II - Spare parts" threshold="10"/>
+      <stock category="Unite essence" threshold="10"/>
+      <stock category="Unite tranche D" threshold="10"/>
+      <stock category="Unite non tranche D" threshold="10"/>
+      <stock category="Unite vivre" threshold="10"/>
+      <stock category="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -1193,8 +1185,8 @@
       </category>
     </logistics>
     <stocks>
-      <stock logistic-supply-class="Class V.D - Ground to ground artillery shells" threshold="30"/>
-      <stock logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" threshold="30"/>
+      <stock category="Unite tranche D" threshold="30"/>
+      <stock category="Unite non tranche D" threshold="30"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -1227,8 +1219,8 @@
       </category>
     </logistics>
     <stocks>
-      <stock logistic-supply-class="Class V.D - Ground to ground artillery shells" threshold="30"/>
-      <stock logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" threshold="30"/>
+      <stock category="Unite tranche D" threshold="30"/>
+      <stock category="Unite non tranche D" threshold="30"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -1261,7 +1253,7 @@
       </category>
     </logistics>
     <stocks>
-      <stock logistic-supply-class="Class I - Items of subsistence (food and forage)" threshold="10"/>
+      <stock category="Unite vivre" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -1294,8 +1286,8 @@
       </category>
     </logistics>
     <stocks>
-      <stock logistic-supply-class="Class V.D - Ground to ground artillery shells" threshold="30"/>
-      <stock logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" threshold="30"/>
+      <stock category="Unite tranche D" threshold="30"/>
+      <stock category="Unite non tranche D" threshold="30"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -1328,8 +1320,8 @@
       </category>
     </logistics>
     <stocks>
-      <stock logistic-supply-class="Class V.D - Ground to ground artillery shells" threshold="30"/>
-      <stock logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" threshold="30"/>
+      <stock category="Unite tranche D" threshold="30"/>
+      <stock category="Unite non tranche D" threshold="30"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -1354,7 +1346,7 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Class II - Spare parts" threshold="10"/>
+      <stock category="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -1380,8 +1372,7 @@
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Class III - Petroleum, oil and lubricants" threshold="10"/>
-      <stock logistic-supply-class="Class IIIa - Aviation fuel and lubricants" threshold="10"/>
+      <stock category="Unite essence" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -1441,7 +1432,7 @@
       <crew-rank count="4" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Class I - Items of subsistence (food and forage)" threshold="10"/>
+      <stock category="Unite vivre" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -1864,7 +1855,7 @@
       <crew-rank count="7" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Class I - Items of subsistence (food and forage)" threshold="10"/>
+      <stock category="Unite vivre" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -1890,8 +1881,7 @@
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Class III - Petroleum, oil and lubricants" threshold="10"/>
-      <stock logistic-supply-class="Class IIIa - Aviation fuel and lubricants" threshold="10"/>
+      <stock category="Unite essence" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -1917,8 +1907,7 @@
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Class III - Petroleum, oil and lubricants" threshold="10"/>
-      <stock logistic-supply-class="Class IIIa - Aviation fuel and lubricants" threshold="10"/>
+      <stock category="Unite essence" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -3030,13 +3019,11 @@
       </category>
     </logistics>
     <stocks>
-      <stock logistic-supply-class="Class IIIa - Aviation fuel and lubricants" threshold="10"/>
-      <stock logistic-supply-class="Class IV - Fortification and construction materials, and additional items" threshold="10"/>
-      <stock logistic-supply-class="Class III - Petroleum, oil and lubricants" threshold="10"/>
-      <stock logistic-supply-class="Class I - Items of subsistence (food and forage)" threshold="10"/>
-      <stock logistic-supply-class="Class V.D - Ground to ground artillery shells" threshold="10"/>
-      <stock logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" threshold="10"/>
-      <stock logistic-supply-class="Class II - Spare parts" threshold="10"/>
+      <stock category="Unite essence" threshold="10"/>
+      <stock category="Unite tranche D" threshold="10"/>
+      <stock category="Unite non tranche D" threshold="10"/>
+      <stock category="Unite vivre" threshold="10"/>
+      <stock category="Pieces" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -4041,4 +4028,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0386339982" -->
+<!-- signature="2693239142" -->

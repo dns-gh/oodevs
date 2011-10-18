@@ -77,7 +77,7 @@ public:
     {
 
     public:
-        explicit StockLogThresholdInfos();
+        explicit StockLogThresholdInfos( E_StockCategory eCategory = ( E_StockCategory )-1 );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -88,8 +88,8 @@ public:
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        ADN_TypePtr_InVector_ABC<helpers::LogisticSupplyClass> ptrLogisticSupplyClass_;
-        ADN_Type_Double                                        rLogThreshold_;
+        ADN_Type_Enum< E_StockCategory, eNbrStockCategory > eCategory_;
+        ADN_Type_Double                                     rLogThreshold_;
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< StockLogThresholdInfos >, StockLogThresholdInfos_Vector )
 

@@ -280,7 +280,7 @@ void ADN_Units_GUI::OnTypeChanged()
             return;
         if( pInfos->stocks_.vLogThresholds_.size() == 0 )
         {
-//            pStockLogThreshold_->InitializeLogThresholds();
+            pStockLogThreshold_->InitializeLogThresholds();
             //pInfos->stocks_.InitializeLogThresholds();
         }
         pStockGroup_->setEnabled( true );

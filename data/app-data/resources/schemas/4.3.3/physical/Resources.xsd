@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.3">
 	<xs:include schemaLocation="tools.xsd"/>
 	<xs:element name="resources">
@@ -266,6 +265,12 @@
 								<xs:documentation xml:lang="fr">Utilisé pour les explosions (attaques terroristes, etc.)</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
+						<xs:attribute name="d-type" type="xs:boolean" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">TODO</xs:documentation>
+								<xs:documentation xml:lang="fr">TODO</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
 						<xs:attribute name="codeEMAT6" type="xs:string" use="optional">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">TODO</xs:documentation>
@@ -290,11 +295,10 @@
 								<xs:documentation xml:lang="fr">Numéro de Nomenclature OTAN</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
-						<xs:attribute name="logistic-supply-class" type="T_LogisticSupplyClass" use="required"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="model-version" type="T_Version"/>
+			<xs:attribute name="model-version" type="T_Version"/>			
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

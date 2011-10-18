@@ -47,7 +47,6 @@ public:
         ADN_Type_String szArmors_;
         ADN_Type_String szActiveProtections_;
         ADN_Type_String szDotationNatures_;
-        ADN_Type_String szLogisticSupplyClasses_;
         ADN_Type_String szObjects_;
         ADN_Type_String szEquipements_;
         ADN_Type_String szLaunchers_;

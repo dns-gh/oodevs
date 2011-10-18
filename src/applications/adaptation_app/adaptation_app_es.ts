@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es">
+<TS version="2.0">
 <context>
     <name>ADNDatabaseWarnings</name>
     <message>
@@ -617,14 +617,6 @@ estacionado con motor encendido</translation>
     <message>
         <source>Resource natures</source>
         <translation>Naturaleza de recursos</translation>
-    </message>
-    <message>
-        <source>Logistic resource categories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic resource category</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1631,7 +1623,7 @@ estacionado con motor encendido</translation>
         <translation>PKs</translation>
     </message>
     <message>
-        <source>Logistic supply class</source>
+        <source>FieldArtyAmmo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4332,18 +4324,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <source>Conveyors availability warnings</source>
         <translation></translation>
     </message>
-    <message>
-        <source>Convoy type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Between logistic bases</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>For final unit supply </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Supply_TrucksDoubleTable</name>
@@ -5109,14 +5089,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>ResourceNetwork</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Real</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Virtual</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
@@ -5381,20 +5353,12 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
     <message>
+        <source>Category</source>
+        <translation>Categoría</translation>
+    </message>
+    <message>
         <source>Log threshold (%)</source>
         <translation>Seuil logistique (%)</translation>
-    </message>
-    <message>
-        <source>Logistic supply class</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add class</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove class</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6093,10 +6057,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
         <translation>Fallas - tipo de falla inválido  &apos;%1&apos;</translation>
     </message>
-    <message>
-        <source>Logistic supply system - Invalid supply convoy type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Categories_Data</name>
@@ -6131,14 +6091,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Categories - Invalid resource nature</source>
         <translation>Categorías - Recurso naural inválido</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated logistic resource category</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6219,10 +6171,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6439,6 +6387,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Unit types - Invalid resource &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6464,10 +6416,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Unit types - Invalid crossing height &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit - Invalid resource logistic supply class &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

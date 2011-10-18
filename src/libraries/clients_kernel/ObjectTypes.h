@@ -39,7 +39,6 @@ namespace kernel
     class MaterialCompositionType;
     class FacadeType;
     class RoofShapeType;
-    class LogisticSupplyClass;
 
 // =============================================================================
 /** @class  ObjectTypes
@@ -57,7 +56,6 @@ class ObjectTypes
     , public Resolver2< MedicalTreatmentType >
     , public Resolver2< BreakdownType >
     , public tools::Resolver< VolumeType >
-    , public tools::StringResolver< LogisticSupplyClass >
     , public tools::StringResolver< ResourceNetworkType >
     , public tools::StringResolver< MaterialCompositionType >
     , public tools::StringResolver< FacadeType >
@@ -113,8 +111,6 @@ private:
     void ReadMaterialCompositionType( xml::xistream& xis );
     void ReadRoofShapeType( xml::xistream& xis );
     void ReadInfrastructureType( xml::xistream& xis );
-    void ReadLogisticSupplyClasses( xml::xistream& xis );
-    void ReadLogisticSupplyClass( xml::xistream& xis );
     //@}
 
 private:

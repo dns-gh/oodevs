@@ -23,7 +23,8 @@
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with
 //-----------------------------------------------------------------------------
-class ADN_Units_LogThreshold_GUI_Connector : public ADN_Connector_Table_ABC
+class ADN_Units_LogThreshold_GUI_Connector
+:public ADN_Connector_Table_ABC
 {
 public:
 
@@ -45,9 +46,11 @@ public:
         tab_.setItem( nRow, 0, pItemName );
         tab_.setItem( nRow, 1, pItemLogThreshold );
 
+        pItemName->setEnabled(false);
+        pItemName->setText( ENT_Tr::ConvertFromStockCategory( pInfo->eCategory_.GetData(), ENT_Tr::eToApp ).c_str() );
+
         // Connect the item
         pItemLogThreshold->GetConnector().Connect( &pInfo->rLogThreshold_ );
-        pItemName->GetConnector().Connect( pInfo->ptrLogisticSupplyClass_.GetData() );
     }
 
 private:
@@ -74,7 +77,7 @@ ADN_Units_LogThreshold_GUI::ADN_Units_LogThreshold_GUI( QWidget* pParent )
     setNumRows( 0 );
     setNumCols( 2 );
 
-    horizontalHeader()->setLabel( 0, tr( "Logistic supply class" ) );
+    horizontalHeader()->setLabel( 0, tr( "Category" ) );
     horizontalHeader()->setLabel( 1, tr( "Log threshold (%)" ) );
 
     pConnector_ = new ADN_Units_LogThreshold_GUI_Connector( *this );
@@ -90,59 +93,18 @@ ADN_Units_LogThreshold_GUI::~ADN_Units_LogThreshold_GUI()
     delete pConnector_;
 }
 
-//-----------------------------------------------------------------------------
-// Name: ADN_Units_LogThreshold_GUI::OnContextMenu
-// Created: AGN 03-08-04
-//-----------------------------------------------------------------------------
-void ADN_Units_LogThreshold_GUI::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
-{
-    Q3PopupMenu menu( this );
-    Q3PopupMenu targetMenu( &menu );
-
-    // Get the list.
-    helpers::T_LogisticSupplyClass_Vector& logisticSupplyClasses = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses();
-
-    // Fill the popup menu with submenus, one for each dotation.
-    for( helpers::IT_LogisticSupplyClass_Vector it = logisticSupplyClasses.begin(); it != logisticSupplyClasses.end(); ++it )
-    {
-        // This id is used to encode the category into the item.
-        int nItemId = (int)(*it);
-        targetMenu.insertItem( (*it)->GetData().c_str(), nItemId );
-    }
-
-    menu.insertItem( tr( "Add class"), &targetMenu ,0 );
-    if( GetCurrentData() != 0 )
-        menu.insertItem( tr( "Remove class" ), 1 );
-
-    int nMenuResult = menu.exec(pt);
-    if( nMenuResult == 1 )
-        RemoveCurrentLogSupplyClass();
-    else if( nMenuResult > 1 )
-        AddNewLogSupplyClass( *(helpers::LogisticSupplyClass*)nMenuResult );
-}
-
 // -----------------------------------------------------------------------------
-// Name: ADN_Units_LogThreshold_GUI::AddNewLogSupplyClass
-// Created: AGN 2003-12-04
+// Name: ADN_Units_LogThreshold_GUI::InitializeLogThresholds
+// Created: SBO 2006-01-11
 // -----------------------------------------------------------------------------
-void ADN_Units_LogThreshold_GUI::AddNewLogSupplyClass( helpers::LogisticSupplyClass& category )
+void ADN_Units_LogThreshold_GUI::InitializeLogThresholds()
 {
-    ADN_Units_Data::StockLogThresholdInfos* pNewInfo = new ADN_Units_Data::StockLogThresholdInfos();
-    pNewInfo->ptrLogisticSupplyClass_ = &category;
-    pNewInfo->rLogThreshold_ = 10;
-
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCTable->AddItem( pNewInfo );
+    for( uint i = 0; i < eNbrStockCategory; ++i )
+    {
+        std::auto_ptr< ADN_Units_Data::StockLogThresholdInfos > spNew( new ADN_Units_Data::StockLogThresholdInfos( ( E_StockCategory )i ) );
+        //vLogThresholds_.AddItem( spNew.release() );
+        pCTable->AddItem( spNew.release() );
+    }
     pCTable->AddItem( 0 );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_LogThreshold_GUI::RemoveCurrentLogSupplyClass
-// Created: AGN 2003-12-04
-// -----------------------------------------------------------------------------
-void ADN_Units_LogThreshold_GUI::RemoveCurrentLogSupplyClass()
-{
-    assert( GetCurrentData() != 0 );
-    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( GetCurrentData() );
-}
-

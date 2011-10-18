@@ -6,7 +6,6 @@
   <active-protections file="ActiveProtections.xml"/>
   <human-protections file="HumanProtections.xml"/>
   <resource-natures file="DotationNatures.xml"/>
-  <logistic-supply-classes file="LogisticSupplyClasses.xml"/>
   <objects file="Objects.xml"/>
   <resources file="Dotations.xml"/>
   <launchers file="Launchers.xml"/>
@@ -41,4 +40,4 @@
   <filters file="Filters/Filters.xml"/>
   <urban-templates file="UrbanTemplates.xml"/>
 </physical>
-<!-- signature="1971817390" -->
+<!-- signature="2579215081" -->

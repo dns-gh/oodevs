@@ -123,20 +123,10 @@ void ADN_Supply_Data::SupplyDataInfos::Reset()
 void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
 {
     std::string strUnit, supplyMission;
-    std::string dotationSupplyConvoyType( "virtual" );
-    std::string stockSupplyConvoyType( "real" );
     input >> xml::start( "supply" )
             >> xml::start( "convoys" )
               >> xml::attribute( "unit-type", strUnit )
               >> xml::attribute( "mission", supplyMission )
-              >> xml::optional >> xml::start( "type" )
-                >> xml::start( "dotation-supply" )
-                    >> xml::attribute( "type", dotationSupplyConvoyType )
-                >> xml::end
-                >> xml::start( "stock-supply" )
-                    >> xml::attribute( "type", stockSupplyConvoyType )
-                >> xml::end
-              >> xml::end
               >> xml::start( "constitution-times" )
                 >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadConstitutionTime )
               >> xml::end
@@ -154,14 +144,6 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
     vConvoyLoadingInfos_.AddItem( 0 );
     vConvoyUnloadingInfos_.AddItem( 0 );
     vConvoySpeedModificatorInfos_.AddItem( 0 );
-
-    dotationSupplyConvoyType_ = ADN_Tr::ConvertToSupplyConvoyType( dotationSupplyConvoyType );
-    if( dotationSupplyConvoyType_ == E_SupplyConvoyType( -1 ) )
-        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).ascii(), tools::translate( "Breakdown_Data", "Logistic supply system - Invalid supply convoy type '%1'" ).arg( dotationSupplyConvoyType.c_str() ).ascii() );
-    stockSupplyConvoyType_ = ADN_Tr::ConvertToSupplyConvoyType( stockSupplyConvoyType );
-    if( stockSupplyConvoyType_ == E_SupplyConvoyType( -1 ) )
-        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).ascii(), tools::translate( "Breakdown_Data", "Logistic supply system - Invalid supply convoy type '%1'" ).arg( stockSupplyConvoyType.c_str() ).ascii() );
-
 
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strUnit );
     if( pUnit == 0 )
@@ -266,16 +248,6 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
     output  << xml::start( "convoys" )
                 << xml::attribute( "unit-type", ptrUnit_.GetData()->strName_ )
                 << xml::attribute( "mission", ptrSupplyMission_.GetData()->strName_ );
-    {
-        output << xml::start( "type" )
-                    << xml::start( "dotation-supply" )
-                        << xml::attribute( "type", ADN_Tr::ConvertFromSupplyConvoyType( dotationSupplyConvoyType_.GetData() ) )
-                    << xml::end
-                    << xml::start( "stock-supply" )
-                        << xml::attribute( "type", ADN_Tr::ConvertFromSupplyConvoyType( stockSupplyConvoyType_.GetData() ) )
-                    << xml::end
-               << xml::end;
-    }
     {
         output << xml::start( "constitution-times" );
         for( IT_ConvoyTimeInfoVector it = vConvoySetupInfos_.begin(); it != vConvoySetupInfos_.end(); ++it )

@@ -208,13 +208,6 @@ enum E_BreakdownNTI
     eNbrBreakdownNTI,
 };
 
-enum E_SupplyConvoyType
-{
-    eSupplyConvoy_Real,
-    eSupplyConvoy_Virtual,
-    eNbrSupplyConvoy,
-};
-
 enum E_MunitionType
 {
     eMunitionType_Obus,

@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    const std::string& GetName() const;
+    std::string GetName() const;
     unsigned int GetId() const;
     //@}
 

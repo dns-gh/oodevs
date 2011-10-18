@@ -13,7 +13,6 @@
 #include "AgentNature.h"
 #include "DotationCapacityType.h"
 #include "SymbolFactory.h"
-#include "LogisticSupplyClass.h"
 #include <xeumeuleu/xml.hpp>
 #include "ENT/ENT_Tr.h"
 
@@ -119,9 +118,9 @@ void AgentType::ReadResources( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentType::ReadStock( xml::xistream& xis )
 {
-    const std::string logisticSupplyClass = xis.attribute< std::string >( "logistic-supply-class" );
+    const std::string category = xis.attribute< std::string >( "category"  );
     unsigned int threshold = xis.attribute< unsigned int >( "threshold" );
-    stocks_[ logisticSupplyClass ] = threshold;
+    stocks_[ ENT_Tr::ConvertToStockCategory( category ) ] = threshold;
 }
 
 // -----------------------------------------------------------------------------
@@ -269,7 +268,19 @@ bool AgentType::IsLogisticMedical() const
 // Name: AgentType::IsStockCategoryDefined
 // Created: MMC 2011-08-30
 // -----------------------------------------------------------------------------
-bool AgentType::IsStockCategoryDefined( const LogisticSupplyClass& logClass ) const
+bool AgentType::IsStockCategoryDefined( E_StockCategory category ) const
 {
-    return stocks_.find( logClass.GetName() ) != stocks_.end();
+    return stocks_.find( category ) != stocks_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetStockCategoryThreshold
+// Created: MMC 2011-08-30
+// -----------------------------------------------------------------------------
+unsigned int AgentType::GetStockCategoryThreshold( E_StockCategory category ) const
+{
+    CIT_StocksThresholds stock = stocks_.find( category );
+    if ( stock == stocks_.end() )
+        return 0;
+    return stock->second;
 }
