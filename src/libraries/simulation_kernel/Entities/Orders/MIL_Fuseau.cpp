@@ -285,9 +285,10 @@ bool MIL_Fuseau::IsPointInsidePolygon( T_PointVector& leftPoints, T_PointVector&
 void MIL_Fuseau::TruncateAndReorientLimits( T_PointVector& leftLimit, T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima )
 {
     // The two limits must have the same orientation
-    MT_Line lineBorder1( *leftLimit.begin (), *rightLimit.begin() );
-    MT_Line lineBorder2( *leftLimit.rbegin(), *rightLimit.rbegin() );
-    if( lineBorder1.Intersect2D( lineBorder2 ) )
+    MT_Vector2D u = *leftLimit.rbegin() - *leftLimit.begin();
+    MT_Vector2D v = *rightLimit.rbegin() - *rightLimit.begin();
+    const double rProjection = DotProduct( u, v );
+    if( rProjection < 0. )
         std::reverse( rightLimit.begin(), rightLimit.end() );
 
     // The orientation cannot be determined from the 'LDM' and the 'LFM'
@@ -295,6 +296,8 @@ void MIL_Fuseau::TruncateAndReorientLimits( T_PointVector& leftLimit, T_PointVec
     //     position of unit owning the fuseau
 
     // Orientation = From the closest border to the furthest
+    MT_Line lineBorder1( *leftLimit.begin (), *rightLimit.begin() );
+    MT_Line lineBorder2( *leftLimit.rbegin(), *rightLimit.rbegin() );
     if( vOrientationRefPos_.SquareDistance( lineBorder1.GetCenter() ) > vOrientationRefPos_.SquareDistance( lineBorder2.GetCenter() ) )
     {
         std::reverse( rightLimit.begin(), rightLimit.end() );
