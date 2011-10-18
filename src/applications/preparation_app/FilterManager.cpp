@@ -19,10 +19,11 @@
 // Name: FilterManager constructor
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
-FilterManager::FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, Q3ListBox& list, Q3WidgetStack& stack )
+FilterManager::FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, Q3ListBox& list, Q3WidgetStack& stack, QWidget& parent )
     : description_( xis )
     , config_     ( config )
     , id_         ( xis.attribute< std::string >( "id" ) )
+    , parent_     ( parent )
 {
     assert( !id_.empty() );
     xis >> xml::start( "filters" )
@@ -66,7 +67,10 @@ void FilterManager::ReadFilter( xml::xistream& xis, Q3ListBox& list, Q3WidgetSta
 {
     Filter_ABC* filter;
     if( xis.has_attribute( "command" ) )
+    {
         filter = new FilterCommand( xis, config_ );
+        filter->connect( filter, SIGNAL( ForceSaveAndAddActionPlanning( const std::string& ) ), &parent_, SLOT( OnForceSaveAndAddActionPlanning( const std::string& ) ) );
+    }
     else
     {
         if( !xis.has_attribute( "target" ) || !xis.has_attribute( "xsl" ) || !xis.has_attribute( "output" ) )

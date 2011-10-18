@@ -47,7 +47,7 @@ class Exercise
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Exercise( kernel::Controller& controller, const tools::ExerciseConfig& config );
+    explicit Exercise( kernel::Controller& controller );
     virtual ~Exercise();
     //@}
 
@@ -65,6 +65,7 @@ public:
     void SetName( const QString& name );
     void SetBriefing( const QString& lang, const QString& text );
     void AddResource( const QString& name, const QString& file );
+    void AddActionPlanning( const std::string& filename );
     void ClearResources();
     //@}
 
@@ -91,11 +92,11 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    const tools::ExerciseConfig& config_;
-    QString name_;
-    T_Resources briefings_;
-    T_Resources resources_;
+    kernel::Controller&          controller_;
+    QString                      name_;
+    T_Resources                  briefings_;
+    T_Resources                  resources_;
+    std::string                  actionPlanning_;
     //@}
 };
 
