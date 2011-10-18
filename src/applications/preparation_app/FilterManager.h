@@ -40,7 +40,7 @@ class FilterManager : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, Q3ListBox& list, Q3WidgetStack& stack );
+             FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, Q3ListBox& list, Q3WidgetStack& stack, QWidget& parent );
     virtual ~FilterManager();
     //@}
 
@@ -72,6 +72,7 @@ private:
     //@{
     const tools::ExerciseConfig& config_;
     const std::string            id_;
+    QWidget&                     parent_;
     FilterDescription            description_;
     T_Filters                    filters_;
     //@}

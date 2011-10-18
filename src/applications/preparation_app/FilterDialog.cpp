@@ -64,7 +64,7 @@ FilterDialog::FilterDialog( QWidget* parent, xml::xistream& xis, const tools::Ex
     }
     // Manager
     {
-        filterManager_.reset( new FilterManager( xis, config, *list_, *stack_ ) );
+        filterManager_.reset( new FilterManager( xis, config, *list_, *stack_, *parent ) );
     }
     // Dialog setting
     {

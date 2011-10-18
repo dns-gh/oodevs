@@ -696,6 +696,17 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MainWindow::OnForceSaveAndAddActionPlanning
+// Created: ABR 2011-10-18
+// -----------------------------------------------------------------------------
+void MainWindow::OnForceSaveAndAddActionPlanning( const std::string& filename )
+{
+    model_.exercise_.AddActionPlanning( filename );
+    needsSaving_ = true;
+    Save();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MainWindow::CheckConsistency
 // Created: ABR 2011-09-23
 // -----------------------------------------------------------------------------

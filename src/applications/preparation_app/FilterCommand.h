@@ -64,6 +64,12 @@ private slots:
     void OnValueChanged();
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void ForceSaveAndAddActionPlanning( const std::string& filename );
+    //@}
+
 private:
     //! @name Type
     //@{

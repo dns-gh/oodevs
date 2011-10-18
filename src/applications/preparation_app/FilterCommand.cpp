@@ -249,6 +249,12 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
 // -----------------------------------------------------------------------------
 void FilterCommand::Execute()
 {
+    // $$$$ ABR 2011-10-18: Hack, should not be hard coded, add an attribute to Filters.xml instead (when the ICD will no longer be frozen)
+    std::string lowerCommand = command_;
+    std::transform( lowerCommand.begin(), lowerCommand.end(), lowerCommand.begin(), tolower); 
+    if( lowerCommand.find( "melmil.exe" ) != std::string::npos && reloadExercise_ )
+        emit ForceSaveAndAddActionPlanning( "melmil.xml" );
+
     assert( !path_.empty() );
     boost::shared_ptr< frontend::SpawnCommand > command(
         new frontend::SpawnCommand( config_, ( bfs::path( bfs::path( path_, bfs::native ) / bfs::path( command_, bfs::native ) ).string() + argumentsLine_ ).c_str(), true ) );

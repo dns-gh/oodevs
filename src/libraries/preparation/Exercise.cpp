@@ -23,9 +23,8 @@ namespace bfs = boost::filesystem;
 // Name: Exercise constructor
 // Created: SBO 2010-03-08
 // -----------------------------------------------------------------------------
-Exercise::Exercise( kernel::Controller& controller, const tools::ExerciseConfig& config )
+Exercise::Exercise( kernel::Controller& controller )
     : controller_( controller )
-    , config_    ( config )
 {
     // NOTHING
 }
@@ -128,8 +127,8 @@ void Exercise::Serialize( const std::string& file, const tools::SchemaWriter_ABC
     SerializeResources( xos );
     xos     << xml::end;
     CopyFromFile( file, xos );
-    if( bfs::exists( bfs::path( config_.GetExerciseDir( config_.GetExerciseName() ) ) / "melmil.xml" ) )
-        xos << xml::start( "action-planning" ) << xml::attribute( "file", "melmil.xml" ) << xml::end;
+    if( !actionPlanning_.empty() )
+        xos << xml::start( "action-planning" ) << xml::attribute( "file", actionPlanning_ ) << xml::end;
     xos << xml::end;
 }
 
@@ -201,6 +200,15 @@ void Exercise::AddResource( const QString& name, const QString& file )
 {
     resources_[name] = file;
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::AddActionPlanning
+// Created: ABR 2011-10-18
+// -----------------------------------------------------------------------------
+void Exercise::AddActionPlanning( const std::string& filename )
+{
+    actionPlanning_ = filename;
 }
 
 // -----------------------------------------------------------------------------

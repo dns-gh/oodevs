@@ -61,7 +61,7 @@ using namespace kernel;
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model( Controllers& controllers, const StaticModel& staticModel, const tools::ExerciseConfig& config )
+Model::Model( Controllers& controllers, const StaticModel& staticModel )
     : EntityResolverFacade( static_cast< Model_ABC& >( *this ) )
     , controllers_          ( controllers )
     , idManager_            ( *new IdManager() )
@@ -76,7 +76,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const to
     , drawingFactory_       ( *new gui::DrawerFactory( controllers, staticModel.drawings_, staticModel.coordinateConverter_ ) )
     , resourceObserver_     ( *new ResourceNetworkSelectionObserver( controllers ) )
     , loaded_               ( false )
-    , exercise_             ( *new Exercise( controllers.controller_, config ) )
+    , exercise_             ( *new Exercise( controllers.controller_ ) )
     , teams_                ( *new TeamsModel( controllers, teamFactory_ ) )
     , objects_              ( *new ObjectsModel( controllers, objectFactory_ ) )
     , knowledgeGroups_      ( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) ) // LTO
@@ -100,6 +100,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const to
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    // $$$$ ABR 2011-10-14: TODO: Delete everything ...
     delete &profiles_;
     delete &successFactors_;
     delete &successFactorFactory_;
