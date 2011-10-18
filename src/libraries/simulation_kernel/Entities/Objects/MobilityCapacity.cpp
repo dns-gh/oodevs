@@ -123,7 +123,7 @@ void MobilityCapacity::Instanciate( MIL_Object_ABC& object ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MobilityCapacity::GetMaxSpeed
+// Name: MobilityCapacity::GetDefaultSpeed
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 double MobilityCapacity::GetDefaultSpeed() const

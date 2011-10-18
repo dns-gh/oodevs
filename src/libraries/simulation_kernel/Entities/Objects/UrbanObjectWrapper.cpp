@@ -249,7 +249,7 @@ void UrbanObjectWrapper::SendCreation() const
         if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
         {
             sword::UrbanAttributes_Architecture* msg = message().mutable_attributes()->mutable_architecture();
-            msg->set_height( architecture->GetHeight() );
+            msg->set_height( (float) architecture->GetHeight() );
             msg->set_floor_number( architecture->GetFloorNumber() );
             msg->set_roof_shape( architecture->GetRoofShape().c_str() );
             msg->set_material( architecture->GetMaterial().c_str() );
@@ -400,7 +400,7 @@ float UrbanObjectWrapper::GetHeight() const
 {
     if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
         if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
-            return architecture->GetHeight();
+            return (float) architecture->GetHeight();
     return 0;
 }
 

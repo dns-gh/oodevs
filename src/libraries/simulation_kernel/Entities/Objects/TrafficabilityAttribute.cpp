@@ -40,7 +40,7 @@ TrafficabilityAttribute::TrafficabilityAttribute( const sword::MissionParameter_
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
 TrafficabilityAttribute::TrafficabilityAttribute( xml::xistream& xis )
-    : max_( xis.attribute< double >( "max" ) )
+    : max_( xis.attribute< float >( "max" ) )
 {
     // NOTHING
 }
@@ -49,7 +49,7 @@ TrafficabilityAttribute::TrafficabilityAttribute( xml::xistream& xis )
 // Name: TrafficabilityAttribute constructor
 // Created: LGY 2011-09-20
 // -----------------------------------------------------------------------------
-TrafficabilityAttribute::TrafficabilityAttribute( double max )
+TrafficabilityAttribute::TrafficabilityAttribute( float max )
     : max_( max )
 {
     // NOTHING
@@ -98,7 +98,7 @@ void TrafficabilityAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned
 // Name: TrafficabilityAttribute::GetMaxValue
 // Created: CMA 2011-09-09
 // -----------------------------------------------------------------------------
-double TrafficabilityAttribute::GetMaxValue() const
+float TrafficabilityAttribute::GetMaxValue() const
 {
     return max_;
 }

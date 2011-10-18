@@ -209,7 +209,7 @@ void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Ob
     pCell->pObject_ = &object;
     pCell->phase_ = phase;
     TerrainData terrainData;
-    FindTerrainData( pCell->center_, radius, terrainData );
+    FindTerrainData( pCell->center_, (float) radius, terrainData );
     const FireAttribute& fireAttribute = object.GetAttribute< FireAttribute >();
     fireAttribute.GetSurfaceFirePotentials( terrainData, pCell->ignitionThreshold_, pCell->maxCombustionEnergy_ );
     for( PropagationModifierObjects::const_iterator it = propagationModifierObjects_.begin(); it != propagationModifierObjects_.end(); ++it )

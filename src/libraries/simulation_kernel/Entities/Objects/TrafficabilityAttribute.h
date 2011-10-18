@@ -39,7 +39,7 @@ public:
     //@{
              TrafficabilityAttribute();
     explicit TrafficabilityAttribute( const sword::MissionParameter_Value& attributes );
-    explicit TrafficabilityAttribute( double max );
+    explicit TrafficabilityAttribute( float max );
     explicit TrafficabilityAttribute( xml::xistream& xis );
     virtual ~TrafficabilityAttribute();
     //@}
@@ -53,7 +53,7 @@ public:
 
     //! @name Accessors
     //@{
-    double GetMaxValue() const;
+    float GetMaxValue() const;
     //@}
 
     //! @name Operations
@@ -81,7 +81,7 @@ private:
 private:
     //! @name Member data
     //@{
-    double max_;
+    float max_;
     //@}
 };
 

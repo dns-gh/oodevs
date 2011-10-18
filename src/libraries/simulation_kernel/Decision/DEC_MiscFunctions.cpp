@@ -90,7 +90,7 @@ int DEC_MiscFunctions::GetAgentReinforcementsNumber( const DEC_Decision_ABC* pAg
 {
     const MIL_AgentPion& pion = pAgent->GetPion();
     const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    return reinforcements.size();
+    return (int) reinforcements.size();
 }
 
 //-----------------------------------------------------------------------------
