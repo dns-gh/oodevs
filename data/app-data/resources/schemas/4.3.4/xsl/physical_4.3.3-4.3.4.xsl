@@ -10,6 +10,11 @@
                   <xsl:attribute name="file">Funeral.xml</xsl:attribute>
               </xsl:element>
           </xsl:if>
+          <xsl:if test="count( ./logistic-supply-classes ) = 0">
+              <xsl:element name="logistic-supply-classes">
+                  <xsl:attribute name="file">LogisticSupplyClasses.xml</xsl:attribute>
+              </xsl:element>
+          </xsl:if>
       </xsl:copy>
   </xsl:template>
   
