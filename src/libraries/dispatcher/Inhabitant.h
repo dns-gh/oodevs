@@ -11,11 +11,17 @@
 #define __Inhabitant_h_
 
 #include "Inhabitant_ABC.h"
+#include "tools/Resolver.h"
 
 namespace sword
 {
     class PopulationCreation;
     class PopulationUpdate;
+}
+
+namespace kernel
+{
+    class InhabitantType;
 }
 
 namespace dispatcher
@@ -36,12 +42,15 @@ class Inhabitant : public Inhabitant_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg );
+             Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg,
+                         const tools::Resolver_ABC< kernel::InhabitantType >& types );
     virtual ~Inhabitant();
     //@}
 
     //! @name Operations
     //@{
+    virtual const kernel::InhabitantType& GetType() const;
+
     virtual void DoUpdate( const sword::PopulationUpdate& msg );
     virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
@@ -84,6 +93,7 @@ private:
     //! @name Member data
     //@{
     Model_ABC& model_;
+    const kernel::InhabitantType& type_;
     const unsigned long nType_;
     const std::string strName_;
     const std::string text_;

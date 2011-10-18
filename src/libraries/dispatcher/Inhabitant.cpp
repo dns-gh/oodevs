@@ -22,9 +22,11 @@ using namespace dispatcher;
 // Name: Inhabitant constructor
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg )
+Inhabitant::Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg,
+                        const tools::Resolver_ABC< kernel::InhabitantType >& types )
     : Inhabitant_ABC( msg.id().id(), QString( msg.name().c_str() ) )
     , model_              ( model )
+    , type_               ( types.Get( msg.type().id() ))
     , nType_              ( msg.type().id() )
     , strName_            ( msg.name() )
     , text_               ( msg.text() )
@@ -49,6 +51,15 @@ Inhabitant::Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg )
 Inhabitant::~Inhabitant()
 {
     side_.Remove( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Inhabitant::GetType
+// Created: LGY 2011-10-18
+// -----------------------------------------------------------------------------
+const kernel::InhabitantType& Inhabitant::GetType() const
+{
+    return type_;
 }
 
 // -----------------------------------------------------------------------------

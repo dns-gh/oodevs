@@ -347,7 +347,7 @@ void Model::Update( const sword::SimToClient& wrapper )
         logConsignsFuneral_.Get( wrapper.message().log_funeral_handling_update().request().id() ).Update( wrapper.message().log_funeral_handling_update() );
 
     else if( wrapper.message().has_population_creation() )
-        CreateUpdate< Inhabitant >( inhabitants_, wrapper.message().population_creation().id().id(), wrapper.message().population_creation() );
+        CreateUpdate< Inhabitant >( inhabitants_, wrapper.message().population_creation().id().id(), wrapper.message().population_creation(), staticModel_.types_ );
     else if( wrapper.message().has_population_update() )
         inhabitants_.Get( wrapper.message().population_update().id().id() ).Update( wrapper.message().population_update() );
 
