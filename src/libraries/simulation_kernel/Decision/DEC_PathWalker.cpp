@@ -141,7 +141,7 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
     if( ( pCurrentPath_->GetState() == DEC_PathResult::ePartial ) && bCanSendTerrainReport )
 	{
         movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
-		rc = eNotAllowed;
+		rc = ePartialPath;
 	}
     itNextPathPoint_ = itCurrentPathPoint_;
     ++itNextPathPoint_;
