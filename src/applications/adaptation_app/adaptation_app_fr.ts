@@ -3119,11 +3119,11 @@ du tireur</translation>
         <translation>Attitude</translation>
     </message>
     <message>
-        <source>Aveuglant</source>
+        <source>Blinding</source>
         <translation>Aveuglant</translation>
     </message>
     <message>
-        <source>Nombre d&apos;humain par pas de simulation</source>
+        <source>Number of humans per simulation step</source>
         <translation>Nombre d&apos;humains par pas de simulation</translation>
     </message>
     <message>
