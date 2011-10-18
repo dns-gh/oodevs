@@ -82,6 +82,113 @@
     </message>
 </context>
 <context>
+    <name>CsvExport</name>
+    <message>
+        <source>Automat</source>
+        <translation>Automate</translation>
+    </message>
+    <message>
+        <source>Entity</source>
+        <translation>Entite</translation>
+    </message>
+    <message>
+        <source>SIDE</source>
+        <translation>CAMP</translation>
+    </message>
+    <message>
+        <source>CATEGORY</source>
+        <translation>CATEGORIE</translation>
+    </message>
+    <message>
+        <source>NAME</source>
+        <translation>NOM</translation>
+    </message>
+    <message>
+        <source>TYPE</source>
+        <translation>TYPE</translation>
+    </message>
+    <message>
+        <source>POSITION</source>
+        <translation>POSITION</translation>
+    </message>
+    <message>
+        <source>Object</source>
+        <translation>Objet</translation>
+    </message>
+    <message>
+        <source>Population</source>
+        <translation>Foule</translation>
+    </message>
+    <message>
+        <source>Inhabitant</source>
+        <translation>Population</translation>
+    </message>
+    <message>
+        <source>orbat</source>
+        <translation>odb</translation>
+    </message>
+    <message>
+        <source>resources</source>
+        <translation>dotations</translation>
+    </message>
+    <message>
+        <source>ENTITY</source>
+        <translation>ENTITE</translation>
+    </message>
+    <message>
+        <source>QUANTITY</source>
+        <translation>QUANTITE</translation>
+    </message>
+    <message>
+        <source>stocks</source>
+        <translation>stocks</translation>
+    </message>
+    <message>
+        <source>weather</source>
+        <translation>meteo</translation>
+    </message>
+    <message>
+        <source>WIND SPEED</source>
+        <translation>VITESSE VENT</translation>
+    </message>
+    <message>
+        <source>WIND DIRECTION</source>
+        <translation>DIRECTION VENT</translation>
+    </message>
+    <message>
+        <source>TEMPERATURE</source>
+        <translation>TEMPERATURE</translation>
+    </message>
+    <message>
+        <source>CLOUDS FLOOR</source>
+        <translation>PLANCHER NUAGES</translation>
+    </message>
+    <message>
+        <source>CLOUDS CEILING</source>
+        <translation>PLAFOND NUAGES</translation>
+    </message>
+    <message>
+        <source>DENSITY CEILING</source>
+        <translation>DENSITE NUAGES</translation>
+    </message>
+    <message>
+        <source>WEATHER TYPE</source>
+        <translation>TYPE DE TEMPS</translation>
+    </message>
+    <message>
+        <source>START TIME</source>
+        <translation>HEURE DE DEBUT</translation>
+    </message>
+    <message>
+        <source>END TIME</source>
+        <translation>HEURE DE FIN</translation>
+    </message>
+    <message>
+        <source>diplomacy</source>
+        <translation>diplomatie</translation>
+    </message>
+</context>
+<context>
     <name>DotationsEditor</name>
     <message>
         <source>Resources editor</source>
@@ -262,6 +369,33 @@
     <message>
         <source>Argument &apos;%1&apos;:</source>
         <translation>Argument &apos;%1&apos;:</translation>
+    </message>
+</context>
+<context>
+    <name>FilterCsv</name>
+    <message>
+        <source>CSV export</source>
+        <translation>Export CSV</translation>
+    </message>
+    <message>
+        <source>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
+        <translation>Exporter l&apos;orbat, les dotations, les stocks, la météo, la diplomatie, les profils, la liste de diffusion ainsi que les liens logistiques en fichier CSV.</translation>
+    </message>
+    <message>
+        <source>Select output directory</source>
+        <translation>Sélectionnez le repertoire de sortie</translation>
+    </message>
+    <message>
+        <source>Output to:</source>
+        <translation>Enregistrer dans:</translation>
+    </message>
+    <message>
+        <source>Enter output directory here</source>
+        <translation>Entrez le repertoire de sortie ici</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Parcourir...</translation>
     </message>
 </context>
 <context>

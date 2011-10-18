@@ -46,6 +46,12 @@ public:
     virtual ~Inhabitant();
     //@}
 
+public:
+    //! @name Operations
+    //@{
+    virtual const kernel::InhabitantType& GetType() const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

@@ -15,6 +15,7 @@
 namespace kernel
 {
     class InhabitantType;
+    class AutomatType;
 
 // =============================================================================
 /** @class  Inhabitant_ABC
@@ -40,6 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetTypeName() const;
+    virtual const kernel::InhabitantType& GetType() const = 0;
 
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;

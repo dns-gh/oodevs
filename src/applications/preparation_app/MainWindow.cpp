@@ -307,7 +307,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
     menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, *consistencyDialog_, *factory, expiration, *help );
     setMenuBar( menu_ );
-    filterDialogs_ = new FilterDialogs( this, config_, model, *menu_ );
+    filterDialogs_ = new FilterDialogs( this, config_, model, *menu_, staticModel_.coordinateConverter_ );
 
     // Layers
     CreateLayers( *pCreationPanel_, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer,

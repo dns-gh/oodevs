@@ -111,3 +111,12 @@ void Inhabitant::SerializeAttributes( xml::xostream& xos ) const
         << xml::end
         << xml::content( "information", text_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Inhabitant::GetType
+// Created: LGY 2011-10-18
+// -----------------------------------------------------------------------------
+const kernel::InhabitantType& Inhabitant::GetType() const
+{
+    return type_;
+}
