@@ -35,8 +35,11 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const PHY_DotationCategory& category_;
     double rConsumption_;
+    //@}
 };
 
 #endif // __PHY_DotationConsumption_h_

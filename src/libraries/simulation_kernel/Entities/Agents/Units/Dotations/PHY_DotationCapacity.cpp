@@ -19,15 +19,10 @@
 // -----------------------------------------------------------------------------
 PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category, xml::xistream& xis )
     : category_        ( category )
-    , rCapacity_       ( 0. )
+    , rCapacity_       ( xis.attribute< double >( "capacity" ) )
     , rSupplyThreshold_( 0. )
 {
-    float rSupplyThresholdPercentage;
-
-    xis >> xml::attribute( "capacity", rCapacity_ )
-        >> xml::attribute( "logistic-threshold", rSupplyThresholdPercentage );
-
-    ComputeThreshold( rSupplyThresholdPercentage );
+    ComputeThreshold( xis.attribute< double >( "logistic-threshold" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +56,7 @@ void PHY_DotationCapacity::ComputeThreshold( double rSupplyThresholdPercentage )
         throw std::runtime_error( __FUNCTION__ " dotation capacity <= 0" );
     if( rSupplyThresholdPercentage < 0 || rSupplyThresholdPercentage > 100 )
         throw std::runtime_error( __FUNCTION__ " dotation logistic-threshold not in [0..100]" );
-    rSupplyThreshold_ = static_cast< float >( rCapacity_ * rSupplyThresholdPercentage / 100. );
+    rSupplyThreshold_ = rCapacity_ * rSupplyThresholdPercentage / 100.;
 }
 
 // -----------------------------------------------------------------------------

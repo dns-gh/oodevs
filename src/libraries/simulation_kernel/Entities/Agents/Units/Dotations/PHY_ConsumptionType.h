@@ -49,7 +49,7 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-          unsigned int         GetID  () const;
+    unsigned int GetID() const;
     //@}
 
     //! @name Operators
@@ -70,7 +70,7 @@ private:
     //@}
 
 private:
-     PHY_ConsumptionType( const std::string& strName, E_ConsumptionType nType );
+             PHY_ConsumptionType( const std::string& strName, E_ConsumptionType nType );
     virtual ~PHY_ConsumptionType();
 
 private:

@@ -109,7 +109,7 @@ const std::string& PHY_ConsumptionType::GetName() const
 // -----------------------------------------------------------------------------
 unsigned int PHY_ConsumptionType::GetID() const
 {
-    return (unsigned int)nType_;
+    return static_cast< unsigned int >( nType_ );
 }
 
 // -----------------------------------------------------------------------------

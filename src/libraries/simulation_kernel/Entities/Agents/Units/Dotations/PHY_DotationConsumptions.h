@@ -31,11 +31,11 @@ public:
     //! @name types
     //@{
     typedef std::map< const PHY_DotationCategory*, double > T_ConsumptionValue;
-    typedef T_ConsumptionValue::const_iterator                CIT_ConsumptionValue;
+    typedef T_ConsumptionValue::const_iterator             CIT_ConsumptionValue;
     //@}
 
 public:
-     PHY_DotationConsumptions( const std::string& strParentTagName, xml::xistream& xis );
+             PHY_DotationConsumptions( const std::string& strParentTagName, xml::xistream& xis );
     virtual ~PHY_DotationConsumptions();
 
     //! @name Accessors
@@ -52,7 +52,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< const PHY_DotationCategory*, PHY_DotationConsumption* > T_DotationConsumptionMap;
-    typedef T_DotationConsumptionMap::const_iterator                          CIT_DotationConsumptionMap;
+    typedef T_DotationConsumptionMap::const_iterator                        CIT_DotationConsumptionMap;
     //@}
 
 private:
@@ -60,8 +60,12 @@ private:
     //@{
     void ReadDotation( xml::xistream& xis );
     //@}
+
 private:
+    //! @name Member data
+    //@{
     T_DotationConsumptionMap dotationConsumptions_;
+    //@}
 };
 
 #endif // __PHY_DotationConsumptions_h_
