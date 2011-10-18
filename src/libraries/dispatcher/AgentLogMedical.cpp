@@ -116,15 +116,4 @@ void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
     }
 
     asn.Send( publisher );
-
-    if( asn().evacuation_ambulances().elem_size() > 0 )
-        asn().mutable_evacuation_ambulances()->Clear();
-    if( asn().collection_ambulances().elem_size() > 0 )
-        asn().mutable_collection_ambulances()->Clear();
-    if( asn().doctors().elem_size() > 0 )
-        asn().mutable_doctors()->Clear();
-    if( asn().priorities().elem_size() > 0 )
-        asn().mutable_priorities()->Clear();
-    if( asn().tactical_priorities().elem_size() > 0 )
-        asn().mutable_tactical_priorities()->Clear();
 }
