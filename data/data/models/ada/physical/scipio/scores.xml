@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<scores model-version="4.8.2">
+<scores model-version="4.8.3">
   <foreach source="party" variable="$$UNIT_LIST$$">
     <score name="Number of dead">
       <formula><![CDATA[sum(domain( humans( $ranks, $dead ), $party))]]></formula>
@@ -148,4 +148,4 @@
     </score>
   </foreach>
 </scores>
-<!-- signature="4207201915" -->
+<!-- signature="1022657910" -->

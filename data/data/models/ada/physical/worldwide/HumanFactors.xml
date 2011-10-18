@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<humans-factors model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/HumanFactors.xsd">
+<humans-factors model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/HumanFactors.xsd">
   <experience-factor>
     <modifier loading-time="1" max-speed="1" ph="1" posture-setup-time="1" sensor-distance="1" state="Veteran"/>
     <modifier loading-time="1.2" max-speed="0.9" ph="0.9" posture-setup-time="1.5" sensor-distance="0.9" state="Experimente"/>
@@ -16,4 +16,4 @@
     <modifier loading-time="1" max-speed="1" ph="1" posture-setup-time="1" sensor-distance="1" state="Stressed"/>
   </stress-factor>
 </humans-factors>
-<!-- signature="3164646009" -->
+<!-- signature="0986753276" -->

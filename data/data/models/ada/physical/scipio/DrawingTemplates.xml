@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<templates model-version="4.8.2">
+<templates model-version="4.8.3">
     <category name='Lignes'>
         <description>Lignes tactiques</description>
         <template name='-- oo --' type="line">
@@ -846,4 +846,4 @@
         </template>
     </category>
 </templates>
-<!-- signature="0144315103" -->
+<!-- signature="2648207846" -->

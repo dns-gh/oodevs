@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<populations model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Crowds.xsd">
+<populations model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Crowds.xsd">
   <reloading-time-effect modifier="1" population-density="0.05"/>
   <time-between-nbc-applications delay="1h"/>
   <population armed-individuals="0" concentration-density="0.001" decisional-model="Masalife.Foule" id="0" moving-base-density="0.1" moving-speed="6" name="Population standard BM">
@@ -325,4 +325,4 @@
     <repartition children="0" female="0.5" male="0.5"/>
   </population>
 </populations>
-<!-- signature="1271180939" -->
+<!-- signature="1759663546" -->

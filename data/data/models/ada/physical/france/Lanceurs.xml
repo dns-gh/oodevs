@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<launchers model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Launchers.xsd">
+<launchers model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Launchers.xsd">
   <launcher indirect-fire="true" name="Mitrailleuse ALAT M621">
     <ph-modifiers posture="Mouvement">
       <ph-modifier target-posture="Mouvement" value="0.6"/>
@@ -1969,4 +1969,4 @@
   <launcher indirect-fire="true" name="Canon 152 2A 36"/>
   <launcher indirect-fire="true" name="LTO ALR Launcher"/>
 </launchers>
-<!-- signature="3483907735" -->
+<!-- signature="3098320052" -->

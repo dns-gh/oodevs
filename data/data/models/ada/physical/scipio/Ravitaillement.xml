@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<supply model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Supply.xsd">
+<supply model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Supply.xsd">
   <convoys mission="PION LOGISTIQUE Convoyer" unit-type="LOG . Convoi">
     <type>
       <dotation-supply type="virtual"/>
@@ -30,4 +30,4 @@
     <resource-availability-alert availability-threshold="0"/>
   </resource-availability-alerts>
 </supply>
-<!-- signature="0025057744" -->
+<!-- signature="3531953370" -->

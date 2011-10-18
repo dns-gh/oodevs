@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<models model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Models.xsd">
+<models model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Models.xsd">
   <units>
     <unit dia-type="StrategicBomberPatrol" file="Air\Pions\Patrouille Assaut\model.bms" masalife="false" name="Strategic Bomber Patrol">
       <missions>
@@ -4180,4 +4180,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3652015826" -->
+<!-- signature="3433918061" -->

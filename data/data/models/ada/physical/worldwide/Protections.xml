@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<protections model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Armors.xsd">
+<protections model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Armors.xsd">
   <protection name="HeavyTank" type="materiel">
     <neutralization average-time="300s" variance="60s"/>
     <random-breakdown-probability eva="8" neva="0"/>
@@ -61,4 +61,4 @@
     <neutralization average-time="300s" variance="420s"/>
   </protection>
 </protections>
-<!-- signature="1222100540" -->
+<!-- signature="3903079970" -->

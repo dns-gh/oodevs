@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<objects model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Objects.xsd">
+<objects model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Objects.xsd">
   <object geometry="point" name="bouchon mines" symbol="G*MPOMC---****X" type="mines">
     <activable/>
     <attrition attrition-surface="0" category="mine classique" ph="0"/>
@@ -459,4 +459,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="2646407262" -->
+<!-- signature="1421466277" -->
