@@ -210,7 +210,7 @@ void InitialState::Initialize()
     FillResources( agent.CreateResourcesIterator() );
     tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agent.CreateIterator();
     int nbrTotalOfficers = 0;
-    for( unsigned nPos = 0; agentCompositionIterator.HasMoreElements(); ++nPos )
+    while( agentCompositionIterator.HasMoreElements() )
     {
         const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
         const std::string& agentName = agentComposition.GetType().GetName();
@@ -224,7 +224,7 @@ void InitialState::Initialize()
                 breakdowns << breakdown.GetName().c_str();
         }
         FillResources( equipmentType.CreateResourcesIterator(), agentComposition.GetCount() );
-        for( unsigned i = 0; i < agentComposition.GetCount(); ++i )
+        for( unsigned int i = 0; i < agentComposition.GetCount(); ++i )
             originalEquipments_.push_back( InitialStateEquipment( agentName.c_str(), eEquipmentState_Available, breakdowns ) );
         nbrTotalOfficers += agentComposition.GetCount() * agentComposition.GetCrew();
     }
@@ -249,10 +249,11 @@ void InitialState::FillResources( tools::Iterator< const kernel::DotationCapacit
             {
                 originalResources_[ i ].number_ += dotation.GetCapacity() * factor;
                 originalResources_[ i ].maximum_ += dotation.GetCapacity() * factor;
+                originalResources_[ i ].consumption_ += dotation.GetNormalizedConsumption() * factor;
                 break;
             }
         if( i == originalResources_.size() )
-            originalResources_.push_back( InitialStateResource( dotation.GetName().c_str(), RetrieveResourceCategory( dotation.GetName().c_str() ), dotation.GetCapacity() * factor, dotation.GetCapacity() * factor, dotation.GetLogisticThreshold() ) );
+            originalResources_.push_back( InitialStateResource( dotation.GetName().c_str(), RetrieveResourceCategory( dotation.GetName().c_str() ), dotation.GetCapacity() * factor, dotation.GetCapacity() * factor, dotation.GetLogisticThreshold(), dotation.GetNormalizedConsumption() * factor ) );
     }
 }
 

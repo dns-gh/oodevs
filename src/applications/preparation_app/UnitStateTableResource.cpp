@@ -195,7 +195,7 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     InitialState& extension = selected.Get< InitialState >();
     for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
-        MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->threshold_ );
+        MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->threshold_, it->normalizedConsumption_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,5 +214,6 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
                                                                   GetDisplayData( row, eCategory ),
                                                                   GetUserData( row, eQuantity ).toUInt(),
                                                                   GetUserData( row, eMaximum ).toUInt(),
-                                                                  GetUserData( row, eThreshold ).toDouble() ) );
+                                                                  GetUserData( row, eThreshold ).toDouble(),
+                                                                  GetUserData( row, eConsumption ).toDouble() ) );
 }

@@ -1710,6 +1710,10 @@ Voulez-vous le supprimer?</translation>
         <source>Logistic threshold (%)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Normalized consumption</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::UnitsPanel</name>
