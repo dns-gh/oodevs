@@ -845,7 +845,7 @@
         <resource capacity="13" logistic-threshold="10" name="120-mm Shaped Charge" normalized-consumption="5"/>
         <resource capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
         <resource capacity="10" logistic-threshold="10" name="120-mm armour-piercing shell" normalized-consumption="3"/>
-        <resource capacity="0" logistic-threshold="0" name="56-mm Smoke Grenade" normalized-consumption="1"/>
+        <resource capacity="1" logistic-threshold="0" name="56-mm Smoke Grenade" normalized-consumption="1"/>
       </category>
       <category name="carburant">
         <resource capacity="1700" logistic-threshold="30" name="Diesel" normalized-consumption="320"/>
@@ -1238,7 +1238,7 @@
         <resource capacity="20" logistic-threshold="10" name="105-mm Shaped Charge" normalized-consumption="3"/>
         <resource capacity="10" logistic-threshold="10" name="105-mm High Explosive Shell" normalized-consumption="2"/>
         <resource capacity="960" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="120"/>
-        <resource capacity="0" logistic-threshold="0" name="56-mm Smoke Grenade" normalized-consumption="1"/>
+        <resource capacity="1" logistic-threshold="0" name="56-mm Smoke Grenade" normalized-consumption="1"/>
         <resource capacity="20" logistic-threshold="10" name="105-mm armour-piercing shell" normalized-consumption="3"/>
       </category>
       <category name="carburant">
@@ -10286,7 +10286,7 @@
         <resource capacity="960" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="120"/>
         <resource capacity="2200" logistic-threshold="10" name="7.62-mm Bullet" normalized-consumption="300"/>
         <resource capacity="900" logistic-threshold="10" name="25-mm Shell" normalized-consumption="10"/>
-        <resource capacity="0" logistic-threshold="0" name="56-mm Smoke Grenade" normalized-consumption="1"/>
+        <resource capacity="1" logistic-threshold="0" name="56-mm Smoke Grenade" normalized-consumption="1"/>
       </category>
       <category name="carburant">
         <resource capacity="390" logistic-threshold="30" name="Diesel" normalized-consumption="35"/>
@@ -10958,7 +10958,7 @@
         <resource capacity="960" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="120"/>
         <resource capacity="2200" logistic-threshold="10" name="7.62-mm Bullet" normalized-consumption="300"/>
         <resource capacity="1200" logistic-threshold="10" name="25-mm Shell" normalized-consumption="10"/>
-        <resource capacity="0" logistic-threshold="0" name="56-mm Smoke Grenade" normalized-consumption="1"/>
+        <resource capacity="1" logistic-threshold="0" name="56-mm Smoke Grenade" normalized-consumption="1"/>
       </category>
       <category name="carburant">
         <resource capacity="390" logistic-threshold="30" name="Diesel" normalized-consumption="35"/>
@@ -15813,4 +15813,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1966546195" -->
+<!-- signature="0493651710" -->
