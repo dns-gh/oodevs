@@ -357,13 +357,13 @@ void ADN_Objects_GUI::Build()
     ADN_GroupBox* perception = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Perception" ), hBox );
     {
         vInfosConnectors[ ePerceptionCapacityPresent ] = & perception->GetConnector();
-        builder.AddField< ADN_CheckBox >( perception, tr( "Aveuglant" ), vInfosConnectors[eBlinded] );
+        builder.AddField< ADN_CheckBox >( perception, tr( "Blinding" ), vInfosConnectors[eBlinded] );
     }
 
     ADN_GroupBox* scattering = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Scattering" ), hBox );
     {
         vInfosConnectors[ eScatteringCapacityPresent ] = & scattering->GetConnector();
-        builder.AddField< ADN_EditLine_Int >( scattering, tr( "Nombre d'humain par pas de simulation" ), vInfosConnectors[eHumanByTimeStep] );
+        builder.AddField< ADN_EditLine_Int >( scattering, tr( "Number of humans per simulation step" ), vInfosConnectors[eHumanByTimeStep] );
         builder.SetValidator( new ADN_IntValidator( 1, INT_MAX, this ) );
     }
 

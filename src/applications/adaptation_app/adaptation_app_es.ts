@@ -3133,7 +3133,7 @@ tirador</translation>
         <translation>Percepción</translation>
     </message>
     <message>
-        <source>Aveuglant</source>
+        <source>Blinding</source>
         <translation>Deslumbrador</translation>
     </message>
     <message>
@@ -3141,7 +3141,7 @@ tirador</translation>
         <translation>Dispersión</translation>
     </message>
     <message>
-        <source>Nombre d&apos;humain par pas de simulation</source>
+        <source>Number of humans per simulation step</source>
         <translation>Numero de humanos por etapa de simulación</translation>
     </message>
     <message>
