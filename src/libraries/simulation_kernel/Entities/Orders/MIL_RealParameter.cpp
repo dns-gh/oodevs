@@ -48,7 +48,7 @@ MIL_RealParameter::~MIL_RealParameter()
 // -----------------------------------------------------------------------------
 bool MIL_RealParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return type == MIL_ParameterType_ABC::eNumeric || MIL_ParameterType_ABC::eInteger;
+    return type == MIL_ParameterType_ABC::eNumeric || MIL_ParameterType_ABC::eInteger || MIL_ParameterType_ABC::eEnumeration;
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +58,16 @@ bool MIL_RealParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 bool MIL_RealParameter::ToNumeric( float& value ) const
 {
     value = value_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealParameter::ToId
+// Created: LMY 2010-10-17
+// -----------------------------------------------------------------------------
+bool MIL_RealParameter::ToId( int& value ) const
+{
+	value = value_;
     return true;
 }
 

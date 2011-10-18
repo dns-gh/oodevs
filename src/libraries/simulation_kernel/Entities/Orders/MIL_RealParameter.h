@@ -39,6 +39,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToNumeric( float& value ) const;
+	virtual bool ToId( int& ) const;
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
