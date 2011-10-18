@@ -14,4 +14,6 @@ goto end
 :x64
 "%~dp0\vcredist_vc100_x64.exe" /S /NCRC
 
+%~dp0../applications/launcher_app.exe -i 
+
 :end
