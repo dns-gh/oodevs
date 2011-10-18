@@ -35,13 +35,15 @@ namespace
     public:
         virtual unsigned int GetID() const { return 0; }
         virtual const std::string& GetName() const { return name_; }
-        virtual const std::string& GetRealName() const { return ""; }
+        virtual const std::string& GetRealName() const { return realName_; }
         virtual double GetPointSize() const { return 250.; }
     private:
+        static const std::string realName_;
         static const std::string name_;
     };
 
     const std::string ControlZoneType::name_ = "control zone";
+    const std::string ControlZoneType::realName_ = "control zone";
 
     class MIL_ObjectControlZoneBuilder : public MIL_ObjectBuilder_ABC
     {
