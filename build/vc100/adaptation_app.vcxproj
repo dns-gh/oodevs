@@ -154,6 +154,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Config.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DateEdit.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.cpp" />
@@ -2006,6 +2009,9 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_RoofShapes.h" />

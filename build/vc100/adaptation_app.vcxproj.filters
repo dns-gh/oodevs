@@ -179,15 +179,6 @@
     <Filter Include="Source Files\Workspace\Human factors\Human factors GUI">
       <UniqueIdentifier>{27797829-c762-41ee-80fb-88f58228cf7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Maintenance">
-      <UniqueIdentifier>{5da50a28-14bb-4055-81da-58b5307027fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Maintenance\Maintenance data">
-      <UniqueIdentifier>{4fdb052e-a1ce-4698-8ff3-57a82a1c91d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Maintenance\Maintenance GUI">
-      <UniqueIdentifier>{da349d77-e3f3-4443-ab11-51981ccd2fd4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Missions">
       <UniqueIdentifier>{6298914c-3bb5-4e2c-85b1-3e38e9498370}</UniqueIdentifier>
     </Filter>
@@ -223,24 +214,6 @@
     </Filter>
     <Filter Include="Source Files\Workspace\Knowledge groups\Knowledge groups GUI\Knowledge groups wizard">
       <UniqueIdentifier>{ac00cb73-172f-4637-97fc-1de9484d01e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Health">
-      <UniqueIdentifier>{fab4964b-e031-491b-8ffc-7692285104b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Health\Health data">
-      <UniqueIdentifier>{23cebc47-0fa8-4ee3-b6be-934c27c6ad90}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Health\Health GUI">
-      <UniqueIdentifier>{cf2e72cc-7f6e-4429-a4a2-84c32e2f36da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Supply">
-      <UniqueIdentifier>{83615548-389b-448e-8518-fc817a9251de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Supply\Supply data">
-      <UniqueIdentifier>{a087ec4b-c5a8-4b73-8c3e-8ec5d8ae70ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Supply\Supply GUI">
-      <UniqueIdentifier>{22952b4a-6f18-49de-bb60-cf5523575ef8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Radars">
       <UniqueIdentifier>{aed412a7-2a5e-46fc-890a-532f9b7136a2}</UniqueIdentifier>
@@ -412,6 +385,45 @@
     </Filter>
     <Filter Include="Translations">
       <UniqueIdentifier>{4787fa5a-706d-4875-b7c4-a6ffccc001e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic">
+      <UniqueIdentifier>{2863f215-20fd-4702-aa57-ccf66ba7791a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Maintenance">
+      <UniqueIdentifier>{5da50a28-14bb-4055-81da-58b5307027fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Maintenance\Maintenance data">
+      <UniqueIdentifier>{4fdb052e-a1ce-4698-8ff3-57a82a1c91d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Maintenance\Maintenance GUI">
+      <UniqueIdentifier>{da349d77-e3f3-4443-ab11-51981ccd2fd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Supply">
+      <UniqueIdentifier>{83615548-389b-448e-8518-fc817a9251de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Supply\Supply data">
+      <UniqueIdentifier>{a087ec4b-c5a8-4b73-8c3e-8ec5d8ae70ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Supply\Supply GUI">
+      <UniqueIdentifier>{22952b4a-6f18-49de-bb60-cf5523575ef8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Health">
+      <UniqueIdentifier>{fab4964b-e031-491b-8ffc-7692285104b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Health\Health data">
+      <UniqueIdentifier>{23cebc47-0fa8-4ee3-b6be-934c27c6ad90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Health\Health GUI">
+      <UniqueIdentifier>{cf2e72cc-7f6e-4429-a4a2-84c32e2f36da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Funeral">
+      <UniqueIdentifier>{c6cef32f-f113-4331-994b-4559cbfcf93b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Funeral\Funeral data">
+      <UniqueIdentifier>{214d06d0-17f4-423a-b3fe-7bbae9705a73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Funeral\Funeral GUI">
+      <UniqueIdentifier>{bc2f4274-d990-4341-88f8-6491ad086077}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -833,16 +845,16 @@
       <Filter>Source Files\Workspace\Human factors\Human factors GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AvailabilityWarning.cpp">
-      <Filter>Source Files\Workspace\Maintenance\Maintenance data</Filter>
+      <Filter>Source Files\Workspace\Logistic\Maintenance\Maintenance data</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Maintenance_Data.cpp">
-      <Filter>Source Files\Workspace\Maintenance\Maintenance data</Filter>
+      <Filter>Source Files\Workspace\Logistic\Maintenance\Maintenance data</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AvailabilityWarningTable.cpp">
-      <Filter>Source Files\Workspace\Maintenance\Maintenance GUI</Filter>
+      <Filter>Source Files\Workspace\Logistic\Maintenance\Maintenance GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Maintenance_GUI.cpp">
-      <Filter>Source Files\Workspace\Maintenance\Maintenance GUI</Filter>
+      <Filter>Source Files\Workspace\Logistic\Maintenance\Maintenance GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_Data.cpp">
       <Filter>Source Files\Workspace\Missions\Missions data</Filter>
@@ -905,22 +917,22 @@
       <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI\Knowledge groups wizard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Health_Data.cpp">
-      <Filter>Source Files\Workspace\Health\Health data</Filter>
+      <Filter>Source Files\Workspace\Logistic\Health\Health data</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Health_GUI.cpp">
-      <Filter>Source Files\Workspace\Health\Health GUI</Filter>
+      <Filter>Source Files\Workspace\Logistic\Health\Health GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Supply_Data.cpp">
-      <Filter>Source Files\Workspace\Supply\Supply data</Filter>
+      <Filter>Source Files\Workspace\Logistic\Supply\Supply data</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Supply_GUI.cpp">
-      <Filter>Source Files\Workspace\Supply\Supply GUI</Filter>
+      <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksDoubleTable.cpp">
-      <Filter>Source Files\Workspace\Supply\Supply GUI</Filter>
+      <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksTimeTable.cpp">
-      <Filter>Source Files\Workspace\Supply\Supply GUI</Filter>
+      <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_Data.cpp">
       <Filter>Source Files\Workspace\Radars\Radars data</Filter>
@@ -1282,6 +1294,15 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DateEdit.cpp">
       <Filter>Source Files\Common widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.cpp">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.cpp">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.cpp">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1591,16 +1612,16 @@
       <Filter>Source Files\Workspace\Human factors\Human factors GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AvailabilityWarning.h">
-      <Filter>Source Files\Workspace\Maintenance\Maintenance data</Filter>
+      <Filter>Source Files\Workspace\Logistic\Maintenance\Maintenance data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Maintenance_Data.h">
-      <Filter>Source Files\Workspace\Maintenance\Maintenance data</Filter>
+      <Filter>Source Files\Workspace\Logistic\Maintenance\Maintenance data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AvailabilityWarningTable.h">
-      <Filter>Source Files\Workspace\Maintenance\Maintenance GUI</Filter>
+      <Filter>Source Files\Workspace\Logistic\Maintenance\Maintenance GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Maintenance_GUI.h">
-      <Filter>Source Files\Workspace\Maintenance\Maintenance GUI</Filter>
+      <Filter>Source Files\Workspace\Logistic\Maintenance\Maintenance GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_Data.h">
       <Filter>Source Files\Workspace\Missions\Missions data</Filter>
@@ -1654,22 +1675,22 @@
       <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI\Knowledge groups wizard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Health_Data.h">
-      <Filter>Source Files\Workspace\Health\Health data</Filter>
+      <Filter>Source Files\Workspace\Logistic\Health\Health data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Health_GUI.h">
-      <Filter>Source Files\Workspace\Health\Health GUI</Filter>
+      <Filter>Source Files\Workspace\Logistic\Health\Health GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_Data.h">
-      <Filter>Source Files\Workspace\Supply\Supply data</Filter>
+      <Filter>Source Files\Workspace\Logistic\Supply\Supply data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_GUI.h">
-      <Filter>Source Files\Workspace\Supply\Supply GUI</Filter>
+      <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksDoubleTable.h">
-      <Filter>Source Files\Workspace\Supply\Supply GUI</Filter>
+      <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksTimeTable.h">
-      <Filter>Source Files\Workspace\Supply\Supply GUI</Filter>
+      <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_Data.h">
       <Filter>Source Files\Workspace\Radars\Radars data</Filter>
@@ -1955,6 +1976,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClass.h">
       <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.h">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.h">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
