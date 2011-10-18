@@ -2089,7 +2089,8 @@ namespace
                                   ( sword::KnowledgeGroupAck::error_invalid_superior, MsgsSimToClient::KnowledgeGroupAck::error_invalid_superior )
                                   ( sword::KnowledgeGroupAck::error_invalid_party, MsgsSimToClient::KnowledgeGroupAck::error_invalid_camp )
                                   ( sword::KnowledgeGroupAck::error_invalid_knowledgegroup, MsgsSimToClient::KnowledgeGroupAck::error_invalid_knowledgegroup )
-                                  ( sword::KnowledgeGroupAck::error_invalid_type, MsgsSimToClient::KnowledgeGroupAck::error_invalid_type ) );
+                                  ( sword::KnowledgeGroupAck::error_invalid_type, MsgsSimToClient::KnowledgeGroupAck::error_invalid_type )
+                                  ( sword::KnowledgeGroupAck::error_invalid_perception, MsgsSimToClient::KnowledgeGroupAck::error_invalid_type ) );
     }
 }
 
@@ -2098,6 +2099,15 @@ namespace
 // Created: MCO 2010-11-24
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::KnowledgeGroupMagicActionAck& from, MsgsSimToClient::MsgKnowledgeGroupMagicActionAck* to )
+{
+    ConvertKnowledgeGroupAck( from, to );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationToClient::Convert
+// Created: LDC 2011-10-18
+// -----------------------------------------------------------------------------
+void SimulationToClient::Convert( const sword::KnowledgeGroupUpdateAck& from, MsgsSimToClient::MsgKnowledgeGroupMagicActionAck* to )
 {
     ConvertKnowledgeGroupAck( from, to );
 }
