@@ -68,8 +68,8 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::Dotations_ABC& dotations );
-    void ComputeCapacity( const std::string& name, unsigned int& capacity, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, unsigned int factor = 1 ) const;
-    unsigned int GetCapacity( const std::string& name, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator ) const;
+    void ComputeCapacityAndConsumption( const std::string& name, unsigned int& capacity, double& consumption, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, unsigned int factor = 1 ) const;
+    std::pair< unsigned int, double > GetCapacityAndConsumption( const std::string& name, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator ) const;
     int HasDotationChanged( const Dotation& dotation ) const;
     //@}
 

@@ -27,7 +27,7 @@ class InitialStateResource
 public:
     //! @name Constructors/Destructor
     //@{
-             InitialStateResource( const QString& name, const QString& category, unsigned int number, unsigned int maximum, double threshold );
+             InitialStateResource( const QString& name, const QString& category, unsigned int number, unsigned int maximum, double threshold, double consumption );
     explicit InitialStateResource( xml::xistream& xis );
     virtual ~InitialStateResource();
     //@}
@@ -47,6 +47,7 @@ public:
     unsigned int number_;
     unsigned int maximum_;
     double       threshold_;
+    double       consumption_;
     //@}
 };
 

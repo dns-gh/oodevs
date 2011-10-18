@@ -62,10 +62,10 @@ UnitStateTableResource::~UnitStateTableResource()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitStateTableResource::ComputeCapacity
+// Name: UnitStateTableResource::ComputeCapacityAndConsumption
 // Created: ABR 2011-07-11
 // -----------------------------------------------------------------------------
-void UnitStateTableResource::ComputeCapacity( const std::string& name, unsigned int& capacity, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, unsigned int factor /*= 1*/ ) const
+void UnitStateTableResource::ComputeCapacityAndConsumption( const std::string& name, unsigned int& capacity, double& consumption, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, unsigned int factor /*= 1*/ ) const
 {
     while( agentResourceIterator.HasMoreElements() )
     {
@@ -73,20 +73,22 @@ void UnitStateTableResource::ComputeCapacity( const std::string& name, unsigned 
         if( dotation.GetName() == name )
         {
             capacity += dotation.GetCapacity() * factor;
+            consumption += dotation.GetNormalizedConsumption() * factor;
             return;
         }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitStateTableResource::GetCapacity
+// Name: UnitStateTableResource::GetCapacityAndConsumption
 // Created: ABR 2011-07-11
 // -----------------------------------------------------------------------------
-unsigned int UnitStateTableResource::GetCapacity( const std::string& name, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator ) const
+std::pair< unsigned int, double > UnitStateTableResource::GetCapacityAndConsumption( const std::string& name, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator ) const
 {
     unsigned int capacity = 0;
+    double consumption = 0;
 
-    ComputeCapacity( name, capacity, agentResourceIterator );
+    ComputeCapacityAndConsumption( name, capacity, consumption, agentResourceIterator );
     while( agentCompositionIterator.HasMoreElements() )
     {
         const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
@@ -97,12 +99,12 @@ unsigned int UnitStateTableResource::GetCapacity( const std::string& name, tools
             const kernel::EquipmentType& equipmentType = equipmentTypeIterator.NextElement();
             if( equipmentType.GetName() == agentName )
             {
-                ComputeCapacity( name, capacity, equipmentType.CreateResourcesIterator(), agentComposition.GetCount() );
+                ComputeCapacityAndConsumption( name, capacity, consumption, equipmentType.CreateResourcesIterator(), agentComposition.GetCount() );
                 break;
             }
         }
     }
-    return capacity;
+    return std::make_pair< unsigned int, double >( capacity, consumption );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,8 +190,8 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
     {
         const Dotation& dotation = dotationIterator.NextElement();
         const std::string& name = dotation.type_->GetName();
-        unsigned int capacityMax = GetCapacity( name, agent.CreateResourcesIterator(), agent.CreateIterator() );
-        MergeLine( name.c_str(), dotation.type_->GetCategory().c_str(), dotation.quantity_, capacityMax, dotation.thresholdPercentage_ );
+        std::pair< unsigned int, double > capacityAndConsumption = GetCapacityAndConsumption( name, agent.CreateResourcesIterator(), agent.CreateIterator() );
+        MergeLine( name.c_str(), dotation.type_->GetCategory().c_str(), dotation.quantity_, capacityAndConsumption.first, dotation.thresholdPercentage_, capacityAndConsumption.second );
     }
 }
 

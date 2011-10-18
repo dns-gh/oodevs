@@ -15,12 +15,13 @@
 // Name: InitialStateResource::InitialStateResource
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
-InitialStateResource::InitialStateResource( const QString& name, const QString& category, unsigned int number, unsigned int maximum, double threshold  )
-    : name_     ( name )
-    , category_ ( category )
-    , number_   ( number )
-    , maximum_  ( maximum )
-    , threshold_( threshold )
+InitialStateResource::InitialStateResource( const QString& name, const QString& category, unsigned int number, unsigned int maximum, double threshold, double consumption )
+    : name_       ( name )
+    , category_   ( category )
+    , number_     ( number )
+    , maximum_    ( maximum )
+    , threshold_  ( threshold )
+    , consumption_( consumption )
 {
     // NOTHING
 }
@@ -30,8 +31,9 @@ InitialStateResource::InitialStateResource( const QString& name, const QString& 
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
 InitialStateResource::InitialStateResource( xml::xistream& xis )
-    : category_( "" )
-    , maximum_  ( 0 )
+    : category_   ( "" )
+    , maximum_    ( 0 )
+    , consumption_( 0 )
 {
     std::string name;
     xis >> xml::attribute( "name", name )
@@ -69,7 +71,7 @@ void InitialStateResource::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 bool InitialStateResource::operator==( const InitialStateResource& object ) const
 {
-    return name_ == object.name_ && category_ == object.category_ && number_ == object.number_ && threshold_ == object.threshold_;
+    return name_ == object.name_ && category_ == object.category_ && number_ == object.number_ && threshold_ == object.threshold_ && consumption_ == object.consumption_;
 }
 
 // -----------------------------------------------------------------------------
