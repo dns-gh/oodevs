@@ -1582,6 +1582,14 @@ BOOST_FIXTURE_TEST_CASE( knowledge_group_update_to_client_is_converted, ContextF
     converter.ReceiveSimToClient( msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( knowledge_group_update_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
+{
+    content.mutable_knowledge_group_update_ack()->mutable_knowledge_group()->set_id( 7 );
+    content.mutable_knowledge_group_update_ack()->set_error_code( sword::KnowledgeGroupAck::error_invalid_perception );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { knowledge_group_magic_action_ack { knowledge_group { id: 7 } error_code: error_invalid_type } }" ) );
+    converter.ReceiveSimToClient( msg );
+}
+
 BOOST_FIXTURE_TEST_CASE( knowledge_group_creation_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_knowledge_group_creation_ack()->mutable_knowledge_group()->set_id( 7 );
