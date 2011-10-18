@@ -107,6 +107,10 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConfig.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralPackagingResource.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConsign.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConveyor.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoy.cpp" />
@@ -825,6 +829,13 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConfig.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConsign.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConsign_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralPackagingResource.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralRequest.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralRequest_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConsign.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConsign_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConveyor.h" />

@@ -483,6 +483,9 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\TrafficabilityAttribute.cpp">
       <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignFuneral.cpp">
+      <Filter>Source Files\Model\Logistic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\dispatcher\Config.h">
@@ -982,6 +985,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\TrafficabilityAttribute.h">
       <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignFuneral.h">
+      <Filter>Source Files\Model\Logistic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
