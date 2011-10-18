@@ -5371,6 +5371,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Log threshold (%)</source>
         <translation>Seuil logistique (%)</translation>
     </message>
+    <message>
+        <source>Add class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove class</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_Postures_GUI</name>

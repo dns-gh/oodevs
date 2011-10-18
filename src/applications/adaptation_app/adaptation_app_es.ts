@@ -5360,6 +5360,14 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Log threshold (%)</source>
         <translation>Seuil logistique (%)</translation>
     </message>
+    <message>
+        <source>Add class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove class</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_Postures_GUI</name>

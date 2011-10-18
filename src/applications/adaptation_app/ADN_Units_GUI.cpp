@@ -273,18 +273,7 @@ void ADN_Units_GUI::OnTypeChanged()
         || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLTRavitaillement, ENT_Tr_ABC::eToTr ).c_str()
         || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGConvoi, ENT_Tr_ABC::eToTr ).c_str()
         || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGTC2, ENT_Tr_ABC::eToTr ).c_str() )
-    {
-        // insert stock category list if not exist yet
-        ADN_Units_Data::UnitInfos* pInfos = (ADN_Units_Data::UnitInfos*)pListUnits_->GetCurrentData();
-        if( pInfos == 0 )
-            return;
-        if( pInfos->stocks_.vLogThresholds_.size() == 0 )
-        {
-            pStockLogThreshold_->InitializeLogThresholds();
-            //pInfos->stocks_.InitializeLogThresholds();
-        }
         pStockGroup_->setEnabled( true );
-    }
     else
         pStockGroup_->setEnabled( false );
 }
