@@ -39,6 +39,7 @@ private:
 public:
     bool bIncludeNormalizedConsumption_;
     bool bIncludeThreshold_;
+    bool bQtyDecimal_;
 };
 
 

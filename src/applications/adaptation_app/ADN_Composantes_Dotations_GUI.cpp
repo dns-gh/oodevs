@@ -33,7 +33,7 @@ public:
         : ADN_Connector_Table_ABC( tab, false )
         , bIncludeNormalizedConsumption_( tab.bIncludeNormalizedConsumption_ )
         , bIncludeThreshold_( tab.bIncludeThreshold_ )
-		, bQtyDecimal_( bQtyDecimal )
+        , bQtyDecimal_( bQtyDecimal )
     {}
 
     void AddSubItems( int n, void* pObj )
@@ -43,11 +43,11 @@ public:
 
         // Add a new row.
         ADN_TableItem_String*    pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
-        ADN_TableItem_Double*	 pItemQty  = new ADN_TableItem_Double( &tab_, pObj );
+        ADN_TableItem_Double*    pItemQty  = new ADN_TableItem_Double( &tab_, pObj );
         ADN_TableItem_Double*    pItemLogThreshold  = new ADN_TableItem_Double( &tab_, pObj );
         ADN_TableItem_Double*    pItemNormalizedConsumption  = new ADN_TableItem_Double( &tab_, pObj );
 
-		pItemQty->GetValidator().setRange(  bQtyDecimal_? 0.001 : 1 , INT_MAX, bQtyDecimal_? 3 : 0 );			
+        pItemQty->GetValidator().setRange( bQtyDecimal_? 0.001 : 1 , INT_MAX, bQtyDecimal_? 3 : 0 );
         pItemLogThreshold->GetValidator().setRange( 0, 100, 2 );
         pItemNormalizedConsumption->GetValidator().setRange( 0.001, INT_MAX, 3 );
 
@@ -68,7 +68,7 @@ public:
 private:
     bool bIncludeNormalizedConsumption_;
     bool bIncludeThreshold_;
-	bool bQtyDecimal_;
+    bool bQtyDecimal_;
 };
 
 //-----------------------------------------------------------------------------
@@ -79,6 +79,7 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNorma
     : ADN_Table2( pParent, "ADN_Composantes_Dotations_GUI" )
     , bIncludeNormalizedConsumption_( bIncludeNormalizedConsumption )
     , bIncludeThreshold_( bIncludeThreshold )
+    , bQtyDecimal_( bQtyDecimal )
 {
     // Selection and sorting.
     setSorting( true );
@@ -193,7 +194,7 @@ void ADN_Composantes_Dotations_GUI::AddNewDotation( ADN_Equipement_Data::Categor
 {
     CategoryInfos* pNewInfo = new CategoryInfos( category.parentResource_ );
     pNewInfo->ptrCategory_ = &category;
-    pNewInfo->rNbr_ = 0;
+    pNewInfo->rNbr_ = bQtyDecimal_? 0.001 : 1;
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
