@@ -159,6 +159,8 @@ namespace
                 std::vector< DEC_Decision_ABC* > result;
                 if( parameters[i]->ToAutomatList( result ) )
                     return result;
+                else
+                    return std::vector< DEC_Decision_ABC* >(); 
             }
         }
         throw std::runtime_error( std::string( "Unknown parameter: " ) + name );
@@ -174,6 +176,8 @@ namespace
                 DEC_Decision_ABC* result = 0;
                 if( parameters[i]->ToAgent( result ) )
                     return result;
+                else
+                    return 0;
             }
         }
         throw std::runtime_error( std::string( "Unknown parameter: " ) + name );
@@ -189,6 +193,8 @@ namespace
                 boost::shared_ptr< TER_Localisation > result;
                 if( parameters[i]->ToPolygon( result ) )
                     return result;
+                else
+                    return boost::shared_ptr< TER_Localisation >(); 
             }
         }
         throw std::runtime_error( std::string( "Unknown parameter: " ) + name );
@@ -204,6 +210,8 @@ namespace
                 boost::shared_ptr< MT_Vector2D > result;
                 if( parameters[i]->ToPoint( result ) )
                     return result;
+                else
+                    return boost::shared_ptr< MT_Vector2D >();
             }
         }
         throw std::runtime_error( std::string( "Unknown parameter: " ) + name );
@@ -234,6 +242,8 @@ const PHY_DotationCategory* MIL_FragOrder::GetMunitions() const
             const PHY_DotationCategory* result;
             if( parameters_[i]->ToDotationType( result ) )
                 return result;
+            else
+                return 0;
         }
     }
     throw std::runtime_error( "Unknown parameter munitions_" );
@@ -333,6 +343,8 @@ MIL_FragOrder::T_MedicalPriorityVector MIL_FragOrder::GetOrderConduiteModifierPr
             T_MedicalPriorityVector result;
             if( parameters_[i]->ToMedicalPriorities( result ) )
                 return result;
+            else
+                return MIL_FragOrder::T_MedicalPriorityVector(); 
         }
     }
     throw std::runtime_error( "Unknown parameter orderConduiteModifierPrioritesBlesses_" );
@@ -352,6 +364,8 @@ MIL_FragOrder::T_MaintenancePriorityVector MIL_FragOrder::GetOrderConduiteModifi
             T_MaintenancePriorityVector result;
             if( parameters_[i]->ToMaintenancePriorities( result ) )
                 return result;
+            else
+                return MIL_FragOrder::T_MaintenancePriorityVector(); 
         }
     }
     throw std::runtime_error( "Unknown parameter orderConduiteModifierPrioritesReparations_" );
@@ -474,7 +488,7 @@ int MIL_FragOrder::GetSiteFranchissementVariante() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() const
 {
-    static const std::string parameterName( "pointCible_" );
+    static const std::string parameterName( "agentKnowledge_" );
 
     unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
     for (unsigned int i = 0; i < parametersNumber; ++i )
@@ -484,6 +498,8 @@ boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() cons
             boost::shared_ptr< DEC_Knowledge_Agent > result;
             if( parameters_[i]->ToAgentKnowledge( result ) )
                 return result;
+            else
+                return boost::shared_ptr< DEC_Knowledge_Agent >();
         }
     }
     throw std::runtime_error( std::string( "Unknown parameter: " ) + parameterName );
