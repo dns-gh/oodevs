@@ -283,5 +283,5 @@ void ProfilesModel::Visit( T_Units& units ) const
 void ProfilesModel::Visit( T_Profiles& profiles ) const
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        profiles.insert( (*it)->GetLogin() );
+        profiles.insert( (*it)->GetLogin().ascii() );
 }
