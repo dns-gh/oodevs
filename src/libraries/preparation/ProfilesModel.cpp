@@ -183,6 +183,32 @@ bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfilesModel::IsReadable
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+bool ProfilesModel::IsReadable( const kernel::Entity_ABC& entity, const std::string& profile ) const
+{
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        if( (*it)->GetLogin().toStdString() == profile && (*it)->IsReadable( entity ) )
+                return true;
+    const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
+    return superior ? IsReadable( *superior, profile ) : false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::IsWriteable
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity, const std::string& profile ) const
+{
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        if( (*it)->GetLogin().toStdString() == profile && (*it)->IsWriteable( entity ) )
+            return true;
+    const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
+    return superior ? IsWriteable( *superior, profile ) : false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfilesModel::Find
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
@@ -248,4 +274,14 @@ void ProfilesModel::Visit( T_Units& units ) const
             BOOST_FOREACH( unsigned long id, ids )
                 units[ id ].insert( (*it)->GetLogin().ascii() );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::Visit
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+void ProfilesModel::Visit( T_Profiles& profiles ) const
+{
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        profiles.insert( (*it)->GetLogin() );
 }

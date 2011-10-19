@@ -74,11 +74,14 @@ public:
     void CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly );
     void DeleteProfile( const UserProfile& profile );
     void Visit( T_Units& units ) const;
+    void Visit( T_Profiles& profiles ) const;
 
     bool Exists( const QString& login ) const;
     const UserProfile* Find( const QString& name ) const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
+    bool IsReadable( const kernel::Entity_ABC& entity, const std::string& profile ) const;
+    bool IsWriteable( const kernel::Entity_ABC& entity, const std::string& profile ) const;
 
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );

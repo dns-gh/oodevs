@@ -52,6 +52,9 @@ private:
     void WriteStocks( boost::filesystem::path& path, const std::string& separator );
     void WriteWeather( boost::filesystem::path& path, const std::string& separator );
     void WriteDiplomaty( boost::filesystem::path& path, const std::string& separator );
+    void WriteProfiles( boost::filesystem::path& path, const std::string& separator );
+    void WriteProfiles( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity,
+                        const std::set< std::string >& profiles );
     //@}
 
 private:

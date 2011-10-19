@@ -18,6 +18,7 @@
 #include "preparation/InitialStateResource.h"
 #include "preparation/Stocks.h"
 #include "preparation/Dotation.h"
+#include "preparation/ProfilesModel.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -40,6 +41,7 @@
 #include "meteo/Meteo.h"
 #include "meteo/MeteoLocal.h"
 #include "meteo/PHY_Precipitation.h"
+#include <boost/foreach.hpp>
 
 namespace bfs = boost::filesystem;
 
@@ -85,6 +87,7 @@ void CsvExport::Execute( bfs::path& path )
     WriteStocks( path, separator );
     WriteWeather( path, separator );
     WriteDiplomaty( path, separator );
+    WriteProfiles( path, separator );
 }
 
 namespace
@@ -302,4 +305,45 @@ void CsvExport::WriteDiplomaty( boost::filesystem::path& path, const std::string
         file << std::endl;
     }
     file.close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CsvExport::WriteProfiles
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+void CsvExport::WriteProfiles( boost::filesystem::path& path, const std::string& separator )
+{
+    bfs::path profilesPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "profiles" ) + ".csv" ).filename() ) );
+    std::ofstream file( profilesPath.string().c_str() );
+    ProfilesModel::T_Profiles profiles;
+    model_.profiles_.Visit( profiles );
+    BOOST_FOREACH( const std::string& profile, profiles )
+        file << separator << profile;
+    file << std::endl;
+    tools::Iterator< const kernel::Automat_ABC& > itAutomat = model_.GetAutomatResolver().CreateIterator();
+    while( itAutomat.HasMoreElements() )
+        WriteProfiles( file, separator, itAutomat.NextElement(), profiles );
+    tools::Iterator< const kernel::Population_ABC& > itPopulation = model_.GetPopulationResolver().CreateIterator();
+    while( itPopulation.HasMoreElements() )
+        WriteProfiles( file, separator, itPopulation.NextElement(), profiles );
+    file.close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CsvExport::WriteProfiles
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+void CsvExport::WriteProfiles( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity,
+                               const std::set< std::string >& profiles )
+{
+    file << GetName( entity );
+    BOOST_FOREACH( const std::string& profile, profiles )
+    {
+        file << separator;
+        if(  model_.profiles_.IsWriteable( entity, profile ) )
+            file << "RW";
+        else if( model_.profiles_.IsReadable( entity, profile ) )
+            file << "R";
+    }
+    file << std::endl;
 }
