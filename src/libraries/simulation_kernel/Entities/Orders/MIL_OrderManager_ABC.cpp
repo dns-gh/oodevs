@@ -61,7 +61,7 @@ void MIL_OrderManager_ABC::Update()
                     pController_->Start( pMission_ );
                 bNewMissionStarted_ = true;
             }
-            catch( std::runtime_error& e )
+            catch( std::exception& e )
             {
                 if( pController_ && pMission_.get() )
                     pController_->Stop( pMission_ );
