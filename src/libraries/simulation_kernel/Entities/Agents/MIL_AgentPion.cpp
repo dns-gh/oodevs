@@ -441,7 +441,7 @@ void MIL_AgentPion::UpdateDecision( float duration )
         pOrderManager_->Update();
         GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     }
-    catch( std::runtime_error& e )
+    catch( std::exception& e )
     {
         GetRole< DEC_Decision_ABC >().LogError( &e );
         MIL_Report::PostEvent( *this, MIL_Report::eReport_MissionImpossible_ );
