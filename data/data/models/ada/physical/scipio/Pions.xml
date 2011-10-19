@@ -16800,37 +16800,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="600" name="MILICE . PICK UP 14,5" type="Pion MILICE">
-    <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
-    <equipments>
-      <equipment count="4" crew="1" loadable="true" type="Milicien AK47"/>
-      <equipment count="1" crew="1" type="Milicien RPG"/>
-      <equipment count="1" crew="2" major="true" type="PICK UP 14,5"/>
-    </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="1" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="1800s"/>
-    </postures>
-    <nbc decontamination-delay="600s"/>
-    <distance-before-points>
-      <distance-before-point type="forest" value="500"/>
-      <distance-before-point type="urban area" value="500"/>
-      <distance-before-point type="crossroad" value="500"/>
-      <distance-before-point type="bridge" value="500"/>
-    </distance-before-points>
-    <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Masalife.Milice" id="601" name="MILICE . PICK UP 10 Miliciens" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="600" name="MILICE . PICK UP 10 Miliciens" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="8" crew="1" loadable="true" major="true" type="Milicien AK47"/>
@@ -16860,7 +16830,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="602" name="MILICE . PICK UP 5 Miliciens" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="601" name="MILICE . PICK UP 5 Miliciens" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" major="true" type="Milicien AK47"/>
@@ -16890,7 +16860,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="603" name="MILICE . PICK UP 23/2" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="602" name="MILICE . PICK UP 23/2" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" type="Milicien AK47"/>
@@ -16921,4 +16891,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="2515361173" -->
+<!-- signature="1704497640" -->
