@@ -524,6 +524,7 @@
     <ClInclude Include="..\..\src\applications\preparation_app\NBCPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ObjectPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ObstaclePrototype.h" />
+    <ClInclude Include="..\..\src\applications\preparation_app\Progress_ABC.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ResourceNetworkPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\SaveModelChecker.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\StockPrototype.h" />

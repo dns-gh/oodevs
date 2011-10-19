@@ -191,6 +191,10 @@
         <source>profiles</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>diffusion</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DotationsEditor</name>

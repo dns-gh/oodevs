@@ -191,6 +191,10 @@
         <source>profiles</source>
         <translation>controle</translation>
     </message>
+    <message>
+        <source>diffusion</source>
+        <translation>diffusion</translation>
+    </message>
 </context>
 <context>
     <name>DotationsEditor</name>

@@ -12,6 +12,7 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/noncopyable.hpp>
+#include <vector>
 
 namespace kernel
 {
@@ -20,6 +21,7 @@ namespace kernel
 }
 
 class Model;
+class Progress_ABC;
 
 // =============================================================================
 /** @class  CsvExport
@@ -38,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void Execute( boost::filesystem::path& path );
+    void Execute( boost::filesystem::path& path, Progress_ABC& progress );
     //@}
 
 private:
@@ -55,6 +57,11 @@ private:
     void WriteProfiles( boost::filesystem::path& path, const std::string& separator );
     void WriteProfiles( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity,
                         const std::set< std::string >& profiles );
+    void WriteDiffusion( boost::filesystem::path& path, const std::string& separator );
+    void WriteReceiver( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity );
+    void WriteTransmitter( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity );
+    void WriteTransmitter( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity,
+                           const std::vector< std::string >& list );
     //@}
 
 private:

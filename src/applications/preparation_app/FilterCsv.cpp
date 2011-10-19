@@ -21,12 +21,17 @@ namespace bfs = boost::filesystem;
 // Name: FilterCsv constructor
 // Created: LGY 2011-10-17
 // -----------------------------------------------------------------------------
-FilterCsv::FilterCsv( const tools::ExerciseConfig& config, Model& model, const kernel::CoordinateConverter_ABC& converter )
-    : pExport_     ( new CsvExport( model, converter ) )
-    , output_      ( 0 )
-    , exerciseFile_( config.GetExerciseFile().c_str() )
+FilterCsv::FilterCsv( QWidget* parent, const tools::ExerciseConfig& config, Model& model,
+                      const kernel::CoordinateConverter_ABC& converter )
+    : progressDialog_( new QProgressDialog( parent, Qt::SplashScreen ) )
+    , pExport_       ( new CsvExport( model, converter ) )
+    , output_        ( 0 )
+    , exerciseFile_  ( config.GetExerciseFile().c_str() )
 {
-        // NOTHING
+    progressDialog_->setAutoClose( true );
+    progressDialog_->setCancelButton( 0 );
+    progressDialog_->setMinimum( 0 );
+    progressDialog_->setMaximum( 100 );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,9 +59,20 @@ namespace
 void FilterCsv::Execute()
 {
     bfs::path ouput( output_->text().ascii() );
-    pExport_->Execute( ouput );
+    pExport_->Execute( ouput, *this );
 }
 
+// -----------------------------------------------------------------------------
+// Name: FilterCsv::Update
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+void FilterCsv::Update( unsigned int value )
+{
+    if( value == 0 )
+        progressDialog_->show();
+    progressDialog_->setValue( value );
+    qApp->processEvents();
+}
 
 // -----------------------------------------------------------------------------
 // Name: FilterCsv::GetName
