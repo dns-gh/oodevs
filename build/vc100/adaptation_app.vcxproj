@@ -1862,7 +1862,6 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Equipment_LogisticSupplyClass.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Config.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
@@ -2010,7 +2009,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_RoofShapes.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Templates.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Template_Usages.h">
@@ -2027,7 +2025,6 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClass.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_ABC.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Choice.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Enum.h" />
