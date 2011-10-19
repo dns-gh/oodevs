@@ -131,7 +131,7 @@ namespace
 void CsvExport::WriteEntity( bfs::path& path, const std::string& separator )
 {
     bfs::path odbPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "orbat" ) + ".csv" ).filename() ) );
-    std::ofstream file( odbPath.string() );
+    std::ofstream file( odbPath.string().c_str() );
     file    << tools::translate( "CsvExport", "SIDE" ) << separator << tools::translate( "CsvExport", "CATEGORY" )
             << separator << tools::translate( "CsvExport", "NAME" ) << separator << tools::translate( "CsvExport", "TYPE" )
             << separator << tools::translate( "CsvExport", "POSITION" ) << std::endl;
@@ -199,7 +199,7 @@ void CsvExport::Write( std::ofstream& file, const std::string& separator, const 
 void CsvExport::WriteResources( boost::filesystem::path& path, const std::string& separator )
 {
     bfs::path resourcesPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "resources" ) + ".csv" ).filename() ) );
-    std::ofstream file( resourcesPath.string() );
+    std::ofstream file( resourcesPath.string().c_str() );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;
     tools::Iterator< const kernel::Agent_ABC& > it = model_.GetAgentResolver().CreateIterator();
@@ -220,7 +220,7 @@ void CsvExport::WriteResources( boost::filesystem::path& path, const std::string
 void CsvExport::WriteStocks( boost::filesystem::path& path, const std::string& separator )
 {
     bfs::path stocksPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "stocks" ) + ".csv" ).filename() ) );
-    std::ofstream file( stocksPath.string() );
+    std::ofstream file( stocksPath.string().c_str() );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;
     tools::Iterator< const kernel::Agent_ABC& > it = model_.GetAgentResolver().CreateIterator();
@@ -249,7 +249,7 @@ void CsvExport::WriteStocks( boost::filesystem::path& path, const std::string& s
 void CsvExport::WriteWeather( boost::filesystem::path& path, const std::string& separator )
 {
     bfs::path weatherPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "weather" ) + ".csv" ).filename() ) );
-    std::ofstream file( weatherPath.string() );
+    std::ofstream file( weatherPath.string().c_str() );
     file << tools::translate( "CsvExport", "WIND SPEED" ) << separator << tools::translate( "CsvExport", "WIND DIRECTION" ) << separator
          << tools::translate( "CsvExport", "TEMPERATURE" ) << separator <<  tools::translate( "CsvExport", "CLOUDS FLOOR" ) << separator
          << tools::translate( "CsvExport", "CLOUDS CEILING" ) << separator <<  tools::translate( "CsvExport", "DENSITY CEILING" ) << separator
@@ -281,7 +281,7 @@ void CsvExport::WriteWeather( boost::filesystem::path& path, const std::string& 
 void CsvExport::WriteDiplomaty( boost::filesystem::path& path, const std::string& separator )
 {
     bfs::path diplomacyPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "diplomacy" ) + ".csv" ).filename() ) );
-    std::ofstream file( diplomacyPath.string() );
+    std::ofstream file( diplomacyPath.string().c_str() );
     tools::Iterator< const kernel::Team_ABC& > it = model_.teams_.CreateIterator();
     while( it.HasMoreElements() )
         file << separator<< it.NextElement().GetName();
