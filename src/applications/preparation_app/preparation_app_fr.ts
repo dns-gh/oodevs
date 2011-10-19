@@ -195,6 +195,10 @@
         <source>diffusion</source>
         <translation>diffusion</translation>
     </message>
+    <message>
+        <source>logistic</source>
+        <translation>logistique</translation>
+    </message>
 </context>
 <context>
     <name>DotationsEditor</name>

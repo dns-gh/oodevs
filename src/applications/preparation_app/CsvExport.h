@@ -62,6 +62,8 @@ private:
     void WriteTransmitter( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity );
     void WriteTransmitter( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity,
                            const std::vector< std::string >& list );
+    void WriteLogistic( boost::filesystem::path& path, const std::string& separator );
+    void WriteLogistic( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity );
     //@}
 
 private:
