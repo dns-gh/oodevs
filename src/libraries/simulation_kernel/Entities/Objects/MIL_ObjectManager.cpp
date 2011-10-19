@@ -13,6 +13,7 @@
 #include "MIL_ObjectManager.h"
 #include "AltitudeModifierAttribute.h"
 #include "CapacityFactory.h"
+#include "CrowdCapacity.h"
 #include "FloodAttribute.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
@@ -343,7 +344,7 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
     else if( msg.type() == sword::ObjectMagicAction::destroy )
     {
         MIL_Object_ABC* pObject = Find( msg.object().id() );
-        if( !pObject )
+        if( !pObject || pObject->Retrieve< CrowdCapacity >() )
             nErrorCode = sword::ObjectMagicActionAck::error_invalid_object;
         else
             ( *pObject )().Destroy();
