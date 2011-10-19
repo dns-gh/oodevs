@@ -11,11 +11,9 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Environments_GUI.h"
 #include "moc_ADN_Sensors_Environments_GUI.cpp"
-
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_Connector_Table_ABC.h"
-
 #include "ADN_Tr.h"
 
 typedef ADN_Sensors_Data::SensorInfos                   SensorInfos;
@@ -24,50 +22,52 @@ typedef ADN_Sensors_Data::ModificatorEnvironmentInfos   ModificatorEnvironmentIn
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with T_ModificatorEnvironmentInfos_Vector
 //-----------------------------------------------------------------------------
-class ADN_CT_Sensors_Environments
-:public ADN_Connector_Table_ABC
+class ADN_CT_Sensors_Environments : public ADN_Connector_Table_ABC
 {
 public:
 
-    ADN_CT_Sensors_Environments(ADN_Sensors_Environments_GUI& tab)
-    : ADN_Connector_Table_ABC(tab,false)
+    ADN_CT_Sensors_Environments( ADN_Sensors_Environments_GUI& tab )
+    : ADN_Connector_Table_ABC( tab, false )
     {}
 
-    void  AddSubItems(int i,void *obj)
+    void  AddSubItems( int i ,void *obj )
     {
-
         assert(obj);
-        ADN_TableItem_String *pItemString=0;
-        ADN_TableItem_Double *pItemDouble=0;
+        ADN_TableItem_String *pItemString = 0;
+        ADN_TableItem_Double *pItemDouble = 0;
 
         // add a new row & set new values
-        tab_.setItem(i,0,pItemString=new ADN_TableItem_String(&tab_,obj));
-        tab_.setItem(i,1,pItemDouble=new ADN_TableItem_Double(&tab_,obj));
+        tab_.setItem( i, 0, pItemString =new ADN_TableItem_String( &tab_, obj ) );
+        tab_.setItem( i, 1, pItemDouble =new ADN_TableItem_Double( &tab_, obj ) );
 
         // disable first column
-        pItemString->setEnabled(false);
-        pItemString->setText(ADN_Tr::ConvertFromVisionObject(static_cast<ModificatorEnvironmentInfos*>(obj)->eType_,ENT_Tr_ABC::eToTr).c_str());
+        pItemString->setEnabled( false );
+        pItemString->setText( ADN_Tr::ConvertFromVisionObject( static_cast< ModificatorEnvironmentInfos* >( obj )->eType_, ENT_Tr_ABC::eToTr ).c_str() );
 
         // set table item properties
         pItemDouble->GetValidator().setRange( 0, 1, 2 );
 
         // connect items & datas
-        pItemDouble->GetConnector().Connect(&static_cast<ModificatorEnvironmentInfos*>(obj)->rCoeff_);
+        pItemDouble->GetConnector().Connect( &static_cast<ModificatorEnvironmentInfos* >( obj )->rCoeff_ );
+
+        if( static_cast< ModificatorEnvironmentInfos* >( obj )->eType_ == eVisionEmpty )
+        {
+            pItemDouble->setEnabled( false );
+            static_cast< ModificatorEnvironmentInfos* >(obj )->rCoeff_ = 1;
+        }
     }
 
 private:
     ADN_CT_Sensors_Environments& operator=( const ADN_CT_Sensors_Environments& );
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Sensors_Environments_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_Sensors_Environments_GUI::ADN_Sensors_Environments_GUI(QWidget * parent)
-:   ADN_Table2(parent, "ADN_Sensors_Environments_GUI" )
+:   ADN_Table2( parent, "ADN_Sensors_Environments_GUI" )
 {
-    // peut etre selectionne & trie
     setSorting(true);
     setSelectionMode(Q3Table::NoSelection);
     setShowGrid(false);
