@@ -150,12 +150,15 @@ message HierarchyModificationAck {
 message MsgAutomatChangeKnowledgeGroupAck  {
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
+
 message MsgChangeLogisticLinksAck  {
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
+
 message MsgAutomatChangeSuperiorAck  {
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
+
 message MsgUnitChangeSuperiorAck  {
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
@@ -210,16 +213,16 @@ message MsgActionCreateFireOrderAck {
 }
 
 message MsgControlInformation {
-   required int32                      current_tick         = 1;
-   required Common.MsgDateTime         initial_date_time    = 2;
-   required Common.MsgDateTime         date_time            = 3;
-   required int32                      tick_duration        = 4;
-   required int32                      time_factor          = 5;
-   required int32                      checkpoint_frequency = 6;
-   required Common.EnumSimulationState status               = 7;
-   required bool                       send_vision_cones    = 8;
-   required bool                       profiling_enabled    = 9;
-   optional Common.MsgDateTime         checkpoint_real_time = 10;
+   required int32                      current_tick             = 1;
+   required Common.MsgDateTime         initial_date_time        = 2;
+   required Common.MsgDateTime         date_time                = 3;
+   required int32                      tick_duration            = 4;
+   required int32                      time_factor              = 5;
+   required int32                      checkpoint_frequency     = 6;
+   required Common.EnumSimulationState status                   = 7;
+   required bool                       send_vision_cones        = 8;
+   required bool                       profiling_enabled        = 9;
+   optional Common.MsgDateTime         checkpoint_real_time     = 10;
 }
 
 message MsgControlProfilingInformation {
@@ -348,14 +351,15 @@ message MsgAutomatDestruction {
    required Common.AutomatId automat = 1;
 }
 
+
 message MsgUnitCreation {
-   required Common.UnitId           unit        = 1;
-   required Common.UnitType         type        = 2;
-   required string                  nom         = 3;
-   required Common.AutomatId        automat     = 4;
-   required bool                    pc          = 5;
-   optional Common.RgbColor         color       = 6;
-   optional Common.HumanRepartition repartition = 7;
+    required Common.UnitId           unit        = 1;
+    required Common.UnitType         type        = 2;
+    required string                  nom         = 3;
+    required Common.AutomatId        automat     = 4;
+    required bool                    pc          = 5;
+    optional Common.RgbColor         color       = 6;
+    optional Common.HumanRepartition repartition = 7;
 }
 
 message EquipmentUpdate {
@@ -380,15 +384,15 @@ message LentEquipments {
     message LentEquipment {
         required Common.UnitId        borrower = 1;
         required Common.EquipmentType type     = 2;
-        required int32               nombre    = 3;
+        required int32                nombre    = 3;
     }
     repeated LentEquipment elem = 1;
 }
 
 message ResourceDotations {
     message ResourceDotation {
-        required Common.ResourceType type                = 1;
-        required int32               quantite_disponible = 2;
+        required Common.ResourceType type               = 1;
+        required int32              quantite_disponible = 2;
     }
     repeated ResourceDotation elem = 1;
 }
@@ -407,16 +411,16 @@ message EquipmentDotations {
 
 message HumanDotations {
     message HumanDotation {
-        required Common.EnumHumanRank rang                         = 1;
-        required int32                nb_total                     = 2;
-        required int32                nb_operationnels             = 3;
-        required int32                nb_morts                     = 4;
-        required int32                nb_blesses                   = 5;
-        required int32                nb_blesses_mentaux           = 6;
-        required int32                nb_contamines_nbc            = 7;
-        required int32                nb_dans_chaine_sante         = 8;
-        required int32                nb_utilises_pour_maintenance = 9;
-        required int32                nb_blesses_non_evacues       = 10;
+        required Common.EnumHumanRank rang                           = 1;
+        required int32                nb_total                       = 2;
+        required int32                nb_operationnels               = 3;
+        required int32                nb_morts                       = 4;
+        required int32                nb_blesses                     = 5;
+        required int32                nb_blesses_mentaux             = 6;
+        required int32                nb_contamines_nbc              = 7;
+        required int32                nb_dans_chaine_sante           = 8;
+        required int32                nb_utilises_pour_maintenance   = 9;
+        required int32                nb_blesses_non_evacues         = 10;
         required int32                nb_morts_dans_chaine_mortuaire = 11;
     }
     repeated HumanDotation elem = 1;
@@ -458,11 +462,11 @@ message MsgUnitAttributes {
         maintien_a_distance_par_moyens_non_letaux = 2;
         dispersion_par_moyens_de_defense_actifs   = 3;
         armes_letales_autorisees                  = 4;
-    }
+    }    
     message Satisfaction {
-        optional float safety                = 1;
-        optional float lodging               = 2;
-        optional float access_to_health_care = 3;
+        optional float                  safety                = 1;
+        optional float                  lodging               = 2;
+        optional float                  access_to_health_care = 3;
     }
     required Common.UnitId                      unit                          = 1;
     optional HumanDotations                     dotation_eff_personnel        = 2;
@@ -480,9 +484,9 @@ message MsgUnitAttributes {
     optional Common.UnitId                      reinforced_unit               = 14;
     optional bool                               mort                          = 15;
     optional bool                               neutralise                    = 16;
-    optional bool                               mode_furtif_actif             = 17;  
+    optional bool                               mode_furtif_actif             = 17;
     optional bool                               embarque                      = 18;
-    optional bool                               underground                   = 19;  
+    optional bool                               underground                   = 19;
     optional bool                               transporteurs_disponibles     = 20;
     optional Posture                            posture_old                   = 21;
     optional Posture                            posture_new                   = 22;
@@ -724,12 +728,12 @@ message MsgUnitVisionCones {
 }
 
 message MsgObjectCreation {
-   required Common.ObjectId            object     = 1;
-   required Common.ObjectType          type       = 2;
-   required string                     name       = 3;
-   required Common.PartyId             party      = 4;
-   required Common.MsgLocation         location   = 5;
-   required Common.ObjectAttributes    attributes = 6;
+   required Common.ObjectId            object              = 1;
+   required Common.ObjectType          type                = 2;
+   required string                     name                = 3;
+   required Common.PartyId             party               = 4;
+   required Common.MsgLocation         location            = 5;
+   required Common.ObjectAttributes    attributes          = 6;
    optional int32                      external_identifier = 7;
 }
 
@@ -889,9 +893,9 @@ message MsgLogSupplyHandlingCreation {
 
 message SupplyResourceRequest {
     required Common.ResourceType resource  = 1; //!< The type of the resource @see ResourceType
-    required int32               requested = 2; //!< The amount requested
-    required int32               granted   = 3; //!< The amount granted
-    required int32               convoyed  = 4; //!< The amount being convoyed
+    required int32        requested        = 2; //!< The amount requested
+    required int32        granted          = 3; //!< The amount granted
+    required int32        convoyed         = 4; //!< The amount being convoyed
 }
 
 message SupplyRecipientResourcesRequest
@@ -914,7 +918,7 @@ message MsgLogSupplyHandlingUpdate {
 }
 
 message MsgLogSupplyHandlingDestruction {
-    required Common.SupplyRequestId request  = 1;
+   required Common.SupplyRequestId request  = 1;
 }
 
 message MsgLogSupplyEquimentAvailability {
@@ -1031,16 +1035,16 @@ message MsgCrowdFlowDestruction {
 }
 
 message MsgCrowdFlowUpdate {
-   required Common.CrowdFlowId       flow         = 1;
-   required Common.CrowdId           crowd        = 2;
-   optional Common.MsgPath           parts        = 3;
-   optional Common.MsgHeading        direction    = 4;
-   optional int32                    speed        = 5;
-   optional int32                    healthy      = 6;
-   optional int32                    wounded      = 7;
-   optional int32                    contaminated = 8;
-   optional int32                    dead         = 9;
-   optional Common.EnumCrowdAttitude attitude     = 10;
+   required Common.CrowdFlowId        flow               = 1;
+   required Common.CrowdId            crowd              = 2;
+   optional Common.MsgPath            parts              = 3;
+   optional Common.MsgHeading         direction          = 4;
+   optional int32                     speed              = 5;
+   optional int32                     healthy            = 6;
+   optional int32                     wounded            = 7;
+   optional int32                     contaminated       = 8;
+   optional int32                     dead               = 9;
+   optional Common.EnumCrowdAttitude  attitude           = 10;
 }
 
 message MsgCrowdKnowledgeCreation {
@@ -1132,10 +1136,12 @@ message MsgControlCheckPointSaveBeginAck    {}
 message MsgControlCheckPointSaveEnd {
     optional string name = 1;
 }
+
 message MsgControlCheckPointListAck      {}
 message MsgControlCheckPointList {
     repeated string checkpoint = 1;
 }
+
 message MsgControlCheckPointDeleteAck    {}
 
 // Current State / Initialization
@@ -1222,7 +1228,7 @@ message KnowledgeGroupAck {
        error_invalid_superior       = 2;
        error_invalid_camp           = 3;
        error_invalid_knowledgegroup = 4;
-       error_invalid_type           = 5; 
+       error_invalid_type           = 5;    
     }
 }
 
@@ -1259,7 +1265,7 @@ message MsgControlLocalWeatherCreation {
 }
 
 message MsgControlLocalWeatherDestruction {
-   required Common.WeatherId weather = 1;
+   required Common.WeatherId   weather  = 1;
 }
 
 // Populations
@@ -1290,21 +1296,21 @@ message MsgPopulationUpdate {
     message BlockOccupation {
          message UsageOccupation {
              required string usage  = 1;
-             required int32  number = 2;
-         }
+         required int32           number = 2;
+     }
          required Common.ObjectId object  = 1;
          repeated UsageOccupation persons = 2;
      }
 
-    required Common.PopulationId   id           = 1;
-    optional int32                 healthy      = 2;
-    optional int32                 wounded      = 3;
-    optional int32                 dead         = 4;
-    optional Common.PartyAdhesions adhesions    = 5;
-    optional Satisfaction          satisfaction = 6;
-    optional string                motivation   = 7; 
-    repeated BlockOccupation       occupations  = 8;
-    optional Common.Extension      extension    = 9;
+    required Common.PopulationId    id           = 1;
+    optional int32                  healthy      = 2;
+    optional int32                  wounded      = 3;
+    optional int32                  dead         = 4;
+    optional Common.PartyAdhesions  adhesions    = 5;
+    optional Satisfaction           satisfaction = 6;
+    optional string                 motivation   = 7; 
+    repeated BlockOccupation        occupations  = 8;
+    optional Common.Extension       extension    = 9;
 }
 
 message MsgUnitKnowledgeCreationRequestAck {
@@ -1344,8 +1350,8 @@ message MsgSimToClient {
         optional MsgControlResumeAck                            control_resume_ack                             = 24;
         optional MsgControlChangeTimeFactorAck                  control_change_time_factor_ack                 = 25;
         optional MsgControlDatetimeChangeAck                    control_date_time_change_ack                   = 26;
-        optional MsgControlCheckPointSaveEnd                    control_checkpoint_save_end                    = 27;
-        optional MsgFormationCreation                           formation_creation                             = 28;
+        optional MsgControlCheckPointSaveEnd                    control_checkpoint_save_end                    = 27; 
+        optional MsgFormationCreation                           formation_creation                             = 28;   
         optional MsgPartyCreation                               party_creation                                 = 29;
         optional MsgAutomatCreation                             automat_creation                               = 30;
         optional MsgAutomatAttributes                           automat_attributes                             = 31;

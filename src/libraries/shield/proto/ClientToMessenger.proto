@@ -13,7 +13,7 @@ import "Common.proto";
 
 // Drawings
 message MsgShapeCreationRequest {
-    required Common.MsgShape shape = 1; 
+    required Common.MsgShape shape = 1;
 }
 
 message MsgShapeUpdateRequest {
@@ -27,15 +27,15 @@ message MsgShapeDestructionRequest {
 }
 
 message MsgMarkerCreationRequest {
-    required Common.MsgMarker           marker        = 1;      
+    required Common.MsgMarker           marker        = 1;
 }
 
 message MsgMarkerUpdateRequest {
-    required Common.MarkerId           marker      = 1;
-    optional string                    name        = 2;
+    required Common.MarkerId           marker               = 1;
+    optional string                    name                 = 2;
     optional string                    optional_information	= 3;
-    optional string                    description = 4;
-    optional Common.MarkerId           parent      = 5;
+    optional string                    description          = 4;
+    optional Common.MarkerId           parent               = 5;
 }
 
 message MsgMarkerDestructionRequest {

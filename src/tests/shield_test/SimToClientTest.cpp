@@ -1043,7 +1043,8 @@ BOOST_FIXTURE_TEST_CASE( log_medical_handling_update_to_client_is_converted, Con
     content.mutable_log_medical_handling_update()->set_nbc_contaminated( true );
     content.mutable_log_medical_handling_update()->set_state( sword::LogMedicalHandlingUpdate::triaging );
     content.mutable_log_medical_handling_update()->set_diagnosed( true );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_medical_handling_update { request { id: 7 } unit { id: 8 } provider { id: 9 } blessure: mort blesse_mental: true contamine_nbc: true etat: tri current_state_end_tick: 1 diagnostique_effectue: true } }" ) );
+    content.mutable_log_medical_handling_update()->set_current_state_end_tick( 11 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_medical_handling_update { request { id: 7 } unit { id: 8 } provider { id: 9 } blessure: mort blesse_mental: true contamine_nbc: true etat: tri current_state_end_tick: 11 diagnostique_effectue: true } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
@@ -1179,6 +1180,37 @@ BOOST_FIXTURE_TEST_CASE( log_supply_handling_destruction_to_client_is_converted,
 {
     content.mutable_log_supply_handling_destruction()->mutable_request()->set_id( 7 );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_destruction { request { id: 7 } } }" ) );
+    converter.ReceiveSimToClient( msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( log_funeral_handling_creation_to_client_is_converted, ContextFixture< sword::SimToClient > )
+{
+    content.mutable_log_funeral_handling_creation()->mutable_request()->set_id( 7 );
+    content.mutable_log_funeral_handling_creation()->mutable_unit()->set_id( 8 );
+    content.mutable_log_funeral_handling_creation()->set_tick( 9 );
+    content.mutable_log_funeral_handling_creation()->set_rank( sword::officer );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_funeral_handling_creation { request { id: 7 } requesting_unit { id: 8 } tick_creation: 9 rank: officier } }" ) );
+    converter.ReceiveSimToClient( msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( log_funeral_handling_update_to_client_is_converted, ContextFixture< sword::SimToClient > )
+{
+    // NB: requesting_unit '8' comes from 'log_funeral_handling_creation_to_client_is_converted' ...
+    content.mutable_log_funeral_handling_update()->mutable_request()->set_id( 7 );
+    content.mutable_log_funeral_handling_update()->mutable_handling_unit()->mutable_automat()->set_id( 9 );
+    content.mutable_log_funeral_handling_update()->mutable_convoying_unit()->set_id( 10 );
+    content.mutable_log_funeral_handling_update()->set_state( sword::LogFuneralHandlingUpdate::waiting_for_transporter );
+    content.mutable_log_funeral_handling_update()->set_current_state_end_tick( 666 );
+    content.mutable_log_funeral_handling_update()->mutable_packaging_resource()->set_id( 11 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_funeral_handling_update { request { id: 7 } requesting_unit { id: 8 } handling_unit { automat { id: 9 } } convoying_unit { id: 10 } status: attente_transporteur conditioning_resource { id: 11 } } }" ) );
+    converter.ReceiveSimToClient( msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( log_funeral_handling_destruction_to_client_is_converted, ContextFixture< sword::SimToClient > )
+{
+    // NB: requesting_unit '8' comes from 'log_funeral_handling_creation_to_client_is_converted' ...
+    content.mutable_log_funeral_handling_destruction()->mutable_request()->set_id( 7 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_funeral_handling_destruction { request { id: 7 } requesting_unit { id: 8 } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 

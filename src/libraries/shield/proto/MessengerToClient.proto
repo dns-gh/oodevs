@@ -34,7 +34,7 @@ message ShapeRequestAck {
     }
 }
 message MsgShapeCreationRequestAck {
-    required ShapeRequestAck.ErrorCode error_code = 1;      
+    required ShapeRequestAck.ErrorCode error_code = 1;
 }
 
 message MsgShapeUpdateRequestAck {
