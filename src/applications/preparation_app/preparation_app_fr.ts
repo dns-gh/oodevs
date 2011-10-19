@@ -187,6 +187,10 @@
         <source>diplomacy</source>
         <translation>diplomatie</translation>
     </message>
+    <message>
+        <source>profiles</source>
+        <translation>controle</translation>
+    </message>
 </context>
 <context>
     <name>DotationsEditor</name>

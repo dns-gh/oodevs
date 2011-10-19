@@ -18,6 +18,7 @@
 #include "preparation/InitialStateResource.h"
 #include "preparation/Stocks.h"
 #include "preparation/Dotation.h"
+#include "preparation/ProfilesModel.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -40,6 +41,7 @@
 #include "meteo/Meteo.h"
 #include "meteo/MeteoLocal.h"
 #include "meteo/PHY_Precipitation.h"
+#include <boost/foreach.hpp>
 
 namespace bfs = boost::filesystem;
 
@@ -85,6 +87,7 @@ void CsvExport::Execute( bfs::path& path )
     WriteStocks( path, separator );
     WriteWeather( path, separator );
     WriteDiplomaty( path, separator );
+    WriteProfiles( path, separator );
 }
 
 namespace
@@ -131,7 +134,7 @@ namespace
 void CsvExport::WriteEntity( bfs::path& path, const std::string& separator )
 {
     bfs::path odbPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "orbat" ) + ".csv" ).filename() ) );
-    std::ofstream file( odbPath.string() );
+    std::ofstream file( odbPath.string().c_str() );
     file    << tools::translate( "CsvExport", "SIDE" ) << separator << tools::translate( "CsvExport", "CATEGORY" )
             << separator << tools::translate( "CsvExport", "NAME" ) << separator << tools::translate( "CsvExport", "TYPE" )
             << separator << tools::translate( "CsvExport", "POSITION" ) << std::endl;
@@ -199,7 +202,7 @@ void CsvExport::Write( std::ofstream& file, const std::string& separator, const 
 void CsvExport::WriteResources( boost::filesystem::path& path, const std::string& separator )
 {
     bfs::path resourcesPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "resources" ) + ".csv" ).filename() ) );
-    std::ofstream file( resourcesPath.string() );
+    std::ofstream file( resourcesPath.string().c_str() );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;
     tools::Iterator< const kernel::Agent_ABC& > it = model_.GetAgentResolver().CreateIterator();
@@ -220,7 +223,7 @@ void CsvExport::WriteResources( boost::filesystem::path& path, const std::string
 void CsvExport::WriteStocks( boost::filesystem::path& path, const std::string& separator )
 {
     bfs::path stocksPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "stocks" ) + ".csv" ).filename() ) );
-    std::ofstream file( stocksPath.string() );
+    std::ofstream file( stocksPath.string().c_str() );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;
     tools::Iterator< const kernel::Agent_ABC& > it = model_.GetAgentResolver().CreateIterator();
@@ -249,7 +252,7 @@ void CsvExport::WriteStocks( boost::filesystem::path& path, const std::string& s
 void CsvExport::WriteWeather( boost::filesystem::path& path, const std::string& separator )
 {
     bfs::path weatherPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "weather" ) + ".csv" ).filename() ) );
-    std::ofstream file( weatherPath.string() );
+    std::ofstream file( weatherPath.string().c_str() );
     file << tools::translate( "CsvExport", "WIND SPEED" ) << separator << tools::translate( "CsvExport", "WIND DIRECTION" ) << separator
          << tools::translate( "CsvExport", "TEMPERATURE" ) << separator <<  tools::translate( "CsvExport", "CLOUDS FLOOR" ) << separator
          << tools::translate( "CsvExport", "CLOUDS CEILING" ) << separator <<  tools::translate( "CsvExport", "DENSITY CEILING" ) << separator
@@ -281,7 +284,7 @@ void CsvExport::WriteWeather( boost::filesystem::path& path, const std::string& 
 void CsvExport::WriteDiplomaty( boost::filesystem::path& path, const std::string& separator )
 {
     bfs::path diplomacyPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "diplomacy" ) + ".csv" ).filename() ) );
-    std::ofstream file( diplomacyPath.string() );
+    std::ofstream file( diplomacyPath.string().c_str() );
     tools::Iterator< const kernel::Team_ABC& > it = model_.teams_.CreateIterator();
     while( it.HasMoreElements() )
         file << separator<< it.NextElement().GetName();
@@ -302,4 +305,45 @@ void CsvExport::WriteDiplomaty( boost::filesystem::path& path, const std::string
         file << std::endl;
     }
     file.close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CsvExport::WriteProfiles
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+void CsvExport::WriteProfiles( boost::filesystem::path& path, const std::string& separator )
+{
+    bfs::path profilesPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "profiles" ) + ".csv" ).filename() ) );
+    std::ofstream file( profilesPath.string().c_str() );
+    ProfilesModel::T_Profiles profiles;
+    model_.profiles_.Visit( profiles );
+    BOOST_FOREACH( const std::string& profile, profiles )
+        file << separator << profile;
+    file << std::endl;
+    tools::Iterator< const kernel::Automat_ABC& > itAutomat = model_.GetAutomatResolver().CreateIterator();
+    while( itAutomat.HasMoreElements() )
+        WriteProfiles( file, separator, itAutomat.NextElement(), profiles );
+    tools::Iterator< const kernel::Population_ABC& > itPopulation = model_.GetPopulationResolver().CreateIterator();
+    while( itPopulation.HasMoreElements() )
+        WriteProfiles( file, separator, itPopulation.NextElement(), profiles );
+    file.close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CsvExport::WriteProfiles
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+void CsvExport::WriteProfiles( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity,
+                               const std::set< std::string >& profiles )
+{
+    file << GetName( entity );
+    BOOST_FOREACH( const std::string& profile, profiles )
+    {
+        file << separator;
+        if(  model_.profiles_.IsWriteable( entity, profile ) )
+            file << "RW";
+        else if( model_.profiles_.IsReadable( entity, profile ) )
+            file << "R";
+    }
+    file << std::endl;
 }
