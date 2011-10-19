@@ -12,6 +12,7 @@
 #include "ModelBuilder.h"
 #include "preparation/TacticalLinePositions.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
+#include "clients_kernel/Controller.h"
 
 using namespace kernel;
 using namespace gui;
@@ -106,6 +107,7 @@ bool LimitsLayer::MouseMove( kernel::TacticalLine_ABC& entity, QMouseEvent* mous
         const geometry::Vector2f translation( dragPoint_, point );
         static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->Translate( dragPoint_, translation, Precision( point ) );
         dragPoint_ = point;
+        controllers_.controller_.Update( entity );
     }
     return true;
 }
