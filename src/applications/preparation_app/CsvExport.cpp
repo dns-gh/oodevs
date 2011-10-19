@@ -37,11 +37,18 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/DictionaryExtensions.h"
+#include "clients_kernel/ExtensionTypes.h"
+#include "clients_kernel/AttributeType.h"
 #include "clients_gui/LongNameHelper.h"
 #include "meteo/Meteo.h"
 #include "meteo/MeteoLocal.h"
 #include "meteo/PHY_Precipitation.h"
 #include <boost/foreach.hpp>
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
+#include <boost/lexical_cast.hpp>
 
 namespace bfs = boost::filesystem;
 
@@ -88,6 +95,7 @@ void CsvExport::Execute( bfs::path& path )
     WriteWeather( path, separator );
     WriteDiplomaty( path, separator );
     WriteProfiles( path, separator );
+    WriteDiffusion( path, separator );
 }
 
 namespace
@@ -346,4 +354,82 @@ void CsvExport::WriteProfiles( std::ofstream& file, const std::string& separator
             file << "R";
     }
     file << std::endl;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CsvExport::WriteDiffusion
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+void CsvExport::WriteDiffusion( boost::filesystem::path& path, const std::string& separator )
+{
+    bfs::path diffusionPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "diffusion" ) + ".csv" ).filename() ) );
+    std::ofstream file( diffusionPath.string().c_str() );
+    tools::Iterator< const kernel::Team_ABC& > itReceiver = model_.teams_.CreateIterator();
+    while( itReceiver.HasMoreElements() )
+        WriteReceiver( file, separator, itReceiver.NextElement() );
+    file << std::endl;
+    tools::Iterator< const kernel::Team_ABC& > itTransmitter  = model_.teams_.CreateIterator();
+    while( itTransmitter.HasMoreElements() )
+        WriteTransmitter( file, separator, itTransmitter.NextElement() );
+    file.close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CsvExport::WriteReceiver
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+void CsvExport::WriteReceiver( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity )
+{
+    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& child = it.NextElement();
+        file << separator << GetName( child );
+        WriteReceiver( file, separator, child );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CsvExport::WriteTransmitter
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+void CsvExport::WriteTransmitter( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity )
+{
+    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& child = it.NextElement();
+        file << GetName( child );
+        std::vector< std::string > list;
+        if( const kernel::DictionaryExtensions* extension = child.Retrieve< kernel::DictionaryExtensions >() )
+        {
+             const std::string name = extension->GetExtensionTypes().GetNameByType( kernel::AttributeType::ETypeDiffusionList );
+             const std::string value = extension->GetValue( name );
+             boost::split( list, value, boost::algorithm::is_any_of( ";" ) );
+        }
+        tools::Iterator< const kernel::Team_ABC& > itTeam = model_.teams_.CreateIterator();
+        while( itTeam.HasMoreElements() )
+            WriteTransmitter( file, separator, itTeam.NextElement(), list );
+        file << std::endl;
+        WriteTransmitter( file, separator, child );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CsvExport::WriteTransmitter
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+void CsvExport::WriteTransmitter( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity,
+                                  const std::vector< std::string >& list )
+{
+    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& child = it.NextElement();
+        file << separator;
+        const std::string id = boost::lexical_cast< std::string >( child.GetId() );
+        if( std::find( list.begin(), list.end(), id ) != list.end() )
+            file << "X";
+        WriteTransmitter( file, separator, child, list );
+    }
 }
