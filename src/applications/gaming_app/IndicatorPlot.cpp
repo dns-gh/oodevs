@@ -189,16 +189,6 @@ void IndicatorPlot::UpdatePlot( gui::GQ_PlotData* plot, const IndicatorRequest& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPlot::hideEvent
-// Created: AGE 2007-09-26
-// -----------------------------------------------------------------------------
-void IndicatorPlot::hideEvent( QHideEvent* event )
-{
-    gui::GQ_Plot::hideEvent( event );
-    dock_->deleteLater();
-}
-
-// -----------------------------------------------------------------------------
 // Name: IndicatorPlot::mouseReleaseEvent
 // Created: AGE 2007-09-27
 // -----------------------------------------------------------------------------

@@ -140,11 +140,10 @@ void Simulation::Update( const sword::ControlProfilingInformation& message )
 // -----------------------------------------------------------------------------
 void Simulation::Update( const sword::ControlBeginTick& message )
 {
-    int tick = message.current_tick();
+    currentTick_ = message.current_tick();
     date_ = message.date_time().data();
     profiling_.Tick();
-    currentTick_ = tick;
-    time_ = tick * tickDuration_;
+    time_ = currentTick_ * tickDuration_;
     controller_.Update( startTick_ );
     controller_.Update( *this );
 }

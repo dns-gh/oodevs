@@ -98,6 +98,7 @@ private:
     //! @name Member data
     //@{
     const Config& config_;
+    unsigned int firstTick_;
     unsigned int tickCount_;
     bool initReady_;
     mutable boost::mutex dataAccessMutex_;

@@ -1606,7 +1606,7 @@ void AgentServerMsgMgr::OnReceiveUrbanUpdate( const sword::UrbanUpdate& message 
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveUrbanDetection( const sword::UrbanDetection& message )
 {
-    GetModel().agents_.GetAgent( message.object().id() ).Update( message );
+    GetModel().agents_.GetAgent( message.observer().id() ).Update( message );
 }
 
 // LTO begin

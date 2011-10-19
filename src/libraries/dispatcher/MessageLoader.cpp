@@ -33,6 +33,7 @@ boost::mutex MessageLoader::filesAccessMutex_;
 // -----------------------------------------------------------------------------
 MessageLoader::MessageLoader( const Config& config, bool threaded )
     : config_   ( config )
+    , firstTick_( std::numeric_limits< unsigned int >::max() )
     , tickCount_( 0 )
     , initReady_( false )
 {
@@ -258,6 +259,7 @@ void MessageLoader::AddFolder( const std::string& folderName )
     infoFile.close();
     fragmentsInfos_[ folderName ] = std::make_pair< unsigned int, unsigned int >( start, end );
     tickCount_ = std::max( tickCount_, end );
+    firstTick_ = std::min( firstTick_, start );
 }
 
 // -----------------------------------------------------------------------------
@@ -330,8 +332,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
 {
-    if( frameNumber > tickCount_ )
-        frameNumber = tickCount_;
+    frameNumber = std::max( firstTick_, std::min( frameNumber, tickCount_ ) );
     bool doSwitch = false;
     {
         boost::mutex::scoped_lock lock( dataAccessMutex_ );
