@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "CsvExport.h"
+#include "Progress_ABC.h"
 #include "preparation/Model.h"
 #include "preparation/TeamsModel.h"
 #include "preparation/ObjectsModel.h"
@@ -86,16 +87,24 @@ namespace
 // Name: CsvExport::Execute
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::Execute( bfs::path& path )
+void CsvExport::Execute( bfs::path& path, Progress_ABC& progress )
 {
     const std::string separator = GetSeparator();
+    progress.Update( 0 );
     WriteEntity( path, separator );
+    progress.Update( 10 );
     WriteResources( path, separator );
+    progress.Update( 20 );
     WriteStocks( path, separator );
+    progress.Update( 30 );
     WriteWeather( path, separator );
+    progress.Update( 40 );
     WriteDiplomaty( path, separator );
+    progress.Update( 50 );
     WriteProfiles( path, separator );
+    progress.Update( 60 );
     WriteDiffusion( path, separator );
+    progress.Update( 100 );
 }
 
 namespace

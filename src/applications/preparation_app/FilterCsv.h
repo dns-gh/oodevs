@@ -11,6 +11,7 @@
 #define __FilterCsv_h_
 
 #include "Filter_ABC.h"
+#include "Progress_ABC.h"
 
 namespace tools
 {
@@ -32,13 +33,15 @@ class CsvExport;
 // Created: LGY 2011-10-17
 // =============================================================================
 class FilterCsv : public Filter_ABC
+                , private Progress_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterCsv( const tools::ExerciseConfig& config, Model& model, const kernel::CoordinateConverter_ABC& converter );
+             FilterCsv( QWidget* parent, const tools::ExerciseConfig& config, Model& model,
+                        const kernel::CoordinateConverter_ABC& converter );
     virtual ~FilterCsv();
     //@}
 
@@ -50,6 +53,7 @@ public:
     virtual QWidget* CreateParametersWidget( QWidget* parent );
     virtual bool IsValid() const;
     virtual bool NeedToReloadExercise() const;
+    virtual void Update( unsigned int value );
     //@}
 
 private slots:
@@ -62,6 +66,7 @@ private slots:
 private:
     //! @name Member data
     //@{
+    QProgressDialog* progressDialog_;
     std::auto_ptr< CsvExport > pExport_;
     QLineEdit* output_;
     const std::string exerciseFile_;

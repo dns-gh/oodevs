@@ -21,6 +21,7 @@ namespace kernel
 }
 
 class Model;
+class Progress_ABC;
 
 // =============================================================================
 /** @class  CsvExport
@@ -39,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void Execute( boost::filesystem::path& path );
+    void Execute( boost::filesystem::path& path, Progress_ABC& progress );
     //@}
 
 private:

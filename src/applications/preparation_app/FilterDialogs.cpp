@@ -56,7 +56,7 @@ void FilterDialogs::Load()
         CreateImportDialog();
     if( !Find( "export" ) )
         CreateExportDialog();
-    Get( "export" ).AddFilter( *new FilterCsv( config_, model_, converter_ ) );
+    Get( "export" ).AddFilter( *new FilterCsv( &Get( "export" ), config_, model_, converter_ ) );
     Get( "import" ).AddFilter( *new FilterOrbatReIndexer( parent_, config_, model_ ) );
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->InsertMenuEntry( menu_ );
