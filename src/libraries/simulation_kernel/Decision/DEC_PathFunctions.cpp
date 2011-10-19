@@ -222,7 +222,12 @@ std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >
 boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const MIL_AgentPion& /*callerAgent*/, const DEC_Path_ABC* pPath )
 {
     assert( pPath );
-    boost::shared_ptr< MT_Vector2D > pPos ( new MT_Vector2D( dynamic_cast< const DEC_PathResult* > ( pPath )->GetResult().back()->GetPos() ) );
+    const DEC_PathResult* path = dynamic_cast< const DEC_PathResult* > ( pPath );
+    if( !path || path->GetResult().empty() )
+    {
+        return boost::shared_ptr< MT_Vector2D >();
+    }
+    boost::shared_ptr< MT_Vector2D > pPos ( new MT_Vector2D( path->GetResult().back()->GetPos() ) );
     return pPos;
 }
 
