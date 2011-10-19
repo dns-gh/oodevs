@@ -218,7 +218,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\ReportFilterOptions.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ReportListView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticStatusWidgets.cpp" />
-	<ClCompile Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\MaintenanceConsignsWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\MedicalConsignsWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\SupplyConsignsWidget.cpp" />
@@ -239,7 +239,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\InfoCompositionDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoMaintenanceDialog.cpp" />
-	<ClCompile Include="..\..\src\applications\gaming_app\InfoFuneralDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\InfoFuneralDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoMedicalDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoSupplyDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InfoButtonsWidget.cpp" />
@@ -1230,7 +1230,7 @@
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticStatusWidget_ABC.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticStatusWidgets.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticConsignsWidget_ABC.h" />
-	<ClInclude Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.h" />
+    <ClInclude Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\MaintenanceConsignsWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\MedicalConsignsWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticAvailabilitiesListView_ABC.h" />
@@ -1285,7 +1285,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-	<ClInclude Include="..\..\src\applications\gaming_app\InfoFuneralDialog.h" />
+    <ClInclude Include="..\..\src\applications\gaming_app\InfoFuneralDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\InfoMaintenanceDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\InfoMedicalDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\InfoSupplyDialog.h" />
