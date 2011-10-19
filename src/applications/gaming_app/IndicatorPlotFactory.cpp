@@ -45,14 +45,15 @@ IndicatorPlotFactory::~IndicatorPlotFactory()
 // -----------------------------------------------------------------------------
 IndicatorPlot* IndicatorPlotFactory::CreatePlot( const IndicatorRequest& request )
 {
-    QDockWidget* dock = new QDockWidget( "indicatorplot", mainWindow_, Qt::WDestructiveClose );
-    Q3VBox* vbox = new Q3VBox( dock );
-    Q3VBox* box = new Q3VBox( vbox );
-    IndicatorPlot* plot = new IndicatorPlot( box, controllers_, publisher_, dock, exportDialog_, hasReplay_, request, simulation_.GetCurrentTick(), vbox );
-    dock->setWidget( vbox );
-    dock->setFeatures( QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable );
-    vbox->show();
+    QDockWidget* dock = new QDockWidget( "indicatorplot", mainWindow_ );
+    dock->setAttribute( Qt::WA_DeleteOnClose, true );
+    mainWindow_->addDockWidget( Qt::LeftDockWidgetArea, dock );
+    Q3VBox* box = new Q3VBox( dock );
+    IndicatorPlot* plot = new IndicatorPlot( box, controllers_, publisher_, dock, exportDialog_, hasReplay_, request, simulation_.GetCurrentTick(), box );
+    dock->setWidget( box );
+    dock->setFeatures( QDockWidget::AllDockWidgetFeatures );
     dock->setProperty( "notAppropriate", QVariant( true ) );
+    dock->show();
     return plot;
 }
 

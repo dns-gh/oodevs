@@ -61,7 +61,6 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual void hideEvent( QHideEvent* event );
     virtual void mouseReleaseEvent( QMouseEvent* e );
     virtual void dragEnterEvent( QDragEnterEvent* e );
     virtual void dropEvent( QDropEvent* e );

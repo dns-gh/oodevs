@@ -209,6 +209,7 @@ void Task::Process( dispatcher::MessageLoader_ABC& loader )
     if( firstTick_ > lastTick_ )
         return;
     firstTickRead_ = loader.FindKeyFrame( firstTick_ );
+    firstTick_ = std::max( firstTick_, firstTickRead_ );
     const unsigned int ticks = std::min( lastTick_, loader.GetTickNumber() - 1 ) + 1;
     loader.LoadKeyFrame( firstTickRead_, *this );
     for( unsigned int i = firstTickRead_; i < ticks - 1; ++i )
