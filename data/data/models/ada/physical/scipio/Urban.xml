@@ -4,6 +4,7 @@
     <material-composition-types>
       <material-composition-type name="Bois">
         <attritions>
+          <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
           <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
@@ -16,6 +17,7 @@
       </material-composition-type>
       <material-composition-type name="Beton">
         <attritions>
+          <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
           <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
@@ -28,6 +30,7 @@
       </material-composition-type>
       <material-composition-type name="Brique">
         <attritions>
+          <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
           <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
@@ -40,6 +43,7 @@
       </material-composition-type>
       <material-composition-type name="Metal">
         <attritions>
+          <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0.05" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
           <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
@@ -52,6 +56,7 @@
       </material-composition-type>
       <material-composition-type name="Torchis">
         <attritions>
+          <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
           <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
@@ -64,6 +69,7 @@
       </material-composition-type>
       <material-composition-type name="Prefabrique">
         <attritions>
+          <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
           <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
@@ -76,6 +82,7 @@
       </material-composition-type>
       <material-composition-type name="Vegetation">
         <attritions>
+          <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
           <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
@@ -177,4 +184,4 @@
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="4200857605" -->
+<!-- signature="0254285472" -->

@@ -1,3 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<templates/>
-<!-- signature="2867133099" -->
+<templates>
+  <template>
+    <element level="6" name="i - Formation [2]" type="formation" x="0" y="0"/>
+  </template>
+</templates>
+<!-- signature="1302416120" -->

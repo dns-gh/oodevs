@@ -10,12 +10,11 @@
     </constitution-times>
     <loading-times>
       <unit-time time="30m" truck-count="1"/>
-      <unit-time time="110m" truck-count="10"/>
+      <unit-time time="60m" truck-count="10"/>
     </loading-times>
     <unloading-times>
       <unit-time time="15m" truck-count="1"/>
       <unit-time time="30m" truck-count="10"/>
-      <unit-time time="120m" truck-count="40"/>
     </unloading-times>
     <speed-modifiers>
       <speed-modifier truck-count="1" value="1"/>
@@ -26,4 +25,4 @@
     <resource-availability-alert availability-threshold="0"/>
   </resource-availability-alerts>
 </supply>
-<!-- signature="3346570550" -->
+<!-- signature="1633676667" -->
