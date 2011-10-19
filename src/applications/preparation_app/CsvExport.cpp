@@ -20,6 +20,7 @@
 #include "preparation/Stocks.h"
 #include "preparation/Dotation.h"
 #include "preparation/ProfilesModel.h"
+#include "preparation/LogisticHierarchiesBase.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -41,6 +42,7 @@
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/AttributeType.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "clients_gui/LongNameHelper.h"
 #include "meteo/Meteo.h"
 #include "meteo/MeteoLocal.h"
@@ -104,6 +106,8 @@ void CsvExport::Execute( bfs::path& path, Progress_ABC& progress )
     WriteProfiles( path, separator );
     progress.Update( 60 );
     WriteDiffusion( path, separator );
+    progress.Update( 90 );
+    WriteLogistic( path, separator );
     progress.Update( 100 );
 }
 
@@ -440,5 +444,91 @@ void CsvExport::WriteTransmitter( std::ofstream& file, const std::string& separa
         if( std::find( list.begin(), list.end(), id ) != list.end() )
             file << "X";
         WriteTransmitter( file, separator, child, list );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CsvExport::WriteLogistic
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+void CsvExport::WriteLogistic( boost::filesystem::path& path, const std::string& separator )
+{
+    bfs::path logisticPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "logistic" ) + ".csv" ).filename() ) );
+    std::ofstream file( logisticPath.string().c_str() );
+    tools::Iterator< const kernel::Automat_ABC& > itTC2 = model_.GetAutomatResolver().CreateIterator();
+    while( itTC2.HasMoreElements() )
+    {
+        const kernel::Automat_ABC& child = itTC2.NextElement();
+        if( child.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+            file << separator << GetName( child );
+    }
+    tools::Iterator< const kernel::Formation_ABC& > itBL = model_.GetFormationResolver().CreateIterator();
+    while( itBL.HasMoreElements() )
+    {
+        const kernel::Formation_ABC& child = itBL.NextElement();
+        if( child.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+            file << separator << GetName( child );
+    }
+    file << std::endl;
+    tools::Iterator< const kernel::Automat_ABC& > itAutomat = model_.GetAutomatResolver().CreateIterator();
+    while( itAutomat.HasMoreElements() )
+    {
+        const kernel::Automat_ABC& child = itAutomat.NextElement();
+        file << GetName( child );
+        WriteLogistic( file, separator, child );
+        file << std::endl;
+    }
+    tools::Iterator< const kernel::Formation_ABC& > itFormation = model_.GetFormationResolver().CreateIterator();
+    while( itFormation.HasMoreElements() )
+    {
+        const kernel::Formation_ABC& child = itFormation.NextElement();
+        if( child.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        {
+            file << GetName( child );
+            WriteLogistic( file, separator, child );
+            file << std::endl;
+        }
+    }
+    file.close();
+}
+
+namespace
+{
+    bool IsLogisticSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
+    {
+        if( const LogisticHierarchiesBase* pHierarchy = entity.Retrieve< LogisticHierarchiesBase >() )
+            if( pHierarchy->GetSuperior() && pHierarchy->GetSuperior()->GetId() == superior.GetId() )
+                return true;
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CsvExport::WriteLogistic
+// Created: LGY 2011-10-19
+// -----------------------------------------------------------------------------
+void CsvExport::WriteLogistic( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity )
+{
+    tools::Iterator< const kernel::Automat_ABC& > itTC2 = model_.GetAutomatResolver().CreateIterator();
+    while( itTC2.HasMoreElements() )
+    {
+        const kernel::Automat_ABC& child = itTC2.NextElement();
+        if( child.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        {
+            file << separator;
+            if( IsLogisticSuperior( entity, child ) )
+                file << "X";
+        }
+    }
+    tools::Iterator< const kernel::Formation_ABC& > itBL = model_.GetFormationResolver().CreateIterator();
+    while( itBL.HasMoreElements() )
+    {
+        const kernel::Formation_ABC& child = itBL.NextElement();
+        if( child.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        {
+            file << separator;
+            if( IsLogisticSuperior( entity, child ) )
+                file << "X";
+        }
     }
 }
