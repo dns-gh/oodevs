@@ -45,10 +45,11 @@ void load_construct_data( Archive& archive, PHY_RoleAction_MovingUnderground* ro
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
 PHY_RoleAction_MovingUnderground::PHY_RoleAction_MovingUnderground( MIL_Agent_ABC& pion )
-    : pion_        ( pion )
-    , transferTime_( 0 )
-    , speed_       ( 0 )
-    , bHasChanged_ ( false )
+    : pion_           ( pion )
+    , transferTime_   ( 0 )
+    , speed_          ( 0 )
+    , preparingToHide_( false )
+    , bHasChanged_    ( false )
 {
     // NOTHING
 }
@@ -168,6 +169,15 @@ bool PHY_RoleAction_MovingUnderground::CanExitFromCurrentLocation() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_MovingUnderground::PreparingToHide
+// Created: JSR 2011-10-20
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_MovingUnderground::PreparingToHide() const
+{
+    return preparingToHide_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_MovingUnderground::IsUnderground
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
@@ -202,7 +212,10 @@ bool PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork( boost::shared_p
     if( !attr || !attr->IsActivated() )
         return false;
     bHasChanged_ = true;
-    speed_ = pion_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( TerrainData(), *object );
+    preparingToHide_ = true;
+    unsigned int duration = MIL_Singletons::GetTime().GetTickDuration();
+    speed_ = duration == 0 ? 0 : pion_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( TerrainData(), *object ) / duration;
+    preparingToHide_ = false;
     pCurrentLocation_ = pKnowledge;
     currentNetwork_ = attr->Network();
     pDestination_.reset();

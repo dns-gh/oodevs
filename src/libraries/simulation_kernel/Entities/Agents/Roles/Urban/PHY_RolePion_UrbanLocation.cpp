@@ -19,6 +19,7 @@
 #include "UrbanLocationComputerFactory_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
+#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "simulation_terrain/TER_ObjectManager.h"
@@ -259,7 +260,7 @@ void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& /*algori
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    if( urbanObject_ && !isFlying_ )
+    if( urbanObject_ && !isFlying_ && !pion_.Get< PHY_RoleAction_MovingUnderground >().PreparingToHide() )
         algorithm.AddModifier( 1. - urbanObject_->GetOccupation(), true );
 }
 

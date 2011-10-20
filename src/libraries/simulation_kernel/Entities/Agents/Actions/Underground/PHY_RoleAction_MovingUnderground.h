@@ -61,6 +61,7 @@ public:
     bool InitializeUndergroundMoving( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     bool Run();
     bool CanExitFromCurrentLocation() const;
+    bool PreparingToHide() const;
     bool IsUnderground() const;
     double EstimatedUndergroundTime( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge ) const;
     bool HideInUndergroundNetwork( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
@@ -91,6 +92,7 @@ private:
     boost::shared_ptr< DEC_Knowledge_Object > pDestination_;
     double transferTime_;
     double speed_;
+    bool preparingToHide_;
     bool bHasChanged_;
     //@}
 };
