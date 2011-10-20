@@ -283,6 +283,8 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Affinities", "list" );
     else if( name == "inhabitant_change_alerted_state" )
         CreateOrderParameter( "Alerted", "bool" );
+    else if( name == "inhabitant_change_confined_state" )
+        CreateOrderParameter( "Confined", "bool" );
     else if( name == "unit_change_affinities" )
         CreateOrderParameter( "Affinities", "list" );
     else if( name == "change_extension" )
