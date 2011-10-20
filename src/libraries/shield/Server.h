@@ -65,7 +65,7 @@ class Server : private tools::ServerNetworker, private ClientListener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Server( unsigned short port, const std::string& host, Listener_ABC& listener, bool encodeStringsInUtf8 );
+             Server( unsigned short port, const std::string& host, Listener_ABC& listener, bool encodeStringsInUtf8, unsigned long timeOut = 0 );
     virtual ~Server();
     //@}
 

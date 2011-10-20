@@ -80,6 +80,7 @@ public:
     virtual void OnReceiveMessage( const sword::SimToClient& message );
     virtual void OnReceiveMessage( const sword::MessengerToClient& message );
     virtual void OnReceiveMessage( const sword::AuthenticationToClient& message );
+    virtual void OnReceiveMessage( const sword::DispatcherToClient& message );
     //
     void RegisterMessageHandler( int context, std::auto_ptr< MessageHandler_ABC > handler );
     void AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC > handler );

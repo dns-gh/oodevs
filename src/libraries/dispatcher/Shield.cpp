@@ -53,7 +53,7 @@ namespace
         const unsigned short port = config.GetNetworkShieldParameters();
         bool useUtf8StringEncoding = config.UseShieldUtf8Encoding();
         const std::string host = "localhost:" + boost::lexical_cast< std::string >( config.GetNetworkClientsParameters() );
-        return port ? new shield::Server( port, host, logger, useUtf8StringEncoding ) : 0;
+        return port ? new shield::Server( port, host, logger, useUtf8StringEncoding, config.GetNetworkTimeout() ) : 0;
     }
 }
 

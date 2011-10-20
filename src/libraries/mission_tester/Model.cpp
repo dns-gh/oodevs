@@ -93,6 +93,15 @@ void Model::OnReceiveMessage( const sword::AuthenticationToClient& /*message*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Model::OnReceiveMessage
+// Created: JSR 2011-10-20
+// -----------------------------------------------------------------------------
+void Model::OnReceiveMessage( const sword::DispatcherToClient& /*message*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::Register
 // Created: PHC 2011-04-08
 // -----------------------------------------------------------------------------

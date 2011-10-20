@@ -15,6 +15,7 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/LauncherSenders.h"
 #include "protocol/AuthenticationSenders.h"
+#include "protocol/DispatcherSenders.h"
 
 namespace launcher
 {
@@ -40,6 +41,7 @@ public:
     virtual bool OnReceiveMessage( const sword::SimToClient& message );
     virtual bool OnReceiveMessage( const sword::MessengerToClient& message );
     virtual bool OnReceiveMessage( const sword::AuthenticationToClient& message );
+    virtual bool OnReceiveMessage( const sword::DispatcherToClient& message );
     //@}
 
 protected:

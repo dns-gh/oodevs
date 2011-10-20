@@ -33,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              SocketManager( boost::shared_ptr< MessageCallback_ABC > message,
-                            boost::shared_ptr< ConnectionCallback_ABC > connection );
+                            boost::shared_ptr< ConnectionCallback_ABC > connection, DWORD timeOut );
     virtual ~SocketManager();
     //@}
 
@@ -70,6 +70,7 @@ private:
     //@{
     boost::shared_ptr< MessageCallback_ABC > message_;
     boost::shared_ptr< ConnectionCallback_ABC > connection_;
+    const DWORD timeOut_;
     T_Sockets sockets_;
     unsigned long nbMessagesSent_;
     //@}

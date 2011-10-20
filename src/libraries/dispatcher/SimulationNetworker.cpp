@@ -15,6 +15,7 @@
 #include "Config.h"
 #include "Logger.h"
 #include "protocol/Protocol.h"
+#include "protocol/DispatcherSenders.h"
 #include "MT_Tools/MT_Logger.h"
 
 using namespace tools;
@@ -27,7 +28,7 @@ using namespace dispatcher;
 SimulationNetworker::SimulationNetworker( Model& model, ClientsNetworker& clients,
                                           MessageHandler_ABC& handler, const Config& config,
                                           RotatingLog& log )
-    : ClientNetworker( config.GetNetworkSimulationParameters(), true )
+    : ClientNetworker( config.GetNetworkSimulationParameters(), true, config.GetNetworkTimeout() )
     , model_  ( model )
     , clients_( clients )
     , handler_( handler )
@@ -79,6 +80,8 @@ void SimulationNetworker::ConnectionError( const std::string& address, const std
     simulation_.reset();
     model_.Reset();
     clients_.DenyConnections();
+    dispatcher::ConnectionToSimLost msg;
+    msg.Send( clients_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +111,10 @@ void SimulationNetworker::Send( const sword::ClientToSim& asnMsg )
 {
     try
     {
-        simulation_->Send( asnMsg );
+        if( simulation_.get() )
+            simulation_->Send( asnMsg );
+        else
+            MT_LOG_ERROR_MSG( "Message received from client while simulation is disconnected." );
     }
     catch( std::runtime_error& exception )
     {
@@ -124,7 +130,8 @@ void SimulationNetworker::Send( const sword::DispatcherToSim& asnMsg )
 {
     try
     {
-        simulation_->Send( asnMsg );
+        if( simulation_.get() )
+            simulation_->Send( asnMsg );
     }
     catch( std::runtime_error& exception )
     {

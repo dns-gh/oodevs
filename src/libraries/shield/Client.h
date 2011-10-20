@@ -54,8 +54,8 @@ class Client : public tools::MessageDispatcher_ABC , public tools::MessageSender
 public:
     //! @name Constructors/Destructor
     //@{
-             Client( boost::asio::io_service& service, const std::string& from,
-                     tools::MessageSender_ABC& sender, ClientListener_ABC& listener, bool encodeStringsInUtf8 );
+             Client( boost::asio::io_service& service, const std::string& from, tools::MessageSender_ABC& sender,
+                     ClientListener_ABC& listener, bool encodeStringsInUtf8, unsigned long timeOut );
     virtual ~Client();
     //@}
 

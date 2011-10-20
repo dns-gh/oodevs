@@ -23,7 +23,8 @@ namespace po  = boost::program_options;
 // -----------------------------------------------------------------------------
 Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observer )
     : SessionConfig( observer )
-    , orderFile_( "" )
+    , orderFile_     ( "" )
+    , networkTimeOut_( 10000 )
 {
     po::options_description desc( "Gaming options" );
     desc.add_options()
@@ -35,6 +36,16 @@ Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observ
     isLoginInCommandLine_ = IsSet( "login" );
     if( isLoginInCommandLine_ && login_ == "anonymous" )
         login_ = "";
+    const std::string session = GetSessionFile();
+    if( !session.empty() )
+    {
+        xml::xifstream xis( session );
+        xis >> xml::start( "session" )
+                >> xml::start( "config" )
+                    >> xml::start( "gaming" )
+                        >> xml::start( "network" )
+                            >> xml::optional >> xml::attribute( "timeout", networkTimeOut_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -109,4 +120,13 @@ std::string Config::GetOrderFile() const
 bool Config::IsLoginInCommandLine() const
 {
     return isLoginInCommandLine_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetNetworkTimeOut
+// Created: JSR 2011-10-19
+// -----------------------------------------------------------------------------
+unsigned long Config::GetNetworkTimeOut() const
+{
+    return networkTimeOut_;
 }

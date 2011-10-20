@@ -18,12 +18,13 @@ using namespace shield;
 // Name: Clients constructor
 // Created: MCO 2010-11-29
 // -----------------------------------------------------------------------------
-Clients::Clients( const std::string& host, tools::MessageSender_ABC& sender,
-                  ClientListener_ABC& listener, bool encodeStringsInUtf8 )
+Clients::Clients( const std::string& host, tools::MessageSender_ABC& sender, ClientListener_ABC& listener,
+                  bool encodeStringsInUtf8, unsigned long timeOut )
     : host_              ( host )
     , sender_            ( sender )
     , listener_          ( listener )
     , utf8StringEncoding_( encodeStringsInUtf8 )
+    , timeOut_           ( timeOut )
     , stopped_           ( false )
     , thread_            ( boost::bind( &Clients::Run, this ) )
 {
@@ -89,7 +90,7 @@ void Clients::Update()
 void Clients::Add( const std::string& from )
 {
     clients_.erase( from );
-    boost::shared_ptr< Client > client( new Client( service_, from, sender_, listener_, utf8StringEncoding_ ) );
+    boost::shared_ptr< Client > client( new Client( service_, from, sender_, listener_, utf8StringEncoding_, timeOut_ ) );
     clients_.insert( std::make_pair( from, client ) );
     client->Connect( host_ );
 }

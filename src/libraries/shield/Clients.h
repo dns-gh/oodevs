@@ -70,8 +70,8 @@ class Clients : boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Clients( const std::string& host, tools::MessageSender_ABC& sender,
-                      ClientListener_ABC& listener, bool encodeStringsInUtf8 );
+    explicit Clients( const std::string& host, tools::MessageSender_ABC& sender, ClientListener_ABC& listener,
+                      bool encodeStringsInUtf8, unsigned long timeOut );
     virtual ~Clients();
     //@}
 
@@ -111,6 +111,7 @@ private:
     tools::MessageSender_ABC& sender_;
     ClientListener_ABC& listener_;
     bool utf8StringEncoding_;
+    const unsigned long timeOut_;
     boost::asio::io_service service_;
     T_Clients clients_;
     bool stopped_;

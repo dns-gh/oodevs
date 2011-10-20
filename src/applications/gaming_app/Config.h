@@ -40,6 +40,7 @@ public:
     std::string GetLogin() const;
     std::string GetOrderFile() const;
     bool IsLoginInCommandLine() const;
+    unsigned long GetNetworkTimeOut() const;
     //@}
 
 private:
@@ -55,6 +56,7 @@ private:
     std::string login_;
     std::string orderFile_;
     bool isLoginInCommandLine_;
+    unsigned long networkTimeOut_;
     //@}
 };
 

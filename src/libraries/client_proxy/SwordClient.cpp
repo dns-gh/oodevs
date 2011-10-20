@@ -24,8 +24,8 @@
 // Name: SwordClient constructor
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-SwordClient::SwordClient( const std::string& host, unsigned short port, const std::string& profile, const std::string& password )
-    : tools::ClientNetworker( "", false )
+SwordClient::SwordClient( const std::string& host, unsigned short port, const std::string& profile, const std::string& password, unsigned long timeOut )
+    : tools::ClientNetworker( "", false, timeOut )
     , host_                 ( host )
     , port_                 ( port )
     , profile_              ( profile )
@@ -153,9 +153,9 @@ void SwordClient::HandleAuthenticationToClient( const std::string& /*endpoint*/,
 // Name: SwordClient::HandleDispatcherToClient
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-void SwordClient::HandleDispatcherToClient( const std::string& /*endpoint*/, const sword::DispatcherToClient& /*message*/ )
+void SwordClient::HandleDispatcherToClient( const std::string& /*endpoint*/, const sword::DispatcherToClient& message )
 {
-    // NOTHING
+    UpdateHandlers( message );
 }
 
 // -----------------------------------------------------------------------------

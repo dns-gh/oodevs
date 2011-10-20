@@ -31,6 +31,12 @@ message ServicesDescription {
     repeated string services = 1;
 }
 
+/** @struct ConnectionToSimLost
+    @brief A message sent by the Dispatcher to announce that the connection with the simulation has been lost.
+*/
+message ConnectionToSimLost {
+}
+
 /** @struct DispatcherToClient
     @brief Wraps available messages going from Dispatcher to client.
     
@@ -42,7 +48,8 @@ message DispatcherToClient {
         @warning Each Content message must contain exactly one of the possible messages.
     */
     message Content {
-        optional ServicesDescription services_description = 1; //!< A services description message
+        optional ServicesDescription services_description   = 1; //!< A services description message
+        optional ConnectionToSimLost connection_to_sim_lost = 2; //!< A connection to sim lost message
     }
     /** @property message
         @brief A field containing one of the messages to be sent.

@@ -44,6 +44,7 @@ public:
     const std::string& GetNetworkSimulationParameters() const;
     unsigned short     GetNetworkClientsParameters() const;
     unsigned short     GetNetworkShieldParameters() const;
+    unsigned long      GetNetworkTimeout() const;
     bool               UseShieldUtf8Encoding() const;
     unsigned int       GetKeyFramesFrequency() const;
     unsigned int       GetReplayFragmentsFrequency() const;
@@ -61,6 +62,7 @@ private:
     unsigned short networkSimulationPort_;
     unsigned short networkClientsParameters_;
     unsigned short networkShieldParameters_;
+    unsigned long  networkTimeout_;
     bool           useShieldUtf8Encoding_;
     unsigned int   keyFramesFrequency_;
     unsigned int   replayFragmentsFrequency_;

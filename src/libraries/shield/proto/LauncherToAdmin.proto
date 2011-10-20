@@ -143,10 +143,12 @@ message MsgSessionStatus{
         running     = 1;
         paused      = 2;
         not_running = 3;
+        breakdown   = 4;
     }
-    required string     exercise   = 1;
-    required string     session    = 2;
-    required Status     status = 3;
+    required string     exercise              = 1;
+    required string     session               = 2;
+    required Status     status                = 3;
+    optional string     breakdown_information = 4;
 }
 
 // response to session parameter change request
