@@ -89,8 +89,7 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 {
     if( viewport.IsHotpointVisible() )
     {
-//        if( symbol_.empty() ) // $$$$ SBO 2007-03-08: allow symbol update on team karma change... to avoid observation of team update
-            InitializeSymbol();
+        InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where, -1.f );
         tools.DrawApp6Symbol( type_.GetLevelSymbol(), where, -1.f );
         if( commandPost_ )
@@ -144,8 +143,8 @@ void Agent::CreateDictionary( kernel::Controller& controller )
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
     const Agent& constSelf = *this;
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), (const unsigned long)id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), name_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), constSelf.id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), name_, *this, &Agent::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), constSelf.type_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Command post" ), commandPost_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Critical intelligence" ), criticalIntelligence_ );
