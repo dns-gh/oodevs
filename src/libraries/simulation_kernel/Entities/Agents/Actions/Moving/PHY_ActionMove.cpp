@@ -39,10 +39,7 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
     , role_     ( pion.GetRole< moving::PHY_RoleAction_Moving >() )
     , pMainPath_( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
 {
-    if( pMainPath_.get() )
-        Callback( static_cast< int >( DEC_PathWalker::eRunning ) );
-    else
-        Callback( static_cast< int >( DEC_PathWalker::eNotAllowed ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
