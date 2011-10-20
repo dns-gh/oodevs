@@ -61,14 +61,14 @@ namespace
 // Name: NetnRequestConvoySender::ConvoyRequested
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
-void NetnRequestConvoySender::ConvoyRequested( const std::string& carrier, long long embarkmentTime, const geometry::Point2d& embarkmentPoint,
+void NetnRequestConvoySender::ConvoyRequested( long long embarkmentTime, const geometry::Point2d& embarkmentPoint,
                                                long long disembarkmentTime, const geometry::Point2d& disembarkmentPoint,
                                                const TransportedUnits_ABC& transportedUnits, unsigned int context )
 {
     interactions::NetnRequestConvoy convoy;
     convoy.serviceId = NetnEventIdentifier( context, "SWORD" );
     convoy.consumer = UnicodeString( "SWORD" );
-    convoy.provider = UnicodeString( carrier );
+    convoy.provider = UnicodeString( "Any carrier" );
     convoy.serviceType = 4; // convoy
     convoy.requestTimeOut = 0; // no timeout
     NetnDataTStruct transport;

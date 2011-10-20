@@ -119,13 +119,12 @@ namespace
 // -----------------------------------------------------------------------------
 void TransportationController::Notify(  const sword::AutomatOrder& message, int /*context*/ )
 {
-    if( message.type().id() == transportIdentifier_ && message.parameters().elem_size() == 9 )
+    if( message.type().id() == transportIdentifier_ && message.parameters().elem_size() == 8 )
     {
         const geometry::Point2d embarkmentPoint = ReadLocation( message.parameters().elem( 4 ) );
         const long long embarkmentTime = ReadTime( message.parameters().elem( 5 ) );
         const geometry::Point2d debarkmentPoint = ReadLocation( message.parameters().elem( 6 ) );
         const long long debarkmentTime = ReadTime( message.parameters().elem( 7 ) );
-        const std::string transportingUnitCallsign = callsignResolver_.ResolveCallsign( ReadAgent( message.parameters().elem( 8 ) ) );
         const SubordinatesVisitor visitor( subordinates_, message.tasker().id() );
         const unsigned int context = contextFactory_.Create();
         pendingRequests_.right.erase( message.tasker().id() );
@@ -133,7 +132,7 @@ void TransportationController::Notify(  const sword::AutomatOrder& message, int 
         contextRequests_[ context ].embarkmentPoint = embarkmentPoint;
         contextRequests_[ context ].debarkmentPoint = debarkmentPoint;
         BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
-            listener->ConvoyRequested( transportingUnitCallsign, embarkmentTime, embarkmentPoint, debarkmentTime, debarkmentPoint, visitor, context );
+            listener->ConvoyRequested( embarkmentTime, embarkmentPoint, debarkmentTime, debarkmentPoint, visitor, context );
     }
 }
 

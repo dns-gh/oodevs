@@ -46,7 +46,7 @@ NetnOfferResponseSender::~NetnOfferResponseSender()
 // Name: NetnOfferResponseSender::ConvoyRequested
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-void NetnOfferResponseSender::ConvoyRequested( const std::string& /*carrier*/, long long /*embarkmentTime*/, const geometry::Point2d& /*embarkmentPoint*/,
+void NetnOfferResponseSender::ConvoyRequested( long long /*embarkmentTime*/, const geometry::Point2d& /*embarkmentPoint*/,
                                                long long /*disembarkmentTime*/, const geometry::Point2d& /*disembarkmentPoint*/,
                                                const TransportedUnits_ABC& /*transportedUnits*/, unsigned int /*context*/ )
 {

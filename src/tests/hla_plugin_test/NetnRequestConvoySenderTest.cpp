@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE( netn_request_convoy_sender_sends_request_when_receiving_co
     const std::string callsign = "callsign";
     const std::string uniqueId = "uniqueId";
     MOCK_EXPECT( transportedUnits, Apply ).once().calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _1, callsign, uniqueId ) );
-    listener->ConvoyRequested( "carrier-identifier", embarkmentTime, embarkmentPoint, disembarkmentTime, disembarkmentPoint, transportedUnits, 42 );
+    listener->ConvoyRequested( embarkmentTime, embarkmentPoint, disembarkmentTime, disembarkmentPoint, transportedUnits, 42 );
     mock::verify();
     const int convoyServiceType = 4;
     const unsigned int noTimeout = 0;
@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE( netn_request_convoy_sender_sends_request_when_receiving_co
     BOOST_CHECK_EQUAL( convoy.serviceId.eventCount, 42 );
     BOOST_CHECK_EQUAL( convoy.serviceId.issuingObjectIdentifier.str(), "SWORD" );
     BOOST_CHECK_EQUAL( convoy.consumer.str(), "SWORD" );
-    BOOST_CHECK_EQUAL( convoy.provider.str(), "carrier-identifier" );
+    BOOST_CHECK_EQUAL( convoy.provider.str(), "Any carrier" );
     BOOST_CHECK_EQUAL( convoy.serviceType, convoyServiceType );
     BOOST_CHECK_EQUAL( convoy.requestTimeOut, noTimeout );
     BOOST_CHECK_EQUAL( convoy.transportData.convoyType, convoyTransportType );

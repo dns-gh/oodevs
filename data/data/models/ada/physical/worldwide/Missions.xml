@@ -3257,7 +3257,6 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="heureEmbarquement_" name="Embarking time" optional="false" type="DateTime"/>
       <parameter dia-name="zoneDebarquement_" name="Debarking point" optional="false" type="Location"/>
       <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
-      <parameter dia-name="uniteTransport_" name="Transporting unit" optional="false" type="Agent"/>
     </mission>
   </automats>
   <populations>

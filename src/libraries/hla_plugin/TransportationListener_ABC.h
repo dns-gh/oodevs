@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void ConvoyRequested( const std::string& carrier, long long embarkmentTime, const geometry::Point2d& embarkmentPoint,
+    virtual void ConvoyRequested( long long embarkmentTime, const geometry::Point2d& embarkmentPoint,
                                   long long disembarkmentTime, const geometry::Point2d& disembarkmentPoint,
                                   const TransportedUnits_ABC& transportedUnits, unsigned int context ) = 0;
     virtual void OfferAccepted( unsigned int context, const std::string& provider ) = 0;

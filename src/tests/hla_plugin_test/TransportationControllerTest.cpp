@@ -110,7 +110,6 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mis
     const long long debarkingTime = 2;
     const std::string subordinateCallsign = "subordinate callsign";
     const std::string subordinateNetnUniqueId = "143";
-    const unsigned long transportingUnitSimulationId = 43;
     const std::string transportingUnitCallsign = "transporting callsign";
     sword::SimToClient_Content message = MakeTransportationMessage( transportId );
     sword::AutomatOrder* automatOrder = message.mutable_automat_order();
@@ -124,10 +123,8 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mis
     parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000001" ); // embarking time
     AddLocation( *parameters, debarkingPoint ); // debarking point
     parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000002" ); // debarking time
-    parameters->add_elem()->add_value()->mutable_agent()->set_id( transportingUnitSimulationId );// transporting unit
-    MOCK_EXPECT( callsignResolver, ResolveCallsign ).once().with( transportingUnitSimulationId ).returns( transportingUnitCallsign );
     MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
-    MOCK_EXPECT( listener, ConvoyRequested ).once().with( transportingUnitCallsign, embarkingTime, embarkingPoint, debarkingTime, debarkingPoint, boost::bind( &CheckTransportedUnits, _1, boost::cref( subordinateCallsign ), boost::cref( subordinateNetnUniqueId ) ), 1337u );
+    MOCK_EXPECT( listener, ConvoyRequested ).once().with( embarkingTime, embarkingPoint, debarkingTime, debarkingPoint, boost::bind( &CheckTransportedUnits, _1, boost::cref( subordinateCallsign ), boost::cref( subordinateNetnUniqueId ) ), 1337u );
     MOCK_EXPECT( factory, Create ).once().returns( 1337 );
     messageController.Dispatch( message );
 }
@@ -173,10 +170,8 @@ namespace
             parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000001" ); // embarking time
             AddLocation( *parameters, debarkingPoint ); // debarking point
             parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000002" ); // debarking time
-            parameters->add_elem()->add_value()->mutable_agent()->set_id( transportingUnitSimulationId );// transporting unit
-            MOCK_EXPECT( callsignResolver, ResolveCallsign ).once().with( transportingUnitSimulationId ).returns( transportingUnitCallsign );
             MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
-            MOCK_EXPECT( listener, ConvoyRequested ).once().with( transportingUnitCallsign, embarkingTime, embarkingPoint, debarkingTime, debarkingPoint, boost::bind( &CheckTransportedUnits, _1, boost::cref( subordinateCallsign ), boost::cref( subordinateNetnUniqueId ) ), context );
+            MOCK_EXPECT( listener, ConvoyRequested ).once();
             MOCK_EXPECT( factory, Create ).once().returns( context );
             messageController.Dispatch( message );
         }
