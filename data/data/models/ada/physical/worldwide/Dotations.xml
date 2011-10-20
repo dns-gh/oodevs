@@ -657,7 +657,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1315 14 550 5275" id="36" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="120-mm Hight Explosive Shell Guided" nature="Solid" package-mass="0.06" package-size="2" package-volume="0.088" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1315 14 550 5275" id="34" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="120-mm Hight Explosive Shell Guided" nature="Solid" package-mass="0.06" package-size="2" package-volume="0.088" type="Obus">
     <guided maintain="true" range="1000"/>
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.05"/>
@@ -688,7 +688,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1340 14 478 4618" id="37" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="25-mm Shell" nature="Solid" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1340 14 478 4618" id="35" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="25-mm Shell" nature="Solid" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.2"/>
       <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.4"/>
@@ -709,7 +709,7 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1315 14 412 7124" id="38" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="227-mm Sub-Munition Rocket" nature="Solid" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1315 14 412 7124" id="36" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="227-mm Sub-Munition Rocket" nature="Solid" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
       <attrition destruction="0.6" protection="HeavyTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.7" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
@@ -739,7 +739,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1315 14 445 3657" id="39" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="122-mm Rocket" nature="Solid" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1315 14 445 3657" id="37" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="122-mm Rocket" nature="Solid" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
       <attrition destruction="0.05" protection="HeavyTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.75"/>
       <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.6"/>
@@ -769,7 +769,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320 14 443 5580" id="40" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="152-mm Antitank Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320 14 443 5580" id="38" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="152-mm Antitank Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0.2" protection="HeavyTank" repairable-with-evacuation="0.5" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.35" protection="MediumTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0.25"/>
@@ -799,7 +799,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320 14 443 5580" id="41" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="152-mm High Explosive MPA Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320 14 443 5580" id="39" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="152-mm High Explosive MPA Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0.05" protection="HeavyTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.75"/>
       <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.6"/>
@@ -829,7 +829,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1315 14 508 7142" id="42" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="125-mm Antitank Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1315 14 508 7142" id="40" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="125-mm Antitank Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.6" repairable-without-evacuation="0.2"/>
       <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.7" repairable-without-evacuation="0.2"/>
@@ -850,7 +850,7 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1315 14 412 7126" id="43" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="125-mm Armour Piercing Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1315 14 412 7126" id="41" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="125-mm Armour Piercing Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0.15" protection="HeavyTank" repairable-with-evacuation="0.55" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.2" protection="MediumTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0"/>
@@ -871,7 +871,7 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1427 14 477 4828" id="44" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="MANPAD Missile" nature="Solid" package-mass="0.02" package-size="2" package-volume="0.001" type="MissileAir">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1427 14 477 4828" id="42" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="MANPAD Missile" nature="Solid" package-mass="0.02" package-size="2" package-volume="0.001" type="MissileAir">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -901,7 +901,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1315 14 397 4952" id="45" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="125-mm High Explosive Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.07" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1315 14 397 4952" id="43" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="125-mm High Explosive Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.07" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.4"/>
       <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0.5"/>
@@ -922,16 +922,16 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320 14 449 8616" id="46" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="152-mm Smoke Shell" nature="Solid" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320 14 449 8616" id="44" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="152-mm Smoke Shell" nature="Solid" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
     <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1345 14 470 8533" id="47" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="155-mm FASCAM Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1345 14 470 8533" id="45" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="155-mm FASCAM Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <indirect-fire intervention-type="6" life-time="2h" object-type="Mined Area (linear)" type="effect" x-dispersion="200" y-dispersion="200"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="48" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="152-mm Chemical Shell" nature="Solid" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="46" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="152-mm Chemical Shell" nature="Solid" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
     <indirect-fire intervention-type="4" life-time="30m" object-type="NBC Area" type="effect" x-dispersion="500" y-dispersion="500"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1410 14 463 7644" id="49" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="SA-8 Missile" nature="Solid" package-mass="0.17" package-size="1" package-volume="0.13" type="MissileAir">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1410 14 463 7644" id="47" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="SA-8 Missile" nature="Solid" package-mass="0.17" package-size="1" package-volume="0.13" type="MissileAir">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -952,7 +952,7 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320 14 443 5580" id="50" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="152-mm High Explosive Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320 14 443 5580" id="48" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="152-mm High Explosive Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0.05" protection="HeavyTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.75"/>
       <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.6"/>
@@ -982,7 +982,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1375 14 041 5736" id="51" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Homemade bomb" nature="Solid" package-mass="0.05" package-size="1" package-volume="0.05" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1375 14 041 5736" id="49" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Homemade bomb" nature="Solid" package-mass="0.05" package-size="1" package-volume="0.05" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1012,25 +1012,25 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="52" id-nature="5" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Fire extinguisher - Sprayed water" nature="Sprayed water" package-mass="1" package-size="1" package-volume="1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="50" id-nature="5" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Fire extinguisher - Sprayed water" nature="Sprayed water" package-mass="1" package-size="1" package-volume="1" type="Obus">
     <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="53" id-nature="6" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Fire extinguisher - Foam" nature="Fire Retardant Foam" package-mass="1" package-size="1" package-volume="1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="51" id-nature="6" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Fire extinguisher - Foam" nature="Fire Retardant Foam" package-mass="1" package-size="1" package-volume="1" type="Obus">
     <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="54" id-nature="7" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Fire extinguisher - Powder" nature="Powder" package-mass="1" package-size="1" package-volume="1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="52" id-nature="7" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Fire extinguisher - Powder" nature="Powder" package-mass="1" package-size="1" package-volume="1" type="Obus">
     <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="55" id-nature="8" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Fire extinguisher - CO2" nature="CO2" package-mass="1" package-size="1" package-volume="1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="53" id-nature="8" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Fire extinguisher - CO2" nature="CO2" package-mass="1" package-size="1" package-volume="1" type="Obus">
     <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="56" id-nature="9" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Fire extinguisher - Sand" nature="Sand" package-mass="1" package-size="1" package-volume="1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="54" id-nature="9" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Fire extinguisher - Sand" nature="Sand" package-mass="1" package-size="1" package-volume="1" type="Obus">
     <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="57" id-nature="10" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Fire extinguisher - Hydrocarbures Halogenes" nature="Hydocarbures Halogenes" package-mass="1" package-size="1" package-volume="1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="55" id-nature="10" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Fire extinguisher - Hydrocarbures Halogenes" nature="Hydocarbures Halogenes" package-mass="1" package-size="1" package-volume="1" type="Obus">
     <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="59" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Flashball Ammo" nature="Solid" package-mass="1" package-size="0.001" package-volume="1" type="Mitraille">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="56" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Flashball Ammo" nature="Solid" package-mass="1" package-size="0.001" package-volume="1" type="Mitraille">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1042,10 +1042,10 @@
       <attrition destruction="0.1" protection="Individual" repairable-with-evacuation="0.9" repairable-without-evacuation="0"/>
     </attritions>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="60" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Teargas bomb" nature="Solid" package-mass="0.027" package-size="16" package-volume="0.04" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="57" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Teargas bomb" nature="Solid" package-mass="0.027" package-size="16" package-volume="0.04" type="Obus">
     <indirect-fire intervention-type="1" life-time="300s" object-type="" type="effect" x-dispersion="200" y-dispersion="200"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="61" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="Antitank Air Bomb" nature="Solid" package-mass="0.5" package-size="1" package-volume="0.5" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="58" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="Antitank Air Bomb" nature="Solid" package-mass="0.5" package-size="1" package-volume="0.5" type="Obus">
     <attritions>
       <attrition destruction="0.5" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
       <attrition destruction="0.5" protection="MediumTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
@@ -1066,11 +1066,11 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="62" id-nature="15" logistic-supply-class="Class III - Petroleum, oil and lubricants" name="Gasoil" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="63" id-nature="2" logistic-supply-class="Class III - Petroleum, oil and lubricants" name="Diesel" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="64" id-nature="2" logistic-supply-class="Class III - Petroleum, oil and lubricants" name="Gas" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="65" id-nature="1" logistic-supply-class="Class IIIa - Aviation fuel and lubricants" name="Kerosene" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="explosif" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="66" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Standard Explosive" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="59" id-nature="15" logistic-supply-class="Class III - Petroleum, oil and lubricants" name="Gasoil" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="60" id-nature="2" logistic-supply-class="Class III - Petroleum, oil and lubricants" name="Diesel" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="61" id-nature="2" logistic-supply-class="Class III - Petroleum, oil and lubricants" name="Gas" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="62" id-nature="1" logistic-supply-class="Class IIIa - Aviation fuel and lubricants" name="Kerosene" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="explosif" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="63" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Standard Explosive" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
@@ -1091,7 +1091,7 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
-  <resource category="mine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="67" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Standard Landmine" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+  <resource category="mine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="64" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Standard Landmine" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
@@ -1112,30 +1112,30 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
-  <resource category="barbele" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="68" id-nature="3" logistic-supply-class="Class IV - Fortification and construction materials, and additional items" name="Standard Barbed Wire" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="69" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI1 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="70" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI2 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="71" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI3" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="72" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI1 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="73" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI2 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="74" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI2 TRS" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="75" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI2 COTAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="76" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI2 DEM" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="77" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR AAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="78" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI1 EA" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="79" id-nature="3" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Food" nature="Solid" package-mass="0.015" package-size="10" package-volume="0.01"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="80" id-nature="3" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Water" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="81" id-nature="3" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Bottle of Distilled Water" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="82" id-nature="11" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Electricity - other" nature="Electricity" package-mass="0.1" package-size="1" package-volume="0.1"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="83" id-nature="3" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Cover" nature="Solid" package-mass="0.05" package-size="50" package-volume="2"/>
-  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="84" id-nature="6" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Extinguisher Agent - Foam" nature="Fire Retardant Foam" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="85" id-nature="5" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Extinguisher Agent - Sprayed water" nature="Sprayed water" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="86" id-nature="8" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Extinguisher Agent - CO2" nature="CO2" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="87" id-nature="9" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Extinguisher Agent - Sand" nature="Sand" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="88" id-nature="7" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Extinguisher Agent - Powder" nature="Powder" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="89" id-nature="10" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Extinguisher Agent - Hydrocarbures Halogenes" nature="Hydocarbures Halogenes" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="90" id-nature="11" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Electricity" nature="Electricity" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="91" id-nature="12" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Running Water" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="92" id-nature="13" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Natural Gas" nature="Gaseous" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="barbele" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="65" id-nature="3" logistic-supply-class="Class IV - Fortification and construction materials, and additional items" name="Standard Barbed Wire" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="66" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI1 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="67" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI2 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="68" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI3" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="69" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI1 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="70" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI2 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="71" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI2 TRS" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="72" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI2 COTAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="73" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI2 DEM" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="74" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR AAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="75" id-nature="3" logistic-supply-class="Class II - Spare parts" name="UR NTI1 EA" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="76" id-nature="3" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Food" nature="Solid" package-mass="0.015" package-size="10" package-volume="0.01"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="77" id-nature="3" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Water" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="78" id-nature="3" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Bottle of Distilled Water" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="79" id-nature="11" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Electricity - other" nature="Electricity" package-mass="0.1" package-size="1" package-volume="0.1"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="80" id-nature="3" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Cover" nature="Solid" package-mass="0.05" package-size="50" package-volume="2"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="81" id-nature="6" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Extinguisher Agent - Foam" nature="Fire Retardant Foam" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="82" id-nature="5" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Extinguisher Agent - Sprayed water" nature="Sprayed water" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="83" id-nature="8" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Extinguisher Agent - CO2" nature="CO2" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="84" id-nature="9" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Extinguisher Agent - Sand" nature="Sand" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="85" id-nature="7" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Extinguisher Agent - Powder" nature="Powder" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="86" id-nature="10" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Extinguisher Agent - Hydrocarbures Halogenes" nature="Hydocarbures Halogenes" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="87" id-nature="11" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Electricity" nature="Electricity" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="88" id-nature="12" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Running Water" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="89" id-nature="13" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Natural Gas" nature="Gaseous" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="1632488739" -->
+<!-- signature="1482295811" -->
