@@ -156,8 +156,9 @@ void Formation::CreateDictionary( kernel::Controller& controller )
 {
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), (const unsigned long)id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), name_ );
+    const Formation& constSelf = *this;
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), constSelf.id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), name_, *this, &Formation::Rename );
 }
 
 // -----------------------------------------------------------------------------
