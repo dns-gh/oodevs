@@ -107,7 +107,7 @@ unsigned long Drawing::GetId() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::vector< sword::CoordLatLong >& Drawing::GetPoints
+// Name: Drawing::GetPoints
 // Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
 const std::vector< sword::CoordLatLong >& Drawing::GetPoints() const
@@ -125,7 +125,7 @@ const kernel::CoordinateConverter_ABC& Drawing::GetConverter() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::optional< sword::Diffusion >& Drawing::GetDiffusion
+// Name: Drawing::GetDiffusion
 // Created: JSR 2011-06-30
 // -----------------------------------------------------------------------------
 const boost::optional< sword::Diffusion >& Drawing::GetDiffusion() const
