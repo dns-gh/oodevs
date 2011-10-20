@@ -1010,11 +1010,6 @@
     <reloading duration="10s" munition="5"/>
     <indirect-fire average-speed="200" max-range="5000" min-range="0"/>
   </weapon-system>
-  <weapon-system launcher="None" munition="Handmade Bomb">
-    <burst duration="10s" munition="1"/>
-    <reloading duration="10s" munition="1"/>
-    <indirect-fire average-speed="50" max-range="50" min-range="0"/>
-  </weapon-system>
   <weapon-system launcher="25-mm Chain Gun" munition="25-mm Shell">
     <burst duration="5s" munition="4"/>
     <reloading duration="30s" munition="230"/>
@@ -1469,4 +1464,4 @@
     <indirect-fire average-speed="200" max-range="5000" min-range="0"/>
   </weapon-system>
 </weapons>
-<!-- signature="3465802694" -->
+<!-- signature="2498945303" -->

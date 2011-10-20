@@ -807,7 +807,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Leclerc" codeEMAT8="Leclerc" codeLFRIL="Leclerc" codeNNO="Leclerc" comment="" id="11" name="Main Battle Tank" protection="HeavyTank" size="Heavy" weight="54">
+  <equipment codeEMAT6="Leclerc" codeEMAT8="FRL28709010" codeLFRIL="Leclerc" codeNNO="" comment="" id="11" name="Main Battle Tank" protection="HeavyTank" size="Heavy" weight="54">
     <speeds max="70">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="1"/>
@@ -9752,7 +9752,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="10" logistic-threshold="0" name="Handmade Bomb" normalized-consumption="0"/>
+        <resource capacity="10" logistic-threshold="0" name="Homemade bomb" normalized-consumption="0"/>
       </category>
       <category name="carburant">
         <resource capacity="10" logistic-threshold="0" name="Diesel" normalized-consumption="0"/>
@@ -9774,7 +9774,7 @@
       </consumption>
     </consumptions>
     <weapon-systems>
-      <weapon-system launcher="None" munition="Handmade Bomb"/>
+      <weapon-system launcher="Hand" munition="Homemade bomb"/>
     </weapon-systems>
     <human-protections/>
     <objects/>
@@ -15813,4 +15813,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0493651710" -->
+<!-- signature="4293438830" -->
