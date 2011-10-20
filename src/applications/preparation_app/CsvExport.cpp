@@ -41,6 +41,7 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/ExtensionTypes.h"
+#include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/AttributeType.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_gui/LongNameHelper.h"
@@ -387,6 +388,38 @@ void CsvExport::WriteDiffusion( boost::filesystem::path& path, const std::string
     file.close();
 }
 
+
+namespace
+{
+    bool IsReceiver( const kernel::Entity_ABC& entity )
+    {
+        kernel::DictionaryExtensions* dictionary = const_cast< kernel::DictionaryExtensions* >( entity.Retrieve< kernel::DictionaryExtensions >() );
+        if( !dictionary )
+            return false;
+        kernel::ExtensionType* type = dictionary->GetExtensionTypes().tools::StringResolver< kernel::ExtensionType >::Find( "orbat-attributes" );
+        if( !type || dictionary->GetExtensions().size() == 0 )
+            return false;
+        if( !dictionary->GetValue( "TypePC" ).empty() && dictionary->GetValue( "TypePC" ) != "PasCorresp" )
+            return true;
+        return false;
+    }
+
+    bool IsTransmitter( const kernel::Entity_ABC& entity )
+    {
+        if( const kernel::DictionaryExtensions* dictionary = entity.Retrieve< kernel::DictionaryExtensions >() )
+        {
+            const std::string name = dictionary->GetExtensionTypes().GetNameByType( kernel::AttributeType::ETypeDiffusionList );
+            kernel::ExtensionType* type = dictionary->GetExtensionTypes().tools::StringResolver< kernel::ExtensionType >::Find( "orbat-attributes" );
+            if( !type )
+                return false;
+            kernel::AttributeType* attribute = type->tools::StringResolver< kernel::AttributeType >::Find( name );
+            if( attribute->IsActive( dictionary->GetExtensions() ) )
+                return true;
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: CsvExport::WriteReceiver
 // Created: LGY 2011-10-19
@@ -397,7 +430,8 @@ void CsvExport::WriteReceiver( std::ofstream& file, const std::string& separator
     while( it.HasMoreElements() )
     {
         const kernel::Entity_ABC& child = it.NextElement();
-        file << separator << GetName( child );
+        if( IsReceiver( child ) )
+            file << separator << GetName( child );
         WriteReceiver( file, separator, child );
     }
 }
@@ -412,18 +446,21 @@ void CsvExport::WriteTransmitter( std::ofstream& file, const std::string& separa
     while( it.HasMoreElements() )
     {
         const kernel::Entity_ABC& child = it.NextElement();
-        file << GetName( child );
-        std::vector< std::string > list;
-        if( const kernel::DictionaryExtensions* extension = child.Retrieve< kernel::DictionaryExtensions >() )
+        if( IsTransmitter( child ) )
         {
-             const std::string name = extension->GetExtensionTypes().GetNameByType( kernel::AttributeType::ETypeDiffusionList );
-             const std::string value = extension->GetValue( name );
-             boost::split( list, value, boost::algorithm::is_any_of( ";" ) );
+            file << GetName( child );
+            std::vector< std::string > list;
+            if( const kernel::DictionaryExtensions* extension = child.Retrieve< kernel::DictionaryExtensions >() )
+            {
+                const std::string name = extension->GetExtensionTypes().GetNameByType( kernel::AttributeType::ETypeDiffusionList );
+                const std::string value = extension->GetValue( name );
+                boost::split( list, value, boost::algorithm::is_any_of( ";" ) );
+            }
+            tools::Iterator< const kernel::Team_ABC& > itTeam = model_.teams_.CreateIterator();
+            while( itTeam.HasMoreElements() )
+                WriteTransmitter( file, separator, itTeam.NextElement(), list );
+            file << std::endl;
         }
-        tools::Iterator< const kernel::Team_ABC& > itTeam = model_.teams_.CreateIterator();
-        while( itTeam.HasMoreElements() )
-            WriteTransmitter( file, separator, itTeam.NextElement(), list );
-        file << std::endl;
         WriteTransmitter( file, separator, child );
     }
 }
@@ -439,10 +476,13 @@ void CsvExport::WriteTransmitter( std::ofstream& file, const std::string& separa
     while( it.HasMoreElements() )
     {
         const kernel::Entity_ABC& child = it.NextElement();
-        file << separator;
-        const std::string id = boost::lexical_cast< std::string >( child.GetId() );
-        if( std::find( list.begin(), list.end(), id ) != list.end() )
-            file << "X";
+        if( IsReceiver( child ) )
+        {
+            file << separator;
+            const std::string id = boost::lexical_cast< std::string >( child.GetId() );
+            if( std::find( list.begin(), list.end(), id ) != list.end() )
+                file << "X";
+        }
         WriteTransmitter( file, separator, child, list );
     }
 }
