@@ -44,9 +44,9 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& cont
     UnitStateDialog* unitStateDialog = new UnitStateDialog( topLevelWidget(), controllers, staticModel, actionsModel, simulation, profile );
     AddButton< InfoCompositionDialog >( MakePixmap( "composition" ), controllers, factory );
     //AddButton( unitStateDialog, MakePixmap( "composition" ), unitStateDialog->GetEquipmentToolTip(), SLOT( ToggleEquipment( bool ) ), SIGNAL( OnToggleEquipment( bool ) ) );
-    AddButton( unitStateDialog, MakePixmap( "ordnance" ), unitStateDialog->GetResourceToolTip(), SLOT( ToggleResource( bool ) ), SIGNAL( OnToggleResource( bool ) ) );    
+    AddButton( unitStateDialog, MakePixmap( "ordnance" ), unitStateDialog->GetResourceToolTip(), SLOT( ToggleResource( bool ) ), SIGNAL( OnToggleResource( bool ) ) );
     AddButton< InfoMedicalDialog >    ( MakePixmap( "health"      ), controllers, factory );
-    AddButton< InfoMaintenanceDialog >( MakePixmap( "maintenance" ), controllers, factory );    
+    AddButton< InfoMaintenanceDialog >( MakePixmap( "maintenance" ), controllers, factory );
     AddButton< InfoSupplyDialog >     ( MakePixmap( "supply"      ), controllers, factory );
     AddButton< InfoFuneralDialog >    ( MakePixmap( "supply"      ), controllers, factory );
 }

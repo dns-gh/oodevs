@@ -41,7 +41,7 @@ TrafficabilityAttribute::~TrafficabilityAttribute()
 // -----------------------------------------------------------------------------
 double TrafficabilityAttribute::GetMaxValue() const
 {
-	return max_;
+    return max_;
 }
 
 // -----------------------------------------------------------------------------

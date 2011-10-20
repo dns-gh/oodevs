@@ -78,7 +78,7 @@ IndicatorReportDialog::IndicatorReportDialog( QWidget* parent, const ScoreModel&
         QPushButton* cancel = new QPushButton( tools::translate( "IndicatorReports", "Cancel" ) );
         connect( ok_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
-        
+
         QHBoxLayout* boxLayout = new QHBoxLayout();
         boxLayout->addStretch( 1 );
         boxLayout->addWidget( ok_ );

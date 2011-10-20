@@ -53,7 +53,7 @@ using namespace gui;
 using namespace actions;
 using namespace parameters;
 
-namespace 
+namespace
 {
     class customStringListModel : public QStringListModel
     {
@@ -85,7 +85,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     , pRecipientSelected_( 0 )
     , startWaypointLocation_( false )
     , layer_( layer )
-{  
+{
     setCaption( tr( "Push supply flow" ) );
 
     waypointLocationCreator_ = new LocationCreator( 0, layer, *this );
@@ -111,7 +111,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     QPushButton* okButton = new QPushButton( tr( "Ok" ), tabs_ );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
     connect( okButton, SIGNAL( clicked() ), SLOT( Validate() ) );
-    
+
     moveUpButton_ = new QPushButton( upDownGroup );
     moveDownButton_ = new QPushButton( upDownGroup );
     addWaypointButton_ = new QPushButton( upDownGroup );
@@ -128,7 +128,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     connect( moveDownButton_, SIGNAL( clicked() ), SLOT( MoveDownWaypoint() ) );
     connect( delWaypointButton_, SIGNAL( clicked() ), SLOT( DeleteWaypoint() ) );
     connect( addWaypointButton_, SIGNAL( clicked() ), SLOT( AddWaypoint() ) );
-    
+
     tabLayout->addWidget( okButton, 1, 0, 1, 1 );
     tabLayout->addWidget( cancelButton, 1, 2, 1, 1 );
     this->setFixedSize( 340, 420 );
@@ -141,7 +141,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     recipientsList_->setResizeMode( Q3ListView::LastColumn );
     connect( recipientsList_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRecipientContextMenu( Q3ListViewItem*, const QPoint&, int ) ) );
     connect( recipientsList_, SIGNAL( selectionChanged( Q3ListViewItem * ) ), this, SLOT( OnRecipientSelectionChanged( Q3ListViewItem * ) ) );
-    
+
     resourcesTable_ = new Q3Table( 0, 3, resourcesTab );
     resourcesTable_->horizontalHeader()->setLabel( 0, tools::translate( "Logistic : Push supply flow", "Resource" ) );
     resourcesTable_->horizontalHeader()->setLabel( 1, tools::translate( "Logistic : Push supply flow", "Available" ) );
@@ -156,7 +156,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     QVBoxLayout* resourcesLayout = new QVBoxLayout( resourcesTab );
     resourcesLayout->addWidget( recipientsList_ );
     resourcesLayout->addWidget( resourcesTable_ );
-    
+
     carriersUseCheck_ = new QCheckBox( tools::translate( "Logistic : Push supply flow", "Manual selection of transport carriers" ), carriersTab );
     connect( carriersUseCheck_, SIGNAL( stateChanged( int ) ), this, SLOT( OnCarriersUseCheckStateChanged() ) );
     QStringList carriersTitles;
@@ -227,7 +227,7 @@ void LogisticSupplyPushFlowDialog::OnRecipientContextMenu( Q3ListViewItem* item,
 
     QString recipient;
     Q3ListViewItem* pSelectedItem = recipientsList_->selectedItem();
-    if ( pSelectedItem )
+    if( pSelectedItem )
         menu.insertItem( tr( "Remove recipient" ), 1000 );
 
     QStringList recipientsList;
@@ -429,11 +429,11 @@ void LogisticSupplyPushFlowDialog::AddRecipient( const QString& recipientName )
     recipientsList_->insertItem( pListViewItem );
 
     const kernel::Automat_ABC* pRecipient = recipientsNames_[ recipientName ];
-    if ( !pRecipient )
+    if( !pRecipient )
         return;
     if( recipientSupplies_.find( pRecipient ) == recipientSupplies_.end() )
         recipientSupplies_[ pRecipient ];
-    if ( std::find( recipients_.begin(), recipients_.end(), pRecipient ) ==  recipients_.end() )
+    if( std::find( recipients_.begin(), recipients_.end(), pRecipient ) ==  recipients_.end() )
         recipients_.push_back( pRecipient );
 
     customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
@@ -570,7 +570,7 @@ void LogisticSupplyPushFlowDialog::AddWaypoint()
     {
        controllers_.Unregister( *routeLocationCreator_ );
        controllers_.Update( *waypointLocationCreator_ );
-    }    
+    }
     startWaypointLocation_ = true;
     waypointLocationCreator_->StartPoint();
 }
@@ -617,16 +617,16 @@ void LogisticSupplyPushFlowDialog::DeleteWaypoint()
 void LogisticSupplyPushFlowDialog::MoveUpWaypoint()
 {
     QString waypoint = GetSelectedWaypoint();
-    if ( !waypoint.isEmpty() )
+    if( !waypoint.isEmpty() )
     {
         customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
         QStringList waypoints = pModel->stringList();
         int index = waypoints.indexOf( waypoint );
-        if ( index > 0 )
+        if( index > 0 )
         {
             waypoints.swap( index, index-1 );
             pModel->setStringList( waypoints );
-            waypointList_->selectionModel()->select( pModel->index( index-1, 0 ), QItemSelectionModel::Select );            
+            waypointList_->selectionModel()->select( pModel->index( index-1, 0 ), QItemSelectionModel::Select );
         }
     }
     waypointList_->setFocus();
@@ -639,22 +639,21 @@ void LogisticSupplyPushFlowDialog::MoveUpWaypoint()
 void LogisticSupplyPushFlowDialog::MoveDownWaypoint()
 {
     QString waypoint = GetSelectedWaypoint();
-    if ( !waypoint.isEmpty() )
+    if( !waypoint.isEmpty() )
     {
         customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
         QStringList waypoints = pModel->stringList();
         int index = waypoints.indexOf( waypoint );
-        if ( index < waypoints.size()-1 )
+        if( index < waypoints.size()-1 )
         {
             QModelIndexList curSelection = waypointList_->selectionModel()->selectedIndexes();
             waypoints.swap( index, index+1 );
             pModel->setStringList( waypoints );
-            waypointList_->selectionModel()->select( pModel->index( index+1, 0 ), QItemSelectionModel::Select ); 
+            waypointList_->selectionModel()->select( pModel->index( index+1, 0 ), QItemSelectionModel::Select );
         }
     }
     waypointList_->setFocus();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog::Clear
@@ -758,7 +757,7 @@ void LogisticSupplyPushFlowDialog::EraseRecipientData( const QString& recipient 
     while( itSupplies != recipientSupplies_.end() )
     {
         T_RecipientSupplies::iterator curItSupplies = itSupplies++;
-        if ( curItSupplies->first == pRecipient )
+        if( curItSupplies->first == pRecipient )
             recipientSupplies_.erase( curItSupplies );
     }
 }
@@ -891,8 +890,8 @@ void LogisticSupplyPushFlowDialog::ComputeRecipients()
 void LogisticSupplyPushFlowDialog::ComputeAvailableRecipients( QStringList& displayRecipientsNames )
 {
     displayRecipientsNames.clear();
-    for ( T_RecipientsNames::iterator it = recipientsNames_.begin(); it != recipientsNames_.end(); ++it )
-        if ( std::find( recipients_.begin(), recipients_.end(), it.value() ) == recipients_.end() )
+    for( T_RecipientsNames::iterator it = recipientsNames_.begin(); it != recipientsNames_.end(); ++it )
+        if( std::find( recipients_.begin(), recipients_.end(), it.value() ) == recipients_.end() )
             displayRecipientsNames.append( it.key() );
 }
 
@@ -932,7 +931,7 @@ void LogisticSupplyPushFlowDialog::OnResourcesValueChanged( int row, int col )
     {
         if( resourcesTable_->numRows() > 1 )
             resourcesTable_->removeRow( row );
-        supplies.erase( itSupplies );       
+        supplies.erase( itSupplies );
     }
     else
     {
@@ -946,7 +945,7 @@ void LogisticSupplyPushFlowDialog::OnResourcesValueChanged( int row, int col )
             AddResourceItem();
         }
         else
-        {   
+        {
             ObjectQuantity& dotationQty = *itSupplies;
             if( col == 0 )
             {
@@ -1014,7 +1013,7 @@ void LogisticSupplyPushFlowDialog::OnCarriersValueChanged( int row, int col )
             AddCarrierItem();
         }
         else
-        {   
+        {
             ObjectQuantity& equipementQty = *itSupplies;
             if( col == 0 )
             {
@@ -1042,9 +1041,9 @@ void LogisticSupplyPushFlowDialog::OnWaypointSelect()
     QString waypoint = GetSelectedWaypoint();
     delWaypointButton_->setEnabled( points_.find( waypoint ) != points_.end() );
 
-    if ( !waypoint.isEmpty() )
+    if( !waypoint.isEmpty() )
     {
-        QStringList waypointsList = static_cast< customStringListModel* >( waypointList_->model() )->stringList();        
+        QStringList waypointsList = static_cast< customStringListModel* >( waypointList_->model() )->stringList();
         moveUpButton_->setEnabled( waypoint != waypointsList.first() );
         moveDownButton_->setEnabled( waypoint != waypointsList.last() );
     }

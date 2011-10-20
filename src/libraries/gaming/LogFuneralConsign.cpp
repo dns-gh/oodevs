@@ -30,8 +30,8 @@ using namespace kernel;
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 LogFuneralConsign::LogFuneralConsign( Controller& controller, const sword::LogFuneralHandlingCreation& message, const tools::Resolver_ABC< Automat_ABC >& automatResolver,
-                                      const tools::Resolver_ABC< Agent_ABC >& agentResolver, 
-                                      const tools::Resolver_ABC< Formation_ABC >&   formationResolver, 
+                                      const tools::Resolver_ABC< Agent_ABC >& agentResolver,
+                                      const tools::Resolver_ABC< Formation_ABC >&   formationResolver,
                                       const tools::Resolver_ABC< DotationType >& dotationResolver,
                                       const Simulation& simulation )
     : controller_         ( controller )
@@ -118,11 +118,11 @@ void LogFuneralConsign::Display( Displayer_ABC& displayer, Displayer_ABC& itemDi
     else
     {
         unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + currentStateEndTick_ * simulation_.GetTickDuration();
-        QDateTime endDate = QDateTime::	fromTime_t( endSeconds );
+        QDateTime endDate = QDateTime::fromTime_t( endSeconds );
         QDateTime curDate = simulation_.GetDateTime();
 
         QString dateDisplay;
-        if ( endDate.date() != curDate.date() )
+        if( endDate.date() != curDate.date() )
             dateDisplay += endDate.date().toString() + " ";
         dateDisplay += endDate.time().toString();
 

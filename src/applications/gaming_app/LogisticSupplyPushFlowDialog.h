@@ -142,7 +142,7 @@ private:
     //@{
     typedef std::map< QString, Dotation > T_Supplies;
 
-    struct ObjectQuantity 
+    struct ObjectQuantity
     {
         QString objectName_;
         int quantity_;
@@ -167,12 +167,12 @@ private:
     typedef std::vector< ObjectQuantity > T_CarriersVector;
     typedef std::vector< Waypoint > T_Route;
 
-    typedef std::map< const kernel::Automat_ABC*, T_SuppliesVector > T_RecipientSupplies;    
+    typedef std::map< const kernel::Automat_ABC*, T_SuppliesVector > T_RecipientSupplies;
     typedef std::vector< const kernel::Automat_ABC* > T_Recipients;
     typedef QMap< QString, const kernel::Automat_ABC* > T_RecipientsNames;
 
     typedef std::map< QString , unsigned int > T_CarriersQty;
-    typedef std::map< QString , const kernel::EquipmentType* > T_CarriersName;   
+    typedef std::map< QString , const kernel::EquipmentType* > T_CarriersName;
     typedef std::map< QString , geometry::Point2f > T_PointNames;
     //@}
 

@@ -50,7 +50,7 @@ using namespace gui;
 using namespace actions;
 using namespace parameters;
 
-namespace 
+namespace
 {
     class customStringListModel : public QStringListModel
     {
@@ -113,7 +113,7 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Con
     moveUpButton_ = new QPushButton( upDownGroup );
     moveDownButton_ = new QPushButton( upDownGroup );
     addWaypointButton_ = new QPushButton( upDownGroup );
-    delWaypointButton_ = new QPushButton( upDownGroup );       
+    delWaypointButton_ = new QPushButton( upDownGroup );
     moveUpButton_->setIcon( MAKE_ICON( arrow_up ) );
     moveDownButton_->setIcon( MAKE_ICON( arrow_down ) );
     delWaypointButton_->setIcon( MAKE_ICON( trash ) );
@@ -127,7 +127,6 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Con
     connect( delWaypointButton_, SIGNAL( clicked() ), SLOT( DeleteWaypoint() ) );
     connect( addWaypointButton_, SIGNAL( clicked() ), SLOT( AddWaypoint() ) );
     connect( tabs_, SIGNAL( currentChanged( int ) ), SLOT( OnTabChanged( int ) ) );
-
 
     tabLayout->addWidget( okButton, 1, 0, 1, 1 );
     tabLayout->addWidget( cancelButton, 1, 2, 1, 1 );
@@ -395,7 +394,6 @@ namespace
     };
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPullFlowDialog::AddDotation
 // Created : AHC 2010-10-14
@@ -526,7 +524,7 @@ void LogisticSupplyPullFlowDialog::AddWaypoint()
     {
         controllers_.Unregister( *routeLocationCreator_ );
         controllers_.Update( *waypointLocationCreator_ );
-    }    
+    }
     startWaypointLocation_ = true;
     waypointLocationCreator_->StartPoint();
 }
@@ -566,7 +564,6 @@ void LogisticSupplyPullFlowDialog::DeleteWaypoint()
     moveDownButton_->setEnabled( false );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPullFlowDialog::DeleteWaypoint
 // Created: MMC 2011-09-28
@@ -574,16 +571,16 @@ void LogisticSupplyPullFlowDialog::DeleteWaypoint()
 void LogisticSupplyPullFlowDialog::MoveUpWaypoint()
 {
     QString waypoint = GetSelectedWaypoint();
-    if ( !waypoint.isEmpty() )
+    if( !waypoint.isEmpty() )
     {
         customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
         QStringList waypoints = pModel->stringList();
         int index = waypoints.indexOf( waypoint );
-        if ( index > 0 )
+        if( index > 0 )
         {
             waypoints.swap( index, index-1 );
             pModel->setStringList( waypoints );
-            waypointList_->selectionModel()->select( pModel->index( index-1, 0 ), QItemSelectionModel::Select );            
+            waypointList_->selectionModel()->select( pModel->index( index-1, 0 ), QItemSelectionModel::Select );
         }
     }
     waypointList_->setFocus();
@@ -596,17 +593,17 @@ void LogisticSupplyPullFlowDialog::MoveUpWaypoint()
 void LogisticSupplyPullFlowDialog::MoveDownWaypoint()
 {
     QString waypoint = GetSelectedWaypoint();
-    if ( !waypoint.isEmpty() )
+    if( !waypoint.isEmpty() )
     {
         customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
         QStringList waypoints = pModel->stringList();
         int index = waypoints.indexOf( waypoint );
-        if ( index < waypoints.size()-1 )
+        if( index < waypoints.size()-1 )
         {
             QModelIndexList curSelection = waypointList_->selectionModel()->selectedIndexes();
             waypoints.swap( index, index+1 );
             pModel->setStringList( waypoints );
-            waypointList_->selectionModel()->select( pModel->index( index+1, 0 ), QItemSelectionModel::Select ); 
+            waypointList_->selectionModel()->select( pModel->index( index+1, 0 ), QItemSelectionModel::Select );
         }
     }
     waypointList_->setFocus();
@@ -763,7 +760,7 @@ void LogisticSupplyPullFlowDialog::OnSupplierValueChanged()
     customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
     QStringList waypoints = pModel->stringList();
     if( supplier_ )
-        waypoints.removeAll( supplier_->GetName() );    
+        waypoints.removeAll( supplier_->GetName() );
     EraseSupplierData();
 
     QString selection = supplierCombo_->text( supplierCombo_->currentIndex() );
@@ -878,7 +875,7 @@ void LogisticSupplyPullFlowDialog::OnResourcesValueChanged( int row, int col )
     {
         if( resourcesTable_->numRows() > 1 )
             resourcesTable_->removeRow( row );
-        supplierSupplies_.erase( itSupplies );       
+        supplierSupplies_.erase( itSupplies );
     }
     else
     {
@@ -892,7 +889,7 @@ void LogisticSupplyPullFlowDialog::OnResourcesValueChanged( int row, int col )
             AddResourceItem();
         }
         else
-        {   
+        {
             ObjectQuantity& dotationQty = *itSupplies;
             if( col == 0 )
             {
@@ -960,7 +957,7 @@ void LogisticSupplyPullFlowDialog::OnCarriersValueChanged( int row, int col )
             AddCarrierItem();
         }
         else
-        {   
+        {
             ObjectQuantity& equipementQty = *itSupplies;
             if( col == 0 )
             {
@@ -988,9 +985,9 @@ void LogisticSupplyPullFlowDialog::OnWaypointSelect()
     QString waypoint = GetSelectedWaypoint();
     delWaypointButton_->setEnabled( points_.find( waypoint ) != points_.end() );
 
-    if ( !waypoint.isEmpty() )
+    if( !waypoint.isEmpty() )
     {
-        QStringList waypointsList = static_cast< customStringListModel* >( waypointList_->model() )->stringList();        
+        QStringList waypointsList = static_cast< customStringListModel* >( waypointList_->model() )->stringList();
         moveUpButton_->setEnabled( waypoint != waypointsList.first() );
         moveDownButton_->setEnabled( waypoint != waypointsList.last() );
     }
@@ -1092,7 +1089,7 @@ void LogisticSupplyPullFlowDialog::UpdateRouteDrawpoints()
             if( pos )
                 routeDrawpoints_.push_back( pos->GetPosition() );
         }
-    
+
     if( startPos )
         routeDrawpoints_.push_back( startPos->GetPosition() );
 }
@@ -1112,7 +1109,7 @@ void LogisticSupplyPullFlowDialog::Draw( const kernel::Location_ABC& /*location*
         glLineStipple( 1, tools.StipplePattern( -1 ) );
         tools.DrawCurvedArrow( routeDrawpoints_[i-1], routeDrawpoints_[i], 0.6f );
     }
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPullFlowDialog::OnTabChanged

@@ -167,7 +167,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     settings.beginGroup( "/Gaming" );
     restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
 
-    setAttribute( Qt::WA_DeleteOnClose, true ); 
+    setAttribute( Qt::WA_DeleteOnClose, true );
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     planifName_ = tools::translate( "Application", "SWORD" ) + tr( " - Not connected" );
     setCaption( planifName_ );
@@ -215,7 +215,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     logger.SetLogger( *pLogPanel_ );
 
     // Standard toolbars
-    
+
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
     gui::GisToolbar* gToolBar = new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
     EventToolbar* eToolBar = new EventToolbar( this, controllers, profile );
@@ -738,9 +738,9 @@ void MainWindow::ToggleDocks()
     }
     else
     {
-        if ( restoreState( docks_ ) )
+        if( restoreState( docks_ ) )
             docks_ = 0;
-        if ( restoreState( toolbars_ ) )
+        if( restoreState( toolbars_ ) )
             toolbars_ = 0;
     }
 }

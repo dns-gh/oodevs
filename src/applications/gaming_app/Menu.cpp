@@ -134,11 +134,11 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     Q3PopupMenu* menu = new Q3PopupMenu( this );
     addMenu( menu );
     new ConnectionMenu( menu, controllers, network, logger );
-    
+
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), Qt::CTRL + Qt::Key_Q );
     insertItem( tools::translate( "Menu", "&File" ), menu );
-    
+
     menu = new Q3PopupMenu( this );
     addMenu( menu );
     Q3PopupMenu* subMenu = new Q3PopupMenu( menu );

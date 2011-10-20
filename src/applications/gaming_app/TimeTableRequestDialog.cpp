@@ -19,7 +19,7 @@
 // -----------------------------------------------------------------------------
 TimeTableRequestDialog::TimeTableRequestDialog( QWidget* parent, Publisher_ABC& network, unsigned int maxTick )
 : QDialog ( parent, 0, true, Qt::WStyle_Customize | Qt::WStyle_NormalBorder | Qt::WStyle_Title )
-    , network_( network )    
+    , network_( network )
 {
     setCaption( tr( "Time Table Request" ) );
 

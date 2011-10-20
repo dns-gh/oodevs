@@ -26,7 +26,6 @@
 #include <QtGui/qevent.h>
 #pragma warning( pop )
 
-
 namespace
 {
     class LifeBar : public Q3ProgressBar
@@ -46,7 +45,7 @@ namespace
         virtual void paintEvent( QPaintEvent* )
         {
             QPainter* painter = new QPainter();
-            if ( painter->begin( this ) )
+            if( painter->begin( this ) )
             {
                 const QRect bar = contentsRect();
                 painter->fillRect( bar, QColor( 255, 100, 100 ) );
@@ -139,7 +138,7 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
     setFixedWidth( 150 );
     setAutoFillBackground( true );
     setPalette( QPalette( backgroundRole(), QBrush( background_ ) ) );
-    
+
     Q3HBox* box = new Q3HBox( this );
     box->setBackgroundOrigin( QWidget::AncestorOrigin );
     box->layout()->setAlignment( Qt::AlignRight );

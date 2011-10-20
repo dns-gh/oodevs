@@ -345,7 +345,7 @@ MainWindow::~MainWindow()
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locations, 
+void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locations,
                                gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
                                PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker,
                                LivingAreaEditor& livingAreaEditor, gui::AutomatsLayer& automats, gui::FormationLayer& formation )
@@ -855,9 +855,9 @@ void MainWindow::ToggleDocks()
     }
     else
     {
-        if ( restoreState( docks_ ) )
+        if( restoreState( docks_ ) )
             docks_ = 0;
-        if ( restoreState( toolbars_ ) )
+        if( restoreState( toolbars_ ) )
             toolbars_ = 0;
     }
 }

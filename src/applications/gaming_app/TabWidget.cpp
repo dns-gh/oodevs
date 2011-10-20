@@ -17,7 +17,7 @@
 // Name: TabWidget constructor
 // Created: FPT 2011-08-08
 // -----------------------------------------------------------------------------
-TabWidget::TabWidget( Q3VBox* box ) 
+TabWidget::TabWidget( Q3VBox* box )
     : QTabWidget( box )
     , filters_( 0 )
     , toolbar_( 0 )

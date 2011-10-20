@@ -66,7 +66,6 @@ bool AmmoEffect::IsInside( const geometry::Point2f& point ) const
     return ellipse_.IsInside( point );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AmmoEffect::ApplyEffect
 // Created: ABR 2011-07-27

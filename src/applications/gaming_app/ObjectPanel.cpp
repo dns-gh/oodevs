@@ -104,7 +104,7 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
     construction_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Construction:" ) ) );
     valorisation_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Mining:" ) ) );
     contournement_ = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Bypass:" ) ) );
-    
+
     Q3HBox* pHBox  = new Q3HBox( pWidget_ );
     QPushButton* pApplyButton_  = new QPushButton( tools::translate( "CreationPanel", "Apply" ), pHBox );
     QPushButton* pCancelButton_ = new QPushButton( tools::translate( "CreationPanel", "Cancel" ), pHBox );

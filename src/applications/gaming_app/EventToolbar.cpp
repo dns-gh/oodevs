@@ -30,16 +30,16 @@ EventToolbar::EventToolbar( QMainWindow* pParent, Controllers& controllers, cons
     , controllers_( controllers )
     , profile_( profile )
 {
-    setObjectName( "eventToolBar" ); 
+    setObjectName( "eventToolBar" );
     setWindowTitle( tr( "Messages" ) );
     gasButton_ = new QToolButton( MAKE_ICON( gas ), tr( "Out of gas" ), "", this, SLOT( GasClicked() ), this );
     conflictButton_ = new QToolButton( MAKE_ICON( ammo ), tr( "Conflicts" ), "", this, SLOT( ConflictClicked() ), this );
     messageButton_ = new QToolButton( MAKE_ICON( msg ), "0", "", this, SLOT( MessageClicked() ), this );
-    
+
     addWidget( gasButton_ );
     addWidget( conflictButton_ );
     addWidget( messageButton_ );
-    
+
     messageButton_->setUsesTextLabel( true );
     messageButton_->setTextPosition( QToolButton::BesideIcon );
     controllers_.Register( *this );

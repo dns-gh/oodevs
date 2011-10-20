@@ -58,7 +58,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model, 
+    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model,
                                 gui::ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory );
     virtual void NotifyUpdated( const Services& services );
     virtual void NotifyCreated( const AfterActionRequest& );

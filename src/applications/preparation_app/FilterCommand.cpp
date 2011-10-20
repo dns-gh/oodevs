@@ -251,7 +251,7 @@ void FilterCommand::Execute()
 {
     // $$$$ ABR 2011-10-18: Hack, should not be hard coded, add an attribute to Filters.xml instead (when the ICD will no longer be frozen)
     std::string lowerCommand = command_;
-    std::transform( lowerCommand.begin(), lowerCommand.end(), lowerCommand.begin(), tolower); 
+    std::transform( lowerCommand.begin(), lowerCommand.end(), lowerCommand.begin(), tolower);
     if( lowerCommand.find( "melmil.exe" ) != std::string::npos && reloadExercise_ )
         emit ForceSaveAndAddActionPlanning( "melmil.xml" );
 

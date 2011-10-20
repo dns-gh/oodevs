@@ -21,7 +21,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/assign/list_of.hpp>
 
-
 namespace
 {
     void Initialize( Q3Table& table, const std::vector< std::string >& cols )

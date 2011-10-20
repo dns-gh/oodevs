@@ -100,7 +100,7 @@ bool UnitStateTableCrew::HasChanged( kernel::Entity_ABC& selected ) const
                     human.state_        == GetEnumData< E_HumanState >( row, eState ) &&
                     human.location_     == GetEnumData< E_HumanLocation >( row, eLocation ) &&
                     human.psyop_        == GetCheckedState( row, ePsy ) &&
-                    human.contaminated_ == GetCheckedState( row, eContaminated ) && 
+                    human.contaminated_ == GetCheckedState( row, eContaminated ) &&
                     ( human.state_ != eHumanState_Injured || seriousness == GetEnumData< E_InjuriesSeriousness >( row, eInjuries ) ) )
                 {
                     ++nbFound;

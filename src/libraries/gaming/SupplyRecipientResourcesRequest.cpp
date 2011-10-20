@@ -52,7 +52,7 @@ void SupplyRecipientResourcesRequest::Update( const sword::SupplyRecipientResour
         }
         else
         {
-            Register( data.resource().id(), *new SupplyResourceRequest( dotationResolver_.Get( data.resource().id() ), 
+            Register( data.resource().id(), *new SupplyResourceRequest( dotationResolver_.Get( data.resource().id() ),
                                                                    data.requested(),
                                                                    data.granted(),
                                                                    data.convoyed() ) );

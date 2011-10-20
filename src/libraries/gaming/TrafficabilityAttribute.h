@@ -38,7 +38,7 @@ public:
     double GetMaxValue() const;
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;

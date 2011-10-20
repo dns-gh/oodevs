@@ -15,15 +15,13 @@
 inline
 bool Sector::IsInCone( const geometry::Point2f& vPos, float rRadius ) const
 {
-    if ( rSemiAngle_ >= pi_ || rSemiAngle_ <= 0 ) // vision sur 360°
+    if( rSemiAngle_ >= pi_ || rSemiAngle_ <= 0 ) // vision sur 360°
         return vPos.SquareDistance( vOrigin_ ) <= ( rRadius * rRadius );
 
     return vPos.SquareDistance( vOrigin_ ) <= ( rRadius * rRadius )  // test de distance
         && ( rB1_ * vPos.Y() + rA1_ * vPos.X() + rC1_ >= 0 )            // test 1er demi-plan
-        && ( rB2_ * vPos.Y() + rA2_ * vPos.X() + rC2_ <= 0 );           // test 2eme demi-plan  
+        && ( rB2_ * vPos.Y() + rA2_ * vPos.X() + rC2_ <= 0 );           // test 2eme demi-plan
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Name: Sector::IsInSector
@@ -32,11 +30,11 @@ bool Sector::IsInCone( const geometry::Point2f& vPos, float rRadius ) const
 inline
 bool Sector::IsInSector( const geometry::Point2f& vPos ) const
 {
-    if ( rSemiAngle_ >= pi_ || rSemiAngle_ <= 0 )
+    if( rSemiAngle_ >= pi_ || rSemiAngle_ <= 0 )
         return true;
 
     return ( rB1_ * vPos.Y() + rA1_ * vPos.X() + rC1_ >= 0 )  // test 1er demi-plan
-        && ( rB2_ * vPos.Y() + rA2_ * vPos.X() + rC2_ <= 0 ); // test 2eme demi-plan  
+        && ( rB2_ * vPos.Y() + rA2_ * vPos.X() + rC2_ <= 0 ); // test 2eme demi-plan
 }
 
 // -----------------------------------------------------------------------------

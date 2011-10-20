@@ -31,7 +31,7 @@ class TrafficabilityPrototype : public gui::TrafficabilityPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-			 TrafficabilityPrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList, double maxWeight );
+             TrafficabilityPrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList, double maxWeight );
     virtual ~TrafficabilityPrototype();
     //@}
 

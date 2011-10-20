@@ -361,7 +361,7 @@ void CsvExport::WriteProfiles( std::ofstream& file, const std::string& separator
     BOOST_FOREACH( const std::string& profile, profiles )
     {
         file << separator;
-        if(  model_.profiles_.IsWriteable( entity, profile ) )
+        if( model_.profiles_.IsWriteable( entity, profile ) )
             file << "RW";
         else if( model_.profiles_.IsReadable( entity, profile ) )
             file << "R";

@@ -33,5 +33,4 @@ public:
     //@}
 };
 
-
 #endif // __Progress_ABC_h_

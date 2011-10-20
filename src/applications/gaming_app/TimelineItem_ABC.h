@@ -10,7 +10,6 @@
 #ifndef __TimelineItem_ABC_h_
 #define __TimelineItem_ABC_h_
 
-
 // =============================================================================
 /** @class  TimelineItem_ABC
     @brief  TimelineItem_ABC

@@ -35,7 +35,7 @@ namespace
         virtual void paintEvent( QPaintEvent* )
         {
             QPainter* painter = new QPainter();
-            if ( painter->begin( this ) )
+            if( painter->begin( this ) )
             {
                 const QRect bar = contentsRect();
                 painter->fillRect( bar, QColor( 200, 200, 200 ) );
@@ -75,7 +75,7 @@ namespace
         virtual void paintEvent( QPaintEvent* )
         {
             QPainter* painter = new QPainter();
-            if ( painter->begin( this ) )
+            if( painter->begin( this ) )
             {
                 static const QColor colors[] = { QColor( 255,  50, 50 ), QColor( 255, 50, 50 )
                                                , QColor( 255, 255, 50 ), QColor( 50, 255, 50 ) };

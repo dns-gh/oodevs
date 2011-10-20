@@ -71,7 +71,7 @@ private slots:
     void StopEvacuate();
     void ActivateUndergroundExit();
     void DeactivateUndergroundExit();
-	void ChangeTrafficability();
+    void ChangeTrafficability();
     //@}
 
 private:
