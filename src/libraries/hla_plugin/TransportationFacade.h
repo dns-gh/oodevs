@@ -31,6 +31,7 @@ namespace sword
 namespace dispatcher
 {
     class SimulationPublisher_ABC;
+    class ClientPublisher_ABC;
 }
 
 namespace hla
@@ -85,7 +86,7 @@ public:
                                    tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                    const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
                                    Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters,
-                                   dispatcher::SimulationPublisher_ABC& publisher );
+                                   dispatcher::SimulationPublisher_ABC& simulationPublisher, dispatcher::ClientPublisher_ABC& clientsPublisher );
     virtual ~TransportationFacade();
     //@}
 

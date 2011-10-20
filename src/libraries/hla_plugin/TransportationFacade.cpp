@@ -42,8 +42,8 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
                                             tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                             const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
                                             Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters,
-                                            dispatcher::SimulationPublisher_ABC& publisher )
-    : pTransportationController_             ( new TransportationController( xis, missionResolver, controller, callsignResolver, subordinates, contextFactory, publisher ) )
+                                            dispatcher::SimulationPublisher_ABC& simulationPublisher, dispatcher::ClientPublisher_ABC& clientsPublisher )
+    : pTransportationController_             ( new TransportationController( xis, missionResolver, controller, callsignResolver, subordinates, contextFactory, simulationPublisher ) )
     , pNetnRequestConvoy_                    ( new NetnRequestConvoy( federate, *this ) )
     , pNetnRequestConvoySender_              ( new NetnRequestConvoySender( *pTransportationController_, *pNetnRequestConvoy_ ) )
     , pNetnOfferConvoyReceiver_              ( new NetnOfferConvoyReceiver( *pTransportationController_ ) )

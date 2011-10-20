@@ -16,6 +16,7 @@
 
 namespace dispatcher
 {
+    class ClientPublisher_ABC;
     class SimulationPublisher_ABC;
 }
 
@@ -23,12 +24,12 @@ namespace dispatcher
 // Name: CreateInstance
 // Created: JMT 2011-09-19
 // -----------------------------------------------------------------------------
-BML_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& dynamicModel, const dispatcher::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& /*config*/, dispatcher::Logger_ABC& logger, xml::xistream& xis )
+BML_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& dynamicModel, const dispatcher::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& simulation, dispatcher::ClientPublisher_ABC& /*clients*/, const dispatcher::Config& /*config*/, dispatcher::Logger_ABC& logger, xml::xistream& xis )
 {
     try
     {
         logger.LogInfo( "Initialization..." );
-        dispatcher::Plugin_ABC* result = new plugins::bml::BmlPlugin( dynamicModel, staticModel, xis, simulation  );
+        dispatcher::Plugin_ABC* result = new plugins::bml::BmlPlugin( dynamicModel, staticModel, xis, simulation );
         logger.LogInfo( "Initialized!" );
         return result;
     }

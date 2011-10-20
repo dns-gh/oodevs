@@ -69,11 +69,12 @@ namespace
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::StaticModel& staticModel,
-                      dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config,
-                      xml::xistream& xis, dispatcher::Logger_ABC& logger )
+                      dispatcher::SimulationPublisher_ABC& simulationPublisher, dispatcher::ClientPublisher_ABC& clientsPublisher,
+                      const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger )
     : dynamicModel_               ( dynamicModel )
     , staticModel_                ( staticModel )
-    , publisher_                  ( publisher )
+    , simulationPublisher_        ( simulationPublisher )
+    , clientsPublisher_           ( clientsPublisher )
     , config_                     ( config )
     , pXisSession_                ( new xml::xibufferstream( xis ) )
     , pXisConfiguration_          ( new xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "configuration", "configuration.xml" ) ) )
@@ -136,13 +137,13 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
                                                   config_.BuildPluginDirectory( "hla" ), *pCallsignResolver_ ) );
-            pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, publisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_ ) );
+            pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, simulationPublisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
-            pInteractionsFacade_.reset( new InteractionsFacade( *pFederate_, publisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ) ) );
+            pInteractionsFacade_.reset( new InteractionsFacade( *pFederate_, simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ) ) );
             pSideChecker_.reset( new SideChecker( *pSubject_, *pFederate_, *pRemoteAgentResolver_ ) );
             pTransporters_.reset( new Transporters( *pSubject_, *pCallsignResolver_, *pSideChecker_, *pAutomatChecker_ ) );
-            pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pFederate_, *pContextFactory_, *pTransporters_, publisher_ ) : 0 );
-            pStepper_.reset( new Stepper( *pXis_, *pMessageController_, publisher_ ) );
+            pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pFederate_, *pContextFactory_, *pTransporters_, simulationPublisher_, clientsPublisher_ ) : 0 );
+            pStepper_.reset( new Stepper( *pXis_, *pMessageController_, simulationPublisher_ ) );
             pSubject_->Visit( dynamicModel_ );
         }
     }

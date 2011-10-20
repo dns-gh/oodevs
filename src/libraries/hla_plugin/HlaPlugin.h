@@ -25,6 +25,7 @@ namespace dispatcher
     class Model_ABC;
     class Logger_ABC;
     class SimulationPublisher_ABC;
+    class ClientPublisher_ABC;
     class StaticModel;
 }
 
@@ -81,8 +82,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::StaticModel& staticModel,
-                        dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config,
-                        xml::xistream& xis, dispatcher::Logger_ABC& logger );
+                        dispatcher::SimulationPublisher_ABC& simulationPublisher, dispatcher::ClientPublisher_ABC& clientsPublisher,
+                        const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger );
     virtual ~HlaPlugin();
     //@}
 
@@ -99,7 +100,8 @@ private:
     //@{
     dispatcher::Model_ABC& dynamicModel_;
     const dispatcher::StaticModel& staticModel_;
-    dispatcher::SimulationPublisher_ABC& publisher_;
+    dispatcher::SimulationPublisher_ABC& simulationPublisher_;
+    dispatcher::ClientPublisher_ABC& clientsPublisher_;
     const dispatcher::Config& config_;
     std::auto_ptr< xml::xistream > pXisSession_;
     std::auto_ptr< xml::xistream > pXisConfiguration_;
