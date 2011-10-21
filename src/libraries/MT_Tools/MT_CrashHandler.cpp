@@ -43,7 +43,7 @@ namespace
             return;
         }
 
-        GetFinalPathNameByHandle( hDumpFile, szFileName, MAX_PATH, VOLUME_NAME_DOS );
+        GetFinalPathNameByHandle( hDumpFile, szFileName, MAX_PATH, 0 );
 
         ExpParam.ThreadId = GetCurrentThreadId();
         ExpParam.ExceptionPointers = pExceptionPointers;
