@@ -11,6 +11,7 @@
 #include "NetnCancelConvoy.h"
 #include "Federate_ABC.h"
 #include "Interactions.h"
+#include "NetnService.h"
 #include <cassert>
 #include <hla/Interaction.h>
 #include <hla/InteractionIdentifier.h>
@@ -25,10 +26,7 @@ using namespace plugins::hla;
 NetnCancelConvoy::NetnCancelConvoy( Federate_ABC& federate )
     : pInteraction_( new ::hla::Interaction< interactions::NetnCancelConvoy >( *this ) )
 {
-    pInteraction_->Register( "ServiceID"  , ::hla::CreateParameter( &interactions::NetnCancelConvoy::serviceId ) );
-    pInteraction_->Register( "Consumer"   , ::hla::CreateParameter( &interactions::NetnCancelConvoy::consumer ) );
-    pInteraction_->Register( "Provider"   , ::hla::CreateParameter( &interactions::NetnCancelConvoy::provider ) );
-    pInteraction_->Register( "ServiceType", ::hla::CreateParameter( &interactions::NetnCancelConvoy::serviceType ) );
+    RegisterNetnService( *pInteraction_ );
     pInteraction_->Register( "Reason"     , ::hla::CreateParameter( &interactions::NetnCancelConvoy::reason ) );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_CancelService.NETN_CancelConvoy" ), *pInteraction_, true, true );
 }

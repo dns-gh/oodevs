@@ -11,6 +11,7 @@
 #include "NetnServiceStarted.h"
 #include "Federate_ABC.h"
 #include "Interactions.h"
+#include "NetnService.h"
 #include <cassert>
 #include <hla/Interaction.h>
 #include <hla/InteractionIdentifier.h>
@@ -25,10 +26,7 @@ using namespace plugins::hla;
 NetnServiceStarted::NetnServiceStarted( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted >& notification )
     : pInteraction_( new ::hla::Interaction< interactions::NetnServiceStarted >( notification ) )
 {
-    pInteraction_->Register( "ServiceID"  , ::hla::CreateParameter( &interactions::NetnServiceStarted::serviceId ) );
-    pInteraction_->Register( "Consumer"   , ::hla::CreateParameter( &interactions::NetnServiceStarted::consumer ) );
-    pInteraction_->Register( "Provider"   , ::hla::CreateParameter( &interactions::NetnServiceStarted::provider ) );
-    pInteraction_->Register( "ServiceType", ::hla::CreateParameter( &interactions::NetnServiceStarted::serviceType ) );
+    RegisterNetnService( *pInteraction_ );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_ServiceStarted" ), *pInteraction_, true, true );
 }
 

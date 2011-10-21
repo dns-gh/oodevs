@@ -11,6 +11,7 @@
 #include "NetnConvoyDisembarkmentStatus.h"
 #include "Federate_ABC.h"
 #include "Interactions.h"
+#include "NetnService.h"
 #include <cassert>
 #include <hla/Interaction.h>
 #include <hla/InteractionIdentifier.h>
@@ -25,10 +26,7 @@ using namespace plugins::hla;
 NetnConvoyDisembarkmentStatus::NetnConvoyDisembarkmentStatus( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnConvoyDisembarkmentStatus >& notification )
     : pInteraction_( new ::hla::Interaction< interactions::NetnConvoyDisembarkmentStatus >( notification ) )
 {
-    pInteraction_->Register( "ServiceID"              , ::hla::CreateParameter( &interactions::NetnConvoyDisembarkmentStatus::serviceId ) );
-    pInteraction_->Register( "Consumer"               , ::hla::CreateParameter( &interactions::NetnConvoyDisembarkmentStatus::consumer ) );
-    pInteraction_->Register( "Provider"               , ::hla::CreateParameter( &interactions::NetnConvoyDisembarkmentStatus::provider ) );
-    pInteraction_->Register( "ServiceType"            , ::hla::CreateParameter( &interactions::NetnConvoyDisembarkmentStatus::serviceType ) );
+    RegisterNetnService( *pInteraction_ );
     pInteraction_->Register( "ListOfObjectDisembarked", ::hla::CreateParameter( &interactions::NetnConvoyDisembarkmentStatus::listOfObjectDisembarked ) );
     pInteraction_->Register( "TransportUnitIdentifier", ::hla::CreateParameter( &interactions::NetnConvoyDisembarkmentStatus::transportUnitIdentifier ) );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_ConvoyDisembarkmentStatus" ), *pInteraction_, true, true );

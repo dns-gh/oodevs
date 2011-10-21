@@ -11,6 +11,7 @@
 #include "NetnConvoyDestroyedEntities.h"
 #include "Federate_ABC.h"
 #include "Interactions.h"
+#include "NetnService.h"
 #include <cassert>
 #include <hla/Interaction.h>
 #include <hla/InteractionIdentifier.h>
@@ -25,10 +26,7 @@ using namespace plugins::hla;
 NetnConvoyDestroyedEntities::NetnConvoyDestroyedEntities( Federate_ABC& federate )
     : pInteraction_( new ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >( *this ) )
 {
-    pInteraction_->Register( "ServiceID"                    , ::hla::CreateParameter( &interactions::NetnConvoyDestroyedEntities::serviceId ) );
-    pInteraction_->Register( "Consumer"                     , ::hla::CreateParameter( &interactions::NetnConvoyDestroyedEntities::consumer ) );
-    pInteraction_->Register( "Provider"                     , ::hla::CreateParameter( &interactions::NetnConvoyDestroyedEntities::provider ) );
-    pInteraction_->Register( "ServiceType"                  , ::hla::CreateParameter( &interactions::NetnConvoyDestroyedEntities::serviceType ) );
+    RegisterNetnService( *pInteraction_ );
     pInteraction_->Register( "ListOfEmbarkedObjectDestroyed", ::hla::CreateParameter( &interactions::NetnConvoyDestroyedEntities::listOfEmbarkedObjectDestroyed ) );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_ConvoyDestroyedEntities" ), *pInteraction_, true, true );
 }

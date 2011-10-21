@@ -12,6 +12,7 @@
 #include "Federate_ABC.h"
 #include "Interactions.h"
 #include "SerializationTools.h"
+#include "NetnService.h"
 #include <cassert>
 #include <hla/Interaction.h>
 #include <hla/InteractionIdentifier.h>
@@ -26,10 +27,7 @@ using namespace plugins::hla;
 NetnRejectOfferConvoy::NetnRejectOfferConvoy( Federate_ABC& federate )
     : pInteraction_( new ::hla::Interaction< interactions::NetnRejectOfferConvoy >( *this ) )
 {
-    pInteraction_->Register( "ServiceID"  , ::hla::CreateParameter( &interactions::NetnRejectOfferConvoy::serviceId ) );
-    pInteraction_->Register( "Consumer"   , ::hla::CreateParameter( &interactions::NetnRejectOfferConvoy::consumer ) );
-    pInteraction_->Register( "Provider"   , ::hla::CreateParameter( &interactions::NetnRejectOfferConvoy::provider ) );
-    pInteraction_->Register( "ServiceType", ::hla::CreateParameter( &interactions::NetnRejectOfferConvoy::serviceType ) );
+    RegisterNetnService( *pInteraction_ );
     pInteraction_->Register( "Reason"     , ::hla::CreateParameter( &interactions::NetnRejectOfferConvoy::reason ) );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_RejectOffer.NETN_RejectOfferConvoy" ), *pInteraction_, true, false );
 }

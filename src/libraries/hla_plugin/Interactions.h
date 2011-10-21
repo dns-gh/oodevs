@@ -41,6 +41,24 @@ struct EventIdentifierStruct
     Omt13String issuingObjectIdentifier;
 };
 
+struct MunitionDetonation
+{
+    uint32 articulatedPartData;
+    rpr::WorldLocation detonationLocation;
+    int8 detonationResultCode;
+    EventIdentifierStruct eventIdentifier;
+    Omt13String firingObjectIdentifier;
+    rpr::VelocityVector finalVelocityVector;
+    int16 fuseType;
+    Omt13String munitionObjectIdentifier;
+    rpr::EntityType munitionType;
+    uint16 quantityFired;
+    uint16 rateOfFire;
+    rpr::VelocityVector relativeDetonationLocation; // RelativePositionStruct
+    Omt13String targetObjectIdentifier;
+    int16 warheadType;
+};
+
 struct ListOfTransporters
 {
     template< typename Archive >
@@ -61,133 +79,70 @@ struct ListOfTransporters
     std::vector< NetnObjectDefinitionStruct > list;
 };
 
-struct MunitionDetonation
-{
-    uint32 articulatedPartData;
-    rpr::WorldLocation detonationLocation;
-    int8 detonationResultCode;
-    EventIdentifierStruct eventIdentifier;
-    Omt13String firingObjectIdentifier;
-    rpr::VelocityVector finalVelocityVector;
-    int16 fuseType;
-    Omt13String munitionObjectIdentifier;
-    rpr::EntityType munitionType;
-    uint16 quantityFired;
-    uint16 rateOfFire;
-    rpr::VelocityVector relativeDetonationLocation; // RelativePositionStruct
-    Omt13String targetObjectIdentifier;
-    int16 warheadType;
-};
-
-struct NetnRequestConvoy
+struct NetnService
 {
     NetnEventIdentifier serviceId;
     UnicodeString consumer;
     UnicodeString provider;
     int8 serviceType;
+};
+
+struct NetnRequestConvoy : public NetnService
+{
     int64 requestTimeOut;
     NetnTransportStruct transportData;
 };
 
-struct NetnOfferConvoy
+struct NetnOfferConvoy : public NetnService
 {
     int32 isOffering;
     int64 requestTimeOut;
-    NetnEventIdentifier serviceId;
-    UnicodeString consumer;
-    UnicodeString provider;
-    int8 serviceType;
     NetnTransportStruct transportData;
     int32 offerType;
     ListOfTransporters listOfTransporters;
 };
 
-struct NetnRejectOfferConvoy
+struct NetnRejectOfferConvoy : public NetnService
 {
-    NetnEventIdentifier serviceId;
-    UnicodeString consumer;
-    UnicodeString provider;
-    int8 serviceType;
     std::string reason;
 };
 
-struct NetnCancelConvoy
+struct NetnCancelConvoy : public NetnService
 {
-    NetnEventIdentifier serviceId;
-    UnicodeString consumer;
-    UnicodeString provider;
-    int8 serviceType;
     std::string reason;
 };
 
-struct NetnAcceptOffer
-{
-    NetnEventIdentifier serviceId;
-    UnicodeString consumer;
-    UnicodeString provider;
-    int8 serviceType;
-};
+struct NetnAcceptOffer : public NetnService
+{};
 
-struct NetnReadyToReceiveService
-{
-    NetnEventIdentifier serviceId;
-    UnicodeString consumer;
-    UnicodeString provider;
-    int8 serviceType;
-};
+struct NetnReadyToReceiveService : public NetnService
+{};
 
-struct NetnServiceStarted
-{
-    NetnEventIdentifier serviceId;
-    UnicodeString consumer;
-    UnicodeString provider;
-    int8 serviceType;
-};
+struct NetnServiceStarted : public NetnService
+{};
 
-struct NetnServiceComplete
+struct NetnConvoyEmbarkmentStatus : public NetnService
 {
-    NetnEventIdentifier serviceId;
-    UnicodeString consumer;
-    UnicodeString provider;
-    int8 serviceType;
-};
-
-struct NetnServiceReceived
-{
-    NetnEventIdentifier serviceId;
-    UnicodeString consumer;
-    UnicodeString provider;
-    int8 serviceType;
-};
-
-struct NetnConvoyEmbarkmentStatus
-{
-    NetnEventIdentifier serviceId;
-    UnicodeString consumer;
-    UnicodeString provider;
-    int8 serviceType;
     ListOfTransporters listOfObjectEmbarked;
     UnicodeString transportUnitIdentifier;
 };
 
-struct NetnConvoyDisembarkmentStatus
+struct NetnConvoyDisembarkmentStatus : public NetnService
 {
-    NetnEventIdentifier serviceId;
-    UnicodeString consumer;
-    UnicodeString provider;
-    int8 serviceType;
     ListOfTransporters listOfObjectDisembarked;
     UnicodeString transportUnitIdentifier;
 };
 
-struct NetnConvoyDestroyedEntities
+struct NetnConvoyDestroyedEntities : public NetnService
 {
-    NetnEventIdentifier serviceId;
-    UnicodeString consumer;
-    UnicodeString provider;
-    int8 serviceType;
     ListOfTransporters listOfEmbarkedObjectDestroyed;
 };
+
+struct NetnServiceComplete : public NetnService
+{};
+
+struct NetnServiceReceived : public NetnService
+{};
 
 }
 }

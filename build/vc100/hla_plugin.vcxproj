@@ -249,6 +249,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoySender.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnService.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceComplete.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceCompleteReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceReceived.h" />

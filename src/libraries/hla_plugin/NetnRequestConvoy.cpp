@@ -12,6 +12,7 @@
 #include "Federate_ABC.h"
 #include "Interactions.h"
 #include "SerializationTools.h"
+#include "NetnService.h"
 #include <cassert>
 #include <hla/Interaction.h>
 #include <hla/InteractionIdentifier.h>
@@ -26,10 +27,7 @@ using namespace plugins::hla;
 NetnRequestConvoy::NetnRequestConvoy( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnRequestConvoy >& receiver )
     : pInteraction_( new ::hla::Interaction< interactions::NetnRequestConvoy >( receiver ) )
 {
-    pInteraction_->Register( "ServiceID"     , ::hla::CreateParameter( &interactions::NetnRequestConvoy::serviceId ) );
-    pInteraction_->Register( "Consumer"      , ::hla::CreateParameter( &interactions::NetnRequestConvoy::consumer ) );
-    pInteraction_->Register( "Provider"      , ::hla::CreateParameter( &interactions::NetnRequestConvoy::provider ) );
-    pInteraction_->Register( "ServiceType"   , ::hla::CreateParameter( &interactions::NetnRequestConvoy::serviceType ) );
+    RegisterNetnService( *pInteraction_ );
     pInteraction_->Register( "RequestTimeOut", ::hla::CreateParameter( &interactions::NetnRequestConvoy::requestTimeOut ) );
     pInteraction_->Register( "TransportData" , ::hla::CreateParameter( &interactions::NetnRequestConvoy::transportData ) );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_RequestService.NETN_RequestConvoy" ), *pInteraction_, true, true );

@@ -12,6 +12,7 @@
 #include "Federate_ABC.h"
 #include "Interactions.h"
 #include "SerializationTools.h"
+#include "NetnService.h"
 #include <cassert>
 #include <hla/Interaction.h>
 #include <hla/InteractionIdentifier.h>
@@ -28,10 +29,7 @@ NetnOfferConvoy::NetnOfferConvoy( Federate_ABC& federate, ::hla::InteractionNoti
 {
     pInteraction_->Register( "IsOffering"        , ::hla::CreateParameter( &interactions::NetnOfferConvoy::isOffering ) );
     pInteraction_->Register( "RequestTimeOut"    , ::hla::CreateParameter( &interactions::NetnOfferConvoy::requestTimeOut ) );
-    pInteraction_->Register( "ServiceID"         , ::hla::CreateParameter( &interactions::NetnOfferConvoy::serviceId ) );
-    pInteraction_->Register( "Consumer"          , ::hla::CreateParameter( &interactions::NetnOfferConvoy::consumer ) );
-    pInteraction_->Register( "Provider"          , ::hla::CreateParameter( &interactions::NetnOfferConvoy::provider ) );
-    pInteraction_->Register( "ServiceType"       , ::hla::CreateParameter( &interactions::NetnOfferConvoy::serviceType ) );
+    RegisterNetnService( *pInteraction_ );
     pInteraction_->Register( "TransportData"     , ::hla::CreateParameter( &interactions::NetnOfferConvoy::transportData ) );
     pInteraction_->Register( "OfferType"         , ::hla::CreateParameter( &interactions::NetnOfferConvoy::offerType ) );
     pInteraction_->Register( "ListOfTransporters", ::hla::CreateParameter( &interactions::NetnOfferConvoy::listOfTransporters ) );
