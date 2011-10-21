@@ -58,7 +58,9 @@ public:
         eProfileUnwritable      = 512,
         eAllProfile             = 896,
 
-        eAllChecks              = 1023
+        eGhostExistence         = 1024,
+
+        eAllChecks              = 2047
     };
     struct ConsistencyError
     {
@@ -97,6 +99,7 @@ private:
     void CheckLogisticInitialization();
     void CheckProfileUniqueness();
     void CheckProfileInitialization();
+    void CheckGhostExistence();
     //@}
 
 private:

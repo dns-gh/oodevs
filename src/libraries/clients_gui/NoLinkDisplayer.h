@@ -37,6 +37,7 @@ private:
     virtual void Call( const kernel::Population_ABC& value );
     virtual void Call( const kernel::Object_ABC& value );
     virtual void Call( const kernel::Formation_ABC& value );
+    virtual void Call( const kernel::Ghost_ABC& value );
     //@}
 };
 

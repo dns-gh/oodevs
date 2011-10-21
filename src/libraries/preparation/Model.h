@@ -41,6 +41,8 @@ class AgentFactory_ABC;
 class Exercise;
 class FormationModel;
 class FormationFactory_ABC;
+class GhostFactory_ABC;
+class GhostModel;
 class IdManager;
 class LimitsModel;
 class WeatherModel;
@@ -93,6 +95,7 @@ public:
     void Purge();
     QString GetName() const;
     IdManager& GetIdManager() const;
+    kernel::SymbolFactory& GetSymbolsFactory() const;
     bool IsLoaded() const;
     //@}
 
@@ -118,6 +121,7 @@ private:
     ScoreFactory_ABC& scoreFactory_;
     SuccessFactorFactory_ABC& successFactorFactory_;
     gui::DrawingFactory_ABC& drawingFactory_;
+    GhostFactory_ABC& ghostFactory_;
     kernel::ResourceNetworkSelectionObserver& resourceObserver_;
     QString name_;
     bool loaded_;
@@ -140,6 +144,7 @@ public:
     SuccessFactorsModel& successFactors_;
     UrbanModel& urban_;
     gui::DrawerModel& drawings_;
+    GhostModel& ghosts_;
     //@}
 };
 

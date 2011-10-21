@@ -47,21 +47,21 @@ enum E_AmmunitionFamily
 
 enum E_NatureLevel
 {
-    eNatureLevel_None,
-    eNatureLevel_b,
-    eNatureLevel_o,
-    eNatureLevel_c,
-    eNatureLevel_oo,
-    eNatureLevel_ooo,
-    eNatureLevel_i,
-    eNatureLevel_ii,
-    eNatureLevel_iii,
-    eNatureLevel_x,
-    eNatureLevel_xx,
-    eNatureLevel_xxx,
-    eNatureLevel_xxxx,
-    eNatureLevel_xxxxx,
-    eNbrNatureLevel
+    eNatureLevel_None  = 0,
+    eNatureLevel_b     = 1,
+    eNatureLevel_o     = 2,
+    eNatureLevel_c     = 3,
+    eNatureLevel_oo    = 4,
+    eNatureLevel_ooo   = 5,
+    eNatureLevel_i     = 6,
+    eNatureLevel_ii    = 7,
+    eNatureLevel_iii   = 8,
+    eNatureLevel_x     = 9,
+    eNatureLevel_xx    = 10,
+    eNatureLevel_xxx   = 11,
+    eNatureLevel_xxxx  = 12,
+    eNatureLevel_xxxxx = 13,
+    eNbrNatureLevel    = 14,
 };
 
 enum E_Diplomacy
@@ -400,5 +400,12 @@ enum E_StockCategory
     eNbrStockCategory
 };
 
+enum E_GhostType
+{
+    eGhostType_Agent   = 0,
+    eGhostType_Automat = 1,
+    eGhostType_Invalid = 2,
+    eNbrGhostType      = 3
+};
 
 #endif // __ENT_Enums_Gen_h_

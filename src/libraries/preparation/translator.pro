@@ -14,6 +14,8 @@ Diplomacies.cpp \
 FireAttribute.cpp \
 FloodAttribute.cpp \
 Formation.cpp \
+Ghost.cpp \
+GhostPositions.cpp \
 InfrastructureAttribute.cpp \
 Inhabitant.cpp \
 InhabitantPositions.cpp \

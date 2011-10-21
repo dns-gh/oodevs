@@ -12,6 +12,7 @@
 #include "AgentFactory_ABC.h"
 #include "Agent.h"
 #include "Automat.h"
+#include "GhostModel.h"
 #include "LogisticBaseStates.h"
 #include "LimitsModel.h"
 #include "AgentsModelChecker.h"
@@ -97,16 +98,17 @@ void AgentsModel::CreateAutomat( kernel::Entity_ABC& parent, const kernel::Autom
 // Name: AgentsModel::CreateAutomat
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits, std::string& loadingErrors )
+void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits, GhostModel& ghosts, std::string& loadingErrors )
 {
     try
     {
         Automat_ABC* agent = agentFactory_.Create( xis, parent );
         tools::Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
-        xis >> xml::list( "automat", *this , &AgentsModel::CreateAutomat, *agent, limits, loadingErrors )
-            >> xml::list( "unit"   , *this , &AgentsModel::CreateAgent, *agent, loadingErrors )
-            >> xml::list( "lima"   , limits, &LimitsModel::CreateLima , *(Entity_ABC*)agent )
-            >> xml::list( "limit"  , limits, &LimitsModel::CreateLimit, *(Entity_ABC*)agent );
+        xis >> xml::list( "automat", *this , &AgentsModel::CreateAutomat, *agent, limits, ghosts, loadingErrors )
+            >> xml::list( "unit"   , *this , &AgentsModel::CreateAgent,   *agent, loadingErrors )
+            >> xml::list( "phantom", ghosts, &GhostModel::Create,         *(Entity_ABC*)agent )
+            >> xml::list( "lima"   , limits, &LimitsModel::CreateLima ,   *(Entity_ABC*)agent )
+            >> xml::list( "limit"  , limits, &LimitsModel::CreateLimit,   *(Entity_ABC*)agent );
     }
     catch( std::exception& e )
     {

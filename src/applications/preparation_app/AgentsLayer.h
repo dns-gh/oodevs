@@ -37,7 +37,7 @@ class AgentsLayer : public gui::AgentsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter, QWidget* parent );
+             AgentsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter, QWidget* parent );
     virtual ~AgentsLayer();
     //@}
 
@@ -67,7 +67,6 @@ private:
     //! @name Member data
     //@{
     Model& model_;
-    ModelBuilder& modelBuilder_;
     kernel::SafePointer< kernel::Agent_ABC >     selectedAgent_;
     kernel::SafePointer< kernel::Automat_ABC >   selectedAutomat_;
     kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;

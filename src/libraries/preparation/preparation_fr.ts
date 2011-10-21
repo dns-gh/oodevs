@@ -190,6 +190,32 @@
     </message>
 </context>
 <context>
+    <name>Ghost</name>
+    <message>
+        <source>Info/Identifier</source>
+        <translation>Info/Identifiant</translation>
+    </message>
+    <message>
+        <source>Info/Phantom type</source>
+        <translation>Info/Type de fantôme</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation>Info/Nom</translation>
+    </message>
+    <message>
+        <source>Info/Type</source>
+        <translation>Info/Type</translation>
+    </message>
+</context>
+<context>
+    <name>GhostPositions</name>
+    <message>
+        <source>Info/Position</source>
+        <translation>Info/Position</translation>
+    </message>
+</context>
+<context>
     <name>Infrastructure</name>
     <message>
         <source>Infrastructure</source>

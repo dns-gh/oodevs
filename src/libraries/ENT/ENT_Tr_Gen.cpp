@@ -399,6 +399,13 @@ ENT_Tr::T_ConverterStockCategory ENT_Tr::stockCategoryConverter_[] =
     T_ConverterStockCategory( "", "", (E_StockCategory)-1 )
 };
 
+ENT_Tr::T_ConverterGhostType ENT_Tr::GhostTypeConverter_ [] =
+{
+    T_ConverterGhostType( "agent",   QT_TRANSLATE_NOOP( "ENT_Tr", "Agent" ), eGhostType_Agent ),
+    T_ConverterGhostType( "automat", QT_TRANSLATE_NOOP( "ENT_Tr", "Automat" ), eGhostType_Automat ),
+    T_ConverterGhostType( "invalid", QT_TRANSLATE_NOOP( "ENT_Tr", "Invalid" ), eGhostType_Invalid ),
+    T_ConverterGhostType( "", "", ( E_GhostType ) - 1 )
+};
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
@@ -440,6 +447,7 @@ void ENT_Tr::InitTranslations()
     InitTr( EquipmentStateConverter_, "ENT_Tr" );
     InitTr( InjuriesSeriousnessConverter_, "ENT_Tr" );
     InitTr( stockCategoryConverter_, "ENT_Tr" );
+    InitTr( GhostTypeConverter_, "ENT_Tr" );
 }
 
 //-----------------------------------------------------------------------------
@@ -748,6 +756,14 @@ const std::string& ENT_Tr::ConvertFromStockCategory( E_StockCategory nValue, E_C
     return ENT_Tr::InverseFindInConverter( stockCategoryConverter_, nValue, nConversion );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertFromGhostType
+// Created: ABR 2011-10-18
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromGhostType( E_GhostType nValue, E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( GhostTypeConverter_, nValue, nConverterType );
+}
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLocationType
@@ -1044,4 +1060,13 @@ E_InjuriesSeriousness ENT_Tr::ConvertToInjuriesSeriousness( const std::string& s
 E_StockCategory ENT_Tr::ConvertToStockCategory( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( stockCategoryConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertToGhostType
+// Created: ABR 2011-10-18
+// -----------------------------------------------------------------------------
+E_GhostType ENT_Tr::ConvertToGhostType( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( GhostTypeConverter_, strName );
 }

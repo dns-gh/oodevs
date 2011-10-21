@@ -35,19 +35,19 @@ using namespace gui;
 // Name: UnitPreviewIcon constructor
 // Created: SBO 2007-10-16
 // -----------------------------------------------------------------------------
-UnitPreviewIcon::UnitPreviewIcon( QWidget* parent, Controllers& controllers, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy )
+UnitPreviewIcon::UnitPreviewIcon( QWidget* parent, Controllers& controllers, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, const QString& tooltips )
     : Q3HBox          ( parent )
     , controllers_   ( controllers )
     , icons_         ( icons )
     , colorStrategy_ ( colorStrategy )
     , selectedParent_( controllers_ )
 {
-    setFrameStyle( Q3Frame::Plain | Q3Frame::Box );
-    setPaletteBackgroundColor( Qt::white );
+    setStyleSheet( "background-color: white" );
+    setFrameStyle( QFrame::Plain | QFrame::Box );
     layout()->setAlignment( Qt::AlignCenter | Qt::AlignHCenter );
     icon_ = new QLabel( this );
     icon_->setMargin( 10 );
-    QToolTip::add( icon_, tr( "Drag and drop symbol to map to create a new unit." ) );
+    QToolTip::add( icon_, tooltips );
     UpdateSymbol();
     controllers_.Register( *this );
 }
@@ -102,6 +102,7 @@ void UnitPreviewIcon::BeforeSelection()
 // -----------------------------------------------------------------------------
 void UnitPreviewIcon::AfterSelection()
 {
+    emit SelectionChanged( selectedParent_ );
     UpdateSymbol();
 }
 
@@ -181,4 +182,49 @@ void UnitPreviewIcon::mouseMoveEvent( QMouseEvent* event )
 {
     if( selectedParent_ && ( event->button() | Qt::LeftButton ) )
         emit StartDrag();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitPreviewIcon::SetSymbol
+// Created: ABR 2011-10-17
+// -----------------------------------------------------------------------------
+void UnitPreviewIcon::SetSymbol( const std::string& symbol )
+{
+    symbol_ = symbol;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitPreviewIcon::SetLevel
+// Created: ABR 2011-10-17
+// -----------------------------------------------------------------------------
+void UnitPreviewIcon::SetLevel( const std::string& level )
+{
+    level_ = level;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitPreviewIcon::GetSymbol
+// Created: ABR 2011-10-18
+// -----------------------------------------------------------------------------
+const std::string& UnitPreviewIcon::GetSymbol() const
+{
+    return symbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitPreviewIcon::GetLevel
+// Created: ABR 2011-10-18
+// -----------------------------------------------------------------------------
+const std::string& UnitPreviewIcon::GetLevel() const
+{
+    return level_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitPreviewIcon::GetSelectedParent
+// Created: ABR 2011-10-17
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* UnitPreviewIcon::GetSelectedParent() const
+{
+    return selectedParent_;
 }

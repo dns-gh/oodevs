@@ -10,10 +10,11 @@
 #include "preparation_pch.h"
 #include "FormationHierarchies.h"
 #include "AutomatDecisions.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
 #include <xeumeuleu/xml.hpp>
@@ -75,7 +76,13 @@ void FormationHierarchies::SerializeAttributes( xml::xostream& xos ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << xml::start( it->second->Retrieve< AutomatDecisions >() ? "automat" : "formation" ); // $$$$ SBO 2006-09-22: bof bof
+        const kernel::Entity_ABC* child = it->second;
+        if( dynamic_cast< const kernel::Ghost_ABC* >( child ) )
+            xos << xml::start( "phantom" );
+        else if( dynamic_cast< const kernel::Automat_ABC* >( child ) )
+            xos << xml::start( "automat" );
+        else
+            xos << xml::start( "formation" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         xos << xml::end;
     }

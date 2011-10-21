@@ -16,6 +16,7 @@ namespace kernel
     class Agent_ABC;
     class Automat_ABC;
     class Formation_ABC;
+    class Ghost_ABC;
     class Object_ABC;
     class Population_ABC;
     class Inhabitant_ABC;
@@ -58,6 +59,7 @@ public:
     virtual void SelectColor( const kernel::Team_ABC& team ) = 0;
     virtual void SelectColor( const Drawing_ABC& drawing ) = 0;
     virtual void SelectColor( const TerrainObjectProxy& proxy ) = 0;
+    virtual void SelectColor( const kernel::Ghost_ABC& ghost ) = 0;
     virtual QColor FindColor( const kernel::Entity_ABC& entity ) = 0;
     virtual QColor FindBaseColor( const kernel::Entity_ABC& entity ) = 0;
     virtual QColor FindColor( const kernel::Knowledge_ABC& knowledge ) = 0;

@@ -45,6 +45,7 @@ namespace kernel
     class ObjectKnowledge_ABC;
     class KnowledgeGroup_ABC;
     class LogisticLevel;
+    class Ghost_ABC;
 }
 
 namespace gui
@@ -89,6 +90,7 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public tools::Caller< kernel::ObjectKnowledge_ABC >
                     , public tools::Caller< kernel::KnowledgeGroup_ABC >
                     , public tools::Caller< kernel::LogisticLevel >
+                    , public tools::Caller< kernel::Ghost_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -137,6 +139,7 @@ private:
     virtual void Call( const kernel::ObjectKnowledge_ABC& value );
     virtual void Call( const kernel::KnowledgeGroup_ABC& value );
     virtual void Call( const kernel::LogisticLevel& value );
+    virtual void Call( const kernel::Ghost_ABC& value );
     //@}
 };
 

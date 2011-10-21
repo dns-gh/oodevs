@@ -91,6 +91,10 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\preparation\Ghost.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\GhostFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\GhostModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\GhostPositions.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\LinkGenerator.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ModelConsistencyChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\preparation_pch.cpp">
@@ -230,6 +234,11 @@
     <ClCompile Include="..\..\src\libraries\preparation\LocationSerializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\preparation\Ghost.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\GhostFactory.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\GhostFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\GhostModel.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\GhostPositions.h" />
     <ClInclude Include="..\..\src\libraries\preparation\InhabitantPositions_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LinkGenerator.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LogisticHierarchiesBase.h" />

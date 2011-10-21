@@ -17,6 +17,8 @@ namespace kernel
 {
     class LocationVisitor_ABC;
 
+    // $$$$ ABR 2011-10-19: Rename to Positions_ABC, and create a new class Positions that will implement common method for each sub positions class.
+
 // =============================================================================
 /** @class  Positions
     @brief  Positions

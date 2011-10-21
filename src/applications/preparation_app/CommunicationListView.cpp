@@ -13,6 +13,7 @@
 #include "PreparationProfile.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_gui/ValuedDragObject.h" // LTO
 #include "clients_gui/ValuedListItem.h" // LTO
@@ -92,62 +93,6 @@ void CommunicationListView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC&
     menu.InsertItem( "Creation", tools::translate( "CommunicationListView", "Create sub knowledge group" ), &modelBuilder_, SLOT( OnCreateCommunication() ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: CommunicationListView::CanDrop
-// Created: FHD/SYD 2009-11-30
-// LTO
-// -----------------------------------------------------------------------------
-bool CommunicationListView::CanDrop( const Entity_ABC* draggedEntity, QPoint dropPosition ) const
-{
-    // $$$$ SYD 2009-12-02: TODO REFACTOR: This method could be used also by Drop method
-    //        Base class may have such a "can drop method", along with a dragMoveEvent that use it
-    //        More generally, drag n drop validity checking might be more consistent throughout the GUI
-    gui::ValuedListItem* targetItem = (gui::ValuedListItem*)itemAt( dropPosition );
-    if( targetItem == NULL )
-        return false;
-
-    //--- check source of drag n drop
-    const KnowledgeGroup_ABC* srcKnowledgeGroup = dynamic_cast< const KnowledgeGroup_ABC* >( draggedEntity );
-    const Automat_ABC* srcAutomat = dynamic_cast< const Automat_ABC* >( draggedEntity );
-    if( !srcKnowledgeGroup && !srcAutomat )
-        return false; // can drop only automats or knowledge group
-
-    //--- check destination of drag n drop
-    const Entity_ABC* dstEntity = dynamic_cast< const Entity_ABC* >( targetItem->GetValue< const Entity_ABC >() );
-    const KnowledgeGroup_ABC* dstKnowledgeGroup = dynamic_cast< const KnowledgeGroup_ABC* >( dstEntity );
-    const Entity_ABC* dstTeam = 0;
-    if( const kernel::CommunicationHierarchies* dstHierarchies = dstEntity->Retrieve< kernel::CommunicationHierarchies >() )
-        dstTeam = &dstHierarchies->GetTop();
-
-    if( !dstKnowledgeGroup && !dstTeam )
-        return false; // can drop only on knowledge group or team
-
-    //--- check compatibility between source and destination of drag n drop
-    if( draggedEntity == dstEntity )
-        return false; // cannot drop an item on itself
-
-    const Entity_ABC* srcTeam = 0;
-    const Entity_ABC* srcSuperior = 0;
-    if( const kernel::CommunicationHierarchies* srcHierarchies = draggedEntity->Retrieve< kernel::CommunicationHierarchies >() )
-    {
-        srcTeam = &srcHierarchies->GetTop();
-        srcSuperior = srcHierarchies->GetSuperior();
-    }
-
-    if( srcSuperior == dstEntity )
-        return false; // cannot drop an item on his parent
-
-    if( !dstKnowledgeGroup && !srcKnowledgeGroup )
-        return false; // if source is not a knowledge group, then destination must be a knowledge group
-
-    if( dstTeam == dstEntity && srcAutomat )
-        return false; // cannot drop an automat directly on its team
-
-    if( srcTeam != dstTeam )
-        return false; // cannot drag n drop between teams
-
-    return true;
-}
 
 // -----------------------------------------------------------------------------
 // Name: CommunicationListView::Drop
@@ -157,11 +102,14 @@ bool CommunicationListView::CanDrop( const Entity_ABC* draggedEntity, QPoint dro
 bool CommunicationListView::Drop( const Entity_ABC& draggedEntity, const Entity_ABC& target )
 {
     const Automat_ABC*        automat = dynamic_cast< const Automat_ABC* >       ( &draggedEntity );
+    const Ghost_ABC*          ghost   = dynamic_cast< const Ghost_ABC* >         ( &draggedEntity );
     const KnowledgeGroup_ABC* group   = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
-    if( automat && group )
+    if( ghost && ghost->GetGhostType() != eGhostType_Automat )
+        return false;
+    if( ( automat || ghost ) && group )
     {
         // moving an automat under knowledgegroup
-        CommunicationHierarchies& com = const_cast< CommunicationHierarchies& >( automat->Get< CommunicationHierarchies >() );
+        CommunicationHierarchies& com = const_cast< CommunicationHierarchies& >( ( automat ) ? automat->Get< CommunicationHierarchies >() : ghost->Get< CommunicationHierarchies >() );
         if( &com.GetTop() != &target.Get< CommunicationHierarchies >().GetTop() )
             return false;
         static_cast< AutomatCommunications& >( com ).ChangeSuperior( const_cast< Entity_ABC& >( target ) );
@@ -203,22 +151,4 @@ void CommunicationListView::keyPressEvent( QKeyEvent* event )
         modelBuilder_.DeleteEntity( *((gui::ValuedListItem*)selectedItem())->GetValue< const Entity_ABC >() );
     else
         Q3ListView::keyPressEvent( event );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CommunicationListView::CommunicationListView::dragMoveEvent
-// Created: FHD/SYD 2009-12-01
-// LTO
-// -----------------------------------------------------------------------------
-void CommunicationListView::dragMoveEvent( QDragMoveEvent *pEvent )
-{
-    const Entity_ABC* entity = gui::ValuedDragObject::GetValue< Entity_ABC >( pEvent );
-    if( !entity )
-    {
-        pEvent->ignore();
-        return;
-    }
-
-    QPoint position = viewport()->mapFromParent( pEvent->pos() );
-    pEvent->accept( CanDrop( entity, position ) );
 }

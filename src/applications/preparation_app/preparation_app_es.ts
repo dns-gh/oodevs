@@ -576,6 +576,65 @@
     </message>
 </context>
 <context>
+    <name>GhostsPanel</name>
+    <message>
+        <source>Phantom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished">Nombre:</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a parent automat or formation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>- Name not set.&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>- Type not set.&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag and drop symbol to map to create a new phantom.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter phantom name here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter phantom type here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>- Superior not set to a formation or an automat.&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error, missing informations:&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>InhabitantCreationPanel</name>
     <message>
         <source>Information</source>
@@ -848,6 +907,10 @@ Do you want to save anyway?</source>
     </message>
     <message>
         <source>ORBAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phantom</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1129,6 +1192,10 @@ Do you want to save anyway?</source>
     </message>
     <message>
         <source>Not &apos;writable&apos; to any user profile. You will not be able to give orders to it on the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A phantom unit is present.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

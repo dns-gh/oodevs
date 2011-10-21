@@ -21,6 +21,7 @@
 #include "FilterDialog.h"
 #include "FilterDialogs.h"
 #include "FilterOrbatReIndexer.h"
+#include "GhostsLayer.h"
 #include "LimitsLayer.h"
 #include "LogisticListView.h"
 #include "Menu.h"
@@ -275,7 +276,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
     gui::LocationEditorToolbar* LocEditToolBar = new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer );
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *LocEditToolBar );
-    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile(), *simpleFilter_, this );
+    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, PreparationProfile::GetProfile(), *simpleFilter_, this );
     gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
@@ -365,6 +366,7 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     Layer_ABC& limits                   = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile, *simpleFilter_ );
     Layer_ABC& objectsLayer             = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker, *urbanFilter_ );
     Layer_ABC& populations              = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
+    Layer_ABC& ghosts                   = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
     Layer_ABC& defaultLayer             = *new DefaultLayer( controllers_ );
     Layer_ABC& drawerLayer              = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
     Layer_ABC& inhabitantLayer          = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
@@ -387,6 +389,7 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     glProxy_->Register( inhabitantLayer );          preferences.AddLayer( tr( "Populations" ), inhabitantLayer );   inhabitantLayer     .SetPasses( "main" );
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main" );
     glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowd" ), populations );             populations         .SetPasses( "main" );
+    glProxy_->Register( ghosts );                   preferences.AddLayer( tr( "Phantom" ), ghosts );                ghosts              .SetPasses( "main" );
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main" );
     glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );             automats            .SetPasses( "main" );
     glProxy_->Register( formation );                preferences.AddLayer( tr( "Formations" ), formation );         formation           .SetPasses( "main" );
@@ -406,6 +409,7 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     forward_->Register( automats );
     forward_->Register( formation );
     forward_->Register( populations );
+    forward_->Register( ghosts );
     forward_->Register( objectsLayer );
     forward_->Register( weather );
     forward_->Register( inhabitantLayer );
@@ -582,6 +586,7 @@ void MainWindow::LoadExercise()
         std::string loadingErrors;
         SetProgression( 70, tr( "Loading exercise ..." ) );
         model_.Load( config_, loadingErrors );
+        pCreationPanel_->Load();
         if( config_.HasGenerateScores() )
         {
             model_.scores_.GenerateScoresFromTemplate( config_.GetLoader() );

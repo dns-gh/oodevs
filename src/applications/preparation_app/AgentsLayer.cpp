@@ -27,10 +27,9 @@ using namespace kernel;
 // Name: AgentsLayer constructor
 // Created: SBO 2006-08-31
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const Profile_ABC& profile, const gui::LayerFilter_ABC& filter, QWidget* parent )
+AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, const Profile_ABC& profile, const gui::LayerFilter_ABC& filter, QWidget* parent )
     : gui::AgentsLayer  ( controllers, tools, strategy, view, profile, filter )
     , model_            ( model )
-    , modelBuilder_     ( modelBuilder )
     , selectedAgent_    ( controllers )
     , selectedAutomat_  ( controllers )
     , selectedFormation_( controllers )
@@ -212,7 +211,7 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
         Q3DragObject* drag = new gui::ValuedDragObject( pos, dynamic_cast< QWidget* >( parent() ) );
         drag->dragMove();
     }
-        return result;
+    return result;
 }
 
 // -----------------------------------------------------------------------------

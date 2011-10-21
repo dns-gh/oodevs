@@ -11,6 +11,7 @@
 #include "ModelConsistencyChecker.h"
 #include "AgentsModel.h"
 #include "FormationModel.h"
+#include "GhostModel.h"
 #include "LimitsModel.h"
 #include "LogisticBaseStates.h"
 #include "LogisticHierarchiesBase.h"
@@ -26,6 +27,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
@@ -124,6 +126,8 @@ bool ModelConsistencyChecker::CheckConsistency( unsigned int filters /*= eAllChe
         CheckProfileUniqueness();
     if( filters & eProfileUnreadable || filters & eProfileUnwritable )
         CheckProfileInitialization();
+    if( filters & eGhostExistence )
+        CheckGhostExistence();
     return !errors_.empty();
 }
 
@@ -314,6 +318,20 @@ void ModelConsistencyChecker::CheckProfileInitialization()
             if( filters_ & eProfileUnreadable && !model_.profiles_.IsReadable( agent ) )
                 AddError( eProfileUnreadable, &agent );
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckGhostExistence
+// Created: ABR 2011-10-20
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckGhostExistence()
+{
+    Iterator< const Ghost_ABC& > it = model_.ghosts_.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Ghost_ABC& ghost = it.NextElement();
+        AddError( eGhostExistence, &ghost );
     }
 }
 

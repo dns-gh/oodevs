@@ -21,6 +21,7 @@ FilterInputArgument.cpp \
 FilterManager.cpp \
 FilterOrbatReIndexer.cpp \
 FilterXsl.cpp \
+GhostsPanel.cpp \
 InhabitantCreationPanel.cpp \
 InitialStateDialog.cpp \
 InitialStateTableCrew.cpp \

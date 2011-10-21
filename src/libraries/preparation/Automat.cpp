@@ -145,7 +145,7 @@ void Automat::SerializeAttributes( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::SerializeAttributes
+// Name: Automat::GetLogisticLevel
 // Created: AHC 2010-10-07
 // -----------------------------------------------------------------------------
 const LogisticLevel& Automat::GetLogisticLevel() const

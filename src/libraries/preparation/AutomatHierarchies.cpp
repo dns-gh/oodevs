@@ -9,8 +9,9 @@
 
 #include "preparation_pch.h"
 #include "AutomatHierarchies.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -51,10 +52,11 @@ void AutomatHierarchies::SerializeAttributes( xml::xostream& xos ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        // $$$$ AGE 2007-04-05: quick ada fix.
         const kernel::Entity_ABC* child = it->second;
         if( dynamic_cast< const kernel::Agent_ABC* >( child ) )
             xos << xml::start( "unit" );
+        else if( dynamic_cast< const kernel::Ghost_ABC* >( child ) )
+            xos << xml::start( "phantom" );
         else
             xos << xml::start( "automat" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );

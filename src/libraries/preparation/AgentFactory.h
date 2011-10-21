@@ -51,10 +51,10 @@ public:
     virtual kernel::Inhabitant_ABC* CreateInhab( xml::xistream& xis, kernel::Team_ABC& parent );
     //@}
 
-private:
+public:
     //! @name Helpers
     //@{
-    kernel::Entity_ABC* FindorCreateKnowledgeGroup( const kernel::Entity_ABC& parent );
+    static kernel::Entity_ABC* FindorCreateKnowledgeGroup( const kernel::Entity_ABC& parent, kernel::KnowledgeGroupFactory_ABC& knowledgeFactory );
     //@}
 
 private:

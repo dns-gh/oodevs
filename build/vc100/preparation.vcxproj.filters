@@ -113,6 +113,12 @@
     <Filter Include="Translations">
       <UniqueIdentifier>{83cb819c-6cfc-4433-afed-a5e9e577191b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Ghosts">
+      <UniqueIdentifier>{9fd239e6-008b-4d8b-b8a9-dc4cc17eb385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Ghosts\Extensions">
+      <UniqueIdentifier>{7f647236-3f0e-4840-a508-31c908593702}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\preparation\preparation_pch.cpp">
@@ -510,6 +516,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\LinkGenerator.cpp">
       <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\GhostFactory.cpp">
+      <Filter>Source Files\Model\Ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\Ghost.cpp">
+      <Filter>Source Files\Model\Ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\GhostModel.cpp">
+      <Filter>Source Files\Model\Ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\GhostPositions.cpp">
+      <Filter>Source Files\Model\Ghosts\Extensions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -959,6 +977,21 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\LinkGenerator.h">
       <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\GhostFactory.h">
+      <Filter>Source Files\Model\Ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\Ghost.h">
+      <Filter>Source Files\Model\Ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\GhostModel.h">
+      <Filter>Source Files\Model\Ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\GhostFactory_ABC.h">
+      <Filter>Source Files\Model\Ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\GhostPositions.h">
+      <Filter>Source Files\Model\Ghosts\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

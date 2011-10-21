@@ -811,5 +811,17 @@
         <source>Logistic - Not field arty ammo</source>
         <translation>Logistique - munitions non tranche D</translation>
     </message>
+    <message>
+        <source>Agent</source>
+        <translation>Pion</translation>
+    </message>
+    <message>
+        <source>Automat</source>
+        <translation>Automate</translation>
+    </message>
+    <message>
+        <source>Invalid</source>
+        <translation>Invalide</translation>
+    </message>
 </context>
 </TS>
