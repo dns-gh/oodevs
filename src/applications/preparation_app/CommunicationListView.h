@@ -58,9 +58,6 @@ private:
     virtual bool Drop( const kernel::Entity_ABC& draggedEntity, const kernel::Entity_ABC& target );
     // LTO begin
     virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& knowledgegroup, kernel::ContextMenu& menu );
-
-    virtual bool CanDrop( const kernel::Entity_ABC* draggedEntity, QPoint dropPosition ) const;
-    virtual void dragMoveEvent( QDragMoveEvent *pEvent );
     // LTO end
     virtual void keyPressEvent( QKeyEvent* event );
    //@}

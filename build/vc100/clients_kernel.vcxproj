@@ -99,6 +99,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\FormationLevels.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Ghost_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Karma.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Level.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticLevel.cpp" />
@@ -225,6 +226,8 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\FormationLevels.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\GhostPrototype.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Ghost_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\HierarchyLevel_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Karma.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Level.h" />

@@ -791,5 +791,17 @@
         <source>transporting packaged</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Agent</source>
+        <translation>Pion</translation>
+    </message>
+    <message>
+        <source>Automat</source>
+        <translation>Automate</translation>
+    </message>
+    <message>
+        <source>Invalid</source>
+        <translation>Invalide</translation>
+    </message>
 </context>
 </TS>

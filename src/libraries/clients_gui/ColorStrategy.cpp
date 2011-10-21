@@ -18,6 +18,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Knowledge_ABC.h"
@@ -130,6 +131,15 @@ void ColorStrategy::SelectColor( const Automat_ABC& automat )
 void ColorStrategy::SelectColor( const Formation_ABC& formation )
 {
     Process( formation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
+// Created: ABR 2011-10-19
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const kernel::Ghost_ABC& ghost )
+{
+    Process( ghost );
 }
 
 // -----------------------------------------------------------------------------

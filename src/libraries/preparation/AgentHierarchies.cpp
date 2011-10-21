@@ -19,11 +19,11 @@
 // Name: AgentHierarchies constructor
 // Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-AgentHierarchies::AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder, kernel::Entity_ABC* superior )
+AgentHierarchies::AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const std::string& level, const std::string& symbol, kernel::Entity_ABC* superior )
     : TacticalHierarchies( controller, holder, 0 )
-    , level_ ( holder.GetType().GetLevelSymbol() )
-    , baseSymbol_( holder.GetType().GetSymbol() )
-    , symbol_( baseSymbol_ )
+    , level_ ( level )
+    , baseSymbol_( symbol )
+    , symbol_( symbol )
     , superior_( superior )
 {
     // NOTHING

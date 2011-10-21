@@ -457,6 +457,12 @@
     <ClCompile Include="..\..\src\applications\preparation_app\CsvExport.cpp">
       <Filter>Source Files\Dialogs\Filter</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\GhostsPanel.cpp">
+      <Filter>Source Files\Panels\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\GhostsLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -632,6 +638,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\Progress_ABC.h">
       <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\GhostsLayer.h">
+      <Filter>Source Files\Layers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -840,6 +849,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\FilterCsv.h">
       <Filter>Source Files\Dialogs\Filter</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\GhostsPanel.h">
+      <Filter>Source Files\Panels\Creation</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

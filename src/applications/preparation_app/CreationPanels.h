@@ -32,10 +32,11 @@ namespace gui
     class WeatherLayer;
 }
 
-class StaticModel;
+class GhostsPanel;
+class InhabitantCreationPanel;
 class Model;
 class ObjectCreationPanel;
-class InhabitantCreationPanel;
+class StaticModel;
 
 // =============================================================================
 /** @class  CreationPanels
@@ -56,6 +57,7 @@ public:
 
     //! @name Operations
     //@{
+    void Load();
     ObjectCreationPanel& GetObjectCreationPanel() const;
     InhabitantCreationPanel& GetInhabitantCreationPanel() const;
     //@}
@@ -63,8 +65,9 @@ public:
 private:
     //! @name Member data
     //@{
-    ObjectCreationPanel* objectCreationPanel_;
+    ObjectCreationPanel*     objectCreationPanel_;
     InhabitantCreationPanel* inhabitantCreationPanel_;
+    GhostsPanel*             ghostPanel_;
     //@}
 };
 

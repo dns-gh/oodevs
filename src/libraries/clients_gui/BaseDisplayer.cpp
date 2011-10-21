@@ -39,6 +39,7 @@
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -360,4 +361,13 @@ void BaseDisplayer::Clear()
 void BaseDisplayer::Call( const kernel::LogisticLevel& value )
 {
     AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: ABR 2011-10-20
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::Ghost_ABC& value )
+{
+    AddToDisplay( InternalLinks::CreateLink( value, value.GetName() ) );
 }

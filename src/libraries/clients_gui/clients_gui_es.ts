@@ -1593,13 +1593,6 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
-    <name>gui::UnitPreviewIcon</name>
-    <message>
-        <source>Drag and drop symbol to map to create a new unit.</source>
-        <translation>Glissez/déposez le symbole sur la carte pour créer une nouvelle unité.</translation>
-    </message>
-</context>
-<context>
     <name>gui::UnitStateDialog</name>
     <message>
         <source>Unit state</source>
@@ -1740,6 +1733,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Atlas qualifier</source>
         <translation>Qualificatif Atlas</translation>
+    </message>
+    <message>
+        <source>Drag and drop symbol to map to create a new unit.</source>
+        <translation type="unfinished">Glissez/déposez le symbole sur la carte pour créer une nouvelle unité.</translation>
     </message>
 </context>
 <context>

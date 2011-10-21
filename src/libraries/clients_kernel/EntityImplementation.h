@@ -65,7 +65,7 @@ private:
     //@{
     Controller& controller_;
 protected:
-    unsigned long id_;
+    const unsigned long id_;
     QString name_;
     //@}
 };

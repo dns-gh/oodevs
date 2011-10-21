@@ -16,7 +16,6 @@
 
 namespace kernel
 {
-    class Team_ABC;
     class GlTools_ABC;
     class Controllers;
 }
@@ -56,6 +55,7 @@ public:
     virtual void SelectColor( const kernel::Team_ABC& team );
     virtual void SelectColor( const Drawing_ABC& drawing );
     virtual void SelectColor( const TerrainObjectProxy& proxy );
+    virtual void SelectColor( const kernel::Ghost_ABC& ghost );
     virtual QColor FindColor( const kernel::Entity_ABC& entity );
     virtual QColor FindBaseColor( const kernel::Entity_ABC& entity );
     virtual QColor FindColor( const kernel::Knowledge_ABC& knowledge );

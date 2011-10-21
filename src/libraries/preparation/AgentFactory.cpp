@@ -94,7 +94,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
         result->Rename( name );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dico ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetType().GetLevelSymbol(), result->GetType().GetSymbol(), &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dico, tools::translate( "Affinities", "Affinities" ) ) );
@@ -120,7 +120,7 @@ Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, 
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
-    Entity_ABC* kg = FindorCreateKnowledgeGroup( parent );
+    Entity_ABC* kg = FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
 
     bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
@@ -195,7 +195,7 @@ Inhabitant_ABC* AgentFactory::Create( Entity_ABC& parent, const InhabitantType& 
 // Name: AgentFactory::FindKnowledgeGroup
 // Created: AGE 2006-10-10
 // -----------------------------------------------------------------------------
-Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const Entity_ABC& parent )
+Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const Entity_ABC& parent, kernel::KnowledgeGroupFactory_ABC& knowledgeFactory )
 {
     const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
     const CommunicationHierarchies& teamHierarchy = team.Get< CommunicationHierarchies >();
@@ -209,7 +209,7 @@ Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const Entity_ABC& parent )
     // LTO begin
     Team_ABC* teamtop = dynamic_cast< Team_ABC* >( const_cast< Entity_ABC* >(&team) );
     if( teamtop )
-        return knowledgeGroupFactory_.Create( *teamtop );
+        return knowledgeFactory.Create( *teamtop );
     // LTO end
     return const_cast< Entity_ABC* >( &team );
 }
@@ -223,7 +223,7 @@ Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
     Agent* result = new Agent( xis, controllers_.controller_, idManager_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_, controllers_.controller_, dico ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetType().GetLevelSymbol(), result->GetType().GetSymbol(), &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new InitialState( xis, static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( xis, *result, controllers_, model_, dico, tools::translate( "Affinities", "Affinities" ) ) );

@@ -20,6 +20,7 @@ namespace kernel
     class Formation_ABC;
     class FormationLevels;
     class HierarchyLevel_ABC;
+    class Ghost_ABC;
 }
 
 class AutomatDecisions;
@@ -77,10 +78,11 @@ private:
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void keyPressEvent( QKeyEvent* event );
 
-    virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
-    virtual bool Drop( const kernel::Agent_ABC& item, const kernel::Entity_ABC& target );
-    virtual bool Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target );
-    virtual bool Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target );
+    bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
+    bool Drop( const kernel::Agent_ABC& item, const kernel::Entity_ABC& target );
+    bool Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target );
+    bool Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target );
+    bool Drop( const kernel::Ghost_ABC& item, const kernel::Entity_ABC& target );
     void AddFormationMenu( kernel::ContextMenu& menu, const kernel::HierarchyLevel_ABC& root );
     //@}
 

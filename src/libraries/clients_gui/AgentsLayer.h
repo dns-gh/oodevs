@@ -12,13 +12,6 @@
 
 #include "EntityLayer.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/SafePointer.h"
-
-namespace kernel
-{
-    class Automat_ABC;
-}
 
 namespace gui
 {

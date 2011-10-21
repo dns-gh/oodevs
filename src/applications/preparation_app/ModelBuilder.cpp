@@ -22,6 +22,7 @@
 #include "preparation/KnowledgeGroup.h"
 #include "preparation/Automat.h"
 #include "preparation/Agent.h"
+#include "preparation/Ghost.h"
 #include "preparation/Object.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Level.h"
@@ -71,6 +72,7 @@ ModelBuilder::ModelBuilder( Controllers& controllers, Model& model )
     , selectedAgent_( controllers )
     , selectedAutomat_( controllers )
     , selectedFormation_( controllers )
+    , selectedGhost_( controllers )
     , toDelete_( controllers )
     , confirmation_( new ConfirmationBox( tr( "Confirmation" ), boost::bind( &ModelBuilder::OnConfirmDeletion, this, _1 ) ) )
 {
@@ -257,6 +259,7 @@ void ModelBuilder::ClearSelection()
     selectedAgent_ = 0;
     selectedAutomat_ = 0;
     selectedFormation_ = 0;
+    selectedGhost_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -327,6 +330,16 @@ void ModelBuilder::Select( const kernel::Automat_ABC& element )
     selectedAutomat_ = &element;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::Select
+// Created: ABR 2011-10-20
+// -----------------------------------------------------------------------------
+void ModelBuilder::Select( const kernel::Ghost_ABC& element )
+{
+    ClearSelection();
+    selectedGhost_ = &element;
+}
+
 namespace
 {
     template< typename Concrete, typename T >
@@ -353,4 +366,6 @@ void ModelBuilder::OnRename( Q3ListViewItem*, int, const QString& text )
         Rename< Formation >( selectedFormation_, text );
     else if( selectedGroup_ )
         Rename< KnowledgeGroup >( selectedGroup_, text );
+    else if( selectedGhost_ )
+        Rename< Ghost >( selectedGhost_, text );
 }

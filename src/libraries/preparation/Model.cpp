@@ -18,6 +18,8 @@
 #include "Exercise.h"
 #include "FormationFactory.h"
 #include "FormationModel.h"
+#include "GhostFactory.h"
+#include "GhostModel.h"
 #include "IdManager.h"
 #include "KnowledgeGroupFactory.h" // LTO
 #include "LimitsModel.h"
@@ -74,6 +76,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , scoreFactory_         ( *new ScoreFactory( controllers_, staticModel.indicators_, staticModel.gaugeTypes_, *this ) )
     , successFactorFactory_ ( *new SuccessFactorFactory( controllers_, *this, staticModel.successFactorActionTypes_ ) )
     , drawingFactory_       ( *new gui::DrawerFactory( controllers, staticModel.drawings_, staticModel.coordinateConverter_ ) )
+    , ghostFactory_         ( *new GhostFactory( controllers, *this, staticModel, idManager_, knowledgeGroupFactory_ ) )
     , resourceObserver_     ( *new ResourceNetworkSelectionObserver( controllers ) )
     , loaded_               ( false )
     , exercise_             ( *new Exercise( controllers.controller_ ) )
@@ -89,6 +92,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , successFactors_       ( *new SuccessFactorsModel( successFactorFactory_ ) )
     , urban_                ( *new UrbanModel( controllers, staticModel, objects_ ) )
     , drawings_             ( *new gui::DrawerModel( controllers, drawingFactory_, *this ) )
+    , ghosts_               ( *new GhostModel( controllers, ghostFactory_ ) )
     , symbolsFactory_       ( *new SymbolFactory() )
 {
     // NOTHING
@@ -121,6 +125,8 @@ Model::~Model()
     delete &teams_;
     delete &teamFactory_;
     delete &urban_;
+    delete &ghosts_;
+    delete &ghostFactory_;
     delete &idManager_;
 }
 
@@ -227,6 +233,7 @@ void Model::Purge()
     scores_.Purge();
     weather_.Purge();
     limits_.Purge();
+    ghosts_.Purge();
     agents_.Purge();
     formations_.Purge();
     knowledgeGroups_.Purge();
@@ -353,6 +360,15 @@ QString Model::GetName() const
 IdManager& Model::GetIdManager() const
 {
     return idManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetSymbolsFactory
+// Created: ABR 2011-10-14
+// -----------------------------------------------------------------------------
+kernel::SymbolFactory& Model::GetSymbolsFactory() const
+{
+    return symbolsFactory_;
 }
 
 // -----------------------------------------------------------------------------

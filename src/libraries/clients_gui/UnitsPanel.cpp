@@ -62,7 +62,7 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
         connect( list_ , SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( SelectionChanged( Q3ListViewItem* ) ) );
     }
     {
-        icon_ = new UnitPreviewIcon( vbox, controllers_, icons, colorStrategy );
+        icon_ = new UnitPreviewIcon( vbox, controllers_, icons, colorStrategy, tr( "Drag and drop symbol to map to create a new unit." ) );
         connect( icon_, SIGNAL( StartDrag() ), SLOT( IconDragged() ) );
     }
     setWidget( vbox );

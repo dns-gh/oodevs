@@ -68,7 +68,8 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ ModelConsistencyChecker::eLogisticInitialization ] = tr( "No logistic link initialized." );
     errorDescriptions_[ ModelConsistencyChecker::eProfileUniqueness ]      = tr( "Association with multiple profiles: %1." );
     errorDescriptions_[ ModelConsistencyChecker::eProfileUnreadable ]      = tr( "Not 'readable' to any user profile. You will not be able to see it on the game." );
-    errorDescriptions_[ ModelConsistencyChecker::eProfileUnwritable]       = tr( "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
+    errorDescriptions_[ ModelConsistencyChecker::eProfileUnwritable ]      = tr( "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
+    errorDescriptions_[ ModelConsistencyChecker::eGhostExistence ]         = tr( "A phantom unit is present." );
 }
 
 // -----------------------------------------------------------------------------

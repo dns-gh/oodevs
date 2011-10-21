@@ -22,6 +22,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "icons.h"
 
 using namespace gui;
@@ -256,6 +257,11 @@ bool TacticalListView::Drop( const Entity_ABC& item, const Entity_ABC& target )
     const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &item );
     if( formation )
         return Drop( *formation, target );
+
+    const Ghost_ABC* ghost = dynamic_cast< const Ghost_ABC* >( &item );
+    if( ghost )
+        return Drop( *ghost, target );
+
     return false;
 }
 
@@ -333,14 +339,27 @@ bool TacticalListView::Drop( const Formation_ABC& formation, const Entity_ABC& t
 {
     const Formation_ABC* targetFormation = dynamic_cast< const Formation_ABC* >( &target );
     if( targetFormation )
-    {
-        if( formation.GetLevel() < targetFormation->GetLevel() )
-            return ChangeSuperior( formation, target );
-        return false;
-    }
+        return ChangeSuperior( formation, target );
 
     const Team_ABC* team = dynamic_cast< const Team_ABC* >( &target );
     if( team )
         return ChangeSuperior( formation, target );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::Drop
+// Created: ABR 2011-10-20
+// -----------------------------------------------------------------------------
+bool TacticalListView::Drop( const kernel::Ghost_ABC& item, const kernel::Entity_ABC& target )
+{
+    const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &target );
+    if( formation && item.GetGhostType() == eGhostType_Automat )
+        return ChangeSuperior( item, target );
+
+    const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &target );
+    if( automat && item.GetGhostType() == eGhostType_Agent )
+        return ChangeSuperior( item, target );
+
     return false;
 }

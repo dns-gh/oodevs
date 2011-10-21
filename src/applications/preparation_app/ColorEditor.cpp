@@ -14,6 +14,7 @@
 #include "clients_kernel/tools.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -99,6 +100,15 @@ void ColorEditor::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::
 // Created: LGY 2011-06-28
 // -----------------------------------------------------------------------------
 void ColorEditor::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+{
+    Update( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorEditor::NotifyContextMenu
+// Created: ABR 2011-10-19
+// -----------------------------------------------------------------------------
+void ColorEditor::NotifyContextMenu( const kernel::Ghost_ABC& entity, kernel::ContextMenu& menu )
 {
     Update( entity, menu );
 }

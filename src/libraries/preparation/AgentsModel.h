@@ -37,6 +37,7 @@ namespace xml
 }
 
 class AgentFactory_ABC;
+class GhostModel;
 class LimitsModel;
 class ModelChecker_ABC;
 
@@ -67,7 +68,7 @@ public:
     //! @name Operations
     //@{
     void CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
-    void CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits, std::string& loadingErrors );
+    void CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits, GhostModel& ghosts, std::string& loadingErrors );
     kernel::Automat_ABC& CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const QString& name = "" );
 
     kernel::Automat_ABC& GetAutomat( unsigned long id );

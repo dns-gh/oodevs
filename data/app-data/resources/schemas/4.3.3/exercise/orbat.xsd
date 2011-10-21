@@ -737,6 +737,7 @@
 				<xs:extension base="entityType">
 					<xs:choice minOccurs="0" maxOccurs="unbounded">
 						<xs:element ref="automat" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="phantom" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element ref="formation" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
@@ -808,6 +809,7 @@
 				<xs:extension base="entityType">
 					<xs:choice minOccurs="0" maxOccurs="unbounded">
 						<xs:element ref="unit" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="phantom" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element ref="automat" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>

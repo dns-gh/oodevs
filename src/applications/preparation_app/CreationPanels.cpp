@@ -16,6 +16,7 @@
 #include "clients_gui/UnitsPanel.h"
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
+#include "GhostsPanel.h"
 #include "TemplatesPanel.h"
 #include "InhabitantCreationPanel.h"
 #include "ObjectCreationPanel.h"
@@ -39,6 +40,8 @@ CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controller
     AddPanel( inhabitantCreationPanel_ );
     objectCreationPanel_ = new ObjectCreationPanel( this, *this, controllers, staticModel, model.objects_, model.urban_, paramLayer, glProxy, config );
     AddPanel( objectCreationPanel_ );
+    ghostPanel_ = new GhostsPanel( this, *this, controllers, model.GetSymbolsFactory(), icons, colorStrategy );
+    AddPanel( ghostPanel_ );
     AddPanel( new TemplatesPanel( this, *this, controllers, model.agents_, model.formations_, staticModel.types_ ) );
     AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, model.drawings_, config ) );
     AddPanel( new WeatherPanel( this, *this, controllers, staticModel.coordinateConverter_, weatherLayer ) );
@@ -69,4 +72,13 @@ ObjectCreationPanel& CreationPanels::GetObjectCreationPanel() const
 InhabitantCreationPanel& CreationPanels::GetInhabitantCreationPanel() const
 {
     return *inhabitantCreationPanel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreationPanels::Load
+// Created: ABR 2011-10-14
+// -----------------------------------------------------------------------------
+void CreationPanels::Load()
+{
+    ghostPanel_->Load();
 }

@@ -576,6 +576,65 @@
     </message>
 </context>
 <context>
+    <name>GhostsPanel</name>
+    <message>
+        <source>Phantom</source>
+        <translation>Fantôme</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Type:</translation>
+    </message>
+    <message>
+        <source>Level:</source>
+        <translation>Niveau:</translation>
+    </message>
+    <message>
+        <source>Select a parent automat or formation</source>
+        <translation>Selectionner un automate ou une formation parent</translation>
+    </message>
+    <message>
+        <source>Category:</source>
+        <translation>Categorie:</translation>
+    </message>
+    <message>
+        <source>Weapon:</source>
+        <translation>Armes:</translation>
+    </message>
+    <message>
+        <source>Drag and drop symbol to map to create a new phantom.</source>
+        <translation>Glissez/déposez le symbole sur la carte pour créer un nouveau fantôme.</translation>
+    </message>
+    <message>
+        <source>Enter phantom name here</source>
+        <translation>Entrer le nom du fantôme ici</translation>
+    </message>
+    <message>
+        <source>Enter phantom type here</source>
+        <translation>Entrer le type du fantôme ici</translation>
+    </message>
+    <message>
+        <source>- Name not set.&lt;br&gt;</source>
+        <translation>- Nom pas encore défini.&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>- Type not set.&lt;br&gt;</source>
+        <translation>- Type pas encore défini.&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>- Superior not set to a formation or an automat.&lt;br&gt;</source>
+        <translation>- Superieur non défini à une formation ou un automate.&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>Error, missing informations:&lt;br&gt;</source>
+        <translation>Erreur, informations manquantes :&lt;br&gt;</translation>
+    </message>
+</context>
+<context>
     <name>InhabitantCreationPanel</name>
     <message>
         <source>Information</source>
@@ -849,6 +908,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>ORBAT</source>
         <translation>ODB</translation>
+    </message>
+    <message>
+        <source>Phantom</source>
+        <translation>Fantôme</translation>
     </message>
 </context>
 <context>
@@ -1130,6 +1193,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Not &apos;writable&apos; to any user profile. You will not be able to give orders to it on the game.</source>
         <translation>Indisponible en &apos;écriture&apos; pour tous les profils utilisateurs. Vous ne pourrez pas lui donner des ordres en phase de conduite.</translation>
+    </message>
+    <message>
+        <source>A phantom unit is present.</source>
+        <translation>Une unité fantôme est présente.</translation>
     </message>
 </context>
 <context>
