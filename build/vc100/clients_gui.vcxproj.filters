@@ -838,6 +838,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\AggregateToolbar.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\OrbatPanel.cpp">
+      <Filter>Source Files\Preferences\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1692,6 +1695,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\AggregateToolbar.h">
       <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\OrbatPanel.h">
+      <Filter>Source Files\Preferences\Panels</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
