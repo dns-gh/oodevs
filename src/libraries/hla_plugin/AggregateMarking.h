@@ -10,6 +10,8 @@
 #ifndef plugins_hla_AggregateMarking_h
 #define plugins_hla_AggregateMarking_h
 
+#include <boost/lexical_cast.hpp>
+
 namespace plugins
 {
 namespace hla
@@ -32,12 +34,17 @@ public:
         ::memset( markingData_, 0, sizeof( markingData_ ) );
     }
 
-    explicit RprMarking( const std::string& name )
+    RprMarking( const std::string& name, unsigned int identifier )
         : markingType_( 1 ) // ASCII
     {
+        std::string data = name;
+        std::string id = boost::lexical_cast< std::string >( identifier );
+        if( name.size() + id.size() > Number )
+            data.resize( Number - id.size() );
+        data += id;
         ::memset( markingData_, 0, sizeof( markingData_ ) );
-        const std::size_t length = std::min( sizeof( markingData_ ), name.length() );
-        ::memcpy( markingData_, name.c_str(), length );
+        const std::size_t length = std::min( sizeof( markingData_ ), data.length() );
+        ::memcpy( markingData_, data.c_str(), length );
     }
 
     virtual ~RprMarking()

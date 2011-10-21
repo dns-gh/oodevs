@@ -31,7 +31,7 @@ Aircraft::Aircraft( Agent_ABC& agent, unsigned int identifier,
     attributes_->Register( "EntityType", type );
     attributes_->Register( "EntityIdentifier", rpr::EntityIdentifier( 1, 1, static_cast< unsigned short >( identifier ) ) );
     attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
-    attributes_->Register( "Marking", Marking( name ) );
+    attributes_->Register( "Marking", Marking( name, identifier ) );
     attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
     agent_.Register( *this );
 }
