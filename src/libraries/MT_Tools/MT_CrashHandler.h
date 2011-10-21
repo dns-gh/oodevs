@@ -10,6 +10,8 @@
 #ifndef __MT_CrashHandler_h_
 #define __MT_CrashHandler_h_
 
+#include <windows.h>
+
 // =============================================================================
 // Created: NLD 2006-03-17
 // =============================================================================
@@ -18,9 +20,9 @@ class MT_CrashHandler
 public:
     //! @name Handlers
     //@{
-    static int ContinueSearch   ( const void* exceptionInfos );
-    static int ExecuteHandler   ( const void* exceptionInfos );
-    static int ContinueExecution( const void* exceptionInfos );
+    static int ContinueSearch   ( EXCEPTION_POINTERS* pExceptionPointers );
+    static int ExecuteHandler   ( EXCEPTION_POINTERS* pExceptionPointers );
+    static int ContinueExecution( EXCEPTION_POINTERS* pExceptionPointers );
     //@}
 };
 
