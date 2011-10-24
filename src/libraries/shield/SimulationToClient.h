@@ -116,6 +116,9 @@ public:
     static void Convert( const sword::LogSupplyPushFlowAck& from, MsgsSimToClient::MsgLogSupplyPushFlowAck* to );
     static void Convert( const sword::LogSupplyQuotas& from, MsgsSimToClient::MsgLogSupplyQuotas* to );
     static void Convert( const sword::LogSupplyState& from, MsgsSimToClient::MsgLogSupplyState* to );
+    static void Convert( const sword::LogFuneralHandlingCreation& from, MsgsSimToClient::MsgLogFuneralHandlingCreation* to );
+    static void Convert( const sword::LogFuneralHandlingDestruction& from, MsgsSimToClient::MsgLogFuneralHandlingDestruction* to );
+    static void Convert( const sword::LogFuneralHandlingUpdate& from, MsgsSimToClient::MsgLogFuneralHandlingUpdate* to );
     static void Convert( const sword::MagicActionAck& from, MsgsSimToClient::MsgMagicActionAck* to );
     static void Convert( const sword::ObjectCreation& from, MsgsSimToClient::MsgObjectCreation* to );
     static void Convert( const sword::ObjectDestruction& from, MsgsSimToClient::MsgObjectDestruction* to );

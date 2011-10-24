@@ -1422,7 +1422,7 @@ void SimulationToClient::Convert( const sword::LogMedicalHandlingUpdate& from, M
                                   ( sword::LogMedicalHandlingUpdate::collection_ambulance_moving_in, Common::ambulance_ramassage_deplacement_aller )
                                   ( sword::LogMedicalHandlingUpdate::collection_ambulance_unloading, Common::ambulance_ramassage_dechargement )
                                   ( sword::LogMedicalHandlingUpdate::finished, Common::termine ) );
-    CONVERT_TO( diagnosed, current_state_end_tick );
+    CONVERT_TO( current_state_end_tick, current_state_end_tick );
     CONVERT_TO( diagnosed, diagnostique_effectue );
 }
 
@@ -1590,6 +1590,59 @@ void SimulationToClient::Convert( const sword::LogSupplyHandlingUpdate& from, Ms
 void SimulationToClient::Convert( const sword::LogSupplyHandlingDestruction& from, MsgsSimToClient::MsgLogSupplyHandlingDestruction* to )
 {
     CONVERT_ID( request );
+}
+
+
+static std::map< unsigned long, unsigned long > funeralHandlingRequestingUnits_;
+
+// -----------------------------------------------------------------------------
+// Name: SimulationToClient::Convert
+// Created: MCO 2010-11-22
+// -----------------------------------------------------------------------------
+void SimulationToClient::Convert( const sword::LogFuneralHandlingCreation& from, MsgsSimToClient::MsgLogFuneralHandlingCreation* to )
+{
+    CONVERT_ID( request );
+    CONVERT_ID_TO( unit, requesting_unit );
+    CONVERT_TO( tick, tick_creation );
+    CONVERT_ENUM( rank, ( Common::officier, sword::officer )
+                        ( Common::sous_officier, sword::sub_officer )
+                        ( Common::mdr, sword::trooper ) );
+    funeralHandlingRequestingUnits_[ from.request().id() ] = from.unit().id();
+}
+// -----------------------------------------------------------------------------
+// Name: SimulationToClient::Convert
+// Created: MCO 2010-11-22
+// -----------------------------------------------------------------------------
+void SimulationToClient::Convert( const sword::LogFuneralHandlingUpdate& from, MsgsSimToClient::MsgLogFuneralHandlingUpdate* to )
+{
+    CONVERT_ID( request );
+    CONVERT_CB( handling_unit, ConvertParentEntity );
+    CONVERT_ID( convoying_unit );
+    CONVERT_ENUM_TO( state, status, 
+                         ( sword::LogFuneralHandlingUpdate::waiting_for_handling, MsgsSimToClient::en_attente_de_prise_en_charge )
+                         ( sword::LogFuneralHandlingUpdate::transporting_unpackaged, MsgsSimToClient::transport_non_conditionne )
+                         ( sword::LogFuneralHandlingUpdate::waiting_for_packaging, MsgsSimToClient::attente_moyen_conditionnement )
+                         ( sword::LogFuneralHandlingUpdate::packaging, MsgsSimToClient::conditionnement )
+                         ( sword::LogFuneralHandlingUpdate::waiting_for_transporter, MsgsSimToClient::attente_transporteur )
+                         ( sword::LogFuneralHandlingUpdate::transporting_packaged, MsgsSimToClient::transport_conditionne )
+                         ( sword::LogFuneralHandlingUpdate::finished, MsgsSimToClient::sortie_de_chaine ) );
+    CONVERT_ID_TO( packaging_resource, conditioning_resource );
+    //CONVERT_TO( current_state_end_tick, current_state_end_tick ); <== manque dans les ICDs ...
+    assert( funeralHandlingRequestingUnits_.find( from.request().id() ) != funeralHandlingRequestingUnits_.end() );
+    to->mutable_requesting_unit()->set_id( funeralHandlingRequestingUnits_[ from.request().id() ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationToClient::Convert
+// Created: MCO 2010-11-22
+// -----------------------------------------------------------------------------
+void SimulationToClient::Convert( const sword::LogFuneralHandlingDestruction& from, MsgsSimToClient::MsgLogFuneralHandlingDestruction* to )
+{
+    CONVERT_ID( request );
+    std::map< unsigned long, unsigned long >::iterator it = funeralHandlingRequestingUnits_.find( from.request().id() );
+    assert( it != funeralHandlingRequestingUnits_.end() );
+    to->mutable_requesting_unit()->set_id( it->second );
+    funeralHandlingRequestingUnits_.erase( it );
 }
 
 namespace

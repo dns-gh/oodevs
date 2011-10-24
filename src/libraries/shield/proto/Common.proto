@@ -37,12 +37,12 @@ message PopulationId                       { required uint32              id = 1
 message PopulationIdList                   { repeated uint32              id = 1; }
 
 message Tasker {
-    optional AutomatId   	automat    = 1;
-    optional FormationId 	formation  = 2;
-    optional CrowdId     	crowd      = 3;
-    optional UnitId      	unit       = 4;
-    optional PartyId     	party      = 5;
-    optional PopulationId   population = 6;
+    optional AutomatId    automat    = 1;
+    optional FormationId  formation  = 2;
+    optional CrowdId      crowd      = 3;
+    optional UnitId       unit       = 4;
+    optional PartyId      party      = 5;
+    optional PopulationId population = 6;
 }
 
 message ParentEntity {
@@ -363,10 +363,10 @@ enum EnumLogisticLevel {
 }
 
 enum EnumBurningCellPhase {
-    pre_ignition = 0;
-    combustion = 1;
-    decline = 2;
-    extinguished = 3;
+	pre_ignition = 0;
+	combustion = 1;
+	decline = 2;
+	extinguished = 3;
 }
 
 // Control messages
@@ -452,11 +452,11 @@ message ObstacleType
 }
 
 message MsgPlannedWork {
-   required string                            type                = 1;
-   required MsgLocation                       position            = 2;
-   optional ObstacleType.DemolitionTargetType type_obstacle       = 3;
-   optional float                             densite             = 4;
-   optional AutomatId                         tc2                 = 5;
+   required string                            type                  = 1;
+   required MsgLocation                       position              = 2;
+   optional ObstacleType.DemolitionTargetType type_obstacle         = 3;
+   optional float                             densite               = 4;
+   optional AutomatId                         tc2                   = 5;
    optional int32                             activity_time         = 6;    //in seconds
    optional int32                             activation_time       = 7;    //in seconds
 }
@@ -597,7 +597,7 @@ message MsgMissionParameter {
         optional MsgLogMaintenancePriorities logMaintenancePriorities    = 20;
         optional MsgLogMedicalPriorities     logMedicalPriorities        = 21;
         optional ResourceNetworkElement      resourceNetwork             = 22;
-
+        
         //parameters used for magic actions only:
         optional float                       aReal                       = 23;
         optional MsgPathList                 pathList                    = 24;
@@ -627,8 +627,8 @@ message MsgMissionParameter {
         //
         optional int32                       external_identifier         = 48;
     }
-    optional bool  null_value       = 1;
-    repeated Value value   = 2;
+    optional bool  null_value           = 1;
+    repeated Value value                = 2;
 }
 
 message MsgMissionParameters {
@@ -716,21 +716,21 @@ message ResourceNetwork
 {
     message Link
     {
-        required ObjectId object   = 1;
-        required int32    capacity = 2;
-        required uint32   flow     = 3;
+        required ObjectId object  = 1;
+        required int32  capacity  = 2;
+        required uint32 flow      = 3;
     }
-    required ResourceNetworkType resource         = 1;
-    repeated Link                link             = 2;
-    required bool                enabled          = 3;
-    optional uint32              max_stock        = 4;
-    optional uint32              stock            = 5;
-    optional uint32              production       = 6;
-    optional uint32              consumption      = 7;
-    optional bool                critical         = 8;
-    optional uint32              initial_stock    = 9;
-    optional uint32              max_production   = 10;
-    optional uint32              max_consumption  = 11;
+    required ResourceNetworkType resource        = 1;
+    repeated Link                link            = 2;
+    required bool                enabled         = 3;
+    optional uint32              max_stock       = 4;
+    optional uint32              stock           = 5;
+    optional uint32              production      = 6;
+    optional uint32              consumption     = 7;
+    optional bool                critical        = 8;
+    optional uint32              initial_stock   = 9;
+    optional uint32              max_production  = 10;
+    optional uint32              max_consumption = 11;
     optional float               functional_state = 12;
 }
 
@@ -765,8 +765,8 @@ message ObjectAttributeInteractionHeight {
 }
 
 message ObjectAttributeObstacle {
-   required ObstacleType.DemolitionTargetType type      = 1;
-   optional bool                              activated = 2;
+   required ObstacleType.DemolitionTargetType type            = 1;
+   optional bool                              activated       = 2;
 }
 
 message ObjectAttributeActivityTime {
@@ -838,28 +838,28 @@ message ObjectAttributeBurn {
 }
 
 message ObjectAttributeBurnSurface {
-    message BurningCell {
-        message PreIgnition {
-            required int32 ignition_energy = 1;
-            required int32 ignition_threshold = 2;
-        }
-        message Combustion {
-           required int32 current_heat = 1;
-           required int32 combustion_energy = 2;
-           required int32 max_combustion_energy = 3;
-        }
-        message Decline {
-           required int32 current_heat = 1;
-        }		
-        required int32 origin_x = 1;
-        required int32 origin_y = 2;
-        required EnumBurningCellPhase phase = 3;
-        optional PreIgnition pre_ignition = 4;
-        optional Combustion combustion = 5;
-        optional Decline decline = 6;
-    }
-    required int32 cell_size = 1;
-    repeated BurningCell burning_cells = 2;
+	message BurningCell {
+		message PreIgnition {
+			required int32 ignition_energy = 1;
+			required int32 ignition_threshold = 2;
+		}
+		message Combustion {
+		   required int32 current_heat = 1;
+		   required int32 combustion_energy = 2;
+		   required int32 max_combustion_energy = 3;
+		}
+		message Decline {
+		   required int32 current_heat = 1;
+		}		
+		required int32 origin_x = 1;
+		required int32 origin_y = 2;
+		required EnumBurningCellPhase phase = 3;
+		optional PreIgnition pre_ignition = 4;
+		optional Combustion combustion = 5;
+		optional Decline decline = 6;
+	}
+	required int32 cell_size = 1;
+	repeated BurningCell burning_cells = 2;
 }
 
 message ObjectAttributeTrafficability {
@@ -923,9 +923,9 @@ message ObjectAttributes {
 }
 
 message MsgMarker {
-    required string                             name                = 1;
-    required string                             description         = 2;
-    optional MarkerId                           parent              = 3;
+    required string                             name                 = 1;
+    required string                             description          = 2;
+    optional MarkerId                           parent               = 3;
     optional string                             optional_information = 4;
 }
 
