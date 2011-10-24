@@ -95,7 +95,7 @@ void Team::CreateDictionary( Controller& controller )
 // Name: Team::OptionChanged
 // Created: ABR 2011-10-24
 // -----------------------------------------------------------------------------
-void Team::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+void Team::OptionChanged( const std::string& name, const kernel::OptionVariant& /*value*/ )
 {
     if( name == "Color/Phantom" )
     {
