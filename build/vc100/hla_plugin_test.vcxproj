@@ -162,7 +162,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnConvoyEmbarkmentStatusReceiverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoyReceiverTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoySenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferResponseSenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteCallsignListenerTest.cpp" />
@@ -182,6 +181,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SubordinatesTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationControllerTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationOffererTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationTypesTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportersTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnicodeStringTest.cpp" />

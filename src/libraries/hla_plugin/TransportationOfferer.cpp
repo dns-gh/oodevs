@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "NetnOfferConvoySender.h"
+#include "TransportationOfferer.h"
 #include "InteractionSender_ABC.h"
 #include "Transporters_ABC.h"
 #include "Interactions.h"
@@ -19,10 +19,10 @@
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
-// Name: NetnOfferConvoySender constructor
+// Name: TransportationOfferer constructor
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-NetnOfferConvoySender::NetnOfferConvoySender( InteractionSender_ABC< interactions::NetnOfferConvoy >& offerInteractionSender,
+TransportationOfferer::TransportationOfferer( InteractionSender_ABC< interactions::NetnOfferConvoy >& offerInteractionSender,
                                               InteractionSender_ABC< interactions::NetnServiceStarted >& serviceStartedInteractionSender,
                                               InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus >& convoyEmbarkmentStatusSender,
                                               const Transporters_ABC& transporters, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
@@ -38,10 +38,10 @@ NetnOfferConvoySender::NetnOfferConvoySender( InteractionSender_ABC< interaction
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnOfferConvoySender destructor
+// Name: TransportationOfferer destructor
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-NetnOfferConvoySender::~NetnOfferConvoySender()
+TransportationOfferer::~TransportationOfferer()
 {
     // NOTHING
 }
@@ -71,10 +71,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnOfferConvoySender::Receive
+// Name: TransportationOfferer::Receive
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-void NetnOfferConvoySender::Receive( interactions::NetnRequestConvoy& request )
+void TransportationOfferer::Receive( interactions::NetnRequestConvoy& request )
 {
     if( request.serviceType != 4 ) // Convoy service type
         return;
@@ -105,10 +105,10 @@ void NetnOfferConvoySender::Receive( interactions::NetnRequestConvoy& request )
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnOfferConvoySender::Receive
+// Name: TransportationOfferer::Receive
 // Created: VPR 2011-10-12
 // -----------------------------------------------------------------------------
-void NetnOfferConvoySender::Receive( interactions::NetnAcceptOffer& accept )
+void TransportationOfferer::Receive( interactions::NetnAcceptOffer& accept )
 {
     unsigned int eventCount = accept.serviceId.eventCount;
     if( pendingOffers_.find( eventCount ) == pendingOffers_.end() )
@@ -119,10 +119,10 @@ void NetnOfferConvoySender::Receive( interactions::NetnAcceptOffer& accept )
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnOfferConvoySender::Receive
+// Name: TransportationOfferer::Receive
 // Created: VPR 2011-10-12
 // -----------------------------------------------------------------------------
-void NetnOfferConvoySender::Receive( interactions::NetnReadyToReceiveService& readyToReceive )
+void TransportationOfferer::Receive( interactions::NetnReadyToReceiveService& readyToReceive )
 {
     unsigned int eventCount = readyToReceive.serviceId.eventCount;
     if( acceptedOffers_.find( eventCount ) == acceptedOffers_.end() )
@@ -139,20 +139,20 @@ void NetnOfferConvoySender::Receive( interactions::NetnReadyToReceiveService& re
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnOfferConvoySender::Transfer
+// Name: TransportationOfferer::Transfer
 // Created: VPR 2011-10-12
 // -----------------------------------------------------------------------------
-void NetnOfferConvoySender::Transfer( T_Offers& from, T_Offers& to, unsigned int eventCount ) const
+void TransportationOfferer::Transfer( T_Offers& from, T_Offers& to, unsigned int eventCount ) const
 {
     from.erase( eventCount );
     to.insert( eventCount );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnOfferConvoySender::Notify
+// Name: TransportationOfferer::Notify
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-void NetnOfferConvoySender::Notify( const sword::UnitAttributes& message, int /*context*/ )
+void TransportationOfferer::Notify( const sword::UnitAttributes& message, int /*context*/ )
 {
     if( !message.has_transported_units() )
         return;

@@ -12,7 +12,7 @@
 #include "TransportationInteractionBuilder.h"
 #include "TransportationController.h"
 #include "NetnRequestConvoySender.h"
-#include "NetnOfferConvoySender.h"
+#include "TransportationOfferer.h"
 #include "NetnOfferConvoyReceiver.h"
 #include "NetnOfferResponseSender.h"
 #include "NetnServiceStartedReceiver.h"
@@ -51,7 +51,7 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
     , pNetnServiceStartedReceiver_           ( new NetnServiceStartedReceiver( *pTransportationController_ ) )
     , pNetnConvoyEmbarkmentStatusReceiver_   ( new NetnConvoyEmbarkmentStatusReceiver( *pTransportationController_ ) )
     , pNetnConvoyDisembarkmentStatusReceiver_( new NetnConvoyDisembarkmentStatusReceiver( *pTransportationController_ ) )
-    , pNetnOfferConvoySender_                ( new NetnOfferConvoySender( *this, *this, *this, transporters, controller, callsignResolver ) )
+    , pTransportationOfferer_                ( new TransportationOfferer( *this, *this, *this, transporters, controller, callsignResolver ) )
     , pNetnOfferResponseSender_              ( new NetnOfferResponseSender( *pTransportationController_, *this, *this, *this, *this ) )
     , pNetnServiceCompleteReceiver_          ( new NetnServiceCompleteReceiver( *pTransportationController_ ) )
 {
@@ -85,7 +85,7 @@ TransportationFacade::~TransportationFacade()
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnRequestConvoy& request )
 {
-    pNetnOfferConvoySender_->Receive( request );
+    pTransportationOfferer_->Receive( request );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ void TransportationFacade::Receive( interactions::NetnOfferConvoy& interaction )
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnAcceptOffer& interaction )
 {
-    pNetnOfferConvoySender_->Receive( interaction );
+    pTransportationOfferer_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +130,7 @@ void TransportationFacade::Receive( interactions::NetnCancelConvoy& /*interactio
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnReadyToReceiveService& interaction )
 {
-    pNetnOfferConvoySender_->Receive( interaction );
+    pTransportationOfferer_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------

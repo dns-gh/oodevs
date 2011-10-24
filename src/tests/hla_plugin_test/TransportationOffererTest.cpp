@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_test_pch.h"
-#include "hla_plugin/NetnOfferConvoySender.h"
+#include "hla_plugin/TransportationOfferer.h"
 #include "hla_plugin/Interactions.h"
 #include "hla_plugin/TransportedUnitsVisitor_ABC.h"
 #include "MockTransportationController.h"
@@ -39,7 +39,7 @@ namespace
         interactions::NetnRequestConvoy request;
         tools::MessageController< sword::SimToClient_Content > messageController;
         MockCallsignResolver callsignResolver;
-        NetnOfferConvoySender offerConvoySender;
+        TransportationOfferer offerConvoySender;
     };
 }
 

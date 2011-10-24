@@ -139,9 +139,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportersTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoySenderTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SideCheckerTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -152,6 +149,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnConvoyEmbarkmentStatusReceiverTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationOffererTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

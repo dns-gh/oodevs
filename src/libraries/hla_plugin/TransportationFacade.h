@@ -53,7 +53,7 @@ namespace hla
     class TransportationController_ABC;
     template< typename T > class InteractionSender_ABC;
     class NetnRequestConvoySender;
-    class NetnOfferConvoySender;
+    class TransportationOfferer;
     class Transporters_ABC;
     class NetnOfferResponseSender;
 
@@ -169,7 +169,7 @@ private:
     std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted > > pNetnServiceStartedReceiver_;
     std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnConvoyEmbarkmentStatus > > pNetnConvoyEmbarkmentStatusReceiver_;
     std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnConvoyDisembarkmentStatus > > pNetnConvoyDisembarkmentStatusReceiver_;
-    std::auto_ptr< NetnOfferConvoySender > pNetnOfferConvoySender_;
+    std::auto_ptr< TransportationOfferer > pTransportationOfferer_;
     std::auto_ptr< NetnOfferResponseSender > pNetnOfferResponseSender_;
     std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnServiceComplete > > pNetnServiceCompleteReceiver_;
     //@}

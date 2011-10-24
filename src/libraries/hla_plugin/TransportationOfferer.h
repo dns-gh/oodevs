@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnOfferConvoySender_h
-#define plugins_hla_NetnOfferConvoySender_h
+#ifndef plugins_hla_TransportationOfferer_h
+#define plugins_hla_TransportationOfferer_h
 
 #include "Interactions.h"
 #include "tools/MessageObserver.h"
@@ -46,12 +46,12 @@ namespace interactions
 }
 
 // =============================================================================
-/** @class  NetnOfferConvoySender
+/** @class  TransportationOfferer
     @brief  Netn offer convoy sender
 */
 // Created: SLI 2011-10-11
 // =============================================================================
-class NetnOfferConvoySender : public ::hla::InteractionNotification_ABC< interactions::NetnRequestConvoy >
+class TransportationOfferer : public ::hla::InteractionNotification_ABC< interactions::NetnRequestConvoy >
                             , public ::hla::InteractionNotification_ABC< interactions::NetnAcceptOffer >
                             , public ::hla::InteractionNotification_ABC< interactions::NetnReadyToReceiveService >
                             , private tools::MessageObserver< sword::UnitAttributes >
@@ -59,12 +59,12 @@ class NetnOfferConvoySender : public ::hla::InteractionNotification_ABC< interac
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnOfferConvoySender( InteractionSender_ABC< interactions::NetnOfferConvoy >& offerInteractionSender,
+             TransportationOfferer( InteractionSender_ABC< interactions::NetnOfferConvoy >& offerInteractionSender,
                                     InteractionSender_ABC< interactions::NetnServiceStarted >& serviceStartedInteractionSender,
                                     InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus >& convoyEmbarkmentStatusSender,
                                     const Transporters_ABC& transporters, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
                                     const CallsignResolver_ABC& callsignRevoler );
-    virtual ~NetnOfferConvoySender();
+    virtual ~TransportationOfferer();
     //@}
 
     //! @name Operations
@@ -119,4 +119,4 @@ private:
 }
 }
 
-#endif // plugins_hla_NetnOfferConvoySender_h
+#endif // plugins_hla_TransportationOfferer_h

@@ -232,9 +232,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transporters.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoySender.cpp">
-      <Filter>Source Files\Transportation</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\SideChecker.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
@@ -272,6 +269,9 @@
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationInteractionBuilder.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationOfferer.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
   </ItemGroup>
@@ -585,9 +585,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\Transporters_ABC.h">
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoySender.h">
-      <Filter>Source Files\Transportation</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\SideChecker.h">
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
@@ -628,6 +625,9 @@
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationInteractionBuilder.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationOfferer.h">
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
   </ItemGroup>
