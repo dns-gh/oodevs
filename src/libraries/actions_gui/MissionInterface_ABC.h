@@ -65,6 +65,7 @@ public slots:
     //! @name Slots
     //@{
     virtual void OnOk();
+    virtual void OnCancel();
     //@}
 
 signals:

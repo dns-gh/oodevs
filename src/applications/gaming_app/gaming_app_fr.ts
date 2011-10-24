@@ -128,13 +128,6 @@
     </message>
 </context>
 <context>
-    <name>AgentChangeAffinitiesDialog</name>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
-    </message>
-</context>
-<context>
     <name>AgentKnowledge</name>
     <message>
         <source>Unit knowledge</source>
@@ -284,6 +277,10 @@
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
     </message>
 </context>
 <context>

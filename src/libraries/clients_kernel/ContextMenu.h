@@ -66,8 +66,17 @@ public:
 private:
     //! @name Types
     //@{
+    struct CategoryTextKey
+    {
+        CategoryTextKey( const std::string category, const std::string text ) : category_( category ), text_( text ) {}
+        bool operator<( const CategoryTextKey& categoryText ) const { return ( category_ == categoryText.category_ ) ? ( text_ < categoryText.text_ ) : ( category_ < categoryText.category_ ); }
+
+        std::string category_;
+        std::string text_;
+    };
+
     typedef std::vector< std::string > T_OrderedCategories;
-    typedef std::map< std::string, Q3PopupMenu* > T_CategoryMenus;
+    typedef std::map< CategoryTextKey, Q3PopupMenu* > T_CategoryMenus;
     typedef std::map< std::string, QAction* > T_Categories;
     //@}
 

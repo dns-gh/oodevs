@@ -205,10 +205,12 @@ Q3PopupMenu* ContextMenu::SubMenu( const std::string& category, const QString& t
     T_OrderedCategories::iterator it = std::find( categories_.begin(), categories_.end(), category );
     if( it == categories_.end() )
         AddCategory( category );
-    T_CategoryMenus::iterator itMenu = menus_.find( category );
+
+    CategoryTextKey categoryKey( category, text.toStdString() );
+    T_CategoryMenus::iterator itMenu = menus_.find( categoryKey );
     if( itMenu == menus_.end() )
-        menus_[category] = new Q3PopupMenu( menu_ );
-    Q3PopupMenu* result = menus_[category];
+        menus_[ categoryKey ] = new Q3PopupMenu( menu_ );
+    Q3PopupMenu* result = menus_[ categoryKey ];
     InsertItem( category, text, result );
     return result;
 }
