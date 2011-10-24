@@ -24,6 +24,7 @@
 #include "clients_kernel/CommandPostAttributes.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/Options.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace actions;
@@ -35,10 +36,10 @@ using namespace actions;
 TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, profile, icons )
     , actionsModel_( actionsModel )
-    , static_( staticModel )
-    , simulation_( simulation )
-    , lock_( MAKE_PIXMAP( lock ) )
-    , commandPost_( MAKE_PIXMAP( commandpost ) )
+    , static_      ( staticModel )
+    , simulation_  ( simulation )
+    , lock_        ( MAKE_PIXMAP( lock ) )
+    , commandPost_ ( MAKE_PIXMAP( commandpost ) )
 {
     controllers_.Register( *this );
     addColumn( "HiddenPuce", 15 );
@@ -86,7 +87,16 @@ void TacticalListView::Display( const kernel::Entity_ABC& entity, gui::ValuedLis
         item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
 
     if( const Attributes* attributes = static_cast< const Attributes* >( entity.Retrieve< kernel::Attributes_ABC >() ) )
-        item->SetBackgroundColor( attributes->bDead_ ? QColor( 255, 200, 200 ) : QColor() );
+    {
+        QColor color;
+        if( attributes->bNeutralized_ )
+            color = QColor( controllers_.options_.GetOption( "Color/Neutralized", QString( "" ) ).To< QString >() );
+        if( attributes->nOpState_ == eOperationalStatus_DetruitTactiquement )
+            color = QColor( controllers_.options_.GetOption( "Color/TacticallyDestroyed", QString( "" ) ).To< QString >() );
+        if( attributes->nOpState_ == eOperationalStatus_DetruitTotalement )
+            color = QColor( controllers_.options_.GetOption( "Color/TotallyDestroyed", QString( "" ) ).To< QString >() );
+        item->SetBackgroundColor( color );
+    }
 
     gui::HierarchyListView< kernel::TacticalHierarchies >::Display( entity, item );
 }

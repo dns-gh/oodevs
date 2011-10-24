@@ -11,6 +11,8 @@
 #include "Team.h"
 #include "Tools.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 
 using namespace kernel;
 
@@ -38,11 +40,13 @@ namespace
 // Name: Team constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-Team::Team( const sword::PartyCreation& message, Controller& controller )
-    : EntityImplementation< Team_ABC >( controller, message.party().id(), QString( message.name().c_str() ) )
-    , karma_( MakeKarma( message.type() ) )
+Team::Team( const sword::PartyCreation& message, Controllers& controllers )
+    : EntityImplementation< Team_ABC >( controllers.controller_, message.party().id(), QString( message.name().c_str() ) )
+    , controllers_( controllers )
+    , karma_      ( MakeKarma( message.type() ) )
 {
-    CreateDictionary( controller );
+    CreateDictionary( controllers_.controller_ );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,6 +56,7 @@ Team::Team( const sword::PartyCreation& message, Controller& controller )
 Team::~Team()
 {
     Destroy();
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,4 +79,19 @@ void Team::CreateDictionary( kernel::Controller& controller )
 const kernel::Karma& Team::GetKarma() const
 {
     return karma_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::OptionChanged
+// Created: LGY 2011-10-21
+// -----------------------------------------------------------------------------
+void Team::OptionChanged( const std::string& name, const kernel::OptionVariant& /*value*/ )
+{
+    if( name == "Color/Neutralized" || name == "Color/TacticallyDestroyed" || name == "Color/TotallyDestroyed" )
+    {
+        if( const kernel::TacticalHierarchies* pTactical = Retrieve< kernel::TacticalHierarchies >() )
+            controllers_.controller_.Update( *pTactical );
+        if( const kernel::CommunicationHierarchies* pCommunication = Retrieve< kernel::CommunicationHierarchies >() )
+            controllers_.controller_.Update( *pCommunication );
+    }
 }
