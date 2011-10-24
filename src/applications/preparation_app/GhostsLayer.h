@@ -58,6 +58,7 @@ private:
     virtual void Select( const kernel::Ghost_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
+    virtual void SetAlpha( float alpha );
     bool IsEligibleForDrag( const geometry::Point2f& point );
     //@}
 
