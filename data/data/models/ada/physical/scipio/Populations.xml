@@ -31,6 +31,10 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -65,6 +69,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -99,6 +107,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -133,6 +145,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -208,6 +224,10 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.3">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -242,6 +262,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.3">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -276,6 +300,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.3">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -310,6 +338,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.3">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -385,6 +417,10 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.5">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -419,6 +455,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.5">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -453,6 +493,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.5">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -487,6 +531,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.5">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -562,6 +610,10 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.5">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -596,6 +648,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.5">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0.001" repairable-with-evacuation="0.005" repairable-without-evacuation="0.01"/>
           <armed destruction="0.002" repairable-with-evacuation="0.01" repairable-without-evacuation="0.01"/>
@@ -630,6 +686,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.5">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0.005" repairable-with-evacuation="0.02" repairable-without-evacuation="0.05"/>
           <armed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.05"/>
@@ -664,6 +724,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.5">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
           <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
@@ -739,6 +803,10 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.5">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -773,6 +841,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.5">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -807,6 +879,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.5">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -841,6 +917,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.5">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
           <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
@@ -916,6 +996,10 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -950,6 +1034,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -984,6 +1072,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0.0001" repairable-with-evacuation="0.0005" repairable-without-evacuation="0.001"/>
           <armed destruction="0.0005" repairable-with-evacuation="0.001" repairable-without-evacuation="0.001"/>
@@ -1018,6 +1110,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0.0001" repairable-with-evacuation="0.0005" repairable-without-evacuation="0.001"/>
           <armed destruction="0.0005" repairable-with-evacuation="0.001" repairable-without-evacuation="0.001"/>
@@ -1093,6 +1189,10 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1127,6 +1227,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1161,6 +1265,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0.0001" repairable-with-evacuation="0.0005" repairable-without-evacuation="0.001"/>
           <armed destruction="0.0005" repairable-with-evacuation="0.001" repairable-without-evacuation="0.001"/>
@@ -1195,6 +1303,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0.0001" repairable-with-evacuation="0.0005" repairable-without-evacuation="0.001"/>
           <armed destruction="0.0005" repairable-with-evacuation="0.001" repairable-without-evacuation="0.001"/>
@@ -1270,6 +1382,10 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1304,6 +1420,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1338,6 +1458,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
           <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
@@ -1372,6 +1496,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
           <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
@@ -1447,6 +1575,10 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1481,6 +1613,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1515,6 +1651,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
           <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
@@ -1549,6 +1689,10 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
+        <protection name="Composite">
+          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        </protection>
         <protection name="CombattantProtege">
           <unarmed destruction="0.01" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
           <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
@@ -1596,4 +1740,4 @@
     <repartition children="0.1" female="0.45" male="0.45"/>
   </population>
 </populations>
-<!-- signature="3807351943" -->
+<!-- signature="4262237839" -->

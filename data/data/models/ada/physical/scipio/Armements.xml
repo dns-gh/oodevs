@@ -35,18 +35,33 @@
     <burst duration="10s" munition="1"/>
     <reloading duration="30s" munition="4"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="500" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.6"/>
+        <hit-probability distance="4000" percentage="0.3"/>
+        <hit-probability distance="6000" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="6000" percentage="1"/>
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="6000" percentage="0.01"/>
+        <hit-probability distance="500" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.8"/>
+        <hit-probability distance="4000" percentage="0.6"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="6000" percentage="1"/>
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="6000" percentage="0.01"/>
+        <hit-probability distance="500" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.8"/>
+        <hit-probability distance="4000" percentage="0.5"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="6000" percentage="1"/>
+        <hit-probability distance="4000" percentage="0.4"/>
+        <hit-probability distance="6000" percentage="0.01"/>
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="500" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.7"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -55,27 +70,33 @@
     <burst duration="10s" munition="1"/>
     <reloading duration="30s" munition="4"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="500" percentage="0.8"/>
+        <hit-probability distance="2500" percentage="0.6"/>
+        <hit-probability distance="3000" percentage="0.3"/>
+        <hit-probability distance="5000" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="450" percentage="0"/>
-        <hit-probability distance="500" percentage="1"/>
-        <hit-probability distance="4000" percentage="1"/>
-        <hit-probability distance="4200" percentage="0"/>
+        <hit-probability distance="500" percentage="0.8"/>
+        <hit-probability distance="2500" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.6"/>
+        <hit-probability distance="5000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="450" percentage="0"/>
-        <hit-probability distance="500" percentage="1"/>
-        <hit-probability distance="4000" percentage="1"/>
-        <hit-probability distance="4200" percentage="0"/>
+        <hit-probability distance="500" percentage="0.8"/>
+        <hit-probability distance="2500" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.5"/>
+        <hit-probability distance="5000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="450" percentage="0"/>
-        <hit-probability distance="500" percentage="1"/>
-        <hit-probability distance="4000" percentage="1"/>
-        <hit-probability distance="4200" percentage="0"/>
+        <hit-probability distance="500" percentage="0.8"/>
+        <hit-probability distance="2500" percentage="0.7"/>
+        <hit-probability distance="3000" percentage="0.4"/>
+        <hit-probability distance="5000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -84,30 +105,35 @@
     <burst duration="5s" munition="5"/>
     <reloading duration="20s" munition="30"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1200" percentage="0.15"/>
+        <hit-probability distance="1600" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="1000" percentage="0.9"/>
-        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.01"/>
+        <hit-probability distance="800" percentage="0.7"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="1000" percentage="0.8"/>
-        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="1200" percentage="0.45"/>
+        <hit-probability distance="1600" percentage="0.01"/>
+        <hit-probability distance="800" percentage="0.6"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.5"/>
         <hit-probability distance="1200" percentage="0.4"/>
-        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="1600" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.2"/>
-        <hit-probability distance="1300" percentage="0"/>
+        <hit-probability distance="800" percentage="0.25"/>
+        <hit-probability distance="1200" percentage="0.15"/>
+        <hit-probability distance="1600" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -116,42 +142,33 @@
     <reloading duration="20s" munition="30"/>
     <direct-fire>
       <hit-probabilities target="Drone">
-        <hit-probability distance="300" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0.6"/>
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="600" percentage="0.25"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="1200" percentage="0"/>
       </hit-probabilities>
       <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0.1"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="0" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.55"/>
+        <hit-probability distance="1200" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="2000" percentage="0.9"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="0" percentage="0.75"/>
+        <hit-probability distance="1200" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.01"/>
+        <hit-probability distance="800" percentage="0.5"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0.1"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="0" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.3"/>
+        <hit-probability distance="1200" percentage="0.2"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0.1"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="0" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.25"/>
+        <hit-probability distance="1200" percentage="0.15"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -159,29 +176,35 @@
     <burst duration="5s" munition="3"/>
     <reloading duration="20s" munition="25"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="0.15"/>
+        <hit-probability distance="300" percentage="0.1"/>
+        <hit-probability distance="400" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="1"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="200" percentage="0.8"/>
+        <hit-probability distance="300" percentage="0.5"/>
+        <hit-probability distance="400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="300" percentage="0.95"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="200" percentage="0.7"/>
+        <hit-probability distance="300" percentage="0.45"/>
+        <hit-probability distance="400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="300" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="200" percentage="0.6"/>
+        <hit-probability distance="300" percentage="0.4"/>
+        <hit-probability distance="400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="300" percentage="0.85"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="200" percentage="0.4"/>
+        <hit-probability distance="300" percentage="0.2"/>
+        <hit-probability distance="400" percentage="0.1"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -191,32 +214,33 @@
     <direct-fire>
       <hit-probabilities target="Drone">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="250" percentage="0.6"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="300" percentage="0.1"/>
+        <hit-probability distance="400" percentage="0.01"/>
+        <hit-probability distance="200" percentage="0.15"/>
       </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="300" percentage="0.95"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="200" percentage="0.8"/>
+        <hit-probability distance="300" percentage="0.5"/>
+        <hit-probability distance="400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="300" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="200" percentage="0.7"/>
+        <hit-probability distance="300" percentage="0.45"/>
+        <hit-probability distance="400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="300" percentage="0.85"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="200" percentage="0.6"/>
+        <hit-probability distance="300" percentage="0.4"/>
+        <hit-probability distance="400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="300" percentage="0.8"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="200" percentage="0.4"/>
+        <hit-probability distance="300" percentage="0.2"/>
+        <hit-probability distance="400" percentage="0.1"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -224,30 +248,35 @@
     <burst duration="5s" munition="5"/>
     <reloading duration="5s" munition="30"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.15"/>
+        <hit-probability distance="600" percentage="0.1"/>
+        <hit-probability distance="800" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="1"/>
-        <hit-probability distance="800" percentage="0"/>
-        <hit-probability distance="600" percentage="0.81"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.01"/>
+        <hit-probability distance="600" percentage="0.5"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="1"/>
-        <hit-probability distance="600" percentage="0.76"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="300" percentage="0.7"/>
+        <hit-probability distance="600" percentage="0.45"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="1"/>
-        <hit-probability distance="600" percentage="0.71"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="300" percentage="0.6"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="1"/>
-        <hit-probability distance="600" percentage="0.66"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="300" percentage="0.4"/>
+        <hit-probability distance="600" percentage="0.2"/>
+        <hit-probability distance="800" percentage="0.1"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -258,27 +287,27 @@
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="600" percentage="0.95"/>
-        <hit-probability distance="650" percentage="0"/>
+        <hit-probability distance="300" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="600" percentage="0.9"/>
-        <hit-probability distance="650" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="600" percentage="0.45"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="600" percentage="0.8"/>
-        <hit-probability distance="650" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="600" percentage="0.7"/>
-        <hit-probability distance="650" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.05"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -288,22 +317,22 @@
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="10" percentage="0.95"/>
-        <hit-probability distance="250" percentage="0.9"/>
-        <hit-probability distance="260" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="170" percentage="0.6"/>
+        <hit-probability distance="200" percentage="0.5"/>
+        <hit-probability distance="260" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="10" percentage="0.95"/>
-        <hit-probability distance="250" percentage="0.9"/>
-        <hit-probability distance="260" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="170" percentage="0.6"/>
+        <hit-probability distance="200" percentage="0.45"/>
+        <hit-probability distance="260" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="10" percentage="0.95"/>
-        <hit-probability distance="250" percentage="0.9"/>
-        <hit-probability distance="260" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="170" percentage="0.5"/>
+        <hit-probability distance="200" percentage="0.4"/>
+        <hit-probability distance="260" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -314,25 +343,22 @@
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="50" percentage="0"/>
-        <hit-probability distance="60" percentage="0.55"/>
-        <hit-probability distance="600" percentage="0.35"/>
-        <hit-probability distance="650" percentage="0.2"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="50" percentage="0"/>
-        <hit-probability distance="60" percentage="0.55"/>
-        <hit-probability distance="600" percentage="0.35"/>
-        <hit-probability distance="650" percentage="0.2"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="600" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="50" percentage="0"/>
-        <hit-probability distance="60" percentage="0.55"/>
-        <hit-probability distance="600" percentage="0.35"/>
-        <hit-probability distance="650" percentage="0.3"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="300" percentage="0.7"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -344,28 +370,24 @@
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="400" percentage="0"/>
-        <hit-probability distance="800" percentage="0.55"/>
-        <hit-probability distance="3600" percentage="0.5"/>
-        <hit-probability distance="4000" percentage="0.45"/>
-        <hit-probability distance="4300" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.6"/>
+        <hit-probability distance="4000" percentage="0.4"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="400" percentage="0"/>
-        <hit-probability distance="800" percentage="0.55"/>
-        <hit-probability distance="3200" percentage="0.45"/>
-        <hit-probability distance="3800" percentage="0.35"/>
-        <hit-probability distance="4300" percentage="0"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.75"/>
+        <hit-probability distance="3000" percentage="0.55"/>
+        <hit-probability distance="4000" percentage="0.35"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="400" percentage="0"/>
-        <hit-probability distance="800" percentage="0.55"/>
-        <hit-probability distance="3200" percentage="0.4"/>
-        <hit-probability distance="3600" percentage="0.3"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.7"/>
+        <hit-probability distance="3000" percentage="0.4"/>
         <hit-probability distance="4000" percentage="0.2"/>
-        <hit-probability distance="4300" percentage="0"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -376,25 +398,22 @@
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
-        <hit-probability distance="400" percentage="0"/>
-        <hit-probability distance="600" percentage="0.55"/>
-        <hit-probability distance="1900" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0"/>
-        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="750" percentage="0.9"/>
+        <hit-probability distance="1500" percentage="0.8"/>
+        <hit-probability distance="1900" percentage="0.7"/>
+        <hit-probability distance="0" percentage="1"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="400" percentage="0"/>
-        <hit-probability distance="600" percentage="0.5"/>
-        <hit-probability distance="1900" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="750" percentage="0.8"/>
+        <hit-probability distance="1500" percentage="0.7"/>
+        <hit-probability distance="1900" percentage="0.6"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="400" percentage="0"/>
-        <hit-probability distance="600" percentage="0.45"/>
-        <hit-probability distance="1900" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="750" percentage="0.7"/>
+        <hit-probability distance="1500" percentage="0.6"/>
+        <hit-probability distance="1900" percentage="0.5"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -443,252 +462,190 @@
     <burst duration="2s" munition="5"/>
     <reloading duration="20s" munition="30"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.3"/>
+        <hit-probability distance="1060" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="200" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
         <hit-probability distance="600" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.4"/>
-        <hit-probability distance="900" percentage="0"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="200" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="600" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.4"/>
-        <hit-probability distance="900" percentage="0"/>
+        <hit-probability distance="600" percentage="0.7"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="200" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="600" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.4"/>
-        <hit-probability distance="900" percentage="0"/>
+        <hit-probability distance="600" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="200" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="600" percentage="0.5"/>
         <hit-probability distance="800" percentage="0.4"/>
-        <hit-probability distance="900" percentage="0"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon Stabilise" munition="CART 120 OECC F1">
-    <burst duration="10s" munition="1"/>
-    <reloading duration="10s" munition="1"/>
+    <burst duration="5s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.9"/>
-        <hit-probability distance="1600" percentage="0.8"/>
-        <hit-probability distance="2000" percentage="0.7"/>
-        <hit-probability distance="2400" percentage="0.6"/>
-        <hit-probability distance="2800" percentage="0.5"/>
-        <hit-probability distance="3200" percentage="0.3"/>
-        <hit-probability distance="3500" percentage="0"/>
+        <hit-probability distance="1500" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.5"/>
+        <hit-probability distance="4000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.95"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.8"/>
-        <hit-probability distance="1600" percentage="0.75"/>
-        <hit-probability distance="2000" percentage="0.65"/>
-        <hit-probability distance="2400" percentage="0.5"/>
-        <hit-probability distance="2800" percentage="0.2"/>
-        <hit-probability distance="3000" percentage="0"/>
+        <hit-probability distance="1500" percentage="0.7"/>
+        <hit-probability distance="3000" percentage="0.45"/>
+        <hit-probability distance="4000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1600" percentage="0.6"/>
-        <hit-probability distance="2000" percentage="0.5"/>
-        <hit-probability distance="2400" percentage="0.3"/>
-        <hit-probability distance="2600" percentage="0"/>
+        <hit-probability distance="1500" percentage="0.6"/>
+        <hit-probability distance="3000" percentage="0.4"/>
+        <hit-probability distance="4000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="1500" percentage="0.2"/>
+        <hit-probability distance="3000" percentage="0.1"/>
+        <hit-probability distance="4000" percentage="0.01"/>
         <hit-probability distance="0" percentage="1"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon Stabilise" munition="CART 120 OFL F1">
+    <burst duration="5s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.8"/>
+        <hit-probability distance="4000" percentage="0.5"/>
+        <hit-probability distance="5330" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.7"/>
+        <hit-probability distance="4000" percentage="0.45"/>
+        <hit-probability distance="5330" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="4000" percentage="0.4"/>
+        <hit-probability distance="5330" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="4000" percentage="0.04"/>
+        <hit-probability distance="5330" percentage="0.01"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon" munition="CART 105 F3 OCC F3">
     <burst duration="10s" munition="1"/>
     <reloading duration="10s" munition="1"/>
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="1200" percentage="1"/>
-        <hit-probability distance="1600" percentage="0.95"/>
-        <hit-probability distance="2000" percentage="0.9"/>
-        <hit-probability distance="2400" percentage="0.8"/>
-        <hit-probability distance="2800" percentage="0.7"/>
-        <hit-probability distance="3200" percentage="0.6"/>
-        <hit-probability distance="3600" percentage="0.4"/>
-        <hit-probability distance="4000" percentage="0.2"/>
-        <hit-probability distance="4500" percentage="0"/>
+        <hit-probability distance="850" percentage="0.8"/>
+        <hit-probability distance="1700" percentage="0.5"/>
+        <hit-probability distance="2250" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.95"/>
-        <hit-probability distance="1600" percentage="0.9"/>
-        <hit-probability distance="2000" percentage="0.85"/>
-        <hit-probability distance="2400" percentage="0.75"/>
-        <hit-probability distance="2800" percentage="0.65"/>
-        <hit-probability distance="3200" percentage="0.5"/>
-        <hit-probability distance="3600" percentage="0.2"/>
-        <hit-probability distance="3800" percentage="0"/>
+        <hit-probability distance="850" percentage="0.7"/>
+        <hit-probability distance="1700" percentage="0.45"/>
+        <hit-probability distance="2250" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.8"/>
-        <hit-probability distance="1600" percentage="0.7"/>
-        <hit-probability distance="2000" percentage="0.6"/>
-        <hit-probability distance="2400" percentage="0.4"/>
-        <hit-probability distance="2800" percentage="0.2"/>
-        <hit-probability distance="3000" percentage="0"/>
+        <hit-probability distance="850" percentage="0.6"/>
+        <hit-probability distance="1700" percentage="0.4"/>
+        <hit-probability distance="2250" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="0.4"/>
-        <hit-probability distance="600" percentage="0.1"/>
-        <hit-probability distance="1800" percentage="0"/>
-      </hit-probabilities>
-    </direct-fire>
-  </weapon-system>
-  <weapon-system launcher="Canon" munition="CART 105 F3 OCC F3">
-    <burst duration="15s" munition="1"/>
-    <reloading duration="15s" munition="1"/>
-    <direct-fire>
-      <hit-probabilities target="Drone"/>
-      <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1600" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0.4"/>
-        <hit-probability distance="2400" percentage="0.2"/>
-        <hit-probability distance="2800" percentage="0.1"/>
-        <hit-probability distance="3000" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0.3"/>
-        <hit-probability distance="2400" percentage="0.1"/>
-        <hit-probability distance="2500" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.7"/>
-        <hit-probability distance="1200" percentage="0.5"/>
-        <hit-probability distance="1600" percentage="0.3"/>
-        <hit-probability distance="2000" percentage="0.2"/>
-        <hit-probability distance="2100" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="0.5"/>
-        <hit-probability distance="1000" percentage="0"/>
-        <hit-probability distance="800" percentage="0.1"/>
+        <hit-probability distance="850" percentage="0.3"/>
+        <hit-probability distance="2250" percentage="0.01"/>
+        <hit-probability distance="1700" percentage="0.15"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="CART 105  F3 OE F3">
-    <burst duration="15s" munition="1"/>
-    <reloading duration="15s" munition="1"/>
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0.1"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.5"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.85"/>
-        <hit-probability distance="800" percentage="0.7"/>
-        <hit-probability distance="1200" percentage="0.4"/>
-        <hit-probability distance="1600" percentage="0.2"/>
-        <hit-probability distance="1800" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.7"/>
+        <hit-probability distance="2000" percentage="0.45"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.6"/>
-        <hit-probability distance="1200" percentage="0.2"/>
-        <hit-probability distance="1600" percentage="0.05"/>
-        <hit-probability distance="1700" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="500" percentage="0.7"/>
-        <hit-probability distance="1300" percentage="0"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+        <hit-probability distance="2000" percentage="0.08"/>
+        <hit-probability distance="1000" percentage="0.2"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="CART 105  F3 OFL F3">
-    <burst duration="15s" munition="1"/>
-    <reloading duration="15s" munition="1"/>
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.9"/>
-        <hit-probability distance="1600" percentage="0.75"/>
-        <hit-probability distance="2000" percentage="0.6"/>
-        <hit-probability distance="2500" percentage="0.4"/>
-        <hit-probability distance="2300" percentage="0.5"/>
-        <hit-probability distance="3000" percentage="0"/>
+        <hit-probability distance="1250" percentage="0.8"/>
+        <hit-probability distance="2500" percentage="0.5"/>
+        <hit-probability distance="3300" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.85"/>
-        <hit-probability distance="1600" percentage="0.6"/>
-        <hit-probability distance="2000" percentage="0.4"/>
-        <hit-probability distance="2400" percentage="0"/>
+        <hit-probability distance="1250" percentage="0.7"/>
+        <hit-probability distance="2500" percentage="0.45"/>
+        <hit-probability distance="3300" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="0.95"/>
-        <hit-probability distance="1200" percentage="0.8"/>
-        <hit-probability distance="1600" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0.2"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="1250" percentage="0.6"/>
+        <hit-probability distance="2500" percentage="0.4"/>
+        <hit-probability distance="3300" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="0.1"/>
-        <hit-probability distance="500" percentage="0.1"/>
-        <hit-probability distance="800" percentage="0.05"/>
-        <hit-probability distance="1200" percentage="0.04"/>
-        <hit-probability distance="1500" percentage="0.03"/>
-        <hit-probability distance="1800" percentage="0.02"/>
+        <hit-probability distance="1250" percentage="0.2"/>
+        <hit-probability distance="2500" percentage="0.08"/>
+        <hit-probability distance="3300" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -696,40 +653,35 @@
     <burst duration="10s" munition="3"/>
     <reloading duration="30s" munition="15"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="500" percentage="0.3"/>
+        <hit-probability distance="1000" percentage="0.15"/>
+        <hit-probability distance="1300" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="1800" percentage="0.2"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="500" percentage="0.8"/>
+        <hit-probability distance="1000" percentage="0.5"/>
+        <hit-probability distance="1300" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.5"/>
-        <hit-probability distance="1400" percentage="0.3"/>
-        <hit-probability distance="1600" percentage="0.1"/>
-        <hit-probability distance="1800" percentage="0"/>
+        <hit-probability distance="500" percentage="0.7"/>
+        <hit-probability distance="1000" percentage="0.45"/>
+        <hit-probability distance="1300" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1000" percentage="0.3"/>
-        <hit-probability distance="1200" percentage="0.1"/>
-        <hit-probability distance="1400" percentage="0"/>
+        <hit-probability distance="500" percentage="0.6"/>
+        <hit-probability distance="1000" percentage="0.4"/>
+        <hit-probability distance="1300" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="600" percentage="0.4"/>
-        <hit-probability distance="800" percentage="0.2"/>
-        <hit-probability distance="1000" percentage="0.1"/>
-        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="500" percentage="0.1"/>
+        <hit-probability distance="1000" percentage="0.04"/>
+        <hit-probability distance="1300" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -740,33 +692,27 @@
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.8"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="1700" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
         <hit-probability distance="800" percentage="0.8"/>
         <hit-probability distance="1200" percentage="0.5"/>
-        <hit-probability distance="1600" percentage="0.1"/>
-        <hit-probability distance="1700" percentage="0"/>
+        <hit-probability distance="1600" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.45"/>
+        <hit-probability distance="1600" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.65"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.6"/>
         <hit-probability distance="1200" percentage="0.4"/>
-        <hit-probability distance="1600" percentage="0.1"/>
-        <hit-probability distance="1700" percentage="0"/>
+        <hit-probability distance="1600" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="0.8"/>
-        <hit-probability distance="400" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1200" percentage="0.25"/>
-        <hit-probability distance="1600" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1200" percentage="0.3"/>
+        <hit-probability distance="1600" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -777,27 +723,27 @@
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.4"/>
-        <hit-probability distance="1100" percentage="0"/>
+        <hit-probability distance="600" percentage="0.7"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.75"/>
-        <hit-probability distance="800" percentage="0.35"/>
-        <hit-probability distance="1050" percentage="0"/>
+        <hit-probability distance="600" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.7"/>
-        <hit-probability distance="800" percentage="0.3"/>
-        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -805,34 +751,35 @@
     <burst duration="5s" munition="5"/>
     <reloading duration="120s" munition="150"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="600" percentage="0.3"/>
+        <hit-probability distance="800" percentage="0.15"/>
+        <hit-probability distance="1050" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="600" percentage="1"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0"/>
-        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1060" percentage="0.01"/>
+        <hit-probability distance="600" percentage="0.8"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="200" percentage="1"/>
-        <hit-probability distance="600" percentage="0.95"/>
-        <hit-probability distance="1200" percentage="0"/>
-        <hit-probability distance="800" percentage="0.75"/>
+        <hit-probability distance="600" percentage="0.7"/>
+        <hit-probability distance="1060" percentage="0.01"/>
+        <hit-probability distance="800" percentage="0.6"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="600" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.7"/>
-        <hit-probability distance="1200" percentage="0"/>
-        <hit-probability distance="200" percentage="1"/>
+        <hit-probability distance="600" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="200" percentage="1"/>
-        <hit-probability distance="800" percentage="0.6"/>
-        <hit-probability distance="1200" percentage="0"/>
-        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1060" percentage="0.01"/>
+        <hit-probability distance="600" percentage="0.5"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -869,122 +816,95 @@
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="CART 90 F2 OCC 62">
-    <burst duration="20s" munition="1"/>
+    <burst duration="15s" munition="1"/>
     <reloading duration="15s" munition="1"/>
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.85"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="1600" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0.4"/>
-        <hit-probability distance="2200" percentage="0.05"/>
-        <hit-probability distance="2300" percentage="0"/>
+        <hit-probability distance="750" percentage="0.8"/>
+        <hit-probability distance="1500" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.7"/>
-        <hit-probability distance="1200" percentage="0.5"/>
-        <hit-probability distance="1400" percentage="0.3"/>
-        <hit-probability distance="1600" percentage="0.2"/>
-        <hit-probability distance="1800" percentage="0.1"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="750" percentage="0.7"/>
+        <hit-probability distance="1500" percentage="0.45"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.6"/>
-        <hit-probability distance="1000" percentage="0.4"/>
-        <hit-probability distance="1200" percentage="0.2"/>
-        <hit-probability distance="1400" percentage="0.1"/>
-        <hit-probability distance="1600" percentage="0"/>
+        <hit-probability distance="750" percentage="0.6"/>
+        <hit-probability distance="1500" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="1500" percentage="0.1"/>
+        <hit-probability distance="2000" percentage="0.01"/>
+        <hit-probability distance="750" percentage="0.2"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="CART 90 F2 OE F1">
-    <burst duration="20s" munition="1"/>
+    <burst duration="15s" munition="1"/>
     <reloading duration="15s" munition="1"/>
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="1500" percentage="0.4"/>
-        <hit-probability distance="2100" percentage="0"/>
-        <hit-probability distance="1800" percentage="0.2"/>
+        <hit-probability distance="750" percentage="0.8"/>
+        <hit-probability distance="1500" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.75"/>
-        <hit-probability distance="1200" percentage="0.5"/>
-        <hit-probability distance="1500" percentage="0.3"/>
-        <hit-probability distance="1700" percentage="0.15"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="750" percentage="0.7"/>
+        <hit-probability distance="1500" percentage="0.45"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1200" percentage="0.35"/>
-        <hit-probability distance="1400" percentage="0.2"/>
-        <hit-probability distance="1600" percentage="0"/>
+        <hit-probability distance="750" percentage="0.6"/>
+        <hit-probability distance="1500" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.5"/>
-        <hit-probability distance="800" percentage="0.3"/>
-        <hit-probability distance="900" percentage="0.05"/>
-        <hit-probability distance="1100" percentage="0"/>
+        <hit-probability distance="750" percentage="0.3"/>
+        <hit-probability distance="1500" percentage="0.15"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="CART 90 F1 OFLE F1">
-    <burst duration="20s" munition="1"/>
+    <burst duration="15s" munition="1"/>
     <reloading duration="15s" munition="1"/>
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.95"/>
-        <hit-probability distance="1200" percentage="0.8"/>
-        <hit-probability distance="1600" percentage="0.6"/>
-        <hit-probability distance="2400" percentage="0.15"/>
-        <hit-probability distance="2500" percentage="0"/>
-        <hit-probability distance="1000" percentage="0.9"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.5"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1600" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0.3"/>
-        <hit-probability distance="2400" percentage="0"/>
-        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.7"/>
+        <hit-probability distance="2000" percentage="0.45"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0.1"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="0.2"/>
-        <hit-probability distance="1800" percentage="0"/>
+        <hit-probability distance="2000" percentage="0.04"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+        <hit-probability distance="1000" percentage="0.1"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -1026,35 +946,27 @@
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="900" percentage="0.95"/>
+        <hit-probability distance="900" percentage="0.9"/>
         <hit-probability distance="1800" percentage="0.5"/>
-        <hit-probability distance="1200" percentage="0.8"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="900" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1800" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="900" percentage="0.7"/>
+        <hit-probability distance="1800" percentage="0.45"/>
+        <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="850" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1800" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="900" percentage="0.6"/>
+        <hit-probability distance="1800" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1800" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="900" percentage="0.7"/>
+        <hit-probability distance="1800" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0.05"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -1199,39 +1111,35 @@
     <burst duration="15s" munition="6"/>
     <reloading duration="40s" munition="6"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.1"/>
+        <hit-probability distance="2000" percentage="0.04"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0.2"/>
-        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.5"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.5"/>
-        <hit-probability distance="1600" percentage="0.3"/>
-        <hit-probability distance="2000" percentage="0.1"/>
-        <hit-probability distance="2300" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.7"/>
+        <hit-probability distance="2000" percentage="0.45"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1200" percentage="0.3"/>
-        <hit-probability distance="1600" percentage="0.1"/>
-        <hit-probability distance="1900" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="600" percentage="0.4"/>
-        <hit-probability distance="800" percentage="0.2"/>
-        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.1"/>
+        <hit-probability distance="2000" percentage="0.04"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -1239,75 +1147,61 @@
     <burst duration="5s" munition="5"/>
     <reloading duration="120s" munition="150"/>
     <direct-fire>
-      <hit-probabilities target="Drone">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="0.6"/>
-        <hit-probability distance="800" percentage="0"/>
-      </hit-probabilities>
+      <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1500" percentage="0.8"/>
-        <hit-probability distance="1800" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1500" percentage="0.5"/>
-        <hit-probability distance="1800" percentage="0.2"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1200" percentage="0.45"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.7"/>
-        <hit-probability distance="1300" percentage="0.45"/>
-        <hit-probability distance="1700" percentage="0.1"/>
-        <hit-probability distance="1800" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="0.8"/>
-        <hit-probability distance="400" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.65"/>
-        <hit-probability distance="1200" percentage="0.4"/>
-        <hit-probability distance="1800" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.25"/>
+        <hit-probability distance="1200" percentage="0.15"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="Obus 73 OE">
-    <burst duration="10s" munition="1"/>
-    <reloading duration="30s" munition="3"/>
+    <burst duration="5s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="1500" percentage="0.3"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.6"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1750" percentage="0.01"/>
+        <hit-probability distance="650" percentage="0.8"/>
+        <hit-probability distance="1300" percentage="0.5"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1400" percentage="0.2"/>
-        <hit-probability distance="1800" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="650" percentage="0.7"/>
+        <hit-probability distance="1300" percentage="0.45"/>
+        <hit-probability distance="1750" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.4"/>
-        <hit-probability distance="1200" percentage="0.1"/>
-        <hit-probability distance="1300" percentage="0"/>
-        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1300" percentage="0.4"/>
+        <hit-probability distance="1750" percentage="0.01"/>
+        <hit-probability distance="650" percentage="0.6"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="600" percentage="0.3"/>
-        <hit-probability distance="800" percentage="0.05"/>
-        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="650" percentage="0.4"/>
+        <hit-probability distance="1300" percentage="0.2"/>
+        <hit-probability distance="1750" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -1333,33 +1227,27 @@
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="1000" percentage="0.8"/>
-        <hit-probability distance="1600" percentage="0.6"/>
-        <hit-probability distance="2000" percentage="0.3"/>
-        <hit-probability distance="2400" percentage="0"/>
+        <hit-probability distance="800" percentage="0.75"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2130" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.95"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="2000" percentage="0.15"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2300" percentage="0"/>
+        <hit-probability distance="1600" percentage="0.45"/>
+        <hit-probability distance="2130" percentage="0.01"/>
+        <hit-probability distance="800" percentage="0.65"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.7"/>
-        <hit-probability distance="1200" percentage="0.5"/>
-        <hit-probability distance="1600" percentage="0.25"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="800" percentage="0.55"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2130" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="100" percentage="0.9"/>
-        <hit-probability distance="1500" percentage="0"/>
-        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="2130" percentage="0.01"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.2"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -1370,33 +1258,27 @@
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="1200" percentage="1"/>
-        <hit-probability distance="1600" percentage="0.8"/>
-        <hit-probability distance="2000" percentage="0.6"/>
-        <hit-probability distance="2400" percentage="0.3"/>
-        <hit-probability distance="2800" percentage="0"/>
+        <hit-probability distance="800" percentage="0.75"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2130" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.85"/>
-        <hit-probability distance="1600" percentage="0.6"/>
-        <hit-probability distance="2000" percentage="0.3"/>
-        <hit-probability distance="2400" percentage="0"/>
+        <hit-probability distance="800" percentage="0.65"/>
+        <hit-probability distance="1600" percentage="0.45"/>
+        <hit-probability distance="2130" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.8"/>
-        <hit-probability distance="1600" percentage="0.55"/>
-        <hit-probability distance="2000" percentage="0.2"/>
-        <hit-probability distance="2200" percentage="0"/>
+        <hit-probability distance="800" percentage="0.55"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2130" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="200" percentage="1"/>
-        <hit-probability distance="1500" percentage="0"/>
-        <hit-probability distance="500" percentage="0.95"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.1"/>
+        <hit-probability distance="2130" percentage="0.01"/>
+        <hit-probability distance="1600" percentage="0.04"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -1599,39 +1481,35 @@
     <burst duration="15s" munition="6"/>
     <reloading duration="40s" munition="6"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.2"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="2660" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0.2"/>
-        <hit-probability distance="2200" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.7"/>
+        <hit-probability distance="2000" percentage="0.5"/>
+        <hit-probability distance="2660" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.5"/>
-        <hit-probability distance="1600" percentage="0.3"/>
-        <hit-probability distance="2000" percentage="0.1"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.65"/>
+        <hit-probability distance="2000" percentage="0.45"/>
+        <hit-probability distance="2660" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1200" percentage="0.3"/>
-        <hit-probability distance="1600" percentage="0.1"/>
-        <hit-probability distance="1700" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.5"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2660" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.4"/>
-        <hit-probability distance="1200" percentage="0.2"/>
-        <hit-probability distance="1600" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.3"/>
+        <hit-probability distance="2000" percentage="0.15"/>
+        <hit-probability distance="2660" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -1661,189 +1539,64 @@
     <direct-fire>
       <hit-probabilities target="Drone">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="250" percentage="0.6"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="600" percentage="0.1"/>
+        <hit-probability distance="800" percentage="0.01"/>
+        <hit-probability distance="350" percentage="0.15"/>
       </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="600" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="350" percentage="0.8"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="600" percentage="0.7"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="350" percentage="0.7"/>
+        <hit-probability distance="600" percentage="0.45"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="600" percentage="0.6"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="350" percentage="0.6"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="600" percentage="0.6"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="350" percentage="0.4"/>
+        <hit-probability distance="600" percentage="0.3"/>
+        <hit-probability distance="800" percentage="0.15"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="Obus 76 OE">
-    <burst duration="10s" munition="1"/>
-    <reloading duration="30s" munition="3"/>
-    <direct-fire>
-      <hit-probabilities target="Drone"/>
-      <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="1500" percentage="0.3"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.6"/>
-        <hit-probability distance="2000" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1400" percentage="0.2"/>
-        <hit-probability distance="1800" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.4"/>
-        <hit-probability distance="1200" percentage="0.1"/>
-        <hit-probability distance="1300" percentage="0"/>
-        <hit-probability distance="400" percentage="0.9"/>
-      </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="600" percentage="0.3"/>
-        <hit-probability distance="800" percentage="0.05"/>
-        <hit-probability distance="1000" percentage="0"/>
-      </hit-probabilities>
-    </direct-fire>
-  </weapon-system>
-  <weapon-system launcher="Canon" munition="CART 105 OFL F1">
-    <burst duration="15s" munition="1"/>
-    <reloading duration="15s" munition="1"/>
+    <burst duration="5s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.9"/>
-        <hit-probability distance="1600" percentage="0.75"/>
-        <hit-probability distance="2000" percentage="0.6"/>
-        <hit-probability distance="2400" percentage="0.3"/>
-        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="1750" percentage="0.01"/>
+        <hit-probability distance="650" percentage="0.8"/>
+        <hit-probability distance="1300" percentage="0.5"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.85"/>
-        <hit-probability distance="1600" percentage="0.6"/>
-        <hit-probability distance="2000" percentage="0.4"/>
-        <hit-probability distance="2400" percentage="0"/>
+        <hit-probability distance="650" percentage="0.7"/>
+        <hit-probability distance="1300" percentage="0.45"/>
+        <hit-probability distance="1750" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="0.95"/>
-        <hit-probability distance="1200" percentage="0.8"/>
-        <hit-probability distance="1600" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0.2"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="1300" percentage="0.4"/>
+        <hit-probability distance="1750" percentage="0.01"/>
+        <hit-probability distance="650" percentage="0.6"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="0.1"/>
-        <hit-probability distance="500" percentage="0.1"/>
-        <hit-probability distance="800" percentage="0.05"/>
-        <hit-probability distance="1200" percentage="0.04"/>
-        <hit-probability distance="1500" percentage="0.03"/>
-        <hit-probability distance="1800" percentage="0.02"/>
-      </hit-probabilities>
-    </direct-fire>
-  </weapon-system>
-  <weapon-system launcher="Canon" munition="CART 105 OCC F3 B">
-    <burst duration="15s" munition="1"/>
-    <reloading duration="15s" munition="1"/>
-    <direct-fire>
-      <hit-probabilities target="Drone"/>
-      <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1600" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0.4"/>
-        <hit-probability distance="2400" percentage="0.2"/>
-        <hit-probability distance="2800" percentage="0.1"/>
-        <hit-probability distance="3000" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0.3"/>
-        <hit-probability distance="2400" percentage="0.1"/>
-        <hit-probability distance="2500" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.7"/>
-        <hit-probability distance="1200" percentage="0.5"/>
-        <hit-probability distance="1600" percentage="0.3"/>
-        <hit-probability distance="2000" percentage="0.2"/>
-        <hit-probability distance="2100" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="0.5"/>
-        <hit-probability distance="1000" percentage="0"/>
-        <hit-probability distance="800" percentage="0.1"/>
-      </hit-probabilities>
-    </direct-fire>
-  </weapon-system>
-  <weapon-system launcher="Canon" munition="CART 105 F3A  OE F3">
-    <burst duration="15s" munition="1"/>
-    <reloading duration="15s" munition="1"/>
-    <direct-fire>
-      <hit-probabilities target="Drone"/>
-      <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0.1"/>
-        <hit-probability distance="2100" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.85"/>
-        <hit-probability distance="800" percentage="0.7"/>
-        <hit-probability distance="1200" percentage="0.4"/>
-        <hit-probability distance="1600" percentage="0.2"/>
-        <hit-probability distance="1800" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.6"/>
-        <hit-probability distance="1200" percentage="0.2"/>
-        <hit-probability distance="1600" percentage="0.05"/>
-        <hit-probability distance="1700" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="500" percentage="0.7"/>
-        <hit-probability distance="1300" percentage="0"/>
+        <hit-probability distance="650" percentage="0.4"/>
+        <hit-probability distance="1300" percentage="0.2"/>
+        <hit-probability distance="1750" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -1932,50 +1685,33 @@
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon Stabilise" munition="CART 120 OFL F1A">
-    <burst duration="10s" munition="1"/>
-    <reloading duration="10s" munition="1"/>
+    <burst duration="5s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="1200" percentage="1"/>
-        <hit-probability distance="1600" percentage="0.95"/>
-        <hit-probability distance="2000" percentage="0.9"/>
-        <hit-probability distance="2400" percentage="0.8"/>
-        <hit-probability distance="2800" percentage="0.7"/>
-        <hit-probability distance="3200" percentage="0.6"/>
-        <hit-probability distance="3600" percentage="0.55"/>
+        <hit-probability distance="2000" percentage="0.8"/>
         <hit-probability distance="4000" percentage="0.5"/>
-        <hit-probability distance="4500" percentage="0.3"/>
-        <hit-probability distance="5000" percentage="0"/>
+        <hit-probability distance="5330" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.95"/>
-        <hit-probability distance="1600" percentage="0.9"/>
-        <hit-probability distance="2000" percentage="0.85"/>
-        <hit-probability distance="2400" percentage="0.75"/>
-        <hit-probability distance="2800" percentage="0.65"/>
-        <hit-probability distance="3200" percentage="0.5"/>
-        <hit-probability distance="3600" percentage="0.2"/>
-        <hit-probability distance="3800" percentage="0"/>
+        <hit-probability distance="2000" percentage="0.7"/>
+        <hit-probability distance="4000" percentage="0.45"/>
+        <hit-probability distance="5330" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.8"/>
-        <hit-probability distance="1600" percentage="0.7"/>
         <hit-probability distance="2000" percentage="0.6"/>
-        <hit-probability distance="2400" percentage="0.4"/>
-        <hit-probability distance="2800" percentage="0.2"/>
-        <hit-probability distance="3000" percentage="0"/>
+        <hit-probability distance="4000" percentage="0.4"/>
+        <hit-probability distance="5330" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="0.4"/>
-        <hit-probability distance="600" percentage="0.1"/>
-        <hit-probability distance="1800" percentage="0"/>
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="4000" percentage="0.04"/>
+        <hit-probability distance="5330" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -2132,31 +1868,25 @@
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
-        <hit-probability distance="1500" percentage="1"/>
-        <hit-probability distance="3500" percentage="1"/>
-        <hit-probability distance="3750" percentage="0.9"/>
-        <hit-probability distance="4000" percentage="0"/>
-        <hit-probability distance="750" percentage="0.75"/>
-        <hit-probability distance="1000" percentage="0.9"/>
-        <hit-probability distance="500" percentage="0.5"/>
+        <hit-probability distance="3000" percentage="0.6"/>
+        <hit-probability distance="4000" percentage="0.4"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.8"/>
+        <hit-probability distance="0" percentage="0"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="1000" percentage="0.75"/>
-        <hit-probability distance="3750" percentage="0.4"/>
-        <hit-probability distance="4000" percentage="0"/>
-        <hit-probability distance="3500" percentage="0.8"/>
-        <hit-probability distance="1500" percentage="1"/>
-        <hit-probability distance="3250" percentage="1"/>
-        <hit-probability distance="500" percentage="0.5"/>
+        <hit-probability distance="4000" percentage="0.35"/>
+        <hit-probability distance="2000" percentage="0.75"/>
+        <hit-probability distance="3000" percentage="0.55"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="0" percentage="0"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="3750" percentage="0.4"/>
-        <hit-probability distance="4000" percentage="0"/>
-        <hit-probability distance="500" percentage="0.4"/>
-        <hit-probability distance="3000" percentage="1"/>
-        <hit-probability distance="3500" percentage="0.8"/>
-        <hit-probability distance="1000" percentage="0.75"/>
-        <hit-probability distance="1500" percentage="1"/>
+        <hit-probability distance="4000" percentage="0.2"/>
+        <hit-probability distance="500" percentage="1"/>
+        <hit-probability distance="3000" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.7"/>
+        <hit-probability distance="0" percentage="0"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -2165,40 +1895,35 @@
     <burst duration="10s" munition="3"/>
     <reloading duration="30s" munition="15"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.1"/>
+        <hit-probability distance="2000" percentage="0.04"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="1800" percentage="0.2"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.5"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.5"/>
-        <hit-probability distance="1400" percentage="0.3"/>
-        <hit-probability distance="1600" percentage="0.1"/>
-        <hit-probability distance="1800" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.7"/>
+        <hit-probability distance="2000" percentage="0.45"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1000" percentage="0.3"/>
-        <hit-probability distance="1200" percentage="0.1"/>
-        <hit-probability distance="1400" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="600" percentage="0.4"/>
-        <hit-probability distance="800" percentage="0.2"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.04"/>
         <hit-probability distance="1000" percentage="0.1"/>
-        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -2206,40 +1931,35 @@
     <burst duration="10s" munition="3"/>
     <reloading duration="30s" munition="15"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.1"/>
+        <hit-probability distance="2000" percentage="0.04"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="1800" percentage="0.2"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+        <hit-probability distance="2000" percentage="0.5"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.5"/>
-        <hit-probability distance="1400" percentage="0.3"/>
-        <hit-probability distance="1600" percentage="0.1"/>
-        <hit-probability distance="1800" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.7"/>
+        <hit-probability distance="2000" percentage="0.45"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1000" percentage="0.3"/>
-        <hit-probability distance="1200" percentage="0.1"/>
-        <hit-probability distance="1400" percentage="0"/>
+        <hit-probability distance="1000" percentage="0.6"/>
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="600" percentage="0.4"/>
-        <hit-probability distance="800" percentage="0.2"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.04"/>
+        <hit-probability distance="2650" percentage="0.01"/>
         <hit-probability distance="1000" percentage="0.1"/>
-        <hit-probability distance="1200" percentage="0"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -2283,22 +2003,22 @@
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="4000" percentage="0.3"/>
-        <hit-probability distance="4300" percentage="0"/>
-        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="2000" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.6"/>
+        <hit-probability distance="4000" percentage="0.4"/>
+        <hit-probability distance="0" percentage="1"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="4000" percentage="0.25"/>
-        <hit-probability distance="800" percentage="0.45"/>
-        <hit-probability distance="4300" percentage="0"/>
-        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="3000" percentage="0.55"/>
+        <hit-probability distance="2000" percentage="0.75"/>
+        <hit-probability distance="4000" percentage="0.35"/>
+        <hit-probability distance="0" percentage="1"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="3000" percentage="0.4"/>
         <hit-probability distance="4000" percentage="0.2"/>
-        <hit-probability distance="4300" percentage="0"/>
-        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.7"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -2383,89 +2103,107 @@
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
-  <weapon-system launcher="Lance missile SOL AIR" munition="Missile SA 9">
+  <weapon-system launcher="Lance Missile SOL AIR" munition="Missile SA 9">
     <burst duration="10s" munition="1"/>
     <reloading duration="30s" munition="1"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="4000" percentage="0.6"/>
+        <hit-probability distance="5000" percentage="0.3"/>
+        <hit-probability distance="6500" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="600" percentage="0"/>
-        <hit-probability distance="650" percentage="1"/>
-        <hit-probability distance="6000" percentage="1"/>
-        <hit-probability distance="6500" percentage="0"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="4000" percentage="0.8"/>
+        <hit-probability distance="5000" percentage="0.6"/>
+        <hit-probability distance="6500" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="600" percentage="0"/>
-        <hit-probability distance="650" percentage="1"/>
-        <hit-probability distance="6000" percentage="1"/>
-        <hit-probability distance="6500" percentage="0"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="4000" percentage="0.8"/>
+        <hit-probability distance="5000" percentage="0.5"/>
+        <hit-probability distance="6500" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="600" percentage="0"/>
-        <hit-probability distance="650" percentage="1"/>
-        <hit-probability distance="6000" percentage="1"/>
-        <hit-probability distance="6500" percentage="0"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="4000" percentage="0.7"/>
+        <hit-probability distance="5000" percentage="0.4"/>
+        <hit-probability distance="6500" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
-  <weapon-system launcher="Lance missile SOL AIR" munition="Missile SA 13">
+  <weapon-system launcher="Lance Missile SOL AIR" munition="Missile SA 13">
     <burst duration="10s" munition="1"/>
     <reloading duration="30s" munition="1"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="700" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.7"/>
+        <hit-probability distance="5000" percentage="0.4"/>
+        <hit-probability distance="6000" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="700" percentage="0"/>
-        <hit-probability distance="750" percentage="1"/>
-        <hit-probability distance="6000" percentage="0"/>
-        <hit-probability distance="5800" percentage="1"/>
+        <hit-probability distance="700" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.8"/>
+        <hit-probability distance="6000" percentage="0.01"/>
+        <hit-probability distance="5000" percentage="0.6"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="700" percentage="0"/>
-        <hit-probability distance="750" percentage="1"/>
-        <hit-probability distance="5800" percentage="1"/>
-        <hit-probability distance="6000" percentage="0"/>
+        <hit-probability distance="700" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.8"/>
+        <hit-probability distance="5000" percentage="0.5"/>
+        <hit-probability distance="6000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="700" percentage="0"/>
-        <hit-probability distance="750" percentage="1"/>
-        <hit-probability distance="5800" percentage="1"/>
-        <hit-probability distance="6000" percentage="0"/>
+        <hit-probability distance="700" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.7"/>
+        <hit-probability distance="5000" percentage="0.4"/>
+        <hit-probability distance="6000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
-  <weapon-system launcher="Lance missile SOL AIR" munition="Missile SA 16">
+  <weapon-system launcher="Lance Missile SOL AIR" munition="Missile SA 16">
     <burst duration="11s" munition="1"/>
     <reloading duration="25s" munition="1"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.6"/>
+        <hit-probability distance="3500" percentage="0.3"/>
+        <hit-probability distance="5000" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="300" percentage="0"/>
-        <hit-probability distance="350" percentage="1"/>
-        <hit-probability distance="4800" percentage="1"/>
-        <hit-probability distance="5000" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.8"/>
+        <hit-probability distance="3500" percentage="0.6"/>
+        <hit-probability distance="5000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="300" percentage="0"/>
-        <hit-probability distance="350" percentage="1"/>
-        <hit-probability distance="4800" percentage="1"/>
-        <hit-probability distance="5000" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.8"/>
+        <hit-probability distance="3500" percentage="0.5"/>
+        <hit-probability distance="5000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="300" percentage="0"/>
-        <hit-probability distance="350" percentage="1"/>
-        <hit-probability distance="4800" percentage="1"/>
-        <hit-probability distance="5000" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.7"/>
+        <hit-probability distance="3500" percentage="0.4"/>
+        <hit-probability distance="5000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -2487,91 +2225,96 @@
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="1400" percentage="0.6"/>
-        <hit-probability distance="1600" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0.3"/>
-        <hit-probability distance="2500" percentage="0"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1860" percentage="0.01"/>
+        <hit-probability distance="700" percentage="0.75"/>
+        <hit-probability distance="1400" percentage="0.5"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.7"/>
-        <hit-probability distance="1200" percentage="0.55"/>
-        <hit-probability distance="1600" percentage="0.35"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="700" percentage="0.65"/>
+        <hit-probability distance="1400" percentage="0.45"/>
+        <hit-probability distance="1860" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.6"/>
-        <hit-probability distance="1200" percentage="0.4"/>
-        <hit-probability distance="1600" percentage="0"/>
+        <hit-probability distance="700" percentage="0.55"/>
+        <hit-probability distance="1400" percentage="0.4"/>
+        <hit-probability distance="1860" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="400" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.55"/>
-        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="1400" percentage="0.15"/>
+        <hit-probability distance="1860" percentage="0.01"/>
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="900" percentage="0.3"/>
+        <hit-probability distance="700" percentage="0.3"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
-  <weapon-system launcher="Lance missile SOL AIR" munition="Missile SA 6">
+  <weapon-system launcher="Lance Missile SOL AIR" munition="Missile SA 6">
     <burst duration="3s" munition="1"/>
     <reloading duration="5s" munition="1"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="3000" percentage="0.8"/>
+        <hit-probability distance="14000" percentage="0.6"/>
+        <hit-probability distance="18000" percentage="0.3"/>
+        <hit-probability distance="24000" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="3000" percentage="0"/>
-        <hit-probability distance="3500" percentage="0.5"/>
-        <hit-probability distance="22000" percentage="0.5"/>
-        <hit-probability distance="24000" percentage="0"/>
+        <hit-probability distance="3000" percentage="0.8"/>
+        <hit-probability distance="14000" percentage="0.8"/>
+        <hit-probability distance="18000" percentage="0.6"/>
+        <hit-probability distance="24000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="3000" percentage="0"/>
-        <hit-probability distance="3500" percentage="0.5"/>
-        <hit-probability distance="22000" percentage="0.5"/>
-        <hit-probability distance="24000" percentage="0"/>
+        <hit-probability distance="3000" percentage="0.8"/>
+        <hit-probability distance="14000" percentage="0.8"/>
+        <hit-probability distance="18000" percentage="0.5"/>
+        <hit-probability distance="24000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="3000" percentage="0"/>
-        <hit-probability distance="3500" percentage="0.5"/>
-        <hit-probability distance="22000" percentage="0.5"/>
-        <hit-probability distance="24000" percentage="0"/>
+        <hit-probability distance="3000" percentage="0.8"/>
+        <hit-probability distance="14000" percentage="0.7"/>
+        <hit-probability distance="18000" percentage="0.4"/>
+        <hit-probability distance="24000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
-  <weapon-system launcher="Lance missile SOL AIR" munition="Missile SA 11">
+  <weapon-system launcher="Lance Missile SOL AIR" munition="Missile SA 11">
     <burst duration="5s" munition="1"/>
     <reloading duration="8s" munition="1"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="3500" percentage="0.8"/>
+        <hit-probability distance="10000" percentage="0.7"/>
+        <hit-probability distance="20000" percentage="0.4"/>
+        <hit-probability distance="28500" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="3500" percentage="0"/>
-        <hit-probability distance="4000" percentage="0.9"/>
-        <hit-probability distance="28000" percentage="0.9"/>
-        <hit-probability distance="28500" percentage="0"/>
+        <hit-probability distance="3500" percentage="0.8"/>
+        <hit-probability distance="10000" percentage="0.8"/>
+        <hit-probability distance="20000" percentage="0.6"/>
+        <hit-probability distance="28500" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="3500" percentage="0"/>
-        <hit-probability distance="4000" percentage="0.9"/>
-        <hit-probability distance="28000" percentage="0.9"/>
-        <hit-probability distance="28500" percentage="0"/>
+        <hit-probability distance="3500" percentage="0.8"/>
+        <hit-probability distance="10000" percentage="0.8"/>
+        <hit-probability distance="20000" percentage="0.5"/>
+        <hit-probability distance="28500" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="3500" percentage="0"/>
-        <hit-probability distance="4000" percentage="0.9"/>
-        <hit-probability distance="28000" percentage="0.9"/>
-        <hit-probability distance="28500" percentage="0"/>
+        <hit-probability distance="3500" percentage="0.8"/>
+        <hit-probability distance="10000" percentage="0.7"/>
+        <hit-probability distance="20000" percentage="0.4"/>
+        <hit-probability distance="28500" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -2580,30 +2323,35 @@
     <burst duration="5s" munition="3"/>
     <reloading duration="20s" munition="30"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.3"/>
+        <hit-probability distance="1200" percentage="0.15"/>
+        <hit-probability distance="1600" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="1000" percentage="0.9"/>
-        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="1200" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="1000" percentage="0.8"/>
-        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1600" percentage="0.01"/>
+        <hit-probability distance="800" percentage="0.7"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.4"/>
-        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.2"/>
-        <hit-probability distance="1300" percentage="0"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.4"/>
+        <hit-probability distance="1600" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -2613,22 +2361,22 @@
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="10" percentage="0.95"/>
-        <hit-probability distance="250" percentage="0.9"/>
-        <hit-probability distance="260" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="170" percentage="0.6"/>
+        <hit-probability distance="200" percentage="0.5"/>
+        <hit-probability distance="260" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="10" percentage="0.95"/>
-        <hit-probability distance="250" percentage="0.9"/>
-        <hit-probability distance="260" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="170" percentage="0.6"/>
+        <hit-probability distance="200" percentage="0.45"/>
+        <hit-probability distance="260" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="10" percentage="0.95"/>
-        <hit-probability distance="250" percentage="0.9"/>
-        <hit-probability distance="260" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="170" percentage="0.5"/>
+        <hit-probability distance="200" percentage="0.4"/>
+        <hit-probability distance="260" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -2639,40 +2387,28 @@
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
+        <hit-probability distance="550" percentage="0.8"/>
+        <hit-probability distance="1100" percentage="0.5"/>
+        <hit-probability distance="1470" percentage="0.01"/>
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="200" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="600" percentage="0.7"/>
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1000" percentage="0.4"/>
-        <hit-probability distance="1200" percentage="0.2"/>
-        <hit-probability distance="1400" percentage="0.1"/>
-        <hit-probability distance="1500" percentage="0"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="200" percentage="1"/>
-        <hit-probability distance="400" percentage="0.8"/>
-        <hit-probability distance="600" percentage="0.6"/>
-        <hit-probability distance="800" percentage="0.4"/>
-        <hit-probability distance="1000" percentage="0.3"/>
-        <hit-probability distance="1200" percentage="0.1"/>
-        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="550" percentage="0.7"/>
+        <hit-probability distance="1100" percentage="0.45"/>
+        <hit-probability distance="1470" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="200" percentage="1"/>
-        <hit-probability distance="400" percentage="0.7"/>
-        <hit-probability distance="600" percentage="0.5"/>
-        <hit-probability distance="800" percentage="0.3"/>
-        <hit-probability distance="1000" percentage="0.2"/>
-        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="1100" percentage="0.4"/>
+        <hit-probability distance="1470" percentage="0.01"/>
+        <hit-probability distance="550" percentage="0.6"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="0.5"/>
-        <hit-probability distance="1000" percentage="0"/>
-        <hit-probability distance="800" percentage="0.1"/>
+        <hit-probability distance="550" percentage="0.3"/>
+        <hit-probability distance="1470" percentage="0.01"/>
+        <hit-probability distance="1100" percentage="0.15"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -2682,32 +2418,33 @@
     <direct-fire>
       <hit-probabilities target="Drone">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="250" percentage="0.6"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="300" percentage="0.1"/>
+        <hit-probability distance="400" percentage="0.01"/>
+        <hit-probability distance="200" percentage="0.15"/>
       </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="300" percentage="0.95"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="200" percentage="0.8"/>
+        <hit-probability distance="300" percentage="0.5"/>
+        <hit-probability distance="400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="300" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="200" percentage="0.7"/>
+        <hit-probability distance="300" percentage="0.45"/>
+        <hit-probability distance="400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="300" percentage="0.85"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="200" percentage="0.6"/>
+        <hit-probability distance="300" percentage="0.4"/>
+        <hit-probability distance="400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="300" percentage="0.8"/>
-        <hit-probability distance="400" percentage="0"/>
+        <hit-probability distance="200" percentage="0.4"/>
+        <hit-probability distance="300" percentage="0.2"/>
+        <hit-probability distance="400" percentage="0.1"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -2718,33 +2455,27 @@
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0.1"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="700" percentage="0.8"/>
+        <hit-probability distance="1400" percentage="0.5"/>
+        <hit-probability distance="1850" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.85"/>
-        <hit-probability distance="800" percentage="0.7"/>
-        <hit-probability distance="1200" percentage="0.4"/>
-        <hit-probability distance="1600" percentage="0.2"/>
-        <hit-probability distance="1800" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="700" percentage="0.6"/>
+        <hit-probability distance="1400" percentage="0.4"/>
+        <hit-probability distance="1850" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.6"/>
-        <hit-probability distance="1200" percentage="0.2"/>
-        <hit-probability distance="1600" percentage="0.05"/>
-        <hit-probability distance="1700" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="700" percentage="0.5"/>
+        <hit-probability distance="1400" percentage="0.35"/>
+        <hit-probability distance="1850" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="500" percentage="0.7"/>
-        <hit-probability distance="1300" percentage="0"/>
+        <hit-probability distance="1400" percentage="0.15"/>
+        <hit-probability distance="1850" percentage="0.01"/>
+        <hit-probability distance="700" percentage="0.3"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -2755,39 +2486,27 @@
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1600" percentage="0.5"/>
-        <hit-probability distance="2400" percentage="0.2"/>
-        <hit-probability distance="2800" percentage="0.1"/>
-        <hit-probability distance="3000" percentage="0"/>
-        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="550" percentage="0.8"/>
+        <hit-probability distance="1100" percentage="0.5"/>
+        <hit-probability distance="1450" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.6"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2400" percentage="0.1"/>
-        <hit-probability distance="2500" percentage="0"/>
-        <hit-probability distance="2000" percentage="0.3"/>
+        <hit-probability distance="550" percentage="0.6"/>
+        <hit-probability distance="1100" percentage="0.4"/>
+        <hit-probability distance="1450" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.7"/>
-        <hit-probability distance="1200" percentage="0.5"/>
-        <hit-probability distance="1600" percentage="0.3"/>
-        <hit-probability distance="2000" percentage="0.2"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="550" percentage="0.5"/>
+        <hit-probability distance="1100" percentage="0.35"/>
+        <hit-probability distance="1450" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="0.5"/>
-        <hit-probability distance="800" percentage="0.1"/>
-        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="550" percentage="0.2"/>
+        <hit-probability distance="1100" percentage="0.1"/>
+        <hit-probability distance="1450" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -2798,38 +2517,27 @@
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.9"/>
-        <hit-probability distance="1600" percentage="0.75"/>
-        <hit-probability distance="2000" percentage="0.6"/>
-        <hit-probability distance="2400" percentage="0.3"/>
-        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="900" percentage="0.8"/>
+        <hit-probability distance="1800" percentage="0.5"/>
+        <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.85"/>
-        <hit-probability distance="1600" percentage="0.6"/>
-        <hit-probability distance="2000" percentage="0.4"/>
-        <hit-probability distance="2400" percentage="0"/>
+        <hit-probability distance="900" percentage="0.7"/>
+        <hit-probability distance="1800" percentage="0.45"/>
+        <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="0.95"/>
-        <hit-probability distance="1200" percentage="0.8"/>
-        <hit-probability distance="1600" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0.2"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="900" percentage="0.6"/>
+        <hit-probability distance="1800" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="0.1"/>
-        <hit-probability distance="500" percentage="0.1"/>
-        <hit-probability distance="800" percentage="0.05"/>
-        <hit-probability distance="1200" percentage="0.04"/>
-        <hit-probability distance="1500" percentage="0.03"/>
-        <hit-probability distance="1800" percentage="0.02"/>
+        <hit-probability distance="900" percentage="0.1"/>
+        <hit-probability distance="1800" percentage="0.04"/>
+        <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -2837,34 +2545,30 @@
     <burst duration="10s" munition="6"/>
     <reloading duration="30s" munition="1"/>
     <direct-fire>
-      <hit-probabilities target="Drone">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="0.6"/>
-        <hit-probability distance="800" percentage="0"/>
-      </hit-probabilities>
+      <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="600" percentage="0.7"/>
         <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.4"/>
-        <hit-probability distance="1100" percentage="0"/>
+        <hit-probability distance="600" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0.45"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.75"/>
-        <hit-probability distance="800" percentage="0.35"/>
-        <hit-probability distance="1050" percentage="0"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.7"/>
-        <hit-probability distance="800" percentage="0.3"/>
-        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="600" percentage="0.25"/>
+        <hit-probability distance="800" percentage="0.15"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -2872,30 +2576,35 @@
     <burst duration="10s" munition="5"/>
     <reloading duration="30s" munition="1"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="600" percentage="0.3"/>
+        <hit-probability distance="800" percentage="0.15"/>
+        <hit-probability distance="1060" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.5"/>
-        <hit-probability distance="1200" percentage="0"/>
+        <hit-probability distance="600" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.8"/>
-        <hit-probability distance="800" percentage="0.4"/>
-        <hit-probability distance="1100" percentage="0"/>
+        <hit-probability distance="600" percentage="0.7"/>
+        <hit-probability distance="800" percentage="0.6"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.75"/>
-        <hit-probability distance="800" percentage="0.35"/>
-        <hit-probability distance="1050" percentage="0"/>
+        <hit-probability distance="600" percentage="0.6"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.7"/>
-        <hit-probability distance="800" percentage="0.3"/>
-        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="600" percentage="0.5"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -2905,32 +2614,33 @@
     <direct-fire>
       <hit-probabilities target="Drone">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="0.6"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="1200" percentage="0.15"/>
+        <hit-probability distance="1600" percentage="0.01"/>
+        <hit-probability distance="800" percentage="0.6"/>
       </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="1000" percentage="0.9"/>
-        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="1000" percentage="0.8"/>
-        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="1200" percentage="0.45"/>
+        <hit-probability distance="1600" percentage="0.01"/>
+        <hit-probability distance="800" percentage="0.6"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.5"/>
         <hit-probability distance="1200" percentage="0.4"/>
-        <hit-probability distance="1500" percentage="0"/>
+        <hit-probability distance="1600" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="800" percentage="0.8"/>
-        <hit-probability distance="1200" percentage="0.2"/>
-        <hit-probability distance="1300" percentage="0"/>
+        <hit-probability distance="800" percentage="0.25"/>
+        <hit-probability distance="1200" percentage="0.15"/>
+        <hit-probability distance="1600" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -2940,96 +2650,88 @@
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="100" percentage="0"/>
-        <hit-probability distance="150" percentage="0.5"/>
-        <hit-probability distance="3500" percentage="0.3"/>
-        <hit-probability distance="4000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.6"/>
+        <hit-probability distance="4000" percentage="0.4"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="100" percentage="0"/>
-        <hit-probability distance="150" percentage="0.5"/>
-        <hit-probability distance="3500" percentage="0.3"/>
-        <hit-probability distance="4000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.75"/>
+        <hit-probability distance="3000" percentage="0.55"/>
+        <hit-probability distance="4000" percentage="0.35"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="100" percentage="0"/>
-        <hit-probability distance="150" percentage="0.5"/>
-        <hit-probability distance="3500" percentage="0.3"/>
-        <hit-probability distance="4000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="2000" percentage="0.7"/>
+        <hit-probability distance="3000" percentage="0.4"/>
+        <hit-probability distance="4000" percentage="0.2"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon 120" munition="Obus 120 OFL">
-    <burst duration="10s" munition="1"/>
-    <reloading duration="30s" munition="1"/>
+    <burst duration="5s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.9"/>
-        <hit-probability distance="1600" percentage="0.75"/>
-        <hit-probability distance="2000" percentage="0.6"/>
-        <hit-probability distance="2400" percentage="0.3"/>
-        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="900" percentage="0.8"/>
+        <hit-probability distance="1800" percentage="0.5"/>
+        <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="0.85"/>
-        <hit-probability distance="1600" percentage="0.6"/>
-        <hit-probability distance="2000" percentage="0.4"/>
-        <hit-probability distance="2400" percentage="0"/>
+        <hit-probability distance="900" percentage="0.7"/>
+        <hit-probability distance="1800" percentage="0.45"/>
+        <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="0.95"/>
-        <hit-probability distance="1200" percentage="0.8"/>
-        <hit-probability distance="1600" percentage="0.5"/>
-        <hit-probability distance="2000" percentage="0.2"/>
-        <hit-probability distance="2100" percentage="0"/>
+        <hit-probability distance="900" percentage="0.6"/>
+        <hit-probability distance="1800" percentage="0.4"/>
+        <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="0.1"/>
-        <hit-probability distance="500" percentage="0.1"/>
-        <hit-probability distance="800" percentage="0.05"/>
-        <hit-probability distance="1200" percentage="0.04"/>
-        <hit-probability distance="1500" percentage="0.03"/>
-        <hit-probability distance="1800" percentage="0.01"/>
+        <hit-probability distance="900" percentage="0.1"/>
+        <hit-probability distance="1800" percentage="0.04"/>
+        <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
-  <weapon-system launcher="Lance missile SOL AIR" munition="Missile SA 14">
+  <weapon-system launcher="Lance Missile SOL AIR" munition="Missile SA 14">
     <burst duration="10s" munition="1"/>
     <reloading duration="30s" munition="1"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="3000" percentage="0.3"/>
+        <hit-probability distance="4200" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="300" percentage="0"/>
-        <hit-probability distance="350" percentage="0.5"/>
-        <hit-probability distance="4000" percentage="0.5"/>
-        <hit-probability distance="4200" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.6"/>
+        <hit-probability distance="4200" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="300" percentage="0"/>
-        <hit-probability distance="350" percentage="0.5"/>
-        <hit-probability distance="4000" percentage="0.5"/>
-        <hit-probability distance="4200" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.5"/>
+        <hit-probability distance="4200" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="300" percentage="0"/>
-        <hit-probability distance="350" percentage="0.5"/>
-        <hit-probability distance="4000" percentage="0.5"/>
-        <hit-probability distance="4200" percentage="0"/>
+        <hit-probability distance="300" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.7"/>
+        <hit-probability distance="3000" percentage="0.4"/>
+        <hit-probability distance="4200" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -3040,28 +2742,22 @@
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="400" percentage="0.45"/>
-        <hit-probability distance="600" percentage="0.5"/>
-        <hit-probability distance="1900" percentage="0.2"/>
-        <hit-probability distance="2500" percentage="0"/>
-        <hit-probability distance="75" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1800" percentage="0.6"/>
+        <hit-probability distance="2500" percentage="0.5"/>
+        <hit-probability distance="1200" percentage="0.7"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="400" percentage="0.45"/>
-        <hit-probability distance="600" percentage="0.5"/>
-        <hit-probability distance="1900" percentage="0.2"/>
-        <hit-probability distance="2500" percentage="0"/>
-        <hit-probability distance="75" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.6"/>
+        <hit-probability distance="1800" percentage="0.5"/>
+        <hit-probability distance="2500" percentage="0.4"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="400" percentage="0.45"/>
-        <hit-probability distance="600" percentage="0.5"/>
-        <hit-probability distance="1900" percentage="0.2"/>
-        <hit-probability distance="2500" percentage="0"/>
-        <hit-probability distance="75" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1200" percentage="0.5"/>
+        <hit-probability distance="1800" percentage="0.4"/>
+        <hit-probability distance="2500" percentage="0.3"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
@@ -3072,36 +2768,72 @@
     <direct-fire>
       <hit-probabilities target="Drone">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="200" percentage="0.6"/>
-        <hit-probability distance="300" percentage="0"/>
+        <hit-probability distance="800" percentage="0.01"/>
+        <hit-probability distance="600" percentage="0.1"/>
+        <hit-probability distance="350" percentage="0.15"/>
       </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="1"/>
-        <hit-probability distance="800" percentage="0"/>
-        <hit-probability distance="600" percentage="0.81"/>
+        <hit-probability distance="350" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.01"/>
+        <hit-probability distance="600" percentage="0.5"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="1"/>
-        <hit-probability distance="600" percentage="0.76"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="350" percentage="0.7"/>
+        <hit-probability distance="600" percentage="0.45"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="1"/>
-        <hit-probability distance="600" percentage="0.71"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="350" percentage="0.6"/>
+        <hit-probability distance="600" percentage="0.4"/>
+        <hit-probability distance="800" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="300" percentage="1"/>
-        <hit-probability distance="600" percentage="0.66"/>
-        <hit-probability distance="800" percentage="0"/>
+        <hit-probability distance="350" percentage="0.4"/>
+        <hit-probability distance="600" percentage="0.3"/>
+        <hit-probability distance="800" percentage="0.15"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
-  <weapon-system launcher="LANCE MISSILE MANPAD" munition="Missile SA 7">
+  <weapon-system launcher="Lance Missile MANPAD" munition="Missile SA 7">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="30s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.6"/>
+        <hit-probability distance="3000" percentage="0.3"/>
+        <hit-probability distance="4300" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.6"/>
+        <hit-probability distance="4300" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.8"/>
+        <hit-probability distance="3000" percentage="0.5"/>
+        <hit-probability distance="4300" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="0" percentage="0"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.7"/>
+        <hit-probability distance="3000" percentage="0.4"/>
+        <hit-probability distance="4300" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lance Missile MANPAD" munition="Missile SA 14">
     <burst duration="10s" munition="1"/>
     <reloading duration="30s" munition="1"/>
     <direct-fire>
@@ -3109,35 +2841,6 @@
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="0"/>
         <hit-probability distance="300" percentage="0"/>
-        <hit-probability distance="350" percentage="1"/>
-        <hit-probability distance="4100" percentage="1"/>
-        <hit-probability distance="4300" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="300" percentage="0"/>
-        <hit-probability distance="350" percentage="1"/>
-        <hit-probability distance="4100" percentage="1"/>
-        <hit-probability distance="4300" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="300" percentage="0"/>
-        <hit-probability distance="350" percentage="1"/>
-        <hit-probability distance="4100" percentage="1"/>
-        <hit-probability distance="4300" percentage="0"/>
-      </hit-probabilities>
-      <hit-probabilities target="Personnel"/>
-    </direct-fire>
-  </weapon-system>
-  <weapon-system launcher="LANCE MISSILE MANPAD" munition="Missile SA 14">
-    <burst duration="10s" munition="1"/>
-    <reloading duration="30s" munition="1"/>
-    <direct-fire>
-      <hit-probabilities target="Drone"/>
-      <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="300" percentage="0"/>
         <hit-probability distance="350" percentage="0.5"/>
         <hit-probability distance="4000" percentage="0.5"/>
         <hit-probability distance="4200" percentage="0"/>
@@ -3159,7 +2862,7 @@
       <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
-  <weapon-system launcher="LANCE MISSILE MANPAD" munition="Missile SA 16">
+  <weapon-system launcher="Lance Missile MANPAD" munition="Missile SA 16">
     <burst duration="11s" munition="1"/>
     <reloading duration="25s" munition="1"/>
     <direct-fire>
@@ -3253,7 +2956,7 @@
     <reloading duration="5s" munition="1"/>
     <indirect-fire average-speed="1200" max-range="18500" min-range="1000"/>
   </weapon-system>
-  <weapon-system launcher="Lance roquette 57" munition="Roquette 57">
+  <weapon-system launcher="Lance Roquette 57" munition="Roquette 57">
     <burst duration="10s" munition="10"/>
     <reloading duration="10s" munition="10"/>
     <indirect-fire average-speed="200" max-range="3000" min-range="0"/>
@@ -3323,59 +3026,54 @@
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="100" percentage="0.9"/>
-        <hit-probability distance="200" percentage="0.85"/>
-        <hit-probability distance="300" percentage="0.75"/>
-        <hit-probability distance="350" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="0.7"/>
+        <hit-probability distance="300" percentage="0.5"/>
+        <hit-probability distance="500" percentage="0.1"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="100" percentage="0.8"/>
+        <hit-probability distance="0" percentage="1"/>
         <hit-probability distance="200" percentage="0.6"/>
-        <hit-probability distance="300" percentage="0.25"/>
-        <hit-probability distance="350" percentage="0"/>
+        <hit-probability distance="300" percentage="0.5"/>
+        <hit-probability distance="500" percentage="0.1"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
-        <hit-probability distance="0" percentage="0"/>
-        <hit-probability distance="100" percentage="0.7"/>
-        <hit-probability distance="200" percentage="0.4"/>
-        <hit-probability distance="300" percentage="0.15"/>
-        <hit-probability distance="350" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="200" percentage="0.5"/>
+        <hit-probability distance="300" percentage="0.4"/>
+        <hit-probability distance="500" percentage="0.07"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="Obus 100 OE">
     <burst duration="10s" munition="1"/>
-    <reloading duration="30s" munition="3"/>
+    <reloading duration="30s" munition="1"/>
     <direct-fire>
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="2000" percentage="0.15"/>
-        <hit-probability distance="1000" percentage="0.9"/>
-        <hit-probability distance="1500" percentage="0.7"/>
-        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="2000" percentage="0.01"/>
+        <hit-probability distance="750" percentage="0.8"/>
+        <hit-probability distance="1500" percentage="0.5"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="500" percentage="0.8"/>
-        <hit-probability distance="1000" percentage="0.6"/>
-        <hit-probability distance="1500" percentage="0.1"/>
-        <hit-probability distance="2000" percentage="0"/>
+        <hit-probability distance="750" percentage="0.6"/>
+        <hit-probability distance="1500" percentage="0.4"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="900" percentage="0.55"/>
-        <hit-probability distance="1200" percentage="0.1"/>
-        <hit-probability distance="1500" percentage="0"/>
-        <hit-probability distance="500" percentage="0.7"/>
+        <hit-probability distance="750" percentage="0.5"/>
+        <hit-probability distance="1500" percentage="0.35"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="500" percentage="0.7"/>
-        <hit-probability distance="1300" percentage="0"/>
+        <hit-probability distance="750" percentage="0.3"/>
+        <hit-probability distance="1500" percentage="0.15"/>
+        <hit-probability distance="2000" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -3430,10 +3128,10 @@
   </weapon-system>
   <weapon-system launcher="Lance Roquette GMLRS" munition="ROQ GMLRS">
     <burst duration="2s" munition="1"/>
-    <reloading duration="5s" munition="1"/>
+    <reloading duration="20s" munition="1"/>
     <indirect-fire average-speed="1000" max-range="70000" min-range="15000"/>
   </weapon-system>
-  <weapon-system launcher="lance Roquette LRU Animation" munition="ROQ GMLRS">
+  <weapon-system launcher="Lance Roquette LRU Animation" munition="ROQ GMLRS">
     <burst duration="2s" munition="1"/>
     <reloading duration="5s" munition="1"/>
     <indirect-fire average-speed="500000" max-range="500000" min-range="15000"/>
@@ -3445,43 +3143,43 @@
       <hit-probabilities target="Drone"/>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="600" percentage="0.95"/>
-        <hit-probability distance="650" percentage="0"/>
+        <hit-probability distance="400" percentage="0.9"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="600" percentage="0.9"/>
-        <hit-probability distance="650" percentage="0"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.45"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="600" percentage="0.8"/>
-        <hit-probability distance="650" percentage="0"/>
+        <hit-probability distance="400" percentage="0.8"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1060" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="1"/>
-        <hit-probability distance="600" percentage="0.7"/>
-        <hit-probability distance="650" percentage="0"/>
+        <hit-probability distance="400" percentage="0.7"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1060" percentage="0.05"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon 155/52" munition="OE F1 155 CAESAR">
-    <burst duration="2s" munition="1"/>
-    <reloading duration="2s" munition="1"/>
+    <burst duration="5s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
     <indirect-fire average-speed="1300" max-range="23000" min-range="2000"/>
   </weapon-system>
   <weapon-system launcher="Canon 155/52" munition="OE F2 155 CAESAR">
-    <burst duration="2s" munition="1"/>
-    <reloading duration="2s" munition="1"/>
+    <burst duration="5s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
     <indirect-fire average-speed="1300" max-range="28000" min-range="2000"/>
   </weapon-system>
   <weapon-system launcher="Canon 155/52" munition="OE F4 155 CAESAR">
-    <burst duration="2s" munition="1"/>
-    <reloading duration="2s" munition="1"/>
+    <burst duration="5s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
     <indirect-fire average-speed="1300" max-range="38000" min-range="2000"/>
   </weapon-system>
   <weapon-system launcher="Canon 155/52" munition="ACED 155 CAESAR">
@@ -3490,48 +3188,43 @@
     <indirect-fire average-speed="1500" max-range="38000" min-range="2000"/>
   </weapon-system>
   <weapon-system launcher="Canon 155/52" munition="OE F5 155 CAESAR">
-    <burst duration="2s" munition="1"/>
-    <reloading duration="2s" munition="1"/>
+    <burst duration="5s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
     <indirect-fire average-speed="1300" max-range="28000" min-range="2000"/>
   </weapon-system>
   <weapon-system launcher="Canon ZSU" munition="Obus 23 OE">
     <burst duration="1s" munition="4"/>
     <reloading duration="1s" munition="4"/>
     <direct-fire>
-      <hit-probabilities target="Drone"/>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.4"/>
+        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="2130" percentage="0.01"/>
+      </hit-probabilities>
       <hit-probabilities target="Gros">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="0.9"/>
-        <hit-probability distance="1200" percentage="0.7"/>
-        <hit-probability distance="1600" percentage="0.4"/>
-        <hit-probability distance="2000" percentage="0.2"/>
-        <hit-probability distance="2500" percentage="0"/>
+        <hit-probability distance="800" percentage="0.7"/>
+        <hit-probability distance="1600" percentage="0.5"/>
+        <hit-probability distance="2130" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Moyen">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="1"/>
-        <hit-probability distance="1600" percentage="0.6"/>
-        <hit-probability distance="2000" percentage="0.3"/>
-        <hit-probability distance="2600" percentage="0"/>
+        <hit-probability distance="800" percentage="0.65"/>
+        <hit-probability distance="1600" percentage="0.45"/>
+        <hit-probability distance="2130" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Petit">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="1"/>
-        <hit-probability distance="800" percentage="1"/>
-        <hit-probability distance="1200" percentage="1"/>
-        <hit-probability distance="2500" percentage="0.4"/>
-        <hit-probability distance="1600" percentage="0.8"/>
-        <hit-probability distance="3000" percentage="0"/>
+        <hit-probability distance="800" percentage="0.5"/>
+        <hit-probability distance="1600" percentage="0.4"/>
+        <hit-probability distance="2130" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="0.9"/>
-        <hit-probability distance="400" percentage="0.9"/>
-        <hit-probability distance="600" percentage="0.4"/>
-        <hit-probability distance="800" percentage="0.2"/>
-        <hit-probability distance="1000" percentage="0"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="800" percentage="0.3"/>
+        <hit-probability distance="1600" percentage="0.15"/>
+        <hit-probability distance="2130" percentage="0.01"/>
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
@@ -3577,5 +3270,87 @@
     </direct-fire>
     <indirect-fire average-speed="2000" max-range="50" min-range="0"/>
   </weapon-system>
+  <weapon-system launcher="Canon Mitrailleur 25M811" munition="Obus 25mm HEI EXPLO.">
+    <burst duration="2s" munition="6"/>
+    <reloading duration="30s" munition="15"/>
+    <direct-fire>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.1"/>
+        <hit-probability distance="2000" percentage="0.04"/>
+        <hit-probability distance="2500" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="2000" percentage="0.5"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.9"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="2000" percentage="0.5"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="2000" percentage="0.45"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.7"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="2000" percentage="0.1"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.2"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Canon Mitrailleur 25M811" munition="Obus 25mm APDS PERFO.">
+    <burst duration="2s" munition="6"/>
+    <reloading duration="30s" munition="15"/>
+    <direct-fire>
+      <hit-probabilities target="Drone">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.1"/>
+        <hit-probability distance="2000" percentage="0.04"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Gros">
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.8"/>
+        <hit-probability distance="2000" percentage="0.5"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Moyen">
+        <hit-probability distance="2000" percentage="0.45"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.7"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Petit">
+        <hit-probability distance="2000" percentage="0.4"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.6"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+      </hit-probabilities>
+      <hit-probabilities target="Personnel">
+        <hit-probability distance="2000" percentage="0.04"/>
+        <hit-probability distance="0" percentage="1"/>
+        <hit-probability distance="1000" percentage="0.1"/>
+        <hit-probability distance="2650" percentage="0.01"/>
+      </hit-probabilities>
+    </direct-fire>
+  </weapon-system>
+  <weapon-system launcher="Lanceur GALIX" munition="GALIX FLB/AP">
+    <burst duration="30s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <indirect-fire average-speed="100" max-range="50" min-range="20"/>
+  </weapon-system>
+  <weapon-system launcher="Canon 155" munition="OE JUPU 155 F2 Kit RTC">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="28000" min-range="4200"/>
+  </weapon-system>
 </weapons>
-<!-- signature="1259538642" -->
+<!-- signature="3942970492" -->

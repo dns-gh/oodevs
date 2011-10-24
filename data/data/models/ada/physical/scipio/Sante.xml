@@ -11,9 +11,17 @@
   </injuries>
   <resource-availability-alerts>
     <resource-availability-alert availability-threshold="0" resource="relieve"/>
+    <resource-availability-alert availability-threshold="0" resource="relieve"/>
+    <resource-availability-alert availability-threshold="0" resource="relieve"/>
+    <resource-availability-alert availability-threshold="25" resource="collection"/>
+    <resource-availability-alert availability-threshold="0" resource="collection"/>
+    <resource-availability-alert availability-threshold="25" resource="collection"/>
+    <resource-availability-alert availability-threshold="0" resource="collection"/>
     <resource-availability-alert availability-threshold="25" resource="collection"/>
     <resource-availability-alert availability-threshold="0" resource="collection"/>
     <resource-availability-alert availability-threshold="0" resource="doctor"/>
+    <resource-availability-alert availability-threshold="0" resource="doctor"/>
+    <resource-availability-alert availability-threshold="0" resource="doctor"/>
   </resource-availability-alerts>
 </health>
-<!-- signature="1731397882" -->
+<!-- signature="3374300510" -->
