@@ -981,7 +981,6 @@
     </macrodef>
 
     <target name="scripts_test" description="run all script tests">
-        <test-scripts dataset="ada" physical="france"/>
         <test-scripts dataset="ada" physical="scipio"/>
         <!--
         <test-scripts dataset="ada" physical="security-fr"/>
@@ -1076,7 +1075,6 @@
     </macrodef>
 
     <target name="adaptation_test" description="load and save adaptation main data then check that output is the same as input">
-        <test-adaptation input="${data.dir}/data/models/ada/physical/france"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/scipio"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/security-fr"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
@@ -1129,7 +1127,6 @@
 
     <target name="exercises_test" description="validates some significant exercises">
         <test-exercise exercise="Egypt"/>
-        <test-exercise exercise="Cabourg"/>
         <test-exercise exercise="Poseidon VA"/>
     </target>
 
@@ -1205,13 +1202,13 @@
         </sequential>
     </macrodef>
 
-    <target name="reports_test" description="check that ada/physical/france/Reports.xml and ada/physical/worldwide/Reports.xml contain the same amount of reports">
+    <target name="reports_test" description="check that ada/physical/scipio/Reports.xml and ada/physical/worldwide/Reports.xml contain the same amount of reports">
         <count property="reports_test.worldwide" string="report id=" file="${data.dir}/data/models/Ada/physical/worldwide/Reports.xml"/>
-        <count property="reports_test.france" string="report id=" file="${data.dir}/data/models/Ada/physical/france/Reports.xml"/>
-        <fail message="File 'reports.xml' from physical databases doesn't contain the same amount of entries - France:${reports_test.france} vs Worldwide:${reports_test.worldwide}">
+        <count property="reports_test.scipio" string="report id=" file="${data.dir}/data/models/Ada/physical/scipio/Reports.xml"/>
+        <fail message="File 'reports.xml' from physical databases doesn't contain the same amount of entries - France:${reports_test.scipio} vs Worldwide:${reports_test.worldwide}">
             <condition>
                 <not>
-                    <equals arg1="${reports_test.worldwide}" arg2="${reports_test.france}"/>
+                    <equals arg1="${reports_test.worldwide}" arg2="${reports_test.scipio}"/>
                 </not>
             </condition>
         </fail>
@@ -1388,7 +1385,7 @@
         </sequential>
     </macrodef>
 
-    <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.france,
+    <target name="package.otpacks" depends="package.otpack.defense.worldwide,
                                             package.otpack.defense.scipio,package.otpack.defense.scipio.VA,package.otpack.security.worldwide,package.otpack.security.masa,
                                             package.otpack.lossc,package.otpack.trainingML,package.otpack.decisional3,package.otpack.decisional4,package.otpack.decisional5"
                                    description="package the exercise otpacks"/>
@@ -1418,54 +1415,6 @@
             <include name="exercises/tutorials/11 - Preparation/**"/>
             <include name="exercises/tutorials/12 - AAR/**"/>
             <include name="exercises/tutorials/13 - Advanced features/**"/>          
-        </pack>
-    </target>
-
-    <target name="package.otpack.defense.france" description="package du defense-france otpack">
-        <pack name="defense-france" description="defense-france exercises package">
-            <include name="data/models/ada/physical/france/**"/>
-            <include name="data/propagations/test/**"/>
-            <include name="exercises/Cabourg/**"/>
-            <include name="exercises/BMDrosoville/**"/>
-            <include name="exercises/TerrainDifficile/**"/>
-            <include name="exercises/Poseidon VA/**"/>
-            <include name="exercises/tutorials/01 - Generalites/**"/>
-            <include name="exercises/tutorials/02 - Jeu/**"/>
-            <include name="exercises/tutorials/03 - Mission/**"/>
-            <include name="exercises/tutorials/04 - ABC/**"/>
-            <include name="exercises/tutorials/05 - Infanterie/**"/>
-            <include name="exercises/tutorials/06 - Genie/**"/>
-            <include name="exercises/tutorials/07 - Artillerie/**"/>
-            <include name="exercises/tutorials/071 - NRBC/**"/>
-            <include name="exercises/tutorials/072 - ALAT/**"/>
-            <include name="exercises/tutorials/073 - LOG/**"/>
-            <include name="exercises/tutorials/08 - Fonctions Avancees/**"/>
-            <include name="exercises/tutorials/09 - Rejeu et AAA/**"/>
-            <include name="exercises/tutorials/10 - Preparation/**"/>
-            <include name="exercises/tests/capteurs/**"/>
-            <include name="exercises/tests/capteurs-delai/**"/>
-            <include name="exercises/tests/nested_knowledge_groups/**"/>
-            <include name="exercises/tests/suicide/**"/>
-            <include name="exercises/tests/Test1_9_2/**"/>
-            <include name="exercises/tests/ValidationTests/**"/>
-            <include name="exercises/tests/ValidationTests aux tomates/**"/>
-            <include name="exercises/tests/ValidationTests LOG/**"/>
-            <include name="exercises/tests/ValidationTests LOG 1_9_2/**"/>
-            <include name="exercises/tests/Water/**"/>
-            <include name="exercises/tests/missions/**"/>
-            <include name="exercises/tests/embrayer/**"/>
-            <include name="exercises/tests/jamming-shoot/**"/>
-            <include name="exercises/tests/attrition/**"/>
-            <include name="exercises/tests/coi/**"/>
-            <include name="exercises/tests/Meteo/**"/>
-            <include name="exercises/tests/embrayerAuto/**"/>
-            <include name="data/terrains/Nord egypt/**"/>
-            <include name="data/terrains/Paris_Est/**"/>
-            <include name="data/terrains/Malaisie/**"/>
-            <include name="data/terrains/Cabourg/**"/>
-            <include name="data/terrains/Drosoville_France/**"/>
-            <include name="data/terrains/Angers_x9/**"/>
-            <include name="data/terrains/PortoV3Lite/**"/>
         </pack>
     </target>
 
