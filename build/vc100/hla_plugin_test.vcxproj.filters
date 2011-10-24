@@ -124,9 +124,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationControllerTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRequestConvoyTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationTypesTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -142,31 +139,16 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportersTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoyTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoySenderTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SideCheckerTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRejectOfferConvoyTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAcceptOfferTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoyReceiverTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferResponseSenderTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnReadyToReceiveServiceTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnServiceStartedTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnConvoyEmbarkmentStatusReceiverTest.cpp">

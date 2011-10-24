@@ -41,9 +41,6 @@
     <Filter Include="Source Files\Transportation">
       <UniqueIdentifier>{0c58d9fa-3e3a-4144-a91c-fadb18fc4654}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Transportation\Interactions">
-      <UniqueIdentifier>{47f7302f-9005-474b-ab28-d3d9f42cea9b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Detonation">
       <UniqueIdentifier>{105e53cd-1abd-4556-9c60-3f29721e4bc9}</UniqueIdentifier>
     </Filter>
@@ -265,49 +262,16 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAircraft.cpp">
       <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAcceptOffer.cpp">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnOfferConvoy.cpp">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatus.cpp">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnReadyToReceiveService.cpp">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRejectOfferConvoy.cpp">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.cpp">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceStarted.cpp">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceCompleteReceiver.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyDisembarkmentStatusReceiver.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnCancelConvoy.cpp">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyDestroyedEntities.cpp">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnConvoyDisembarkmentStatus.cpp">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceComplete.cpp">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceReceived.cpp">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnServiceStartedReceiver.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationInteractionBuilder.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
   </ItemGroup>
@@ -654,53 +618,17 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAircraft.h">
       <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAcceptOffer.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnOfferConvoy.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyEmbarkmentStatus.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnReadyToReceiveService.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRejectOfferConvoy.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRequestConvoy.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceStarted.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceCompleteReceiver.h">
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyDisembarkmentStatusReceiver.h">
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnCancelConvoy.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyDestroyedEntities.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnConvoyDisembarkmentStatus.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceComplete.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceReceived.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnServiceStartedReceiver.h">
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnService.h">
-      <Filter>Source Files\Transportation\Interactions</Filter>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationInteractionBuilder.h">
+      <Filter>Source Files\Transportation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -171,39 +171,3 @@ void NetnOfferConvoySender::Notify( const sword::UnitAttributes& message, int /*
         callsignRevoler_.ResolveUniqueId( message.transported_units().elem( i ).id() ), NetnObjectFeatureStruct() ) );
     convoyEmbarkmentStatusSender_.Send( status );
 }
-
-// -----------------------------------------------------------------------------
-// Name: NetnOfferConvoySender::Receive
-// Created: SLI 2011-10-21
-// -----------------------------------------------------------------------------
-void NetnOfferConvoySender::Receive( interactions::NetnServiceReceived& /*received*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnOfferConvoySender::Receive
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void NetnOfferConvoySender::Receive( interactions::NetnRejectOfferConvoy& /*rejected*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnOfferConvoySender::Receive
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void NetnOfferConvoySender::Receive( interactions::NetnCancelConvoy& /*canceled*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnOfferConvoySender::Receive
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void NetnOfferConvoySender::Receive( interactions::NetnConvoyDestroyedEntities& /*destroyed*/ )
-{
-    // NOTHING
-}
