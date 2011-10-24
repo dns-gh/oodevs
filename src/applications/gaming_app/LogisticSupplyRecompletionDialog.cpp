@@ -246,6 +246,7 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
         dotationsTable_->setItem( nPos, 0, new Q3CheckTableItem( dotationsTable_, 0 ) );
         dotationsTable_->setText( nPos, 1, type.GetCategory().c_str() );
         dotationsTable_->setItem( nPos, 2, new SpinTableItem< int >( dotationsTable_, 0, 100, 1 ) );
+        category_[ type.GetCategory().c_str() ] = type.GetFamily();
     }
     dotationsTable_->setMinimumHeight( dotationsTable_->rowHeight( 0 ) * 5 );
 }
@@ -401,14 +402,18 @@ void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::Param
             Q3CheckTableItem* pDotationItemCheckBox = static_cast< Q3CheckTableItem* >( dotationsTable_->item( nRow, 0 ) );
             Q3TableItem*      pDotationItem         = dotationsTable_->item( nRow, 1 );
             Q3TableItem*      pPercentageItem       = dotationsTable_->item( nRow, 2 );
-
+            const std::string name = pDotationItem->text().toStdString();
             assert( pDotationItemCheckBox );
             if( !pDotationItemCheckBox->isChecked() )
                 continue;
 
-            ParameterList& personalList = list.AddList( CreateName( "Dotation", index ) );
-            personalList.AddIdentifier( "Dotation", tools::DotationFamilyFromString( pDotationItem->text() ) );
-            personalList.AddQuantity( "Number", pPercentageItem->text().toInt() );
+            CIT_Category it = category_.find( name );
+            if( it != category_.end() )
+            {
+                ParameterList& personalList = list.AddList( CreateName( "Dotation", index ) );
+                personalList.AddIdentifier( "Dotation", it->second );
+                personalList.AddQuantity( "Number", pPercentageItem->text().toInt() );
+            }
         }
     }
 }
@@ -520,6 +525,7 @@ void LogisticSupplyRecompletionDialog::Validate()
     action->RegisterAndPublish( actionsModel_ );
 
     selected_ = 0;
+    category_.clear();
 }
 
 // -----------------------------------------------------------------------------

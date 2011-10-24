@@ -108,6 +108,8 @@ private:
 
     typedef std::map< QString, const Equipment* > T_Equipments;
     typedef std::map< QString, const Dotation* >  T_Dotations;
+    typedef std::map< std::string, unsigned long > T_Category;
+    typedef T_Category::const_iterator           CIT_Category;
     //@}
 
 private:
@@ -118,19 +120,17 @@ private:
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
-
     kernel::SafePointer< kernel::Agent_ABC > selected_;
-
-    Q3Table*          equipmentsTable_;
-    QStringList      equipmentsList_;
-    T_Equipments     equipments_;
-    T_Ints           equipmentsMax_;
-
-    Q3Table*          personalsTable_;
-    Q3Table*          dotationsTable_;
-    Q3Table*          munitionsFamilyTable_;
-    Q3Table*          stockTable_;
-    T_Dotations      stocks_;
+    Q3Table* equipmentsTable_;
+    QStringList equipmentsList_;
+    T_Equipments equipments_;
+    T_Ints equipmentsMax_;
+    Q3Table* personalsTable_;
+    Q3Table* dotationsTable_;
+    Q3Table* munitionsFamilyTable_;
+    Q3Table* stockTable_;
+    T_Dotations stocks_;
+    T_Category category_;
     //@}
 };
 
