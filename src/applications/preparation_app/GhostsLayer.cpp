@@ -168,3 +168,12 @@ bool GhostsLayer::IsEligibleForDrag( const geometry::Point2f& point )
 {
     return selectedGhost_ && IsInSelection( *selectedGhost_, point );
 }
+
+// -----------------------------------------------------------------------------
+// Name: GhostsLayer::SetAlpha
+// Created: ABR 2011-10-21
+// -----------------------------------------------------------------------------
+void GhostsLayer::SetAlpha( float alpha )
+{
+    Layer_ABC::SetAlpha( alpha / 3.f );
+}

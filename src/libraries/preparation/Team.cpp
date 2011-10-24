@@ -12,7 +12,10 @@
 #include "IdManager.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -21,24 +24,28 @@ using namespace kernel;
 // Name: Team constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-Team::Team( Controller& controller, IdManager& idManager )
-    : EntityImplementation< Team_ABC >( controller, idManager.GetNextId(), "" )
+Team::Team( Controllers& controllers, IdManager& idManager )
+    : EntityImplementation< Team_ABC >( controllers.controller_, idManager.GetNextId(), "" )
+    , controllers_( controllers )
 {
     name_ = tools::translate( "Preparation", "Army %1" ).arg( id_ );
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary( controllers.controller_ );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Team constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Team::Team( xml::xistream& xis, Controller& controller, IdManager& idManager )
-    : EntityImplementation< Team_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
+Team::Team( xml::xistream& xis, Controllers& controllers, IdManager& idManager )
+    : EntityImplementation< Team_ABC >( controllers.controller_, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
+    , controllers_( controllers )
 {
     RegisterSelf( *this );
     idManager.Lock( id_ );
-    CreateDictionary( controller );
+    CreateDictionary( controllers.controller_ );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,6 +55,7 @@ Team::Team( xml::xistream& xis, Controller& controller, IdManager& idManager )
 Team::~Team()
 {
     Destroy();
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,4 +89,19 @@ void Team::CreateDictionary( Controller& controller )
     const Team& constSelf = *this;
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Team", "Info/Identifier" ), constSelf.id_ );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Team", "Info/Name" ), name_, *this, &Team::Rename );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::OptionChanged
+// Created: ABR 2011-10-24
+// -----------------------------------------------------------------------------
+void Team::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "Color/Phantom" )
+    {
+        if( const kernel::TacticalHierarchies* pTactical = Retrieve< kernel::TacticalHierarchies >() )
+            controllers_.controller_.Update( *pTactical );
+        if( const kernel::CommunicationHierarchies* pCommunication = Retrieve< kernel::CommunicationHierarchies >() )
+            controllers_.controller_.Update( *pCommunication );
+    }
 }

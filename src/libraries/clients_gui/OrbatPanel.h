@@ -62,6 +62,7 @@ private:
     ColorButton* pNColor_;
     ColorButton* pADColor_;
     ColorButton* pODColor_;
+    ColorButton* pGhostColor_;
     //@}
 };
 

@@ -11,13 +11,15 @@
 #define __Team_h_
 
 #include "clients_kernel/EntityImplementation.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
+    class OptionVariant;
 }
 
 namespace xml
@@ -37,13 +39,15 @@ class IdManager;
 class Team : public kernel::EntityImplementation< kernel::Team_ABC >
            , public kernel::Extension_ABC
            , public kernel::Serializable_ABC
+           , public tools::Observer_ABC
+           , public kernel::OptionsObserver_ABC
            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( kernel::Controller& controller,IdManager& idManager );
-             Team( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager );
+             Team( kernel::Controllers& controllers,IdManager& idManager );
+             Team( xml::xistream& xis, kernel::Controllers& controllers, IdManager& idManager );
     virtual ~Team();
     //@}
 
@@ -51,12 +55,19 @@ public:
     //@{
     void Rename( const QString& name );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Controllers& controllers_;
     //@}
 };
 

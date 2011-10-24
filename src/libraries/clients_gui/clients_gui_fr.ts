@@ -1181,7 +1181,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Neutralized:</source>
-        <translation>Neutralisé</translation>
+        <translation>Neutralisé :</translation>
     </message>
     <message>
         <source>Tactically destroyed:</source>
@@ -1190,6 +1190,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Totally destroyed:</source>
         <translation>Détruit totalement :</translation>
+    </message>
+    <message>
+        <source>Phantom:</source>
+        <translation>Fantôme :</translation>
     </message>
 </context>
 <context>
