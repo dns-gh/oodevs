@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
   <parties>
     <party id="1" name="GoodGuys" type="friend">
       <objects>
@@ -139,8 +139,8 @@
           </automat>
           <automat engaged="true" id="86" knowledge-group="2" name="Escadron Transport Blinde [86]" type="CIRCU . Escadron Transport Blinde">
             <unit command-post="true" id="87" name="Peloton CDT ESC TRPT BLD" position="31TCM1590286880" type="CIRCU . Peloton CDT ESC TRPT BLD"/>
-            <unit command-post="false" id="88" name="Peloton Transport Blindes CL100" position="31TCM1638786365" type="LOG . Peloton Transport Blindes CL100"/>
-            <unit command-post="false" id="89" name="Peloton Transport Blindes CL50" position="31TCM1587085882" type="LOG . Peloton Transport Blindes CL50"/>
+            <unit command-post="false" id="88" name="Peloton Transport Blindes CL100" position="31TCM1638786365" type="CIRCU . Peloton Transport Blindes CL100"/>
+            <unit command-post="false" id="89" name="Peloton Transport Blindes CL50" position="31TCM1587085882" type="CIRCU . Peloton Transport Blindes CL50"/>
           </automat>
           <automat engaged="false" id="200" knowledge-group="2" name="SGTIA PIA" type="SGTIA">
             <unit command-post="true" id="201" name="PC SGTIA" position="31TCM1027186842" type="PC SGTIA"/>
@@ -277,4 +277,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3053157792" -->
+<!-- signature="4164728306" -->

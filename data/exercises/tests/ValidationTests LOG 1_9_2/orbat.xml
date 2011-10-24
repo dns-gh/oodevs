@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Les Méchants" type="enemy">
       <objects/>
@@ -164,9 +164,6 @@
           <automat engaged="true" id="998" knowledge-group="4" logistic-level="logistic-base" name="LOG . TC2 RG BIA [998]" type="LOG . TC2 RG BIA">
             <unit command-post="true" id="999" name="LOG . TC2 RG BIA" position="30UXU4362533681" type="LOG . TC2 RG BIA"/>
           </automat>
-          <automat engaged="true" id="1000" knowledge-group="4" logistic-level="logistic-base" name="LOG . TC2 RGT AMX30B2 BRENNUS [1000]" type="LOG . TC2 RGT AMX30B2 BRENNUS">
-            <unit command-post="true" id="1001" name="ABC . TC2 RGT AMX30B2 BRENNUS" position="30UXU4340832273" type="LOG . ABC . TC2 RGT AMX30B2 BRENNUS"/>
-          </automat>
           <automat engaged="true" id="1002" knowledge-group="4" logistic-level="logistic-base" name="LOG . TC2 SGAM [1002]" type="LOG . TC2 SGAM">
             <unit command-post="true" id="1003" name="ALAT . TC2 SGAM" position="30UXU4859634860" type="LOG . ALAT . TC2 SGAM"/>
           </automat>
@@ -201,13 +198,6 @@
             <unit command-post="false" id="1022" name="ABC . Peloton ERC 90 CDP OFF" position="30UXU3375034092" type="ABC . Peloton ERC 90 CDP OFF"/>
             <unit command-post="false" id="1023" name="ABC . Peloton ERC 90 CDP SOFF" position="30UXU3473334627" type="ABC . Peloton ERC 90 CDP SOFF"/>
           </automat>
-          <automat engaged="true" id="1024" knowledge-group="4" name="ABC . Escadron de Chars AMX30B2 BRENNUS [1024]" type="ABC . Escadron de Chars AMX30B2 BRENNUS">
-            <unit command-post="true" id="1025" name="ABC . Peloton CDT ESC AMX30B2 BRENNUS" position="30UXU3138535706" type="ABC . Peloton CDT ESC AMX30B2 BRENNUS"/>
-            <unit command-post="false" id="1026" name="ABC . Peloton d appui direct" position="30UXU3190335225" type="ABC . Peloton d appui direct"/>
-            <unit command-post="false" id="1027" name="ABC . Peloton AMX30B2 BRENNUS CDP OFF" position="30UXU3142134708" type="ABC . Peloton AMX30B2 BRENNUS CDP OFF"/>
-            <unit command-post="false" id="1028" name="ABC . Peloton AMX30B2 BRENNUS CDP OFF" position="30UXU3090235189" type="ABC . Peloton AMX30B2 BRENNUS CDP OFF"/>
-            <unit command-post="false" id="1029" name="ABC . Peloton AMX30B2 BRENNUS CDP SOFF" position="30UXU3188535724" type="ABC . Peloton AMX30B2 BRENNUS CDP SOFF"/>
-          </automat>
         </formation>
       </tactical>
       <communication>
@@ -223,7 +213,6 @@
         </logistic-base>
         <logistic-base id="972">
           <subordinate id="972"/>
-          <subordinate id="1024"/>
         </logistic-base>
         <logistic-base id="974">
           <subordinate id="974"/>
@@ -264,9 +253,6 @@
         <logistic-base id="998">
           <subordinate id="998"/>
         </logistic-base>
-        <logistic-base id="1000">
-          <subordinate id="1000"/>
-        </logistic-base>
         <logistic-base id="1002">
           <subordinate id="1002"/>
         </logistic-base>
@@ -297,4 +283,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0001536873" -->
+<!-- signature="3047830466" -->
