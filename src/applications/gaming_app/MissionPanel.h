@@ -102,6 +102,8 @@ private slots:
     void Engage();
     void Disengage();
     void Close();
+    void closeEvent( QCloseEvent* pEvent );
+    virtual void OnCancel();
     //@}
 
 private:

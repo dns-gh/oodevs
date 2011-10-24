@@ -137,7 +137,7 @@ void MissionInterface_ABC::CreateOkCancelButtons()
     ok_->setDefault( true );
     ok_->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
     connect( ok_, SIGNAL( clicked() ), SLOT( OnOk() ) );
-    connect( cancel, SIGNAL( clicked() ), parent(), SLOT( hide() ) );
+    connect( cancel, SIGNAL( clicked() ), parent(), SLOT( OnCancel() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,6 +200,15 @@ void MissionInterface_ABC::OnOk()
         return;
     Publish();
     emit( OkClicked() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::OnCancel
+// Created: MMC 2011-10-14
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::OnCancel()
+{
+    hide();
 }
 
 // -----------------------------------------------------------------------------
