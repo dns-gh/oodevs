@@ -53,7 +53,7 @@ void LogConsignFuneral::Update( const sword::LogFuneralHandlingUpdate& msg )
     if( msg.has_handling_unit() )
         pHandlingEntity_ = FindLogEntity( msg.handling_unit() );
     if( msg.has_convoying_unit() )
-        pConvoy_ = &model_.Agents().Get( msg.convoying_unit().id() );
+        pConvoy_ = ( msg.convoying_unit().id() == 0 ) ? 0 : &model_.Agents().Get( msg.convoying_unit().id() );
     if( msg.has_state() )
         nState_ = msg.state();
     if( msg.has_current_state_end_tick() )
