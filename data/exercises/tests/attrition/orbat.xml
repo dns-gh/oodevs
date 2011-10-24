@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Camp 1" type="friend">
       <objects/>
       <tactical>
         <formation id="6" level="x" name="Formation [6]">
-          <automat engaged="true" id="12" knowledge-group="2" name="Escadron de Chars LECLERC [12]" type="Escadron de Chars LECLERC">
-            <unit command-post="true" id="13" name="Peloton LECLERC CDT ESC" position="31UEQ0928523861" type="Peloton LECLERC CDT ESC"/>
-            <unit command-post="false" id="14" name="Peloton LECLERC CDP OFF" position="31UEQ0978523361" type="Peloton LECLERC CDP OFF"/>
-            <unit command-post="false" id="15" name="Peloton LECLERC CDP OFF" position="31UEQ0928322863" type="Peloton LECLERC CDP OFF"/>
-            <unit command-post="false" id="16" name="Peloton LECLERC CDP SOFF" position="31UEQ0878323363" type="Peloton LECLERC CDP SOFF"/>
-            <unit command-post="false" id="17" name="Peloton d appui direct" position="31UEQ0978523860" type="Peloton d appui direct"/>
+          <automat engaged="true" id="12" knowledge-group="2" name="Escadron de Chars LECLERC [12]" type="ABC . Escadron de Chars LECLERC">
+            <unit command-post="true" id="13" name="Peloton LECLERC CDT ESC" position="31UEQ0928523861" type="ABC . Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="14" name="Peloton LECLERC CDP OFF" position="31UEQ0978523361" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="15" name="Peloton LECLERC CDP OFF" position="31UEQ0928322863" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="16" name="Peloton LECLERC CDP SOFF" position="31UEQ0878323363" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="17" name="Peloton d appui direct" position="31UEQ0978523860" type="ABC . Peloton d appui direct"/>
           </automat>
-          <automat engaged="true" id="27" knowledge-group="2" logistic-level="logistic-base" name="TC2 GE40 LECLERC [27]" type="TC2 GE40 LECLERC">
-            <unit command-post="true" id="28" name="TC2 GE40 LECLERC" position="31UEQ0878126383" type="TC2 GE40 LECLERC"/>
+          <automat engaged="true" id="27" knowledge-group="2" logistic-level="logistic-base" name="TC2 GE40 LECLERC [27]" type="LOG . TC2 GE40 LECLERC">
+            <unit command-post="true" id="28" name="TC2 GE40 LECLERC" position="31UEQ0878126383" type="LOG . ABC . TC2 GE40 LECLERC"/>
           </automat>
-          <automat engaged="true" id="31" knowledge-group="2" name="Batterie de Tir AUF1 [31]" type="Batterie de Tir AUF1">
-            <unit command-post="true" id="32" name="PC Batterie ASS" position="31UEQ1143722593" type="PC Batterie ASS"/>
-            <unit command-post="false" id="33" name="Section de Tir AUF1 CDS OFF" position="31UEQ1193722093" type="Section de Tir AUF1 CDS OFF"/>
-            <unit command-post="false" id="34" name="Section de Tir AUF1 CDS SOFF" position="31UEQ1143621594" type="Section de Tir AUF1 CDS SOFF"/>
+          <automat engaged="true" id="31" knowledge-group="2" name="Batterie de Tir AUF1 [31]" type="ART - Batterie de Tir AUF1">
+            <unit command-post="true" id="32" name="PC Batterie ASS" position="31UEQ1143722593" type="ART - PC Batterie ASS"/>
+            <unit command-post="false" id="33" name="Section de Tir AUF1 CDS OFF" position="31UEQ1193722093" type="ART - Section de Tir AUF1 CDS OFF"/>
+            <unit command-post="false" id="34" name="Section de Tir AUF1 CDS SOFF" position="31UEQ1143621594" type="ART - Section de Tir AUF1 CDS SOFF"/>
           </automat>
-          <automat engaged="true" id="37" knowledge-group="2" name="Compagnie CBT GENIE type BB BM [37]" type="Compagnie CBT GENIE type BB BM">
-            <unit command-post="true" id="38" name="PC CIE CBT GENIEType BB/BM" position="31UEQ1299126523" type="PC CIE CBT GENIEType BB/BM"/>
-            <unit command-post="false" id="39" name="Section CBT GEN" position="31UEQ1349126023" type="Section CBT GEN"/>
-            <unit command-post="false" id="40" name="Section CBT GEN" position="31UEQ1298925525" type="Section CBT GEN"/>
-            <unit command-post="false" id="41" name="Section CBT GEN" position="31UEQ1248926025" type="Section CBT GEN"/>
-            <unit command-post="false" id="42" name="Groupe EBG" position="31UEQ1349126522" type="Groupe EBG"/>
-            <unit command-post="false" id="43" name="Groupe EBG" position="31UEQ1369826023" type="Groupe EBG"/>
-            <unit command-post="false" id="44" name="Groupe EBG" position="31UEQ1349025524" type="Groupe EBG"/>
-            <unit command-post="false" id="45" name="Groupe EBG" position="31UEQ1298925318" type="Groupe EBG"/>
-            <unit command-post="false" id="46" name="Groupe MPG" position="31UEQ1248925525" type="Groupe MPG"/>
-            <unit command-post="false" id="47" name="Groupe MPG" position="31UEQ1228226025" type="Groupe MPG"/>
+          <automat engaged="true" id="37" knowledge-group="2" name="Compagnie CBT GENIE type BB BM [37]" type="GEN . Compagnie CBT type BB BM">
+            <unit command-post="true" id="38" name="PC CIE CBT GENIEType BB/BM" position="31UEQ1299126523" type="GEN . PC CIE CBT GENIE Type BB/BM"/>
+            <unit command-post="false" id="39" name="Section CBT GEN" position="31UEQ1349126023" type="GEN . Section CBT"/>
+            <unit command-post="false" id="40" name="Section CBT GEN" position="31UEQ1298925525" type="GEN . Section CBT"/>
+            <unit command-post="false" id="41" name="Section CBT GEN" position="31UEQ1248926025" type="GEN . Section CBT"/>
+            <unit command-post="false" id="42" name="Groupe EBG" position="31UEQ1349126522" type="GEN . Groupe EBG"/>
+            <unit command-post="false" id="43" name="Groupe EBG" position="31UEQ1369826023" type="GEN . Groupe EBG"/>
+            <unit command-post="false" id="44" name="Groupe EBG" position="31UEQ1349025524" type="GEN . Groupe EBG"/>
+            <unit command-post="false" id="45" name="Groupe EBG" position="31UEQ1298925318" type="GEN . Groupe EBG"/>
+            <unit command-post="false" id="46" name="Groupe MPG" position="31UEQ1248925525" type="GEN . Groupe MPG"/>
+            <unit command-post="false" id="47" name="Groupe MPG" position="31UEQ1228226025" type="GEN . Groupe MPG"/>
           </automat>
           <limit name="Limite 7">
             <point>31UEQ0687827739</point>
@@ -77,15 +77,15 @@
       </objects>
       <tactical>
         <formation id="20" level="x" name="Formation [20]">
-          <automat engaged="true" id="21" knowledge-group="4" name="Compagnie INF AMX 10 P [21]" type="Compagnie INF AMX 10 P">
-            <unit command-post="true" id="22" name="Section CDT CIE INF AMX10P" position="31UEQ0860817602" type="Section CDT CIE INF AMX10P"/>
-            <unit command-post="false" id="23" name="Section CBT INF AMX10P CDS OFF" position="31UEQ0910817102" type="Section CBT INF AMX10P CDS OFF"/>
-            <unit command-post="false" id="24" name="Section CBT INF AMX10P CDS OFF" position="31UEQ0860616604" type="Section CBT INF AMX10P CDS OFF"/>
-            <unit command-post="false" id="25" name="Section CBT INF AMX10P CDS OFF" position="31UEQ0810617104" type="Section CBT INF AMX10P CDS OFF"/>
-            <unit command-post="false" id="26" name="Section CBT INF AMX10P CDS SOFF" position="31UEQ0910817601" type="Section CBT INF AMX10P CDS SOFF"/>
+          <automat engaged="true" id="21" knowledge-group="4" name="Compagnie INF AMX 10 P [21]" type="INF . Compagnie CBT AMX 10 P">
+            <unit command-post="true" id="22" name="Section CDT CIE INF AMX10P" position="31UEQ0860817602" type="INF . Section CDT CIE quaternaire AMX10P"/>
+            <unit command-post="false" id="23" name="Section CBT INF AMX10P CDS OFF" position="31UEQ0910817102" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit command-post="false" id="24" name="Section CBT INF AMX10P CDS OFF" position="31UEQ0860616604" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit command-post="false" id="25" name="Section CBT INF AMX10P CDS OFF" position="31UEQ0810617104" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit command-post="false" id="26" name="Section CBT INF AMX10P CDS SOFF" position="31UEQ0910817601" type="INF . Section CBT AMX10P CDS SOFF"/>
           </automat>
-          <automat engaged="true" id="29" knowledge-group="4" logistic-level="logistic-base" name="TC2 GTIA INF AMX 10P [29]" type="TC2 GTIA INF AMX 10P">
-            <unit command-post="true" id="30" name="TC2 GTIA INF AMX 10P" position="31UEQ0687915479" type="TC2 GTIA INF AMX 10P"/>
+          <automat engaged="true" id="29" knowledge-group="4" logistic-level="logistic-base" name="TC2 GTIA INF AMX 10P [29]" type="LOG . TC2 GTIA INF AMX 10P">
+            <unit command-post="true" id="30" name="TC2 GTIA INF AMX 10P" position="31UEQ0687915479" type="LOG . INF . TC2 GTIA  AMX 10P"/>
           </automat>
         </formation>
       </tactical>
@@ -93,7 +93,7 @@
         <knowledge-group id="4" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="agressive" id="35" name="Population standard [35]" position="31UEQ0355116745" type="Population standard">
+        <population attitude="agressive" id="35" name="Population standard [35]" position="31UEQ0355116745" type="Foule standard">
           <composition contaminated="0" dead="0" healthy="10000" wounded="0"/>
           <armed-individuals value="0.02"/>
           <repartition children="0.5" female="0.5" male="0.5"/>
@@ -121,4 +121,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2529730355" -->
+<!-- signature="1826846733" -->
