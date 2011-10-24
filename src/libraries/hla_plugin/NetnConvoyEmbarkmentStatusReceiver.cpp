@@ -9,7 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "NetnConvoyEmbarkmentStatusReceiver.h"
-#include "TransportationController_ABC.h"
+#include "TransportationRequester_ABC.h"
 #include "Interactions.h"
 #include "TransportedUnits_ABC.h"
 #include "TransportedUnitsVisitor_ABC.h"
@@ -21,7 +21,7 @@ using namespace plugins::hla;
 // Name: NetnConvoyEmbarkmentStatusReceiver constructor
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-NetnConvoyEmbarkmentStatusReceiver::NetnConvoyEmbarkmentStatusReceiver( TransportationController_ABC& controller )
+NetnConvoyEmbarkmentStatusReceiver::NetnConvoyEmbarkmentStatusReceiver( TransportationRequester_ABC& controller )
     : controller_( controller )
 {
     // NOTHING

@@ -9,7 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "NetnRequestConvoySender.h"
-#include "TransportationController_ABC.h"
+#include "TransportationRequester_ABC.h"
 #include "InteractionSender_ABC.h"
 #include "TransportedUnitsVisitor_ABC.h"
 #include "TransportedUnits_ABC.h"
@@ -23,7 +23,7 @@ using namespace plugins::hla;
 // Name: NetnRequestConvoySender constructor
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
-NetnRequestConvoySender::NetnRequestConvoySender( TransportationController_ABC& controller,
+NetnRequestConvoySender::NetnRequestConvoySender( TransportationRequester_ABC& controller,
                                                   InteractionSender_ABC< interactions::NetnRequestConvoy >& interactionSender )
     : controller_       ( controller )
     , interactionSender_( interactionSender )

@@ -9,7 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "NetnOfferResponseSender.h"
-#include "TransportationController_ABC.h"
+#include "TransportationRequester_ABC.h"
 #include "InteractionSender_ABC.h"
 #include "Interactions.h"
 
@@ -19,7 +19,7 @@ using namespace plugins::hla;
 // Name: NetnOfferResponseSender constructor
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-NetnOfferResponseSender::NetnOfferResponseSender( TransportationController_ABC& controller,
+NetnOfferResponseSender::NetnOfferResponseSender( TransportationRequester_ABC& controller,
                                                   InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptOfferSender,
                                                   InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectOfferSender,
                                                   InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readyToReceiveServiceSender,

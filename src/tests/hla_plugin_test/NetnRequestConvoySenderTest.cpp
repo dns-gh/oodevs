@@ -11,7 +11,7 @@
 #include "hla_plugin/NetnRequestConvoySender.h"
 #include "hla_plugin/Interactions.h"
 #include "hla_plugin/TransportedUnitsVisitor_ABC.h"
-#include "MockTransportationController.h"
+#include "MockTransportationRequester.h"
 #include "MockInteractionSender.h"
 #include "MockTransportedUnits.h"
 
@@ -19,7 +19,7 @@ using namespace plugins::hla;
 
 BOOST_AUTO_TEST_CASE( netn_request_convoy_sender_sends_request_when_receiving_convoy_event )
 {
-    MockTransportationController controller;
+    MockTransportationRequester controller;
     MockInteractionSender< interactions::NetnRequestConvoy > interactionSender;
     TransportationListener_ABC* listener = 0;
     MOCK_EXPECT( controller, Register ).once().with( mock::retrieve( listener ) );

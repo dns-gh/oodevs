@@ -16,7 +16,7 @@ namespace plugins
 {
 namespace hla
 {
-    class TransportationController_ABC;
+    class TransportationRequester_ABC;
     template< typename Interaction > class InteractionSender_ABC;
 
 namespace interactions
@@ -35,7 +35,7 @@ class NetnRequestConvoySender : private TransportationListener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnRequestConvoySender( TransportationController_ABC& controller,
+             NetnRequestConvoySender( TransportationRequester_ABC& controller,
                                       InteractionSender_ABC< interactions::NetnRequestConvoy >& interactionSender );
     virtual ~NetnRequestConvoySender();
     //@}
@@ -55,7 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
-    TransportationController_ABC& controller_;
+    TransportationRequester_ABC& controller_;
     InteractionSender_ABC< interactions::NetnRequestConvoy >& interactionSender_;
     //@}
 };

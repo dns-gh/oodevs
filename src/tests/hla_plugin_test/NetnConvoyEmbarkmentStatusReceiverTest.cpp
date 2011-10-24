@@ -11,7 +11,7 @@
 #include "hla_plugin/NetnConvoyEmbarkmentStatusReceiver.h"
 #include "hla_plugin/Interactions.h"
 #include "hla_plugin/TransportedUnits_ABC.h"
-#include "MockTransportationController.h"
+#include "MockTransportationRequester.h"
 #include "MockTransportedUnitsVisitor.h"
 
 using namespace plugins::hla;
@@ -24,7 +24,7 @@ namespace
         Fixture()
             : receiver( controller )
         {}
-        MockTransportationController controller;
+        MockTransportationRequester controller;
         NetnConvoyEmbarkmentStatusReceiver receiver;
     };
     bool Check( const TransportedUnits_ABC& units, const std::string& callsign, const std::string& id )

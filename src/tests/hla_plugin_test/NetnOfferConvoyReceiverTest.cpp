@@ -10,7 +10,7 @@
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/NetnOfferConvoyReceiver.h"
 #include "hla_plugin/Interactions.h"
-#include "MockTransportationController.h"
+#include "MockTransportationRequester.h"
 
 using namespace plugins::hla;
 
@@ -35,7 +35,7 @@ namespace
             offer.provider = UnicodeString( provider );
             return offer;
         }
-        MockTransportationController controller;
+        MockTransportationRequester controller;
         NetnOfferConvoyReceiver receiver;
     };
 }

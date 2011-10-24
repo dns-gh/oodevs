@@ -24,7 +24,7 @@ namespace interactions
     struct NetnServiceReceived;
 }
 
-    class TransportationController_ABC;
+    class TransportationRequester_ABC;
     template< typename T > class InteractionSender_ABC;
 
 // =============================================================================
@@ -38,7 +38,7 @@ class NetnOfferResponseSender : private TransportationListener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnOfferResponseSender( TransportationController_ABC& controller,
+             NetnOfferResponseSender( TransportationRequester_ABC& controller,
                                       InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptOfferSender,
                                       InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectOfferSender,
                                       InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readyToReceiveServiceSender,
@@ -61,7 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
-    TransportationController_ABC& controller_;
+    TransportationRequester_ABC& controller_;
     InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptOfferSender_;
     InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectOfferSender_;
     InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readyToReceiveServiceSender_;

@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "TransportationController.h"
+#include "TransportationRequester.h"
 #include "MissionResolver_ABC.h"
 #include "TransportationListener_ABC.h"
 #include "CallsignResolver_ABC.h"
@@ -47,10 +47,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController::oller
+// Name: TransportationRequester::oller
 // Created: SLI 2011-10-06
 // -----------------------------------------------------------------------------
-TransportationController::TransportationController( xml::xisubstream xis, const MissionResolver_ABC& resolver,
+TransportationRequester::TransportationRequester( xml::xisubstream xis, const MissionResolver_ABC& resolver,
                                                     tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                                     const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
                                                     const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher )
@@ -66,10 +66,10 @@ TransportationController::TransportationController( xml::xisubstream xis, const 
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController destructor
+// Name: TransportationRequester destructor
 // Created: SLI 2011-10-06
 // -----------------------------------------------------------------------------
-TransportationController::~TransportationController()
+TransportationRequester::~TransportationRequester()
 {
     // NOTHING
 }
@@ -114,10 +114,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController::Notify
+// Name: TransportationRequester::Notify
 // Created: SLI 2011-10-06
 // -----------------------------------------------------------------------------
-void TransportationController::Notify(  const sword::AutomatOrder& message, int /*context*/ )
+void TransportationRequester::Notify(  const sword::AutomatOrder& message, int /*context*/ )
 {
     if( message.type().id() == transportIdentifier_ && message.parameters().elem_size() == 8 )
     {
@@ -137,10 +137,10 @@ void TransportationController::Notify(  const sword::AutomatOrder& message, int 
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController::Notify
+// Name: TransportationRequester::Notify
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-void TransportationController::Notify( const sword::Report& message, int /*context*/ )
+void TransportationRequester::Notify( const sword::Report& message, int /*context*/ )
 {
     if( !message.source().has_automat() )
         return;
@@ -157,28 +157,28 @@ void TransportationController::Notify( const sword::Report& message, int /*conte
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController::Register
+// Name: TransportationRequester::Register
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
-void TransportationController::Register( TransportationListener_ABC& listener )
+void TransportationRequester::Register( TransportationListener_ABC& listener )
 {
     listeners_.push_back( &listener );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController::Unregister
+// Name: TransportationRequester::Unregister
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
-void TransportationController::Unregister( TransportationListener_ABC& listener )
+void TransportationRequester::Unregister( TransportationListener_ABC& listener )
 {
     listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController::OfferReceived
+// Name: TransportationRequester::OfferReceived
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-void TransportationController::OfferReceived( unsigned int context, bool fullOffer, const std::string& provider, const interactions::ListOfTransporters& listOfTransporters )
+void TransportationRequester::OfferReceived( unsigned int context, bool fullOffer, const std::string& provider, const interactions::ListOfTransporters& listOfTransporters )
 {
     if( pendingRequests_.left.find( context ) == pendingRequests_.left.end() )
     {
@@ -201,10 +201,10 @@ void TransportationController::OfferReceived( unsigned int context, bool fullOff
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController::ServiceStarted
+// Name: TransportationRequester::ServiceStarted
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-void TransportationController::ServiceStarted( unsigned int context )
+void TransportationRequester::ServiceStarted( unsigned int context )
 {
     if( readyToReceiveRequests_.left.find( context ) == readyToReceiveRequests_.left.end() )
         return;
@@ -212,10 +212,10 @@ void TransportationController::ServiceStarted( unsigned int context )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController::Transfer
+// Name: TransportationRequester::Transfer
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-void TransportationController::Transfer( T_Requests& from, T_Requests& to, unsigned int context ) const
+void TransportationRequester::Transfer( T_Requests& from, T_Requests& to, unsigned int context ) const
 {
     const unsigned int automatId = from.left.find( context )->second;
     from.left.erase( context );
@@ -249,28 +249,28 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController::NotifyEmbarkationStatus
+// Name: TransportationRequester::NotifyEmbarkationStatus
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-void TransportationController::NotifyEmbarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits )
+void TransportationRequester::NotifyEmbarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits )
 {
     SendTransportMagicAction( context, transporterCallsign, transportedUnits, sword::UnitMagicAction::load_unit );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController::NotifyDisembarkationStatus
+// Name: TransportationRequester::NotifyDisembarkationStatus
 // Created: SLI 2011-10-17
 // -----------------------------------------------------------------------------
-void TransportationController::NotifyDisembarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits )
+void TransportationRequester::NotifyDisembarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits )
 {
     SendTransportMagicAction( context, transporterCallsign, transportedUnits, sword::UnitMagicAction::unload_unit );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController::SendTransportMagicAction
+// Name: TransportationRequester::SendTransportMagicAction
 // Created: SLI 2011-10-17
 // -----------------------------------------------------------------------------
-void TransportationController::SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits, unsigned int actionType )
+void TransportationRequester::SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits, unsigned int actionType )
 {
     T_Requests::left_const_iterator request = serviceStartedRequests_.left.find( context );
     if( request == serviceStartedRequests_.left.end() )
@@ -291,10 +291,10 @@ void TransportationController::SendTransportMagicAction( unsigned int context, c
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationController::ServiceComplete
+// Name: TransportationRequester::ServiceComplete
 // Created: SLI 2011-10-17
 // -----------------------------------------------------------------------------
-void TransportationController::ServiceComplete( unsigned int context, const std::string& provider )
+void TransportationRequester::ServiceComplete( unsigned int context, const std::string& provider )
 {
     if( serviceStartedRequests_.left.find( context ) == serviceStartedRequests_.left.end() )
         return;

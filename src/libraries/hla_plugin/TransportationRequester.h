@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_TransportationController_h
-#define plugins_hla_TransportationController_h
+#ifndef plugins_hla_TransportationRequester_h
+#define plugins_hla_TransportationRequester_h
 
-#include "TransportationController_ABC.h"
+#include "TransportationRequester_ABC.h"
 #include "tools/MessageObserver.h"
 #include "Interactions.h"
 #include <vector>
@@ -52,23 +52,23 @@ namespace hla
     class ContextFactory_ABC;
 
 // =============================================================================
-/** @class  TransportationController
+/** @class  TransportationRequester
     @brief  Transportation controller
 */
 // Created: SLI 2011-10-06
 // =============================================================================
-class TransportationController : public TransportationController_ABC
+class TransportationRequester : public TransportationRequester_ABC
                                , private tools::MessageObserver< sword::AutomatOrder >
                                , private tools::MessageObserver< sword::Report >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TransportationController( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
+             TransportationRequester( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
                                        tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                        const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
                                        const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher );
-    virtual ~TransportationController();
+    virtual ~TransportationRequester();
     //@}
 
 public:
@@ -136,4 +136,4 @@ private:
 }
 }
 
-#endif // plugins_hla_TransportationController_h
+#endif // plugins_hla_TransportationRequester_h

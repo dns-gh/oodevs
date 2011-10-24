@@ -199,9 +199,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaClass.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationController.cpp">
-      <Filter>Source Files\Transportation</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transportation.cpp">
       <Filter>Source Files\Types</Filter>
     </ClCompile>
@@ -272,6 +269,9 @@
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationOfferer.cpp">
+      <Filter>Source Files\Transportation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationRequester.cpp">
       <Filter>Source Files\Transportation</Filter>
     </ClCompile>
   </ItemGroup>
@@ -525,17 +525,11 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationController.h">
-      <Filter>Source Files\Transportation</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationListener_ABC.h">
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\Transportation.h">
       <Filter>Source Files\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationController_ABC.h">
-      <Filter>Source Files\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportedUnits_ABC.h">
       <Filter>Source Files\Transportation</Filter>
@@ -628,6 +622,12 @@
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationOfferer.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationRequester.h">
+      <Filter>Source Files\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationRequester_ABC.h">
       <Filter>Source Files\Transportation</Filter>
     </ClInclude>
   </ItemGroup>

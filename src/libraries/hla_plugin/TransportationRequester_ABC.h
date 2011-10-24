@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_TransportationController_ABC_h
-#define plugins_hla_TransportationController_ABC_h
+#ifndef plugins_hla_TransportationRequester_ABC_h
+#define plugins_hla_TransportationRequester_ABC_h
 
 #include <boost/noncopyable.hpp>
 #include <string>
@@ -25,18 +25,18 @@ namespace interactions
     class TransportedUnits_ABC;
 
 // =============================================================================
-/** @class  TransportationController_ABC
+/** @class  TransportationRequester_ABC
     @brief  Transportation controller definition
 */
 // Created: SLI 2011-10-07
 // =============================================================================
-class TransportationController_ABC : private boost::noncopyable
+class TransportationRequester_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TransportationController_ABC() {}
-    virtual ~TransportationController_ABC() {}
+             TransportationRequester_ABC() {}
+    virtual ~TransportationRequester_ABC() {}
     //@}
 
     //! @name Operations
@@ -54,4 +54,4 @@ public:
 }
 }
 
-#endif // plugins_hla_TransportationController_ABC_h
+#endif // plugins_hla_TransportationRequester_ABC_h

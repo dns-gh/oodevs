@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_test_pch.h"
-#include "hla_plugin/TransportationController.h"
+#include "hla_plugin/TransportationRequester.h"
 #include "hla_plugin/TransportedUnits_ABC.h"
 #include "MockMissionResolver.h"
 #include "MockTransportationListener.h"
@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE( transportation_controller_reads_transportation_mission_nam
     dispatcher::MockSimulationPublisher publisher;
     MockContextFactory factory;
     MOCK_EXPECT( resolver, Resolve ).once().with( "transportation mission name" ).returns( 42 );
-    TransportationController controller( xis, resolver, messageController, callsignResolver, subordinates, factory, publisher );
+    TransportationRequester controller( xis, resolver, messageController, callsignResolver, subordinates, factory, publisher );
 }
 
 namespace
@@ -102,7 +102,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mission_and_notifies_listener, Fixture )
 {
-    TransportationController controller( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher );
+    TransportationRequester controller( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher );
     controller.Register( listener );
     const geometry::Point2d embarkingPoint;
     const geometry::Point2d debarkingPoint;
@@ -131,7 +131,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mis
 
 BOOST_FIXTURE_TEST_CASE( transporation_controller_does_nothing_if_mission_is_not_transportation, Fixture )
 {
-    TransportationController controller( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher );
+    TransportationRequester controller( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher );
     controller.Register( listener );
     const unsigned int unknownMission = transportId + 1;
     messageController.Dispatch( MakeTransportationMessage( unknownMission ) );
@@ -183,7 +183,7 @@ namespace
             report->mutable_type()->set_id( reportType );
             return message;
         }
-        TransportationController controller;
+        TransportationRequester controller;
         const unsigned int context;
         const unsigned int missionCompleteId;
         const geometry::Point2d embarkingPoint;

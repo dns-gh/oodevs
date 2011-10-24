@@ -10,7 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "TransportationFacade.h"
 #include "TransportationInteractionBuilder.h"
-#include "TransportationController.h"
+#include "TransportationRequester.h"
 #include "NetnRequestConvoySender.h"
 #include "TransportationOfferer.h"
 #include "NetnOfferConvoyReceiver.h"
@@ -45,15 +45,15 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
     , pNetnConvoyDestroyedEntities_          ( new ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >( *this ) )
     , pNetnServiceComplete_                  ( new ::hla::Interaction< interactions::NetnServiceComplete >( *this ) )
     , pNetnServiceReceived_                  ( new ::hla::Interaction< interactions::NetnServiceReceived >( *this ) )
-    , pTransportationController_             ( new TransportationController( xis, missionResolver, controller, callsignResolver, subordinates, contextFactory, simulationPublisher ) )
-    , pNetnRequestConvoySender_              ( new NetnRequestConvoySender( *pTransportationController_, *this ) )
-    , pNetnOfferConvoyReceiver_              ( new NetnOfferConvoyReceiver( *pTransportationController_ ) )
-    , pNetnServiceStartedReceiver_           ( new NetnServiceStartedReceiver( *pTransportationController_ ) )
-    , pNetnConvoyEmbarkmentStatusReceiver_   ( new NetnConvoyEmbarkmentStatusReceiver( *pTransportationController_ ) )
-    , pNetnConvoyDisembarkmentStatusReceiver_( new NetnConvoyDisembarkmentStatusReceiver( *pTransportationController_ ) )
+    , pTransportationRequester_             ( new TransportationRequester( xis, missionResolver, controller, callsignResolver, subordinates, contextFactory, simulationPublisher ) )
+    , pNetnRequestConvoySender_              ( new NetnRequestConvoySender( *pTransportationRequester_, *this ) )
+    , pNetnOfferConvoyReceiver_              ( new NetnOfferConvoyReceiver( *pTransportationRequester_ ) )
+    , pNetnServiceStartedReceiver_           ( new NetnServiceStartedReceiver( *pTransportationRequester_ ) )
+    , pNetnConvoyEmbarkmentStatusReceiver_   ( new NetnConvoyEmbarkmentStatusReceiver( *pTransportationRequester_ ) )
+    , pNetnConvoyDisembarkmentStatusReceiver_( new NetnConvoyDisembarkmentStatusReceiver( *pTransportationRequester_ ) )
     , pTransportationOfferer_                ( new TransportationOfferer( *this, *this, *this, transporters, controller, callsignResolver ) )
-    , pNetnOfferResponseSender_              ( new NetnOfferResponseSender( *pTransportationController_, *this, *this, *this, *this ) )
-    , pNetnServiceCompleteReceiver_          ( new NetnServiceCompleteReceiver( *pTransportationController_ ) )
+    , pNetnOfferResponseSender_              ( new NetnOfferResponseSender( *pTransportationRequester_, *this, *this, *this, *this ) )
+    , pNetnServiceCompleteReceiver_          ( new NetnServiceCompleteReceiver( *pTransportationRequester_ ) )
 {
     TransportationInteractionBuilder builder;
     builder.Build( federate, *pNetnRequestConvoy_ );

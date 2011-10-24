@@ -50,7 +50,7 @@ namespace hla
     class Subordinates_ABC;
     class Federate_ABC;
     class ContextFactory_ABC;
-    class TransportationController_ABC;
+    class TransportationRequester_ABC;
     template< typename T > class InteractionSender_ABC;
     class NetnRequestConvoySender;
     class TransportationOfferer;
@@ -163,7 +163,7 @@ private:
     std::auto_ptr< ::hla::Interaction< interactions::NetnConvoyDestroyedEntities > > pNetnConvoyDestroyedEntities_;
     std::auto_ptr< ::hla::Interaction< interactions::NetnServiceComplete > > pNetnServiceComplete_;
     std::auto_ptr< ::hla::Interaction< interactions::NetnServiceReceived > > pNetnServiceReceived_;
-    std::auto_ptr< TransportationController_ABC > pTransportationController_;
+    std::auto_ptr< TransportationRequester_ABC > pTransportationRequester_;
     std::auto_ptr< NetnRequestConvoySender > pNetnRequestConvoySender_;
     std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoyReceiver_;
     std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted > > pNetnServiceStartedReceiver_;

@@ -9,7 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "NetnServiceStartedReceiver.h"
-#include "TransportationController_ABC.h"
+#include "TransportationRequester_ABC.h"
 #include "Interactions.h"
 #include <boost/foreach.hpp>
 
@@ -19,7 +19,7 @@ using namespace plugins::hla;
 // Name: NetnServiceStartedReceiver constructor
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-NetnServiceStartedReceiver::NetnServiceStartedReceiver( TransportationController_ABC& controller )
+NetnServiceStartedReceiver::NetnServiceStartedReceiver( TransportationRequester_ABC& controller )
     : controller_( controller )
 {
     // NOTHING

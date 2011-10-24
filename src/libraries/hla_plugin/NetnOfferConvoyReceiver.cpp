@@ -9,7 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "NetnOfferConvoyReceiver.h"
-#include "TransportationController_ABC.h"
+#include "TransportationRequester_ABC.h"
 #include "Interactions.h"
 
 using namespace plugins::hla;
@@ -18,7 +18,7 @@ using namespace plugins::hla;
 // Name: NetnOfferConvoyReceiver constructor
 // Created: SLI 2011-10-12
 // -----------------------------------------------------------------------------
-NetnOfferConvoyReceiver::NetnOfferConvoyReceiver( TransportationController_ABC& controller )
+NetnOfferConvoyReceiver::NetnOfferConvoyReceiver( TransportationRequester_ABC& controller )
     : controller_( controller )
 {
     // NOTHING

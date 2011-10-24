@@ -20,7 +20,7 @@ namespace interactions
 {
     struct NetnOfferConvoy;
 }
-    class TransportationController_ABC;
+    class TransportationRequester_ABC;
 
 // =============================================================================
 /** @class  NetnOfferConvoyReceiver
@@ -33,7 +33,7 @@ class NetnOfferConvoyReceiver : public ::hla::InteractionNotification_ABC< inter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NetnOfferConvoyReceiver( TransportationController_ABC& controller );
+    explicit NetnOfferConvoyReceiver( TransportationRequester_ABC& controller );
     virtual ~NetnOfferConvoyReceiver();
     //@}
 
@@ -45,7 +45,7 @@ public:
 private:
     //! @name Member data
     //@{
-    TransportationController_ABC& controller_;
+    TransportationRequester_ABC& controller_;
     //@}
 };
 

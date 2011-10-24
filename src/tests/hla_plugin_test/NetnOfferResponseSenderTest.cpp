@@ -11,7 +11,7 @@
 #include "hla_plugin/NetnOfferResponseSender.h"
 #include "hla_plugin/Interactions.h"
 #include "MockInteractionSender.h"
-#include "MockTransportationController.h"
+#include "MockTransportationRequester.h"
 
 using namespace plugins::hla;
 
@@ -31,7 +31,7 @@ namespace
         MockInteractionSender< interactions::NetnRejectOfferConvoy > rejectOfferSender;
         MockInteractionSender< interactions::NetnReadyToReceiveService > readyToReceiveServiceSender;
         MockInteractionSender< interactions::NetnServiceReceived > serviceReceivedSender;
-        MockTransportationController controller;
+        MockTransportationRequester controller;
         TransportationListener_ABC* transportationListener;
         const int context;
     };

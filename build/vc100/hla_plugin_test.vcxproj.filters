@@ -121,9 +121,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\HlaClassTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationControllerTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationTypesTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -152,6 +149,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationOffererTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationRequesterTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -273,9 +273,6 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationListener.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationController.h">
-      <Filter>Source Files\mock</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnits.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
@@ -298,6 +295,9 @@
       <Filter>Source Files\mock</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAutomatChecker.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationRequester.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
   </ItemGroup>

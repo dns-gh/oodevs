@@ -20,7 +20,7 @@ namespace interactions
 {
     struct NetnServiceStarted;
 }
-    class TransportationController_ABC;
+    class TransportationRequester_ABC;
 
 // =============================================================================
 /** @class  NetnServiceStartedReceiver
@@ -33,7 +33,7 @@ class NetnServiceStartedReceiver : public ::hla::InteractionNotification_ABC< in
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NetnServiceStartedReceiver( TransportationController_ABC& controller );
+    explicit NetnServiceStartedReceiver( TransportationRequester_ABC& controller );
     virtual ~NetnServiceStartedReceiver();
     //@}
 
@@ -45,7 +45,7 @@ public:
 private:
     //! @name Member data
     //@{
-    TransportationController_ABC& controller_;
+    TransportationRequester_ABC& controller_;
     //@}
 };
 
