@@ -165,7 +165,7 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity )
     }
     rCapacity_ = std::min( rCapacity_, maxCapacity_ );
     rValue_ = std::min( rValue_, maxCapacity_ );
-    rSupplyThreshold_ += capacity.GetSupplyThreshold();
+    rSupplyThreshold_ = std::min( rCapacity_, rSupplyThreshold_ + capacity.GetSupplyThreshold() );
     assert( pGroup_ );
     pGroup_->NotifyDotationChanged( *this );
 }
@@ -178,7 +178,7 @@ void PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
 {
     assert( rCapacity_ >= capacity.GetCapacity() );
     rCapacity_        -= capacity.GetCapacity();
-    rSupplyThreshold_ -= capacity.GetSupplyThreshold();
+    rSupplyThreshold_ = std::max( std::min( rCapacity_, rSupplyThreshold_ - capacity.GetSupplyThreshold() ), 0. );
     if( rFireReservation_ > rCapacity_ )
     {
         rFireReservation_ = rCapacity_;
@@ -340,7 +340,7 @@ void PHY_Dotation::ChangeDotation( unsigned int number, float thresholdPercentag
     SetValue( number );
     rConsumptionReservation_ = 0.;
     rFireReservation_        = 0.;
-    rSupplyThreshold_ = rCapacity_ * thresholdPercentage / 100.f;
+    rSupplyThreshold_ = std::min( rCapacity_ * thresholdPercentage / 100.f, rCapacity_ );
     assert( pGroup_ );
     pGroup_->NotifyDotationChanged( *this );
 }
@@ -417,5 +417,7 @@ double PHY_Dotation::Supply( double rSupply )
 double PHY_Dotation::GetSupplyThresholdPercentage() const
 {
     assert( rSupplyThreshold_ <= rCapacity_ );
+    if( rCapacity_ == 0 )
+        return 0;
     return rSupplyThreshold_ / rCapacity_ * 100.f;
 }
