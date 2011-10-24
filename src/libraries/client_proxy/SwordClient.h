@@ -42,7 +42,7 @@ class SwordClient : public tools::ClientNetworker
 public:
     //! @name Constructors/Destructor
     //@{
-             SwordClient( const std::string& host, unsigned short port, const std::string& profile, const std::string& password );
+             SwordClient( const std::string& host, unsigned short port, const std::string& profile, const std::string& password, unsigned long timeOut );
     virtual ~SwordClient();
     //@}
 

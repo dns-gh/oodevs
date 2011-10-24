@@ -252,6 +252,16 @@ unsigned short MIL_Config::GetNetworkPort() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Config::GetNetworkTimeout
+// Created: JSR 2011-10-19
+// -----------------------------------------------------------------------------
+inline
+unsigned long MIL_Config::GetNetworkTimeout() const
+{
+    return networkTimeOut_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Config::GetPathFinderThreads
 // Created: NLD 2007-01-11
 // -----------------------------------------------------------------------------

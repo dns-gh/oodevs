@@ -41,8 +41,8 @@ using namespace shield;
 // Name: Client constructor
 // Created: MCO 2010-09-30
 // -----------------------------------------------------------------------------
-Client::Client( boost::asio::io_service& service, const std::string& from,
-                tools::MessageSender_ABC& sender, ClientListener_ABC& listener, bool encodeStringsInUtf8 )
+Client::Client( boost::asio::io_service& service, const std::string& from, tools::MessageSender_ABC& sender,
+                ClientListener_ABC& listener, bool encodeStringsInUtf8, unsigned long timeOut )
     : from_               ( from )
     , sender_             ( sender )
     , listener_           ( listener )
@@ -50,7 +50,7 @@ Client::Client( boost::asio::io_service& service, const std::string& from,
     , encodeStringsInUtf8_( encodeStringsInUtf8 )
     , connectionBuffer_   ( new tools::BufferedConnectionCallback() )
     , messageBuffer_      ( new tools::BufferedMessageCallback() )
-    , sockets_            ( new tools::SocketManager( messageBuffer_, connectionBuffer_ ) )
+    , sockets_            ( new tools::SocketManager( messageBuffer_, connectionBuffer_, timeOut ) )
     , messageService_     ( new tools::ObjectMessageService() )
     , connector_          ( new tools::Connector( service, *sockets_, *connectionBuffer_ ) )
 {

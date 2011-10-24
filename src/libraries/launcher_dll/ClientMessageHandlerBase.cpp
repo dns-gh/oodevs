@@ -59,3 +59,12 @@ bool ClientMessageHandlerBase::OnReceiveMessage( const sword::AuthenticationToCl
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ClientMessageHandlerBase::OnReceiveMessage
+// Created: JSR 2011-10-20
+// -----------------------------------------------------------------------------
+bool ClientMessageHandlerBase::OnReceiveMessage( const sword::DispatcherToClient& /*message*/ )
+{
+    return false;
+}

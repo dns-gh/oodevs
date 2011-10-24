@@ -64,3 +64,18 @@ bool ControlInformationMessageHandler::OnReceiveMessage( const sword::SimToClien
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ControlInformationMessageHandler::OnReceiveMessage
+// Created: JSR 2011-10-20
+// -----------------------------------------------------------------------------
+bool ControlInformationMessageHandler::OnReceiveMessage( const sword::DispatcherToClient& message )
+{
+    if( message.message().has_connection_to_sim_lost() )
+    {
+        SessionStatus statusResponse;
+        statusResponse().set_status( sword::SessionStatus::breakdown );
+        Send( statusResponse );
+    }
+    return false;
+}

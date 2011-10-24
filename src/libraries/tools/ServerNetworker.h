@@ -49,7 +49,7 @@ class ServerNetworker : public MessageDispatcher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ServerNetworker( unsigned short port );
+             ServerNetworker( unsigned short port, unsigned long timeOut = 10000 );
     virtual ~ServerNetworker();
     //@}
 

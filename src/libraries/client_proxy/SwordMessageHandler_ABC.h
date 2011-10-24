@@ -12,9 +12,10 @@
 
 namespace sword
 {
-    class SimToClient;
-    class MessengerToClient;
     class AuthenticationToClient;
+    class DispatcherToClient;
+    class MessengerToClient;
+    class SimToClient;
 }
 
 // =============================================================================
@@ -38,6 +39,7 @@ public:
     virtual void OnReceiveMessage( const sword::SimToClient& message ) = 0;
     virtual void OnReceiveMessage( const sword::MessengerToClient& message ) = 0;
     virtual void OnReceiveMessage( const sword::AuthenticationToClient& message ) = 0;
+    virtual void OnReceiveMessage( const sword::DispatcherToClient& message ) = 0;
     //@}
 };
 

@@ -58,6 +58,7 @@ public:
     bool               IsFrozenMode              () const;
     bool               IsDispatcherEmbedded      () const;
     unsigned short     GetNetworkPort            () const;
+    unsigned long      GetNetworkTimeout         () const;
     bool               IsThreadedNetwork         () const;
 
     bool               UseCheckPointCRC          () const;
@@ -135,6 +136,7 @@ private:
     unsigned short diaDebuggerPort_;
     unsigned short networkLoggerPort_;
     unsigned short networkPort_;
+    unsigned long  networkTimeOut_;
     bool           bCheckPointOrbat_;
     bool           bUseCheckPointCRC_;
     bool           bUseOnlyDIAArchive_;

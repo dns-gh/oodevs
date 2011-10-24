@@ -48,7 +48,7 @@ class ClientNetworker: public MessageDispatcher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ClientNetworker( const std::string& host = "", bool retry = false );
+    explicit ClientNetworker( const std::string& host = "", bool retry = false, unsigned long timeOut = 10000 );
     virtual ~ClientNetworker();
     //@}
 

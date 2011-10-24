@@ -15,6 +15,7 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/AuthenticationSenders.h"
+#include "protocol/DispatcherSenders.h"
 #include <boost/foreach.hpp>
 
 using namespace launcher;
@@ -191,6 +192,16 @@ void SwordFacade::OnReceiveMessage( const sword::MessengerToClient& message )
 void SwordFacade::OnReceiveMessage( const sword::AuthenticationToClient& message )
 {
     Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::OnReceiveMessage
+// Created: JSR 2011-10-20
+// -----------------------------------------------------------------------------
+void SwordFacade::OnReceiveMessage( const sword::DispatcherToClient& message )
+{
+    BOOST_FOREACH( T_Handler handler, permanentHandler_ )
+        handler->OnReceiveMessage( message );
 }
 
 // -----------------------------------------------------------------------------

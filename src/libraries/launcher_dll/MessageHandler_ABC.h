@@ -17,6 +17,7 @@ namespace sword
     class SimToClient;
     class MessengerToClient;
     class AuthenticationToClient;
+    class DispatcherToClient;
 }
 
 namespace launcher
@@ -41,6 +42,8 @@ public:
     virtual bool OnReceiveMessage( const sword::SimToClient& message ) = 0;
     virtual bool OnReceiveMessage( const sword::MessengerToClient& message ) = 0;
     virtual bool OnReceiveMessage( const sword::AuthenticationToClient& message ) = 0;
+    virtual bool OnReceiveMessage( const sword::DispatcherToClient& message ) = 0;
+    // TODO gérer le nouveau message unhandled DIspatcherToClient
     //@}
 };
 

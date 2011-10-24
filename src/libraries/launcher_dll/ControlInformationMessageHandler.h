@@ -33,6 +33,7 @@ public:
     //! @name Operations
     //@{
     virtual bool OnReceiveMessage( const sword::SimToClient& message );
+    virtual bool OnReceiveMessage( const sword::DispatcherToClient& message );
     //@}
 };
 

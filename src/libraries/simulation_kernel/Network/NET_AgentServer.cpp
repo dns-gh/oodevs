@@ -23,7 +23,7 @@ using namespace tools;
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
 NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time, NET_Simulation_ABC& simulation )
-    : ServerNetworker                ( config.GetNetworkPort() )
+    : ServerNetworker                ( config.GetNetworkPort(), config.GetNetworkTimeout() )
     , time_                          ( time )
     , pMsgMgr_                       ( new NET_AS_MOSServerMsgMgr( *this, simulation ) )
     , nUnitVisionConesChangeTimeStep_( 0 )

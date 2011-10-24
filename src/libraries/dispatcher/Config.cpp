@@ -28,6 +28,7 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     , networkSimulationPort_   ( 0 )
     , networkClientsParameters_( 0 )
     , networkShieldParameters_ ( 0 )
+    , networkTimeout_          ( 10000 )
     , keyFramesFrequency_      ( 100 )
     , replayFragmentsFrequency_( 150 )
     , timeStep_                ( 0 )
@@ -92,6 +93,7 @@ void Config::Parse( int argc, char** argv )
                     >> xml::start( "network" )
                         >> xml::attribute( "client", networkSimulationParameters_ )
                         >> xml::attribute( "server", port )
+                        >> xml::optional >> xml::attribute( "timeout", networkTimeout_ )
                     >> xml::end
                     >> xml::optional >> xml::start( "debug" )
                         >> xml::optional >> xml::attribute( "logfiles", logFiles_ )
@@ -141,6 +143,15 @@ unsigned short Config::GetNetworkClientsParameters() const
 unsigned short Config::GetNetworkShieldParameters() const
 {
     return networkShieldParameters_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetNetworkTimeout
+// Created: JSR 2011-10-19
+// -----------------------------------------------------------------------------
+unsigned long Config::GetNetworkTimeout() const
+{
+    return networkTimeout_;
 }
 
 // -----------------------------------------------------------------------------

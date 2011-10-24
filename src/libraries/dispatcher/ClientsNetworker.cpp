@@ -23,7 +23,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin, const Services& services )
-    : ServerNetworker( config.GetNetworkClientsParameters() )
+    : ServerNetworker( config.GetNetworkClientsParameters(), config.GetNetworkTimeout() )
     , plugin_  ( plugin )
     , services_( services )
 {

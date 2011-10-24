@@ -15,7 +15,7 @@ class SwordProxy::SwordProxyImplementation
 {
 public:
     SwordProxyImplementation( const std::string& host, unsigned short port, const std::string& profile, const std::string& password )
-        : client_( new SwordClient( host, port, profile, password ) ) {}
+        : client_( new SwordClient( host, port, profile, password, 0 ) ) {}
     ~SwordProxyImplementation() {}
 
     void Connect( SwordConnectionHandler_ABC* handler ) { client_->Connect( handler ); }

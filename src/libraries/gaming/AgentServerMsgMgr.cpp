@@ -2138,6 +2138,8 @@ void AgentServerMsgMgr::OnReceiveMsgDispatcherToClient( const std::string& , con
 {
     if( wrapper.message().has_services_description() )
         services_.Update( wrapper.message().services_description() );
+    else if( wrapper.message().has_connection_to_sim_lost() )
+        ;
     else
         UnhandledMessage( &wrapper.message() );
 }

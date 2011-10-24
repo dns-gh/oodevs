@@ -24,11 +24,11 @@ using namespace tools;
 // Name: ServerNetworker constructor
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-ServerNetworker::ServerNetworker( unsigned short port )
+ServerNetworker::ServerNetworker( unsigned short port, unsigned long timeOut /*=10000*/ )
     : service_         ( new boost::asio::io_service() )
     , connectionBuffer_( new BufferedConnectionCallback() )
     , messageBuffer_   ( new BufferedMessageCallback() )
-    , sockets_         ( new SocketManager( messageBuffer_, connectionBuffer_ ) )
+    , sockets_         ( new SocketManager( messageBuffer_, connectionBuffer_, timeOut ) )
     , messageService_  ( new ObjectMessageService() )
     , acceptor_        ( new Acceptor( *sockets_, *service_, port ) )
     , stopped_         ( false )

@@ -170,6 +170,15 @@ void Model::OnReceiveMessage( const sword::AuthenticationToClient& /*message*/ )
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: Model::OnReceiveMessage
+// Created: JSR 2011-10-20
+// -----------------------------------------------------------------------------
+void Model::OnReceiveMessage( const sword::DispatcherToClient& /*message*/ )
+{
+    // NOTHING
+}
+
 namespace
 {
     template< class Entity >

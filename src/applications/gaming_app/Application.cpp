@@ -88,7 +88,7 @@ void Application::Initialize( int /*argc*/, char** /*argv*/ )
     services_.reset( new Services( controllers_->controller_, *logger_ ) );
     simulation_.reset( new Simulation( controllers_->controller_ ) );
     workers_.reset( new Workers() );
-    network_.reset( new Network( *services_, *simulation_, *logger_ ) );
+    network_.reset( new Network( *services_, *simulation_, *logger_, config_->GetNetworkTimeOut() ) );
     rcResolver_.reset( new RcEntityResolver( *controllers_ ) );
     staticModel_.reset( new ::StaticModel( *controllers_, *rcResolver_.get(), *simulation_ ) );
     model_.reset( new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *config_ ) );

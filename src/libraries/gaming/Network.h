@@ -36,7 +36,7 @@ class Network : public tools::ClientNetworker
 public:
     //! @name Constructors/Destructor
     //@{
-             Network( Services& services, Simulation& simu, kernel::Logger_ABC& logger );
+             Network( Services& services, Simulation& simu, kernel::Logger_ABC& logger, unsigned long timeOut );
     virtual ~Network();
     //@}
 
