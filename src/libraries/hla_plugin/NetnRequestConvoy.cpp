@@ -24,8 +24,8 @@ using namespace plugins::hla;
 // Name: NetnRequestConvoy constructor
 // Created: SLI 2011-10-06
 // -----------------------------------------------------------------------------
-NetnRequestConvoy::NetnRequestConvoy( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnRequestConvoy >& receiver )
-    : pInteraction_( new ::hla::Interaction< interactions::NetnRequestConvoy >( receiver ) )
+NetnRequestConvoy::NetnRequestConvoy( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnRequestConvoy >& notification )
+    : pInteraction_( new ::hla::Interaction< interactions::NetnRequestConvoy >( notification ) )
 {
     RegisterNetnService( *pInteraction_ );
     pInteraction_->Register( "RequestTimeOut", ::hla::CreateParameter( &interactions::NetnRequestConvoy::requestTimeOut ) );

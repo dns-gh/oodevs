@@ -23,8 +23,8 @@ using namespace plugins::hla;
 // Name: NetnConvoyDestroyedEntities constructor
 // Created: VPR 2011-10-12
 // -----------------------------------------------------------------------------
-NetnConvoyDestroyedEntities::NetnConvoyDestroyedEntities( Federate_ABC& federate )
-    : pInteraction_( new ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >( *this ) )
+NetnConvoyDestroyedEntities::NetnConvoyDestroyedEntities( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnConvoyDestroyedEntities >& notification )
+    : pInteraction_( new ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >( notification ) )
 {
     RegisterNetnService( *pInteraction_ );
     pInteraction_->Register( "ListOfEmbarkedObjectDestroyed", ::hla::CreateParameter( &interactions::NetnConvoyDestroyedEntities::listOfEmbarkedObjectDestroyed ) );
@@ -47,13 +47,4 @@ NetnConvoyDestroyedEntities::~NetnConvoyDestroyedEntities()
 void NetnConvoyDestroyedEntities::Send( const interactions::NetnConvoyDestroyedEntities& interaction )
 {
     pInteraction_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnConvoyDestroyedEntities::Receive
-// Created: VPR 2011-10-12
-// -----------------------------------------------------------------------------
-void NetnConvoyDestroyedEntities::Receive( interactions::NetnConvoyDestroyedEntities& /*interaction*/ )
-{
-    // NOTHING
 }

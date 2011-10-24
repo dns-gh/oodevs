@@ -23,8 +23,8 @@ using namespace plugins::hla;
 // Name: NetnServiceReceived constructor
 // Created: VPR 2011-10-12
 // -----------------------------------------------------------------------------
-NetnServiceReceived::NetnServiceReceived( Federate_ABC& federate )
-    : pInteraction_( new ::hla::Interaction< interactions::NetnServiceReceived >( *this ) )
+NetnServiceReceived::NetnServiceReceived( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnServiceReceived >& notification )
+    : pInteraction_( new ::hla::Interaction< interactions::NetnServiceReceived >( notification ) )
 {
     RegisterNetnService( *pInteraction_ );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_ServiceReceived" ), *pInteraction_, true, true );
@@ -46,13 +46,4 @@ NetnServiceReceived::~NetnServiceReceived()
 void NetnServiceReceived::Send( const interactions::NetnServiceReceived& interaction )
 {
     pInteraction_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnServiceReceived::Receive
-// Created: VPR 2011-10-12
-// -----------------------------------------------------------------------------
-void NetnServiceReceived::Receive( interactions::NetnServiceReceived& /*interaction*/ )
-{
-    // NOTHING
 }

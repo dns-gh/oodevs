@@ -23,11 +23,11 @@ using namespace plugins::hla;
 // Name: NetnCancelConvoy constructor
 // Created: VPR 2011-10-12
 // -----------------------------------------------------------------------------
-NetnCancelConvoy::NetnCancelConvoy( Federate_ABC& federate )
-    : pInteraction_( new ::hla::Interaction< interactions::NetnCancelConvoy >( *this ) )
+NetnCancelConvoy::NetnCancelConvoy( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnCancelConvoy >& notification )
+    : pInteraction_( new ::hla::Interaction< interactions::NetnCancelConvoy >( notification ) )
 {
     RegisterNetnService( *pInteraction_ );
-    pInteraction_->Register( "Reason"     , ::hla::CreateParameter( &interactions::NetnCancelConvoy::reason ) );
+    pInteraction_->Register( "Reason", ::hla::CreateParameter( &interactions::NetnCancelConvoy::reason ) );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_CancelService.NETN_CancelConvoy" ), *pInteraction_, true, true );
 }
 
@@ -47,13 +47,4 @@ NetnCancelConvoy::~NetnCancelConvoy()
 void NetnCancelConvoy::Send( const interactions::NetnCancelConvoy& interaction )
 {
     pInteraction_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnCancelConvoy::Receive
-// Created: VPR 2011-10-12
-// -----------------------------------------------------------------------------
-void NetnCancelConvoy::Receive( interactions::NetnCancelConvoy& /*interaction*/ )
-{
-    // NOTHING
 }

@@ -36,12 +36,11 @@ namespace interactions
 // Created: VPR 2011-10-12
 // =============================================================================
 class NetnCancelConvoy : public InteractionSender_ABC< interactions::NetnCancelConvoy >
-                       , private ::hla::InteractionNotification_ABC< interactions::NetnCancelConvoy >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NetnCancelConvoy( Federate_ABC& federate );
+             NetnCancelConvoy( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnCancelConvoy >& notification );
     virtual ~NetnCancelConvoy();
     //@}
 
@@ -49,9 +48,6 @@ public:
     //@{
     virtual void Send( const interactions::NetnCancelConvoy& interaction );
     //@}
-
-private:
-    virtual void Receive( interactions::NetnCancelConvoy& interaction );
 
 private:
     //! @name Member data

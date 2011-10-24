@@ -40,7 +40,7 @@ class NetnRequestConvoy : public InteractionSender_ABC< interactions::NetnReques
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnRequestConvoy( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnRequestConvoy >& receiver );
+             NetnRequestConvoy( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnRequestConvoy >& notification );
     virtual ~NetnRequestConvoy();
     //@}
 

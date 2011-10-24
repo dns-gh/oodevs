@@ -54,6 +54,10 @@ namespace interactions
 class NetnOfferConvoySender : public ::hla::InteractionNotification_ABC< interactions::NetnRequestConvoy >
                             , public ::hla::InteractionNotification_ABC< interactions::NetnAcceptOffer >
                             , public ::hla::InteractionNotification_ABC< interactions::NetnReadyToReceiveService >
+                            , public ::hla::InteractionNotification_ABC< interactions::NetnServiceReceived >
+                            , public ::hla::InteractionNotification_ABC< interactions::NetnRejectOfferConvoy >
+                            , public ::hla::InteractionNotification_ABC< interactions::NetnCancelConvoy >
+                            , public ::hla::InteractionNotification_ABC< interactions::NetnConvoyDestroyedEntities >
                             , private tools::MessageObserver< sword::UnitAttributes >
 {
 public:
@@ -72,6 +76,10 @@ public:
     virtual void Receive( interactions::NetnRequestConvoy& request );
     virtual void Receive( interactions::NetnAcceptOffer& accept );
     virtual void Receive( interactions::NetnReadyToReceiveService& readyToReceive );
+    virtual void Receive( interactions::NetnServiceReceived& received );
+    virtual void Receive( interactions::NetnRejectOfferConvoy& rejected );
+    virtual void Receive( interactions::NetnCancelConvoy& canceled );
+    virtual void Receive( interactions::NetnConvoyDestroyedEntities& destroyed );
     //@}
 
 private:

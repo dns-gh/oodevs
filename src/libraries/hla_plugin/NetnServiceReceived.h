@@ -36,24 +36,17 @@ namespace interactions
 // Created: VPR 2011-10-12
 // =============================================================================
 class NetnServiceReceived : public InteractionSender_ABC< interactions::NetnServiceReceived >
-                          , private ::hla::InteractionNotification_ABC< interactions::NetnServiceReceived >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NetnServiceReceived( Federate_ABC& federate );
+             NetnServiceReceived( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnServiceReceived >& notification );
     virtual ~NetnServiceReceived();
     //@}
 
     //! @name Operations
     //@{
     virtual void Send( const interactions::NetnServiceReceived& interaction );
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void Receive( interactions::NetnServiceReceived& interaction );
     //@}
 
 private:

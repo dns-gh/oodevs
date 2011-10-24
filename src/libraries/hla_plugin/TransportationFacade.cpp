@@ -55,15 +55,15 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
     , pNetnConvoyDisembarkmentStatusReceiver_( new NetnConvoyDisembarkmentStatusReceiver( *pTransportationController_ ) )
     , pNetnConvoyDisembarkmentStatus_        ( new NetnConvoyDisembarkmentStatus( federate, *pNetnConvoyDisembarkmentStatusReceiver_ ) )
     , pNetnOfferConvoySender_                ( new NetnOfferConvoySender( *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_, transporters, controller, callsignResolver ) )
-    , pNetnRejectOfferConvoy_                ( new NetnRejectOfferConvoy( federate ) )
+    , pNetnRejectOfferConvoy_                ( new NetnRejectOfferConvoy( federate, *pNetnOfferConvoySender_ ) )
     , pNetnAcceptOffer_                      ( new NetnAcceptOffer( federate, *pNetnOfferConvoySender_ ) )
     , pNetnReadyToReceiveService_            ( new NetnReadyToReceiveService( federate, *pNetnOfferConvoySender_ ) )
-    , pNetnServiceReceived_                  ( new NetnServiceReceived( federate ) )
+    , pNetnServiceReceived_                  ( new NetnServiceReceived( federate, *pNetnOfferConvoySender_ ) )
     , pNetnOfferResponseSender_              ( new NetnOfferResponseSender( *pTransportationController_, *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_, *pNetnReadyToReceiveService_, *pNetnServiceReceived_ ) )
     , pNetnServiceCompleteReceiver_          ( new NetnServiceCompleteReceiver( *pTransportationController_ ) )
     , pNetnServiceComplete_                  ( new NetnServiceComplete( federate, *pNetnServiceCompleteReceiver_ ) )
-    , pNetnCancelConvoy_                     ( new NetnCancelConvoy( federate ) )
-    , pNetnConvoyDestroyedEntities_          ( new NetnConvoyDestroyedEntities( federate ) )
+    , pNetnCancelConvoy_                     ( new NetnCancelConvoy( federate, *pNetnOfferConvoySender_ ) )
+    , pNetnConvoyDestroyedEntities_          ( new NetnConvoyDestroyedEntities( federate, *pNetnOfferConvoySender_ ) )
 {
     // NOTHING
 }

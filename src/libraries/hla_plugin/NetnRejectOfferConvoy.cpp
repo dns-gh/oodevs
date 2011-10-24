@@ -24,11 +24,11 @@ using namespace plugins::hla;
 // Name: NetnRejectOfferConvoy constructor
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-NetnRejectOfferConvoy::NetnRejectOfferConvoy( Federate_ABC& federate )
-    : pInteraction_( new ::hla::Interaction< interactions::NetnRejectOfferConvoy >( *this ) )
+NetnRejectOfferConvoy::NetnRejectOfferConvoy( Federate_ABC& federate, ::hla::InteractionNotification_ABC< interactions::NetnRejectOfferConvoy >& notification )
+    : pInteraction_( new ::hla::Interaction< interactions::NetnRejectOfferConvoy >( notification ) )
 {
     RegisterNetnService( *pInteraction_ );
-    pInteraction_->Register( "Reason"     , ::hla::CreateParameter( &interactions::NetnRejectOfferConvoy::reason ) );
+    pInteraction_->Register( "Reason", ::hla::CreateParameter( &interactions::NetnRejectOfferConvoy::reason ) );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_RejectOffer.NETN_RejectOfferConvoy" ), *pInteraction_, true, false );
 }
 
@@ -48,13 +48,4 @@ NetnRejectOfferConvoy::~NetnRejectOfferConvoy()
 void NetnRejectOfferConvoy::Send( const interactions::NetnRejectOfferConvoy& interaction )
 {
     pInteraction_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnRejectOfferConvoy::Receive
-// Created: SLI 2011-10-11
-// -----------------------------------------------------------------------------
-void NetnRejectOfferConvoy::Receive( interactions::NetnRejectOfferConvoy& /*interaction*/ )
-{
-    throw std::runtime_error( __FUNCTION__ " unimplemented function" );
 }
