@@ -212,7 +212,7 @@
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
-    <trafficability default="false"/>
+    <trafficability default="true" max-weight="100"/>
   </object>
   <object geometry="point" name="poste tir" symbol="G*FPAP----****X" type="firing post">
     <bypassable bypass-speed="-1"/>
@@ -385,7 +385,7 @@
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
-    <trafficability default="false"/>
+    <trafficability default="true" max-weight="100"/>
   </object>
   <object geometry="point" name="installation" symbol="S*GPI-----*****" type="installation">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
@@ -459,4 +459,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="3621671650" -->
+<!-- signature="0156593978" -->
