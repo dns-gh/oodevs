@@ -1204,7 +1204,7 @@
   <equipment codeEMAT6="AMX 10 RC" codeEMAT8="AMX 10 RC" codeLFRIL="AMX 10 RC" codeNNO="AMX 10 RC" comment="" id="14" name="Medium Tank" protection="MediumTank" size="Heavy" weight="17">
     <speeds max="90">
       <speed terrain="unknown" value="10"/>
-      <speed terrain="forest" value="0"/>
+      <speed terrain="forest" value="1"/>
       <speed terrain="orchard" value="0"/>
       <speed terrain="swamp" value="4"/>
       <speed terrain="dune" value="30"/>
@@ -15813,4 +15813,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="4293438830" -->
+<!-- signature="0451542053" -->

@@ -183,7 +183,7 @@
   <automat decisional-model="Radar detection station" id="174" name="Radar detection station" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Radar detection station"/>
   </automat>
-  <automat decisional-model="Ground Surveillance Radar" id="175" name="Ground suveillance radar" type="Automate RENS">
+  <automat decisional-model="Ground Surveillance Radar" id="175" name="Ground surveillance radar" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Ground surveillance radar"/>
   </automat>
   <automat decisional-model="NBC reconnaissance platoon" id="176" name="NBC reconnaissance platoon" type="Automate NBC">
@@ -327,4 +327,4 @@
     <unit command-post="true" min-occurs="1" type="Firefighter - Operation Officer"/>
   </automat>
 </automats>
-<!-- signature="1341974995" -->
+<!-- signature="1242214564" -->
