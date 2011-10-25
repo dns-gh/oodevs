@@ -491,7 +491,7 @@
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_license_gui-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}">
-            <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32"/>
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32,shell32,gdi32"/>
             <defineset define="QT3_SUPPORT"/>
         </build-app>
     </target>
@@ -513,7 +513,7 @@
                   lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_license_gui-${platform}-mt@{suffix}">
-            <syslibset libs="dbghelp,psapi,shell32,iphlpapi,advapi32"/>
+            <syslibset libs="dbghelp,psapi,shell32,iphlpapi,advapi32,gdi32"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <defineset define="QT3_SUPPORT"/>
             <defineset define="_WIN32_WINNT=0x0501"/> <!-- for 'IsDebuggerPresent()' -->
@@ -544,7 +544,7 @@
                   lib${ant.project.name}_shield-${platform}-mt@{suffix},
                   lib${ant.project.name}_indicators-${platform}-mt,
                   lib${ant.project.name}_license_gui-${platform}-mt@{suffix}">
-            <syslibset libs="dbghelp,psapi,iphlpapi,user32,shell32,advapi32"/>
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,shell32,advapi32,gdi32"/>
             <defineset define="QT3_SUPPORT"/>
         </build-app>
     </target>
@@ -582,7 +582,7 @@
                          lib${ant.project.name}_flood-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt,
                          lib${ant.project.name}_license_gui-${platform}-mt@{suffix}">
-            <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32"/>
+            <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32,shell32"/>
             <defineset define="QT3_SUPPORT"/>
         </build-app>
     </target>
@@ -615,7 +615,7 @@
                          lib${ant.project.name}_tools-${platform}-mt,
                          lib${ant.project.name}_frontend-${platform}-mt,
                          lib${ant.project.name}_license_gui-${platform}-mt@{suffix}">
-            <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32"/>
+            <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32,shell32"/>
             <defineset define="QT3_SUPPORT"/>
         </build-app>
     </target>
