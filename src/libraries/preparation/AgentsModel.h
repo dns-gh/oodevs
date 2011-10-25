@@ -29,6 +29,7 @@ namespace kernel
     class Team_ABC;
     class Controllers;
     class Location_ABC;
+    class Ghost_ABC;
 }
 
 namespace xml
@@ -69,6 +70,8 @@ public:
     //! @name Operations
     //@{
     void CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
+    void CreateAutomat( kernel::Ghost_ABC& ghost, const kernel::AutomatType& type );
+    void CreateAutomat( kernel::Ghost_ABC& ghost, const kernel::AutomatType& type, const geometry::Point2f& position );
     void CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits, GhostModel& ghosts, std::string& loadingErrors );
     kernel::Automat_ABC& CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const QString& name = "" );
 
@@ -76,6 +79,8 @@ public:
     kernel::Automat_ABC* FindAutomat( unsigned long id );
 
     kernel::Agent_ABC& CreateAgent( kernel::Automat_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position, bool commandPost = false, const QString& name = "" );
+    void CreateAgent( kernel::Ghost_ABC& ghost, const kernel::AgentType& type );
+    void CreateAgent( kernel::Ghost_ABC& ghost, const kernel::AgentType& type, const geometry::Point2f& position );
     void CreateAgent( xml::xistream& xis, kernel::Automat_ABC& parent, std::string& loadingErrors );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;
@@ -101,6 +106,11 @@ private:
     //@{
     AgentsModel( const AgentsModel& );            //!< Copy constructor
     AgentsModel& operator=( const AgentsModel& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void CreateAutomatChilds( kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
     //@}
 
     //! @name Helpers

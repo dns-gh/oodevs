@@ -50,6 +50,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DictionaryExtensions.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -302,6 +303,84 @@ Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, Team_ABC& parent 
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     if( Inhabitants* popus = parent.Retrieve< Inhabitants >() )
         popus->AddInhabitant( *result );
+    result->Polish();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentFactory::Create
+// Created: ABR 2011-10-25
+// -----------------------------------------------------------------------------
+kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel::AgentType& type, const geometry::Point2f position )
+{
+    assert( ghost.GetGhostType() == eGhostType_Agent );
+    bool commandPost = false;
+
+    Agent* result = new Agent( type, controllers_.controller_, idManager_, commandPost );
+    result->Rename( ghost.GetName() );
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
+    result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dico ) );
+    // Hierarchies
+    {
+        const kernel::TacticalHierarchies* ghostHierarchy = ghost.Retrieve< kernel::TacticalHierarchies >();
+        assert( ghostHierarchy );
+        Entity_ABC* tactSuperior = const_cast< Entity_ABC* >( ghostHierarchy->GetSuperior() );
+        assert( tactSuperior );
+
+        result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetType().GetLevelSymbol(), result->GetType().GetSymbol(), tactSuperior ) );
+        result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, tactSuperior ) );
+    }
+    result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
+    result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dico, tools::translate( "Affinities", "Affinities" ) ) );
+    if( result->GetType().IsLogisticSupply() )
+        result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
+    result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
+    if( commandPost )
+        result->Attach( *new CommandPostAttributes( *result ) );
+    result->Attach< kernel::Color_ABC >( *new Color( ghost ) );
+    result->Polish();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentFactory::Create
+// Created: ABR 2011-10-25
+// -----------------------------------------------------------------------------
+kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel::AutomatType& type )
+{
+    assert( ghost.GetGhostType() == eGhostType_Automat );
+
+    Automat* result = new Automat( type, controllers_.controller_, idManager_, ghost.GetName() );
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
+    result->Attach< Positions >( *new AutomatPositions( *result ) );
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
+    result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
+    // Tactical Hierarchies
+    {
+        const kernel::TacticalHierarchies* ghostHierarchy = ghost.Retrieve< kernel::TacticalHierarchies >();
+        assert( ghostHierarchy );
+        Entity_ABC* tactSuperior = const_cast< Entity_ABC* >( ghostHierarchy->GetSuperior() );
+        assert( tactSuperior );
+        result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, tactSuperior ) );
+    }
+    // Communication Hierarchies
+    {
+        const CommunicationHierarchies* ghostHierarchy = ghost.Retrieve< CommunicationHierarchies >();
+        assert( ghostHierarchy );
+        Entity_ABC* comSuperior = const_cast< Entity_ABC* >( ghostHierarchy->GetSuperior() );
+        assert( comSuperior );
+        result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, comSuperior ) );
+    }
+
+    bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
+    result->Attach( *new LogisticLevelAttritube( controllers_.controller_, *result, isTC2, dico ) );
+    result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico, isTC2 ) );
+
+    result->Attach( *new TacticalLines() );
+    result->Attach< kernel::Color_ABC >( *new Color( ghost ) );
+    result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
+    kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( &result->Get< CommunicationHierarchies >().GetTop() );
+    result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, superior ) );
     result->Polish();
     return result;
 }

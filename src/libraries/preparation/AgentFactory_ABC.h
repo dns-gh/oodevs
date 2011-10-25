@@ -25,6 +25,7 @@ namespace kernel
     class Automat_ABC;
     class Entity_ABC;
     class Location_ABC;
+    class Ghost_ABC;
 }
 
 namespace xml
@@ -58,6 +59,9 @@ public:
     virtual kernel::Automat_ABC* Create( xml::xistream& xis, kernel::Entity_ABC& parent ) = 0;
     virtual kernel::Population_ABC* CreatePop( xml::xistream& xis, kernel::Team_ABC& parent ) = 0;
     virtual kernel::Inhabitant_ABC* CreateInhab( xml::xistream& xis, kernel::Team_ABC& parent ) = 0;
+
+    virtual kernel::Agent_ABC* Create( kernel::Ghost_ABC& ghost, const kernel::AgentType& type, const geometry::Point2f position ) = 0;
+    virtual kernel::Automat_ABC* Create( kernel::Ghost_ABC& ghost, const kernel::AutomatType& type ) = 0;
     //@}
 };
 
