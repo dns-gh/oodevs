@@ -40,7 +40,6 @@ FeatureNameParser::~FeatureNameParser()
 bool FeatureNameParser::Parse( QString content, geometry::Point2f& result, QStringList& hint ) const
 {
     const bool next = lastRequest_ == content;
-    lastRequest_ = content;
     QString hintSearch;
     bool found = false;
     if( next )
@@ -48,6 +47,7 @@ bool FeatureNameParser::Parse( QString content, geometry::Point2f& result, QStri
     else
         found =  searcher_->Search( content, result, hintSearch );
     hint.append( hintSearch );
+    lastRequest_ = content;
     return found;
 }
 // -----------------------------------------------------------------------------
