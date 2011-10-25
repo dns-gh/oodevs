@@ -1866,9 +1866,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_EquipmentTypeParameter.cpp">
       <Filter>Source Files\Entities\Orders\Parameters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ExternalIdentifierWrapper.cpp">
-      <Filter>Source Files\Entities\Orders\Parameters</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntegerParameter.cpp">
       <Filter>Source Files\Entities\Orders\Parameters</Filter>
     </ClCompile>
@@ -4182,9 +4179,6 @@
       <Filter>Source Files\Entities\Orders\Parameters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_EquipmentTypeParameter.h">
-      <Filter>Source Files\Entities\Orders\Parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ExternalIdentifierWrapper.h">
       <Filter>Source Files\Entities\Orders\Parameters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntegerParameter.h">

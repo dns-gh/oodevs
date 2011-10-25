@@ -25,10 +25,11 @@
 // Name: PHY_ActionConstructObject constructor
 // Constructd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* pLocalisation )
+PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* pLocalisation,
+                                                      unsigned int externalIdentifier )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_( pion.GetRole< PHY_RoleAction_Objects >() )
-    , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, sword::ObstacleType_DemolitionTargetType_preliminary ) )
+    , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, sword::ObstacleType_DemolitionTargetType_preliminary, externalIdentifier ) )
 {
     role_.SetCreator( *pObject_ );
     ConstructionAttribute* attribute = pObject_->RetrieveAttribute< ConstructionAttribute >();

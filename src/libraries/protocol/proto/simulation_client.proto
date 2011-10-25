@@ -1336,12 +1336,13 @@ message CrowdFlowDetection {
     @brief Notifies of the creation of an object
 */
 message ObjectCreation {
-    required ObjectId         object     = 1; //!< The object identifier
-    required ObjectType       type       = 2; //!< The object type
-    required string           name       = 3; //!< The object name
-    required PartyId          party      = 4; //!< The object party
-    required Location         location   = 5; //!< The object location
-    required ObjectAttributes attributes = 6; //!< The object attributes
+    required ObjectId         object              = 1; //!< The object identifier
+    required ObjectType       type                = 2; //!< The object type
+    required string           name                = 3; //!< The object name
+    required PartyId          party               = 4; //!< The object party
+    required Location         location            = 5; //!< The object location
+    required ObjectAttributes attributes          = 6; //!< The object attributes
+    optional int32            external_identifier = 7; //!< The external identifier
 }
 
 /** @struct ObjectDestruction

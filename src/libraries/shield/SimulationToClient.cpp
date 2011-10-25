@@ -1296,6 +1296,7 @@ void SimulationToClient::Convert( const sword::ObjectCreation& from, MsgsSimToCl
     CONVERT_ID( party );
     CONVERT_CB( location, ConvertLocation );
     CONVERT_CB( attributes, ConvertObjectAttributes );
+    CONVERT( external_identifier );
 }
 
 // -----------------------------------------------------------------------------

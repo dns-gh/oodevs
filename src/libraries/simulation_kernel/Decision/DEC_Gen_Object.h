@@ -44,6 +44,7 @@ public:
     //@{
              DEC_Gen_Object();
              DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
+             DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager, unsigned int identifier );
              DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary );
              DEC_Gen_Object( const DEC_Gen_Object& rhs );
     virtual ~DEC_Gen_Object();
@@ -52,6 +53,7 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetTypeName() const;
+    unsigned int GetExternalIdentifier() const;
     const TER_Localisation& GetLocalisation() const;
     E_DemolitionTargetType GetObstacleType() const;
     double GetDensity() const;
@@ -76,6 +78,7 @@ private:
     //! @name Member data
     //@{
     std::string type_;
+    unsigned int identifier_;
     TER_Localisation localisation_;
     E_DemolitionTargetType pObstacleType_;
     double rDensity_;

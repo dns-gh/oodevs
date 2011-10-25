@@ -73,9 +73,10 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const sword::MissionParameters& 
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, sword::ObstacleType_DemolitionTargetType obstacleType )
+MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation,
+                                                sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier )
 {
-    return MIL_ObjectLoader::GetLoader().CreateObject( name, type, army, localisation, obstacleType == sword::ObstacleType_DemolitionTargetType_reserved );
+    return MIL_ObjectLoader::GetLoader().CreateObject( name, type, army, localisation, obstacleType == sword::ObstacleType_DemolitionTargetType_reserved, externalIdentifier );
 }
 
 // -----------------------------------------------------------------------------

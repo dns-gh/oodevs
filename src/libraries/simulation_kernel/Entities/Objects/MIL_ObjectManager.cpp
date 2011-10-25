@@ -227,7 +227,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
 {
-    MIL_Object_ABC* pObject = builder_->BuildObject( "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary );
+    MIL_Object_ABC* pObject = builder_->BuildObject( "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u );
     RegisterObject( pObject );
     return pObject;
 }
@@ -236,11 +236,12 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, sword::ObstacleType_DemolitionTargetType obstacleType )
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation,
+                                                 sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier )
 {
     if( pLocalisation )
     {
-        MIL_Object_ABC* pObject = builder_->BuildObject( "", type, army, *pLocalisation, obstacleType );
+        MIL_Object_ABC* pObject = builder_->BuildObject( "", type, army, *pLocalisation, obstacleType, externalIdentifier );
         RegisterObject( pObject );
         return pObject;
     }

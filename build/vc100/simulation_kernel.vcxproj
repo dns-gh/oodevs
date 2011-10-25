@@ -639,7 +639,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_DotationTypeParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_EnumerationParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_EquipmentTypeParameter.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ExternalIdentifierWrapper.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntegerParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ListParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LocationParameter.cpp" />
@@ -1434,7 +1433,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_DotationTypeParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_EnumerationParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_EquipmentTypeParameter.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ExternalIdentifierWrapper.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_IntegerParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ListParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LocationParameter.h" />

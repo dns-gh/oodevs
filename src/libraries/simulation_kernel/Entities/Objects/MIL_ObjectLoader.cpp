@@ -122,12 +122,13 @@ void MIL_ObjectLoader::ReadCapacity( const std::string& capacity, xml::xistream&
 // Name: MIL_ObjectLoader::CreateObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& location, bool reserved ) const
+MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& location,
+                                                bool reserved, unsigned int externalIdentifier ) const
 {
     CIT_Prototypes it = prototypes_.find( type );
     if( it == prototypes_.end() )
         throw std::runtime_error( __FUNCTION__ " - Unknown object type: " + type );
-    Object* object = new Object( *it->second, army, &location, name, reserved );
+    Object* object = new Object( *it->second, army, &location, externalIdentifier, name, reserved );
     attributes_->Initialize( *object );
     object->Finalize();
     return object;
@@ -171,7 +172,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& 
     double rPointSize = it->second->GetPointSize();
     if( ! NET_ASN_Tools::ReadLocation( message.elem( 1 ).value( 0 ).location(), location, rPointSize ) )
         return 0;
-    Object* pObject = new Object( *it->second, army, &location, message.elem( 2 ).value( 0 ).acharstr() );
+    Object* pObject = new Object( *it->second, army, &location, 0u, message.elem( 2 ).value( 0 ).acharstr() );
 
     try
     {
@@ -201,7 +202,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MIL_ObjectBuilder_ABC& bui
     CIT_Prototypes it = prototypes_.find( builder.GetType().GetName() );
     if( it == prototypes_.end() )
         return 0;
-    Object* pObject = new Object( *it->second, army, 0 );
+    Object* pObject = new Object( *it->second, army, 0, 0u );
     builder.Build( *pObject );
     pObject->Finalize();
     return pObject;
