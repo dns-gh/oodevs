@@ -26,6 +26,17 @@ std::string DEC_ObjectFunctions::GetGenObjectType( const DEC_Gen_Object* object)
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::GetGenObjectExternalIdentifier
+// Created: LGY 2011-10-25
+// -----------------------------------------------------------------------------
+unsigned int DEC_ObjectFunctions::GetGenObjectExternalIdentifier( const DEC_Gen_Object* object )
+{
+    if( object )
+        return object->GetExternalIdentifier();
+    return 0u;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_ObjectFunctions::GetGenObjectReservedObstacle
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------

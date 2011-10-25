@@ -30,6 +30,7 @@ public:
     //@{
              MIL_PlannedWorkParameter();
              MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
+             MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager, unsigned int identifier );
     explicit MIL_PlannedWorkParameter( boost::shared_ptr< DEC_Gen_Object > param );
     virtual ~MIL_PlannedWorkParameter();
     //@}
@@ -56,6 +57,7 @@ private:
     //! @name Member data
     //@{
     boost::shared_ptr< DEC_Gen_Object > pGenObject_;
+    unsigned int identifier_;
     //@}
 };
 

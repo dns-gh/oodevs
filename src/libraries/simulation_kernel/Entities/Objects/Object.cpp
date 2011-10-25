@@ -44,9 +44,11 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
 // Name: Object constructor
 // Created: SBO 2009-12-14
 // -----------------------------------------------------------------------------
-Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name /*= std::string()*/, bool reserved /*= true*/ )
+Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation,
+                unsigned int externalIdentifier, const std::string& name /*= std::string()*/, bool reserved /*= true*/ )
     : MIL_Object( &army, builder.GetType() )
-    , name_( name )
+    , name_              ( name )
+    , externalIdentifier_( externalIdentifier )
 {
     MIL_Object_ABC::Register();
     if( pLocation )
@@ -174,6 +176,8 @@ void Object::SendCreation() const
     asn().mutable_party()->set_id( GetArmy()->GetID() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs
+    if( externalIdentifier_ != 0u )
+        asn().set_external_identifier( externalIdentifier_ );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

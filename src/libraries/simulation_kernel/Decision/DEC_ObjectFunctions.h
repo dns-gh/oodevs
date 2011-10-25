@@ -37,6 +37,7 @@ public:
 
     // Gen object
     static std::string GetGenObjectType( const DEC_Gen_Object* object );
+    static unsigned int GetGenObjectExternalIdentifier(  const DEC_Gen_Object* object );
     static bool GetGenObjectReservedObstacle( const DEC_Gen_Object* object );
     static DEC_Decision_ABC* GetGenObjectTC2( const DEC_Gen_Object* object );
 

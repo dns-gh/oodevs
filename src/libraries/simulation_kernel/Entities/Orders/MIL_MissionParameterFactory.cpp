@@ -40,7 +40,6 @@
 #include "MIL_StringParameter.h"
 #include "MIL_TirIndirectParameter.h"
 #include "MIL_UrbanBlockParameter.h"
-#include "MIL_ExternalIdentifierWrapper.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
@@ -123,7 +122,12 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
     else if( message.has_crowdknowledge() )
         ptr = new MIL_PopulationKnowledgeParameter( message.crowdknowledge(), resolver, entityManager );
     else if( message.has_plannedwork() )
-        ptr = new MIL_PlannedWorkParameter( message.plannedwork(), entityManager );
+    {
+        if( message.has_external_identifier() )
+            ptr = new MIL_PlannedWorkParameter( message.plannedwork(), entityManager, message.external_identifier() );
+        else
+            ptr = new MIL_PlannedWorkParameter( message.plannedwork(), entityManager );
+    }
     else if( message.has_resourcetype() )
         ptr = new MIL_DotationTypeParameter( message.resourcetype() );
     else if( message.has_equipmenttype() )
@@ -157,8 +161,6 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         ptr = new MIL_ListParameter( resolver, message.list() );
 
     boost::shared_ptr<MIL_MissionParameter_ABC> result( ptr );
-    if( message.has_external_identifier() )
-        return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_ExternalIdentifierWrapper( result, message.external_identifier() ) );
     return result;
 }
 

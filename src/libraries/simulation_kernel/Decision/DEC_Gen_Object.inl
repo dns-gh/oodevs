@@ -18,6 +18,16 @@ const std::string& DEC_Gen_Object::GetTypeName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::GetExternalIdentifier
+// Created: LGY 2011-10-25
+// -----------------------------------------------------------------------------
+inline
+unsigned int DEC_Gen_Object::GetExternalIdentifier() const
+{
+    return identifier_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Gen_Object::GetLocalisation
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------

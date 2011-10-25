@@ -30,6 +30,18 @@ MIL_PlannedWorkParameter::MIL_PlannedWorkParameter()
 // -----------------------------------------------------------------------------
 MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
     : pGenObject_( new DEC_Gen_Object( asn, entityManager ) )
+    , identifier_( 0u )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PlannedWorkParameter constructor
+// Created: LGY 2011-10-25
+// -----------------------------------------------------------------------------
+MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager, unsigned int identifier )
+    : pGenObject_( new DEC_Gen_Object( asn, entityManager, identifier ) )
+    , identifier_( identifier )
 {
     // NOTHING
 }
@@ -40,6 +52,7 @@ MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const sword::PlannedWork& as
 // -----------------------------------------------------------------------------
 MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( boost::shared_ptr< DEC_Gen_Object > param )
     : pGenObject_( param )
+    , identifier_( 0u )
 {
     // NOTHING
 }
@@ -78,6 +91,8 @@ bool MIL_PlannedWorkParameter::ToGenObject( boost::shared_ptr< DEC_Gen_Object >&
 // -----------------------------------------------------------------------------
 bool MIL_PlannedWorkParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
+    if( identifier_ != 0 )
+        elem.set_external_identifier( identifier_ );
     pGenObject_->Serialize( *elem.mutable_plannedwork() );
     return true;
 }
@@ -89,7 +104,8 @@ bool MIL_PlannedWorkParameter::ToElement( sword::MissionParameter_Value& elem ) 
 void MIL_PlannedWorkParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> pGenObject_;
+         >> pGenObject_
+         >> identifier_;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,5 +115,6 @@ void MIL_PlannedWorkParameter::load( MIL_CheckPointInArchive& file, const unsign
 void MIL_PlannedWorkParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_BaseParameter >( *this )
-         << pGenObject_;
+         << pGenObject_
+         << identifier_;
 }
