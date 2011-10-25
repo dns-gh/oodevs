@@ -202,6 +202,15 @@ bool ObjectType::CanBeBypassed() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectType::CanBeTrafficable
+// Created: LGY 2011-10-25
+// -----------------------------------------------------------------------------
+bool ObjectType::CanBeTrafficable() const
+{
+    return capacities_.find( "trafficability" ) != capacities_.end();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectType::CanBePoint
 // Created: SBO 2008-04-17
 // -----------------------------------------------------------------------------

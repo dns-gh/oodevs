@@ -61,7 +61,7 @@ public:
     bool CanBeReservedObstacle() const;
     bool CanBeValorized() const;
     bool CanBeBypassed() const;
-
+    bool CanBeTrafficable() const;
     bool CanBePoint() const;
     bool CanBeLine() const;
     bool CanBeRectangle() const;

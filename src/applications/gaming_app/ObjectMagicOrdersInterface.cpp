@@ -155,9 +155,10 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
             else
                 AddMagic( tr( "Activate exit" ), SLOT( ActivateUndergroundExit() ), magicMenu );
         }
-        if( const TrafficabilityAttribute_ABC* trafficability = entity.Retrieve< TrafficabilityAttribute_ABC >() )
+        const TrafficabilityAttribute_ABC* trafficability = entity.Retrieve< TrafficabilityAttribute_ABC >();
+        if( trafficability || entity.GetType().CanBeTrafficable() )
         {
-            double value = static_cast< const TrafficabilityAttribute* >( trafficability )->GetMaxValue();
+            double value = trafficability ? static_cast< const TrafficabilityAttribute* >( trafficability )->GetMaxValue() : 0.;
             AddDoubleValuedMagic( magicMenu, menu, tr( "Limit Trafficability" ), SLOT( ChangeTrafficability() ), value );
         }
     }
@@ -446,11 +447,14 @@ void ObjectMagicOrdersInterface::ChangeTrafficability()
     if( !selectedEntity_ )
         return;
     if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
-        if( const TrafficabilityAttribute_ABC* trafficability = selectedEntity_->Retrieve< TrafficabilityAttribute_ABC >() )
+    {
+        const TrafficabilityAttribute_ABC* trafficability = selectedEntity_->Retrieve< TrafficabilityAttribute_ABC >();
+        if( trafficability || selectedEntity_->GetType().CanBeTrafficable() )
         {
             ParameterList& list = *new ParameterList( OrderParameter( "Trafficability", "list", false ) );
             list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::trafficability );
             list.AddNumeric( "Trafficability", editor->text().toFloat() );
             actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
         }
+    }
 }
