@@ -148,6 +148,8 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateParameter( const
         return CreateAutomatParameter( parameter );
     if( parameter.GetType() == "agent" )
         return CreateAgentParameter( parameter );
+	if( parameter.GetType() == "locationcomposite" )
+		return CreateLocationCompositeParameter( parameter );
     return std::auto_ptr< actions::Parameter_ABC >();
 }
 
@@ -422,7 +424,9 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateLocationComposit
         return CreateAgentParameter( parameter );
     if( choice == "point" )
         return CreatePointParameter( parameter );
-    return CreatePolygonParameter( parameter );
+	if( choice == "polygon" )
+		return CreatePolygonParameter( parameter );
+	return std::auto_ptr< actions::Parameter_ABC >();
 }
 
 // -----------------------------------------------------------------------------
