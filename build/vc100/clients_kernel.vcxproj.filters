@@ -65,6 +65,9 @@
     <Filter Include="Translations">
       <UniqueIdentifier>{e6a01cec-02a0-4fab-96f8-49fd3920e55b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Entities\Ghost">
+      <UniqueIdentifier>{6d183e51-f4bb-417a-9583-9cc291dafc24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Application_ABC.cpp">
@@ -440,7 +443,7 @@
       <Filter>Source Files\XML model</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Ghost_ABC.cpp">
-      <Filter>Source Files\Model\Entities</Filter>
+      <Filter>Source Files\Model\Entities\Ghost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1039,10 +1042,10 @@
       <Filter>Source Files\XML model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Ghost_ABC.h">
-      <Filter>Source Files\Model\Entities</Filter>
+      <Filter>Source Files\Model\Entities\Ghost</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\GhostPrototype.h">
-      <Filter>Source Files\XML model</Filter>
+      <Filter>Source Files\Model\Entities\Ghost</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
