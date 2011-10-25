@@ -54,9 +54,12 @@ void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_
         wrapper->Start();
         process_ = wrapper;
     }
-    client_.reset( new SwordProxy( "localhost", config.GetDispatcherPort(), supervisorProfile, supervisorPassword ) );
-    client_->RegisterMessageHandler( this );
-    client_->Connect( this );
+    if( isDispatcher_ )
+    {
+        client_.reset( new SwordProxy( "localhost", config.GetDispatcherPort(), supervisorProfile, supervisorPassword ) );
+        client_->RegisterMessageHandler( this );
+        client_->Connect( this );
+    }
 }
 
 // -----------------------------------------------------------------------------
