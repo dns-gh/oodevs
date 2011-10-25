@@ -90,7 +90,6 @@ private:
     void ResetCombo( QComboBox& combo, T_TraductionMap& traductionMap );
     void FillCombo( QComboBox& combo, T_TraductionMap& traductionMap );
     void Select( QComboBox& combo, const QString& value );
-    Q3DragObject* dragObject();
     //@}
 
     //! @name SymbolVisitor implementation

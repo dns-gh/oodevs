@@ -37,6 +37,7 @@ namespace xml
 }
 
 class AgentFactory_ABC;
+class Model;
 class GhostModel;
 class LimitsModel;
 class ModelChecker_ABC;
@@ -61,7 +62,7 @@ class AgentsModel : public tools::Resolver< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsModel( kernel::Controllers& controllers, AgentFactory_ABC& agentFactory );
+             AgentsModel( kernel::Controllers& controllers, AgentFactory_ABC& agentFactory, Model& model );
     virtual ~AgentsModel();
     //@}
 
@@ -114,8 +115,9 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    AgentFactory_ABC& agentFactory_;
+    kernel::Controllers&   controllers_;
+    AgentFactory_ABC&      agentFactory_;
+    Model&                 model_;
     tools::WorldParameters parameters_;
     //@}
 };

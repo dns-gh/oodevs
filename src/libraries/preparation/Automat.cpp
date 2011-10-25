@@ -13,7 +13,6 @@
 #include "Tools.h"
 #include "LogisticLevelAttritube.h"
 #include "clients_gui/Tools.h"
-#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -46,9 +45,9 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
 // Name: Automat constructor
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
+Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManager, const AutomatType& type )
     : EntityImplementation< Automat_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
-    , type_( agentTypes.Resolver< AutomatType, std::string >::Get( xis.attribute< std::string >( "type" ) ) )
+    , type_( type )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );

@@ -293,17 +293,11 @@ void GhostsPanel::IconDragged()
     protoType_.type_ = typeLineEdit_->text().ascii();
     protoType_.symbol_ = icon_->GetSymbol();
     protoType_.level_ = icon_->GetLevel();
-    if( Q3DragObject* drag = dragObject() )
+    if( warningLabel_->text().isEmpty() )
+    {
+        Q3DragObject* drag = new gui::ValuedDragObject( &protoType_, this );
         drag->drag();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GhostsPanel::dragObject
-// Created: ABR 2011-10-17
-// -----------------------------------------------------------------------------
-Q3DragObject* GhostsPanel::dragObject()
-{
-    return ( warningLabel_->text().isEmpty() ) ? new gui::ValuedDragObject( &protoType_, this ) : 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -323,5 +317,3 @@ void GhostsPanel::UpdateWarning()
         error = "<font color=\"#FF0000\">" + tr( "Error, missing informations:<br>" ) + error + "</font>";
     warningLabel_->setText( error );
 }
-
-

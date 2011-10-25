@@ -1198,6 +1198,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>A phantom unit is present.</source>
         <translation>Une unité fantôme est présente.</translation>
     </message>
+    <message>
+        <source>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</source>
+        <translation>Type inconnu &apos;%1&apos;, un fantôme a été créé à la place.</translation>
+    </message>
 </context>
 <context>
     <name>ObjectCreationPanel</name>

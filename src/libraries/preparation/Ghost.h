@@ -21,6 +21,7 @@ namespace kernel
     class Controller;
     class GhostPrototype;
     class GlTools_ABC;
+    class Entity_ABC;
     class Viewport_ABC;
 }
 
@@ -48,6 +49,7 @@ public:
     //@{
              Ghost( kernel::Controller& controller, IdManager& idManager, const kernel::GhostPrototype& prototype );
              Ghost( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis );
+             Ghost( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType );
     virtual ~Ghost();
     //@}
 
@@ -61,9 +63,11 @@ public:
 
     //! @name Accessors
     //@{
+    virtual const QString& GetType() const;
     virtual E_GhostType GetGhostType() const;
-    virtual const std::string& GetSymbol() const;
-    virtual const std::string& GetLevel() const;
+    virtual bool IsConverted() const;
+    const std::string& GetSymbol() const;
+    const std::string& GetLevel() const;
     //@}
 
 private:
@@ -79,6 +83,7 @@ private:
     QString     type_;
     std::string symbol_;
     std::string level_;
+    bool        converted_;
     //@}
 };
 

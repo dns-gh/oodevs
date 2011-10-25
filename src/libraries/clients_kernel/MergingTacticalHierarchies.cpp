@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "MergingTacticalHierarchies.h"
 #include "SymbolHierarchy_ABC.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 using namespace kernel;
 
@@ -143,6 +144,18 @@ std::string MergingTacticalHierarchies::IncreaseLevel( const std::string& value 
         return value + level;
     const char newChar = level == 'o' ? 'i' : 'x';
     return value.substr( 0, value.length() - count ) + newChar;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MergingTacticalHierarchies::DecreaseLevel
+// Created: ABR 2011-10-24
+// -----------------------------------------------------------------------------
+std::string MergingTacticalHierarchies::DecreaseLevel( const std::string& value )
+{
+    E_NatureLevel parentLevel = ENT_Tr::ConvertToNatureLevel( value.substr( 7 ) );
+    if( parentLevel > eNatureLevel_b )
+        parentLevel = static_cast< E_NatureLevel >( parentLevel - 1 );
+    return "levels/" + ENT_Tr::ConvertFromNatureLevel( parentLevel );
 }
 
 // -----------------------------------------------------------------------------

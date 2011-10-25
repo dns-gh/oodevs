@@ -220,7 +220,10 @@ Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const Entity_ABC& parent, 
 // -----------------------------------------------------------------------------
 Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
 {
-    Agent* result = new Agent( xis, controllers_.controller_, idManager_, static_.types_ );
+    const AgentType* type = static_.types_.Resolver< AgentType, std::string >::Find( xis.attribute< std::string >( "type" ) );
+    if( !type )
+        return 0;
+    Agent* result = new Agent( xis, controllers_.controller_, idManager_, *type );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_, controllers_.controller_, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetType().GetLevelSymbol(), result->GetType().GetSymbol(), &parent ) );
@@ -243,7 +246,10 @@ Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
 // -----------------------------------------------------------------------------
 Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
 {
-    Automat* result = new Automat( xis, controllers_.controller_, idManager_, static_.types_ );
+    const AutomatType* type = static_.types_.Resolver< AutomatType, std::string >::Find( xis.attribute< std::string >( "type" ) );
+    if( !type )
+        return 0;
+    Automat* result = new Automat( xis, controllers_.controller_, idManager_, *type );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );

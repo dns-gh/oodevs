@@ -20,7 +20,6 @@
 namespace kernel
 {
     class AutomatType;
-    class AgentTypes;
     class Controller;
 }
 
@@ -47,7 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Automat( const kernel::AutomatType& type, kernel::Controller& controller, IdManager& idManager, const QString& name );
-             Automat( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentTypes& agentTypes );
+             Automat( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AutomatType& type );
     virtual ~Automat();
     //@}
 

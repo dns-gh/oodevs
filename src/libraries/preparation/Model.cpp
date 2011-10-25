@@ -83,7 +83,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , teams_                ( *new TeamsModel( controllers, teamFactory_ ) )
     , objects_              ( *new ObjectsModel( controllers, objectFactory_ ) )
     , knowledgeGroups_      ( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) ) // LTO
-    , agents_               ( *new AgentsModel( controllers, agentFactory_ ) )
+    , agents_               ( *new AgentsModel( controllers, agentFactory_, *this ) )
     , formations_           ( *new FormationModel( controllers, formationFactory_, agents_, staticModel ) )
     , limits_               ( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
     , weather_              ( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )

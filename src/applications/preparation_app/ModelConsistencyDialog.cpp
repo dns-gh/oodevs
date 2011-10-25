@@ -70,6 +70,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ ModelConsistencyChecker::eProfileUnreadable ]      = tr( "Not 'readable' to any user profile. You will not be able to see it on the game." );
     errorDescriptions_[ ModelConsistencyChecker::eProfileUnwritable ]      = tr( "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
     errorDescriptions_[ ModelConsistencyChecker::eGhostExistence ]         = tr( "A phantom unit is present." );
+    errorDescriptions_[ ModelConsistencyChecker::eGhostConverted ]         = tr( "Unknown type '%1', a phantom unit has been created instead." );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +130,10 @@ void ModelConsistencyDialog::UpdateDataModel()
             const kernel::Entity_ABC& entity = **entityIt;
             AddItem( currentRow, eID, QString::number( entity.GetId() ), entity );
             AddItem( currentRow, eName, entity.GetName(), entity );
-            AddItem( currentRow, eDescription, ( error.type_ & ModelConsistencyChecker::eAllUniqueness || error.type_ & ModelConsistencyChecker::eProfileUniqueness )
+            AddItem( currentRow, eDescription, 
+                ( error.type_ & ModelConsistencyChecker::eAllUniqueness ||
+                  error.type_ & ModelConsistencyChecker::eProfileUniqueness ||
+                  error.type_ & ModelConsistencyChecker::eGhostConverted )
                 ? errorDescriptions_[ error.type_ ].arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() )
                 : errorDescriptions_[ error.type_ ], entity );
         }

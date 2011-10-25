@@ -20,7 +20,6 @@ namespace kernel
 {
     class Controller;
     class AgentType;
-    class AgentTypes;
     class Automat_ABC;
 }
 
@@ -48,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Agent( const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager, bool commandPost = false );
-             Agent( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentTypes& agentTypes ); // $$$$ AGE 2006-10-25: resolver, par agentTypes concret...
+             Agent( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentType& type );
     virtual ~Agent();
     //@}
 

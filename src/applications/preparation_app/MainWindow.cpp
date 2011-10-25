@@ -106,6 +106,7 @@
 #include "frontend/commands.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/FormationModel.h"
+#include "preparation/GhostModel.h"
 #include "preparation/Model.h"
 #include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
@@ -601,7 +602,7 @@ void MainWindow::LoadExercise()
         }
         loading_ = false;
         bool errors = !loadingErrors.empty();
-        SetWindowTitle( errors );
+        SetWindowTitle( errors || model_.ghosts_.NeedSaving() );
         if( errors )
             QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
                 , tr( "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() );
