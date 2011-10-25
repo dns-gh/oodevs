@@ -77,7 +77,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
 
         // Check license
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-        std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f, silentMode ) );
+        std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f, "license.dat;.", silentMode ? FlexLmLicense::eCheckModeSilent : FlexLmLicense::eCheckModeNormal ) );
         try
         {
             FlexLmLicense license_dispatch( "sword-dispatcher", 1.0f );
