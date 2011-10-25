@@ -227,18 +227,25 @@ void Saver::Flush()
 // -----------------------------------------------------------------------------
 void Saver::CopyFromCurrentToFolder()
 {
-    const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
-    if( !bfs::exists( currentDirectory ) )
-        return;
-    const bfs::path newDirectory = bfs::path( recorderDirectory_, bfs::native ) / CreateFolderName( currentFolder_++ );
-    bfs::create_directories( newDirectory );
-    bfs::directory_iterator endItr;
-    for( bfs::directory_iterator itr( currentDirectory ); itr != endItr; ++itr )
+    try
     {
-        std::string destPath = itr->path().string();
-        boost::algorithm::replace_first( destPath, currentDirectory.string(), newDirectory.string() );
-        bfs::copy_file( itr->path(), bfs::path( destPath ) );
-        bfs::remove( itr->path() );
+        const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
+        if( !bfs::exists( currentDirectory ) )
+            return;
+        const bfs::path newDirectory = bfs::path( recorderDirectory_, bfs::native ) / CreateFolderName( currentFolder_++ );
+        bfs::create_directories( newDirectory );
+        bfs::directory_iterator endItr;
+        for( bfs::directory_iterator itr( currentDirectory ); itr != endItr; ++itr )
+        {
+            std::string destPath = itr->path().string();
+            boost::algorithm::replace_first( destPath, currentDirectory.string(), newDirectory.string() );
+            bfs::copy_file( itr->path(), bfs::path( destPath ) );
+            bfs::remove( itr->path() );
+        }
+    }
+    catch( std::exception& exception )
+    {
+        MT_LOG_ERROR_MSG( "Saver plugin : " << exception.what() << " : " << ( bfs::path( recorderDirectory_ ) / currentFolderName_ / "index") );
     }
 }
 

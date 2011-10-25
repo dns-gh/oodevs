@@ -52,16 +52,18 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , bFrozenMode_              ( false )
     , bEmbeddedDispatcher_      ( false )
     , bPausedAtStartup_         ( false )
+    , bSilentMode_              ( false )
     , randomSeed_               ( 0 )
 {
     po::options_description desc( "Simulation options" );
     desc.add_options()
-        ( "checkpointorbat"                                          , "use backup orbat with checkpoint"         )
-        ( "test"                                                     , "test mode: loading + first tick"          )
-        ( "testdata"                                                 , "test mode: load models only (no terrain)" )
-        ( "savecheckpoint" , po::value( &strCheckPointNameTestMode_ ), "specify checkpoint to save"               )
-        ( "deletecheckpoint"                                         , "delete checkpoint folder"                 )
-        ( "simulation-port", po::value( &networkPort_ )              , "specify the simulation server port number"      );
+        ( "checkpointorbat"                                          , "use backup orbat with checkpoint"          )
+        ( "test"                                                     , "test mode: loading + first tick"           )
+        ( "testdata"                                                 , "test mode: load models only (no terrain)"  )
+        ( "savecheckpoint" , po::value( &strCheckPointNameTestMode_ ), "specify checkpoint to save"                )
+        ( "deletecheckpoint"                                         , "delete checkpoint folder"                  )
+        ( "silent"                                                   , "activate silent mode"                      )
+        ( "simulation-port", po::value( &networkPort_ )              , "specify the simulation server port number" );
     AddOptions( desc );
 }
 
@@ -86,6 +88,7 @@ void MIL_Config::Parse( int argc, char** argv )
     bSaveCheckpointTestMode_ = IsSet( "savecheckpoint" );
     bCheckPointOrbat_ = IsSet( "checkpointorbat" );
     bDeleteCheckpointTestMode_ = IsSet( "deletecheckpoint" );
+    bSilentMode_ = IsSet( "silent" );
     ReadSessionFile( GetSessionFile() );
 }
 
