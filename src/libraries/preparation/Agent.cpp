@@ -12,7 +12,6 @@
 #include "IdManager.h"
 #include "Tools.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -55,9 +54,9 @@ namespace
 // Name: Agent constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
+Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentType& type )
     : EntityImplementation< Agent_ABC >( controller, xis.attribute< unsigned long >( "id" ), ReadName( xis ) )
-    , type_       ( agentTypes.Resolver< AgentType, std::string >::Get( xis.attribute< std::string >( "type" ) ) )
+    , type_       ( type )
     , symbol_     ( type_.GetSymbol() )
     , commandPost_( xis.attribute< bool >( "command-post", false ) )
 {

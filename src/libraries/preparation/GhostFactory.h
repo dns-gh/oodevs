@@ -28,6 +28,7 @@ namespace xml
 
 class IdManager;
 class Model;
+class MT_Vector2D;
 class StaticModel;
 
 // =============================================================================
@@ -50,6 +51,15 @@ public:
     //@{
     virtual kernel::Ghost_ABC* Create( kernel::Entity_ABC& parent, const kernel::GhostPrototype& prototype, const geometry::Point2f& position );
     virtual kernel::Ghost_ABC* Create( kernel::Entity_ABC& parent, xml::xistream& xis );
+    virtual kernel::Ghost_ABC* Create( kernel::Entity_ABC& parent, xml::xistream& xis, E_GhostType ghostType );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    geometry::Point2f ComputeAutomatPosition( xml::xistream& xis ) const;
+    void InternalComputeAutomatPosition( xml::xistream& xis, geometry::Polygon2f& ) const;
+    void ReadUnitPosition( xml::xistream& xis, geometry::Polygon2f& ) const;
     //@}
 
 private:

@@ -11,6 +11,7 @@
 #include "GhostModel.h"
 #include "GhostFactory_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
@@ -18,8 +19,9 @@
 // Created: ABR 2011-10-14
 // -----------------------------------------------------------------------------
 GhostModel::GhostModel( kernel::Controllers& controllers, GhostFactory_ABC& ghostFactory )
-    : controllers_ ( controllers )
-    , ghostFactory_( ghostFactory )
+    : controllers_         ( controllers )
+    , ghostFactory_        ( ghostFactory )
+    , hasConvertNeedSaving_( false )
 {
     controllers_.Register( *this );
 }
@@ -47,12 +49,24 @@ kernel::Ghost_ABC* GhostModel::Create( kernel::Entity_ABC& parent, const kernel:
 
 // -----------------------------------------------------------------------------
 // Name: GhostModel::Create
-// Created: ABR 2011-10-14
+// Created: ABR 2011-10-24
 // -----------------------------------------------------------------------------
 void GhostModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent )
 {
     kernel::Ghost_ABC* ghost = ghostFactory_.Create( parent, xis );
     Register( ghost->GetId(), *ghost );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GhostModel::Create
+// Created: ABR 2011-10-14
+// -----------------------------------------------------------------------------
+void GhostModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType )
+{
+    kernel::Ghost_ABC* ghost = ghostFactory_.Create( parent, xis, ghostType  );
+    Register( ghost->GetId(), *ghost );
+    if( !hasConvertNeedSaving_ )
+        hasConvertNeedSaving_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,4 +85,13 @@ void GhostModel::Purge()
 void GhostModel::NotifyDeleted( const kernel::Ghost_ABC& ghost )
 {
     Remove( ghost.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GhostModel::NeedSaving
+// Created: ABR 2011-10-24
+// -----------------------------------------------------------------------------
+bool GhostModel::NeedSaving() const
+{
+    return hasConvertNeedSaving_;
 }

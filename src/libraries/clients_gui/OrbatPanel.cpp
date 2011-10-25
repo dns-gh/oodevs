@@ -56,7 +56,7 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
     // Phantom
     QHBoxLayout* ghostLayout = new QHBoxLayout();
     ghostLayout->addWidget( new QLabel( tr( "Phantom:" ) ) );
-    pGhostColor_ = new ColorButton( main, "", QColor( 200, 200, 200 ) );
+    pGhostColor_ = new ColorButton( main, "", QColor( 60, 180, 90 ) );
     ghostLayout->addWidget( pGhostColor_ );
     mainLayout->addLayout( ghostLayout );
 

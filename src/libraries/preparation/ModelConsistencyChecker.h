@@ -40,27 +40,29 @@ public:
     //@{
     enum E_ConsistencyCheck
     {
-        eLongNameUniqueness     = 1,
-        eTeamNameUniqueness     = 2,
-        eObjectNameUniqueness   = 4,
-        eLimaNameUniqueness     = 8,
-        eLimitNameUniqueness    = 16,
-        eAllUniqueness          = 31,
+        eLongNameUniqueness     = 0x0001,
+        eTeamNameUniqueness     = 0x0002,
+        eObjectNameUniqueness   = 0x0004,
+        eLimaNameUniqueness     = 0x0008,
+        eLimitNameUniqueness    = 0x0010,
+        eAllUniqueness          = eLongNameUniqueness | eTeamNameUniqueness | eObjectNameUniqueness | eLimaNameUniqueness | eLimitNameUniqueness,
 
-        eStockInitialization    = 32,
-        eLogisticInitialization = 64,
-        eAllInitialization      = 96,
+        eStockInitialization    = 0x0020,
+        eLogisticInitialization = 0x0040,
+        eAllInitialization      = eStockInitialization | eLogisticInitialization,
 
-        eAllCheckWithoutProfile = 127,
+        eAllCheckWithoutProfile = eAllUniqueness | eAllInitialization,
 
-        eProfileUniqueness      = 128,
-        eProfileUnreadable      = 256,
-        eProfileUnwritable      = 512,
-        eAllProfile             = 896,
+        eProfileUniqueness      = 0x0080,
+        eProfileUnreadable      = 0x0100,
+        eProfileUnwritable      = 0x0200,
+        eAllProfile             = eProfileUniqueness | eProfileUnreadable | eProfileUnwritable,
 
-        eGhostExistence         = 1024,
+        eGhostExistence         = 0x0400,
+        eGhostConverted         = 0x0800,
+        eAllGhost               = eGhostExistence | eGhostConverted,
 
-        eAllChecks              = 2047
+        eAllChecks              = eAllCheckWithoutProfile | eAllProfile | eAllGhost
     };
     struct ConsistencyError
     {
@@ -99,7 +101,7 @@ private:
     void CheckLogisticInitialization();
     void CheckProfileUniqueness();
     void CheckProfileInitialization();
-    void CheckGhostExistence();
+    void CheckGhosts();
     //@}
 
 private:

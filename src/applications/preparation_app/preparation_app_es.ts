@@ -1198,6 +1198,10 @@ Do you want to save anyway?</source>
         <source>A phantom unit is present.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ObjectCreationPanel</name>

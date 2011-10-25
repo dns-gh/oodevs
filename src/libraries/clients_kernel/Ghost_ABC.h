@@ -39,7 +39,9 @@ public:
 
     //! @name Accessors
     //@{
+    virtual const QString& GetType() const = 0;
     virtual E_GhostType GetGhostType() const = 0;
+    virtual bool IsConverted() const = 0;
     //@}
 
     //! @name Operations

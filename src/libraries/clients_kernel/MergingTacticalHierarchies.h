@@ -38,6 +38,7 @@ public:
 
     static std::string MaxLevel( const std::string& lhs, const std::string& rhs );
     static std::string IncreaseLevel( const std::string& level );
+    static std::string DecreaseLevel( const std::string& level );
     //@}
 
 protected:

@@ -12,6 +12,7 @@
 
 #include "tools/Resolver.h"
 #include "tools/ElementObserver_ABC.h"
+#include "ENT/ENT_Enums_Gen.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -53,7 +54,9 @@ public:
     //@{
     kernel::Ghost_ABC* Create( kernel::Entity_ABC& parent, const kernel::GhostPrototype& prototype, const geometry::Point2f& position );
     void Create( xml::xistream& xis, kernel::Entity_ABC& parent );
+    void Create( xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType );
     void Purge();
+    bool NeedSaving() const;
     //@}
 
 private:
@@ -67,6 +70,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     GhostFactory_ABC&    ghostFactory_;
+    bool                 hasConvertNeedSaving_;
     //@}
 };
 

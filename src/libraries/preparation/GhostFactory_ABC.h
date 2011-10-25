@@ -11,6 +11,7 @@
 #define __GhostFactory_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace kernel
 {
@@ -43,6 +44,7 @@ public:
     //@{
     virtual kernel::Ghost_ABC* Create( kernel::Entity_ABC& parent, const kernel::GhostPrototype& prototype, const geometry::Point2f& position ) = 0;
     virtual kernel::Ghost_ABC* Create( kernel::Entity_ABC& parent, xml::xistream& xis ) = 0;
+    virtual kernel::Ghost_ABC* Create( kernel::Entity_ABC& parent, xml::xistream& xis, E_GhostType ghostType ) = 0;
     //@}
 };
 

@@ -10,11 +10,15 @@
 #include "preparation_pch.h"
 #include "Ghost.h"
 #include "IdManager.h"
+#include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GhostPrototype.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/MergingTacticalHierarchies.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "ENT/ENT_Tr.h"
@@ -31,7 +35,26 @@ Ghost::Ghost( kernel::Controller& controller, IdManager& idManager, const GhostP
     , type_     ( prototype.type_.c_str() )
     , symbol_   ( prototype.symbol_ )
     , level_    ( prototype.level_ )
+    , converted_( false )
 {
+    RegisterSelf( *this );
+    CreateDictionary( controller );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Ghost constructor
+// Created: ABR 2011-10-24
+// -----------------------------------------------------------------------------
+Ghost::Ghost( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis )
+    : EntityImplementation< Ghost_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name", "" ).c_str() )
+    , ghostType_( ENT_Tr::ConvertToGhostType( xis.attribute< std::string >( "ghost-type", ENT_Tr::ConvertFromGhostType( eGhostType_Invalid ) ) ) )
+    , type_     ( xis.attribute< std::string >( "type", "" ).c_str() )
+    , symbol_   ( xis.attribute< std::string >( "nature", "" ) )
+    , level_    ( xis.attribute< std::string >( "level", "" ) )
+    , converted_( false )
+{
+    assert( ghostType_ != eGhostType_Invalid && !symbol_.empty() && !level_.empty() );
+    idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
@@ -40,14 +63,25 @@ Ghost::Ghost( kernel::Controller& controller, IdManager& idManager, const GhostP
 // Name: Ghost constructor
 // Created: ABR 2011-10-14
 // -----------------------------------------------------------------------------
-Ghost::Ghost( Controller& controller, IdManager& idManager, xml::xistream& xis )
+Ghost::Ghost( Controller& controller, IdManager& idManager, xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType )
     : EntityImplementation< Ghost_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name", "" ).c_str() )
-    , ghostType_( ENT_Tr::ConvertToGhostType( xis.attribute< std::string >( "ghost-type", ENT_Tr::ConvertFromGhostType( eGhostType_Invalid, ENT_Tr::eToSim ) ) ) )
-    , type_  ( xis.attribute< std::string >( "type", "" ).c_str() )
-    , symbol_( xis.attribute< std::string >( "nature", "" ) )
-    , level_ ( xis.attribute< std::string >( "level", "" ) )
+    , ghostType_( ghostType )
+    , type_     ( xis.attribute< std::string >( "type", "" ).c_str() )
+    , symbol_   ( "symbols/s*gpu" )
+    , level_    ( ( ghostType == eGhostType_Automat ) ? "levels/ii" : "levels/ooo" )
+    , converted_( true )
 {
-    assert( ghostType_ != eGhostType_Invalid && !symbol_.empty() && !level_.empty() );
+    assert( ghostType_ != eGhostType_Invalid );
+
+    if( const TacticalHierarchies* pHierarchy = parent.Retrieve< TacticalHierarchies >() )
+    {
+        kernel::App6Symbol::SetKarma( symbol_, pHierarchy->GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
+
+        std::string levelSymbol = pHierarchy->GetLevel();
+        if ( !levelSymbol.empty() )
+            level_ = MergingTacticalHierarchies::DecreaseLevel( levelSymbol );
+    }
+
     idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -130,6 +164,15 @@ void Ghost::Rename( const QString& name )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Ghost::GetType
+// Created: ABR 2011-10-24
+// -----------------------------------------------------------------------------
+const QString& Ghost::GetType() const
+{
+    return type_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Ghost::GetGhostType
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
@@ -154,4 +197,13 @@ const std::string& Ghost::GetSymbol() const
 const std::string& Ghost::GetLevel() const
 {
     return level_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Ghost::IsConverted
+// Created: ABR 2011-10-24
+// -----------------------------------------------------------------------------
+bool Ghost::IsConverted() const
+{
+    return converted_;
 }

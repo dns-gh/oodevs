@@ -126,8 +126,8 @@ bool ModelConsistencyChecker::CheckConsistency( unsigned int filters /*= eAllChe
         CheckProfileUniqueness();
     if( filters & eProfileUnreadable || filters & eProfileUnwritable )
         CheckProfileInitialization();
-    if( filters & eGhostExistence )
-        CheckGhostExistence();
+    if( filters & eGhostExistence || filters & eGhostConverted )
+        CheckGhosts();
     return !errors_.empty();
 }
 
@@ -322,16 +322,24 @@ void ModelConsistencyChecker::CheckProfileInitialization()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModelConsistencyChecker::CheckGhostExistence
+// Name: ModelConsistencyChecker::CheckGhosts
 // Created: ABR 2011-10-20
 // -----------------------------------------------------------------------------
-void ModelConsistencyChecker::CheckGhostExistence()
+void ModelConsistencyChecker::CheckGhosts()
 {
     Iterator< const Ghost_ABC& > it = model_.ghosts_.CreateIterator();
     while( it.HasMoreElements() )
     {
         const Ghost_ABC& ghost = it.NextElement();
-        AddError( eGhostExistence, &ghost );
+        if( filters_ & eGhostConverted )
+        {
+            if( ghost.IsConverted() )
+                AddError( eGhostConverted, &ghost, ghost.GetType().ascii() );
+            else if( filters_ & eGhostExistence )
+                AddError( eGhostExistence, &ghost );
+        }
+        else
+            AddError( eGhostExistence, &ghost );
     }
 }
 
