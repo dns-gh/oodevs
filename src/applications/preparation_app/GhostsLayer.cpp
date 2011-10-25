@@ -52,7 +52,8 @@ GhostsLayer::~GhostsLayer()
 bool GhostsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& /*point*/ )
 {
     return ( gui::ValuedDragObject::Provides< const GhostPrototype >( event ) && ( selectedAutomat_ || selectedFormation_ ) )
-        || ( gui::ValuedDragObject::Provides< const GhostPositions >( event ) && selectedGhost_ );
+        || ( gui::ValuedDragObject::Provides< const GhostPositions >( event ) && selectedGhost_ )
+        || ( gui::ValuedDragObject::Provides< const Entity_ABC >    ( event ) && selectedGhost_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,6 +80,18 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         if( event->source() || position->GetPosition( true ).Distance( point ) > 100 )
             position->Move( point );
         return true;
+    }
+    if( const Entity_ABC* droppedItem = gui::ValuedDragObject::GetValue< const Entity_ABC >( event ) )
+    {
+        if( !selectedGhost_ )
+            return false;
+        const kernel::Positions& positions = selectedGhost_->Get< Positions >();
+        if( const kernel::Moveable_ABC* moveable = dynamic_cast< const kernel::Moveable_ABC* >( &positions ) )
+        {
+            const_cast< kernel::Moveable_ABC* >( moveable )->Move( point );
+            return true;
+        }
+        return false;
     }
     return false;
 }
