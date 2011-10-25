@@ -27,13 +27,19 @@ int __cdecl NoMoreMemoryHandler( std::size_t nSize )
     int nResult = MessageBox( 0, MT_FormatString( "No more memory (%d bytes requested) - Retry ?", nSize ).c_str(), "SWORD - Memory error", MB_ICONERROR | MB_RETRYCANCEL | MB_TOPMOST );
     switch( nResult )
     {
-        case IDRETRY:
-            return 1;
-        case IDCANCEL:
-        default:
-            throw std::bad_alloc();
+    case IDRETRY:
+        return 1;
+    case IDCANCEL:
+    default:
+        throw std::bad_alloc();
     }
 }
+
+int __cdecl SilentNoMoreMemoryHandler( std::size_t nSize )
+{
+    throw std::bad_alloc();
+}
+
 
 //-----------------------------------------------------------------------------
 // Name: SetLowFragmentationHeapAlgorithm
@@ -92,7 +98,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
 
         // Memory handlers
         _set_new_mode   ( 1 );
-        _set_new_handler( NoMoreMemoryHandler );
+        _set_new_handler( ( silentMode ) ? SilentNoMoreMemoryHandler : NoMoreMemoryHandler );
 
         // Execute simulation
         GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -116,7 +122,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     {
         MT_LOG_ERROR_MSG( exception.what() );
         if( !silentMode )
-            MessageBox ( 0, exception.what(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
+            MessageBox( 0, exception.what(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
     catch( std::bad_alloc& /*exception*/ )
     {
