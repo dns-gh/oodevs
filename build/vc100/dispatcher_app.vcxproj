@@ -134,6 +134,9 @@
     <ProjectReference Include="dispatcher_dll.vcxproj">
       <Project>{71063679-b378-45a9-87aa-5e15b358209f}</Project>
     </ProjectReference>
+    <ProjectReference Include="license_gui.vcxproj">
+      <Project>{18cfec8a-e69c-433a-8959-faafd82f9b7f}</Project>
+    </ProjectReference>
     <ProjectReference Include="MT_Tools.vcxproj">
       <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
     </ProjectReference>

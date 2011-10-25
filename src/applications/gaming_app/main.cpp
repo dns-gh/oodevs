@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "Application.h"
+#include "license_gui/LicenseDialog.h"
 #include "tools/Version.h"
 #include "tools/WinArguments.h"
 #include "tools/Win32/BugTrap.h"
@@ -25,8 +26,17 @@ int main( int argc, char** argv )
 {
     QString expiration;
 #if !defined( NO_LICENSE_CHECK )
-    std::auto_ptr< FlexLmLicense > pLicense = FlexLmLicense::CheckLicense( "sword-gaming", 1.0f );
-    expiration = pLicense->GetExpirationDate().c_str();
+    const std::string licenseFeature = "sword-gaming";
+    try
+    {
+        std::auto_ptr< FlexLmLicense > pLicense = FlexLmLicense::CheckLicense( licenseFeature, 1.0f, "license.dat;.", FlexLmLicense::eCheckModeCustom );
+        expiration = pLicense->GetExpirationDate().c_str();
+    }
+    catch( FlexLmLicense::LicenseError& error )
+    {
+        license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ );
+        return 0;
+    }
 #endif
 
     QApplication::setStyle( new QCleanlooksStyle() );
@@ -63,7 +73,7 @@ int main( int argc, char** argv )
     return 0;
 }
 
-int WINAPI WinMain( HINSTANCE /*hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )
+int WINAPI WinMain( HINSTANCE /*hinstance*/, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )
 {
     tools::WinArguments winArgs(lpCmdLine) ;
     return main( winArgs.Argc(), const_cast<char**>( winArgs.Argv() ) );

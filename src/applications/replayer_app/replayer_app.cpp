@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "App.h"
+#include "license_gui/LicenseDialog.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/win32/FlexLm.h"
@@ -16,16 +17,21 @@
 
 int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
 {
-#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword-replayer", 1.0f ) );
-#endif
+    const std::string licenseFeature = "sword-replayer";
+    int nResult = EXIT_SUCCESS;
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
-    int nResult = EXIT_SUCCESS;
     try
     {
+#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+        std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( licenseFeature, 1.0f, "license.dat;.", FlexLmLicense::eCheckModeCustom ) );
+#endif
         App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
         app.Execute();
+    }
+    catch( FlexLmLicense::LicenseError& error )
+    {
+        license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ );
     }
     catch( std::exception& e )
     {

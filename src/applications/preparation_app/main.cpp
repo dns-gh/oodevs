@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "Application.h"
+#include "license_gui/LicenseDialog.h"
 #include "tools/WinArguments.h"
 #include "tools/Version.h"
 #include "tools/Win32/BugTrap.h"
@@ -24,8 +25,17 @@ int main( int argc, char** argv )
 {
     QString expiration;
 #if !defined( NO_LICENSE_CHECK )
-    std::auto_ptr< FlexLmLicense > license = FlexLmLicense::CheckLicense( "sword-preparation", 1.0f );
-    expiration = license->GetExpirationDate().c_str();
+    const std::string licenseFeature = "sword-preparation";
+    try
+    {
+        std::auto_ptr< FlexLmLicense > license = FlexLmLicense::CheckLicense( licenseFeature, 1.0f, "license.dat;.", FlexLmLicense::eCheckModeCustom );
+        expiration = license->GetExpirationDate().c_str();
+    }
+    catch( FlexLmLicense::LicenseError& error )
+    {
+        license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ );
+        return 0;
+    }
 #endif
 
     QApplication::setStyle( new QCleanlooksStyle );

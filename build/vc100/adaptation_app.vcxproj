@@ -3824,6 +3824,9 @@ lrelease -verbose %(FullPath)
     <ProjectReference Include="ENT.vcxproj">
       <Project>{f03cbc87-1ed6-45ad-8ed7-9a94c248b556}</Project>
     </ProjectReference>
+    <ProjectReference Include="license_gui.vcxproj">
+      <Project>{18cfec8a-e69c-433a-8959-faafd82f9b7f}</Project>
+    </ProjectReference>
     <ProjectReference Include="MT_Tools.vcxproj">
       <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
     </ProjectReference>

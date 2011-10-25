@@ -2,12 +2,13 @@
 #include "simulation_app_pch.h"
 #include "SIM_App.h"
 #include "SIM_NetworkLogger.h"
+#include "license_gui/LicenseDialog.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include "tools/Version.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/Version.h"
 #include <tools/win32/FlexLm.h>
 #include <masalloc/masalloc.h>
 #pragma warning( push, 0 )
@@ -69,6 +70,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     int nResult = EXIT_FAILURE;
     bool silentMode = false;
     int maxConnections = 10;
+    const std::string licenseFeature( "sword-runtime" );
     try
     {
         // Silent mode
@@ -77,7 +79,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
 
         // Check license
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-        std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f, silentMode ) );
+        std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( licenseFeature, 1.0f, "license.dat;.", silentMode ? FlexLmLicense::eCheckModeSilent : FlexLmLicense::eCheckModeCustom ) );
         try
         {
             FlexLmLicense license_dispatch( "sword-dispatcher", 1.0f );
@@ -129,6 +131,10 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         MT_LOG_ERROR_MSG( "Bad alloc" );
         if( !silentMode )
             MessageBox( 0, "Allocation error : not enough memory", "Simulation - Memory error", MB_ICONERROR | MB_OK | MB_TOPMOST );
+    }
+    catch( FlexLmLicense::LicenseError& error )
+    {
+        license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ );
     }
     catch( std::exception& exception )
     {

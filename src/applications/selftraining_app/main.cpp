@@ -9,6 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "Application.h"
+#include "license_gui/LicenseDialog.h"
 #include "tools/Version.h"
 #include "tools/WinArguments.h"
 #include "tools/win32/FlexLm.h"
@@ -19,7 +20,16 @@
 int main( int argc, char* argv[] )
 {
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
+    const std::string licenseFeature = "sword";
+    try
+    {
+        std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( licenseFeature, 1.0f, "license.dat;.", FlexLmLicense::eCheckModeCustom ) );
+    }
+    catch( FlexLmLicense::LicenseError& error )
+    {
+        license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ );
+        return 0;
+    }
 #endif
 
     BugTrap::Setup( tools::translate( "Application", "SWORD" ).ascii() )

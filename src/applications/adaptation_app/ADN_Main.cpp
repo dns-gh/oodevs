@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_App.h"
 #include "ADN_Exception_ABC.h"
+#include "license_gui/LicenseDialog.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Version.h"
 #include "tools/Version.h"
@@ -82,7 +83,16 @@ void SetConsolePos( const int nPosX, const int nPosY )
 int main( uint nArgc, char** ppArgv )
 {
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword-authoring", 1.0f ) );
+    const std::string licenseFeature = "sword-authoring";
+    try
+    {
+        std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( licenseFeature , 1.0f, "license.dat;.", FlexLmLicense::eCheckModeCustom ) );
+    }
+    catch( FlexLmLicense::LicenseError& error )
+    {
+        license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ );
+        return 0;
+    }
 #endif
     // Console
     SetConsoleTitle( szADN_Version.c_str() );
