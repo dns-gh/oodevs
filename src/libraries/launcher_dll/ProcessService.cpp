@@ -443,18 +443,25 @@ void ProcessService::ChangeParameter( const std::string& endpoint, const sword::
         return SendErrorMessage< SessionParameterChangeResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionParameterChangeResponse::session_not_running );
 
     boost::shared_ptr< SwordFacade > client( it->second );
+    SessionParameterChangeResponse parameterChangeResponse;
+    parameterChangeResponse().set_error_code( sword::SessionParameterChangeResponse::success );
+	parameterChangeResponse().set_exercise( message.exercise() );
+	parameterChangeResponse().set_session( message.session() );
     if( message.has_acceleration_factor() )
     {
         simulation::ControlChangeTimeFactor request;
         request().set_time_factor( message.acceleration_factor() );
         request.Send( *client, 0 );
+		parameterChangeResponse().set_acceleration_factor( message.acceleration_factor() );
     }
     if( message.has_checkpoint_frequency() )
     {
         simulation::ControlCheckPointSetFrequency request;
         request().set_frequency( message.checkpoint_frequency() );
         request.Send( *client, 0 );
+		parameterChangeResponse().set_checkpoint_frequency( message.checkpoint_frequency() );
     }
+	parameterChangeResponse.Send( server_.ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------
