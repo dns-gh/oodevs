@@ -77,10 +77,13 @@ BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
     dispatcherResponse.Send( dispatcher, 1 );
 
     sword::SessionCommandExecutionResponse launcherResponse;
+    sword::SessionStatus statusResponse;
     MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
+    MOCK_EXPECT( handler, HandleSessionStatus ).once().with( mock::retrieve( statusResponse ) );
 
-    Wait( launcherResponse );
+    Wait( statusResponse );
     LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" running: false" );
+    LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" status: paused" );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,10 +102,13 @@ BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
     dispatcherResponse.Send( dispatcher, 2 );
 
     sword::SessionCommandExecutionResponse launcherResponse;
+    sword::SessionStatus statusResponse;
     MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
+    MOCK_EXPECT( handler, HandleSessionStatus ).once().with( mock::retrieve( statusResponse ) );
 
-    Wait( launcherResponse );
+    Wait( statusResponse );
     LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: session_already_running exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" running: true" );
+    LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" status: running" );
 }
 
 // -----------------------------------------------------------------------------
