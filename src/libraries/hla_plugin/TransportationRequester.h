@@ -103,14 +103,7 @@ private:
     //! @name Types
     //@{
     typedef boost::bimap< unsigned int, unsigned int > T_Requests;
-    struct T_Request
-    {
-        std::string provider;
-        geometry::Point2d embarkmentPoint;
-        geometry::Point2d debarkmentPoint;
-        interactions::ListOfUnits listOfTransporters;
-    };
-    typedef std::map< unsigned int, T_Request > T_ContextRequests;
+    typedef std::map< unsigned int, interactions::NetnOfferConvoy > T_ContextRequests;
     //@}
 
 private:

@@ -159,8 +159,6 @@ void TransportationRequester::Notify( const sword::AutomatOrder& message, int /*
         const unsigned int context = contextFactory_.Create();
         pendingRequests_.right.erase( message.tasker().id() );
         pendingRequests_.insert( T_Requests::value_type( context, message.tasker().id() ) );
-        contextRequests_[ context ].embarkmentPoint = embarkmentPoint;
-        contextRequests_[ context ].debarkmentPoint = debarkmentPoint;
         interactions::NetnRequestConvoy request;
         request.serviceId = NetnEventIdentifier( context, "SWORD" );
         request.consumer = UnicodeString( "SWORD" );
@@ -173,6 +171,8 @@ void TransportationRequester::Notify( const sword::AutomatOrder& message, int /*
         SubordinatesVisitor subordinatesVisitor( transport.objectToManage );
         subordinates_.Apply( message.tasker().id(), subordinatesVisitor );
         request.transportData = NetnTransportStruct( transport );
+        CopyService( request, contextRequests_[ context ] );
+        contextRequests_[ context ].transportData = request.transportData;
         requestSender_.Send( request );
     }
 }
@@ -208,8 +208,7 @@ void TransportationRequester::Receive( interactions::NetnOfferConvoy& interactio
         interactions::NetnAcceptOffer accept;
         CopyService( interaction, accept );
         acceptSender_.Send( accept );
-        contextRequests_[ context ].provider = interaction.provider.str();
-        contextRequests_[ context ].listOfTransporters = interaction.listOfTransporters;
+        contextRequests_[ context ] = interaction;
         Transfer( pendingRequests_, acceptedRequests_, context );
     }
     else
@@ -237,7 +236,7 @@ void TransportationRequester::Notify( const sword::Report& message, int /*contex
         return;
     const unsigned int context = request->second;
     interactions::NetnReadyToReceiveService ready;
-    // $$$$
+    CopyService( contextRequests_[ context ], ready );
     readySender_.Send( ready );
     Transfer( acceptedRequests_, readyToReceiveRequests_, context );
 }
@@ -267,7 +266,7 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
     T_Requests::left_const_iterator request = serviceStartedRequests_.left.find( context );
     if( request == serviceStartedRequests_.left.end() )
         return;
-    const T_Request& contextRequest = contextRequests_[ context ];
+    const interactions::NetnOfferConvoy& contextRequest = contextRequests_[ context ];
     const std::string transporterUniqueId = ResolveUniqueIdFromCallsign( transporterCallsign, contextRequest.listOfTransporters );
     const unsigned int transporterId = callsignResolver_.ResolveSimulationIdentifier( transporterUniqueId );
     BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, units.list )
