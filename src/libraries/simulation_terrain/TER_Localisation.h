@@ -95,6 +95,7 @@ public:
     //-------------------------------------------------------------------------
     //@{
     bool operator == ( const TER_Localisation& localisation ) const;
+    bool operator != ( const TER_Localisation& localisation ) const;
     //@}
 
     //-------------------------------------------------------------------------

@@ -38,6 +38,16 @@ bool TER_Localisation::operator == ( const TER_Localisation& localisation ) cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_Localisation::operator!=
+// Created: CMA 2011-10-13
+// -----------------------------------------------------------------------------
+inline 
+bool TER_Localisation::operator != ( const TER_Localisation& localisation ) const
+{
+    return ! ( *this == localisation );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_Localisation::ComputeBarycenter
 // Created: NLD 2003-08-22
 // -----------------------------------------------------------------------------
