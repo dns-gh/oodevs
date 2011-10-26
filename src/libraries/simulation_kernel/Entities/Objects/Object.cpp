@@ -45,8 +45,8 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
 // Created: SBO 2009-12-14
 // -----------------------------------------------------------------------------
 Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation,
-                unsigned int externalIdentifier, const std::string& name /*= std::string()*/, bool reserved /*= true*/ )
-    : MIL_Object( &army, builder.GetType() )
+                unsigned int externalIdentifier, const std::string& name /*= std::string()*/, bool reserved /*= true*/, unsigned int forcedId /*= 0u*/ )
+    : MIL_Object( &army, builder.GetType(), forcedId )
     , name_              ( name )
     , externalIdentifier_( externalIdentifier )
 {

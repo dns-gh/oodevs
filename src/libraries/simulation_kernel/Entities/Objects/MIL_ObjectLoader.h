@@ -60,7 +60,7 @@ public:
     MIL_Object_ABC* CreateObject( xml::xistream& xis, MIL_Army_ABC& army ) const;
     MIL_Object_ABC* CreateObject( const sword::MissionParameters& asn, MIL_Army_ABC& army, sword::ObjectMagicActionAck_ErrorCode& value ) const;
     MIL_Object_ABC* CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& location,
-                                  bool reserved, unsigned int externalIdentifier ) const;
+                                  bool reserved, unsigned int externalIdentifier, unsigned int forcedId ) const;
     MIL_Object_ABC* CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army ) const;
     MIL_Object_ABC* CreateUrbanObject( const urban::TerrainObject_ABC& object ) const;
     //@}

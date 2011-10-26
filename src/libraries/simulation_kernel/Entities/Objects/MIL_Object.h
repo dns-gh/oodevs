@@ -20,8 +20,7 @@ class MIL_Object : public MIL_Object_ABC
 {
 public:
              MIL_Object();
-             MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type );
-             MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int id );
+             MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int forcedId );
     virtual ~MIL_Object();
 
     //! @name CheckPoints

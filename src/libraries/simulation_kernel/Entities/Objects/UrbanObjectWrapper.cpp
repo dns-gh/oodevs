@@ -43,7 +43,7 @@ const float UrbanObjectWrapper::stretchOffset_ = 10.f; // $$$$ _RC_ LGY 2010-10-
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object )
-    : MIL_Object( 0, builder.GetType() )
+    : MIL_Object( 0, builder.GetType(), 0 )
     , object_( &object )
 {
     builder.Build( *this );
