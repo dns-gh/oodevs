@@ -570,6 +570,15 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Ar
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreateObject
+// Created: JSR 2011-10-26
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, unsigned int id )
+{
+    return pObjectManager_->CreateObject( type, army, localisation, id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateObject
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder )

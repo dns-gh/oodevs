@@ -234,6 +234,17 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::CreateObject
+// Created: JSR 2011-10-26
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, unsigned int forcedId )
+{
+    MIL_Object_ABC* pObject = builder_->BuildObject( "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u, forcedId );
+    RegisterObject( pObject );
+    return pObject;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation,

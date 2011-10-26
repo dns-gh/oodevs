@@ -59,7 +59,7 @@ public:
     MIL_Object_ABC* BuildObject( xml::xistream& xis, MIL_Army_ABC& army );
     MIL_Object_ABC* BuildObject( const sword::MissionParameters& asn, MIL_Army_ABC& army, sword::ObjectMagicActionAck_ErrorCode& value );
     MIL_Object_ABC* BuildObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation,
-                                 sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier );
+                                 sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier, unsigned int forcedId = 0u );
     MIL_Object_ABC* BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army );
     MIL_Object_ABC* BuildUrbanObject( const urban::TerrainObject_ABC& object );
     //@}

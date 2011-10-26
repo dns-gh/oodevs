@@ -34,7 +34,7 @@ public:
     //@{
              Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, bool reserved = true );
              Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, unsigned int externalIdentifier,
-                     const std::string& name = std::string(), bool reserved = true );
+                     const std::string& name = std::string(), bool reserved = true, unsigned int forcedId = 0u );
              Object();
     virtual ~Object();
     //@}
