@@ -41,7 +41,7 @@ public:
     //! @name Message sending
     //@{
     virtual void Send( sword::SimToClient& asnMsg );
-    void RemoveClient( const std::string& client );
+    bool RemoveClient( const std::string& client );
     //@}
 
 private:
