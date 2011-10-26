@@ -78,30 +78,6 @@ void NET_RolePion_Dotations::serialize( Archive& file, const unsigned int )
 void NET_RolePion_Dotations::SendMsgUnitAttributes( client::UnitAttributes& asnMsg, unsigned int context ) const
 {
     asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
-
-    if( asnMsg().has_reinforcements()  && asnMsg().reinforcements().elem_size() > 0 )
-        asnMsg().mutable_reinforcements()->Clear();
-
-    if( asnMsg().has_contamination_agents()  && asnMsg().contamination_agents().elem_size() > 0 )
-        asnMsg().mutable_contamination_agents()->Clear();
-
-    if( asnMsg().has_transported_units()  && asnMsg().transported_units().elem_size() > 0 )
-        asnMsg().mutable_transported_units()->Clear();
-
-    if( asnMsg().has_resource_dotations()  && asnMsg().resource_dotations().elem_size() > 0 )
-        asnMsg().mutable_resource_dotations()->Clear();
-
-    if( asnMsg().has_equipment_dotations()  && asnMsg().equipment_dotations().elem_size() > 0 )
-        asnMsg().mutable_equipment_dotations()->Clear();
-
-    if( asnMsg().has_human_dotations()  && asnMsg().human_dotations().elem_size() > 0 )
-        asnMsg().mutable_human_dotations()->Clear();
-
-    if( asnMsg().has_lent_equipments()  && asnMsg().lent_equipments().elem_size() > 0 )
-        asnMsg().mutable_lent_equipments()->Clear();
-
-    if( asnMsg().has_borrowed_equipments()  && asnMsg().borrowed_equipments().elem_size() > 0 )
-        asnMsg().mutable_borrowed_equipments()->Clear();
 }
 
 // -----------------------------------------------------------------------------

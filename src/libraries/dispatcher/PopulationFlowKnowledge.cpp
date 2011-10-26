@@ -148,9 +148,6 @@ void PopulationFlowKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) c
         asn().set_perceived( bPerceived_ );
 
     asn.Send( publisher );
-
-    if( asn().has_parts() && asn().parts().elem_size() > 0 )
-        asn().mutable_parts()->Clear();
 }
 
 // -----------------------------------------------------------------------------

@@ -84,5 +84,4 @@ void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher, int ) const
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher );
-    message().Clear();
 }

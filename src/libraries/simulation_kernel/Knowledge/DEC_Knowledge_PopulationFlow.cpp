@@ -290,11 +290,6 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
         asnMsg().set_attitude( pAttitude_->GetAsnID() );
     }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    if( asnMsg().has_parts() )
-    {
-        asnMsg().mutable_parts()->Clear();
-        asnMsg().Clear();
-    }
 }
 
 // -----------------------------------------------------------------------------

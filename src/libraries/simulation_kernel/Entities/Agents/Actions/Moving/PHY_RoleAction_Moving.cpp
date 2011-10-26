@@ -266,7 +266,6 @@ void PHY_RoleAction_Moving::SendCurrentPath( unsigned int context ) const
     if( !SerializeCurrentPath( *asnMsg().mutable_path() ) )
         return;
     asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
-    asnMsg().mutable_path()->Clear();
 }
 
 // -----------------------------------------------------------------------------

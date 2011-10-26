@@ -105,5 +105,4 @@ void FragOrder::Publish( Publisher_ABC& publisher, int ) const
     message().mutable_type()->set_id( GetType().GetId() );
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher );
-    message().Clear();
 }

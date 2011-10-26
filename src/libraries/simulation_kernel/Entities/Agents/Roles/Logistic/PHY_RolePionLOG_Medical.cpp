@@ -846,16 +846,6 @@ void PHY_RolePionLOG_Medical::SendFullState( unsigned int context ) const
     ExecuteOnComponentsAndLendedComponents( predicate3, composanteUse );
     SendComposanteUse( composanteUse, *asn().mutable_doctors() );
     asn.Send( NET_Publisher_ABC::Publisher(), context );
-    if( asn().priorities().elem_size() > 0 )
-        asn().mutable_priorities()->Clear();
-    if( asn().tactical_priorities().elem_size() > 0 )
-        asn().mutable_tactical_priorities()->Clear();
-    if( asn().collection_ambulances().elem_size() > 0 )
-        asn().mutable_collection_ambulances()->Clear();
-    if( asn().evacuation_ambulances().elem_size() > 0 )
-        asn().mutable_evacuation_ambulances()->Clear();
-    if( asn().doctors().elem_size() > 0 )
-        asn().mutable_doctors()->Clear();
 }
 
 // -----------------------------------------------------------------------------

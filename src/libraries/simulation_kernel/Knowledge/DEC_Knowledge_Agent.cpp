@@ -450,8 +450,6 @@ void DEC_Knowledge_Agent::SendChangedState()
     dataRecognition_.SendChangedState( asnMsg() );
     dataIdentification_.SendChangedState( asnMsg() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    if( asnMsg().has_perceptions()  && asnMsg().perceptions().elem_size() > 0 )
-        asnMsg().mutable_perceptions()->Clear(); //$$$ RAM
 }
 
 // -----------------------------------------------------------------------------
@@ -478,8 +476,6 @@ void DEC_Knowledge_Agent::SendFullState()
     dataRecognition_ .SendFullState( asnMsg() );
     dataIdentification_.SendFullState( asnMsg() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    if( asnMsg().has_perceptions()  && asnMsg().perceptions().elem_size() > 0 )
-        asnMsg().mutable_perceptions()->Clear(); //$$$ RAM
 }
 
 // -----------------------------------------------------------------------------

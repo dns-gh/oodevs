@@ -106,5 +106,4 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
     message.Send( publisher, context );
     if( type == sword::UnitMagicAction_Type_move_to )
         const_cast< kernel::Entity_ABC& >( GetEntity() ).Update( message() );
-    message().Clear();
 }
