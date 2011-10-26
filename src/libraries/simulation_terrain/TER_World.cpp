@@ -82,7 +82,7 @@ TER_World::TER_World( const tools::WorldParameters& config )
     pObjectManager_     = new TER_ObjectManager    ( extent );
     pPopulationManager_ = new TER_PopulationManager( extent );
     pCoordinateManager_ = new TER_CoordinateManager( config.latitude_, config.longitude_, extent );
-    pGraphManager_      = new TER_GraphManager     ( config.pathfindGraph_, config.pathfindNodes_, config.pathfindLinks_, 0.1f );
+    pGraphManager_      = new TER_GraphManager     ( config.pathfindGraph_, config.pathfindNodes_, config.pathfindLinks_, 0.01f );
     pPathfindManager_   = new TER_PathFindManager  ( *pGraphManager_ );
     pAnalyzerManager_   = new TER_AnalyzerManager  ( *pGraphManager_ );
 }
