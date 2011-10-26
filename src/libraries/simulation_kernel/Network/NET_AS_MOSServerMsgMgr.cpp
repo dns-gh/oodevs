@@ -49,9 +49,14 @@ NET_AS_MOSServerMsgMgr::~NET_AS_MOSServerMsgMgr()
 // Name: NET_AS_MOSServerMsgMgr::RemoveClient
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::RemoveClient( const std::string& client )
+bool NET_AS_MOSServerMsgMgr::RemoveClient( const std::string& client )
 {
-    clients_.erase( client );
+    if( clients_.find( client ) != clients_.end() )
+    {
+        clients_.erase( client );
+        return true;
+    }
+    return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -144,6 +149,8 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMiddle( const std::string& from, const swo
 void NET_AS_MOSServerMsgMgr::OnReceiveCtrlClientAnnouncement( const std::string& from )
 {
     MT_LOG_INFO_MSG( "Announcement from client " << from );
+    // should allow only one connection so ...
+    agentServer_.DenyConnections();
     clients_.insert( from );
     simulation_.SendControlInformation();
     client::ControlSendCurrentStateBegin().Send( NET_Publisher_ABC::Publisher() );
