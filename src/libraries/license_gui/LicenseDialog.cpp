@@ -12,6 +12,11 @@
 #include <sstream>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include "xeumeuleu/xml.hpp"
+#pragma warning( push, 0 )
+#include <QtCore/qsettings.h>
+#include <QtCore/qtextcodec.h>
+#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 using namespace license_gui;
@@ -23,6 +28,16 @@ using namespace license_gui;
 
 #define MARGIN 10
 #define BUTTON_HEIGHT 30
+
+namespace
+{
+    QString ReadLang()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", "SWORD" );
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: LicenseDialog::Run
@@ -41,6 +56,8 @@ LicenseDialog::LicenseDialog( const std::string& feature, const std::string& hos
     : feature_( feature )
     , hostId_ ( hostId )
 {
+    ReadTranslations();
+    
     static TCHAR szWindowClass[] = _T( "win32app" );
     static TCHAR szTitle[] = _T( "License Dialog" );
 
@@ -59,7 +76,7 @@ LicenseDialog::LicenseDialog( const std::string& feature, const std::string& hos
     wc.lpszClassName = "LicenseWinClass";
     if( ! RegisterClass( &wc ) )
         return;
-    HWND hWnd = CreateWindow( wc.lpszClassName, "Invalid License", WS_OVERLAPPEDWINDOW & ( ~ WS_THICKFRAME ),
+    HWND hWnd = CreateWindow( wc.lpszClassName, tr( "Invalid License" ).c_str(), WS_OVERLAPPEDWINDOW & ( ~ WS_THICKFRAME ),
         CW_USEDEFAULT, CW_USEDEFAULT, 400, 200,
         0, 0, hInstance, 0 );
     SetWindowLongPtr( hWnd, GWLP_USERDATA, reinterpret_cast< LONG_PTR >( this ) );
@@ -104,9 +121,9 @@ LRESULT CALLBACK LicenseDialog::MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam
             HINSTANCE hInstance = GetModuleHandle( NULL );
             DWORD buttonStyle = BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE;
             HWND hEdit = CreateWindowEx( WS_EX_CLIENTEDGE, "EDIT", "", WS_CHILD | WS_VISIBLE | ES_MULTILINE | ES_READONLY, 0, 0, 0, 0, hWnd, reinterpret_cast< HMENU >( ID_MAIN_EDIT ), hInstance, NULL );
-            HWND hButtonEmail   = CreateWindow( "Button", "Send email",      buttonStyle, 0, 0, 0, 0, hWnd,  reinterpret_cast< HMENU >( ID_BUTTON_EMAIL   ), hInstance, NULL );
-            HWND hButtonInstall = CreateWindow( "Button", "Install license", buttonStyle, 0, 0, 0, 0, hWnd,  reinterpret_cast< HMENU >( ID_BUTTON_INSTALL ), hInstance, NULL );
-            HWND hButtonClose   = CreateWindow( "Button", "Close",           buttonStyle, 0, 0, 0, 0, hWnd,  reinterpret_cast< HMENU >( ID_BUTTON_CLOSE   ), hInstance, NULL );
+            HWND hButtonEmail   = CreateWindow( "Button", "", buttonStyle, 0, 0, 0, 0, hWnd,  reinterpret_cast< HMENU >( ID_BUTTON_EMAIL   ), hInstance, NULL );
+            HWND hButtonInstall = CreateWindow( "Button", "", buttonStyle, 0, 0, 0, 0, hWnd,  reinterpret_cast< HMENU >( ID_BUTTON_INSTALL ), hInstance, NULL );
+            HWND hButtonClose   = CreateWindow( "Button", "", buttonStyle, 0, 0, 0, 0, hWnd,  reinterpret_cast< HMENU >( ID_BUTTON_CLOSE   ), hInstance, NULL );
             WPARAM hfDefault = reinterpret_cast<  WPARAM  >( GetStockObject( DEFAULT_GUI_FONT ) );
             SendMessage( hEdit,          WM_SETFONT, hfDefault, MAKELPARAM( FALSE, 0 ) );
             SendMessage( hButtonInstall, WM_SETFONT, hfDefault, MAKELPARAM( FALSE, 0 ) );
@@ -126,17 +143,26 @@ LRESULT CALLBACK LicenseDialog::MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam
                           MARGIN, width - 2 * MARGIN,
                           height - 3 * MARGIN - BUTTON_HEIGHT,
                           SWP_NOZORDER );
-            SetWindowPos( GetDlgItem( hWnd, ID_BUTTON_EMAIL ), NULL,
+            HWND hButtonEmail   = GetDlgItem( hWnd, ID_BUTTON_EMAIL );
+            HWND hButtonInstall = GetDlgItem( hWnd, ID_BUTTON_INSTALL );
+            HWND hButtonClose   = GetDlgItem( hWnd, ID_BUTTON_CLOSE );
+            const std::string label1 = "Send email";
+            const std::string label2 = "Install license";
+            const std::string label3 = "Close";
+            SetWindowText( hButtonEmail,   ( dlg ? dlg->tr( label1 ) : label1 ).c_str() );
+            SetWindowText( hButtonInstall, ( dlg ? dlg->tr( label2 ) : label2 ).c_str() );
+            SetWindowText( hButtonClose,   ( dlg ? dlg->tr( label3 ) : label3 ).c_str() );
+            SetWindowPos( hButtonEmail, NULL,
                           MARGIN,
                           height - MARGIN - BUTTON_HEIGHT,
                           buttonWidth,
                           BUTTON_HEIGHT, SWP_NOZORDER );
-            SetWindowPos( GetDlgItem( hWnd, ID_BUTTON_INSTALL ), NULL,
+            SetWindowPos( hButtonInstall, NULL,
                           2 * MARGIN + buttonWidth,
                           height - MARGIN - BUTTON_HEIGHT,
                           buttonWidth,
                           BUTTON_HEIGHT, SWP_NOZORDER );
-            SetWindowPos( GetDlgItem( hWnd, ID_BUTTON_CLOSE ), NULL,
+            SetWindowPos( hButtonClose, NULL,
                           3 * MARGIN + 2 * buttonWidth,
                           height - MARGIN - BUTTON_HEIGHT,
                           buttonWidth,
@@ -183,9 +209,16 @@ void LicenseDialog::SendMail( HWND hWnd )
 {
     std::stringstream s;
     s << "mailto:licenses@masagroup.net?subject= MASA Sword license request"
-      << "&body=Name :%0ACompany :%0AAddress :%0APhone :%0AEmail :%0AComments :%0A%0APLEASE DON'T REMOVE THE FOLLOWING LINES%0A%0A"
+      << "&body="
+      << tr( "Name" )     << " :%0A"
+      << tr( "Company" )  << " :%0A"
+      << tr( "Address" )  << " :%0A"
+      << tr( "Phone" )    << " :%0A"
+      << tr( "Email" )    << " :%0A"
+      << tr( "Comments" ) << " :%0A%0A"
+      << tr( "PLEASE DON'T REMOVE THE FOLLOWING LINES" ) << "%0A%0A"
       << "Feature : " << feature_ << "%0A"
-      << "HostID : " << hostId_ << "%0A";
+      << "HostID : "  << hostId_  << "%0A";
     ShellExecute ( hWnd, "open", s.str().c_str(), NULL, NULL, SW_SHOW );
 }
 
@@ -196,7 +229,7 @@ void LicenseDialog::SendMail( HWND hWnd )
 void LicenseDialog::SetEditText( HWND hEdit )
 {
     std::stringstream s;
-    s << "Please contact MASA Group by sending an email to licenses@masagroup.net with the following information :\r\n\r\n"
+    s << tr( "Please contact MASA Group by sending an email to licenses@masagroup.net with the following information" ) << ":\r\n\r\n"
         << "Feature : " << feature_ << "\r\n"
         << "HostID : " << hostId_;
     SetWindowText( hEdit, s.str().c_str() );
@@ -214,10 +247,11 @@ void LicenseDialog::InstallLicense( HWND hWnd )
     ZeroMemory( &ofn, sizeof( ofn ) );
     ofn.lStructSize = sizeof( ofn );
     ofn.hwndOwner = hWnd;
-    ofn.lpstrFilter = "License Files (*.lic)\0*.lic\0\0";
+    const std::string licenseFiles = tr( "License Files" ) + " (*.lic)\0*.lic\0\0";
+    ofn.lpstrFilter = licenseFiles.c_str();
     ofn.lpstrFile = szFileName;
     ofn.nMaxFile = MAX_PATH;
-    ofn.lpstrTitle = _T( "Please select license file..." );
+    ofn.lpstrTitle = tr( "Please select license file..." ).c_str();
     ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
     ofn.lpstrDefExt = "lic";
     if( GetOpenFileName( &ofn ) )
@@ -241,4 +275,58 @@ void LicenseDialog::InstallLicense( HWND hWnd )
             }
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LicenseDialog::ReadTranslations
+// Created: JSR 2011-10-26
+// -----------------------------------------------------------------------------
+void LicenseDialog::ReadTranslations()
+{
+    try
+    {
+        TCHAR szAppPath[ MAX_PATH ];
+        if( GetModuleFileName( NULL, szAppPath, MAX_PATH ) )
+        {
+            bfs::path filePath( szAppPath );
+            filePath.remove_filename();
+            const std::string language = ReadLang().ascii();
+            filePath /= bfs::path( "resources/locales" ) / bfs::path( "license_gui_" + language + ".ts" );
+            if( bfs::exists( filePath) )
+            {
+                xml::xifstream xis( filePath.native_file_string() );
+                xis >> xml::start( "TS" ) 
+                      >> xml::start( "context" )
+                        >> xml::list( "message", *this, &LicenseDialog::ReadTranslation );
+            }
+        }
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LicenseDialog::ReadTranslation
+// Created: JSR 2011-10-26
+// -----------------------------------------------------------------------------
+void LicenseDialog::ReadTranslation( xml::xistream& xis )
+{
+    const std::string message = xis.content< std::string >( "source", "" );
+    const std::string translation = xis.content< std::string >( "translation", "" );
+    if( !message.empty() && !translation.empty() )
+        translations_[ message ] = translation;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LicenseDialog::tr
+// Created: JSR 2011-10-26
+// -----------------------------------------------------------------------------
+const std::string& LicenseDialog::tr( const std::string& source ) const
+{
+    std::map< std::string, std::string >::const_iterator it = translations_.find( source );
+    if( it != translations_.end() )
+        return it->second;
+    return source;
 }

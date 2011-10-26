@@ -10,9 +10,15 @@
 #ifndef __LicenseDialog_h_
 #define __LicenseDialog_h_
 
+#include <map>
 #include <string>
 #include <windows.h>
 #include <boost/noncopyable.hpp>
+
+namespace xml
+{
+    class xistream;
+}
 
 namespace license_gui
 {
@@ -45,6 +51,9 @@ private:
     void SetEditText( HWND hEdit );
     void SendMail( HWND hWnd );
     void InstallLicense( HWND hWnd );
+    void ReadTranslations();
+    void ReadTranslation( xml::xistream& xis );
+    const std::string& tr( const std::string& source ) const;
     //@}
 
 private:
@@ -52,6 +61,7 @@ private:
     //@{
     const std::string feature_;
     const std::string hostId_;
+    std::map< std::string, std::string > translations_;
     //@}
 };
 

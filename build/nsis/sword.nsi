@@ -23,6 +23,7 @@ Section "!${PRODUCT_NAME}"
     SetOutPath "$INSTDIR\applications\resources\locales"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${RUNDIR}\*.qm"
+    File "${RUNDIR}\*.ts"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ;---- resources: documentation ----

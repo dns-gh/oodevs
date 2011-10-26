@@ -136,7 +136,7 @@
     </target>
 
     <target name="library.license_gui" description="build license_gui static library">
-        <build-lib name="license_gui" pattern="lib${ant.project.name}_license_gui-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="license_gui" depends="qt4" pattern="lib${ant.project.name}_license_gui-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
     <target name="library.bml_plugin" depends="library.dispatcher" description="build BML dispatcher plugin static library">
@@ -484,7 +484,7 @@
     </target>
 
     <target name="application.dispatcher_app" depends="application.dispatcher_dll" description="build Sword Dispatcher executable">
-        <build-app name="dispatcher_app" mode="release" depends="boost,terrain,flexlm"
+        <build-app name="dispatcher_app" mode="release" depends="boost,terrain,flexlm,qt4"
             libs="masalloc,tools,
                   Qt3Support4,
                   dispatcher-${platform}-mt@{suffix},
