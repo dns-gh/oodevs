@@ -221,9 +221,10 @@ void PHY_RolePion_Location::Follow( const MIL_Agent_ABC& agent )
 {
     const PHY_RoleInterface_Location& roleLocation = agent.GetRole< PHY_RoleInterface_Location >();
     Move     ( roleLocation.GetPosition(), roleLocation.GetDirection(), roleLocation.GetCurrentSpeed() );
-    pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-
     SetHeight( roleLocation.GetHeight() );
+
+    if( bPositionHasChanged_ || bDirectionHasChanged_|| bHeightHasChanged_ || bCurrentSpeedHasChanged_ )
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
