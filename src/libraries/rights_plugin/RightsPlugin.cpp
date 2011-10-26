@@ -15,6 +15,7 @@
 #include "dispatcher/DefaultProfile.h"
 #include "dispatcher/Services.h"
 #include "dispatcher/Config.h"
+#include "MT_Tools/MT_Logger.h"
 #include "protocol/AuthenticationSenders.h"
 #include "protocol/Version.h"
 #include "tools/MessageDispatcher_ABC.h"
@@ -85,6 +86,7 @@ void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
         {
             authenticated_.erase( it );
             --currentConnections_;
+            MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
             return;
         }
 }
@@ -151,6 +153,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         authenticated_[ link ] = profile;
         container_.NotifyClientAuthenticated( client, *profile );
         ++currentConnections_;
+        MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }
 }
 

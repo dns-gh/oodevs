@@ -2137,6 +2137,33 @@ unsigned long MIL_EntityManager::GetObjectsCount() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetAutomatsCount
+// Created: JSR 2011-10-25
+// -----------------------------------------------------------------------------
+unsigned long MIL_EntityManager::GetAutomatsCount() const
+{
+    return automateFactory_->Count();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetAgentsCount
+// Created: JSR 2011-10-25
+// -----------------------------------------------------------------------------
+unsigned long MIL_EntityManager::GetAgentsCount() const
+{
+    return agentFactory_->Count();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetCrowdsCount
+// Created: JSR 2011-10-25
+// -----------------------------------------------------------------------------
+unsigned long MIL_EntityManager::GetCrowdsCount() const
+{
+    return populationFactory_->Count();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::setToTasker
 // Created: PHC 2010-07-07
 // -----------------------------------------------------------------------------
