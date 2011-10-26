@@ -243,7 +243,7 @@ namespace
         const unsigned long transportingUnitSimulationId;
         const std::string transportingUnitCallsign;
         const std::string transportingUnitUniqueId;
-        interactions::ListOfTransporters listOfTransporters;
+        interactions::ListOfUnits listOfTransporters;
     };
 }
 

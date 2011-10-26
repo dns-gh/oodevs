@@ -59,7 +59,7 @@ struct MunitionDetonation
     int16 warheadType;
 };
 
-struct ListOfTransporters
+struct ListOfUnits
 {
     template< typename Archive >
     void Serialize( Archive& archive ) const
@@ -99,7 +99,7 @@ struct NetnOfferConvoy : public NetnService
     int64 requestTimeOut;
     NetnTransportStruct transportData;
     int32 offerType;
-    ListOfTransporters listOfTransporters;
+    ListOfUnits listOfTransporters;
 };
 
 struct NetnRejectOfferConvoy : public NetnService
@@ -123,19 +123,19 @@ struct NetnServiceStarted : public NetnService
 
 struct NetnConvoyEmbarkmentStatus : public NetnService
 {
-    ListOfTransporters listOfObjectEmbarked;
+    ListOfUnits listOfObjectEmbarked;
     UnicodeString transportUnitIdentifier;
 };
 
 struct NetnConvoyDisembarkmentStatus : public NetnService
 {
-    ListOfTransporters listOfObjectDisembarked;
+    ListOfUnits listOfObjectDisembarked;
     UnicodeString transportUnitIdentifier;
 };
 
 struct NetnConvoyDestroyedEntities : public NetnService
 {
-    ListOfTransporters listOfEmbarkedObjectDestroyed;
+    ListOfUnits listOfEmbarkedObjectDestroyed;
 };
 
 struct NetnServiceComplete : public NetnService

@@ -51,7 +51,7 @@ namespace
     class TransportersVisitor : public TransportedUnitsVisitor_ABC
     {
     public:
-        explicit TransportersVisitor( interactions::ListOfTransporters& listOfTransporters )
+        explicit TransportersVisitor( interactions::ListOfUnits& listOfTransporters )
             : listOfTransporters_( listOfTransporters )
         {}
         virtual void Notify( const std::string& callsign, const std::string& uniqueId )
@@ -59,9 +59,9 @@ namespace
             listOfTransporters_.list.push_back( NetnObjectDefinitionStruct( callsign, uniqueId, NetnObjectFeatureStruct() ) );
         }
     private:
-        interactions::ListOfTransporters& listOfTransporters_;
+        interactions::ListOfUnits& listOfTransporters_;
     };
-    void FillTransporters( const Transporters_ABC& transporters, interactions::ListOfTransporters& listOfTransporters, const NetnDataTStruct& dataTransport )
+    void FillTransporters( const Transporters_ABC& transporters, interactions::ListOfUnits& listOfTransporters, const NetnDataTStruct& dataTransport )
     {
         TransportersVisitor visitor( listOfTransporters );
         const std::string transportedUnitUniqueId = dataTransport.objectToManage[ 0 ].uniqueId.str();

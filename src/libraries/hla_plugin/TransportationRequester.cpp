@@ -11,7 +11,6 @@
 #include "TransportationRequester.h"
 #include "MissionResolver_ABC.h"
 #include "CallsignResolver_ABC.h"
-#include "TransportedUnits_ABC.h"
 #include "TransportedUnitsVisitor_ABC.h"
 #include "Subordinates_ABC.h"
 #include "ContextFactory_ABC.h"
@@ -101,30 +100,10 @@ namespace
     {
         return parameter.value( 0 ).agent().id();
     }
-    class SubordinatesVisitor : public TransportedUnits_ABC
-                              , private TransportedUnitsVisitor_ABC
+    class SubordinatesVisitor : public TransportedUnitsVisitor_ABC
     {
     public:
-        SubordinatesVisitor( const Subordinates_ABC& subordinates, unsigned long automatIdentifier )
-        {
-            subordinates.Apply( automatIdentifier, *this );
-        }
-        virtual void Apply( TransportedUnitsVisitor_ABC& visitor ) const
-        {
-            for( std::vector< std::pair< std::string, std::string > >::const_iterator it = units_.begin(); it != units_.end(); ++it )
-                visitor.Notify( it->first, it->second );
-        }
-        virtual void Notify( const std::string& callsign, const std::string& uniqueId )
-        {
-            units_.push_back( std::make_pair( callsign, uniqueId ) );
-        }
-    private:
-        std::vector< std::pair< std::string, std::string > > units_;
-    };
-    class TransportedUnitsVisitor : public TransportedUnitsVisitor_ABC
-    {
-    public:
-        explicit TransportedUnitsVisitor( std::vector< NetnObjectDefinitionStruct >& units )
+        explicit SubordinatesVisitor( std::vector< NetnObjectDefinitionStruct >& units )
             : units_( units )
         {}
         virtual void Notify( const std::string& callsign, const std::string& uniqueId )
@@ -148,7 +127,6 @@ void TransportationRequester::Notify(  const sword::AutomatOrder& message, int /
         const long long embarkmentTime = ReadTime( message.parameters().elem( 5 ) );
         const geometry::Point2d debarkmentPoint = ReadLocation( message.parameters().elem( 6 ) );
         const long long debarkmentTime = ReadTime( message.parameters().elem( 7 ) );
-        const SubordinatesVisitor subordinatesVisitor( subordinates_, message.tasker().id() );
         const unsigned int context = contextFactory_.Create();
         pendingRequests_.right.erase( message.tasker().id() );
         pendingRequests_.insert( T_Requests::value_type( context, message.tasker().id() ) );
@@ -163,8 +141,8 @@ void TransportationRequester::Notify(  const sword::AutomatOrder& message, int /
         NetnDataTStruct transport;
         transport.appointment = NetnAppointmentStruct( embarkmentTime, rpr::WorldLocation( embarkmentPoint.X(), embarkmentPoint.Y(), 0. ) );
         transport.finalAppointment = NetnAppointmentStruct( debarkmentTime, rpr::WorldLocation( debarkmentPoint.X(), debarkmentPoint.Y(), 0. ) );
-        TransportedUnitsVisitor visitor( transport.objectToManage );
-        subordinatesVisitor.Apply( visitor );
+        SubordinatesVisitor subordinatesVisitor( transport.objectToManage );
+        subordinates_.Apply( message.tasker().id(), subordinatesVisitor );
         request.transportData = NetnTransportStruct( transport );
         requestSender_.Send( request );
     }
@@ -193,22 +171,7 @@ void TransportationRequester::Notify( const sword::Report& message, int /*contex
 
 namespace
 {
-     class TransportedSubordinates : private TransportedUnitsVisitor_ABC
-    {
-    public:
-        TransportedSubordinates( const TransportedUnits_ABC& transportedUnits )
-        {
-            transportedUnits.Apply( *this );
-        }
-    private:
-        virtual void Notify( const std::string& /*callsign*/, const std::string& uniqueId )
-        {
-            transportedUnits_.insert( uniqueId );
-        }
-    public:
-        std::set< std::string > transportedUnits_;
-    };
-     std::string ResolveUniqueIdFromCallsign( const std::string& callsign, const interactions::ListOfTransporters& listOfTransporters )
+     std::string ResolveUniqueIdFromCallsign( const std::string& callsign, const interactions::ListOfUnits& listOfTransporters )
      {
          BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, listOfTransporters.list )
              if( unit.callsign.str() == callsign )
@@ -223,30 +186,6 @@ namespace
         to.provider = from.provider;
         to.serviceType = from.serviceType;
      }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationRequester::SendTransportMagicAction
-// Created: SLI 2011-10-17
-// -----------------------------------------------------------------------------
-void TransportationRequester::SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits, unsigned int actionType )
-{
-    T_Requests::left_const_iterator request = serviceStartedRequests_.left.find( context );
-    if( request == serviceStartedRequests_.left.end() )
-        return;
-    const TransportedSubordinates subordinates( transportedUnits ) ;
-    const T_Request& contextRequest = contextRequests_[ context ];
-    const std::string transporterUniqueId = ResolveUniqueIdFromCallsign( transporterCallsign, contextRequest.listOfTransporters );
-    const unsigned int transporterId = callsignResolver_.ResolveSimulationIdentifier( transporterUniqueId );
-    BOOST_FOREACH( const std::string& uniqueId, subordinates.transportedUnits_ )
-    {
-        const unsigned int id = callsignResolver_.ResolveSimulationIdentifier( uniqueId );
-        simulation::UnitMagicAction message;
-        message().mutable_tasker()->mutable_unit()->set_id( transporterId );
-        message().set_type( static_cast< sword::UnitMagicAction_Type >( actionType ) );
-        message().mutable_parameters()->add_elem()->add_value()->mutable_agent()->set_id( id );
-        message.Send( publisher_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -309,22 +248,27 @@ void TransportationRequester::Receive( interactions::NetnServiceStarted& interac
     Transfer( readyToReceiveRequests_, serviceStartedRequests_, context );
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::SendTransportMagicAction
+// Created: SLI 2011-10-17
+// -----------------------------------------------------------------------------
+void TransportationRequester::SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const interactions::ListOfUnits& units, unsigned int actionType )
 {
-    class TransportedUnits : public TransportedUnits_ABC
+    T_Requests::left_const_iterator request = serviceStartedRequests_.left.find( context );
+    if( request == serviceStartedRequests_.left.end() )
+        return;
+    const T_Request& contextRequest = contextRequests_[ context ];
+    const std::string transporterUniqueId = ResolveUniqueIdFromCallsign( transporterCallsign, contextRequest.listOfTransporters );
+    const unsigned int transporterId = callsignResolver_.ResolveSimulationIdentifier( transporterUniqueId );
+    BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, units.list )
     {
-    public:
-        explicit TransportedUnits( const interactions::ListOfTransporters& listOfTransportedUnits )
-            : listOfTransportedUnits_( listOfTransportedUnits )
-        {}
-        virtual void Apply( TransportedUnitsVisitor_ABC& visitor ) const
-        {
-            BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, listOfTransportedUnits_.list )
-                visitor.Notify( unit.callsign.str(), unit.uniqueId.str() );
-        }
-    private:
-        const interactions::ListOfTransporters& listOfTransportedUnits_;
-    };
+        const unsigned int id = callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId.str() );
+        simulation::UnitMagicAction message;
+        message().mutable_tasker()->mutable_unit()->set_id( transporterId );
+        message().set_type( static_cast< sword::UnitMagicAction_Type >( actionType ) );
+        message().mutable_parameters()->add_elem()->add_value()->mutable_agent()->set_id( id );
+        message.Send( publisher_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -338,8 +282,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyEmbarkmentStatus&
     if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
-    TransportedUnits units( interaction.listOfObjectEmbarked );
-    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), units, sword::UnitMagicAction::load_unit );
+    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectEmbarked, sword::UnitMagicAction::load_unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -353,8 +296,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyDisembarkmentStat
     if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
-    TransportedUnits units( interaction.listOfObjectDisembarked );
-    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), units, sword::UnitMagicAction::unload_unit );
+    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectDisembarked, sword::UnitMagicAction::unload_unit );
 }
 
 // -----------------------------------------------------------------------------

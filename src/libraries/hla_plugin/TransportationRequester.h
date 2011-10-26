@@ -108,7 +108,7 @@ private:
         std::string provider;
         geometry::Point2d embarkmentPoint;
         geometry::Point2d debarkmentPoint;
-        interactions::ListOfTransporters listOfTransporters;
+        interactions::ListOfUnits listOfTransporters;
     };
     typedef std::map< unsigned int, T_Request > T_ContextRequests;
     //@}
@@ -117,7 +117,7 @@ private:
     //! @name Helpers
     //@{
     void Transfer( T_Requests& from, T_Requests& to, unsigned int context ) const;
-    void SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits, unsigned int actionType );
+    void SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const interactions::ListOfUnits& units, unsigned int actionType );
     //@}
 
 private:
