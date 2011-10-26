@@ -288,12 +288,10 @@
     <spawn action-range="0" nbc="true" object="nbc cloud"/>
   </object>
   <object geometry="polygon" name="zone brouillage" symbol="G*EW***********" type="jamming area">
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <delay/>
     <interact-with-enemy/>
     <interference/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="aire poser" symbol="G*GPGAL---****X" type="landing area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
@@ -459,4 +457,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="2851848368" -->
+<!-- signature="4135156020" -->
