@@ -87,6 +87,11 @@ namespace
     {
         return parameter.value( 0 ).agent().id();
     }
+
+    bool CheckService( const interactions::NetnService& service )
+    {
+        return service.serviceType == 4 && service.serviceId.issuingObjectIdentifier.str() == "SWORD";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -177,17 +182,26 @@ void TransportationRequester::Notify( const sword::AutomatOrder& message, int /*
     }
 }
 
+namespace
+{
+    void Reject( InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& sender, interactions::NetnService& service, const std::string& reason )
+    {
+        interactions::NetnRejectOfferConvoy reject;
+        CopyService( service, reject );
+        reject.reason = reason;
+        sender.Send( reject );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TransportationRequester::Receive
 // Created: SLI 2011-10-25
 // -----------------------------------------------------------------------------
 void TransportationRequester::Receive( interactions::NetnOfferConvoy& interaction )
 {
-    if( interaction.serviceType != 4 )
+    if( ! CheckService( interaction ) )
         return;
     if( interaction.transportData.convoyType != 0 )
-        return;
-    if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
         return;
     if( !interaction.isOffering )
         return;
@@ -195,29 +209,16 @@ void TransportationRequester::Receive( interactions::NetnOfferConvoy& interactio
     if( pendingRequests_.left.find( context ) == pendingRequests_.left.end() )
     {
         if( acceptedRequests_.left.find( context ) != acceptedRequests_.left.end() )
-        {
-            interactions::NetnRejectOfferConvoy reject;
-            CopyService( interaction, reject );
-            reject.reason = "An other offer has already been accepted";
-            rejectSender_.Send( reject );
-        }
+            Reject( rejectSender_, interaction, "An other offer has already been accepted" );
         return;
     }
-    if( interaction.offerType == 1 ) // full offer
-    {
-        interactions::NetnAcceptOffer accept;
-        CopyService( interaction, accept );
-        acceptSender_.Send( accept );
-        contextRequests_[ context ] = interaction;
-        Transfer( pendingRequests_, acceptedRequests_, context );
-    }
-    else
-    {
-        interactions::NetnRejectOfferConvoy reject;
-        CopyService( interaction, reject );
-        reject.reason = "Offering only partial offer";
-        rejectSender_.Send( reject );
-    }
+    if( interaction.offerType != 1 ) // full offer
+        return Reject( rejectSender_, interaction, "Offering only partial offer" );
+    interactions::NetnAcceptOffer accept;
+    CopyService( interaction, accept );
+    acceptSender_.Send( accept );
+    contextRequests_[ context ] = interaction;
+    Transfer( pendingRequests_, acceptedRequests_, context );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,9 +248,7 @@ void TransportationRequester::Notify( const sword::Report& message, int /*contex
 // -----------------------------------------------------------------------------
 void TransportationRequester::Receive( interactions::NetnServiceStarted& interaction )
 {
-    if( interaction.serviceType != 4 )
-        return;
-    if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
+    if( ! CheckService( interaction ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
     if( readyToReceiveRequests_.left.find( context ) == readyToReceiveRequests_.left.end() )
@@ -286,9 +285,7 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
 // -----------------------------------------------------------------------------
 void TransportationRequester::Receive( interactions::NetnConvoyEmbarkmentStatus& interaction )
 {
-    if( interaction.serviceType != 4 )
-        return;
-    if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
+    if( ! CheckService( interaction ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
     SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectEmbarked, sword::UnitMagicAction::load_unit );
@@ -300,9 +297,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyEmbarkmentStatus&
 // -----------------------------------------------------------------------------
 void TransportationRequester::Receive( interactions::NetnConvoyDisembarkmentStatus& interaction )
 {
-    if( interaction.serviceType != 4 )
-        return;
-    if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
+    if( ! CheckService( interaction ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
     SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectDisembarked, sword::UnitMagicAction::unload_unit );
@@ -314,9 +309,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyDisembarkmentStat
 // -----------------------------------------------------------------------------
 void TransportationRequester::Receive( interactions::NetnServiceComplete& interaction )
 {
-    if( interaction.serviceType != 4 )
-        return;
-    if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
+    if( ! CheckService( interaction ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
     if( serviceStartedRequests_.left.find( context ) == serviceStartedRequests_.left.end() )
