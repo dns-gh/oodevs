@@ -170,30 +170,6 @@ Voulez vous sauvegarder malgré tout ?</translation>
         <translation>Adhésion maximale</translation>
     </message>
     <message>
-        <source>Available</source>
-        <translation>Disponible</translation>
-    </message>
-    <message>
-        <source>Unavailable</source>
-        <translation>Indisponible</translation>
-    </message>
-    <message>
-        <source>Repairable</source>
-        <translation>Réparable avec évacuation</translation>
-    </message>
-    <message>
-        <source>Repairing</source>
-        <translation>Réparable sur place</translation>
-    </message>
-    <message>
-        <source>Captured</source>
-        <translation>Capturé</translation>
-    </message>
-    <message>
-        <source>Equipment state on power indicators</source>
-        <translation>Effet état équipement sur indicateurs de puissance</translation>
-    </message>
-    <message>
         <source>Decisional threshold</source>
         <translation>Seuil Décisionnel</translation>
     </message>
@@ -1171,26 +1147,6 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Extinguishing duration</source>
         <translation>Durée d&apos;extinction</translation>
-    </message>
-    <message>
-        <source>Power indicators</source>
-        <translation>Indicateurs de puissance</translation>
-    </message>
-    <message>
-        <source>Direct fire</source>
-        <translation>Tir direct</translation>
-    </message>
-    <message>
-        <source>Indirect fire</source>
-        <translation>Tir indirect</translation>
-    </message>
-    <message>
-        <source>Close combat</source>
-        <translation>Combat rapproché</translation>
-    </message>
-    <message>
-        <source>Engineering</source>
-        <translation>Génie</translation>
     </message>
     <message>
         <source>Crowd transport</source>

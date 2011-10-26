@@ -162,13 +162,7 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eIsLogSupply]->Connect( &pInfos->logInfos_.bHasSupplyInfos_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasHealthLog]->Connect( &pInfos->logInfos_.bHasHealthInfos_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasMaxSlope]->Connect( &pInfos->bMaxSlope_, bConnect );
-
-    vItemConnectors_[ ADN_Composantes_GUI::ePowerDirectFire ]->Connect( &pInfos->nPowerDirectFire_, bConnect );
-    vItemConnectors_[ ADN_Composantes_GUI::ePowerIndirectFire ]->Connect( &pInfos->nPowerIndirectFire_, bConnect );
-    vItemConnectors_[ ADN_Composantes_GUI::ePowerCloseCombat ]->Connect( &pInfos->nPowerCloseCombat_, bConnect );
-    vItemConnectors_[ ADN_Composantes_GUI::ePowerEngineering ]->Connect( &pInfos->nPowerEngineering_, bConnect );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Composantes::OnContextMenu

@@ -168,30 +168,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unavailable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repairable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repairing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Captured</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment state on power indicators</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Decisional threshold</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1168,26 +1144,6 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Extinguishing duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Power indicators</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Direct fire</source>
-        <translation type="unfinished">Fuego directo</translation>
-    </message>
-    <message>
-        <source>Indirect fire</source>
-        <translation type="unfinished">Fuego indirecto</translation>
-    </message>
-    <message>
-        <source>Close combat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Engineering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

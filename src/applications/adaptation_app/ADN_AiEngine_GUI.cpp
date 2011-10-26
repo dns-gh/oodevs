@@ -86,21 +86,12 @@ void ADN_AiEngine_GUI::Build()
     builder.AddField<ADN_TimeField>( pCriticalIntelligenceBox, tr( "Neutral affinity" ), data_.rNeutralAffinity_ );
     builder.AddField<ADN_TimeField>( pCriticalIntelligenceBox, tr( "Maximum affinity" ), data_.rMaximumAffinity_ );
 
-    // Wound effects modificators
-    Q3GroupBox* pWoundEffectsBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Equipment state on power indicators" ), pMainWidget_ );
-    builder.AddField<ADN_EditLine_Double>( pWoundEffectsBox, tr( "Available" ), data_.rAvailableModificator_, tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pWoundEffectsBox, tr( "Unavailable" ), data_.rUnavailableModificator_, tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pWoundEffectsBox, tr( "Repairable" ), data_.rRepairableModificator_, tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pWoundEffectsBox, tr( "Repairing" ), data_.rRepairingModificator_, tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pWoundEffectsBox, tr( "Captured" ), data_.rCapturedModificator_, tr( "%" ), ePercentage );
-
     // Layout
     Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pDangerBox );
     pMainLayout->addWidget( pOpStateBox );
     pMainLayout->addWidget( pUrbanStateBox );
     pMainLayout->addWidget( pCriticalIntelligenceBox );
-    pMainLayout->addWidget( pWoundEffectsBox );
 
     builder.AddStretcher( pMainWidget_, Qt::Vertical );
 }

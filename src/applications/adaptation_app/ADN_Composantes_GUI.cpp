@@ -250,15 +250,6 @@ void ADN_Composantes_GUI::Build()
         BuildMaintenance    ( pLogPage, vInfosConnectors );
     }
 
-    // Power indicators page
-    {
-        Q3VBox* pPowerIndicatorsPage = new Q3VBox( pTabWidget );
-        pPowerIndicatorsPage->setMargin( 5 );
-        pPowerIndicatorsPage->setSpacing( 5 );
-        pTabWidget->addTab( pPowerIndicatorsPage, tr( "Power indicators" ) );
-
-        BuildPowerIndicators( pPowerIndicatorsPage, vInfosConnectors );
-    }
 
     // Connect the gui to the data.
     pComposanteList_->SetItemConnectors( vInfosConnectors );
@@ -423,26 +414,6 @@ QWidget* ADN_Composantes_GUI::BuildNTI( QWidget* pParent, const char* szName, T_
     builder.AddField<ADN_CheckBox>( pNTIGroup, tr( "Can fix mobility breakdowns" ), vInfosConnectors[nIndex + eCanRepairM] );
 
     return pNTIGroup;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI::BuildPowerIndicators
-// Created: FPO 2011-03-30
-// -----------------------------------------------------------------------------
-QWidget* ADN_Composantes_GUI::BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
-{
-    ADN_GuiBuilder builder;
-    Q3GroupBox* pPowerIndicatorsGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Power indicators" ), pParent );
-
-    pPowerIndicatorsGroup->setMinimumWidth(400);
-    pPowerIndicatorsGroup->setMinimumHeight(130);
-
-    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Direct fire" ),   vInfosConnectors[ ePowerDirectFire ],   0, eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Indirect fire" ), vInfosConnectors[ ePowerIndirectFire ], 0, eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Close combat" ),  vInfosConnectors[ ePowerCloseCombat ],  0, eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Engineering" ),   vInfosConnectors[ ePowerEngineering ],  0, eGreaterEqualZero );
-
-    return pPowerIndicatorsGroup;
 }
 
 // -----------------------------------------------------------------------------
