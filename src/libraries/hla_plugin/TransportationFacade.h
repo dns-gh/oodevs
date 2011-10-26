@@ -90,18 +90,6 @@ class TransportationFacade : private ::hla::InteractionNotification_ABC< interac
                            , private ::hla::InteractionNotification_ABC< interactions::NetnConvoyDestroyedEntities >
                            , private ::hla::InteractionNotification_ABC< interactions::NetnServiceComplete >
                            , private ::hla::InteractionNotification_ABC< interactions::NetnServiceReceived >
-                           , private InteractionSender_ABC< interactions::NetnRequestConvoy >
-                           , private InteractionSender_ABC< interactions::NetnOfferConvoy >
-                           , private InteractionSender_ABC< interactions::NetnAcceptOffer >
-                           , private InteractionSender_ABC< interactions::NetnRejectOfferConvoy >
-                           , private InteractionSender_ABC< interactions::NetnCancelConvoy >
-                           , private InteractionSender_ABC< interactions::NetnReadyToReceiveService >
-                           , private InteractionSender_ABC< interactions::NetnServiceStarted >
-                           , private InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus >
-                           , private InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus >
-                           , private InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities >
-                           , private InteractionSender_ABC< interactions::NetnServiceComplete >
-                           , private InteractionSender_ABC< interactions::NetnServiceReceived >
 {
 public:
     //! @name Constructors/Destructor
@@ -131,37 +119,21 @@ private:
    virtual void Receive( interactions::NetnServiceReceived& interaction );
     //@}
 
-    //! @name Send
-    //@{
-   virtual void Send( const interactions::NetnRequestConvoy& interaction );
-   virtual void Send( const interactions::NetnOfferConvoy& interaction );
-   virtual void Send( const interactions::NetnAcceptOffer& interaction );
-   virtual void Send( const interactions::NetnRejectOfferConvoy& interaction );
-   virtual void Send( const interactions::NetnCancelConvoy& interaction );
-   virtual void Send( const interactions::NetnReadyToReceiveService& interaction );
-   virtual void Send( const interactions::NetnServiceStarted& interaction );
-   virtual void Send( const interactions::NetnConvoyEmbarkmentStatus& interaction );
-   virtual void Send( const interactions::NetnConvoyDisembarkmentStatus& interaction );
-   virtual void Send( const interactions::NetnConvoyDestroyedEntities& interaction );
-   virtual void Send( const interactions::NetnServiceComplete& interaction );
-   virtual void Send( const interactions::NetnServiceReceived& interaction );
-    //@}
-
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::Interaction< interactions::NetnRequestConvoy > > pNetnRequestConvoy_;
-    std::auto_ptr< ::hla::Interaction< interactions::NetnOfferConvoy > > pNetnOfferConvoy_;
-    std::auto_ptr< ::hla::Interaction< interactions::NetnAcceptOffer > > pNetnAcceptOffer_;
-    std::auto_ptr< ::hla::Interaction< interactions::NetnRejectOfferConvoy > > pNetnRejectOfferConvoy_;
-    std::auto_ptr< ::hla::Interaction< interactions::NetnCancelConvoy > > pNetnCancelConvoy_;
-    std::auto_ptr< ::hla::Interaction< interactions::NetnReadyToReceiveService > > pNetnReadyToReceiveService_;
-    std::auto_ptr< ::hla::Interaction< interactions::NetnServiceStarted > > pNetnServiceStarted_;
-    std::auto_ptr< ::hla::Interaction< interactions::NetnConvoyEmbarkmentStatus > > pNetnConvoyEmbarkmentStatus_;
-    std::auto_ptr< ::hla::Interaction< interactions::NetnConvoyDisembarkmentStatus > > pNetnConvoyDisembarkmentStatus_;
-    std::auto_ptr< ::hla::Interaction< interactions::NetnConvoyDestroyedEntities > > pNetnConvoyDestroyedEntities_;
-    std::auto_ptr< ::hla::Interaction< interactions::NetnServiceComplete > > pNetnServiceComplete_;
-    std::auto_ptr< ::hla::Interaction< interactions::NetnServiceReceived > > pNetnServiceReceived_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnRequestConvoy > > pNetnRequestConvoy_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoy_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnAcceptOffer > > pNetnAcceptOffer_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnRejectOfferConvoy > > pNetnRejectOfferConvoy_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnCancelConvoy > > pNetnCancelConvoy_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnReadyToReceiveService > > pNetnReadyToReceiveService_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnServiceStarted > > pNetnServiceStarted_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus > > pNetnConvoyEmbarkmentStatus_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus > > pNetnConvoyDisembarkmentStatus_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities > > pNetnConvoyDestroyedEntities_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnServiceComplete > > pNetnServiceComplete_;
+    std::auto_ptr< InteractionSender_ABC< interactions::NetnServiceReceived > > pNetnServiceReceived_;
     std::auto_ptr< TransportationRequester > pTransportationRequester_;
     std::auto_ptr< TransportationOfferer > pTransportationOfferer_;
     //@}

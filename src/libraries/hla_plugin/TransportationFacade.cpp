@@ -17,6 +17,28 @@
 
 using namespace plugins::hla;
 
+namespace
+{
+    template< typename T >
+    class InteractionSender : public InteractionSender_ABC< T >
+    {
+    public:
+        InteractionSender( ::hla::InteractionNotification_ABC< T >& receiver, Federate_ABC& federate )
+            : interaction_( new ::hla::Interaction< T >( receiver ) )
+        {
+            TransportationInteractionBuilder builder;
+            builder.Build( federate, *interaction_ );
+        }
+        virtual ~InteractionSender() {}
+        virtual void Send( const T& interaction )
+        {
+            interaction_->Send( interaction );
+        }
+    private:
+        std::auto_ptr< ::hla::Interaction< T > > interaction_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: TransportationFacade constructor
 // Created: SLI 2011-10-10
@@ -26,34 +48,26 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
                                             const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
                                             Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters,
                                             dispatcher::SimulationPublisher_ABC& simulationPublisher, dispatcher::ClientPublisher_ABC& clientsPublisher )
-    : pNetnRequestConvoy_                    ( new ::hla::Interaction< interactions::NetnRequestConvoy >( *this ) )
-    , pNetnOfferConvoy_                      ( new ::hla::Interaction< interactions::NetnOfferConvoy >( *this ) )
-    , pNetnAcceptOffer_                      ( new ::hla::Interaction< interactions::NetnAcceptOffer >( *this ) )
-    , pNetnRejectOfferConvoy_                ( new ::hla::Interaction< interactions::NetnRejectOfferConvoy >( *this ) )
-    , pNetnCancelConvoy_                     ( new ::hla::Interaction< interactions::NetnCancelConvoy >( *this ) )
-    , pNetnReadyToReceiveService_            ( new ::hla::Interaction< interactions::NetnReadyToReceiveService >( *this ) )
-    , pNetnServiceStarted_                   ( new ::hla::Interaction< interactions::NetnServiceStarted >( *this ) )
-    , pNetnConvoyEmbarkmentStatus_           ( new ::hla::Interaction< interactions::NetnConvoyEmbarkmentStatus >( *this ) )
-    , pNetnConvoyDisembarkmentStatus_        ( new ::hla::Interaction< interactions::NetnConvoyDisembarkmentStatus >( *this ) )
-    , pNetnConvoyDestroyedEntities_          ( new ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >( *this ) )
-    , pNetnServiceComplete_                  ( new ::hla::Interaction< interactions::NetnServiceComplete >( *this ) )
-    , pNetnServiceReceived_                  ( new ::hla::Interaction< interactions::NetnServiceReceived >( *this ) )
-    , pTransportationRequester_              ( new TransportationRequester( xis, missionResolver, controller, callsignResolver, subordinates, contextFactory, simulationPublisher, *this, *this, *this, *this, *this ) )
-    , pTransportationOfferer_                ( new TransportationOfferer( *this, *this, *this, transporters, controller, callsignResolver ) )
+    : pNetnRequestConvoy_            ( new InteractionSender< interactions::NetnRequestConvoy >( *this, federate ) )
+    , pNetnOfferConvoy_              ( new InteractionSender< interactions::NetnOfferConvoy >( *this, federate ) )
+    , pNetnAcceptOffer_              ( new InteractionSender< interactions::NetnAcceptOffer >( *this, federate ) )
+    , pNetnRejectOfferConvoy_        ( new InteractionSender< interactions::NetnRejectOfferConvoy >( *this, federate ) )
+    , pNetnCancelConvoy_             ( new InteractionSender< interactions::NetnCancelConvoy >( *this, federate ) )
+    , pNetnReadyToReceiveService_    ( new InteractionSender< interactions::NetnReadyToReceiveService >( *this, federate ) )
+    , pNetnServiceStarted_           ( new InteractionSender< interactions::NetnServiceStarted >( *this, federate ) )
+    , pNetnConvoyEmbarkmentStatus_   ( new InteractionSender< interactions::NetnConvoyEmbarkmentStatus >( *this, federate ) )
+    , pNetnConvoyDisembarkmentStatus_( new InteractionSender< interactions::NetnConvoyDisembarkmentStatus >( *this, federate ) )
+    , pNetnConvoyDestroyedEntities_  ( new InteractionSender< interactions::NetnConvoyDestroyedEntities >( *this, federate ) )
+    , pNetnServiceComplete_          ( new InteractionSender< interactions::NetnServiceComplete >( *this, federate ) )
+    , pNetnServiceReceived_          ( new InteractionSender< interactions::NetnServiceReceived >( *this, federate ) )
+    , pTransportationRequester_      ( new TransportationRequester( xis, missionResolver, controller, callsignResolver, subordinates,
+                                                                    contextFactory, simulationPublisher, *pNetnRequestConvoy_,
+                                                                    *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_,
+                                                                    *pNetnReadyToReceiveService_, *pNetnServiceReceived_ ) )
+    , pTransportationOfferer_        ( new TransportationOfferer( *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_,
+                                                                  transporters, controller, callsignResolver ) )
 {
-    TransportationInteractionBuilder builder;
-    builder.Build( federate, *pNetnRequestConvoy_ );
-    builder.Build( federate, *pNetnOfferConvoy_ );
-    builder.Build( federate, *pNetnAcceptOffer_ );
-    builder.Build( federate, *pNetnRejectOfferConvoy_ );
-    builder.Build( federate, *pNetnCancelConvoy_ );
-    builder.Build( federate, *pNetnReadyToReceiveService_ );
-    builder.Build( federate, *pNetnServiceStarted_ );
-    builder.Build( federate, *pNetnConvoyEmbarkmentStatus_ );
-    builder.Build( federate, *pNetnConvoyDisembarkmentStatus_ );
-    builder.Build( federate, *pNetnConvoyDestroyedEntities_ );
-    builder.Build( federate, *pNetnServiceComplete_ );
-    builder.Build( federate, *pNetnServiceReceived_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -171,112 +185,4 @@ void TransportationFacade::Receive( interactions::NetnServiceComplete& interacti
 void TransportationFacade::Receive( interactions::NetnServiceReceived& /*interaction*/ )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationFacade::Send
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void TransportationFacade::Send( const interactions::NetnRequestConvoy& interaction )
-{
-    pNetnRequestConvoy_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationFacade::Send
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void TransportationFacade::Send( const interactions::NetnOfferConvoy& interaction )
-{
-    pNetnOfferConvoy_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationFacade::Send
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void TransportationFacade::Send( const interactions::NetnAcceptOffer& interaction )
-{
-    pNetnAcceptOffer_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationFacade::Send
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void TransportationFacade::Send( const interactions::NetnRejectOfferConvoy& interaction )
-{
-    pNetnRejectOfferConvoy_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationFacade::Send
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void TransportationFacade::Send( const interactions::NetnCancelConvoy& interaction )
-{
-    pNetnCancelConvoy_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationFacade::Send
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void TransportationFacade::Send( const interactions::NetnReadyToReceiveService& interaction )
-{
-    pNetnReadyToReceiveService_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationFacade::Send
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void TransportationFacade::Send( const interactions::NetnServiceStarted& interaction )
-{
-    pNetnServiceStarted_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationFacade::Send
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void TransportationFacade::Send( const interactions::NetnConvoyEmbarkmentStatus& interaction )
-{
-    pNetnConvoyEmbarkmentStatus_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationFacade::Send
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void TransportationFacade::Send( const interactions::NetnConvoyDisembarkmentStatus& interaction )
-{
-    pNetnConvoyDisembarkmentStatus_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationFacade::Send
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void TransportationFacade::Send( const interactions::NetnConvoyDestroyedEntities& interaction )
-{
-    pNetnConvoyDestroyedEntities_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationFacade::Send
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void TransportationFacade::Send( const interactions::NetnServiceComplete& interaction )
-{
-    pNetnServiceComplete_->Send( interaction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationFacade::Send
-// Created: SLI 2011-10-24
-// -----------------------------------------------------------------------------
-void TransportationFacade::Send( const interactions::NetnServiceReceived& interaction )
-{
-    pNetnServiceReceived_->Send( interaction );
 }
