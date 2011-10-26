@@ -298,6 +298,8 @@ void MIL_AgentServer::MainSimLoop()
     pEntityManager_->Accept( visitor );
     MT_LOG_INFO_MSG( MT_FormatString( "%d Objects - %d Knowledges ( %d Knowledge agents, %d Knowledge objects, %d Knowledge populations )" , pEntityManager_->GetObjectsCount(),
                      visitor.Count(), visitor.agents_, visitor.objects_, visitor.populations_ ) );
+    MT_LOG_INFO_MSG( MT_FormatString( "%d Agents - %d Automats - %d Crowds" , pEntityManager_->GetAgentsCount(),
+                            pEntityManager_->GetAutomatsCount(), pEntityManager_->GetCrowdsCount() ) );
     pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
     SendMsgEndTick();
     pEntityManager_->Clean();
