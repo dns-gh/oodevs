@@ -11,14 +11,7 @@
 #include "TransportationFacade.h"
 #include "TransportationInteractionBuilder.h"
 #include "TransportationRequester.h"
-#include "NetnRequestConvoySender.h"
 #include "TransportationOfferer.h"
-#include "NetnOfferConvoyReceiver.h"
-#include "NetnOfferResponseSender.h"
-#include "NetnServiceStartedReceiver.h"
-#include "NetnServiceCompleteReceiver.h"
-#include "NetnConvoyEmbarkmentStatusReceiver.h"
-#include "NetnConvoyDisembarkmentStatusReceiver.h"
 #include <xeumeuleu/xml.hpp>
 #include <hla/Interaction.h>
 
@@ -45,15 +38,8 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
     , pNetnConvoyDestroyedEntities_          ( new ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >( *this ) )
     , pNetnServiceComplete_                  ( new ::hla::Interaction< interactions::NetnServiceComplete >( *this ) )
     , pNetnServiceReceived_                  ( new ::hla::Interaction< interactions::NetnServiceReceived >( *this ) )
-    , pTransportationRequester_             ( new TransportationRequester( xis, missionResolver, controller, callsignResolver, subordinates, contextFactory, simulationPublisher ) )
-    , pNetnRequestConvoySender_              ( new NetnRequestConvoySender( *pTransportationRequester_, *this ) )
-    , pNetnOfferConvoyReceiver_              ( new NetnOfferConvoyReceiver( *pTransportationRequester_ ) )
-    , pNetnServiceStartedReceiver_           ( new NetnServiceStartedReceiver( *pTransportationRequester_ ) )
-    , pNetnConvoyEmbarkmentStatusReceiver_   ( new NetnConvoyEmbarkmentStatusReceiver( *pTransportationRequester_ ) )
-    , pNetnConvoyDisembarkmentStatusReceiver_( new NetnConvoyDisembarkmentStatusReceiver( *pTransportationRequester_ ) )
+    , pTransportationRequester_              ( new TransportationRequester( xis, missionResolver, controller, callsignResolver, subordinates, contextFactory, simulationPublisher, *this, *this, *this, *this, *this ) )
     , pTransportationOfferer_                ( new TransportationOfferer( *this, *this, *this, transporters, controller, callsignResolver ) )
-    , pNetnOfferResponseSender_              ( new NetnOfferResponseSender( *pTransportationRequester_, *this, *this, *this, *this ) )
-    , pNetnServiceCompleteReceiver_          ( new NetnServiceCompleteReceiver( *pTransportationRequester_ ) )
 {
     TransportationInteractionBuilder builder;
     builder.Build( federate, *pNetnRequestConvoy_ );
@@ -94,7 +80,7 @@ void TransportationFacade::Receive( interactions::NetnRequestConvoy& request )
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnOfferConvoy& interaction )
 {
-    pNetnOfferConvoyReceiver_->Receive( interaction );
+    pTransportationRequester_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +125,7 @@ void TransportationFacade::Receive( interactions::NetnReadyToReceiveService& int
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnServiceStarted& interaction )
 {
-    pNetnServiceStartedReceiver_->Receive( interaction );
+    pTransportationRequester_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +134,7 @@ void TransportationFacade::Receive( interactions::NetnServiceStarted& interactio
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnConvoyEmbarkmentStatus& interaction )
 {
-    pNetnConvoyEmbarkmentStatusReceiver_->Receive( interaction );
+    pTransportationRequester_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +143,7 @@ void TransportationFacade::Receive( interactions::NetnConvoyEmbarkmentStatus& in
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnConvoyDisembarkmentStatus& interaction )
 {
-    pNetnConvoyDisembarkmentStatusReceiver_->Receive( interaction );
+    pTransportationRequester_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +161,7 @@ void TransportationFacade::Receive( interactions::NetnConvoyDestroyedEntities& /
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnServiceComplete& interaction )
 {
-    pNetnServiceCompleteReceiver_->Receive( interaction );
+    pTransportationRequester_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------

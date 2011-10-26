@@ -10,12 +10,12 @@
 #include "hla_plugin_pch.h"
 #include "TransportationRequester.h"
 #include "MissionResolver_ABC.h"
-#include "TransportationListener_ABC.h"
 #include "CallsignResolver_ABC.h"
 #include "TransportedUnits_ABC.h"
 #include "TransportedUnitsVisitor_ABC.h"
 #include "Subordinates_ABC.h"
 #include "ContextFactory_ABC.h"
+#include "InteractionSender_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include <set>
@@ -53,13 +53,23 @@ namespace
 TransportationRequester::TransportationRequester( xml::xisubstream xis, const MissionResolver_ABC& resolver,
                                                     tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                                     const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
-                                                    const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher )
+                                                    const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher,
+                                                    InteractionSender_ABC< interactions::NetnRequestConvoy >& requestSender,
+                                                    InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptSender,
+                                                    InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender,
+                                                    InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender,
+                                                    InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender)
     : transportIdentifier_    ( ResolveMission( xis, resolver, "transport" ) )
     , missionCompleteReportId_( ResolveReportId( xis ) )
     , callsignResolver_       ( callsignResolver )
     , subordinates_           ( subordinates )
     , contextFactory_         ( contextFactory )
     , publisher_              ( publisher )
+    , requestSender_          ( requestSender )
+    , acceptSender_           ( acceptSender )
+    , rejectSender_           ( rejectSender )
+    , readySender_            ( readySender )
+    , receivedSender_         ( receivedSender )
 {
     CONNECT( controller, *this, automat_order );
     CONNECT( controller, *this, report );
@@ -111,6 +121,19 @@ namespace
     private:
         std::vector< std::pair< std::string, std::string > > units_;
     };
+    class TransportedUnitsVisitor : public TransportedUnitsVisitor_ABC
+    {
+    public:
+        explicit TransportedUnitsVisitor( std::vector< NetnObjectDefinitionStruct >& units )
+            : units_( units )
+        {}
+        virtual void Notify( const std::string& callsign, const std::string& uniqueId )
+        {
+            units_.push_back( NetnObjectDefinitionStruct( callsign, uniqueId, NetnObjectFeatureStruct() ) );
+        }
+    private:
+        std::vector< NetnObjectDefinitionStruct >& units_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -125,14 +148,25 @@ void TransportationRequester::Notify(  const sword::AutomatOrder& message, int /
         const long long embarkmentTime = ReadTime( message.parameters().elem( 5 ) );
         const geometry::Point2d debarkmentPoint = ReadLocation( message.parameters().elem( 6 ) );
         const long long debarkmentTime = ReadTime( message.parameters().elem( 7 ) );
-        const SubordinatesVisitor visitor( subordinates_, message.tasker().id() );
+        const SubordinatesVisitor subordinatesVisitor( subordinates_, message.tasker().id() );
         const unsigned int context = contextFactory_.Create();
         pendingRequests_.right.erase( message.tasker().id() );
         pendingRequests_.insert( T_Requests::value_type( context, message.tasker().id() ) );
         contextRequests_[ context ].embarkmentPoint = embarkmentPoint;
         contextRequests_[ context ].debarkmentPoint = debarkmentPoint;
-        BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
-            listener->ConvoyRequested( embarkmentTime, embarkmentPoint, debarkmentTime, debarkmentPoint, visitor, context );
+        interactions::NetnRequestConvoy request;
+        request.serviceId = NetnEventIdentifier( context, "SWORD" );
+        request.consumer = UnicodeString( "SWORD" );
+        request.provider = UnicodeString( "Any carrier" );
+        request.serviceType = 4; // convoy
+        request.requestTimeOut = 0; // no timeout
+        NetnDataTStruct transport;
+        transport.appointment = NetnAppointmentStruct( embarkmentTime, rpr::WorldLocation( embarkmentPoint.X(), embarkmentPoint.Y(), 0. ) );
+        transport.finalAppointment = NetnAppointmentStruct( debarkmentTime, rpr::WorldLocation( debarkmentPoint.X(), debarkmentPoint.Y(), 0. ) );
+        TransportedUnitsVisitor visitor( transport.objectToManage );
+        subordinatesVisitor.Apply( visitor );
+        request.transportData = NetnTransportStruct( transport );
+        requestSender_.Send( request );
     }
 }
 
@@ -151,75 +185,10 @@ void TransportationRequester::Notify( const sword::Report& message, int /*contex
     if( request == acceptedRequests_.right.end() )
         return;
     const unsigned int context = request->second;
-    BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
-        listener->ReadyToReceiveService( context, contextRequests_[ context ].provider );
+    interactions::NetnReadyToReceiveService ready;
+    // $$$$
+    readySender_.Send( ready );
     Transfer( acceptedRequests_, readyToReceiveRequests_, context );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationRequester::Register
-// Created: SLI 2011-10-07
-// -----------------------------------------------------------------------------
-void TransportationRequester::Register( TransportationListener_ABC& listener )
-{
-    listeners_.push_back( &listener );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationRequester::Unregister
-// Created: SLI 2011-10-07
-// -----------------------------------------------------------------------------
-void TransportationRequester::Unregister( TransportationListener_ABC& listener )
-{
-    listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationRequester::OfferReceived
-// Created: SLI 2011-10-12
-// -----------------------------------------------------------------------------
-void TransportationRequester::OfferReceived( unsigned int context, bool fullOffer, const std::string& provider, const interactions::ListOfTransporters& listOfTransporters )
-{
-    if( pendingRequests_.left.find( context ) == pendingRequests_.left.end() )
-    {
-        if( acceptedRequests_.left.find( context ) != acceptedRequests_.left.end() )
-            BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
-                listener->OfferRejected( context, provider, "An other offer has already been accepted" );
-        return;
-    }
-    if( fullOffer )
-    {
-        BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
-            listener->OfferAccepted( context, provider );
-        contextRequests_[ context ].provider = provider;
-        contextRequests_[ context ].listOfTransporters = listOfTransporters;
-        Transfer( pendingRequests_, acceptedRequests_, context );
-    }
-    else
-        BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
-            listener->OfferRejected( context, provider, "Offering only partial offer" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationRequester::ServiceStarted
-// Created: SLI 2011-10-12
-// -----------------------------------------------------------------------------
-void TransportationRequester::ServiceStarted( unsigned int context )
-{
-    if( readyToReceiveRequests_.left.find( context ) == readyToReceiveRequests_.left.end() )
-        return;
-    Transfer( readyToReceiveRequests_, serviceStartedRequests_, context );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationRequester::Transfer
-// Created: SLI 2011-10-12
-// -----------------------------------------------------------------------------
-void TransportationRequester::Transfer( T_Requests& from, T_Requests& to, unsigned int context ) const
-{
-    const unsigned int automatId = from.left.find( context )->second;
-    from.left.erase( context );
-    to.insert( T_Requests::value_type( context, automatId ) );
 }
 
 namespace
@@ -246,24 +215,14 @@ namespace
                  return unit.uniqueId.str();
          return "";
      }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationRequester::NotifyEmbarkationStatus
-// Created: SLI 2011-10-12
-// -----------------------------------------------------------------------------
-void TransportationRequester::NotifyEmbarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits )
-{
-    SendTransportMagicAction( context, transporterCallsign, transportedUnits, sword::UnitMagicAction::load_unit );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationRequester::NotifyDisembarkationStatus
-// Created: SLI 2011-10-17
-// -----------------------------------------------------------------------------
-void TransportationRequester::NotifyDisembarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits )
-{
-    SendTransportMagicAction( context, transporterCallsign, transportedUnits, sword::UnitMagicAction::unload_unit );
+     template< typename From, typename To >
+     void CopyService( const From& from, To& to )
+     {
+        to.serviceId = from.serviceId;
+        to.consumer = from.consumer;
+        to.provider = from.provider;
+        to.serviceType = from.serviceType;
+     }
 }
 
 // -----------------------------------------------------------------------------
@@ -291,14 +250,139 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationRequester::ServiceComplete
-// Created: SLI 2011-10-17
+// Name: TransportationRequester::Receive
+// Created: SLI 2011-10-25
 // -----------------------------------------------------------------------------
-void TransportationRequester::ServiceComplete( unsigned int context, const std::string& provider )
+void TransportationRequester::Receive( interactions::NetnOfferConvoy& interaction )
 {
+    if( interaction.serviceType != 4 )
+        return;
+    if( interaction.transportData.convoyType != 0 )
+        return;
+    if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
+        return;
+    if( !interaction.isOffering )
+        return;
+    const unsigned int context = interaction.serviceId.eventCount;
+    if( pendingRequests_.left.find( context ) == pendingRequests_.left.end() )
+    {
+        if( acceptedRequests_.left.find( context ) != acceptedRequests_.left.end() )
+        {
+            interactions::NetnRejectOfferConvoy reject;
+            CopyService( interaction, reject );
+            reject.reason = "An other offer has already been accepted";
+            rejectSender_.Send( reject );
+        }
+        return;
+    }
+    if( interaction.offerType == 1 ) // full offer
+    {
+        interactions::NetnAcceptOffer accept;
+        CopyService( interaction, accept );
+        acceptSender_.Send( accept );
+        contextRequests_[ context ].provider = interaction.provider.str();
+        contextRequests_[ context ].listOfTransporters = interaction.listOfTransporters;
+        Transfer( pendingRequests_, acceptedRequests_, context );
+    }
+    else
+    {
+        interactions::NetnRejectOfferConvoy reject;
+        CopyService( interaction, reject );
+        reject.reason = "Offering only partial offer";
+        rejectSender_.Send( reject );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Receive
+// Created: SLI 2011-10-25
+// -----------------------------------------------------------------------------
+void TransportationRequester::Receive( interactions::NetnServiceStarted& interaction )
+{
+    if( interaction.serviceType != 4 )
+        return;
+    if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
+        return;
+    const unsigned int context = interaction.serviceId.eventCount;
+    if( readyToReceiveRequests_.left.find( context ) == readyToReceiveRequests_.left.end() )
+        return;
+    Transfer( readyToReceiveRequests_, serviceStartedRequests_, context );
+}
+
+namespace
+{
+    class TransportedUnits : public TransportedUnits_ABC
+    {
+    public:
+        explicit TransportedUnits( const interactions::ListOfTransporters& listOfTransportedUnits )
+            : listOfTransportedUnits_( listOfTransportedUnits )
+        {}
+        virtual void Apply( TransportedUnitsVisitor_ABC& visitor ) const
+        {
+            BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, listOfTransportedUnits_.list )
+                visitor.Notify( unit.callsign.str(), unit.uniqueId.str() );
+        }
+    private:
+        const interactions::ListOfTransporters& listOfTransportedUnits_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Receive
+// Created: SLI 2011-10-25
+// -----------------------------------------------------------------------------
+void TransportationRequester::Receive( interactions::NetnConvoyEmbarkmentStatus& interaction )
+{
+    if( interaction.serviceType != 4 )
+        return;
+    if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
+        return;
+    const unsigned int context = interaction.serviceId.eventCount;
+    TransportedUnits units( interaction.listOfObjectEmbarked );
+    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), units, sword::UnitMagicAction::load_unit );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Receive
+// Created: SLI 2011-10-25
+// -----------------------------------------------------------------------------
+void TransportationRequester::Receive( interactions::NetnConvoyDisembarkmentStatus& interaction )
+{
+    if( interaction.serviceType != 4 )
+        return;
+    if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
+        return;
+    const unsigned int context = interaction.serviceId.eventCount;
+    TransportedUnits units( interaction.listOfObjectDisembarked );
+    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), units, sword::UnitMagicAction::unload_unit );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Receive
+// Created: SLI 2011-10-25
+// -----------------------------------------------------------------------------
+void TransportationRequester::Receive( interactions::NetnServiceComplete& interaction )
+{
+    if( interaction.serviceType != 4 )
+        return;
+    if( interaction.serviceId.issuingObjectIdentifier.str() != "SWORD" )
+        return;
+    const unsigned int context = interaction.serviceId.eventCount;
     if( serviceStartedRequests_.left.find( context ) == serviceStartedRequests_.left.end() )
         return;
     Transfer( serviceStartedRequests_, completeRequests_, context );
-    BOOST_FOREACH( TransportationListener_ABC* listener, listeners_ )
-        listener->ServiceReceived( context, provider );
+    interactions::NetnServiceReceived received;
+    CopyService( interaction, received );
+    receivedSender_.Send( received );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Transfer
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void TransportationRequester::Transfer( T_Requests& from, T_Requests& to, unsigned int context ) const
+{
+    const unsigned int automatId = from.left.find( context )->second;
+    from.left.erase( context );
+    to.insert( T_Requests::value_type( context, automatId ) );
 }

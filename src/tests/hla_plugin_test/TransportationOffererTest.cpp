@@ -11,7 +11,6 @@
 #include "hla_plugin/TransportationOfferer.h"
 #include "hla_plugin/Interactions.h"
 #include "hla_plugin/TransportedUnitsVisitor_ABC.h"
-#include "MockTransportationRequester.h"
 #include "MockInteractionSender.h"
 #include "MockContextFactory.h"
 #include "MockTransportedUnits.h"

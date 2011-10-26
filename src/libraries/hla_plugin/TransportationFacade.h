@@ -52,10 +52,9 @@ namespace hla
     class ContextFactory_ABC;
     class TransportationRequester_ABC;
     template< typename T > class InteractionSender_ABC;
-    class NetnRequestConvoySender;
     class TransportationOfferer;
+    class TransportationRequester;
     class Transporters_ABC;
-    class NetnOfferResponseSender;
 
 namespace interactions
 {
@@ -163,15 +162,8 @@ private:
     std::auto_ptr< ::hla::Interaction< interactions::NetnConvoyDestroyedEntities > > pNetnConvoyDestroyedEntities_;
     std::auto_ptr< ::hla::Interaction< interactions::NetnServiceComplete > > pNetnServiceComplete_;
     std::auto_ptr< ::hla::Interaction< interactions::NetnServiceReceived > > pNetnServiceReceived_;
-    std::auto_ptr< TransportationRequester_ABC > pTransportationRequester_;
-    std::auto_ptr< NetnRequestConvoySender > pNetnRequestConvoySender_;
-    std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnOfferConvoy > > pNetnOfferConvoyReceiver_;
-    std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted > > pNetnServiceStartedReceiver_;
-    std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnConvoyEmbarkmentStatus > > pNetnConvoyEmbarkmentStatusReceiver_;
-    std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnConvoyDisembarkmentStatus > > pNetnConvoyDisembarkmentStatusReceiver_;
+    std::auto_ptr< TransportationRequester > pTransportationRequester_;
     std::auto_ptr< TransportationOfferer > pTransportationOfferer_;
-    std::auto_ptr< NetnOfferResponseSender > pNetnOfferResponseSender_;
-    std::auto_ptr< ::hla::InteractionNotification_ABC< interactions::NetnServiceComplete > > pNetnServiceCompleteReceiver_;
     //@}
 };
 

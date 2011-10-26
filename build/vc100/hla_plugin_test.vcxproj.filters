@@ -124,9 +124,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationTypesTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRequestConvoySenderTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteCallsignListenerTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -137,15 +134,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SideCheckerTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoyReceiverTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferResponseSenderTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnConvoyEmbarkmentStatusReceiverTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationOffererTest.cpp">
@@ -270,9 +258,6 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMissionResolver.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationListener.h">
-      <Filter>Source Files\mock</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnits.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
@@ -295,9 +280,6 @@
       <Filter>Source Files\mock</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAutomatChecker.h">
-      <Filter>Source Files\mock</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationRequester.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
   </ItemGroup>

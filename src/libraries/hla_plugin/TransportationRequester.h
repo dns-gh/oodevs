@@ -10,9 +10,9 @@
 #ifndef plugins_hla_TransportationRequester_h
 #define plugins_hla_TransportationRequester_h
 
-#include "TransportationRequester_ABC.h"
 #include "tools/MessageObserver.h"
 #include "Interactions.h"
+#include <hla/InteractionNotification_ABC.h>
 #include <vector>
 #include <map>
 #include <geometry/Types.h>
@@ -50,37 +50,46 @@ namespace hla
     class CallsignResolver_ABC;
     class Subordinates_ABC;
     class ContextFactory_ABC;
+    class TransportedUnits_ABC;
+    template< typename T > class InteractionSender_ABC;
 
 // =============================================================================
 /** @class  TransportationRequester
-    @brief  Transportation controller
+    @brief  Transportation requester
 */
 // Created: SLI 2011-10-06
 // =============================================================================
-class TransportationRequester : public TransportationRequester_ABC
-                               , private tools::MessageObserver< sword::AutomatOrder >
-                               , private tools::MessageObserver< sword::Report >
+class TransportationRequester : private tools::MessageObserver< sword::AutomatOrder >
+                              , private tools::MessageObserver< sword::Report >
+                              , private ::hla::InteractionNotification_ABC< interactions::NetnOfferConvoy >
+                              , private ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted >
+                              , private ::hla::InteractionNotification_ABC< interactions::NetnConvoyEmbarkmentStatus >
+                              , private ::hla::InteractionNotification_ABC< interactions::NetnConvoyDisembarkmentStatus >
+                              , private ::hla::InteractionNotification_ABC< interactions::NetnServiceComplete >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              TransportationRequester( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
-                                       tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                       const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
-                                       const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher );
+                                      tools::MessageController_ABC< sword::SimToClient_Content >& controller,
+                                      const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
+                                      const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher,
+                                      InteractionSender_ABC< interactions::NetnRequestConvoy >& requestSender,
+                                      InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptSender,
+                                      InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender,
+                                      InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender,
+                                      InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender );
     virtual ~TransportationRequester();
     //@}
 
 public:
     //! @name Operations
     //@{
-    virtual void Register( TransportationListener_ABC& listener );
-    virtual void Unregister( TransportationListener_ABC& listener );
-    virtual void OfferReceived( unsigned int context, bool fullOffer, const std::string& provider, const interactions::ListOfTransporters& listOfTransporters );
-    virtual void ServiceStarted( unsigned int context );
-    virtual void NotifyEmbarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits );
-    virtual void NotifyDisembarkationStatus( unsigned int context, const std::string& transporterCallsign, const TransportedUnits_ABC& transportedUnits );
-    virtual void ServiceComplete( unsigned int context, const std::string& provider );
+    virtual void Receive( interactions::NetnOfferConvoy& interaction );
+    virtual void Receive( interactions::NetnServiceStarted& interaction );
+    virtual void Receive( interactions::NetnConvoyEmbarkmentStatus& interaction );
+    virtual void Receive( interactions::NetnConvoyDisembarkmentStatus& interaction );
+    virtual void Receive( interactions::NetnServiceComplete& interaction );
     //@}
 
 private:
@@ -93,7 +102,6 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< TransportationListener_ABC* > T_Listeners;
     typedef boost::bimap< unsigned int, unsigned int > T_Requests;
     struct T_Request
     {
@@ -121,7 +129,11 @@ private:
     const Subordinates_ABC& subordinates_;
     const ContextFactory_ABC& contextFactory_;
     dispatcher::SimulationPublisher_ABC& publisher_;
-    T_Listeners listeners_;
+    InteractionSender_ABC< interactions::NetnRequestConvoy >& requestSender_;
+    InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptSender_;
+    InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender_;
+    InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender_;
+    InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender_;
     T_Requests pendingRequests_;
     T_Requests acceptedRequests_;
     T_Requests readyToReceiveRequests_;
