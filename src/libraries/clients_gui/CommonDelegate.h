@@ -94,6 +94,15 @@ private:
         DelegatePosition() : id_( 0 ), fromRow_( 0 ), toRow_( 0 ), fromCol_( 0 ), toCol_( 0 ) {}
         DelegatePosition( unsigned int id, int fromRow, int toRow, int fromCol, int toCol ) : id_( id ), fromRow_( fromRow ), toRow_( toRow ), fromCol_( fromCol ), toCol_( toCol ) {}
 
+        void Fill( unsigned int id, int fromRow, int toRow, int fromCol, int toCol )
+        {
+            id_ = id;
+            fromRow_ = fromRow;
+            toRow_ = toRow;
+            fromCol_ = fromCol;
+            toCol_ = toCol;
+        }
+
         unsigned int id_;
         int fromRow_;
         int toRow_;

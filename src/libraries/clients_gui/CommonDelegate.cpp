@@ -42,10 +42,21 @@ unsigned int CommonDelegate::AddSpinBox( int fromRow, int toRow, int fromCol, in
                                          int min /*= 0*/, int max /*= 100*/, int gap /*= 1*/,
                                          int minLinkedRow /*= -1*/, int maxLinkedRow /*= -1*/, int minLinkedCol /*= -1*/, int maxLinkedCol /*= -1*/ )
 {
-    assert( FindPosition( fromRow, toRow, fromCol, toCol ) == 0 );
     unsigned int id = GetNewId();
-    positions_.push_back( DelegatePosition( id, fromRow, toRow, fromCol, toCol ) );
-    spinBoxs_.Register( id, *new SpinBoxDescription< int >( min, max, gap, 0, minLinkedRow, maxLinkedRow, minLinkedCol, maxLinkedCol ) );
+    CommonDelegate::DelegatePosition* position = const_cast< CommonDelegate::DelegatePosition*  >( FindPosition( fromRow, toRow, fromCol, toCol ) );
+    if( position == 0 )
+    {
+        positions_.push_back( DelegatePosition( id, fromRow, toRow, fromCol, toCol ) );
+        spinBoxs_.Register( id, *new SpinBoxDescription< int >( min, max, gap, 0, minLinkedRow, maxLinkedRow, minLinkedCol, maxLinkedCol ) );
+    }
+    else
+    {
+        spinBoxs_.Remove( position->id_ );
+        doubleSpinBoxs_.Remove( position->id_ );
+        comboBoxs_.Remove( position->id_ );
+        position->Fill( id, fromRow, toRow, fromCol, toCol );
+        spinBoxs_.Register( id, *new SpinBoxDescription< int >( min, max, gap, 0, minLinkedRow, maxLinkedRow, minLinkedCol, maxLinkedCol ) );
+    }
     return id;
 }
 
@@ -57,10 +68,21 @@ unsigned int CommonDelegate::AddDoubleSpinBox( int fromRow, int toRow, int fromC
                                                double min /*= 0.*/, double max /*= 100.*/, double gap /*= 1.*/, int precision /*= 2*/,
                                                int minLinkedRow /*= -1*/, int maxLinkedRow /*= -1*/, int minLinkedCol /*= -1*/, int maxLinkedCol /*= -1*/ )
 {
-    assert( FindPosition( fromRow, toRow, fromCol, toCol ) == 0 );
     unsigned int id = GetNewId();
-    positions_.push_back( DelegatePosition( id, fromRow, toRow, fromCol, toCol ) );
-    doubleSpinBoxs_.Register( id, *new SpinBoxDescription< double >( min, max, gap, precision, minLinkedRow, maxLinkedRow, minLinkedCol, maxLinkedCol ) );
+    CommonDelegate::DelegatePosition* position = const_cast< CommonDelegate::DelegatePosition*  >( FindPosition( fromRow, toRow, fromCol, toCol ) );
+    if( position == 0 )
+    {
+        positions_.push_back( DelegatePosition( id, fromRow, toRow, fromCol, toCol ) );
+        doubleSpinBoxs_.Register( id, *new SpinBoxDescription< double >( min, max, gap, precision, minLinkedRow, maxLinkedRow, minLinkedCol, maxLinkedCol ) );
+    }
+    else
+    {
+        spinBoxs_.Remove( position->id_ );
+        doubleSpinBoxs_.Remove( position->id_ );
+        comboBoxs_.Remove( position->id_ );
+        position->Fill( id, fromRow, toRow, fromCol, toCol );
+        doubleSpinBoxs_.Register( id, *new SpinBoxDescription< double >( min, max, gap, precision, minLinkedRow, maxLinkedRow, minLinkedCol, maxLinkedCol ) );
+    }
     return id;
 }
 
@@ -71,10 +93,21 @@ unsigned int CommonDelegate::AddDoubleSpinBox( int fromRow, int toRow, int fromC
 unsigned int CommonDelegate::AddComboBox( int fromRow, int toRow, int fromCol, int toCol,
                                           QStringList stringList )
 {
-    assert( FindPosition( fromRow, toRow, fromCol, toCol ) == 0 );
     unsigned int id = GetNewId();
-    positions_.push_back( DelegatePosition( id, fromRow, toRow, fromCol, toCol ) );
-    comboBoxs_.Register( id, *new QStringList( stringList ) );
+    CommonDelegate::DelegatePosition* position = const_cast< CommonDelegate::DelegatePosition*  >( FindPosition( fromRow, toRow, fromCol, toCol ) );
+    if( position == 0 )
+    {
+        positions_.push_back( DelegatePosition( id, fromRow, toRow, fromCol, toCol ) );
+        comboBoxs_.Register( id, *new QStringList( stringList ) );
+    }
+    else
+    {
+        spinBoxs_.Remove( position->id_ );
+        doubleSpinBoxs_.Remove( position->id_ );
+        comboBoxs_.Remove( position->id_ );
+        position->Fill( id, fromRow, toRow, fromCol, toCol );
+        comboBoxs_.Register( id, *new QStringList( stringList ) );
+    }
     return id;
 }
 

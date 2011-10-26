@@ -94,7 +94,7 @@ void UnitStateTableCrew::OnClearItems()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitStateTableCrew::OnRemoveItem
+// Name: UnitStateTableCrew::OnRemoveCurrentItem
 // Created: ABR 2011-02-28
 // -----------------------------------------------------------------------------
 void UnitStateTableCrew::OnRemoveCurrentItem()
@@ -124,7 +124,7 @@ void UnitStateTableCrew::contextMenuEvent( QContextMenuEvent* e )
         if( index.isValid() && index.row() >= eNbrHumanRank && index.row() <= dataModel_.rowCount() )
         {
             setCurrentIndex( index );
-            popupMenu.insertItem( tr( "Delete" ), this, SLOT( OnRemoveItem() ) );
+            popupMenu.insertItem( tr( "Delete" ), this, SLOT( OnRemoveCurrentItem() ) );
         }
         popupMenu.insertItem( tr( "Clear" ), this, SLOT( OnClearItems() ) );
     }
