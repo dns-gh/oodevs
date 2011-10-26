@@ -116,7 +116,6 @@ private:
 private:
     //! @name Helpers
     //@{
-    void Transfer( T_Requests& from, T_Requests& to, unsigned int context ) const;
     void SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const interactions::ListOfUnits& units, unsigned int actionType );
     //@}
 
@@ -138,8 +137,6 @@ private:
     T_Requests acceptedRequests_;
     T_Requests readyToReceiveRequests_;
     T_Requests serviceStartedRequests_;
-    T_Requests embarkedRequests_;
-    T_Requests debarkedRequests_;
     T_Requests completeRequests_;
     T_ContextRequests contextRequests_;
     //@}

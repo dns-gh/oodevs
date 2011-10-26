@@ -36,12 +36,56 @@ namespace
                 >> xml::content( mission, name );
         return resolver.Resolve( name );
     }
+
     unsigned int ResolveReportId( xml::xisubstream xis )
     {
         unsigned int reportType = 0;
         xis >> xml::start( "reports" )
                 >> xml::content( "mission-complete", reportType );
         return reportType;
+    }
+
+    template< typename T_Requests >
+    void Transfer( T_Requests& from, T_Requests& to, unsigned int context )
+    {
+        const unsigned int automatId = from.left.find( context )->second;
+        from.left.erase( context );
+        to.insert( T_Requests::value_type( context, automatId ) );
+    }
+
+    std::string ResolveUniqueIdFromCallsign( const std::string& callsign, const interactions::ListOfUnits& listOfTransporters )
+    {
+        BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, listOfTransporters.list )
+            if( unit.callsign.str() == callsign )
+                return unit.uniqueId.str();
+        return "";
+    }
+
+    template< typename From, typename To >
+    void CopyService( const From& from, To& to )
+    {
+       to.serviceId = from.serviceId;
+       to.consumer = from.consumer;
+       to.provider = from.provider;
+       to.serviceType = from.serviceType;
+    }
+
+    geometry::Point2d ReadLocation( const sword::MissionParameter& parameter )
+    {
+        return geometry::Point2d( parameter.value( 0 ).location().coordinates().elem( 0 ).latitude(),
+                                  parameter.value( 0 ).location().coordinates().elem( 0 ).longitude() );
+    }
+
+    long long ReadTime( const sword::MissionParameter& parameter )
+    {
+        const std::string data = parameter.value( 0 ).datetime().data();
+        bpt::ptime time = bpt::from_iso_string( data );
+        return ( time - bpt::from_time_t( 0 ) ).total_seconds();
+    }
+
+    unsigned long ReadAgent( const sword::MissionParameter& parameter )
+    {
+        return parameter.value( 0 ).agent().id();
     }
 }
 
@@ -57,7 +101,7 @@ TransportationRequester::TransportationRequester( xml::xisubstream xis, const Mi
                                                     InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptSender,
                                                     InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender,
                                                     InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender,
-                                                    InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender)
+                                                    InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender )
     : transportIdentifier_    ( ResolveMission( xis, resolver, "transport" ) )
     , missionCompleteReportId_( ResolveReportId( xis ) )
     , callsignResolver_       ( callsignResolver )
@@ -85,21 +129,6 @@ TransportationRequester::~TransportationRequester()
 
 namespace
 {
-    geometry::Point2d ReadLocation( const sword::MissionParameter& parameter )
-    {
-        return geometry::Point2d( parameter.value( 0 ).location().coordinates().elem( 0 ).latitude(),
-                                  parameter.value( 0 ).location().coordinates().elem( 0 ).longitude() );
-    }
-    long long ReadTime( const sword::MissionParameter& parameter )
-    {
-        const std::string data = parameter.value( 0 ).datetime().data();
-        bpt::ptime time = bpt::from_iso_string( data );
-        return ( time - bpt::from_time_t( 0 ) ).total_seconds();
-    }
-    unsigned long ReadAgent( const sword::MissionParameter& parameter )
-    {
-        return parameter.value( 0 ).agent().id();
-    }
     class SubordinatesVisitor : public TransportedUnitsVisitor_ABC
     {
     public:
@@ -119,7 +148,7 @@ namespace
 // Name: TransportationRequester::Notify
 // Created: SLI 2011-10-06
 // -----------------------------------------------------------------------------
-void TransportationRequester::Notify(  const sword::AutomatOrder& message, int /*context*/ )
+void TransportationRequester::Notify( const sword::AutomatOrder& message, int /*context*/ )
 {
     if( message.type().id() == transportIdentifier_ && message.parameters().elem_size() == 8 )
     {
@@ -146,46 +175,6 @@ void TransportationRequester::Notify(  const sword::AutomatOrder& message, int /
         request.transportData = NetnTransportStruct( transport );
         requestSender_.Send( request );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationRequester::Notify
-// Created: SLI 2011-10-12
-// -----------------------------------------------------------------------------
-void TransportationRequester::Notify( const sword::Report& message, int /*context*/ )
-{
-    if( !message.source().has_automat() )
-        return;
-    if( message.type().id() != missionCompleteReportId_ )
-        return;
-    const unsigned int automatId = message.source().automat().id();
-    T_Requests::right_const_iterator request = acceptedRequests_.right.find( automatId );
-    if( request == acceptedRequests_.right.end() )
-        return;
-    const unsigned int context = request->second;
-    interactions::NetnReadyToReceiveService ready;
-    // $$$$
-    readySender_.Send( ready );
-    Transfer( acceptedRequests_, readyToReceiveRequests_, context );
-}
-
-namespace
-{
-     std::string ResolveUniqueIdFromCallsign( const std::string& callsign, const interactions::ListOfUnits& listOfTransporters )
-     {
-         BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, listOfTransporters.list )
-             if( unit.callsign.str() == callsign )
-                 return unit.uniqueId.str();
-         return "";
-     }
-     template< typename From, typename To >
-     void CopyService( const From& from, To& to )
-     {
-        to.serviceId = from.serviceId;
-        to.consumer = from.consumer;
-        to.provider = from.provider;
-        to.serviceType = from.serviceType;
-     }
 }
 
 // -----------------------------------------------------------------------------
@@ -230,6 +219,27 @@ void TransportationRequester::Receive( interactions::NetnOfferConvoy& interactio
         reject.reason = "Offering only partial offer";
         rejectSender_.Send( reject );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Notify
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void TransportationRequester::Notify( const sword::Report& message, int /*context*/ )
+{
+    if( !message.source().has_automat() )
+        return;
+    if( message.type().id() != missionCompleteReportId_ )
+        return;
+    const unsigned int automatId = message.source().automat().id();
+    T_Requests::right_const_iterator request = acceptedRequests_.right.find( automatId );
+    if( request == acceptedRequests_.right.end() )
+        return;
+    const unsigned int context = request->second;
+    interactions::NetnReadyToReceiveService ready;
+    // $$$$
+    readySender_.Send( ready );
+    Transfer( acceptedRequests_, readyToReceiveRequests_, context );
 }
 
 // -----------------------------------------------------------------------------
@@ -316,15 +326,4 @@ void TransportationRequester::Receive( interactions::NetnServiceComplete& intera
     interactions::NetnServiceReceived received;
     CopyService( interaction, received );
     receivedSender_.Send( received );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransportationRequester::Transfer
-// Created: SLI 2011-10-12
-// -----------------------------------------------------------------------------
-void TransportationRequester::Transfer( T_Requests& from, T_Requests& to, unsigned int context ) const
-{
-    const unsigned int automatId = from.left.find( context )->second;
-    from.left.erase( context );
-    to.insert( T_Requests::value_type( context, automatId ) );
 }
