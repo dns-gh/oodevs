@@ -520,11 +520,6 @@ void PHY_RolePionLOG_Supply::SendFullState( unsigned int context ) const
     pStocks_->SendFullState( asn );
 
     asn.Send( NET_Publisher_ABC::Publisher(), context );
-
-    if( asn().transporters().elem_size() > 0 )
-        asn().mutable_transporters()->Clear();
-    if( asn().stocks().elem_size() > 0 )
-        asn().mutable_stocks()->Clear();
 }
 
 // -----------------------------------------------------------------------------

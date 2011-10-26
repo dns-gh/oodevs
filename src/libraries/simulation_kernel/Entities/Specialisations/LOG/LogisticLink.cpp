@@ -222,9 +222,6 @@ void LogisticLink::SendQuotas( unsigned int context ) const
     }
 
     message.Send( NET_Publisher_ABC::Publisher(), context );
-
-    if( message().quotas().elem_size() > 0 )
-        message().mutable_quotas()->Clear();
 }
 
 // -----------------------------------------------------------------------------
