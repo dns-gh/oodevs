@@ -10,9 +10,12 @@
 #include "preparation_app_pch.h"
 #include "ModelConsistencyDialog.h"
 #include "moc_ModelConsistencyDialog.cpp"
+#include "FilterProxyModel.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Entity_ABC.h"
+#include <boost/foreach.hpp>
+#include <boost/assign/list_of.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyDialog constructor
@@ -22,6 +25,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     : QDialog ( parent, "ModelConsistencyDialog" )
     , actionController_( actionController )
     , checker_         ( model, staticModel )
+    , pMapper_         ( new QSignalMapper( this ) )
 {
     // Initialize dialog
     setCaption( tr( "Consistency analysis" ) );
@@ -31,21 +35,32 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     horizontalHeaders_ << tr( "ID" ) << tr( "Name" ) << tr( "Description" );
     dataModel_ = new QStandardItemModel( this );
     dataModel_->setColumnCount( 3 );
+    proxyModel_ = new FilterProxyModel( this );
+    proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->setSourceModel( dataModel_ );
+    proxyModel_->setSortRole( Qt::UserRole + 2 );
 
     // View
     tableView_ = new QTableView( this );
-    tableView_->setModel( dataModel_ );
+    tableView_->setModel( proxyModel_ );
+    tableView_->setSortingEnabled( true );
     tableView_->setSelectionBehavior( QAbstractItemView::SelectRows );
     tableView_->setSelectionMode( QAbstractItemView::SingleSelection );
     tableView_->setAlternatingRowColors( true );
     tableView_->verticalHeader()->setVisible( false );
     connect( tableView_, SIGNAL( doubleClicked( const QModelIndex & ) ), this, SLOT( OnSelectionChanged( const QModelIndex& ) ) );
-
     // Buttons
     QPushButton* refreshButton = new QPushButton( tr( "Refresh" ) );
     QPushButton* closeButton = new QPushButton( tr( "Close" ) );
     connect( refreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
     connect( closeButton, SIGNAL( clicked() ), SLOT( reject() ) );
+
+    // CheckBox
+    QHBoxLayout* checkBoxLayout = new QHBoxLayout();
+    CreateCheckbox( *checkBoxLayout, boost::assign::map_list_of( ModelConsistencyChecker::eAllProfile, tr( "Profile" ) )
+                                                               ( ModelConsistencyChecker::eAllGhost, tr( "Ghost" ) )
+                                                               ( ModelConsistencyChecker::eAllInitialization, tr( "Logistic" ) )
+                                                               ( ModelConsistencyChecker::eAllUniqueness, tr( "Unicity" ) ) );
 
     // Layout creation
     QVBoxLayout* mainLayout = new QVBoxLayout();
@@ -53,6 +68,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     QHBoxLayout* buttonLayout = new QHBoxLayout();
 
     // Layout management
+    mainLayout->addLayout( checkBoxLayout );
     mainLayout->addWidget( tableView_ );
     mainLayout->addLayout( buttonLayout );
     buttonLayout->addWidget( refreshButton );
@@ -83,24 +99,40 @@ ModelConsistencyDialog::~ModelConsistencyDialog()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelConsistencyDialog::CreateCheckbox
+// Created: LGY 2011-10-26
+// -----------------------------------------------------------------------------
+void ModelConsistencyDialog::CreateCheckbox( QHBoxLayout& layout, const T_Types& names )
+{
+    connect( pMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnFilterChanged( int ) ) );
+    BOOST_FOREACH( const T_Types::value_type& name, names )
+    {
+        QCheckBox* pCheckBox = new QCheckBox( name.second );
+        connect( pCheckBox, SIGNAL( stateChanged( int ) ), pMapper_, SLOT( map() ) );
+        pMapper_->setMapping( pCheckBox, name.first );
+        pCheckBox->setCheckState( Qt::Checked );
+        layout.addWidget( pCheckBox );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelConsistencyDialog::OnRefresh
 // Created: ABR 2011-09-23
 // -----------------------------------------------------------------------------
 void ModelConsistencyDialog::OnRefresh()
 {
-    CheckConsistency( currentFilters_ );
+    CheckConsistency();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyDialog::CheckConsistency
 // Created: ABR 2011-09-23
 // -----------------------------------------------------------------------------
-void ModelConsistencyDialog::CheckConsistency( unsigned int filters /*= ModelConsistencyChecker::eAllChecks*/ )
+void ModelConsistencyDialog::CheckConsistency()
 {
-    currentFilters_ = filters;
-    checker_.CheckConsistency( currentFilters_ );
+    checker_.CheckConsistency();
     UpdateDataModel();
-    if( !checker_.GetConsistencyErrors().empty() && !isShown() )
+    if( !checker_.GetConsistencyErrors().empty() && !isShown() && dataModel_->rowCount() > 0 )
         show();
 }
 
@@ -127,16 +159,34 @@ void ModelConsistencyDialog::UpdateDataModel()
 
         for( std::vector< const kernel::Entity_ABC* >::const_iterator entityIt = error.entities_.begin(); entityIt != error.entities_.end(); ++entityIt, ++currentRow )
         {
+
+            QList< QStandardItem* > items;
             const kernel::Entity_ABC& entity = **entityIt;
-            AddItem( currentRow, eID, QString::number( entity.GetId() ), entity );
-            AddItem( currentRow, eName, entity.GetName(), entity );
-            AddItem( currentRow, eDescription, 
-                ( error.type_ & ModelConsistencyChecker::eAllUniqueness ||
-                  error.type_ & ModelConsistencyChecker::eProfileUniqueness ||
-                  error.type_ & ModelConsistencyChecker::eGhostConverted )
-                ? errorDescriptions_[ error.type_ ].arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() )
-                : errorDescriptions_[ error.type_ ], entity );
+            AddItem( static_cast< unsigned int >( entity.GetId() ), QString::number( entity.GetId() ), entity, error.type_, items );
+            AddItem( entity.GetName(), entity.GetName(), entity, error.type_, items );
+            QString text = ( error.type_ & ModelConsistencyChecker::eAllUniqueness ||
+                             error.type_ & ModelConsistencyChecker::eProfileUniqueness ||
+                             error.type_ & ModelConsistencyChecker::eGhostConverted )
+                           ? errorDescriptions_[ error.type_ ].arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() )
+                           : errorDescriptions_[ error.type_ ];
+
+            AddItem( text, text, entity, error.type_, items  );
+            dataModel_->appendRow( items );
         }
+    }
+}
+
+namespace
+{
+    int Convert( ModelConsistencyChecker::E_ConsistencyCheck type )
+    {
+        if( type <= ModelConsistencyChecker::eAllUniqueness )
+            return ModelConsistencyChecker::eAllUniqueness;
+        if( type <= ModelConsistencyChecker::eAllInitialization )
+            return ModelConsistencyChecker::eAllInitialization;
+        if( type <= ModelConsistencyChecker::eAllProfile )
+            return ModelConsistencyChecker::eAllProfile;
+        return ModelConsistencyChecker::eAllGhost;
     }
 }
 
@@ -144,14 +194,19 @@ void ModelConsistencyDialog::UpdateDataModel()
 // Name: ModelConsistencyDialog::AddItem
 // Created: ABR 2011-09-26
 // -----------------------------------------------------------------------------
-void ModelConsistencyDialog::AddItem( int row, int col, QString text, const kernel::Entity_ABC& entity )
+template< typename T >
+void ModelConsistencyDialog::AddItem( T data, QString text, const kernel::Entity_ABC& entity,
+                                      ModelConsistencyChecker::E_ConsistencyCheck type, QList< QStandardItem* >& items )
 {
     QStandardItem* item = new QStandardItem( text );
     item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
     QVariant* variant = new QVariant();
     variant->setValue( VariantPointer( &entity ) );
-    item->setData( *variant, Qt::UserRole + 1 );
-    dataModel_->setItem( row, col, item );
+    item->setData( *variant, Qt::UserRole );
+    QVariant* errorType = new QVariant( Convert( type ) );
+    item->setData( *errorType, Qt::UserRole + 1 );
+    item->setData( data, Qt::UserRole + 2 );
+    items.push_back( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,10 +215,20 @@ void ModelConsistencyDialog::AddItem( int row, int col, QString text, const kern
 // -----------------------------------------------------------------------------
 void ModelConsistencyDialog::OnSelectionChanged( const QModelIndex& index )
 {
-    const kernel::Entity_ABC* entity = static_cast< const kernel::Entity_ABC* >( index.data( Qt::UserRole + 1 ).value< VariantPointer >().ptr_ );
+    const kernel::Entity_ABC* entity = static_cast< const kernel::Entity_ABC* >( index.data( Qt::UserRole ).value< VariantPointer >().ptr_ );
     if( entity )
     {
         entity->Select( actionController_ );
         entity->Activate( actionController_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyDialog::OnFilterChanged
+// Created: LGY 2011-10-26
+// -----------------------------------------------------------------------------
+void ModelConsistencyDialog::OnFilterChanged( int type )
+{
+    proxyModel_->ToggleFilter( static_cast< ModelConsistencyChecker::E_ConsistencyCheck >( type ) );
+    proxyModel_->setSourceModel( dataModel_ );
 }

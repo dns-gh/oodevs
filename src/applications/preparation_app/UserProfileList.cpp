@@ -61,7 +61,7 @@ void UserProfileList::Save()
         *const_cast< UserProfile* >( it->first ) = *it->second;
         controllers_.controller_.Update( it->first );
     }
-    emit( DoConsistencyCheck( ModelConsistencyChecker::eAllProfile ) );
+    emit( DoConsistencyCheck() );
 }
 
 // -----------------------------------------------------------------------------

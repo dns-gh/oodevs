@@ -56,7 +56,7 @@ FilterOrbatReIndexer::FilterOrbatReIndexer( QWidget* mainwindow, const tools::Ex
     , checkedPixmap_        ( MAKE_PIXMAP( check ) )
     , uncheckedPixmap_      ( MAKE_PIXMAP( cross ) )
 {
-    connect( this, SIGNAL( DoConsistencyCheck( unsigned int ) ), mainwindow, SLOT( CheckConsistency( unsigned int ) ) );
+    connect( this, SIGNAL( DoConsistencyCheck() ), mainwindow, SLOT( CheckConsistency() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,7 +302,7 @@ void FilterOrbatReIndexer::Execute()
     model_.teams_.Load( newXis, model_, loadingErrors );
     if( !loadingErrors.empty() )
         QMessageBox::critical( QApplication::activeModalWidget(), tools::translate( "FilterOrbatReIndexer", "Error loading the new orbat file" ), ( tools::translate( "FilterOrbatReIndexer", "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() ).ascii() );
-    emit( DoConsistencyCheck( ModelConsistencyChecker::eAllUniqueness ) );
+    emit( DoConsistencyCheck() );
 }
 
 // -----------------------------------------------------------------------------

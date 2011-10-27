@@ -53,7 +53,7 @@ public:
 signals:
     //! @name Types
     //@{
-    void DoConsistencyCheck( unsigned int );
+    void DoConsistencyCheck();
     //@}
 
 private:

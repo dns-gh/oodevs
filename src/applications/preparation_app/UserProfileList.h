@@ -49,7 +49,7 @@ public:
     //@}
 
 signals:
-    void DoConsistencyCheck( unsigned int );
+    void DoConsistencyCheck();
 
 private slots:
     //! @name Slots
