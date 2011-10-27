@@ -21,6 +21,9 @@
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/Tools.h"
 #include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
@@ -148,6 +151,17 @@ namespace
     }
 }
 
+namespace
+{
+    bool IsValid( const kernel::Automat_ABC& automat, const kernel::AgentType& type )
+    {
+        if( ( type.IsTC2() || type.IsLogisticSupply() || type.IsLogisticMaintenance() ||  type.IsLogisticMedical() )
+            && automat.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+             return false;
+        return true;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer::HandleDropEvent
 // Created: SBO 2006-09-01
@@ -167,6 +181,12 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
     {
         if( !selectedAutomat_ )
             return false;
+        if( !IsValid( *selectedAutomat_, *droppedItem ) )
+        {
+            QMessageBox::warning( 0, tools::translate( "Application", "SWORD" ), tools::translate( "AgentsLayer", "Logistic units can not be placed under a non logistic automat" ) );
+            return false;
+        }
+
         model_.agents_.CreateAgent( *selectedAutomat_.ConstCast(), *droppedItem, point );
         return true;
     }

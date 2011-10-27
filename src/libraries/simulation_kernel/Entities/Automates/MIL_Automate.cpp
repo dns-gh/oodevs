@@ -941,6 +941,17 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitCreationReques
     MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, nCtx ); // Auto-registration
 }
 
+namespace
+{
+    bool IsLogistic( const MIL_AgentTypePion& type )
+    {
+        const std::string name = type.GetMilPionType();
+        if( name.find( "Pion LOG" ) != std::string::npos )
+            return true;
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveUnitCreationRequest
 // Created: JSR 2010-04-16
@@ -956,6 +967,8 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( id.value().Get(0).identifier() );
     if( !pType )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
+    if(  !pBrainLogistic_.get() && IsLogistic( *pType ) )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
     const sword::MissionParameter& location = msg.parameters().elem( 1 );
     if( location.value_size() != 1 || !location.value().Get(0).has_point() )
