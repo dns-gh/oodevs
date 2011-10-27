@@ -486,7 +486,7 @@
     </target>
 
     <target name="application.dispatcher_app" depends="application.dispatcher_dll" description="build Sword Dispatcher executable">
-        <build-app name="dispatcher_app" mode="release" depends="boost,terrain,flexlm,qt4"
+        <build-app name="dispatcher_app" mode="release" depends="boost,terrain,flexlm,qt4,xerces,xalan"
             libs="masalloc,tools,
                   Qt3Support4,
                   dispatcher-${platform}-mt@{suffix},
