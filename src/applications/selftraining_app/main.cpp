@@ -12,23 +12,21 @@
 #include "license_gui/LicenseDialog.h"
 #include "tools/Version.h"
 #include "tools/WinArguments.h"
-#include "tools/win32/FlexLm.h"
 #include "tools/Win32/BugTrap.h"
 #include "clients_gui/Tools.h"
 #include <windows.h>
 
 int main( int argc, char* argv[] )
 {
+    int nResult = EXIT_FAILURE;
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    const std::string licenseFeature = "sword";
     try
     {
-        std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( licenseFeature, 1.0f, "license.dat;.", FlexLmLicense::eCheckModeCustom ) );
+        license_gui::LicenseDialog::CheckLicense( "sword" );
     }
-    catch( FlexLmLicense::LicenseError& error )
+    catch( std::exception& /*e*/ )
     {
-        license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ );
-        return 0;
+        return nResult;
     }
 #endif
 
@@ -41,7 +39,7 @@ int main( int argc, char* argv[] )
     try
     {
         app.Initialize();
-        app.exec();
+        nResult = app.exec();
     }
     catch( std::runtime_error& e )
     {
@@ -51,7 +49,7 @@ int main( int argc, char* argv[] )
     {
         QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
     }
-    return 0;
+    return nResult;
 }
 
 int WINAPI WinMain( HINSTANCE /*hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )

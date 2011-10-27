@@ -11,27 +11,30 @@
 #include "license_gui/LicenseDialog.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Logger.h"
-#include "tools/win32/FlexLm.h"
 #include "tools/WinArguments.h"
+#pragma warning( push )
+#pragma warning( disable: 4512 )
+#include <boost/program_options.hpp>
+#pragma warning( pop )
 #include <windows.h>
 
-int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
+int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 {
-    const std::string licenseFeature = "sword-replayer";
     int nResult = EXIT_SUCCESS;
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
+    bool silentMode = false;
     try
     {
+        // Silent mode
+        std::vector< std::string > argv = boost::program_options:: split_winmain( lpCmdLine );
+        silentMode = ( std::find( argv.begin(), argv.end(), "--silent" ) != argv.end() );
+
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-        std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( licenseFeature, 1.0f, "license.dat;.", FlexLmLicense::eCheckModeCustom ) );
+        license_gui::LicenseDialog::CheckLicense( "sword-replayer", silentMode );
 #endif
         App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
         app.Execute();
-    }
-    catch( FlexLmLicense::LicenseError& error )
-    {
-        license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ );
     }
     catch( std::exception& e )
     {

@@ -14,7 +14,6 @@
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Version.h"
 #include "tools/Version.h"
-#include <tools/win32/FlexLm.h>
 #include <windows.h>
 #include <commctrl.h>
 
@@ -26,40 +25,6 @@
 namespace po = boost::program_options;
 
 static const std::string szADN_Version   = "ADN - " + std::string( tools::AppVersion() ) + " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
-
-/*
-#pragma init_seg(lib)
-
-class ADN_MessageOutputIntercepter
-{
-public:
-
-    ADN_MessageOutputIntercepter()
-    {
-        qInstallMsgHandler( ADN_MessageOutputIntercepter::intercept );
-    }
-
-    static void intercept( QtMsgType type, const char *msg )
-    {
-        switch ( type )
-        {
-            case QtDebugMsg:
-                fprintf( stderr, "Debug: %s\n", msg );
-                break;
-            case QtWarningMsg:
-                fprintf( stderr, "Warning: %s\n", msg );
-                break;
-            case QtFatalMsg:
-            {
-                _asm {int 3}
-                fprintf( stderr, "Fatal: %s\n", msg );
-            }
-        }
-    }
-};
-
-static ADN_MessageOutputIntercepter msgIntercept;
-*/
 
 void SetConsolePos( const int nPosX, const int nPosY )
 {
@@ -75,23 +40,21 @@ void SetConsolePos( const int nPosX, const int nPosY )
     rcPos.Right = rcPos.Left + coord.X-1;
     rcPos.Bottom = rcPos.Top + coord.Y-1;
 
-    int nRet;
-    nRet = SetConsoleScreenBufferSize( GetStdHandle( STD_OUTPUT_HANDLE ), coord );
-    SetWindowPos( FindWindow( NULL, szADN_Version.c_str() ), NULL, rcPos.Left, rcPos.Top, 0, 0, SWP_NOZORDER | SWP_NOACTIVATE | SWP_NOSIZE | SWP_FRAMECHANGED  );
+    SetConsoleScreenBufferSize( GetStdHandle( STD_OUTPUT_HANDLE ), coord );
+    SetWindowPos( FindWindow( NULL, szADN_Version.c_str() ), NULL, rcPos.Left, rcPos.Top, 0, 0, SWP_NOZORDER | SWP_NOACTIVATE | SWP_NOSIZE | SWP_FRAMECHANGED );
 }
 
-int main( uint nArgc, char** ppArgv )
+int main( int nArgc, char** ppArgv )
 {
+    int nResult = EXIT_FAILURE;
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    const std::string licenseFeature = "sword-authoring";
     try
     {
-        std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( licenseFeature , 1.0f, "license.dat;.", FlexLmLicense::eCheckModeCustom ) );
+        license_gui::LicenseDialog::CheckLicense( "sword-authoring" );
     }
-    catch( FlexLmLicense::LicenseError& error )
+    catch( std::exception& /*e*/ )
     {
-        license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ );
-        return 0;
+        return nResult;
     }
 #endif
     // Console
@@ -118,12 +81,13 @@ int main( uint nArgc, char** ppArgv )
     {
         bool nosymbols = vm.count( "nosymbols" ) != 0;
         if( app.Initialize( inputFile, outputFile, nosymbols, nArgc, ppArgv ) )
-            app.exec();
+            nResult = app.exec();
+        else
+            nResult = EXIT_SUCCESS;
     }
     catch( ADN_Exception_ABC& e )
     {
         QMessageBox::critical( 0, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
-        return EXIT_FAILURE;
     }
     catch( std::exception& exception )
     {
@@ -134,17 +98,11 @@ int main( uint nArgc, char** ppArgv )
             MT_LOG_ERROR_MSG( exception.what() );
             QMessageBox::critical( 0, "Critical", exception.what() );
         }
-
-        app.quit();
-        MT_LOG_UNREGISTER_LOGGER( consoleLogger );
-        return EXIT_FAILURE;
     }
     catch( ... )
     {
         QMessageBox::critical( 0, "Critical", "Unknown error !" );
-        return EXIT_FAILURE;
     }
-    app.quit();
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
-    return EXIT_SUCCESS;
+    return nResult;
 }

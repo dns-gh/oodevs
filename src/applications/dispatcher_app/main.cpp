@@ -13,7 +13,6 @@
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/WinArguments.h"
-#include "tools/win32/FlexLm.h"
 #include <windows.h>
 #pragma warning( push )
 #pragma warning( disable: 4512 )
@@ -33,7 +32,6 @@ int Run( LPSTR lpCmdLine )
     bool silentMode = false;
     int maxConnections = 10;
     int nResult = EXIT_FAILURE;
-    std::string licenseFeature;
     try
     {
         // Silent mode
@@ -42,28 +40,14 @@ int Run( LPSTR lpCmdLine )
 
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
         // Check license
-        licenseFeature = "sword-runtime";
-        std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( licenseFeature, 1.0f, "license.dat;.", silentMode ? FlexLmLicense::eCheckModeSilent : FlexLmLicense::eCheckModeCustom ) );
-        licenseFeature = "sword-dispatcher";
-        std::auto_ptr< FlexLmLicense > license_dispatch( FlexLmLicense::CheckLicense( licenseFeature, 1.0f, "license.dat;.", silentMode ? FlexLmLicense::eCheckModeSilent : FlexLmLicense::eCheckModeCustom ) );
-        try
-        {
-            maxConnections = license_dispatch->GetAuthorisedUsers();
-        }
-        catch( FlexLmLicense::LicenseError& )
-        {
-            maxConnections = 1;
-        }
+        license_gui::LicenseDialog::CheckLicense( "sword-runtime", silentMode );
+        license_gui::LicenseDialog::CheckLicense( "sword-dispatcher", silentMode, &maxConnections );
 #endif
 
         // Execute dispatcher
         tools::WinArguments winArgs( lpCmdLine );
         Application app( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ), maxConnections );
         nResult = app.Execute();
-    }
-    catch( FlexLmLicense::LicenseError& error )
-    {
-        license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ );
     }
     catch( std::exception& e )
     {

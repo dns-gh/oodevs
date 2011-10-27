@@ -34,19 +34,20 @@ class LicenseDialog : private boost::noncopyable
 public:
     //! @name Operations
     //@{
-    static void Run( const std::string& feature, const std::string& hostId );
+    static void CheckLicense( const std::string& licenseFeature, bool silentMode = false, int* pMaxConnections = 0, std::string* pExpiration = 0 );
     //@}
     
 private:
     //! @name Constructors/Destructor
     //@{
-             LicenseDialog( const std::string& feature, const std::string& hostId );
+             LicenseDialog( const std::string& feature, const std::string& hostId, bool& installingLicense );
     virtual ~LicenseDialog();
     //@}
 
 private:
     //! @name Helpers
     //@{
+    static bool Run( const std::string& feature, const std::string& hostId );
     static LRESULT CALLBACK MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
     void SetEditText( HWND hEdit );
     void SendMail( HWND hWnd );
@@ -59,6 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
+    bool& installingLicense_;
     const std::string feature_;
     const std::string hostId_;
     std::map< std::string, std::string > translations_;

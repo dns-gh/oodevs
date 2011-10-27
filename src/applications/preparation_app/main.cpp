@@ -17,24 +17,20 @@
 
 //#define NO_LICENSE_CHECK
 
-#if !defined( NO_LICENSE_CHECK )
-#   include <tools/win32/FlexLm.h>
-#endif
-
 int main( int argc, char** argv )
 {
+    int nResult = EXIT_FAILURE;
     QString expiration;
 #if !defined( NO_LICENSE_CHECK )
-    const std::string licenseFeature = "sword-preparation";
     try
     {
-        std::auto_ptr< FlexLmLicense > license = FlexLmLicense::CheckLicense( licenseFeature, 1.0f, "license.dat;.", FlexLmLicense::eCheckModeCustom );
-        expiration = license->GetExpirationDate().c_str();
+        std::string strExpiration;
+        license_gui::LicenseDialog::CheckLicense( "sword-preparation", false, 0, &strExpiration );
+        expiration = strExpiration.c_str();
     }
-    catch( FlexLmLicense::LicenseError& error )
+    catch( std::exception& /*e*/ )
     {
-        license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ );
-        return 0;
+        return nResult;
     }
 #endif
 
@@ -56,19 +52,19 @@ int main( int argc, char** argv )
     try
     {
         if( app.Initialize() )
-            app.exec();
+            nResult = app.exec();
+        else
+            nResult = EXIT_SUCCESS;
     }
     catch( std::exception& e )
     {
         QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
-        return 1;
     }
     catch( ... )
     {
         QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::translate( "Application", "Unhandled error" ) );
-        return 1;
     }
-    return 0;
+    return nResult;
 }
 
 int WINAPI WinMain( HINSTANCE /*hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )

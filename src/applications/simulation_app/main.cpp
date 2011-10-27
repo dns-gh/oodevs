@@ -36,7 +36,7 @@ int __cdecl NoMoreMemoryHandler( std::size_t nSize )
     }
 }
 
-int __cdecl SilentNoMoreMemoryHandler( std::size_t nSize )
+int __cdecl SilentNoMoreMemoryHandler( std::size_t /*nSize*/ )
 {
     throw std::bad_alloc();
 }
@@ -70,7 +70,6 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     int nResult = EXIT_FAILURE;
     bool silentMode = false;
     int maxConnections = 10;
-    const std::string licenseFeature( "sword-runtime" );
     try
     {
         // Silent mode
@@ -79,7 +78,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
 
         // Check license
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-        std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( licenseFeature, 1.0f, "license.dat;.", silentMode ? FlexLmLicense::eCheckModeSilent : FlexLmLicense::eCheckModeCustom ) );
+        license_gui::LicenseDialog::CheckLicense( "sword-runtime", silentMode );
         try
         {
             FlexLmLicense license_dispatch( "sword-dispatcher", 1.0f );
@@ -134,7 +133,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     }
     catch( FlexLmLicense::LicenseError& error )
     {
-        license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ );
+        MT_LOG_ERROR_MSG( error.what() );
     }
     catch( std::exception& exception )
     {

@@ -8,11 +8,12 @@
 // *****************************************************************************
 
 #include "LicenseDialog.h"
+#include "tools/win32/FlexLm.h"
 #include <tchar.h>
 #include <sstream>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#include "xeumeuleu/xml.hpp"
+#include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <QtCore/qsettings.h>
 #include <QtCore/qtextcodec.h>
@@ -21,10 +22,10 @@
 namespace bfs = boost::filesystem;
 using namespace license_gui;
 
-#define ID_MAIN_EDIT 101
-#define ID_BUTTON_EMAIL 102
-#define ID_BUTTON_INSTALL 103
-#define ID_BUTTON_CLOSE 104
+#define ID_MAIN_EDIT 1001
+#define ID_BUTTON_EMAIL 1002
+#define ID_BUTTON_INSTALL 1003
+#define ID_BUTTON_CLOSE 1004
 
 #define MARGIN 10
 #define BUTTON_HEIGHT 30
@@ -40,21 +41,61 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: LicenseDialog::CheckLicense
+// Created: JSR 2011-10-27
+// -----------------------------------------------------------------------------
+void LicenseDialog::CheckLicense( const std::string& licenseFeature, bool silentMode /*= false*/, int* pMaxConnections /*= 0*/, std::string* pExpiration /*= 0*/  )
+{
+    for( ;; )
+    {
+        try
+        {
+            std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( licenseFeature, 1.0f, "license.dat;.", silentMode ? FlexLmLicense::eCheckModeSilent : FlexLmLicense::eCheckModeCustom ) );
+            if( pMaxConnections )
+            {
+                try
+                {
+                    *pMaxConnections = license->GetAuthorisedUsers();
+                }
+                catch( FlexLmLicense::LicenseError& )
+                {
+                    *pMaxConnections = 1;
+                }
+            }
+            if( pExpiration )
+                *pExpiration = license->GetExpirationDate();
+            break;
+        }
+        catch( FlexLmLicense::LicenseError& error )
+        {
+            if( !license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ ) )
+                throw error;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: LicenseDialog::Run
 // Created: JSR 2011-10-24
 // -----------------------------------------------------------------------------
-void LicenseDialog::Run( const std::string& feature, const std::string& hostId )
+bool LicenseDialog::Run( const std::string& feature, const std::string& hostId )
 {
-    LicenseDialog( feature, hostId );
+    bool installingLicense = false;
+    TCHAR currentDirectory[ MAX_PATH ];
+    GetCurrentDirectory( MAX_PATH, currentDirectory );
+    LicenseDialog( feature, hostId, installingLicense );
+    SetCurrentDirectory( currentDirectory );
+    return installingLicense;
 }
 
 // -----------------------------------------------------------------------------
 // Name: LicenseDialog constructor
 // Created: JSR 2011-10-24
 // -----------------------------------------------------------------------------
-LicenseDialog::LicenseDialog( const std::string& feature, const std::string& hostId )
-    : feature_( feature )
-    , hostId_ ( hostId )
+LicenseDialog::LicenseDialog( const std::string& feature, const std::string& hostId, bool& installingLicense )
+    : installingLicense_( installingLicense )
+    , feature_          ( feature )
+    , hostId_           ( hostId )
 {
     ReadTranslations();
     
@@ -91,11 +132,16 @@ LicenseDialog::LicenseDialog( const std::string& feature, const std::string& hos
     UpdateWindow(hWnd);
 
     MSG msg;
-    while( GetMessage( &msg, NULL, 0, 0 ) )
+    BOOL bRet;
+    while( ( bRet = GetMessage( &msg, NULL, 0, 0 ) ) != 0 )
     {
-        TranslateMessage( &msg );
-        DispatchMessage( &msg );
+        if( bRet != -1 )
+        {
+            TranslateMessage( &msg );
+            DispatchMessage( &msg );
+        }
     }
+    UnregisterClass( wc.lpszClassName, hInstance );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,13 +221,15 @@ LRESULT CALLBACK LicenseDialog::MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam
         case ID_BUTTON_EMAIL:
             if( dlg )
                 dlg->SendMail( hWnd );
+            DestroyWindow( hWnd );
             break;
         case ID_BUTTON_INSTALL:
             if( dlg )
                 dlg->InstallLicense( hWnd );
+            DestroyWindow( hWnd );
             break;
         case ID_BUTTON_CLOSE:
-            PostQuitMessage( 0 );
+            DestroyWindow( hWnd );
             break;
         default:
             break;
@@ -268,6 +316,7 @@ void LicenseDialog::InstallLicense( HWND hWnd )
                 if( bfs::exists( destFile) )
                     bfs::remove( destFile );
                 bfs::copy_file( sourceFile, destFile );
+                installingLicense_ = true;
             }
             catch( ... )
             {
