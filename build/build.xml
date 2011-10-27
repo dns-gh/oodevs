@@ -136,7 +136,9 @@
     </target>
 
     <target name="library.license_gui" description="build license_gui static library">
-        <build-lib name="license_gui" depends="qt4" pattern="lib${ant.project.name}_license_gui-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="license_gui" depends="qt4" pattern="lib${ant.project.name}_license_gui-${platform}-mt@{suffix}" suffix="-gd">
+            <defineset define="QT3_SUPPORT"/>
+        </build-lib>
     </target>
 
     <target name="library.bml_plugin" depends="library.dispatcher" description="build BML dispatcher plugin static library">
