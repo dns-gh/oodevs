@@ -89,17 +89,6 @@ void AgentsModel::CreateAutomat( Entity_ABC& parent, const AutomatType& type, co
 // Name: AgentsModel::CreateAutomat
 // Created: ABR 2011-10-25
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomat( Ghost_ABC& ghost, const AutomatType& type )
-{
-    const Positions* position = ghost.Retrieve< Positions >();
-    if( position )
-        CreateAutomat( ghost, type, position->GetPosition() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsModel::CreateAutomat
-// Created: ABR 2011-10-25
-// -----------------------------------------------------------------------------
 void AgentsModel::CreateAutomat( Ghost_ABC& ghost, const AutomatType& type, const geometry::Point2f& position )
 {
     Automat_ABC* automat = agentFactory_.Create( ghost, type );
@@ -183,17 +172,6 @@ Agent_ABC& AgentsModel::CreateAgent( Automat_ABC& parent, const AgentType& type,
     Agent_ABC* agent = agentFactory_.Create( parent, type, parameters_.Clip( position ), commandPost, name );
     tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
     return *agent;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsModel::CreateAgent
-// Created: ABR 2011-10-25
-// -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( Ghost_ABC& ghost, const AgentType& type )
-{
-    const Positions* position = ghost.Retrieve< Positions >();
-    if( position )
-        CreateAgent( ghost, type, position->GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

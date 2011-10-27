@@ -406,11 +406,11 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     // ordre des evenements
     forward_->Register( terrain );
     forward_->Register( parameters );
+    forward_->Register( ghosts );
     forward_->Register( agents );
     forward_->Register( automats );
     forward_->Register( formation );
     forward_->Register( populations );
-    forward_->Register( ghosts );
     forward_->Register( objectsLayer );
     forward_->Register( weather );
     forward_->Register( inhabitantLayer );

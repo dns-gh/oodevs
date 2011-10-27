@@ -9,13 +9,17 @@
 
 #include "preparation_app_pch.h"
 #include "GhostsLayer.h"
+#include "preparation/AgentsModel.h"
 #include "preparation/GhostModel.h"
 #include "preparation/GhostPositions.h"
 #include "preparation/Model.h"
+#include "clients_kernel/AgentType.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/GhostPrototype.h"
 #include "clients_kernel/Moveable_ABC.h"
+
 #include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
@@ -31,6 +35,7 @@ GhostsLayer::GhostsLayer( kernel::Controllers& controllers, const kernel::GlTool
     , selectedGhost_    ( controllers )
     , selectedAutomat_  ( controllers )
     , selectedFormation_( controllers )
+    , highLightedGhost_ ( controllers )
     , dummy_( new QWidget() )
 {
     // NOTHING
@@ -46,14 +51,40 @@ GhostsLayer::~GhostsLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostsLayer::HandleEnterDragEvent
-// Created: ABR 2011-10-19
+// Name: GhostsLayer::IsDropAllowed
+// Created: ABR 2011-10-26
 // -----------------------------------------------------------------------------
-bool GhostsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& /*point*/ )
+bool GhostsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*point*/ ) const
 {
-    return ( gui::ValuedDragObject::Provides< const GhostPrototype >( event ) && ( selectedAutomat_ || selectedFormation_ ) )
-        || ( gui::ValuedDragObject::Provides< const GhostPositions >( event ) && selectedGhost_ )
-        || ( gui::ValuedDragObject::Provides< const Entity_ABC >    ( event ) && selectedGhost_ );
+    return ( gui::ValuedDragObject::Provides< const GhostPrototype >( event ) && ( selectedAutomat_ || selectedFormation_ ) ) ||
+           ( gui::ValuedDragObject::Provides< const GhostPositions >( event ) && selectedGhost_ ) ||
+           ( gui::ValuedDragObject::Provides< const Entity_ABC >    ( event ) && selectedGhost_ ) ||
+           ( gui::ValuedDragObject::Provides< const AgentType >     ( event ) ) ||
+           ( gui::ValuedDragObject::Provides< const AutomatType >   ( event ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GhostsLayer::HandleMoveDragEvent
+// Created: ABR 2011-10-26
+// -----------------------------------------------------------------------------
+bool GhostsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
+{
+    highLightedGhost_ = 0;
+    for( unsigned i = 0; i < entities_.size(); ++i )
+    {
+        if( IsInSelection( *entities_[ i ], point ) )
+        {
+            highLightedGhost_ = static_cast< const Ghost_ABC* >( entities_[ i ] );
+            break;
+        }
+    }
+    return ( gui::ValuedDragObject::Provides< const GhostPrototype >( event ) && ( selectedAutomat_ || selectedFormation_ ) ) ||
+           ( gui::ValuedDragObject::Provides< const GhostPositions >( event ) && selectedGhost_ ) ||
+           ( gui::ValuedDragObject::Provides< const Entity_ABC >    ( event ) && selectedGhost_ ) ||
+           ( gui::ValuedDragObject::Provides< const AgentType >     ( event ) && ( highLightedGhost_ && highLightedGhost_->GetGhostType() == eGhostType_Agent ||
+                                                                                   selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Agent ) ) ||
+           ( gui::ValuedDragObject::Provides< const AutomatType >   ( event ) && ( highLightedGhost_ && highLightedGhost_->GetGhostType() == eGhostType_Automat ||
+                                                                                   selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Automat ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,6 +93,7 @@ bool GhostsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::
 // -----------------------------------------------------------------------------
 bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
+    // Create ghost from creation panel
     if( const GhostPrototype* droppedItem = gui::ValuedDragObject::GetValue< const GhostPrototype >( event ) )
     {
         Entity_ABC* selectedEntity = selectedFormation_.ConstCast();
@@ -72,15 +104,16 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         model_.ghosts_.Create( *selectedEntity, *droppedItem, point );
         return true;
     }
+    // Move ghost on map
     if( GhostPositions* position = gui::ValuedDragObject::GetValue< GhostPositions >( event ) )
     {
         if( !selectedGhost_ )
             return false;
-        // if the events comes from the list or if far enough
         if( event->source() || position->GetPosition( true ).Distance( point ) > 100 )
             position->Move( point );
         return true;
     }
+    // Move ghost from ODB
     if( const Entity_ABC* droppedItem = gui::ValuedDragObject::GetValue< const Entity_ABC >( event ) )
     {
         if( !selectedGhost_ )
@@ -92,6 +125,40 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
             return true;
         }
         return false;
+    }
+    // Create agent from ghost
+    if( const AgentType* droppedItem = gui::ValuedDragObject::GetValue< const AgentType >( event ) )
+    {
+        const bool fromSelection = selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Agent;
+        const bool fromHighLight = highLightedGhost_ && highLightedGhost_->GetGhostType() == eGhostType_Agent;
+        if( !fromSelection && !fromHighLight )
+            return false;
+
+        Ghost_ABC* currentGhost = ( fromHighLight ) ? highLightedGhost_.ConstCast() : selectedGhost_.ConstCast();
+        assert( currentGhost && currentGhost->Retrieve< Positions >() );
+        const geometry::Point2f position = ( fromHighLight ) ? currentGhost->Retrieve< Positions >()->GetPosition() : point;
+        model_.agents_.CreateAgent( *currentGhost, *droppedItem, position );
+        delete static_cast< const Ghost_ABC* >( currentGhost );
+        selectedGhost_ = 0;
+        highLightedGhost_ = 0;
+        return true;
+    }
+    // Create automat from ghost
+    if( const AutomatType* droppedItem = gui::ValuedDragObject::GetValue< const AutomatType >( event ) )
+    {
+        const bool fromSelection = selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Automat;
+        const bool fromHighLight = highLightedGhost_ && highLightedGhost_->GetGhostType() == eGhostType_Automat;
+        if( !fromSelection && !fromHighLight )
+            return false;
+
+        Ghost_ABC* currentGhost = ( fromHighLight ) ? highLightedGhost_.ConstCast() : selectedGhost_.ConstCast();
+        assert( currentGhost && currentGhost->Retrieve< Positions >() );
+        const geometry::Point2f position = ( fromHighLight ) ? currentGhost->Retrieve< Positions >()->GetPosition() : point;
+        model_.agents_.CreateAutomat( *currentGhost, *droppedItem, position );
+        delete static_cast< const Ghost_ABC* >( currentGhost );
+        selectedGhost_ = 0;
+        highLightedGhost_ = 0;
+        return true;
     }
     return false;
 }
@@ -125,6 +192,7 @@ bool GhostsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
     }
     return result;
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: GhostsLayer::BeforeSelection
