@@ -47,10 +47,10 @@ TeamLayer::~TeamLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamLayer::HandleEnterDragEvent
+// Name: TeamLayer::CanDrop
 // Created: LDC 2010-10-26
 // -----------------------------------------------------------------------------
-bool TeamLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
+bool TeamLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
     return selected_ && gui::ValuedDragObject::Provides< const kernel::PopulationPrototype >( event );
 }

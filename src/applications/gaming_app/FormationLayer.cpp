@@ -50,10 +50,10 @@ FormationLayer::~FormationLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationLayer::HandleEnterDragEvent
+// Name: FormationLayer::CanDrop
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-bool FormationLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& /*point*/ )
+bool FormationLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*point*/ ) const
 {
     return selected_ && ( gui::ValuedDragObject::Provides< const kernel::AutomatType >( event )
                          || gui::ValuedDragObject::Provides< const kernel::PopulationPrototype >( event ) );

@@ -45,10 +45,10 @@ PopulationsLayer::~PopulationsLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationsLayer::HandleEnterDragEvent
+// Name: PopulationsLayer::CanDrop
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-bool PopulationsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
+bool PopulationsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
     return ( gui::ValuedDragObject::Provides< const PopulationPrototype >( event ) && selectedEntity_ )
         || ( gui::ValuedDragObject::Provides< const PopulationPositions >( event ) && selectedPopulation_ );

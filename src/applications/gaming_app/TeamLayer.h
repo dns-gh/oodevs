@@ -51,7 +51,7 @@ public:
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void Paint( kernel::Viewport_ABC& viewport );
 
-    virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
+    virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseMove( QMouseEvent* , const geometry::Point2f& point );
