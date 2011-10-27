@@ -1003,7 +1003,7 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
             if( nameParam.value_size() != 1 || !nameParam.value().Get( 0 ).has_acharstr() )
                 throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
             name = nameParam.value().Get( 0 ).acharstr();
-        }        
+        }
 
         MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, theGroupId, name, entity, nCtx ); // auto-registration
     }
@@ -1987,7 +1987,7 @@ MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroup( unsigned int nID ) co
 namespace
 {
     void FindKnowledgeGroupFromParent( MIL_KnowledgeGroup** ppKnowledgetGroupFound, unsigned int nID, MIL_KnowledgeGroup& curKG )
-    {   
+    {
         if ( *ppKnowledgetGroupFound )
             return;
         MIL_KnowledgeGroup* pKG = curKG.FindKnowledgeGroup( nID );

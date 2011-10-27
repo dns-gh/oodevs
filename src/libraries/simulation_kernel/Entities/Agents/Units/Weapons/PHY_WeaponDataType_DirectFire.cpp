@@ -254,13 +254,13 @@ double PHY_WeaponDataType_DirectFire::GetMaxRangeToFire( double rWantedPH ) cons
 {
     const PHY_Volume::T_VolumeMap& volumes = PHY_Volume::GetVolumes();
 
-	double result = 0.;
+    double result = 0.;
     for( PHY_Volume::CIT_VolumeMap it = volumes.begin(); it != volumes.end(); ++it )
-	{
-		result = std::max( result, GetMaxDistanceForPH( rWantedPH, PHY_Posture::posteReflexe_, PHY_Posture::posteReflexe_, *it->second ) );
-	}
+    {
+        result = std::max( result, GetMaxDistanceForPH( rWantedPH, PHY_Posture::posteReflexe_, PHY_Posture::posteReflexe_, *it->second ) );
+    }
 
-	return result;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -334,7 +334,6 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_Agent_ABC& t
 
     MIL_Effect_DirectFirePion* pEffect = new MIL_Effect_DirectFirePion( weaponType_.GetDotationCategory(), target, compTarget, fireResult );
     MIL_EffectManager::GetEffectManager().Register( *pEffect );
-
 
     // handle direct-indirect fire on populations
     const MT_Vector2D firerPosition ( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_ );

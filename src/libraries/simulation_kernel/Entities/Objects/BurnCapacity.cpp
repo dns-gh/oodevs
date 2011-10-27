@@ -127,9 +127,9 @@ void BurnCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
 {
     object.GetAttribute< BurnAttribute >().Burn( object );
 
-	//attrition on objects
-	const PHY_UrbanAttritionData& urbanAttritionData = object.GetAttribute< FireAttribute >().GetClass().GetUrbanAttritionData();
-	std::vector< TER_Object_ABC* > objects;
+    //attrition on objects
+    const PHY_UrbanAttritionData& urbanAttritionData = object.GetAttribute< FireAttribute >().GetClass().GetUrbanAttritionData();
+    std::vector< TER_Object_ABC* > objects;
     TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( object.GetLocalisation(), objects );
     for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
     {

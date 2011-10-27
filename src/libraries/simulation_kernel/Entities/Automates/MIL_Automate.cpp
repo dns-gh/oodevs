@@ -1028,7 +1028,7 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         break;
     case sword::UnitMagicAction::reload_brain:
         CancelAllActions();
-        GetDecision().Reload(); 
+        GetDecision().Reload();
         pOrderManager_->CancelMission();
         break;
     default:
@@ -1076,7 +1076,7 @@ void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& 
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( msg.parameters().elem( 1 ).value_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-    
+
     // Inversion possible des paramètres à gérer
     bool knowledgeGroupParamFirst   = msg.parameters().elem( 0 ).value().Get( 0 ).has_knowledgegroup() && msg.parameters().elem( 1 ).value().Get( 0 ).has_party();
     bool partyParamFirst            = msg.parameters().elem( 0 ).value().Get( 0 ).has_party() && msg.parameters().elem( 1 ).value().Get( 0 ).has_knowledgegroup();

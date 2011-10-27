@@ -53,7 +53,6 @@ MIL_DotationSupplyManager::MIL_DotationSupplyManager()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager destructor
 // Created: NLD 2004-08-11

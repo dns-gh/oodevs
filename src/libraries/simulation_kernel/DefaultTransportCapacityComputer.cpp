@@ -15,7 +15,6 @@
 
 namespace transport {
 
-
 // -----------------------------------------------------------------------------
 // Name: DefaultTransportCapacityComputer constructor
 // Created: AHC 2009-10-01

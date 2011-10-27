@@ -64,7 +64,6 @@ PHY_AttritionData::PHY_AttritionData( const PHY_AttritionData& rhs )
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_AttritionData constructor
 // Created: MMC 2011-03-28

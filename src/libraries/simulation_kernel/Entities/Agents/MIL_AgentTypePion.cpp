@@ -238,7 +238,6 @@ void MIL_AgentTypePion::InitializeDistancesAvantPoints( xml::xistream& xis )
         >> xml::end;
 }
 
-
 namespace
 {
     const TerrainData KeypointToTerrainData( const E_KeyPoint keypoint )

@@ -30,7 +30,6 @@
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 
-
 namespace
 {
     MIL_IDManager idManager_;

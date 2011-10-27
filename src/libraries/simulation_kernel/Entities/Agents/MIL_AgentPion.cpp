@@ -1012,7 +1012,7 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         break;
     case sword::UnitMagicAction::reload_brain:
         CancelAllActions();
-        GetDecision().Reload(); 
+        GetDecision().Reload();
         pOrderManager_->CancelMission();
         break;
     case sword::UnitMagicAction::create_breakdowns:
@@ -1254,7 +1254,7 @@ double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > p
 {
     if( pTargetKnowledge->GetMaxPerceptionLevel() < PHY_PerceptionLevel::recognized_
         ||  GetArmy().IsAFriend( *pTargetKnowledge->GetArmy() ) == eTristate_True
-        ||  pTargetKnowledge->IsSurrendered() 
+        ||  pTargetKnowledge->IsSurrendered()
         || GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         return 0.;
     // Target is dead ....

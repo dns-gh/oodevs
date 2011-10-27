@@ -91,7 +91,6 @@ void DefaultHealComputer::Wound( const PHY_HumanRank& rank, unsigned int nNbrToC
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DefaultHealableComputer::HealAll
 // Created: MGD 2009-09-24

@@ -187,7 +187,6 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Co
 
         assert( nNbrAmmoToFire > 0 );
 
-
         unsigned int nNbrAmmoReserved = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire );
 
         if( nNbrAmmoReserved )
