@@ -100,7 +100,10 @@ void ADN_Template_Usages::OnContextMenu( int /*row*/, int /*col*/, const QPoint&
     {
         ADN_Urban_Data::UsageTemplateInfos* pCurrent = (ADN_Urban_Data::UsageTemplateInfos*)GetCurrentData();
         if( pCurrent != 0 )
+        {
             static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrent );
+            UpdateValidator();
+        }
     }
     else
     {
@@ -111,6 +114,7 @@ void ADN_Template_Usages::OnContextMenu( int /*row*/, int /*col*/, const QPoint&
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         pCTable->AddItem( 0 );
+        UpdateValidator();
     }
 }
 
@@ -130,4 +134,36 @@ bool ADN_Template_Usages::Contains( ADN_Urban_Data::AccommodationInfos& accommod
         ++n;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Template_Usages::doValueChanged
+// Created: LGY 2011-10-27
+// -----------------------------------------------------------------------------
+void ADN_Template_Usages::doValueChanged( int row, int col )
+{
+    UpdateValidator();
+    ADN_Table2::doValueChanged( row, col );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Template_Usages::UpdateValidator
+// Created: LGY 2011-10-27
+// -----------------------------------------------------------------------------
+void ADN_Template_Usages::UpdateValidator()
+{
+    int count = numRows();
+    for( int i = 0; i < count; ++i )
+    {
+        int total = 0;
+        for( int j = 0; j < count; ++j )
+            if( i != j )
+            {
+                ADN_TableItem_Int* pValue = (ADN_TableItem_Int*)item( j, 1 );
+                if( pValue )
+                    total += pValue->text().toInt();
+            }
+        ADN_TableItem_Int* pValue = (ADN_TableItem_Int*)item( i, 1 );
+        pValue->GetValidator().setRange( 0, 100 - total );
+    }
 }

@@ -35,6 +35,8 @@ private:
     //@{
     virtual void OnContextMenu( int row, int col, const QPoint& point );
     virtual bool Contains( ADN_Urban_Data::AccommodationInfos& accommodation );
+    virtual void doValueChanged( int row, int col );
+    void UpdateValidator();
     //@}
 };
 
