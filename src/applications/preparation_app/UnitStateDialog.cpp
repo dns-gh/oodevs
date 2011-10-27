@@ -74,6 +74,8 @@ void UnitStateDialog::Reset()
 // -----------------------------------------------------------------------------
 void UnitStateDialog::NotifySelected( const kernel::Entity_ABC* element )
 {
+    if( selected_ == element )
+        return;
     for( unsigned int i = 0; i < tabs_.size(); ++i )
         tabs_[ i ]->SetReadOnly( false );
     gui::UnitStateDialog::NotifySelected( element );
