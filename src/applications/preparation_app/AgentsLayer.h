@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
+    virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
     //@}
 
@@ -60,7 +60,7 @@ private:
     virtual void Select( const kernel::Team_ABC& element );
     virtual void Select( const kernel::Ghost_ABC& element );
 
-    bool IsValidTemplate( QDragEnterEvent* event ) const;
+    bool IsValidTemplate( QDragMoveEvent* event ) const;
     bool IsEligibleForDrag( const geometry::Point2f& point ) const;
 
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );

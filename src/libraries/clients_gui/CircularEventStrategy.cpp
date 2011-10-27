@@ -123,6 +123,7 @@ namespace
     typedef EventFunctor< QMouseEvent >     MouseFunctor;
     typedef EventFunctor< QDropEvent >      DropFunctor;
     typedef EventFunctor< QDragEnterEvent > DragFunctor;
+    typedef EventFunctor< QDragMoveEvent >  DragMoveFunctor;
     typedef EventFunctor< QWheelEvent >     WheelFunctor;
 }
 
@@ -247,5 +248,18 @@ void CircularEventStrategy::HandleEnterDragEvent( QDragEnterEvent* event, const 
     accept = Apply( DragFunctor( event, point, &MapLayer_ABC::HandleEnterDragEvent ) );
     if( ! accept && default_ )
         accept = default_->HandleEnterDragEvent( event, point );
+    event->accept( accept );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::HandleMoveDragEvent
+// Created: ABR 2011-10-26
+// -----------------------------------------------------------------------------
+void CircularEventStrategy::HandleMoveDragEvent( QDragMoveEvent*  event, const geometry::Point2f& point )
+{
+    bool accept = false;
+    accept = Apply( DragMoveFunctor( event, point, &MapLayer_ABC::HandleMoveDragEvent ) );
+    if( !accept && default_ )
+        accept = default_->HandleMoveDragEvent( event, point );
     event->accept( accept );
 }

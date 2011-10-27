@@ -118,10 +118,10 @@ void AgentsLayer::Select( const kernel::Ghost_ABC& element )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsLayer::HandleEnterDragEvent
+// Name: AgentsLayer::CanDrop
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
+bool AgentsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
     return ( gui::ValuedDragObject::Provides< const AgentPositions >   ( event ) && selectedAgent_ )
         || ( gui::ValuedDragObject::Provides< const AgentType >        ( event ) && ( selectedAutomat_ || selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Agent ) )
@@ -134,7 +134,7 @@ bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::
 // Name: AgentsLayer::IsValidTemplate
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-bool AgentsLayer::IsValidTemplate( QDragEnterEvent* event ) const
+bool AgentsLayer::IsValidTemplate( QDragMoveEvent* event ) const
 {
     if( !selectedFormation_ && !selectedTeam_ )
         return false;

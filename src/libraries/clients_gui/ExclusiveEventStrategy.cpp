@@ -145,6 +145,18 @@ void ExclusiveEventStrategy::HandleEnterDragEvent( QDragEnterEvent* event, const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExclusiveEventStrategy::HandleMoveDragEvent
+// Created: ABR 2011-10-26
+// -----------------------------------------------------------------------------
+void ExclusiveEventStrategy::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
+{
+    if( layer_ )
+        layer_->HandleMoveDragEvent( event, point );
+    else
+        forward_.HandleMoveDragEvent( event, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExclusiveEventStrategy::Register
 // Created: AGE 2007-01-15
 // -----------------------------------------------------------------------------

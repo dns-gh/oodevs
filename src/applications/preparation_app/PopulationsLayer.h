@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
+    virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
     virtual bool HandleKeyPress( QKeyEvent* key );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );

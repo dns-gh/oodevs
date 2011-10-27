@@ -105,10 +105,10 @@ bool AutomatsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatsLayer::HandleEnterDragEvent
+// Name: AutomatsLayer::CanDrop
 // Created: SBO 2007-06-20
 // -----------------------------------------------------------------------------
-bool AutomatsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
+bool AutomatsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
     return selected_ && ( gui::ValuedDragObject::Provides< const AgentType >( event )
         || gui::ValuedDragObject::Provides< const AutomatType >( event ) );
