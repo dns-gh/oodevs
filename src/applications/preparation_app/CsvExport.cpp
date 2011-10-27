@@ -413,6 +413,8 @@ namespace
             if( !type )
                 return false;
             kernel::AttributeType* attribute = type->tools::StringResolver< kernel::AttributeType >::Find( name );
+            if( !attribute )
+                return false;
             if( attribute->IsActive( dictionary->GetExtensions() ) )
                 return true;
         }
