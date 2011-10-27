@@ -44,10 +44,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
+    virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
-    virtual bool HandleKeyPress( QKeyEvent* key );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
+    virtual bool HandleKeyPress( QKeyEvent* key );
     //@}
 
 private:
@@ -69,6 +70,7 @@ private:
     kernel::SafePointer< kernel::Ghost_ABC >     selectedGhost_;
     kernel::SafePointer< kernel::Automat_ABC >   selectedAutomat_;
     kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
+    kernel::SafePointer< kernel::Ghost_ABC >     highLightedGhost_;
     QWidget* dummy_;
     //@}
 };

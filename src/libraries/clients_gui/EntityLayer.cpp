@@ -200,9 +200,12 @@ bool EntityLayerBase::DisplayTooltip( std::size_t i, const geometry::Point2f& po
         std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
         tooltip_ = tooltip;
     }
-    return ShouldDisplayTooltip( i, point )
-        && DisplayTooltip( *entities_[ i ], *tooltip_ )
-        && ( tooltiped_ = i, 1 );  // $$$$ AGE 2006-06-29: duh
+    if( ShouldDisplayTooltip( i, point ) && DisplayTooltip( *entities_[ i ], *tooltip_ ) )
+    {
+        tooltiped_ = i;
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

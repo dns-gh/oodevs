@@ -36,7 +36,6 @@ AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gu
     , selectedAutomat_  ( controllers )
     , selectedFormation_( controllers )
     , selectedTeam_     ( controllers )
-    , selectedGhost_    ( controllers )
 {
     setParent( parent );
 }
@@ -60,7 +59,6 @@ void AgentsLayer::BeforeSelection()
     selectedAutomat_ = 0;
     selectedFormation_ = 0;
     selectedTeam_ = 0;
-    selectedGhost_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -109,23 +107,14 @@ void AgentsLayer::Select( const kernel::Team_ABC& element )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsLayer::Select
-// Created: ABR 2011-10-25
-// -----------------------------------------------------------------------------
-void AgentsLayer::Select( const kernel::Ghost_ABC& element )
-{
-    selectedGhost_ = &element;
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentsLayer::CanDrop
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
 bool AgentsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
     return ( gui::ValuedDragObject::Provides< const AgentPositions >   ( event ) && selectedAgent_ )
-        || ( gui::ValuedDragObject::Provides< const AgentType >        ( event ) && ( selectedAutomat_ || selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Agent ) )
-        || ( gui::ValuedDragObject::Provides< const AutomatType >      ( event ) && ( selectedFormation_ || selectedAutomat_ || selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Automat ) )
+        || ( gui::ValuedDragObject::Provides< const AgentType >        ( event ) && selectedAutomat_ )
+        || ( gui::ValuedDragObject::Provides< const AutomatType >      ( event ) && ( selectedFormation_ || selectedAutomat_ ) )
         || ( gui::ValuedDragObject::Provides< const HierarchyTemplate >( event ) && IsValidTemplate( event ) )
         || ( gui::ValuedDragObject::Provides< const Entity_ABC >       ( event ) && ( selectedAutomat_ || selectedAgent_ || selectedFormation_ ) );
 }
@@ -176,35 +165,19 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
     }
     if( const AgentType* droppedItem = gui::ValuedDragObject::GetValue< const AgentType >( event ) )
     {
-        if( !( selectedAutomat_ || selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Agent ) )
+        if( !selectedAutomat_ )
             return false;
-
-        if( selectedAutomat_ )
-            model_.agents_.CreateAgent( *selectedAutomat_.ConstCast(), *droppedItem, point );
-        else //if ( selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Agent )
-        {
-            Ghost_ABC* ghost = selectedGhost_.ConstCast();
-            model_.agents_.CreateAgent( *ghost, *droppedItem, point );
-            delete static_cast< const Ghost_ABC* >( selectedGhost_ );
-            selectedGhost_ = 0;
-        }
+        model_.agents_.CreateAgent( *selectedAutomat_.ConstCast(), *droppedItem, point );
         return true;
     }
     if( const AutomatType* droppedItem = gui::ValuedDragObject::GetValue< const AutomatType >( event ) )
     {
-        if( !( selectedFormation_ || selectedAutomat_ || selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Automat ) )
+        if( !selectedFormation_ && !selectedAutomat_ )
             return false;
-        if( selectedFormation_ )
-            model_.agents_.CreateAutomat( *selectedFormation_.ConstCast(), *droppedItem, point );
-        else if( selectedAutomat_ )
-            model_.agents_.CreateAutomat( *selectedAutomat_.ConstCast(), *droppedItem, point );
-        else //if ( selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Automat )
-        {
-            Ghost_ABC* ghost = selectedGhost_.ConstCast();
-            model_.agents_.CreateAutomat( *ghost, *droppedItem, point );
-            delete static_cast< const Ghost_ABC* >( selectedGhost_ );
-            selectedGhost_ = 0;
-        }
+        Entity_ABC* selectedEntity = selectedFormation_.ConstCast();
+        if( !selectedEntity )
+            selectedEntity = selectedAutomat_.ConstCast();
+        model_.agents_.CreateAutomat( *selectedEntity, *droppedItem, point );
         return true;
     }
     if( const HierarchyTemplate* droppedItem = gui::ValuedDragObject::GetValue< const HierarchyTemplate >( event ) )

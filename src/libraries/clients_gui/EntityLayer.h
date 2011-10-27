@@ -90,7 +90,7 @@ protected:
     virtual bool DisplayTooltip( const kernel::Entity_ABC&, kernel::Displayer_ABC& displayer );
     //@}
 
-private:
+protected:
     //! @name Types
     //@{
     typedef std::vector< const kernel::Entity_ABC* >  T_Entities;
@@ -98,21 +98,24 @@ private:
     typedef T_Entities::const_iterator              CIT_Entities;
     //@}
 
-private:
-    //! @name Member data
+protected:
+    //! @name Protected member data
     //@{
-    kernel::Controllers& controllers_;
-    ColorStrategy_ABC& strategy_;
-    View_ABC& view_;
-    T_Entities entities_;
-    std::size_t tooltiped_;
-    std::auto_ptr< kernel::GlTooltip_ABC > tooltip_;
-    std::size_t selected_;
-
-protected: // $$$$ AGE 2006-05-17:
     const kernel::Profile_ABC& profile_;
     const kernel::GlTools_ABC& tools_;
-    const LayerFilter_ABC& filter_;
+    const LayerFilter_ABC&     filter_;
+    T_Entities                 entities_;
+    //@}
+
+private:
+    //! @name Private Member data
+    //@{
+    kernel::Controllers&                    controllers_;
+    ColorStrategy_ABC&                      strategy_;
+    View_ABC&                               view_;
+    std::size_t                             tooltiped_;
+    std::auto_ptr< kernel::GlTooltip_ABC >  tooltip_;
+    std::size_t                             selected_;
     //@}
 };
 

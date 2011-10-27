@@ -17,7 +17,6 @@ namespace kernel
 {
     class Automat_ABC;
     class Formation_ABC;
-    class Ghost_ABC;
     class Team_ABC;
 }
 
@@ -34,7 +33,6 @@ class AgentsLayer : public gui::AgentsLayer
                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
                   , public tools::SelectionObserver_Base< kernel::Team_ABC >
-                  , public tools::SelectionObserver_Base< kernel::Ghost_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -58,7 +56,6 @@ private:
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
     virtual void Select( const kernel::Team_ABC& element );
-    virtual void Select( const kernel::Ghost_ABC& element );
 
     bool IsValidTemplate( QDragMoveEvent* event ) const;
     bool IsEligibleForDrag( const geometry::Point2f& point ) const;
@@ -74,7 +71,6 @@ private:
     kernel::SafePointer< kernel::Automat_ABC >   selectedAutomat_;
     kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
     kernel::SafePointer< kernel::Team_ABC >      selectedTeam_;
-    kernel::SafePointer< kernel::Ghost_ABC >     selectedGhost_;
     //@}
 };
 
