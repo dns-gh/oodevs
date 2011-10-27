@@ -185,8 +185,8 @@ void PHY_RolePion_NBC::Decontaminate( double rRatioAgentsWorking )
     rNewContaminationState = std::max( rNewContaminationState, 0. );
     if( static_cast< unsigned int >( rNewContaminationState * 100. ) != ( rContaminationState_ * 100. ) )
         bHasChanged_ = true;
+    rContaminationQuantity_ = std::max( 0., ( rContaminationQuantity_ / rContaminationState_ ) * rNewContaminationState );
     rContaminationState_ = rNewContaminationState;
-    rContaminationQuantity_ = std::max( 0., rContaminationQuantity_ * rContaminationState_ );
     if( rContaminationState_ == 0. )
     {
         rContaminationQuantity_ = 0.;
