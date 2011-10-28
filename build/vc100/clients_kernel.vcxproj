@@ -233,6 +233,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Level.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticLevel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\OverFlyingObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StaticModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\AltitudeModified.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\App6Symbol.h" />
@@ -334,10 +335,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ActivationObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ContextMenu.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ContextMenuObserver_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\ControllerObserver_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\ElementObserver_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Observer_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\SelectionObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ResourceNetworkSelectionObserver.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\TeamSelectionObserver.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ModelVisitor_ABC.h" />

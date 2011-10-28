@@ -69,3 +69,11 @@ void Ghost_ABC::Activate( ActionController& controller ) const
     controller.Activate( *this, *(const Entity_ABC*)this );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Ghost_ABC::OverFly
+// Created: ABR 2011-10-27
+// -----------------------------------------------------------------------------
+void Ghost_ABC::OverFly( ActionController& controller ) const
+{
+    controller.OverFly( *this, *(const Entity_ABC*)this );
+}

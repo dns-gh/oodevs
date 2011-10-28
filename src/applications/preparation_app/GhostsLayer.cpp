@@ -69,15 +69,26 @@ bool GhostsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*poi
 // -----------------------------------------------------------------------------
 bool GhostsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
-    highLightedGhost_ = 0;
-    for( unsigned i = 0; i < entities_.size(); ++i )
-    {
+    bool found = false;
+    for( unsigned i = 0; i < entities_.size() && !found; ++i )
         if( IsInSelection( *entities_[ i ], point ) )
         {
             highLightedGhost_ = static_cast< const Ghost_ABC* >( entities_[ i ] );
-            break;
+            if( ( gui::ValuedDragObject::Provides< const AgentType >( event ) && highLightedGhost_->GetGhostType() == eGhostType_Agent ) || 
+                ( gui::ValuedDragObject::Provides< const AutomatType > ( event ) && highLightedGhost_->GetGhostType() == eGhostType_Automat ) )
+            {
+                highLightedGhost_->OverFly( controllers_.actions_ );
+                found = true;
+            }
+            else
+                highLightedGhost_ = 0;
         }
+    if( !found )
+    {
+        highLightedGhost_ = 0;
+        controllers_.actions_.OverFly( point );
     }
+
     return ( gui::ValuedDragObject::Provides< const GhostPrototype >( event ) && ( selectedAutomat_ || selectedFormation_ ) ) ||
            ( gui::ValuedDragObject::Provides< const GhostPositions >( event ) && selectedGhost_ ) ||
            ( gui::ValuedDragObject::Provides< const Entity_ABC >    ( event ) && selectedGhost_ ) ||

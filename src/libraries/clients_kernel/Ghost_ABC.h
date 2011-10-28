@@ -51,6 +51,7 @@ public:
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
+    virtual void OverFly( ActionController& controller ) const;
     //@}
 };
 

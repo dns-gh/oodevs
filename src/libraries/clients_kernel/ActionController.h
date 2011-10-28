@@ -16,6 +16,7 @@
 #include "ActivationObserver_ABC.h"
 #include "ContextMenu.h"
 #include "ContextMenuObserver_ABC.h"
+#include "OverFlyingObserver_ABC.h"
 
 namespace kernel
 {
@@ -43,10 +44,13 @@ public:
 
     //! @name Operations
     //@{
+    // -----------------------------------------------------------------------------
+    // Select
+    // -----------------------------------------------------------------------------
     template< typename T >
     void Select( const T& element )
     {
-        // avoid reentrance
+        // avoid re entrance
         if( ! selecting_ )
         {
             selecting_ = true;
@@ -56,11 +60,10 @@ public:
         }
         selecting_ = false;
     }
-
     template< typename T1, typename T2 >
     void Select( const T1& firstElement, const T2& secondElement )
     {
-        // avoid reentrance
+        // avoid re entrance
         if( ! selecting_ )
         {
             selecting_ = true;
@@ -71,11 +74,10 @@ public:
         }
         selecting_ = false;
     }
-
     template< typename T1, typename T2, typename T3 >
     void Select( const T1& firstElement, const T2& secondElement, const T3& thirdElement )
     {
-        // avoid reentrance
+        // avoid re entrance
         if( ! selecting_ )
         {
             selecting_ = true;
@@ -88,6 +90,9 @@ public:
         selecting_ = false;
     }
 
+    // -----------------------------------------------------------------------------
+    // ContextMenu
+    // -----------------------------------------------------------------------------
     template< typename T >
     void ContextMenu( const T& element, const QPoint& where )
     {
@@ -95,7 +100,6 @@ public:
         Apply( & ContextMenuObserver_ABC< T >::NotifyContextMenu, element, menu_ );
         ShowMenu( where );
     }
-
     template< typename T1, typename T2 >
     void ContextMenu( const T1& firstElement, const T2& secondElement, const QPoint& where )
     {
@@ -104,7 +108,6 @@ public:
         Apply( & ContextMenuObserver_ABC< T2 >::NotifyContextMenu, secondElement, menu_ );
         ShowMenu( where );
     }
-
     template< typename T1, typename T2, typename T3 >
     void ContextMenu( const T1& firstElement, const T2& secondElement, const T3& thirdElement, const QPoint& where )
     {
@@ -115,17 +118,50 @@ public:
         ShowMenu( where );
     }
 
+    // -----------------------------------------------------------------------------
+    // Activate
+    // -----------------------------------------------------------------------------
     template< typename T >
     void Activate( const T& element )
     {
         Apply( & ActivationObserver_ABC< T >::NotifyActivated, element );
     }
-
     template< typename T1, typename T2 >
     void Activate( const T1& firstElement, const T2& secondElement )
     {
         Apply( & ActivationObserver_ABC< T1 >::NotifyActivated, firstElement );
         Apply( & ActivationObserver_ABC< T2 >::NotifyActivated, secondElement );
+    }
+
+    // -----------------------------------------------------------------------------
+    // OverFly
+    // -----------------------------------------------------------------------------
+    template< typename T>
+    void OverFly( const T& element )
+    {
+        // avoid re entrance
+        if( !overFlying_ )
+        {
+            overFlying_ = true;
+            Apply( & OverFlyingObserver_ABC::BeforeOverFlying );
+            Apply( & OverFlyingObserver_Base< T >::OverFly, element );
+            Apply( & OverFlyingObserver_ABC::AfterOverFlying );
+        }
+        overFlying_ = false;
+    }
+    template< typename T1, typename T2 >
+    void OverFly( const T1& firstElement, const T2& secondElement )
+    {
+        // avoid re entrance
+        if( !overFlying_ )
+        {
+            overFlying_ = true;
+            Apply( & OverFlyingObserver_ABC::BeforeOverFlying );
+            Apply( & OverFlyingObserver_Base< T1 >::OverFly, firstElement );
+            Apply( & OverFlyingObserver_Base< T2 >::OverFly, secondElement );
+            Apply( & OverFlyingObserver_ABC::AfterOverFlying );
+        }
+        overFlying_ = false;
     }
     //@}
 
@@ -145,6 +181,7 @@ private:
     //! @name Member data
     //@{
     bool selecting_;
+    bool overFlying_;
     kernel::ContextMenu menu_;
     //@}
 

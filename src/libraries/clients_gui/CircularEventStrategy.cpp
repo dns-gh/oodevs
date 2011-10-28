@@ -258,6 +258,7 @@ void CircularEventStrategy::HandleEnterDragEvent( QDragEnterEvent* event, const 
 void CircularEventStrategy::HandleMoveDragEvent( QDragMoveEvent*  event, const geometry::Point2f& point )
 {
     bool accept = false;
+    rlast_ = layers_.rbegin();
     accept = Apply( DragMoveFunctor( event, point, &MapLayer_ABC::HandleMoveDragEvent ) );
     if( !accept && default_ )
         accept = default_->HandleMoveDragEvent( event, point );
