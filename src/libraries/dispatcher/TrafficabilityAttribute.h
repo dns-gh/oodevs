@@ -38,7 +38,7 @@ public:
 private:
     //! @name Member data
     //@{
-    double max_;
+    float max_;
     //@}
 };
 
