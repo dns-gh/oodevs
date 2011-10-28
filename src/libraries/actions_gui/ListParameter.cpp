@@ -39,8 +39,7 @@ ListParameter::ListParameter( QObject* parent, const kernel::OrderParameter& par
 // -----------------------------------------------------------------------------
 ListParameter::~ListParameter()
 {
-    Clear();
-    delete list_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
