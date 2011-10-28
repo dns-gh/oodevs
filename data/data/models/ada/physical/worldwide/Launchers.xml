@@ -1309,7 +1309,6 @@
   <launcher indirect-fire="true" name="122-mm Gun"/>
   <launcher indirect-fire="true" name="56-mm Armoured Vehicle Close Defense Multiple Launcher"/>
   <launcher indirect-fire="true" name="Bomber Launcher"/>
-  <launcher indirect-fire="true" name="None"/>
   <launcher indirect-fire="true" name="20-mm Gun">
     <ph-modifiers posture="Mouvement">
       <ph-modifier target-posture="Mouvement" value="0.01"/>
@@ -2290,4 +2289,4 @@
   </launcher>
   <launcher indirect-fire="true" name="Hand"/>
 </launchers>
-<!-- signature="0393623954" -->
+<!-- signature="2925027851" -->

@@ -1164,35 +1164,6 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="HS_Safety" file="Emergency\Pions\Safety\Model.bms" masalife="false" name="HS - Safety">
-      <missions>
-        <mission name="Emergency - organise shelter"/>
-        <mission name="Emergency - provide first aid"/>
-        <mission name="Emergency - soothe"/>
-        <mission name="Emergency - supply"/>
-        <mission name="Common - move"/>
-        <mission name="Common - park"/>
-        <mission name="Emergency - follow population"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-        <fragorder name="Munition - Forbidden"/>
-        <fragorder name="Munition - Authorize"/>
-        <fragorder name="Munition - Authorize all"/>
-      </fragorders>
-    </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.bms" masalife="false" name="Firefinder radar">
       <missions>
         <mission name="FieldArtillery - collect enemy artillery intelligence"/>
@@ -1427,39 +1398,6 @@
         <mission name="OOTW - manage prisoners"/>
         <mission name="Common - follow"/>
         <mission name="Infantry - monitor"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-        <fragorder name="Munition - Forbidden"/>
-        <fragorder name="Munition - Authorize"/>
-        <fragorder name="Munition - Authorize all"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" masalife="false" name="Surface to Air Defense Troop">
-      <missions>
-        <mission name="Common - go through decontamination process"/>
-        <mission name="Common - adopt transportation posture"/>
-        <mission name="Common - park"/>
-        <mission name="Common - follow"/>
-        <mission name="Common - withdraw"/>
-        <mission name="Common - move"/>
-        <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - cross"/>
-        <mission name="AirDefenseArtillery - defend area (from a position)"/>
-        <mission name="AirDefenseArtillery - monitor"/>
-        <mission name="AirDefenseArtillery - defend area"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2356,114 +2294,6 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="HS_Police" file="Emergency\Pions\Police\Model.bms" masalife="false" name="HS - Police">
-      <missions>
-        <mission name="Emergency - block road"/>
-        <mission name="Emergency - convoy population"/>
-        <mission name="Emergency - escort demonstration"/>
-        <mission name="Emergency - evacuate area"/>
-        <mission name="Emergency - organize distribution"/>
-        <mission name="Common - follow"/>
-        <mission name="Common - move"/>
-        <mission name="Common - reconnaissance area"/>
-        <mission name="Common - reconnaissance area hidden"/>
-        <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - park"/>
-        <mission name="Emergency - alert"/>
-        <mission name="Emergency - follow population"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-        <fragorder name="Munition - Forbidden"/>
-        <fragorder name="Munition - Authorize"/>
-        <fragorder name="Munition - Authorize all"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="HS_Medical" file="Emergency\Pions\Medical\Model.bms" masalife="false" name="HS - Medical">
-      <missions>
-        <mission name="Emergency - organise shelter"/>
-        <mission name="Emergency - provide first aid"/>
-        <mission name="Emergency - soothe"/>
-        <mission name="Common - follow"/>
-        <mission name="Common - move"/>
-        <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - park"/>
-        <mission name="Emergency - evacuate wounded"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-        <fragorder name="Munition - Forbidden"/>
-        <fragorder name="Munition - Authorize"/>
-        <fragorder name="Munition - Authorize all"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="HS_Firefighter" file="Emergency\Pions\Firefighter\Model.bms" masalife="false" name="HS - Firefighter">
-      <missions>
-        <mission name="Emergency - evacuate area"/>
-        <mission name="Emergency - extinguish fire"/>
-        <mission name="Emergency - soothe"/>
-        <mission name="Emergency - provide first aid"/>
-        <mission name="Common - follow"/>
-        <mission name="Common - move"/>
-        <mission name="Common - reconnaissance area"/>
-        <mission name="Common - reconnaissance area hidden"/>
-        <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - park"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-        <fragorder name="Munition - Forbidden"/>
-        <fragorder name="Munition - Authorize"/>
-        <fragorder name="Munition - Authorize all"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="HS_Disturbance" file="Emergency\Pions\Disturbance\Model.bms" masalife="false" name="HS - Disturbance">
-      <missions>
-        <mission name="Emergency - riot"/>
-        <mission name="Common - move"/>
-        <mission name="Common - reconnaissance area"/>
-        <mission name="Common - reconnaissance area hidden"/>
-        <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - park"/>
-      </missions>
-      <fragorders/>
-    </unit>
     <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.bms" masalife="false" name="Journalist">
       <missions>
         <mission name="Asymetric - infiltrate"/>
@@ -2491,17 +2321,6 @@
         <fragorder name="Munition - Authorize"/>
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
-    </unit>
-    <unit dia-type="StrategicBomberPatrol" file="Air\Pions\Patrouille Assaut\model.bms" masalife="false" name="UAV">
-      <missions>
-        <mission name="Common - move"/>
-        <mission name="Common - reconnaissance area"/>
-        <mission name="Common - reconnaissance area hidden"/>
-        <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
-        <mission name="JointAir - loiter"/>
-      </missions>
-      <fragorders/>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Terrorist Engineer">
       <missions>
@@ -2879,37 +2698,6 @@
         <mission name="Common - park"/>
         <mission name="AirDefenseArtillery - defend area (ShortRange)"/>
         <mission name="AirDefenseArtillery - monitor (ShortRange)"/>
-        <mission name="Common - adopt transportation posture"/>
-        <mission name="Common - follow"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" masalife="false" name="Surface To Air Battery">
-      <missions>
-        <mission name="AirDefenseArtillery - defend area"/>
-        <mission name="AirDefenseArtillery - monitor"/>
-        <mission name="Common - withdraw"/>
-        <mission name="Common - move"/>
-        <mission name="Common - move parallel"/>
-        <mission name="Common - cross"/>
-        <mission name="Common - go through decontamination process"/>
-        <mission name="Common - resupply"/>
-        <mission name="Common - park"/>
-        <mission name="AirDefenseArtillery - defend a route"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - follow"/>
       </missions>
@@ -4014,97 +3802,6 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="HS_Police_HQ" file="Emergency\Automates\Police\Model.bms" masalife="false" name="HS - Police HQ">
-      <missions>
-        <mission name="Emergency - evacuate area"/>
-        <mission name="Emergency - alert"/>
-        <mission name="Common - move"/>
-        <mission name="Common - move parallel"/>
-        <mission name="Common - park"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="HS_Firefighter_HQ" file="Emergency\Automates\Firefighter\Model.bms" masalife="false" name="HS - Firefighter HQ">
-      <missions>
-        <mission name="Emergency - evacuate area"/>
-        <mission name="Common - move"/>
-        <mission name="Common - move parallel"/>
-        <mission name="Common - park"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="HS_Safety_HQ" file="Emergency\Automates\Safety\Model.bms" masalife="false" name="HS - Safety HQ">
-      <missions>
-        <mission name="Common - move"/>
-        <mission name="Common - move parallel"/>
-        <mission name="Common - park"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="HS_Medical_HQ" file="Emergency\Automates\Medical\Model.bms" masalife="false" name="HS - Medical HQ">
-      <missions>
-        <mission name="Common - move"/>
-        <mission name="Common - move parallel"/>
-        <mission name="Common - park"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Switch posture"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-      </fragorders>
-    </automat>
     <automat dia-type="GTIA" file="Melee\Abc\Automates\GE40\model.bms" masalife="false" name="Battalion">
       <missions>
         <mission name="Battalion - move to"/>
@@ -4180,4 +3877,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0642666836" -->
+<!-- signature="2130553341" -->
