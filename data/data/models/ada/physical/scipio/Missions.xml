@@ -1672,6 +1672,13 @@
         <value id="1" name="discontinu"/>
       </parameter>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.trans.tasks.SeDeployer" dia-type="france.military.platoon.combat.support.trans.tasks.SeDeployer" id="2473" name="PION TRANS Se Deployer" package="support">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objective" name="Position deploiement" optional="false" type="Point"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AUTOMATE ALAT Aller Se Recompleter" package="none">
@@ -2158,13 +2165,6 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_TRANS_Commander" dia-type="T_Mission_Automate_TRANS_Commander" id="328" mrt-dia-behavior="MIS_Automate_MRT_TRANS_Commander" name="AUTOMATE TRANS Commander" package="none">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zoneDeploiement_" name="Zone deploiement" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_PrendreEnComptePrisonniers" dia-type="T_Mission_Automate_PrendreEnComptePrisonniers" id="329" mrt-dia-behavior="MIS_Automate_MRT_PrendreEnComptePrisonniers" name="AUTOMATE Prendre En Compte Prisonniers" package="none">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -3032,6 +3032,13 @@
         <value id="1" name="discontinu"/>
       </parameter>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.trans.tasks.Commander" dia-type="france.military.company.combat.support.trans.tasks.Commander" id="28761" mrt-dia-behavior="france.military.company.combat.support.trans.tasks.Commander" name="AUTOMATE TRANS Commander" package="none">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="area" name="Zone" optional="false" type="Polygon"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -3269,4 +3276,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="4069034786" -->
+<!-- signature="1649550957" -->
