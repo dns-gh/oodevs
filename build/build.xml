@@ -148,6 +148,7 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+				  lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}">
             <syslibset libs="shell32,user32"/>
