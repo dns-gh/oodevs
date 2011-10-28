@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <plugin name="bml" version="1.0" 
-	library="bml_plugin-vc80-mt.dll"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\resources\schemas\4.3.1\plugins\plugin.xsd">
+	library="bml_plugin-vc100-mt.dll"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\resources\schemas\4.3.1\plugins\plugin.xsd">
 	<descriptions>
 		<description lang="en" name="OpenBML"><![CDATA[OpenBML communication plugin.]]></description>
 		<description lang="fr" name="OpenBML"><![CDATA[Plugin de communication OpenBML.]]></description>
