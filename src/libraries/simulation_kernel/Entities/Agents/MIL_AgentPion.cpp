@@ -858,11 +858,21 @@ void MIL_AgentPion::OnReceiveResupplyAll()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
 {
+    if( msg.elem_size() < 5 )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
     if( msg.elem( 0 ).value_size() > 0 ) // Equipments
     {
         PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
         for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
         {
+            if ( msg.elem( 0 ).value().Get( i ).list_size() < 2 )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            if ( !msg.elem( 0 ).value().Get( i ).list( 0 ).has_identifier() )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            if ( !msg.elem( 0 ).value().Get( i ).list( 1 ).has_quantity() )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            
             sword::EquipmentType type;
             type.set_id( msg.elem( 0 ).value().Get( i ).list( 0 ).identifier() );
             int number = msg.elem( 0 ).value().Get( i ).list( 1 ).quantity();
@@ -876,6 +886,13 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
         human::PHY_RolePion_Humans& roleHumans = GetRole< human::PHY_RolePion_Humans >();
         for( int i = 0 ; i < msg.elem( 1 ).value_size(); ++i )
         {
+            if ( msg.elem( 1 ).value().Get( i ).list_size() < 2 )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            if ( !msg.elem( 1 ).value().Get( i ).list( 0 ).has_identifier() )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            if ( !msg.elem( 1 ).value().Get( i ).list( 1 ).has_quantity() )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
             unsigned int rank = msg.elem( 1 ).value().Get( i ).list( 0 ).identifier();
             int number = msg.elem( 1 ).value().Get( i ).list( 1 ).quantity();
             const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( rank );
@@ -888,6 +905,13 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
         dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
         for( int i = 0; i < msg.elem( 2 ).value_size(); ++i )
         {
+            if ( msg.elem( 2 ).value().Get( i ).list_size() < 2 )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            if ( !msg.elem( 2 ).value().Get( i ).list( 0 ).has_identifier() )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            if ( !msg.elem( 2 ).value().Get( i ).list( 1 ).has_quantity() )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
             unsigned int dotation = msg.elem( 2 ).value().Get( i ).list( 0 ).identifier();
             int number = msg.elem( 2 ).value().Get( i ).list( 1 ).quantity();
             const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( dotation );
@@ -900,6 +924,13 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
         dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
         for( int i = 0; i < msg.elem( 3 ).value_size(); ++i )
         {
+            if ( msg.elem( 3 ).value().Get( i ).list_size() < 2 )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            if ( !msg.elem( 3 ).value().Get( i ).list( 0 ).has_identifier() )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            if ( !msg.elem( 3 ).value().Get( i ).list( 1 ).has_quantity() )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
             unsigned int munition = msg.elem( 3 ).value().Get( i ).list( 0 ).identifier();
             int number = msg.elem( 3 ).value().Get( i ).list( 1 ).quantity();
             const PHY_AmmoDotationClass* pAmmoClass = PHY_AmmoDotationClass::Find( munition );
@@ -911,6 +942,13 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
     if( roleSupply && msg.elem( 4 ).value_size() > 0 ) // stocks
         for( int i = 0; i < msg.elem( 4 ).value_size(); ++i )
         {
+            if ( msg.elem( 4 ).value().Get( i ).list_size() < 2 )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            if ( !msg.elem( 4 ).value().Get( i ).list( 0 ).has_identifier() )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            if ( !msg.elem( 4 ).value().Get( i ).list( 1 ).has_quantity() )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
             unsigned int stock = msg.elem( 4 ).value().Get( i ).list( 0 ).identifier();
             int number = msg.elem( 4 ).value().Get( i ).list( 1 ).quantity();
             const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( stock );

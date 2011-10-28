@@ -1032,7 +1032,11 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         pOrderManager_->CancelMission();
         break;
     default:
-        pPionPC_->OnReceiveUnitMagicAction( msg, armies );
+        {
+            if ( !pPionPC_ )
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
+            pPionPC_->OnReceiveUnitMagicAction( msg, armies );
+        }
         break;
     }
 }
