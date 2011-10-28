@@ -211,7 +211,8 @@ void ScoreVariableCreationWizard::OnChangeType()
     }
 
     if( parameter_ )
-        parameter_->RemoveFromController(); parameter_.reset();
+        parameter_->RemoveFromController();
+    parameter_.reset();
 
     parameter_ = CreateParameter( type_->GetValue(), name_->text() );
     if( parameter_ )
