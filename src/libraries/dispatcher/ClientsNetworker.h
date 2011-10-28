@@ -17,10 +17,10 @@
 
 namespace dispatcher
 {
-    class Client;
     class Config;
     class Plugin_ABC;
     class Services;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  ClientsNetworker
@@ -79,8 +79,8 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, Client* > T_Clients;
-    typedef T_Clients::const_iterator      CIT_Clients;
+    typedef std::map< std::string, ClientPublisher_ABC* > T_Clients;
+    typedef T_Clients::const_iterator                   CIT_Clients;
     //@}
 
 private:

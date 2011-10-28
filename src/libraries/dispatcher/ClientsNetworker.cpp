@@ -60,8 +60,9 @@ void ClientsNetworker::ConnectionSucceeded( const std::string& link )
 {
     MT_LOG_INFO_MSG( "Connection received from client '" << link << "'" );
     ServerNetworker::ConnectionSucceeded( link  );
-    Client* newClient = clients_[link] = new Client( *this, link );
-    services_.Send( *newClient );
+    Client* pClient = new Client( *this, link );
+    clients_[link] = pClient;
+    services_.Send( *pClient );
     MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }
 
@@ -86,7 +87,7 @@ void ClientsNetworker::ConnectionError( const std::string& link, const std::stri
     T_Clients::iterator it = clients_.find( link );
     if( it != clients_.end() && it->second )
     {
-        Client* client = it->second;
+        ClientPublisher_ABC* client = it->second;
         plugin_.NotifyClientLeft( *client );
         clients_.erase( it );
         delete client;
