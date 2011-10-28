@@ -58,12 +58,15 @@ void MIL_LivingArea::Finalize()
     for( std::set< unsigned long >::const_iterator it = urbanIds_.begin(); it != urbanIds_.end(); ++it )
     {
         const unsigned int simId = MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( *it );
-        UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( simId ) );
-        if( !object )
-            throw std::runtime_error( "Error in loading living urban block of population" );
-        blocks_.push_back( new MIL_LivingAreaBlock( *object ) );
-        object->Register( *pInhabitant_ );
-        object->AddLivingArea( *this );
+        if( simId != 0)
+        {
+            UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( simId ) );
+            if( !object )
+                throw std::runtime_error( "Error in loading living urban block of population" );
+            blocks_.push_back( new MIL_LivingAreaBlock( *object ) );
+            object->Register( *pInhabitant_ );
+            object->AddLivingArea( *this );
+        }
     }
     DistributeHumans( population_ );
 }

@@ -183,8 +183,19 @@ void NodeElement::Update( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void NodeElement::Finalize( const ResourceTools_ABC& tools )
 {
-    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+    IT_ResourceLinks it;
+    for( it = links_.begin(); it != links_.end(); ++it )
         ( *it )->Finalize( tools );
+    for( it = links_.begin(); it != links_.end(); )
+    {
+        if( ( *it )->GetTarget() == 0 )
+        {
+            delete *it;
+            it = links_.erase( it );
+        }
+        else
+            ++it;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -434,6 +445,7 @@ void NodeElement::RemoveLink( unsigned int nodeId )
     for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
         if( ( *it )->GetTarget() == nodeId )
         {
+            delete *it;
             links_.erase( it );
             return;
         }

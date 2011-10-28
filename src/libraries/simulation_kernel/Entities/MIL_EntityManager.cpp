@@ -2052,7 +2052,12 @@ UrbanObjectWrapper& MIL_EntityManager::GetUrbanObjectWrapper( const urban::Terra
 // -----------------------------------------------------------------------------
 unsigned int MIL_EntityManager::ConvertUrbanIdToSimId( unsigned int urbanId )
 {
-    return pObjectManager_->ConvertUrbanIdToSimId( urbanId );
+    unsigned int id = pObjectManager_->ConvertUrbanIdToSimId( urbanId );
+    if( id == 0 )
+    {
+        MT_LOG_WARNING_MSG( "Cannot find urban object with id " << urbanId );
+    }
+    return id;
 }
 
 // -----------------------------------------------------------------------------

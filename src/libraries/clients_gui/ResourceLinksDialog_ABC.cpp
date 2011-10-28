@@ -173,13 +173,20 @@ void ResourceLinksDialog_ABC::Update()
     table_->setColumnReadOnly( 0, true );
     for( unsigned int j = 0; j < node.links_.size(); ++j )
     {
-        table_->setText( j, 0, selected_->GetLinkName( resource, j ) );
-        table_->setItem( j, 1, new Q3CheckTableItem( table_, ""  ) );
-        table_->setItem( j, 2, new SpinTableItem< int >( table_, 0, std::numeric_limits< int >::max() ) );
-        bool limited = node.links_[ j ].capacity_ != -1;
-        table_->item( j, 2 )->setEnabled( limited );
-        static_cast< Q3CheckTableItem* >( table_->item( j, 1 ) )->setChecked( limited );
-        table_->setText( j, 2, QString::number( limited ? node.links_[ j ].capacity_ : 0 ) );
+        try
+        {
+            table_->setText( j, 0, selected_->GetLinkName( resource, j ) );
+            table_->setItem( j, 1, new Q3CheckTableItem( table_, ""  ) );
+            table_->setItem( j, 2, new SpinTableItem< int >( table_, 0, std::numeric_limits< int >::max() ) );
+            bool limited = node.links_[ j ].capacity_ != -1;
+            table_->item( j, 2 )->setEnabled( limited );
+            static_cast< Q3CheckTableItem* >( table_->item( j, 1 ) )->setChecked( limited );
+            table_->setText( j, 2, QString::number( limited ? node.links_[ j ].capacity_ : 0 ) );
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
     }
 }
 

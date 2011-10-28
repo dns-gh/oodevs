@@ -174,7 +174,7 @@ unsigned int MIL_ObjectManager::ConvertUrbanIdToSimId( unsigned int urbanId )
     for( CIT_UrbanObjectMap it = urbanObjects_.begin(); it != urbanObjects_.end(); ++it )
         if( it->first->GetId() == urbanId )
             return it->second->GetID();
-    throw std::exception( ( "Cannot find urban object with id = " + boost::lexical_cast< std::string >( urbanId ) ).c_str() );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

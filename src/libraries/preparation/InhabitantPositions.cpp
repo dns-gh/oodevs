@@ -115,9 +115,7 @@ InhabitantPositions::~InhabitantPositions()
 void InhabitantPositions::ReadLivingUrbanBlock( xml::xistream& xis )
 {
     gui::TerrainObjectProxy* pObject = urbanModel_.tools::Resolver< gui::TerrainObjectProxy >::Find( xis.attribute< unsigned long >( "id" ) );
-    if( !pObject )
-        xis.error( "error in loading living urban block for population" );
-    else
+    if( pObject )
         livingUrbanObject_.push_back( boost::make_tuple( pObject->GetId(), pObject->GetName(), pObject ) );
 }
 
