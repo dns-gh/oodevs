@@ -72,6 +72,7 @@
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/MiscLayer.h"
 #include "clients_gui/OptionsPanel.h"
+#include "clients_gui/OverFlyingColorModifier.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RasterLayer.h"
@@ -188,6 +189,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     strategy_ = new ColorStrategy( controllers, *glProxy_, *colorController_ );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new SelectionColorModifier( controllers, *glProxy_ ) ) );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new HighlightColorModifier( controllers ) ) );
+    strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new OverFlyingColorModifier( controllers ) ) );
 
     QStackedWidget* centralWidget = new QStackedWidget();
     setCentralWidget( centralWidget );
@@ -403,10 +405,9 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     glProxy_->Register( drawerLayer );                                                                              drawerLayer         .SetPasses( "main" );
     glProxy_->Register( tooltipLayer );                                                                             tooltipLayer        .SetPasses( "tooltip" );
 
-    // ordre des evenements
+    // events order
     forward_->Register( terrain );
     forward_->Register( parameters );
-    forward_->Register( ghosts );
     forward_->Register( agents );
     forward_->Register( automats );
     forward_->Register( formation );
@@ -414,6 +415,7 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     forward_->Register( objectsLayer );
     forward_->Register( weather );
     forward_->Register( inhabitantLayer );
+    forward_->Register( ghosts );
     forward_->Register( limits );
     forward_->Register( urbanLayer );
     forward_->Register( drawerLayer );

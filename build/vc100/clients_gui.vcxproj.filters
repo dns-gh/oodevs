@@ -838,6 +838,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\AggregateToolbar.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1355,6 +1358,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\LongNameHelper.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

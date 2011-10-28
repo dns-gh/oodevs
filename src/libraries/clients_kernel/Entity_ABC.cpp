@@ -90,3 +90,12 @@ void Entity_ABC::CheckUpdate( const type_info& /*type*/ )
                             + " could be updated with message type " + type );
     */
 }
+
+// -----------------------------------------------------------------------------
+// Name: Entity_ABC::OverFly
+// Created: ABR 2011-10-27
+// -----------------------------------------------------------------------------
+void Entity_ABC::OverFly( ActionController& controller ) const
+{
+    // NOTHING
+}

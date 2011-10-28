@@ -107,6 +107,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionCategory.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Logger.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\resources.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\StatusBar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ExtensionsPanel.cpp" />
@@ -484,6 +485,7 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\LogisticList.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LongNameHelper.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\resources.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\StatusBar.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>

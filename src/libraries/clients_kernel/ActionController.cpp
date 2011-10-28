@@ -17,7 +17,8 @@ using namespace kernel;
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
 ActionController::ActionController()
-    : selecting_( false )
+    : selecting_ ( false )
+    , overFlying_( false )
     , menu_()
 {
     menu_.AddCategory( "Parameter" );

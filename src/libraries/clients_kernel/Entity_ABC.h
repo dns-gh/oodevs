@@ -66,6 +66,7 @@ public:
     virtual void Select( ActionController& controller ) const = 0;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
     virtual void Activate( ActionController& controller ) const = 0;
+    virtual void OverFly( ActionController& controller ) const; // $$$$ ABR 2011-10-28: Not abstract cause not yet needed for all entities
 
     template< typename T >
     void Update( const T& updateMessage )
