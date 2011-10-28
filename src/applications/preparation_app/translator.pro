@@ -2,6 +2,7 @@ HEADERS =
 
 SOURCES = AffinitiesDialog.cpp \
 AgentAffinitiesDialog.cpp \
+AgentsLayer.cpp \
 Application.cpp \
 ColorEditor.cpp \
 CommunicationListView.cpp \

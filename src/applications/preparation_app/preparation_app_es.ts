@@ -21,6 +21,13 @@
     </message>
 </context>
 <context>
+    <name>AgentsLayer</name>
+    <message>
+        <source>Logistic units can not be placed under a non logistic automat</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
