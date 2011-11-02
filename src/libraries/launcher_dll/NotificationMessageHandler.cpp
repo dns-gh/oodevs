@@ -37,12 +37,28 @@ NotificationMessageHandler::~NotificationMessageHandler()
 // -----------------------------------------------------------------------------
 bool NotificationMessageHandler::OnReceiveMessage( const sword::SimToClient& message )
 {
+    // Unit
+    if( message.message().has_unit_creation() )
+    {
+        SessionNotification response;
+        sword::SessionNotification_UnitUpdate* unit = response().mutable_notification()->mutable_unit_update();
+        unit->mutable_unit()->set_id( message.message().unit_attributes().unit().id() );
+        Send( response );
+    }
     if( message.message().has_unit_attributes() && message.message().unit_attributes().has_extension() )
     {
         SessionNotification response;
         sword::SessionNotification_UnitUpdate* unit = response().mutable_notification()->mutable_unit_update();
         unit->mutable_unit()->set_id( message.message().unit_attributes().unit().id() );
         *unit->mutable_extensions() = message.message().unit_attributes().extension();
+        Send( response );
+    }
+    // Formation
+    if( message.message().has_formation_creation() )
+    {
+        SessionNotification response;
+        sword::SessionNotification_FormationUpdate* formation = response().mutable_notification()->mutable_formation_update();
+        formation->mutable_formation()->set_id( message.message().formation_update().formation().id() );
         Send( response );
     }
     if( message.message().has_formation_update() && message.message().formation_update().has_extension() )
