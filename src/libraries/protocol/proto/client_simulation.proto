@@ -198,14 +198,14 @@ message ObjectMagicAction {
         structural_state   = 18;
         infrastructure     = 19;
         usages             = 20;
-        confined           = 21;
-        alerted            = 22;
-        evacuated          = 23;
-        resource_network   = 24;
-        lodging            = 25;
-        altitude_modifier  = 26;
-        underground        = 27;
-        trafficability     = 28;
+        lodging            = 21;
+        trafficability     = 22;
+        underground        = 23;
+        confined           = 24;
+        alerted            = 25;
+        evacuated          = 26;
+        resource_network   = 27;
+        altitude_modifier  = 28;
     }
     required ObjectId          object     = 1; //!< The object identifier
     required Type              type       = 2; //!< The type of magic action
