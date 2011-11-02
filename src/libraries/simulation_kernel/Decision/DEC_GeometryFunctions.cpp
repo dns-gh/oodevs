@@ -437,6 +437,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInVecto
 bool DEC_GeometryFunctions::ComparePositions( MT_Vector2D* p1, MT_Vector2D* p2 )
 {
     assert( p1 && p2 );
+    if( !p1 || !p2 )
+        throw std::runtime_error( "Bad pointer given to DEC_Geometrie_PositionsEgales" );
 
     // $$$ JVT : Débile : si il y a besoin d'une "weldvalue" elle doit être prise en compte
     //           directement dans l'objet vecteur et dans ses operateurs ( en l'occurence == )
