@@ -1180,11 +1180,8 @@
   <automat decisional-model="Masalife.Automate.LOG" id="862" name="GLAISE - LOG . TC2 ART" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - LOG . TC2 ART"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="863" name="CIV . Individus Isoles" type="Automate REFUGIE">
-    <unit command-post="true" max-occurs="3" min-occurs="1" type="Individu Isole"/>
-    <unit type="Journalistes"/>
-    <unit type="Notable"/>
-    <unit type="Civil"/>
+  <automat decisional-model="Masalife.Automate.MonoPion" id="863" name="CIV . Journalistes" type="Automate REFUGIE">
+    <unit command-post="true" min-occurs="1" type="Journalistes"/>
   </automat>
   <automat decisional-model="Masalife.Automate.MonoPion" id="864" name="CIV . DPRE" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="1" type="Refugies"/>
@@ -1372,5 +1369,11 @@
   <automat decisional-model="TAC" id="908" name="CIRCU - Peloton CDT ECR" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU - Peloton  CDT ECR"/>
   </automat>
+  <automat decisional-model="Masalife.Automate.MonoPion" id="909" name="CIV . Civil" type="Automate REFUGIE">
+    <unit command-post="true" min-occurs="1" type="Civil"/>
+  </automat>
+  <automat decisional-model="Masalife.Automate.MonoPion" id="910" name="CIV . Notable" type="Automate REFUGIE">
+    <unit command-post="true" min-occurs="1" type="Notable"/>
+  </automat>
 </automats>
-<!-- signature="1603886902" -->
+<!-- signature="2330451800" -->
