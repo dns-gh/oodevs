@@ -1471,15 +1471,14 @@ void MIL_AgentPion::OnReceiveCreateWounds( const sword::MissionParameters& msg )
 
         int number = elem.list( 0 ).quantity();
         sword::EnumHumanWound wound = sword::unwounded;
-        if( elem.list_size() == 2 )
+        bool randomWound = ( elem.list_size() != 2 );
+        if( !randomWound )
         {
             if( !elem.list( 1 ).has_enumeration() )
                 throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
             wound = static_cast< sword::EnumHumanWound >( elem.list( 1 ).enumeration() );
-            if( wound == sword::unwounded || wound == sword::dead )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
         }
-        roleComposantes.CreateWounds( static_cast< unsigned int >( number ), wound );
+        roleComposantes.CreateWounds( static_cast< unsigned int >( number ), randomWound, wound );
     }
 }
 

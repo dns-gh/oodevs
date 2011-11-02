@@ -1844,20 +1844,33 @@ void PHY_RolePion_Composantes::CreateBreakdowns( const PHY_ComposanteTypePion& c
 // Name: PHY_RolePion_Composantes::CreateWounds
 // Created: ABR 2011-08-11
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::CreateWounds( unsigned int quantity, sword::EnumHumanWound wound )
+void PHY_RolePion_Composantes::CreateWounds( unsigned int quantity, bool randomWound, sword::EnumHumanWound wound )
 {
-    const PHY_HumanWound* pHumanWound = PHY_HumanWound::Find( wound );
+    const PHY_HumanWound* pHumanWound = 0;
+    if( randomWound )
+        pHumanWound = PHY_HumanWound::GetRandomWoundSeriousness();
+    else
+        pHumanWound = PHY_HumanWound::Find( wound );
     if( !pHumanWound )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-    if( pHumanWound == &PHY_HumanWound::notWounded_ || pHumanWound == &PHY_HumanWound::killed_ )
-        pHumanWound = PHY_HumanWound::GetRandomWoundSeriousness();
-
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
-        quantity -= ( *it )->WoundHumans( PHY_HumanRank::militaireDuRang_, quantity, *pHumanWound );
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
-        quantity -= ( *it )->WoundHumans( PHY_HumanRank::sousOfficier_, quantity, *pHumanWound );
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
-        quantity -= ( *it )->WoundHumans( PHY_HumanRank::officier_, quantity, *pHumanWound );
+    if( pHumanWound == &PHY_HumanWound::notWounded_ )
+    {
+        for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
+            quantity -= ( *it )->HealHumans( PHY_HumanRank::militaireDuRang_, quantity );
+        for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
+            quantity -= ( *it )->HealHumans( PHY_HumanRank::sousOfficier_, quantity );
+        for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
+            quantity -= ( *it )->HealHumans( PHY_HumanRank::officier_, quantity );
+    }
+    else
+    {
+        for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
+            quantity -= ( *it )->WoundHumans( PHY_HumanRank::militaireDuRang_, quantity, *pHumanWound );
+        for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
+            quantity -= ( *it )->WoundHumans( PHY_HumanRank::sousOfficier_, quantity, *pHumanWound );
+        for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
+            quantity -= ( *it )->WoundHumans( PHY_HumanRank::officier_, quantity, *pHumanWound );
+    }
 }
 
 // -----------------------------------------------------------------------------
