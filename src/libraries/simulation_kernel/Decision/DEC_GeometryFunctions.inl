@@ -51,8 +51,10 @@ template< typename T >
 std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitLocalisationInParts( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts, const MT_Vector2D* direction )
 {
     assert( pLocalisation );
+    if( !pLocalisation )
+        throw std::runtime_error( "Null location when splitting location in parts" );
 
-     std::vector< boost::shared_ptr< TER_Localisation > > result;
+    std::vector< boost::shared_ptr< TER_Localisation > > result;
 
     TER_Localisation clippedLocalisation;
     unsigned int errCode = eError_LocalisationPasDansFuseau;

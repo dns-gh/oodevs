@@ -643,7 +643,14 @@ void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& acti
         if( !it.HasMoreElements() )
             throw std::exception( tools::translate( "ActionFactory", "too many parameters provided" ) );
         // $$$$ LDC AddParameter can throw after having taken ownership of the parameter thus do not use auto_ptr here
-        actions::Parameter_ABC* param = factory_.CreateParameter( it.NextElement(), xis, entity );
+        const kernel::OrderParameter& parameter = it.NextElement();
+        actions::Parameter_ABC* param = factory_.CreateParameter( parameter, xis, entity );
+        if( !param )
+        {
+            std::string errorMessage( "Impossible to create parameter " );
+            errorMessage = errorMessage + parameter.GetName();
+            throw std::exception( errorMessage.c_str() );
+        }
         action.AddParameter( *param );
     }
     catch( std::exception& e )

@@ -160,9 +160,10 @@ do
     rIt = rIt + 1
     end
 
-    local ptCopie = DEC_Geometrie_CreerPoint()
+    local ptCopie = nil
     if( rId_Zone < rTailleListe ) then
         do
+            ptCopie = DEC_Geometrie_CreerLocalisation()
             DEC_Copie_Localisation( DEC_UserTypeList_GetAt( lstZones_Reco, rId_Zone ), ptCopie )
             DEC_UserTypeList_Remove( lstZones_Reco, DEC_UserTypeList_GetAt( lstZones_Reco, rId_Zone ) )
         end
