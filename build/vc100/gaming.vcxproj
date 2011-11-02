@@ -98,6 +98,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\HumanState.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LogFuneralConsign.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\statusicons.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\SupplyResourceRequest.cpp" />
@@ -261,7 +262,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\ToxicCloudAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\UndergroundAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\LogisticConsignFactory.cpp" />
-    <ClCompile Include="..\..\src\libraries\gaming\LogFuneralConsign.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\LogisticsModel.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\LogMaintenanceConsign.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\LogMedicalConsign.cpp" />
@@ -319,6 +319,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\FloodProxy.h" />
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h" />
     <ClInclude Include="..\..\src\libraries\gaming\HumanState.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogFuneralConsign.h" />
     <ClInclude Include="..\..\src\libraries\gaming\statusicons.h" />
     <ClInclude Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.h" />
     <ClInclude Include="..\..\src\libraries\gaming\SupplyResourceRequest.h" />
@@ -494,7 +495,6 @@
     <ClInclude Include="..\..\src\libraries\gaming\ToxicCloudAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\UndergroundAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogisticConsignFactory.h" />
-    <ClCompile Include="..\..\src\libraries\gaming\LogFuneralConsign.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogisticConsignFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogisticsModel.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogMaintenanceConsign.h" />

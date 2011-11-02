@@ -203,7 +203,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\MaintenanceEquipmentAvailability.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\MedicalEquipmentAvailability.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignMaintenance.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignFuneral.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignMedical.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignSupply.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Frames.cpp" />
@@ -358,7 +357,6 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\LogisticLink.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\MaintenanceEquipmentAvailability.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\MedicalEquipmentAvailability.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignFuneral.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignMaintenance.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignMedical.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignSupply.h" />

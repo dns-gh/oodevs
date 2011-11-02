@@ -484,7 +484,7 @@
       <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignFuneral.cpp">
-      <Filter>Source Files\Model\Logistic</Filter>
+      <Filter>Source Files\Model\Logistic\Consigns</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -987,7 +987,7 @@
       <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignFuneral.h">
-      <Filter>Source Files\Model\Logistic</Filter>
+      <Filter>Source Files\Model\Logistic\Consigns</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

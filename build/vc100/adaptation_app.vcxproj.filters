@@ -387,7 +387,7 @@
       <UniqueIdentifier>{4787fa5a-706d-4875-b7c4-a6ffccc001e8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Logistic">
-      <UniqueIdentifier>{2863f215-20fd-4702-aa57-ccf66ba7791a}</UniqueIdentifier>
+      <UniqueIdentifier>{fc6f277f-19c8-45f6-9d8c-49d3d7137e53}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Logistic\Maintenance">
       <UniqueIdentifier>{5da50a28-14bb-4055-81da-58b5307027fb}</UniqueIdentifier>
@@ -398,15 +398,6 @@
     <Filter Include="Source Files\Workspace\Logistic\Maintenance\Maintenance GUI">
       <UniqueIdentifier>{da349d77-e3f3-4443-ab11-51981ccd2fd4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Logistic\Supply">
-      <UniqueIdentifier>{83615548-389b-448e-8518-fc817a9251de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Logistic\Supply\Supply data">
-      <UniqueIdentifier>{a087ec4b-c5a8-4b73-8c3e-8ec5d8ae70ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Logistic\Supply\Supply GUI">
-      <UniqueIdentifier>{22952b4a-6f18-49de-bb60-cf5523575ef8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Logistic\Health">
       <UniqueIdentifier>{fab4964b-e031-491b-8ffc-7692285104b9}</UniqueIdentifier>
     </Filter>
@@ -416,14 +407,23 @@
     <Filter Include="Source Files\Workspace\Logistic\Health\Health GUI">
       <UniqueIdentifier>{cf2e72cc-7f6e-4429-a4a2-84c32e2f36da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Logistic\Funeral">
-      <UniqueIdentifier>{c6cef32f-f113-4331-994b-4559cbfcf93b}</UniqueIdentifier>
+    <Filter Include="Source Files\Workspace\Logistic\Supply">
+      <UniqueIdentifier>{83615548-389b-448e-8518-fc817a9251de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Logistic\Funeral\Funeral data">
-      <UniqueIdentifier>{214d06d0-17f4-423a-b3fe-7bbae9705a73}</UniqueIdentifier>
+    <Filter Include="Source Files\Workspace\Logistic\Supply\Supply data">
+      <UniqueIdentifier>{a087ec4b-c5a8-4b73-8c3e-8ec5d8ae70ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Supply\Supply GUI">
+      <UniqueIdentifier>{22952b4a-6f18-49de-bb60-cf5523575ef8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Funeral">
+      <UniqueIdentifier>{7a80031a-d37a-4dcf-89df-6e216c389107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Funeral\Funeral Data">
+      <UniqueIdentifier>{0d3d416f-fdcc-4cde-9865-7d0b0ee86e1b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Logistic\Funeral\Funeral GUI">
-      <UniqueIdentifier>{bc2f4274-d990-4341-88f8-6491ad086077}</UniqueIdentifier>
+      <UniqueIdentifier>{d90fd807-4955-4a27-a3ef-0675a2dea77c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1291,8 +1291,14 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.cpp">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.cpp">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral Data</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.cpp">
-      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral data</Filter>
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.cpp">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1967,6 +1973,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.h">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.h">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.h">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
