@@ -185,6 +185,16 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     RegisterRole( *new DEC_AutomateDecision( *this, gcPause, gcMult ) ) ;
     RegisterRole( *new DEC_Representations() );
 
+    if( type.IsLogistic() )
+    {
+        pBrainLogistic_.reset( new MIL_AutomateLOG( *this, PHY_LogisticLevel::logistic_base_ ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_.get() ) );
+        RegisterAction( pLogisticAction_ );
+
+        // Automat having logistic brain are always there own tc2
+        pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, *pBrainLogistic_, false /* no quotas*/ ) );
+    }
+
     if( pParentFormation_ )
     {
         pColor_.reset( new MIL_Color( pParentFormation_->GetColor() ) );
