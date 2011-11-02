@@ -173,9 +173,9 @@
       <objects/>
       <tactical>
         <formation id="62" level="ii" name="Formation">
-          <automat engaged="false" id="63" knowledge-group="61" name="Refugies x100 [63]" type="CIV . Individus Isoles">
-            <unit command-post="true" id="64" name="Individu Isole[64]" position="31TCM0967389547" type="Individu Isole"/>
-            <unit command-post="false" id="65" name="Individu Isole[65]" position="31TCM0913989321" type="Individu Isole"/>
+          <automat engaged="false" id="63" knowledge-group="61" name="Refugies x100 [63]" type="CIV . Civil">
+            <unit command-post="true" id="64" name="Individu Isole[64]" position="31TCM0967389547" type="Civil"/>
+            <unit command-post="false" id="65" name="Individu Isole[65]" position="31TCM0913989321" type="Civil"/>
             <unit command-post="false" id="209" name="Terroriste IED" position="31TCM0808387976" type="Terroriste IED"/>
           </automat>
         </formation>
@@ -277,4 +277,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="4187857108" -->
+<!-- signature="4279671046" -->

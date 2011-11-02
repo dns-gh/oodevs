@@ -1180,11 +1180,8 @@
   <automat decisional-model="Masalife.Automate.LOG" id="891" name="GLAISE - LOG . TC2 ART" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - LOG . TC2 ART"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="892" name="CIV . Individus Isoles" type="Automate REFUGIE">
-    <unit command-post="true" max-occurs="3" min-occurs="1" type="Individu Isole"/>
-    <unit type="Journalistes"/>
-    <unit type="Notable"/>
-    <unit type="Civil"/>
+  <automat decisional-model="Masalife.Automate.MonoPion" id="892" name="CIV . Journalistes" type="Automate REFUGIE">
+    <unit command-post="true" min-occurs="1" type="Journalistes"/>
   </automat>
   <automat decisional-model="Masalife.Automate.MonoPion" id="893" name="CIV . DPRE" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="1" type="Refugies"/>
@@ -1372,10 +1369,16 @@
   <automat decisional-model="TAC" id="937" name="CIRCU - Peloton CDT ECR" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU - Peloton  CDT ECR"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="938" name="TRANS . Section RAC3 BIA" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="938" name="CIV . Civil" type="Automate REFUGIE">
+    <unit command-post="true" min-occurs="1" type="Civil"/>
+  </automat>
+  <automat decisional-model="Masalife.Automate.MonoPion" id="939" name="CIV . Notable" type="Automate REFUGIE">
+    <unit command-post="true" min-occurs="1" type="Notable"/>
+  </automat>
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="940" name="TRANS . Section RAC3 BIA" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC RAC3 BIA"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe RAC3 BIA"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe LAN"/>
   </automat>
 </automats>
-<!-- signature="4046965412" -->
+<!-- signature="2960974548" -->
