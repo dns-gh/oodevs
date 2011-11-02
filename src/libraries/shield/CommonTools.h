@@ -149,6 +149,9 @@ namespace shield
         to->set_category( "" );
 #endif
         CONVERT_CB( diffusion, ConvertDiffusion);
+        CONVERT( text );
+        CONVERT( font );
+        CONVERT( font_size );
     }
     template< typename From, typename To >
     void ConvertMarker( const From& from, To* to )

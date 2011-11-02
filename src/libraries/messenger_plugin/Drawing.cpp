@@ -24,17 +24,23 @@ using namespace plugins::messenger;
 // Name: Drawing constructor
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-Drawing::Drawing( unsigned int id, const sword::ShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter )
+Drawing::Drawing( unsigned int id, const sword::ShapeCreationRequest& msg, const kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
     , id_       ( id )
-    , category_ ( asn.shape().category() )
-    , color_    ( QColor( asn.shape().color().red(), asn.shape().color().green(), asn.shape().color().blue() ).name().ascii() )
-    , pattern_  ( asn.shape().pattern() )
+    , category_ ( msg.shape().category() )
+    , color_    ( QColor( msg.shape().color().red(), msg.shape().color().green(), msg.shape().color().blue() ).name().ascii() )
+    , pattern_  ( msg.shape().pattern() )
 {
-    if( asn.shape().has_diffusion() )
-        diffusion_ = asn.shape().diffusion();
-    for( int i = 0; i < asn.shape().points().elem_size(); ++i )
-        points_.push_back( asn.shape().points().elem( i ) );
+    if( msg.shape().has_diffusion() )
+        diffusion_ = msg.shape().diffusion();
+    for( int i = 0; i < msg.shape().points().elem_size(); ++i )
+        points_.push_back( msg.shape().points().elem( i ) );
+    if( msg.shape().has_text() )
+        text_ = msg.shape().text();
+    if( msg.shape().has_font() )
+        font_ = msg.shape().font();
+    if( msg.shape().has_font_size() )
+        fontSize_ = msg.shape().font_size();
 }
 
 // -----------------------------------------------------------------------------
@@ -170,6 +176,12 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_shape()->set_pattern( pattern_ );
     if( diffusion_ )
         *message().mutable_shape()->mutable_diffusion() = *diffusion_;
+    if( text_ )
+        message().mutable_shape()->set_text( *text_ );
+    if( font_ )
+        message().mutable_shape()->set_font( *font_ );
+    if( fontSize_ )
+        message().mutable_shape()->set_font_size( *fontSize_ );
     sword::CoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
     for( CIT_Points iter = points_.begin(); iter != points_.end(); ++iter )
         *points->add_elem() = *iter;        //const_cast< CoordLatLong* >( &points_.front() );

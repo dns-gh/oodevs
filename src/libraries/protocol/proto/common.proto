@@ -997,8 +997,11 @@ message Shape {
    required string           category  = 1; //!< The category
    required RgbColor         color     = 2; //!< The color
    required string           pattern   = 3; //!< The pattern
-   required CoordLatLongList points	   = 4; //!< The coordinates
+   required CoordLatLongList points    = 4; //!< The coordinates
    optional Diffusion        diffusion = 5; //!< The Diffusion
+   optional string           text      = 6; //!< The text
+   optional string           font      = 7; //!< The font
+   optional uint32           font_size = 8; //!< The font size
 }
 
 /** @struct ChatTarget

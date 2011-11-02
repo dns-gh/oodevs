@@ -176,6 +176,9 @@ namespace shield
         s->mutable_location()->set_type( Common::MsgLocation::polygon );
         FillCoordLatLong( s->mutable_location()->mutable_coordinates()->add_elem() );
         FillCoordLatLong( s->mutable_location()->mutable_coordinates()->add_elem() );
+        s->set_text( "text" );
+        s->set_font( "font" );
+        s->set_font_size( 42 );
     }
     template< typename M >
     void FillMarker( M* m )

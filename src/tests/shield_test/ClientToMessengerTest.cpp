@@ -26,7 +26,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( shape_creation_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
 {
     FillShieldShape( content.mutable_shape_creation_request()->mutable_shape() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { shape_creation_request { shape { category: \"\" color { red: 4 green: 5 blue: 6 } pattern: \"external identifier\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } }" ) );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { shape_creation_request { shape { category: \"\" color { red: 4 green: 5 blue: 6 } pattern: \"external identifier\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } text: \"text\" font: \"font\" font_size: 42 } } }" ) );
     converter.ReceiveClientToMessenger( msg );
 }
 

@@ -46,7 +46,7 @@ class Drawing : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Drawing( unsigned int id, const sword::ShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter );
+             Drawing( unsigned int id, const sword::ShapeCreationRequest& msg, const kernel::CoordinateConverter_ABC& converter );
              Drawing( unsigned int id, xml::xistream& xis, const boost::optional< sword::Diffusion >& diffusion, const kernel::CoordinateConverter_ABC& converter );
              Drawing( unsigned int id, const Drawing& rhs );
     virtual ~Drawing();
@@ -91,6 +91,9 @@ private:
     std::string pattern_;
     T_Points points_;
     boost::optional< sword::Diffusion > diffusion_;
+    boost::optional< std::string > text_;
+    boost::optional< std::string > font_;
+    boost::optional< unsigned int > fontSize_;
     //@}
 };
 
