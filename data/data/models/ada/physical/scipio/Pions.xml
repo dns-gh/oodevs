@@ -16890,5 +16890,80 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="603" name="TRANS . Groupe LAN" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="4" crew="3" major="true" type="TRM 2000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="8" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="604" name="TRANS . PC RAC3 BIA" type="Pion TRANS">
+    <nature atlas-nature="None" level="ooo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="VBL 7,62"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="150s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="605" name="TRANS . Groupe RAC3 BIA" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="Eqp CMAI"/>
+      <equipment count="1" crew="2" major="true" type="Station CHF"/>
+      <equipment count="1" crew="2" type="VAB 12,7"/>
+      <equipment count="1" crew="2" major="true" type="Station RDO UHF"/>
+      <equipment count="1" crew="2" major="true" type="Station RDO VHF"/>
+      <equipment count="1" crew="2" major="true" type="Station HF NGF4"/>
+      <equipment count="2" crew="1" major="true" type="Station HF NGF5"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="10" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="5100s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="1833494841" -->
+<!-- signature="3480467416" -->
