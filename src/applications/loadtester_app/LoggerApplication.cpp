@@ -31,7 +31,8 @@ LoggerApplication::LoggerApplication( const std::string& hostname, const std::st
     , bConnectionLost_( false )
     , bVerbose_       ( verbose )
 {
-    file_.open( logFile.c_str(), std::ios::out | std::ios::trunc );
+    if(! logFile.empty() )
+        file_.open( logFile.c_str(), std::ios::out | std::ios::trunc );
     RegisterMessage( *this, &LoggerApplication::OnReceiveSimToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgAuthenticationToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgDispatcherToClient );
@@ -66,12 +67,14 @@ int LoggerApplication::Run()
     }
     catch( std::runtime_error& err )
     {
-        file_ << "Error: " << err.what() << std::endl;
+        if( file_.good() )
+            file_ << "Error: " << err.what() << std::endl;
         return 2;
     }
     catch(...)
     {
-        file_ << "Unexpected exception caught" << std::endl;
+        if( file_.good() )
+            file_ << "Unexpected exception caught" << std::endl;
         return 3;
     }
     return 0;
@@ -98,7 +101,8 @@ void LoggerApplication::ConnectionSucceeded( const std::string& endpoint )
 void LoggerApplication::ConnectionFailed( const std::string& address, const std::string& error )
 {
     DumpTime();
-    file_ << "Connection failed: " << address << " : " << error << std::endl;
+    if( file_.good() )
+        file_ << "Connection failed: " << address << " : " << error << std::endl;
     bConnectionLost_ = true;
 }
 
@@ -109,7 +113,8 @@ void LoggerApplication::ConnectionFailed( const std::string& address, const std:
 void LoggerApplication::ConnectionError( const std::string& address, const std::string& error )
 {
     DumpTime();
-    file_ << "Connection error: " << address << " : " << error << std::endl;
+    if( file_.good() )
+        file_ << "Connection error: " << address << " : " << error << std::endl;
     bConnectionLost_ = true;
 }
 
@@ -120,7 +125,8 @@ void LoggerApplication::ConnectionError( const std::string& address, const std::
 void LoggerApplication::ConnectionWarning( const std::string& address, const std::string& warning )
 {
     DumpTime();
-    file_ << "Connection warning: " << address << " : " << warning << std::endl;
+    if( file_.good() )
+        file_ << "Connection warning: " << address << " : " << warning << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +153,8 @@ void LoggerApplication::OnReceiveSimToClient( const std::string& /*from*/, const
 void LoggerApplication::OnReceiveMsgAuthenticationToClient( const std::string& /*from*/, const sword::AuthenticationToClient& /*wrapper*/ )
 {
     DumpTime();
-    file_ << "Authentication received" << std::endl;
+    if( file_.good() )
+        file_ << "Authentication received" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +164,8 @@ void LoggerApplication::OnReceiveMsgAuthenticationToClient( const std::string& /
 void LoggerApplication::OnReceiveMsgDispatcherToClient( const std::string& /*from*/, const sword::DispatcherToClient& /*wrapper*/ )
 {
     DumpTime();
-    file_ << "Dispatcher message received" << std::endl;
+    if( file_.good() )
+        file_ << "Dispatcher message received" << std::endl;
 }
 
 // ----------------------------------   -------------------------------------------
@@ -167,7 +175,8 @@ void LoggerApplication::OnReceiveMsgDispatcherToClient( const std::string& /*fro
 void LoggerApplication::OnReceiveMsgMessengerToClient( const std::string& /*from*/, const sword::MessengerToClient& /*wrapper*/ )
 {
     DumpTime();
-    file_ << "Messenger message received" << std::endl;
+    if( file_.good() )
+        file_ << "Messenger message received" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +186,8 @@ void LoggerApplication::OnReceiveMsgMessengerToClient( const std::string& /*from
 void LoggerApplication::OnReceiveMsgReplayToClient( const std::string& /*from*/, const sword::ReplayToClient& /*wrapper*/ )
 {
     DumpTime();
-    file_ << "Replay message received" << std::endl;
+    if( file_.good() )
+        file_ << "Replay message received" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +197,8 @@ void LoggerApplication::OnReceiveMsgReplayToClient( const std::string& /*from*/,
 void LoggerApplication::OnReceiveMsgAarToClient( const std::string& /*from*/, const sword::AarToClient& /*wrapper*/ )
 {
     DumpTime();
-    file_ << "Aar message received" << std::endl;
+    if( file_.good() )
+        file_ << "Aar message received" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +208,8 @@ void LoggerApplication::OnReceiveMsgAarToClient( const std::string& /*from*/, co
 void LoggerApplication::OnReceiveControlBeginTick( int tick )
 {
     DumpTime();
-    file_ << "New tick " << tick << std::endl;
+    if( file_.good() )
+        file_ << "New tick " << tick << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +221,8 @@ void LoggerApplication::LogMessage( const sword::SimToClient& wrapper )
     if( bVerbose_ )
     {
         DumpTime();
-        file_ << "Received " << wrapper.message().DebugString() << std::endl;
+        if( file_.good() )
+            file_ << "Received " << wrapper.message().DebugString() << std::endl;
 
         /*typedef std::vector< const google::protobuf::FieldDescriptor* > T_Fields;
         T_Fields fields;
@@ -228,7 +241,8 @@ void LoggerApplication::LogMessage( const sword::SimToClient& wrapper )
 // -----------------------------------------------------------------------------
 void LoggerApplication::DumpTime()
 {
-    file_ << boost::posix_time::microsec_clock::universal_time() << ": ";
+    if( file_.good() )
+        file_ << boost::posix_time::microsec_clock::universal_time() << ": ";
 }
 
 // -----------------------------------------------------------------------------

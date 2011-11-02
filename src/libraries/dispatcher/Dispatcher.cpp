@@ -97,8 +97,8 @@ void Dispatcher::Update()
     clientsNetworker_->Update();
     simulationNetworker_->Update();
     handler_->Update();
-    memoryLogger_->Update();
     shield_->Update();
+    memoryLogger_->Update();
 }
 
 // -----------------------------------------------------------------------------

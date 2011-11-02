@@ -138,6 +138,8 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMiddle( const std::string& from, const swo
 {
     if( wrapper.message().has_control_client_announcement() )
         OnReceiveCtrlClientAnnouncement( from );
+    else if( wrapper.message().has_control_tick_ack() )
+        simulation_.Continue();
     else
         assert( false );
 }

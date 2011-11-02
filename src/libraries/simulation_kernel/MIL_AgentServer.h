@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "Tools/MIL_Config.h"
 #include "Network/NET_Simulation_ABC.h"
+#include "MT_Tools/MT_Profiler.h"
 #include "MT_Tools/MT_Timer_ABC.h"
 #include "MT_Tools/MT_TimerManager.h"
 #include "MIL_Time_ABC.h"
@@ -63,7 +64,8 @@ public:
         eSimRunning = 0,
         eSimPaused  = 1,
         eSimStopped = 2,
-        eSimLoading = 3
+        eSimLoading = 3,
+        eSimWait    = 4
     };
     //@}
 
@@ -87,6 +89,7 @@ public:
     virtual void SendControlInformation() const;
     virtual void Stop();
     virtual void Pause();
+    virtual void Continue();
     virtual void Resume( unsigned int ticks );
     virtual void SetTimeFactor( unsigned timeFactor );
     virtual void SetRealTime( const std::string& realTime );
@@ -174,7 +177,11 @@ private:
     unsigned int nSimTime_;
     unsigned int nInitialRealTime_;
     unsigned int nRealTime_;
+    long lastStep_;
+    unsigned int nextPause_;
+    double rWaitTime_;
     std::string localTime_;
+    MT_Profiler profiler_;
     MIL_EffectManager* pEffectManager_;
     MIL_EntityManager* pEntityManager_;
     DEC_Workspace* pWorkspaceDIA_;
@@ -191,8 +198,6 @@ private:
     MIL_BurningCells* pBurningCells_;
     MIL_PropagationManager* pPropagationManager_;
     ProcessMonitor* pProcessMonitor_;
-    long lastStep_;
-    unsigned int nextPause_;
     //@}
 
 private:

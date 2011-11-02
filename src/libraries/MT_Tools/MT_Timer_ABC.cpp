@@ -30,6 +30,7 @@ MT_Timer_ABC::MT_Timer_ABC()
     , tLastTimeLaunched_( GetSystemTime() )
     , bStarted_         ( false )
     , bPaused_          ( false )
+    , bWaiting_         ( false )
 {
     // NOTHING
 }
@@ -55,7 +56,7 @@ MT_Timer_ABC::~MT_Timer_ABC()
 //-----------------------------------------------------------------------------
 void MT_Timer_ABC::Process( long long int currentTime )
 {
-    if( !bStarted_ || bPaused_ )
+    if( !bStarted_ || bPaused_ || bWaiting_ )
         return;
     if( currentTime - tLastTimeLaunched_ < tPeriod_ )
         return;
@@ -105,4 +106,22 @@ void MT_Timer_ABC::Pause()
 void MT_Timer_ABC::Resume()
 {
     bPaused_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_Timer_ABC::Wait
+// Created: JSR 2011-10-28
+// -----------------------------------------------------------------------------
+void MT_Timer_ABC::Wait()
+{
+    bWaiting_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_Timer_ABC::Continue
+// Created: JSR 2011-10-28
+// -----------------------------------------------------------------------------
+void MT_Timer_ABC::Continue()
+{
+    bWaiting_ = false;
 }

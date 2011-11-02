@@ -47,6 +47,9 @@ public:
     void Pause ();
     void Resume();
 
+    void Wait();
+    void Continue();
+
     void Process( long long int currentTime );
     //@}
 
@@ -59,6 +62,7 @@ private:
     long long int tLastTimeLaunched_;
     bool bStarted_;
     bool bPaused_;
+    bool bWaiting_;
     //@}
 };
 

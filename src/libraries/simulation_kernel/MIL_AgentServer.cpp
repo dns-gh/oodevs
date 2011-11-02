@@ -53,6 +53,9 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , nCurrentTimeStep_     ( 1 )
     , nSimTime_             ( 0 )
     , nRealTime_            ( 0 )
+    , lastStep_             ( clock() )
+    , nextPause_            ( config_.GetPausedAtStartup() ? 1 : 0 )
+    , rWaitTime_            ( 0. )
     , pEffectManager_       ( new MIL_EffectManager() )
     , pEntityManager_       ( 0 )
     , pWorkspaceDIA_        ( 0 )
@@ -68,8 +71,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pPropagationManager_  ( new MIL_PropagationManager() )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
-    , lastStep_             ( clock() )
-    , nextPause_            ( config_.GetPausedAtStartup() ? 1 : 0 )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
@@ -281,16 +282,16 @@ void MIL_AgentServer::MainSimLoop()
     pPathFindManager_->UpdateInSimulationThread();
     if( pProcessMonitor_->MonitorProcess() )
     {
-        MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - PathFind : %d short %d long %d done - RAM : %.3f MB / %.3f MB (VM)",
+        MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms - PathFind : %d short %d long %d done - RAM : %.3f MB / %.3f MB (VM)",
         nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(),
-        pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(),
+        pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), rWaitTime_, pPathFindManager_->GetNbrShortRequests(),
         pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
     }
     else
     {
-        MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - PathFind : %d short %d long %d done",
+        MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms - PathFind : %d short %d long %d done",
         nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(),
-        pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(),
+        pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), rWaitTime_, pPathFindManager_->GetNbrShortRequests(),
         pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests() ) );
     }
 
@@ -304,6 +305,9 @@ void MIL_AgentServer::MainSimLoop()
     SendMsgEndTick();
     pEntityManager_->Clean();
     pCheckPointManager_->Update();
+    nSimState_ = eSimWait;
+    MT_Timer_ABC::Wait();
+    profiler_.Start();
 }
 
 // -----------------------------------------------------------------------------
@@ -432,6 +436,7 @@ void MIL_AgentServer::SendControlInformation() const
     if( localTime_ != "" )
         message().mutable_checkpoint_real_time()->set_data( localTime_ );
     message.Send( NET_Publisher_ABC::Publisher() );
+    const_cast< MIL_AgentServer* >( this )->Continue();
 }
 
 // -----------------------------------------------------------------------------
@@ -460,7 +465,7 @@ void MIL_AgentServer::Stop()
 void MIL_AgentServer::Pause()
 {
     client::ControlPauseAck msg;
-    if( nSimState_ != eSimRunning )
+    if( nSimState_ != eSimRunning && nSimState_ != eSimWait )
         msg().set_error_code( sword::ControlAck::error_already_paused );
     else
     {
@@ -490,6 +495,16 @@ void MIL_AgentServer::Resume( unsigned int ticks )
         msg().set_error_code( sword::ControlAck::no_error );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::Continue
+// Created: JSR 2011-10-28
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::Continue()
+{
+    rWaitTime_ = profiler_.Stop();
+    MT_Timer_ABC::Continue();
 }
 
 // -----------------------------------------------------------------------------
