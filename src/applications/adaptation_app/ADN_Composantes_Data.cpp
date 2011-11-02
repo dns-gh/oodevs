@@ -458,7 +458,7 @@ ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
 , rVolume_            ( 0 )
 , ptrResourceNature_  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
 {
-    BindExistenceTo( &ptrResourceNature_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
