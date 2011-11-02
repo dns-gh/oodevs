@@ -429,7 +429,7 @@ void MIL_AgentServer::SendControlInformation() const
     NET_ASN_Tools::WriteGDH( nRealTime_, *message().mutable_date_time() );
     message().set_tick_duration( GetTimeStepDuration() );
     message().set_time_factor( nTimeFactor_ );
-    message().set_status( sword::EnumSimulationState( nSimState_ ) );
+    message().set_status( sword::EnumSimulationState( nSimState_ == eSimWait ? eSimRunning : nSimState_ ) );
     message().set_checkpoint_frequency( GetCheckPointManager().GetCheckPointFrequency() );
     message().set_send_vision_cones( GetAgentServer().MustSendUnitVisionCones() );
     message().set_profiling_enabled( GetProfilerManager().IsProfilingEnabled() );
