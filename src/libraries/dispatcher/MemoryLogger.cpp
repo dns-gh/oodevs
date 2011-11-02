@@ -24,6 +24,7 @@ MemoryLogger::MemoryLogger()
     : monitor_     ( new ProcessMonitor() )
     , next_        ( 0 )
     , nCurrentTick_( 0 )
+    , lastTick_    ( 0 )
 {
     // NOTHING
 }
@@ -61,10 +62,11 @@ void MemoryLogger::Update( const sword::ControlEndTick& message )
 void MemoryLogger::Update()
 {
     const time_t current = time( 0 );
-    if( current > next_ )
+    if( current > next_ || lastTick_ != nCurrentTick_ )
     {
         next_ = static_cast< int >( current ) + 60;
         monitor_->MonitorProcess();
         MT_LOG_INFO_MSG( "**** Time tick " << nCurrentTick_ << " - Memory: " << ToMb( monitor_->GetMemory() ) << " MB / " << ToMb( monitor_->GetVirtualMemory() ) << " MB (VM)" );
+        lastTick_ = nCurrentTick_;
     }
 }

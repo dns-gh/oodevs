@@ -44,6 +44,7 @@ private:
     std::auto_ptr< ProcessMonitor > monitor_;
     int next_;
     unsigned int nCurrentTick_;
+    unsigned int lastTick_;
     //@}
 };
 }

@@ -13,11 +13,11 @@
 
 int main( int argc, char** argv )
 {
-    std::cout << "Usage: loadtester hostname logFile [verbose [login password]]]" << std::endl;
-    if( argc < 3 )
+    std::cout << "Usage: loadtester hostname [logFile [verbose [login password]]]]" << std::endl;
+    if( argc < 2 )
         return 1;
     std::string hostname( argv[1] );
-    std::string logFile( argv[2] );
+    std::string logFile( argc > 2 ? argv[2] : "" );
     std::string verbose;
     if( argc > 3 )
         verbose = argv[3];
