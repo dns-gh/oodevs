@@ -263,7 +263,6 @@
     <propagation model="cloud"/>
   </object>
   <object geometry="point polygon" name="plot ravitaillement" symbol="G*SPPR----****X" type="logistic support area">
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <supply/>
   </object>
@@ -457,4 +456,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="4135156020" -->
+<!-- signature="4140429010" -->
