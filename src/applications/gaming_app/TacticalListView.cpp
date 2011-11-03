@@ -18,10 +18,10 @@
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
 #include "gaming/StaticModel.h"
+#include "gaming/CommandPostAttributes.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/CommandPostAttributes.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Options.h"
@@ -83,7 +83,7 @@ void TacticalListView::Display( const kernel::Entity_ABC& entity, gui::ValuedLis
 {
     if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
         item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
-    else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
+    else if( const CommandPostAttributes* commandPost = entity.Retrieve< CommandPostAttributes >() )
         item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
 
     if( const Attributes* attributes = static_cast< const Attributes* >( entity.Retrieve< kernel::Attributes_ABC >() ) )

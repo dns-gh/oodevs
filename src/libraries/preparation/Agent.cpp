@@ -29,11 +29,10 @@ using namespace kernel;
 // Name: Agent constructor
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManager, bool commandPost )
+Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManager )
     : EntityImplementation< Agent_ABC >( controller, idManager.GetNextId(), type.GetName().c_str() )
     , type_                ( type )
     , symbol_              ( type_.GetSymbol() )
-    , commandPost_         ( commandPost )
     , criticalIntelligence_( "" )
 {
     RegisterSelf( *this );
@@ -58,7 +57,6 @@ Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, 
     : EntityImplementation< Agent_ABC >( controller, xis.attribute< unsigned long >( "id" ), ReadName( xis ) )
     , type_       ( type )
     , symbol_     ( type_.GetSymbol() )
-    , commandPost_( xis.attribute< bool >( "command-post", false ) )
 {
     std::string criticalIntelligence;
     xis >> xml::optional
@@ -91,8 +89,6 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
         InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where, -1.f );
         tools.DrawApp6Symbol( type_.GetLevelSymbol(), where, -1.f );
-        if( commandPost_ )
-            tools.DrawApp6Symbol( type_.GetHQSymbol(), where, -1.f );
     }
 }
 
@@ -112,15 +108,6 @@ void Agent::InitializeSymbol() const
 const AgentType& Agent::GetType() const
 {
     return type_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::IsCommandPost
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-bool Agent::IsCommandPost() const
-{
-    return commandPost_;
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +132,6 @@ void Agent::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), constSelf.id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), name_, *this, &Agent::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), constSelf.type_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Command post" ), commandPost_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Critical intelligence" ), criticalIntelligence_ );
 }
 
@@ -157,8 +143,7 @@ void Agent::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", long( id_ ) )
         << xml::attribute( "type", type_.GetName() )
-        << xml::attribute( "name", name_.ascii() )
-        << xml::attribute( "command-post", commandPost_ );
+        << xml::attribute( "name", name_.ascii() );
     if( criticalIntelligence_ != "" )
     {
         xos << xml::start( "critical-intelligence" )

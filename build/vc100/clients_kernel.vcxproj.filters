@@ -364,9 +364,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\EntityResolverFacade.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\CommandPostAttributes.cpp">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\DictionaryExtensions.cpp">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClCompile>
@@ -841,9 +838,6 @@
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Color_ABC.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\CommunicationHierarchies.h">

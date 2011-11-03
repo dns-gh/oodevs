@@ -40,7 +40,6 @@ public:
     //! @name Accessors
     //@{
     virtual const AgentType& GetType() const = 0;
-    virtual bool IsCommandPost() const = 0;
     //@}
 
     //! @name Operations

@@ -307,9 +307,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\Paths.cpp">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\gaming\PcAttributes.cpp">
-      <Filter>Source Files\Model\Agents\Extensions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\Reinforcements.cpp">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClCompile>
@@ -796,6 +793,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\LogFuneralConsign.cpp">
       <Filter>Source Files\Model\Logistique</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\CommandPostAttributes.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -979,9 +979,6 @@
       <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\Paths.h">
-      <Filter>Source Files\Model\Agents\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\gaming\PcAttributes.h">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\Reinforcements.h">
@@ -1505,6 +1502,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\LogFuneralConsign.h">
       <Filter>Source Files\Model\Logistique</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\CommandPostAttributes.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -76,6 +76,16 @@ void TacticalListView::setColumnWidth( int column, int w )
     Q3ListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
 }
 
+namespace
+{
+    bool IsCommandPost( const kernel::Entity_ABC& entity )
+    {
+        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
+            return pAttributes->IsCommandPost();
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TacticalListView::Display
 // Created: AGE 2006-09-20
@@ -85,7 +95,7 @@ void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
     item->setRenameEnabled( 0, true );
     if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
         item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
-    else if( entity.Retrieve< CommandPostAttributes >() )
+    else if( IsCommandPost( entity ) )
         item->setPixmap( 1, commandPost_ );
     QColor color = Qt::transparent;
     if( dynamic_cast< const Ghost_ABC* >( &entity ) != 0 )
@@ -96,7 +106,6 @@ void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView::NotifyUpdated
-
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
@@ -116,8 +125,10 @@ void TacticalListView::NotifyUpdated( const Entity_ABC& entity )
     if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
     {
         item->SetNamed( entity );
-        if( entity.Retrieve< CommandPostAttributes >() )
+        if( IsCommandPost( entity ) )
             item->setPixmap( 1, commandPost_ );
+        else
+            item->setPixmap( 1, QPixmap() );
     }
 }
 

@@ -12,6 +12,7 @@
 #include "AgentsModel.h"
 #include "Tools.h"
 #include "ModelChecker_ABC.h"
+#include "CommandPostAttributes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -45,6 +46,16 @@ bool AgentsModelChecker::Check( const AgentsModel& model, ModelChecker_ABC& chec
     return CheckCommandPosts( model, checker );
 }
 
+namespace
+{
+    bool IsCommandPost( const kernel::Entity_ABC& entity )
+    {
+        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
+            return pAttributes->IsCommandPost();
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentsModelChecker::CheckCommandPosts
 // Created: SBO 2007-01-18
@@ -60,8 +71,7 @@ bool AgentsModelChecker::CheckCommandPosts( const AgentsModel& model, ModelCheck
         unsigned int commandPostCount = 0;
         while( itChild.HasMoreElements() )
         {
-            const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( & itChild.NextElement() );
-            if( agent && agent->IsCommandPost() )
+            if( IsCommandPost( itChild.NextElement() ) )
                 ++commandPostCount;
         }
         if( commandPostCount == 0 )

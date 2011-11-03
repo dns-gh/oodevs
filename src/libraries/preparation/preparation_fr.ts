@@ -23,16 +23,16 @@
         <translation>Info/Nom</translation>
     </message>
     <message>
-        <source>Info/Command post</source>
-        <translation>Info/Poste de commande</translation>
-    </message>
-    <message>
         <source>Info/Critical intelligence</source>
         <translation>Info/Renseignement critique</translation>
     </message>
     <message>
         <source>Info/Type</source>
         <translation type="unfinished">Info/Type</translation>
+    </message>
+    <message>
+        <source>Info/Command post</source>
+        <translation>Info/Poste de commande</translation>
     </message>
 </context>
 <context>

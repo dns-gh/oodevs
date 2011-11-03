@@ -46,7 +46,7 @@ class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager, bool commandPost = false );
+             Agent( const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager );
              Agent( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentType& type );
     virtual ~Agent();
     //@}
@@ -58,7 +58,6 @@ public:
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
 
-    virtual bool IsCommandPost() const;
     void Rename( const QString& name );
     //@}
 
@@ -81,7 +80,6 @@ private:
     const kernel::AgentType& type_;
     mutable std::string symbol_;
     QString criticalIntelligence_;
-    bool commandPost_;
     //@}
 };
 

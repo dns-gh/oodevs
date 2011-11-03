@@ -51,7 +51,6 @@
 #include "ObjectDetections.h"
 #include "ObjectsModel.h"
 #include "Paths.h"
-#include "PcAttributes.h"
 #include "Population.h"
 #include "PopulationDecisions.h"
 #include "PopulationDetections.h"
@@ -70,8 +69,8 @@
 #include "VisionCones.h"
 #include "Weapons.h"
 #include "Color.h"
+#include "CommandPostAttributes.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/CommandPostAttributes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -160,7 +159,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
 
     result->Attach< Lives_ABC >( *new Lives( controllers_.controller_ ) );
     result->Attach< kernel::Attributes_ABC >( *new Attributes( *result, controllers_.controller_, static_.coordinateConverter_, dico, model_.teams_ ) );
-    result->Attach( *new kernel::CommandPostAttributes( *result ) );
+    result->Attach( *new CommandPostAttributes( *result, message, static_.types_ ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< kernel::Positions >( *new AgentPositions( controllers_.controller_, *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
@@ -173,8 +172,6 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new LogFuneralConsigns( controllers_.controller_ ) );
     result->Attach< kernel::CommunicationHierarchies >( *new AgentHierarchiesCommunication( controllers_.controller_, *result, model_.agents_, model_.knowledgeGroups_ ) );
     result->Attach< kernel::TacticalHierarchies >     ( *new AgentHierarchies< kernel::TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
-    if( result->IsCommandPost() )
-        result->Attach( *new PcAttributes( *result ) );
 
     result->Attach< kernel::HumanFactors_ABC >( *new HumanFactors( controllers_.controller_, dico ) );
     result->Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );
