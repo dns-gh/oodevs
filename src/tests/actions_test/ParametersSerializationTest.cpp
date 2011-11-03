@@ -82,7 +82,6 @@ namespace
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetType, 0 );
-        MOCK_METHOD( IsCommandPost, 0 );
     };
 
     MOCK_BASE_CLASS( MockAutomat, kernel::Automat_ABC )

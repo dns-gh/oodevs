@@ -69,6 +69,7 @@ public:
     virtual sword::ForceRatio_Value GetForceRatio() const = 0;
     virtual const Order_ABC* GetOrder() const = 0;
     virtual bool IsMounted() const = 0;
+    virtual bool IsCommandPost() const = 0;
     //@}
 
     //! @name Operations
