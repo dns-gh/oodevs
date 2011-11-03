@@ -29,7 +29,6 @@
 #include "frontend/SessionConfigPanel.h"
 #include "frontend/StartExercise.h"
 #include "frontend/StartReplay.h"
-#include "frontend/TabWidget.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include "clients_gui/Tools.h"
@@ -132,13 +131,11 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
     , exercise_( 0 )
 {
     Q3VBox* box = new Q3VBox( this );
-    box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setMargin( 5 );
     {
-        frontend::TabWidget* tabs = new frontend::TabWidget( box );
+        QTabWidget* tabs = new QTabWidget( box );
         {
             exercises_ = new ExerciseList( tabs, config_, fileLoader_, controllers, true, true, true, false );
-            exercises_->setBackgroundOrigin( QWidget::WindowOrigin );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
             tabs->addTab( exercises_, tools::translate( "ScenarioLauncherPage", "General" ) );
@@ -147,8 +144,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
             Q3GroupBox* configBox = new Q3GroupBox( 1, Qt::Vertical, tabs );
             configBox->setMargin( 5 );
             configBox->setFrameShape( Q3GroupBox::NoFrame );
-            configBox->setBackgroundOrigin( QWidget::WindowOrigin );
-            frontend::TabWidget* config = new frontend::TabWidget( configBox );
+            QTabWidget* config = new QTabWidget( configBox );
             tabs->addTab( configBox, tools::translate( "ScenarioLauncherPage", "Settings" ) );
             {
                 frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >( config );

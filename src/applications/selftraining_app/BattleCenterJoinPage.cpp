@@ -55,15 +55,11 @@ BattleCenterJoinPage::BattleCenterJoinPage( Q3WidgetStack* pages, Page_ABC& prev
     Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );
-    box->setBackgroundOrigin( QWidget::WindowOrigin );
     {
         Q3GroupBox* hbox = new Q3GroupBox( 1, Qt::Vertical, box );
-        hbox->setBackgroundOrigin( QWidget::WindowOrigin );
-        QLabel* label = new QLabel( tools::translate( "BattleCenterJoinPage", "Host:" ), hbox );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        new QLabel( tools::translate( "BattleCenterJoinPage", "Host:" ), hbox );
         host_ = new QLineEdit( tools::translate( "BattleCenterJoinPage", "127.0.0.1" ), hbox );
-        label = new QLabel( tools::translate( "BattleCenterJoinPage", "Port:" ), hbox );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        new QLabel( tools::translate( "BattleCenterJoinPage", "Port:" ), hbox );
         port_ = new QSpinBox( hbox );
         port_->setMaxValue( 65535 );
         port_->setValue( config.GetLauncherPort() );

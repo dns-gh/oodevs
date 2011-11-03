@@ -179,7 +179,6 @@
     <ClInclude Include="..\..\src\libraries\frontend\StartReplay.h" />
     <ClInclude Include="..\..\src\libraries\frontend\StartTerrainWorkshop.h" />
     <ClInclude Include="..\..\src\libraries\frontend\ConfigurationManipulator.h" />
-    <ClInclude Include="..\..\src\libraries\frontend\TabWidget.h" />
     <ClInclude Include="..\..\src\libraries\frontend\XmlNode.h" />
     <ClInclude Include="..\..\src\libraries\frontend\ProcessList.h" />
     <ClInclude Include="..\..\src\libraries\frontend\ProcessObserver_ABC.h" />

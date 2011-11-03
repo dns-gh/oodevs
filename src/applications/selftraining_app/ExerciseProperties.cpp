@@ -26,13 +26,6 @@ namespace
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
-
-    template< typename T >
-    T* Style( T* widget )
-    {
-        widget->setBackgroundOrigin( QWidget::WindowOrigin );
-        return widget;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -49,15 +42,14 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralCon
     , dataChanged_ ( false )
 {
     setMinimumWidth( 200 );
-    setBackgroundOrigin( QWidget::WindowOrigin );
     setSpacing( 5 );
     if( briefing )
     {
-        Q3VBox* box = Style( new Q3VBox( this ) );
+        Q3VBox* box = new Q3VBox( this );
         box->setMinimumWidth( 200 );
         box->setSpacing( 5 );
-        briefingImage_ = Style( new QLabel( box ) );
-        briefingText_ = Style( new Q3TextEdit( box ) );
+        briefingImage_ = new QLabel( box );
+        briefingText_ = new Q3TextEdit( box );
         briefingText_->setFont( QFont( "Georgia", 10, QFont::Normal, true ) );
         briefingText_->setReadOnly( true );
         briefingText_->hide();
@@ -67,16 +59,16 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralCon
         Q3GroupBox* box = new Q3GroupBox( 1, Qt::Vertical, this );
         box->setEnabled( editable );
         box->setMaximumHeight( 100 );
-        Q3VBox* editBox = Style( new Q3VBox( box ) );
+        Q3VBox* editBox = new Q3VBox( box );
         editBox->setMinimumWidth( 200 );
         editBox->setSpacing( 5 );
-        Style( new QLabel( tools::translate( "ExerciseProperties", "Exercise parameters:" ), editBox ) );
+        new QLabel( tools::translate( "ExerciseProperties", "Exercise parameters:" ), editBox );
         {
-            terrainList_ = Style( new QComboBox( editBox ) );
+            terrainList_ = new QComboBox( editBox );
             connect( terrainList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
         }
         {
-            modelList_ = Style( new QComboBox( editBox ) );
+            modelList_ = new QComboBox( editBox );
             connect( modelList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
         }
     }

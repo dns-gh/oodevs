@@ -83,7 +83,6 @@ void MainWindow::SetStyle()
 
     p.setBrush( backgroundRole(), QBrush( px ) );
     setPalette( p );
-    setBackgroundOrigin( QWidget::WindowOrigin );
 }
 
 // -----------------------------------------------------------------------------

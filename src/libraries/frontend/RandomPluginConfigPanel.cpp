@@ -29,13 +29,6 @@ using namespace frontend;
 
 namespace
 {
-    template< typename T >
-    T* Style( T* widget )
-    {
-        widget->setBackgroundOrigin( QWidget::WindowOrigin );
-        return widget;
-    }
-
     void ReadGaussian( bool* distributions )
     {
         QSettings settings;
@@ -131,19 +124,18 @@ RandomPluginConfigPanel::RandomPluginConfigPanel( QWidget* parent, const tools::
     , config_( config )
 {
     setMargin( 5 );
-    setBackgroundOrigin( QWidget::WindowOrigin );
 
-    Q3GroupBox* hbox = Style( new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "RandomPluginConfigPanel", "Random Generator" ), this ) );
-    hasSeed_ = Style( new QCheckBox( tools::translate( "RandomPluginConfigPanel", "Seed:" ), hbox ) );
+    Q3GroupBox* hbox = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "RandomPluginConfigPanel", "Random Generator" ), this );
+    hasSeed_ = new QCheckBox( tools::translate( "RandomPluginConfigPanel", "Seed:" ), hbox );
     connect( hasSeed_, SIGNAL( toggled( bool ) ), SLOT( OnSeedToggled() ) );
-    seed_ = Style( new QSpinBox( 1, std::numeric_limits< int >::max(), 1, hbox ) );
+    seed_ = new QSpinBox( 1, std::numeric_limits< int >::max(), 1, hbox );
     bool bHasSeed = ReadHasSeed();
     seed_->setValue( ReadSeed() );
     seed_->setEnabled( bHasSeed );
     hasSeed_->setChecked( bHasSeed );
 
-    Style( new QLabel( tools::translate( "RandomPluginConfigPanel", "Context:" ), hbox ) );
-    contextList_ = Style( new QComboBox( hbox ) );
+    new QLabel( tools::translate( "RandomPluginConfigPanel", "Context:" ), hbox );
+    contextList_ = new QComboBox( hbox );
     contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Fire" ), eFire );
     contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Wounds" ), eWounds );
     contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Perception" ), ePerception );
@@ -151,23 +143,23 @@ RandomPluginConfigPanel::RandomPluginConfigPanel( QWidget* parent, const tools::
     contextList_->setCurrentItem( 0 );
     connect( contextList_, SIGNAL( activated( int ) ), SLOT( OnContextChanged( int ) ) );
 
-    Style( new QLabel( tools::translate( "RandomPluginConfigPanel", "Distribution:" ), hbox ) );
-    distributionList_ = Style( new QComboBox( hbox ) );
+    new QLabel( tools::translate( "RandomPluginConfigPanel", "Distribution:" ), hbox );
+    distributionList_ = new QComboBox( hbox );
     distributionList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Linear" ) );
     distributionList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Gaussian" ) );
     connect( distributionList_, SIGNAL( activated( int ) ), SLOT( OnDistributionChanged( int ) ) );
 
-    Style( new QLabel( tools::translate( "RandomPluginConfigPanel", "Standard deviation:" ), hbox ) );
-    deviation_ = Style( new QLineEdit( hbox ) );
+    new QLabel( tools::translate( "RandomPluginConfigPanel", "Standard deviation:" ), hbox );
+    deviation_ = new QLineEdit( hbox );
     deviation_->setValidator( new Validator( deviation_ ) );
     connect( deviation_, SIGNAL( textChanged( const QString& ) ), SLOT( OnDeviationChanged( const QString& ) ) );
 
-    Style( new QLabel( tools::translate( "RandomPluginConfigPanel", "Mean:" ), hbox ) );
-    mean_ = Style( new QLineEdit( hbox ) );
+    new QLabel( tools::translate( "RandomPluginConfigPanel", "Mean:" ), hbox );
+    mean_ = new QLineEdit( hbox );
     mean_->setValidator( new Validator( mean_ ) );
     connect( mean_, SIGNAL( textChanged( const QString& ) ), SLOT( OnMeanChanged( const QString& ) ) );
 
-    QPushButton* defaultBtn = Style( new QPushButton( tools::translate( "RandomPluginConfigPanel", "Set as default" ), hbox ) );
+    QPushButton* defaultBtn = new QPushButton( tools::translate( "RandomPluginConfigPanel", "Set as default" ), hbox );
     connect( defaultBtn, SIGNAL( clicked() ), this, SLOT( OnDefaultClicked() ) );
 
     ReadRandomValues();

@@ -34,29 +34,21 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
 {
     setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     setMargin( 5 );
-    setBackgroundOrigin( QWidget::WindowOrigin );
     Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "ExportWidget", "Create a package" ), this );
-    group->setBackgroundOrigin( QWidget::WindowOrigin );
     {
-        QLabel* label = new QLabel( tools::translate( "ExportWidget", "Exercise to package:" ), group );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        new QLabel( tools::translate( "ExportWidget", "Exercise to package:" ), group );
         list_ = new Q3ListBox( group );
-        list_->setBackgroundOrigin( QWidget::WindowOrigin );
         connect( list_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
     }
     {
-        QLabel* label = new QLabel(  tools::translate( "ExportWidget", "Package description:" ), group );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        new QLabel(  tools::translate( "ExportWidget", "Package description:" ), group );
         description_ = new Q3TextEdit( group );
-        description_->setBackgroundOrigin( QWidget::WindowOrigin );
         description_->setMaximumHeight( 30 );
         description_->setReadOnly( false );
     }
     {
-        QLabel* label = new QLabel(  tools::translate( "ExportWidget", "Package content:" ), group );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        new QLabel(  tools::translate( "ExportWidget", "Package content:" ), group );
         content_ = new Q3ListView( group );
-        content_->setBackgroundOrigin( QWidget::WindowOrigin );
         content_->addColumn( "exercise features" );
         content_->setResizeMode( Q3ListView::AllColumns );
         content_->header()->hide();

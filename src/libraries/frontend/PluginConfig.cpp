@@ -38,13 +38,6 @@ namespace
         return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
     }
 
-    template< typename T >
-    T* Style( T* widget )
-    {
-        widget->setBackgroundOrigin( QWidget::WindowOrigin );
-        return widget;
-    }
-
     struct DescriptionReader
     {
         DescriptionReader( xml::xisubstream xis, const std::string& currentLanguage )
@@ -79,15 +72,14 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
 {
     DescriptionReader reader( xis, ReadLang() );
     setMargin( 5 );
-    setBackgroundOrigin( QWidget::WindowOrigin );
-    view_ = Style( new Q3ScrollView( this ) );
+    view_ = new Q3ScrollView( this );
     view_->setHScrollBarMode( Q3ScrollView::AlwaysOff );
     view_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
     view_->setResizePolicy( Q3ScrollView::AutoOneFit );
     view_->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    box_ = Style( new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "PluginConfig", "Enable %1 plugin (v%2)" )
-                                                                    .arg( reader.name_.c_str() )
-                                                                    .arg( version_.c_str() ), view_->viewport() ) );
+    box_ = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "PluginConfig", "Enable %1 plugin (v%2)" )
+                                                                 .arg( reader.name_.c_str() )
+                                                                 .arg( version_.c_str() ), view_->viewport() );
     label_ = reader.name_.c_str();
     QToolTip::add( box_, reader.description_.c_str() );
     box_->setCheckable( true );
@@ -189,7 +181,7 @@ void PluginConfig::ReadSetting( xml::xistream& xis, QWidget* parent )
 void PluginConfig::ReadGroup( xml::xistream& xis, QWidget* parent )
 {
     DescriptionReader reader( xis, ReadLang() );
-    Q3GroupBox* box = Style( new Q3GroupBox( 2, Qt::Horizontal, reader.name_.c_str(), parent ) );
+    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, reader.name_.c_str(), parent );
     box->setMargin( 5 );
     static_cast< Q3GroupBox* >( parent )->setColumns( 1 );
     QToolTip::add( box_, reader.description_.c_str() );

@@ -12,11 +12,6 @@
 
 class ScenarioEditPage;
 
-namespace frontend
-{
-    class TabWidget;
-}
-
 namespace tools
 {
     class GeneralConfig;
@@ -84,7 +79,7 @@ private:
     //@{
     ScenarioEditPage&           page_;
     const tools::GeneralConfig& config_;
-    frontend::TabWidget*        tabs_;
+    QTabWidget*                 tabs_;
     QLineEdit*                  package_;
     QLineEdit*                  packageName_;
     Q3TextEdit*                 packageDescription_;

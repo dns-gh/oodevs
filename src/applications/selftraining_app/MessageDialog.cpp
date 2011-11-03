@@ -63,10 +63,8 @@ MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QStri
     Q3VBoxLayout* mainLayout = new Q3VBoxLayout( this );
 
     Q3VBox* vbox = new Q3VBox( this );
-   // vbox->setBackgroundOrigin( QWidget::WindowOrigin );
     vbox->setSpacing( 10 );
     QLabel* label = new QLabel( vbox );
-   // label->setBackgroundOrigin( QWidget::WindowOrigin );
     label->setText( message );
     label->setAlignment( Qt::AlignCenter | Qt::TextWordWrap );
     label->setMinimumHeight( 50 );
@@ -79,7 +77,6 @@ MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QStri
 
     QWidget* spacer = new QWidget( vbox );
     spacer->setMinimumHeight( 50 );
-    spacer->setBackgroundOrigin( QWidget::WindowOrigin );
 }
 
 // -----------------------------------------------------------------------------

@@ -31,10 +31,8 @@ CheckpointList::CheckpointList( QWidget* parent, const tools::GeneralConfig& con
     , enabled_( false )
 {
     setSpacing( 5 );
-    setBackgroundOrigin( QWidget::WindowOrigin );
     {
         QLabel* label = new QLabel( tools::translate( "CheckpointList", "Checkpoint:" ), this );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
         list_ = new Q3ListBox( this );
         connect( list_, SIGNAL( highlighted( int ) ), this, SLOT( SelectCheckpoint( int ) ) );
     }

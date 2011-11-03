@@ -37,7 +37,6 @@ ReplayPage::ReplayPage( Q3WidgetStack* pages, Page_ABC& previous, const frontend
     Q3VBox* mainBox = new Q3VBox( this );
     {
         Q3HBox* hbox = new Q3HBox( mainBox );
-        hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         hbox->setMargin( 10 );
         hbox->setSpacing( 10 );
         {

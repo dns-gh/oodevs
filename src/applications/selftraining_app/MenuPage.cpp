@@ -45,17 +45,14 @@ MenuPage::MenuPage( Q3WidgetStack* pages, Page_ABC& previous, unsigned short but
     Q3VBox* box = new Q3VBox(this);
     AddContent( box );
     box->setSpacing( 5 );
-    box->setBackgroundOrigin( QWidget::WindowOrigin );
     // title
     QFont titleFont( "Century Gothic", 18, QFont::Bold );
     titleFont.setItalic( true ) ;
     title_ = new QLabel( title, box ) ;
-    title_->setBackgroundOrigin( QWidget::WindowOrigin );
     title_->setFont( titleFont );
     title_->setAlignment( Qt::AlignCenter ) ;
     QWidget* spacer = new QWidget( box );
     spacer->setMinimumHeight( 40 );
-    spacer->setBackgroundOrigin( QWidget::WindowOrigin );
     // main container
     container_ = new TransparentContainer( box);
 
@@ -64,7 +61,6 @@ MenuPage::MenuPage( Q3WidgetStack* pages, Page_ABC& previous, unsigned short but
     subTitleFont.setItalic( true );
     subTitle_ = new QLabel( box );
     subTitle_->setMargin( 5 );
-    subTitle_->setBackgroundOrigin( QWidget::WindowOrigin );
     subTitle_->setFont( subTitleFont);
 
     layout()->setAlignment( Qt::AlignCenter );

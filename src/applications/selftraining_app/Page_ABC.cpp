@@ -28,8 +28,6 @@ Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short fla
     , joinButton_( 0 )
     , editButton_( 0 )
 {
-    setBackgroundOrigin( QWidget::WindowOrigin );
-
     //layout()->setAlignment( Qt::AlignTop );
     grid_ = new Q3GridLayout( layout(), 3, 2 );
     grid_->setRowStretch( 0, 1 );
@@ -128,7 +126,6 @@ void Page_ABC::AddContent( QWidget* widget )
 void Page_ABC::AddTitle( const QString& title )
 {
     QLabel* label = new QLabel( title, this );
-    label->setBackgroundOrigin( QWidget::WindowOrigin );
     QFont font( font() );
     font.setPixelSize( 30 );
     font.setItalic( true );

@@ -22,7 +22,6 @@
 #include "frontend/Exercise_ABC.h"
 #include "frontend/ImportExercise.h"
 #include "frontend/ProcessWrapper.h"
-#include "frontend/TabWidget.h"
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioEditPage constructor
@@ -36,10 +35,9 @@ ScenarioEditPage::ScenarioEditPage( Q3WidgetStack* pages, Page_ABC& previous, co
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioEditPage", "Editing exercise" ) ) )
 {
     Q3VBox* box = new Q3VBox( this );
-    box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setMargin( 5 );
     {
-        mainTabs_ = new frontend::TabWidget( box );
+        mainTabs_ = new QTabWidget( box );
         connect( mainTabs_, SIGNAL( currentChanged( QWidget* ) ), this, SLOT( UpdateEditButton( QWidget* ) ) );
         {
             exercises_ = new ExerciseList( mainTabs_, config_, fileLoader_, controllers, true, false );

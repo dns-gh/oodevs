@@ -39,14 +39,11 @@ OptionsPage::OptionsPage( Q3WidgetStack* pages, Page_ABC& previous, Config& conf
     languages_[ tools::translate( "OptionsPage", "Español" ) ] = "es";
 
     Q3VBox* mainBox = new Q3VBox( this );
-    mainBox->setBackgroundOrigin( QWidget::WindowOrigin );
     mainBox->setMargin( 10 );
     Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, mainBox );
     box->setFrameShape( Q3GroupBox::NoFrame );
-    box->setBackgroundOrigin( QWidget::WindowOrigin );
     {
-        QLabel* label = new QLabel( tools::translate( "OptionsPage", "Language: " ), box );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        new QLabel( tools::translate( "OptionsPage", "Language: " ), box );
         QComboBox* combo = new QComboBox( box );
         BOOST_FOREACH( const T_Languages::value_type& lang, languages_ )
         {
@@ -57,18 +54,15 @@ OptionsPage::OptionsPage( Q3WidgetStack* pages, Page_ABC& previous, Config& conf
         connect( combo, SIGNAL( activated( const QString& ) ), SLOT( OnChangeLanguage( const QString& ) ) );
     }
     {
-        QLabel* label = new QLabel( tools::translate( "OptionsPage", "Data directory: " ), box );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        new QLabel( tools::translate( "OptionsPage", "Data directory: " ), box );
         Q3HBox* hbox = new Q3HBox( box );
-        hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         dataDirectory_ = new QLineEdit( hbox );
         dataDirectory_->setText( QDir::convertSeparators( config.GetRootDir().c_str() ) );
         QPushButton* browse = new QPushButton( tools::translate( "OptionsPage", "..." ), hbox );
         connect( browse, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
     }
     {
-        QLabel* label = new QLabel( tools::translate( "OptionsPage", "Profile: " ), box );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        new QLabel( tools::translate( "OptionsPage", "Profile: " ), box );
         QComboBox* combo = new QComboBox( box );
         combo->insertItem( tools::translate( "OptionsPage", "Terrain" ), Config::eTerrain );
         combo->insertItem( tools::translate( "OptionsPage", "User" ), Config::eUser );

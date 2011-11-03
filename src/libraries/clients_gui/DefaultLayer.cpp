@@ -65,7 +65,7 @@ bool DefaultLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f
 // Name: DefaultLayer::HandleMoveDragEvent
 // Created: ABR 2011-10-28
 // -----------------------------------------------------------------------------
-bool DefaultLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
+bool DefaultLayer::HandleMoveDragEvent( QDragMoveEvent* /*event*/, const geometry::Point2f& point )
 {
     point_ = point;
     controllers_.actions_.OverFly( point_ );
@@ -76,7 +76,7 @@ bool DefaultLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::P
 // Name: DefaultLayer::HandleMouseMove
 // Created: ABR 2011-10-28
 // -----------------------------------------------------------------------------
-bool DefaultLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point )
+bool DefaultLayer::HandleMouseMove( QMouseEvent* /*mouse*/, const geometry::Point2f& point )
 {
     point_ = point;
     controllers_.actions_.OverFly( point_ );
