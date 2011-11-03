@@ -43,7 +43,7 @@ struct EventIdentifierStruct
 
 struct MunitionDetonation
 {
-    uint32 articulatedPartData;
+    std::vector< int8 > articulatedPartData;
     rpr::WorldLocation detonationLocation;
     int8 detonationResultCode;
     EventIdentifierStruct eventIdentifier;

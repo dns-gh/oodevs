@@ -34,14 +34,14 @@ namespace hla
     Serializer& operator<<( Serializer& serializer, const std::vector< T >& values )
     {
         for( std::vector< T >::const_iterator it = values.begin(); it != values.end(); ++it )
-            it->Serialize( serializer );
+            serializer << *it;
         return serializer;
     }
     template< typename T >
     Deserializer& operator>>( Deserializer& deserializer, std::vector< T >& values )
     {
         for( std::vector< T >::iterator it = values.begin(); it != values.end(); ++it )
-            it->Deserialize( deserializer );
+            deserializer >> *it;
         return deserializer;
     }
     template< typename T >
