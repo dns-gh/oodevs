@@ -150,18 +150,16 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ColorNameSelector.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Equipment_LogisticSupplyClass.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Config.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DateEdit.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_RoofShapes.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Templates.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClass.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Main.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>

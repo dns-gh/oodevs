@@ -1282,9 +1282,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Template_Usages.cpp">
       <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DateEdit.cpp">
-      <Filter>Source Files\Common widgets</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.cpp">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral data</Filter>
     </ClCompile>
