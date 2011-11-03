@@ -60,7 +60,7 @@ public:
     void Update( const sword::SimToClient& asnMsg );
     virtual void Send( ClientPublisher_ABC& publisher ) const;
 
-    virtual void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned int factor ) const;
+    virtual void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned int factor, unsigned int firstTick = 1 ) const;
     virtual void SendFirstTick( ClientPublisher_ABC& publisher ) const;
     //@}
 

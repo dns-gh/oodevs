@@ -120,7 +120,7 @@ void ReplayPlugin::OnTimer()
 void ReplayPlugin::SendReplayInfo( ClientPublisher_ABC& client )
 {
     tickNumber_ = loader_.GetTickNumber();
-    model_.SendReplayInfo( client, tickNumber_, running_ ? sword::running : sword::paused, factor_ );
+    model_.SendReplayInfo( client, tickNumber_, running_ ? sword::running : sword::paused, factor_, loader_.GetFirstTick() );
 }
 
 // -----------------------------------------------------------------------------

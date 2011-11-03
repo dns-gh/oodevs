@@ -74,7 +74,7 @@ public:
 
     virtual void Send( ClientPublisher_ABC& publisher ) const = 0;
     virtual void SendFirstTick( ClientPublisher_ABC& publisher ) const = 0;
-    virtual void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned int factor ) const = 0;
+    virtual void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned int factor, unsigned int firstTick = 1 ) const = 0;
     //@}
 
     //! @name Accessors

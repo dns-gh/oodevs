@@ -137,30 +137,21 @@ void SimulationModel::Update( const sword::ControlEndTick& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SimulationModel::Update
-// Created: NLD 2006-10-02
-// -----------------------------------------------------------------------------
-//void SimulationModel::Update( const ControlCheckPointSetFrequencyAck& msg )
-//{
-//    nCheckpointFrequency_ = msg;
-//}
-
-// -----------------------------------------------------------------------------
 // Name: SimulationModel::Send
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 {
     client::ControlInformation msg;
-    msg().set_current_tick         ( nCurrentTick_);
+    msg().set_current_tick( nCurrentTick_);
     msg().mutable_initial_date_time()->set_data( initialDate_.c_str() );
     msg().mutable_date_time()->set_data( date_.c_str() );
-    msg().set_tick_duration        ( nTickDuration_ );
-    msg().set_time_factor          ( nTimeFactor_);
-    msg().set_checkpoint_frequency ( nCheckpointFrequency_ );
-    msg().set_status               ( nSimState_);
-    msg().set_send_vision_cones    ( bSendVisionCones_ );
-    msg().set_profiling_enabled    ( bProfilingEnabled_ );
+    msg().set_tick_duration( nTickDuration_ );
+    msg().set_time_factor( nTimeFactor_);
+    msg().set_checkpoint_frequency( nCheckpointFrequency_ );
+    msg().set_status( nSimState_);
+    msg().set_send_vision_cones( bSendVisionCones_ );
+    msg().set_profiling_enabled( bProfilingEnabled_ );
     if( localTime_ != "" )
         msg().mutable_checkpoint_real_time()->set_data( localTime_ );
     msg.Send( publisher );
@@ -170,16 +161,18 @@ void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 // Name: SimulationModel::SendReplayInfo
 // Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
-void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned factor ) const
+void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned int totalTicks, sword::EnumSimulationState status, unsigned int factor, unsigned int firstTick /*= 1*/ ) const
 {
     replay::ControlReplayInformation msg;
-    msg().set_current_tick      ( nCurrentTick_ );
+    msg().set_current_tick( nCurrentTick_ );
     msg().mutable_initial_date_time()->set_data( initialDate_.c_str() );
     msg().mutable_date_time()->set_data( date_.c_str() );
-    msg().set_tick_duration     ( nTickDuration_ );
-    msg().set_time_factor       ( factor );
-    msg().set_status            ( status );
-    msg().set_tick_count        ( totalTicks );
+    msg().set_tick_duration( nTickDuration_ );
+    msg().set_time_factor( factor );
+    msg().set_status( status );
+    msg().set_tick_count( totalTicks );
+    if( firstTick != 1 )
+        msg().set_first_tick( firstTick );
     msg.Send( publisher );
 }
 
@@ -190,7 +183,7 @@ void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned t
 void SimulationModel::SendFirstTick( ClientPublisher_ABC& publisher ) const
 {
     client::ControlBeginTick msg;
-    msg().set_current_tick ( 0 );
+    msg().set_current_tick( 0 );
     msg().mutable_date_time()->set_data( date_.c_str() );
     msg.Send( publisher );
 }

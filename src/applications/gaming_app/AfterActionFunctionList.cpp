@@ -90,7 +90,7 @@ AfterActionFunctionList::~AfterActionFunctionList()
 // -----------------------------------------------------------------------------
 void AfterActionFunctionList::NotifyUpdated( const Simulation& simulation )
 {
-    firstTick_->setMinValue( 0 );
+    firstTick_->setMinValue( simulation.GetFirstTick() );
     firstTick_->setMaxValue( simulation.GetTickCount() );
     duration_->setMinValue( 0 );
     duration_->setMaxValue( simulation.GetTickCount() );
@@ -179,7 +179,7 @@ void AfterActionFunctionList::Request()
         {
             IndicatorRequest& request = model_.CreateRequest( *function );
             if( timeGroup_->isChecked() )
-                request.SetTimeRange( firstTick_->value(), duration_->value() );
+                request.SetTimeRange( firstTick_->value() - 1, duration_->value() );
             Serializer serializer( request );
             std::for_each( paramList_.begin(), paramList_.end(),
                 boost::bind( &actions::gui::Param_ABC::CommitTo, _1, boost::ref( serializer ) ) );

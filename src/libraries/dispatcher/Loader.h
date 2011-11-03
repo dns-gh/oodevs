@@ -47,6 +47,7 @@ public:
 
     unsigned int GetCurrentTick() const;
     unsigned int GetTickNumber() const;
+    unsigned int GetFirstTick() const;
 
     void FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsigned int endTick ) const;
     //@}

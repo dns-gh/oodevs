@@ -129,6 +129,16 @@ unsigned int MessageLoader::GetTickNumber() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MessageLoader::GetFirstTick
+// Created: JSR 2011-11-03
+// -----------------------------------------------------------------------------
+unsigned int MessageLoader::GetFirstTick() const
+{
+    boost::mutex::scoped_lock lock( dataAccessMutex_ );
+    return firstTick_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MessageLoader::FindKeyFrame
 // Created: JSR 2010-10-28
 // -----------------------------------------------------------------------------

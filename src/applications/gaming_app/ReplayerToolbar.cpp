@@ -60,7 +60,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         {
             slider_ = new QSlider( Qt::Horizontal, this );
             addWidget( slider_ );
-            slider_->setMinValue( 0 );
+            slider_->setMinValue( simulation.GetFirstTick() );
             slider_->setPageStep( 1 );
             slider_->setMinimumWidth( 200 );
             slider_->setTickmarks( QSlider::TicksBelow );
@@ -78,10 +78,10 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             connect( pTimeTableButton, SIGNAL( clicked() ), SLOT( OnTimeTable() ) );
         }
         userMove_ = false;
-        slider_->setMaxValue( maxTick_ - 1 );
+        slider_->setMaxValue( maxTick_ );
         slider_->setTickInterval( slider_->maxValue() / 20 );
         slider_->setValue( simulation.GetCurrentTick() );
-        OnSliderMoved( simulation.GetCurrentTick() );
+        OnSliderMoved( slider_->value() );
         userMove_ = true;
         if( ! isVisible() )
         {
@@ -142,7 +142,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation::sTimeTable& timeTable )
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::OnSliderMoved( int frame )
 {
-    value_->setText( tr( "Tick %1" ).arg( frame + 1 ) );
+    value_->setText( tr( "Tick %1" ).arg( frame ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ void ReplayerToolbar::OnSliderReleased()
     if( userMove_ )
     {
         replay::ControlSkipToTick skip;
-        skip().set_tick( slider_->value() );
+        skip().set_tick( slider_->value() - 1 );
         skip.Send( network_ );
     }
 }

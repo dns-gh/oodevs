@@ -29,6 +29,7 @@ message ControlReplayInformation {
    required int32               time_factor       = 5; //!< The simulation time multiplier
    required EnumSimulationState status            = 6; //!< The simulation status
    required int32               tick_count        = 7; //!< The total number of ticks in the replay
+   optional int32               first_tick        = 8; //!< The first tick recorded
 }
 
 /** @struct ControlSkipToTickAck

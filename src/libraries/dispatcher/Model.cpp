@@ -534,9 +534,9 @@ void Model::SendFirstTick( ClientPublisher_ABC& publisher ) const
 // Name: Model::SendReplayInfo
 // Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
-void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned int factor ) const
+void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned int factor, unsigned int firstTick /*= 1*/ ) const
 {
-    simulation_->SendReplayInfo( publisher, totalTicks, status, factor );
+    simulation_->SendReplayInfo( publisher, totalTicks, status, factor, firstTick );
 }
 
 // -----------------------------------------------------------------------------

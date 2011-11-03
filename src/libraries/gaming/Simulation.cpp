@@ -25,6 +25,7 @@ Simulation::Simulation( Controller& controller )
     , timeFactor_  ( 1 )
     , currentTick_ ( 0 )
     , tickCount_   ( static_cast< unsigned int >( -1 ) )
+    , firstTick_   ( 1 )
     , time_        ( 0 )
     , paused_      ( false )
     , connected_   ( false )
@@ -64,6 +65,7 @@ void Simulation::Disconnect()
         return;
     time_ = 0;
     currentTick_ = 0;
+    firstTick_ = 1;
     profiling_.Clear();
     connected_ = false;
     initialized_ = false;
@@ -122,6 +124,8 @@ void Simulation::Update( const sword::ControlReplayInformation& message )
     time_         = message.current_tick() * tickDuration_;
     initialDate_  = message.initial_date_time().data();
     date_         = message.date_time().data();
+    if( message.has_first_tick() )
+        firstTick_ = message.first_tick();
     controller_.Update( *this );
 }
 
@@ -253,7 +257,7 @@ int Simulation::GetSpeed() const
 // Name: Simulation::GetCurrentTick
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-unsigned Simulation::GetCurrentTick() const
+unsigned int Simulation::GetCurrentTick() const
 {
     return currentTick_;
 }
@@ -262,9 +266,18 @@ unsigned Simulation::GetCurrentTick() const
 // Name: Simulation::GetTickCount
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-unsigned Simulation::GetTickCount() const
+unsigned int Simulation::GetTickCount() const
 {
     return tickCount_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetFirstTick
+// Created: JSR 2011-11-03
+// -----------------------------------------------------------------------------
+unsigned int Simulation::GetFirstTick() const
+{
+    return firstTick_;
 }
 
 // -----------------------------------------------------------------------------

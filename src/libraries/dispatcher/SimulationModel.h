@@ -51,9 +51,8 @@ public:
     void Update_Pause( const sword::ControlPauseAck& msg );
     void Update_Resume( const sword::ControlResumeAck& msg );
     void Update( const sword::ControlChangeTimeFactorAck& msg );
-//    void Update ( const ControlCheckPointSetFrequencyAck& msg );
     void Send( ClientPublisher_ABC& publisher ) const;
-    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned factor ) const;
+    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned int totalTicks, sword::EnumSimulationState status, unsigned int factor, unsigned int firstTick = 1 ) const;
     void Reset();
     void SendFirstTick( ClientPublisher_ABC& publisher ) const;
     //@}

@@ -90,8 +90,9 @@ public:
 
     int GetTime() const;                    //!< seconds since simulation start
 
-    unsigned GetCurrentTick() const;         //!< tick since simulation start
-    unsigned GetTickCount() const;           //!< total tick count (replayer)
+    unsigned int GetCurrentTick() const;         //!< tick since simulation start
+    unsigned int GetTickCount() const;           //!< total tick count (replayer)
+    unsigned int GetFirstTick() const;           //!< first recorded tick (replayer)
     virtual unsigned int GetTickDuration() const;
 
     bool IsPaused() const;
@@ -117,6 +118,7 @@ private:
     unsigned int timeFactor_;
     unsigned int currentTick_;
     unsigned int tickCount_;
+    unsigned int firstTick_;
     int time_;
     std::string initialDate_;
     std::string date_;
