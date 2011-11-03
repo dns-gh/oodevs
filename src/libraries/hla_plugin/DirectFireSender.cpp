@@ -72,7 +72,7 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
     if( targetTdentifier.empty() )
         return;
     interactions::MunitionDetonation parameters;
-    parameters.articulatedPartData = 0u;  // empty array
+    parameters.articulatedPartData.clear();  // empty array
     parameters.detonationLocation = positions_[ targetTdentifier ];
     parameters.detonationResultCode = 1; // EntityImpact
     parameters.eventIdentifier.eventCount = static_cast< uint16 >( fireIdentifier );

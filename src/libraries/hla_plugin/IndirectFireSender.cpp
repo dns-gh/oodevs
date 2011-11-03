@@ -66,7 +66,7 @@ void IndirectFireSender::Notify( const sword::StopUnitFire& message, int /*conte
         return;
     const sword::StartUnitFire& startMessage = fires_[ fireIdentifier ];
     interactions::MunitionDetonation parameters;
-    parameters.articulatedPartData = 0u;  // empty array
+    parameters.articulatedPartData.clear();  // empty array
     parameters.detonationLocation = rpr::WorldLocation( startMessage.target().position().latitude(), startMessage.target().position().longitude(), 0. );
     parameters.detonationResultCode = 3; // GroundImpact
     parameters.eventIdentifier.eventCount = static_cast< uint16 >( fireIdentifier );
