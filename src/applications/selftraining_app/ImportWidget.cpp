@@ -14,6 +14,7 @@
 #include "clients_gui/Tools.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
+#include "frontend/TabWidget.h"
 #include "tools/GeneralConfig.h"
 
 #include <xeumeuleu/xml.hpp>
@@ -21,21 +22,6 @@
 #pragma warning( push, 0 )
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
-
-namespace
-{
-    class TabWidget : public QTabWidget
-    {
-    public:
-        TabWidget( QWidget* parent )
-            : QTabWidget( parent )
-        {
-            setBackgroundOrigin( QWidget::WindowOrigin );
-            tabBar()->setBackgroundOrigin( QWidget::WindowOrigin );
-            setMargin( 0 );
-        }
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: ImportWidget constructor
@@ -49,7 +35,7 @@ ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools
     setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     setMargin( 5 );
     setBackgroundOrigin( QWidget::WindowOrigin );
-    tabs_ = new TabWidget( this );
+    tabs_ = new frontend::TabWidget( this );
     connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), &page, SLOT( UpdateEditButton( QWidget* ) ) );
     {
         Q3GroupBox* importGroup = new Q3GroupBox( 2, Qt::Vertical, parent );

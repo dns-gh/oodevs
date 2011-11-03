@@ -306,6 +306,9 @@
     <ClInclude Include="..\..\src\libraries\frontend\ProfileVisitor_ABC.h">
       <Filter>Source Files\Model\Profiles</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\TabWidget.h">
+      <Filter>Source Files\Panels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\frontend\frontend_es.ts">

@@ -10,28 +10,13 @@
 #include "frontend_pch.h"
 #include "CompositePluginConfig.h"
 #include "PluginConfig.h"
+#include "TabWidget.h"
 #include <clients_kernel/Tools.h>
 #include <algorithm>
 #include <boost/bind.hpp>
 #include <Qt3Support/q3groupbox.h>
-#include <QtGui/qtabbar.h>
-#include <QtGui/qtabwidget.h>
 
 using namespace frontend;
-
-namespace
-{
-    class TabWidget : public QTabWidget
-    {
-    public:
-        explicit TabWidget( QWidget* parent ) : QTabWidget( parent )
-        {
-            setBackgroundOrigin( QWidget::WindowOrigin );
-            tabBar()->setBackgroundOrigin( QWidget::WindowOrigin );
-            setMargin( 0 );
-        }
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: CompositePluginConfig constructor

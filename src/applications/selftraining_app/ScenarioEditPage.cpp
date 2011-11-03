@@ -22,20 +22,7 @@
 #include "frontend/Exercise_ABC.h"
 #include "frontend/ImportExercise.h"
 #include "frontend/ProcessWrapper.h"
-
-namespace
-{
-    class TabWidget : public QTabWidget
-    {
-    public:
-        TabWidget( QWidget* parent )
-            : QTabWidget( parent )
-        {
-            setBackgroundOrigin( QWidget::WindowOrigin );
-            tabBar()->setBackgroundOrigin( QWidget::WindowOrigin );
-        }
-    };
-}
+#include "frontend/TabWidget.h"
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioEditPage constructor
@@ -52,7 +39,7 @@ ScenarioEditPage::ScenarioEditPage( Q3WidgetStack* pages, Page_ABC& previous, co
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setMargin( 5 );
     {
-        mainTabs_ = new TabWidget( box );
+        mainTabs_ = new frontend::TabWidget( box );
         connect( mainTabs_, SIGNAL( currentChanged( QWidget* ) ), this, SLOT( UpdateEditButton( QWidget* ) ) );
         {
             exercises_ = new ExerciseList( mainTabs_, config_, fileLoader_, controllers, true, false );

@@ -29,6 +29,7 @@
 #include "frontend/SessionConfigPanel.h"
 #include "frontend/StartExercise.h"
 #include "frontend/StartReplay.h"
+#include "frontend/TabWidget.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include "clients_gui/Tools.h"
@@ -44,17 +45,6 @@ namespace bpt = boost::posix_time;
 
 namespace
 {
-    class TabWidget : public QTabWidget
-    {
-    public:
-        explicit TabWidget( QWidget* parent ) : QTabWidget( parent )
-        {
-            setBackgroundOrigin( QWidget::WindowOrigin );
-            tabBar()->setBackgroundOrigin( QWidget::WindowOrigin );
-            setMargin( 0 );
-        }
-    };
-
     std::string MakeLink( const std::string& file )
     {
         const QFileInfo info( file.c_str() );
@@ -145,7 +135,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setMargin( 5 );
     {
-        TabWidget* tabs = new TabWidget( box );
+        frontend::TabWidget* tabs = new frontend::TabWidget( box );
         {
             exercises_ = new ExerciseList( tabs, config_, fileLoader_, controllers, true, true, true, false );
             exercises_->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -158,7 +148,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
             configBox->setMargin( 5 );
             configBox->setFrameShape( Q3GroupBox::NoFrame );
             configBox->setBackgroundOrigin( QWidget::WindowOrigin );
-            TabWidget* config = new TabWidget( configBox );
+            frontend::TabWidget* config = new frontend::TabWidget( configBox );
             tabs->addTab( configBox, tools::translate( "ScenarioLauncherPage", "Settings" ) );
             {
                 frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >( config );
