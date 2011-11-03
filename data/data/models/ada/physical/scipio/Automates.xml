@@ -1397,7 +1397,7 @@
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.BIA" id="973" name="TRANS . PC BDE" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC BDE AV"/>
-    <unit max-occurs="1" min-occurs="1" type="TRANS - PC BDE MR"/>
+    <unit max-occurs="1" min-occurs="1" type="TRANS . PC BDE MR"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.BIA" id="974" name="TRANS . PC BIA" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC BIA"/>
@@ -1408,23 +1408,23 @@
   <automat decisional-model="Masalife.Automate.TRANS.DIV" id="976" name="TRANS . PC DIV Reserve" type="Automate TRANS">
     <unit max-occurs="1" min-occurs="1" type="TRANS . Section RAC2"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Section RAC3"/>
-    <unit max-occurs="1" min-occurs="1" type="TRANS - Section RAC4"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Section SIEX2"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Section RDO2"/>
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC DIV Reserve"/>
+    <unit max-occurs="1" min-occurs="1" type="TRANS . Section RAC4"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.TAC" id="977" name="TRANS . PC GEN" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.TAC" id="978" name="TRANS . PC GTIA - 2+2" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
-    <unit max-occurs="1" min-occurs="1" type="TRANS - GTIA - AV - 2+2"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . GTIA - MR - 2+2"/>
+    <unit max-occurs="1" min-occurs="1" type="TRANS . GTIA - AV - 2+2"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.TAC" id="979" name="TRANS . PC GTIA - 3+1" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
-    <unit max-occurs="1" min-occurs="1" type="TRANS - GTIA - MR - 3+1"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . GTIA - AV - 3+1"/>
+    <unit max-occurs="1" min-occurs="1" type="TRANS . GTIA - MR - 3+1"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.TAC" id="980" name="TRANS . PC GTIA Debarque" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC GTIA INF Debarque"/>
@@ -1451,12 +1451,12 @@
   <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="987" name="TRANS . Section RAC1" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="3" min-occurs="3" type="TRANS . Groupe ARISTOTE"/>
-    <unit max-occurs="8" min-occurs="8" type="TRANS - Groupe RAC1"/>
+    <unit max-occurs="8" min-occurs="8" type="TRANS . Groupe RAC1"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="988" name="TRANS . Section RAC2" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="4" min-occurs="4" type="TRANS . Groupe RAC2"/>
-    <unit max-occurs="1" min-occurs="1" type="TRANS - Groupe ARISTOTE"/>
+    <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe ARISTOTE"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="989" name="TRANS . Section RAC3" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
@@ -1497,7 +1497,7 @@
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="998" name="TRANS . Section SIC DL1" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . CDT SIC"/>
-    <unit max-occurs="3" min-occurs="3" type="TRANS - Groupe SIC DL1"/>
+    <unit max-occurs="3" min-occurs="3" type="TRANS . Groupe SIC DL1"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="999" name="TRANS . Section SIC DL2" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . CDT SIC"/>
@@ -1531,4 +1531,4 @@
     <unit command-post="true" min-occurs="1" type="Notable"/>
   </automat>
 </automats>
-<!-- signature="4016384307" -->
+<!-- signature="3620206202" -->
