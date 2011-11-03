@@ -16965,5 +16965,1345 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="606" name="TRANS . CDT RAC" type="Pion TRANS">
+    <nature atlas-nature="PC" level="ooo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1500s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="607" name="TRANS . BDE AV" type="Pion TRANS">
+    <nature atlas-nature="PC" level="x" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="Eqp CMAI"/>
+      <equipment count="1" crew="1" major="true" type="FH Simple"/>
+      <equipment count="1" crew="11" major="true" type="Station CHF"/>
+      <equipment count="1" crew="2" major="true" type="Station SATCOM"/>
+      <equipment count="2" crew="11" major="true" type="Station HF NGF5"/>
+      <equipment count="6" crew="1" major="true" type="VAB PC 12.7"/>
+      <equipment count="14" crew="4" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="38" type="Officier"/>
+      <crew-rank count="48" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="608" name="TRANS . CDT SIC" type="Pion TRANS">
+    <nature atlas-nature="PC" level="ooo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="609" name="TRANS . Groupe ARISTOTE" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="Station ARISTOTE"/>
+      <equipment count="1" crew="2" type="TRM 2000"/>
+      <equipment count="1" crew="2" major="true" type="Station SATCOM"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC DIV" id="610" name="TRANS . Groupe FH 1-2" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="8" crew="2" major="true" type="Station CHF"/>
+      <equipment count="4" crew="2" type="TRM 10000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="8250s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="611" name="TRANS . Groupe RAC1" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="Eqp CMAI"/>
+      <equipment count="1" crew="2" major="true" type="Station CHF"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="612" name="TRANS . Groupe RAC2" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="Eqp CMAI"/>
+      <equipment count="1" crew="2" major="true" type="Station CHF"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="613" name="TRANS . Groupe RAC3" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="Eqp CMAI"/>
+      <equipment count="1" crew="2" major="true" type="Station CHF"/>
+      <equipment count="1" crew="2" type="VAB 12,7"/>
+      <equipment count="1" crew="1" major="true" type="Station HF NGF4"/>
+      <equipment count="1" crew="1" major="true" type="Station HF NGF5"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="8" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="5100s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="614" name="TRANS . Groupe RAC4" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="3" type="TRM 2000"/>
+      <equipment count="4" crew="2" major="true" type="Eqp CMAI"/>
+      <equipment count="4" crew="2" major="true" type="Station CHF"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="16" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="615" name="TRANS . Groupe RAC4 CCT" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="4" crew="3" type="TRM 2000"/>
+      <equipment count="2" crew="1" major="true" type="Eqp CMAI"/>
+      <equipment count="2" crew="1" major="true" type="Station CHF"/>
+      <equipment count="1" crew="3" major="true" type="Station RDO VHF"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="16" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="616" name="TRANS . Groupe RAC4 TRM" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="3" type="TRM 2000"/>
+      <equipment count="4" crew="2" major="true" type="Station CHF"/>
+      <equipment count="4" crew="2" major="true" type="Eqp CMAI"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="16" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="150s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC DIV" id="617" name="TRANS . Groupe RESEAU" type="Pion TRANS">
+    <nature atlas-nature="PC" level="x" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="10" crew="3" major="true" type="TRM 2000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="27" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="8250s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC DIV" id="618" name="TRANS . Groupe SACRE" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="4" crew="5" major="true" type="TRM 2000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="5" type="Officier"/>
+      <crew-rank count="13" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="8250s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="619" name="TRANS . Groupe SIC DL1" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="3" crew="2" type="TRM 2000"/>
+      <equipment count="1" crew="2" major="true" type="Station HF NGF5"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1800s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="620" name="TRANS . Groupe SIC DL2" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="TRM 2000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="621" name="TRANS . Groupe WAN" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="5" crew="3" major="true" type="TRM 2000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="14" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="622" name="TRANS . GTIA - AV - 2+2" type="Pion TRANS">
+    <nature atlas-nature="PC" level="ii" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="4" crew="2" type="VBL 7,62"/>
+      <equipment count="2" crew="1" major="true" type="VAB PC 12.7"/>
+      <equipment count="1" crew="3" major="true" type="VAB PC 7.62"/>
+      <equipment count="11" crew="1" type="VTC P4"/>
+      <equipment count="2" crew="2" type="GBC 180"/>
+      <equipment count="2" crew="1" type="Moto CAGIVA 350"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="11" type="Officier"/>
+      <crew-rank count="9" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="623" name="TRANS . GTIA - AV - 3+1" type="Pion TRANS">
+    <nature atlas-nature="PC" level="ii" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="4" crew="2" type="VBL 7,62"/>
+      <equipment count="3" crew="1" major="true" type="VAB PC 12.7"/>
+      <equipment count="1" crew="2" major="true" type="VAB PC 7.62"/>
+      <equipment count="11" crew="1" type="VTC P4"/>
+      <equipment count="2" crew="1" type="GBC 180"/>
+      <equipment count="2" crew="1" type="Moto CAGIVA 350"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="11" type="Officier"/>
+      <crew-rank count="10" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="624" name="TRANS . GTIA - MR - 2+2" type="Pion TRANS">
+    <nature atlas-nature="PC" level="ii" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" type="VBL 7,62"/>
+      <equipment count="2" crew="2" major="true" type="VAB PC 12.7"/>
+      <equipment count="4" crew="4" type="VTC P4"/>
+      <equipment count="1" crew="1" type="TRM 2000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="5" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="625" name="TRANS . GTIA - MR - 3+1" type="Pion TRANS">
+    <nature atlas-nature="PC" level="ii" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="1" type="VBL 7,62"/>
+      <equipment count="1" crew="1" major="true" type="VAB PC 12.7"/>
+      <equipment count="4" crew="4" type="VTC P4"/>
+      <equipment count="1" crew="1" type="TRM 2000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="5" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="626" name="TRANS . MOA BDE PC" type="Pion TRANS">
+    <nature atlas-nature="PC" level="x" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="VAB PC 7.62"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="627" name="TRANS . Node Deport" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="Station CHF"/>
+      <equipment count="1" crew="2" type="TRM 2000"/>
+      <equipment count="1" crew="2" major="true" type="CTRT"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="628" name="TRANS . Node Transit Integration" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="Station CHF"/>
+      <equipment count="1" crew="2" major="true" type="CART"/>
+      <equipment count="1" crew="2" type="TRM 2000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="629" name="TRANS . PC" type="Pion TRANS">
+    <nature atlas-nature="None" level="iii" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="150s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="630" name="TRANS . PC 1 GE LECLERC" type="Pion TRANS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="9" crew="2" type="VTC P4"/>
+      <equipment count="2" crew="2" type="TRM 2000"/>
+      <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
+      <equipment count="1" crew="3" type="VBL 7,62"/>
+      <equipment count="1" crew="5" type="GBC 180"/>
+      <equipment count="2" crew="4" major="true" type="VAB PC 12.7"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="10" type="Officier"/>
+      <crew-rank count="10" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="3750s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="631" name="TRANS . PC 1 GTIA AMX10P" type="Pion TRANS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="4" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="2" type="TRM 2000"/>
+      <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
+      <equipment count="1" crew="3" type="VBL 7,62"/>
+      <equipment count="2" crew="2" type="GBC 8 KT 12.7"/>
+      <equipment count="1" crew="3" major="true" type="VAB PC 12.7"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="6" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="2550s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="632" name="TRANS . PC 1  GTIA VAB" type="Pion TRANS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="5" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="1" type="TRM 4000"/>
+      <equipment count="2" crew="3" major="true" type="VAB PC 12.7"/>
+      <equipment count="1" crew="3" type="VBL 7,62"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="6" type="Officier"/>
+      <crew-rank count="7" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="2250s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="633" name="TRANS . PC 2 GE LECLERC" type="Pion TRANS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="10" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="2" type="TRM 2000"/>
+      <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
+      <equipment count="1" crew="3" type="GBC 180"/>
+      <equipment count="1" crew="3" type="VBL 7,62"/>
+      <equipment count="2" crew="3" type="VBL 12,7"/>
+      <equipment count="2" crew="4" major="true" type="VAB PC 12.7"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="10" type="Officier"/>
+      <crew-rank count="7" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="3450s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="634" name="TRANS . PC 2 GTIA AMX10P" type="Pion TRANS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="5" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="2" type="TRM 2000"/>
+      <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
+      <equipment count="1" crew="3" type="VBL 7,62"/>
+      <equipment count="1" crew="3" major="true" type="VAB PC 12.7"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="5" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1800s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="635" name="TRANS . PC 2 GTIA VAB" type="Pion TRANS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="5" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="1" type="TRM 4000"/>
+      <equipment count="1" crew="3" major="true" type="VAB PC 12.7"/>
+      <equipment count="1" crew="3" type="VBL 7,62"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="5" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1800s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="636" name="TRANS . PC BDE AV" type="Pion TRANS">
+    <nature atlas-nature="PC" level="xx" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="Eqp CMAI"/>
+      <equipment count="1" crew="1" major="true" type="FH Simple"/>
+      <equipment count="1" crew="11" major="true" type="Station CHF"/>
+      <equipment count="1" crew="2" major="true" type="Station SATCOM"/>
+      <equipment count="2" crew="11" major="true" type="Station HF NGF5"/>
+      <equipment count="6" crew="1" major="true" type="VAB PC 12.7"/>
+      <equipment count="14" crew="4" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="38" type="Officier"/>
+      <crew-rank count="48" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="637" name="TRANS . PC BDE MR" type="Pion TRANS">
+    <nature atlas-nature="PC" level="x" nature-app6="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="Eqp CMAI"/>
+      <equipment count="1" crew="1" major="true" type="FH Simple"/>
+      <equipment count="1" crew="11" major="true" type="Station CHF"/>
+      <equipment count="1" crew="2" major="true" type="Station SATCOM"/>
+      <equipment count="2" crew="5" major="true" type="Station HF NGF5"/>
+      <equipment count="6" crew="1" major="true" type="VAB PC 12.7"/>
+      <equipment count="14" crew="2" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="16" type="Officier"/>
+      <crew-rank count="38" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC.BIA" id="638" name="TRANS . PC BIA" type="Pion TRANS">
+    <nature atlas-nature="PC" level="x" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="Station CHF"/>
+      <equipment count="1" crew="2" type="VBL 7,62"/>
+      <equipment count="1" crew="2" type="Eqp CMAI"/>
+      <equipment count="1" crew="3" type="VAB PC 12.7"/>
+      <equipment count="1" crew="3" type="Station RDO UHF"/>
+      <equipment count="1" crew="3" type="Station RDO VHF"/>
+      <equipment count="1" crew="2" type="Station HF NGF4"/>
+      <equipment count="1" crew="2" type="Station HF NGF5"/>
+      <equipment count="4" crew="2" type="TRM 2000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="15" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="9300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="639" name="TRANS . PC BIE NBC" type="Pion TRANS">
+    <nature atlas-nature="PC" level="i" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="5" crew="4" major="true" type="VAB Reco NBC"/>
+      <equipment count="1" crew="2" type="VTC P4 12,7"/>
+      <equipment count="2" crew="1" type="TRM 4000"/>
+      <equipment count="4" crew="2" type="VTC P4 7,62"/>
+      <equipment count="6" crew="2" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="8" type="Officier"/>
+      <crew-rank count="12" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC DIV" id="640" name="TRANS . PC DIV" type="Pion TRANS">
+    <nature atlas-nature="PC" level="xx" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="4" crew="2" type="VTC P4"/>
+      <equipment count="4" crew="2" major="true" type="Eqp CMAI"/>
+      <equipment count="10" crew="2" major="true" type="Station CHF"/>
+      <equipment count="1" crew="5" type="ARISTOTE"/>
+      <equipment count="3" crew="5" major="true" type="SSI"/>
+      <equipment count="17" crew="3" type="PL PC"/>
+      <equipment count="8" crew="5" major="true" type="Station FH"/>
+      <equipment count="3" crew="2" major="true" type="CART"/>
+      <equipment count="4" crew="5" major="true" type="Station SATCOM"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="29" type="Officier"/>
+      <crew-rank count="55" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="8250s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC DIV" id="641" name="TRANS . PC DIV Reserve" type="Pion TRANS">
+    <nature atlas-nature="None" level="xx" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="5" crew="1" major="true" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="4350s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="642" name="TRANS . PC GTIA INF Debarque" type="Pion TRANS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/wheeled/medium"/>
+    <equipments>
+      <equipment count="2" crew="2" type="VTC P4"/>
+      <equipment count="3" crew="2" major="true" type="VTT AEROT BLIND AU1"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1650s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="643" name="TRANS . PC RGT AMX30B2 BRENNUS" type="Pion TRANS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/wheeled/medium"/>
+    <equipments>
+      <equipment count="7" crew="3" type="VBL 7,62"/>
+      <equipment count="2" crew="2" major="true" type="AMX10P PC"/>
+      <equipment count="2" crew="2" type="VAB 12,7"/>
+      <equipment count="3" crew="2" type="GBC 8 KT 12.7"/>
+      <equipment count="1" crew="2" type="VTC P4 7,62"/>
+      <equipment count="8" crew="2" type="TRM 2000"/>
+      <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="20" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="8700s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="644" name="TRANS . PC TAC" type="Pion TRANS">
+    <nature atlas-nature="PC" level="i" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="3" type="VBL 7,62"/>
+      <equipment count="1" crew="2" major="true" type="Eqp CMAI"/>
+      <equipment count="1" crew="1" major="true" type="FH Simple"/>
+      <equipment count="1" crew="2" major="true" type="Station CHF"/>
+      <equipment count="1" crew="2" major="true" type="Station SATCOM"/>
+      <equipment count="2" crew="2" major="true" type="Station HF NGF5"/>
+      <equipment count="4" crew="2" major="true" type="VAB PC 12.7"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="11" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="645" name="TRANS . PC TAC GE LECLERC" type="Pion TRANS">
+    <nature atlas-nature="Vehicule" level="ii" nature-app6="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="Char LECLERC"/>
+      <equipment count="1" crew="4" type="VAB PC 7.62"/>
+      <equipment count="1" crew="4" type="VAB PC 12.7"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1650s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="646" name="TRANS . PC TAC GTIA VAB" type="Pion TRANS">
+    <nature atlas-nature="Vehicule" level="ii" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="1" crew="3" type="VBL 7,62"/>
+      <equipment count="1" crew="3" major="true" type="VAB PC 12.7"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="647" name="TRANS . PC TAC GTIA AMX10P" type="Pion TRANS">
+    <nature atlas-nature="Vehicule" level="ii" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="1" crew="3" type="VBL 7,62"/>
+      <equipment count="1" crew="2" major="true" type="AMX10P PC"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="648" name="TRANS . Peloton CDT EEI" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="3" crew="3" type="VBL 7,62"/>
+      <equipment count="1" crew="4" type="VAB SAN"/>
+      <equipment count="2" crew="3" major="true" type="VAB 12,7"/>
+      <equipment count="1" crew="3" type="TRM 2000"/>
+      <equipment count="2" crew="2" type="VTC P4"/>
+      <equipment count="2" crew="1" type="Moto CAGIVA 350"/>
+      <equipment count="1" crew="3" type="GBC 8 KT 7.62"/>
+      <equipment count="1" crew="2" type="Lot 7"/>
+      <equipment count="1" crew="2" type="VTC P4 7,62"/>
+      <equipment count="4" crew="2" type="GBC 180"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="4" type="Officier"/>
+      <crew-rank count="10" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="9000s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="649" name="TRANS . RADIO1" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="Station CHF"/>
+      <equipment count="1" crew="2" type="TRM 2000"/>
+      <equipment count="2" crew="2" major="true" type="Station HF NGF3"/>
+      <equipment count="4" crew="2" major="true" type="Station HF NGF5"/>
+      <equipment count="3" crew="2" major="true" type="Station RDO VHF"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="11" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="650" name="TRANS . RADIO2" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="Station CHF"/>
+      <equipment count="1" crew="4" type="TRM 2000"/>
+      <equipment count="1" crew="4" major="true" type="Station HF NGF3"/>
+      <equipment count="3" crew="1" major="true" type="Station HF NGF4"/>
+      <equipment count="2" crew="1" major="true" type="Station HF NGF5"/>
+      <equipment count="1" crew="3" major="true" type="Station RDO UHF"/>
+      <equipment count="2" crew="1" major="true" type="Station RDO VHF"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC DIV" id="651" name="TRANS . SATELLITE" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="24" crew="2" major="true" type="Station SATCOM"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="36" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="8250s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC DIV" id="652" name="TRANS . Section HORISON" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="6" crew="3" major="true" type="SHELTER HORISON"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="12" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="8250s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="653" name="TRANS . Section RAC2" type="Pion TRANS">
+    <nature atlas-nature="PC" level="ooo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="4" crew="2" major="true" type="Eqp CMAI"/>
+      <equipment count="4" crew="2" major="true" type="Station CHF"/>
+      <equipment count="1" crew="3" major="true" type="Station ARISTOTE"/>
+      <equipment count="1" crew="2" type="TRM 2000"/>
+      <equipment count="1" crew="2" major="true" type="Station SATCOM"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="14" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="654" name="TRANS . Section RAC3" type="Pion TRANS">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="Eqp CMAI"/>
+      <equipment count="1" crew="2" major="true" type="Station CHF"/>
+      <equipment count="1" crew="2" type="VAB 12,7"/>
+      <equipment count="1" crew="1" major="true" type="Station HF NGF4"/>
+      <equipment count="1" crew="1" major="true" type="Station HF NGF5"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="8" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="5100s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="655" name="TRANS . Section RAC4" type="Pion TRANS">
+    <nature atlas-nature="PC" level="ooo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="4" crew="2" major="true" type="Eqp CMAI"/>
+      <equipment count="4" crew="2" major="true" type="Station CHF"/>
+      <equipment count="1" crew="2" type="TRM 2000"/>
+      <equipment count="1" crew="2" major="true" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="16" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="656" name="TRANS . Section RDO2" type="Pion TRANS">
+    <nature atlas-nature="PC" level="ooo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="1" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="3" type="TRM 2000"/>
+      <equipment count="1" crew="2" major="true" type="Station HF NGF3"/>
+      <equipment count="3" crew="2" major="true" type="Station HF NGF4"/>
+      <equipment count="2" crew="2" major="true" type="Station HF NGF5"/>
+      <equipment count="1" crew="2" major="true" type="Station RDO UHF"/>
+      <equipment count="2" crew="2" major="true" type="Station RDO VHF"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.PC DIV" id="657" name="TRANS . Section SIEX 1" type="Pion TRANS">
+    <nature atlas-nature="PC" level="x" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="12" crew="3" major="true" type="TRM 2000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="25" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="8250s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.TRANS.Section TRANS" id="658" name="TRANS . Section SIEX2" type="Pion TRANS">
+    <nature atlas-nature="PC" level="ooo" nature-app6="combat support/signal unit"/>
+    <equipments>
+      <equipment count="13" crew="2" major="true" type="TRM 2000"/>
+      <equipment count="1" crew="10" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="30" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="3480467416" -->
+<!-- signature="1623258906" -->
