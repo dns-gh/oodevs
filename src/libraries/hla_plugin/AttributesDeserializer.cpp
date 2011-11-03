@@ -49,5 +49,15 @@ void AttributesDeserializer::Deserialize( const std::string& identifier, ::hla::
 {
     T_Notifications::const_iterator notification = notifications_.find( identifier );
     if( notification != notifications_.end() )
-        notification->second( deserializer, identifier_, listener_ );
+    {
+        try
+        {
+            notification->second( deserializer, identifier_, listener_ );
+        }
+        catch( std::exception& e )
+        {
+            throw std::runtime_error( "Error while deserializing attribute '" + identifier
+                                    + "' on object '" + identifier_ + "' : " + e.what() );
+        }
+    }
 }
