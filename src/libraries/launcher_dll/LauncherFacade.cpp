@@ -11,29 +11,8 @@
 #include "LauncherFacade.h"
 #include "Launcher.h"
 #include "Config.h"
-#include "shield/Server.h"
-#include "shield/Listener_ABC.h"
 #include <boost/lexical_cast.hpp>
 #include <windows.h>
-
-namespace
-{
-    class NullLogger : public shield::Listener_ABC
-    {
-        virtual void Info( const std::string& /*message*/ )
-        {
-            // NOTHING
-        }
-        virtual void Error( const std::string& /*message*/ )
-        {
-            // NOTHING
-        }
-        virtual void Debug( const shield::DebugInfo_ABC& /*info*/ )
-        {
-            // NOTHING
-        }
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: LauncherFacade constructor
@@ -42,7 +21,6 @@ namespace
 LauncherFacade::LauncherFacade()
     : config_  ( new launcher::Config() )
     , launcher_( 0 )
-    , proxy_   ( 0 )
 {
     // NOTHING
 }
@@ -53,7 +31,6 @@ LauncherFacade::LauncherFacade()
 // -----------------------------------------------------------------------------
 LauncherFacade::LauncherFacade( const std::string& path )
     : launcher_( 0 )
-    , proxy_   ( 0 )
 {
     ::SetCurrentDirectory( path.c_str() );
     config_.reset( new launcher::Config() );
@@ -78,9 +55,6 @@ void LauncherFacade::Initialize( int argc, char** argv )
     {
         config_->Parse( argc, argv );
         launcher_.reset( new launcher::Launcher( *config_ ) );
-        unsigned short port = config_->GetLauncherPort();
-        static NullLogger logger;
-        proxy_.reset( new shield::Server( port + 1, "localhost:" + boost::lexical_cast< std::string >( port ), logger, true ) ); // $$$$ MCO should we hard-code 30001 instead of port + 1 ?
     }
     catch( std::exception& e )
     {
@@ -99,7 +73,6 @@ bool LauncherFacade::Update()
         if( IsInitialized() )
         {
             launcher_->Update();
-            proxy_->Update();
         }
         return true;
     }
@@ -116,7 +89,7 @@ bool LauncherFacade::Update()
 // -----------------------------------------------------------------------------
 bool LauncherFacade::IsInitialized() const
 {
-    return launcher_.get() && proxy_.get();
+    return launcher_.get() != 0;
 }
 
 // -----------------------------------------------------------------------------

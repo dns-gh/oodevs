@@ -10,12 +10,8 @@
 #ifndef shield_Clients_h
 #define shield_Clients_h
 
-#include "tools/asio.h"
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
-#pragma warning( push, 0 )
-#include <boost/thread.hpp>
-#pragma warning( pop )
 #include <map>
 
 namespace MsgsClientToAar
@@ -51,10 +47,12 @@ namespace MsgsAdminToLauncher
 namespace tools
 {
     class MessageSender_ABC;
+    class MessageDispatcher_ABC;
 }
 
 namespace shield
 {
+    class ClientHandler_ABC;
     class ClientListener_ABC;
     class Listener_ABC;
     class Client;
@@ -70,8 +68,9 @@ class Clients : boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Clients( const std::string& host, tools::MessageSender_ABC& sender, ClientListener_ABC& listener,
-                      bool encodeStringsInUtf8, unsigned long timeOut );
+    explicit Clients( tools::MessageSender_ABC& sender, tools::MessageDispatcher_ABC& dispatcher,
+                      ClientHandler_ABC& handler, ClientListener_ABC& listener,
+                      bool encodeStringsInUtf8 );
     virtual ~Clients();
     //@}
 
@@ -80,21 +79,12 @@ public:
     void Add( const std::string& from );
     void Remove( const std::string& from );
 
-    void Update();
-
     void ReceiveClientToAar           ( const std::string& from, const MsgsClientToAar::MsgClientToAar& msg );
     void ReceiveClientToAuthentication( const std::string& from, const MsgsClientToAuthentication::MsgClientToAuthentication& msg );
     void ReceiveClientToMessenger     ( const std::string& from, const MsgsClientToMessenger::MsgClientToMessenger& msg );
     void ReceiveClientToReplay        ( const std::string& from, const MsgsClientToReplay::MsgClientToReplay& msg );
     void ReceiveClientToSim           ( const std::string& from, const MsgsClientToSim::MsgClientToSim& msg );
     void ReceiveAdminToLauncher       ( const std::string& from, const MsgsAdminToLauncher::MsgAdminToLauncher& msg );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void Run();
-    void Stop();
     //@}
 
 private:
@@ -107,15 +97,12 @@ private:
 private:
     //! @name Member data
     //@{
-    const std::string host_;
     tools::MessageSender_ABC& sender_;
+    tools::MessageDispatcher_ABC& dispatcher_;
+    ClientHandler_ABC& handler_;
     ClientListener_ABC& listener_;
     bool utf8StringEncoding_;
-    const unsigned long timeOut_;
-    boost::asio::io_service service_;
     T_Clients clients_;
-    bool stopped_;
-    boost::thread thread_;
     //@}
 };
 

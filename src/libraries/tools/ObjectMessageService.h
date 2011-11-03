@@ -13,7 +13,7 @@
 #include "MessageDispatcher_ABC.h"
 #include "MessageCallback_ABC.h"
 #include <boost/function.hpp>
-#include <vector>
+#include <map>
 
 namespace tools
 {

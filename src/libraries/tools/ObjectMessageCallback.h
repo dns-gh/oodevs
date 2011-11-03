@@ -50,7 +50,19 @@ public:
     {
         callbacks_.push_back( callback );
     }
-    virtual void OnMessage( const std::string& link, Message& message, MessageCallback_ABC& callback )
+    void OnMessage( const std::string& link, const T& message ) const
+    {
+        try
+        {
+            for( CIT_Callbacks it = callbacks_.begin(); it != callbacks_.end(); ++it )
+                (*it)( link, message );
+        }
+        catch( std::exception& e )
+        {
+            throw std::runtime_error( e.what() + (" " + message.ShortDebugString()) );
+        }
+    }
+    virtual void OnMessage( const std::string& link, Message& message, MessageCallback_ABC& callback ) const
     {
         T t;
         if( ! t.ParseFromArray( message.Data(), static_cast< int >( message.Size() ) ) )
@@ -59,15 +71,11 @@ public:
         if( message.Size() > threshold )
             callback.OnWarning( link,
                 "Message size larger than " + boost::lexical_cast< std::string >( threshold ) + " detected" + " " + t.ShortDebugString() );
-        try
-        {
-            for( CIT_Callbacks it = callbacks_.begin(); it != callbacks_.end(); ++it )
-                (*it)( link, t );
-        }
-        catch( std::exception& e )
-        {
-            throw std::runtime_error( e.what() + (" " + t.ShortDebugString()) );
-        }
+        OnMessage( link, t );
+    }
+    virtual void OnMessage( const std::string& link, const google::protobuf::Message& message ) const
+    {
+        OnMessage( link, static_cast< const T& >( message ) );
     }
     //@}
 

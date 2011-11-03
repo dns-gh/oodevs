@@ -12,6 +12,7 @@
 
 #include "ObjectMessageCallback.h"
 #include "MessageIdentifierFactory.h"
+#include <boost/noncopyable.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 
@@ -23,7 +24,7 @@ namespace tools
 */
 // Created: AGE 2007-05-28
 // =============================================================================
-class MessageDispatcher_ABC
+class MessageDispatcher_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -55,6 +56,25 @@ public:
             Register( id, std::auto_ptr< ObjectMessageCallback_ABC >( composite ) );
         }
         composite->AddCallback( callback );
+    }
+
+    template< typename T >
+    void Receive( const std::string& link, const T& object )
+    {
+        const unsigned int id = tools::MessageIdentifierFactory::GetIdentifier< T >();
+        tools::ObjectMessageCallback< T >* composite =
+            static_cast< tools::ObjectMessageCallback< T >* >( Retrieve( id ) );
+        if( ! composite )
+            throw std::runtime_error( "Unknown message" );
+        composite->OnMessage( link, object );
+    }
+    template< typename T >
+    void Receive( const std::string& link, unsigned long id, const T& object )
+    {
+        tools::ObjectMessageCallback_ABC* composite = Retrieve( id );
+        if( ! composite )
+            throw std::runtime_error( "Unknown message" );
+        composite->OnMessage( link, object );
     }
     //@}
 

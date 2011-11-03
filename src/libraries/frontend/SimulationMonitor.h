@@ -32,8 +32,7 @@ namespace frontend
 */
 // Created: SBO 2010-10-26
 // =============================================================================
-class SimulationMonitor : private boost::noncopyable
-                        , public tools::ClientNetworker
+class SimulationMonitor : public tools::ClientNetworker
 {
 public:
     //! @name Constructors/Destructor

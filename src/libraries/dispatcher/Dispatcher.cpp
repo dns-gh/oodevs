@@ -50,7 +50,7 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     , log_                ( factory, config.BuildSessionChildFile( "Protobuf.log" ), config.GetLogFiles(), config.GetLogSize() )
     , clientsNetworker_   ( new ClientsNetworker( config, *handler_, *services_ ) )
     , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config, log_ ) )
-    , shield_             ( new Shield( config ) )
+    , shield_             ( new Shield( config, *clientsNetworker_, *clientsNetworker_ ) )
     , factory_            ( new PluginFactory( config, *model_, *staticModel_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_, *services_, log_, maxConnections ) )
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;

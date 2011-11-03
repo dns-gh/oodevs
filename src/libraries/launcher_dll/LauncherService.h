@@ -11,9 +11,10 @@
 #define __LauncherService_h_
 
 #include "tools/ServerNetworker.h"
+#include "shield/ClientHandler_ABC.h"
 #include <boost/shared_ptr.hpp>
-#include <map>
 #include <string>
+#include <map>
 
 namespace sword
 {
@@ -30,7 +31,7 @@ namespace launcher
 */
 // Created: SBO 2010-09-29
 // =============================================================================
-class LauncherService : public tools::ServerNetworker
+class LauncherService : public tools::ServerNetworker, public shield::ClientHandler_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -42,6 +43,12 @@ public:
     //! @name Operations
     //@{
     LauncherPublisher& ResolveClient( const std::string& endpoint ) const;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Register( const std::string& endpoint, tools::MessageSender_ABC& sender );
+    virtual void Unregister( const std::string& endpoint );
     //@}
 
 private:
