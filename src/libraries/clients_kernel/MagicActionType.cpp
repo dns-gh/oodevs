@@ -122,7 +122,7 @@ void MagicActionType::Initialize()
     {
         CreateOrderParameter( "PopulationType", "string" );
         CreateOrderParameter( "Location", "point" );
-        CreateOrderParameter( "Number", "numeric" );
+        CreateOrderParameter( "Number", "quantity" );
         CreateOrderParameter( "Name", "string" );
     }
     else if( name == "crowd_change_attitude" )
