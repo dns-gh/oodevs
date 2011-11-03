@@ -64,7 +64,7 @@ ParamLocationComposite::ParamLocationComposite( const kernel::OrderParameter& pa
 // -----------------------------------------------------------------------------
 ParamLocationComposite::~ParamLocationComposite()
 {
-    // NOTHING
+    RemoveFromController();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,6 +75,7 @@ void ParamLocationComposite::RemoveFromController()
 {
     for( CIT_Params it = params_.begin(); it != params_.end(); ++it )
         (*it)->RemoveFromController();
+    Param_ABC::RemoveFromController();
 }
 
 // -----------------------------------------------------------------------------

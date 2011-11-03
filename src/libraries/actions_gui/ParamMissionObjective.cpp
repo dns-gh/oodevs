@@ -39,6 +39,7 @@ ParamMissionObjective::ParamMissionObjective( const kernel::OrderParameter& para
 // -----------------------------------------------------------------------------
 ParamMissionObjective::~ParamMissionObjective()
 {
+    RemoveFromController();
     delete schedule_;
     delete location_;
 }
@@ -50,6 +51,7 @@ ParamMissionObjective::~ParamMissionObjective()
 void ParamMissionObjective::RemoveFromController()
 {
     location_->RemoveFromController();
+    Param_ABC::RemoveFromController();
 }
 
 // -----------------------------------------------------------------------------

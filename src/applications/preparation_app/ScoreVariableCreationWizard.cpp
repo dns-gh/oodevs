@@ -203,16 +203,16 @@ void ScoreVariableCreationWizard::OnChangeName()
 // -----------------------------------------------------------------------------
 void ScoreVariableCreationWizard::OnChangeType()
 {
+    if( parameter_ )
+        parameter_->RemoveFromController();
+    parameter_.reset();
+
     if( paramBox_ )
     {
         delete paramBox_;
         paramBox_ = new Q3VGroupBox( tr( "Value" ), this );
         static_cast< Q3GridLayout* >( layout() )->addWidget( paramBox_, 1, 0 );
     }
-
-    if( parameter_ )
-        parameter_->RemoveFromController();
-    parameter_.reset();
 
     parameter_ = CreateParameter( type_->GetValue(), name_->text() );
     if( parameter_ )
