@@ -51,6 +51,7 @@ ParamObstacle::ParamObstacle( QObject* parent, const kernel::OrderParameter& par
 // -----------------------------------------------------------------------------
 ParamObstacle::~ParamObstacle()
 {
+    RemoveFromController();
     delete tc2_;
     delete density_;
     delete location_;
@@ -111,6 +112,7 @@ void ParamObstacle::RemoveFromController()
     location_->RemoveFromController();
     tc2_->RemoveFromController();
     density_->RemoveFromController();
+    Param_ABC::RemoveFromController();
 }
 
 // -----------------------------------------------------------------------------

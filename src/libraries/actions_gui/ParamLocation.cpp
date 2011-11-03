@@ -46,7 +46,7 @@ ParamLocation::ParamLocation( const kernel::OrderParameter& parameter, ::gui::Pa
 // -----------------------------------------------------------------------------
 ParamLocation::~ParamLocation()
 {
-    // NOTHING
+    RemoveFromController();
 }
 
 // -----------------------------------------------------------------------------
