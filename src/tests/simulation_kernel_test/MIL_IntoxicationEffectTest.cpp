@@ -43,14 +43,14 @@ BOOST_FIXTURE_TEST_CASE( no_intoxication_effect, ConfigurationFixture )
 BOOST_FIXTURE_TEST_CASE( intoxication_effect, ConfigurationFixture )
 {
     intoxication_.Add( 0.5, 0.3 );
-    Check( 20u, 224u, 20u, 136u );
+    Check( 20u, 200, 20u, 160u );
 }
 
 BOOST_FIXTURE_TEST_CASE( liquid_and_gas_intoxication_effects, ConfigurationFixture )
 {
     intoxication_.Add( 0.5, 0.3 );
     intoxication_.Add( 0.2, 0.1 );
-    Check( 14u, 233u, 14u, 139u );
+    Check( 14u, 208u, 14u, 164u );
 }
 
 BOOST_FIXTURE_TEST_CASE( human_number_does_not_change, ConfigurationFixture )
@@ -67,7 +67,7 @@ namespace
         Fixture()
         {
             intoxication_.Add( 0.5, 0.3 );
-            Check( 20u, 224u, 20u, 136u );
+            Check( 20u, 200u, 20u, 160u );
         }
     };
 }
@@ -75,22 +75,22 @@ namespace
 BOOST_FIXTURE_TEST_CASE( no_effect_updated_when_delay_does_not_pass, Fixture )
 {
     intoxication_.Update( 1u );
-    Check( 20u, 224u, 20u, 136u );
+    Check( 20u, 200u, 20u, 160u );
     intoxication_.Update( 5u );
-    Check( 20u, 224u, 20u, 136u );
+    Check( 20u, 200u, 20u, 160u );
     intoxication_.Update( 9u );
-    Check( 20u, 224u, 20u, 136u );
+    Check( 20u, 200u, 20u, 160u );
 }
 
 BOOST_FIXTURE_TEST_CASE( effect_updated, Fixture )
 {
     intoxication_.Update( 10u );
-    Check( 4u, 249u, 4u, 143u );
+    Check( 4u, 220u, 4u, 172u );
     intoxication_.Update( 16u );
-    Check( 4u, 249u, 4u, 143u );
+    Check( 4u, 220u, 4u, 172u );
     intoxication_.Update( 19u );
-    Check( 4u, 249u, 4u, 143u );
+    Check( 4u, 220u, 4u, 172u );
     intoxication_.Update( 21u );
-    Check( 0u, 256u, 0u, 144u );
+    Check( 0u, 226u, 0u, 174u );
 }
 
