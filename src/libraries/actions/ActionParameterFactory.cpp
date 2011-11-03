@@ -102,7 +102,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         else
             return new parameters::String( parameter, "0" );
     }
-    else if( ( !parameter.IsList() && message.value_size() == 1 ) || ( message.value_size() == 1 && message.value().Get( 0 ).has_phaseline() ) )
+    else if( ( !parameter.IsList() && message.value_size() == 1 ) )
         return CreateParameter( parameter, message.value().Get( 0 ), entity );
     else
         return new parameters::ParameterList( parameter, message.value(), *this, entity );
@@ -161,7 +161,12 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_limit() )
         return new parameters::Limit( parameter, converter_, message.limit() );
     if( message.has_phaseline() )
-        return new parameters::LimaList( parameter, converter_, message.phaseline() );
+    {
+        if( message.phaseline().elem_size() > 1 )
+            return new parameters::LimaList( parameter, converter_, message.phaseline() );
+        else if( message.phaseline().elem_size() == 1 )
+            return new parameters::Lima( parameter, converter_, message.phaseline().elem(0) );
+    }
     if( message.has_datetime() )
         return new parameters::DateTime( parameter, message.datetime() );
     if( message.has_urbanknowledge() )  // $$$$ _RC_ LGY 2011-02-24: urban block id
