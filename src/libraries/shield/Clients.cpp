@@ -9,6 +9,7 @@
 
 #include "Clients.h"
 #include "Client.h"
+#include "ClientHandler_ABC.h"
 
 #pragma warning( disable: 4355 )
 
@@ -18,15 +19,13 @@ using namespace shield;
 // Name: Clients constructor
 // Created: MCO 2010-11-29
 // -----------------------------------------------------------------------------
-Clients::Clients( const std::string& host, tools::MessageSender_ABC& sender, ClientListener_ABC& listener,
-                  bool encodeStringsInUtf8, unsigned long timeOut )
-    : host_              ( host )
-    , sender_            ( sender )
+Clients::Clients( tools::MessageSender_ABC& sender, tools::MessageDispatcher_ABC& dispatcher,
+                  ClientHandler_ABC& handler, ClientListener_ABC& listener, bool encodeStringsInUtf8 )
+    : sender_            ( sender )
+    , dispatcher_        ( dispatcher )
+    , handler_           ( handler )
     , listener_          ( listener )
     , utf8StringEncoding_( encodeStringsInUtf8 )
-    , timeOut_           ( timeOut )
-    , stopped_           ( false )
-    , thread_            ( boost::bind( &Clients::Run, this ) )
 {
     // NOTHING
 }
@@ -37,50 +36,8 @@ Clients::Clients( const std::string& host, tools::MessageSender_ABC& sender, Cli
 // -----------------------------------------------------------------------------
 Clients::~Clients()
 {
-    try
-    {
-        service_.post( boost::bind( &Clients::Stop, this ) );
-        thread_.join();
-    }
-    catch( ... )
-    {
-        // NOTHING
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Clients::Run
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-void Clients::Run()
-{
-    ::SetThreadPriority( GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL );
-    while( !stopped_ )
-    {
-        service_.run();
-        ::Sleep( 100 );
-        service_.reset();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Clients::Stop
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-void Clients::Stop()
-{
-    stopped_ = true;
-    clients_.clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Clients::Update
-// Created: MCO 2010-11-29
-// -----------------------------------------------------------------------------
-void Clients::Update()
-{
     for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-        it->second->Update();
+        handler_.Unregister( it->first );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,9 +47,9 @@ void Clients::Update()
 void Clients::Add( const std::string& from )
 {
     clients_.erase( from );
-    boost::shared_ptr< Client > client( new Client( service_, from, sender_, listener_, utf8StringEncoding_, timeOut_ ) );
+    boost::shared_ptr< Client > client( new Client( from, sender_, dispatcher_, handler_, listener_, utf8StringEncoding_ ) );
     clients_.insert( std::make_pair( from, client ) );
-    client->Connect( host_ );
+    handler_.Register( from, *client );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,6 +59,7 @@ void Clients::Add( const std::string& from )
 void Clients::Remove( const std::string& from )
 {
     clients_.erase( from );
+    handler_.Unregister( from );
 }
 
 // -----------------------------------------------------------------------------

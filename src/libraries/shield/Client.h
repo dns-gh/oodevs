@@ -13,31 +13,19 @@
 #include "Converter.h"
 #include "Server_ABC.h"
 #include "Client_ABC.h"
-#include "tools/ConnectionCallback_ABC.h"
 #include "tools/MessageSender_ABC.h"
-#include "tools/MessageDispatcher_ABC.h"
+#include "tools/ObjectMessageService.h"
 #include <string>
 #include <memory>
 
-namespace boost
-{
-namespace asio
-{
-    class io_service;
-}
-}
-
 namespace tools
 {
-    class ObjectMessageService;
-    class BufferedMessageCallback;
-    class BufferedConnectionCallback;
-    class SocketManager;
-    class Connector;
+    class MessageDispatcher_ABC;
 }
 
 namespace shield
 {
+    class ClientHandler_ABC;
     class ClientListener_ABC;
 
 // =============================================================================
@@ -48,14 +36,14 @@ namespace shield
 */
 // Created: MCO 2010-09-30
 // =============================================================================
-class Client : public tools::MessageDispatcher_ABC , public tools::MessageSender_ABC
-             , private tools::ConnectionCallback_ABC, private Server_ABC, private Client_ABC
+class Client : private Server_ABC, private Client_ABC
+             , public tools::MessageSender_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Client( boost::asio::io_service& service, const std::string& from, tools::MessageSender_ABC& sender,
-                     ClientListener_ABC& listener, bool encodeStringsInUtf8, unsigned long timeOut );
+             Client( const std::string& from, tools::MessageSender_ABC& sender, tools::MessageDispatcher_ABC& dispatcher,
+                     ClientHandler_ABC& handler, ClientListener_ABC& listener, bool encodeStringsInUtf8 );
     virtual ~Client();
     //@}
 
@@ -67,31 +55,19 @@ public:
     void ReceiveClientToReplay        ( const MsgsClientToReplay::MsgClientToReplay& msg );
     void ReceiveClientToSim           ( const MsgsClientToSim::MsgClientToSim& msg );
     void ReceiveAdminToLauncher       ( const MsgsAdminToLauncher::MsgAdminToLauncher& msg );
-    //@}
 
-    //! @name Operations
-    //@{
-    void Update();
-
-    void Connect( const std::string& host );
-    void Disconnect();
-
-    using MessageSender_ABC::Send;
-    using MessageDispatcher_ABC::RegisterMessage;
+    virtual void Send( const std::string& link, unsigned long tag, const google::protobuf::Message& m );
+    virtual void Send( const std::string& link, unsigned long tag, const tools::Message& message );
     //@}
 
     //! @name Accessors
     //@{
-    virtual unsigned long GetNbMessagesReceived() const; // $$$$ MCO : make a proxy on MessageDispatcher_ABC instead
-    virtual unsigned long GetNbMessagesSent() const; // $$$$ MCO : make a proxy on MessageSender_ABC instead
+    virtual unsigned long GetNbMessagesSent() const;
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void ConnectionSucceeded( const std::string& host );
-    virtual void ConnectionFailed( const std::string& host, const std::string& error );
-
     virtual void Send( sword::ClientToAar& message );
     virtual void Send( sword::ClientToAuthentication& message );
     virtual void Send( sword::ClientToSim& message );
@@ -108,18 +84,8 @@ private:
     virtual void Send( MsgsLauncherToAdmin::MsgLauncherToAdmin& message );
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Send( const std::string& endpoint, unsigned long tag, const tools::Message& message );
-    virtual void Register( unsigned long id, std::auto_ptr< tools::ObjectMessageCallback_ABC > callback );
-    virtual tools::ObjectMessageCallback_ABC* Retrieve( unsigned long id );
-    //@}
-
     //! @name Helpers
     //@{
-    void ConnectionError( const std::string& host, const std::string& error );
-    void ConnectionWarning( const std::string& host, const std::string& warning );
-
     template< typename T >
     void DoSend( T& message );
 
@@ -130,24 +96,14 @@ private:
 private:
     //! @name Member data
     //@{
-    typedef std::vector< boost::function< void() > > T_Callbacks;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::string host_;
     const std::string from_;
-    T_Callbacks callbacks_;
     tools::MessageSender_ABC& sender_;
+    tools::MessageDispatcher_ABC& dispatcher_;
+    ClientHandler_ABC& handler_;
     ClientListener_ABC& listener_;
     Converter converter_;
-    bool encodeStringsInUtf8_;
-    boost::shared_ptr< tools::BufferedConnectionCallback > connectionBuffer_;
-    boost::shared_ptr< tools::BufferedMessageCallback >    messageBuffer_;
-    std::auto_ptr< tools::SocketManager >                  sockets_;
-    std::auto_ptr< tools::ObjectMessageService >           messageService_;
-    std::auto_ptr< tools::Connector >                      connector_;
+    tools::ObjectMessageService service_;
+    bool encodeStringsInUtf8_; // $$$$ MCO : make a proxy !
     //@}
 };
 

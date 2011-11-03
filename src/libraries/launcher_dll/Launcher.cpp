@@ -17,8 +17,29 @@
 #include "tools/DefaultLoader.h"
 #include "protocol/LauncherSenders.h"
 #include "protocol/Version.h"
+#include "shield/Server.h"
+#include "shield/Listener_ABC.h"
 
 using namespace launcher;
+
+namespace
+{
+    class NullLogger : public shield::Listener_ABC
+    {
+        virtual void Info( const std::string& /*message*/ )
+        {
+            // NOTHING
+        }
+        virtual void Error( const std::string& /*message*/ )
+        {
+            // NOTHING
+        }
+        virtual void Debug( const shield::DebugInfo_ABC& /*info*/ )
+        {
+            // NOTHING
+        }
+    } logger;
+}
 
 // -----------------------------------------------------------------------------
 // Name: Launcher constructor
@@ -29,6 +50,7 @@ Launcher::Launcher( const Config& config )
     , fileLoader_        ( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , server_            ( new LauncherService( config.GetLauncherPort() ) )
     , processes_         ( new ProcessService( config, *fileLoader_, *server_ ) )
+    , proxy_             ( new shield::Server( config.GetLauncherPort() + 1, *server_, *server_, logger, true ) ) // $$$$ MCO should we hard-code 30001 instead of port + 1 ?
 {
     server_->RegisterMessage( *this, &Launcher::HandleAdminToLauncher );
 }
@@ -52,6 +74,7 @@ void Launcher::Update()
         server_->Update();
     if( processes_.get() )
         processes_->Update();
+    proxy_->Update();
 }
 
 // -----------------------------------------------------------------------------

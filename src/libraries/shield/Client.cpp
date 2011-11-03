@@ -8,9 +8,12 @@
 // *****************************************************************************
 
 #include "Client.h"
+#include "ClientHandler_ABC.h"
 #include "ClientListener_ABC.h"
 #include "Utf8Converter.h"
 #include "DebugInfo.h"
+#include "tools/MessageSender_ABC.h"
+#include "tools/MessageDispatcher_ABC.h"
 #pragma warning( push, 0 )
 #include "proto/ClientToAar.pb.h"
 #include "proto/ClientToAuthentication.pb.h"
@@ -25,13 +28,6 @@
 #include "proto/SimToClient.pb.h"
 #include "proto/LauncherToAdmin.pb.h"
 #pragma warning( pop )
-#include "tools/SocketManager.h"
-#include "tools/Connector.h"
-#include "tools/BufferedMessageCallback.h"
-#include "tools/BufferedConnectionCallback.h"
-#include "tools/ObjectMessageService.h"
-#include <boost/bind.hpp>
-#include <boost/bind/apply.hpp>
 
 #pragma warning( disable: 4355 )
 
@@ -41,28 +37,23 @@ using namespace shield;
 // Name: Client constructor
 // Created: MCO 2010-09-30
 // -----------------------------------------------------------------------------
-Client::Client( boost::asio::io_service& service, const std::string& from, tools::MessageSender_ABC& sender,
-                ClientListener_ABC& listener, bool encodeStringsInUtf8, unsigned long timeOut )
+Client::Client( const std::string& from, tools::MessageSender_ABC& sender, tools::MessageDispatcher_ABC& dispatcher,
+                ClientHandler_ABC& handler, ClientListener_ABC& listener, bool encodeStringsInUtf8 )
     : from_               ( from )
     , sender_             ( sender )
+    , dispatcher_         ( dispatcher )
+    , handler_            ( handler )
     , listener_           ( listener )
     , converter_          ( *this, *this, listener )
     , encodeStringsInUtf8_( encodeStringsInUtf8 )
-    , connectionBuffer_   ( new tools::BufferedConnectionCallback() )
-    , messageBuffer_      ( new tools::BufferedMessageCallback() )
-    , sockets_            ( new tools::SocketManager( messageBuffer_, connectionBuffer_, timeOut ) )
-    , messageService_     ( new tools::ObjectMessageService() )
-    , connector_          ( new tools::Connector( service, *sockets_, *connectionBuffer_ ) )
 {
-    messageService_->RegisterErrorCallback( boost::bind( &Client::ConnectionError, this, _1, _2 ) );
-    messageService_->RegisterWarningCallback( boost::bind( &Client::ConnectionWarning, this, _1, _2 ) );
-    RegisterMessage( converter_, &Converter::ReceiveSimToClient );
-    RegisterMessage( converter_, &Converter::ReceiveAuthenticationToClient );
-    RegisterMessage( converter_, &Converter::ReceiveDispatcherToClient );
-    RegisterMessage( converter_, &Converter::ReceiveMessengerToClient );
-    RegisterMessage( converter_, &Converter::ReceiveReplayToClient );
-    RegisterMessage( converter_, &Converter::ReceiveAarToClient );
-    RegisterMessage( converter_, &Converter::ReceiveLauncherToAdmin );
+    service_.RegisterMessage< sword::AarToClient >( boost::bind( &Converter::ReceiveAarToClient, &converter_, _2 ) );
+    service_.RegisterMessage< sword::AuthenticationToClient >( boost::bind( &Converter::ReceiveAuthenticationToClient, &converter_, _2 ) );
+    service_.RegisterMessage< sword::DispatcherToClient >( boost::bind( &Converter::ReceiveDispatcherToClient, &converter_, _2 ) );
+    service_.RegisterMessage< sword::MessengerToClient >( boost::bind( &Converter::ReceiveMessengerToClient, &converter_, _2 ) );
+    service_.RegisterMessage< sword::ReplayToClient >( boost::bind( &Converter::ReceiveReplayToClient, &converter_, _2 ) );
+    service_.RegisterMessage< sword::SimToClient >( boost::bind( &Converter::ReceiveSimToClient, &converter_, _2 ) );
+    service_.RegisterMessage< sword::LauncherToAdmin >( boost::bind( &Converter::ReceiveLauncherToAdmin, &converter_, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,169 +66,57 @@ Client::~Client()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Client::Connect
-// Created: SBO 2007-01-26
-// -----------------------------------------------------------------------------
-void Client::Connect( const std::string& host )
-{
-    connector_->Connect( host );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::Disconnect
-// Created: SBO 2007-01-26
-// -----------------------------------------------------------------------------
-void Client::Disconnect()
-{
-    sockets_->Disconnect();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::Update
-// Created: NLD 2007-01-24
-// -----------------------------------------------------------------------------
-void Client::Update()
-{
-    connectionBuffer_->Commit( *this );
-    messageBuffer_->Commit( *messageService_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::Send
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-void Client::Send( const std::string& endpoint, unsigned long tag, const tools::Message& message )
-{
-    sockets_->Send( endpoint, tag, message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::Register
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-void Client::Register( unsigned long id, std::auto_ptr< tools::ObjectMessageCallback_ABC > callback )
-{
-    messageService_->Register( id, callback );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::Retrieve
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-tools::ObjectMessageCallback_ABC* Client::Retrieve( unsigned long id )
-{
-    return messageService_->Retrieve( id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::GetNbMessagesReceived
-// Created: NLD 2010-10-20
-// -----------------------------------------------------------------------------
-unsigned long Client::GetNbMessagesReceived() const
-{
-    return messageService_->GetNbMessagesReceived();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::GetNbMessagesSent
-// Created: NLD 2010-10-20
-// -----------------------------------------------------------------------------
-unsigned long Client::GetNbMessagesSent() const
-{
-    return sockets_->GetNbMessagesSent();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Client::ReceiveClientToAar
 // Created: MCO 2011-07-06
 // -----------------------------------------------------------------------------
-void Client::ReceiveClientToAar( const MsgsClientToAar::MsgClientToAar& msg )
+void Client::ReceiveClientToAar( const MsgsClientToAar::MsgClientToAar& message )
 {
-    converter_.ReceiveClientToAar( msg );
+    converter_.ReceiveClientToAar( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Client::ReceiveClientToAuthentication
 // Created: MCO 2011-07-06
 // -----------------------------------------------------------------------------
-void Client::ReceiveClientToAuthentication( const MsgsClientToAuthentication::MsgClientToAuthentication& msg )
+void Client::ReceiveClientToAuthentication( const MsgsClientToAuthentication::MsgClientToAuthentication& message )
 {
-    converter_.ReceiveClientToAuthentication( msg );
+    converter_.ReceiveClientToAuthentication( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Client::ReceiveClientToMessenger
 // Created: MCO 2011-07-06
 // -----------------------------------------------------------------------------
-void Client::ReceiveClientToMessenger( const MsgsClientToMessenger::MsgClientToMessenger& msg )
+void Client::ReceiveClientToMessenger( const MsgsClientToMessenger::MsgClientToMessenger& message )
 {
-    converter_.ReceiveClientToMessenger( msg );
+    converter_.ReceiveClientToMessenger( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Client::ReceiveClientToReplay
 // Created: MCO 2011-07-06
 // -----------------------------------------------------------------------------
-void Client::ReceiveClientToReplay( const MsgsClientToReplay::MsgClientToReplay& msg )
+void Client::ReceiveClientToReplay( const MsgsClientToReplay::MsgClientToReplay& message )
 {
-    converter_.ReceiveClientToReplay( msg );
+    converter_.ReceiveClientToReplay( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Client::ReceiveClientToSim
 // Created: MCO 2011-07-06
 // -----------------------------------------------------------------------------
-void Client::ReceiveClientToSim( const MsgsClientToSim::MsgClientToSim& msg )
+void Client::ReceiveClientToSim( const MsgsClientToSim::MsgClientToSim& message )
 {
-    converter_.ReceiveClientToSim( msg );
+    converter_.ReceiveClientToSim( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Client::ReceiveAdminToLauncher
 // Created: MCO 2011-07-06
 // -----------------------------------------------------------------------------
-void Client::ReceiveAdminToLauncher( const MsgsAdminToLauncher::MsgAdminToLauncher& msg )
+void Client::ReceiveAdminToLauncher( const MsgsAdminToLauncher::MsgAdminToLauncher& message )
 {
-    converter_.ReceiveAdminToLauncher( msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::ConnectionSucceeded
-// Created: MCO 2010-10-26
-// -----------------------------------------------------------------------------
-void Client::ConnectionSucceeded( const std::string& host )
-{
-    host_ = host;
-    listener_.Info( "Shield proxy connected to " + host );
-    std::for_each( callbacks_.begin(), callbacks_.end(), boost::apply< void >() );
-    callbacks_.clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::ConnectionFailed
-// Created: MCO 2010-10-26
-// -----------------------------------------------------------------------------
-void Client::ConnectionFailed( const std::string& host, const std::string& error )
-{
-    listener_.Error( from_, "Shield proxy connection to " + host + " failed : " + error );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::ConnectionError
-// Created: MCO 2010-10-26
-// -----------------------------------------------------------------------------
-void Client::ConnectionError( const std::string& host, const std::string& error )
-{
-    listener_.Error( from_, "Shield proxy connection to " + host + " aborted : " + error );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::ConnectionWarning
-// Created: MCO 2011-09-26
-// -----------------------------------------------------------------------------
-void Client::ConnectionWarning( const std::string& host, const std::string& warning )
-{
-    listener_.Warning( from_, "Shield proxy connection to " + host + " warning : " + warning );
+    converter_.ReceiveAdminToLauncher( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,10 +128,34 @@ void Client::DoSend( T& message )
 {
     if( encodeStringsInUtf8_ )
         Utf8Converter::ConvertUtf8StringsToCP1252( message );
-    if( host_.empty() )
-        callbacks_.push_back( boost::bind( &tools::MessageSender_ABC::Send< T >, this, boost::cref( host_ ), message ) );
-    else
-        tools::MessageSender_ABC::Send( host_, message );
+    dispatcher_.Receive( from_, message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Send
+// Created: MCO 2011-11-03
+// -----------------------------------------------------------------------------
+void Client::Send( const std::string& link, unsigned long tag, const google::protobuf::Message& m )
+{
+    service_.Receive( link, tag, m );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Send
+// Created: MCO 2011-11-03
+// -----------------------------------------------------------------------------
+void Client::Send( const std::string&, unsigned long, const tools::Message& )
+{
+    throw std::runtime_error( __FUNCTION__ ); // $$$$ MCO : pretty crappy but can actually never happen...
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::GetNbMessagesSent
+// Created: MCO 2011-11-03
+// -----------------------------------------------------------------------------
+unsigned long Client::GetNbMessagesSent() const
+{
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

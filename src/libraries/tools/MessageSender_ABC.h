@@ -14,6 +14,7 @@
 #include "Message.h"
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
+#include <google/protobuf/message.h>
 #pragma warning( pop )
 #include <boost/shared_array.hpp>
 
@@ -41,25 +42,23 @@ public:
     template< typename T >
     void Send( const std::string& link, const T& t )
     {
-        if( !t.IsInitialized() )
-            throw std::runtime_error( "Message of type \"" + t.GetDescriptor()->full_name()
-                + "\" is missing required fields: " + t.InitializationErrorString() );
-        boost::shared_array< google::protobuf::uint8 > buffer( new google::protobuf::uint8[ t.ByteSize() ] );
-        if( !t.SerializeWithCachedSizesToArray( buffer.get() ) )
-            throw std::runtime_error( "Error serializing message of type \"" + t.GetDescriptor()->full_name() + '"' );
-        Message message;
-        message.Write( (const char*)buffer.get(), t.GetCachedSize() );
-        static const unsigned long id = MessageIdentifierFactory::GetIdentifier< T >();
-        Send( link, id, message );
+        static const unsigned long tag = MessageIdentifierFactory::GetIdentifier< T >();
+        Send( link, tag, t );
     }
-    template< typename T >
-    void Send( const std::string& link, const T& , const Message& message )
+    virtual void Send( const std::string& link, unsigned long tag, const google::protobuf::Message& m )
     {
-        static const unsigned long id = MessageIdentifierFactory::GetIdentifier< T >();
-        Send( link, id, message );
+        if( !m.IsInitialized() )
+            throw std::runtime_error( "Message of type \"" + m.GetDescriptor()->full_name()
+                + "\" is missing required fields: " + m.InitializationErrorString() );
+        boost::shared_array< google::protobuf::uint8 > buffer( new google::protobuf::uint8[ m.ByteSize() ] );
+        if( !m.SerializeWithCachedSizesToArray( buffer.get() ) )
+            throw std::runtime_error( "Error serializing message of type \"" + m.GetDescriptor()->full_name() + '"' );
+        Message message;
+        message.Write( (const char*)buffer.get(), m.GetCachedSize() );
+        Send( link, tag, message );
     }
 
-    virtual void Send( const std::string& endpoint, unsigned long tag, const Message& message ) = 0;
+    virtual void Send( const std::string& link, unsigned long tag, const Message& message ) = 0;
     //@}
 
     //! @name Accessors

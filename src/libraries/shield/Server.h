@@ -48,6 +48,7 @@ namespace MsgsAdminToLauncher
 
 namespace shield
 {
+    class ClientHandler_ABC;
     class Listener_ABC;
     class Client;
 
@@ -65,7 +66,9 @@ class Server : private tools::ServerNetworker, private ClientListener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Server( unsigned short port, const std::string& host, Listener_ABC& listener, bool encodeStringsInUtf8, unsigned long timeOut = 0 );
+             Server( unsigned short port, tools::MessageDispatcher_ABC& dispatcher,
+                     ClientHandler_ABC& handler, Listener_ABC& listener,
+                     bool encodeStringsInUtf8, unsigned long timeOut = 0 );
     virtual ~Server();
     //@}
 

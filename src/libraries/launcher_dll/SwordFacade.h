@@ -114,7 +114,6 @@ private:
     bool isAuthenticated_;
     boost::weak_ptr< frontend::ProcessWrapper > process_;
     boost::shared_ptr< SwordProxy > client_;
-    boost::shared_ptr< SwordConnectionHandler_ABC > connectionHandler_;
     HandlerContainer messageHandlers_;
     std::vector< T_Handler > permanentHandler_;
     //@}

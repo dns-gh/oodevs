@@ -38,7 +38,7 @@ LauncherService::~LauncherService()
 // -----------------------------------------------------------------------------
 void LauncherService::ConnectionSucceeded( const std::string& endpoint )
 {
-    clients_[ endpoint ] = boost::shared_ptr< LauncherPublisher >( new LauncherPublisher( *this, endpoint ) );
+    clients_[ endpoint ].reset( new LauncherPublisher( *this, endpoint ) );
     tools::ServerNetworker::ConnectionSucceeded( endpoint );
 }
 
@@ -72,4 +72,22 @@ LauncherPublisher& LauncherService::ResolveClient( const std::string& endpoint )
     if( it != clients_.end() )
         return *it->second;
     throw std::runtime_error( __FUNCTION__ ": client " + endpoint + " does not exist." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherService::Register
+// Created: MCO 2011-11-03
+// -----------------------------------------------------------------------------
+void LauncherService::Register( const std::string& endpoint, tools::MessageSender_ABC& sender )
+{
+    clients_[ endpoint ].reset( new LauncherPublisher( sender, endpoint ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherService::Unregister
+// Created: MCO 2011-11-03
+// -----------------------------------------------------------------------------
+void LauncherService::Unregister( const std::string& endpoint )
+{
+    clients_.erase( endpoint );
 }

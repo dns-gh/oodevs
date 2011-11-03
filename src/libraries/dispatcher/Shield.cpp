@@ -48,12 +48,11 @@ namespace
         RotatingLog log_;
     };
 
-    shield::Server* CreateServer( const Config& config, shield::Listener_ABC& logger )
+    shield::Server* CreateServer( const Config& config, tools::MessageDispatcher_ABC& dispatcher, shield::ClientHandler_ABC& handler, shield::Listener_ABC& logger )
     {
         const unsigned short port = config.GetNetworkShieldParameters();
         bool useUtf8StringEncoding = config.UseShieldUtf8Encoding();
-        const std::string host = "localhost:" + boost::lexical_cast< std::string >( config.GetNetworkClientsParameters() );
-        return port ? new shield::Server( port, host, logger, useUtf8StringEncoding, config.GetNetworkTimeout() ) : 0;
+        return port ? new shield::Server( port, dispatcher, handler, logger, useUtf8StringEncoding, config.GetNetworkTimeout() ) : 0;
     }
 }
 
@@ -61,9 +60,9 @@ namespace
 // Name: Shield constructor
 // Created: MCO 2010-09-30
 // -----------------------------------------------------------------------------
-Shield::Shield( const Config& config )
+Shield::Shield( const Config& config, tools::MessageDispatcher_ABC& dispatcher, shield::ClientHandler_ABC& handler )
     : logger_( new Logger( config ) )
-    , server_( CreateServer( config, *logger_ ) )
+    , server_( CreateServer( config, dispatcher, handler, *logger_ ) )
 {
     // NOTHING
 }

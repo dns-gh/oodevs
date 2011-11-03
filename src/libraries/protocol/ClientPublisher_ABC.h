@@ -14,16 +14,12 @@
 
 namespace sword
 {
-    class AarToClient;
     class SimToClient;
     class AuthenticationToClient;
     class ReplayToClient;
+    class AarToClient;
     class MessengerToClient;
     class DispatcherToClient;
-    class ClientToAar;
-    class ClientToSim;
-    class ClientToReplay;
-    class ClientToAuthentication;
 }
 
 namespace dispatcher

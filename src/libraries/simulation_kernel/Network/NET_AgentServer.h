@@ -24,7 +24,6 @@ class NET_Simulation_ABC;
 // Created: NLD 2002-07-12
 //=============================================================================
 class NET_AgentServer : public tools::ServerNetworker
-                      , private boost::noncopyable
 {
 public:
              NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time, NET_Simulation_ABC& simulation );

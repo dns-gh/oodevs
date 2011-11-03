@@ -36,8 +36,7 @@ ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin, co
 // -----------------------------------------------------------------------------
 ClientsNetworker::~ClientsNetworker()
 {
-    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-        delete it->second;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -59,9 +58,10 @@ void ClientsNetworker::Receive( const sword::SimToClient& wrapper )
 void ClientsNetworker::ConnectionSucceeded( const std::string& link )
 {
     MT_LOG_INFO_MSG( "Connection received from client '" << link << "'" );
-    ServerNetworker::ConnectionSucceeded( link  );
-    Client* newClient = clients_[link] = new Client( *this, link );
-    services_.Send( *newClient );
+    ServerNetworker::ConnectionSucceeded( link );
+    boost::shared_ptr< ClientPublisher_ABC >& pClient = clients_[ link ];
+    pClient.reset( new Client( *this, link ) );
+    services_.Send( *pClient );
     MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }
 
@@ -86,10 +86,8 @@ void ClientsNetworker::ConnectionError( const std::string& link, const std::stri
     T_Clients::iterator it = clients_.find( link );
     if( it != clients_.end() && it->second )
     {
-        Client* client = it->second;
-        plugin_.NotifyClientLeft( *client );
+        plugin_.NotifyClientLeft( *it->second );
         clients_.erase( it );
-        delete client;
     }
     MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }
@@ -236,4 +234,28 @@ ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link )
 std::string ClientsNetworker::GetEndpoint() const
 {
     return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Register
+// Created: MCO 2011-10-28
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Register( const std::string& link, MessageSender_ABC& sender )
+{
+    MT_LOG_INFO_MSG( "Publisher registered for client '" << link << "'" );
+    boost::shared_ptr< ClientPublisher_ABC >& pClient = clients_[ link ];
+    pClient.reset( new Client( sender, link ) );
+    services_.Send( *pClient );
+    MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Unregister
+// Created: MCO 2011-10-28
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Unregister( const std::string& link )
+{
+    MT_LOG_INFO_MSG( "Publisher unregistered for client '" << link << "'" );
+    clients_.erase( link );
+    MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }
