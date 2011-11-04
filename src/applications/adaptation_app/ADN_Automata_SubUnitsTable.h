@@ -34,6 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    void AddSubItems( const std::string& name );
     //@}
 
 private:
@@ -42,6 +43,10 @@ private:
 
 private slots:
     void MenuListItemSelected();
+
+signals:
+    void AddItem( const std::string& name );
+    void RemoveItem( const std::string& name );
 
 private:
     bool bMenuListItemSelected_;

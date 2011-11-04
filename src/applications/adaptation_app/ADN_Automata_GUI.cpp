@@ -18,6 +18,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Automata_GUI.h"
+#include "moc_ADN_Automata_GUI.cpp"
 #include "ADN_MainWindow.h"
 #include "ADN_App.h"
 #include "ADN_GuiBuilder.h"
@@ -34,18 +35,20 @@
 #include "ADN_ListView.h"
 #include "ADN_AutomatLog_ListView.h"
 #include "ADN_AutomatLogCategory_ListView.h"
-
+#include "UnitsFilter.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_GUI constructor
 // Created: APE 2004-12-10
 // -----------------------------------------------------------------------------
 ADN_Automata_GUI::ADN_Automata_GUI( ADN_Automata_Data& data )
-: ADN_GUI_ABC( "ADN_Automata_GUI" )
-, data_      ( data )
+    : ADN_GUI_ABC( "ADN_Automata_GUI" )
+    , data_         ( data )
+    , pAutomataList_( 0 )
+    , pFilter_      ( 0 )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_GUI destructor
@@ -53,8 +56,8 @@ ADN_Automata_GUI::ADN_Automata_GUI( ADN_Automata_Data& data )
 // -----------------------------------------------------------------------------
 ADN_Automata_GUI::~ADN_Automata_GUI()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_GUI::Build
@@ -70,8 +73,8 @@ void ADN_Automata_GUI::Build()
     pMainWidget_ = new QWidget( 0, "Weapon systems main widget" );
 
     // Create the automata listview.
-    ADN_Automata_ListView* pAutomataList = new ADN_Automata_ListView( pMainWidget_ );
-    pAutomataList->GetConnector().Connect( &data_.GetAutomata() );
+    pAutomataList_ = new ADN_Automata_ListView( pMainWidget_ );
+    pAutomataList_->GetConnector().Connect( &data_.GetAutomata() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     Q3GroupBox* pGroup = new Q3GroupBox( 0, Qt::Horizontal, tr( "Automata" ), pMainWidget_ );
@@ -88,7 +91,7 @@ void ADN_Automata_GUI::Build()
     builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pPropertiesGroup, tr( "Doctrine model" ), vInfosConnectors[eModel] );
 
     // Unit
-    builder.AddField< ADN_ComboBox_Vector<ADN_Units_Data::UnitInfos> >( pPropertiesGroup, tr( "Command post" ), vInfosConnectors[eUnit] );
+    pFilter_ = builder.AddField< UnitsFilter >( pPropertiesGroup, tr( "Command post" ), vInfosConnectors[eUnit] );
 
     // Feedback time
     builder.AddOptionnalField<ADN_TimeField>( pPropertiesGroup, tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
@@ -97,19 +100,21 @@ void ADN_Automata_GUI::Build()
     ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( pSubUnitsGroup );
     vInfosConnectors[eSubUnit] = &pSubUnitsTable->GetConnector();
 
-    pAutomataList->SetItemConnectors( vInfosConnectors );
+    pAutomataList_->SetItemConnectors( vInfosConnectors );
 
     // Layout
     Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
-    pMainLayout->addWidget( pAutomataList, 1 );
+    pMainLayout->addWidget( pAutomataList_, 1 );
     pMainLayout->addWidget( pGroup, 3 );
 
     Q3VBoxLayout* pGroupLayout = new Q3VBoxLayout( pGroup->layout(), 5 );
     pGroupLayout->addWidget( pPropertiesGroup, 0, 0 );
     pGroupLayout->addWidget( pSubUnitsGroup, 1, 0 );
     builder.AddStretcher( pGroupLayout, Qt::Vertical );
-}
 
+    connect( pSubUnitsTable, SIGNAL( AddItem( const std::string& ) ), this, SLOT( OnItemAdded( const std::string& ) ) );
+    connect( pSubUnitsTable, SIGNAL( RemoveItem( const std::string& ) ), this, SLOT( OnItemRemoved( const std::string& ) ) );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_GUI::CreateAutomataCompositionsTable
@@ -273,4 +278,24 @@ void ADN_Automata_GUI::RegisterTable( ADN_MainWindow& mainWindow )
     mainWindow.AddTable   ( tr( "Automata compositions" ), new ADN_Callback<ADN_Table*   ,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataCompositionsTable ) );
     mainWindow.AddListView( tr( "Logistic per automat" ) , new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataLogTable ) );
     mainWindow.AddListView( tr( "Logistic per resource" ), new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataLogTablePerDotation ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Automata_GUI::OnItemAdded
+// Created: LGY 2011-11-04
+// -----------------------------------------------------------------------------
+void ADN_Automata_GUI::OnItemAdded( const std::string& name )
+{
+    pFilter_->Add( name );
+    pAutomataList_->Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Automata_GUI::OnItemRemoved
+// Created: LGY 2011-11-04
+// -----------------------------------------------------------------------------
+void ADN_Automata_GUI::OnItemRemoved( const std::string& name )
+{
+    pFilter_->Remove( name );
+    pAutomataList_->Update();
 }

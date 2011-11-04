@@ -69,10 +69,10 @@ void ADN_Automata_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Automata_GUI::eName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Automata_GUI::eAgentType]->Connect( &pInfos->nAgentType_, bConnect );
     vItemConnectors_[ADN_Automata_GUI::eModel]->Connect( &pInfos->ptrModel_, bConnect );
-    vItemConnectors_[ADN_Automata_GUI::eUnit]->Connect( &pInfos->ptrUnit_, bConnect );
     vItemConnectors_[ADN_Automata_GUI::eSubUnit]->Connect( &pInfos->vSubUnits_, bConnect );
     vItemConnectors_[ADN_Automata_GUI::eFeedbackTime]->Connect( &pInfos->strengthRatioFeedbackTime_, bConnect );
     vItemConnectors_[ADN_Automata_GUI::eHasFeedbackTime]->Connect( &pInfos->bStrengthRatioFeedbackTime_, bConnect );
+    vItemConnectors_[ADN_Automata_GUI::eUnit]->Connect( &pInfos->ptrUnit_, bConnect );
 }
 
 
@@ -86,4 +86,19 @@ void ADN_Automata_ListView::OnContextMenu( const QPoint& pt )
     ADN_Automata_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Automata_ListView::Update
+// Created: LGY 2011-11-04
+// -----------------------------------------------------------------------------
+void ADN_Automata_ListView::Update()
+{
+    if( pCurData_ == 0 )
+        return;
+
+    AutomatonInfos* pInfos = (AutomatonInfos*)pCurData_;
+    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Automata_GUI::eNbrGuiElements );
+
+    vItemConnectors_[ADN_Automata_GUI::eUnit]->Connect( &pInfos->ptrUnit_, true );
 }

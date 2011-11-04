@@ -37,6 +37,7 @@ class ADN_Connector_SubUnitTable
 public:
     ADN_Connector_SubUnitTable( ADN_Automata_SubUnitsTable& tab )
         : ADN_Connector_Table_ABC( tab, false, "ADN_Automata_SubUnitsTable" )
+        , tab_( tab )
     {}
 
     void AddSubItems( int i, void* pObj )
@@ -54,7 +55,10 @@ public:
         pItemName->GetConnector().Connect( &static_cast<UnitInfos*>(pObj)->ptrUnit_.GetData()->strName_ );
         pItemMinCount->GetConnector().Connect( &static_cast<UnitInfos*>(pObj)->min_ );
         pItemMaxCount->GetConnector().Connect( &static_cast<UnitInfos*>(pObj)->max_ );
+        tab_.AddSubItems( static_cast<UnitInfos*>(pObj)->ptrUnit_.GetData()->strName_.GetData() );
     }
+private:
+    ADN_Automata_SubUnitsTable& tab_;
 };
 
 // -----------------------------------------------------------------------------
@@ -62,8 +66,8 @@ public:
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
 ADN_Automata_SubUnitsTable::ADN_Automata_SubUnitsTable( QWidget* pParent )
-: ADN_Table2( pParent, "ADN_Automata_SubUnitsTable" )
-, bMenuListItemSelected_( false )
+    : ADN_Table2( pParent, "ADN_Automata_SubUnitsTable" )
+    , bMenuListItemSelected_( false )
 {
     // Selection and sorting.
     setSorting( true );
@@ -166,21 +170,19 @@ void ADN_Automata_SubUnitsTable::OnContextMenu( int /*nRow*/, int /*nCol*/, cons
         AddNewElement( list ->SelectedValue() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_SubUnitsTable::AddNewElement
 // Created: APE 2005-05-09
 // -----------------------------------------------------------------------------
 void ADN_Automata_SubUnitsTable::AddNewElement( int n )
-    {
-        // Create a new element
-        UnitInfos* pNewInfo = new UnitInfos();
+{
+    // Create a new element
+    UnitInfos* pNewInfo = new UnitInfos();
     pNewInfo->ptrUnit_ = (ADN_Units_Data::UnitInfos*)n;
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );
-    }
-
+    ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
+    pCTable->AddItem( pNewInfo );
+    pCTable->AddItem( 0 );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_SubUnitsTable::RemoveCurrentElement
@@ -191,9 +193,11 @@ void ADN_Automata_SubUnitsTable::RemoveCurrentElement()
     // Delete the current element.
     UnitInfos* pCurPh = (UnitInfos*)GetCurrentData();
     if( pCurPh != 0 )
+    {
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurPh );
+        emit RemoveItem( pCurPh->ptrUnit_.GetData()->strName_.GetData() );
+    }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_SubUnitsTable::MenuListItemSelected
@@ -203,4 +207,13 @@ void ADN_Automata_SubUnitsTable::MenuListItemSelected()
 {
     bMenuListItemSelected_ = true;
     qApp->exit_loop();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Automata_SubUnitsTable::AddSubItems
+// Created: LGY 2011-11-03
+// -----------------------------------------------------------------------------
+void ADN_Automata_SubUnitsTable::AddSubItems( const std::string& name )
+{
+    emit AddItem( name );
 }

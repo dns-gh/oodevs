@@ -42,7 +42,7 @@ public:
     void                        SetItemConnectors(const T_ConnectorVector& v);
 
     void*                       GetCurrentData();
-    void                        SetCurrentData(void *data);
+    virtual void                SetCurrentData(void *data);
 
     virtual void                ConnectItem();
     virtual void                DisconnectItem();
