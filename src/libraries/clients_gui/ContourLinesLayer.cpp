@@ -58,6 +58,7 @@ ContourLinesLayer::~ContourLinesLayer()
 void ContourLinesLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
     parameters_.Load( modelLoaded.config_ );
+    LoadGraphics();
     reset_       = true;
     modelLoaded_ = true;
 }
@@ -95,9 +96,6 @@ void ContourLinesLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     if( !ShouldDrawPass() || GetAlpha() == 0 || !enabled_  )
         return;
-
-    if( !layer_.get() && !noVBOlayer_.get() )
-        LoadGraphics();
 
     if( layer_.get() || noVBOlayer_.get() )
     {
