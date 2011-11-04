@@ -733,7 +733,12 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Unite a escorter" optional="false" type="Agent"/>
+      <parameter dia-name="objective" name="Unite a escorter" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="Agent"/>
+        </choice>
+      </parameter>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.Surveiller" dia-type="france.military.platoon.tasks.Surveiller" id="2070" name="PION MELEE Surveiller" package="control" symbol="IdSurveiller_Polygone">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2656,6 +2661,7 @@
       <parameter dia-name="objective" name="Unite ou automate" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Automat"/>
+          <parameter type="AgentKnowledge"/>
           <parameter type="Agent"/>
         </choice>
       </parameter>
