@@ -63,8 +63,9 @@ public:
     template < typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
-    //! @name virtual
+    //! @name Operations
     //@{
+    void Finalize();
     const logistic::LogisticHierarchy_ABC& GetLogisticHierarchy() const;
     //@}
 
@@ -84,6 +85,7 @@ private:
     //! @name
     //@{
     std::auto_ptr< logistic::ObjectLogisticHierarchy > pLogisticHierarchy_;
+    unsigned int idFromXML_;
     //@}
 };
 

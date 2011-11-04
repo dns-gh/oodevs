@@ -63,7 +63,7 @@ private:
     void UpdateData( const T& message );
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;

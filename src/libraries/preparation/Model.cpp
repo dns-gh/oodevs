@@ -287,6 +287,7 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
     {
         UpdateName( orbatFile );
         config.GetLoader().LoadFile( orbatFile, boost::bind( &TeamsModel::Load, &teams_, _1, boost::ref( *this ), boost::ref( loadingErrors ) ) );
+        objects_.Finalize();
     }
 
     const tools::SchemaWriter schemaWriter;

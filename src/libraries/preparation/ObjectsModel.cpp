@@ -14,6 +14,7 @@
 #include "Model.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -37,6 +38,15 @@ ObjectsModel::~ObjectsModel()
 {
     Purge();
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectsModel::Finalize
+// Created: JSR 2011-11-04
+// -----------------------------------------------------------------------------
+void ObjectsModel::Finalize()
+{
+    Apply( boost::bind( &Object_ABC::Finalize, _1) );
 }
 
 // -----------------------------------------------------------------------------

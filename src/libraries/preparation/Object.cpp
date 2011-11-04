@@ -46,7 +46,10 @@ Object::Object( xml::xistream& xis, Controller& controller, const CoordinateConv
     , converter_( converter )
     , type_     ( types.Get( xis.attribute< std::string >( "type" ) ) )
 {
-    idManager.Lock( id_ );
+    if( type_.HasSpawn() )
+        idManager.Lock( id_ + 1 );
+    else
+        idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }

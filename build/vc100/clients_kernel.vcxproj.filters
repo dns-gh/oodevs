@@ -1032,6 +1032,9 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\OverFlyingObserver_ABC.h">
       <Filter>Source Files\kernel\Observer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Finalizable_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">

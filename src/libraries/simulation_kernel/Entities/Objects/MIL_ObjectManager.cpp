@@ -15,6 +15,7 @@
 #include "CapacityFactory.h"
 #include "CrowdCapacity.h"
 #include "FloodAttribute.h"
+#include "LogisticAttribute.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectLoader.h"
@@ -315,9 +316,14 @@ void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::FinalizeObjects()
 {
+    // $$$$ _RC_ JSR 2011-11-04: TODO passer par une interface? (attention, respecter l'ordre, floods en derniers)
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    {
         if( AltitudeModifierAttribute* altitude = it->second->RetrieveAttribute< AltitudeModifierAttribute >() )
             altitude->ModifyAltitude( it->second->GetLocalisation() );
+        if( LogisticAttribute* logistic = it->second->RetrieveAttribute< LogisticAttribute >() )
+            logistic->Finalize();
+    }
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
         if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )
             flood->GenerateFlood();
