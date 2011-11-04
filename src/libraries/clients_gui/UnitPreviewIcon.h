@@ -48,7 +48,7 @@ class UnitPreviewIcon : public Q3HBox
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitPreviewIcon( QWidget* parent, kernel::Controllers& controllers, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, const QString& tooltips );
+             UnitPreviewIcon( QWidget* parent, kernel::Controllers& controllers, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, QString tooltips = QString() );
     virtual ~UnitPreviewIcon();
     //@}
 

@@ -117,43 +117,46 @@ void ADN_Units_GUI::Build()
     builder.AddField<ADN_EditLine_Int>( pRangeGroup, tr( "Sensors" ), vInfosConnectors[eSensorRange], tr( "m" ) );
     builder.AddField<ADN_EditLine_Int>( pRangeGroup, tr( "Equipments" ), vInfosConnectors[eEquipmentRange], tr( "m" ) );
 
-    // Nature
+    // Nature group
     Q3GroupBox* pNatureGroup = new Q3GroupBox( 2, Qt::Horizontal, tr( "Nature" ), pGroup );
-
-    Q3GroupBox* pNatureInternalGroup = new Q3GroupBox( 3, Qt::Vertical, pNatureGroup );
-    //pNatureInternalGroup->setFrameStyle( Q3Frame::NoFrame );
-    Q3GroupBox* subLayout = new Q3GroupBox( 3, Qt::Horizontal, pNatureInternalGroup );
-    subLayout->setInsideMargin( 0 );
-    subLayout->setInsideSpacing( 0 );
-    subLayout->setFrameStyle( Q3Frame::Plain );
-
-    builder.AddEnumField<E_NatureLevel>( subLayout, tr( "Level" ), vInfosConnectors[eNatureLevel], ENT_Tr::ConvertFromNatureLevel );
-
-    // nature atlas type
-    builder.AddEnumField<E_NatureAtlasType>( subLayout, tr( "Atlas" ), vInfosConnectors[eNatureAtlas], ADN_Tr::ConvertFromNatureAtlasType );
-
-    pNatureGui_ = new ADN_Nature_GUI( pNatureInternalGroup );
-    vInfosConnectors[eNatureNature] = &pNatureGui_->GetConnector();
-
-    // Symbol
-    Q3VBox* pSymbolLayout = new Q3VBox( pNatureGroup );
-    QLabel* pSymbolLabel = new QLabel( pSymbolLayout );
-    pSymbolWidget_ = new ADN_SymbolWidget( pSymbolLayout );
-    pSymbolWidget_->makeCurrent();
-    pSymbolWidget_->initializeGL();
-    pSymbolWidget_->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-    pSymbolWidget_->setMinimumSize( 130, 140 );
-    pSymbolWidget_->setMaximumSize( 130, 140 );
-    connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), pSymbolWidget_, SLOT( OnNatureChanged( const QString& ) ) );
-    connect( pSymbolWidget_, SIGNAL( SymbolChanged( const QString& ) ), pSymbolLabel, SLOT( setText( const QString& ) ) );
-
-    QWidget* pHolder = builder.AddFieldHolder( pNatureGroup );
-
-    ADN_UnitSymbolsComboBox* unitSymbolsCombo = builder.AddField< ADN_UnitSymbolsComboBox >( pHolder, tr( "UnitSymbol"), vInfosConnectors[ eNatureSymbol ] );
-
-    unitSymbolsCombo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
-    connect( unitSymbolsCombo, SIGNAL( UnitSymbolChanged( const QString& ) ), pNatureGui_, SLOT( OnUnitSymbolChanged( const QString& ) ) );
-    connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), unitSymbolsCombo, SLOT( OnNatureChanged( const QString& ) ) );
+    {
+        QGroupBox* pNatureInternalGroup = new QGroupBox( pNatureGroup );
+        QGridLayout* pNatureInternalGroupLayout = new QGridLayout( pNatureInternalGroup );
+        pNatureInternalGroupLayout->setMargin( 10 );
+        pNatureInternalGroupLayout->setAlignment( Qt::AlignTop );
+        // Level & Atlas
+        Q3GroupBox* subLayout = new Q3GroupBox( 3, Qt::Horizontal );
+        subLayout->setMargin( 0 );
+        subLayout->setInsideMargin( 0 );
+        subLayout->setFrameStyle( Q3Frame::Plain );
+        builder.AddEnumField<E_NatureLevel>( subLayout, tr( "Level:" ), vInfosConnectors[eNatureLevel], ENT_Tr::ConvertFromNatureLevel );
+        builder.AddEnumField<E_NatureAtlasType>( subLayout, tr( "Atlas:" ), vInfosConnectors[eNatureAtlas], ADN_Tr::ConvertFromNatureAtlasType );
+        // Separator
+        QFrame* separator = new QFrame;
+        separator->setFrameStyle( QFrame::HLine | QFrame::Raised );
+        pNatureInternalGroupLayout->addWidget( separator, 1, 0, 1, 2, Qt::AlignTop );
+        // Nature GUI
+        pNatureInternalGroupLayout->addWidget( subLayout, 0, 0, 1, 2, Qt::AlignTop );
+        pNatureGui_ = new ADN_Nature_GUI( pNatureInternalGroupLayout, 2 );
+        vInfosConnectors[eNatureNature] = &pNatureGui_->GetConnector();
+        // Symbol
+        Q3VBox* pSymbolLayout = new Q3VBox( pNatureGroup );
+        QLabel* pSymbolLabel = new QLabel( pSymbolLayout );
+        pSymbolWidget_ = new ADN_SymbolWidget( pSymbolLayout );
+        pSymbolWidget_->makeCurrent();
+        pSymbolWidget_->initializeGL();
+        pSymbolWidget_->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+        pSymbolWidget_->setMinimumSize( 130, 140 );
+        pSymbolWidget_->setMaximumSize( 130, 140 );
+        connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), pSymbolWidget_, SLOT( OnNatureChanged( const QString& ) ) );
+        connect( pSymbolWidget_, SIGNAL( SymbolChanged( const QString& ) ), pSymbolLabel, SLOT( setText( const QString& ) ) );
+        // Symbol combo
+        QWidget* pHolder = builder.AddFieldHolder( pNatureGroup );
+        ADN_UnitSymbolsComboBox* unitSymbolsCombo = builder.AddField< ADN_UnitSymbolsComboBox >( pHolder, tr( "UnitSymbol"), vInfosConnectors[ eNatureSymbol ] );
+        unitSymbolsCombo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
+        connect( unitSymbolsCombo, SIGNAL( UnitSymbolChanged( const QString& ) ), pNatureGui_, SLOT( OnUnitSymbolChanged( const QString& ) ) );
+        connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), unitSymbolsCombo, SLOT( OnNatureChanged( const QString& ) ) );
+    }
 
     // Commandement
     Q3GroupBox* pCommandGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Command" ), pGroup );

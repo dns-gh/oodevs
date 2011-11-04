@@ -20,12 +20,13 @@ using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: NatureEditionWidget constructor
-// Created: AGE 2006-10-24
+// Created: ABR 2011-11-02
 // -----------------------------------------------------------------------------
-NatureEditionWidget::NatureEditionWidget( QWidget* parent )
-    : Q3VBox( parent )
+NatureEditionWidget::NatureEditionWidget( QGridLayout* layout, int row /*= 0*/, int deep /*= -1*/ )
+    : QWidget( ( layout && layout->parentWidget() ) ? layout->parentWidget() : 0 )
 {
-    rootWidget_ = new NatureEditionCategory( this );
+    assert( deep != 0 );
+    rootWidget_ = new NatureEditionCategory( layout, row, ( deep < 0 ) ? -1 : deep - 1 );
     connect( rootWidget_, SIGNAL( NatureChanged( const QString& ) ), this, SIGNAL( textChanged( const QString& ) ) );
 }
 
@@ -35,7 +36,7 @@ NatureEditionWidget::NatureEditionWidget( QWidget* parent )
 // -----------------------------------------------------------------------------
 NatureEditionWidget::~NatureEditionWidget()
 {
-    delete rootWidget_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -63,4 +64,13 @@ void NatureEditionWidget::setText( const QString& nature )
 void NatureEditionWidget::SetRootSymbolRule( kernel::SymbolRule& root )
 {
     rootWidget_->SetRootSymbolRule( root );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NatureEditionWidget::Clear
+// Created: ABR 2011-11-02
+// -----------------------------------------------------------------------------
+void NatureEditionWidget::Clear()
+{
+    rootWidget_->Clear();
 }

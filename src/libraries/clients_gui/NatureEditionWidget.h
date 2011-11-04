@@ -26,7 +26,7 @@ namespace gui
 */
 // Created: AGE 2006-10-24
 // =============================================================================
-class NatureEditionWidget : public Q3VBox
+class NatureEditionWidget : public QWidget
                           , private boost::noncopyable
 {
     Q_OBJECT;
@@ -34,7 +34,7 @@ class NatureEditionWidget : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             NatureEditionWidget( QWidget* parent );
+             NatureEditionWidget( QGridLayout* parent, int row = 0, int deep = -1 );
     virtual ~NatureEditionWidget();
     //@}
 
@@ -42,6 +42,7 @@ public:
     //@{
     QString text();
     void SetRootSymbolRule( kernel::SymbolRule& root );
+    void Clear();
     //@}
 
 public slots:
@@ -59,6 +60,7 @@ signals:
 private:
     //! @name Member data
     //@{
+    QGridLayout*           layout_;
     NatureEditionCategory* rootWidget_;
     //@}
 };

@@ -33,9 +33,10 @@ namespace gui
     class SymbolIcons;
 
     class UnitPreviewIcon;
+    class NatureEditionWidget;
 }
 
-class GhostModel;
+class GhostSymbolEditor;
 
 // =============================================================================
 /** @class  GhostsPanel
@@ -46,7 +47,6 @@ class GhostModel;
 class GhostsPanel : public gui::InfoPanel_ABC
                   , public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                  , public kernel::SymbolVisitor_ABC
                   , private boost::noncopyable
 {
     Q_OBJECT
@@ -64,68 +64,32 @@ public:
     void Load();
     //@}
 
-private slots:
-    //! @name Helpers
-    //@{
-    void OnCategoryChange();
-    void UpdateSymbol();
-    void IconDragged();
-    void OnSelectionChanged( const kernel::Entity_ABC* );
-    void UpdateWarning();
-    //@}
-
 private:
-    //! @name Types
-    //@{
-    enum E_Status { eLoading = 0, eSwapping = 1, eVisitingWeapon = 2 };
-
-    typedef std::map< QString, std::string >    T_TraductionMap;
-    typedef T_TraductionMap::const_iterator   CIT_TraductionMap;
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
-    void AddChoice( const std::string& name, T_TraductionMap& traductionMap );
-    void ResetCombo( QComboBox& combo, T_TraductionMap& traductionMap );
-    void FillCombo( QComboBox& combo, T_TraductionMap& traductionMap );
-    void Select( QComboBox& combo, const QString& value );
     //@}
 
-    //! @name SymbolVisitor implementation
+private slots:
+    //! @name Helpers
     //@{
-    virtual void StartCategory( const std::string& title );
-    virtual void EndCategory();
-    virtual void AddChoice( kernel::SymbolRule* rule, const std::string& name, const std::string& value );
+    void IconDragged();
+    void UpdateWarning();
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&            controllers_;
-    kernel::SymbolFactory&          symbolsFactory_;
-    E_Status                        status_;
-    kernel::GhostPrototype          protoType_;
+    kernel::Controllers&   controllers_;
+    kernel::SymbolFactory& symbolsFactory_;
+    kernel::GhostPrototype protoType_;
     // Name and type
-    QString                         nameBase_;
-    QLineEdit*                      nameLineEdit_;
-    QString                         typeBase_;
-    QLineEdit*                      typeLineEdit_;
-    // Level
-    QString                         levelBase_;
-    QComboBox*                      levelComboBox_;
-    QStringList                     levelNames_;
-    // Category and weapon
-    QString                         categoryCurrentName_;
-    const kernel::SymbolRule*       categoryRule_;
-    QComboBox*                      categoryComboBox_;
-    T_TraductionMap                 categoryNames_;
-    QComboBox*                      weaponComboBox_;
-    T_TraductionMap                 weaponNames_;
-    // Icon
-    gui::UnitPreviewIcon*           icon_;
+    QLineEdit*             nameLineEdit_;
+    QLineEdit*             typeLineEdit_;
+    // Symbol
+    GhostSymbolEditor*     symbolEditor_;
     // Warning
-    QLabel*                         warningLabel_;
+    QLabel*                warningLabel_;
     //@}
 };
 

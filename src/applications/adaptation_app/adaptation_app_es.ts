@@ -5238,14 +5238,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation>Nature</translation>
     </message>
     <message>
-        <source>Level</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Atlas</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Command</source>
         <translation></translation>
     </message>
@@ -5375,6 +5367,14 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Atlas:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

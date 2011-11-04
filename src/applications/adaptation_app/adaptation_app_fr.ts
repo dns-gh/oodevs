@@ -5249,12 +5249,12 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Nature</translation>
     </message>
     <message>
-        <source>Level</source>
-        <translation>Niveau</translation>
+        <source>Level:</source>
+        <translation>Niveau:</translation>
     </message>
     <message>
-        <source>Atlas</source>
-        <translation>Atlas</translation>
+        <source>Atlas:</source>
+        <translation>Atlas:</translation>
     </message>
     <message>
         <source>Command</source>

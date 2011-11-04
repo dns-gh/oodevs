@@ -35,7 +35,7 @@ using namespace gui;
 // Name: UnitPreviewIcon constructor
 // Created: SBO 2007-10-16
 // -----------------------------------------------------------------------------
-UnitPreviewIcon::UnitPreviewIcon( QWidget* parent, Controllers& controllers, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, const QString& tooltips )
+UnitPreviewIcon::UnitPreviewIcon( QWidget* parent, Controllers& controllers, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, QString tooltips /*= QString()*/ )
     : Q3HBox          ( parent )
     , controllers_   ( controllers )
     , icons_         ( icons )
@@ -47,7 +47,8 @@ UnitPreviewIcon::UnitPreviewIcon( QWidget* parent, Controllers& controllers, Sym
     layout()->setAlignment( Qt::AlignCenter | Qt::AlignHCenter );
     icon_ = new QLabel( this );
     icon_->setMargin( 10 );
-    QToolTip::add( icon_, tooltips );
+    if( !tooltips.isEmpty() )
+        QToolTip::add( icon_, tooltips );
     UpdateSymbol();
     controllers_.Register( *this );
 }

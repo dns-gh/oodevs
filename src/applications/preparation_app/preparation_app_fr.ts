@@ -579,6 +579,36 @@
     </message>
 </context>
 <context>
+    <name>GhostSymbolDialog</name>
+    <message>
+        <source>Phantom symbol editor</source>
+        <translation>Editeur de symbole de fantôme</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
+    <name>GhostSymbolEditor</name>
+    <message>
+        <source>Level:</source>
+        <translation>Niveau:</translation>
+    </message>
+    <message>
+        <source>Select a parent automat or formation</source>
+        <translation>Selectionner un automate ou une formation parent</translation>
+    </message>
+    <message>
+        <source>Drag and drop symbol to map to create a new phantom.</source>
+        <translation>Glissez/déposez le symbole sur la carte pour créer un nouveau fantôme.</translation>
+    </message>
+</context>
+<context>
     <name>GhostsPanel</name>
     <message>
         <source>Phantom</source>
@@ -591,26 +621,6 @@
     <message>
         <source>Type:</source>
         <translation>Type:</translation>
-    </message>
-    <message>
-        <source>Level:</source>
-        <translation>Niveau:</translation>
-    </message>
-    <message>
-        <source>Select a parent automat or formation</source>
-        <translation>Selectionner un automate ou une formation parent</translation>
-    </message>
-    <message>
-        <source>Category:</source>
-        <translation>Categorie:</translation>
-    </message>
-    <message>
-        <source>Weapon:</source>
-        <translation>Armes:</translation>
-    </message>
-    <message>
-        <source>Drag and drop symbol to map to create a new phantom.</source>
-        <translation>Glissez/déposez le symbole sur la carte pour créer un nouveau fantôme.</translation>
     </message>
     <message>
         <source>Enter phantom name here</source>
