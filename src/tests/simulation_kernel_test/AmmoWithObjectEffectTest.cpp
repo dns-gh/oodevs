@@ -51,7 +51,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
 {
-    WorldInitialize( "Paris" ); // $$$$ because used in asn and in destructor of action!!!
+    WorldInitialize( "worldwide/Paris" ); // $$$$ because used in asn and in destructor of action!!!
     MockNET_Publisher_ABC mockPublisher;
 
     {
