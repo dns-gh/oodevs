@@ -116,6 +116,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\Formation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireSender.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\InteractionBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\InteractionsFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\MissionResolver.cpp" />
@@ -142,7 +143,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transportation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationFacade.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationInteractionBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationOfferer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationRequester.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transporters.cpp" />
@@ -201,6 +201,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\Formation.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireSender.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionBuilder.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Interactions.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionsFacade.h" />
@@ -240,7 +241,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Transportation.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationFacade.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationInteractionBuilder.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationOfferer.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationRequester.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportedUnitsVisitor_ABC.h" />

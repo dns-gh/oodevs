@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "TransportationInteractionBuilder.h"
+#include "InteractionBuilder.h"
 #include "Federate_ABC.h"
 #include "Interactions.h"
 #include "SerializationTools.h"
@@ -31,28 +31,28 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder constructor
+// Name: InteractionBuilder constructor
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-TransportationInteractionBuilder::TransportationInteractionBuilder()
+InteractionBuilder::InteractionBuilder()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder destructor
+// Name: InteractionBuilder destructor
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-TransportationInteractionBuilder::~TransportationInteractionBuilder()
+InteractionBuilder::~InteractionBuilder()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder::Build
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnRequestConvoy >& interaction ) const
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnRequestConvoy >& interaction ) const
 {
     RegisterNetnService( interaction );
     interaction.Register( "RequestTimeOut", ::hla::CreateParameter( &interactions::NetnRequestConvoy::requestTimeOut ) );
@@ -61,10 +61,10 @@ void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Int
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder::Build
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnOfferConvoy >& interaction ) const
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnOfferConvoy >& interaction ) const
 {
     interaction.Register( "IsOffering"        , ::hla::CreateParameter( &interactions::NetnOfferConvoy::isOffering ) );
     interaction.Register( "RequestTimeOut"    , ::hla::CreateParameter( &interactions::NetnOfferConvoy::requestTimeOut ) );
@@ -76,20 +76,20 @@ void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Int
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder::Build
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnAcceptOffer >& interaction ) const
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnAcceptOffer >& interaction ) const
 {
     RegisterNetnService( interaction );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_AcceptOffer" ), interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder::Build
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnRejectOfferConvoy >& interaction ) const
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnRejectOfferConvoy >& interaction ) const
 {
     RegisterNetnService( interaction );
     interaction.Register( "Reason", ::hla::CreateParameter( &interactions::NetnRejectOfferConvoy::reason ) );
@@ -97,10 +97,10 @@ void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Int
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder::Build
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnCancelConvoy >& interaction ) const
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnCancelConvoy >& interaction ) const
 {
     RegisterNetnService( interaction );
     interaction.Register( "Reason", ::hla::CreateParameter( &interactions::NetnCancelConvoy::reason ) );
@@ -108,30 +108,30 @@ void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Int
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder::Build
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnReadyToReceiveService >& interaction ) const
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnReadyToReceiveService >& interaction ) const
 {
     RegisterNetnService( interaction );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_ReadyToReceiveService" ), interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder::Build
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnServiceStarted >& interaction ) const
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnServiceStarted >& interaction ) const
 {
     RegisterNetnService( interaction );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_ServiceStarted" ), interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder::Build
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnConvoyEmbarkmentStatus >& interaction ) const
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnConvoyEmbarkmentStatus >& interaction ) const
 {
     RegisterNetnService( interaction );
     interaction.Register( "ListOfObjectEmbarked"   , ::hla::CreateParameter( &interactions::NetnConvoyEmbarkmentStatus::listOfObjectEmbarked ) );
@@ -140,10 +140,10 @@ void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Int
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder::Build
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnConvoyDisembarkmentStatus >& interaction ) const
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnConvoyDisembarkmentStatus >& interaction ) const
 {
     RegisterNetnService( interaction );
     interaction.Register( "ListOfObjectDisembarked", ::hla::CreateParameter( &interactions::NetnConvoyDisembarkmentStatus::listOfObjectDisembarked ) );
@@ -152,10 +152,10 @@ void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Int
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder::Build
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >& interaction ) const
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >& interaction ) const
 {
     RegisterNetnService( interaction );
     interaction.Register( "ListOfEmbarkedObjectDestroyed", ::hla::CreateParameter( &interactions::NetnConvoyDestroyedEntities::listOfEmbarkedObjectDestroyed ) );
@@ -163,20 +163,20 @@ void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Int
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder::Build
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnServiceComplete >& interaction ) const
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnServiceComplete >& interaction ) const
 {
     RegisterNetnService( interaction );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_ServiceComplete" ), interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationInteractionBuilder::Build
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationInteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnServiceReceived >& interaction ) const
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnServiceReceived >& interaction ) const
 {
     RegisterNetnService( interaction );
     federate.Register( ::hla::InteractionIdentifier( "NETN_Service.NETN_ServiceReceived" ), interaction, true, true );

@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_test_pch.h"
-#include "hla_plugin/TransportationInteractionBuilder.h"
+#include "hla_plugin/InteractionBuilder.h"
 #include "hla_plugin/Interactions.h"
 #include "MockFederate.h"
 #include "MockInteractionHandler.h"
@@ -40,7 +40,7 @@ namespace
             Interaction message;
             interaction.Send( message );
         }
-        TransportationInteractionBuilder builder;
+        InteractionBuilder builder;
     };
 }
 

@@ -38,11 +38,14 @@
     <Filter Include="Source Files\Resolvers">
       <UniqueIdentifier>{d197b6f9-447b-4645-aeb5-a591705436eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Transportation">
-      <UniqueIdentifier>{0c58d9fa-3e3a-4144-a91c-fadb18fc4654}</UniqueIdentifier>
+    <Filter Include="Source Files\Interactions">
+      <UniqueIdentifier>{bfdcbe5f-5de2-4f26-822b-57761d69a57b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Detonation">
+    <Filter Include="Source Files\Interactions\Detonation">
       <UniqueIdentifier>{105e53cd-1abd-4556-9c60-3f29721e4bc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Interactions\Transportation">
+      <UniqueIdentifier>{0c58d9fa-3e3a-4144-a91c-fadb18fc4654}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -110,7 +113,7 @@
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionDetonation.cpp">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp">
       <Filter>Source Files\Classes\netn</Filter>
@@ -152,10 +155,10 @@
       <Filter>Source Files\Types</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireSender.cpp">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireSender.cpp">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.cpp">
       <Filter>Source Files\Resolvers</Filter>
@@ -167,16 +170,16 @@
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.cpp">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.cpp">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\InteractionsFacade.cpp">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.cpp">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
@@ -215,7 +218,7 @@
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationFacade.cpp">
-      <Filter>Source Files\Transportation</Filter>
+      <Filter>Source Files\Interactions\Transportation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\MissionResolver.cpp">
       <Filter>Source Files\Resolvers</Filter>
@@ -224,7 +227,7 @@
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transporters.cpp">
-      <Filter>Source Files\Transportation</Filter>
+      <Filter>Source Files\Interactions\Transportation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\SideChecker.cpp">
       <Filter>Source Files\Resolvers</Filter>
@@ -244,14 +247,14 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAircraft.cpp">
       <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationInteractionBuilder.cpp">
-      <Filter>Source Files\Transportation</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationOfferer.cpp">
-      <Filter>Source Files\Transportation</Filter>
+      <Filter>Source Files\Interactions\Transportation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationRequester.cpp">
-      <Filter>Source Files\Transportation</Filter>
+      <Filter>Source Files\Interactions\Transportation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\InteractionBuilder.cpp">
+      <Filter>Source Files\Interactions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -349,7 +352,7 @@
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionDetonation.h">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h">
       <Filter>Source Files\Classes\netn</Filter>
@@ -415,16 +418,13 @@
       <Filter>Source Files\Types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireSender.h">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireSender.h">
-      <Filter>Source Files\Detonation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\Interactions.h">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender_ABC.h">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
@@ -445,7 +445,7 @@
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.h">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.h">
       <Filter>Source Files\Resolvers</Filter>
@@ -454,10 +454,10 @@
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.h">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionsFacade.h">
-      <Filter>Source Files\Detonation</Filter>
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypes_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
@@ -508,10 +508,10 @@
       <Filter>Source Files\Types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportedUnits_ABC.h">
-      <Filter>Source Files\Transportation</Filter>
+      <Filter>Source Files\Interactions\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportedUnitsVisitor_ABC.h">
-      <Filter>Source Files\Transportation</Filter>
+      <Filter>Source Files\Interactions\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\Subordinates_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
@@ -532,7 +532,7 @@
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationFacade.h">
-      <Filter>Source Files\Transportation</Filter>
+      <Filter>Source Files\Interactions\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver.h">
       <Filter>Source Files\Resolvers</Filter>
@@ -547,10 +547,10 @@
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\Transporters.h">
-      <Filter>Source Files\Transportation</Filter>
+      <Filter>Source Files\Interactions\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\Transporters_ABC.h">
-      <Filter>Source Files\Transportation</Filter>
+      <Filter>Source Files\Interactions\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\SideChecker.h">
       <Filter>Source Files\Resolvers</Filter>
@@ -573,14 +573,17 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAircraft.h">
       <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationInteractionBuilder.h">
-      <Filter>Source Files\Transportation</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationOfferer.h">
-      <Filter>Source Files\Transportation</Filter>
+      <Filter>Source Files\Interactions\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationRequester.h">
-      <Filter>Source Files\Transportation</Filter>
+      <Filter>Source Files\Interactions\Transportation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Interactions.h">
+      <Filter>Source Files\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionBuilder.h">
+      <Filter>Source Files\Interactions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

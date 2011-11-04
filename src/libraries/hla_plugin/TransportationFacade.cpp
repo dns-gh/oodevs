@@ -9,7 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "TransportationFacade.h"
-#include "TransportationInteractionBuilder.h"
+#include "InteractionBuilder.h"
 #include "TransportationRequester.h"
 #include "TransportationOfferer.h"
 #include <xeumeuleu/xml.hpp>
@@ -26,7 +26,7 @@ namespace
         InteractionSender( ::hla::InteractionNotification_ABC< T >& receiver, Federate_ABC& federate )
             : interaction_( new ::hla::Interaction< T >( receiver ) )
         {
-            TransportationInteractionBuilder builder;
+            InteractionBuilder builder;
             builder.Build( federate, *interaction_ );
         }
         virtual ~InteractionSender() {}

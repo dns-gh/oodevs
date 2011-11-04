@@ -37,18 +37,18 @@ namespace interactions
     class Federate_ABC;
 
 // =============================================================================
-/** @class  TransportationInteractionBuilder
+/** @class  InteractionBuilder
     @brief  Transportation interaction builder
 */
 // Created: SLI 2011-10-24
 // =============================================================================
-class TransportationInteractionBuilder
+class InteractionBuilder
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TransportationInteractionBuilder();
-    virtual ~TransportationInteractionBuilder();
+             InteractionBuilder();
+    virtual ~InteractionBuilder();
     //@}
 
     //! @name Operations
