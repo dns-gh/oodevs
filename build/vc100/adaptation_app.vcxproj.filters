@@ -1303,6 +1303,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DateEdit.cpp">
       <Filter>Source Files\Common widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\UnitsFilter.cpp">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -2380,6 +2383,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_DateEdit.h">
       <Filter>Source Files\Common widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\UnitsFilter.h">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
