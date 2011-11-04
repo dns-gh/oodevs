@@ -67,7 +67,7 @@ namespace hla
     class Subordinates_ABC;
     class Transporters_ABC;
     class SimulationFacade;
-    class InteractionsFacade;
+    class DetonationFacade;
     class TransportationFacade;
 
 // =============================================================================
@@ -130,7 +130,7 @@ private:
     std::auto_ptr< FederateFacade > pFederate_;
     std::auto_ptr< SimulationFacade > pSimulationFacade_;
     std::auto_ptr< RemoteAgentResolver_ABC > pRemoteAgentResolver_;
-    std::auto_ptr< InteractionsFacade > pInteractionsFacade_;
+    std::auto_ptr< DetonationFacade > pDetonationFacade_;
     std::auto_ptr< SideChecker_ABC > pSideChecker_;
     std::auto_ptr< Transporters_ABC > pTransporters_;
     std::auto_ptr< TransportationFacade > pTransportationFacade_;

@@ -23,7 +23,7 @@
 #include "LocalAgentResolver.h"
 #include "RemoteAgentResolver.h"
 #include "SimulationFacade.h"
-#include "InteractionsFacade.h"
+#include "DetonationFacade.h"
 #include "ComponentTypes.h"
 #include "TransportationFacade.h"
 #include "CallsignResolver.h"
@@ -103,7 +103,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pFederate_                  ( 0 )
     , pSimulationFacade_          ( 0 )
     , pRemoteAgentResolver_       ( 0 )
-    , pInteractionsFacade_        ( 0 )
+    , pDetonationFacade_          ( 0 )
     , pSideChecker_               ( 0 )
     , pTransporters_              ( 0 )
     , pTransportationFacade_      ( 0 )
@@ -139,7 +139,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
                                                   config_.BuildPluginDirectory( "hla" ), *pCallsignResolver_ ) );
             pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, simulationPublisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
-            pInteractionsFacade_.reset( new InteractionsFacade( *pFederate_, simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ) ) );
+            pDetonationFacade_.reset( new DetonationFacade( *pFederate_, simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ) ) );
             pSideChecker_.reset( new SideChecker( *pSubject_, *pFederate_, *pRemoteAgentResolver_ ) );
             pTransporters_.reset( new Transporters( *pSubject_, *pCallsignResolver_, *pSideChecker_, *pAutomatChecker_ ) );
             pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pFederate_, *pContextFactory_, *pTransporters_, simulationPublisher_, clientsPublisher_ ) : 0 );

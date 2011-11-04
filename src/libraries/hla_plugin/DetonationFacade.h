@@ -49,21 +49,21 @@ namespace interactions
 }
 
 // =============================================================================
-/** @class  InteractionsFacade
+/** @class  DetonationFacade
     @brief  Interactions facade
 */
 // Created: SLI 2011-09-27
 // =============================================================================
-class InteractionsFacade : private ::hla::InteractionNotification_ABC< interactions::MunitionDetonation >
+class DetonationFacade : private ::hla::InteractionNotification_ABC< interactions::MunitionDetonation >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InteractionsFacade( Federate_ABC& federate, dispatcher::SimulationPublisher_ABC& publisher, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
+             DetonationFacade( Federate_ABC& federate, dispatcher::SimulationPublisher_ABC& publisher, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                  const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
                                  const ContextFactory_ABC& contextFactory, const MunitionTypeResolver_ABC& munitionTypeResolver,
                                  RemoteAgentSubject_ABC& remoteAgentSubject, const std::string& federateName );
-    virtual ~InteractionsFacade();
+    virtual ~DetonationFacade();
     //@}
 
 private:

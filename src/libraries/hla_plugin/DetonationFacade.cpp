@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "InteractionsFacade.h"
+#include "DetonationFacade.h"
 #include "Interactions.h"
 #include "InteractionSender_ABC.h"
 #include "InteractionBuilder.h"
@@ -43,10 +43,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: InteractionsFacade constructor
+// Name: DetonationFacade constructor
 // Created: SLI 2011-09-27
 // -----------------------------------------------------------------------------
-InteractionsFacade::InteractionsFacade( Federate_ABC& federate, dispatcher::SimulationPublisher_ABC& publisher, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
+DetonationFacade::DetonationFacade( Federate_ABC& federate, dispatcher::SimulationPublisher_ABC& publisher, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                         const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
                                         const ContextFactory_ABC& contextFactory, const MunitionTypeResolver_ABC& munitionTypeResolver,
                                         RemoteAgentSubject_ABC& remoteAgentSubject, const std::string& federateName )
@@ -60,19 +60,19 @@ InteractionsFacade::InteractionsFacade( Federate_ABC& federate, dispatcher::Simu
 }
 
 // -----------------------------------------------------------------------------
-// Name: InteractionsFacade destructor
+// Name: DetonationFacade destructor
 // Created: SLI 2011-09-27
 // -----------------------------------------------------------------------------
-InteractionsFacade::~InteractionsFacade()
+DetonationFacade::~DetonationFacade()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: InteractionsFacade::Receive
+// Name: DetonationFacade::Receive
 // Created: SLI 2011-09-27
 // -----------------------------------------------------------------------------
-void InteractionsFacade::Receive( interactions::MunitionDetonation& interaction )
+void DetonationFacade::Receive( interactions::MunitionDetonation& interaction )
 {
     pDirectFireReceiver_->Receive( interaction );
     pIndirectFireReceiver_->Receive( interaction );

@@ -175,9 +175,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.cpp">
       <Filter>Source Files\Interactions\Detonation</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\InteractionsFacade.cpp">
-      <Filter>Source Files\Interactions\Detonation</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.cpp">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClCompile>
@@ -252,6 +249,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\InteractionBuilder.cpp">
       <Filter>Source Files\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\DetonationFacade.cpp">
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -450,9 +450,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.h">
       <Filter>Source Files\Interactions\Detonation</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionsFacade.h">
-      <Filter>Source Files\Interactions\Detonation</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypes_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
@@ -578,6 +575,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionBuilder.h">
       <Filter>Source Files\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DetonationFacade.h">
+      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
