@@ -2763,8 +2763,8 @@
                   <entry key="TypeSIOC" value="6"/>
                 </extensions>
               </formation>
-              <automat engaged="true" id="4211812" knowledge-group="2" name="MOA1.30BDE" type="TRANS - Section(s) NTI">
-                <unit command-post="true" id="4211813" name="PC" position="29TNF3418666230" type="TRANS - PC">
+              <automat engaged="true" id="4211812" knowledge-group="2" name="MOA1.30BDE" type="TRANS . Section(s) NTI">
+                <unit command-post="true" id="4211813" name="PC" position="29TNF3418666230" type="TRANS . PC">
                   <extensions>
                     <entry key="IdCdB" value=""/>
                     <entry key="IndOpe" value=""/>
@@ -2782,8 +2782,8 @@
                   <entry key="NomLong" value="MOA1.30BDE.FR"/>
                 </extensions>
               </automat>
-              <automat engaged="true" id="4211814" knowledge-group="2" name="MOA2.30BDE" type="TRANS - Section(s) NTI">
-                <unit command-post="true" id="4211815" name="PC" position="29TNF3529566486" type="TRANS - PC">
+              <automat engaged="true" id="4211814" knowledge-group="2" name="MOA2.30BDE" type="TRANS . Section(s) NTI">
+                <unit command-post="true" id="4211815" name="PC" position="29TNF3529566486" type="TRANS . PC">
                   <extensions>
                     <entry key="IdCdB" value=""/>
                     <entry key="IndOpe" value=""/>
@@ -2801,8 +2801,8 @@
                   <entry key="NomLong" value="MOA2.30BDE.FR"/>
                 </extensions>
               </automat>
-              <automat engaged="true" id="4211816" knowledge-group="2" name="1.30CCT" type="TRANS - Section RAC3 BIA">
-                <unit command-post="true" id="4211817" name="CDT" position="29TNF2706565576" type="TRANS - PC RAC3 BIA">
+              <automat engaged="true" id="4211816" knowledge-group="2" name="1.30CCT" type="TRANS . Section RAC3 BIA">
+                <unit command-post="true" id="4211817" name="CDT" position="29TNF2706565576" type="TRANS . PC RAC3 BIA">
                   <extensions>
                     <entry key="IdCdB" value=""/>
                     <entry key="IndOpe" value=""/>
@@ -2814,7 +2814,7 @@
                     <entry key="TypeSIOC" value="6"/>
                   </extensions>
                 </unit>
-                <unit command-post="false" id="4211818" name="RAC" position="29TNF2672565646" type="TRANS - Groupe RAC3 BIA">
+                <unit command-post="false" id="4211818" name="RAC" position="29TNF2672565646" type="TRANS . Groupe RAC3 BIA">
                   <extensions>
                     <entry key="IdCdB" value=""/>
                     <entry key="IndOpe" value=""/>
@@ -2826,7 +2826,7 @@
                     <entry key="TypeSIOC" value="6"/>
                   </extensions>
                 </unit>
-                <unit command-post="false" id="4211819" name="LAN" position="29TNF2695565896" type="TRANS - Groupe LAN">
+                <unit command-post="false" id="4211819" name="LAN" position="29TNF2695565896" type="TRANS . Groupe LAN">
                   <extensions>
                     <entry key="IdCdB" value=""/>
                     <entry key="IndOpe" value=""/>
@@ -2844,8 +2844,8 @@
                   <entry key="NomLong" value="1.30CCT.FR"/>
                 </extensions>
               </automat>
-              <automat engaged="true" id="4211820" knowledge-group="2" name="2.30CCT" type="TRANS - Section RAC3 BIA">
-                <unit command-post="true" id="4211821" name="CDT" position="29TNF2759465627" type="TRANS - PC RAC3 BIA">
+              <automat engaged="true" id="4211820" knowledge-group="2" name="2.30CCT" type="TRANS . Section RAC3 BIA">
+                <unit command-post="true" id="4211821" name="CDT" position="29TNF2759465627" type="TRANS . PC RAC3 BIA">
                   <extensions>
                     <entry key="IdCdB" value=""/>
                     <entry key="IndOpe" value=""/>
@@ -2857,7 +2857,7 @@
                     <entry key="TypeSIOC" value="6"/>
                   </extensions>
                 </unit>
-                <unit command-post="false" id="4211822" name="RAC" position="29TNF2759465627" type="TRANS - Groupe RAC3 BIA">
+                <unit command-post="false" id="4211822" name="RAC" position="29TNF2759465627" type="TRANS . Groupe RAC3 BIA">
                   <extensions>
                     <entry key="IdCdB" value=""/>
                     <entry key="IndOpe" value=""/>
@@ -2869,7 +2869,7 @@
                     <entry key="TypeSIOC" value="6"/>
                   </extensions>
                 </unit>
-                <unit command-post="false" id="4211823" name="LAN" position="29TNF2759465627" type="TRANS - Groupe LAN">
+                <unit command-post="false" id="4211823" name="LAN" position="29TNF2759465627" type="TRANS . Groupe LAN">
                   <extensions>
                     <entry key="IdCdB" value=""/>
                     <entry key="IndOpe" value=""/>
@@ -6950,4 +6950,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0620003411" -->
+<!-- signature="4146510036" -->

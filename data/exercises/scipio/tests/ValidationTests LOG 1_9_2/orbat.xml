@@ -34,8 +34,8 @@
       </objects>
       <tactical>
         <formation id="897" level="xxxx" logistic-level="logistic-base" name="Formation [897]">
-          <automat engaged="true" id="899" knowledge-group="4" name="LOG - PC BIA [899]" type="LOG - PC BIA">
-            <unit command-post="true" id="900" name="TRANS - PC BIA" position="30UXU3370539922" type="TRANS - PC BIA"/>
+          <automat engaged="true" id="899" knowledge-group="4" name="LOG - PC BIA [899]" type="LOG . PC BIA">
+            <unit command-post="true" id="900" name="TRANS - PC BIA" position="30UXU3370539922" type="TRANS . PC BIA"/>
           </automat>
           <automat engaged="true" id="901" knowledge-group="4" name="LOG . Secteur appro (CAP) [901]" type="LOG . Secteur appro (CAP)">
             <unit command-post="true" id="902" name="LOG . PC LOG BLD Secteur Ravitaillement" position="30UXU4168639210" type="LOG . PC LOG BLD Secteur Ravitaillement"/>

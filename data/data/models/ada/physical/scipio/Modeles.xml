@@ -3180,34 +3180,6 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="PCBIA" file="Appui\Trans\Pions\Model.bms" masalife="false" name="PC BIA">
-      <missions>
-        <mission name="PION TRANS Etablir Gerer Liaison"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Faire Mouvement"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
     <unit dia-type="SectionTRANS" file="Appui\Trans\Pions\Model.bms" masalife="false" name="Section TRANS">
       <missions>
         <mission name="PION TRANS Etablir Gerer Liaison"/>
@@ -9841,4 +9813,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0715680808" -->
+<!-- signature="0142510508" -->
