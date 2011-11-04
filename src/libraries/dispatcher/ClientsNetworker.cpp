@@ -256,6 +256,11 @@ void ClientsNetworker::Register( const std::string& link, MessageSender_ABC& sen
 void ClientsNetworker::Unregister( const std::string& link )
 {
     MT_LOG_INFO_MSG( "Publisher unregistered for client '" << link << "'" );
-    clients_.erase( link );
+    T_Clients::iterator it = clients_.find( link );
+    if( it != clients_.end() && it->second )
+    {
+        plugin_.NotifyClientLeft( *it->second );
+        clients_.erase( it );
+    }
     MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }
