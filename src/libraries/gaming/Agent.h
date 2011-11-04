@@ -52,7 +52,6 @@ public:
     //@{
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     virtual const kernel::AgentType& GetType() const;
-    virtual bool IsCommandPost() const;
     //@}
 
 private:
@@ -74,7 +73,6 @@ private:
     //@{
     kernel::AgentType& type_;
     mutable std::string symbol_;
-    bool isPc_;
     //@}
 };
 

@@ -90,6 +90,7 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\gaming\CommandPostAttributes.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\FloodProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\gaming_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -160,7 +161,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\Lives.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\ObjectDetections.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Paths.cpp" />
-    <ClCompile Include="..\..\src\libraries\gaming\PcAttributes.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Reinforcements.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Reports.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Speeds.cpp" />
@@ -316,6 +316,7 @@
     <ClCompile Include="..\..\src\libraries\gaming\MeteoModel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\gaming\CommandPostAttributes.h" />
     <ClInclude Include="..\..\src\libraries\gaming\FloodProxy.h" />
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h" />
     <ClInclude Include="..\..\src\libraries\gaming\HumanState.h" />
@@ -386,7 +387,6 @@
     <ClInclude Include="..\..\src\libraries\gaming\Lives.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ObjectDetections.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Paths.h" />
-    <ClInclude Include="..\..\src\libraries\gaming\PcAttributes.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Reinforcements.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Reports.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Speeds.h" />

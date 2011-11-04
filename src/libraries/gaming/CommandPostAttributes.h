@@ -10,11 +10,21 @@
 #ifndef __CommandPostAttributes_h_
 #define __CommandPostAttributes_h_
 
-#include "Extension_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
+#include "tools/Resolver_ABC.h"
+#include <boost/noncopyable.hpp>
+
+namespace sword
+{
+    class UnitCreation;
+}
 
 namespace kernel
 {
-    class Agent_ABC;
+    class AgentType;
+    class Entity_ABC;
+}
 
 // =============================================================================
 /** @class  CommandPostAttributes
@@ -22,34 +32,35 @@ namespace kernel
 */
 // Created: SBO 2006-11-30
 // =============================================================================
-class CommandPostAttributes : public Extension_ABC
+class CommandPostAttributes : public kernel::Extension_ABC
+                            , public kernel::Drawable_ABC
+                            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CommandPostAttributes( const Agent_ABC& holder );
+             CommandPostAttributes( kernel::Entity_ABC& entity, const sword::UnitCreation& message,
+                                    const tools::Resolver_ABC< kernel::AgentType >& resolver );
     virtual ~CommandPostAttributes();
     //@}
 
     //! @name Operations
     //@{
-    bool IsCommandPost() const;
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Accessors
     //@{
-    CommandPostAttributes( const CommandPostAttributes& );            //!< Copy constructor
-    CommandPostAttributes& operator=( const CommandPostAttributes& ); //!< Assignment operator
+    bool IsCommandPost() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const Agent_ABC& holder_;
+    kernel::Entity_ABC& entity_;
+    const kernel::AgentType& type_;
+    bool commandPost_;
     //@}
 };
-
-}
 
 #endif // __CommandPostAttributes_h_

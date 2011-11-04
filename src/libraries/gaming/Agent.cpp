@@ -29,9 +29,7 @@ using namespace kernel;
 Agent::Agent( const sword::UnitCreation& message, Controller& controller, const tools::Resolver_ABC< AgentType >& resolver )
     : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ) )
     , type_( resolver.Get( message.type().id() ) )
-    , isPc_ ( false )
 {
-    isPc_ = ( message.pc() != 0 );
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.unit().id() );
     RegisterSelf( *this );
@@ -59,8 +57,6 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
             InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where, -1.f );
         tools.DrawApp6Symbol( type_.GetLevelSymbol(), where, -1.f );
-        if( isPc_ )
-            tools.DrawApp6Symbol( type_.GetHQSymbol(), where, -1.f );
     }
 }
 
@@ -83,15 +79,6 @@ void Agent::InitializeSymbol() const
 const AgentType& Agent::GetType() const
 {
     return type_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::IsCommandPost
-// Created: SBO 2006-11-30
-// -----------------------------------------------------------------------------
-bool Agent::IsCommandPost() const
-{
-    return isPc_;
 }
 
 // -----------------------------------------------------------------------------

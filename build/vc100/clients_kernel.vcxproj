@@ -196,7 +196,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Viewport_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Drawer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\EntityResolverFacade.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\CommandPostAttributes.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\DictionaryExtensions.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\MergingTacticalHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\ObjectHierarchies.cpp" />
@@ -363,7 +362,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Aggregatable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Architecture_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Color_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\CommunicationHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Creatable.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryExtensions.h" />

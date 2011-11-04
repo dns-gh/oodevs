@@ -9,11 +9,22 @@
 
 #include "preparation_pch.h"
 #include "AgentTemplateElement.h"
+#include "AgentsModel.h"
+#include "CommandPostAttributes.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AgentType.h"
-#include "AgentsModel.h"
 #include <xeumeuleu/xml.hpp>
+
+namespace
+{
+    bool IsCommandPost( const kernel::Entity_ABC& entity )
+    {
+        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
+            return pAttributes->IsCommandPost();
+        return false;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: AgentTemplateElement constructor
@@ -21,9 +32,9 @@
 // -----------------------------------------------------------------------------
 AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const kernel::Agent_ABC& agent )
     : agents_( agents )
-    , type_( agent.GetType() )
-    , cp_  ( agent.IsCommandPost() )
-    , name_( agent.GetName() )
+    , type_  ( agent.GetType() )
+    , cp_    ( IsCommandPost( agent ) )
+    , name_  ( agent.GetName() )
 {
     // NOTHING
 }

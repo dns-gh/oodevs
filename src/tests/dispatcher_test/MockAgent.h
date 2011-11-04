@@ -31,7 +31,6 @@ MOCK_BASE_CLASS( MockAgent, dispatcher::Agent_ABC )
 
     // kernel::Agent_ABC
     MOCK_METHOD( GetType, 0 );
-    MOCK_METHOD( IsCommandPost, 0 );
 
     // dispatcher::Sendable< kernel::Agent_ABC >
     MOCK_METHOD( SendCreation, 1 );

@@ -23,7 +23,6 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "protocol/Protocol.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "PcAttributes.h"
 #include <boost/foreach.hpp>
 
 using namespace geometry;

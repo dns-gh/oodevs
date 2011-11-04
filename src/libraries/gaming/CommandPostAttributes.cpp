@@ -1,0 +1,68 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "gaming_pch.h"
+#include "CommandPostAttributes.h"
+#include "LogisticLinks.h"
+#include "DebugPoints.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "protocol/Protocol.h"
+
+// -----------------------------------------------------------------------------
+// Name: CommandPostAttributes constructor
+// Created: SBO 2006-11-30
+// -----------------------------------------------------------------------------
+CommandPostAttributes::CommandPostAttributes( kernel::Entity_ABC& entity, const sword::UnitCreation& message,
+                                              const tools::Resolver_ABC< kernel::AgentType >& resolver )
+    : entity_     ( entity )
+    , type_       ( resolver.Get( message.type().id() ) )
+    , commandPost_( false )
+{
+    commandPost_ = ( message.pc() != 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommandPostAttributes destructor
+// Created: SBO 2006-11-30
+// -----------------------------------------------------------------------------
+CommandPostAttributes::~CommandPostAttributes()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommandPostAttributes::IsCommandPost
+// Created: SBO 2006-11-30
+// -----------------------------------------------------------------------------
+bool CommandPostAttributes::IsCommandPost() const
+{
+    return commandPost_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommandPostAttributes::Draw
+// Created: LGY 2011-11-03
+// -----------------------------------------------------------------------------
+void CommandPostAttributes::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    if( commandPost_ )
+    {
+        if( viewport.IsHotpointVisible() )
+            tools.DrawApp6Symbol( type_.GetHQSymbol(), where, -1.f );
+
+        const kernel::Entity_ABC& automata = entity_.Get< kernel::TacticalHierarchies >().GetUp();
+        if( const LogisticLinks* links = automata.Retrieve< LogisticLinks >() )
+            links->Draw( where, viewport, tools );
+        if( const DebugPoints* points = automata.Retrieve< DebugPoints >() )
+            points->Draw( where, viewport, tools );
+    }
+}

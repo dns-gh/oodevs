@@ -90,7 +90,7 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost, const QString& name )
 {
-    Agent* result = new Agent( type, controllers_.controller_, idManager_, commandPost );
+    Agent* result = new Agent( type, controllers_.controller_, idManager_ );
     if( !name.isEmpty() )
         result->Rename( name );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
@@ -102,8 +102,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
-    if( commandPost )
-        result->Attach( *new CommandPostAttributes( *result ) );
+    result->Attach( *new CommandPostAttributes( *result, type, dico, commandPost ) );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
     result->Polish();
     return result;
@@ -231,8 +230,7 @@ Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new InitialState( xis, static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( xis, *result, controllers_, model_, dico, tools::translate( "Affinities", "Affinities" ) ) );
-    if( result->IsCommandPost() )
-        result->Attach( *new CommandPostAttributes( *result ) );
+    result->Attach( *new CommandPostAttributes( xis, *result, *type, dico ) );
     if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
@@ -314,9 +312,7 @@ Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, Team_ABC& parent 
 kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel::AgentType& type, const geometry::Point2f position )
 {
     assert( ghost.GetGhostType() == eGhostType_Agent );
-    bool commandPost = false;
-
-    Agent* result = new Agent( type, controllers_.controller_, idManager_, commandPost );
+    Agent* result = new Agent( type, controllers_.controller_, idManager_ );
     result->Rename( ghost.GetName() );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dico ) );
@@ -335,8 +331,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
     if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
-    if( commandPost )
-        result->Attach( *new CommandPostAttributes( *result ) );
+    result->Attach( *new CommandPostAttributes( *result, type, dico ) );
     result->Attach< kernel::Color_ABC >( *new Color( ghost ) );
     result->Polish();
     return result;

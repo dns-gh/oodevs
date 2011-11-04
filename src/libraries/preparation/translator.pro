@@ -7,6 +7,7 @@ AgentsModelChecker.cpp \
 AltitudeModifierAttribute.cpp \
 Automat.cpp \
 BypassAttribute.cpp \
+CommandPostAttributes.cpp \
 ConstructionAttribute.cpp \
 CrossingSiteAttribute.cpp \
 DelayAttribute.cpp \
