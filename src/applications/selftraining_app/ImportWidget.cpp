@@ -32,7 +32,6 @@ ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools
     , config_( config )
 {
     setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-    setMargin( 5 );
     tabs_ = new QTabWidget( this );
     connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), &page, SLOT( UpdateEditButton( QWidget* ) ) );
     {

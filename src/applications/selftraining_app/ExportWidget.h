@@ -10,6 +10,8 @@
 #ifndef __ExportWidget_h_
 #define __ExportWidget_h_
 
+#include <boost/noncopyable.hpp>
+
 class ScenarioEditPage;
 
 namespace tools
@@ -30,6 +32,7 @@ namespace zip
 // Created: JSR 2010-07-15
 // =============================================================================
 class ExportWidget : public Q3GroupBox
+                   , private boost::noncopyable
 {
     Q_OBJECT
 
@@ -42,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update();
+    void Update( Q3ListBoxItem* item = 0 );
     void ExportPackage();
     bool EnableEditButton();
     //@}
@@ -56,22 +59,18 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    void UpdateExercises();
-
+    Q3ListBoxItem* GetCurrentSelection() const;
+    QTextEdit* GetCurrentDescription() const;
     bool BrowseClicked();
+    void InternalExportPackage( zip::ozipfile& archive );
     void WriteContent( zip::ozipfile& archive ) const;
-    //@}
-
-    //! @name Copy/Assignment
-    //@{
-    ExportWidget( const ExportWidget& );            //!< Copy constructor
-    ExportWidget& operator=( const ExportWidget& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::pair< std::string, std::string > T_Package; // <path, filename>
+    enum E_Tabs{ exercise = 0, terrain = 1, models = 2 };
     //@}
 
 private:
@@ -79,12 +78,22 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC&    fileLoader_;
-    ScenarioEditPage& page_;
-    Q3ListBox*  list_;
-    T_Package package_;
-    Q3TextEdit* description_;
-    Q3ListView* content_;
-    Q3ProgressBar* progress_;
+    ScenarioEditPage&           page_;
+    QTabWidget*                 tabs_;
+    // Common
+    Q3ProgressBar*              progress_;
+    T_Package                   package_;
+    // Exercises
+    Q3ListBox*                  exerciseList_;
+    QTextEdit*                  exerciseDescription_;
+    Q3ListView*                 exerciseContent_;
+    // Terrains
+    QTextEdit*                  terrainDescription_;
+    Q3ListBox*                  terrainList_;
+    // Referential
+    QTextEdit*                  modelDescription_;
+    QCheckBox*                  decisionalCheckBox_;
+    Q3ListBox*                  physicalList_;
     //@}
 };
 
