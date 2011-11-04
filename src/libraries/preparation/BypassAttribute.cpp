@@ -33,7 +33,6 @@ BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& dico )
 BypassAttribute::BypassAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
     : rBypassConstructionPercentage_ ( 0., Units::percentage )
 {
-    std::string density;
     xis >> xml::attribute( "value", rBypassConstructionPercentage_.value_ );
     CreateDictionary( dico );
 }

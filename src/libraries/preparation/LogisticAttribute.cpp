@@ -28,6 +28,9 @@ LogisticAttribute::LogisticAttribute( kernel::PropertiesDictionary& dico, kernel
     : controllers_( controllers )
     , logisticBase_( 0 )
     , object_      ( object )
+    , idToConvert_ ( 0 )
+    , pAutomats_   ( 0 )
+    , pFormations_ ( 0 )
 {
     CreateDictionary( dico );
     controllers_.Register( *this );
@@ -43,14 +46,24 @@ LogisticAttribute::LogisticAttribute( xml::xistream& xis, const tools::Resolver_
     : controllers_( controllers )
     , logisticBase_( 0 )
     , object_      ( object )
+    , idToConvert_ ( xis.attribute< unsigned long >( "id" ) )
+    , pAutomats_   ( &automats )
+    , pFormations_ ( &formations )
 {
-    unsigned long id = xis.attribute< unsigned long >( "id" );
-    logisticBase_ = automats.Find( id );
-    if( !logisticBase_ )
-        logisticBase_ = formations.Find( id );
-
     CreateDictionary( dico );
     controllers_.Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticAttribute::Finalize
+// Created: JSR 2011-11-04
+// -----------------------------------------------------------------------------
+void LogisticAttribute::Finalize()
+{
+    if( pAutomats_ )
+        logisticBase_ = pAutomats_->Find( idToConvert_ );
+    if( !logisticBase_ && pFormations_ )
+        logisticBase_ = pFormations_->Find( idToConvert_ );
 }
 
 // -----------------------------------------------------------------------------

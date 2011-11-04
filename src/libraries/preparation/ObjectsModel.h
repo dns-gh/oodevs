@@ -53,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( xml::xistream& xis, Model& model, std::string& loadingErrors );
+    void Finalize();
     void Purge();
     kernel::Object_ABC* CreateObject( const kernel::Team_ABC& team, const kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location );
     void CreateObject( xml::xistream& xis, const kernel::Team_ABC& team, std::string& loadingErrors );

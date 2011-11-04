@@ -20,8 +20,9 @@
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "protocol/Protocol.h"
 #include "Checkpoints/SerializationTools.h"
-#include <xeumeuleu/xml.hpp>
 #include <boost/assign/list_of.hpp>
+#include <boost/lexical_cast.hpp>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( LogisticAttribute )
 
@@ -33,14 +34,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyRecon< LogisticA
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 LogisticAttribute::LogisticAttribute( xml::xistream& xis )
+    : idFromXML_( xis.attribute< unsigned int >( "id" ) )
 {
-    unsigned int logSuperiorId;
-    xis >> xml::attribute( "id", logSuperiorId );
-
-    MIL_AutomateLOG* pLogSuperior = MIL_AgentServer::GetWorkspace().GetEntityManager().FindBrainLogistic( logSuperiorId );
-    if( !pLogSuperior )
-        xis.error( "Invalid logistic base" );
-    pLogisticHierarchy_.reset( new logistic::ObjectLogisticHierarchy( *pLogSuperior ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,6 +44,7 @@ LogisticAttribute::LogisticAttribute( xml::xistream& xis )
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
 LogisticAttribute::LogisticAttribute( const sword::MissionParameter_Value& attributes )
+    : idFromXML_( 0 )
 {
     MIL_AutomateLOG* pLogSuperior = MIL_AgentServer::GetWorkspace().GetEntityManager().FindBrainLogistic( attributes.list( 1 ).identifier() );
     if( !pLogSuperior )
@@ -150,7 +147,9 @@ bool LogisticAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 LogisticAttribute& LogisticAttribute::operator=( const LogisticAttribute& rhs )
 {
     //$$$ POURRI TMP
-    pLogisticHierarchy_->ChangeLinks( boost::assign::list_of( rhs.pLogisticHierarchy_->GetPrimarySuperior() ) );
+    if( pLogisticHierarchy_.get() && rhs.pLogisticHierarchy_.get() )
+        pLogisticHierarchy_->ChangeLinks( boost::assign::list_of( rhs.pLogisticHierarchy_->GetPrimarySuperior() ) );
+    idFromXML_ = rhs.idFromXML_;
     return *this;
 }
 
@@ -161,13 +160,29 @@ LogisticAttribute& LogisticAttribute::operator=( const LogisticAttribute& rhs )
 bool LogisticAttribute::Update( const LogisticAttribute& rhs )
 {
     //$$$ POURRI TMP
-    if( rhs.pLogisticHierarchy_->GetPrimarySuperior() != pLogisticHierarchy_->GetPrimarySuperior() )
+    idFromXML_ = rhs.idFromXML_;
+    if( pLogisticHierarchy_.get() && rhs.pLogisticHierarchy_.get() && rhs.pLogisticHierarchy_->GetPrimarySuperior() != pLogisticHierarchy_->GetPrimarySuperior() )
     {
         pLogisticHierarchy_->ChangeLinks( boost::assign::list_of( rhs.pLogisticHierarchy_->GetPrimarySuperior() ) );
         NotifyAttributeUpdated( eOnUpdate );
         return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticAttribute::Finalize
+// Created: JSR 2011-11-04
+// -----------------------------------------------------------------------------
+void LogisticAttribute::Finalize()
+{
+    if( !pLogisticHierarchy_.get() || !pLogisticHierarchy_->HasSuperior() )
+    {
+        MIL_AutomateLOG* pLogSuperior = MIL_AgentServer::GetWorkspace().GetEntityManager().FindBrainLogistic( idFromXML_ );
+        if( !pLogSuperior )
+            throw xml::exception( "Invalid logistic base for logistic attribute : id = " + boost::lexical_cast< std::string >( idFromXML_ ) );
+        pLogisticHierarchy_.reset( new logistic::ObjectLogisticHierarchy( *pLogSuperior ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

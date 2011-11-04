@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "Object_ABC.h"
 #include "ActionController.h"
+#include "Finalizable_ABC.h"
 
 using namespace kernel;
 
@@ -67,4 +68,13 @@ void Object_ABC::ContextMenu( ActionController& controller, const QPoint& where 
 void Object_ABC::Activate( ActionController& controller ) const
 {
     controller.Activate( *this, *(const Entity_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object_ABC::Finalize
+// Created: JSR 2011-11-04
+// -----------------------------------------------------------------------------
+void Object_ABC::Finalize() const
+{
+    Interface().Apply( &Finalizable_ABC::Finalize );
 }

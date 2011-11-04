@@ -10,11 +10,13 @@
 #ifndef __LogisticAttribute_h_
 #define __LogisticAttribute_h_
 
+#include "clients_kernel/Finalizable_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/SubTypes.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -39,10 +41,12 @@ namespace xml
 // Created: AGE 2006-02-14
 // =============================================================================
 class LogisticAttribute : public kernel::LogisticAttribute_ABC
+                        , public kernel::Finalizable_ABC
                         , public kernel::Serializable_ABC
                         , public tools::Observer_ABC
                         , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                         , public tools::ElementObserver_ABC< kernel::Formation_ABC >
+                        , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -58,6 +62,7 @@ public:
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    virtual void Finalize();
     //@}
 
     //! @name Operations
@@ -66,12 +71,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LogisticAttribute( const LogisticAttribute& );            //!< Copy constructor
-    LogisticAttribute& operator=( const LogisticAttribute& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyDeleted( const kernel::Automat_ABC& entity );
@@ -85,6 +84,9 @@ private:
     kernel::Controllers& controllers_;
     kernel::LogisticBaseSuperior logisticBase_;
     const kernel::Object_ABC& object_;
+    unsigned long idToConvert_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >* pAutomats_;
+    const tools::Resolver_ABC< kernel::Formation_ABC >* pFormations_;
     //@}
 };
 
