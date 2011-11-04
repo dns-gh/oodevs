@@ -76,7 +76,7 @@ namespace
     {
         ObjectCapacityFixture()
         {
-            WorldInitialize( "Paris" );
+            WorldInitialize( "worldwide/Paris" );
         }
         ~ObjectCapacityFixture()
         {

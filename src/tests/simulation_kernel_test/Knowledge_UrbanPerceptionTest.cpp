@@ -41,7 +41,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
 {
-    WorldInitialize( "Paris" );
+    WorldInitialize( "worldwide/Paris" );
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
