@@ -44,6 +44,26 @@ namespace
     };
 }
 
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_munition_detonation, Fixture )
+{
+    const std::string name = "MunitionDetonation";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ArticulatedPartData" )
+                                                                        ( "DetonationLocation" )
+                                                                        ( "DetonationResultCode" )
+                                                                        ( "EventIdentifier" )
+                                                                        ( "FiringObjectIdentifier" )
+                                                                        ( "FinalVelocityVector" )
+                                                                        ( "FuseType" )
+                                                                        ( "MunitionObjectIdentifier" )
+                                                                        ( "MunitionType" )
+                                                                        ( "QuantityFired" )
+                                                                        ( "RateOfFire" )
+                                                                        ( "RelativeDetonationLocation" )
+                                                                        ( "TargetObjectIdentifier" )
+                                                                        ( "WarheadType" );
+    CheckBuild< interactions::MunitionDetonation >( name, parameters );
+}
+
 BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_request_convoy, Fixture )
 {
     const std::string name = "NETN_Service.NETN_RequestService.NETN_RequestConvoy";

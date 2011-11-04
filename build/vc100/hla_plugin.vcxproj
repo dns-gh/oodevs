@@ -162,7 +162,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\ObjectResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesSerializer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntity.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionDetonation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTeleporter.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.cpp" />
   </ItemGroup>
@@ -272,7 +271,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\SerializationTools.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateEntity.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EventListener_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionDetonation.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTeleporter.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver_ABC.h" />

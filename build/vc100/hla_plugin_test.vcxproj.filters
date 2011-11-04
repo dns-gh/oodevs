@@ -31,9 +31,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\MunitionDetonationTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprSerializationTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

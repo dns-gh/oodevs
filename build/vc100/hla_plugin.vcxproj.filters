@@ -112,9 +112,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesSerializer.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionDetonation.cpp">
-      <Filter>Source Files\Interactions\Detonation</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp">
       <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
@@ -350,9 +347,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\EventListener_ABC.h">
       <Filter>Source Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionDetonation.h">
-      <Filter>Source Files\Interactions\Detonation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h">
       <Filter>Source Files\Classes\netn</Filter>

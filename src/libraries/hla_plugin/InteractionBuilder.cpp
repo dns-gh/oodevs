@@ -50,6 +50,29 @@ InteractionBuilder::~InteractionBuilder()
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
+// Created: SLI 2011-11-04
+// -----------------------------------------------------------------------------
+void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::MunitionDetonation >& interaction ) const
+{
+    interaction.Register( "ArticulatedPartData"       , ::hla::CreateParameter( &interactions::MunitionDetonation::articulatedPartData ) );
+    interaction.Register( "DetonationLocation"        , ::hla::CreateParameter( &interactions::MunitionDetonation::detonationLocation ) );
+    interaction.Register( "DetonationResultCode"      , ::hla::CreateParameter( &interactions::MunitionDetonation::detonationResultCode ) );
+    interaction.Register( "EventIdentifier"           , ::hla::CreateParameter( &interactions::MunitionDetonation::eventIdentifier ) );
+    interaction.Register( "FiringObjectIdentifier"    , ::hla::CreateParameter( &interactions::MunitionDetonation::firingObjectIdentifier ) );
+    interaction.Register( "FinalVelocityVector"       , ::hla::CreateParameter( &interactions::MunitionDetonation::finalVelocityVector ) );
+    interaction.Register( "FuseType"                  , ::hla::CreateParameter( &interactions::MunitionDetonation::fuseType ) );
+    interaction.Register( "MunitionObjectIdentifier"  , ::hla::CreateParameter( &interactions::MunitionDetonation::munitionObjectIdentifier ) );
+    interaction.Register( "MunitionType"              , ::hla::CreateParameter( &interactions::MunitionDetonation::munitionType ) );
+    interaction.Register( "QuantityFired"             , ::hla::CreateParameter( &interactions::MunitionDetonation::quantityFired ) );
+    interaction.Register( "RateOfFire"                , ::hla::CreateParameter( &interactions::MunitionDetonation::rateOfFire ) );
+    interaction.Register( "RelativeDetonationLocation", ::hla::CreateParameter( &interactions::MunitionDetonation::relativeDetonationLocation ) );
+    interaction.Register( "TargetObjectIdentifier"    , ::hla::CreateParameter( &interactions::MunitionDetonation::targetObjectIdentifier ) );
+    interaction.Register( "WarheadType"               , ::hla::CreateParameter( &interactions::MunitionDetonation::warheadType ) );
+    federate.Register( ::hla::InteractionIdentifier( "MunitionDetonation" ), interaction, true, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
 void InteractionBuilder::Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnRequestConvoy >& interaction ) const

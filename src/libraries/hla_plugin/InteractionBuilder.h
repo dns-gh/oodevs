@@ -21,6 +21,7 @@ namespace hla
 {
 namespace interactions
 {
+    struct MunitionDetonation;
     struct NetnRequestConvoy;
     struct NetnOfferConvoy;
     struct NetnAcceptOffer;
@@ -53,6 +54,7 @@ public:
 
     //! @name Operations
     //@{
+    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::MunitionDetonation >& interaction ) const;
     void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnRequestConvoy >& interaction ) const;
     void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnOfferConvoy >& interaction ) const;
     void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnAcceptOffer >& interaction ) const;

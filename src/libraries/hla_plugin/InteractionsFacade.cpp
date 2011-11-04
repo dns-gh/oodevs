@@ -9,13 +9,38 @@
 
 #include "hla_plugin_pch.h"
 #include "InteractionsFacade.h"
-#include "MunitionDetonation.h"
+#include "Interactions.h"
+#include "InteractionSender_ABC.h"
+#include "InteractionBuilder.h"
 #include "DirectFireReceiver.h"
 #include "DirectFireSender.h"
 #include "IndirectFireReceiver.h"
 #include "IndirectFireSender.h"
+#include <hla/Interaction.h>
 
 using namespace plugins::hla;
+
+namespace
+{
+    template< typename T >
+    class InteractionSender : public InteractionSender_ABC< T >
+    {
+    public:
+        InteractionSender( ::hla::InteractionNotification_ABC< T >& receiver, Federate_ABC& federate )
+            : interaction_( new ::hla::Interaction< T >( receiver ) )
+        {
+            InteractionBuilder builder;
+            builder.Build( federate, *interaction_ );
+        }
+        virtual ~InteractionSender() {}
+        virtual void Send( const T& interaction )
+        {
+            interaction_->Send( interaction );
+        }
+    private:
+        std::auto_ptr< ::hla::Interaction< T > > interaction_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: InteractionsFacade constructor
@@ -25,7 +50,7 @@ InteractionsFacade::InteractionsFacade( Federate_ABC& federate, dispatcher::Simu
                                         const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
                                         const ContextFactory_ABC& contextFactory, const MunitionTypeResolver_ABC& munitionTypeResolver,
                                         RemoteAgentSubject_ABC& remoteAgentSubject, const std::string& federateName )
-    : pMunitionDetonation_  ( new MunitionDetonation( federate, *this ) )
+    : pMunitionDetonation_  ( new InteractionSender< interactions::MunitionDetonation >( *this, federate ) )
     , pDirectFireReceiver_  ( new DirectFireReceiver( publisher, remoteResolver, localResolver, contextFactory ) )
     , pIndirectFireReceiver_( new IndirectFireReceiver( publisher, contextFactory, munitionTypeResolver ) )
     , pDirectFireSender_    ( new DirectFireSender( *pMunitionDetonation_, remoteResolver, localResolver, remoteAgentSubject, controller, federateName ) )
