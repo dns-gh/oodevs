@@ -735,8 +735,8 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Unite a escorter" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="AgentKnowledge"/>
           <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
         </choice>
       </parameter>
     </mission>
@@ -2661,8 +2661,8 @@
       <parameter dia-name="objective" name="Unite ou automate" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Automat"/>
-          <parameter type="AgentKnowledge"/>
           <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
         </choice>
       </parameter>
     </mission>
@@ -3282,4 +3282,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="1649550957" -->
+<!-- signature="3719407306" -->
