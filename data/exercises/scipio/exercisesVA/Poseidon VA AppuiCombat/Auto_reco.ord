@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="1019" name="MELEE Reconnaitre" target="257" time="2011-01-19T14:48:20" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="162"/>
+    <parameter name="Limas" type="list">
+      <parameter name="Limas (élément 1)" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="29TNF2840661045"/>
+            <point coordinates="29TNF3075261893"/>
+            <point coordinates="29TNF3244561269"/>
+            <point coordinates="29TNF3433760847"/>
+            <point coordinates="29TNF3610561058"/>
+            <point coordinates="29TNF3663561394"/>
+            <point coordinates="29TNF3781461342"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20110119T143942"/>
+      </parameter>
+      <parameter name="Limas (élément 2)" type="lima" value="LCA">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="29TNF3517759408"/>
+            <point coordinates="29TNF3658658912"/>
+            <point coordinates="29TNF3773458854"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20110119T143942"/>
+      </parameter>
+      <parameter name="Limas (élément 3)" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="29TNF2834155274"/>
+            <point coordinates="29TNF3024355391"/>
+            <point coordinates="29TNF3157455002"/>
+            <point coordinates="29TNF3221954500"/>
+            <point coordinates="29TNF3368454725"/>
+            <point coordinates="29TNF3441054551"/>
+            <point coordinates="29TNF3554955013"/>
+            <point coordinates="29TNF3632754722"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20110119T143942"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="29TNF3609161219"/>
+        <point coordinates="29TNF3539059941"/>
+        <point coordinates="29TNF3523259008"/>
+        <point coordinates="29TNF3525358694"/>
+        <point coordinates="29TNF3486657512"/>
+        <point coordinates="29TNF3533657200"/>
+        <point coordinates="29TNF3526456134"/>
+        <point coordinates="29TNF3557355450"/>
+        <point coordinates="29TNF3542254926"/>
+        <point coordinates="29TNF3545554108"/>
+        <point coordinates="29TNF3574353643"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="29TNF3764865720"/>
+        <point coordinates="29TNF3760958203"/>
+        <point coordinates="29TNF3598454511"/>
+        <point coordinates="29TNF3764548583"/>
+      </location>
+    </parameter>
+    <parameter name="Nombre d'echelons" type="numeric" value="0"/>
+    <parameter name="Objectifs" type="list">
+      <parameter name="Objectifs (élément 1)" type="point">
+        <location type="point">
+          <point coordinates="29TNF3580858848"/>
+        </location>
+      </parameter>
+      <parameter name="Objectifs (élément 2)" type="point">
+        <location type="point">
+          <point coordinates="29TNF3694358616"/>
+        </location>
+      </parameter>
+      <parameter name="Objectifs (élément 3)" type="polygon">
+        <location type="polygon">
+          <point coordinates="29TNF3625458091"/>
+          <point coordinates="29TNF3632957696"/>
+          <point coordinates="29TNF3687257761"/>
+          <point coordinates="29TNF3688357976"/>
+          <point coordinates="29TNF3659958211"/>
+          <point coordinates="29TNF3625458091"/>
+        </location>
+      </parameter>
+      <parameter name="Objectifs (élément 4)" type="point">
+        <location type="point">
+          <point coordinates="29TNF3556057454"/>
+        </location>
+      </parameter>
+      <parameter name="Objectifs (élément 5)" type="polygon">
+        <location type="polygon">
+          <point coordinates="29TNF3605056633"/>
+          <point coordinates="29TNF3592056177"/>
+          <point coordinates="29TNF3642956141"/>
+          <point coordinates="29TNF3643656672"/>
+          <point coordinates="29TNF3605056633"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+</actions>

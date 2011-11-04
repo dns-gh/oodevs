@@ -1,0 +1,1599 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+<!-- Voici des commentaires XML -->
+
+<!-- C1 -->
+
+  <action id="50" name="Armor - attack - C1" target="93" time="2008-11-13T16:26:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="35"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Assault route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3889827121"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+<!-- C2 -->
+
+<action id="50" name="Armor - attack - C2" target="92" time="2008-11-13T16:35:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="48"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXU8929204746"/>
+        <point coordinates="30TXU9513611599"/>
+        <point coordinates="30TXU9918313474"/>
+        <point coordinates="30TYU0236617986"/>
+        <point coordinates="30UYU0549928082"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXU9248401636"/>
+        <point coordinates="30TXU9601807090"/>
+        <point coordinates="30TYU0275910455"/>
+        <point coordinates="30TYU0625515678"/>
+        <point coordinates="30UYU0857320997"/>
+        <point coordinates="30UYU0931024392"/>
+        <point coordinates="30UYU1038027655"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Assault route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UYU0051429672"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+  <!-- C3 -->
+
+    <action id="50" name="Armor - attack - C3" target="94" time="2008-11-13T16:59:26" type="mission">
+    <parameter name="Danger direction" type="Direction" value="26"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCP0189804837"/>
+        <point coordinates="31TCP0814011234"/>
+        <point coordinates="31TCP1232012775"/>
+        <point coordinates="31TCP1585617057"/>
+        <point coordinates="31UCP1974526836"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCP0477201708"/>
+        <point coordinates="31TCP0887906910"/>
+        <point coordinates="31TCP1571809625"/>
+        <point coordinates="31TCP1958914563"/>
+        <point coordinates="31UCP2232119675"/>
+        <point coordinates="31UCP2336122999"/>
+        <point coordinates="31UCP2464226212"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Assault route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP2137022540"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+<!-- C4 -->
+
+  <action id="52" name="Armor - scout - C4" target="154" time="2008-11-13T19:03:26" type="mission">
+    <parameter name="Danger direction" type="Direction" value="38"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3079529007"/>
+        <point coordinates="30TXT3667936163"/>
+        <point coordinates="30TXT4072438051"/>
+        <point coordinates="30TXT4396742665"/>
+        <point coordinates="30TXT4708052599"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3391426094"/>
+        <point coordinates="30TXT3746231606"/>
+        <point coordinates="30TXT4421635029"/>
+        <point coordinates="30TXT4768240011"/>
+        <point coordinates="30TXT5000845562"/>
+        <point coordinates="30TXT5077648808"/>
+        <point coordinates="30TXT5184552170"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT4694743579"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+
+<!-- C5 -->
+
+<action id="236" name="C5 - Red - Hold" target="290" time="2008-11-13T16:44:16" type="mission">
+    <parameter name="Danger direction" type="Direction" value="166"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9206031305"/>
+        <point coordinates="30TXT9793438355"/>
+        <point coordinates="30TYT0201440154"/>
+        <point coordinates="30TYT0516244858"/>
+        <point coordinates="30TYT0830754796"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9510328321"/>
+        <point coordinates="30TXT9882533734"/>
+        <point coordinates="30TYT0542137321"/>
+        <point coordinates="30TYT0893042221"/>
+        <point coordinates="30TYT1121747813"/>
+        <point coordinates="30TYT1202151101"/>
+        <point coordinates="30TYT1305454398"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Deployment area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TYT0487743407"/>
+        <point coordinates="30TYT0680842284"/>
+        <point coordinates="30TYT0721243264"/>
+        <point coordinates="30TYT0528944568"/>
+        <point coordinates="30TYT0487743407"/>
+      </location>
+    </parameter>
+  </action>
+
+
+  <action id="221" name="Armor - attack - C5" target="138" time="2008-11-13T16:10:36" type="mission">
+    <parameter name="Danger direction" type="Direction" value="36"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9206031305"/>
+        <point coordinates="30TXT9793438355"/>
+        <point coordinates="30TYT0201440154"/>
+        <point coordinates="30TYT0516244858"/>
+        <point coordinates="30TYT0830754796"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9510328321"/>
+        <point coordinates="30TXT9882533734"/>
+        <point coordinates="30TYT0542137321"/>
+        <point coordinates="30TYT0893042221"/>
+        <point coordinates="30TYT1121747813"/>
+        <point coordinates="30TYT1202151101"/>
+        <point coordinates="30TYT1305454398"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  
+  <!-- C6 -->
+
+    <action id="253" name="Battalion - Attack - C6" target="161" time="2008-11-13T19:09:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="44"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TBN9889131474"/>
+        <point coordinates="31TCN0525038222"/>
+        <point coordinates="31TCN0942939764"/>
+        <point coordinates="31TCN1295944180"/>
+        <point coordinates="31TCN1685753784"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCN0653026397"/>
+        <point coordinates="31TCN0852829069"/>
+        <point coordinates="31TCN1430231678"/>
+        <point coordinates="31TCN1647934206"/>
+        <point coordinates="31TCN2127638829"/>
+        <point coordinates="31TCN2560652196"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Objectives" type="ObjectiveList"/>
+    <parameter name="short delay" type="Bool" value="false"/>
+    <parameter name="without dynamic assets organization" type="Bool" value="false"/>
+  </action>
+
+<!-- C8 -->
+<action id="235" name="Invasion" target="603" time="2008-11-13T17:00:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="176"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TYS0838795434"/>
+        <point coordinates="30TYS0608286975"/>
+        <point coordinates="30TYS0730178936"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYS1690095099"/>
+        <point coordinates="30TYS1582088153"/>
+        <point coordinates="30TYS1752477485"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Objective" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TYS0745782463"/>
+        <point coordinates="30TYS0772780045"/>
+        <point coordinates="30TYS1288179381"/>
+        <point coordinates="30TYS1244682272"/>
+        <point coordinates="30TYS0745782463"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="285" name="Invasion" target="609" time="2008-11-13T17:00:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="189"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TYS1690095099"/>
+        <point coordinates="30TYS1582088153"/>
+        <point coordinates="30TYS1752477485"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYS0838795434"/>
+        <point coordinates="30TYS0608286975"/>
+        <point coordinates="30TYS0730178936"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Objective" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TYS1172883792"/>
+        <point coordinates="30TYS1379684785"/>
+        <point coordinates="30TYS1572982315"/>
+        <point coordinates="30TYS1386081954"/>
+        <point coordinates="30TYS1172883792"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="310" name="Invasion" target="615" time="2008-11-13T17:00:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="172"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TYS1690095099"/>
+        <point coordinates="30TYS1582088153"/>
+        <point coordinates="30TYS1752477485"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYS0838795434"/>
+        <point coordinates="30TYS0608286975"/>
+        <point coordinates="30TYS0730178936"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TYS0804583588"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+  <action id="358" name="Militia - Change population ROE" target="670" time="2008-11-13T16:33:06" type="fragorder">
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+  </action>
+  <action id="358" name="Militia - Change population ROE" target="668" time="2008-11-13T16:33:06" type="fragorder">
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+  </action>
+  <action id="358" name="Militia - Change population ROE" target="669" time="2008-11-13T16:33:06" type="fragorder">
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+  </action>
+  <action id="173" name="Asymetric - attack population (in an area)" target="670" time="2008-11-13T17:37:36" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TYS1037476379"/>
+        <point coordinates="30TYS1136976125"/>
+        <point coordinates="30TYS1143378131"/>
+        <point coordinates="30TYS1066777949"/>
+        <point coordinates="30TYS1037476379"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="173" name="Asymetric - attack population (in an area)" target="668" time="2008-11-13T17:09:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TYS0947180622"/>
+        <point coordinates="30TYS1097480733"/>
+        <point coordinates="30TYS1090779884"/>
+        <point coordinates="30TYS0961879742"/>
+        <point coordinates="30TYS0947180622"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="173" name="Asymetric - attack population (in an area)" target="669" time="2008-11-13T17:24:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TYS0994479811"/>
+        <point coordinates="30TYS1046379868"/>
+        <point coordinates="30TYS1121978181"/>
+        <point coordinates="30TYS1083977975"/>
+        <point coordinates="30TYS0994479811"/>
+      </location>
+    </parameter>
+  </action>
+  
+  <action id="342" name="Population - move" target="671" time="2008-11-13T17:16:56" type="mission">
+    <parameter name="Objective" type="Point">
+      <location type="point">
+        <point coordinates="30TYS0227164624"/>
+      </location>
+    </parameter>
+  </action>
+  
+  <action id="142" name="filtrate populations" target="595" time="2008-11-13T17:58:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Point" type="Point">
+      <location type="point">
+        <point coordinates="30TYS0905370238"/>
+      </location>
+    </parameter>
+  </action>
+
+    <action id="141" name="deny population crossing" target="596" time="2008-11-13T18:40:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Point" type="Point">
+      <location type="point">
+        <point coordinates="30TYS0738668974"/>
+      </location>
+    </parameter>
+  </action>
+  
+    <action id="169" name="Asymetric - infiltrate" target="586" time="2008-11-13T18:59:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="176"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TYS0902370068"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+    <action id="77" name="Engineer - build camps" target="630" time="2008-11-13T19:20:26" type="mission">
+    <parameter name="Danger direction" type="Direction" value="63"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Work" type="GenObjectList">
+      <parameter name="Obstacle 1" type="obstacle" value="refugees camp">
+        <parameter name="TC2" type="tc2" value="632"/>
+        <parameter name="Location" type="location">
+          <location type="polygon">
+            <point coordinates="30TYS0147364899"/>
+            <point coordinates="30TYS0210363875"/>
+            <point coordinates="30TYS0308764533"/>
+            <point coordinates="30TYS0236165575"/>
+            <point coordinates="30TYS0147364899"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+  </action>
+
+  <action id="354" name="Cancel maneuver" target="596" time="2008-11-13T20:52:06" type="fragorder"/>
+
+  <action id="133" name="move_blue" target="596" time="2008-11-13T19:59:26" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TYS0871064868"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+  <action id="77" name="Engineer - perform work" target="630" time="2008-11-13T16:33:46" type="mission">
+    <parameter name="Danger direction" type="Direction" value="48"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Work" type="GenObjectList">
+      <parameter name="Obstacle 1" type="obstacle" value="abattis">
+        <parameter name="Obstacle type" type="obstacletype" value="0"/>
+        <parameter name="Location" type="location">
+          <location type="line">
+            <point coordinates="30TYS0895170680"/>
+            <point coordinates="30TYS0951370368"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+  </action>
+  
+  <action id="173" name="Asymetric - attack2" target="670" time="2008-11-13T22:00:36" type="mission">
+    <parameter name="Danger direction" type="Direction" value="202"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXS9842763432"/>
+        <point coordinates="30TYS0672371778"/>
+        <point coordinates="30TYS0785980431"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYS1536480313"/>
+        <point coordinates="30TYS1151469535"/>
+        <point coordinates="30TYS0596257930"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TYS0187765588"/>
+        <point coordinates="30TYS0243063222"/>
+        <point coordinates="30TYS0475663943"/>
+        <point coordinates="30TYS0423466609"/>
+        <point coordinates="30TYS0187765588"/>
+      </location>
+    </parameter>
+  </action>
+
+
+  <action id="145" name="control Populations" target="596" time="2008-11-13T23:40:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TYS0224063954"/>
+        <point coordinates="30TYS0320664669"/>
+        <point coordinates="30TYS0190766433"/>
+        <point coordinates="30TYS0054365679"/>
+        <point coordinates="30TYS0224063954"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="145" name="control Populations" target="597" time="2008-11-13T23:40:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TYS0157564894"/>
+        <point coordinates="30TYS0259365264"/>
+        <point coordinates="30TYS0400463208"/>
+        <point coordinates="30TYS0225062556"/>
+        <point coordinates="30TYS0157564894"/>
+      </location>
+    </parameter>
+  </action>
+  
+  <action id="66" name="Engineer - open a route" target="630" time="2008-11-13T19:09:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="26"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Way point 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TYS0609867197"/>
+        </location>
+      </parameter>
+      <parameter name="Way point 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TYS0767269193"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TYS0810169340"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+    <action id="342" name="Population - move2" target="671" time="2008-11-13T20:19:36" type="mission">
+    <parameter name="Objective" type="Point">
+      <location type="point">
+        <point coordinates="30TYS0755269084"/>
+      </location>
+    </parameter>
+  </action>
+  
+  <action id="310" name="move" target="609" time="2008-11-13T18:59:26" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT8366302071"/>
+        <point coordinates="30TXS9699192738"/>
+        <point coordinates="30TXS9699192738"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT8636609478"/>
+        <point coordinates="30TYT0671203158"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT8093708750"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+  <action id="138" name="withdraw" target="630" time="2008-11-13T23:00:26" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Point">
+      <location type="point">
+        <point coordinates="30TYS0930367365"/>
+      </location>
+    </parameter>
+  </action>
+  
+    <action id="310" name="move2" target="609" time="2008-11-13T16:19:46" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TYT1885710944"/>
+        <point coordinates="30TYT1116508165"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TBN8067906201"/>
+        <point coordinates="30TYT1804302747"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TBN7992409841"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+  <action id="97" name="Infantry - control defensive" target="595" time="2008-11-13T20:55:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Point to defend" type="Point">
+      <location type="point">
+        <point coordinates="30TYS0454165733"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="Bool" value="true"/>
+  </action>
+
+<!-- C9 -->
+
+<action id="238" name="Blue - Defense" target="715" time="2008-11-13T16:19:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TBM9723259524"/>
+        <point coordinates="31TCM0028078895"/>
+        <point coordinates="31TCM0288885036"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0538457791"/>
+        <point coordinates="31TCM0863169755"/>
+        <point coordinates="31TCM1134175942"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM0388179081"/>
+        <point coordinates="31TCM0804977771"/>
+        <point coordinates="31TCM0753275516"/>
+        <point coordinates="31TCM0300077025"/>
+        <point coordinates="31TCM0388179081"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="238" name="Blue - Defense" target="711" time="2008-11-13T16:23:16" type="mission">
+    <parameter name="Danger direction" type="Direction" value="30"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0538457791"/>
+        <point coordinates="31TCM0863169755"/>
+        <point coordinates="31TCM1134175942"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM1386854345"/>
+        <point coordinates="31TCM1953266559"/>
+        <point coordinates="31TCM2348579843"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM1031670551"/>
+        <point coordinates="31TCM1298668615"/>
+        <point coordinates="31TCM1515170909"/>
+        <point coordinates="31TCM1050972330"/>
+        <point coordinates="31TCM1031670551"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="290" name="Blue - Defense" target="750" time="2008-11-13T16:30:46" type="mission">
+    <parameter name="Danger direction" type="Direction" value="28"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TBM9723259524"/>
+        <point coordinates="31TCM0028078895"/>
+        <point coordinates="31TCM0288885036"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0538457791"/>
+        <point coordinates="31TCM0863169755"/>
+        <point coordinates="31TCM1134175942"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Position" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM0314475894"/>
+        <point coordinates="31TCM0639274791"/>
+        <point coordinates="31TCM0656576001"/>
+        <point coordinates="31TCM0322076880"/>
+        <point coordinates="31TCM0314475894"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="Bool" value="true"/>
+  </action>
+  <action id="290" name="Blue - Defense" target="744" time="2008-11-13T16:36:16" type="mission">
+    <parameter name="Danger direction" type="Direction" value="31"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0538457791"/>
+        <point coordinates="31TCM0863169755"/>
+        <point coordinates="31TCM1134175942"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM1386854345"/>
+        <point coordinates="31TCM1953266559"/>
+        <point coordinates="31TCM2348579843"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Position" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM0955869417"/>
+        <point coordinates="31TCM1232167835"/>
+        <point coordinates="31TCM1341569259"/>
+        <point coordinates="31TCM0977370798"/>
+        <point coordinates="31TCM0955869417"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="Bool" value="true"/>
+  </action>
+  <action id="236" name="Blue - Defense" target="699" time="2008-11-13T16:41:26" type="mission">
+    <parameter name="Danger direction" type="Direction" value="30"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TBM9723259524"/>
+        <point coordinates="31TCM0028078895"/>
+        <point coordinates="31TCM0288885036"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0538457791"/>
+        <point coordinates="31TCM0863169755"/>
+        <point coordinates="31TCM1134175942"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Deployment area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM0264575705"/>
+        <point coordinates="31TCM0622073520"/>
+        <point coordinates="31TCM0672476094"/>
+        <point coordinates="31TCM0246877221"/>
+        <point coordinates="31TCM0264575705"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="236" name="Blue - Defense" target="705" time="2008-11-13T16:41:26" type="mission">
+    <parameter name="Danger direction" type="Direction" value="18"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0538457791"/>
+        <point coordinates="31TCM0863169755"/>
+        <point coordinates="31TCM1134175942"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM1386854345"/>
+        <point coordinates="31TCM1953266559"/>
+        <point coordinates="31TCM2348579843"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Deployment area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM0910368684"/>
+        <point coordinates="31TCM1260766714"/>
+        <point coordinates="31TCM1294869201"/>
+        <point coordinates="31TCM0947370932"/>
+        <point coordinates="31TCM0910368684"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="77" name="Blue - Defense" target="723" time="2008-11-13T17:25:36" type="mission">
+    <parameter name="Danger direction" type="Direction" value="32"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Work" type="GenObjectList">
+      <parameter name="Obstacle 1" type="obstacle" value="abattis">
+        <parameter name="Obstacle type" type="obstacletype" value="0"/>
+        <parameter name="Location" type="location">
+          <location type="line">
+            <point coordinates="31TCM0281774846"/>
+            <point coordinates="31TCM0379873509"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="77" name="Blue - Defense" target="722" time="2008-11-13T17:33:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Work" type="GenObjectList">
+      <parameter name="Obstacle 1" type="obstacle" value="mines">
+        <parameter name="Obstacle type" type="obstacletype" value="0"/>
+        <parameter name="Location" type="location">
+          <location type="point">
+            <point coordinates="31TCM0454372896"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="77" name="Blue - Defense" target="726" time="2008-11-13T17:44:36" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Work" type="GenObjectList">
+      <parameter name="Obstacle 1" type="obstacle" value="mines">
+        <parameter name="Obstacle type" type="obstacletype" value="0"/>
+        <parameter name="Location" type="location">
+          <location type="point">
+            <point coordinates="31TCM0991068414"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="77" name="Blue - Defense" target="727" time="2008-11-13T19:03:16" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Work" type="GenObjectList">
+      <parameter name="Obstacle 1" type="obstacle" value="abattis">
+        <parameter name="Obstacle type" type="obstacletype" value="0"/>
+        <parameter name="Location" type="location">
+          <location type="line">
+            <point coordinates="31TCM0986667790"/>
+            <point coordinates="31TCM1106267467"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+  </action>
+
+  <action id="252" name="Blue Battalion - move" target="846" time="2008-11-13T17:03:36" type="mission">
+    <parameter name="Danger direction" type="Direction" value="317"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM1386854345"/>
+        <point coordinates="31TCM1953266559"/>
+        <point coordinates="31TCM2348579843"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM2455849659"/>
+        <point coordinates="31TCM3122864431"/>
+        <point coordinates="31TCM3470572835"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Arrival position" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM2086162344"/>
+        <point coordinates="31TCM2365559073"/>
+        <point coordinates="31TCM2851562507"/>
+        <point coordinates="31TCM2795367771"/>
+        <point coordinates="31TCM2523668537"/>
+        <point coordinates="31TCM2354163604"/>
+        <point coordinates="31TCM2082062822"/>
+        <point coordinates="31TCM2086162344"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="310" name="Blue Battalion - move" target="980" time="2008-11-13T17:11:26" type="mission">
+    <parameter name="Danger direction" type="Direction" value="315"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM2214551910"/>
+        <point coordinates="31TBM9839266329"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM1615945505"/>
+        <point coordinates="31TBM9607858434"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCM0759159171"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="310" name="Blue Battalion - move" target="974" time="2008-11-13T17:11:26" type="mission">
+    <parameter name="Danger direction" type="Direction" value="320"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM1615945505"/>
+        <point coordinates="31TBM9607858434"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM2214551910"/>
+        <point coordinates="31TBM9839266329"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCM0054863065"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+  <action id="226" name="Red - scout" target="962" time="2008-11-13T16:13:46" type="mission">
+    <parameter name="Danger direction" type="Direction" value="200"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  <action id="226" name="Red - scout" target="1048" time="2008-11-13T16:20:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="195"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM2564186577"/>
+        <point coordinates="31TCM1929665694"/>
+        <point coordinates="31TCM1360453406"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+
+<action id="221" name="Red - attack" target="922" time="2008-11-13T16:16:46" type="mission">
+    <parameter name="Danger direction" type="Direction" value="200"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  <action id="221" name="Red - attack" target="916" time="2008-11-13T16:18:26" type="mission">
+    <parameter name="Danger direction" type="Direction" value="204"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  <action id="230" name="Red - attack" target="1075" time="2008-11-13T16:18:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="199"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  <action id="269" name="Red - attack" target="952" time="2008-11-13T16:19:16" type="mission">
+    <parameter name="Danger direction" type="Direction" value="201"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM0269077733"/>
+        <point coordinates="31TCM0455276554"/>
+        <point coordinates="31TCM0765276127"/>
+        <point coordinates="31TCM0777677525"/>
+        <point coordinates="31TCM0502179008"/>
+        <point coordinates="31TCM0372279194"/>
+        <point coordinates="31TCM0269077733"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="Bool" value="true"/>
+  </action>
+  <action id="269" name="Red - attack" target="1018" time="2008-11-13T16:21:26" type="mission">
+    <parameter name="Danger direction" type="Direction" value="198"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM2564186577"/>
+        <point coordinates="31TCM1929665694"/>
+        <point coordinates="31TCM1360453406"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM1039871170"/>
+        <point coordinates="31TCM1147769689"/>
+        <point coordinates="31TCM1319869151"/>
+        <point coordinates="31TCM1528170101"/>
+        <point coordinates="31TCM1307372664"/>
+        <point coordinates="31TCM1102773449"/>
+        <point coordinates="31TCM1039871170"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="Bool" value="true"/>
+  </action>
+  <action id="221" name="Red - attack" target="1030" time="2008-11-13T16:21:46" type="mission">
+    <parameter name="Danger direction" type="Direction" value="197"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM2564186577"/>
+        <point coordinates="31TCM1929665694"/>
+        <point coordinates="31TCM1360453406"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  <action id="221" name="Red - attack" target="1024" time="2008-11-13T16:21:56" type="mission">
+    <parameter name="Danger direction" type="Direction" value="199"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM2564186577"/>
+        <point coordinates="31TCM1929665694"/>
+        <point coordinates="31TCM1360453406"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  <action id="230" name="Red - attack" target="1042" time="2008-11-13T16:22:16" type="mission">
+    <parameter name="Danger direction" type="Direction" value="205"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM2564186577"/>
+        <point coordinates="31TCM1929665694"/>
+        <point coordinates="31TCM1360453406"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  
+    <action id="253" name="Blue Battalion - cattack" target="846" time="2008-11-13T16:31:36" type="mission">
+    <parameter name="Danger direction" type="Direction" value="302"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM3118555619"/>
+        <point coordinates="31TCM2376258822"/>
+        <point coordinates="31TCM1869663295"/>
+        <point coordinates="31TCM1677865839"/>
+        <point coordinates="31TCM1067869938"/>
+        <point coordinates="31TCM0755574514"/>
+        <point coordinates="31TCM0425076449"/>
+        <point coordinates="31TBM9813277675"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM3346657034"/>
+        <point coordinates="31TCM2055874281"/>
+        <point coordinates="31TCM1342380047"/>
+        <point coordinates="31TCM0298285874"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Objectives" type="ObjectiveList"/>
+    <parameter name="Short delay" type="Bool" value="false"/>
+    <parameter name="Without dynamic assets organization" type="Bool" value="false"/>
+  </action>
+  
+    <action id="221" name="Blue - cattack" target="974" time="2008-11-13T16:31:36" type="mission">
+    <parameter name="Danger direction" type="Direction" value="29"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0538457791"/>
+        <point coordinates="31TCM0863169755"/>
+        <point coordinates="31TCM1134175942"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TBM9723259524"/>
+        <point coordinates="31TCM0028078895"/>
+        <point coordinates="31TCM0288885036"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  <action id="221" name="Blue - cattack" target="980" time="2008-11-13T16:31:36" type="mission">
+    <parameter name="Danger direction" type="Direction" value="26"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0538457791"/>
+        <point coordinates="31TCM0863169755"/>
+        <point coordinates="31TCM1134175942"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM1386854345"/>
+        <point coordinates="31TCM1953266559"/>
+        <point coordinates="31TCM2348579843"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  
+  <action id="133" name="C9_move" target="727" time="2008-11-13T17:40:36" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCM1326960874"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="C9_move" target="726" time="2008-11-13T17:44:16" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCM1320260877"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="C9_move" target="723" time="2008-11-13T18:02:36" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCM0097967960"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="C9_move" target="722" time="2008-11-13T18:37:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCM0660669399"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+    <action id="308" name="Red - withdraw" target="962" time="2008-11-13T16:14:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="18"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM1072489378"/>
+        <point coordinates="31TCM1379286546"/>
+        <point coordinates="31TCM1515487894"/>
+        <point coordinates="31TCM1144290552"/>
+        <point coordinates="31TCM1072489378"/>
+      </location>
+    </parameter>
+  </action>
+  
+      <action id="308" name="Red - withdraw" target="922" time="2008-11-13T16:14:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="18"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM1072489378"/>
+        <point coordinates="31TCM1379286546"/>
+        <point coordinates="31TCM1515487894"/>
+        <point coordinates="31TCM1144290552"/>
+        <point coordinates="31TCM1072489378"/>
+      </location>
+    </parameter>
+  </action>
+  
+      <action id="308" name="Red - withdraw" target="916" time="2008-11-13T16:14:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="18"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM1072489378"/>
+        <point coordinates="31TCM1379286546"/>
+        <point coordinates="31TCM1515487894"/>
+        <point coordinates="31TCM1144290552"/>
+        <point coordinates="31TCM1072489378"/>
+      </location>
+    </parameter>
+  </action>
+  
+      <action id="308" name="Red - withdraw" target="1075" time="2008-11-13T16:14:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="18"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM1072489378"/>
+        <point coordinates="31TCM1379286546"/>
+        <point coordinates="31TCM1515487894"/>
+        <point coordinates="31TCM1144290552"/>
+        <point coordinates="31TCM1072489378"/>
+      </location>
+    </parameter>
+  </action>
+  
+      <action id="308" name="Red - withdraw" target="952" time="2008-11-13T16:14:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="18"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM1072489378"/>
+        <point coordinates="31TCM1379286546"/>
+        <point coordinates="31TCM1515487894"/>
+        <point coordinates="31TCM1144290552"/>
+        <point coordinates="31TCM1072489378"/>
+      </location>
+    </parameter>
+  </action>
+  
+      <action id="308" name="Red - withdraw" target="1048" time="2008-11-13T16:14:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="18"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM1072489378"/>
+        <point coordinates="31TCM1379286546"/>
+        <point coordinates="31TCM1515487894"/>
+        <point coordinates="31TCM1144290552"/>
+        <point coordinates="31TCM1072489378"/>
+      </location>
+    </parameter>
+  </action>
+
+      <action id="308" name="Red - withdraw" target="1030" time="2008-11-13T16:14:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="18"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM1072489378"/>
+        <point coordinates="31TCM1379286546"/>
+        <point coordinates="31TCM1515487894"/>
+        <point coordinates="31TCM1144290552"/>
+        <point coordinates="31TCM1072489378"/>
+      </location>
+    </parameter>
+  </action>
+  
+      <action id="308" name="Red - withdraw" target="1024" time="2008-11-13T16:14:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="18"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM1072489378"/>
+        <point coordinates="31TCM1379286546"/>
+        <point coordinates="31TCM1515487894"/>
+        <point coordinates="31TCM1144290552"/>
+        <point coordinates="31TCM1072489378"/>
+      </location>
+    </parameter>
+  </action>
+  
+      <action id="308" name="Red - withdraw" target="1042" time="2008-11-13T16:14:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="18"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM1072489378"/>
+        <point coordinates="31TCM1379286546"/>
+        <point coordinates="31TCM1515487894"/>
+        <point coordinates="31TCM1144290552"/>
+        <point coordinates="31TCM1072489378"/>
+      </location>
+    </parameter>
+  </action>
+  
+      <action id="308" name="Red - withdraw" target="1018" time="2008-11-13T16:14:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="18"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0671690953"/>
+        <point coordinates="31TCM0086378446"/>
+        <point coordinates="31TBM9743759015"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0576158252"/>
+        <point coordinates="31TCM1140676766"/>
+        <point coordinates="31TCM1840887951"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Meeting point" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31TCM1072489378"/>
+        <point coordinates="31TCM1379286546"/>
+        <point coordinates="31TCM1515487894"/>
+        <point coordinates="31TCM1144290552"/>
+        <point coordinates="31TCM1072489378"/>
+      </location>
+    </parameter>
+  </action>
+
+</actions>

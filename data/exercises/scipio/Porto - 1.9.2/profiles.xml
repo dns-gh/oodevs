@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<profiles model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
+  <profile name="Camp 1" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Camp 3" password="" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="13"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Faire Mouvement" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="13"/>
+        <side id="3"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Observer et Reconnaitre" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Detruire" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Auto Faire Mouvement" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="13"/>
+        <side id="3"/>
+      </readwrite>
+    </rights>
+  </profile>
+</profiles>
+<!-- signature="0116201452" -->

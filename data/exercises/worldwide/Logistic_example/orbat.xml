@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Army 1" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="2" level="x" name="Formation [2]">
+          <automat engaged="true" id="3" knowledge-group="4" logistic-level="logistic-base" name="Logistic combat train [3]" type="Logistic combat train">
+            <unit command-post="true" id="5" name="Logistic CT" position="31UEQ0390913327" type="Logistic CT">
+              <stocks>
+                <resource name="Diesel" quantity="10000"/>
+              </stocks>
+            </unit>
+          </automat>
+          <automat engaged="false" id="21" knowledge-group="4" name="MBT squadron [21]" type="MBT squadron">
+            <unit command-post="true" id="22" name="Armored squadron CP" position="31UDQ9820917389" type="Armored squadron CP"/>
+            <unit command-post="false" id="23" name="MBT platoon" position="31UDQ9870916889" type="MBT platoon"/>
+            <unit command-post="false" id="24" name="MBT platoon" position="31UDQ9820816390" type="MBT platoon"/>
+            <unit command-post="false" id="25" name="MBT platoon" position="31UDQ9770816890" type="MBT platoon"/>
+            <unit command-post="false" id="26" name="MBT platoon" position="31UDQ9871017388" type="MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="74" knowledge-group="4" logistic-level="logistic-base" name="Logistic combat train [74]" type="Logistic combat train">
+            <unit command-post="true" id="75" name="Logistic CT" position="31UDQ9824113345" type="Logistic CT"/>
+          </automat>
+        </formation>
+        <formation id="6" level="x" logistic-level="logistic-base" name="BLD">
+          <automat engaged="true" id="7" knowledge-group="4" name="Supply logistic area  (corps) [7]" type="Supply logistic area  (corps)">
+            <unit command-post="true" id="8" name="Supply CP (division)" position="31UEQ0232706750" type="Supply CP (division)"/>
+            <unit command-post="false" id="9" name="Ammo supply group SOFF TT - D" position="31UEQ0282706250" type="Ammo supply group SOFF TT - D"/>
+            <unit command-post="false" id="10" name="Ammo supply group OFF TT- D" position="31UEQ0232605751" type="Ammo supply group OFF TT- D"/>
+            <unit command-post="false" id="11" name="Water supply group" position="31UEQ0182606251" type="Water supply group"/>
+            <unit command-post="false" id="12" name="Ammo supply group" position="31UEQ0282806749" type="Ammo supply group"/>
+            <unit command-post="false" id="13" name="Ammo supply group SOFF TD" position="31UEQ0303506249" type="Ammo supply group SOFF TD"/>
+            <unit command-post="false" id="14" name="Supply Transportation platoon (PT)" position="31UEQ0282705751" type="Supply Transportation platoon (PT)"/>
+            <unit command-post="false" id="15" name="Supply platoon (PR)" position="31UEQ0232605544" type="Supply platoon (PR)"/>
+            <unit command-post="false" id="16" name="Supply group 60m3" position="31UEQ0182505752" type="Supply group 60m3">
+              <stocks>
+                <resource name="Diesel" quantity="100000"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="17" name="Magazin section CAP" position="31UEQ0161906251" type="Magazin section CAP"/>
+            <unit command-post="false" id="18" name="Supply Transportation platoon" position="31UEQ0182706750" type="Supply Transportation platoon"/>
+            <unit command-post="false" id="19" name="Supply group 35m3" position="31UEQ0232806956" type="Supply group 35m3"/>
+            <unit command-post="false" id="20" name="Supply group180m3" position="31UEQ0303506955" type="Supply group180m3"/>
+          </automat>
+          <automat engaged="true" id="27" knowledge-group="4" name="Medical logistic area (corps) [27]" type="Medical logistic area (corps)">
+            <unit command-post="true" id="28" name="Medical CP (division)" position="31UDQ9584109585" type="Medical CP (division)"/>
+            <unit command-post="false" id="29" name="Medical group VAB" position="31UDQ9634109085" type="Medical group VAB"/>
+            <unit command-post="false" id="30" name="Casualty evacuation group" position="31UDQ9583908587" type="Casualty evacuation group"/>
+            <unit command-post="false" id="31" name="Logistic decontamination section" position="31UDQ9533909086" type="Logistic decontamination section"/>
+            <unit command-post="false" id="32" name="Psychological section" position="31UDQ9634109584" type="Psychological section"/>
+            <unit command-post="false" id="33" name="Medical section" position="31UDQ9654809085" type="Medical section"/>
+            <unit command-post="false" id="34" name="Surgical section (modular)" position="31UDQ9634008586" type="Surgical section (modular)"/>
+            <unit command-post="false" id="35" name="Surgical section HMC" position="31UDQ9583908380" type="Surgical section HMC"/>
+            <unit command-post="false" id="36" name="Casualty assessment section" position="31UDQ9533908587" type="Casualty assessment section"/>
+          </automat>
+          <automat engaged="true" id="37" knowledge-group="4" name="Maintenance logistic area (corps) [37]" type="Maintenance logistic area (corps)">
+            <unit command-post="true" id="38" name="Maintenance CP  (division)" position="31UEQ0916207238" type="Maintenance CP  (division)"/>
+            <unit command-post="false" id="39" name="Maintenance evacuation group" position="31UEQ0966206738" type="Maintenance evacuation group"/>
+            <unit command-post="false" id="40" name="Repairs section (corps)" position="31UEQ0916106239" type="Repairs section (corps)"/>
+            <unit command-post="false" id="41" name="Mobility repairs section (corps)" position="31UEQ0866106739" type="Mobility repairs section (corps)"/>
+            <unit command-post="false" id="42" name="Firing mobility repairs section (corps)" position="31UEQ0966307237" type="Firing mobility repairs section (corps)"/>
+          </automat>
+        </formation>
+        <formation id="43" level="x" logistic-level="logistic-base" name="BLT">
+          <automat engaged="true" id="44" knowledge-group="4" name="Supply logistic area  (corps) [7] [44]" type="Supply logistic area  (corps)">
+            <unit command-post="true" id="45" name="Supply CP (division)" position="31UEP0011494283" type="Supply CP (division)"/>
+            <unit command-post="false" id="46" name="Ammo supply group SOFF TT - D" position="31UEP0061493783" type="Ammo supply group SOFF TT - D"/>
+            <unit command-post="false" id="47" name="Ammo supply group OFF TT- D" position="31UEP0011393284" type="Ammo supply group OFF TT- D"/>
+            <unit command-post="false" id="48" name="Water supply group" position="31UDP9961393784" type="Water supply group"/>
+            <unit command-post="false" id="49" name="Ammo supply group" position="31UEP0061594282" type="Ammo supply group"/>
+            <unit command-post="false" id="50" name="Ammo supply group SOFF TD" position="31UEP0082293782" type="Ammo supply group SOFF TD"/>
+            <unit command-post="false" id="51" name="Supply Transportation platoon (PT)" position="31UEP0061493284" type="Supply Transportation platoon (PT)"/>
+            <unit command-post="false" id="52" name="Supply platoon (PR)" position="31UEP0011393077" type="Supply platoon (PR)"/>
+            <unit command-post="false" id="53" name="Supply group 60m3" position="31UDP9961293285" type="Supply group 60m3"/>
+            <unit command-post="false" id="54" name="Magazin section CAP" position="31UDP9940693784" type="Magazin section CAP"/>
+            <unit command-post="false" id="55" name="Supply Transportation platoon" position="31UDP9961494283" type="Supply Transportation platoon"/>
+            <unit command-post="false" id="56" name="Supply group 35m3" position="31UEP0011594489" type="Supply group 35m3"/>
+            <unit command-post="false" id="57" name="Supply group180m3" position="31UEP0082294488" type="Supply group180m3"/>
+          </automat>
+          <automat engaged="true" id="58" knowledge-group="4" name="Medical logistic area (corps) [27] [58]" type="Medical logistic area (corps)">
+            <unit command-post="true" id="59" name="Medical CP (division)" position="31UDP9362897117" type="Medical CP (division)"/>
+            <unit command-post="false" id="60" name="Medical group VAB" position="31UDP9412896617" type="Medical group VAB"/>
+            <unit command-post="false" id="61" name="Casualty evacuation group" position="31UDP9362696119" type="Casualty evacuation group"/>
+            <unit command-post="false" id="62" name="Logistic decontamination section" position="31UDP9312696618" type="Logistic decontamination section"/>
+            <unit command-post="false" id="63" name="Psychological section" position="31UDP9412897116" type="Psychological section"/>
+            <unit command-post="false" id="64" name="Medical section" position="31UDP9433596617" type="Medical section"/>
+            <unit command-post="false" id="65" name="Surgical section (modular)" position="31UDP9412796118" type="Surgical section (modular)"/>
+            <unit command-post="false" id="66" name="Surgical section HMC" position="31UDP9362695912" type="Surgical section HMC"/>
+            <unit command-post="false" id="67" name="Casualty assessment section" position="31UDP9312696119" type="Casualty assessment section"/>
+          </automat>
+          <automat engaged="true" id="68" knowledge-group="4" name="Maintenance logistic area (corps) [37] [68]" type="Maintenance logistic area (corps)">
+            <unit command-post="true" id="69" name="Maintenance CP  (division)" position="31UEP0694994771" type="Maintenance CP  (division)"/>
+            <unit command-post="false" id="70" name="Maintenance evacuation group" position="31UEP0744994271" type="Maintenance evacuation group"/>
+            <unit command-post="false" id="71" name="Repairs section (corps)" position="31UEP0694893772" type="Repairs section (corps)"/>
+            <unit command-post="false" id="72" name="Mobility repairs section (corps)" position="31UEP0644894272" type="Mobility repairs section (corps)"/>
+            <unit command-post="false" id="73" name="Firing mobility repairs section (corps)" position="31UEP0745094770" type="Firing mobility repairs section (corps)"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="4" name="Knowledge group [4]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="3">
+          <subordinate id="21"/>
+        </logistic-base>
+        <logistic-base id="6">
+          <subordinate id="3">
+            <quotas>
+              <resource name="Diesel" quantity="7500"/>
+            </quotas>
+          </subordinate>
+        </logistic-base>
+        <logistic-base id="43">
+          <subordinate id="6">
+            <quotas>
+              <resource name="Diesel" quantity="20000"/>
+            </quotas>
+          </subordinate>
+        </logistic-base>
+      </logistics>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1"/>
+  </diplomacy>
+</orbat>
+<!-- signature="4106118332" -->

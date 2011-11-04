@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<profiles model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
+  <profile name="x - Monterey3" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="102"/>
+        <side id="116"/>
+        <formation id="3"/>
+        <formation id="77"/>
+        <formation id="35"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="x - Salinas35" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="102"/>
+        <side id="116"/>
+        <formation id="35"/>
+        <formation id="3"/>
+        <formation id="77"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="x - Laguna Seca77" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="102"/>
+        <side id="116"/>
+        <formation id="77"/>
+        <formation id="3"/>
+        <formation id="35"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Terrorists" password="" supervision="false">
+    <rights>
+      <readonly>
+        <side id="102"/>
+      </readonly>
+      <readwrite>
+        <side id="97"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Godseye" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="102"/>
+        <side id="97"/>
+        <side id="116"/>
+      </readwrite>
+    </rights>
+  </profile>
+</profiles>
+<!-- signature="0903862047" -->

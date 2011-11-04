@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Blue Forces" type="friend">
+      <objects>
+        <object id="241" name="barricade [241]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>30TXU9767011946</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="242" name="barricade [242]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>30TXU9723612358</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="244" name="mined area (linear) [244]" type="mined area (linear)">
+          <shape type="ligne">
+            <points>
+              <point>30TYU0220413749</point>
+              <point>30TYU0249113167</point>
+              <point>30TYU0290812958</point>
+              <point>30TYU0332512769</point>
+              <point>30TYU0378012622</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="245" name="barricade [245]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>31TCP1067211440</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="247" name="barricade [247]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>31TCP1032011882</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="252" name="barricade [252]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>30TXT3870936714</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="253" name="barricade [253]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>30TXT3898136225</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="254" name="barricade [254]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>30TXT9990638892</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="255" name="barricade [255]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>30TYT0016038421</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="273" name="mined area (linear) [273]" type="mined area (linear)">
+          <shape type="ligne">
+            <points>
+              <point>31TCP1530612994</point>
+              <point>31TCP1578112117</point>
+              <point>31TCP1694811640</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="274" name="mined area (linear) [274]" type="mined area (linear)">
+          <shape type="ligne">
+            <points>
+              <point>30TXT4359838251</point>
+              <point>30TXT4409337384</point>
+              <point>30TXT4533636966</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="275" name="mined area (linear) [275]" type="mined area (linear)">
+          <shape type="ligne">
+            <points>
+              <point>30TYT0478440394</point>
+              <point>30TYT0533539502</point>
+              <point>30TYT0648139135</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="328" name="continuous pontoon bridge [328]" type="continuous pontoon bridge">
+          <shape type="ligne">
+            <points>
+              <point>31TCN1961038719</point>
+              <point>31TCN2042539624</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="329" name="continuous pontoon bridge [329]" type="continuous pontoon bridge">
+          <shape type="ligne">
+            <points>
+              <point>31TCN1985738407</point>
+              <point>31TCN2054338932</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="674" name="240" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>30TXU9701609421</point>
+              <point>30TXU9732609036</point>
+              <point>30TXU9709008898</point>
+              <point>30TXU9683209345</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="675" name="243" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>30TXU9683511931</point>
+              <point>30TXU9621011777</point>
+              <point>30TXU9618612030</point>
+              <point>30TXU9676312152</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="680" name="248" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>31TCP0986011528</point>
+              <point>31TCP0923511374</point>
+              <point>31TCP0921111627</point>
+              <point>31TCP0978811749</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="681" name="249" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>31TCP0985308962</point>
+              <point>31TCP1016308577</point>
+              <point>31TCP0992708439</point>
+              <point>31TCP0966908886</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="682" name="250" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>30TXT3826936476</point>
+              <point>30TXT3764436322</point>
+              <point>30TXT3762036575</point>
+              <point>30TXT3819736697</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="683" name="251" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>30TXT3836233606</point>
+              <point>30TXT3867233221</point>
+              <point>30TXT3843633083</point>
+              <point>30TXT3817833530</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="684" name="256" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>30TXT9943638499</point>
+              <point>30TXT9881138345</point>
+              <point>30TXT9878738598</point>
+              <point>30TXT9936438720</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="685" name="257" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>30TXT9954235756</point>
+              <point>30TXT9985235371</point>
+              <point>30TXT9961635233</point>
+              <point>30TXT9935835680</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="686" name="258" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>31TCN0684038314</point>
+              <point>31TCN0621538160</point>
+              <point>31TCN0619138413</point>
+              <point>31TCN0676838535</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="687" name="259" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>31TCN0670835409</point>
+              <point>31TCN0701835024</point>
+              <point>31TCN0678234886</point>
+              <point>31TCN0652435333</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="688" name="375" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>31TCN0723736022</point>
+              <point>31TCN0775335647</point>
+              <point>31TCN0758835457</point>
+              <point>31TCN0700235835</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="693" name="244" type="mined area (linear)">
+          <shape type="polygone">
+            <points>
+              <point>30TYU0225113800</point>
+              <point>30TYU0252313187</point>
+              <point>30TYU0378412643</point>
+              <point>30TYU0383812789</point>
+              <point>30TYU0260413321</point>
+              <point>30TYU0235513843</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="5" level="iii" name="Formation [5]">
+          <formation id="6" level="ii" name="Formation [6]">
+            <automat engaged="false" id="89" knowledge-group="1125" name="MBT squadron [89]" type="MBT squadron">
+              <unit command-post="true" id="90" name="Armored squadron CP" position="30TXU2771502184" type="Armored squadron CP"/>
+              <unit command-post="false" id="92" name="MBT platoon" position="30TXU9289004114" type="MBT platoon"/>
+              <unit command-post="false" id="93" name="MBT platoon" position="30TXU3170502187" type="MBT platoon"/>
+              <unit command-post="false" id="94" name="MBT platoon" position="31TCP0537604022" type="MBT platoon"/>
+              <unit command-post="false" id="154" name="MBT platoon" position="30TXT3438828534" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="138" knowledge-group="1163" name="MBT squadron [138]" type="MBT squadron">
+              <unit command-post="true" id="139" name="Armored squadron CP" position="30TXT9529429525" type="Armored squadron CP"/>
+              <unit command-post="false" id="140" name="MBT platoon" position="30TXT9331230634" type="MBT platoon"/>
+              <unit command-post="false" id="141" name="MBT platoon" position="30TXT9399930877" type="MBT platoon"/>
+              <unit command-post="false" id="142" name="MBT platoon" position="30TXT9361030713" type="MBT platoon"/>
+              <unit command-post="false" id="143" name="Mortar troop" position="30TXT9521629988" type="Mortar troop"/>
+              <unit command-post="false" id="144" name="MBT platoon" position="30TXT9546530657" type="MBT platoon"/>
+              <unit command-post="false" id="1282" name="Light armored platoon" position="30TXT9527431714" type="Light armored platoon"/>
+              <unit command-post="false" id="1283" name="Light armored platoon" position="30TXT9648331412" type="Light armored platoon"/>
+            </automat>
+            <automat engaged="true" id="499" knowledge-group="1167" name="MBT squadron [499]" type="MBT squadron">
+              <unit command-post="true" id="500" name="Armored squadron CP" position="30TXS4190062538" type="Armored squadron CP"/>
+              <unit command-post="false" id="501" name="MBT platoon" position="30TXS4241862057" type="MBT platoon"/>
+              <unit command-post="false" id="502" name="MBT platoon" position="30TXS4193561540" type="MBT platoon"/>
+              <unit command-post="false" id="503" name="MBT platoon" position="30TXS4141762022" type="MBT platoon"/>
+              <unit command-post="false" id="504" name="MBT platoon" position="30TXS4240062556" type="MBT platoon"/>
+              <unit command-post="false" id="519" name="MBT platoon" position="30TXS4110962705" type="MBT platoon"/>
+              <unit command-post="false" id="520" name="MBT platoon" position="30TXS4071162166" type="MBT platoon"/>
+              <unit command-post="false" id="521" name="MBT platoon" position="30TXS4110661546" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="551" knowledge-group="1167" name="MBT squadron [551]" type="MBT squadron">
+              <unit command-post="true" id="552" name="Armored squadron CP" position="30TXS3583364314" type="Armored squadron CP"/>
+              <unit command-post="false" id="553" name="MBT platoon" position="30TXS3635163833" type="MBT platoon"/>
+              <unit command-post="false" id="554" name="MBT platoon" position="30TXS3586863316" type="MBT platoon"/>
+              <unit command-post="false" id="555" name="MBT platoon" position="30TXS3535063798" type="MBT platoon"/>
+              <unit command-post="false" id="556" name="MBT platoon" position="30TXS3633364332" type="MBT platoon"/>
+              <unit command-post="false" id="557" name="MBT platoon" position="30TXS3504264481" type="MBT platoon"/>
+              <unit command-post="false" id="558" name="MBT platoon" position="30TXS3464463942" type="MBT platoon"/>
+              <unit command-post="false" id="559" name="MBT platoon" position="30TXS3503963322" type="MBT platoon"/>
+            </automat>
+            <automat engaged="false" id="589" knowledge-group="1165" name="Infantry company [589]" type="Infantry company">
+              <unit command-post="false" id="595" name="Infantry platoon" position="30TYS0822067251" type="Infantry platoon"/>
+              <unit command-post="false" id="596" name="Infantry platoon" position="30TYS0764067558" type="Infantry platoon"/>
+              <unit command-post="false" id="597" name="Infantry platoon" position="30TYS0758567501" type="Infantry platoon"/>
+              <unit command-post="true" id="598" name="Infantry company CP" position="30TYS0834665211" type="Infantry company CP"/>
+              <unit command-post="false" id="630" name="Deployment support platoon" position="30TYS0207963786" type="Deployment support platoon"/>
+            </automat>
+            <automat engaged="true" id="632" knowledge-group="1165" logistic-level="logistic-base" name="Armored battalion combat train [632]" type="Armored battalion combat train">
+              <unit command-post="true" id="633" name="Teeth arms battalion CT" position="30TYS0079263689" type="Teeth arms battalion CT"/>
+            </automat>
+            <formation id="719" level="i" name="Formation [719]">
+              <automat engaged="true" id="699" knowledge-group="1166" name="MBT squadron [699]" type="MBT squadron">
+                <unit command-post="true" id="700" name="Armored squadron CP" position="31TCM0310064466" type="Armored squadron CP"/>
+                <unit command-post="false" id="701" name="MBT platoon" position="31TCM0358063946" type="MBT platoon"/>
+                <unit command-post="false" id="702" name="MBT platoon" position="31TCM0305963468" type="MBT platoon"/>
+                <unit command-post="false" id="703" name="MBT platoon" position="31TCM0257963987" type="MBT platoon"/>
+                <unit command-post="false" id="704" name="MBT platoon" position="31TCM0360064445" type="MBT platoon"/>
+                <limit name="Limit 815">
+                  <point>31TBM9723259524</point>
+                  <point>31TCM0028078895</point>
+                  <point>31TCM0288885036</point>
+                </limit>
+                <limit name="Limit 816">
+                  <point>31TCM0538457791</point>
+                  <point>31TCM0863169755</point>
+                  <point>31TCM1134175942</point>
+                </limit>
+                <limit name="Limit 817">
+                  <point>31TCM1386854345</point>
+                  <point>31TCM1953266559</point>
+                  <point>31TCM2348579843</point>
+                </limit>
+                <limit name="Limit 818">
+                  <point>31TCM2455849659</point>
+                  <point>31TCM3122864431</point>
+                  <point>31TCM3470572835</point>
+                </limit>
+                <limit name="Limit 820">
+                  <point>31TCM3118555619</point>
+                  <point>31TCM2376258822</point>
+                  <point>31TCM1869663295</point>
+                  <point>31TCM1677865839</point>
+                  <point>31TCM1067869938</point>
+                  <point>31TCM0755574514</point>
+                  <point>31TCM0425076449</point>
+                  <point>31TBM9813277675</point>
+                </limit>
+                <limit name="Limit 821">
+                  <point>31TCM3346657034</point>
+                  <point>31TCM2055874281</point>
+                  <point>31TCM1342380047</point>
+                  <point>31TCM0298285874</point>
+                </limit>
+              </automat>
+              <automat engaged="true" id="705" knowledge-group="1166" name="MBT squadron [705]" type="MBT squadron">
+                <unit command-post="true" id="706" name="Armored squadron CP" position="31TCM0774660377" type="Armored squadron CP"/>
+                <unit command-post="false" id="707" name="MBT platoon" position="31TCM0822759857" type="MBT platoon"/>
+                <unit command-post="false" id="708" name="MBT platoon" position="31TCM0770659379" type="MBT platoon"/>
+                <unit command-post="false" id="709" name="MBT platoon" position="31TCM0722659898" type="MBT platoon"/>
+                <unit command-post="false" id="710" name="MBT platoon" position="31TCM0824760356" type="MBT platoon"/>
+              </automat>
+              <automat engaged="true" id="711" knowledge-group="1166" name="Scout platoon [711]" type="Scout platoon">
+                <unit command-post="false" id="712" name="Antitank patrol" position="31TCM0892663478" type="Antitank patrol"/>
+                <unit command-post="true" id="713" name="Scout patrol" position="31TCM0940662958" type="Scout patrol"/>
+                <unit command-post="false" id="714" name="Scout patrol" position="31TCM0888562480" type="Scout patrol"/>
+              </automat>
+              <automat engaged="true" id="715" knowledge-group="1166" name="Scout platoon [715]" type="Scout platoon">
+                <unit command-post="false" id="716" name="Antitank patrol" position="31TCM0574865457" type="Antitank patrol"/>
+                <unit command-post="true" id="717" name="Scout patrol" position="31TCM0622864938" type="Scout patrol"/>
+                <unit command-post="false" id="718" name="Scout patrol" position="31TCM0570764459" type="Scout patrol"/>
+              </automat>
+              <automat engaged="false" id="720" knowledge-group="1166" name="Countermobility company [720]" type="Countermobility company">
+                <unit command-post="true" id="721" name="Countermobility platoon" position="31TCM0339661904" type="Countermobility platoon"/>
+                <unit command-post="false" id="722" name="Countermobility platoon" position="31TCM0387661385" type="Countermobility platoon"/>
+                <unit command-post="false" id="723" name="Countermobility platoon" position="31TCM0335660906" type="Countermobility platoon"/>
+              </automat>
+              <automat engaged="false" id="724" knowledge-group="1166" name="Countermobility company [724]" type="Countermobility company">
+                <unit command-post="true" id="725" name="Countermobility platoon" position="31TCM0917858177" type="Countermobility platoon"/>
+                <unit command-post="false" id="726" name="Countermobility platoon" position="31TCM0965857658" type="Countermobility platoon"/>
+                <unit command-post="false" id="727" name="Countermobility platoon" position="31TCM0913757179" type="Countermobility platoon"/>
+              </automat>
+              <automat engaged="true" id="744" knowledge-group="1166" name="Infantry company [744]" type="Infantry company">
+                <unit command-post="true" id="745" name="Infantry company CP" position="31TCM0742459370" type="Infantry company CP"/>
+                <unit command-post="false" id="746" name="Infantry platoon" position="31TCM0790458851" type="Infantry platoon"/>
+                <unit command-post="false" id="747" name="MRA troop" position="31TCM0738358373" type="MRA troop"/>
+                <unit command-post="false" id="748" name="Mortar troop" position="31TCM0690358892" type="Mortar troop"/>
+                <unit command-post="false" id="749" name="Light armored platoon" position="31TCM0792459350" type="Light armored platoon"/>
+              </automat>
+              <automat engaged="true" id="750" knowledge-group="1166" name="Infantry company [750]" type="Infantry company">
+                <unit command-post="true" id="751" name="Infantry company CP" position="31TCM0165563459" type="Infantry company CP"/>
+                <unit command-post="false" id="752" name="Infantry platoon" position="31TCM0213562939" type="Infantry platoon"/>
+                <unit command-post="false" id="753" name="MRA troop" position="31TCM0161462461" type="MRA troop"/>
+                <unit command-post="false" id="754" name="Mortar troop" position="31TCM0113462980" type="Mortar troop"/>
+                <unit command-post="false" id="755" name="Light armored platoon" position="31TCM0215563438" type="Light armored platoon"/>
+              </automat>
+              <automat engaged="true" id="974" knowledge-group="1166" name="MBT squadron [974]" type="MBT squadron">
+                <unit command-post="true" id="975" name="Armored squadron CP" position="31TCM1629353877" type="Armored squadron CP"/>
+                <unit command-post="false" id="976" name="MBT platoon" position="31TCM1677453358" type="MBT platoon"/>
+                <unit command-post="false" id="977" name="MBT platoon" position="31TCM1625352879" type="MBT platoon"/>
+                <unit command-post="false" id="978" name="MBT platoon" position="31TCM1577353399" type="MBT platoon"/>
+                <unit command-post="false" id="979" name="MBT platoon" position="31TCM1679453857" type="MBT platoon"/>
+                <unit command-post="false" id="1092" name="MBT platoon" position="31TCM1679252841" type="MBT platoon"/>
+                <unit command-post="false" id="1093" name="MBT platoon" position="31TCM1732753397" type="MBT platoon"/>
+              </automat>
+              <automat engaged="true" id="980" knowledge-group="1166" name="MBT squadron [980]" type="MBT squadron">
+                <unit command-post="true" id="981" name="Armored squadron CP" position="31TCM2059852436" type="Armored squadron CP"/>
+                <unit command-post="false" id="982" name="MBT platoon" position="31TCM2107851917" type="MBT platoon"/>
+                <unit command-post="false" id="983" name="MBT platoon" position="31TCM2055751438" type="MBT platoon"/>
+                <unit command-post="false" id="984" name="MBT platoon" position="31TCM2007751958" type="MBT platoon"/>
+                <unit command-post="false" id="985" name="MBT platoon" position="31TCM2109852416" type="MBT platoon"/>
+                <unit command-post="false" id="1090" name="MBT platoon" position="31TCM1997852668" type="MBT platoon"/>
+                <unit command-post="false" id="1091" name="MBT platoon" position="31TCM1944452134" type="MBT platoon"/>
+              </automat>
+            </formation>
+            <automat engaged="false" id="846" knowledge-group="1166" name="Teeth Arms Battalion [846]" type="Teeth Arms Battalion">
+              <unit command-post="true" id="847" name="Armored squadron CP" position="31TCM2157056721" type="Armored squadron CP"/>
+              <automat engaged="true" id="848" knowledge-group="1166" name="MBT squadron [848]" type="MBT squadron">
+                <unit command-post="true" id="849" name="Armored squadron CP" position="31TCM1712255853" type="Armored squadron CP"/>
+                <unit command-post="false" id="850" name="MBT platoon" position="31TCM1760255334" type="MBT platoon"/>
+                <unit command-post="false" id="851" name="MBT platoon" position="31TCM1708154855" type="MBT platoon"/>
+                <unit command-post="false" id="852" name="MBT platoon" position="31TCM1660155374" type="MBT platoon"/>
+                <unit command-post="false" id="853" name="MBT platoon" position="31TCM1762355832" type="MBT platoon"/>
+              </automat>
+              <automat engaged="true" id="854" knowledge-group="1166" name="MBT squadron [854]" type="MBT squadron">
+                <unit command-post="true" id="855" name="Armored squadron CP" position="31TCM1922254467" type="Armored squadron CP"/>
+                <unit command-post="false" id="856" name="MBT platoon" position="31TCM1970253948" type="MBT platoon"/>
+                <unit command-post="false" id="857" name="MBT platoon" position="31TCM1918153470" type="MBT platoon"/>
+                <unit command-post="false" id="858" name="MBT platoon" position="31TCM1870153989" type="MBT platoon"/>
+                <unit command-post="false" id="859" name="MBT platoon" position="31TCM1972254447" type="MBT platoon"/>
+              </automat>
+              <automat engaged="true" id="860" knowledge-group="1166" name="MBT squadron [860]" type="MBT squadron">
+                <unit command-post="true" id="861" name="Armored squadron CP" position="31TCM2127854483" type="Armored squadron CP"/>
+                <unit command-post="false" id="862" name="MBT platoon" position="31TCM2175853964" type="MBT platoon"/>
+                <unit command-post="false" id="863" name="MBT platoon" position="31TCM2123753485" type="MBT platoon"/>
+                <unit command-post="false" id="864" name="MBT platoon" position="31TCM2075754005" type="MBT platoon"/>
+                <unit command-post="false" id="865" name="MBT platoon" position="31TCM2177954463" type="MBT platoon"/>
+              </automat>
+              <automat engaged="true" id="866" knowledge-group="1166" name="MBT squadron [866]" type="MBT squadron">
+                <unit command-post="true" id="867" name="Armored squadron CP" position="31TCM2118958436" type="Armored squadron CP"/>
+                <unit command-post="false" id="868" name="MBT platoon" position="31TCM2166957916" type="MBT platoon"/>
+                <unit command-post="false" id="869" name="MBT platoon" position="31TCM2114857438" type="MBT platoon"/>
+                <unit command-post="false" id="870" name="MBT platoon" position="31TCM2066857957" type="MBT platoon"/>
+                <unit command-post="false" id="871" name="MBT platoon" position="31TCM2168958415" type="MBT platoon"/>
+              </automat>
+              <automat engaged="true" id="872" knowledge-group="1166" name="MBT squadron [872]" type="MBT squadron">
+                <unit command-post="true" id="873" name="Armored squadron CP" position="31TCM2294254715" type="Armored squadron CP"/>
+                <unit command-post="false" id="874" name="MBT platoon" position="31TCM2342254196" type="MBT platoon"/>
+                <unit command-post="false" id="875" name="MBT platoon" position="31TCM2290153717" type="MBT platoon"/>
+                <unit command-post="false" id="876" name="MBT platoon" position="31TCM2242154237" type="MBT platoon"/>
+                <unit command-post="false" id="877" name="MBT platoon" position="31TCM2344354695" type="MBT platoon"/>
+              </automat>
+            </automat>
+            <lima name="Lima 100">
+              <point>30TXT4369343942</point>
+              <point>30TXT4555242172</point>
+              <point>30TXT4871640197</point>
+            </lima>
+            <lima name="Lima 155">
+              <point>30TXT3445035161</point>
+              <point>30TXT3709132134</point>
+              <point>30TXT3800231111</point>
+              <point>30TXT3847930669</point>
+            </lima>
+            <lima name="Lima 156">
+              <point>30TXT4636552203</point>
+              <point>30TXT5133748387</point>
+            </lima>
+            <lima name="Lima 158">
+              <point>30TXT9580637336</point>
+              <point>30TXT9821434392</point>
+              <point>30TXT9929833268</point>
+            </lima>
+            <lima name="Lima 159">
+              <point>30TYT0511745719</point>
+              <point>30TYT0569744944</point>
+              <point>30TYT0654444454</point>
+              <point>30TYT0679044432</point>
+              <point>30TYT0732744022</point>
+              <point>30TYT0797743862</point>
+              <point>30TYT0895543132</point>
+              <point>30TYT0980742489</point>
+            </lima>
+            <lima name="Lima 160">
+              <point>30TYT0769854137</point>
+              <point>30TYT1252550521</point>
+            </lima>
+            <limit name="Limit 102">
+              <point>30TXT9510328321</point>
+              <point>30TXT9882533734</point>
+              <point>30TYT0542137321</point>
+              <point>30TYT0893042221</point>
+              <point>30TYT1121747813</point>
+              <point>30TYT1202151101</point>
+              <point>30TYT1305454398</point>
+            </limit>
+            <limit name="Limit 622">
+              <point>30TYS0761773563</point>
+              <point>30TYS0559268196</point>
+              <point>30TXS9641963593</point>
+            </limit>
+            <limit name="Limit 623">
+              <point>30TYS1237071214</point>
+              <point>30TYS1105069499</point>
+              <point>30TYS0863163796</point>
+              <point>30TYS0793759330</point>
+            </limit>
+          </formation>
+          <limit name="Limit 36">
+            <point>30TXU8929204746</point>
+            <point>30TXU9513611599</point>
+            <point>30TXU9918313474</point>
+            <point>30TYU0236617986</point>
+            <point>30UYU0549928082</point>
+          </limit>
+          <limit name="Limit 47">
+            <point>31TCP0189804837</point>
+            <point>31TCP0814011234</point>
+            <point>31TCP1232012775</point>
+            <point>31TCP1585617057</point>
+            <point>31UCP1974526836</point>
+          </limit>
+          <limit name="Limit 48">
+            <point>30TXT9206031305</point>
+            <point>30TXT9793438355</point>
+            <point>30TYT0201440154</point>
+            <point>30TYT0516244858</point>
+            <point>30TYT0830754796</point>
+          </limit>
+          <limit name="Limit 50">
+            <point>30TXT3079529007</point>
+            <point>30TXT3667936163</point>
+            <point>30TXT4072438051</point>
+            <point>30TXT4396742665</point>
+            <point>30TXT4708052599</point>
+          </limit>
+          <limit name="Limit 53">
+            <point>30TXS3338955617</point>
+            <point>30TXS3912562675</point>
+            <point>30TXS4300964643</point>
+            <point>30TXS4638769113</point>
+            <point>30TXS4947778954</point>
+          </limit>
+          <limit name="Limit 56">
+            <point>30TXU9248401636</point>
+            <point>30TXU9601807090</point>
+            <point>30TYU0275910455</point>
+            <point>30TYU0625515678</point>
+            <point>30UYU0857320997</point>
+            <point>30UYU0931024392</point>
+            <point>30UYU1038027655</point>
+          </limit>
+          <limit name="Limit 57">
+            <point>31TCP0477201708</point>
+            <point>31TCP0887906910</point>
+            <point>31TCP1571809625</point>
+            <point>31TCP1958914563</point>
+            <point>31UCP2232119675</point>
+            <point>31UCP2336122999</point>
+            <point>31UCP2464226212</point>
+          </limit>
+          <limit name="Limit 59">
+            <point>30TXT3391426094</point>
+            <point>30TXT3746231606</point>
+            <point>30TXT4421635029</point>
+            <point>30TXT4768240011</point>
+            <point>30TXT5000845562</point>
+            <point>30TXT5077648808</point>
+            <point>30TXT5184552170</point>
+          </limit>
+          <limit name="Limit 63">
+            <point>30TXS3672052891</point>
+            <point>30TXS4023358299</point>
+            <point>30TXS4705061702</point>
+            <point>30TXS5037966512</point>
+            <point>30TXS5287972211</point>
+            <point>30TXS5344175393</point>
+            <point>30TXS5461678637</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="1125" name="Case 1_4" type="Standard"/>
+        <knowledge-group id="1163" name="Case 5" type="Standard"/>
+        <knowledge-group id="1164" name="Case 6" type="Standard"/>
+        <knowledge-group id="1165" name="Case 8" type="Standard"/>
+        <knowledge-group id="1166" name="Case 9" type="Standard"/>
+        <knowledge-group id="1167" name="Case 7" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants>
+        <inhabitant id="1309" name="Population" type="popType2">
+          <composition dead="0" healthy="300000000" wounded="0"/>
+          <health-need quantity="30"/>
+          <information></information>
+          <living-area>
+            <urban-block id="7"/>
+            <urban-block id="8"/>
+            <urban-block id="9"/>
+            <urban-block id="10"/>
+            <urban-block id="11"/>
+            <urban-block id="12"/>
+            <urban-block id="13"/>
+            <urban-block id="14"/>
+            <urban-block id="15"/>
+            <urban-block id="16"/>
+            <urban-block id="17"/>
+            <urban-block id="18"/>
+            <urban-block id="19"/>
+            <urban-block id="20"/>
+            <urban-block id="21"/>
+            <urban-block id="22"/>
+            <urban-block id="23"/>
+            <urban-block id="24"/>
+            <urban-block id="25"/>
+            <urban-block id="26"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="579" value="0"/>
+          </adhesions>
+        </inhabitant>
+        <inhabitant id="1317" name="POPTEST" type="popType2">
+          <composition dead="0" healthy="1000000000" wounded="0"/>
+          <health-need quantity="1e+006"/>
+          <information></information>
+          <living-area>
+            <urban-block id="27"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="579" value="0"/>
+          </adhesions>
+        </inhabitant>
+      </inhabitants>
+      <logistics/>
+    </party>
+    <party id="3" name="Red Forces" type="enemy">
+      <objects>
+        <object id="270" name="mines [270]" type="mines">
+          <shape type="point">
+            <points>
+              <point>31TCP1451814076</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="271" name="mines [271]" type="mines">
+          <shape type="point">
+            <points>
+              <point>31TCP1411614465</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="286" name="mines [286]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30TXT4269439215</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="287" name="mines [287]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30TXT4227339553</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="288" name="mines [288]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30TYT0388241408</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="289" name="mines [289]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30TYT0341941746</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="698" name="Mine Cluster [698]" type="mines">
+          <shape type="point">
+            <points>
+              <point>30TYS0474065898</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="15" level="iii" name="Formation [15]">
+          <formation id="16" level="ii" name="Formation [16]">
+            <automat engaged="false" id="262" knowledge-group="1171" name="Light armored squadron [262]" type="Light armored squadron">
+              <unit command-post="true" id="263" name="Armored squadron CP" position="31TCP1725215546" type="Armored squadron CP"/>
+              <unit command-post="false" id="265" name="Light armored platoon" position="31TCP1448014711" type="Light armored platoon"/>
+              <unit command-post="false" id="268" name="Light armored platoon" position="31TCP1492614276" type="Light armored platoon"/>
+              <unit command-post="false" id="299" name="Light armored platoon" position="31TCP1596115289" type="Light armored platoon"/>
+            </automat>
+            <automat engaged="false" id="279" knowledge-group="1172" name="Light armored squadron [279]" type="Light armored squadron">
+              <unit command-post="true" id="280" name="Armored squadron CP" position="30TXT4522041059" type="Armored squadron CP"/>
+              <unit command-post="false" id="282" name="Light armored platoon" position="30TXT4262939893" type="Light armored platoon"/>
+              <unit command-post="false" id="283" name="Light armored platoon" position="30TXT4297439402" type="Light armored platoon"/>
+              <unit command-post="false" id="298" name="Light armored platoon" position="30TXT4408940523" type="Light armored platoon"/>
+            </automat>
+            <automat engaged="true" id="290" knowledge-group="1173" name="Light armored squadron [290]" type="Light armored squadron">
+              <unit command-post="true" id="291" name="Armored squadron CP" position="30TYT0640543267" type="Armored squadron CP"/>
+              <unit command-post="false" id="293" name="Light armored platoon" position="30TYT0384742094" type="Light armored platoon"/>
+              <unit command-post="false" id="294" name="Light armored platoon" position="30TYT0448741933" type="Light armored platoon"/>
+              <unit command-post="false" id="297" name="Light armored platoon" position="30TYT0518242685" type="Light armored platoon"/>
+            </automat>
+            <automat engaged="true" id="505" knowledge-group="1174" name="MBT squadron [505]" type="MBT squadron">
+              <unit command-post="true" id="506" name="Armored squadron CP" position="30TXS5099776713" type="Armored squadron CP"/>
+              <unit command-post="false" id="507" name="MBT platoon" position="30TXS5259874504" type="MBT platoon"/>
+              <unit command-post="false" id="508" name="MBT platoon" position="30TXS5062174988" type="MBT platoon"/>
+              <unit command-post="false" id="509" name="MBT platoon" position="30TXS5133774560" type="MBT platoon"/>
+              <unit command-post="false" id="522" name="MBT platoon" position="30TXS4981575441" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="569" knowledge-group="1174" name="MBT squadron [569]" type="MBT squadron">
+              <unit command-post="true" id="570" name="Armored squadron CP" position="30TXS4510681541" type="Armored squadron CP"/>
+              <unit command-post="false" id="571" name="MBT platoon" position="30TXS4670879332" type="MBT platoon"/>
+              <unit command-post="false" id="572" name="MBT platoon" position="30TXS4473179816" type="MBT platoon"/>
+              <unit command-post="false" id="573" name="MBT platoon" position="30TXS4544779388" type="MBT platoon"/>
+              <unit command-post="false" id="576" name="MBT platoon" position="30TXS4330380495" type="MBT platoon"/>
+            </automat>
+            <limit name="Limit 577">
+              <point>30TXS4813081147</point>
+              <point>30TXS4536974084</point>
+              <point>30TXS4262667859</point>
+              <point>30TXS3150155751</point>
+            </limit>
+            <limit name="Limit 578">
+              <point>30TXS2657258333</point>
+              <point>30TXS3446369735</point>
+              <point>30TXS4042776985</point>
+              <point>30TXS4297383178</point>
+            </limit>
+          </formation>
+          <formation id="619" level="ii" name="Formation [619]">
+            <automat engaged="true" id="603" knowledge-group="1168" name="MBT squadron [603]" type="MBT squadron">
+              <unit command-post="true" id="604" name="Armored squadron CP" position="30TYS1371790803" type="Armored squadron CP"/>
+              <unit command-post="false" id="605" name="MBT platoon" position="30TYS1423590321" type="MBT platoon"/>
+              <unit command-post="false" id="606" name="MBT platoon" position="30TYS1375289805" type="MBT platoon"/>
+              <unit command-post="false" id="607" name="MBT platoon" position="30TYS1323490286" type="MBT platoon"/>
+              <unit command-post="false" id="608" name="MBT platoon" position="30TYS1421890821" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="609" knowledge-group="1168" name="Infantry company [609]" type="Infantry company">
+              <unit command-post="true" id="610" name="Infantry company CP" position="30TYS1245992413" type="Infantry company CP"/>
+              <unit command-post="false" id="611" name="Infantry platoon" position="30TYS1297791932" type="Infantry platoon"/>
+              <unit command-post="false" id="612" name="MRA troop" position="30TYS1249491415" type="MRA troop"/>
+              <unit command-post="false" id="613" name="Mortar troop" position="30TYS1197691896" type="Mortar troop"/>
+              <unit command-post="false" id="614" name="Light armored platoon" position="30TYS1295992431" type="Light armored platoon"/>
+            </automat>
+            <automat engaged="true" id="615" knowledge-group="1168" name="Commandos platoon [615]" type="Commandos platoon">
+              <unit command-post="true" id="616" name="Commando troop" position="30TYS1066691186" type="Commando troop"/>
+              <unit command-post="false" id="617" name="Commando troop" position="30TYS1118590705" type="Commando troop"/>
+              <unit command-post="false" id="618" name="Commando troop" position="30TYS1070290188" type="Commando troop"/>
+            </automat>
+          </formation>
+          <formation id="666" level="ii" name="Formation [666]">
+            <automat engaged="false" id="667" knowledge-group="1168" name="Militias [667]" type="Militias">
+              <unit command-post="true" id="668" name="Militia" position="30TYS0824282161" type="Militia"/>
+              <unit command-post="false" id="669" name="Militia" position="30TYS1174981930" type="Militia"/>
+              <unit command-post="false" id="670" name="Militia" position="30TYS0803479866" type="Militia"/>
+            </automat>
+          </formation>
+          <formation id="756" level="ii" name="Formation [756]">
+            <automat engaged="false" id="908" knowledge-group="1169" name="Teeth Arms Battalion [908]" type="Teeth Arms Battalion">
+              <unit command-post="true" id="909" name="Armored squadron CP" position="31TCM1393188751" type="Armored squadron CP"/>
+              <automat engaged="true" id="916" knowledge-group="1169" name="MBT squadron [916]" type="MBT squadron">
+                <unit command-post="true" id="917" name="Armored squadron CP" position="31TCM1614989409" type="Armored squadron CP"/>
+                <unit command-post="false" id="918" name="MBT platoon" position="31TCM1662988890" type="MBT platoon"/>
+                <unit command-post="false" id="919" name="MBT platoon" position="31TCM1610888411" type="MBT platoon"/>
+                <unit command-post="false" id="920" name="MBT platoon" position="31TCM1562888931" type="MBT platoon"/>
+                <unit command-post="false" id="921" name="MBT platoon" position="31TCM1664989388" type="MBT platoon"/>
+                <unit command-post="false" id="1081" name="MBT platoon" position="31TCM1685088266" type="MBT platoon"/>
+                <unit command-post="false" id="1082" name="MBT platoon" position="31TCM1753589088" type="MBT platoon"/>
+              </automat>
+              <automat engaged="true" id="922" knowledge-group="1169" name="MBT squadron [922]" type="MBT squadron">
+                <unit command-post="true" id="923" name="Armored squadron CP" position="31TCM1361891000" type="Armored squadron CP"/>
+                <unit command-post="false" id="924" name="MBT platoon" position="31TCM1409890481" type="MBT platoon"/>
+                <unit command-post="false" id="925" name="MBT platoon" position="31TCM1357790002" type="MBT platoon"/>
+                <unit command-post="false" id="926" name="MBT platoon" position="31TCM1309790522" type="MBT platoon"/>
+                <unit command-post="false" id="927" name="MBT platoon" position="31TCM1411890979" type="MBT platoon"/>
+                <unit command-post="false" id="1083" name="MBT platoon" position="31TCM1433090021" type="MBT platoon"/>
+                <unit command-post="false" id="1084" name="MBT platoon" position="31TCM1504790392" type="MBT platoon"/>
+              </automat>
+              <automat engaged="true" id="952" knowledge-group="1169" name="Infantry company [952]" type="Infantry company">
+                <unit command-post="true" id="953" name="Infantry company CP" position="31TCM1574287584" type="Infantry company CP"/>
+                <unit command-post="false" id="954" name="Infantry platoon" position="31TCM1622287065" type="Infantry platoon"/>
+                <unit command-post="false" id="955" name="MRA troop" position="31TCM1570186586" type="MRA troop"/>
+                <unit command-post="false" id="956" name="Mortar troop" position="31TCM1522187106" type="Mortar troop"/>
+                <unit command-post="false" id="957" name="Light armored platoon" position="31TCM1624387563" type="Light armored platoon"/>
+              </automat>
+              <automat engaged="true" id="962" knowledge-group="1169" name="Scout platoon [962]" type="Scout platoon">
+                <unit command-post="false" id="963" name="Antitank patrol" position="31TCM0774084460" type="Antitank patrol"/>
+                <unit command-post="true" id="964" name="Scout patrol" position="31TCM0831484610" type="Scout patrol"/>
+                <unit command-post="false" id="965" name="Scout patrol" position="31TCM0774283980" type="Scout patrol"/>
+                <unit command-post="false" id="1068" name="Scout patrol" position="31TCM1105782196" type="Scout patrol"/>
+                <unit command-post="false" id="1069" name="Scout patrol" position="31TCM1141181032" type="Scout patrol"/>
+                <unit command-post="false" id="1070" name="Antitank patrol" position="31TCM1195882159" type="Antitank patrol"/>
+              </automat>
+              <automat engaged="true" id="1075" knowledge-group="1169" name="Light armored squadron [1075]" type="Light armored squadron">
+                <unit command-post="true" id="1076" name="Armored squadron CP" position="31TCM1240588010" type="Armored squadron CP"/>
+                <unit command-post="false" id="1077" name="Light armored platoon" position="31TCM1288587491" type="Light armored platoon"/>
+                <unit command-post="false" id="1078" name="Light armored platoon" position="31TCM1236487013" type="Light armored platoon"/>
+                <unit command-post="false" id="1079" name="Light armored platoon" position="31TCM1188487532" type="Light armored platoon"/>
+                <unit command-post="false" id="1080" name="Light armored platoon" position="31TCM1290687990" type="Light armored platoon"/>
+              </automat>
+            </automat>
+            <automat engaged="false" id="1016" knowledge-group="1169" name="Teeth Arms Battalion [1016]" type="Teeth Arms Battalion">
+              <unit command-post="true" id="1017" name="Armored squadron CP" position="31TCM2346887668" type="Armored squadron CP"/>
+              <automat engaged="true" id="1018" knowledge-group="1169" name="Infantry company [1018]" type="Infantry company">
+                <unit command-post="true" id="1019" name="Infantry company CP" position="31TCM1902986531" type="Infantry company CP"/>
+                <unit command-post="false" id="1020" name="Infantry platoon" position="31TCM1950986011" type="Infantry platoon"/>
+                <unit command-post="false" id="1021" name="MRA troop" position="31TCM1898885533" type="MRA troop"/>
+                <unit command-post="false" id="1022" name="Mortar troop" position="31TCM1850886052" type="Mortar troop"/>
+                <unit command-post="false" id="1023" name="Light armored platoon" position="31TCM1952986510" type="Light armored platoon"/>
+              </automat>
+              <automat engaged="true" id="1024" knowledge-group="1169" name="MBT squadron [1024]" type="MBT squadron">
+                <unit command-post="true" id="1025" name="Armored squadron CP" position="31TCM2361786143" type="Armored squadron CP"/>
+                <unit command-post="false" id="1026" name="MBT platoon" position="31TCM2409785623" type="MBT platoon"/>
+                <unit command-post="false" id="1027" name="MBT platoon" position="31TCM2357685145" type="MBT platoon"/>
+                <unit command-post="false" id="1028" name="MBT platoon" position="31TCM2309685664" type="MBT platoon"/>
+                <unit command-post="false" id="1029" name="MBT platoon" position="31TCM2411786122" type="MBT platoon"/>
+                <unit command-post="false" id="1071" name="MBT platoon" position="31TCM2447785210" type="MBT platoon"/>
+                <unit command-post="false" id="1072" name="MBT platoon" position="31TCM2496984990" type="MBT platoon"/>
+              </automat>
+              <automat engaged="true" id="1030" knowledge-group="1169" name="MBT squadron [1030]" type="MBT squadron">
+                <unit command-post="true" id="1031" name="Armored squadron CP" position="31TCM2061187758" type="Armored squadron CP"/>
+                <unit command-post="false" id="1032" name="MBT platoon" position="31TCM2109187239" type="MBT platoon"/>
+                <unit command-post="false" id="1033" name="MBT platoon" position="31TCM2057086760" type="MBT platoon"/>
+                <unit command-post="false" id="1034" name="MBT platoon" position="31TCM2009087280" type="MBT platoon"/>
+                <unit command-post="false" id="1035" name="MBT platoon" position="31TCM2111187737" type="MBT platoon"/>
+                <unit command-post="false" id="1073" name="MBT platoon" position="31TCM2191587073" type="MBT platoon"/>
+                <unit command-post="false" id="1074" name="MBT platoon" position="31TCM2256486997" type="MBT platoon"/>
+              </automat>
+              <automat engaged="true" id="1042" knowledge-group="1169" name="Light armored squadron [1042]" type="Light armored squadron">
+                <unit command-post="true" id="1043" name="Armored squadron CP" position="31TCM2100285142" type="Armored squadron CP"/>
+                <unit command-post="false" id="1044" name="Light armored platoon" position="31TCM2148384623" type="Light armored platoon"/>
+                <unit command-post="false" id="1045" name="Light armored platoon" position="31TCM2096284145" type="Light armored platoon"/>
+                <unit command-post="false" id="1046" name="Light armored platoon" position="31TCM2048284664" type="Light armored platoon"/>
+                <unit command-post="false" id="1047" name="Light armored platoon" position="31TCM2150385122" type="Light armored platoon"/>
+              </automat>
+              <automat engaged="true" id="1048" knowledge-group="1169" name="Scout platoon [1048]" type="Scout platoon">
+                <unit command-post="false" id="1049" name="Antitank patrol" position="31TCM1693881363" type="Antitank patrol"/>
+                <unit command-post="true" id="1050" name="Scout patrol" position="31TCM1741880844" type="Scout patrol"/>
+                <unit command-post="false" id="1051" name="Scout patrol" position="31TCM1689780365" type="Scout patrol"/>
+                <unit command-post="false" id="1065" name="Antitank patrol" position="31TCM1842680671" type="Antitank patrol"/>
+                <unit command-post="false" id="1066" name="Scout patrol" position="31TCM1835979024" type="Scout patrol"/>
+                <unit command-post="false" id="1067" name="Scout patrol" position="31TCM1918978490" type="Scout patrol"/>
+              </automat>
+            </automat>
+          </formation>
+          <limit name="Limit 624">
+            <point>30TYS0838795434</point>
+            <point>30TYS0608286975</point>
+            <point>30TYS0484976450</point>
+          </limit>
+          <limit name="Limit 625">
+            <point>30TYS1690095099</point>
+            <point>30TYS1582088153</point>
+            <point>30TYS1579670271</point>
+          </limit>
+          <limit name="Limit 813">
+            <point>31TCM2564186577</point>
+            <point>31TCM1929665694</point>
+            <point>31TCM1360453406</point>
+          </limit>
+          <limit name="Limit 814">
+            <point>31TCM0671690953</point>
+            <point>31TCM0086378446</point>
+            <point>31TBM9743759015</point>
+          </limit>
+          <limit name="Limit 1061">
+            <point>31TCM0576158252</point>
+            <point>31TCM1140676766</point>
+            <point>31TCM1840887951</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="1168" name="Case 8" type="Standard"/>
+        <knowledge-group id="1169" name="Case 9" type="Standard"/>
+        <knowledge-group id="1170" name="Case 6" type="Standard"/>
+        <knowledge-group id="1171" name="Case 3" type="Standard"/>
+        <knowledge-group id="1172" name="Case 4" type="Standard"/>
+        <knowledge-group id="1173" name="Case 5" type="Standard"/>
+        <knowledge-group id="1174" name="Case 7" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="579" name="Locals" type="neutral">
+      <objects/>
+      <tactical>
+        <formation id="581" level="iii" name="Formation [581]">
+          <automat engaged="false" id="585" knowledge-group="580" name="Terrorists [585]" type="Terrorists">
+            <unit command-post="true" id="586" name="Terrorist" position="30TYS0577776354" type="Terrorist"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="580" name="Case 8" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="671" name="Population standard [671]" position="30TYS1020280298" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="5000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="579" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="3"/>
+      <relationship diplomacy="enemy" party="579"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="enemy" party="579"/>
+    </party>
+    <party id="579">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="enemy" party="3"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="3598390750" -->

@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp Bleu" type="friend">
+      <objects>
+        <object id="104" name="zone protegee [104]" type="safe zone">
+          <shape type="point">
+            <points>
+              <point>29TNF3617559517</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="10" level="ii" name="INF [10]">
+          <automat engaged="false" id="11" knowledge-group="95" name="SGTIA INF [11]" type="SGTIA INF">
+            <unit command-post="true" id="12" name="Section . CDT CIE INF VAB" position="29TNF3245158128" type="Section . CDT CIE INF VAB">
+              <extensions>
+                <entry key="Nationalite" value="84"/>
+                <entry key="NomLong" value="PC.3.31BB.FR"/>
+                <entry key="PC" value="True"/>
+                <entry key="TypePC" value="1"/>
+                <entry key="TypeSIOC" value="6"/>
+              </extensions>
+            </unit>
+            <unit command-post="false" id="13" name="Section . CBT INF VAB CDS SOFF" position="29TNF3323557555" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="14" name="Section . CBT INF VAB CDS SOFF" position="29TNF3200157688" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="15" name="Section . CBT INF VAB CDS OFF" position="29TNF3166157811" type="Section . CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="16" name="Groupe . MO81 VAB" position="29TNF3250457725" type="Groupe . MO81 VAB"/>
+            <unit command-post="false" id="17" name="Peloton . LECLERC CDP SOFF" position="29TNF3203057892" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="18" name="Groupe GEN . EBG" position="29TNF3277957761" type="Groupe GEN . EBG"/>
+            <unit command-post="false" id="19" name="PIA Dominante ABC" position="29TNF3309757657" type="PIA Dominante ABC"/>
+            <unit command-post="false" id="20" name="PIA Dominante INF" position="29TNF3271057443" type="PIA Dominante INF"/>
+            <unit command-post="false" id="21" name="PIA Dominante Reco" position="29TNF3330158136" type="PIA Dominante Reco"/>
+          </automat>
+          <automat engaged="true" id="34" knowledge-group="95" logistic-level="logistic-base" name="TC2 [34]" type="LOG . TC2 LOG">
+            <unit command-post="true" id="35" name="PC" position="29TNF3106659198" type="LOG . TC2">
+              <stocks>
+                <resource name="CART 12.7 SBP" quantity="56200"/>
+                <resource name="CART 7.62 N BD PAN" quantity="68300"/>
+                <resource name="CART 120 OECC F1" quantity="130"/>
+                <resource name="CART 120 OFL F1" quantity="270"/>
+                <resource name="CART 105 F3 OCC F3" quantity="20"/>
+                <resource name="CART 105  F3 OE F3" quantity="10"/>
+                <resource name="CART 105  F3 OFL F3" quantity="38"/>
+                <resource name="CART 5.56 F1A F1" quantity="83760"/>
+                <resource name="CART 5.56 BAL ORD F1" quantity="4080"/>
+                <resource name="ROQ 84 EXPL ABLF1" quantity="52"/>
+                <resource name="CART CAL 308 168 GRS" quantity="810"/>
+                <resource name="MIS AC 136 ERYX F1" quantity="42"/>
+                <resource name="ART FUM DREB" quantity="176"/>
+                <resource name="CPLT 81 EXPL MLE F2" quantity="200"/>
+                <resource name="GR 51  EXPL AP LGI" quantity="320"/>
+                <resource name="GR 51 FUM INC LGI" quantity="32"/>
+                <resource name="GR 47  ECL LGI" quantity="32"/>
+                <resource name="CART 120 OFL F1A" quantity="100"/>
+                <resource name="CART 105 F3 OFUM PH" quantity="10"/>
+                <resource name="CPLT 81 OFUM PH" quantity="20"/>
+                <resource name="CPLT 81 OECL F1" quantity="20"/>
+                <resource name="CART 20 OEI OEIT SBP" quantity="100"/>
+                <resource name="CART 20 OPT" quantity="760"/>
+                <resource name="F-63 1" quantity="48230"/>
+                <resource name="F-57 1" quantity="30"/>
+                <resource name="PETD 500 G T ID M 1" quantity="160"/>
+                <resource name="mine classique" quantity="380"/>
+                <resource name="barbele classique" quantity="190"/>
+                <resource name="Rechange  NTI1 MOB" quantity="30"/>
+                <resource name="Rechange  NTI1 EA" quantity="6"/>
+                <resource name="RATION DE COMBAT 1" quantity="1164"/>
+                <resource name="EAU MINERALE 1L T 1" quantity="6984"/>
+              </stocks>
+            </unit>
+          </automat>
+          <automat engaged="true" id="182" knowledge-group="7" name="ART - Batterie de Reco et Tir AUF1 [182]" type="ART - Batterie de Reco et Tir AUF1">
+            <unit command-post="true" id="183" name="ART - PC Batterie ASS" position="29TNF3232560375" type="ART - PC Batterie ASS">
+              <extensions>
+                <entry key="IdCdB" value="HAA"/>
+                <entry key="IndOpe" value="PBR2"/>
+                <entry key="IndRadio" value="50"/>
+                <entry key="Nationalite" value="84"/>
+                <entry key="NomLong" value="EO.21.DL2.35BA.FR"/>
+                <entry key="PC" value="True"/>
+                <entry key="TypePC" value="1"/>
+                <entry key="TypeSIOC" value="1"/>
+              </extensions>
+            </unit>
+            <unit command-post="false" id="184" name="ART - Section de Tir AUF1 CDS OFF Pour SIC" position="29TNF3282859878" type="ART - Section de Tir AUF1 CDS OFF Pour SIC"/>
+            <unit command-post="false" id="185" name="ART - Section de Tir AUF1 CDS SOFF Pour SIC" position="29TNF3232959377" type="ART - Section de Tir AUF1 CDS SOFF Pour SIC"/>
+            <unit command-post="false" id="186" name="ART - Equipe de Reco AUF1" position="29TNF3182759874" type="ART - Equipe de Reco AUF1"/>
+            <unit command-post="false" id="187" name="ART - Equipe de Reco AUF1" position="29TNF3282560377" type="ART - Equipe de Reco AUF1"/>
+          </automat>
+          <limit name="Limite 90">
+            <point>29TNF2690165242</point>
+            <point>29TNF3017959918</point>
+            <point>29TNF2893555358</point>
+            <point>29TNF3061250520</point>
+          </limit>
+          <limit name="Limite 91">
+            <point>29TNF4079964830</point>
+            <point>29TNF3974260922</point>
+            <point>29TNF3865955394</point>
+            <point>29TNF3670250590</point>
+          </limit>
+        </formation>
+        <formation id="92" level="ii" name="ABC [92]">
+          <automat engaged="true" id="22" knowledge-group="94" name="SGTIA ABC [22]" type="SGTIA ABC">
+            <unit command-post="true" id="23" name="Peloton . LECLERC CDT ESC" position="29TNF3462859298" type="Peloton . LECLERC CDT ESC"/>
+            <unit command-post="false" id="24" name="Peloton . LECLERC CDP SOFF" position="29TNF3480558372" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="25" name="Peloton . LECLERC CDP SOFF" position="29TNF3489958215" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="26" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3414458329" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="27" name="Section . CBT INF VAB CDS SOFF" position="29TNF3503958595" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="28" name="Peloton . d appui direct" position="29TNF3418358939" type="Peloton . d appui direct"/>
+            <unit command-post="false" id="29" name="Groupe GEN . EBG" position="29TNF3450458846" type="Groupe GEN . EBG"/>
+            <unit command-post="false" id="30" name="PIA Dominante ABC" position="29TNF3460258815" type="PIA Dominante ABC"/>
+            <unit command-post="false" id="31" name="PIA Dominante INF" position="29TNF3416858526" type="PIA Dominante INF"/>
+            <unit command-post="false" id="32" name="PIA Dominante Reco" position="29TNF3513058899" type="PIA Dominante Reco"/>
+          </automat>
+          <automat engaged="true" id="110" knowledge-group="94" logistic-level="logistic-base" name="TC2 [110]" type="LOG . TC2 LOG">
+            <unit command-post="true" id="111" name="PC" position="29TNF3419761369" type="LOG . TC2">
+              <stocks>
+                <resource name="CART 12.7 SBP" quantity="55400"/>
+                <resource name="CART 7.62 N BD PAN" quantity="92100"/>
+                <resource name="CART 120 OECC F1" quantity="247"/>
+                <resource name="CART 120 OFL F1" quantity="513"/>
+                <resource name="CART 105 F3 OCC F3" quantity="20"/>
+                <resource name="CART 105  F3 OE F3" quantity="10"/>
+                <resource name="CART 105  F3 OFL F3" quantity="38"/>
+                <resource name="CART 20 AME 621" quantity="5040"/>
+                <resource name="CART 5.56 F1A F1" quantity="76800"/>
+                <resource name="CART 5.56 BAL ORD F1" quantity="2400"/>
+                <resource name="ROQ 84 EXPL ABLF1" quantity="33"/>
+                <resource name="CART CAL 308 168 GRS" quantity="450"/>
+                <resource name="MIS AC 136 ERYX F1" quantity="26"/>
+                <resource name="ART FUM DREB" quantity="320"/>
+                <resource name="GR 51  EXPL AP LGI" quantity="160"/>
+                <resource name="GR 51 FUM INC LGI" quantity="16"/>
+                <resource name="GR 47  ECL LGI" quantity="16"/>
+                <resource name="CART 120 OFL F1A" quantity="190"/>
+                <resource name="CART 105 F3 OFUM PH" quantity="10"/>
+                <resource name="F-63 1" quantity="60435"/>
+                <resource name="F-57 1" quantity="60"/>
+                <resource name="PETD 500 G T ID M 1" quantity="160"/>
+                <resource name="mine classique" quantity="300"/>
+                <resource name="barbele classique" quantity="110"/>
+                <resource name="Rechange  NTI1 MOB" quantity="30"/>
+                <resource name="Rechange  NTI1 EA" quantity="6"/>
+                <resource name="RATION DE COMBAT 1" quantity="1044"/>
+                <resource name="EAU MINERALE 1L T 1" quantity="6264"/>
+              </stocks>
+            </unit>
+          </automat>
+        </formation>
+        <formation id="108" level="x" logistic-level="logistic-base" name="BLD">
+          <formation id="109" level="iii" name="ZRAV">
+            <automat engaged="true" id="118" knowledge-group="7" name="SH [118]" type="LOG . Secteur approvisionnement (SH)">
+              <unit command-post="true" id="119" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF3251065928" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
+              <unit command-post="false" id="120" name="LOG . Groupe Appro Vivre Eau" position="29TNF3301365432" type="LOG . Groupe Appro Vivre Eau"/>
+            </automat>
+            <automat engaged="true" id="129" knowledge-group="7" name="MUN [129]" type="LOG . Secteur munitions">
+              <unit command-post="true" id="130" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF3228765676" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
+              <unit command-post="false" id="131" name="LOG . Groupe Munitions SOFF TT - D" position="29TNF3278965180" type="LOG . Groupe Munitions SOFF TT - D"/>
+              <unit command-post="false" id="132" name="LOG . Groupe Munitions OFF TT- D" position="29TNF3229164679" type="LOG . Groupe Munitions OFF TT- D"/>
+              <unit command-post="false" id="133" name="LOG . Groupe Munitions OFF TD" position="29TNF3178865175" type="LOG . Groupe Munitions OFF TD"/>
+              <unit command-post="false" id="134" name="LOG . Groupe Munitions SOFF TD" position="29TNF3278765678" type="LOG . Groupe Munitions SOFF TD"/>
+            </automat>
+            <automat engaged="true" id="163" knowledge-group="7" name="TRANSP [163]" type="LOG . Secteur transport">
+              <unit command-post="true" id="164" name="LOG . PC LOG BLD Secteur Transport" position="29TNF3219364946" type="LOG . PC LOG BLD Secteur Transport"/>
+              <unit command-post="false" id="165" name="LOG . Peloton Transport VTLR (PT)" position="29TNF3269564449" type="LOG . Peloton Transport VTLR (PT)"/>
+              <unit command-post="false" id="166" name="LOG . Peloton Ravitaillement (PR)" position="29TNF3219763949" type="LOG . Peloton Ravitaillement (PR)"/>
+              <unit command-post="false" id="167" name="LOG . Peloton Transport TRM 10000" position="29TNF3169464445" type="LOG . Peloton Transport TRM 10000"/>
+            </automat>
+            <automat engaged="true" id="177" knowledge-group="7" logistic-level="logistic-base" name="TC2 [177]" type="LOG . TC2 LOG">
+              <unit command-post="true" id="178" name="PC" position="29TNF3335765338" type="LOG . TC2"/>
+            </automat>
+          </formation>
+          <formation id="112" level="iii" name="ZSAN">
+            <automat engaged="true" id="123" knowledge-group="7" name="EVASAN [123]" type="LOG . Secteur EVASAN">
+              <unit command-post="true" id="124" name="LOG . PC LOG BLD Secteur Sante" position="29TNF3711765712" type="LOG . PC LOG BLD Secteur Sante"/>
+              <unit command-post="false" id="125" name="LOG . Groupe VS J5" position="29TNF3762065216" type="LOG . Groupe VS J5"/>
+              <unit command-post="false" id="126" name="LOG . Groupe VS VAB" position="29TNF3712164715" type="LOG . Groupe VS VAB"/>
+              <unit command-post="false" id="127" name="LOG . Equipe HM EVASAN" position="29TNF3661965212" type="LOG . Equipe HM EVASAN"/>
+            </automat>
+            <automat engaged="true" id="151" knowledge-group="7" name="Trait [151]" type="LOG . Secteur traitement">
+              <unit command-post="true" id="152" name="LOG . PC LOG BLD Secteur Sante" position="29TNF3672365100" type="LOG . PC LOG BLD Secteur Sante"/>
+              <unit command-post="false" id="153" name="LOG . Section Decontamination Medicale NBC" position="29TNF3722664603" type="LOG . Section Decontamination Medicale NBC"/>
+              <unit command-post="false" id="154" name="LOG . Section Medico Psychologique" position="29TNF3672864103" type="LOG . Section Medico Psychologique"/>
+              <unit command-post="false" id="155" name="LOG . Antenne Chirurgicale" position="29TNF3622564599" type="LOG . Antenne Chirurgicale"/>
+              <unit command-post="false" id="156" name="LOG . Section Chirurgicale Modulaire" position="29TNF3722465102" type="LOG . Section Chirurgicale Modulaire"/>
+              <unit command-post="false" id="157" name="LOG . Section Chirurgicale HMC" position="29TNF3743364604" type="LOG . Section Chirurgicale HMC"/>
+            </automat>
+            <automat engaged="true" id="169" knowledge-group="7" name="Tri [169]" type="LOG . Secteur triage">
+              <unit command-post="true" id="170" name="LOG . PC LOG BLD Secteur Sante" position="29TNF3612764695" type="LOG . PC LOG BLD Secteur Sante"/>
+              <unit command-post="false" id="171" name="LOG . Section Triage modulaire" position="29TNF3663064199" type="LOG . Section Triage modulaire"/>
+            </automat>
+            <automat engaged="true" id="173" knowledge-group="7" logistic-level="logistic-base" name="TC2 [173]" type="LOG . TC2 LOG">
+              <unit command-post="true" id="174" name="PC" position="29TNF3615864546" type="LOG . TC2"/>
+            </automat>
+          </formation>
+          <formation id="113" level="iii" name="ZMAINT">
+            <automat engaged="true" id="114" knowledge-group="7" name="CAP [114]" type="LOG . Secteur appro (CAP)">
+              <unit command-post="true" id="115" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF2780565348" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
+              <unit command-post="false" id="116" name="LOG . Section Magasin CAP" position="29TNF2830864851" type="LOG . Section Magasin CAP"/>
+            </automat>
+            <automat engaged="true" id="139" knowledge-group="7" name="MOB [139]" type="LOG . Secteur reparation maint mob">
+              <unit command-post="true" id="140" name="LOG . PC LOG BLD Secteur Maintenance" position="29TNF2868565065" type="LOG . PC LOG BLD Secteur Maintenance"/>
+              <unit command-post="false" id="141" name="LOG . Section CDT CMM (EVAC)" position="29TNF2918864568" type="LOG . Section CDT CMM (EVAC)"/>
+              <unit command-post="false" id="142" name="LOG . Section Reparation Mob BLD  MOB" position="29TNF2868964067" type="LOG . Section Reparation Mob BLD  MOB"/>
+              <unit command-post="false" id="143" name="LOG . Section Reparation Mob Feu BLD  SRMF" position="29TNF2818764564" type="LOG . Section Reparation Mob Feu BLD  SRMF"/>
+            </automat>
+            <automat engaged="true" id="147" knowledge-group="7" name="SREAT [147]" type="LOG . Secteur reparation techniques fines">
+              <unit command-post="true" id="148" name="LOG . PC LOG BLD Secteur Maintenance" position="29TNF2925464799" type="LOG . PC LOG BLD Secteur Maintenance"/>
+              <unit command-post="false" id="149" name="LOG . Section Reparation EA BLD SREAT" position="29TNF2975764302" type="LOG . Section Reparation EA BLD SREAT"/>
+            </automat>
+            <automat engaged="true" id="175" knowledge-group="7" logistic-level="logistic-base" name="TC2 [175]" type="LOG . TC2 LOG">
+              <unit command-post="true" id="176" name="PC" position="29TNF2911464351" type="LOG . TC2"/>
+            </automat>
+          </formation>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="7" name="BLD" type="Standard"/>
+        <knowledge-group id="94" name="KG ABC [94]" type="Standard"/>
+        <knowledge-group id="95" name="KG INF [95]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="179" name="Foule standard BM [179]" position="29TNF3119762768" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="34">
+          <subordinate id="11"/>
+        </logistic-base>
+        <logistic-base id="110">
+          <subordinate id="22"/>
+        </logistic-base>
+        <logistic-base id="177">
+          <subordinate id="118"/>
+          <subordinate id="129"/>
+          <subordinate id="163"/>
+        </logistic-base>
+        <logistic-base id="173">
+          <subordinate id="123"/>
+          <subordinate id="151"/>
+          <subordinate id="169"/>
+        </logistic-base>
+        <logistic-base id="175">
+          <subordinate id="114"/>
+          <subordinate id="139"/>
+          <subordinate id="147"/>
+        </logistic-base>
+        <logistic-base id="108">
+          <subordinate id="34"/>
+          <subordinate id="110"/>
+          <subordinate id="173"/>
+          <subordinate id="175"/>
+          <subordinate id="177"/>
+        </logistic-base>
+      </logistics>
+    </party>
+    <party id="2" name="Camp Rouge" type="enemy">
+      <objects>
+        <object id="100" name="zone minee lineaire [100]" type="mined area (linear)">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3561558266</point>
+              <point>29TNF3610658385</point>
+              <point>29TNF3643158257</point>
+              <point>29TNF3640357850</point>
+              <point>29TNF3596357630</point>
+              <point>29TNF3563157528</point>
+              <point>29TNF3541957942</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="101" name="destruction pont [101]" type="bridge destruction">
+          <shape type="point">
+            <points>
+              <point>29TNF3386954369</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+          </attributes>
+        </object>
+        <object id="102" name="destruction pont [102]" type="bridge destruction">
+          <shape type="point">
+            <points>
+              <point>29TNF3346154501</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+          </attributes>
+        </object>
+        <object id="103" name="destruction pont [103]" type="bridge destruction">
+          <shape type="point">
+            <points>
+              <point>29TNF3279854380</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+          </attributes>
+        </object>
+        <object id="107" name="zone minee lineaire [107]" type="mined area (linear)">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3776257805</point>
+              <point>29TNF3772757681</point>
+              <point>29TNF3802157567</point>
+              <point>29TNF3802257355</point>
+              <point>29TNF3820057276</point>
+              <point>29TNF3817257683</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="33" level="ii" name="ENI [33]">
+          <automat engaged="false" id="64" knowledge-group="8" name="SGTIA INF [64]" type="SGTIA INF">
+            <unit command-post="true" id="65" name="Section . CDT CIE INF VAB" position="29TNF3132452702" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="66" name="Section . CBT INF VAB CDS SOFF" position="29TNF3143352943" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="67" name="Section . CBT INF VAB CDS SOFF" position="29TNF3165252860" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="70" name="Peloton . LECLERC CDP SOFF" position="29TNF3213052750" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="71" name="Groupe GEN . EBG" position="29TNF3183152456" type="Groupe GEN . EBG"/>
+          </automat>
+          <automat engaged="true" id="75" knowledge-group="8" name="SGTIA ABC [75]" type="SGTIA ABC">
+            <unit command-post="true" id="76" name="Peloton . LECLERC CDT ESC" position="29TNF3330852046" type="Peloton . LECLERC CDT ESC"/>
+            <unit command-post="false" id="78" name="Peloton . LECLERC CDP SOFF" position="29TNF3268452315" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="80" name="Section . CBT INF VAB CDS SOFF" position="29TNF3311552256" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="81" name="Peloton . d appui direct" position="29TNF3265652105" type="Peloton . d appui direct"/>
+          </automat>
+          <automat engaged="true" id="82" knowledge-group="8" name="SGTIA ABC [82]" type="SGTIA ABC">
+            <unit command-post="true" id="83" name="Peloton . LECLERC CDT ESC" position="29TNF3635452123" type="Peloton . LECLERC CDT ESC"/>
+            <unit command-post="false" id="86" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3622952858" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="87" name="Section . CBT INF VAB CDS SOFF" position="29TNF3670753093" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="88" name="Peloton . d appui direct" position="29TNF3659152712" type="Peloton . d appui direct"/>
+            <unit command-post="false" id="89" name="Groupe GEN . EBG" position="29TNF3714553049" type="Groupe GEN . EBG"/>
+          </automat>
+          <limit name="Limite 90">
+            <point>29TNF3041953732</point>
+            <point>29TNF2936256703</point>
+            <point>29TNF3027458840</point>
+            <point>29TNF3044061047</point>
+          </limit>
+          <limit name="Limite 91">
+            <point>29TNF3667053038</point>
+            <point>29TNF3735356413</point>
+            <point>29TNF3723960182</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="8" name="Rouge" type="Standard"/>
+        <knowledge-group id="9" name="Poubelle Rouge" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="180" name="Pop 1" position="29TNF3521556435" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="181" name="Pop 2" position="29TNF3625255116" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="3" name="Camp Vert" type="neutral">
+      <objects/>
+      <tactical/>
+      <communication>
+        <knowledge-group id="4" name="Vert" type="Standard"/>
+        <knowledge-group id="5" name="Poubelle Verte" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+      <relationship diplomacy="neutral" party="3"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="neutral" party="3"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="2"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="0891172303" -->

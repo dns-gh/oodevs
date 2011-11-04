@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp Ami" type="friend">
+      <objects>
+        <object id="26" name="camp prisonniers [26]" type="prisoners camp">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3453353026</point>
+              <point>29TNF3420353149</point>
+              <point>29TNF3445853416</point>
+              <point>29TNF3457253292</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="51" name="site decontamination [51]" type="decontamination site">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3182451888</point>
+              <point>29TNF3242851890</point>
+              <point>29TNF3234351335</point>
+              <point>29TNF3183351480</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="53" name="site franchissement [53]" type="crossing site">
+          <shape type="ligne">
+            <points>
+              <point>29TNF3580153337</point>
+              <point>29TNF3627253635</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="55" name="pont flottant continu [55]" type="continuous pontoon bridge">
+          <shape type="point">
+            <points>
+              <point>29TNF3799552359</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>true</construction-needed>
+            </crossing-site>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="56" name="pont flottant discontinu [56]" type="discontinuous pontoon bridge">
+          <shape type="point">
+            <points>
+              <point>29TNF3834051473</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>false</construction-needed>
+            </crossing-site>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="57" name="site franchissement [57]" type="crossing site">
+          <shape type="ligne">
+            <points>
+              <point>29TNF3834151475</point>
+              <point>29TNF3875651732</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="4" level="ii" name="Formation [4]">
+          <automat engaged="false" id="5" knowledge-group="6" name="SGTIA PIA [5]" type="SGTIA PIA">
+            <unit command-post="true" id="7" name="PC SGTIA" position="29TNF3459553508" type="PC SGTIA"/>
+            <unit command-post="false" id="8" name="PIA Dominante ABC" position="29TNF3547853907" type="PIA Dominante ABC"/>
+            <unit command-post="false" id="9" name="PIA Dominante INF" position="29TNF3527254148" type="PIA Dominante INF"/>
+            <unit command-post="false" id="10" name="PIA Dominante Reco" position="29TNF3506553832" type="PIA Dominante Reco"/>
+            <unit command-post="false" id="11" name="Patrouille . EI 12,7" position="29TNF3512853902" type="Patrouille . EI 12,7"/>
+          </automat>
+          <automat engaged="false" id="12" knowledge-group="6" name="GEN [12]" type="GEN . Compagnie CBT type BB BM">
+            <unit command-post="true" id="13" name="GEN . PC" position="29TNF3595652347" type="GEN . PC CIE CBT GENIE Type BB/BM"/>
+            <unit command-post="false" id="14" name="GEN . Section CBT" position="29TNF3580452921" type="GEN . Section CBT"/>
+            <unit command-post="false" id="18" name="GEN . Groupe EBG" position="29TNF3597952180" type="GEN . Groupe EBG"/>
+            <unit command-post="false" id="21" name="GEN . Groupe MPG" position="29TNF3597352264" type="GEN . Groupe MPG"/>
+            <unit command-post="false" id="23" name="GEN . Groupe PAA" position="29TNF3588452616" type="GEN . Groupe PAA"/>
+          </automat>
+          <automat engaged="false" id="24" knowledge-group="6" name="LOG . TC2 LOG [24]" type="LOG . TC2 LOG">
+            <unit command-post="true" id="25" name="LOG . TC2" position="29TNF3475652091" type="LOG . TC2"/>
+          </automat>
+          <automat engaged="false" id="41" knowledge-group="6" name="NRBC . Decontamination [41]" type="NRBC . Section Decontamination">
+            <unit command-post="true" id="42" name="NRBC . PC deconta" position="29TNF3236052346" type="NRBC . PC deconta"/>
+            <unit command-post="false" id="43" name="NRBC . Equipe decontamination" position="29TNF3269452371" type="NRBC . Equipe decontamination"/>
+          </automat>
+          <automat engaged="false" id="46" knowledge-group="6" name="CIRCU [46]" type="CIRCU . Escadron Transport Blinde">
+            <unit command-post="true" id="47" name="CIRCU . Peloton CDT ESC TRPT BLD" position="29TNF3304051070" type="CIRCU . Peloton CDT ESC TRPT BLD"/>
+            <unit command-post="false" id="48" name="CIRCU . Peloton Transport Blindes CL100" position="29TNF3305151210" type="CIRCU . Peloton Transport Blindes CL100"/>
+            <unit command-post="false" id="49" name="CIRCU . Peloton Transport Blindes CL50" position="29TNF3305751325" type="CIRCU . Peloton Transport Blindes CL50"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="6" name="Groupe de connaissance [6]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="2" name="Camp Eni" type="enemy">
+      <objects>
+        <object id="54" name="zone nbc [54]" type="nbc zone">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3067152070</point>
+              <point>29TNF3055652297</point>
+              <point>29TNF3030452350</point>
+              <point>29TNF3009352162</point>
+              <point>29TNF3012451852</point>
+              <point>29TNF3051251756</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents state="gaseous">
+              <nbc-agent type="Nucleaire"/>
+            </nbc-agents>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="27" level="ii" name="Formation [27]">
+          <automat engaged="true" id="28" knowledge-group="29" name="SGTIA INF [28]" type="SGTIA INF">
+            <unit command-post="true" id="30" name="Section . CDT CIE INF VAB" position="29TNF3171558374" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="32" name="Section . CBT INF VAB CDS SOFF" position="29TNF3150858065" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="35" name="Peloton . LECLERC CDP SOFF" position="29TNF3210458167" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="38" name="PIA Dominante INF" position="29TNF3172958104" type="PIA Dominante INF"/>
+            <unit command-post="false" id="40" name="Patrouille . EI 12,7" position="29TNF3195358010" type="Patrouille . EI 12,7"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="29" name="Groupe de connaissance [29]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="4242072371" -->

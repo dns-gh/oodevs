@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="GoodGuys" type="friend">
+      <objects>
+        <object id="43" name="Poste de contrôle [43]" type="checkpoint">
+          <shape type="point">
+            <points>
+              <point>29TNF3417658922</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="45" name="Position de Tir" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>29TNF3562358226</point>
+            </points>
+          </shape>
+          <attributes>
+            <max-size max-size="1"/>
+          </attributes>
+        </object>
+        <object id="52" name="Abattis [52]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3716260034</point>
+              <point>29TNF3734760062</point>
+              <point>29TNF3736759591</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="reserved"/>
+          </attributes>
+        </object>
+        <object id="53" name="Bouchon de mines [53]" type="mines">
+          <shape type="point">
+            <points>
+              <point>29TNF3437160447</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <activity-time value="36000"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="5" level="x" name="Formation [6]">
+          <limit name="Limite 35">
+            <point>29TNF2533159720</point>
+            <point>29TNF2833962192</point>
+            <point>29TNF3450560949</point>
+            <point>29TNF4021461842</point>
+          </limit>
+          <limit name="Limite 36">
+            <point>29TNF2824953420</point>
+            <point>29TNF3518353671</point>
+            <point>29TNF4008749913</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Groupe de connaissance [1]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="3" name="Population" type="neutral">
+      <objects/>
+      <tactical/>
+      <communication>
+        <knowledge-group id="51" name="Groupe de connaissance [51]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="13" name="BadGuys" type="enemy">
+      <objects>
+        <object id="44" name="Barricade [44]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>29TNF3814954804</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="14" level="x" name="Formation [14]"/>
+      </tactical>
+      <communication>
+        <knowledge-group id="17" name="Groupe de connaissance [17]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="neutral" party="3"/>
+      <relationship diplomacy="enemy" party="13"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="13"/>
+    </party>
+    <party id="13">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="neutral" party="3"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="4254974650" -->

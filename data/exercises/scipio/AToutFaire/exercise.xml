@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<exercise model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/exercise.xsd">
+  <meta>
+    <name><![CDATA[AToutFaire]]></name>
+    <briefing/>
+    <resources/>
+  </meta>
+  <profiles file="profiles.xml"/>
+  <orbat file="orbat.xml"/>
+  <weather file="weather.xml"/>
+  <terrain name="PortoV3"/>
+  <model dataset="ada" physical="scipio"/>
+  <urbanstate file="urbanstate.xml"/>
+</exercise>
+<!-- signature="3362694104" -->

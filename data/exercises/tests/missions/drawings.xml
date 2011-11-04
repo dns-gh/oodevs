@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<shapes>
-  <shape name="Area1" category="Divers" color="#ffff00" template="Polygone de test" type="polygon">
-    <point x="58951.1" y="82231.7"/>
-    <point x="58316.1" y="83623.8"/>
-    <point x="60856.1" y="83770.3"/>
-    <point x="61200.1" y="81342.7"/>
-  </shape>
-</shapes><!-- signature="3323578535" -->

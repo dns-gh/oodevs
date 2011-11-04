@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<profiles model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
+  <profile name="Admin" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="20987906"/>
+        <side id="20987907"/>
+        <side id="20987908"/>
+        <side id="20987910"/>
+        <side id="20987909"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Superv" password="" role="supervisor" supervision="true">
+    <rights>
+      <readonly>
+        <side id="20987906"/>
+        <side id="20987907"/>
+        <side id="20987908"/>
+        <side id="20987910"/>
+        <side id="20987909"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="SAni" password="" supervision="true">
+    <rights>
+      <readonly>
+        <side id="20987906"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="SEni" password="motdepasse" role="eniex" supervision="true">
+    <rights>
+      <readonly>
+        <side id="20987907"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="AniEnv" password="" role="environment" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="20987908"/>
+        <side id="20987910"/>
+        <side id="20987909"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="3A" password="" role="analysis" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="EEI" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <formation id="4210706"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="31BB" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <formation id="4210692"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="33BI" password="" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <formation id="4210696"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="35BA" password="" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <formation id="4210700"/>
+      </readwrite>
+    </rights>
+  </profile>
+</profiles>
+<!-- signature="2825567809" -->

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<profiles model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
+  <profile name="Admin" password="" role="analysis" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="2"/>
+        <side id="3"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Bleu" password="" role="analysis" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Rouge" password="" role="analysis" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="2"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Vert" password="" role="analysis" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="White Cell" password="" role="analysis" supervision="true">
+    <rights>
+      <readonly>
+        <side id="1"/>
+        <side id="2"/>
+      </readonly>
+      <readwrite>
+        <side id="3"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Bleu_ABC" password="" role="supervisor" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <formation id="92"/>
+        <automat id="22"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Bleu_INF" password="" role="supervisor" supervision="true">
+    <rights>
+      <readonly>
+        <automat id="34"/>
+      </readonly>
+      <readwrite>
+        <automat id="11"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Bleu_SGTIA_INF" password="" role="direx" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="11"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Bleu_INF_NonSuper" password="" role="environment" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <formation id="10"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Bleu_ABC_NonSuper" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <formation id="92"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Superv" password="" role="environment" supervision="true">
+    <rights>
+      <readonly>
+        <side id="1"/>
+        <side id="2"/>
+        <side id="3"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="AniABC" password="" role="environment" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="22"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="AniINF" password="" role="eniex" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="11"/>
+        <automat id="34"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Eni" password="" role="eniex" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <formation id="33"/>
+      </readwrite>
+    </rights>
+  </profile>
+</profiles>
+<!-- signature="1657396766" -->

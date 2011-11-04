@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp Ami" type="friend">
+      <objects>
+        <object id="597" name="station de metro [597]" type="metro station">
+          <shape type="point">
+            <points>
+              <point>29TNF3322257896</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <underground network="Metro"/>
+          </attributes>
+        </object>
+        <object id="598" name="station de metro [598]" type="metro station">
+          <shape type="point">
+            <points>
+              <point>29TNF3427856836</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <underground network="Metro"/>
+          </attributes>
+        </object>
+        <object id="599" name="station de metro [599]" type="metro station">
+          <shape type="point">
+            <points>
+              <point>29TNF3367756038</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <underground network="Metro"/>
+          </attributes>
+        </object>
+        <object id="600" name="station de metro [600]" type="metro station">
+          <shape type="point">
+            <points>
+              <point>29TNF3289155308</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <underground network="Metro"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="4" level="ii" name="GTIA [4]">
+          <automat engaged="false" id="275" knowledge-group="6" name="INF . Compagnie CBT VAB [275]" type="INF . Compagnie CBT VAB">
+            <unit command-post="true" id="276" name="INF . Section CDT CIE quaternaire VAB" position="29TNF3046760450" type="INF . Section CDT CIE quaternaire VAB"/>
+            <unit command-post="false" id="278" name="INF . Section CBT VAB CDS OFF" position="29TNF2958860140" type="INF . Section CBT VAB CDS OFF"/>
+            <unit command-post="false" id="279" name="INF . Section CBT VAB CDS OFF" position="29TNF2951060349" type="INF . Section CBT VAB CDS OFF"/>
+            <unit command-post="false" id="280" name="INF . Section CBT VAB CDS SOFF" position="29TNF2992960086" type="INF . Section CBT VAB CDS SOFF"/>
+          </automat>
+          <automat engaged="false" id="511" knowledge-group="6" name="GEN . Compagnie CBT type BB BM [511]" type="GEN . Compagnie CBT type BB BM">
+            <unit command-post="true" id="512" name="GEN . PC CIE CBT GENIE Type BB/BM" position="29TNF2956957901" type="GEN . PC CIE CBT GENIE Type BB/BM"/>
+            <unit command-post="false" id="515" name="GEN . Section CBT" position="29TNF2946357552" type="GEN . Section CBT"/>
+            <unit command-post="false" id="520" name="GEN . Groupe MPG" position="29TNF2977157692" type="GEN . Groupe MPG"/>
+            <unit command-post="false" id="583" name="GEN . Groupe Energie 80 kW" position="29TNF2939057297" type="GEN . Groupe Energie 80 kW"/>
+          </automat>
+          <automat engaged="true" id="545" knowledge-group="6" name="SGTIA ABC AMX10RC [545]" type="SGTIA ABC AMX10RC">
+            <unit command-post="false" id="546" name="ABC . Patrouille EI 12,7" position="29TNF3139358386" type="ABC . Patrouille EI 12,7"/>
+            <unit command-post="false" id="547" name="ABC . PLT AMX 10 RC CDP OFF" position="29TNF3171958992" type="ABC . PLT AMX 10 RC CDP OFF"/>
+            <unit command-post="false" id="548" name="ABC . PLT AMX 10 RC CDP SOFF" position="29TNF3158958767" type="ABC . PLT AMX 10 RC CDP SOFF"/>
+            <unit command-post="false" id="549" name="ABC . PLT AMX 10 RC CDP SOFF" position="29TNF3118658563" type="ABC . PLT AMX 10 RC CDP SOFF"/>
+            <unit command-post="true" id="550" name="ABC . PC" position="29TNF3172058820" type="ABC . PC"/>
+            <unit command-post="false" id="551" name="INF . Section CBT VAB CDS SOFF" position="29TNF3218258645" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit command-post="false" id="552" name="GEN . Section CBT renforce MPG" position="29TNF3171558429" type="GEN . Section CBT renforce MPG"/>
+          </automat>
+          <automat engaged="true" id="613" knowledge-group="6" name="SGTIA INF dominante roues [613]" type="SGTIA INF dominante roues">
+            <unit command-post="false" id="614" name="INF . Section CBT quaternaire VAB CDS OFF" position="29TNF3054458260" type="INF . Section CBT quaternaire VAB CDS OFF"/>
+            <unit command-post="false" id="615" name="INF . Section CBT quaternaire VAB CDS SOFF" position="29TNF3080358156" type="INF . Section CBT quaternaire VAB CDS SOFF"/>
+            <unit command-post="false" id="616" name="INF . Section CBT quaternaire VAB CDS SOFF" position="29TNF3028658007" type="INF . Section CBT quaternaire VAB CDS SOFF"/>
+            <unit command-post="false" id="617" name="INF . Groupe INF MO81 Section quaternaire" position="29TNF3017058450" type="INF . Groupe INF MO81 Section quaternaire"/>
+            <unit command-post="false" id="618" name="ABC . PLT AMX 10 RC CDP SOFF" position="29TNF3068358532" type="ABC . PLT AMX 10 RC CDP SOFF"/>
+            <unit command-post="false" id="619" name="GEN . Section CBT renforce MPG" position="29TNF3076758261" type="GEN . Section CBT renforce MPG"/>
+            <unit command-post="true" id="620" name="INF . Section CDT CIE quaternaire VAB" position="29TNF3052458364" type="INF . Section CDT CIE quaternaire VAB"/>
+          </automat>
+          <lima name="Lima 228">
+            <point>29TNF3045661747</point>
+            <point>29TNF3092661854</point>
+            <point>29TNF3118061865</point>
+            <point>29TNF3181561566</point>
+            <point>29TNF3233961277</point>
+          </lima>
+          <lima name="Lima 233">
+            <point>29TNF3114558024</point>
+            <point>29TNF3237258214</point>
+          </lima>
+          <lima name="Lima 239">
+            <point>29TNF3072955345</point>
+            <point>29TNF3111755081</point>
+            <point>29TNF3156755055</point>
+            <point>29TNF3211154588</point>
+            <point>29TNF3275154591</point>
+          </lima>
+          <lima name="Lima 553">
+            <point>29TNF3116557147</point>
+            <point>29TNF3259256917</point>
+          </lima>
+          <lima name="Lima 554">
+            <point>29TNF3092356397</point>
+            <point>29TNF3149556259</point>
+            <point>29TNF3239256109</point>
+          </lima>
+          <lima name="Lima 555">
+            <point>29TNF3246560047</point>
+            <point>29TNF3163760156</point>
+            <point>29TNF3059360383</point>
+          </lima>
+          <limit name="Limite 196">
+            <point>29TNF3270154533</point>
+            <point>29TNF3231956029</point>
+            <point>29TNF3255857098</point>
+            <point>29TNF3234457956</point>
+            <point>29TNF3228658550</point>
+            <point>29TNF3239159602</point>
+            <point>29TNF3244760624</point>
+            <point>29TNF3222661497</point>
+          </limit>
+          <limit name="Limite 219">
+            <point>29TNF3068061873</point>
+            <point>29TNF3062359804</point>
+            <point>29TNF3118058060</point>
+            <point>29TNF3129157293</point>
+            <point>29TNF3113256552</point>
+            <point>29TNF3098656383</point>
+            <point>29TNF3097256053</point>
+            <point>29TNF3083355862</point>
+            <point>29TNF3081255664</point>
+            <point>29TNF3083155180</point>
+          </limit>
+          <limit name="Limite 367">
+            <point>29TNF2883861456</point>
+            <point>29TNF2869660678</point>
+            <point>29TNF2887659738</point>
+            <point>29TNF2899058431</point>
+            <point>29TNF2921858003</point>
+            <point>29TNF2919657415</point>
+            <point>29TNF2919456581</point>
+            <point>29TNF2944355960</point>
+            <point>29TNF2980454699</point>
+            <point>29TNF3040853979</point>
+          </limit>
+          <limit name="Limit 541">
+            <point>29TNF2605357861</point>
+            <point>29TNF2602757418</point>
+            <point>29TNF2648256401</point>
+            <point>29TNF2721755396</point>
+            <point>29TNF2761854900</point>
+          </limit>
+          <limit name="Limite 621">
+            <point>29TNF2981058707</point>
+            <point>29TNF2979758285</point>
+            <point>29TNF3024457677</point>
+            <point>29TNF3039457186</point>
+            <point>29TNF3024256876</point>
+            <point>29TNF3002656610</point>
+            <point>29TNF2994655907</point>
+            <point>29TNF3001155548</point>
+            <point>29TNF3016754861</point>
+          </limit>
+        </formation>
+        <formation id="422" level="ii" logistic-level="logistic-base" name="BLD">
+          <automat engaged="true" id="451" knowledge-group="6" logistic-level="logistic-base" name="LOG . TC2 LOG [451]" type="LOG . TC2 LOG">
+            <unit command-post="true" id="452" name="LOG . TC2" position="29TNF2649664714" type="LOG . TC2"/>
+          </automat>
+          <limit name="Limite 453">
+            <point>29TNF2532265508</point>
+            <point>29TNF2531064644</point>
+            <point>29TNF2559563450</point>
+          </limit>
+          <limit name="Limite 454">
+            <point>29TNF2779365590</point>
+            <point>29TNF2830164622</point>
+            <point>29TNF2810063191</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="6" name="Groupe de connaissance [6]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="422">
+          <subordinate id="275"/>
+          <subordinate id="511"/>
+          <subordinate id="545"/>
+        </logistic-base>
+      </logistics>
+    </party>
+    <party id="2" name="Camp Eni" type="enemy">
+      <objects>
+        <object id="611" name="abattis [611]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3151159888</point>
+              <point>29TNF3147559991</point>
+              <point>29TNF3178160083</point>
+              <point>29TNF3191660167</point>
+              <point>29TNF3251860035</point>
+              <point>29TNF3249559963</point>
+              <point>29TNF3193360048</point>
+              <point>29TNF3165159912</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="612" name="abattis [612]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3059959975</point>
+              <point>29TNF3058059879</point>
+              <point>29TNF3081959853</point>
+              <point>29TNF3117660005</point>
+              <point>29TNF3145959931</point>
+              <point>29TNF3154760035</point>
+              <point>29TNF3111660104</point>
+              <point>29TNF3087460004</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="25" level="ii" name="GTIA [25]">
+          <automat engaged="false" id="566" knowledge-group="31" name="ASY . Terroristes [566]" type="ASY . Terroristes">
+            <unit command-post="false" id="567" name="Terroriste IED" position="29TNF3285655778" type="Terroriste IED"/>
+            <unit command-post="true" id="569" name="Terroriste Sniper et IED" position="29TNF3056156944" type="Terroriste Sniper et IED"/>
+            <unit command-post="false" id="570" name="Terroriste RPG" position="29TNF3290355047" type="Terroriste RPG"/>
+          </automat>
+          <automat engaged="true" id="571" knowledge-group="31" name="MILICE [571]" type="MILICE">
+            <unit command-post="true" id="572" name="MILICE . CDT" position="29TNF2935061072" type="MILICE . PICK UP CDT"/>
+            <unit command-post="false" id="573" name="MILICE . Miliciens" position="29TNF2917661094" type="MILICE . PICK UP 14,5"/>
+            <unit command-post="false" id="574" name="MILICE . Miliciens" position="29TNF2970461233" type="MILICE . PICK UP 14,5"/>
+          </automat>
+          <automat engaged="true" id="575" knowledge-group="31" name="SGTIA INF dominante roues [575]" type="SGTIA INF dominante roues">
+            <unit command-post="false" id="576" name="INF . Section CBT quaternaire VAB CDS OFF" position="29TNF3103055412" type="INF . Section CBT quaternaire VAB CDS OFF"/>
+            <unit command-post="false" id="577" name="INF . Section CBT quaternaire VAB CDS SOFF" position="29TNF3188055211" type="INF . Section CBT quaternaire VAB CDS SOFF"/>
+            <unit command-post="false" id="578" name="INF . Section CBT quaternaire VAB CDS SOFF" position="29TNF3226855321" type="INF . Section CBT quaternaire VAB CDS SOFF"/>
+            <unit command-post="false" id="579" name="INF . Groupe INF MO81 Section quaternaire" position="29TNF3112755349" type="INF . Groupe INF MO81 Section quaternaire"/>
+            <unit command-post="false" id="580" name="ABC . PLT AMX 10 RC CDP SOFF" position="29TNF3148755340" type="ABC . PLT AMX 10 RC CDP SOFF"/>
+            <unit command-post="false" id="581" name="GEN . Section CBT renforce MPG" position="29TNF3153855236" type="GEN . Section CBT renforce MPG"/>
+            <unit command-post="true" id="582" name="INF . Section CDT CIE quaternaire VAB" position="29TNF3189655092" type="INF . Section CDT CIE quaternaire VAB"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="31" name="Groupe de connaissance [31]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="0259291482" -->

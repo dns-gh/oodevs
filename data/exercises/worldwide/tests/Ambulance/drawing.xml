@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<shapes>
+  <shape category="Misc." color="#000000" template="Bold arrow" type="line">
+    <point x="72825.4" y="28390.1"/>
+    <point x="75360.7" y="36677.3"/>
+  </shape>
+  <shape category="Misc." color="#000000" template="Bold arrow" type="line">
+    <point x="75928.3" y="24606"/>
+    <point x="80242.2" y="30130.8"/>
+  </shape>
+  <shape category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="79826" y="34898.7"/>
+    <point x="79826" y="34898.7"/>
+  </shape>
+  <shape category="Misc." color="#000000" template="Simple arrow" type="line">
+    <point x="81599.3" y="41776.6"/>
+    <point x="78393" y="39868.1"/>
+  </shape>
+  <shape category="Misc." color="#000000" template="Simple arrow" type="line">
+    <point x="82820.7" y="41547.6"/>
+    <point x="82095.5" y="33989.9"/>
+  </shape>
+  <shape category="Misc." color="#000000" template="Bold arrow" type="line">
+    <point x="64651.7" y="14904.8"/>
+    <point x="74461.5" y="21889.9"/>
+  </shape>
+  <shape category="Misc." color="#000000" template="Bold arrow" type="line">
+    <point x="62705.1" y="19065.3"/>
+    <point x="69957.4" y="24752.7"/>
+  </shape>
+  <shape category="Orders" color="#000000" template="Reckon" type="line">
+    <point x="74480.6" y="14962"/>
+    <point x="74976.8" y="18015.6"/>
+  </shape>
+  <shape category="Orders" color="#000000" template="Reckon" type="line">
+    <point x="73220.9" y="14313.1"/>
+    <point x="71236.1" y="16641.5"/>
+  </shape>
+  <shape category="Orders" color="#000000" template="Support" type="line">
+    <point x="58830.8" y="15381.9"/>
+    <point x="61350" y="16488.8"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Point" type="point">
+    <point x="81446.6" y="31871.4"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Point" type="point">
+    <point x="76064.6" y="39047.4"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Coordinating point" type="point">
+    <point x="72591.1" y="27062"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Coordinating point" type="point">
+    <point x="75835.6" y="23588.5"/>
+  </shape>
+  <shape category="Lines" color="#000000" template="-- x --" type="line">
+    <point x="74779.5" y="29479.4"/>
+    <point x="74067" y="28321.6"/>
+  </shape>
+  <shape category="Lines" color="#000000" template="-- x --" type="line">
+    <point x="74638.2" y="28025.4"/>
+    <point x="73416.7" y="28737.9"/>
+  </shape>
+  <shape category="Lines" color="#000000" template="-- x --" type="line">
+    <point x="79538.1" y="27564.5"/>
+    <point x="78622" y="25910.5"/>
+  </shape>
+  <shape category="Lines" color="#000000" template="-- x --" type="line">
+    <point x="77909.5" y="26266.7"/>
+    <point x="79334.5" y="25579.7"/>
+  </shape>
+  <shape category="Lines" color="#000000" template="-- x --" type="line">
+    <point x="73757.4" y="37182.7"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Point" type="point">
+    <point x="75093.4" y="39625.6"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Coordinating point" type="point"/>
+  <shape category="Markers" color="#000000" template="Coordinating point" type="point">
+    <point x="75895" y="38518.7"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Coordinating point" type="point">
+    <point x="81353.3" y="31495.4"/>
+  </shape>
+</shapes>
+<!-- signature="1130256997" -->

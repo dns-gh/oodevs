@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Interposition army" type="friend">
+      <objects>
+        <object id="45" name="gun artillery deployment area [45]" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>31UDP9526587511</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="46" name="gun artillery deployment area [46]" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>31UDP9766184158</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="47" name="gun artillery deployment area [47]" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>31UDP9851782393</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="48" name="gun artillery deployment area [48]" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>31UDP9695686476</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="5" level="ii" name="Battalion">
+          <automat engaged="true" id="20" knowledge-group="2" name="MBT squadron [20]" type="MBT squadron">
+            <unit command-post="true" id="21" name="Armored squadron CP" position="31UEP0472684967" type="Armored squadron CP"/>
+            <unit command-post="false" id="22" name="MBT platoon" position="31UEP0393786547" type="MBT platoon"/>
+            <unit command-post="false" id="23" name="MBT platoon" position="31UEP0471186277" type="MBT platoon"/>
+            <unit command-post="false" id="24" name="MBT platoon" position="31UEP0392385799" type="MBT platoon"/>
+            <unit command-post="false" id="25" name="MBT platoon" position="31UEP0519985890" type="MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="26" knowledge-group="2" name="MBT squadron [26]" type="MBT squadron">
+            <unit command-post="true" id="27" name="Armored squadron CP" position="31UEP0120685341" type="Armored squadron CP"/>
+            <unit command-post="false" id="28" name="MBT platoon" position="31UEP0156185945" type="MBT platoon"/>
+            <unit command-post="false" id="29" name="MBT platoon" position="31UEP0112486735" type="MBT platoon"/>
+            <unit command-post="false" id="30" name="MBT platoon" position="31UEP0051685913" type="MBT platoon"/>
+            <unit command-post="false" id="31" name="MBT platoon" position="31UEP0189086323" type="MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="32" knowledge-group="2" name="Light armored squadron [32]" type="Light armored squadron">
+            <unit command-post="true" id="33" name="Armored squadron CP" position="31UEP0237989166" type="Armored squadron CP"/>
+            <unit command-post="false" id="34" name="Light armored platoon" position="31UEP0329490328" type="Light armored platoon"/>
+            <unit command-post="false" id="35" name="Light armored platoon" position="31UEP0295289636" type="Light armored platoon"/>
+            <unit command-post="false" id="36" name="Light armored platoon" position="31UEP0304289232" type="Light armored platoon"/>
+            <unit command-post="false" id="37" name="Light armored platoon" position="31UEP0359190106" type="Light armored platoon"/>
+          </automat>
+          <automat engaged="true" id="39" knowledge-group="2" logistic-level="logistic-base" name="Teeth arms battalion CT [39]" type="Armored battalion combat train">
+            <unit command-post="true" id="40" name="Battalion CT" position="31UDP9940689005" type="Teeth arms battalion CT"/>
+          </automat>
+          <automat engaged="true" id="41" knowledge-group="2" name="Countermobility company [41]" type="Countermobility company">
+            <unit command-post="true" id="42" name="Countermobility platoon" position="31UEP0129483662" type="Countermobility platoon"/>
+            <unit command-post="false" id="43" name="Countermobility platoon" position="31UEP0058783797" type="Countermobility platoon"/>
+            <unit command-post="false" id="44" name="Countermobility platoon" position="31UEP0126184317" type="Countermobility platoon"/>
+          </automat>
+          <automat engaged="true" id="49" knowledge-group="2" name="Artillery firing battery [49]" type="Artillery firing battery">
+            <unit command-post="true" id="50" name="Battery CP" position="31UDP9433984464" type="Battery CP"/>
+            <unit command-post="false" id="51" name="Artillery firing platoon" position="31UDP9479686026" type="Artillery firing platoon"/>
+            <unit command-post="false" id="52" name="Artillery firing platoon" position="31UDP9587983959" type="Artillery firing platoon"/>
+            <unit command-post="false" id="53" name="Artillery firing platoon" position="31UDP9618485293" type="Artillery firing platoon"/>
+            <lima name="Phase line 123">
+              <point>31UEQ1118003324</point>
+              <point>31UEQ1297402522</point>
+              <point>31UEQ1358502521</point>
+              <point>31UEQ1553101148</point>
+              <point>31UEQ1576000691</point>
+              <point>31UEQ1637100614</point>
+              <point>31UEQ1690500384</point>
+              <point>31UEP1801299850</point>
+              <point>31UEP1850899887</point>
+              <point>31UEP1927299658</point>
+              <point>31UEP1965399276</point>
+              <point>31UEP2026498971</point>
+              <point>31UEP2114298437</point>
+              <point>31UEP2194397979</point>
+              <point>31UEP2221097940</point>
+              <point>31UEP2305198358</point>
+              <point>31UEP2350997824</point>
+              <point>31UEP2431097595</point>
+              <point>31UEP2495997480</point>
+            </lima>
+          </automat>
+          <lima name="Phase line 12">
+            <point>31UEP0932598918</point>
+            <point>31UEP1076498198</point>
+            <point>31UEP1159797365</point>
+            <point>31UEP1231696873</point>
+            <point>31UEP1258196571</point>
+            <point>31UEP1261895966</point>
+            <point>31UEP1326295701</point>
+            <point>31UEP1356595511</point>
+            <point>31UEP1402095322</point>
+            <point>31UEP1447495057</point>
+            <point>31UEP1466394754</point>
+            <point>31UEP1564894413</point>
+            <point>31UEP1689994373</point>
+            <point>31UEP1777194372</point>
+            <point>31UEP1803694183</point>
+            <point>31UEP1837794296</point>
+            <point>31UEP1905994181</point>
+            <point>31UEP2027193877</point>
+            <point>31UEP2091593763</point>
+            <point>31UEP2167393800</point>
+            <point>31UEP2277293647</point>
+          </lima>
+          <lima name="Phase line 13">
+            <point>31UEQ1434915160</point>
+            <point>31UEQ1844013530</point>
+            <point>31UEQ2109112053</point>
+            <point>31UEQ2408209479</point>
+            <point>31UEQ2752908605</point>
+            <point>31UEQ2866608491</point>
+            <point>31UEQ3090006938</point>
+          </lima>
+          <lima name="Phase line 14">
+            <point>31UDP9642789412</point>
+            <point>31UDP9699488240</point>
+            <point>31UDP9733487560</point>
+            <point>31UDP9793885518</point>
+            <point>31UDP9937280566</point>
+            <point>31UEP0043179469</point>
+          </lima>
+          <limit name="Limit 8">
+            <point>31UDP9647480168</point>
+            <point>31UEP0266083266</point>
+            <point>31UEP0571984304</point>
+            <point>31UEP0708684798</point>
+            <point>31UEP0856085132</point>
+            <point>31UEP1157385700</point>
+            <point>31UEP1631588683</point>
+            <point>31UEP1777791827</point>
+            <point>31UEP2013394698</point>
+            <point>31UEP2328398100</point>
+            <point>31UEP2343599044</point>
+            <point>31UEQ2521901158</point>
+            <point>31UEQ2506902178</point>
+            <point>31UEQ2667809856</point>
+          </limit>
+          <limit name="Limit 10">
+            <point>31UEQ1601815781</point>
+            <point>31UEQ1322006659</point>
+            <point>31UEQ1259002919</point>
+            <point>31UEP1031697488</point>
+            <point>31UEP0594693362</point>
+            <point>31UEP0413692862</point>
+            <point>31UEP0192691968</point>
+            <point>31UDP9978590988</point>
+            <point>31UDP9693888373</point>
+            <point>31UDP9540489281</point>
+            <point>31UDP9443889283</point>
+            <point>31UDP9244687982</point>
+          </limit>
+          <limit name="Limit 38">
+            <point>31UDP9761085266</point>
+            <point>31UEP0240886982</point>
+            <point>31UEP0356487425</point>
+            <point>31UEP0458188085</point>
+            <point>31UEP0575388458</point>
+            <point>31UEP0755989373</point>
+            <point>31UEP0964590671</point>
+            <point>31UEP1255293068</point>
+            <point>31UEP1374294830</point>
+            <point>31UEP1753899082</point>
+            <point>31UEQ1913402827</point>
+            <point>31UEQ2029006367</point>
+            <point>31UEQ2237112639</point>
+          </limit>
+          <intelligence embarked="false" karma="friend" level="i" name="Intelligence [19]" nature="symbols/sfgpucath" position="31UEP0250996210"/>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Knowledge group [2]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="3" name="Local forces" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="62" level="i" name="Militia factions">
+          <automat engaged="true" id="63" knowledge-group="4" name="Militias [63]" type="Militias">
+            <unit command-post="true" id="64" name="Militia" position="31UEQ1687317120" type="Militia"/>
+            <unit command-post="false" id="65" name="Militia" position="31UEQ1899315887" type="Militia"/>
+            <unit command-post="false" id="66" name="Militia" position="31UEQ1684716671" type="Militia"/>
+            <unit command-post="false" id="67" name="Militia" position="31UEQ2520412403" type="Militia"/>
+            <unit command-post="false" id="68" name="Militia" position="31UEQ2507712126" type="Militia"/>
+            <unit command-post="false" id="69" name="Militia" position="31UEQ3126610959" type="Militia"/>
+            <unit command-post="false" id="70" name="Militia" position="31UEQ3096310783" type="Militia"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="4" name="Knowledge group [4]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="54" name="Population standard [54]" position="31UEQ2262303371" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="89" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="55" name="Population standard [55]" position="31UEQ2165113626" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="10000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="89" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="56" name="Population standard [56]" position="31UEQ2344211432" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="89" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="57" name="Population standard [57]" position="31UEQ2680513569" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="3500" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="89" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="89" name="Local army" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="92" level="ii" name="Battalion 1">
+          <automat engaged="true" id="93" knowledge-group="90" name="Light armored squadron [93]" type="Light armored squadron">
+            <unit command-post="true" id="94" name="Armored squadron CP" position="31UEP1433284699" type="Armored squadron CP"/>
+            <unit command-post="false" id="95" name="Light armored platoon" position="31UEP1535685152" type="Light armored platoon"/>
+            <unit command-post="false" id="96" name="Light armored platoon" position="31UEP1440985417" type="Light armored platoon"/>
+            <unit command-post="false" id="97" name="Light armored platoon" position="31UEP1467384737" type="Light armored platoon"/>
+            <unit command-post="false" id="98" name="Light armored platoon" position="31UEP1493984925" type="Light armored platoon"/>
+          </automat>
+          <automat engaged="true" id="99" knowledge-group="90" name="Infantry company [99]" type="Infantry company">
+            <unit command-post="true" id="100" name="Infantry company CP" position="31UEP1881285923" type="Infantry company CP"/>
+            <unit command-post="false" id="101" name="Infantry platoon" position="31UEP1881285923" type="Infantry platoon"/>
+            <unit command-post="false" id="103" name="Mortar troop" position="31UEP1881285923" type="Mortar troop"/>
+            <unit command-post="false" id="106" name="Infantry platoon" position="31UEP1816886105" type="Infantry platoon"/>
+            <unit command-post="false" id="107" name="Infantry platoon" position="31UEP1843486558" type="Infantry platoon"/>
+          </automat>
+          <limit name="Limit 108">
+            <point>31UEP2029186291</point>
+            <point>31UEP1813488977</point>
+            <point>31UEP1593890756</point>
+            <point>31UEP1438792836</point>
+            <point>31UEP1257094501</point>
+            <point>31UEP0939097113</point>
+          </limit>
+          <limit name="Limit 109">
+            <point>31UEP1448782633</point>
+            <point>31UEP1199186075</point>
+            <point>31UEP0991088837</point>
+            <point>31UEP0752490314</point>
+            <point>31UEP0635292431</point>
+            <point>31UEP0597492923</point>
+            <point>31UEP0427093568</point>
+          </limit>
+        </formation>
+        <formation id="110" level="ii" name="Battalion 2">
+          <automat engaged="true" id="111" knowledge-group="90" name="Light armored squadron [111]" type="Light armored squadron">
+            <unit command-post="true" id="112" name="Armored squadron CP" position="31UEQ1546803220" type="Armored squadron CP"/>
+            <unit command-post="false" id="113" name="Light armored platoon" position="31UEQ1554302036" type="Light armored platoon"/>
+            <unit command-post="false" id="114" name="Light armored platoon" position="31UEQ1677900523" type="Light armored platoon"/>
+            <unit command-post="false" id="115" name="Light armored platoon" position="31UEQ1589601456" type="Light armored platoon"/>
+            <unit command-post="false" id="116" name="Light armored platoon" position="31UEQ1619800750" type="Light armored platoon"/>
+          </automat>
+          <automat engaged="true" id="117" knowledge-group="90" name="Light armored squadron [117]" type="Light armored squadron">
+            <unit command-post="true" id="118" name="Armored squadron CP" position="31UEQ2109900542" type="Armored squadron CP"/>
+            <unit command-post="false" id="119" name="Light armored platoon" position="31UEP2107299384" type="Light armored platoon"/>
+            <unit command-post="false" id="120" name="Light armored platoon" position="31UEP2127398476" type="Light armored platoon"/>
+            <unit command-post="false" id="121" name="Light armored platoon" position="31UEP2056698754" type="Light armored platoon"/>
+            <unit command-post="false" id="122" name="Light armored platoon" position="31UEP1991099486" type="Light armored platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="90" name="Knowledge group [90]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="3"/>
+      <relationship diplomacy="enemy" party="89"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="friend" party="89"/>
+    </party>
+    <party id="89">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="friend" party="3"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="2008679163" -->

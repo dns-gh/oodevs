@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Blue" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="24" level="x" name="Formation [24]">
+          <automat engaged="true" id="39" knowledge-group="26" name="Drones station * [39]" type="Drones station">
+            <unit command-post="true" id="40" name="Drones station *" position="33VWE0498973329" type="Drones station"/>
+            <unit command-post="false" id="43" name="Drone (real time) *" position="33VWE0449372824" type="Drone (real time)"/>
+          </automat>
+          <automat engaged="false" id="87" knowledge-group="26" name="Ground suveillance radar [87]" type="Ground suveillance radar">
+            <unit command-post="true" id="88" name="Ground surveillance radar" position="33VVE9820383988" type="Ground surveillance radar"/>
+            <unit command-post="false" id="89" name="Ground surveillance radar" position="33VWE1243488902" type="Ground surveillance radar"/>
+          </automat>
+          <limit name="Limit 73">
+            <point>33VWE0318170907</point>
+            <point>33VWE0154981881</point>
+            <point>33VVE9731787546</point>
+            <point>33VVE9385892592</point>
+          </limit>
+          <limit name="Limit 74">
+            <point>33VWE0804795432</point>
+            <point>33VWE0913290921</point>
+            <point>33VWE1572586181</point>
+            <point>33VWE2006576205</point>
+          </limit>
+          <limit name="Limit 75">
+            <point>33VWE0018894927</point>
+            <point>33VWE0415287506</point>
+            <point>33VWE0712885876</point>
+            <point>33VWE0798381207</point>
+            <point>33VWE0899580826</point>
+            <point>33VWE1028678402</point>
+            <point>33VWE1127473539</point>
+          </limit>
+        </formation>
+        <formation id="38" level="x" name="Formation [38]">
+          <automat engaged="true" id="46" knowledge-group="26" name="MBT squadron [46]" type="MBT squadron">
+            <unit command-post="true" id="47" name="Armored squadron CP" position="33VWE0861876103" type="Armored squadron CP"/>
+            <unit command-post="false" id="48" name="MBT platoon" position="33VWE0912475608" type="MBT platoon"/>
+            <unit command-post="false" id="49" name="MBT platoon" position="33VWE0862775103" type="MBT platoon"/>
+            <unit command-post="false" id="50" name="MBT platoon" position="33VWE0812275599" type="MBT platoon"/>
+            <unit command-post="false" id="51" name="MBT platoon" position="33VWE0911976108" type="MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="52" knowledge-group="26" name="MBT squadron * [52]" type="MBT squadron">
+            <unit command-post="true" id="53" name="Armored squadron CP *" position="33VWE1371581740" type="Armored squadron CP"/>
+            <unit command-post="false" id="54" name="MBT platoon *" position="33VWE1422181244" type="MBT platoon"/>
+            <unit command-post="false" id="55" name="MBT platoon *" position="33VWE1372480739" type="MBT platoon"/>
+            <unit command-post="false" id="56" name="MBT platoon *" position="33VWE1321981235" type="MBT platoon"/>
+            <unit command-post="false" id="57" name="MBT platoon *" position="33VWE1421681744" type="MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="58" knowledge-group="26" name="Light armored squadron [58]" type="Light armored squadron">
+            <unit command-post="true" id="59" name="Armored squadron CP" position="33VWE1217078531" type="Armored squadron CP"/>
+            <unit command-post="false" id="60" name="Light armored platoon" position="33VWE1267678036" type="Light armored platoon"/>
+            <unit command-post="false" id="61" name="Light armored platoon" position="33VWE1217977531" type="Light armored platoon"/>
+            <unit command-post="false" id="62" name="Light armored platoon" position="33VWE1167478027" type="Light armored platoon"/>
+            <unit command-post="false" id="63" name="Light armored platoon" position="33VWE1267178536" type="Light armored platoon"/>
+          </automat>
+        </formation>
+        <formation id="64" level="x" name="Formation [64]">
+          <automat engaged="false" id="65" knowledge-group="26" name="Artillery firing battery [65]" type="Artillery firing battery">
+            <unit command-post="true" id="66" name="Battery CP" position="33VWE1123076340" type="Battery CP"/>
+            <unit command-post="false" id="67" name="Artillery firing platoon" position="33VWE1173575844" type="Artillery firing platoon"/>
+            <unit command-post="false" id="68" name="Artillery firing platoon" position="33VWE1123975340" type="Artillery firing platoon"/>
+          </automat>
+          <automat engaged="false" id="69" knowledge-group="26" name="Artillery firing battery [69]" type="Artillery firing battery">
+            <unit command-post="true" id="70" name="Battery CP" position="33VWE1485579593" type="Battery CP"/>
+            <unit command-post="false" id="71" name="Artillery firing platoon *" position="33VWE1536079098" type="Artillery firing platoon"/>
+            <unit command-post="false" id="72" name="Artillery firing platoon" position="33VWE1486478593" type="Artillery firing platoon"/>
+          </automat>
+        </formation>
+        <formation id="76" level="x" name="Formation [76]">
+          <automat engaged="true" id="77" knowledge-group="26" name="Engineer Recon [77]" type="Countermobility company">
+            <unit command-post="true" id="78" name="Countermobility platoon" position="33VWE0318278152" type="Countermobility platoon"/>
+            <unit command-post="false" id="79" name="Countermobility platoon" position="33VWE0368777657" type="Countermobility platoon"/>
+            <unit command-post="false" id="80" name="Countermobility platoon" position="33VWE0319177152" type="Countermobility platoon"/>
+          </automat>
+          <automat engaged="true" id="81" knowledge-group="26" name="Engineer Recon * [81]" type="Countermobility company">
+            <unit command-post="true" id="82" name="Countermobility platoon *" position="33VWE1458983690" type="Countermobility platoon"/>
+            <unit command-post="false" id="83" name="Countermobility platoon *" position="33VWE1509583194" type="Countermobility platoon"/>
+            <unit command-post="false" id="84" name="Countermobility platoon *" position="33VWE1459882690" type="Countermobility platoon"/>
+          </automat>
+          <automat engaged="false" id="95" knowledge-group="26" name="Countermobility company [95]" type="Countermobility company">
+            <unit command-post="true" id="96" name="Countermobility platoon" position="33VWE0547577835" type="Countermobility platoon"/>
+            <unit command-post="false" id="97" name="Countermobility platoon *" position="33VWE0479877541" type="Countermobility platoon"/>
+            <unit command-post="false" id="98" name="Countermobility platoon" position="33VWE0432677615" type="Countermobility platoon"/>
+            <unit command-post="false" id="99" name="Countermobility platoon" position="33VWE0479178298" type="Countermobility platoon"/>
+            <unit command-post="false" id="100" name="Countermobility platoon" position="33VWE0592177760" type="Countermobility platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="26" name="Knowledge group [26]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="2" name="Red" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="3" level="x" name="Formation [3]">
+          <automat engaged="true" id="4" knowledge-group="5" name="Infantry company [4]" type="Infantry company">
+            <unit command-post="true" id="6" name="Infantry company CP" position="33VWE0136189480" type="Infantry company CP"/>
+            <unit command-post="false" id="7" name="Infantry platoon" position="33VWE0186788985" type="Infantry platoon"/>
+            <unit command-post="false" id="10" name="Light armored platoon" position="33VWE0186289485" type="Light armored platoon"/>
+            <unit command-post="false" id="17" name="Infantry platoon" position="33VWE0136688922" type="Infantry platoon"/>
+            <unit command-post="false" id="18" name="Infantry platoon" position="33VWE0163488616" type="Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="11" knowledge-group="5" name="Infantry company [11]" type="Infantry company">
+            <unit command-post="true" id="12" name="Infantry company CP" position="33VWE0335490335" type="Infantry company CP"/>
+            <unit command-post="false" id="13" name="Infantry platoon" position="33VWE0386089840" type="Infantry platoon"/>
+            <unit command-post="false" id="16" name="Light armored platoon" position="33VWE0385590340" type="Light armored platoon"/>
+            <unit command-post="false" id="19" name="Infantry platoon" position="33VWE0330089835" type="Infantry platoon"/>
+            <unit command-post="false" id="20" name="Infantry platoon" position="33VWE0423890210" type="Infantry platoon"/>
+          </automat>
+          <limit name="Limit 21">
+            <point>33VVE9827791584</point>
+            <point>33VVE9824187774</point>
+            <point>33VVE9962586453</point>
+            <point>33VWE0090385060</point>
+            <point>33VWE0210582438</point>
+          </limit>
+          <limit name="Limit 22">
+            <point>33VWE0630894201</point>
+            <point>33VWE0593790459</point>
+            <point>33VWE0717989171</point>
+            <point>33VWE0961787964</point>
+            <point>33VWE1176286035</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="5" name="Knowledge group [5]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="103" name="Yellow" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="106" level="x" name="Formation [106]">
+          <automat engaged="false" id="122" knowledge-group="123" name="MBT squadron [122]" type="MBT squadron">
+            <unit command-post="true" id="124" name="Armored squadron CP" position="33VWE7047094092" type="Armored squadron CP"/>
+            <unit command-post="false" id="127" name="MBT platoon" position="33VWE7075293284" type="MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="129" knowledge-group="123" name="MBT squadron [129]" type="MBT squadron">
+            <unit command-post="true" id="130" name="Armored squadron CP" position="33VWE7463196450" type="Armored squadron CP"/>
+            <unit command-post="false" id="131" name="MBT platoon" position="33VWE7513695954" type="MBT platoon"/>
+            <unit command-post="false" id="132" name="MBT platoon" position="33VWE7464095450" type="MBT platoon"/>
+            <unit command-post="false" id="133" name="MBT platoon" position="33VWE7413495945" type="MBT platoon"/>
+            <unit command-post="false" id="134" name="MBT platoon" position="33VWE7513296454" type="MBT platoon"/>
+          </automat>
+          <limit name="Limit 135">
+            <point>33VWE7230995762</point>
+            <point>33VWE7612892105</point>
+          </limit>
+          <limit name="Limit 136">
+            <point>33VWE7548798404</point>
+            <point>33VWE7979895290</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="123" name="Knowledge group [123]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="104" name="Green" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="105" level="x" name="Formation [105]">
+          <automat engaged="false" id="107" knowledge-group="108" name="MBT squadron [107]" type="MBT squadron">
+            <unit command-post="true" id="109" name="Armored squadron CP" position="33VWE7749087840" type="Armored squadron CP"/>
+            <unit command-post="false" id="112" name="MBT platoon" position="33VWE7620488420" type="MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="114" knowledge-group="108" name="MBT squadron [114]" type="MBT squadron">
+            <unit command-post="true" id="115" name="Armored squadron CP" position="33VWE8559386236" type="Armored squadron CP"/>
+            <unit command-post="false" id="116" name="MBT platoon" position="33VWE8609885740" type="MBT platoon"/>
+            <unit command-post="false" id="117" name="MBT platoon" position="33VWE8560285236" type="MBT platoon"/>
+            <unit command-post="false" id="118" name="MBT platoon" position="33VWE8494185692" type="MBT platoon"/>
+            <unit command-post="false" id="119" name="MBT platoon" position="33VWE8609486240" type="MBT platoon"/>
+          </automat>
+          <limit name="Limit 120">
+            <point>33VWE8025484184</point>
+            <point>33VWE7702790664</point>
+            <point>33VWE7197195152</point>
+          </limit>
+          <limit name="Limit 121">
+            <point>33VWE7598198882</point>
+            <point>33VWE8298593544</point>
+            <point>33VWE8621591569</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="108" name="Knowledge group [108]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+      <relationship diplomacy="neutral" party="103"/>
+      <relationship diplomacy="neutral" party="104"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="neutral" party="103"/>
+      <relationship diplomacy="neutral" party="104"/>
+    </party>
+    <party id="103">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="2"/>
+      <relationship diplomacy="enemy" party="104"/>
+    </party>
+    <party id="104">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="2"/>
+      <relationship diplomacy="enemy" party="103"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="2972808196" -->

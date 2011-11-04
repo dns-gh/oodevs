@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="28757" name="AUTOMATE NRBC Armer un Site de Decontamination" target="411" time="2010-09-01T12:09:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="29TNF2690165242"/>
+        <point coordinates="29TNF3017959918"/>
+        <point coordinates="29TNF2893555358"/>
+        <point coordinates="29TNF3061250520"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="29TNF4079964830"/>
+        <point coordinates="29TNF3974260922"/>
+        <point coordinates="29TNF3865955394"/>
+        <point coordinates="29TNF3670250590"/>
+      </location>
+    </parameter>
+    <parameter name="Positions" type="list">
+      <parameter name="Positions (élément 1)" type="location">
+        <location type="point">
+          <point coordinates="29TNF3912162424"/>
+        </location>
+      </parameter>
+      <parameter name="Positions (élément 2)" type="location">
+        <location type="point">
+          <point coordinates="29TNF3925863921"/>
+        </location>
+      </parameter>
+      <parameter name="Positions (élément 3)" type="location">
+        <location type="point">
+          <point coordinates="29TNF3691962352"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+</actions>

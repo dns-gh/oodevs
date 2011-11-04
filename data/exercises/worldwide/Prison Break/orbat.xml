@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Security" type="friend">
+      <objects>
+        <object id="27" name="Detainee Holding Area [27]" type="prisoners camp">
+          <shape type="polygone">
+            <points>
+              <point>31UDQ9905192239</point>
+              <point>31UDQ9876192856</point>
+              <point>31UDQ9972592827</point>
+              <point>31UEQ0056293053</point>
+              <point>31UEQ0089193651</point>
+              <point>31UEQ0145493134</point>
+              <point>31UEQ0123592780</point>
+              <point>31UEQ0079892436</point>
+              <point>31UEQ0193592199</point>
+              <point>31UEQ0191792171</point>
+              <point>31UEQ0181691700</point>
+              <point>31UEQ0234391545</point>
+              <point>31UEQ0236191100</point>
+              <point>31UEQ0168790729</point>
+              <point>31UEQ0139690557</point>
+              <point>31UEQ0007790487</point>
+              <point>31UDQ9940390478</point>
+              <point>31UDQ9894090715</point>
+              <point>31UDQ9898691350</point>
+            </points>
+          </shape>
+          <attributes>
+            <logistic-base id="5"/>
+          </attributes>
+        </object>
+        <object id="29" name="General obstacle zone [29]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31UDQ9878492937</point>
+              <point>31UDQ9868192853</point>
+              <point>31UDQ9899392238</point>
+              <point>31UDQ9898991713</point>
+              <point>31UDQ9888391716</point>
+              <point>31UDQ9888092196</point>
+              <point>31UDQ9860392773</point>
+              <point>31UDQ9863993024</point>
+              <point>31UDQ9880493046</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="38" name="General obstacle zone [38]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31UDQ9883193045</point>
+              <point>31UDQ9881392924</point>
+              <point>31UDQ9973592905</point>
+              <point>31UDQ9972493026</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="39" name="General obstacle zone [39]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31UDQ9971893032</point>
+              <point>31UDQ9974192905</point>
+              <point>31UEQ0056593112</point>
+              <point>31UEQ0047893228</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="40" name="General obstacle zone [40]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31UEQ0047393228</point>
+              <point>31UEQ0054293118</point>
+              <point>31UEQ0087993713</point>
+              <point>31UEQ0080493771</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="41" name="General obstacle zone [41]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31UEQ0081093789</point>
+              <point>31UEQ0105393811</point>
+              <point>31UEQ0158693203</point>
+              <point>31UEQ0150593140</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="42" name="General obstacle zone [42]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31UEQ0158693198</point>
+              <point>31UEQ0148293123</point>
+              <point>31UEQ0130192764</point>
+              <point>31UEQ0142392706</point>
+              <point>31UEQ0157593070</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="43" name="General obstacle zone [43]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31UEQ0128492764</point>
+              <point>31UEQ0093692470</point>
+              <point>31UEQ0112192469</point>
+              <point>31UEQ0144192723</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="44" name="General obstacle zone [44]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31UEQ0112192455</point>
+              <point>31UEQ0206592269</point>
+              <point>31UEQ0195091715</point>
+              <point>31UEQ0236491644</point>
+              <point>31UEQ0237391802</point>
+              <point>31UEQ0208291829</point>
+              <point>31UEQ0224292409</point>
+              <point>31UEQ0123692551</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="45" name="General obstacle zone [45]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31UEQ0238691825</point>
+              <point>31UEQ0239591658</point>
+              <point>31UEQ0242291058</point>
+              <point>31UEQ0145890514</point>
+              <point>31UDQ9939290415</point>
+              <point>31UDQ9892990684</point>
+              <point>31UDQ9886490527</point>
+              <point>31UDQ9940190277</point>
+              <point>31UEQ0149590375</point>
+              <point>31UEQ0251590993</point>
+              <point>31UEQ0261791575</point>
+              <point>31UEQ0250791880</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="46" name="General obstacle zone [46]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31UDQ9883991553</point>
+              <point>31UDQ9896291558</point>
+              <point>31UDQ9891390659</point>
+              <point>31UDQ9886490520</point>
+              <point>31UDQ9882290745</point>
+              <point>31UDQ9881291296</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="3" level="x" name="Formation [3]">
+          <automat engaged="false" id="5" knowledge-group="6" logistic-level="logistic-base" name="Logistic combat train [5]" type="Logistic combat train">
+            <unit command-post="true" id="7" name="Logistic CT" position="31UEQ0202991135" type="Logistic CT"/>
+          </automat>
+          <automat engaged="false" id="30" knowledge-group="6" name="Jailors [30]" type="Infantry company">
+            <unit command-post="true" id="31" name="Jailors 1" position="31UDQ9942791144" type="Infantry company CP"/>
+            <unit command-post="false" id="32" name="Jailors 2" position="31UEQ0079891035" type="Infantry platoon"/>
+            <unit command-post="false" id="36" name="Jailors 3" position="31UDQ9948692435" type="Infantry platoon"/>
+            <unit command-post="false" id="37" name="Jailors 4" position="31UEQ0054692441" type="Infantry platoon"/>
+            <unit command-post="false" id="59" name="Countermobility platoon" position="31UEQ0096991980" type="Countermobility platoon"/>
+          </automat>
+          <automat engaged="false" id="47" knowledge-group="6" name="HS - Fire Suppression HQ [47]" type="HS - Fire_Suppression_HQ">
+            <unit command-post="true" id="48" name="HS - Fire_Station_CP" position="31UDQ9701389002" type="HS - Fire_Station_CP"/>
+            <unit command-post="false" id="51" name="HS - Fire Suppression" position="31UDQ9651188503" type="HS - Fire_Suppression"/>
+            <unit command-post="false" id="52" name="HS - Fire Suppression" position="31UDQ9715888681" type="HS - Fire_Suppression"/>
+          </automat>
+          <automat engaged="false" id="53" knowledge-group="6" name="HS - Police_HQ [53]" type="HS - Police_HQ">
+            <unit command-post="true" id="54" name="HS - Law_Police_CP" position="31UDQ9600087223" type="HS - Law_Police_CP"/>
+            <unit command-post="false" id="55" name="HS - Law_Police" position="31UDQ9618486863" type="HS - Law_Police"/>
+            <unit command-post="false" id="56" name="HS - Law_Police" position="31UDQ9573286395" type="HS - Law_Police"/>
+            <unit command-post="false" id="58" name="HS - Law_Police" position="31UDQ9607186919" type="HS - Law_Police"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="6" name="Knowledge group [6]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="2" name="Prisoner" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="4" level="x" name="Formation [4]">
+          <automat engaged="false" id="21" knowledge-group="22" name="Artillery firing battery [21]" type="Artillery firing battery">
+            <unit command-post="true" id="23" name="Battery CP" position="31UDR9136300355" type="Battery CP"/>
+            <unit command-post="false" id="24" name="Artillery firing platoon" position="31UDQ9208399870" type="Artillery firing platoon"/>
+            <unit command-post="false" id="25" name="Artillery firing platoon" position="31UDQ9136199356" type="Artillery firing platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="22" name="Knowledge group [22]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="26" name="Population standard [26]" position="31UEQ0014691841" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="5000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="2642531131" -->

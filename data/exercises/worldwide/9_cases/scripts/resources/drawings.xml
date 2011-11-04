@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<shapes>
+  <shape name="Fontaine" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="86513.8" y="44767.9"/>
+    <point x="86206.3" y="42991.5"/>
+    <point x="94815.3" y="41898.3"/>
+    <point x="94883.6" y="43299"/>
+  </shape>
+  <shape name="Beaufort" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="88670.7" y="37380.6"/>
+    <point x="89004.1" y="38069.6"/>
+    <point x="89648.6" y="38069.6"/>
+    <point x="90382.1" y="36936.1"/>
+    <point x="89004.1" y="36558.2"/>
+  </shape>
+    <shape name="North_beaufort" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="61552.3" y="66784.8"/>
+    <point x="60870.9" y="66596.8"/>
+    <point x="60659.5" y="67254.7"/>
+    <point x="61282.1" y="67466.1"/>
+  </shape>
+    <shape name="Est_beaufort" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="90152.7" y="66601.5"/>
+    <point x="90754.3" y="59582.7"/>
+    <point x="96018.5" y="59933.6"/>
+    <point x="95166.2" y="66501.3"/>
+  </shape>
+  <shape name="South_beaufort" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="89455.6" y="35377.3"/>
+    <point x="90680.6" y="35440.1"/>
+    <point x="90617.7" y="34152.3"/>
+    <point x="89644" y="34183.7"/>
+  </shape>
+  <shape name="Bridge" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="87409.2" y="27827.2"/>
+    <point x="88507.4" y="27240.9"/>
+    <point x="88628.4" y="28720.7"/>
+    <point x="87977" y="28953.3"/>
+  </shape>
+  <shape name="Blocus" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="85613" y="26161.3"/>
+    <point x="86283.1" y="25649.4"/>
+    <point x="86888.1" y="26254.4"/>
+    <point x="86404.1" y="26943.1"/>
+  </shape>
+  <shape name="Louerre" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="80278" y="22143.1"/>
+    <point x="80892.2" y="21193.8"/>
+    <point x="82064.9" y="21933.7"/>
+    <point x="81534.4" y="22883"/>
+  </shape>
+  <shape name="Withdraw" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="87474.4" y="24432.6"/>
+    <point x="88353.9" y="23999.8"/>
+    <point x="88521.4" y="25004.9"/>
+    <point x="87488.4" y="25284.1"/>
+  </shape>
+    <shape name="C1_draw_mid" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point latitude="47.9963" longitude="-1.40425"/>
+    <point latitude="47.9595" longitude="-1.40144"/>
+    <point latitude="47.9643" longitude="-1.28325"/>
+    <point latitude="47.8837" longitude="-1.09586"/>
+    <point latitude="47.9492" longitude="-1.07734"/>
+    <point latitude="48.018" longitude="-1.30156"/>
+    <point latitude="48.0043" longitude="-1.39363"/>
+  </shape>
+    <shape name="C1_draw_end" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point latitude="47.9353" longitude="-0.997658"/>
+    <point latitude="47.9883" longitude="-1.11349"/>
+    <point latitude="48.0273" longitude="-1.14573"/>
+    <point latitude="48.0376" longitude="-1.20473"/>
+    <point latitude="48.0433" longitude="-1.26056"/>
+    <point latitude="48.0443" longitude="-1.3355"/>
+    <point latitude="48.045" longitude="-1.39062"/>
+    <point latitude="48.0424" longitude="-1.44319"/>
+    <point latitude="48.0884" longitude="-1.43933"/>
+    <point latitude="48.1" longitude="-1.26853"/>
+    <point latitude="48.0925" longitude="-1.12522"/>
+    <point latitude="48.0792" longitude="-1.07047"/>
+    <point latitude="48.0396" longitude="-1.00295"/>
+    <point latitude="48.0041" longitude="-0.988182"/>
+    <point latitude="47.9781" longitude="-0.974809"/>
+  </shape>
+    <shape name="C1_center" category="Markers" color="#000000" template="Flag" type="point">
+    <point x="26625" y="174266"/>
+  </shape>
+    <shape name="C2_draw_mid" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="75341.4" y="164956"/>
+    <point x="78372.2" y="162947"/>
+    <point x="79253.3" y="164181"/>
+    <point x="76539.6" y="166330"/>
+  </shape>
+  <shape name="C2_draw_mid2" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="78812.1" y="169195"/>
+    <point x="82271.4" y="166537"/>
+    <point x="85279.5" y="168593"/>
+    <point x="82472" y="171150"/>
+  </shape>
+    <shape name="C2_draw_end" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="86660.8" y="174972"/>
+    <point x="87796.6" y="176569"/>
+    <point x="90002.4" y="175334"/>
+    <point x="88537.4" y="173639"/>
+  </shape>
+      <shape name="C2_center" category="Markers" color="#000000" template="Flag" type="point">
+    <point x="86442.7" y="175141"/>
+  </shape>
+  <shape name="C3_draw_mid" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="141035" y="169537"/>
+    <point x="143174" y="166663"/>
+    <point x="145814" y="168100"/>
+    <point x="143709" y="170807"/>
+  </shape>
+    <shape name="C3_draw_mid2" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="144916" y="171658"/>
+    <point x="148546" y="169120"/>
+    <point x="149498" y="170847"/>
+    <point x="146255" y="173490"/>
+  </shape>
+    <shape name="C3_draw_end" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="148433" y="177148"/>
+    <point x="151870" y="175697"/>
+    <point x="153263" y="178630"/>
+    <point x="149352" y="179904"/>
+  </shape>
+    <shape name="C3_center" category="Markers" color="#000000" template="Flag" type="point">
+    <point x="144916" y="170530"/>
+  </shape>
+    <shape name="C4_draw_mid" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="17970.4" y="95537.4"/>
+    <point x="21525.9" y="93078.1"/>
+    <point x="23096.3" y="95033.7"/>
+    <point x="20696.3" y="97641.1"/>
+  </shape>
+  <shape name="C4_draw_end" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="26340.7" y="102545"/>
+    <point x="27007.4" y="101078"/>
+    <point x="28562.9" y="101078"/>
+    <point x="28562.9" y="102900"/>
+    <point x="27051.8" y="103656"/>
+  </shape>
+  <shape name="C4_center" category="Markers" color="#000000" template="Flag" type="point">
+    <point x="22118.5" y="95833.7"/>
+  </shape>
+  <shape name="C5_center" category="Markers" color="#000000" template="Flag" type="point">
+    <point x="81062.9" y="95318.8"/>
+  </shape>
+  <shape name="C5_draw_mid" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="77270.3" y="93837.3"/>
+    <point x="79700" y="90815.1"/>
+    <point x="82396.2" y="92385.5"/>
+    <point x="79374" y="96267"/>
+  </shape>
+  <shape name="C5_draw_mid2" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="83966.6" y="98696.6"/>
+    <point x="87403.6" y="95526.2"/>
+    <point x="89240.7" y="98074.4"/>
+    <point x="85359.2" y="100771"/>
+  </shape>
+  <shape name="C5_draw_end" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="87492.5" y="102045"/>
+    <point x="89299.9" y="100474"/>
+    <point x="90722.2" y="102756"/>
+    <point x="88292.5" y="104178"/>
+  </shape>
+    <shape name="C6_center" category="Markers" color="#000000" template="Flag" type="point">
+    <point x="144081" y="94092.8"/>
+  </shape>
+  <shape name="C6_draw_mid" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="144881" y="87752.1"/>
+    <point x="138037" y="93055.8"/>
+    <point x="140111" y="95811.3"/>
+    <point x="148792" y="89885.4"/>
+  </shape>
+    <shape name="C6_draw_mid2" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="149081" y="90126"/>
+    <point x="140459" y="95859.4"/>
+    <point x="144637" y="97526"/>
+    <point x="152748" y="94214.9"/>
+  </shape>
+  <shape name="C6_draw_end" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="154414" y="95637.2"/>
+    <point x="146170" y="100059"/>
+    <point x="148037" y="102526"/>
+    <point x="156103" y="97548.3"/>
+  </shape>
+  <shape name="C7_center" category="Markers" color="#000000" template="Flag" type="point">
+    <point x="22096.3" y="30803"/>
+  </shape>
+    <shape name="C7_center2" category="Markers" color="#000000" template="Flag" type="point">
+    <point x="25002.4" y="36155.5"/>
+  </shape>
+  <shape name="C7_draw_mid" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="23259.6" y="30875.6"/>
+    <point x="17018.4" y="33319.5"/>
+    <point x="18296.7" y="35048.9"/>
+    <point x="24199.5" y="33319.5"/>
+  </shape>
+  <shape name="C7_draw_mid2" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="20063.8" y="37041.6"/>
+    <point x="24838.7" y="34635.4"/>
+    <point x="25365" y="36327.3"/>
+    <point x="20477.3" y="38395.1"/>
+  </shape>
+  <shape name="C7_draw_mid3" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="25665.8" y="29221.3"/>
+    <point x="29275.2" y="26401.5"/>
+    <point x="30102.3" y="28018.2"/>
+    <point x="26154.6" y="30424.4"/>
+  </shape>
+  <shape name="C7_draw_end" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="26299.4" y="37937.6"/>
+    <point x="21278.6" y="39867.5"/>
+    <point x="22325.3" y="41781"/>
+    <point x="27019" y="39736.6"/>
+  </shape>
+    <shape name="C8_center" category="Markers" color="#000000" template="Flag" type="point">
+    <point x="88529.4" y="36500.7"/>
+  </shape>
+      <shape name="C8_center2" category="Markers" color="#000000" template="Flag" type="point">
+    <point x="89319.8" y="31911.9"/>
+  </shape>
+        <shape name="C8_center3" category="Markers" color="#000000" template="Flag" type="point">
+    <point x="84916.6" y="24345.5"/>
+  </shape>
+    <shape name="C9_center" category="Markers" color="#000000" template="Flag" type="point">
+    <point x="149829" y="27738.4"/>
+  </shape>
+    <shape name="C9_Gennes" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="147042" y="27327.1"/>
+    <point x="150931" y="25234"/>
+    <point x="151432" y="26345.4"/>
+    <point x="147690" y="28438.5"/>
+  </shape>
+    <shape name="C9_River" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="139146" y="35469.8"/>
+    <point x="144469" y="33682.2"/>
+    <point x="147925" y="28398.8"/>
+    <point x="151143" y="26770.1"/>
+    <point x="152334" y="28438.5"/>
+    <point x="148759" y="32331.5"/>
+    <point x="144469" y="35867"/>
+    <point x="139186" y="36741"/>
+  </shape>
+    <shape name="C9_North" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="140219" y="39299.5"/>
+    <point x="158072" y="27497.7"/>
+    <point x="159522" y="31698.3"/>
+    <point x="141469" y="42550"/>
+  </shape>
+    <shape name="C9_East" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="152871" y="23547"/>
+    <point x="156471" y="20596.6"/>
+    <point x="159572" y="32448.4"/>
+    <point x="155771" y="34098.7"/>
+  </shape>
+    <shape name="C9_Withdraw" category="Misc." color="#000000" template="TestPolygon" type="polygon">
+    <point x="141451" y="46727.7"/>
+    <point x="168930" y="31610.7"/>
+    <point x="164685" y="44940.5"/>
+    <point x="149270" y="50451.1"/>
+  </shape>
+</shapes>
+<!-- signature="3178600013" -->

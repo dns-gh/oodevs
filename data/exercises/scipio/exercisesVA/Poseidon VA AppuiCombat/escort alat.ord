@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="191" name="ALAT Escorter" target="370" time="2011-01-19T14:48:42" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="172"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="29TNF3430760938"/>
+        <point coordinates="29TNF3384859879"/>
+        <point coordinates="29TNF3402859200"/>
+        <point coordinates="29TNF3370758279"/>
+        <point coordinates="29TNF3387857801"/>
+        <point coordinates="29TNF3394457622"/>
+        <point coordinates="29TNF3362256593"/>
+        <point coordinates="29TNF3382456496"/>
+        <point coordinates="29TNF3364955375"/>
+        <point coordinates="29TNF3376955343"/>
+        <point coordinates="29TNF3392454789"/>
+        <point coordinates="29TNF3421554524"/>
+        <point coordinates="29TNF3429653492"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="29TNF3299753162"/>
+        <point coordinates="29TNF3231956029"/>
+        <point coordinates="29TNF3255857098"/>
+        <point coordinates="29TNF3234457956"/>
+        <point coordinates="29TNF3228658550"/>
+        <point coordinates="29TNF3239159602"/>
+        <point coordinates="29TNF3244760624"/>
+        <point coordinates="29TNF3222661497"/>
+      </location>
+    </parameter>
+    <parameter name="Unites a escorter" type="list">
+      <parameter name="Unites a escorter (élément 1)" type="agent" value="258"/>
+    </parameter>
+    <parameter name="Cibles prioritaires" type="natureatlas" value="1184"/>
+    <parameter name="Point regroupement" type="point">
+      <location type="point">
+        <point coordinates="29TNF3289960894"/>
+      </location>
+    </parameter>
+    <parameter name="Plots ravitaillement" type="list">
+      <parameter name="Plots ravitaillement (élément 1)" type="objectknowledge" value="403"/>
+    </parameter>
+  </action>
+</actions>

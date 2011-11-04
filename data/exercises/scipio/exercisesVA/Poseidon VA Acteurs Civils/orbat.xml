@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp Ami" type="friend">
+      <objects>
+        <object id="161" name="poste controle [161]" type="checkpoint">
+          <shape type="point">
+            <points>
+              <point>29TNF3504656175</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="162" name="poste controle [162]" type="checkpoint">
+          <shape type="point">
+            <points>
+              <point>29TNF3277354510</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="166" name="camp refugies [164]" type="refugees camp">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3941155281</point>
+              <point>29TNF3896755505</point>
+              <point>29TNF3882655687</point>
+              <point>29TNF3877056114</point>
+              <point>29TNF3952456037</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <lodging capacity="1000"/>
+            <logistic-base id="173"/>
+          </attributes>
+        </object>
+        <object id="189" name="poste controle [189]" type="checkpoint">
+          <shape type="point">
+            <points>
+              <point>29TNF3693858610</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="4" level="ii" name="GTIA [4]">
+          <automat engaged="false" id="85" knowledge-group="6" name="SGTIA INF 1 [85]" type="SGTIA INF">
+            <unit command-post="true" id="86" name="Section . CDT CIE INF VAB" position="29TNF3498056437" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="87" name="Section . CBT INF VAB CDS SOFF" position="29TNF3512355939" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="88" name="Section . CBT INF VAB CDS SOFF" position="29TNF3521156915" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="92" name="Groupe GEN . EBG" position="29TNF3466256206" type="Groupe GEN . EBG"/>
+            <unit command-post="false" id="94" name="PIA Dominante INF" position="29TNF3492755863" type="PIA Dominante INF"/>
+            <unit command-post="false" id="97" name="Peloton . LECLERC CDP SOFF" position="29TNF3472856127" type="Peloton . LECLERC CDP SOFF"/>
+          </automat>
+          <automat engaged="false" id="110" knowledge-group="6" name="GEN [110]" type="GEN">
+            <unit command-post="true" id="111" name="Groupe GEN . EBG" position="29TNF3594956145" type="Groupe GEN . EBG"/>
+            <unit command-post="false" id="117" name="Groupe GEN . MPG" position="29TNF3596456191" type="Groupe GEN . MPG"/>
+          </automat>
+          <automat engaged="false" id="173" knowledge-group="6" logistic-level="logistic-base" name="ONG 2 [173]" type="ONG">
+            <unit command-post="true" id="174" name="ONG Soutien LOG" position="29TNF3922954751" type="ONG Soutien LOG"/>
+            <unit command-post="false" id="175" name="ONG Intervention" position="29TNF3526555428" type="ONG Intervention"/>
+            <unit command-post="false" id="176" name="ONG Intervention" position="29TNF3525255170" type="ONG Intervention"/>
+          </automat>
+          <automat engaged="true" id="177" knowledge-group="6" name="SGTIA INF 2 [177]" type="SGTIA INF">
+            <unit command-post="true" id="178" name="Section . CDT CIE INF VAB" position="29TNF3617458861" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="179" name="Section . CBT INF VAB CDS SOFF" position="29TNF3667658364" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="181" name="Section . CBT INF VAB CDS OFF" position="29TNF3567558360" type="Section . CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="183" name="Peloton . LECLERC CDP SOFF" position="29TNF3688458365" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="184" name="Groupe GEN . EBG" position="29TNF3667857866" type="Groupe GEN . EBG"/>
+            <unit command-post="false" id="186" name="PIA Dominante INF" position="29TNF3567857861" type="PIA Dominante INF"/>
+          </automat>
+          <limit name="Limite 196">
+            <point>29TNF3286053664</point>
+            <point>29TNF3231956029</point>
+            <point>29TNF3255857098</point>
+            <point>29TNF3234457956</point>
+            <point>29TNF3228658550</point>
+            <point>29TNF3254260621</point>
+          </limit>
+          <limit name="Limite 197">
+            <point>29TNF3797851345</point>
+            <point>29TNF3971354020</point>
+            <point>29TNF3989656780</point>
+            <point>29TNF4021859289</point>
+            <point>29TNF3965861198</point>
+          </limit>
+          <limit name="Limite 198">
+            <point>29TNF3680254788</point>
+            <point>29TNF3733956275</point>
+            <point>29TNF3822956886</point>
+            <point>29TNF3829559087</point>
+            <point>29TNF3866259837</point>
+          </limit>
+          <limit name="Limite 199">
+            <point>29TNF3490954801</point>
+            <point>29TNF3512255702</point>
+            <point>29TNF3553555953</point>
+            <point>29TNF3578857634</point>
+            <point>29TNF3634058374</point>
+            <point>29TNF3625759891</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="6" name="Groupe de connaissance [6]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="2" name="Camp Eni" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="25" level="ii" name="GTIA [25]">
+          <automat engaged="false" id="30" knowledge-group="31" name="SGTIA INF [30]" type="SGTIA INF">
+            <unit command-post="true" id="32" name="Section . CDT CIE INF VAB" position="29TNF3337253427" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="34" name="Section . CBT INF VAB CDS SOFF" position="29TNF3328352758" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="37" name="Peloton . LECLERC CDP SOFF" position="29TNF3329352762" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="40" name="PIA Dominante INF" position="29TNF3301952659" type="PIA Dominante INF"/>
+          </automat>
+          <automat engaged="false" id="149" knowledge-group="31" name="Terroristes [149]" type="ASY . Terroristes">
+            <unit command-post="false" id="151" name="Terroriste Sniper" position="29TNF3353156942" type="Terroriste Sniper"/>
+            <unit command-post="true" id="152" name="Terroriste Sniper et IED" position="29TNF3399357514" type="Terroriste Sniper et IED"/>
+          </automat>
+          <automat engaged="false" id="167" knowledge-group="31" name="Terroristes [167]" type="ASY . Terroristes">
+            <unit command-post="false" id="168" name="Terroriste IED" position="29TNF3543760590" type="Terroriste IED"/>
+            <unit command-post="true" id="170" name="Terroriste Sniper et IED" position="29TNF3511760950" type="Terroriste Sniper et IED"/>
+            <unit command-post="false" id="172" name="Terroriste IED" position="29TNF3572460997" type="Terroriste IED"/>
+          </automat>
+          <automat engaged="false" id="192" knowledge-group="31" name="MILICE [192]" type="MILICE">
+            <unit command-post="true" id="193" name="MILICE . CDT" position="29TNF3434153285" type="MILICE . PICK UP CDT"/>
+            <unit command-post="false" id="194" name="MILICE . Miliciens" position="29TNF3389453073" type="MILICE . PICK UP 14,5"/>
+            <unit command-post="false" id="195" name="MILICE . Miliciens" position="29TNF3411853061" type="MILICE . PICK UP 14,5"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="31" name="Groupe de connaissance [31]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="excitee" id="99" name="Foule [99]" position="29TNF3420158847" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="100" wounded="0"/>
+          <critical-intelligence content="rendez-vous à 14h Place de la République"/>
+          <repartition children="0" female="0.4" male="0.6"/>
+          <adhesions>
+            <adhesion party="1" value="-1"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="128" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="128" name="Camp Neutre" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="129" level="ii" name="Formation [129]">
+          <automat engaged="false" id="154" knowledge-group="132" name="IndividusIsoles [154]" type="CIV . Civil">
+            <unit command-post="true" id="155" name="Individu Isole" position="29TNF3829159630" type="Civil"/>
+            <unit command-post="false" id="156" name="Individu Isole" position="29TNF3833660128" type="Civil"/>
+            <unit command-post="false" id="196" name="Individu Isole" position="29TNF3345254042" type="Civil"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="132" name="Knowledge group [132]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="excitee" id="190" name="Foule" position="29TNF3848260378" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="100" wounded="0"/>
+          <armed-individuals value="0.2"/>
+          <repartition children="0.4" female="0.35" male="0.25"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="128" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="agitee" id="191" name="Foule" position="29TNF3712957589" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="250" wounded="0"/>
+          <armed-individuals value="0.4"/>
+          <repartition children="0.15" female="0.25" male="0.6"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="128" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+      <relationship diplomacy="neutral" party="128"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="neutral" party="128"/>
+    </party>
+    <party id="128">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="2"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="1121042908" -->

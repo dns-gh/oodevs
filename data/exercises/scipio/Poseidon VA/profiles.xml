@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<profiles model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
+  <profile name="Admin" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="2"/>
+        <side id="3"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Bleu" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="22"/>
+        <automat id="11"/>
+        <automat id="111"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Rouge" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="75"/>
+        <automat id="82"/>
+        <automat id="64"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Vert" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="White Cell" password="" role="environment" supervision="false">
+    <rights>
+      <readonly>
+        <side id="1"/>
+        <side id="2"/>
+        <side id="3"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="Bleu_ABC" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="22"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Bleu_INF" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="11"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Bleu_SGTIA_INF" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="11"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Bleu_INF_NonSuper" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <formation id="10"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Bleu_ABC_NonSuper" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <formation id="92"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Superviseur scipio" password="" role="supervisor" supervision="true">
+    <rights>
+      <readonly>
+        <side id="1"/>
+        <side id="3"/>
+        <side id="2"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+</profiles>
+<!-- signature="1078660347" -->

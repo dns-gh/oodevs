@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="good ones" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="2" level="ii" name="Formation [2]">
+          <automat engaged="false" id="3" knowledge-group="4" name="MasaLife Company [3]" type="MasaLife Company">
+            <unit command-post="true" id="5" name="MasaLife Platoon" position="29TNF3334253770" type="MasaLife Platoon"/>
+            <unit command-post="false" id="8" name="MasaLife Platoon" position="29TNF3342553747" type="MasaLife Platoon"/>
+            <unit command-post="false" id="9" name="MasaLife Platoon" position="29TNF3339153881" type="MasaLife Platoon"/>
+            <unit command-post="false" id="10" name="MasaLife Platoon" position="29TNF3339853831" type="MasaLife Platoon"/>
+            <unit command-post="false" id="21" name="MasaLife Milician" position="29TNF3348353065" type="MasaLife Milician"/>
+            <unit command-post="false" id="22" name="MasaLife Milician" position="29TNF3348153264" type="MasaLife Milician"/>
+            <unit command-post="false" id="23" name="MasaLife Platoon" position="29TNF3295353644" type="MasaLife Platoon"/>
+            <unit command-post="false" id="24" name="MasaLife Platoon" position="29TNF3299153652" type="MasaLife Platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="11" name="bad ones" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="12" level="ii" name="Formation [12]">
+          <automat engaged="false" id="13" knowledge-group="14" name="MasaLife Company [13]" type="MasaLife Company">
+            <unit command-post="true" id="15" name="MasaLife Platoon" position="29TNF3655864504" type="MasaLife Platoon"/>
+            <unit command-post="false" id="16" name="MasaLife Platoon" position="29TNF3242855191" type="MasaLife Platoon"/>
+            <unit command-post="false" id="17" name="MasaLife Platoon" position="29TNF3649464439" type="MasaLife Platoon"/>
+            <unit command-post="false" id="18" name="MasaLife Platoon" position="29TNF3344054656" type="MasaLife Platoon"/>
+            <unit command-post="false" id="19" name="MasaLife Milician" position="29TNF3464255049" type="MasaLife Milician"/>
+            <unit command-post="false" id="20" name="MasaLife Milician" position="29TNF3621664447" type="MasaLife Milician"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="14" name="Groupe de connaissance [14]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="11"/>
+    </party>
+    <party id="11">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="3115463505" -->

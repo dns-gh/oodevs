@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp Ami" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="4" level="ii" name="GTIA [4]">
+          <automat engaged="false" id="5" knowledge-group="6" name="SGTIA ABC [5]" type="SGTIA ABC">
+            <unit command-post="false" id="9" name="Peloton . LECLERC CDP SOFF" position="29TNF3205553215" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="10" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3211453250" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="14" name="PIA Dominante ABC" position="29TNF3219353082" type="PIA Dominante ABC"/>
+            <unit command-post="false" id="15" name="PIA Dominante INF" position="29TNF3240653367" type="PIA Dominante INF"/>
+            <unit command-post="false" id="16" name="PIA Dominante Reco" position="29TNF3223053324" type="PIA Dominante Reco"/>
+            <unit command-post="false" id="17" name="Patrouille . EI 12,7" position="29TNF3218453426" type="Patrouille . EI 12,7"/>
+            <unit command-post="true" id="71" name="Section . CDT CIE INF VAB" position="29TNF3220353082" type="Section . CDT CIE INF VAB"/>
+            <limit name="Limite 80">
+              <point>29TNF3255357416</point>
+              <point>29TNF3262457141</point>
+              <point>29TNF3256756830</point>
+              <point>29TNF3255256676</point>
+              <point>29TNF3248156313</point>
+              <point>29TNF3241056198</point>
+              <point>29TNF3236556142</point>
+              <point>29TNF3240255863</point>
+              <point>29TNF3246355796</point>
+              <point>29TNF3253355787</point>
+              <point>29TNF3254555590</point>
+              <point>29TNF3255155281</point>
+              <point>29TNF3255255116</point>
+              <point>29TNF3257554872</point>
+              <point>29TNF3265754597</point>
+            </limit>
+          </automat>
+          <automat engaged="true" id="85" knowledge-group="6" name="SGTIA ABC [85]" type="SGTIA ABC">
+            <unit command-post="true" id="86" name="Peloton . LECLERC CDT ESC" position="29TNF3102551991" type="Peloton . LECLERC CDT ESC"/>
+            <unit command-post="false" id="87" name="Peloton . LECLERC CDP SOFF" position="29TNF3152751494" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="88" name="Peloton . LECLERC CDP SOFF" position="29TNF3102950993" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="89" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3052651490" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="90" name="Section . CBT INF VAB CDS SOFF" position="29TNF3152551993" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="91" name="Peloton . d appui direct" position="29TNF3173551495" type="Peloton . d appui direct"/>
+            <unit command-post="false" id="92" name="Groupe GEN . EBG" position="29TNF3153050996" type="Groupe GEN . EBG"/>
+            <unit command-post="false" id="93" name="PIA Dominante ABC" position="29TNF3103050787" type="PIA Dominante ABC"/>
+            <unit command-post="false" id="94" name="PIA Dominante INF" position="29TNF3052950991" type="PIA Dominante INF"/>
+            <unit command-post="false" id="95" name="PIA Dominante Reco" position="29TNF3031951489" type="PIA Dominante Reco"/>
+            <unit command-post="false" id="96" name="Patrouille . EI 12,7" position="29TNF3052451988" type="Patrouille . EI 12,7"/>
+          </automat>
+          <lima name="Lima 74">
+            <point>29TNF3208755273</point>
+            <point>29TNF3227255313</point>
+            <point>29TNF3236955307</point>
+            <point>29TNF3251555273</point>
+            <point>29TNF3268455250</point>
+            <point>29TNF3276755246</point>
+            <point>29TNF3291555203</point>
+          </lima>
+          <lima name="Lima 75">
+            <point>29TNF3225556011</point>
+            <point>29TNF3247555957</point>
+            <point>29TNF3249155913</point>
+            <point>29TNF3290855883</point>
+          </lima>
+          <lima name="Lima 76">
+            <point>29TNF3214356144</point>
+            <point>29TNF3247456086</point>
+            <point>29TNF3275956071</point>
+            <point>29TNF3296556065</point>
+          </lima>
+          <lima name="Lima 77">
+            <point>29TNF3238956943</point>
+            <point>29TNF3290156874</point>
+          </lima>
+          <lima name="Lima 78">
+            <point>29TNF3235854717</point>
+            <point>29TNF3242754678</point>
+            <point>29TNF3253854727</point>
+            <point>29TNF3291054721</point>
+            <point>29TNF3302554934</point>
+          </lima>
+          <lima name="Lima 79">
+            <point>29TNF3243657364</point>
+            <point>29TNF3249957327</point>
+            <point>29TNF3260557347</point>
+            <point>29TNF3269757348</point>
+            <point>29TNF3305257318</point>
+          </lima>
+          <limit name="Limite 73">
+            <point>29TNF3286754542</point>
+            <point>29TNF3278254924</point>
+            <point>29TNF3275955227</point>
+            <point>29TNF3283455563</point>
+            <point>29TNF3280155989</point>
+            <point>29TNF3263856070</point>
+            <point>29TNF3266156280</point>
+            <point>29TNF3275656926</point>
+            <point>29TNF3279157394</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="6" name="Groupe de connaissance [6]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="104" name="Foule standard [104]" position="29TNF3539755481" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="105" name="Foule standard [105]" position="29TNF3523654924" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="106" name="Foule standard [106]" position="29TNF3583555142" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="2" name="Camp Eni" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="25" level="ii" name="GTIA [25]">
+          <automat engaged="false" id="30" knowledge-group="31" name="SGTIA INF [30]" type="SGTIA INF">
+            <unit command-post="true" id="32" name="Section . CDT CIE INF VAB" position="29TNF3208959052" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="34" name="Section . CBT INF VAB CDS SOFF" position="29TNF3243258682" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="37" name="Peloton . LECLERC CDP SOFF" position="29TNF3244258686" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="40" name="PIA Dominante INF" position="29TNF3216858583" type="PIA Dominante INF"/>
+            <unit command-post="false" id="41" name="PIA Dominante Reco" position="29TNF3276658786" type="PIA Dominante Reco"/>
+            <unit command-post="false" id="81" name="Patrouille . EI 12,7" position="29TNF3257158493" type="Patrouille . EI 12,7"/>
+            <unit command-post="false" id="82" name="Patrouille . EI 12,7" position="29TNF3207858902" type="Patrouille . EI 12,7"/>
+            <unit command-post="false" id="83" name="Patrouille . EI 12,7" position="29TNF3281658913" type="Patrouille . EI 12,7"/>
+            <unit command-post="false" id="84" name="Peloton . d appui direct" position="29TNF3245759039" type="Peloton . d appui direct"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="31" name="Groupe de connaissance [31]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="2191942234" -->

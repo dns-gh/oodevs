@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp 1" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="3" level="ii" name="Formation [3]">
+          <automat engaged="false" id="4" knowledge-group="5" name="MasaLife Company [4]" type="MasaLife Company">
+            <unit command-post="true" id="6" name="MasaLife Platoon" position="35RPP8445684430" type="MasaLife Platoon"/>
+            <unit command-post="false" id="7" name="MasaLife Platoon" position="35RPP8572683976" type="MasaLife Platoon"/>
+            <unit command-post="false" id="8" name="MasaLife Platoon" position="35RPP8426083523" type="MasaLife Platoon"/>
+            <unit command-post="false" id="9" name="MasaLife Platoon" position="35RPP8507983326" type="MasaLife Platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="5" name="Groupe de connaissance [5]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="2" name="Camp 2" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="10" level="ii" name="Formation [10]">
+          <automat engaged="false" id="11" knowledge-group="12" name="MasaLife Company [11]" type="MasaLife Company">
+            <unit command-post="true" id="13" name="MasaLife Platoon" position="35RPP8733673904" type="MasaLife Platoon"/>
+            <unit command-post="false" id="14" name="MasaLife Platoon" position="35RPP8898573940" type="MasaLife Platoon"/>
+            <unit command-post="false" id="15" name="MasaLife Platoon" position="35RPP8775173549" type="MasaLife Platoon"/>
+            <unit command-post="false" id="16" name="MasaLife Platoon" position="35RPP8890473108" type="MasaLife Platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="12" name="Groupe de connaissance [12]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="2690173554" -->
