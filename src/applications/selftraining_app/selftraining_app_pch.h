@@ -51,6 +51,9 @@
 #include <QtGui/qevent.h>
 #include <QtGui/qlineedit.h>
 #include <QtGui/qdesktopwidget.h>
+#include <QtGui/qtextedit.h>
+#include <QtGui/qcheckbox.h>
+#include <QtGui/qfiledialog.h>
 
 #include <Qt3Support/q3progressbar.h>
 #include <Qt3Support/q3gridlayout.h>

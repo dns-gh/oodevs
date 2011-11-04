@@ -30,10 +30,8 @@ SessionList::SessionList( QWidget* parent, const tools::GeneralConfig& config, c
     , fileLoader_( fileLoader )
 {
     setSpacing( 5 );
-    setBackgroundOrigin( QWidget::WindowOrigin );
     {
-        QLabel* label = new QLabel( tools::translate( "SessionList", "Session:" ), this );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        new QLabel( tools::translate( "SessionList", "Session:" ), this );
         list_ = new Q3ListBox( this );
         connect( list_, SIGNAL( highlighted( int ) ), this, SLOT( SelectSession( int ) ) );
     }

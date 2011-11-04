@@ -104,7 +104,6 @@ void Ghost::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 {
     if( viewport.IsHotpointVisible() )
     {
-        // TODO: Add a mark to recognize phantom
         tools.DrawApp6Symbol( symbol_, where, -1.f );
         tools.DrawApp6Symbol( level_, where, -1.f );
     }

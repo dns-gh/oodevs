@@ -24,15 +24,6 @@
 
 using namespace frontend;
 
-namespace
-{
-    template< typename T >
-    T* Style( T* widget )
-    {
-        widget->setBackgroundOrigin( QWidget::WindowOrigin );
-        return widget;
-    }
-}
 // -----------------------------------------------------------------------------
 // Name: EdxlHavePluginConfigPanel constructor
 // Created: SBO 2008-03-05
@@ -41,37 +32,37 @@ EdxlHavePluginConfigPanel::EdxlHavePluginConfigPanel( QWidget* parent, const too
     : PluginConfig_ABC( parent )
     , config_( config )
 {
-    box_ = Style( new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "EdxlHavePluginConfigPanel", "Enable EDXL-HAVE exchange" ), this ) );
+    box_ = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "EdxlHavePluginConfigPanel", "Enable EDXL-HAVE exchange" ), this );
     box_->setCheckable( true );
     box_->setChecked( false );
     {
-        Q3HBox* box = Style( new Q3HBox( box_ ) );
-        Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Host: " ), box ) );
-        host_ = Style( new QLineEdit( "www.ewaphoenix.com", box ) );
+        Q3HBox* box = new Q3HBox( box_ );
+        new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Host: " ), box );
+        host_ = new QLineEdit( "www.ewaphoenix.com", box );
     }
     {
-        Q3HBox* box = Style( new Q3HBox( box_ ) );
-        Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Use SSL: " ), box ) );
-        ssl_ = Style( new QCheckBox( box ) );
+        Q3HBox* box = new Q3HBox( box_ );
+        new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Use SSL: " ), box );
+        ssl_ = new QCheckBox( box );
         ssl_->setChecked( true );
     }
     {
-        Q3HBox* box = Style( new Q3HBox( box_ ) );
-        Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Log: " ), box ) );
-        log_ = Style( new QCheckBox( box ) );
+        Q3HBox* box = new Q3HBox( box_ );
+        new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Log: " ), box );
+        log_ = new QCheckBox( box );
         log_->setChecked( true );
     }
     {
         Q3GroupBox* services = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "EdxlHavePluginConfigPanel", "Services configuration:" ), box_ );
         {
-            Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Initialization service: " ), services ) );
-            initializeServiceURI_ = Style( new QLineEdit( "/EWAPhoenix-BedTracking/XMLReceive.php?message=initialize", services ) );
+            new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Initialization service: " ), services );
+            initializeServiceURI_ = new QLineEdit( "/EWAPhoenix-BedTracking/XMLReceive.php?message=initialize", services );
         }
         {
-            Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Update service: " ), services ) );
-            updateServiceURI_ = Style( new QLineEdit( "/EWAPhoenix-BedTracking/XMLReceive.php?message=update", services ) );
+            new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Update service: " ), services );
+            updateServiceURI_ = new QLineEdit( "/EWAPhoenix-BedTracking/XMLReceive.php?message=update", services );
 
-            Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Frequency: " ), services ) );
+            new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Frequency: " ), services );
             frequency_ = new Q3TimeEdit( services );
             frequency_->setDisplay ( Q3TimeEdit::Hours | Q3TimeEdit::Minutes | Q3TimeEdit::Seconds  );
             frequency_->setTime( QTime().addSecs( 120 ) );

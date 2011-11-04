@@ -11,10 +11,6 @@
 #define __ImportWidget_h_
 
 class ScenarioEditPage;
-namespace
-{
-    class TabWidget;
-}
 
 namespace tools
 {
@@ -81,19 +77,19 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ScenarioEditPage& page_;
+    ScenarioEditPage&           page_;
     const tools::GeneralConfig& config_;
-    TabWidget* tabs_;
-    QLineEdit* package_;
-    QLineEdit* packageName_;
-    Q3TextEdit* packageDescription_;
-    Q3ListBox* packageContent_;
-    Q3ProgressBar* packageProgress_;
+    QTabWidget*                 tabs_;
+    QLineEdit*                  package_;
+    QLineEdit*                  packageName_;
+    Q3TextEdit*                 packageDescription_;
+    Q3ListBox*                  packageContent_;
+    Q3ProgressBar*              packageProgress_;
     // LTO begin
-    QString model_;
-    QLineEdit* inputEdit_;
-    QString outputScenario_;
-    QString terrain_;
+    QString                     model_;
+    QLineEdit*                  inputEdit_;
+    QString                     outputScenario_;
+    QString                     terrain_;
     //@}
 };
 

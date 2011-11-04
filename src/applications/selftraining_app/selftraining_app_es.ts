@@ -226,14 +226,6 @@
 <context>
     <name>ExportWidget</name>
     <message>
-        <source>Create a package</source>
-        <translation>Crear un paquete</translation>
-    </message>
-    <message>
-        <source>Exercise to package:</source>
-        <translation>Ejercicio a paquete:</translation>
-    </message>
-    <message>
         <source>Package description:</source>
         <translation>Descripción de paquete:</translation>
     </message>
@@ -252,6 +244,34 @@
     <message>
         <source>A file called %1 already exists. Do you want to overwrite it?</source>
         <translation>El archivo  %1 ya existe. ¿Desea sobreescribirlo?</translation>
+    </message>
+    <message>
+        <source>Exercise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain</source>
+        <translation type="unfinished">Terreno</translation>
+    </message>
+    <message>
+        <source>Decisional model:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exercise:</source>
+        <translation type="unfinished">Ejercicio:</translation>
+    </message>
+    <message>
+        <source>Terrain:</source>
+        <translation type="unfinished">Terreno:</translation>
+    </message>
+    <message>
+        <source>Models</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical model:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

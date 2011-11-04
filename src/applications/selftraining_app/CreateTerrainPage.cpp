@@ -32,13 +32,10 @@ CreateTerrainPage::CreateTerrainPage( Q3WidgetStack* pages, Page_ABC& previous, 
     const bool available = frontend::CreateTerrain::IsAvailable();
 
     Q3VBox* mainBox = new Q3VBox( this );
-    mainBox->setBackgroundOrigin( QWidget::WindowOrigin );
     mainBox->setMargin( 5 );
     {
         Q3GroupBox* hbox = new Q3GroupBox( 1, Qt::Vertical, mainBox );
-        hbox->setBackgroundOrigin( QWidget::WindowOrigin );
-        QLabel* label = new QLabel( tools::translate( "CreateTerrainPage", "Create new terrain:" ), hbox );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        new QLabel( tools::translate( "CreateTerrainPage", "Create new terrain:" ), hbox );
         editName_ = new QLineEdit( tools::translate( "CreateTerrainPage", "Enter terrain name" ), hbox );
         connect( editName_, SIGNAL( textChanged( const QString& ) ), SLOT( EditNameChanged( const QString& ) ) );
 
@@ -46,7 +43,6 @@ CreateTerrainPage::CreateTerrainPage( Q3WidgetStack* pages, Page_ABC& previous, 
         EnableButton( eButtonStart, available );
 
         label_ = new QLabel( mainBox );
-        label_->setBackgroundOrigin( QWidget::WindowOrigin );
     }
 
     if( !available )

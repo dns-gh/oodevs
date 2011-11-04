@@ -19,16 +19,6 @@
 
 using namespace frontend;
 
-namespace
-{
-    template< typename T >
-    T* Style( T* widget )
-    {
-        widget->setBackgroundOrigin( QWidget::WindowOrigin );
-        return widget;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: AdvancedConfigPanel constructor
 // Created: JSR 2010-07-15
@@ -37,43 +27,43 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     : PluginConfig_ABC( parent )
     , config_( config )
 {
-    Q3VBox* box = Style( new Q3VBox( this ) );
+    Q3VBox* box = new Q3VBox( this );
     box->setMargin( 5 );
-    Q3GroupBox* timeBox = Style( new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "AdvancedConfigPanel", "Time" ), box ) );
+    Q3GroupBox* timeBox = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "AdvancedConfigPanel", "Time" ), box );
     {
-        Q3HBox* stepBox = Style( new Q3HBox( timeBox ) );
-        Style( new QLabel( tools::translate( "AdvancedConfigPanel", "Time step:" ), stepBox ) );
-        stepSpin_ = Style( new QSpinBox( 1, 100, 1, stepBox ) );
+        Q3HBox* stepBox = new Q3HBox( timeBox );
+        new QLabel( tools::translate( "AdvancedConfigPanel", "Time step:" ), stepBox );
+        stepSpin_ = new QSpinBox( 1, 100, 1, stepBox );
         stepSpin_->setValue( 10 );
     }
     {
-        Q3HBox* factorBox = Style( new Q3HBox( timeBox ) );
-        Style( new QLabel( tools::translate( "AdvancedConfigPanel", "Time factor:" ), factorBox ) );
-        factorSpin_ = Style( new QSpinBox( 1, 100, 1, factorBox ) );
+        Q3HBox* factorBox = new Q3HBox( timeBox );
+        new QLabel( tools::translate( "AdvancedConfigPanel", "Time factor:" ), factorBox );
+        factorSpin_ = new QSpinBox( 1, 100, 1, factorBox );
         factorSpin_->setValue( 10 );
     }
     {
-        Q3HBox* endTickBox = Style( new Q3HBox( timeBox ) );
-        Style( new QLabel( tools::translate( "AdvancedConfigPanel", "End tick:" ), endTickBox ) );
-        endtickSpin_ = Style( new QSpinBox( 0, std::numeric_limits< int >::max(), 1, endTickBox ) );
+        Q3HBox* endTickBox = new Q3HBox( timeBox );
+        new QLabel( tools::translate( "AdvancedConfigPanel", "End tick:" ), endTickBox );
+        endtickSpin_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, endTickBox );
         endtickSpin_->setValue( 0 );
     }
     {
-        pausedCheckBox_ = Style( new QCheckBox( tools::translate( "AdvancedConfigPanel", "  Paused at startup" ), timeBox ) );
+        pausedCheckBox_ = new QCheckBox( tools::translate( "AdvancedConfigPanel", "  Paused at startup" ), timeBox );
         pausedCheckBox_->setChecked( false );
     }
-    Q3GroupBox* pathfindBox = Style( new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "AdvancedConfigPanel", "Pathfind" ), box ) );
+    Q3GroupBox* pathfindBox = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "AdvancedConfigPanel", "Pathfind" ), box );
     {
-        Q3HBox* threadBox = Style( new Q3HBox( pathfindBox ) );
-        Style( new QLabel( tools::translate( "AdvancedConfigPanel", "Number of threads:" ), threadBox ) );
-        pathThreads_ = Style( new QSpinBox( 0, 4, 1, threadBox ) );
+        Q3HBox* threadBox = new Q3HBox( pathfindBox );
+        new QLabel( tools::translate( "AdvancedConfigPanel", "Number of threads:" ), threadBox );
+        pathThreads_ = new QSpinBox( 0, 4, 1, threadBox );
         pathThreads_->setValue( 1 );
     }
-    Q3GroupBox* recordBox = Style( new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "AdvancedConfigPanel", "Recorder" ), box ) );
+    Q3GroupBox* recordBox = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "AdvancedConfigPanel", "Recorder" ), box );
     {
-        Q3HBox* freqBox = Style( new Q3HBox( recordBox ) );
-        Style( new QLabel( tools::translate( "AdvancedConfigPanel", "Fragmentation frequency: " ), freqBox ) );
-        fragmentsFrequency_ = Style( new QSpinBox( 0, std::numeric_limits< int >::max(), 1, freqBox ) );
+        Q3HBox* freqBox = new Q3HBox( recordBox );
+        new QLabel( tools::translate( "AdvancedConfigPanel", "Fragmentation frequency: " ), freqBox );
+        fragmentsFrequency_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, freqBox );
         fragmentsFrequency_->setValue( 200 );
     }
 }

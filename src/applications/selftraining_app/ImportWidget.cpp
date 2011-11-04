@@ -22,21 +22,6 @@
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
 
-namespace
-{
-    class TabWidget : public QTabWidget
-    {
-    public:
-        TabWidget( QWidget* parent )
-            : QTabWidget( parent )
-        {
-            setBackgroundOrigin( QWidget::WindowOrigin );
-            tabBar()->setBackgroundOrigin( QWidget::WindowOrigin );
-            setMargin( 0 );
-        }
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: ImportWidget constructor
 // Created: JSR 2010-07-13
@@ -47,45 +32,32 @@ ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools
     , config_( config )
 {
     setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-    setMargin( 5 );
-    setBackgroundOrigin( QWidget::WindowOrigin );
-    tabs_ = new TabWidget( this );
+    tabs_ = new QTabWidget( this );
     connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), &page, SLOT( UpdateEditButton( QWidget* ) ) );
     {
         Q3GroupBox* importGroup = new Q3GroupBox( 2, Qt::Vertical, parent );
         importGroup->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-        importGroup->setBackgroundOrigin( QWidget::WindowOrigin );
         importGroup->setMargin( 0 );
         Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, importGroup );
         group->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-        group->setBackgroundOrigin( QWidget::WindowOrigin );
         {
             QLabel* label = new QLabel( tools::translate( "ImportWidget", "Package to be installed:" ), group );
-            label->setBackgroundOrigin( QWidget::WindowOrigin );
             Q3HBox* hBox = new Q3HBox( group );
-            hBox->setBackgroundOrigin( QWidget::WindowOrigin );
             package_ = new QLineEdit( hBox );
-            package_->setBackgroundOrigin( QWidget::WindowOrigin );
             QPushButton* browseBtn = new QPushButton( tools::translate( "ImportWidget", "Browse..." ), hBox );
-            browseBtn->setBackgroundOrigin( QWidget::WindowOrigin );
             connect( browseBtn, SIGNAL( clicked() ), SLOT( PackageBrowseClicked() ) );
         }
         {
             QLabel* label = new QLabel( tools::translate( "ImportWidget", "Package content:" ), group );
-            label->setBackgroundOrigin( QWidget::WindowOrigin );
             label->setAlignment( Qt::AlignTop );
             Q3VBox* vBox = new Q3VBox( group );
-            vBox->setBackgroundOrigin( QWidget::WindowOrigin );
             vBox->setSpacing( 5 );
             packageName_ = new QLineEdit( vBox );
-            packageName_->setBackgroundOrigin( QWidget::WindowOrigin );
             packageName_->setReadOnly( true );
             packageDescription_ = new Q3TextEdit( vBox );
-            packageDescription_->setBackgroundOrigin( QWidget::WindowOrigin );
             packageDescription_->setMaximumHeight( 80 );
             packageDescription_->setReadOnly( true );
             packageContent_ = new Q3ListBox( vBox );
-            packageContent_->setBackgroundOrigin( QWidget::WindowOrigin );
         }
         packageProgress_ = new Q3ProgressBar( importGroup );
         packageProgress_->hide();
@@ -95,7 +67,6 @@ ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools
     {
         Q3GroupBox* hbox = new Q3GroupBox( 1, Qt::Horizontal, parent );
         hbox->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-        hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         hbox->setInsideSpacing( 10 );
         AddModelChoice( hbox );
         AddInput( hbox );
@@ -230,11 +201,8 @@ bool ImportWidget::ReadPackageContentFile()
 void ImportWidget::AddModelChoice( Q3GroupBox* box )
 {
     Q3GroupBox* hbox = new Q3GroupBox( 1, Qt::Vertical, box );
-    hbox->setBackgroundOrigin( QWidget::WindowOrigin );
-    QLabel* label = new QLabel( tools::translate( "ImportWidget", "Model: " ), hbox );
-    label->setBackgroundOrigin( QWidget::WindowOrigin );
+    new QLabel( tools::translate( "ImportWidget", "Model: " ), hbox );
     QComboBox* editModelList = new QComboBox( hbox );
-    editModelList->setBackgroundOrigin( QWidget::WindowOrigin );
     connect( editModelList, SIGNAL( activated ( const QString & ) ), SLOT( OnModelChanged( const QString & ) ) );
     editModelList->insertItem( tools::translate( "ImportWidget", "Model:" ) );
     QStringList decisionalModels = frontend::commands::ListModels( config_ );
@@ -257,13 +225,10 @@ void ImportWidget::AddModelChoice( Q3GroupBox* box )
 void ImportWidget::AddOutput( Q3GroupBox* box )
 {
     Q3HBox* scenarioBox = new Q3HBox( box );
-    scenarioBox->setBackgroundOrigin( QWidget::WindowOrigin );
     QLabel* label = new QLabel( tools::translate( "ImportWidget", "Output Scenario Name: " ), scenarioBox );
     scenarioBox->setStretchFactor( label, 1 );
-    label->setBackgroundOrigin( QWidget::WindowOrigin );
     QLineEdit* editName = new QLineEdit( tools::translate( "ImportWidget", "Scenario Name" ), scenarioBox );
     scenarioBox->setStretchFactor( editName, 1 );
-    editName->setBackgroundOrigin( QWidget::WindowOrigin );
     connect( editName, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnOutputName( const QString& ) ) );
 }
 
@@ -275,15 +240,10 @@ void ImportWidget::AddOutput( Q3GroupBox* box )
 void ImportWidget::AddInput( Q3GroupBox* box )
 {
     Q3HBox* hbox = new Q3HBox( box );
-    hbox->setBackgroundOrigin( QWidget::WindowOrigin );
-    QLabel* label = new QLabel( tools::translate( "ImportWidget", "Input Scenario: " ), hbox );
-    label->setBackgroundOrigin( QWidget::WindowOrigin );
+    new QLabel( tools::translate( "ImportWidget", "Input Scenario: " ), hbox );
     Q3HBox* browseBox = new Q3HBox( hbox );
-    browseBox->setBackgroundOrigin( QWidget::WindowOrigin );
     inputEdit_ = new QLineEdit( browseBox );
-    inputEdit_->setBackgroundOrigin( QWidget::WindowOrigin );
     QPushButton* browseBtn = new QPushButton( tools::translate( "ImportWidget", "Browse..." ), browseBox );
-    browseBtn->setBackgroundOrigin( QWidget::WindowOrigin );
     connect( browseBtn, SIGNAL( clicked() ), SLOT( OnChangeScenario() ) );
 }
 
@@ -295,7 +255,6 @@ void ImportWidget::AddInput( Q3GroupBox* box )
 void ImportWidget::AddTerrainChoice( Q3GroupBox* box )
 {
     QComboBox* editTerrainList = new QComboBox( box );
-    editTerrainList->setBackgroundOrigin( QWidget::WindowOrigin );
     connect( editTerrainList, SIGNAL( activated( const QString& ) ), SLOT( OnTerrainChanged( const QString& ) ) );
     editTerrainList->clear();
     editTerrainList->insertItem( tools::translate( "ImportWidget", "Terrain:" ) );

@@ -44,17 +44,6 @@ namespace bpt = boost::posix_time;
 
 namespace
 {
-    class TabWidget : public QTabWidget
-    {
-    public:
-        explicit TabWidget( QWidget* parent ) : QTabWidget( parent )
-        {
-            setBackgroundOrigin( QWidget::WindowOrigin );
-            tabBar()->setBackgroundOrigin( QWidget::WindowOrigin );
-            setMargin( 0 );
-        }
-    };
-
     std::string MakeLink( const std::string& file )
     {
         const QFileInfo info( file.c_str() );
@@ -142,13 +131,11 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
     , exercise_( 0 )
 {
     Q3VBox* box = new Q3VBox( this );
-    box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setMargin( 5 );
     {
-        TabWidget* tabs = new TabWidget( box );
+        QTabWidget* tabs = new QTabWidget( box );
         {
             exercises_ = new ExerciseList( tabs, config_, fileLoader_, controllers, true, true, true, false );
-            exercises_->setBackgroundOrigin( QWidget::WindowOrigin );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
             tabs->addTab( exercises_, tools::translate( "ScenarioLauncherPage", "General" ) );
@@ -157,8 +144,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
             Q3GroupBox* configBox = new Q3GroupBox( 1, Qt::Vertical, tabs );
             configBox->setMargin( 5 );
             configBox->setFrameShape( Q3GroupBox::NoFrame );
-            configBox->setBackgroundOrigin( QWidget::WindowOrigin );
-            TabWidget* config = new TabWidget( configBox );
+            QTabWidget* config = new QTabWidget( configBox );
             tabs->addTab( configBox, tools::translate( "ScenarioLauncherPage", "Settings" ) );
             {
                 frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >( config );

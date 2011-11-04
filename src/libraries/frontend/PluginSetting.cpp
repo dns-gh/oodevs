@@ -43,13 +43,6 @@ namespace
         return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
     }
 
-    template< typename T >
-    T* Style( T* widget )
-    {
-        widget->setBackgroundOrigin( QWidget::WindowOrigin );
-        return widget;
-    }
-
     struct DescriptionReader
     {
         DescriptionReader( xml::xisubstream xis, const std::string& currentLanguage )
@@ -74,7 +67,7 @@ namespace
 FileButtonEvent::FileButtonEvent( PluginSetting& plugins, QWidget* parent, const std::string& description ) 
     : QObject( parent )
     , plugins_ ( plugins )
-    , fileValue_( Style( new QPushButton( parent ) ) )
+    , fileValue_( new QPushButton( parent ) )
 {
     fileValue_->setText( description.empty() ? "Select an order file..." : description.c_str() );
     connect( fileValue_, SIGNAL( clicked() ), this, SLOT( OnFileClicked() ) );
@@ -100,12 +93,12 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     , config_ ( config )
 {
     DescriptionReader reader( xis, ReadLang() );
-    QToolTip::add( Style( new QLabel( reader.name_.c_str(), parent ) ), reader.description_.c_str() );
+    QToolTip::add( new QLabel( reader.name_.c_str(), parent ), reader.description_.c_str() );
     if( type_ == "string" )
-        stringValue_ = Style( new QLineEdit( xis.attribute< std::string >( "default", "" ).c_str(), parent ) );
+        stringValue_ = new QLineEdit( xis.attribute< std::string >( "default", "" ).c_str(), parent );
     else if( type_ == "integer" )
     {
-        integerValue_ = Style( new QSpinBox( parent ) );
+        integerValue_ = new QSpinBox( parent );
         if( xis.has_attribute( "min" ) )
             integerValue_->setMinValue( xis.attribute< int >( "min" ) );
         if( xis.has_attribute( "max" ) )
@@ -114,12 +107,12 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     }
     else if( type_ == "boolean" )
     {
-        booleanValue_ = Style( new QCheckBox( parent ) );
+        booleanValue_ = new QCheckBox( parent );
         booleanValue_->setChecked( xis.attribute< bool >( "default", false ) );
     }
     else if( type_ == "time" )
     {
-        timeValue_ = Style( new Q3TimeEdit( parent ) );
+        timeValue_ = new Q3TimeEdit( parent );
         timeValue_->setDisplay ( Q3TimeEdit::Hours | Q3TimeEdit::Minutes | Q3TimeEdit::Seconds );
         timeValue_->setTime( QTime().addSecs( xis.attribute< int >( "default", 0 ) ) );
     }
@@ -129,7 +122,7 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     }
     else if( type_ == "enumeration" )
     {
-        enumerationValue_ = Style( new QComboBox( parent ) );
+        enumerationValue_ = new QComboBox( parent );
         const std::string value = xis.attribute< std::string >( "default", "" );
         std::vector< std::string > enumerations;
         boost::split( enumerations, value, boost::is_any_of( ";" ) );

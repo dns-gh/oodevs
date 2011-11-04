@@ -20,16 +20,6 @@
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
-namespace
-{
-    template< typename T >
-    T* Style( T* widget )
-    {
-        widget->setBackgroundOrigin( QWidget::WindowOrigin );
-        return widget;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: CreateExerciceWidget constructor
 // Created: JSR 2010-07-13
@@ -40,37 +30,36 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
     , fileLoader_  ( fileLoader )
     , page_( page )
 {
-    Style( this );
     setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     setMargin( 5 );
     {
-        Q3HBox* saveBox = Style( new Q3HBox( this ) );
-        Style( new QLabel( tools::translate( "CreateExerciceWidget", "Create new exercise:" ), saveBox ) );
-        editName_ = Style( new QLineEdit( tools::translate( "CreateExerciceWidget", "Enter exercise name" ), saveBox ) );
+        Q3HBox* saveBox = new Q3HBox( this );
+        new QLabel( tools::translate( "CreateExerciceWidget", "Create new exercise:" ), saveBox );
+        editName_ = new QLineEdit( tools::translate( "CreateExerciceWidget", "Enter exercise name" ), saveBox );
         connect( editName_, SIGNAL( textChanged( const QString& ) ), &page, SLOT( EditNameChanged( const QString& ) ) );
         {
-            Q3VBox* box = Style( new Q3VBox( saveBox ) );
-            editTerrainList_ = Style( new QComboBox( box ) );
+            Q3VBox* box = new Q3VBox( saveBox );
+            editTerrainList_ = new QComboBox( box );
             connect( editTerrainList_, SIGNAL( activated( int ) ), &page, SLOT( ComboChanged( int ) ) );
-            editModelList_ = Style( new QComboBox( box ) );
+            editModelList_ = new QComboBox( box );
             connect( editModelList_, SIGNAL( activated( int ) ), &page, SLOT( ComboChanged( int ) ) );
             editTerrainList_->setMinimumWidth( 210 );
             editModelList_->setMinimumWidth( 210 );
         }
     }
     {
-        saveAsGroupBox_ = Style( new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "CreateExerciceWidget", "Create as copy of:" ), this ) );
+        saveAsGroupBox_ = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "CreateExerciceWidget", "Create as copy of:" ), this );
         saveAsGroupBox_->setCheckable( true );
         saveAsGroupBox_->setChecked( false );
         connect( saveAsGroupBox_, SIGNAL( toggled( bool ) ), &page, SLOT( ToggleChanged( bool ) ) );
         {
-            Style( new QLabel( tools::translate( "CreateExerciceWidget", "Exercise to copy:" ), saveAsGroupBox_ ) );
-            exerciseList_ = Style( new Q3ListBox( saveAsGroupBox_ ) );
+            new QLabel( tools::translate( "CreateExerciceWidget", "Exercise to copy:" ), saveAsGroupBox_ );
+            exerciseList_ = new Q3ListBox( saveAsGroupBox_ );
             connect( exerciseList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
         }
         {
-            Style( new QLabel( tools::translate( "CreateExerciceWidget", "Content to copy:" ), saveAsGroupBox_ ) );
-            contentList_ = Style( new Q3ListView( saveAsGroupBox_ ) );
+            new QLabel( tools::translate( "CreateExerciceWidget", "Content to copy:" ), saveAsGroupBox_ );
+            contentList_ = new Q3ListView( saveAsGroupBox_ );
             contentList_->addColumn( "exercise features" );
             contentList_->setResizeMode( Q3ListView::AllColumns );
             contentList_->header()->hide();

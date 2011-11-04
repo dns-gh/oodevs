@@ -14,24 +14,8 @@
 #include <algorithm>
 #include <boost/bind.hpp>
 #include <Qt3Support/q3groupbox.h>
-#include <QtGui/qtabbar.h>
-#include <QtGui/qtabwidget.h>
 
 using namespace frontend;
-
-namespace
-{
-    class TabWidget : public QTabWidget
-    {
-    public:
-        explicit TabWidget( QWidget* parent ) : QTabWidget( parent )
-        {
-            setBackgroundOrigin( QWidget::WindowOrigin );
-            tabBar()->setBackgroundOrigin( QWidget::WindowOrigin );
-            setMargin( 0 );
-        }
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: CompositePluginConfig constructor
@@ -43,8 +27,7 @@ CompositePluginConfig::CompositePluginConfig( QTabWidget* parent )
     Q3GroupBox* pluginsBox = new Q3GroupBox( 1, Qt::Vertical, this );
     pluginsBox->setMargin( 5 );
     pluginsBox->setFrameShape( Q3GroupBox::NoFrame );
-    pluginsBox->setBackgroundOrigin( QWidget::WindowOrigin );
-    tabs_ = new TabWidget( pluginsBox );
+    tabs_ = new QTabWidget( pluginsBox );
     parent->addTab( this, tools::translate( "CompositePluginConfig", "Plugins" ) );
 }
 

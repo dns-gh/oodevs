@@ -62,14 +62,11 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
 {
     Q3HBox* box = new Q3HBox( this );
     box->setMargin( 5 );
-    box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setSpacing( 50 );
     {
         Q3VBox* leftBox = new Q3VBox( box );
         leftBox->setSpacing( 5 );
-        leftBox->setBackgroundOrigin( QWidget::WindowOrigin );
         QLabel* label = new QLabel( tools::translate( "ExerciseList", "Exercise:" ), leftBox );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
         exercises_ = new Q3ListView( leftBox );
         exercises_->addColumn( "exercise" );
         exercises_->header()->hide();
@@ -78,7 +75,6 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         exercises_->setResizeMode( Q3ListView::LastColumn );
 
         label = new QLabel( tools::translate( "ExerciseList", "Profile:" ), leftBox );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
         profiles_ = new ProfileList( leftBox, config, fileLoader_ );
         leftBox->setStretchFactor( exercises_, 3 );
         leftBox->setStretchFactor( profiles_, 1 );

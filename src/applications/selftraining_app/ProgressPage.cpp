@@ -22,12 +22,10 @@ ProgressPage::ProgressPage( Q3WidgetStack* pages, Page_ABC& previous, const QStr
     : ContentPage( pages, title, previous, 0 )
 {
     Q3VBox* box = new Q3VBox( this );
-    box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->layout()->setAlignment( Qt::AlignCenter );
     box->layout()->setSpacing( 10 );
     label_ = new QLabel( box );
     label_->setAlignment( Qt::AlignCenter );
-    label_->setBackgroundOrigin( QWidget::WindowOrigin );
     progressBar_ = new Q3ProgressBar( 100, box );
     progressBar_->setCenterIndicator( true );
     AddContent( box );

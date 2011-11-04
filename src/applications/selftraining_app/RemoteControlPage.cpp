@@ -51,15 +51,11 @@ RemoteControlPage::RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, 
     Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );
-    box->setBackgroundOrigin( QWidget::WindowOrigin );
     {
         Q3GroupBox* gbox = new Q3GroupBox( 1, Qt::Vertical, box );
-        gbox->setBackgroundOrigin( QWidget::WindowOrigin );
-        QLabel* label = new QLabel( tools::translate( "RemoteControlPage", "Host:" ), gbox );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        new QLabel( tools::translate( "RemoteControlPage", "Host:" ), gbox );
         host_ = new QLineEdit( tools::translate( "RemoteControlPage", "127.0.0.1" ), gbox );
-        label = new QLabel( tools::translate( "RemoteControlPage", "Port:" ), gbox );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        new QLabel( tools::translate( "RemoteControlPage", "Port:" ), gbox );
         port_ = new QSpinBox( gbox );
         port_->setMaxValue( 65535 );
         port_->setValue( config.GetLauncherPort() );
@@ -69,7 +65,6 @@ RemoteControlPage::RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, 
     QTabWidget* tabWidget = new QTabWidget( box );
     {
         Q3HBox* hbox = new Q3HBox( tabWidget );
-        hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         {
             filter_.reset( new ExerciseFilter( *host_, *port_ ) );
             exercises_ = new ExerciseList( hbox, config, fileLoader_, controllers, false, false, false, false );
@@ -79,7 +74,6 @@ RemoteControlPage::RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, 
         }
         {
             Q3VBox* vbox = new Q3VBox( hbox );
-            vbox->setBackgroundOrigin( QWidget::WindowOrigin );
             {
                 QPushButton* button = new QPushButton( tools::translate( "RemoteControlPage", "Start game" ), vbox );
                 connect( button, SIGNAL( clicked() ), SLOT( OnStart() ) );
@@ -93,7 +87,6 @@ RemoteControlPage::RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, 
     }
     {
         Q3HBox* hbox = new Q3HBox( tabWidget );
-        hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         {
             runningFilter_.reset( new ExerciseFilter( *host_, *port_, true ) );
             runningExercises_ = new ExerciseList( hbox, config, fileLoader_, controllers, false, false, false, false );
@@ -103,7 +96,6 @@ RemoteControlPage::RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, 
         }
         {
             Q3VBox* vbox = new Q3VBox( hbox );
-            vbox->setBackgroundOrigin( QWidget::WindowOrigin );
             QPushButton* button = new QPushButton( tools::translate( "RemoteControlPage", "Stop running session" ), vbox );
             connect( button, SIGNAL( clicked() ), SLOT( OnStop() ) );
         }

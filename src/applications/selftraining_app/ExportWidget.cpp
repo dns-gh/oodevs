@@ -22,50 +22,92 @@
 #include <zipstream/zipstream.h>
 
 namespace bfs = boost::filesystem;
+
+namespace
+{
+    Q3GroupBox* AddTab( QWidget* parent, QTabWidget* tabs, QString title )
+    {
+        Q3GroupBox* importGroup = new Q3GroupBox( 2, Qt::Horizontal, parent );
+        importGroup->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
+        importGroup->setMargin( 0 );
+        tabs->addTab( importGroup, title );
+        return importGroup;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ExportWidget constructor
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
 ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
     : Q3GroupBox( 2, Qt::Vertical, parent )
-    , config_( config )
+    , config_    ( config )
     , fileLoader_( fileLoader )
-    , page_( page )
+    , page_      ( page )
 {
     setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-    setMargin( 5 );
-    setBackgroundOrigin( QWidget::WindowOrigin );
-    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "ExportWidget", "Create a package" ), this );
-    group->setBackgroundOrigin( QWidget::WindowOrigin );
+    tabs_ = new QTabWidget( this );
+    connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), &page, SLOT( UpdateEditButton( QWidget* ) ) );
+
+    // Exercises
     {
-        QLabel* label = new QLabel( tools::translate( "ExportWidget", "Exercise to package:" ), group );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
-        list_ = new Q3ListBox( group );
-        list_->setBackgroundOrigin( QWidget::WindowOrigin );
-        connect( list_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
+        Q3GroupBox* box = AddTab( this, tabs_, tools::translate( "ExportWidget", "Exercise" ) );
+        {
+            new QLabel( tools::translate( "ExportWidget", "Package description:" ), box );
+            exerciseDescription_ = new QTextEdit( box );
+            exerciseDescription_->setMaximumHeight( 30 );
+        }
+        {
+            new QLabel( tools::translate( "ExportWidget", "Exercise:" ), box );
+            exerciseList_ = new Q3ListBox( box );
+            connect( exerciseList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
+        }
+        {
+            new QLabel( tools::translate( "ExportWidget", "Package content:" ), box );
+            exerciseContent_ = new Q3ListView( box );
+            exerciseContent_->addColumn( "exercise features" );
+            exerciseContent_->setResizeMode( Q3ListView::AllColumns );
+            exerciseContent_->header()->hide();
+            exerciseContent_->adjustSize();
+        }
     }
+    // Terrains
     {
-        QLabel* label = new QLabel(  tools::translate( "ExportWidget", "Package description:" ), group );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
-        description_ = new Q3TextEdit( group );
-        description_->setBackgroundOrigin( QWidget::WindowOrigin );
-        description_->setMaximumHeight( 30 );
-        description_->setReadOnly( false );
+        Q3GroupBox* box = AddTab( this, tabs_, tools::translate( "ExportWidget", "Terrain" ) );
+        {
+            new QLabel( tools::translate( "ExportWidget", "Package description:" ), box );
+            terrainDescription_ = new QTextEdit( box );
+            terrainDescription_->setMaximumHeight( 30 );
+        }
+        {
+            new QLabel( tools::translate( "ExportWidget", "Terrain:" ), box );
+            terrainList_ = new Q3ListBox( box );
+            connect( terrainList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
+        }
     }
+    // Models
     {
-        QLabel* label = new QLabel(  tools::translate( "ExportWidget", "Package content:" ), group );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
-        content_ = new Q3ListView( group );
-        content_->setBackgroundOrigin( QWidget::WindowOrigin );
-        content_->addColumn( "exercise features" );
-        content_->setResizeMode( Q3ListView::AllColumns );
-        content_->header()->hide();
-        content_->adjustSize();
+        Q3GroupBox* box = AddTab( this, tabs_, tools::translate( "ExportWidget", "Models" ) );
+        {
+            new QLabel( tools::translate( "ExportWidget", "Package description:" ), box );
+            modelDescription_ = new QTextEdit( box );
+            modelDescription_->setMaximumHeight( 30 );
+        }
+        {
+            new QLabel( tools::translate( "ExportWidget", "Decisional model:" ), box );
+            decisionalCheckBox_ = new QCheckBox( box );
+            decisionalCheckBox_->setEnabled( false );
+        }
+        {
+            new QLabel( tools::translate( "ExportWidget", "Physical model:" ), box );
+            physicalList_ = new Q3ListBox( box );
+            connect( physicalList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
+        }
     }
     progress_ = new Q3ProgressBar( this );
     progress_->hide();
     package_.first = config_.GetRootDir();
-    UpdateExercises();
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -78,21 +120,118 @@ ExportWidget::~ExportWidget()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExportWidget::GetCurrentSelection
+// Created: ABR 2011-11-03
+// -----------------------------------------------------------------------------
+Q3ListBoxItem* ExportWidget::GetCurrentSelection() const
+{
+    Q3ListBoxItem* item = 0;
+    switch( tabs_->currentIndex() )
+    {
+    case E_Tabs::exercise:
+        item = exerciseList_->selectedItem();
+        break;
+    case E_Tabs::terrain:
+        item = terrainList_->selectedItem();
+        break;
+    case E_Tabs::models:
+        item = physicalList_->selectedItem();
+        break;
+    default:
+        break;
+    }
+    return item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExportWidget::GetCurrentDescription
+// Created: ABR 2011-11-03
+// -----------------------------------------------------------------------------
+QTextEdit* ExportWidget::GetCurrentDescription() const
+{
+    switch( tabs_->currentIndex() )
+    {
+    case E_Tabs::exercise:
+        return exerciseDescription_;
+    case E_Tabs::terrain:
+        return terrainDescription_;
+    case E_Tabs::models:
+        return modelDescription_;
+    default:
+        break;
+    }
+    assert( false );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExportWidget::EnableEditButton
+// Created: JSR 2010-07-19
+// -----------------------------------------------------------------------------
+bool ExportWidget::EnableEditButton()
+{
+    Q3ListBoxItem* item = GetCurrentSelection();
+    if( item )
+        package_.second = std::string( item->text().ascii() ) + ".otpak";
+    return item != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExportWidget::OnSelectionChanged
+// Created: JSR 2010-07-15
+// -----------------------------------------------------------------------------
+void ExportWidget::OnSelectionChanged( Q3ListBoxItem* item )
+{
+    Update( item );
+    page_.UpdateEditButton();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExportWidget::Update
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
-void ExportWidget::Update()
+void ExportWidget::Update( Q3ListBoxItem* item /*= 0*/ )
 {
-    Q3ListBoxItem* item = list_->selectedItem();
-    if( item )
+    if( !item ) // No item, refresh lists
     {
-        std::string exercise( item->text().ascii() );
-        content_->clear();
-        content_->insertItem( frontend::BuildExerciseFeatures( exercise, config_, content_ ) );
-        content_->insertItem( frontend::BuildExerciseData( exercise, config_, content_, fileLoader_ ) );
-   }
-    else
-        UpdateExercises();
+        // Exercise
+        exerciseList_->clear();
+        exerciseList_->insertStringList( frontend::commands::ListExercises( config_ ) );
+        // Terrain
+        terrainList_->clear();
+        terrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
+        // Physical
+        decisionalCheckBox_->setEnabled( false );
+        physicalList_->clear();
+        QStringList physicalBase;
+        QStringList decisionalModels = frontend::commands::ListModels( config_ );
+        for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+        {
+            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
+            for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
+                physicalBase << QString( "%1/%2" ).arg( *it ).arg( *itP );
+        }
+        physicalList_->insertStringList( physicalBase );
+    }
+    else // Item, update content
+    {
+        switch( tabs_->currentIndex() )
+        {
+        case E_Tabs::exercise:
+            {
+                std::string exercise( item->text().ascii() );
+                exerciseContent_->clear();
+                exerciseContent_->insertItem( frontend::BuildExerciseFeatures( exercise, config_, exerciseContent_ ) );
+                exerciseContent_->insertItem( frontend::BuildExerciseData( exercise, config_, exerciseContent_, fileLoader_ ) );
+            }
+            break;
+        case E_Tabs::models:
+            decisionalCheckBox_->setEnabled( true );
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 namespace
@@ -202,6 +341,17 @@ namespace
             ;
         return i;
     }
+
+    bfs::path GetDiffPath( bfs::path basepath, bfs::path other )
+    {
+        bfs::path diff;
+        while( other != basepath )
+        {
+            diff = other.stem() / diff;
+            other = other.parent_path();
+        }
+        return diff;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -215,61 +365,17 @@ void ExportWidget::ExportPackage()
         std::string filename( std::string( package_.first.c_str() ) + "/" + package_.second.c_str() );
         zip::ozipfile archive( filename.c_str() );
         if( archive.isOk() )
-        {
-            progress_->show();
-            progress_->setProgress( 0, ListViewSize( Q3ListViewItemIterator( content_ ) ) );
-            setCursor( Qt::waitCursor );
-            {
-                WriteContent( archive );
-                BrowseFiles( config_.GetRootDir(), Q3ListViewItemIterator( content_ ), archive, Progress( progress_ ) );
-            }
-            setCursor( Qt::arrowCursor );
-            progress_->hide();
-        }
+            InternalExportPackage( archive );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExportWidget::EnableEditButton
-// Created: JSR 2010-07-19
-// -----------------------------------------------------------------------------
-bool ExportWidget::EnableEditButton()
-{
-    return content_->childCount() != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExportWidget::OnSelectionChanged
-// Created: JSR 2010-07-15
-// -----------------------------------------------------------------------------
-void ExportWidget::OnSelectionChanged( Q3ListBoxItem* item )
-{
-    if( item )
-    {
-        package_.second = std::string( item->text().ascii() ) + ".otpak";
-        Update();
-        page_.UpdateEditButton();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExportWidget::UpdateExercises
-// Created: JSR 2010-07-15
-// -----------------------------------------------------------------------------
-void ExportWidget::UpdateExercises()
-{
-    list_->clear();
-    list_->insertStringList( frontend::commands::ListExercises( config_ ) );
-}
-
-// -----------------------------------------------------------------------------
-
 // Name: ExportWidget::BrowseClicked
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
 bool ExportWidget::BrowseClicked()
 {
-    const QString filename = Q3FileDialog::getSaveFileName( package_.second.c_str(), "SWORD packages (*.otpak)", this, "", tools::translate( "ExportWidget", "Select a package" ) );
+    const QString filename = QFileDialog::getSaveFileName( package_.second.c_str(), "SWORD packages (*.otpak)", this, "", tools::translate( "ExportWidget", "Select a package" ) );
     if( filename.isEmpty() )
         return false;
     const bfs::path file = bfs::path( std::string( filename.ascii() ), bfs::native );
@@ -289,17 +395,75 @@ bool ExportWidget::BrowseClicked()
 void ExportWidget::WriteContent( zip::ozipfile& archive ) const
 {
     xml::xostringstream xos;
-    std::string name( list_->selectedItem()->text().ascii() );
-    std::string description( description_->text().ascii() );
+    Q3ListBoxItem* item = GetCurrentSelection();
+    assert( item );
+    std::string name = item->text().ascii();
+    std::string description = GetCurrentDescription()->text().ascii();
+
     if( description.empty() )
-        description = "Packaged scenario of " + name;
+        description = "Packaged scenario of " + name + ".";
     xos << xml::start( "content" )
-            << xml::content( "name", name )
-            << xml::content( "description", description )
+        << xml::content( "name", name )
+        << xml::content( "description", description )
         << xml::end();
     {
         std::istringstream input( xos.str() );
         zip::ozipstream output( archive, "content.xml" );
         Copy( input, output );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExportWidget::InternalExportPackage
+// Created: ABR 2011-11-03
+// -----------------------------------------------------------------------------
+void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
+{
+    progress_->show();
+    setCursor( Qt::waitCursor );
+    WriteContent( archive );
+    switch( tabs_->currentIndex() )
+    {
+    case E_Tabs::exercise:
+        progress_->setProgress( 0, ListViewSize( Q3ListViewItemIterator( exerciseContent_ ) ) );
+        BrowseFiles( config_.GetRootDir(), Q3ListViewItemIterator( exerciseContent_ ), archive, Progress( progress_ ) );
+        break;
+    case E_Tabs::terrain:
+        {
+            assert( terrainList_->selectedItem() );
+            progress_->setProgress( 0, 1 );
+            bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetTerrainDir( terrainList_->selectedItem()->text().ascii() ) );
+            Serialize( config_.GetRootDir(), diffPath.string(), archive, true );
+            progress_->setProgress( 1 );
+        }
+        break;
+    case E_Tabs::models:
+        {
+            assert( physicalList_->selectedItem() );
+            std::string selectedText = physicalList_->selectedItem()->text().ascii();
+            size_t separator = selectedText.find_first_of( '/' );
+            std::string base = selectedText.substr( 0, separator );
+            std::string physical = selectedText.substr( separator, std::string::npos );
+            bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / base;
+            if( decisionalCheckBox_->isChecked() )
+            {
+                progress_->setProgress( 0, 2 );
+                Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / physical ).string(), archive, true );
+                progress_->setProgress( 1 );
+                Serialize( config_.GetRootDir(), bfs::path( diffPath / "decisional" ).string(), archive, true );
+                progress_->setProgress( 2 );
+            }
+            else
+            {
+                progress_->setProgress( 0, 1 );
+                Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / physical ).string(), archive, true );
+                progress_->setProgress( 1 );
+            }
+            break;
+        }
+    default:
+        break;
+    }
+    setCursor( Qt::arrowCursor );
+    progress_->hide();
 }

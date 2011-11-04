@@ -22,16 +22,6 @@
 
 using namespace frontend;
 
-namespace
-{
-    template< typename T >
-    T* Style( T* widget )
-    {
-        widget->setBackgroundOrigin( QWidget::WindowOrigin );
-        return widget;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: SessionConfigPanel constructor
 // Created: JSR 2010-11-05
@@ -40,26 +30,26 @@ SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralCon
     : PluginConfig_ABC( parent )
     , config_( config )
 {
-    Q3VBox* exerciseBox = Style( new Q3VBox( this ) );
+    Q3VBox* exerciseBox = new Q3VBox( this );
     exerciseBox->setMargin( 5 );
     {
-        Q3HBox* sessionBox = Style( new Q3HBox( exerciseBox ) );
-        sessionBox->setStretchFactor( Style( new QLabel( tools::translate( "SessionConfigPanel", "Session name:" ), sessionBox ) ), 1 );
-        sessionName_ = Style( new QLineEdit( sessionBox ) );
+        Q3HBox* sessionBox = new Q3HBox( exerciseBox );
+        sessionBox->setStretchFactor( new QLabel( tools::translate( "SessionConfigPanel", "Session name:" ), sessionBox ), 1 );
+        sessionName_ = new QLineEdit( sessionBox );
         sessionBox->setStretchFactor( sessionName_, 2 );
         sessionName_->setText( "" );
     }
     {
-        Q3HBox* commentBox = Style( new Q3HBox( exerciseBox ) );
-        commentBox->setStretchFactor( Style( new QLabel( tools::translate( "SessionConfigPanel", "Session comments:" ), commentBox ) ), 1 );
-        sessionComment_ = Style( new Q3TextEdit( commentBox ) );
+        Q3HBox* commentBox = new Q3HBox( exerciseBox );
+        commentBox->setStretchFactor( new QLabel( tools::translate( "SessionConfigPanel", "Session comments:" ), commentBox ), 1 );
+        sessionComment_ = new Q3TextEdit( commentBox );
         commentBox->setStretchFactor( sessionComment_, 2 );
         sessionComment_->setText( "" );
     }
     {
-        Q3HBox* exerciseNumberBox = Style( new Q3HBox( exerciseBox ) );
-        exerciseNumberBox->setStretchFactor( Style( new QLabel( tools::translate( "SessionConfigPanel", "Exercise number:" ), exerciseNumberBox ) ), 1 );
-        exerciseNumber_ = Style( new QSpinBox( 1, 10, 1, exerciseNumberBox ) );
+        Q3HBox* exerciseNumberBox = new Q3HBox( exerciseBox );
+        exerciseNumberBox->setStretchFactor( new QLabel( tools::translate( "SessionConfigPanel", "Exercise number:" ), exerciseNumberBox ), 1 );
+        exerciseNumber_ = new QSpinBox( 1, 10, 1, exerciseNumberBox );
         exerciseNumberBox->setStretchFactor( exerciseNumber_, 2 );
         exerciseNumber_->setValue( 1 );
     }
