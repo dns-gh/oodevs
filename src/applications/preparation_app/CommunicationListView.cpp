@@ -13,8 +13,10 @@
 #include "PreparationProfile.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Options.h"
 #include "clients_gui/ValuedDragObject.h" // LTO
 #include "clients_gui/ValuedListItem.h" // LTO
 #include "preparation/AutomatCommunications.h"
@@ -66,6 +68,10 @@ void CommunicationListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void CommunicationListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
+    QColor color = Qt::transparent;
+    if( dynamic_cast< const Ghost_ABC* >( &entity ) != 0 )
+        color = QColor( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
+    item->SetBackgroundColor( color );
     gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( entity, item );
     item->setRenameEnabled( 0, !gui::LongNameHelper::SetItemLongName( entity, *item ) );
 }

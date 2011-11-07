@@ -1191,6 +1191,10 @@ Voulez-vous le supprimer?</translation>
         <source>Totally destroyed:</source>
         <translation>Détruit totalement :</translation>
     </message>
+    <message>
+        <source>Phantom:</source>
+        <translation>Fantôme:</translation>
+    </message>
 </context>
 <context>
     <name>gui::PopulationListView</name>

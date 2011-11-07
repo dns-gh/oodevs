@@ -28,6 +28,7 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
     , pNColor_    ( 0 )
     , pADColor_   ( 0 )
     , pODColor_   ( 0 )
+    , pGhostColor_( 0 )
 {
     QWidget* main = new QWidget( this );
     QBoxLayout* layout = new QBoxLayout( QBoxLayout::TopToBottom, main );
@@ -35,21 +36,31 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
     layout->setAlignment( Qt::AlignTop );
     layout->addWidget( box );
     QVBoxLayout* mainLayout = new QVBoxLayout( box );
+    // Neutralized
     QHBoxLayout* neutralizedLayout = new QHBoxLayout();
     neutralizedLayout->addWidget( new QLabel( tr( "Neutralized:" ) ) );
     pNColor_ = new ColorButton( main, "", QColor( 235, 230, 101 ) );
     neutralizedLayout->addWidget( pNColor_ );
     mainLayout->addLayout( neutralizedLayout );
+    // Tactically destroyed
     QHBoxLayout* tacticallyDestroyedLayout = new QHBoxLayout();
     tacticallyDestroyedLayout->addWidget( new QLabel( tr( "Tactically destroyed:" ) ) );
     pADColor_ = new ColorButton( main, "", QColor( 235, 185, 101 ) );
     tacticallyDestroyedLayout->addWidget( pADColor_ );
     mainLayout->addLayout( tacticallyDestroyedLayout );
+    // Totally destroyed
     QHBoxLayout* totallyDestroyedLayout = new QHBoxLayout();
     totallyDestroyedLayout->addWidget( new QLabel( tr( "Totally destroyed:" ) ) );
     pODColor_ = new ColorButton( main, "", QColor( 235, 106, 101 ) );
     totallyDestroyedLayout->addWidget( pODColor_ );
     mainLayout->addLayout( totallyDestroyedLayout );
+    // Phantom
+    QHBoxLayout* ghostLayout = new QHBoxLayout();
+    ghostLayout->addWidget( new QLabel( tr( "Phantom:" ) ) );
+    pGhostColor_ = new ColorButton( main, "", QColor( 60, 180, 90 ) );
+    ghostLayout->addWidget( pGhostColor_ );
+    mainLayout->addLayout( ghostLayout );
+
     setWidget( main );
     controllers_.Register( *this );
 }
@@ -72,9 +83,11 @@ void OrbatPanel::Commit()
     pNColor_->Commit();
     pADColor_->Commit();
     pODColor_->Commit();
+    pGhostColor_->Commit();
     controllers_.options_.Change( "Color/Neutralized", pNColor_->GetColor().name() );
     controllers_.options_.Change( "Color/TacticallyDestroyed", pADColor_->GetColor().name() );
     controllers_.options_.Change( "Color/TotallyDestroyed", pODColor_->GetColor().name() );
+    controllers_.options_.Change( "Color/Phantom", pGhostColor_->GetColor().name() );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,6 +99,7 @@ void OrbatPanel::Reset()
     pNColor_->Revert();
     pADColor_->Revert();
     pODColor_->Revert();
+    pGhostColor_->Revert();
 }
 
 // -----------------------------------------------------------------------------
@@ -111,5 +125,10 @@ void OrbatPanel::OptionChanged( const std::string& name, const kernel::OptionVar
     {
         pODColor_->SetColor( QColor( value.To< QString >() ) );
         pODColor_->Commit();
+    }
+    else if( option[1] == "Phantom" )
+    {
+        pGhostColor_->SetColor( QColor( value.To< QString >() ) );
+        pGhostColor_->Commit();
     }
 }

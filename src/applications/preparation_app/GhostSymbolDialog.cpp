@@ -105,7 +105,6 @@ void GhostSymbolDialog::Validate()
     {
         static_cast< AgentHierarchies* >( pTactical )->UpdateSymbol( selected_->GetLevelSymbol(), selected_->GetSymbol() );
         controllers_.controller_.Update( *pTactical );
-        //pTactical->UpdateSymbol();
         if( const kernel::CommunicationHierarchies* pCommunication = selected_->Retrieve< kernel::CommunicationHierarchies >() )
             controllers_.controller_.Update( *pCommunication );
     }

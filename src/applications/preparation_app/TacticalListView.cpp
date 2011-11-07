@@ -21,6 +21,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "icons.h"
@@ -96,6 +97,10 @@ void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
         item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
     else if( IsCommandPost( entity ) )
         item->setPixmap( 1, commandPost_ );
+    QColor color = Qt::transparent;
+    if( dynamic_cast< const Ghost_ABC* >( &entity ) != 0 )
+        color = QColor( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
+    item->SetBackgroundColor( color );
     HierarchyListView< kernel::TacticalHierarchies >::Display( entity, item );
 }
 

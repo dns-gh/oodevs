@@ -58,7 +58,7 @@ TeamFactory::~TeamFactory()
 // -----------------------------------------------------------------------------
 Team_ABC* TeamFactory::CreateTeam()
 {
-    Team* result = new Team( controllers_.controller_, idManager_ );
+    Team* result = new Team( controllers_, idManager_ );
     result->Attach( *new Objects() );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Diplomacies_ABC >( *new Diplomacies( controllers_.controller_, model_.GetTeamResolver(), *result, dico, staticModel_.teamKarmas_ ) );
@@ -79,7 +79,7 @@ Team_ABC* TeamFactory::CreateTeam()
 // -----------------------------------------------------------------------------
 Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
 {
-    Team* result = new Team( xis, controllers_.controller_, idManager_ );
+    Team* result = new Team( xis, controllers_, idManager_ );
     result->Attach( *new Objects() );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Diplomacies_ABC >( *new Diplomacies( xis, controllers_.controller_, model_.GetTeamResolver(), *result, dico, staticModel_.teamKarmas_ ) );
