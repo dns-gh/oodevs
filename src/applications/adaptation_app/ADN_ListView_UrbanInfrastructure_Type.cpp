@@ -92,11 +92,11 @@ void ADN_ListView_UrbanInfrastructure_Type::ConnectItem( bool bConnect )
     if( cit == pInfos->capacities_.end() )
         throw std::runtime_error( "unregister object capacity: medical ");
 
-    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacityPresent]->Connect( &pInfos->capacities_[ "medical" ]->bPresent_, bConnect );
-    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacity_NightRate]->Connect( &static_cast< ADN_Objects_Data::ADN_CapacityInfos_Medical* >( pInfos->capacities_[ "medical" ].get() )->emergencyBedsRate_, bConnect );
-    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacity_EmergencyDoctorRate]->Connect( &static_cast< ADN_Objects_Data::ADN_CapacityInfos_Medical* >( pInfos->capacities_[ "medical" ].get() )->emergencyDoctorsRate_, bConnect );
-    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacity_EmergencyBedRate]->Connect( &static_cast< ADN_Objects_Data::ADN_CapacityInfos_Medical* >( pInfos->capacities_[ "medical" ].get() )->nightDoctorsRate_, bConnect );
-
+    ADN_Objects_Data::ADN_CapacityInfos_Medical* medical = static_cast< ADN_Objects_Data::ADN_CapacityInfos_Medical* >( cit->second.get() );
+    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacity_NightRate]->Connect( &medical->emergencyBedsRate_, bConnect );
+    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacity_EmergencyDoctorRate]->Connect( &medical->emergencyDoctorsRate_, bConnect );
+    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacity_EmergencyBedRate]->Connect( &medical->nightDoctorsRate_, bConnect );
+    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacityPresent]->Connect( &medical->bPresent_, bConnect );
 }
 
 //-----------------------------------------------------------------------------
