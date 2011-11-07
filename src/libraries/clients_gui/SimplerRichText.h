@@ -55,9 +55,10 @@ private:
     class RichElement
     {
     public:
-        RichElement( SimplerRichText* parent, const QString& text, const QString& link );
+        RichElement( SimplerRichText* parent, const QString& text, const QString& link, unsigned int line );
         void draw( QPainter* p, int x, int y, const QColorGroup& cg ) const;
         int width() const;
+        int height() const;
         int widthUsed() const;
         bool IsAt( const QPoint& point ) const;
         const QString& Anchor() const;
@@ -68,6 +69,7 @@ private:
         QString label_;
         QString anchor_;
         int offset_;
+        int line_;
     };
     //@}
 
@@ -75,9 +77,8 @@ private:
     //@{
     void Parse( const QString& text );
     void Breakdown( const QString& text, QStringList& list );
-    void AddTextElement( const QString& text );
-    void AddLinkElement( const QString& text );
-    void AddLinkElement( const QString& link, const QString& text );
+    void AddLinkElement( const QString& text, unsigned int line );
+    void AddLinkElement( const QString& link, const QString& text, unsigned int line );
     void UpdateOffset();
     //@}
 
@@ -86,6 +87,7 @@ private:
     //@{
     QFont font_;
     QFont linkFont_;
+    unsigned int lines_;
     T_Elements elements_;
     //@}
 };

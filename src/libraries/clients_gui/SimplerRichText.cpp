@@ -18,11 +18,12 @@ using namespace gui;
 // Name: SimplerRichText::RichElement::RichElement
 // Created: AGE 2007-04-20
 // -----------------------------------------------------------------------------
-SimplerRichText::RichElement::RichElement( SimplerRichText* parent, const QString& text, const QString& link )
+SimplerRichText::RichElement::RichElement( SimplerRichText* parent, const QString& text, const QString& link, unsigned int line )
     : parent_( parent )
     , label_( text )
     , anchor_( link )
     , offset_( 0 )
+    , line_  ( line )
 {
     // NOTHING
 }
@@ -54,6 +55,15 @@ int SimplerRichText::RichElement::width() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: SimplerRichText::RichElement::height
+// Created: SLI 2011-10-18
+// -----------------------------------------------------------------------------
+int SimplerRichText::RichElement::height() const
+{
+    return QFontMetrics( parent_->font_ ).height();
+}
+
+// -----------------------------------------------------------------------------
 // Name: SimplerRichText::RichElement::widthUsed
 // Created: AGE 2007-04-20
 // -----------------------------------------------------------------------------
@@ -68,7 +78,7 @@ int SimplerRichText::RichElement::widthUsed() const
 // -----------------------------------------------------------------------------
 bool SimplerRichText::RichElement::IsAt( const QPoint& point ) const
 {
-    return point.x() >= offset_ && point.x() < widthUsed();
+    return point.x() >= offset_ && point.x() < widthUsed() && point.y() >= line_ * height() && point.y() < ( line_ + 1 ) * height();
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +101,10 @@ void SimplerRichText::RichElement::UpdateOffset( SimplerRichText::CIT_Elements i
     else
     {
         const RichElement& previous = *(it-1);
-        offset_ = previous.widthUsed();
+        if( previous.line_ != line_ )
+            offset_ = 0;
+        else
+            offset_ = previous.widthUsed();
     }
 }
 
@@ -102,9 +115,11 @@ void SimplerRichText::RichElement::UpdateOffset( SimplerRichText::CIT_Elements i
 SimplerRichText::SimplerRichText( const QString& text, const QFont& font )
     : font_( font )
     , linkFont_( font )
+    , lines_( 0 )
 {
     linkFont_.setUnderline( true );
     Parse( text );
+    UpdateOffset();
 }
 
 // -----------------------------------------------------------------------------
@@ -157,18 +172,16 @@ void SimplerRichText::setText( const QString& text )
 // -----------------------------------------------------------------------------
 void SimplerRichText::Parse( const QString& text )
 {
-    QStringList list;
-    Breakdown( text, list );
-    bool textOnly = true;
     elements_.clear();
-    elements_.reserve( list.size() );
-    for( QStringList::iterator it = list.begin(); it != list.end(); ++it )
+    const QStringList lines = QStringList::split( "<br>", text, true );
+    lines_ = 0;
+    for( QStringList::const_iterator line = lines.begin(); line != lines.end(); ++line )
     {
-        if( textOnly )
-            AddTextElement( *it );
-        else
-            AddLinkElement( *it );
-        textOnly = !textOnly;
+        QStringList list;
+        Breakdown( *line + "<br>", list );
+        for( QStringList::iterator it = list.begin(); it != list.end(); ++it )
+            AddLinkElement( *it, lines_ );
+        ++lines_;
     }
 }
 
@@ -194,38 +207,30 @@ void SimplerRichText::Breakdown( const QString& text, QStringList& list )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SimplerRichText::AddTextElement
-// Created: AGE 2007-04-20
-// -----------------------------------------------------------------------------
-void SimplerRichText::AddTextElement( const QString& text )
-{
-    if( ! text.isEmpty() )
-        AddLinkElement( QString(), text );
-}
-
-// -----------------------------------------------------------------------------
 // Name: SimplerRichText::AddLinkElement
 // Created: AGE 2007-04-20
 // -----------------------------------------------------------------------------
-void SimplerRichText::AddLinkElement( const QString& text )
+void SimplerRichText::AddLinkElement( const QString& text, unsigned int line )
 {
+    if( text.isEmpty() )
+        return;
     QRegExp regexp( "\\s*href=[\\'\\\"](.*)[\\'\\\"]\\s*>(.*)" );
     if( regexp.search( text ) > -1 )
     {
         QStringList result = regexp.capturedTexts();
-        AddLinkElement( result[1], result[2] );
+        AddLinkElement( result[1], result[2], line );
     }
     else
-        AddTextElement( text );
+        AddLinkElement( QString(), text, line );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SimplerRichText::AddLinkElement
 // Created: AGE 2007-04-20
 // -----------------------------------------------------------------------------
-void SimplerRichText::AddLinkElement( const QString& link, const QString& text )
+void SimplerRichText::AddLinkElement( const QString& link, const QString& text, unsigned int line )
 {
-    elements_.push_back( RichElement( this, text, link ) );
+    elements_.push_back( RichElement( this, text, link, line ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -256,5 +261,5 @@ int SimplerRichText::widthUsed() const
 // -----------------------------------------------------------------------------
 int SimplerRichText::height() const
 {
-    return QFontMetrics( font_ ).height();
+    return QFontMetrics( font_ ).height() * lines_;
 }
