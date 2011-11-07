@@ -66,6 +66,7 @@ namespace hla
     class AutomatChecker_ABC;
     class Subordinates_ABC;
     class Transporters_ABC;
+    class InteractionBuilder;
     class SimulationFacade;
     class DetonationFacade;
     class TransportationFacade;
@@ -106,6 +107,7 @@ private:
     std::auto_ptr< xml::xistream > pXisSession_;
     std::auto_ptr< xml::xistream > pXisConfiguration_;
     std::auto_ptr< xml::ximultistream > pXis_;
+    std::auto_ptr< dispatcher::Logger_ABC > logFilter_;
     dispatcher::Logger_ABC& logger_;
     std::auto_ptr< ContextFactory_ABC > pContextFactory_;
     std::auto_ptr< ObjectResolver_ABC > pObjectResolver_;
@@ -128,6 +130,7 @@ private:
     std::auto_ptr< AutomatChecker_ABC > pAutomatChecker_;
     std::auto_ptr< AgentController > pSubject_;
     std::auto_ptr< FederateFacade > pFederate_;
+    std::auto_ptr< InteractionBuilder > pInteractionBuilder_;
     std::auto_ptr< SimulationFacade > pSimulationFacade_;
     std::auto_ptr< RemoteAgentResolver_ABC > pRemoteAgentResolver_;
     std::auto_ptr< DetonationFacade > pDetonationFacade_;

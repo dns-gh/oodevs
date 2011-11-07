@@ -19,6 +19,7 @@
 namespace dispatcher
 {
     class Team_ABC;
+    class Logger_ABC;
 }
 
 namespace kernel
@@ -61,7 +62,7 @@ public:
                                     ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                     ContextHandler_ABC< sword::UnitCreation >& unitHandler,
                                     const tools::Resolver_ABC< dispatcher::Team_ABC >& sides,
-                                    const UnitTypeResolver_ABC& typeResolver );
+                                    const UnitTypeResolver_ABC& typeResolver, dispatcher::Logger_ABC& logger );
     virtual ~RemoteAgentController();
     //@}
 
@@ -108,6 +109,7 @@ private:
     ContextHandler_ABC< sword::UnitCreation >& unitHandler_;
     const tools::Resolver_ABC< dispatcher::Team_ABC >& sides_;
     const UnitTypeResolver_ABC& typeResolver_;
+    dispatcher::Logger_ABC& logger_;
     T_UnitCreations unitCreations_;
     T_Parties parties_;
     T_Karmas karmas_;

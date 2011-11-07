@@ -204,6 +204,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionBuilder.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Interactions.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver_ABC.h" />

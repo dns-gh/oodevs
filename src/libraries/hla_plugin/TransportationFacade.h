@@ -10,7 +10,6 @@
 #ifndef plugins_hla_TransportationFacade_h
 #define plugins_hla_TransportationFacade_h
 
-#include "InteractionSender_ABC.h"
 #include <hla/InteractionNotification_ABC.h>
 #include <memory>
 
@@ -48,7 +47,7 @@ namespace hla
     class MissionResolver_ABC;
     class CallsignResolver_ABC;
     class Subordinates_ABC;
-    class Federate_ABC;
+    class InteractionBuilder;
     class ContextFactory_ABC;
     class TransportationRequester_ABC;
     template< typename T > class InteractionSender_ABC;
@@ -97,7 +96,7 @@ public:
              TransportationFacade( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
                                    tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                    const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
-                                   Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters,
+                                   const InteractionBuilder& builder, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters,
                                    dispatcher::SimulationPublisher_ABC& simulationPublisher, dispatcher::ClientPublisher_ABC& clientsPublisher );
     virtual ~TransportationFacade();
     //@}

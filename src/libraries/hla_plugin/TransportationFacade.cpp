@@ -12,32 +12,11 @@
 #include "InteractionBuilder.h"
 #include "TransportationRequester.h"
 #include "TransportationOfferer.h"
+#include "InteractionSender.h"
 #include <xeumeuleu/xml.hpp>
 #include <hla/Interaction.h>
 
 using namespace plugins::hla;
-
-namespace
-{
-    template< typename T >
-    class InteractionSender : public InteractionSender_ABC< T >
-    {
-    public:
-        InteractionSender( ::hla::InteractionNotification_ABC< T >& receiver, Federate_ABC& federate )
-            : interaction_( new ::hla::Interaction< T >( receiver ) )
-        {
-            InteractionBuilder builder;
-            builder.Build( federate, *interaction_ );
-        }
-        virtual ~InteractionSender() {}
-        virtual void Send( const T& interaction )
-        {
-            interaction_->Send( interaction );
-        }
-    private:
-        std::auto_ptr< ::hla::Interaction< T > > interaction_;
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: TransportationFacade constructor
@@ -46,26 +25,26 @@ namespace
 TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
                                             tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                             const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
-                                            Federate_ABC& federate, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters,
+                                            const InteractionBuilder& builder, const ContextFactory_ABC& contextFactory, const Transporters_ABC& /*transporters*/,
                                             dispatcher::SimulationPublisher_ABC& simulationPublisher, dispatcher::ClientPublisher_ABC& clientsPublisher )
-    : pNetnRequestConvoy_            ( new InteractionSender< interactions::NetnRequestConvoy >( *this, federate ) )
-    , pNetnOfferConvoy_              ( new InteractionSender< interactions::NetnOfferConvoy >( *this, federate ) )
-    , pNetnAcceptOffer_              ( new InteractionSender< interactions::NetnAcceptOffer >( *this, federate ) )
-    , pNetnRejectOfferConvoy_        ( new InteractionSender< interactions::NetnRejectOfferConvoy >( *this, federate ) )
-    , pNetnCancelConvoy_             ( new InteractionSender< interactions::NetnCancelConvoy >( *this, federate ) )
-    , pNetnReadyToReceiveService_    ( new InteractionSender< interactions::NetnReadyToReceiveService >( *this, federate ) )
-    , pNetnServiceStarted_           ( new InteractionSender< interactions::NetnServiceStarted >( *this, federate ) )
-    , pNetnConvoyEmbarkmentStatus_   ( new InteractionSender< interactions::NetnConvoyEmbarkmentStatus >( *this, federate ) )
-    , pNetnConvoyDisembarkmentStatus_( new InteractionSender< interactions::NetnConvoyDisembarkmentStatus >( *this, federate ) )
-    , pNetnConvoyDestroyedEntities_  ( new InteractionSender< interactions::NetnConvoyDestroyedEntities >( *this, federate ) )
-    , pNetnServiceComplete_          ( new InteractionSender< interactions::NetnServiceComplete >( *this, federate ) )
-    , pNetnServiceReceived_          ( new InteractionSender< interactions::NetnServiceReceived >( *this, federate ) )
+    : pNetnRequestConvoy_            ( new InteractionSender< interactions::NetnRequestConvoy >( *this, builder ) )
+    , pNetnOfferConvoy_              ( new InteractionSender< interactions::NetnOfferConvoy >( *this, builder ) )
+    , pNetnAcceptOffer_              ( new InteractionSender< interactions::NetnAcceptOffer >( *this, builder ) )
+    , pNetnRejectOfferConvoy_        ( new InteractionSender< interactions::NetnRejectOfferConvoy >( *this, builder ) )
+    , pNetnCancelConvoy_             ( new InteractionSender< interactions::NetnCancelConvoy >( *this, builder ) )
+    , pNetnReadyToReceiveService_    ( new InteractionSender< interactions::NetnReadyToReceiveService >( *this, builder ) )
+    , pNetnServiceStarted_           ( new InteractionSender< interactions::NetnServiceStarted >( *this, builder ) )
+    , pNetnConvoyEmbarkmentStatus_   ( new InteractionSender< interactions::NetnConvoyEmbarkmentStatus >( *this, builder ) )
+    , pNetnConvoyDisembarkmentStatus_( new InteractionSender< interactions::NetnConvoyDisembarkmentStatus >( *this, builder ) )
+    , pNetnConvoyDestroyedEntities_  ( new InteractionSender< interactions::NetnConvoyDestroyedEntities >( *this, builder ) )
+    , pNetnServiceComplete_          ( new InteractionSender< interactions::NetnServiceComplete >( *this, builder ) )
+    , pNetnServiceReceived_          ( new InteractionSender< interactions::NetnServiceReceived >( *this, builder ) )
     , pTransportationRequester_      ( new TransportationRequester( xis, missionResolver, controller, callsignResolver, subordinates,
                                                                     contextFactory, simulationPublisher, *pNetnRequestConvoy_,
                                                                     *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_,
                                                                     *pNetnReadyToReceiveService_, *pNetnServiceReceived_ ) )
-    , pTransportationOfferer_        ( new TransportationOfferer( *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_,
-                                                                  transporters, controller, callsignResolver ) )
+    , pTransportationOfferer_        ( new TransportationOfferer( xis, missionResolver, *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_, *pNetnConvoyDisembarkmentStatus_,
+                                                                  controller, contextFactory, callsignResolver, clientsPublisher ) )
 {
     // NOTHING
 }

@@ -420,9 +420,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireSender.h">
       <Filter>Source Files\Interactions\Detonation</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender_ABC.h">
-      <Filter>Source Files\Interactions\Detonation</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
@@ -587,6 +584,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\MarkingFactory_ABC.h">
       <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender_ABC.h">
+      <Filter>Source Files\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender.h">
+      <Filter>Source Files\Interactions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

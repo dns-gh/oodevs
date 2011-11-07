@@ -10,6 +10,7 @@
 #ifndef plugins_hla_SerializationTools_h
 #define plugins_hla_SerializationTools_h
 
+#include <hla/Encodable.h>
 #include <hla/Serializer.h>
 #include <hla/Deserializer.h>
 #include <vector>

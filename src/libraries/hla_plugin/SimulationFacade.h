@@ -30,6 +30,7 @@ namespace dispatcher
 {
     class SimulationPublisher_ABC;
     class Model_ABC;
+    class Logger_ABC;
     class StaticModel;
 }
 
@@ -75,7 +76,7 @@ public:
              SimulationFacade( xml::xisubstream xis, const ContextFactory_ABC& contextFactory, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
                                const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
-                               RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver );
+                               RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger );
     virtual ~SimulationFacade();
     //@}
 

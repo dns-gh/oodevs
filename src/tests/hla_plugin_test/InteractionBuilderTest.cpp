@@ -13,6 +13,7 @@
 #include "MockFederate.h"
 #include "MockInteractionHandler.h"
 #include "MockInteractionNotification.h"
+#include "MockLogger.h"
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
 
@@ -23,15 +24,17 @@ namespace
     class Fixture
     {
     public:
+        Fixture()
+            : builder( logger, federate )
+        {}
         template< typename Interaction >
         void CheckBuild( const std::string& name, const std::vector< std::string >& parameters )
         {
             ::hla::MockInteractionNotification< Interaction > notification;
             ::hla::Interaction< Interaction > interaction( notification );
-            MockFederate federate;
             hla::MockInteractionHandler* handler = new hla::MockInteractionHandler();
             MOCK_EXPECT( federate, RegisterInteraction ).once().with( name, mock::any, true, true ).calls( boost::bind( &hla::Interaction_ABC::SetHandler, _2, boost::ref( *handler ) ) );
-            builder.Build( federate, interaction );
+            builder.Build( interaction );
             mock::verify();
             mock::sequence s;
             BOOST_FOREACH( const std::string& parameter, parameters )
@@ -40,6 +43,8 @@ namespace
             Interaction message;
             interaction.Send( message );
         }
+        MockFederate federate;
+        dispatcher::MockLogger logger;
         InteractionBuilder builder;
     };
 }

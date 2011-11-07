@@ -33,7 +33,6 @@ namespace plugins
 {
 namespace hla
 {
-    class Federate_ABC;
     class RemoteAgentResolver_ABC;
     class LocalAgentResolver_ABC;
     class MunitionTypeResolver_ABC;
@@ -41,6 +40,7 @@ namespace hla
     class RemoteAgentSubject_ABC;
     class DirectFireSender;
     class IndirectFireSender;
+    class InteractionBuilder;
     template< typename Interaction > class InteractionSender_ABC;
 
 namespace interactions
@@ -59,10 +59,10 @@ class DetonationFacade : private ::hla::InteractionNotification_ABC< interaction
 public:
     //! @name Constructors/Destructor
     //@{
-             DetonationFacade( Federate_ABC& federate, dispatcher::SimulationPublisher_ABC& publisher, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                 const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
-                                 const ContextFactory_ABC& contextFactory, const MunitionTypeResolver_ABC& munitionTypeResolver,
-                                 RemoteAgentSubject_ABC& remoteAgentSubject, const std::string& federateName );
+             DetonationFacade( dispatcher::SimulationPublisher_ABC& publisher, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
+                               const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
+                               const ContextFactory_ABC& contextFactory, const MunitionTypeResolver_ABC& munitionTypeResolver,
+                               RemoteAgentSubject_ABC& remoteAgentSubject, const std::string& federateName, const InteractionBuilder& builder );
     virtual ~DetonationFacade();
     //@}
 

@@ -10,9 +10,16 @@
 #ifndef plugins_hla_TransportationInteractionBuilder_h
 #define plugins_hla_TransportationInteractionBuilder_h
 
+#include <boost/noncopyable.hpp>
+
 namespace hla
 {
     template< typename T > class Interaction;
+}
+
+namespace dispatcher
+{
+    class Logger_ABC;
 }
 
 namespace plugins
@@ -43,30 +50,37 @@ namespace interactions
 */
 // Created: SLI 2011-10-24
 // =============================================================================
-class InteractionBuilder
+class InteractionBuilder : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InteractionBuilder();
+             InteractionBuilder( dispatcher::Logger_ABC& logger, Federate_ABC& federate );
     virtual ~InteractionBuilder();
     //@}
 
     //! @name Operations
     //@{
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::MunitionDetonation >& interaction ) const;
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnRequestConvoy >& interaction ) const;
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnOfferConvoy >& interaction ) const;
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnAcceptOffer >& interaction ) const;
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnRejectOfferConvoy >& interaction ) const;
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnCancelConvoy >& interaction ) const;
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnReadyToReceiveService >& interaction ) const;
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnServiceStarted >& interaction ) const;
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnConvoyEmbarkmentStatus >& interaction ) const;
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnConvoyDisembarkmentStatus >& interaction ) const;
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >& interaction ) const;
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnServiceComplete >& interaction ) const;
-    void Build( Federate_ABC& federate, ::hla::Interaction< interactions::NetnServiceReceived >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::MunitionDetonation >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::NetnRequestConvoy >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::NetnOfferConvoy >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::NetnAcceptOffer >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::NetnRejectOfferConvoy >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::NetnCancelConvoy >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::NetnReadyToReceiveService >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::NetnServiceStarted >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::NetnConvoyEmbarkmentStatus >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::NetnConvoyDisembarkmentStatus >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::NetnServiceComplete >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::NetnServiceReceived >& interaction ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    dispatcher::Logger_ABC& logger_;
+    Federate_ABC& federate_;
     //@}
 };
 

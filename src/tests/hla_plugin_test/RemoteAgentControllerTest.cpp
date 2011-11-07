@@ -17,6 +17,7 @@
 #include "MockRemoteAgentSubject.h"
 #include "MockContextHandler.h"
 #include "MockUnitTypeResolver.h"
+#include "MockLogger.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
@@ -40,6 +41,9 @@ namespace
             , longitude             ( 2. )
             , automat               ( 1337 )
         {
+            MOCK_EXPECT( logger, LogInfo );
+            MOCK_EXPECT( logger, LogError );
+            MOCK_EXPECT( logger, LogWarning );
             MOCK_EXPECT( remoteSubject, Register ).once().with( mock::retrieve( remoteAgentListener ) );
             MOCK_EXPECT( automatCreation, Register ).once().with( mock::retrieve( automatCreationHandler ) );
             MOCK_EXPECT( automatCreation, Unregister );
@@ -62,7 +66,7 @@ namespace
         {
             MOCK_EXPECT( teamResolver, CreateIterator ).once().returns( MakeTeamIterator( boost::assign::list_of( party ) ) );
             BOOST_FOREACH( T_Team team, teams )
-                MOCK_EXPECT( *team, GetKarma ).once().returns( kernel::Karma::friend_ );
+                MOCK_EXPECT( *team, GetKarma ).returns( kernel::Karma::friend_ );
         }
         MockRemoteAgentSubject remoteSubject;
         RemoteAgentListener_ABC* remoteAgentListener;
@@ -71,6 +75,7 @@ namespace
         MockContextHandler< sword::UnitCreation > unitCreation;
         tools::MockResolver< dispatcher::Team_ABC > teamResolver;
         MockUnitTypeResolver unitTypeResolver;
+        dispatcher::MockLogger logger;
         const unsigned long party;
         const double latitude;
         const double longitude;
@@ -81,7 +86,7 @@ namespace
     {
     public:
         AutomatFixture()
-            : remoteController( remoteSubject, automatCreation, unitCreation, teamResolver, unitTypeResolver )
+            : remoteController( remoteSubject, automatCreation, unitCreation, teamResolver, unitTypeResolver, logger )
         {
             BOOST_REQUIRE( automatCreationHandler );
             BOOST_REQUIRE( remoteAgentListener );
