@@ -3045,6 +3045,32 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="area" name="Zone" optional="false" type="Polygon"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.tasks.SeFaireTransporter" dia-type="france.military.company.tasks.SeFaireTransporterHLA" id="28762" mrt-dia-behavior="france.military.company.tasks.SeFaireTransporter" name="AUTOMATE HLA Faire Une Requete de Transport">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="objectives" name="Point d'embarquement" optional="false" type="Point"/>
+      <parameter dia-name="embarkment_time" name="Heure d'embarquement" optional="false" type="DateTime"/>
+      <parameter dia-name="destination" name="Point de debarquement" optional="false" type="Point"/>
+      <parameter dia-name="debarkment_time" name="Heure de debarquement" optional="false" type="DateTime"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.tasks.SeFaireTransporter" dia-type="france.military.company.tasks.AtterrirHLA" id="28763" mrt-dia-behavior="france.military.company.tasks.SeFaireTransporter" name="AUTOMATE HLA Atterrir">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="objectives" name="Point d'embarquement" optional="false" type="Point"/>
+      <parameter dia-name="embarkment_time" name="Heure d'embarquement" optional="false" type="DateTime"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.tasks.SeFaireTransporter" dia-type="france.military.company.tasks.HLA Decoller" id="28764" mrt-dia-behavior="france.military.company.tasks.SeFaireTransporter" name="AUTOMATE HLA Decoller">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="destination" name="Point de debarquement" optional="false" type="Point"/>
+      <parameter dia-name="debarkment_time" name="Heure de debarquement" optional="false" type="DateTime"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -3282,4 +3308,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="0089688068" -->
+<!-- signature="2392053124" -->

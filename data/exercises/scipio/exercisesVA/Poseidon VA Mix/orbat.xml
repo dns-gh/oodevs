@@ -69,7 +69,7 @@
             <unit command-post="false" id="549" name="ABC . PLT AMX 10 RC CDP SOFF" position="29TNF3118658563" type="ABC . PLT AMX 10 RC CDP SOFF"/>
             <unit command-post="true" id="550" name="ABC . PC" position="29TNF3172058820" type="ABC . PC"/>
             <unit command-post="false" id="551" name="INF . Section CBT VAB CDS SOFF" position="29TNF3218258645" type="INF . Section CBT VAB CDS SOFF"/>
-            <unit command-post="false" id="552" name="GEN . Section CBT renforce MPG" position="29TNF3171558429" type="GEN . Section CBT renforce MPG"/>
+            <unit command-post="false" id="552" name="GEN . Section CBT renforce MPG" position="29TNF3171558429" type="GEN . Section CBT + MPG"/>
           </automat>
           <automat engaged="true" id="613" knowledge-group="6" name="SGTIA INF dominante roues [613]" type="SGTIA INF dominante roues">
             <unit command-post="false" id="614" name="INF . Section CBT quaternaire VAB CDS OFF" position="29TNF3054458260" type="INF . Section CBT quaternaire VAB CDS OFF"/>
@@ -77,7 +77,7 @@
             <unit command-post="false" id="616" name="INF . Section CBT quaternaire VAB CDS SOFF" position="29TNF3028658007" type="INF . Section CBT quaternaire VAB CDS SOFF"/>
             <unit command-post="false" id="617" name="INF . Groupe INF MO81 Section quaternaire" position="29TNF3017058450" type="INF . Groupe INF MO81 Section quaternaire"/>
             <unit command-post="false" id="618" name="ABC . PLT AMX 10 RC CDP SOFF" position="29TNF3068358532" type="ABC . PLT AMX 10 RC CDP SOFF"/>
-            <unit command-post="false" id="619" name="GEN . Section CBT renforce MPG" position="29TNF3076758261" type="GEN . Section CBT renforce MPG"/>
+            <unit command-post="false" id="619" name="GEN . Section CBT renforce MPG" position="29TNF3076758261" type="GEN . Section CBT + MPG"/>
             <unit command-post="true" id="620" name="INF . Section CDT CIE quaternaire VAB" position="29TNF3052458364" type="INF . Section CDT CIE quaternaire VAB"/>
           </automat>
           <lima name="Lima 228">
@@ -251,7 +251,7 @@
             <unit command-post="false" id="578" name="INF . Section CBT quaternaire VAB CDS SOFF" position="29TNF3226855321" type="INF . Section CBT quaternaire VAB CDS SOFF"/>
             <unit command-post="false" id="579" name="INF . Groupe INF MO81 Section quaternaire" position="29TNF3112755349" type="INF . Groupe INF MO81 Section quaternaire"/>
             <unit command-post="false" id="580" name="ABC . PLT AMX 10 RC CDP SOFF" position="29TNF3148755340" type="ABC . PLT AMX 10 RC CDP SOFF"/>
-            <unit command-post="false" id="581" name="GEN . Section CBT renforce MPG" position="29TNF3153855236" type="GEN . Section CBT renforce MPG"/>
+            <unit command-post="false" id="581" name="GEN . Section CBT renforce MPG" position="29TNF3153855236" type="GEN . Section CBT + MPG"/>
             <unit command-post="true" id="582" name="INF . Section CDT CIE quaternaire VAB" position="29TNF3189655092" type="INF . Section CDT CIE quaternaire VAB"/>
           </automat>
         </formation>
@@ -273,4 +273,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0307918335" -->
+<!-- signature="2892977354" -->

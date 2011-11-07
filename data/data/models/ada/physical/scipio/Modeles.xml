@@ -6230,6 +6230,7 @@
         <mission name="AUTOMATE MELEE Controler foule"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Maintenir Le Contact"/>
+        <mission name="AUTOMATE HLA Faire Une Requete de Transport"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -9841,4 +9842,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1524589878" -->
+<!-- signature="2311666666" -->
