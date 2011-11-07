@@ -1216,6 +1216,22 @@ Do you want to save anyway?</source>
         <source>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ghost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unicity</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ObjectCreationPanel</name>

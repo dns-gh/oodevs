@@ -11,6 +11,7 @@
 #define __ModelConsistencyDialog_h_
 
 #include <boost/noncopyable.hpp>
+#include <map>
 #include "preparation/ModelConsistencyChecker.h"
 
 namespace kernel
@@ -35,6 +36,8 @@ struct VariantPointer
 };
 Q_DECLARE_METATYPE( VariantPointer );
 
+class FilterProxyModel;
+
 // =============================================================================
 /** @class  ModelConsistencyDialog
     @brief  ModelConsistencyDialog
@@ -56,19 +59,27 @@ public:
 public slots:
     //! @name Slots
     //@{
-    void CheckConsistency( unsigned int filters = ModelConsistencyChecker::eAllChecks );
+    void CheckConsistency();
     //@}
 
 private:
-    //! @name Types
+    //! @name Enums
     //@{
     enum E_Column { eID = 0, eName = 1, eDescription = 2 };
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< unsigned int, QString > T_Types;
+    //@}
+
     //! @name Helpers
     //@{
+    void CreateCheckbox( QHBoxLayout& layout, const T_Types& names );
     void UpdateDataModel();
-    void AddItem( int row, int col, QString text, const kernel::Entity_ABC& entity );
+    template< typename T >
+    void AddItem( T data, QString text, const kernel::Entity_ABC& entity,
+                  ModelConsistencyChecker::E_ConsistencyCheck type, QList< QStandardItem* >& items );
     //@}
 
 private slots:
@@ -76,6 +87,7 @@ private slots:
     //@{
     void OnRefresh();
     void OnSelectionChanged( const QModelIndex& );
+    void OnFilterChanged( int type );
     //@}
 
 private:
@@ -83,11 +95,12 @@ private:
     //@{
     kernel::ActionController&         actionController_;
     ModelConsistencyChecker           checker_;
-    unsigned int                      currentFilters_;
     QTableView*                       tableView_;
     QStandardItemModel*               dataModel_;
+    FilterProxyModel*                 proxyModel_;
     QStringList                       horizontalHeaders_;
     std::map< unsigned int, QString > errorDescriptions_;
+    QSignalMapper*                    pMapper_;
     //@}
 };
 

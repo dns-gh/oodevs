@@ -469,6 +469,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\GhostSymbolEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FilterProxyModel.cpp">
+      <Filter>Source Files\Dialogs\Consistency</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -859,11 +862,17 @@
     <CustomBuild Include="..\..\src\applications\preparation_app\GhostsPanel.h">
       <Filter>Source Files\Panels\Creation</Filter>
     </CustomBuild>
+<<<<<<< .working
     <CustomBuild Include="..\..\src\applications\preparation_app\GhostSymbolDialog.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\GhostSymbolEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
+=======
+    <CustomBuild Include="..\..\src\applications\preparation_app\FilterProxyModel.h">
+      <Filter>Source Files\Dialogs\Consistency</Filter>
+    </CustomBuild>
+>>>>>>> .merge-right.r23464
   </ItemGroup>
 </Project>

@@ -105,7 +105,7 @@ public slots:
     void ToggleFullScreen();
     void ToggleDocks();
     void ReloadExercise();
-    void CheckConsistency( unsigned int filters = 0 );
+    void CheckConsistency();
     void OnForceSaveAndAddActionPlanning( const std::string& filename );
     //@}
 

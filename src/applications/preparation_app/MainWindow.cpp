@@ -718,14 +718,11 @@ void MainWindow::OnForceSaveAndAddActionPlanning( const std::string& filename )
 // Name: MainWindow::CheckConsistency
 // Created: ABR 2011-09-23
 // -----------------------------------------------------------------------------
-void MainWindow::CheckConsistency( unsigned int filters /*= 0*/ )
+void MainWindow::CheckConsistency()
 {
     if( !consistencyDialog_ )
         return;
-    if( filters )
-        consistencyDialog_->CheckConsistency( filters );
-    else
-        consistencyDialog_->CheckConsistency();
+    consistencyDialog_->CheckConsistency();
 }
 
 // -----------------------------------------------------------------------------

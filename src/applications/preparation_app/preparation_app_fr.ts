@@ -1216,6 +1216,22 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</source>
         <translation>Type inconnu &apos;%1&apos;, un fantôme a été créé à la place.</translation>
     </message>
+    <message>
+        <source>Profile</source>
+        <translation>Profil</translation>
+    </message>
+    <message>
+        <source>Ghost</source>
+        <translation>Fantôme</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistique</translation>
+    </message>
+    <message>
+        <source>Unicity</source>
+        <translation>Unicité</translation>
+    </message>
 </context>
 <context>
     <name>ObjectCreationPanel</name>
