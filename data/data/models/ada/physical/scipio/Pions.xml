@@ -15306,7 +15306,7 @@
     <repartition children="0.1" female="0.45" male="0.45"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie" id="533" name="GEN . Section CBT renforce MPG" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie" id="533" name="GEN . Section CBT + MPG" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="4" crew="1" major="true" type="VAB GEN 12,7"/>
@@ -15337,7 +15337,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie" id="534" name="GEN . Section CBT renforce EBG" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie" id="534" name="GEN . Section CBT + EBG" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="4" crew="1" major="true" type="VAB GEN 12,7"/>
@@ -17121,5 +17121,32 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="PC Marine" id="603" name="JOINT - Porte-avions" type="Pion JOINT">
+    <nature atlas-nature="None" level="ooo" nature-app6="combat support/landing support"/>
+    <equipments>
+      <equipment count="1" crew="100" major="true" type="Porte-avions"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="10" type="Officier"/>
+      <crew-rank count="50" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="120s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="2379485897" -->
+<!-- signature="1722731698" -->
