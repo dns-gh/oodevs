@@ -51,6 +51,7 @@ namespace interactions
     struct NetnServiceStarted;
     struct NetnConvoyEmbarkmentStatus;
     struct NetnConvoyDisembarkmentStatus;
+    struct NetnConvoyDestroyedEntities;
 }
     template< typename T > class InteractionSender_ABC;
     class CallsignResolver_ABC;
@@ -77,6 +78,7 @@ public:
                                     InteractionSender_ABC< interactions::NetnServiceStarted >& serviceStartedInteractionSender,
                                     InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus >& convoyEmbarkmentStatusSender,
                                     InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus >& convoyDisembarkmentStatusSender,
+                                    InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities >& convoyDestroyedEntitiesSender,
                                     tools::MessageController_ABC< sword::SimToClient_Content >& messageController, const ContextFactory_ABC& factory,
                                     const CallsignResolver_ABC& callsignRevoler, dispatcher::ClientPublisher_ABC& clientsPublisher );
     virtual ~TransportationOfferer();
@@ -112,9 +114,10 @@ private:
     InteractionSender_ABC< interactions::NetnServiceStarted >& serviceStartedInteractionSender_;
     InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus >& convoyEmbarkmentStatusSender_;
     InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus >& convoyDisembarkmentStatusSender_;
+    InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities >& convoyDestroyedEntitiesSender_;
     tools::MessageController_ABC< sword::SimToClient_Content >& messageController_;
     const ContextFactory_ABC& factory_;
-    const CallsignResolver_ABC& callsignRevoler_;
+    const CallsignResolver_ABC& callsignResolver_;
     dispatcher::ClientPublisher_ABC& clientsPublisher_;
     const unsigned int transportIdentifier_;
     const unsigned int missionCompleteReportId_;

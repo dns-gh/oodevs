@@ -69,15 +69,17 @@ TransportationOfferer::TransportationOfferer( xml::xisubstream xis, const Missio
                                               InteractionSender_ABC< interactions::NetnServiceStarted >& serviceStartedInteractionSender,
                                               InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus >& convoyEmbarkmentStatusSender,
                                               InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus >& convoyDisembarkmentStatusSender,
+                                              InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities >& convoyDestroyedEntitiesSender,
                                               tools::MessageController_ABC< sword::SimToClient_Content >& messageController, const ContextFactory_ABC& factory,
                                               const CallsignResolver_ABC& callsignRevoler, dispatcher::ClientPublisher_ABC& clientsPublisher )
     : offerInteractionSender_         ( offerInteractionSender )
     , serviceStartedInteractionSender_( serviceStartedInteractionSender )
     , convoyEmbarkmentStatusSender_   ( convoyEmbarkmentStatusSender )
     , convoyDisembarkmentStatusSender_( convoyDisembarkmentStatusSender )
+    , convoyDestroyedEntitiesSender_  ( convoyDestroyedEntitiesSender )
     , messageController_              ( messageController )
     , factory_                        ( factory )
-    , callsignRevoler_                ( callsignRevoler )
+    , callsignResolver_                ( callsignRevoler )
     , clientsPublisher_               ( clientsPublisher )
     , transportIdentifier_            ( ResolveMission( xis, missionResolver, "transport" ) )
     , missionCompleteReportId_        ( ResolveReportId( xis ) )
@@ -156,7 +158,7 @@ void TransportationOfferer::Receive( interactions::NetnRequestConvoy& request )
     text->set_message( "/display \"<b>Transport request received:</b><br>"
                        "<font color='red'>Embarking point</font>" + Appointment( request.transportData.dataTransport.appointment ) + "<br>"
                        "<font color='blue'>Debarking point</font>" + Appointment( request.transportData.dataTransport.finalAppointment ) + "<br>"
-                       "Units to embark: " + ListUnits( request.transportData.dataTransport.objectToManage, callsignRevoler_ ) + "<br>"
+                       "Units to embark: " + ListUnits( request.transportData.dataTransport.objectToManage, callsignResolver_ ) + "<br>"
                        "Request identifier: " + ServiceIdentifier( request ) + "<br>\"" );
     clientsPublisher_.Send( message );
     SendDrawingPoint( clientsPublisher_, request.transportData.dataTransport.appointment, factory_.Create(), 255, 0, 0 );
@@ -188,15 +190,15 @@ void TransportationOfferer::Notify( const sword::UnitOrder& message, int /*conte
         interactions::NetnOfferConvoy& offer = it->second;
         offer.transportData.dataTransport.appointment.location = ReadLocation( message.parameters().elem( 6 ) );
         offer.transportData.dataTransport.finalAppointment.location = ReadLocation( message.parameters().elem( 5 ) );
-        offer.listOfTransporters.list.push_back( NetnObjectDefinitionStruct( callsignRevoler_.ResolveCallsign( message.tasker().id() ),
-                                                                             callsignRevoler_.ResolveUniqueId( message.tasker().id() ),
+        offer.listOfTransporters.list.push_back( NetnObjectDefinitionStruct( callsignResolver_.ResolveCallsign( message.tasker().id() ),
+                                                                             callsignResolver_.ResolveUniqueId( message.tasker().id() ),
                                                                              NetnObjectFeatureStruct() ) );
         transporters_[ message.tasker().id() ] = serviceId;
         for( int i = 0; i < message.parameters().elem( 4 ).value_size(); ++i )
         {
             const unsigned int agent = message.parameters().elem( 4 ).value( i ).agent().id();
-            offer.transportData.dataTransport.objectToManage.push_back( NetnObjectDefinitionStruct( callsignRevoler_.ResolveCallsign( agent ),
-                                                                                                    callsignRevoler_.ResolveUniqueId( agent ),
+            offer.transportData.dataTransport.objectToManage.push_back( NetnObjectDefinitionStruct( callsignResolver_.ResolveCallsign( agent ),
+                                                                                                    callsignResolver_.ResolveUniqueId( agent ),
                                                                                                     NetnObjectFeatureStruct() ) );
         }
         if( message.parameters().elem( 9 ).value( 0 ).booleanvalue() )
@@ -265,7 +267,7 @@ namespace
         status.serviceType = offer.serviceType;
         status.transportUnitIdentifier = UnicodeString( callsignResolver.ResolveCallsign( transporterId ) );
         BOOST_FOREACH( unsigned int identifier, units )
-            listOfUnits.list.push_back( NetnObjectDefinitionStruct( 
+            listOfUnits.list.push_back( NetnObjectDefinitionStruct(
                 callsignResolver.ResolveCallsign( identifier ),
                 callsignResolver.ResolveUniqueId( identifier ), NetnObjectFeatureStruct() ) );
         sender.Send( status );
@@ -278,17 +280,34 @@ namespace
 // -----------------------------------------------------------------------------
 void TransportationOfferer::Notify( const sword::UnitAttributes& message, int /*context*/ )
 {
-    if( !message.has_transported_units() )
+    if( !message.has_transported_units() || !message.has_dead() )
         return;
     T_Transporters::const_iterator transporter = transporters_.find( message.unit().id() );
     if( transporter == transporters_.end() )
         return;
-    T_Transported embarked;
-    T_Transported debarked;
-    UpdateTransported( transported_[ message.unit().id() ], embarked, debarked, message.transported_units() );
-    const interactions::NetnOfferConvoy& offer = startedOffers_[ transporter->second ];
-    interactions::NetnConvoyEmbarkmentStatus embarkmentStatus;
-    Send( embarkmentStatus, embarkmentStatus.listOfObjectEmbarked, embarked, convoyEmbarkmentStatusSender_, offer, message.unit().id(), callsignRevoler_ );
-    interactions::NetnConvoyDisembarkmentStatus disembarkmentStatus;
-    Send( disembarkmentStatus, disembarkmentStatus.listOfObjectDisembarked, debarked, convoyDisembarkmentStatusSender_, offer, message.unit().id(), callsignRevoler_ );
+    if( message.has_transported_units() )
+    {
+        T_Transported embarked;
+        T_Transported debarked;
+        UpdateTransported( transported_[ message.unit().id() ], embarked, debarked, message.transported_units() );
+        const interactions::NetnOfferConvoy& offer = startedOffers_[ transporter->second ];
+        interactions::NetnConvoyEmbarkmentStatus embarkmentStatus;
+        Send( embarkmentStatus, embarkmentStatus.listOfObjectEmbarked, embarked, convoyEmbarkmentStatusSender_, offer, message.unit().id(), callsignResolver_ );
+        interactions::NetnConvoyDisembarkmentStatus disembarkmentStatus;
+        Send( disembarkmentStatus, disembarkmentStatus.listOfObjectDisembarked, debarked, convoyDisembarkmentStatusSender_, offer, message.unit().id(), callsignResolver_ );
+    }
+    if( message.has_dead() && !transported_[ message.unit().id() ].empty() )
+    {
+        const interactions::NetnOfferConvoy& offer = startedOffers_[ transporter->second ];
+        interactions::NetnConvoyDestroyedEntities destruction;
+        destruction.serviceId = offer.serviceId;
+        destruction.consumer = offer.consumer;
+        destruction.provider = offer.provider;
+        destruction.serviceType = offer.serviceType;
+        BOOST_FOREACH( const unsigned int transported, transported_[ message.unit().id() ] )
+            destruction.listOfEmbarkedObjectDestroyed.list.push_back( NetnObjectDefinitionStruct(
+                                                                        callsignResolver_.ResolveCallsign( transported ),
+                                                                        callsignResolver_.ResolveUniqueId( transported ), NetnObjectFeatureStruct() ) );
+        convoyDestroyedEntitiesSender_.Send( destruction );
+    }
 }

@@ -43,7 +43,7 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
                                                                     contextFactory, simulationPublisher, *pNetnRequestConvoy_,
                                                                     *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_,
                                                                     *pNetnReadyToReceiveService_, *pNetnServiceReceived_ ) )
-    , pTransportationOfferer_        ( new TransportationOfferer( xis, missionResolver, *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_, *pNetnConvoyDisembarkmentStatus_,
+    , pTransportationOfferer_        ( new TransportationOfferer( xis, missionResolver, *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_, *pNetnConvoyDisembarkmentStatus_, *pNetnConvoyDestroyedEntities_,
                                                                   controller, contextFactory, callsignResolver, clientsPublisher ) )
 {
     // NOTHING
