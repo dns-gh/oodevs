@@ -28,6 +28,7 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
     , pNColor_    ( 0 )
     , pADColor_   ( 0 )
     , pODColor_   ( 0 )
+    , pGhostColor_( 0 )
 {
     QWidget* main = new QWidget( this );
     QBoxLayout* layout = new QBoxLayout( QBoxLayout::TopToBottom, main );
