@@ -11,6 +11,7 @@
 #include "MissionResolver.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/MissionType.h"
+#include "clients_kernel/FragOrderType.h"
 
 using namespace plugins::hla;
 
@@ -18,12 +19,18 @@ using namespace plugins::hla;
 // Name: MissionResolver constructor
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-MissionResolver::MissionResolver( const tools::Resolver_ABC< kernel::MissionType, unsigned long >& missions )
+MissionResolver::MissionResolver( const tools::Resolver_ABC< kernel::MissionType, unsigned long >& missions,
+                                  const tools::Resolver_ABC< kernel::FragOrderType, unsigned long >& fragOrders )
 {
     for( tools::Iterator< const kernel::MissionType& > it = missions.CreateIterator(); it.HasMoreElements(); )
     {
         const kernel::MissionType& mission = it.NextElement();
         missions_[ mission.GetName() ] = mission.GetId();
+    }
+    for( tools::Iterator< const kernel::FragOrderType& > it = fragOrders.CreateIterator(); it.HasMoreElements(); )
+    {
+        const kernel::FragOrderType& fragOrder = it.NextElement();
+        missions_[ fragOrder.GetName() ] = fragOrder.GetId();
     }
 }
 

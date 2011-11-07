@@ -112,7 +112,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pMunitionTypeResolver_      ( new MunitionTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , pLocalAgentResolver_        ( new LocalAgentResolver() )
     , pCallsignResolver_          ( new CallsignResolver() )
-    , pMissionResolver_           ( new MissionResolver( staticModel.types_ ) )
+    , pMissionResolver_           ( new MissionResolver( staticModel.types_, staticModel.types_ ) )
     , pSubordinates_              ( new Subordinates( *pCallsignResolver_, dynamicModel.Automats() ) )
     , pMessageController_         ( new tools::MessageController< sword::SimToClient_Content >() )
     , pAutomatChecker_            ( new AutomatChecker( dynamicModel.Agents() ) )
