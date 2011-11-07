@@ -79,6 +79,10 @@ public:
     static void RecoverHumanTransportersNow( MIL_Agent_ABC& callerAgent );
     static bool CanMount( DEC_Decision_ABC& callerAgent );
 
+    // Deploiement
+    static double GetInstallationTime( DEC_Decision_ABC& callerAgent );
+    static double GetUninstallationTime( DEC_Decision_ABC& callerAgent );
+
     // Etat décisionnel
     static int  GetRulesOfEngagementState( const MIL_Agent_ABC& callerAgent );
     static void NotifyForceRatioStateChanged( MIL_Agent_ABC& callerAgent, int state );
