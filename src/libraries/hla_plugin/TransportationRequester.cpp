@@ -320,3 +320,24 @@ void TransportationRequester::Receive( interactions::NetnServiceComplete& intera
     CopyService( interaction, received );
     receivedSender_.Send( received );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Receive
+// Created: SLI 2011-11-07
+// -----------------------------------------------------------------------------
+void TransportationRequester::Receive( interactions::NetnConvoyDestroyedEntities& interaction )
+{
+    if( ! CheckService( interaction ) )
+        return;
+    const unsigned int context = interaction.serviceId.eventCount;
+    if( serviceStartedRequests_.left.find( context ) == serviceStartedRequests_.left.end() )
+        return;
+    BOOST_FOREACH( const NetnObjectDefinitionStruct& entity, interaction.listOfEmbarkedObjectDestroyed.list )
+    {
+        const unsigned int entityIdentifier = callsignResolver_.ResolveSimulationIdentifier( entity.uniqueId.str() );
+        simulation::UnitMagicAction message;
+        message().mutable_tasker()->mutable_unit()->set_id( entityIdentifier );
+        message().set_type( sword::UnitMagicAction::destroy_all );
+        message.Send( publisher_ );
+    }
+}

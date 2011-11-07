@@ -90,6 +90,7 @@ public:
     virtual void Receive( interactions::NetnConvoyEmbarkmentStatus& interaction );
     virtual void Receive( interactions::NetnConvoyDisembarkmentStatus& interaction );
     virtual void Receive( interactions::NetnServiceComplete& interaction );
+    virtual void Receive( interactions::NetnConvoyDestroyedEntities& interaction );
     //@}
 
 private:

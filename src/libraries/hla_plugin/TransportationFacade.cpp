@@ -143,9 +143,9 @@ void TransportationFacade::Receive( interactions::NetnConvoyDisembarkmentStatus&
 // Name: TransportationFacade::Receive
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationFacade::Receive( interactions::NetnConvoyDestroyedEntities& /*interaction*/ )
+void TransportationFacade::Receive( interactions::NetnConvoyDestroyedEntities& interaction )
 {
-    // NOTHING
+    pTransportationRequester_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------

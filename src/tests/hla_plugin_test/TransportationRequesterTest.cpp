@@ -394,6 +394,22 @@ namespace
     };
 }
 
+BOOST_FIXTURE_TEST_CASE( transportation_controller_sends_destroy_all_magic_action_for_every_destroyed_entity, EmbarkedFixture )
+{
+    interactions::NetnConvoyDestroyedEntities destroyed;
+    FillService( destroyed, "provider", 1337 );
+    destroyed.listOfEmbarkedObjectDestroyed.list.push_back( NetnObjectDefinitionStruct( subordinateCallsign, subordinateNetnUniqueId, NetnObjectFeatureStruct() ) );
+    sword::ClientToSim message;
+    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
+    MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
+    requester.Receive( destroyed );
+    mock::verify();
+    BOOST_CHECK( message.message().has_unit_magic_action() );
+    const sword::UnitMagicAction& action = message.message().unit_magic_action();
+    BOOST_CHECK_EQUAL( action.tasker().unit().id(), surbordinateId );
+    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::destroy_all );
+}
+
 BOOST_FIXTURE_TEST_CASE( transportation_controller_sends_unload_unit_magic_action_for_every_disembarked_unit, EmbarkedFixture )
 {
     interactions::NetnConvoyDisembarkmentStatus status;
