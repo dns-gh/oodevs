@@ -121,13 +121,13 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
 
     vItemConnectors_[ADN_Equipement_GUI::eModifStances]->Connect( &pInfos->indirectAmmoInfos_.vModifStance_, bConnect );
 
-    vItemConnectors_[ADN_Equipement_GUI::eIlluminating]->Connect( &pInfos->bIlluminating_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eRange]->Connect( &pInfos->fRange_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eMaintainIllumination]->Connect( &pInfos->bMaintainIllumination_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eIlluminating]->Connect( &pInfos->bIlluminating_, bConnect );
 
-    vItemConnectors_[ADN_Equipement_GUI::eGuided]->Connect( &pInfos->bGuided_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eMaintainGuidance]->Connect( &pInfos->bMaintainGuidance_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGuidanceRange]->Connect( &pInfos->fGuidanceRange_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eGuided]->Connect( &pInfos->bGuided_, bConnect );
 
     if( bConnect )
         ADN_Workspace::GetWorkspace().GetEquipements().GetGui().InitializeSimulationCombos();
