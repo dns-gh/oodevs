@@ -71,7 +71,7 @@ TeamFactory::~TeamFactory()
 // -----------------------------------------------------------------------------
 kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
 {
-    Team* result = new Team( message, controllers_.controller_ );
+    Team* result = new Team( message, controllers_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new UrbanKnowledges( *result, controllers_.controller_, model_.urbanKnowledgeFactory_ ) );

@@ -22,9 +22,11 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/Options.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/StaticModel.h"
 #include "gaming/CommandPostAttributes.h"
+#include "gaming/Attributes.h"
 #include "icons.h"
 #include "protocol/SimulationSenders.h"
 
@@ -91,6 +93,18 @@ void AgentListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListIt
     else if( const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) ) // $$$$ _RC_ SLG 2009-12-21: TEMP
         item->setPixmap( 1, !kg->IsActivated() ? scisors_ : QPixmap() );
     // LTO end
+
+    if( const Attributes* attributes = static_cast< const Attributes* >( entity.Retrieve< kernel::Attributes_ABC >() ) )
+    {
+        QColor color;
+        if( attributes->bNeutralized_ )
+            color = QColor( controllers_.options_.GetOption( "Color/Neutralized", QString( "" ) ).To< QString >() );
+        if( attributes->nOpState_ == eOperationalStatus_DetruitTactiquement )
+            color = QColor( controllers_.options_.GetOption( "Color/TacticallyDestroyed", QString( "" ) ).To< QString >() );
+        if( attributes->nOpState_ == eOperationalStatus_DetruitTotalement )
+            color = QColor( controllers_.options_.GetOption( "Color/TotallyDestroyed", QString( "" ) ).To< QString >() );
+        item->SetBackgroundColor( color );
+    }
 
     gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( entity, item );
 }

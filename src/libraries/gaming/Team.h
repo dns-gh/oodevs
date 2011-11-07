@@ -12,7 +12,13 @@
 
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/Karma.h"
+
+namespace kernel
+{
+    class OptionVariant;
+}
 
 namespace sword
 {
@@ -26,11 +32,13 @@ namespace sword
 // Created: AGN 2003-12-22
 // =============================================================================
 class Team : public kernel::EntityImplementation< kernel::Team_ABC >
+           , public tools::Observer_ABC
+           , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( const sword::PartyCreation& message, kernel::Controller& controller );
+             Team( const sword::PartyCreation& message, kernel::Controllers& controllers );
     virtual ~Team();
     //@}
 
@@ -46,13 +54,20 @@ private:
     Team& operator=( const Team& );
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    //@}
+
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::Controller& controller );
+        void CreateDictionary( kernel::Controller& controller );
     //@}
+
 private:
     //! @name Attributes
     //@{
+    kernel::Controllers& controllers_;
     kernel::Karma karma_;
     //@}
 

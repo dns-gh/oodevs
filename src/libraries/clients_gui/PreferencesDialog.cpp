@@ -24,6 +24,7 @@
 #include "resources.h"
 #include "ElevationPanel.h"
 #include "Elevation2dLayer.h"
+#include "OrbatPanel.h"
 
 using namespace kernel;
 using namespace gui;
@@ -79,6 +80,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     AddPage( tr( "2D" ), *layersPanel_ );
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
     AddPage( tr( "2D/Population" ), *new InhabitantPanel( pages, controllers ) );
+    AddPage( tr( "Orbat" ), *new OrbatPanel( pages, controllers ) );
 
     box = new Q3HBox( this );
     box->setMargin( 5 );

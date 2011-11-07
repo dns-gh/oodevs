@@ -30,6 +30,7 @@ namespace kernel
     class CoordinateConverter_ABC;
     class PropertiesDictionary;
     class Team_ABC;
+    class Entity_ABC;
 }
 
 // =============================================================================
@@ -46,7 +47,7 @@ class Attributes : public kernel::Attributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Attributes( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter
+             Attributes( kernel::Entity_ABC& entity, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter
                        , kernel::PropertiesDictionary& dictionary, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Attributes();
     //@}
@@ -71,8 +72,15 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    void UpdateHierarchies();
     virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void Aggregate( const bool& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Entity_ABC& entity_;
     //@}
 
 public:

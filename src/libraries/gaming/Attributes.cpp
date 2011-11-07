@@ -16,6 +16,8 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "statusicons.h"
 #include "Tools.h"
 
@@ -26,8 +28,9 @@ using namespace kernel;
 // Name: Attributes constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& converter, PropertiesDictionary& dictionary, const tools::Resolver_ABC< Team_ABC >& teamResolver )
-    : controller_( controller )
+Attributes::Attributes( kernel::Entity_ABC& entity, Controller& controller, const CoordinateConverter_ABC& converter, PropertiesDictionary& dictionary, const tools::Resolver_ABC< Team_ABC >& teamResolver )
+    : entity_( entity )
+    , controller_( controller )
     , converter_ ( converter )
     , teamResolver_( teamResolver )
     , vPos_( 0, 0 )
@@ -35,7 +38,7 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
     , nAltitude_( 0 )
     , nDirection_( 0 )
     , nRawOpState_( 0 )
-    , nOpState_( (E_OperationalStatus)0 )
+    , nOpState_( eOperationalStatus_Operationnel )
     , nFightRateState_( (E_ForceRatioStatus)0 )
     , nRulesOfEngagementState_( (E_Roe)0 )
     , nRulesOfEngagementPopulationState_( (E_PopulationRoe)0 )
@@ -119,8 +122,11 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_raw_operational_state() )
         nRawOpState_ = message.raw_operational_state();
 
+    E_OperationalStatus nOpState = nOpState_;
     if( message.has_operational_state() )
         nOpState_ = (E_OperationalStatus)message.operational_state();
+    if( nOpState != nOpState_ )
+        UpdateHierarchies();
 
     if( message.has_indirect_fire_availability() )
         nIndirectFireAvailability_ = (E_FireAvailability)message.indirect_fire_availability();
@@ -140,8 +146,11 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_dead() )
         bDead_ = message.dead() != 0;
 
+    bool bNeutralized = bNeutralized_;
     if( message.has_neutralized() )
         bNeutralized_ = message.neutralized() != 0;
+    if( bNeutralized != bNeutralized_ )
+        UpdateHierarchies();
 
     if( message.has_force_ratio() )
         nFightRateState_ = (E_ForceRatioStatus)message.force_ratio();
@@ -342,4 +351,20 @@ float Attributes::ComputePostureFactor( const std::vector< float >& factors ) co
 {
     const float ratio = 0.01f * nPostureCompletionPourcentage_;
     return factors.at( nOldPosture_ ) * ( 1.f - ratio ) + factors.at( nCurrentPosture_ ) * ratio;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Attributes::UpdateHierarchies
+// Created: LGY 2011-10-21
+// -----------------------------------------------------------------------------
+void Attributes::UpdateHierarchies()
+{
+    if( const kernel::TacticalHierarchies* pTactical = entity_.Retrieve< kernel::TacticalHierarchies >() )
+    {
+        controller_.Update( *pTactical );
+        if( const kernel::CommunicationHierarchies* pCommunication = entity_.Retrieve< kernel::CommunicationHierarchies >() )
+            controller_.Update( *pCommunication );
+        else if( const kernel::CommunicationHierarchies* pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
+            controller_.Update( *pCommunication );
+    }
 }
