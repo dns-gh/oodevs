@@ -28,7 +28,7 @@ class ADN_Nature_GUI : public gui::NatureEditionWidget
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Nature_GUI( QWidget* parent );
+    explicit ADN_Nature_GUI( QGridLayout* parent, int row = 0 );
     virtual ~ADN_Nature_GUI();
     //@}
 

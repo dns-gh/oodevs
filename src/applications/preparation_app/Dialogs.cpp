@@ -14,6 +14,7 @@
 #include "AgentAffinitiesDialog.h"
 #include "PeopleAffinitiesDialog.h"
 #include "ColorEditor.h"
+#include "GhostSymbolDialog.h"
 #include "LongNameEditor.h"
 #include "SymbolEditor.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -29,7 +30,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const StaticModel& model, const kernel::Profile_ABC& profile,
                   gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
-                  const tools::ExerciseConfig& config )
+                  const tools::ExerciseConfig& config, kernel::SymbolFactory& symbolsFactory, gui::SymbolIcons& icons )
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, profile );
@@ -38,6 +39,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const StaticModel& 
     new PeopleAffinitiesDialog( parent, controllers );
     new ColorEditor( parent, controllers, colorStrategy, colorEditor );
     new SymbolEditor( parent, controllers, symbols, config );
+    new GhostSymbolDialog( parent, controllers, symbolsFactory, icons, colorStrategy );
     new LogisticLinksEditor( parent, controllers );
     new LogisticStockEditor( parent, controllers, model );
     new LongNameEditor( parent, controllers, model );

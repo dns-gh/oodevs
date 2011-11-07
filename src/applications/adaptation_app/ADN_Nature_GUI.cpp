@@ -18,10 +18,10 @@ using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Nature_GUI constructor
-// Created: AGE 2006-10-24
+// Created: ABR 2011-11-02
 // -----------------------------------------------------------------------------
-ADN_Nature_GUI::ADN_Nature_GUI( QWidget* parent )
-    : NatureEditionWidget( parent )
+ADN_Nature_GUI::ADN_Nature_GUI( QGridLayout* parent, int row /*= 0*/ )
+    : NatureEditionWidget( parent, row )
     , ADN_Gfx_ABC()
 {
     pConnector_ = new ADN_Connector_String< ADN_Nature_GUI >( this );

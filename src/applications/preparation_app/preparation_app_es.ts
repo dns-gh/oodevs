@@ -576,6 +576,40 @@
     </message>
 </context>
 <context>
+    <name>GhostSymbolDialog</name>
+    <message>
+        <source>Phantom symbol editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Change symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GhostSymbolEditor</name>
+    <message>
+        <source>Level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a parent automat or formation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag and drop symbol to map to create a new phantom.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GhostsPanel</name>
     <message>
         <source>Phantom</source>
@@ -590,31 +624,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Level:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a parent automat or formation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Category:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weapon:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>- Name not set.&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>- Type not set.&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drag and drop symbol to map to create a new phantom.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -626,11 +640,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>- Superior not set to a formation or an automat.&lt;br&gt;</source>
+        <source>Error, missing informations:&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error, missing informations:&lt;br&gt;</source>
+        <source>- Superior not set to a formation or an automat.&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

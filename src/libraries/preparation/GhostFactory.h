@@ -19,6 +19,7 @@ namespace kernel
     class Ghost_ABC;
     class GhostPrototype;
     class KnowledgeGroupFactory_ABC;
+    class SymbolFactory;
 }
 
 namespace xml
@@ -43,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GhostFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
-                           IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
+                           IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory );
     virtual ~GhostFactory();
     //@}
 
@@ -70,6 +71,7 @@ private:
      const StaticModel&                 staticModel_;
      IdManager&                         idManager_;
      kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
+     kernel::SymbolFactory&             symbolsFactory_;
     //@}
 };
 

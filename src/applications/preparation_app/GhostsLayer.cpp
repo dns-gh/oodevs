@@ -88,7 +88,6 @@ bool GhostsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
         highLightedGhost_ = 0;
         controllers_.actions_.OverFly( point );
     }
-
     return ( gui::ValuedDragObject::Provides< const GhostPrototype >( event ) && ( selectedAutomat_ || selectedFormation_ ) ) ||
            ( gui::ValuedDragObject::Provides< const GhostPositions >( event ) && selectedGhost_ ) ||
            ( gui::ValuedDragObject::Provides< const Entity_ABC >    ( event ) && selectedGhost_ ) ||

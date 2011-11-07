@@ -21,14 +21,15 @@ namespace gui
 */
 // Created: AGE 2006-10-24
 // =============================================================================
-class NatureEditionCategory : public Q3HBox, public kernel::SymbolVisitor_ABC
+class NatureEditionCategory : public QObject
+                            , public kernel::SymbolVisitor_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             NatureEditionCategory( QWidget* parent );
+             NatureEditionCategory( QGridLayout* parent, int row, int deep = -1 );
     virtual ~NatureEditionCategory();
     //@}
 
@@ -37,6 +38,7 @@ public:
     QString GetNature() const;
     void SetNature( const QString& nature );
     void SetRootSymbolRule( kernel::SymbolRule& root );
+    void Clear();
     //@}
 
 signals:
@@ -70,12 +72,15 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::SymbolRule* rule_;
-    QLabel* label_;
-    QComboBox* box_;
+    QGridLayout*                     parentLayout_;
+    int                              row_;
+    int                              deep_;
+    QLabel*                          label_;
+    QComboBox*                       box_;
+    const kernel::SymbolRule*        rule_;
     std::map< QString, std::string > internalNames_;
-    QString current_;
-    NatureEditionCategory* next_;
+    QString                          current_;
+    NatureEditionCategory*           next_;
     //@}
 };
 

@@ -48,7 +48,7 @@ class UnitPreviewIcon : public Q3HBox
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitPreviewIcon( QWidget* parent, kernel::Controllers& controllers, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, const QString& tooltips );
+             UnitPreviewIcon( QWidget* parent, kernel::Controllers& controllers, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, QString tooltips = QString() );
     virtual ~UnitPreviewIcon();
     //@}
 
@@ -64,6 +64,7 @@ public:
     void SetLevel( const std::string& level );
     const std::string& GetSymbol() const;
     const std::string& GetLevel() const;
+    void SetSelectedParent( const kernel::Entity_ABC* entity );
     const kernel::Entity_ABC* GetSelectedParent() const;
     //@}
 

@@ -14,6 +14,7 @@ namespace kernel
 {
     class Controllers;
     class Profile_ABC;
+    class SymbolFactory;
 }
 
 namespace gui
@@ -21,6 +22,7 @@ namespace gui
     class ColorStrategy_ABC;
     class ColorEditor_ABC;
     class EntitySymbols;
+    class SymbolIcons;
 }
 
 namespace tools
@@ -43,7 +45,7 @@ public:
     //@{
              Dialogs( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, const kernel::Profile_ABC& profile,
                       gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
-                      const tools::ExerciseConfig& config );
+                      const tools::ExerciseConfig& config, kernel::SymbolFactory& symbolsFactory, gui::SymbolIcons& icons );
     virtual ~Dialogs();
     //@}
 };

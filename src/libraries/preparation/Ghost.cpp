@@ -11,6 +11,7 @@
 #include "Ghost.h"
 #include "IdManager.h"
 #include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GhostPrototype.h"
@@ -18,6 +19,7 @@
 #include "clients_kernel/MergingTacticalHierarchies.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Viewport_ABC.h"
@@ -31,11 +33,12 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Ghost::Ghost( kernel::Controller& controller, IdManager& idManager, const GhostPrototype& prototype )
     : EntityImplementation< Ghost_ABC >( controller, idManager.GetNextId(), prototype.name_.c_str() )
-    , ghostType_( prototype.ghostType_ )
-    , type_     ( prototype.type_.c_str() )
-    , symbol_   ( prototype.symbol_ )
-    , level_    ( prototype.level_ )
-    , converted_( false )
+    , ghostType_ ( prototype.ghostType_ )
+    , type_      ( prototype.type_.c_str() )
+    , symbol_    ( prototype.symbol_ )
+    , nature_    ( prototype.nature_ )
+    , level_     ( prototype.level_ )
+    , converted_ ( false )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -45,15 +48,17 @@ Ghost::Ghost( kernel::Controller& controller, IdManager& idManager, const GhostP
 // Name: Ghost constructor
 // Created: ABR 2011-10-24
 // -----------------------------------------------------------------------------
-Ghost::Ghost( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis )
+Ghost::Ghost( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, kernel::SymbolFactory& symbolsFactory )
     : EntityImplementation< Ghost_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name", "" ).c_str() )
-    , ghostType_( ENT_Tr::ConvertToGhostType( xis.attribute< std::string >( "ghost-type", ENT_Tr::ConvertFromGhostType( eGhostType_Invalid ) ) ) )
-    , type_     ( xis.attribute< std::string >( "type", "" ).c_str() )
-    , symbol_   ( xis.attribute< std::string >( "nature", "" ) )
-    , level_    ( xis.attribute< std::string >( "level", "" ) )
-    , converted_( false )
+    , ghostType_ ( ENT_Tr::ConvertToGhostType( xis.attribute< std::string >( "ghost-type", ENT_Tr::ConvertFromGhostType( eGhostType_Invalid ) ) ) )
+    , type_      ( xis.attribute< std::string >( "type", "" ).c_str() )
+    , nature_    ( xis.attribute< std::string >( "nature", "" ) )
+    , level_     ( xis.attribute< std::string >( "level", "" ) )
+    , converted_ ( false )
 {
-    assert( ghostType_ != eGhostType_Invalid && !symbol_.empty() && !level_.empty() );
+    assert( ghostType_ != eGhostType_Invalid && !nature_.empty() && !level_.empty() );
+
+    symbol_ = symbolsFactory.CreateSymbol( nature_ );
     idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -65,15 +70,16 @@ Ghost::Ghost( kernel::Controller& controller, IdManager& idManager, xml::xistrea
 // -----------------------------------------------------------------------------
 Ghost::Ghost( Controller& controller, IdManager& idManager, xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType )
     : EntityImplementation< Ghost_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name", "" ).c_str() )
-    , ghostType_( ghostType )
-    , type_     ( xis.attribute< std::string >( "type", "" ).c_str() )
-    , symbol_   ( "symbols/s*gpu" )
-    , level_    ( ( ghostType == eGhostType_Automat ) ? "levels/ii" : "levels/ooo" )
-    , converted_( true )
+    , ghostType_ ( ghostType )
+    , type_      ( xis.attribute< std::string >( "type", "" ).c_str() )
+    , symbol_    ( "symbols/s*gpu" )
+    , nature_    ( "undefined/undefined/undefined/undefined" )
+    , level_     ( ( ghostType == eGhostType_Automat ) ? "ii" : "ooo" )
+    , converted_ ( true )
 {
     assert( ghostType_ != eGhostType_Invalid );
 
-    if( const TacticalHierarchies* pHierarchy = parent.Retrieve< TacticalHierarchies >() )
+    if( const kernel::TacticalHierarchies* pHierarchy = parent.Retrieve< kernel::TacticalHierarchies >() )
     {
         kernel::App6Symbol::SetKarma( symbol_, pHierarchy->GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
 
@@ -97,6 +103,15 @@ Ghost::~Ghost()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Ghost::InitializeSymbol
+// Created: ABR 2011-11-04
+// -----------------------------------------------------------------------------
+void Ghost::InitializeSymbol() const
+{
+    kernel::App6Symbol::SetKarma( symbol_, Get< kernel::CommunicationHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Ghost::Draw
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
@@ -104,8 +119,9 @@ void Ghost::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 {
     if( viewport.IsHotpointVisible() )
     {
+        InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where, -1.f );
-        tools.DrawApp6Symbol( level_, where, -1.f );
+        tools.DrawApp6Symbol( GetLevelSymbol(), where, -1.f );
     }
 }
 
@@ -148,7 +164,7 @@ void Ghost::SerializeAttributes( xml::xostream& xos ) const
         << xml::attribute( "ghost-type", ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToSim ) )
         << xml::attribute( "type", type_.ascii() )
         << xml::attribute( "name", name_.ascii() )
-        << xml::attribute( "nature", symbol_ )
+        << xml::attribute( "nature", nature_ )
         << xml::attribute( "level", level_ );
 }
 
@@ -182,7 +198,7 @@ E_GhostType Ghost::GetGhostType() const
 
 // -----------------------------------------------------------------------------
 // Name: Ghost::GetSymbol
-// Created: ABR 2011-10-19
+// Created: ABR 2011-11-04
 // -----------------------------------------------------------------------------
 const std::string& Ghost::GetSymbol() const
 {
@@ -190,12 +206,21 @@ const std::string& Ghost::GetSymbol() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Ghost::GetLevel
+// Name: Ghost::GetSymbol
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
-const std::string& Ghost::GetLevel() const
+const std::string& Ghost::GetNature() const
 {
-    return level_;
+    return nature_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Ghost::GetLevelSymbol
+// Created: ABR 2011-11-04
+// -----------------------------------------------------------------------------
+const std::string Ghost::GetLevelSymbol() const
+{
+    return "levels/" + level_;
 }
 
 // -----------------------------------------------------------------------------
@@ -205,4 +230,15 @@ const std::string& Ghost::GetLevel() const
 bool Ghost::IsConverted() const
 {
     return converted_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Ghost::UpdateSymbol
+// Created: ABR 2011-11-04
+// -----------------------------------------------------------------------------
+void Ghost::UpdateSymbol( const std::string& level, const std::string& nature, const std::string& symbol )
+{
+    level_ = level;
+    nature_ = nature;
+    symbol_ = symbol;
 }

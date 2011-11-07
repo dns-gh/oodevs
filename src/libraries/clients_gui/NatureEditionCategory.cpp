@@ -18,20 +18,22 @@ using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: NatureEditionCategory constructor
-// Created: AGE 2006-10-24
+// Created: ABR 2011-11-02
 // -----------------------------------------------------------------------------
-NatureEditionCategory::NatureEditionCategory( QWidget* parent )
-    : Q3HBox( parent )
-    , rule_( 0 )
-    , current_( QString::null )
-    , next_( 0 )
+NatureEditionCategory::NatureEditionCategory( QGridLayout* parentLayout, int row, int deep /*= -1*/ )
+    : QObject( parentLayout )
+    , parentLayout_( parentLayout )
+    , deep_        ( deep )
+    , row_         ( row )
+    , rule_        ( 0 )
+    , current_     ( QString::null )
+    , next_        ( 0 )
 {
-    label_ = new QLabel( this );
-    label_->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Preferred );
-    box_ = new QComboBox( this );
-    box_->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Preferred );
-    setStretchFactor( label_, 1 );
-    setStretchFactor( box_, 1 );
+    label_ = new QLabel();
+    box_ = new QComboBox();
+
+    parentLayout->addWidget( label_, row_, 0 );
+    parentLayout->addWidget( box_, row_, 1 );
 
     connect( box_, SIGNAL( activated( int ) ), this, SLOT( OnComboChange() ) );
 }
@@ -42,7 +44,21 @@ NatureEditionCategory::NatureEditionCategory( QWidget* parent )
 // -----------------------------------------------------------------------------
 NatureEditionCategory::~NatureEditionCategory()
 {
+    delete label_;
+    delete box_;
     delete next_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NatureEditionCategory::Clear
+// Created: ABR 2011-11-02
+// -----------------------------------------------------------------------------
+void NatureEditionCategory::Clear()
+{
+    if( next_ )
+        next_->Clear();
+    delete next_;
+    next_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +72,7 @@ void NatureEditionCategory::OnComboChange()
     if( tools::findTranslation( "models::app6", current_ ) != current )
     {
         current_ = internalNames_[current].c_str();
-        delete next_; next_ = 0;
+        Clear();
         rule_->Accept( *this );
         emit NatureChanged( current_ );
     }
@@ -70,7 +86,14 @@ void NatureEditionCategory::StartCategory( const std::string& title )
 {
     if( current_.isNull() )
     {
-        label_->setText( tools::findTranslation( "models::app6", title.c_str() ) );
+        QString label = tools::findTranslation( "models::app6", title.c_str() );
+        if( !label.isEmpty() )
+        {
+            QString tmp = label[ 0 ];
+            label[ 0 ] = tmp[ 0 ].toUpper();
+        }
+        label = label + ":";
+        label_->setText( label );
         box_->clear();
         internalNames_.clear();
         internalNames_[ tools::findTranslation( "models::app6", "undefined" ) ] = "undefined";
@@ -88,11 +111,10 @@ void NatureEditionCategory::AddChoice( SymbolRule* rule, const std::string& name
         QString translatedName = tools::findTranslation( "models::app6", name.c_str() );
         internalNames_[ translatedName ] = name;
     }
-    else if( rule && name == current_.ascii() )
+    else if( rule && name == current_.ascii() && deep_ != 0 )
     {
-        next_ = new NatureEditionCategory( parentWidget() );
+        next_ = new NatureEditionCategory( parentLayout_, row_ + 1, ( deep_ < 0 ) ? -1 : deep_ - 1 );
         next_->SetRootSymbolRule( *rule );
-        next_->show();
         connect( next_, SIGNAL( NatureChanged( const QString& ) ), this, SLOT( OnNatureChanged( const QString& ) ) );
     }
 }
@@ -108,6 +130,7 @@ void NatureEditionCategory::EndCategory()
         box_->clear();
         for( std::map< QString, std::string >::const_iterator it = internalNames_.begin(); it != internalNames_.end(); ++it )
             box_->insertItem( it->first );
+        Select( tools::findTranslation( "models::app6", "undefined" ) );
     }
 }
 

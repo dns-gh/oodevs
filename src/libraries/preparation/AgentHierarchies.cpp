@@ -99,3 +99,14 @@ const kernel::Entity_ABC* AgentHierarchies::GetSuperior() const
     const kernel::Entity_ABC* superior = TacticalHierarchies::GetSuperior();
     return superior ? superior : superior_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchies::UpdateSymbol
+// Created: ABR 2011-11-07
+// -----------------------------------------------------------------------------
+void AgentHierarchies::UpdateSymbol( const std::string& level, const std::string& symbol )
+{
+    level_ = level;
+    symbol_ = symbol;
+    baseSymbol_ = symbol;
+}

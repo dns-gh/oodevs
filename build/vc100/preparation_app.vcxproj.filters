@@ -463,6 +463,12 @@
     <ClCompile Include="..\..\src\applications\preparation_app\GhostsLayer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\GhostSymbolDialog.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\GhostSymbolEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -852,6 +858,12 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\GhostsPanel.h">
       <Filter>Source Files\Panels\Creation</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\GhostSymbolDialog.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\GhostSymbolEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
