@@ -30,7 +30,9 @@ BOOST_AUTO_TEST_CASE( transportation_controller_reads_transportation_mission_nam
 {
     xml::xistringstream xis( "<configuration>"
                              "    <missions>"
-                             "        <transport>transportation mission name</transport>"
+                             "        <request>"
+                             "            <transport>transportation mission name</transport>"
+                             "        </request>"
                              "    </missions>"
                              "    <reports>"
                              "        <mission-complete>1338</mission-complete>"
@@ -60,7 +62,9 @@ namespace
         Fixture()
             : xis( "<configuration>"
                    "    <missions>"
-                   "        <transport>transport</transport>"
+                   "        <request>"
+                   "            <transport>transport</transport>"
+                   "        </request>"
                    "    </missions>"
                    "    <reports>"
                    "        <mission-complete>1338</mission-complete>"

@@ -20,6 +20,12 @@ namespace sword
 {
     class SimToClient_Content;
     class UnitAttributes;
+    class UnitOrder;
+}
+
+namespace dispatcher
+{
+    class ClientPublisher_ABC;
 }
 
 namespace tools
@@ -27,14 +33,15 @@ namespace tools
     template< typename T > class MessageController_ABC;
 }
 
+namespace xml
+{
+    class xisubstream;
+}
+
 namespace plugins
 {
 namespace hla
 {
-    template< typename T > class InteractionSender_ABC;
-    class Transporters_ABC;
-    class CallsignResolver_ABC;
-
 namespace interactions
 {
     struct NetnRequestConvoy;
@@ -43,7 +50,12 @@ namespace interactions
     struct NetnReadyToReceiveService;
     struct NetnServiceStarted;
     struct NetnConvoyEmbarkmentStatus;
+    struct NetnConvoyDisembarkmentStatus;
 }
+    template< typename T > class InteractionSender_ABC;
+    class CallsignResolver_ABC;
+    class ContextFactory_ABC;
+    class MissionResolver_ABC;
 
 // =============================================================================
 /** @class  TransportationOfferer
@@ -55,15 +67,18 @@ class TransportationOfferer : public ::hla::InteractionNotification_ABC< interac
                             , public ::hla::InteractionNotification_ABC< interactions::NetnAcceptOffer >
                             , public ::hla::InteractionNotification_ABC< interactions::NetnReadyToReceiveService >
                             , private tools::MessageObserver< sword::UnitAttributes >
+                            , private tools::MessageObserver< sword::UnitOrder >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TransportationOfferer( InteractionSender_ABC< interactions::NetnOfferConvoy >& offerInteractionSender,
+             TransportationOfferer( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
+                                    InteractionSender_ABC< interactions::NetnOfferConvoy >& offerInteractionSender,
                                     InteractionSender_ABC< interactions::NetnServiceStarted >& serviceStartedInteractionSender,
                                     InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus >& convoyEmbarkmentStatusSender,
-                                    const Transporters_ABC& transporters, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
-                                    const CallsignResolver_ABC& callsignRevoler );
+                                    InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus >& convoyDisembarkmentStatusSender,
+                                    tools::MessageController_ABC< sword::SimToClient_Content >& messageController, const ContextFactory_ABC& factory,
+                                    const CallsignResolver_ABC& callsignRevoler, dispatcher::ClientPublisher_ABC& clientsPublisher );
     virtual ~TransportationOfferer();
     //@}
 
@@ -78,25 +93,16 @@ private:
     //! @name Operations
     //@{
     virtual void Notify( const sword::UnitAttributes& message, int context );
+    virtual void Notify( const sword::UnitOrder& message, int context );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::set< unsigned int > T_Offers;
-    struct T_Transporter
-    {
-        std::string uniqueId;
-        std::string callsign;
-        interactions::NetnOfferConvoy offer;
-    };
-    typedef std::map< unsigned int, T_Transporter > T_Transporters;
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void Transfer( T_Offers& from, T_Offers& to, unsigned int eventCount ) const;
+    typedef std::map< std::string, interactions::NetnOfferConvoy > T_Offers;
+    typedef std::map< unsigned int, std::string > T_Transporters;
+    typedef std::set< unsigned int > T_Transported;
+    typedef std::map< unsigned int, T_Transported > T_TransportedList;
     //@}
 
 private:
@@ -105,14 +111,19 @@ private:
     InteractionSender_ABC< interactions::NetnOfferConvoy >& offerInteractionSender_;
     InteractionSender_ABC< interactions::NetnServiceStarted >& serviceStartedInteractionSender_;
     InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus >& convoyEmbarkmentStatusSender_;
-    const Transporters_ABC& transporters_;
+    InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus >& convoyDisembarkmentStatusSender_;
     tools::MessageController_ABC< sword::SimToClient_Content >& messageController_;
+    const ContextFactory_ABC& factory_;
     const CallsignResolver_ABC& callsignRevoler_;
-    T_Transporters pendingTransporters_;
+    dispatcher::ClientPublisher_ABC& clientsPublisher_;
+    const unsigned int transportIdentifier_;
+    const unsigned int missionCompleteReportId_;
     T_Offers pendingOffers_;
+    T_Offers offeredOffers_;
     T_Offers acceptedOffers_;
     T_Offers startedOffers_;
-    T_Offers embarkedOffers_;
+    T_Transporters transporters_;
+    T_TransportedList transported_;
     //@}
 };
 

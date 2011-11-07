@@ -33,7 +33,8 @@ namespace
     {
         std::string name;
         xis >> xml::start( "missions" )
-                >> xml::content( mission, name );
+                >> xml::start( "request" )
+                    >> xml::content( mission, name );
         return resolver.Resolve( name );
     }
 

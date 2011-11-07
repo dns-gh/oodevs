@@ -9,7 +9,12 @@
         <automat>MBT squadron</automat>
     </types>
     <missions>
-        <transport>Common - request transport</transport>
+        <request>
+            <transport>Common - request transport</transport>
+        </request>
+        <offer>
+            <transport>Common - offer transport</transport>
+        </offer>
     </missions>
     <reports>
         <mission-complete>12</mission-complete>

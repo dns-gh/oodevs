@@ -193,6 +193,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAutomatTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockCallsignResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClassBuilder.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClientPublisher.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockComponentTypes.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextHandler.h" />
