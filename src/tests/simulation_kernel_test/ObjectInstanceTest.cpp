@@ -26,7 +26,7 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
 {
-    WorldInitialize( "Paris" );
+    WorldInitialize( "worldwide/Paris" );
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis(

@@ -1,0 +1,840 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="157" name="Human Intelligence - report information [89]" target="89" time="2011-01-12T04:56:43" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="25"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Area to observe" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VVE9955785786"/>
+        <point coordinates="33VWE0330288642"/>
+        <point coordinates="33VWE0672890591"/>
+        <point coordinates="33VWE0917388804"/>
+        <point coordinates="33VWE0803985898"/>
+        <point coordinates="33VWE0360882819"/>
+        <point coordinates="33VWE0081582939"/>
+        <point coordinates="33VVE9955785786"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="157" name="Human Intelligence - report information [88]" target="88" time="2011-01-12T04:56:53" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="307"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Area to observe" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VVE9952385532"/>
+        <point coordinates="33VWE0320283575"/>
+        <point coordinates="33VWE1019887727"/>
+        <point coordinates="33VWE0970390401"/>
+        <point coordinates="33VWE0574091595"/>
+        <point coordinates="33VWE0042290390"/>
+        <point coordinates="33VVE9856786971"/>
+        <point coordinates="33VVE9952385532"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="290" name="Infantry - hold [4]" target="4" time="2011-01-12T05:10:03" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="148"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VVE9827791584"/>
+        <point coordinates="33VVE9824187774"/>
+        <point coordinates="33VVE9962586453"/>
+        <point coordinates="33VWE0090385060"/>
+        <point coordinates="33VWE0210582438"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0630894201"/>
+        <point coordinates="33VWE0593790459"/>
+        <point coordinates="33VWE0717989171"/>
+        <point coordinates="33VWE0961787964"/>
+        <point coordinates="33VWE1176286035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Position" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0134385469"/>
+        <point coordinates="33VWE0070686668"/>
+        <point coordinates="33VWE0336388059"/>
+        <point coordinates="33VWE0411387255"/>
+        <point coordinates="33VWE0417086051"/>
+        <point coordinates="33VWE0134385469"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="true"/>
+  </action>
+  <action id="290" name="Infantry - hold [11]" target="11" time="2011-01-12T05:08:43" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="142"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VVE9827791584"/>
+        <point coordinates="33VVE9824187774"/>
+        <point coordinates="33VVE9962586453"/>
+        <point coordinates="33VWE0090385060"/>
+        <point coordinates="33VWE0210582438"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0630894201"/>
+        <point coordinates="33VWE0593790459"/>
+        <point coordinates="33VWE0717989171"/>
+        <point coordinates="33VWE0961787964"/>
+        <point coordinates="33VWE1176286035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Position" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0327887178"/>
+        <point coordinates="33VWE0301388218"/>
+        <point coordinates="33VWE0427889457"/>
+        <point coordinates="33VWE0594390191"/>
+        <point coordinates="33VWE0704688857"/>
+        <point coordinates="33VWE0743087424"/>
+        <point coordinates="33VWE0488986057"/>
+        <point coordinates="33VWE0327887178"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="true"/>
+  </action>
+  <action id="223" name="Armor - control [46]" target="46" time="2011-01-12T05:46:23" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="331"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0318170907"/>
+        <point coordinates="33VWE0154981881"/>
+        <point coordinates="33VVE9731787546"/>
+        <point coordinates="33VVE9385892592"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0018894927"/>
+        <point coordinates="33VWE0415287506"/>
+        <point coordinates="33VWE0712885876"/>
+        <point coordinates="33VWE0798381207"/>
+        <point coordinates="33VWE0899580826"/>
+        <point coordinates="33VWE1028678402"/>
+        <point coordinates="33VWE1127473539"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Area to control" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0241881754"/>
+        <point coordinates="33VWE0393979767"/>
+        <point coordinates="33VWE0710081195"/>
+        <point coordinates="33VWE0711683129"/>
+        <point coordinates="33VWE0617383954"/>
+        <point coordinates="33VWE0241881754"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="223" name="Armor - control [58]" target="58" time="2011-01-12T05:46:23" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="305"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0018894927"/>
+        <point coordinates="33VWE0415287506"/>
+        <point coordinates="33VWE0712885876"/>
+        <point coordinates="33VWE0798381207"/>
+        <point coordinates="33VWE0899580826"/>
+        <point coordinates="33VWE1028678402"/>
+        <point coordinates="33VWE1127473539"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0804795432"/>
+        <point coordinates="33VWE0913290921"/>
+        <point coordinates="33VWE1572586181"/>
+        <point coordinates="33VWE2006576205"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Area to control" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0804084338"/>
+        <point coordinates="33VWE0881883278"/>
+        <point coordinates="33VWE1157984603"/>
+        <point coordinates="33VWE1130485368"/>
+        <point coordinates="33VWE0783285203"/>
+        <point coordinates="33VWE0804084338"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="223" name="Armor - control [52]" target="52" time="2011-01-12T05:46:23" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="303"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0804795432"/>
+        <point coordinates="33VWE0913290921"/>
+        <point coordinates="33VWE1572586181"/>
+        <point coordinates="33VWE2006576205"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0018894927"/>
+        <point coordinates="33VWE0415287506"/>
+        <point coordinates="33VWE0712885876"/>
+        <point coordinates="33VWE0798381207"/>
+        <point coordinates="33VWE0899580826"/>
+        <point coordinates="33VWE1028678402"/>
+        <point coordinates="33VWE1127473539"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Area to control" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE1024088559"/>
+        <point coordinates="33VWE0975886421"/>
+        <point coordinates="33VWE1157285370"/>
+        <point coordinates="33VWE1296586449"/>
+        <point coordinates="33VWE1295587583"/>
+        <point coordinates="33VWE1076789464"/>
+        <point coordinates="33VWE1024088559"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="333" name="Imagery Intelligence (real time UAV) - report information" target="39" time="2011-01-12T06:14:43" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0318170907"/>
+        <point coordinates="33VWE0154981881"/>
+        <point coordinates="33VVE9731787546"/>
+        <point coordinates="33VVE9385892592"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0804795432"/>
+        <point coordinates="33VWE0913290921"/>
+        <point coordinates="33VWE1572586181"/>
+        <point coordinates="33VWE2006576205"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Route" type="path">
+      <parameter name="Way point 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="33VWE0109985536"/>
+        </location>
+      </parameter>
+      <parameter name="Way point 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="33VWE0665389534"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="33VWE0745987147"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="32" name="Field Artillery - operate (on position) [67]" target="67" time="2011-01-12T06:50:33" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="33VWE1207476442"/>
+      </location>
+    </parameter>
+    <parameter name="Counter battery" type="bool" value="false"/>
+  </action>
+  <action id="32" name="Field Artillery - operate (on position) [68]" target="68" time="2011-01-12T06:50:33" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="33VWE1040675441"/>
+      </location>
+    </parameter>
+    <parameter name="Counter battery" type="bool" value="false"/>
+  </action>
+  <action id="32" name="Field Artillery - operate (on position) [72]" target="72" time="2011-01-12T06:52:03" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="33VWE1409578643"/>
+      </location>
+    </parameter>
+    <parameter name="Counter battery" type="bool" value="false"/>
+  </action>
+  <action id="32" name="Field Artillery - operate (on position) [71]" target="71" time="2011-01-12T06:52:03" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="33VWE1581579532"/>
+      </location>
+    </parameter>
+    <parameter name="Counter battery" type="bool" value="false"/>
+  </action>
+  <action id="368" name="Fire [68]" target="68" time="2011-01-12T07:20:03" type="fragorder">
+    <parameter name="Ammunitions" type="dotationtype" value="11"/>
+    <parameter name="Shells number" type="numeric" value="2"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="33VWE0207886307"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="368" name="Fire [67]" target="67" time="2011-01-12T07:21:33" type="fragorder">
+    <parameter name="Ammunitions" type="dotationtype" value="11"/>
+    <parameter name="Shells number" type="numeric" value="2"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="33VWE0309887036"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="368" name="Fire [72]" target="72" time="2011-01-12T07:20:03" type="fragorder">
+    <parameter name="Ammunitions" type="dotationtype" value="11"/>
+    <parameter name="Shells number" type="numeric" value="2"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="33VWE0472688019"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="368" name="Fire [71]" target="71" time="2011-01-12T07:18:33" type="fragorder">
+    <parameter name="Ammunitions" type="dotationtype" value="11"/>
+    <parameter name="Shells number" type="numeric" value="2"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="33VWE0552488719"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="368" name="Fire [68] 2" target="68" time="2011-01-12T07:38:03" type="fragorder">
+    <parameter name="Ammunitions" type="dotationtype" value="11"/>
+    <parameter name="Shells number" type="numeric" value="2"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="33VWE0207886307"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="368" name="Fire [67] 2" target="67" time="2011-01-12T07:39:33" type="fragorder">
+    <parameter name="Ammunitions" type="dotationtype" value="11"/>
+    <parameter name="Shells number" type="numeric" value="2"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="33VWE0309887036"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="368" name="Fire [72] 2" target="72" time="2011-01-12T07:39:33" type="fragorder">
+    <parameter name="Ammunitions" type="dotationtype" value="11"/>
+    <parameter name="Shells number" type="numeric" value="2"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="33VWE0472688019"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="368" name="Fire [71] 2" target="71" time="2011-01-12T07:39:33" type="fragorder">
+    <parameter name="Ammunitions" type="dotationtype" value="11"/>
+    <parameter name="Shells number" type="numeric" value="2"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="33VWE0552488719"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="308" name="withdraw  [4]" target="4" time="2011-01-12T07:42:33" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="153"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VVE9827791584"/>
+        <point coordinates="33VVE9824187774"/>
+        <point coordinates="33VVE9962586453"/>
+        <point coordinates="33VWE0090385060"/>
+        <point coordinates="33VWE0210582438"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0630894201"/>
+        <point coordinates="33VWE0593790459"/>
+        <point coordinates="33VWE0717989171"/>
+        <point coordinates="33VWE0961787964"/>
+        <point coordinates="33VWE1176286035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Meeting point" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0062989352"/>
+        <point coordinates="33VWE0209790024"/>
+        <point coordinates="33VWE0238589088"/>
+        <point coordinates="33VWE0086988162"/>
+        <point coordinates="33VWE0062989352"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="308" name="withdraw  [11]" target="11" time="2011-01-12T07:42:33" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="156"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VVE9827791584"/>
+        <point coordinates="33VVE9824187774"/>
+        <point coordinates="33VVE9962586453"/>
+        <point coordinates="33VWE0090385060"/>
+        <point coordinates="33VWE0210582438"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0630894201"/>
+        <point coordinates="33VWE0593790459"/>
+        <point coordinates="33VWE0717989171"/>
+        <point coordinates="33VWE0961787964"/>
+        <point coordinates="33VWE1176286035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Meeting point" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0216990456"/>
+        <point coordinates="33VWE0409790778"/>
+        <point coordinates="33VWE0461489793"/>
+        <point coordinates="33VWE0261688786"/>
+        <point coordinates="33VWE0216990456"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="232" name="Armor - recon in force (a position)  [46]" target="46" time="2011-01-12T08:08:43" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="315"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0318170907"/>
+        <point coordinates="33VWE0154981881"/>
+        <point coordinates="33VVE9731787546"/>
+        <point coordinates="33VVE9385892592"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0018894927"/>
+        <point coordinates="33VWE0415287506"/>
+        <point coordinates="33VWE0712885876"/>
+        <point coordinates="33VWE0798381207"/>
+        <point coordinates="33VWE0899580826"/>
+        <point coordinates="33VWE1028678402"/>
+        <point coordinates="33VWE1127473539"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Position to recon" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0195284591"/>
+        <point coordinates="33VWE0465886813"/>
+        <point coordinates="33VWE0585386022"/>
+        <point coordinates="33VWE0457584440"/>
+        <point coordinates="33VWE0217083686"/>
+        <point coordinates="33VWE0195284591"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="232" name="Armor - recon in force (a position)  [58]" target="58" time="2011-01-12T08:07:13" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="326"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0018894927"/>
+        <point coordinates="33VWE0415287506"/>
+        <point coordinates="33VWE0712885876"/>
+        <point coordinates="33VWE0798381207"/>
+        <point coordinates="33VWE0899580826"/>
+        <point coordinates="33VWE1028678402"/>
+        <point coordinates="33VWE1127473539"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0804795432"/>
+        <point coordinates="33VWE0913290921"/>
+        <point coordinates="33VWE1572586181"/>
+        <point coordinates="33VWE2006576205"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Position to recon" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0570287346"/>
+        <point coordinates="33VWE0729888581"/>
+        <point coordinates="33VWE0839187509"/>
+        <point coordinates="33VWE0836686428"/>
+        <point coordinates="33VWE0753086106"/>
+        <point coordinates="33VWE0570287346"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="232" name="Armor - recon in force (a position)  [52]" target="52" time="2011-01-12T08:07:13" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="323"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0804795432"/>
+        <point coordinates="33VWE0913290921"/>
+        <point coordinates="33VWE1572586181"/>
+        <point coordinates="33VWE2006576205"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0018894927"/>
+        <point coordinates="33VWE0415287506"/>
+        <point coordinates="33VWE0712885876"/>
+        <point coordinates="33VWE0798381207"/>
+        <point coordinates="33VWE0899580826"/>
+        <point coordinates="33VWE1028678402"/>
+        <point coordinates="33VWE1127473539"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Position to recon" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0709088405"/>
+        <point coordinates="33VWE0858389430"/>
+        <point coordinates="33VWE0973689545"/>
+        <point coordinates="33VWE0998988570"/>
+        <point coordinates="33VWE0919787307"/>
+        <point coordinates="33VWE0804686983"/>
+        <point coordinates="33VWE0709088405"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="260" name="Engineer - recon (an area) [77]" target="77" time="2011-01-12T08:35:43" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0318170907"/>
+        <point coordinates="33VWE0154981881"/>
+        <point coordinates="33VVE9731787546"/>
+        <point coordinates="33VVE9385892592"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0018894927"/>
+        <point coordinates="33VWE0415287506"/>
+        <point coordinates="33VWE0712885876"/>
+        <point coordinates="33VWE0798381207"/>
+        <point coordinates="33VWE0899580826"/>
+        <point coordinates="33VWE1028678402"/>
+        <point coordinates="33VWE1127473539"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0126885685"/>
+        <point coordinates="33VWE0437687938"/>
+        <point coordinates="33VWE0578686622"/>
+        <point coordinates="33VWE0224584331"/>
+        <point coordinates="33VWE0126885685"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="260" name="Engineer - recon (an area) [81]" target="81" time="2011-01-12T08:35:43" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="301"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0018894927"/>
+        <point coordinates="33VWE0415287506"/>
+        <point coordinates="33VWE0712885876"/>
+        <point coordinates="33VWE0798381207"/>
+        <point coordinates="33VWE0899580826"/>
+        <point coordinates="33VWE1028678402"/>
+        <point coordinates="33VWE1127473539"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0804795432"/>
+        <point coordinates="33VWE0913290921"/>
+        <point coordinates="33VWE1572586181"/>
+        <point coordinates="33VWE2006576205"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0354487898"/>
+        <point coordinates="33VWE0495586415"/>
+        <point coordinates="33VWE0605286558"/>
+        <point coordinates="33VWE0815989135"/>
+        <point coordinates="33VWE0754890492"/>
+        <point coordinates="33VWE0505989705"/>
+        <point coordinates="33VWE0354487898"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="75" name="Engineer - breach (an area) [100]" target="100" time="2011-01-12T08:55:23" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Area" type="location">
+      <location type="polygon">
+        <point coordinates="33VWE0153386185"/>
+        <point coordinates="33VWE0316487151"/>
+        <point coordinates="33VWE0397785789"/>
+        <point coordinates="33VWE0200484629"/>
+        <point coordinates="33VWE0153386185"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="75" name="Engineer - breach (an area) [98]" target="98" time="2011-01-12T08:55:23" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Area" type="location">
+      <location type="polygon">
+        <point coordinates="33VWE0392487348"/>
+        <point coordinates="33VWE0513388615"/>
+        <point coordinates="33VWE0632587560"/>
+        <point coordinates="33VWE0458286251"/>
+        <point coordinates="33VWE0392487348"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="75" name="Engineer - breach (an area) [97]" target="97" time="2011-01-12T08:55:23" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="308"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Area" type="location">
+      <location type="polygon">
+        <point coordinates="33VWE0498288500"/>
+        <point coordinates="33VWE0676589429"/>
+        <point coordinates="33VWE0727687797"/>
+        <point coordinates="33VWE0507087168"/>
+        <point coordinates="33VWE0498288500"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="75" name="Engineer - breach (an area) [99]" target="99" time="2011-01-12T08:55:23" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="317"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Area" type="location">
+      <location type="polygon">
+        <point coordinates="33VWE0236586916"/>
+        <point coordinates="33VWE0348285632"/>
+        <point coordinates="33VWE0548987172"/>
+        <point coordinates="33VWE0437588076"/>
+        <point coordinates="33VWE0236586916"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="223" name="Armor - control [58] 2" target="58" time="2011-01-12T09:36:53" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="325"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0318170907"/>
+        <point coordinates="33VWE0154981881"/>
+        <point coordinates="33VVE9731787546"/>
+        <point coordinates="33VVE9385892592"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0804795432"/>
+        <point coordinates="33VWE0913290921"/>
+        <point coordinates="33VWE1572586181"/>
+        <point coordinates="33VWE2006576205"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Area to control" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0382488883"/>
+        <point coordinates="33VWE0527190907"/>
+        <point coordinates="33VWE0616789757"/>
+        <point coordinates="33VWE0459887640"/>
+        <point coordinates="33VWE0382488883"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="235" name="Armor - seize [46]" target="46" time="2011-01-12T09:36:53" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0318170907"/>
+        <point coordinates="33VWE0154981881"/>
+        <point coordinates="33VVE9731787546"/>
+        <point coordinates="33VVE9385892592"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0018894927"/>
+        <point coordinates="33VWE0415287506"/>
+        <point coordinates="33VWE0712885876"/>
+        <point coordinates="33VWE0798381207"/>
+        <point coordinates="33VWE0899580826"/>
+        <point coordinates="33VWE1028678402"/>
+        <point coordinates="33VWE1127473539"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Objective" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0030689735"/>
+        <point coordinates="33VWE0151890721"/>
+        <point coordinates="33VWE0247589480"/>
+        <point coordinates="33VWE0215088319"/>
+        <point coordinates="33VWE0028688516"/>
+        <point coordinates="33VWE0030689735"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="235" name="Armor - seize [52]" target="52" time="2011-01-12T09:36:43" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="325"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0018894927"/>
+        <point coordinates="33VWE0415287506"/>
+        <point coordinates="33VWE0712885876"/>
+        <point coordinates="33VWE0798381207"/>
+        <point coordinates="33VWE0899580826"/>
+        <point coordinates="33VWE1028678402"/>
+        <point coordinates="33VWE1127473539"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0804795432"/>
+        <point coordinates="33VWE0913290921"/>
+        <point coordinates="33VWE1572586181"/>
+        <point coordinates="33VWE2006576205"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Objective" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0270690402"/>
+        <point coordinates="33VWE0438191367"/>
+        <point coordinates="33VWE0472390844"/>
+        <point coordinates="33VWE0419189684"/>
+        <point coordinates="33VWE0309989060"/>
+        <point coordinates="33VWE0270690402"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="290" name="Infantry - hold [11] 2" target="11" time="2011-01-12T09:24:03" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="134"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0018894927"/>
+        <point coordinates="33VWE0415287506"/>
+        <point coordinates="33VWE0712885876"/>
+        <point coordinates="33VWE0798381207"/>
+        <point coordinates="33VWE0899580826"/>
+        <point coordinates="33VWE1028678402"/>
+        <point coordinates="33VWE1127473539"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0804795432"/>
+        <point coordinates="33VWE0913290921"/>
+        <point coordinates="33VWE1572586181"/>
+        <point coordinates="33VWE2006576205"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Position" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0289190348"/>
+        <point coordinates="33VWE0486291336"/>
+        <point coordinates="33VWE0410390052"/>
+        <point coordinates="33VWE0341089371"/>
+        <point coordinates="33VWE0289190348"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="false"/>
+  </action>
+  <action id="290" name="Infantry - hold [4] 2" target="4" time="2011-01-12T09:24:03" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="156"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="33VVE9827791584"/>
+        <point coordinates="33VVE9824187774"/>
+        <point coordinates="33VVE9962586453"/>
+        <point coordinates="33VWE0090385060"/>
+        <point coordinates="33VWE0210582438"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="33VWE0630894201"/>
+        <point coordinates="33VWE0593790459"/>
+        <point coordinates="33VWE0717989171"/>
+        <point coordinates="33VWE0961787964"/>
+        <point coordinates="33VWE1176286035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="intelligence"/>
+    <parameter name="Position" type="polygon">
+      <location type="polygon">
+        <point coordinates="33VWE0082489619"/>
+        <point coordinates="33VWE0238090242"/>
+        <point coordinates="33VWE0265689368"/>
+        <point coordinates="33VWE0098188378"/>
+        <point coordinates="33VWE0082489619"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="false"/>
+  </action>
+</actions>

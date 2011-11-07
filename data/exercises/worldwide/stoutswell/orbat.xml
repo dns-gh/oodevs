@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Red Force" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="56" level="iii" name="Formation [56]">
+          <automat engaged="true" id="57" knowledge-group="2" name="Artillery firing battery [57]" type="Artillery firing battery">
+            <unit command-post="true" id="58" name="Battery CP" position="12STD3923733285" type="Battery CP"/>
+            <unit command-post="false" id="59" name="Artillery firing platoon" position="12STD3896433150" type="Artillery firing platoon"/>
+            <unit command-post="false" id="60" name="Artillery firing platoon" position="12STD3932332935" type="Artillery firing platoon"/>
+          </automat>
+          <automat engaged="true" id="78" knowledge-group="2" name="Light armored squadron [78]" type="Light armored squadron">
+            <unit command-post="true" id="79" name="Armored squadron CP" position="12STD3978130779" type="Armored squadron CP"/>
+            <unit command-post="false" id="80" name="Light armored platoon" position="12STD4034230985" type="Light armored platoon"/>
+            <unit command-post="false" id="81" name="Light armored platoon" position="12STD4039630620" type="Light armored platoon"/>
+            <unit command-post="false" id="82" name="Light armored platoon" position="12STD4035730369" type="Light armored platoon"/>
+            <unit command-post="false" id="83" name="Light armored platoon" position="12STD3983230320" type="Light armored platoon"/>
+          </automat>
+          <automat engaged="true" id="86" knowledge-group="2" name="MBT squadron [86]" type="MBT squadron">
+            <unit command-post="true" id="87" name="Armored squadron CP" position="12STD4038234695" type="Armored squadron CP"/>
+            <unit command-post="false" id="88" name="MBT platoon" position="12STD4048333760" type="MBT platoon"/>
+            <unit command-post="false" id="89" name="MBT platoon" position="12STD4121234309" type="MBT platoon"/>
+            <unit command-post="false" id="90" name="MBT platoon" position="12STD4079834257" type="MBT platoon"/>
+            <unit command-post="false" id="91" name="MBT platoon" position="12STD4104933587" type="MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="92" knowledge-group="2" name="MBT squadron [92]" type="MBT squadron">
+            <unit command-post="true" id="93" name="Armored squadron CP" position="12STD3787128748" type="Armored squadron CP"/>
+            <unit command-post="false" id="94" name="MBT platoon" position="12STD3808129468" type="MBT platoon"/>
+            <unit command-post="false" id="95" name="MBT platoon" position="12STD3873929734" type="MBT platoon"/>
+            <unit command-post="false" id="96" name="MBT platoon" position="12STD3897029491" type="MBT platoon"/>
+            <unit command-post="false" id="97" name="MBT platoon" position="12STD3852029251" type="MBT platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Knowledge group [2]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="3" name="Blue Force" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="5" level="iii" name="Formation [5]">
+          <automat engaged="true" id="9" knowledge-group="4" name="Artillery firing battery [9]" type="Artillery firing battery">
+            <unit command-post="true" id="10" name="Battery CP" position="12STD4713028525" type="Battery CP"/>
+            <unit command-post="false" id="11" name="Artillery firing platoon" position="12STD4702528180" type="Artillery firing platoon"/>
+            <unit command-post="false" id="12" name="Artillery firing platoon" position="12STD4767028557" type="Artillery firing platoon"/>
+          </automat>
+          <automat engaged="true" id="13" knowledge-group="4" name="Attack Helicopter squadron [13]" type="Attack Helicopter squadron">
+            <unit command-post="true" id="14" name="AAC CP" position="12STD4859639400" type="AAC CP"/>
+            <unit command-post="false" id="15" name="Antitank Helicopter Patrol" position="12STD4831739045" type="Antitank Helicopter Patrol"/>
+            <unit command-post="false" id="16" name="Light Escort and Close Support Helicopter Patrol" position="12STD4831138808" type="Light Escort and Close Support Helicopter Patrol"/>
+            <unit command-post="false" id="17" name="Heavy Escort and Close Support Helicopter Patrol" position="12STD4900838773" type="Heavy Escort and Close Support Helicopter Patrol"/>
+            <unit command-post="false" id="18" name="General Purpose Helicopter Patrol" position="12STD4874939175" type="General Purpose Helicopter Patrol"/>
+            <unit command-post="false" id="19" name="Air Defence Helicopter Patrol" position="12STD4811739287" type="Air Defence Helicopter Patrol"/>
+          </automat>
+          <automat engaged="true" id="38" knowledge-group="4" name="MBT squadron [38]" type="MBT squadron">
+            <unit command-post="true" id="39" name="Armored squadron CP" position="12STD4709731905" type="Armored squadron CP"/>
+            <unit command-post="false" id="40" name="MBT platoon" position="12STD4669732926" type="MBT platoon"/>
+            <unit command-post="false" id="41" name="MBT platoon" position="12STD4658232203" type="MBT platoon"/>
+            <unit command-post="false" id="42" name="MBT platoon" position="12STD4612932437" type="MBT platoon"/>
+            <unit command-post="false" id="43" name="MBT platoon" position="12STD4597231936" type="MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="44" knowledge-group="4" name="MBT squadron [44]" type="MBT squadron">
+            <unit command-post="true" id="45" name="Armored squadron CP" position="12STD4623527653" type="Armored squadron CP"/>
+            <unit command-post="false" id="46" name="MBT platoon" position="12STD4523328415" type="MBT platoon"/>
+            <unit command-post="false" id="47" name="MBT platoon" position="12STD4503028823" type="MBT platoon"/>
+            <unit command-post="false" id="48" name="MBT platoon" position="12STD4547528574" type="MBT platoon"/>
+            <unit command-post="false" id="49" name="MBT platoon" position="12STD4546429025" type="MBT platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="4" name="Knowledge group [4]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="3"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="0965292446" -->

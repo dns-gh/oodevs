@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<weather model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/weather.xsd">
+  <exercise-date value="20071012T111400"/>
+  <ephemerides day-lighting="JourSansNuage" night-lighting="NuitTroisQuartDeLune" sunrise="10h0m0s" sunset="21h17m0s"/>
+  <theater>
+    <wind direction="0" speed="0"/>
+    <cloud-cover ceiling="10000" density="0" floor="500"/>
+    <temperature value="20"/>
+    <precipitation value="PasDePrecipitation"/>
+  </theater>
+  <local-weather>
+    <local bottom-right="31TBN9000018001" end-time="20990101T000001" start-time="20071012T111400" top-left="31TBN9800110000">
+      <wind direction="45" speed="10"/>
+      <cloud-cover ceiling="10000" density="0" floor="500"/>
+      <temperature value="20"/>
+      <precipitation value="PasDePrecipitation"/>
+    </local>
+  </local-weather>
+</weather>
+<!-- signature="3396728994" -->

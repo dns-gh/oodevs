@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp Ami" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="4" level="ii" name="GTIA [4]">
+          <automat engaged="true" id="275" knowledge-group="6" name="INF . Compagnie CBT VAB [275]" type="INF . Compagnie CBT VAB">
+            <unit command-post="true" id="276" name="INF . Section CDT CIE quaternaire VAB" position="29TNF2641758440" type="INF . Section CDT CIE quaternaire VAB"/>
+            <unit command-post="false" id="278" name="INF . Section CBT VAB CDS OFF" position="29TNF2692358494" type="INF . Section CBT VAB CDS OFF"/>
+            <unit command-post="false" id="279" name="INF . Section CBT VAB CDS OFF" position="29TNF2658158832" type="INF . Section CBT VAB CDS OFF"/>
+            <unit command-post="false" id="280" name="INF . Section CBT VAB CDS SOFF" position="29TNF2715158505" type="INF . Section CBT VAB CDS SOFF"/>
+          </automat>
+          <automat engaged="true" id="316" knowledge-group="6" name="GEN . Compagnie Appui generique [316]" type="GEN . Compagnie Appui generique">
+            <unit command-post="true" id="317" name="GEN . PC Cie APP" position="29TNF3007261278" type="GEN . PC Cie APP"/>
+            <unit command-post="false" id="318" name="GEN . Groupe OT" position="29TNF3038260971" type="GEN . Groupe OT"/>
+            <unit command-post="false" id="319" name="GEN . Groupe MATS" position="29TNF2988460470" type="GEN . Groupe MATS">
+              <equipments>
+                <equipment state="Disponible" type="TRM 10000 MATS"/>
+                <equipment breakdown="Panne MOB 1" state="ReparableAvecEvacuation" type="TRM 10000 MATS"/>
+                <equipment state="Disponible" type="TRM 10000 MATS"/>
+                <equipment state="Disponible" type="TRM 10000 12,7"/>
+                <equipment breakdown="Panne MOB 1" state="ReparableAvecEvacuation" type="TRM 10000 12,7"/>
+                <equipment state="Disponible" type="TRM 10000 12,7"/>
+              </equipments>
+            </unit>
+            <unit command-post="false" id="320" name="GEN . Demi Groupe MFRD CDT" position="29TNF2956560901" type="GEN . Demi Groupe MFRD CDT">
+              <humans>
+                <human contaminated="false" number="1" psyop="false" rank="SousOfficier" state="u2"/>
+                <human contaminated="false" number="1" psyop="true" rank="MilitaireDuRang" state="healthy"/>
+              </humans>
+              <resources>
+                <resource logistic-threshold="10" name="CART 5.56 BAL ORD F1" quantity="960"/>
+                <resource logistic-threshold="30" name="F-63 1" quantity="200"/>
+                <resource logistic-threshold="10" name="PETD 500 G T ID M 1" quantity="200"/>
+                <resource logistic-threshold="30" name="RATION DE COMBAT 1" quantity="21"/>
+                <resource logistic-threshold="30" name="EAU MINERALE 1L T 1" quantity="126"/>
+                <resource logistic-threshold="10" name="CART 12.7 SBP" quantity="400"/>
+                <resource logistic-threshold="10" name="CART 5.56 F1A F1" quantity="720"/>
+              </resources>
+            </unit>
+            <unit command-post="false" id="330" name="GEN . Section Aide au Deploiement" position="29TNF2988760932" type="GEN . Section Aide au Deploiement"/>
+            <unit command-post="false" id="333" name="GEN . Groupe Chantier" position="29TNF3024160563" type="GEN . Groupe Chantier"/>
+          </automat>
+          <automat engaged="true" id="511" knowledge-group="6" name="GEN . Compagnie CBT type BB BM [511]" type="GEN . Compagnie CBT type BB BM">
+            <unit command-post="true" id="512" name="GEN . PC CIE CBT GENIE Type BB/BM" position="29TNF2791157463" type="GEN . PC CIE CBT GENIE Type BB/BM"/>
+            <unit command-post="false" id="514" name="GEN . Section CBT" position="29TNF2801757042" type="GEN . Section CBT"/>
+            <unit command-post="false" id="515" name="GEN . Section CBT" position="29TNF2756957137" type="GEN . Section CBT"/>
+            <unit command-post="false" id="516" name="GEN . Groupe EBG" position="29TNF2763357467" type="GEN . Groupe EBG"/>
+            <unit command-post="false" id="518" name="GEN . Groupe EBG" position="29TNF2821456994" type="GEN . Groupe EBG"/>
+            <unit command-post="false" id="520" name="GEN . Groupe MPG" position="29TNF2808057248" type="GEN . Groupe MPG"/>
+            <unit command-post="false" id="521" name="GEN . Groupe MPG" position="29TNF2784557077" type="GEN . Groupe MPG"/>
+          </automat>
+          <lima name="Lima 228">
+            <point>29TNF3045661747</point>
+            <point>29TNF3092661854</point>
+            <point>29TNF3118061865</point>
+            <point>29TNF3181561566</point>
+            <point>29TNF3233961277</point>
+          </lima>
+          <lima name="Lima 233">
+            <point>29TNF3104558160</point>
+            <point>29TNF3231858403</point>
+          </lima>
+          <lima name="Lima 239">
+            <point>29TNF3072955345</point>
+            <point>29TNF3111755081</point>
+            <point>29TNF3156755055</point>
+            <point>29TNF3211154588</point>
+            <point>29TNF3275154591</point>
+          </lima>
+          <lima name="Lima 240">
+            <point>29TNF2601758169</point>
+            <point>29TNF2667058258</point>
+            <point>29TNF2716158069</point>
+            <point>29TNF2845758544</point>
+            <point>29TNF3007058800</point>
+          </lima>
+          <lima name="Lima 241">
+            <point>29TNF2740064224</point>
+            <point>29TNF2674364566</point>
+            <point>29TNF2551364737</point>
+            <point>29TNF2509164597</point>
+            <point>29TNF2437563991</point>
+          </lima>
+          <lima name="Lima 242">
+            <point>29TNF2524959757</point>
+            <point>29TNF2645660626</point>
+            <point>29TNF2680361525</point>
+            <point>29TNF2792662070</point>
+          </lima>
+          <limit name="Limite 196">
+            <point>29TNF3299753162</point>
+            <point>29TNF3231956029</point>
+            <point>29TNF3255857098</point>
+            <point>29TNF3234457956</point>
+            <point>29TNF3228658550</point>
+            <point>29TNF3239159602</point>
+            <point>29TNF3244760624</point>
+            <point>29TNF3222661497</point>
+          </limit>
+          <limit name="Limite 219">
+            <point>29TNF3068061873</point>
+            <point>29TNF3062359804</point>
+            <point>29TNF3118058060</point>
+            <point>29TNF3129157293</point>
+            <point>29TNF3113256552</point>
+            <point>29TNF3098656383</point>
+            <point>29TNF3097256053</point>
+            <point>29TNF3083355862</point>
+            <point>29TNF3081255664</point>
+            <point>29TNF3092455378</point>
+            <point>29TNF3071255090</point>
+          </limit>
+          <limit name="Limite 221">
+            <point>29TNF2431664343</point>
+            <point>29TNF2528762751</point>
+            <point>29TNF2538261903</point>
+            <point>29TNF2532361529</point>
+            <point>29TNF2538760670</point>
+            <point>29TNF2537159811</point>
+            <point>29TNF2595359036</point>
+            <point>29TNF2603758329</point>
+            <point>29TNF2618257683</point>
+          </limit>
+          <limit name="Limite 222">
+            <point>29TNF2706265013</point>
+            <point>29TNF2739363529</point>
+            <point>29TNF2786163228</point>
+            <point>29TNF2783661954</point>
+            <point>29TNF2834661340</point>
+            <point>29TNF2853260771</point>
+            <point>29TNF2960659946</point>
+            <point>29TNF2996358692</point>
+          </limit>
+          <limit name="Limite 367">
+            <point>29TNF2954958290</point>
+            <point>29TNF2946857745</point>
+            <point>29TNF2919657415</point>
+            <point>29TNF2919456581</point>
+            <point>29TNF2944355960</point>
+            <point>29TNF2980454699</point>
+          </limit>
+          <limit name="Limit 541">
+            <point>29TNF2605357861</point>
+            <point>29TNF2602757418</point>
+            <point>29TNF2648256401</point>
+            <point>29TNF2721755396</point>
+            <point>29TNF2761854900</point>
+          </limit>
+        </formation>
+        <formation id="408" level="iii" name="Organisation [408]">
+          <formation id="409" level="ii" name="Formation [409]">
+            <formation id="410" level="i" name="ONG Formation [410]">
+              <automat engaged="false" id="173" knowledge-group="6" logistic-level="logistic-base" name="ONG 2 [173]" type="ONG">
+                <unit command-post="true" id="174" name="ONG Soutien LOG" position="29TNF2997257991" type="ONG Soutien LOG"/>
+                <unit command-post="false" id="175" name="ONG Intervention" position="29TNF2984157834" type="ONG Intervention"/>
+                <unit command-post="false" id="176" name="ONG Intervention" position="29TNF3017258017" type="ONG Intervention"/>
+              </automat>
+              <automat engaged="false" id="198" knowledge-group="6" logistic-level="logistic-base" name="ONG [198]" type="ONG">
+                <unit command-post="true" id="199" name="ONG Soutien LOG" position="29TNF2886058664" type="ONG Soutien LOG"/>
+                <unit command-post="false" id="200" name="ONG Intervention" position="29TNF2875658819" type="ONG Intervention"/>
+                <unit command-post="false" id="201" name="ONG Intervention" position="29TNF2879658727" type="ONG Intervention"/>
+                <unit command-post="false" id="202" name="ONG Intervention" position="29TNF2870158762" type="ONG Intervention"/>
+              </automat>
+            </formation>
+            <formation id="502" level="i" logistic-level="logistic-base" name="BASE ONG">
+              <automat engaged="true" id="411" knowledge-group="6" logistic-level="logistic-base" name="BASE ONG" type="ONG">
+                <unit command-post="true" id="412" name="BASE ONG LOG" position="29TNF2941265081" type="ONG Soutien LOG"/>
+              </automat>
+              <automat engaged="true" id="461" knowledge-group="6" name="ONG LOG . Secteur triage [461]" type="LOG . Secteur triage">
+                <unit command-post="true" id="462" name="LOG . PC LOG BLD Secteur Sante" position="29TNF2894164419" type="LOG . PC LOG BLD Secteur Sante"/>
+                <unit command-post="false" id="463" name="LOG . Section Triage modulaire" position="29TNF2916064420" type="LOG . Section Triage modulaire"/>
+                <unit command-post="false" id="464" name="GLAISE - LOG . Section Triage Modulaire" position="29TNF2910364182" type="GLAISE - LOG . Section Triage Modulaire"/>
+              </automat>
+              <automat engaged="true" id="465" knowledge-group="6" name="ONG LOG . Secteur traitement [465]" type="LOG . Secteur traitement">
+                <unit command-post="true" id="466" name="LOG . PC LOG BLD Secteur Sante" position="29TNF3017364798" type="LOG . PC LOG BLD Secteur Sante"/>
+                <unit command-post="false" id="467" name="LOG . Section Decontamination Medicale NBC" position="29TNF2998564799" type="LOG . Section Decontamination Medicale NBC"/>
+                <unit command-post="false" id="468" name="LOG . Section Medico Psychologique" position="29TNF3012464908" type="LOG . Section Medico Psychologique"/>
+                <unit command-post="false" id="471" name="LOG . Section Chirurgicale HMC" position="29TNF3028064761" type="LOG . Section Chirurgicale HMC"/>
+                <unit command-post="false" id="477" name="LOG . SAN GTSA 240" position="29TNF3021864741" type="LOG . SAN GTSA 240"/>
+                <unit command-post="false" id="478" name="LOG . Section Medico Psychologique BLIAT" position="29TNF3009864723" type="LOG . Section Medico Psychologique BLIAT"/>
+                <unit command-post="false" id="479" name="LOG . Section Chirurgicale HMC BLIAT" position="29TNF3017664651" type="LOG . Section Chirurgicale HMC BLIAT"/>
+              </automat>
+              <automat engaged="true" id="480" knowledge-group="6" name="ONG LOG . Secteur reparation maint mob [480]" type="LOG . Secteur reparation maint mob">
+                <unit command-post="true" id="481" name="LOG . PC LOG BLD Secteur Maintenance" position="29TNF2873865483" type="LOG . PC LOG BLD Secteur Maintenance"/>
+                <unit command-post="false" id="482" name="LOG . Section CDT CMM (EVAC)" position="29TNF2884365355" type="LOG . Section CDT CMM (EVAC)"/>
+                <unit command-post="false" id="483" name="LOG . Section Reparation Mob BLD  MOB" position="29TNF2881465241" type="LOG . Section Reparation Mob BLD  MOB"/>
+                <unit command-post="false" id="484" name="LOG . Section Reparation Mob Feu BLD  SRMF" position="29TNF2894865256" type="LOG . Section Reparation Mob Feu BLD  SRMF"/>
+                <unit command-post="false" id="494" name="LOG . Section Evacuation BLIAT" position="29TNF2894965452" type="LOG . Section Evacuation BLIAT"/>
+              </automat>
+              <automat engaged="true" id="495" knowledge-group="6" name="ONG LOG . Secteur transport [495]" type="LOG . Secteur transport">
+                <unit command-post="true" id="496" name="LOG . PC LOG BLD Secteur Transport" position="29TNF2967565498" type="LOG . PC LOG BLD Secteur Transport"/>
+                <unit command-post="false" id="497" name="LOG . Peloton Transport VTLR (PT)" position="29TNF2957965468" type="LOG . Peloton Transport VTLR (PT)"/>
+                <unit command-post="false" id="498" name="LOG . Peloton Ravitaillement (PR)" position="29TNF2963965579" type="LOG . Peloton Ravitaillement (PR)"/>
+                <unit command-post="false" id="499" name="LOG . Peloton Transport TRM 10000" position="29TNF2974465380" type="LOG . Peloton Transport TRM 10000"/>
+                <unit command-post="false" id="501" name="LOG . Peloton Transport BLIAT" position="29TNF2976965440" type="LOG . Peloton Transport BLIAT"/>
+              </automat>
+            </formation>
+          </formation>
+          <limit name="Limite 420">
+            <point>29TNF3027965846</point>
+            <point>29TNF3085464620</point>
+            <point>29TNF3085264012</point>
+          </limit>
+          <limit name="Limite 421">
+            <point>29TNF2816365707</point>
+            <point>29TNF2831164632</point>
+            <point>29TNF2885363829</point>
+          </limit>
+        </formation>
+        <formation id="422" level="ii" logistic-level="logistic-base" name="BLD">
+          <automat engaged="true" id="451" knowledge-group="6" logistic-level="logistic-base" name="LOG . TC2 LOG [451]" type="LOG . TC2 LOG">
+            <unit command-post="true" id="452" name="LOG . TC2" position="29TNF3749464098" type="LOG . TC2"/>
+          </automat>
+          <limit name="Limite 453">
+            <point>29TNF3635165804</point>
+            <point>29TNF3586964512</point>
+            <point>29TNF3546062823</point>
+          </limit>
+          <limit name="Limite 454">
+            <point>29TNF3974465487</point>
+            <point>29TNF3924463866</point>
+            <point>29TNF3845962544</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="6" name="Groupe de connaissance [6]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="198">
+          <subordinate id="275"/>
+          <subordinate id="316"/>
+        </logistic-base>
+        <logistic-base id="411">
+          <subordinate id="461"/>
+          <subordinate id="465"/>
+          <subordinate id="480"/>
+          <subordinate id="495"/>
+        </logistic-base>
+        <logistic-base id="502">
+          <subordinate id="173">
+            <quotas>
+              <resource name="F-63 1" quantity="20000"/>
+              <resource name="F-57 1" quantity="20000"/>
+              <resource name="F-35 1" quantity="20000"/>
+              <resource name="RATION DE COMBAT 1" quantity="20000"/>
+              <resource name="EAU MINERALE 1L T 1" quantity="20000"/>
+              <resource name="h2o" quantity="20000"/>
+            </quotas>
+          </subordinate>
+          <subordinate id="198">
+            <quotas>
+              <resource name="F-63 1" quantity="20000"/>
+              <resource name="F-57 1" quantity="20000"/>
+              <resource name="F-35 1" quantity="20000"/>
+              <resource name="RATION DE COMBAT 1" quantity="20000"/>
+              <resource name="EAU MINERALE 1L T 1" quantity="20000"/>
+            </quotas>
+          </subordinate>
+        </logistic-base>
+        <logistic-base id="422">
+          <subordinate id="511"/>
+        </logistic-base>
+      </logistics>
+    </party>
+    <party id="2" name="Camp Eni" type="enemy">
+      <objects>
+        <object id="204" name="barricade [204]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>29TNF2781259705</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="205" name="abattis [205]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>29TNF2664560321</point>
+              <point>29TNF2676160160</point>
+              <point>29TNF2691160240</point>
+              <point>29TNF2673160422</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="255" name="barricade [255]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>29TNF2614161064</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="256" name="abattis [256]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>29TNF2589862398</point>
+              <point>29TNF2583862223</point>
+              <point>29TNF2608762184</point>
+              <point>29TNF2613962391</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="25" level="ii" name="GTIA [25]">
+          <automat engaged="false" id="192" knowledge-group="31" name="MILICE [192]" type="MILICE">
+            <unit command-post="true" id="193" name="MILICE . CDT" position="29TNF3335755311" type="MILICE . PICK UP CDT"/>
+            <unit command-post="false" id="194" name="MILICE . Miliciens" position="29TNF3449155342" type="MILICE . PICK UP 14,5"/>
+            <unit command-post="false" id="195" name="MILICE . Miliciens" position="29TNF3319355351" type="MILICE . PICK UP 14,5"/>
+            <lima name="Lima 337">
+              <point>29TNF3265656108</point>
+              <point>29TNF3308956090</point>
+              <point>29TNF3324456371</point>
+              <point>29TNF3354056316</point>
+            </lima>
+            <lima name="Lima 338">
+              <point>29TNF3267754695</point>
+              <point>29TNF3298754705</point>
+              <point>29TNF3316554929</point>
+              <point>29TNF3370854994</point>
+            </lima>
+            <limit name="Limite 335">
+              <point>29TNF3276954432</point>
+              <point>29TNF3261055046</point>
+              <point>29TNF3263455465</point>
+              <point>29TNF3273055647</point>
+              <point>29TNF3273056123</point>
+            </limit>
+            <limit name="Limite 336">
+              <point>29TNF3391154607</point>
+              <point>29TNF3363454996</point>
+              <point>29TNF3350755356</point>
+              <point>29TNF3346456151</point>
+              <point>29TNF3350856347</point>
+            </limit>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="31" name="Groupe de connaissance [31]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="128" name="Camp Neutre" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="129" level="ii" name="Formation [129]">
+          <automat engaged="false" id="459" knowledge-group="132" name="CIV . DPRE [459]" symbol="symbols/sfgpu" type="CIV . DPRE">
+            <unit command-post="true" id="460" name="Refugies" position="29TNF2707357248" type="Refugies"/>
+            <unit command-post="false" id="542" name="Refugies" position="29TNF2743857395" type="Refugies"/>
+            <unit command-post="false" id="543" name="Refugies" position="29TNF2738557634" type="Refugies"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="132" name="Knowledge group [132]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="544" name="Foule standard [544]" position="29TNF2649257713" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="350" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="128" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants>
+        <inhabitant id="196" name="WEST" type="popStandard">
+          <composition dead="0" healthy="1000" wounded="0"/>
+          <health-need quantity="1"/>
+          <information></information>
+          <living-area>
+            <urban-block id="5"/>
+            <urban-block id="38"/>
+            <urban-block id="42"/>
+            <urban-block id="52"/>
+            <urban-block id="53"/>
+            <urban-block id="55"/>
+            <urban-block id="56"/>
+            <urban-block id="62"/>
+            <urban-block id="63"/>
+            <urban-block id="66"/>
+            <urban-block id="67"/>
+            <urban-block id="71"/>
+            <urban-block id="72"/>
+            <urban-block id="73"/>
+            <urban-block id="74"/>
+            <urban-block id="75"/>
+            <urban-block id="76"/>
+            <urban-block id="77"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="128" value="0"/>
+          </adhesions>
+        </inhabitant>
+        <inhabitant id="197" name="EAST" type="popStandard">
+          <composition dead="0" healthy="1000" wounded="0"/>
+          <health-need quantity="1"/>
+          <information></information>
+          <living-area>
+            <urban-block id="1"/>
+            <urban-block id="2"/>
+            <urban-block id="50"/>
+            <urban-block id="51"/>
+            <urban-block id="78"/>
+            <urban-block id="79"/>
+            <urban-block id="80"/>
+            <urban-block id="81"/>
+            <urban-block id="82"/>
+            <urban-block id="83"/>
+            <urban-block id="109"/>
+            <urban-block id="110"/>
+            <urban-block id="111"/>
+            <urban-block id="112"/>
+            <urban-block id="113"/>
+            <urban-block id="114"/>
+            <urban-block id="121"/>
+            <urban-block id="123"/>
+            <urban-block id="124"/>
+            <urban-block id="128"/>
+            <urban-block id="129"/>
+            <urban-block id="130"/>
+            <urban-block id="131"/>
+            <urban-block id="132"/>
+            <urban-block id="133"/>
+            <urban-block id="134"/>
+            <urban-block id="135"/>
+            <urban-block id="136"/>
+            <urban-block id="137"/>
+            <urban-block id="138"/>
+            <urban-block id="139"/>
+            <urban-block id="140"/>
+            <urban-block id="142"/>
+            <urban-block id="143"/>
+            <urban-block id="144"/>
+            <urban-block id="145"/>
+            <urban-block id="146"/>
+            <urban-block id="147"/>
+            <urban-block id="148"/>
+            <urban-block id="149"/>
+            <urban-block id="191"/>
+            <urban-block id="193"/>
+            <urban-block id="195"/>
+            <urban-block id="197"/>
+            <urban-block id="201"/>
+            <urban-block id="202"/>
+            <urban-block id="203"/>
+            <urban-block id="204"/>
+            <urban-block id="205"/>
+            <urban-block id="207"/>
+            <urban-block id="208"/>
+            <urban-block id="209"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="128" value="0"/>
+          </adhesions>
+        </inhabitant>
+        <inhabitant id="368" name="DRY" type="popRefugie">
+          <composition dead="0" healthy="1000" wounded="0"/>
+          <health-need quantity="1"/>
+          <information></information>
+          <living-area>
+            <urban-block id="16"/>
+            <urban-block id="17"/>
+            <urban-block id="18"/>
+            <urban-block id="25"/>
+            <urban-block id="40"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="128" value="0"/>
+          </adhesions>
+        </inhabitant>
+        <inhabitant id="369" name="DARK" type="popRefugie">
+          <composition dead="0" healthy="1000" wounded="0"/>
+          <health-need quantity="1"/>
+          <information></information>
+          <living-area>
+            <urban-block id="6"/>
+            <urban-block id="9"/>
+            <urban-block id="20"/>
+            <urban-block id="43"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="128" value="0"/>
+          </adhesions>
+        </inhabitant>
+      </inhabitants>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+      <relationship diplomacy="neutral" party="128"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="neutral" party="128"/>
+    </party>
+    <party id="128">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="2"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="3493885985" -->

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="teleport" name="Teleport" target="23" time="2011-04-08T18:12:46" type="magicunit">
+    <parameter name="Location" type="point">
+      <location type="point">
+        <point coordinates="31UEQ0746917283"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="partial_recovery" name="Partial Recovery" target="24" time="2011-04-08T10:04:36" type="magicunit">
+    <parameter name="Equipments" type="list"/>
+    <parameter name="Humans" type="list"/>
+    <parameter name="Dotations" type="list">
+      <parameter name="Dotation 1" type="list">
+        <parameter name="Dotation" type="identifier" value="1"/>
+        <parameter name="Number" type="quantity" value="0"/>
+      </parameter>
+    </parameter>
+    <parameter name="Ammo" type="list"/>
+    <parameter name="Stocks" type="list"/>
+  </action>
+  <action id="partial_recovery" name="Partial Recovery" target="24" time="2011-04-08T11:37:36" type="magicunit">
+    <parameter name="Equipments" type="list"/>
+    <parameter name="Humans" type="list"/>
+    <parameter name="Dotations" type="list">
+      <parameter name="Dotation 1" type="list">
+        <parameter name="Dotation" type="identifier" value="1"/>
+        <parameter name="Number" type="quantity" value="0"/>
+      </parameter>
+    </parameter>
+    <parameter name="Ammo" type="list"/>
+    <parameter name="Stocks" type="list"/>
+  </action>
+  <action id="partial_recovery" name="Partial Recovery" target="24" time="2011-04-08T13:27:26" type="magicunit">
+    <parameter name="Equipments" type="list"/>
+    <parameter name="Humans" type="list"/>
+    <parameter name="Dotations" type="list">
+      <parameter name="Dotation 1" type="list">
+        <parameter name="Dotation" type="identifier" value="1"/>
+        <parameter name="Number" type="quantity" value="0"/>
+      </parameter>
+    </parameter>
+    <parameter name="Ammo" type="list"/>
+    <parameter name="Stocks" type="list"/>
+  </action>
+  <action id="formation_log_supply_change_quotas" name="Log Supply Change Quotas" target="3" time="2011-04-08T14:41:46" type="magicunit">
+    <parameter name="Receiver" type="formation" value="6"/>
+    <parameter name="Dotations" type="list">
+      <parameter name="Dotation 1" type="list">
+        <parameter name="Type" type="identifier" value="51"/>
+        <parameter name="Number" type="quantity" value="10000"/>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="formation_log_supply_push_flow" name="Log Supply Push Flow" target="3" time="2011-04-08T16:37:16" type="magicunit">
+    <parameter name="Receiver" type="formation" value="6"/>
+    <parameter name="Dotations" type="list">
+      <parameter name="Dotation 1" type="list">
+        <parameter name="Type" type="identifier" value="51"/>
+        <parameter name="Number" type="quantity" value="1000"/>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="297" name="Logistics - deploy" target="37" time="2011-04-08T09:59:36" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="31UDQ9732737778"/>
+        <point coordinates="31UDP8514395402"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31UEP1659594563"/>
+        <point coordinates="31UEQ1518436293"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment position" type="point"/>
+  </action>
+  <action id="297" name="Logistics - deploy" target="27" time="2011-04-08T09:59:56" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="31UDQ9732737778"/>
+        <point coordinates="31UDP8514395402"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31UEP1659594563"/>
+        <point coordinates="31UEQ1518436293"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment position" type="point"/>
+  </action>
+  <action id="297" name="Logistics - deploy" target="7" time="2011-04-08T09:59:56" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="31UDQ9732737778"/>
+        <point coordinates="31UDP8514395402"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31UEP1659594563"/>
+        <point coordinates="31UEQ1518436293"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment position" type="point"/>
+  </action>
+  <action id="fire_order_on_location" name="Strike order on location" time="2011-04-08T18:16:06" type="magic">
+    <parameter name="LocationTarget" type="location">
+      <location type="point">
+        <point coordinates="31UEQ0745717253"/>
+      </location>
+    </parameter>
+    <parameter name="Ammo" type="resourcetype" value="13"/>
+    <parameter name="Iterations" type="numeric" value="1"/>
+  </action>
+  <action id="fire_order_on_location" name="Strike order on location" time="2011-04-08T18:15:16" type="magic">
+    <parameter name="LocationTarget" type="location">
+      <location type="point">
+        <point coordinates="31UEQ0745717253"/>
+      </location>
+    </parameter>
+    <parameter name="Ammo" type="resourcetype" value="13"/>
+    <parameter name="Iterations" type="numeric" value="1"/>
+  </action>
+  <action id="fire_order_on_location" name="Strike order on location" time="2011-04-08T18:16:06" type="magic">
+    <parameter name="LocationTarget" type="location">
+      <location type="point">
+        <point coordinates="31UEQ0745717253"/>
+      </location>
+    </parameter>
+    <parameter name="Ammo" type="resourcetype" value="13"/>
+    <parameter name="Iterations" type="numeric" value="1"/>
+  </action>
+  <action id="fire_order_on_location" name="Strike order on location" time="2011-04-08T18:15:06" type="magic">
+    <parameter name="LocationTarget" type="location">
+      <location type="point">
+        <point coordinates="31UEQ0745717253"/>
+      </location>
+    </parameter>
+    <parameter name="Ammo" type="resourcetype" value="13"/>
+    <parameter name="Iterations" type="numeric" value="1"/>
+  </action>
+  <action id="formation_log_supply_pull_flow" name="Log Supply Pull Flow" target="6" time="2011-04-08T17:04:56" type="magicunit">
+    <parameter name="Receiver" type="formation" value="6"/>
+    <parameter name="Dotations" type="list">
+      <parameter name="Dotation 1" type="list">
+        <parameter name="Type" type="identifier" value="51"/>
+        <parameter name="Number" type="quantity" value="1100"/>
+      </parameter>
+    </parameter>
+  </action>
+</actions>

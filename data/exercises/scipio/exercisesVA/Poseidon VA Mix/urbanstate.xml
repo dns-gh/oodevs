@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<urban-state model-version="4.2.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/urbanstate.xsd">
+  <urban-objects>
+    <urban-object id="6">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="500" resource-type="electricite" stock="0">
+          <link capacity="-1" kind="urban-object" target="20"/>
+          <link capacity="-1" kind="urban-object" target="43"/>
+          <link capacity="-1" kind="urban-object" target="9"/>
+        </node>
+      </resources>
+    </urban-object>
+    <urban-object id="9">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="12">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="16">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="17">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0">
+          <link capacity="-1" kind="urban-object" target="18"/>
+          <link capacity="-1" kind="urban-object" target="25"/>
+          <link capacity="-1" kind="urban-object" target="40"/>
+          <link capacity="-1" kind="urban-object" target="16"/>
+        </node>
+      </resources>
+    </urban-object>
+    <urban-object id="18">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="19">
+      <resources>
+        <node consumption="10" critical-consumption="true" enabled="true" initial-stock="0" production="200" resource-type="eau courante" stock="0">
+          <link capacity="-1" kind="urban-object" target="41"/>
+          <link capacity="-1" kind="urban-object" target="39"/>
+          <link capacity="-1" kind="urban-object" target="23"/>
+          <link capacity="-1" kind="urban-object" target="37"/>
+          <link capacity="-1" kind="urban-object" target="36"/>
+          <link capacity="-1" kind="urban-object" target="24"/>
+        </node>
+      </resources>
+    </urban-object>
+    <urban-object id="20">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="23">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="24">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="25">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="36">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="37">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="39">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="40">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="41">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="43">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="50">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="51">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0">
+          <link capacity="-1" kind="urban-object" target="123"/>
+          <link capacity="-1" kind="urban-object" target="50"/>
+          <link capacity="-1" kind="urban-object" target="145"/>
+        </node>
+      </resources>
+    </urban-object>
+    <urban-object id="57">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="61">
+      <resources>
+        <node consumption="10" critical-consumption="false" enabled="true" initial-stock="1000" production="100" resource-type="electricite" stock="0">
+          <link capacity="-1" kind="urban-object" target="12"/>
+          <link capacity="-1" kind="urban-object" target="123"/>
+          <link capacity="-1" kind="urban-object" target="50"/>
+          <link capacity="-1" kind="urban-object" target="145"/>
+          <link capacity="-1" kind="urban-object" target="57"/>
+        </node>
+      </resources>
+    </urban-object>
+    <urban-object id="75">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="600" resource-type="eau courante" stock="0">
+          <link capacity="-1" kind="urban-object" target="55"/>
+          <link capacity="-1" kind="urban-object" target="62"/>
+          <link capacity="-1" kind="urban-object" target="63"/>
+          <link capacity="-1" kind="urban-object" target="56"/>
+          <link capacity="-1" kind="urban-object" target="76"/>
+          <link capacity="-1" kind="urban-object" target="77"/>
+          <link capacity="-1" kind="urban-object" target="71"/>
+          <link capacity="-1" kind="urban-object" target="67"/>
+          <link capacity="-1" kind="urban-object" target="66"/>
+          <link capacity="-1" kind="urban-object" target="53"/>
+          <link capacity="-1" kind="urban-object" target="52"/>
+          <link capacity="-1" kind="urban-object" target="72"/>
+          <link capacity="-1" kind="urban-object" target="73"/>
+          <link capacity="-1" kind="urban-object" target="74"/>
+          <link capacity="-1" kind="urban-object" target="38"/>
+          <link capacity="-1" kind="urban-object" target="5"/>
+          <link capacity="-1" kind="urban-object" target="42"/>
+        </node>
+      </resources>
+    </urban-object>
+    <urban-object id="107">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="112">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="123">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="131">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="134">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="2000" production="300" resource-type="electricite" stock="0">
+          <link capacity="-1" kind="urban-object" target="204"/>
+          <link capacity="-1" kind="urban-object" target="140"/>
+          <link capacity="-1" kind="urban-object" target="207"/>
+          <link capacity="-1" kind="urban-object" target="138"/>
+          <link capacity="-1" kind="urban-object" target="112"/>
+          <link capacity="-1" kind="urban-object" target="131"/>
+        </node>
+      </resources>
+    </urban-object>
+    <urban-object id="138">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="140">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="145">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="1000" production="200" resource-type="eau courante" stock="0"/>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="160">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="185">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0">
+          <link capacity="-1" kind="urban-object" target="188"/>
+          <link capacity="-1" kind="urban-object" target="199"/>
+          <link capacity="-1" kind="urban-object" target="107"/>
+          <link capacity="-1" kind="urban-object" target="160"/>
+        </node>
+      </resources>
+    </urban-object>
+    <urban-object id="188">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="197">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="199">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="201">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="203">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="204">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0"/>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="207">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="eau courante" stock="0">
+          <link capacity="-1" kind="urban-object" target="203"/>
+          <link capacity="-1" kind="urban-object" target="197"/>
+          <link capacity="-1" kind="urban-object" target="195"/>
+          <link capacity="-1" kind="urban-object" target="193"/>
+          <link capacity="-1" kind="urban-object" target="204"/>
+          <link capacity="-1" kind="urban-object" target="132"/>
+          <link capacity="-1" kind="urban-object" target="129"/>
+          <link capacity="-1" kind="urban-object" target="135"/>
+          <link capacity="-1" kind="urban-object" target="208"/>
+          <link capacity="-1" kind="urban-object" target="202"/>
+          <link capacity="-1" kind="urban-object" target="130"/>
+          <link capacity="-1" kind="urban-object" target="113"/>
+          <link capacity="-1" kind="urban-object" target="109"/>
+          <link capacity="-1" kind="urban-object" target="133"/>
+          <link capacity="-1" kind="urban-object" target="131"/>
+          <link capacity="-1" kind="urban-object" target="2"/>
+          <link capacity="-1" kind="urban-object" target="114"/>
+          <link capacity="-1" kind="urban-object" target="81"/>
+          <link capacity="-1" kind="urban-object" target="82"/>
+          <link capacity="-1" kind="urban-object" target="83"/>
+          <link capacity="-1" kind="urban-object" target="201"/>
+          <link capacity="-1" kind="urban-object" target="139"/>
+        </node>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="electricite" stock="0"/>
+      </resources>
+    </urban-object>
+  </urban-objects>
+</urban-state>
+<!-- signature="1950896364" -->

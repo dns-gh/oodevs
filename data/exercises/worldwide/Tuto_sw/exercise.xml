@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<exercise model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/exercise.xsd">
+  <meta>
+    <name><![CDATA[Tutorial (Sweden)]]></name>
+    <briefing>
+      <text lang="en"><![CDATA[<html><head><meta name="qrichtext" content="1" /></head><body style="font-size:8pt;font-family:MS Shell Dlg">
+<p style="margin-top:18px"><span style="font-size:16pt;font-weight:600">Sword's tutorial (Swedish terrain)</span></p>
+<p>This demo shows the main features of Sword v4.2, on a Swedish terrain. It is mainly used to demonstrate Sword, but also as a training session in workshops</p>
+<p style="margin-top:16px"><span style="font-size:12pt;font-weight:600">Profiles</span></p>
+<ul type="disc"><li><span style="font-weight:600">Supervisor:</span> use this profile to demonstrate Sword</li>
+<li><span style="font-weight:600">Red:</span> use this profile during the workshop on a additional screen to display the red view</li>
+<li><span style="font-weight:600">Blue:</span> use this profile during the workshop for trainee to train using Sword as a blue player</li></ul>
+<p style="margin-top:16px"><span style="font-size:12pt;font-weight:600">How to use it</span></p>
+<ul type="disc"><li>As a supervisor, load the &quot;all.ord&quot; file to demonstrate the scenario</li>
+<li>A a blue player (for trainees), load the &quot;all_interactive.ord&quot; file. All units with a * have to be played manually by the trainees</li></ul>
+<p style="margin-top:16px"><span style="font-size:12pt;font-weight:600">Scenario</span></p>
+<li type="disc">The scenario begins with an invasion by the red units, crossing the virtual frontier (water). As a reaction, blue units will advance, recon the situation with an UAV, repel the red units using artillery, recom and clean the area of mines, then counter-attack.</li>
+<li type="disc">During the interactive scenario, the trainee must give the following orders :</li>
+<ul type="disc"><li>05h46 : MBT Squadron 52 : Control (Österstad area)</li>
+<li>06h14 : Drone 39 : Report information on the frontier</li>
+<li>06h52 : Artillery firing platoon 71 : Operate on position (deploy)</li>
+<li>07h18 : Artillery firing platoon 71 : Fire (Grankulla area)</li>
+<li>07h39 : Artillery firing platoon 71 : Fire (Grankulla area)</li>
+<li>08h07 : MBT Squadron 52 : Recon in force (Vedemö area)</li>
+<li>08h35 : Engineer recon 81 : Recon an area (Grankulla area)</li>
+<li>08h55 : Countermobility platoon 97 : Breach an area (Grankulla area)</li>
+<li>09h36 : MBT Squadron 52 : Seize (Sättran area)</li></ul>
+</body></html>
+]]></text>
+    </briefing>
+    <resources/>
+  </meta>
+  <profiles file="profiles.xml"/>
+  <orbat file="orbat.xml"/>
+  <urbanstate file="urbanstate.xml"/>
+  <weather file="weather.xml"/>
+  <terrain name="Sw_terrain2"/>
+  <model dataset="ada" physical="worldwide"/>
+</exercise>
+<!-- signature="0386105883" -->

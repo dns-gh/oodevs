@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Azules" type="friend">
+      <objects>
+        <object id="292" name="Landing Zone (helicopter) [292]" type="landing area (helicopter)">
+          <shape type="polygone">
+            <points>
+              <point>30SWG1698728062</point>
+              <point>30SWG1784930395</point>
+              <point>30SWG2033430900</point>
+              <point>30SWG2044429178</point>
+              <point>30SWG1965228711</point>
+              <point>30SWG1940227419</point>
+              <point>30SWG1835726987</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="293" name="Rearm, Refuel and Resupply Point (R3P) [293]" type="logistic support area">
+          <shape type="point">
+            <points>
+              <point>30SWG2083931322</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="294" name="Rearm, Refuel and Resupply Point (R3P) [294]" type="logistic support area">
+          <shape type="point">
+            <points>
+              <point>30SWG5416838463</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="295" name="Landing Zone [295]" type="landing area">
+          <shape type="polygone">
+            <points>
+              <point>30SWG0382931833</point>
+              <point>30SWG0713933690</point>
+              <point>30SWG0736133095</point>
+              <point>30SWG0809633062</point>
+              <point>30SWG0804532501</point>
+              <point>30SWG0678331547</point>
+              <point>30SWG0451330524</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="3" level="x" name="Brigada Azul">
+          <formation id="4" level="ii" name="Batallón Acorazado 1">
+            <automat engaged="true" id="5" knowledge-group="6" name="Escuadrón de Carros de Combate" type="MBT squadron">
+              <unit command-post="true" id="7" name="PM Escuadrón de Carros de Combate" position="30SWG2723153721" type="Armored squadron CP"/>
+              <unit command-post="false" id="8" name="Sección de Carros de Combate" position="30SWG2773253224" type="MBT platoon"/>
+              <unit command-post="false" id="9" name="Sección de Carros de Combate" position="30SWG2723352725" type="MBT platoon"/>
+              <unit command-post="false" id="10" name="Sección de Carros de Combate" position="30SWG2673253222" type="MBT platoon"/>
+              <unit command-post="false" id="11" name="Sección de Carros de Combate" position="30SWG2773253722" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="12" knowledge-group="6" name="Escuadrón de Carros de Combate" type="MBT squadron">
+              <unit command-post="true" id="13" name="PM Escuadrón de Carros de Combate" position="30SWG2576554638" type="Armored squadron CP"/>
+              <unit command-post="false" id="14" name="Sección de Carros de Combate" position="30SWG2626654140" type="MBT platoon"/>
+              <unit command-post="false" id="15" name="Sección de Carros de Combate" position="30SWG2576653641" type="MBT platoon"/>
+              <unit command-post="false" id="16" name="Sección de Carros de Combate" position="30SWG2526554139" type="MBT platoon"/>
+              <unit command-post="false" id="17" name="Sección de Carros de Combate" position="30SWG2626554639" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="18" knowledge-group="6" name="Escuadrón de Carros de Combate" type="MBT squadron">
+              <unit command-post="true" id="19" name="PM Escuadrón de Carros de Combate" position="30SWG2793455775" type="Armored squadron CP"/>
+              <unit command-post="false" id="20" name="Sección de Carros de Combate" position="30SWG2843555278" type="MBT platoon"/>
+              <unit command-post="false" id="21" name="Sección de Carros de Combate" position="30SWG2793654779" type="MBT platoon"/>
+              <unit command-post="false" id="22" name="Sección de Carros de Combate" position="30SWG2743555276" type="MBT platoon"/>
+              <unit command-post="false" id="23" name="Sección de Carros de Combate" position="30SWG2843555776" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="78" knowledge-group="6" logistic-level="logistic-base" name="Grupo Logístico" type="Logistic combat train">
+              <unit command-post="true" id="79" name="PM Grupo Logístico" position="30SWG2263954147" type="Logistic CT">
+                <stocks>
+                  <resource name="12,7-mm Bullet" quantity="10000"/>
+                  <resource name="7.62-mm Bullet" quantity="20000"/>
+                  <resource name="120-mm Shaped Charge" quantity="300"/>
+                  <resource name="5.56-mm Bullet" quantity="10000"/>
+                  <resource name="120-mm armour-piercing shell" quantity="200"/>
+                  <resource name="Diesel" quantity="20000"/>
+                  <resource name="Food" quantity="1000"/>
+                  <resource name="Water" quantity="5000"/>
+                </stocks>
+              </unit>
+            </automat>
+          </formation>
+          <formation id="35" level="ii" name="Batallón de Infantería Mecanizada">
+            <automat engaged="true" id="36" knowledge-group="6" name="Compañía de Infantería Mecanizada. BMR" type="Mech Infantry CO (BFV)">
+              <unit command-post="true" id="37" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG2452758875" type="Mech Infantry CO HQ (BFV)"/>
+              <unit command-post="false" id="38" name="Sección de Infantería Mecanizada. BMR" position="30SWG2502858377" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="39" name="Sección de Infantería Mecanizada. BMR" position="30SWG2452857878" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="40" name="Sección de Infantería Mecanizada. BMR" position="30SWG2402758376" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="71" name="Sección de Infantería Mecanizada. BMR" position="30SWG2376557984" type="Mech Infantry PLT (BFV)"/>
+            </automat>
+            <automat engaged="true" id="41" knowledge-group="6" name="Compañía de Infantería Mecanizada. BMR" type="Mech Infantry CO (BFV)">
+              <unit command-post="true" id="42" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG2541063262" type="Mech Infantry CO HQ (BFV)"/>
+              <unit command-post="false" id="43" name="Sección de Infantería Mecanizada. BMR" position="30SWG2591162764" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="44" name="Sección de Infantería Mecanizada. BMR" position="30SWG2541162265" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="45" name="Sección de Infantería Mecanizada. BMR" position="30SWG2491062763" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="72" name="Sección de Infantería Mecanizada. BMR" position="30SWG2625262200" type="Mech Infantry PLT (BFV)"/>
+            </automat>
+            <automat engaged="true" id="46" knowledge-group="6" name="Compañía de Infantería Mecanizada. BMR" type="Mech Infantry CO (BFV)">
+              <unit command-post="true" id="47" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG2521061019" type="Mech Infantry CO HQ (BFV)"/>
+              <unit command-post="false" id="48" name="Sección de Infantería Mecanizada. BMR" position="30SWG2571260521" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="49" name="Sección de Infantería Mecanizada. BMR" position="30SWG2521260022" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="50" name="Sección de Infantería Mecanizada. BMR" position="30SWG2471160520" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="73" name="Sección de Infantería Mecanizada. BMR" position="30SWG2606859693" type="Mech Infantry PLT (BFV)"/>
+            </automat>
+            <automat engaged="true" id="76" knowledge-group="6" logistic-level="logistic-base" name="Grupo Logístico" type="Logistic combat train">
+              <unit command-post="true" id="77" name="PM Grupo Logístico" position="30SWG1889058743" type="Logistic CT">
+                <stocks>
+                  <resource name="12,7-mm Bullet" quantity="50000"/>
+                  <resource name="7.62-mm Bullet" quantity="100000"/>
+                  <resource name="5.56-mm Bullet" quantity="50000"/>
+                  <resource name="25-mm Shell" quantity="10000"/>
+                  <resource name="Diesel" quantity="40000"/>
+                  <resource name="Food" quantity="10000"/>
+                  <resource name="Water" quantity="50000"/>
+                </stocks>
+              </unit>
+            </automat>
+          </formation>
+          <formation id="51" level="ii" name=" Batallón de Infantería Motorizada">
+            <automat engaged="true" id="80" knowledge-group="6" logistic-level="logistic-base" name="Grupo Logístico" type="Logistic combat train">
+              <unit command-post="true" id="81" name="PM Grupo Logístico" position="30SWG2696940607" type="Logistic CT">
+                <stocks>
+                  <resource name="12,7-mm Bullet" quantity="100000"/>
+                  <resource name="7.62-mm Bullet" quantity="50000"/>
+                  <resource name="5.56-mm Bullet" quantity="80000"/>
+                  <resource name="68-mm Rocket" quantity="1000"/>
+                  <resource name="Diesel" quantity="40000"/>
+                  <resource name="Food" quantity="10000"/>
+                  <resource name="Water" quantity="50000"/>
+                </stocks>
+              </unit>
+            </automat>
+            <automat engaged="true" id="334" knowledge-group="6" name="Compañía de Infantería Motorizada" type="Infantry company">
+              <unit command-post="true" id="335" name="Infantry company CP" position="30SWG2737042868" type="Infantry company CP"/>
+              <unit command-post="false" id="336" name="Infantry platoon" position="30SWG2787142371" type="Infantry platoon"/>
+              <unit command-post="false" id="337" name="MRA troop" position="30SWG2737141872" type="MRA troop"/>
+              <unit command-post="false" id="338" name="Mortar troop" position="30SWG2687042369" type="Mortar troop"/>
+              <unit command-post="false" id="339" name="Light armored platoon" position="30SWG2787042869" type="Light armored platoon"/>
+            </automat>
+            <automat engaged="true" id="340" knowledge-group="6" name="Compañía de Infantería Motorizada" type="Infantry company">
+              <unit command-post="true" id="341" name="Sección de Infantería Motorizada CP" position="30SWG3081742329" type="Infantry company CP"/>
+              <unit command-post="false" id="342" name="Sección de Infantería Motorizada" position="30SWG3131841831" type="Infantry platoon"/>
+              <unit command-post="false" id="343" name="MRA troop" position="30SWG3081841332" type="MRA troop"/>
+              <unit command-post="false" id="344" name="Mortar troop" position="30SWG3031741830" type="Mortar troop"/>
+              <unit command-post="false" id="345" name="Light armored platoon" position="30SWG3131742329" type="Light armored platoon"/>
+            </automat>
+            <automat engaged="true" id="346" knowledge-group="6" name="Compañía de Infantería Motorizada" type="Infantry company">
+              <unit command-post="true" id="347" name="Infantry company CP" position="30SWG2956739584" type="Infantry company CP"/>
+              <unit command-post="false" id="348" name="Infantry platoon" position="30SWG3006839086" type="Infantry platoon"/>
+              <unit command-post="false" id="349" name="MRA troop" position="30SWG2956838587" type="MRA troop"/>
+              <unit command-post="false" id="350" name="Mortar troop" position="30SWG2906739085" type="Mortar troop"/>
+              <unit command-post="false" id="351" name="Light armored platoon" position="30SWG3006739584" type="Light armored platoon"/>
+            </automat>
+          </formation>
+          <formation id="114" level="ii" name="Batallón Acorazado 2">
+            <automat engaged="true" id="115" knowledge-group="6" name="Escuadrón de Carros de Combate" type="MBT squadron">
+              <unit command-post="true" id="116" name="PM Escuadrón de Carros de Combate" position="30SWG2995046957" type="Armored squadron CP"/>
+              <unit command-post="false" id="117" name="Sección de Carros de Combate" position="30SWG3045146460" type="MBT platoon"/>
+              <unit command-post="false" id="118" name="Sección de Carros de Combate" position="30SWG2995145961" type="MBT platoon"/>
+              <unit command-post="false" id="119" name="Sección de Carros de Combate" position="30SWG2945046458" type="MBT platoon"/>
+              <unit command-post="false" id="120" name="Sección de Carros de Combate" position="30SWG3045046958" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="121" knowledge-group="6" name="Escuadrón de Carros de Combate" type="MBT squadron">
+              <unit command-post="true" id="122" name="PM Escuadrón de Carros de Combate" position="30SWG2783450034" type="Armored squadron CP"/>
+              <unit command-post="false" id="123" name="Sección de Carros de Combate" position="30SWG2833549537" type="MBT platoon"/>
+              <unit command-post="false" id="124" name="Sección de Carros de Combate" position="30SWG2783549038" type="MBT platoon"/>
+              <unit command-post="false" id="125" name="Sección de Carros de Combate" position="30SWG2733449535" type="MBT platoon"/>
+              <unit command-post="false" id="126" name="Sección de Carros de Combate" position="30SWG2833450035" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="127" knowledge-group="6" name="Escuadrón de Carros de Combate" type="MBT squadron">
+              <unit command-post="true" id="128" name="PM Escuadrón de Carros de Combate" position="30SWG2847447857" type="Armored squadron CP"/>
+              <unit command-post="false" id="129" name="Sección de Carros de Combate" position="30SWG2897547359" type="MBT platoon"/>
+              <unit command-post="false" id="130" name="Sección de Carros de Combate" position="30SWG2847546859" type="MBT platoon"/>
+              <unit command-post="false" id="131" name="Sección de Carros de Combate" position="30SWG2797447357" type="MBT platoon"/>
+              <unit command-post="false" id="132" name="Sección de Carros de Combate" position="30SWG2897447857" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="133" knowledge-group="6" logistic-level="logistic-base" name="Grupo Logístico" type="Logistic combat train">
+              <unit command-post="true" id="134" name="PM Grupo Logístico" position="30SWG2508645084" type="Logistic CT">
+                <stocks>
+                  <resource name="12,7-mm Bullet" quantity="10000"/>
+                  <resource name="7.62-mm Bullet" quantity="20000"/>
+                  <resource name="120-mm Shaped Charge" quantity="300"/>
+                  <resource name="5.56-mm Bullet" quantity="10000"/>
+                  <resource name="120-mm armour-piercing shell" quantity="200"/>
+                  <resource name="Diesel" quantity="20000"/>
+                  <resource name="Food" quantity="1000"/>
+                  <resource name="Water" quantity="5000"/>
+                </stocks>
+              </unit>
+            </automat>
+          </formation>
+          <formation id="267" level="ii" name="Formation [267]">
+            <automat engaged="true" id="268" knowledge-group="6" name="Drones station [268]" type="Drones station">
+              <unit command-post="true" id="269" name="Drones station" position="30SWG0880730839" type="Drones station"/>
+              <unit command-post="false" id="272" name="Drone (real time)" position="30SWG0882430837" type="Drone (real time)"/>
+              <unit command-post="false" id="273" name="Drone (real time)" position="30SWG0883830844" type="Drone (real time)"/>
+            </automat>
+            <automat engaged="false" id="275" knowledge-group="6" name="Attack Helicopter squadron [275]" type="Attack Helicopter squadron">
+              <unit command-post="true" id="276" name="AAC CP" position="30SWG1850028978" type="AAC CP"/>
+              <unit command-post="false" id="277" name="Antitank Helicopter Patrol" position="30SWG1900128481" type="Antitank Helicopter Patrol"/>
+              <unit command-post="false" id="281" name="Air Defence Helicopter Patrol" position="30SWG1920828481" type="Air Defence Helicopter Patrol"/>
+              <unit command-post="false" id="287" name="Antitank Helicopter Patrol" position="30SWG1836528379" type="Antitank Helicopter Patrol"/>
+              <unit command-post="false" id="288" name="Antitank Helicopter Patrol" position="30SWG1926929281" type="Antitank Helicopter Patrol"/>
+              <unit command-post="false" id="289" name="Antitank Helicopter Patrol" position="30SWG1927028155" type="Antitank Helicopter Patrol"/>
+            </automat>
+            <automat engaged="false" id="282" knowledge-group="6" name="Strategic Bomber Squadron [282]" type="Strategic Bomber Squadron">
+              <unit command-post="true" id="283" name="Air CP" position="30SWG0458131340" type="Air CP"/>
+              <unit command-post="false" id="284" name="Strategic Bomber Patrol" position="30SWG0577532056" type="Strategic Bomber Patrol"/>
+              <unit command-post="false" id="285" name="Strategic Bomber Patrol" position="30SWG0546831478" type="Strategic Bomber Patrol"/>
+              <unit command-post="false" id="286" name="Strategic Bomber Patrol" position="30SWG0521132123" type="Strategic Bomber Patrol"/>
+            </automat>
+            <automat engaged="true" id="309" knowledge-group="6" logistic-level="logistic-base" name="Logistic combat train [309]" type="Logistic combat train">
+              <unit command-post="true" id="310" name="Logistic CT" position="30SWG1135730080" type="Logistic CT">
+                <stocks>
+                  <resource name="12,7-mm Bullet" quantity="21450"/>
+                  <resource name="7.62-mm Bullet" quantity="7500"/>
+                  <resource name="5.56-mm Bullet" quantity="23400"/>
+                  <resource name="Very Short Range Surface To Air Missile" quantity="30"/>
+                  <resource name="9.00-mm Bullet" quantity="45"/>
+                  <resource name="Antitank Missile" quantity="120"/>
+                  <resource name="Air Bomb" quantity="3000"/>
+                  <resource name="Antitank Air Bomb" quantity="600"/>
+                  <resource name="Diesel" quantity="28415"/>
+                  <resource name="Kerosene" quantity="348250"/>
+                  <resource name="UR NTI1 MOB" quantity="150"/>
+                  <resource name="UR NTI1 EA" quantity="30"/>
+                  <resource name="Food" quantity="935"/>
+                  <resource name="Water" quantity="5610"/>
+                </stocks>
+              </unit>
+            </automat>
+          </formation>
+          <formation id="296" level="ii" name="Formation [296]">
+            <automat engaged="false" id="297" knowledge-group="6" name="Artillery firing battery [297]" type="Artillery firing battery">
+              <unit command-post="true" id="298" name="Battery CP" position="30SWG1682454615" type="Battery CP"/>
+              <unit command-post="false" id="299" name="Artillery firing platoon" position="30SWG1732554117" type="Artillery firing platoon"/>
+              <unit command-post="false" id="300" name="Artillery firing platoon" position="30SWG1682553618" type="Artillery firing platoon"/>
+            </automat>
+            <automat engaged="false" id="301" knowledge-group="6" name="Artillery firing battery [301]" type="Artillery firing battery">
+              <unit command-post="true" id="302" name="Battery CP" position="30SWG1741652775" type="Battery CP"/>
+              <unit command-post="false" id="303" name="Artillery firing platoon" position="30SWG1791752277" type="Artillery firing platoon"/>
+              <unit command-post="false" id="304" name="Artillery firing platoon" position="30SWG1741851778" type="Artillery firing platoon"/>
+            </automat>
+            <automat engaged="false" id="305" knowledge-group="6" name="Artillery firing battery [305]" type="Artillery firing battery">
+              <unit command-post="true" id="306" name="Battery CP" position="30SWG1572651833" type="Battery CP"/>
+              <unit command-post="false" id="307" name="Artillery firing platoon" position="30SWG1622751335" type="Artillery firing platoon"/>
+              <unit command-post="false" id="308" name="Artillery firing platoon" position="30SWG1572750836" type="Artillery firing platoon"/>
+            </automat>
+            <automat engaged="true" id="311" knowledge-group="6" logistic-level="logistic-base" name="Logistic combat train [311]" type="Logistic combat train">
+              <unit command-post="true" id="312" name="Logistic CT" position="30SWG1552953768" type="Logistic CT">
+                <stocks>
+                  <resource name="12,7-mm Bullet" quantity="43650"/>
+                  <resource name="7.62-mm Bullet" quantity="16500"/>
+                  <resource name="5.56-mm Bullet" quantity="37650"/>
+                  <resource name="155-mm High Explosive Shell Rear Skirt" quantity="120"/>
+                  <resource name="155-mm Sub-Munition Shell" quantity="120"/>
+                  <resource name="155-mm Antitank High Explosive Shell" quantity="120"/>
+                  <resource name="155-mm Illumination Round" quantity="840"/>
+                  <resource name="155-mm Smoke Shell" quantity="960"/>
+                  <resource name="Diesel" quantity="43265"/>
+                  <resource name="Standard Landmine" quantity="300"/>
+                  <resource name="Standard Barbed Wire" quantity="300"/>
+                  <resource name="UR NTI1 MOB" quantity="150"/>
+                  <resource name="UR NTI1 EA" quantity="30"/>
+                  <resource name="Food" quantity="1290"/>
+                  <resource name="Water" quantity="7740"/>
+                </stocks>
+              </unit>
+            </automat>
+            <automat engaged="false" id="330" knowledge-group="6" name="Ground suveillance radar [330]" type="Ground suveillance radar">
+              <unit command-post="true" id="331" name="Ground surveillance radar" position="30SWG1687958091" type="Ground surveillance radar"/>
+            </automat>
+          </formation>
+          <formation id="313" level="ii" name="Formation [313]">
+            <automat engaged="false" id="314" knowledge-group="6" name="Countermobility company [314]" type="Countermobility company">
+              <unit command-post="true" id="315" name="Countermobility platoon" position="30SWG2183440061" type="Countermobility platoon"/>
+              <unit command-post="false" id="316" name="Countermobility platoon" position="30SWG2233539563" type="Countermobility platoon"/>
+              <unit command-post="false" id="317" name="Countermobility platoon" position="30SWG2183639064" type="Countermobility platoon"/>
+              <unit command-post="false" id="322" name="Countermobility platoon" position="30SWG2263540549" type="Countermobility platoon"/>
+              <unit command-post="false" id="323" name="Countermobility platoon" position="30SWG2192741158" type="Countermobility platoon"/>
+            </automat>
+            <automat engaged="false" id="318" knowledge-group="6" name="Countermobility company [318]" type="Countermobility company">
+              <unit command-post="true" id="319" name="Countermobility platoon" position="30SWG2292039076" type="Countermobility platoon"/>
+              <unit command-post="false" id="320" name="Countermobility platoon" position="30SWG2342138579" type="Countermobility platoon"/>
+              <unit command-post="false" id="321" name="Countermobility platoon" position="30SWG2292138080" type="Countermobility platoon"/>
+              <unit command-post="false" id="324" name="Countermobility platoon" position="30SWG2409938861" type="Countermobility platoon"/>
+              <unit command-post="false" id="325" name="Countermobility platoon" position="30SWG2329639893" type="Countermobility platoon"/>
+            </automat>
+            <automat engaged="true" id="326" knowledge-group="6" logistic-level="logistic-base" name="Logistic combat train [326]" type="Logistic combat train">
+              <unit command-post="true" id="327" name="Logistic CT" position="30SWG2117639027" type="Logistic CT">
+                <stocks>
+                  <resource name="12,7-mm Bullet" quantity="43450"/>
+                  <resource name="7.62-mm Bullet" quantity="7500"/>
+                  <resource name="5.56-mm Bullet" quantity="65400"/>
+                  <resource name="Diesel" quantity="17955"/>
+                  <resource name="Standard Explosive" quantity="40000"/>
+                  <resource name="Standard Landmine" quantity="10000"/>
+                  <resource name="Standard Barbed Wire" quantity="2000"/>
+                  <resource name="UR NTI1 MOB" quantity="150"/>
+                  <resource name="UR NTI1 EA" quantity="30"/>
+                  <resource name="Food" quantity="2215"/>
+                  <resource name="Water" quantity="13290"/>
+                </stocks>
+              </unit>
+            </automat>
+          </formation>
+        </formation>
+        <formation id="82" level="x" logistic-level="logistic-base" name="Base Logística">
+          <automat engaged="true" id="84" knowledge-group="6" name="Área de Mantenimiento" type="Maintenance logistic area (division)">
+            <unit command-post="true" id="85" name="PM Mantenimiento" position="30SVG9579638705" type="Maintenance CP  (division)"/>
+            <unit command-post="false" id="86" name="Grupo de evacuación de mantenimiento" position="30SVG9629738207" type="Maintenance evacuation group"/>
+            <unit command-post="false" id="87" name="Sección móvil de reparaciones" position="30SVG9579837708" type="Mobility repairs section (division)"/>
+            <unit command-post="false" id="88" name="Sección de reparaciones" position="30SVG9529638206" type="Repairs section (division)"/>
+            <unit command-post="false" id="89" name="Sección de bomberos móvil" position="30SVG9629738705" type="Firing mobility repairs section  (division)"/>
+          </automat>
+          <automat engaged="true" id="90" knowledge-group="6" name="Área Medica" type="Medical logistic area (division)">
+            <unit command-post="true" id="91" name="PM Médico" position="30SVG9719137529" type="Medical CP (division)"/>
+            <unit command-post="false" id="92" name="Medical group VAB" position="30SVG9769237032" type="Medical group VAB"/>
+            <unit command-post="false" id="93" name="Grupo de evacuación médica" position="30SVG9719236533" type="Casualty evacuation group"/>
+            <unit command-post="false" id="94" name="Sección de descontaminación médica" position="30SVG9669137030" type="Logistic decontamination section"/>
+            <unit command-post="false" id="95" name="Sección de psicología médica" position="30SVG9769237530" type="Psychological section"/>
+            <unit command-post="false" id="96" name="Sección médica" position="30SVG9789937032" type="Medical section"/>
+            <unit command-post="false" id="97" name="Sección de cirugía" position="30SVG9769336534" type="Surgical section (modular)"/>
+            <unit command-post="false" id="98" name="Sección de cirugía HMC" position="30SVG9719336326" type="Surgical section HMC"/>
+            <unit command-post="false" id="99" name="Sección de evaluación médica" position="30SVG9669236532" type="Casualty assessment section"/>
+          </automat>
+          <automat engaged="true" id="100" knowledge-group="6" name="Área de Abastecimiento" type="Supply logistic area  (division)">
+            <unit command-post="true" id="101" name="PM Abastecimiento" position="30SVG9815939202" type="Supply CP (division)"/>
+            <unit command-post="false" id="104" name="Grupo de Abastecimiento de Víveres" position="30SVG9765938703" type="Water supply group"/>
+            <unit command-post="false" id="105" name="Grupo de Abastecimiento de Munición" position="30SVG9865939202" type="Ammo supply group">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="73760"/>
+                <resource name="7.62-mm Bullet" quantity="72192"/>
+                <resource name="120-mm Shaped Charge" quantity="480"/>
+                <resource name="5.56-mm Bullet" quantity="95550"/>
+                <resource name="Very Short Range Surface To Air Missile" quantity="6"/>
+                <resource name="155-mm High Explosive Shell Rear Skirt" quantity="24"/>
+                <resource name="155-mm Sub-Munition Shell" quantity="24"/>
+                <resource name="155-mm Antitank High Explosive Shell" quantity="24"/>
+                <resource name="155-mm Illumination Round" quantity="168"/>
+                <resource name="155-mm Smoke Shell" quantity="192"/>
+                <resource name="9.00-mm Bullet" quantity="9"/>
+                <resource name="120-mm armour-piercing shell" quantity="288"/>
+                <resource name="Antitank Missile" quantity="132"/>
+                <resource name="Air Bomb" quantity="600"/>
+                <resource name="25-mm Shell" quantity="540"/>
+                <resource name="Antitank Air Bomb" quantity="120"/>
+                <resource name="Diesel" quantity="71767"/>
+                <resource name="Gas" quantity="6"/>
+                <resource name="Kerosene" quantity="71200"/>
+                <resource name="Standard Explosive" quantity="8000"/>
+                <resource name="Standard Landmine" quantity="2630"/>
+                <resource name="Standard Barbed Wire" quantity="1180"/>
+                <resource name="UR NTI1 MOB" quantity="372"/>
+                <resource name="UR NTI2 MOB" quantity="60"/>
+                <resource name="UR NTI1 TCT" quantity="72"/>
+                <resource name="UR NTI2 TCT" quantity="6"/>
+                <resource name="UR NTI2 TRS" quantity="22"/>
+                <resource name="UR NTI2 COTAC" quantity="22"/>
+                <resource name="UR NTI2 DEM" quantity="22"/>
+                <resource name="UR NTI1 EA" quantity="180"/>
+                <resource name="Food" quantity="3353"/>
+                <resource name="Water" quantity="20118"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="109" name="Grupo de Abastecimiento de Munición 60m3" position="30SVG9854438571" type="Supply group 60m3">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="73760"/>
+                <resource name="7.62-mm Bullet" quantity="72192"/>
+                <resource name="120-mm Shaped Charge" quantity="480"/>
+                <resource name="5.56-mm Bullet" quantity="95550"/>
+                <resource name="Very Short Range Surface To Air Missile" quantity="6"/>
+                <resource name="155-mm High Explosive Shell Rear Skirt" quantity="24"/>
+                <resource name="155-mm Sub-Munition Shell" quantity="24"/>
+                <resource name="155-mm Antitank High Explosive Shell" quantity="24"/>
+                <resource name="155-mm Illumination Round" quantity="168"/>
+                <resource name="155-mm Smoke Shell" quantity="192"/>
+                <resource name="9.00-mm Bullet" quantity="9"/>
+                <resource name="120-mm armour-piercing shell" quantity="288"/>
+                <resource name="Antitank Missile" quantity="132"/>
+                <resource name="Air Bomb" quantity="600"/>
+                <resource name="25-mm Shell" quantity="540"/>
+                <resource name="Antitank Air Bomb" quantity="120"/>
+                <resource name="Diesel" quantity="71767"/>
+                <resource name="Gas" quantity="6"/>
+                <resource name="Kerosene" quantity="71200"/>
+                <resource name="Standard Explosive" quantity="8000"/>
+                <resource name="Standard Landmine" quantity="2630"/>
+                <resource name="Standard Barbed Wire" quantity="1180"/>
+                <resource name="UR NTI1 MOB" quantity="372"/>
+                <resource name="UR NTI2 MOB" quantity="60"/>
+                <resource name="UR NTI1 TCT" quantity="72"/>
+                <resource name="UR NTI2 TCT" quantity="6"/>
+                <resource name="UR NTI2 TRS" quantity="22"/>
+                <resource name="UR NTI2 COTAC" quantity="22"/>
+                <resource name="UR NTI2 DEM" quantity="22"/>
+                <resource name="UR NTI1 EA" quantity="180"/>
+                <resource name="Food" quantity="3353"/>
+                <resource name="Water" quantity="20118"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="111" name="Sección de Transporte de Abastecimiento" position="30SVG9765839201" type="Supply Transportation platoon"/>
+            <unit command-post="false" id="112" name="Grupo de Abastecimiento de Munición 35m3" position="30SVG9815839408" type="Supply group 35m3">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="73760"/>
+                <resource name="7.62-mm Bullet" quantity="72192"/>
+                <resource name="120-mm Shaped Charge" quantity="480"/>
+                <resource name="5.56-mm Bullet" quantity="95550"/>
+                <resource name="Very Short Range Surface To Air Missile" quantity="6"/>
+                <resource name="155-mm High Explosive Shell Rear Skirt" quantity="24"/>
+                <resource name="155-mm Sub-Munition Shell" quantity="24"/>
+                <resource name="155-mm Antitank High Explosive Shell" quantity="24"/>
+                <resource name="155-mm Illumination Round" quantity="168"/>
+                <resource name="155-mm Smoke Shell" quantity="192"/>
+                <resource name="9.00-mm Bullet" quantity="9"/>
+                <resource name="120-mm armour-piercing shell" quantity="288"/>
+                <resource name="Antitank Missile" quantity="132"/>
+                <resource name="Air Bomb" quantity="600"/>
+                <resource name="25-mm Shell" quantity="540"/>
+                <resource name="Antitank Air Bomb" quantity="120"/>
+                <resource name="Diesel" quantity="71767"/>
+                <resource name="Gas" quantity="6"/>
+                <resource name="Kerosene" quantity="71200"/>
+                <resource name="Standard Explosive" quantity="8000"/>
+                <resource name="Standard Landmine" quantity="2630"/>
+                <resource name="Standard Barbed Wire" quantity="1180"/>
+                <resource name="UR NTI1 MOB" quantity="372"/>
+                <resource name="UR NTI2 MOB" quantity="60"/>
+                <resource name="UR NTI1 TCT" quantity="72"/>
+                <resource name="UR NTI2 TCT" quantity="6"/>
+                <resource name="UR NTI2 TRS" quantity="22"/>
+                <resource name="UR NTI2 COTAC" quantity="22"/>
+                <resource name="UR NTI2 DEM" quantity="22"/>
+                <resource name="UR NTI1 EA" quantity="180"/>
+                <resource name="Food" quantity="3353"/>
+                <resource name="Water" quantity="20118"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="113" name="Grupo de Abastecimiento de Munición 180m3" position="30SVG9783538550" type="Supply group180m3">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="73760"/>
+                <resource name="7.62-mm Bullet" quantity="72192"/>
+                <resource name="120-mm Shaped Charge" quantity="480"/>
+                <resource name="5.56-mm Bullet" quantity="95550"/>
+                <resource name="Very Short Range Surface To Air Missile" quantity="6"/>
+                <resource name="155-mm High Explosive Shell Rear Skirt" quantity="24"/>
+                <resource name="155-mm Sub-Munition Shell" quantity="24"/>
+                <resource name="155-mm Antitank High Explosive Shell" quantity="24"/>
+                <resource name="155-mm Illumination Round" quantity="168"/>
+                <resource name="155-mm Smoke Shell" quantity="192"/>
+                <resource name="9.00-mm Bullet" quantity="9"/>
+                <resource name="120-mm armour-piercing shell" quantity="288"/>
+                <resource name="Antitank Missile" quantity="132"/>
+                <resource name="Air Bomb" quantity="600"/>
+                <resource name="25-mm Shell" quantity="540"/>
+                <resource name="Antitank Air Bomb" quantity="120"/>
+                <resource name="Diesel" quantity="71767"/>
+                <resource name="Gas" quantity="6"/>
+                <resource name="Kerosene" quantity="71200"/>
+                <resource name="Standard Explosive" quantity="8000"/>
+                <resource name="Standard Landmine" quantity="2630"/>
+                <resource name="Standard Barbed Wire" quantity="1180"/>
+                <resource name="UR NTI1 MOB" quantity="372"/>
+                <resource name="UR NTI2 MOB" quantity="60"/>
+                <resource name="UR NTI1 TCT" quantity="72"/>
+                <resource name="UR NTI2 TCT" quantity="6"/>
+                <resource name="UR NTI2 TRS" quantity="22"/>
+                <resource name="UR NTI2 COTAC" quantity="22"/>
+                <resource name="UR NTI2 DEM" quantity="22"/>
+                <resource name="UR NTI1 EA" quantity="180"/>
+                <resource name="Food" quantity="3353"/>
+                <resource name="Water" quantity="20118"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="263" name="Grupo de Abastecimiento de Munición" position="30SVG9870938777" type="Ammo supply group">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="73760"/>
+                <resource name="7.62-mm Bullet" quantity="72192"/>
+                <resource name="120-mm Shaped Charge" quantity="480"/>
+                <resource name="5.56-mm Bullet" quantity="95550"/>
+                <resource name="Very Short Range Surface To Air Missile" quantity="6"/>
+                <resource name="155-mm High Explosive Shell Rear Skirt" quantity="24"/>
+                <resource name="155-mm Sub-Munition Shell" quantity="24"/>
+                <resource name="155-mm Antitank High Explosive Shell" quantity="24"/>
+                <resource name="155-mm Illumination Round" quantity="168"/>
+                <resource name="155-mm Smoke Shell" quantity="192"/>
+                <resource name="9.00-mm Bullet" quantity="9"/>
+                <resource name="120-mm armour-piercing shell" quantity="288"/>
+                <resource name="Antitank Missile" quantity="132"/>
+                <resource name="Air Bomb" quantity="600"/>
+                <resource name="25-mm Shell" quantity="540"/>
+                <resource name="Antitank Air Bomb" quantity="120"/>
+                <resource name="Diesel" quantity="71767"/>
+                <resource name="Gas" quantity="6"/>
+                <resource name="Kerosene" quantity="71200"/>
+                <resource name="Standard Explosive" quantity="8000"/>
+                <resource name="Standard Landmine" quantity="2630"/>
+                <resource name="Standard Barbed Wire" quantity="1180"/>
+                <resource name="UR NTI1 MOB" quantity="372"/>
+                <resource name="UR NTI2 MOB" quantity="60"/>
+                <resource name="UR NTI1 TCT" quantity="72"/>
+                <resource name="UR NTI2 TCT" quantity="6"/>
+                <resource name="UR NTI2 TRS" quantity="22"/>
+                <resource name="UR NTI2 COTAC" quantity="22"/>
+                <resource name="UR NTI2 DEM" quantity="22"/>
+                <resource name="UR NTI1 EA" quantity="180"/>
+                <resource name="Food" quantity="3353"/>
+                <resource name="Water" quantity="20118"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="264" name="Sección de Transporte de Abastecimiento" position="30SVG9816138277" type="Supply Transportation platoon"/>
+          </automat>
+          <automat engaged="true" id="265" knowledge-group="6" logistic-level="logistic-base" name="Logistic combat train [265]" type="Logistic combat train">
+            <unit command-post="true" id="266" name="Logistic CT" position="30SVG9697438246" type="Logistic CT">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="69850"/>
+                <resource name="7.62-mm Bullet" quantity="37500"/>
+                <resource name="120-mm Shaped Charge" quantity="400"/>
+                <resource name="5.56-mm Bullet" quantity="75750"/>
+                <resource name="120-mm armour-piercing shell" quantity="240"/>
+                <resource name="Diesel" quantity="70525"/>
+                <resource name="Gas" quantity="30"/>
+                <resource name="Kerosene" quantity="7750"/>
+                <resource name="Standard Barbed Wire" quantity="750"/>
+                <resource name="UR NTI1 MOB" quantity="810"/>
+                <resource name="UR NTI2 MOB" quantity="300"/>
+                <resource name="UR NTI1 TCT" quantity="360"/>
+                <resource name="UR NTI2 TCT" quantity="30"/>
+                <resource name="UR NTI2 TRS" quantity="110"/>
+                <resource name="UR NTI2 COTAC" quantity="110"/>
+                <resource name="UR NTI2 DEM" quantity="110"/>
+                <resource name="UR NTI1 EA" quantity="690"/>
+                <resource name="Food" quantity="2680"/>
+                <resource name="Water" quantity="16080"/>
+              </stocks>
+            </unit>
+          </automat>
+          <limit name="Limit 290">
+            <point>30SVG7306445495</point>
+            <point>30SWG0796170970</point>
+            <point>30SWG7105783916</point>
+          </limit>
+          <limit name="Limit 291">
+            <point>30SWG0129009581</point>
+            <point>30SWG4205934477</point>
+            <point>30SWG9194648281</point>
+          </limit>
+        </formation>
+        <formation id="378" level="x" name="Formation [378]">
+          <automat engaged="true" id="379" knowledge-group="6" name="MBT squadron [379]" type="MBT squadron">
+            <unit command-post="true" id="380" name="Armored squadron CP" position="30SVG9481941884" type="Armored squadron CP"/>
+            <unit command-post="false" id="381" name="MBT platoon" position="30SVG9532041387" type="MBT platoon"/>
+            <unit command-post="false" id="382" name="MBT platoon" position="30SVG9482040888" type="MBT platoon"/>
+            <unit command-post="false" id="383" name="MBT platoon" position="30SVG9431941385" type="MBT platoon"/>
+            <unit command-post="false" id="384" name="MBT platoon" position="30SVG9531941885" type="MBT platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="6" name="Knowledge group [6]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="78">
+          <subordinate id="5"/>
+          <subordinate id="12"/>
+          <subordinate id="18"/>
+        </logistic-base>
+        <logistic-base id="76">
+          <subordinate id="36"/>
+          <subordinate id="41"/>
+          <subordinate id="46"/>
+          <subordinate id="330"/>
+        </logistic-base>
+        <logistic-base id="80">
+          <subordinate id="334"/>
+          <subordinate id="340"/>
+          <subordinate id="346"/>
+        </logistic-base>
+        <logistic-base id="133">
+          <subordinate id="115"/>
+          <subordinate id="121"/>
+          <subordinate id="127"/>
+        </logistic-base>
+        <logistic-base id="309">
+          <subordinate id="268"/>
+          <subordinate id="275"/>
+          <subordinate id="282"/>
+        </logistic-base>
+        <logistic-base id="311">
+          <subordinate id="297"/>
+          <subordinate id="301"/>
+          <subordinate id="305"/>
+        </logistic-base>
+        <logistic-base id="326">
+          <subordinate id="314"/>
+          <subordinate id="318"/>
+        </logistic-base>
+        <logistic-base id="265">
+          <subordinate id="84"/>
+          <subordinate id="90"/>
+          <subordinate id="100"/>
+          <subordinate id="379"/>
+        </logistic-base>
+        <logistic-base id="82">
+          <subordinate id="76"/>
+          <subordinate id="78"/>
+          <subordinate id="80"/>
+          <subordinate id="133"/>
+          <subordinate id="265">
+            <quotas>
+              <resource name="Diesel" quantity="9000"/>
+            </quotas>
+          </subordinate>
+          <subordinate id="309"/>
+          <subordinate id="311"/>
+          <subordinate id="326"/>
+        </logistic-base>
+      </logistics>
+    </party>
+    <party id="2" name="Colorados" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="180" level="x" name="Brigada Colorada">
+          <formation id="181" level="ii" name=" Batallón Acorazado 1">
+            <automat engaged="true" id="182" knowledge-group="139" name="Escuadrón de Carros de Combate" type="MBT squadron">
+              <unit command-post="true" id="183" name="PM Escuadrón de Carros de Combate" position="30SWG6573167201" type="Armored squadron CP"/>
+              <unit command-post="false" id="184" name="Sección de Carros de Combate" position="30SWG6623266704" type="MBT platoon"/>
+              <unit command-post="false" id="185" name="Sección de Carros de Combate" position="30SWG6573366205" type="MBT platoon"/>
+              <unit command-post="false" id="186" name="Sección de Carros de Combate" position="30SWG6523166702" type="MBT platoon"/>
+              <unit command-post="false" id="187" name="Sección de Carros de Combate" position="30SWG6623267202" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="188" knowledge-group="139" name="Escuadrón de Carros de Combate" type="MBT squadron">
+              <unit command-post="true" id="189" name="PM Escuadrón de Carros de Combate" position="30SWG6591664195" type="Armored squadron CP"/>
+              <unit command-post="false" id="190" name="Sección de Carros de Combate" position="30SWG6641863697" type="MBT platoon"/>
+              <unit command-post="false" id="191" name="Sección de Carros de Combate" position="30SWG6591763198" type="MBT platoon"/>
+              <unit command-post="false" id="192" name="Sección de Carros de Combate" position="30SWG6541663696" type="MBT platoon"/>
+              <unit command-post="false" id="193" name="Sección de Carros de Combate" position="30SWG6641764196" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="194" knowledge-group="139" name="Escuadrón de Carros de Combate" type="MBT squadron">
+              <unit command-post="true" id="195" name="PM Escuadrón de Carros de Combate" position="30SWG6906065381" type="Armored squadron CP"/>
+              <unit command-post="false" id="196" name="Sección de Carros de Combate" position="30SWG6956164884" type="MBT platoon"/>
+              <unit command-post="false" id="197" name="Sección de Carros de Combate" position="30SWG6906264384" type="MBT platoon"/>
+              <unit command-post="false" id="198" name="Sección de Carros de Combate" position="30SWG6856164881" type="MBT platoon"/>
+              <unit command-post="false" id="199" name="Sección de Carros de Combate" position="30SWG6956165382" type="MBT platoon"/>
+            </automat>
+          </formation>
+          <formation id="202" level="ii" name="Batallón de Infantería Mecanizada">
+            <automat engaged="true" id="203" knowledge-group="139" name="Compañía de Infantería Mecanizada. BMR" type="Mech Infantry CO (BFV)">
+              <unit command-post="true" id="204" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG6008871652" type="Mech Infantry CO HQ (BFV)"/>
+              <unit command-post="false" id="205" name="Sección de Infantería Mecanizada. BMR" position="30SWG6058971154" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="206" name="Sección de Infantería Mecanizada. BMR" position="30SWG6008970655" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="207" name="Sección de Infantería Mecanizada. BMR" position="30SWG5958871153" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="208" name="Sección de Infantería Mecanizada. BMR" position="30SWG5932670760" type="Mech Infantry PLT (BFV)"/>
+            </automat>
+            <automat engaged="true" id="209" knowledge-group="139" name="Compañía de Infantería Mecanizada. BMR" type="Mech Infantry CO (BFV)">
+              <unit command-post="true" id="210" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG5727570546" type="Mech Infantry CO HQ (BFV)"/>
+              <unit command-post="false" id="211" name="Sección de Infantería Mecanizada. BMR" position="30SWG5777670048" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="212" name="Sección de Infantería Mecanizada. BMR" position="30SWG5727769549" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="213" name="Sección de Infantería Mecanizada. BMR" position="30SWG5677570047" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="214" name="Sección de Infantería Mecanizada. BMR" position="30SWG5811769484" type="Mech Infantry PLT (BFV)"/>
+            </automat>
+            <automat engaged="true" id="215" knowledge-group="139" name="Compañía de Infantería Mecanizada. BMR" type="Mech Infantry CO (BFV)">
+              <unit command-post="true" id="216" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG5429770564" type="Mech Infantry CO HQ (BFV)"/>
+              <unit command-post="false" id="217" name="Sección de Infantería Mecanizada. BMR" position="30SWG5479870066" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="218" name="Sección de Infantería Mecanizada. BMR" position="30SWG5430069568" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="219" name="Sección de Infantería Mecanizada. BMR" position="30SWG5379870065" type="Mech Infantry PLT (BFV)"/>
+              <unit command-post="false" id="220" name="Sección de Infantería Mecanizada. BMR" position="30SWG5515569239" type="Mech Infantry PLT (BFV)"/>
+            </automat>
+          </formation>
+          <formation id="223" level="ii" name="Batallón de Infantería Motorizada">
+            <automat engaged="true" id="354" knowledge-group="139" name="Infantry company [354]" type="Infantry company">
+              <unit command-post="true" id="355" name="Infantry company CP" position="30SWG5457351007" type="Infantry company CP"/>
+              <unit command-post="false" id="356" name="Infantry platoon" position="30SWG5507450509" type="Infantry platoon"/>
+              <unit command-post="false" id="359" name="Light armored platoon" position="30SWG5507451007" type="Light armored platoon"/>
+              <unit command-post="false" id="372" name="Infantry platoon" position="30SWG5451850673" type="Infantry platoon"/>
+              <unit command-post="false" id="373" name="Infantry platoon" position="30SWG5471250399" type="Infantry platoon"/>
+            </automat>
+            <automat engaged="true" id="360" knowledge-group="139" name="Infantry company [360]" type="Infantry company">
+              <unit command-post="true" id="361" name="Infantry company CP" position="30SWG5708749031" type="Infantry company CP"/>
+              <unit command-post="false" id="362" name="Infantry platoon" position="30SWG5758848534" type="Infantry platoon"/>
+              <unit command-post="false" id="365" name="Light armored platoon" position="30SWG5758849032" type="Light armored platoon"/>
+              <unit command-post="false" id="374" name="Infantry platoon" position="30SWG5700548725" type="Infantry platoon"/>
+              <unit command-post="false" id="375" name="Infantry platoon" position="30SWG5722648423" type="Infantry platoon"/>
+            </automat>
+            <automat engaged="true" id="366" knowledge-group="139" name="Infantry company [366]" type="Infantry company">
+              <unit command-post="true" id="367" name="Infantry company CP" position="30SWG6020648760" type="Infantry company CP"/>
+              <unit command-post="false" id="368" name="Infantry platoon" position="30SWG6070748263" type="Infantry platoon"/>
+              <unit command-post="false" id="371" name="Light armored platoon" position="30SWG6070748761" type="Light armored platoon"/>
+              <unit command-post="false" id="376" name="Infantry platoon" position="30SWG6012448537" type="Infantry platoon"/>
+              <unit command-post="false" id="377" name="Infantry platoon" position="30SWG6020748207" type="Infantry platoon"/>
+            </automat>
+          </formation>
+          <formation id="244" level="ii" name=" Batallón Acorazado 2">
+            <automat engaged="true" id="245" knowledge-group="139" name="Escuadrón de Carros de Combate" type="MBT squadron">
+              <unit command-post="true" id="246" name="PM Escuadrón de Carros de Combate" position="30SWG5972058817" type="Armored squadron CP"/>
+              <unit command-post="false" id="247" name="Sección de Carros de Combate" position="30SWG6022258319" type="MBT platoon"/>
+              <unit command-post="false" id="248" name="Sección de Carros de Combate" position="30SWG5972257820" type="MBT platoon"/>
+              <unit command-post="false" id="249" name="Sección de Carros de Combate" position="30SWG5922158318" type="MBT platoon"/>
+              <unit command-post="false" id="250" name="Sección de Carros de Combate" position="30SWG6022158817" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="251" knowledge-group="139" name="Escuadrón de Carros de Combate" type="MBT squadron">
+              <unit command-post="true" id="252" name="PM Escuadrón de Carros de Combate" position="30SWG5763557390" type="Armored squadron CP"/>
+              <unit command-post="false" id="253" name="Sección de Carros de Combate" position="30SWG5813656892" type="MBT platoon"/>
+              <unit command-post="false" id="254" name="Sección de Carros de Combate" position="30SWG5763756394" type="MBT platoon"/>
+              <unit command-post="false" id="255" name="Sección de Carros de Combate" position="30SWG5713656891" type="MBT platoon"/>
+              <unit command-post="false" id="256" name="Sección de Carros de Combate" position="30SWG5813557390" type="MBT platoon"/>
+            </automat>
+            <automat engaged="true" id="257" knowledge-group="139" name="Escuadrón de Carros de Combate" type="MBT squadron">
+              <unit command-post="true" id="258" name="PM Escuadrón de Carros de Combate" position="30SWG5458456392" type="Armored squadron CP"/>
+              <unit command-post="false" id="259" name="Sección de Carros de Combate" position="30SWG5508555894" type="MBT platoon"/>
+              <unit command-post="false" id="260" name="Sección de Carros de Combate" position="30SWG5458555395" type="MBT platoon"/>
+              <unit command-post="false" id="261" name="Sección de Carros de Combate" position="30SWG5408455893" type="MBT platoon"/>
+              <unit command-post="false" id="262" name="Sección de Carros de Combate" position="30SWG5508456392" type="MBT platoon"/>
+            </automat>
+          </formation>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="139" name="Knowledge group [139]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="0691994246" -->

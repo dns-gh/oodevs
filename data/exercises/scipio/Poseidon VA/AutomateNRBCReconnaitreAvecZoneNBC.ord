@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="28756" name="AUTOMATE NRBC Reconnaitre" target="416" time="2010-09-01T12:10:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="29TNF4079964830"/>
+        <point coordinates="29TNF3974260922"/>
+        <point coordinates="29TNF3865955394"/>
+        <point coordinates="29TNF3670250590"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="29TNF2690165242"/>
+        <point coordinates="29TNF3017959918"/>
+        <point coordinates="29TNF2893555358"/>
+        <point coordinates="29TNF3061250520"/>
+      </location>
+    </parameter>
+    <parameter name="Objectifs" type="list">
+      <parameter name="Objectifs (élément 1)" type="point">
+        <location type="point">
+          <point coordinates="29TNF3122661819"/>
+        </location>
+      </parameter>
+      <parameter name="Objectifs (élément 2)" type="polygon">
+        <location type="polygon">
+          <point coordinates="29TNF3325762418"/>
+          <point coordinates="29TNF3306461415"/>
+          <point coordinates="29TNF3399261340"/>
+          <point coordinates="29TNF3440262266"/>
+          <point coordinates="29TNF3404562678"/>
+          <point coordinates="29TNF3325762418"/>
+        </location>
+      </parameter>
+      <parameter name="Objectifs (élément 3)" type="urbanblock" value="436"/>
+    </parameter>
+  </action>
+</actions>

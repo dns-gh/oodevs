@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<exercise model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/exercise.xsd">
+  <meta>
+    <briefing>
+      <text lang="en"><![CDATA[<html><head><meta name="qrichtext" content="1" /></head><body style="font-size:8pt;font-family:MS Shell Dlg 2">
+<p dir="ltr">2 enemy sides with each:</p>
+<ul type="disc"><li dir="ltr">658 units</li>
+<li dir="ltr">152 automats</li>
+<li dir="ltr">23 crowds</li>
+<li dir="ltr">8 populations</li>
+<li dir="ltr">10 ponctuals obstacles</li>
+<li dir="ltr">5 area obstacles</li>
+<li dir="ltr">5 jamming areas</li>
+<li dir="ltr">5 useless objects</li>
+<li dir="ltr">182 urban blocks</li></ul>
+<p dir="ltr"></p>
+</body></html>
+]]></text>
+    </briefing>
+    <resources/>
+  </meta>
+  <profiles file="profiles.xml"/>
+  <orbat file="orbat.xml"/>
+  <urbanstate file="urbanstate.xml"/>
+  <weather file="weather.xml"/>
+  <terrain name="Paris_Est_en"/>
+  <model dataset="ada" physical="worldwide"/>
+</exercise>
+<!-- signature="2463311969" -->

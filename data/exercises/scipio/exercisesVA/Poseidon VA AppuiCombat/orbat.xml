@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp Ami" type="friend">
+      <objects>
+        <object id="403" name="plot ravitaillement [403]" type="logistic support area">
+          <shape type="point">
+            <points>
+              <point>29TNF3284659530</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="461" name="plot ravitaillement [461]" type="logistic support area">
+          <shape type="point">
+            <points>
+              <point>29TNF3241962514</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="462" name="plot ravitaillement [462]" type="logistic support area">
+          <shape type="point">
+            <points>
+              <point>29TNF3014958496</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="4" level="ii" name="GTIA [4]">
+          <automat engaged="true" id="257" knowledge-group="6" name="SGTIA INF [257]" type="SGTIA INF">
+            <unit command-post="true" id="258" name="Section . CDT CIE INF VAB" position="29TNF3286759316" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="260" name="Section . CBT INF VAB CDS SOFF" position="29TNF3244158863" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="261" name="Section . CBT INF VAB CDS OFF" position="29TNF3324359063" type="Section . CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="264" name="Groupe GEN . EBG" position="29TNF3276959091" type="Groupe GEN . EBG"/>
+            <unit command-post="false" id="265" name="PIA Dominante ABC" position="29TNF3347259199" type="PIA Dominante ABC"/>
+            <unit command-post="false" id="266" name="PIA Dominante INF" position="29TNF3384759060" type="PIA Dominante INF"/>
+            <unit command-post="false" id="268" name="Patrouille . EI 12,7" position="29TNF3315558804" type="Patrouille . EI 12,7"/>
+          </automat>
+          <automat engaged="true" id="467" knowledge-group="6" name="ALAT - ESCADRILLE 3HAC [467]" symbol="symbols/sfgpucv" type="ALAT - ESCADRILLE 3HAC">
+            <unit command-post="true" id="468" name="ALAT - PC ALAT" position="29TNF3003263612" type="ALAT - PC ALAT"/>
+            <unit command-post="false" id="469" name="ALAT - Patrouille 3HAC" position="29TNF3064763519" type="ALAT - Patrouille 3HAC"/>
+            <unit command-post="false" id="470" name="ALAT - Patrouille 3HAC" position="29TNF3003662615" type="ALAT - Patrouille 3HAC"/>
+            <unit command-post="false" id="471" name="ALAT - Patrouille 3HAC" position="29TNF2953363111" type="ALAT - Patrouille 3HAC"/>
+            <unit command-post="false" id="472" name="ALAT - Patrouille HAC" position="29TNF3066362962" type="ALAT - Patrouille HAC"/>
+          </automat>
+          <automat engaged="false" id="473" knowledge-group="6" name="ALAT - ESCADRILLE 3HAC [473]" symbol="symbols/sfgpucv" type="ALAT - ESCADRILLE 3HAC">
+            <unit command-post="true" id="474" name="ALAT - PC ALAT" position="29TNF3554863111" type="ALAT - PC ALAT"/>
+            <unit command-post="false" id="475" name="ALAT - Patrouille 3HAC" position="29TNF3602762515" type="ALAT - Patrouille 3HAC"/>
+            <unit command-post="false" id="476" name="ALAT - Patrouille 3HAC" position="29TNF3532962228" type="ALAT - Patrouille 3HAC"/>
+            <unit command-post="false" id="477" name="ALAT - Patrouille 3HAC" position="29TNF3505062610" type="ALAT - Patrouille 3HAC"/>
+            <unit command-post="false" id="478" name="ALAT - Patrouille HAC" position="29TNF3607462915" type="ALAT - Patrouille HAC"/>
+          </automat>
+          <automat engaged="false" id="498" knowledge-group="6" name="ALAT - Escadrille HRA [498]" type="ALAT - Escadrille HRA">
+            <unit command-post="true" id="499" name="ALAT - PC Escadrille" position="29TNF3342063433" type="ALAT - PC Escadrille"/>
+            <unit command-post="false" id="501" name="ALAT - Patrouille 2HAH" position="29TNF3355062905" type="ALAT - Patrouille 2HAH"/>
+            <unit command-post="false" id="502" name="ALAT - Patrouille 2HR" position="29TNF3324763144" type="ALAT - Patrouille 2HR"/>
+            <unit command-post="false" id="503" name="ALAT - Patrouille 2HR" position="29TNF3367863386" type="ALAT - Patrouille 2HR"/>
+            <unit command-post="false" id="504" name="ALAT - Patrouille 3HAH" position="29TNF3375162881" type="ALAT - Patrouille 3HAH"/>
+          </automat>
+          <lima name="Lima 339">
+            <point>29TNF3246056898</point>
+            <point>29TNF3370156691</point>
+          </lima>
+          <lima name="Lima 463">
+            <point>29TNF2870057484</point>
+            <point>29TNF2984257386</point>
+            <point>29TNF3064658044</point>
+            <point>29TNF3260458363</point>
+            <point>29TNF3406958048</point>
+            <point>29TNF3497357495</point>
+            <point>29TNF3626557152</point>
+            <point>29TNF3747757654</point>
+          </lima>
+          <lima name="Lima 464">
+            <point>29TNF2834155274</point>
+            <point>29TNF3024355391</point>
+            <point>29TNF3157455002</point>
+            <point>29TNF3223554579</point>
+            <point>29TNF3376554760</point>
+            <point>29TNF3441054551</point>
+            <point>29TNF3554955013</point>
+            <point>29TNF3632754722</point>
+          </lima>
+          <lima name="Lima 465">
+            <point>29TNF3041351006</point>
+            <point>29TNF3188352242</point>
+            <point>29TNF3406752920</point>
+            <point>29TNF3652153024</point>
+          </lima>
+          <lima name="Lima 466">
+            <point>29TNF3035448686</point>
+            <point>29TNF3322648461</point>
+            <point>29TNF3486249110</point>
+            <point>29TNF3700148405</point>
+            <point>29TNF3812049253</point>
+          </lima>
+          <lima name="Lima 467">
+            <point>29TNF2840661045</point>
+            <point>29TNF3075261893</point>
+            <point>29TNF3244561269</point>
+            <point>29TNF3433760847</point>
+            <point>29TNF3610561058</point>
+            <point>29TNF3663561394</point>
+            <point>29TNF3781461342</point>
+          </lima>
+          <lima name="Lima 468">
+            <point>29TNF2726264763</point>
+            <point>29TNF2810565442</point>
+            <point>29TNF2993465754</point>
+            <point>29TNF3178065746</point>
+            <point>29TNF3676065684</point>
+            <point>29TNF3777765536</point>
+          </lima>
+          <lima name="Lima 524">
+            <point>29TNF3372455620</point>
+            <point>29TNF3240155568</point>
+          </lima>
+          <limit name="Limite 196">
+            <point>29TNF3299753162</point>
+            <point>29TNF3231956029</point>
+            <point>29TNF3255857098</point>
+            <point>29TNF3234457956</point>
+            <point>29TNF3228658550</point>
+            <point>29TNF3239159602</point>
+            <point>29TNF3244760624</point>
+            <point>29TNF3222661497</point>
+          </limit>
+          <limit name="Limite 218">
+            <point>29TNF3430760938</point>
+            <point>29TNF3384859879</point>
+            <point>29TNF3402859200</point>
+            <point>29TNF3370758279</point>
+            <point>29TNF3387857801</point>
+            <point>29TNF3394457622</point>
+            <point>29TNF3362256593</point>
+            <point>29TNF3382456496</point>
+            <point>29TNF3364955375</point>
+            <point>29TNF3376955343</point>
+            <point>29TNF3392454789</point>
+            <point>29TNF3421554524</point>
+            <point>29TNF3429653492</point>
+          </limit>
+          <limit name="Limite 219">
+            <point>29TNF3068061873</point>
+            <point>29TNF3062359804</point>
+            <point>29TNF3118058060</point>
+            <point>29TNF3129157293</point>
+            <point>29TNF3113256552</point>
+            <point>29TNF3098656383</point>
+            <point>29TNF3097256053</point>
+            <point>29TNF3083355862</point>
+            <point>29TNF3081255664</point>
+            <point>29TNF3092455378</point>
+            <point>29TNF3071255090</point>
+          </limit>
+          <limit name="Limite 220">
+            <point>29TNF3609161219</point>
+            <point>29TNF3539059941</point>
+            <point>29TNF3523259008</point>
+            <point>29TNF3525358694</point>
+            <point>29TNF3486657512</point>
+            <point>29TNF3533657200</point>
+            <point>29TNF3526456134</point>
+            <point>29TNF3557355450</point>
+            <point>29TNF3542254926</point>
+            <point>29TNF3545554108</point>
+            <point>29TNF3574353643</point>
+          </limit>
+          <limit name="Limite 459">
+            <point>29TNF3764865720</point>
+            <point>29TNF3760958203</point>
+            <point>29TNF3598454511</point>
+            <point>29TNF3764548583</point>
+          </limit>
+          <limit name="Limite 460">
+            <point>29TNF2718565385</point>
+            <point>29TNF2955159163</point>
+            <point>29TNF2836555431</point>
+            <point>29TNF3076850939</point>
+            <point>29TNF3040148254</point>
+          </limit>
+        </formation>
+        <formation id="422" level="ii" logistic-level="logistic-base" name="BLD">
+          <automat engaged="true" id="451" knowledge-group="6" logistic-level="logistic-base" name="LOG . TC2 LOG [451]" type="LOG . TC2 LOG">
+            <unit command-post="true" id="452" name="LOG . TC2" position="29TNF3450964975" type="LOG . TC2">
+              <stocks>
+                <resource name="CART 5.56 F1A F1" quantity="400000000"/>
+                <resource name="CART 5.56 BAL ORD F1" quantity="40000000"/>
+                <resource name="CART 9 BAL ORD F3" quantity="40000000"/>
+                <resource name="CART 30/550  OSPEI" quantity="40000"/>
+                <resource name="F-35 1" quantity="500000000"/>
+              </stocks>
+            </unit>
+          </automat>
+          <limit name="Limite 453">
+            <point>29TNF3310665816</point>
+            <point>29TNF3267565063</point>
+            <point>29TNF3265463967</point>
+            <point>29TNF3323462576</point>
+          </limit>
+          <limit name="Limite 454">
+            <point>29TNF3688965725</point>
+            <point>29TNF3621964206</point>
+            <point>29TNF3558762443</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="6" name="Groupe de connaissance [6]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="422">
+          <subordinate id="257"/>
+          <subordinate id="467"/>
+          <subordinate id="473"/>
+          <subordinate id="498"/>
+        </logistic-base>
+      </logistics>
+    </party>
+    <party id="2" name="Camp Eni" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="25" level="ii" name="GTIA [25]">
+          <automat engaged="false" id="192" knowledge-group="31" name="MILICE [192]" type="MILICE">
+            <unit command-post="true" id="193" name="MILICE . CDT" position="29TNF3335755311" type="MILICE . PICK UP CDT"/>
+            <unit command-post="false" id="194" name="MILICE . Miliciens" position="29TNF3449155342" type="MILICE . PICK UP 14,5"/>
+            <unit command-post="false" id="195" name="MILICE . Miliciens" position="29TNF3396755956" type="MILICE . PICK UP 14,5"/>
+            <lima name="Lima 337">
+              <point>29TNF3265656108</point>
+              <point>29TNF3308956090</point>
+              <point>29TNF3324456371</point>
+              <point>29TNF3354056316</point>
+            </lima>
+            <lima name="Lima 338">
+              <point>29TNF3267754695</point>
+              <point>29TNF3298754705</point>
+              <point>29TNF3316554929</point>
+              <point>29TNF3370854994</point>
+            </lima>
+            <limit name="Limite 335">
+              <point>29TNF3276954432</point>
+              <point>29TNF3261055046</point>
+              <point>29TNF3263455465</point>
+              <point>29TNF3273055647</point>
+              <point>29TNF3273056123</point>
+            </limit>
+            <limit name="Limite 336">
+              <point>29TNF3391154607</point>
+              <point>29TNF3363454996</point>
+              <point>29TNF3350755356</point>
+              <point>29TNF3346456151</point>
+              <point>29TNF3350856347</point>
+            </limit>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="31" name="Groupe de connaissance [31]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="excitee" id="99" name="Foule [99]" position="29TNF3462057906" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="100" wounded="0"/>
+          <armed-individuals value="0.3"/>
+          <critical-intelligence content="rendez-vous à 14h Place de la République"/>
+          <repartition children="0" female="0.4" male="0.6"/>
+          <adhesions>
+            <adhesion party="1" value="-1"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="128" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="128" name="Camp Neutre" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="129" level="ii" name="Formation [129]"/>
+      </tactical>
+      <communication>
+        <knowledge-group id="132" name="Knowledge group [132]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+      <relationship diplomacy="neutral" party="128"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="neutral" party="128"/>
+    </party>
+    <party id="128">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="2"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="3090602318" -->

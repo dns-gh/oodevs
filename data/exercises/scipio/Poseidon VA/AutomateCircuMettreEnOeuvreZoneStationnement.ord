@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="28755" name="AUTOMATE CIRCULATION Mettre En Oeuvre Zone Stationnement" target="311" time="2010-09-01T12:04:20" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="29TNF2690165242"/>
+        <point coordinates="29TNF3017959918"/>
+        <point coordinates="29TNF2893555358"/>
+        <point coordinates="29TNF3061250520"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="29TNF4079964830"/>
+        <point coordinates="29TNF3974260922"/>
+        <point coordinates="29TNF3865955394"/>
+        <point coordinates="29TNF3670250590"/>
+      </location>
+    </parameter>
+    <parameter name="Zones" type="list">
+      <parameter name="Zones (élément 1)" type="location">
+        <location type="polygon">
+          <point coordinates="29TNF3099159312"/>
+          <point coordinates="29TNF3116358790"/>
+          <point coordinates="29TNF3221258872"/>
+          <point coordinates="29TNF3222659364"/>
+          <point coordinates="29TNF3099159312"/>
+        </location>
+      </parameter>
+      <parameter name="Zones (élément 2)" type="location">
+        <location type="polygon">
+          <point coordinates="29TNF3096461987"/>
+          <point coordinates="29TNF3141960329"/>
+          <point coordinates="29TNF3243660610"/>
+          <point coordinates="29TNF3247761871"/>
+          <point coordinates="29TNF3096461987"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action engaged="true" entity="11" name="Embrayer" target="11" time="2010-09-01T14:16:00" type="change_mode"/>
+  <action id="1010" name="AUTOMATE COMMUNES Faire Mouvement" target="11" time="2010-09-01T14:44:20" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="29TNF4079964830"/>
+        <point coordinates="29TNF3974260922"/>
+        <point coordinates="29TNF3865955394"/>
+        <point coordinates="29TNF3670250590"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="29TNF2690165242"/>
+        <point coordinates="29TNF3017959918"/>
+        <point coordinates="29TNF2893555358"/>
+        <point coordinates="29TNF3061250520"/>
+      </location>
+    </parameter>
+    <parameter name="Nombre d'echelons" type="numeric" value="0"/>
+    <parameter name="Itineraire" type="path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="29TNF3171658618"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="29TNF3130061747"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="29TNF3358560856"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+</actions>

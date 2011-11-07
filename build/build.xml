@@ -936,10 +936,10 @@
     </macrodef>
 
     <target name="checkpoint_test" depends="application.simulation_app" description="save and load a checkpoint">
-        <run-simulation exercise="CheckpointTests">
+        <run-simulation exercise="scipio/CheckpointTests">
             <arg value="--savecheckpoint=tempcheckpoint"/>
         </run-simulation>
-        <run-simulation exercise="CheckpointTests">
+        <run-simulation exercise="scipio/CheckpointTests">
             <arg value="--checkpoint=tempcheckpoint"/>
             <arg value="--deletecheckpoint"/>
         </run-simulation>
@@ -1109,8 +1109,8 @@
     </macrodef>
 
     <target name="exercises_test" description="validates some significant exercises">
-        <test-exercise exercise="Egypt"/>
-        <test-exercise exercise="Poseidon VA"/>
+        <test-exercise exercise="worldwide/Egypt"/>
+        <test-exercise exercise="scipio/Poseidon VA"/>
     </target>
 
     <macrodef name="test-data-migration">
@@ -1376,28 +1376,28 @@
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
         <pack name="defense-worldwide" description="defense-worldwide exercises package">
             <include name="data/models/ada/physical/worldwide/**"/>
-            <include name="exercises/Egypt/**"/>
-            <include name="exercises/Paris/**"/>
-            <include name="exercises/9_cases/**"/>
-            <include name="exercises/Musoria Border Defense/**"/>
+            <include name="exercises/worldwide/Egypt/**"/>
+            <include name="exercises/worldwide/Paris/**"/>
+            <include name="exercises/worldwide/9_cases/**"/>
+            <include name="exercises/worldwide/Musoria Border Defense/**"/>
             <include name="data/terrains/Nord egypt/**"/>
             <include name="data/terrains/Paris_Est/**"/>
             <include name="data/terrains/Angers_x9_en/**"/>
-            <include name="exercises/Tuto_sw/**"/>
+            <include name="exercises/worldwide/Tuto_sw/**"/>
             <include name="data/terrains/Sw_terrain2/**"/>
-            <include name="exercises/tutorials/01 - Generalities/**"/>
-            <include name="exercises/tutorials/02 - Gaming/**"/>
-            <include name="exercises/tutorials/03 - Missions/**"/>
-            <include name="exercises/tutorials/04 - Armor units/**"/>
-            <include name="exercises/tutorials/05 - Infantry/**"/>
-            <include name="exercises/tutorials/06 - Engineering/**"/>
-            <include name="exercises/tutorials/07 - Artillery/**"/>
-            <include name="exercises/tutorials/08 - Logistic/**"/>
-            <include name="exercises/tutorials/09 - Air units/**"/>
-            <include name="exercises/tutorials/10 - NBC/**"/>
-            <include name="exercises/tutorials/11 - Preparation/**"/>
-            <include name="exercises/tutorials/12 - AAR/**"/>
-            <include name="exercises/tutorials/13 - Advanced features/**"/>          
+            <include name="exercises/worldwide/tutorials/01 - Generalities/**"/>
+            <include name="exercises/worldwide/tutorials/02 - Gaming/**"/>
+            <include name="exercises/worldwide/tutorials/03 - Missions/**"/>
+            <include name="exercises/worldwide/tutorials/04 - Armor units/**"/>
+            <include name="exercises/worldwide/tutorials/05 - Infantry/**"/>
+            <include name="exercises/worldwide/tutorials/06 - Engineering/**"/>
+            <include name="exercises/worldwide/tutorials/07 - Artillery/**"/>
+            <include name="exercises/worldwide/tutorials/08 - Logistic/**"/>
+            <include name="exercises/worldwide/tutorials/09 - Air units/**"/>
+            <include name="exercises/worldwide/tutorials/10 - NBC/**"/>
+            <include name="exercises/worldwide/tutorials/11 - Preparation/**"/>
+            <include name="exercises/worldwide/tutorials/12 - AAR/**"/>
+            <include name="exercises/worldwide/tutorials/13 - Advanced features/**"/>          
         </pack>
     </target>
 
@@ -1412,13 +1412,13 @@
 
     <target name="package.otpack.defense.scipio.VA" description="package du defense-scipio Validation Amont otpack">
         <pack name="defense-scipio-VA" description="defense-scipio Validation Amont exercises package">
-            <include name="exercises/exercisesVA/Poseidon VA Missions Communes/**"/>
-            <include name="exercises/exercisesVA/Poseidon VA pions/**"/>
-            <include name="exercises/exercisesVA/Poseidon VA AppuiCombat/**"/>
-            <include name="exercises/exercisesVA/Poseidon VA Automates/**"/>
-            <include name="exercises/exercisesVA/Poseidon VA Acteurs Civils/**"/>
-            <include name="exercises/exercisesVA/Poseidon VA Soutien/**"/>
-            <include name="exercises/exercisesVA/Poseidon VA Mix/**"/>
+            <include name="exercises/scipio/exercisesVA/Poseidon VA Missions Communes/**"/>
+            <include name="exercises/scipio/exercisesVA/Poseidon VA pions/**"/>
+            <include name="exercises/scipio/exercisesVA/Poseidon VA AppuiCombat/**"/>
+            <include name="exercises/scipio/exercisesVA/Poseidon VA Automates/**"/>
+            <include name="exercises/scipio/exercisesVA/Poseidon VA Acteurs Civils/**"/>
+            <include name="exercises/scipio/exercisesVA/Poseidon VA Soutien/**"/>
+            <include name="exercises/scipio/exercisesVA/Poseidon VA Mix/**"/>
             <include name="data/terrains/PortoV3Lite/**"/>
         </pack>
     </target>
@@ -1428,7 +1428,7 @@
             <include name="data/models/ada/physical/worldwide/**"/>
             <include name="data/models/ada/physical/security-fr/**"/>
             <include name="data/propagations/test/**"/>
-            <include name="exercises/CODAH_JANUS/**"/>
+            <include name="exercises/security/CODAH_JANUS/**"/>
             <include name="data/terrains/lehavre_4.2.0/**"/>
         </pack>
     </target>
@@ -1437,16 +1437,16 @@
         <pack name="security-masa" description="security-masa exercises package">
             <include name="data/models/ada/physical/security-fr/**"/>
             <include name="data/propagations/test/**"/>
-            <include name="exercises/CODAH_JANUS/**"/>
+            <include name="exercises/security/CODAH_JANUS/**"/>
             <include name="data/terrains/lehavre_4.2.0/**"/>
         </pack>
     </target>
 
     <target name="package.otpack.lossc" description="package du LOSSC otpack">
         <pack name="LOSSC" description="LOSSC exercises package">
-            <include name="exercises/LOSSC Scenario 1/**"/>
-            <include name="exercises/LOSSC Scenario 2/**"/>
-            <include name="exercises/LOSSC Scenario 3/**"/>
+            <include name="exercises/worldwide/LOSSC Scenario 1/**"/>
+            <include name="exercises/worldwide/LOSSC Scenario 2/**"/>
+            <include name="exercises/worldwide/LOSSC Scenario 3/**"/>
             <include name="data/terrains/afghan_kabuldist/**"/>
         </pack>
     </target>
@@ -1455,9 +1455,9 @@
         <pack name="trainingML" description="package de training MasaLife">
             <include name="data/models/training/physical/worldwide/**"/>
             <include name="data/models/training/decisional/**"/>
-            <include name="exercises/Training/**"/>
-            <include name="exercises/Training Porto/**"/>
-            <include name="exercises/MLTraining/**"/>
+            <include name="exercises/worldwide/Training/**"/>
+            <include name="exercises/worldwide/Training Porto/**"/>
+            <include name="exercises/worldwide/MLTraining/**"/>
             <include name="data/terrains/PortoV3Lite - worldwide/**"/>
             <include name="data/terrains/Nord egypt/**"/>
             <include name="data/terrains/Paris_Est/**"/>

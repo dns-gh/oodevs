@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="290" name="Infantry - hold" target="203" time="2011-09-15T14:30:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="323"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30SWG4647875082"/>
+        <point coordinates="30SWG5291372318"/>
+        <point coordinates="30SWG5391368489"/>
+        <point coordinates="30SWG6061365725"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30SWG5323381166"/>
+        <point coordinates="30SWG5642177539"/>
+        <point coordinates="30SWG6683971544"/>
+      </location>
+    </parameter>
+    <parameter name="Position" type="polygon">
+      <location type="polygon">
+        <point coordinates="30SWG6082174710"/>
+        <point coordinates="30SWG6414072566"/>
+        <point coordinates="30SWG6210669700"/>
+        <point coordinates="30SWG5822872002"/>
+        <point coordinates="30SWG6082174710"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="false"/>
+  </action>
+  <action id="290" name="Infantry - hold" target="209" time="2011-09-15T14:30:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="321"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30SWG4647875082"/>
+        <point coordinates="30SWG5291372318"/>
+        <point coordinates="30SWG5391368489"/>
+        <point coordinates="30SWG6061365725"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30SWG5323381166"/>
+        <point coordinates="30SWG5642177539"/>
+        <point coordinates="30SWG6683971544"/>
+      </location>
+    </parameter>
+    <parameter name="Position" type="polygon">
+      <location type="polygon">
+        <point coordinates="30SWG5624868487"/>
+        <point coordinates="30SWG5784771634"/>
+        <point coordinates="30SWG6105769509"/>
+        <point coordinates="30SWG5867967038"/>
+        <point coordinates="30SWG5624868487"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="false"/>
+  </action>
+  <action id="290" name="Infantry - hold" target="215" time="2011-09-15T14:30:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="320"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30SWG4647875082"/>
+        <point coordinates="30SWG5291372318"/>
+        <point coordinates="30SWG5391368489"/>
+        <point coordinates="30SWG6061365725"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30SWG5323381166"/>
+        <point coordinates="30SWG5642177539"/>
+        <point coordinates="30SWG6683971544"/>
+      </location>
+    </parameter>
+    <parameter name="Position" type="polygon">
+      <location type="polygon">
+        <point coordinates="30SWG5566468873"/>
+        <point coordinates="30SWG5745772649"/>
+        <point coordinates="30SWG5998174781"/>
+        <point coordinates="30SWG5657776664"/>
+        <point coordinates="30SWG5376572402"/>
+        <point coordinates="30SWG5566468873"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="true"/>
+  </action>
+  <action id="290" name="Infantry - hold" target="224" time="2011-09-15T14:30:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="164"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30SWG6583950292"/>
+        <point coordinates="30SWG6332746665"/>
+        <point coordinates="30SWG5856744816"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30SWG5142754984"/>
+        <point coordinates="30SWG4994551298"/>
+        <point coordinates="30SWG5374246954"/>
+      </location>
+    </parameter>
+    <parameter name="Position" type="polygon">
+      <location type="polygon">
+        <point coordinates="30SWG5195854140"/>
+        <point coordinates="30SWG5071851450"/>
+        <point coordinates="30SWG5342248403"/>
+        <point coordinates="30SWG5566052906"/>
+        <point coordinates="30SWG5195854140"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="false"/>
+  </action>
+  <action id="290" name="Infantry - hold" target="230" time="2011-09-15T14:30:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="195"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30SWG6583950292"/>
+        <point coordinates="30SWG6332746665"/>
+        <point coordinates="30SWG5856744816"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30SWG5142754984"/>
+        <point coordinates="30SWG4994551298"/>
+        <point coordinates="30SWG5374246954"/>
+      </location>
+    </parameter>
+    <parameter name="Position" type="polygon">
+      <location type="polygon">
+        <point coordinates="30SWG5433248193"/>
+        <point coordinates="30SWG5617652635"/>
+        <point coordinates="30SWG6054651131"/>
+        <point coordinates="30SWG5952046388"/>
+        <point coordinates="30SWG5630645961"/>
+        <point coordinates="30SWG5433248193"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="false"/>
+  </action>
+  <action id="290" name="Infantry - hold" target="236" time="2011-09-15T14:30:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="200"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30SWG6583950292"/>
+        <point coordinates="30SWG6332746665"/>
+        <point coordinates="30SWG5856744816"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30SWG5142754984"/>
+        <point coordinates="30SWG4994551298"/>
+        <point coordinates="30SWG5374246954"/>
+      </location>
+    </parameter>
+    <parameter name="Position" type="polygon">
+      <location type="polygon">
+        <point coordinates="30SWG6118351071"/>
+        <point coordinates="30SWG6006646328"/>
+        <point coordinates="30SWG6309947087"/>
+        <point coordinates="30SWG6509750080"/>
+        <point coordinates="30SWG6118351071"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="bool" value="false"/>
+  </action>
+  <action id="236" name="Armor - hold" target="245" time="2011-09-15T14:30:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="276"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30SWG4571456811"/>
+        <point coordinates="30SWG5214555798"/>
+        <point coordinates="30SWG5508854303"/>
+        <point coordinates="30SWG6261354517"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30SWG4638963759"/>
+        <point coordinates="30SWG5576361660"/>
+        <point coordinates="30SWG5877361869"/>
+        <point coordinates="30SWG6198563644"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30SWG5371761858"/>
+        <point coordinates="30SWG5614461378"/>
+        <point coordinates="30SWG5597758575"/>
+        <point coordinates="30SWG5294458909"/>
+        <point coordinates="30SWG5371761858"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="236" name="Armor - hold" target="251" time="2011-09-15T14:30:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="288"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30SWG4571456811"/>
+        <point coordinates="30SWG5214555798"/>
+        <point coordinates="30SWG5508854303"/>
+        <point coordinates="30SWG6261354517"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30SWG4638963759"/>
+        <point coordinates="30SWG5576361660"/>
+        <point coordinates="30SWG5877361869"/>
+        <point coordinates="30SWG6198563644"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30SWG5313858716"/>
+        <point coordinates="30SWG5590558261"/>
+        <point coordinates="30SWG5578854733"/>
+        <point coordinates="30SWG5219556226"/>
+        <point coordinates="30SWG5313858716"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="236" name="Armor - hold" target="257" time="2011-09-15T14:30:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="280"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30SWG4571456811"/>
+        <point coordinates="30SWG5214555798"/>
+        <point coordinates="30SWG5508854303"/>
+        <point coordinates="30SWG6261354517"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30SWG4638963759"/>
+        <point coordinates="30SWG5576361660"/>
+        <point coordinates="30SWG5877361869"/>
+        <point coordinates="30SWG6198563644"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30SWG5651655024"/>
+        <point coordinates="30SWG5641061572"/>
+        <point coordinates="30SWG5861861599"/>
+        <point coordinates="30SWG5884554882"/>
+        <point coordinates="30SWG5651655024"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="236" name="Armor - hold" target="188" time="2011-09-15T14:30:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="250"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30SWG6502757580"/>
+        <point coordinates="30SWG6949462040"/>
+        <point coordinates="30SWG8001063980"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30SWG6248767844"/>
+        <point coordinates="30SWG7090369097"/>
+        <point coordinates="30SWG7308470613"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30SWG6688464348"/>
+        <point coordinates="30SWG7124965558"/>
+        <point coordinates="30SWG7225263150"/>
+        <point coordinates="30SWG6772961730"/>
+        <point coordinates="30SWG6688464348"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="236" name="Armor - hold" target="182" time="2011-09-15T14:30:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="230"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30SWG6502757580"/>
+        <point coordinates="30SWG6949462040"/>
+        <point coordinates="30SWG8001063980"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30SWG6248767844"/>
+        <point coordinates="30SWG7090369097"/>
+        <point coordinates="30SWG7308470613"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30SWG6626968193"/>
+        <point coordinates="30SWG7062468751"/>
+        <point coordinates="30SWG7126165992"/>
+        <point coordinates="30SWG6678865040"/>
+        <point coordinates="30SWG6626968193"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="236" name="Armor - hold" target="194" time="2011-09-15T14:30:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="235"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30SWG6502757580"/>
+        <point coordinates="30SWG6949462040"/>
+        <point coordinates="30SWG8001063980"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30SWG6248767844"/>
+        <point coordinates="30SWG7090369097"/>
+        <point coordinates="30SWG7308470613"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30SWG7157468989"/>
+        <point coordinates="30SWG7406770531"/>
+        <point coordinates="30SWG7649263594"/>
+        <point coordinates="30SWG7249362957"/>
+        <point coordinates="30SWG7157468989"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

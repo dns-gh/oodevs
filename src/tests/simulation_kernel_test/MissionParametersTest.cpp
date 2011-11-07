@@ -427,7 +427,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_LocationParameter )
 {
-    WorldInitialize( "Paris" );
+    WorldInitialize( "worldwide/Paris" );
     Location in;
     FillRlyehLocation( in );
     MIL_LocationParameter param( in );
@@ -506,7 +506,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_LogMaintenancePrioritiesParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_Throw )
 {
-    WorldInitialize( "Paris" );
+    WorldInitialize( "worldwide/Paris" );
     Path in;
     in.mutable_location()->mutable_coordinates()->add_elem();
     FillRlyehLocation( *in.mutable_location() );
@@ -520,7 +520,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_Throw )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PathParameter )
 {
-    WorldInitialize( "Paris" );
+    WorldInitialize( "worldwide/Paris" );
     Path in;
     in.mutable_location()->set_type( sword::Location_Geometry_line );
     in.mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 48.52f );
@@ -547,7 +547,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter )
 {
-    WorldInitialize( "Paris" );
+    WorldInitialize( "worldwide/Paris" );
     const std::string typeName( "type" );
     PlannedWork in;
     in.set_type( typeName.c_str() );
@@ -579,7 +579,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PointParameter )
 {
-    WorldInitialize( "Paris" );
+    WorldInitialize( "worldwide/Paris" );
     Point in;
     FillRlyehLocation( *in.mutable_location() );
     MIL_PointParameter param( in );
@@ -597,7 +597,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PointParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PolygonParameter )
 {
-    WorldInitialize( "Paris" );
+    WorldInitialize( "worldwide/Paris" );
     Polygon in;
     FillPolygonLocation( *in.mutable_location(), 0.f );
     MIL_PolygonParameter param( in );

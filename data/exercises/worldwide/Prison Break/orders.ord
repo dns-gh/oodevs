@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="32" name="Field Artillery - operate (on position)" target="24" time="2011-04-06T11:28:57" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="31UDR9246100003"/>
+      </location>
+    </parameter>
+    <parameter name="Counter battery" type="bool" value="false"/>
+  </action>
+  <action id="368" name="Fire" target="24" time="2011-04-06T11:42:17" type="fragorder">
+    <parameter name="Ammunitions" type="resourcetype" value="11"/>
+    <parameter name="Shells number" type="numeric" value="1"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="31UDQ9966693584"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="create_object" name="Object Creation" time="2011-04-06T11:46:27" type="magicobject">
+    <parameter name="Type" type="string" value="fire"/>
+    <parameter name="Location" type="location">
+      <location type="point">
+        <point coordinates="31UDQ9972692961"/>
+      </location>
+    </parameter>
+    <parameter name="Name" type="string" value=""/>
+    <parameter name="Camp" type="army" value="2"/>
+    <parameter name="Attributes" type="list">
+      <parameter name="Fire" type="list">
+        <parameter name="AttributeId" type="identifier" value="10"/>
+        <parameter name="ClassName" type="string" value="Fire Class A"/>
+        <parameter name="MaxCombustionEnergy" type="quantity" value="100000"/>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="crowd_change_attitude" name="Crowd Change Attitude" target="26" time="2011-04-06T11:49:27" type="magicunit">
+    <parameter name="Attitude" type="enumeration" value="3"/>
+  </action>
+  <action id="133" name="move" target="36" time="2011-04-06T11:49:47" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UDQ9923392187"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="move" target="37" time="2011-04-06T11:49:47" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UEQ0086392713"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="move" target="32" time="2011-04-06T11:49:47" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UEQ0055090861"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="3003" name="Security - Extinguish" target="52" time="2011-04-06T12:05:07" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Target" type="objectknowledge" value="38"/>
+    <parameter name="Parking point" type="point">
+      <location type="point">
+        <point coordinates="31UDQ9946793162"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="368" name="Fire" target="24" time="2011-04-06T12:27:57" type="fragorder">
+    <parameter name="Ammunitions" type="resourcetype" value="11"/>
+    <parameter name="Shells number" type="numeric" value="1"/>
+    <parameter name="Target" type="point">
+      <location type="point">
+        <point coordinates="31UEQ0013293050"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="141" name="deny population crossing" target="37" time="2011-04-06T12:33:27" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Point" type="point">
+      <location type="point">
+        <point coordinates="31UEQ0017293056"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="141" name="deny population crossing" target="36" time="2011-04-06T12:33:27" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Point" type="point">
+      <location type="point">
+        <point coordinates="31UDQ9995793011"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="141" name="deny population crossing" target="32" time="2011-04-06T12:33:27" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Point" type="point">
+      <location type="point">
+        <point coordinates="31UEQ0041793152"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="342" name="Population - move" target="26" time="2011-04-06T12:38:17" type="mission">
+    <parameter name="Objective" type="point">
+      <location type="point">
+        <point coordinates="31UEQ0083694440"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="407" name="Emergency - follow population" target="55" time="2011-04-06T13:02:57" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Population" type="crowdknowledge" value="26"/>
+    <parameter name="Target Destination" type="point">
+      <location type="point">
+        <point coordinates="31UDQ9209590095"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="342" name="Population - move" target="26" time="2011-04-06T13:21:47" type="mission">
+    <parameter name="Objective" type="point">
+      <location type="point">
+        <point coordinates="31UDQ9162490090"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="178" name="Emergency - block road" target="56" time="2011-04-06T13:08:08" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="31UDQ9662791240"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="178" name="Emergency - block road" target="58" time="2011-04-06T13:07:47" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="31UDQ9615890678"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="crowd_change_attitude" name="Crowd Change Attitude" target="26" time="2011-04-06T13:17:54" type="magicunit">
+    <parameter name="Attitude" type="enumeration" value="0"/>
+  </action>
+  <action id="141" name="deny population crossing" target="31" time="2011-04-06T11:52:27" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Point" type="point">
+      <location type="point">
+        <point coordinates="31UDQ9881191663"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="133" name="move" target="31" time="2011-04-06T13:26:27" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UDQ9949291003"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="407" name="Emergency - follow population" target="56" time="2011-04-06T13:43:57" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Population" type="crowdknowledge" value="26"/>
+    <parameter name="Target Destination" type="point">
+      <location type="point">
+        <point coordinates="31UDQ9169590199"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="133" name="move" target="36" time="2011-04-06T15:02:57" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UDQ9958592451"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="move" target="32" time="2011-04-06T15:02:57" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UEQ0081092822"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="move" target="37" time="2011-04-06T15:03:07" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UDQ9950292527"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="77" name="Engineer - perform work" target="59" time="2011-04-06T15:09:47" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Work" type="list">
+      <parameter name="Work (item 1)" type="plannedwork" value="movement forbidden area">
+        <parameter name="Location" type="location">
+          <location type="polygon">
+            <point coordinates="31UDQ9971893028"/>
+            <point coordinates="31UDQ9973792922"/>
+            <point coordinates="31UEQ0054293129"/>
+            <point coordinates="31UEQ0047993225"/>
+            <point coordinates="31UDQ9971893028"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+  </action>
+</actions>

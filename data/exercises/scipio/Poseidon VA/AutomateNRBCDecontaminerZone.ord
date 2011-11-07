@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="28758" name="AUTOMATE NRBC Decontaminer Zone" target="411" time="2010-09-01T12:06:40" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="29TNF4079964830"/>
+        <point coordinates="29TNF3974260922"/>
+        <point coordinates="29TNF3865955394"/>
+        <point coordinates="29TNF3670250590"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="29TNF2690165242"/>
+        <point coordinates="29TNF3017959918"/>
+        <point coordinates="29TNF2893555358"/>
+        <point coordinates="29TNF3061250520"/>
+      </location>
+    </parameter>
+    <parameter name="Zones" type="list">
+      <parameter name="Zones (élément 1)" type="location">
+        <location type="polygon">
+          <point coordinates="29TNF3318562335"/>
+          <point coordinates="29TNF3318961335"/>
+          <point coordinates="29TNF3379261118"/>
+          <point coordinates="29TNF3445261701"/>
+          <point coordinates="29TNF3408762659"/>
+          <point coordinates="29TNF3318562335"/>
+        </location>
+      </parameter>
+      <parameter name="Zones (élément 2)" type="location">
+        <location type="polygon">
+          <point coordinates="29TNF3169962389"/>
+          <point coordinates="29TNF3150560948"/>
+          <point coordinates="29TNF3224860911"/>
+          <point coordinates="29TNF3260661673"/>
+          <point coordinates="29TNF3236162412"/>
+          <point coordinates="29TNF3169962389"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+</actions>

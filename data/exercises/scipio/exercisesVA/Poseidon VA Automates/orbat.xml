@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp Ami" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="4" level="ii" name="GTIA [4]">
+          <automat engaged="true" id="5" knowledge-group="6" name="SGTIA ABC [5]" type="SGTIA ABC">
+            <unit command-post="true" id="7" name="Peloton . LECLERC CDT ESC" position="29TNF3313157678" type="Peloton . LECLERC CDT ESC"/>
+            <unit command-post="false" id="9" name="Peloton . LECLERC CDP SOFF" position="29TNF3331057428" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="10" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3307357347" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="11" name="Section . CBT INF VAB CDS SOFF" position="29TNF3331657365" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="12" name="Peloton . d appui direct" position="29TNF3306957564" type="Peloton . d appui direct"/>
+            <unit command-post="false" id="13" name="Groupe GEN . EBG" position="29TNF3309757664" type="Groupe GEN . EBG"/>
+            <unit command-post="false" id="14" name="PIA Dominante ABC" position="29TNF3331057407" type="PIA Dominante ABC"/>
+            <unit command-post="false" id="15" name="PIA Dominante INF" position="29TNF3307357312" type="PIA Dominante INF"/>
+            <unit command-post="false" id="17" name="Patrouille . EI 12,7" position="29TNF3331057595" type="Patrouille . EI 12,7"/>
+            <limit name="Limite 55">
+              <point>29TNF3346258363</point>
+              <point>29TNF3365258021</point>
+              <point>29TNF3376557639</point>
+              <point>29TNF3318755631</point>
+              <point>29TNF3322255077</point>
+              <point>29TNF3339954485</point>
+              <point>29TNF3343354211</point>
+              <point>29TNF3327253783</point>
+            </limit>
+            <limit name="Limite 56">
+              <point>29TNF3441658406</point>
+              <point>29TNF3471157891</point>
+              <point>29TNF3489557827</point>
+              <point>29TNF3461257013</point>
+              <point>29TNF3436856596</point>
+              <point>29TNF3377955287</point>
+              <point>29TNF3393254772</point>
+              <point>29TNF3420654493</point>
+              <point>29TNF3401453599</point>
+            </limit>
+          </automat>
+          <automat engaged="true" id="43" knowledge-group="6" name="SGTIA INF [43]" type="SGTIA INF">
+            <unit command-post="true" id="44" name="Section . CDT CIE INF VAB" position="29TNF3411257399" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="46" name="Section . CBT INF VAB CDS SOFF" position="29TNF3373457228" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="47" name="Section . CBT INF VAB CDS OFF" position="29TNF3450957106" type="Section . CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="48" name="Groupe . MO81 VAB" position="29TNF3424357265" type="Groupe . MO81 VAB"/>
+            <unit command-post="false" id="49" name="Peloton . LECLERC CDP SOFF" position="29TNF3384657208" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="50" name="Groupe GEN . EBG" position="29TNF3390057303" type="Groupe GEN . EBG"/>
+            <unit command-post="false" id="52" name="PIA Dominante INF" position="29TNF3435257128" type="PIA Dominante INF"/>
+            <unit command-post="false" id="53" name="PIA Dominante Reco" position="29TNF3371257164" type="PIA Dominante Reco"/>
+            <unit command-post="false" id="54" name="Patrouille . EI 12,7" position="29TNF3449757080" type="Patrouille . EI 12,7"/>
+            <limit name="Limite 57">
+              <point>29TNF3302458237</point>
+              <point>29TNF3312657910</point>
+              <point>29TNF3296057629</point>
+              <point>29TNF3295757039</point>
+              <point>29TNF3279156348</point>
+              <point>29TNF3278855767</point>
+              <point>29TNF3261455420</point>
+              <point>29TNF3260854949</point>
+              <point>29TNF3294453605</point>
+            </limit>
+            <limit name="Limite 58">
+              <point>29TNF3368658330</point>
+              <point>29TNF3394457632</point>
+              <point>29TNF3333755615</point>
+              <point>29TNF3336155108</point>
+              <point>29TNF3357154396</point>
+              <point>29TNF3359554124</point>
+              <point>29TNF3358253719</point>
+            </limit>
+          </automat>
+          <lima name="Lima 62">
+            <point>29TNF3220458181</point>
+            <point>29TNF3245858220</point>
+            <point>29TNF3283358158</point>
+            <point>29TNF3299258073</point>
+            <point>29TNF3322057890</point>
+            <point>29TNF3379157881</point>
+            <point>29TNF3388957899</point>
+            <point>29TNF3398757977</point>
+            <point>29TNF3472557385</point>
+            <point>29TNF3500557335</point>
+            <point>29TNF3506057275</point>
+            <point>29TNF3514757252</point>
+            <point>29TNF3527957356</point>
+          </lima>
+          <lima name="Lima 64">
+            <point>29TNF3416756186</point>
+            <point>29TNF3435256152</point>
+            <point>29TNF3441156201</point>
+            <point>29TNF3486056209</point>
+            <point>29TNF3490856171</point>
+            <point>29TNF3509956182</point>
+          </lima>
+          <lima name="Lima 65">
+            <point>29TNF3389255654</point>
+            <point>29TNF3397655619</point>
+            <point>29TNF3403455539</point>
+            <point>29TNF3418055607</point>
+            <point>29TNF3436455524</point>
+            <point>29TNF3449755519</point>
+            <point>29TNF3476655417</point>
+            <point>29TNF3480255381</point>
+            <point>29TNF3481555198</point>
+            <point>29TNF3497855099</point>
+            <point>29TNF3511754935</point>
+            <point>29TNF3549654953</point>
+          </lima>
+          <lima name="Lima 66">
+            <point>29TNF3255256929</point>
+            <point>29TNF3293356861</point>
+          </lima>
+          <lima name="Lima 67">
+            <point>29TNF3289356867</point>
+            <point>29TNF3370256737</point>
+          </lima>
+          <lima name="Lima 68">
+            <point>29TNF3347556779</point>
+            <point>29TNF3415956665</point>
+            <point>29TNF3430456721</point>
+            <point>29TNF3442956677</point>
+          </lima>
+          <lima name="Lima 69">
+            <point>29TNF3405255826</point>
+            <point>29TNF3401655952</point>
+            <point>29TNF3356956018</point>
+            <point>29TNF3346956014</point>
+            <point>29TNF3333256175</point>
+          </lima>
+          <lima name="Lima 70">
+            <point>29TNF3316155605</point>
+            <point>29TNF3362855625</point>
+            <point>29TNF3364255725</point>
+            <point>29TNF3387055678</point>
+            <point>29TNF3396455624</point>
+          </lima>
+          <lima name="Lima 71">
+            <point>29TNF3318055469</point>
+            <point>29TNF3368055318</point>
+            <point>29TNF3384155297</point>
+          </lima>
+          <lima name="Lima 72">
+            <point>29TNF3391255062</point>
+            <point>29TNF3351255012</point>
+            <point>29TNF3321555008</point>
+          </lima>
+          <lima name="Lima 73">
+            <point>29TNF3329054640</point>
+            <point>29TNF3353554695</point>
+            <point>29TNF3406054505</point>
+            <point>29TNF3418154575</point>
+          </lima>
+          <lima name="Lima 74">
+            <point>29TNF3266054486</point>
+            <point>29TNF3351654695</point>
+          </lima>
+          <lima name="Lima 75">
+            <point>29TNF3249655282</point>
+            <point>29TNF3284755228</point>
+            <point>29TNF3338855087</point>
+          </lima>
+          <lima name="Lima 76">
+            <point>29TNF3342155400</point>
+            <point>29TNF3249355637</point>
+          </lima>
+          <lima name="Lima 77">
+            <point>29TNF3239556109</point>
+            <point>29TNF3309356057</point>
+            <point>29TNF3324456229</point>
+            <point>29TNF3326456309</point>
+            <point>29TNF3356356293</point>
+          </lima>
+          <limit name="Limite 59">
+            <point>29TNF3231458676</point>
+            <point>29TNF3232158381</point>
+            <point>29TNF3244757898</point>
+            <point>29TNF3240957780</point>
+            <point>29TNF3260757088</point>
+            <point>29TNF3247656261</point>
+            <point>29TNF3238556062</point>
+            <point>29TNF3238655895</point>
+            <point>29TNF3252655773</point>
+            <point>29TNF3254555209</point>
+            <point>29TNF3259455140</point>
+            <point>29TNF3269354544</point>
+            <point>29TNF3295753547</point>
+          </limit>
+          <limit name="Limite 60">
+            <point>29TNF3503658254</point>
+            <point>29TNF3487857905</point>
+            <point>29TNF3498057816</point>
+            <point>29TNF3494457472</point>
+            <point>29TNF3507757404</point>
+            <point>29TNF3537557068</point>
+            <point>29TNF3516256101</point>
+            <point>29TNF3548255712</point>
+            <point>29TNF3555255401</point>
+            <point>29TNF3537455005</point>
+            <point>29TNF3540954129</point>
+            <point>29TNF3564953818</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="6" name="Groupe de connaissance [6]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="2" name="Camp Eni" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="25" level="ii" name="GTIA [25]">
+          <automat engaged="true" id="30" knowledge-group="31" name="SGTIA INF [30]" type="SGTIA INF">
+            <unit command-post="true" id="32" name="Section . CDT CIE INF VAB" position="29TNF3363052579" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="34" name="Section . CBT INF VAB CDS SOFF" position="29TNF3345553242" type="Section . CBT INF VAB CDS SOFF"/>
+            <unit command-post="false" id="35" name="Section . CBT INF VAB CDS OFF" position="29TNF3432553317" type="Section . CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="36" name="Groupe . MO81 VAB" position="29TNF3411652724" type="Groupe . MO81 VAB"/>
+            <unit command-post="false" id="37" name="Peloton . LECLERC CDP SOFF" position="29TNF3352952960" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="38" name="Groupe GEN . EBG" position="29TNF3358952726" type="Groupe GEN . EBG"/>
+            <unit command-post="false" id="40" name="PIA Dominante INF" position="29TNF3317752958" type="PIA Dominante INF"/>
+            <unit command-post="false" id="42" name="Patrouille . EI 12,7" position="29TNF3400752990" type="Patrouille . EI 12,7"/>
+          </automat>
+          <limit name="Limite 78">
+            <point>29TNF3302458237</point>
+            <point>29TNF3312657910</point>
+            <point>29TNF3296057629</point>
+            <point>29TNF3295757039</point>
+            <point>29TNF3279156348</point>
+            <point>29TNF3278855767</point>
+            <point>29TNF3261455420</point>
+            <point>29TNF3260854949</point>
+            <point>29TNF3294453605</point>
+          </limit>
+          <limit name="Limite 79">
+            <point>29TNF3368658330</point>
+            <point>29TNF3394457632</point>
+            <point>29TNF3333755615</point>
+            <point>29TNF3336155108</point>
+            <point>29TNF3357154396</point>
+            <point>29TNF3359554124</point>
+            <point>29TNF3358253719</point>
+          </limit>
+          <limit name="Limite 80">
+            <point>29TNF3231458676</point>
+            <point>29TNF3232158381</point>
+            <point>29TNF3244757898</point>
+            <point>29TNF3240957780</point>
+            <point>29TNF3260757088</point>
+            <point>29TNF3247656261</point>
+            <point>29TNF3238556062</point>
+            <point>29TNF3238655895</point>
+            <point>29TNF3252655773</point>
+            <point>29TNF3254555209</point>
+            <point>29TNF3259455140</point>
+            <point>29TNF3269354544</point>
+            <point>29TNF3295753547</point>
+          </limit>
+          <limit name="Limite 81">
+            <point>29TNF3346258363</point>
+            <point>29TNF3365258021</point>
+            <point>29TNF3376557639</point>
+            <point>29TNF3318755631</point>
+            <point>29TNF3322255077</point>
+            <point>29TNF3339954485</point>
+            <point>29TNF3343354211</point>
+            <point>29TNF3327253783</point>
+          </limit>
+          <limit name="Limite 82">
+            <point>29TNF3441658406</point>
+            <point>29TNF3471157891</point>
+            <point>29TNF3489557827</point>
+            <point>29TNF3461257013</point>
+            <point>29TNF3436856596</point>
+            <point>29TNF3377955287</point>
+            <point>29TNF3393254772</point>
+            <point>29TNF3420654493</point>
+            <point>29TNF3401453599</point>
+          </limit>
+          <limit name="Limite 83">
+            <point>29TNF3302458237</point>
+            <point>29TNF3312657910</point>
+            <point>29TNF3296057629</point>
+            <point>29TNF3295757039</point>
+            <point>29TNF3279156348</point>
+            <point>29TNF3278855767</point>
+            <point>29TNF3261455420</point>
+            <point>29TNF3260854949</point>
+            <point>29TNF3294453605</point>
+          </limit>
+          <limit name="Limite 84">
+            <point>29TNF3368658330</point>
+            <point>29TNF3394457632</point>
+            <point>29TNF3333755615</point>
+            <point>29TNF3336155108</point>
+            <point>29TNF3357154396</point>
+            <point>29TNF3359554124</point>
+            <point>29TNF3358253719</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="31" name="Groupe de connaissance [31]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="0086195078" -->

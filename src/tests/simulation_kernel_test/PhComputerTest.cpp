@@ -44,7 +44,7 @@ namespace
     {
         WorldFixture()
         {
-            WorldInitialize( "Paris" );
+            WorldInitialize( "worldwide/Paris" );
         }
         ~WorldFixture()
         {

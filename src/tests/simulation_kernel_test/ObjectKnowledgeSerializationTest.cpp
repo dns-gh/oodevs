@@ -45,7 +45,7 @@ namespace
     {
         ObjectKnowledgeSerializationFixture()
         {
-            WorldInitialize( "Paris" );
+            WorldInitialize( "worldwide/Paris" );
             PHY_ConsumptionType::Initialize();
             MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
         }

@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="211" name="Armor - attack" target="93" time="502" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="319"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+        <parameter name="Limit 1" type="limit">
+            <location type="Line">
+              <point coordinates="31UEP1448782633"/>
+              <point coordinates="31UEP1199186075"/>
+              <point coordinates="31UEP0991088837"/>
+              <point coordinates="31UEP0752490314"/>
+              <point coordinates="31UEP0635292431"/>
+              <point coordinates="31UEP0597492923"/>
+              <point coordinates="31UEP0427093568"/>
+            </location>
+        </parameter>
+        <parameter name="Limit 2" type="limit">
+            <location type="Line">
+              <point coordinates="31UEP2029186291"/>
+              <point coordinates="31UEP1813488977"/>
+              <point coordinates="31UEP1593890756"/>
+              <point coordinates="31UEP1438792836"/>
+              <point coordinates="31UEP1257094501"/>
+              <point coordinates="31UEP0939097113"/>
+            </location>
+        </parameter>
+      <parameter name="Intelligences" type="intelligencelist"/>
+  </action>
+  <action id="226" name="Armor - hold" target="111" time="6" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="205"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+        <parameter name="Limit 1" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9761085266"/>
+              <point coordinates="31UEP0240886982"/>
+              <point coordinates="31UEP0356487425"/>
+              <point coordinates="31UEP0458188085"/>
+              <point coordinates="31UEP0575388458"/>
+              <point coordinates="31UEP0755989373"/>
+              <point coordinates="31UEP0964590671"/>
+              <point coordinates="31UEP1255293068"/>
+              <point coordinates="31UEP1374294830"/>
+              <point coordinates="31UEP1753899082"/>
+              <point coordinates="31UEQ1913402827"/>
+              <point coordinates="31UEQ2029006367"/>
+              <point coordinates="31UEQ2237112639"/>
+            </location>
+        </parameter>
+        <parameter name="Limit 2" type="limit">
+            <location type="Line">
+              <point coordinates="31UEQ1601815781"/>
+              <point coordinates="31UEQ1322006659"/>
+              <point coordinates="31UEQ1259002919"/>
+              <point coordinates="31UEP1031697488"/>
+              <point coordinates="31UEP0594693362"/>
+              <point coordinates="31UEP0413692862"/>
+              <point coordinates="31UEP0192691968"/>
+              <point coordinates="31UDP9978590988"/>
+              <point coordinates="31UDP9693888373"/>
+              <point coordinates="31UDP9540489281"/>
+              <point coordinates="31UDP9443889283"/>
+              <point coordinates="31UDP9244687982"/>
+            </location>
+        </parameter>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Deployment area" type="Polygon">
+        <location type="Polygon">
+          <point coordinates="31UEP1415499729"/>
+          <point coordinates="31UEP1435899779"/>
+          <point coordinates="31UEP1669898431"/>
+          <point coordinates="31UEP1580697848"/>
+          <point coordinates="31UEP1379799424"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="226" name="Armor - hold" target="117" time="7" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="212"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+        <parameter name="Limit 1" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9647480168"/>
+              <point coordinates="31UEP0266083266"/>
+              <point coordinates="31UEP0571984304"/>
+              <point coordinates="31UEP0708684798"/>
+              <point coordinates="31UEP0856085132"/>
+              <point coordinates="31UEP1157385700"/>
+              <point coordinates="31UEP1631588683"/>
+              <point coordinates="31UEP1777791827"/>
+              <point coordinates="31UEP2013394698"/>
+              <point coordinates="31UEP2328398100"/>
+              <point coordinates="31UEP2343599044"/>
+              <point coordinates="31UEQ2521901158"/>
+              <point coordinates="31UEQ2506902178"/>
+              <point coordinates="31UEQ2667809856"/>
+            </location>
+        </parameter>
+        <parameter name="Limit 2" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9761085266"/>
+              <point coordinates="31UEP0240886982"/>
+              <point coordinates="31UEP0356487425"/>
+              <point coordinates="31UEP0458188085"/>
+              <point coordinates="31UEP0575388458"/>
+              <point coordinates="31UEP0755989373"/>
+              <point coordinates="31UEP0964590671"/>
+              <point coordinates="31UEP1255293068"/>
+              <point coordinates="31UEP1374294830"/>
+              <point coordinates="31UEP1753899082"/>
+              <point coordinates="31UEQ1913402827"/>
+              <point coordinates="31UEQ2029006367"/>
+              <point coordinates="31UEQ2237112639"/>
+            </location>
+        </parameter>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Deployment area" type="Polygon">
+        <location type="Polygon">
+          <point coordinates="31UEP1743798531"/>
+          <point coordinates="31UEP1687697999"/>
+          <point coordinates="31UEP2003095964"/>
+          <point coordinates="31UEP2031196598"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="149" name="Militia - seize and hold position" target="65" time="1064" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="205"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+      <parameter name="Limit 1" type="limit"/>
+      <parameter name="Limit 2" type="limit"/>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Objective" type="Point">
+        <location type="Point">
+          <point coordinates="31UEQ1698110482"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="149" name="Militia - seize and hold position" target="66" time="1085" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="245"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+      <parameter name="Limit 1" type="limit"/>
+      <parameter name="Limit 2" type="limit"/>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Objective" type="Point">
+        <location type="Point">
+          <point coordinates="31UEQ1656210712"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="149" name="Militia - seize and hold position" target="67" time="1067" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="207"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+      <parameter name="Limit 1" type="limit"/>
+      <parameter name="Limit 2" type="limit"/>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Objective" type="Point">
+        <location type="Point">
+          <point coordinates="31UEQ2224304040"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="149" name="Militia - seize and hold position" target="68" time="1099" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="169"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+      <parameter name="Limit 1" type="limit"/>
+      <parameter name="Limit 2" type="limit"/>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Objective" type="Point">
+        <location type="Point">
+          <point coordinates="31UEQ2304403341"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="149" name="Militia - seize and hold position" target="69" time="1113" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="202"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+      <parameter name="Limit 1" type="limit"/>
+      <parameter name="Limit 2" type="limit"/>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Objective" type="Point">
+        <location type="Point">
+          <point coordinates="31UEQ2220402910"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="149" name="Militia - seize and hold position" target="70" time="1081" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="197"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+      <parameter name="Limit 1" type="limit"/>
+      <parameter name="Limit 2" type="limit"/>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Objective" type="Point">
+        <location type="Point">
+          <point coordinates="31UEQ2230603316"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="133" name="move" target="64" time="1176" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="209"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+      <parameter name="Limit 1" type="limit"/>
+      <parameter name="Limit 2" type="limit"/>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Route" type="Path">
+        <parameter name="Destination" type="location">
+          <location type="Point">
+            <point coordinates="31UEQ1701910330"/>
+          </location>
+        </parameter>
+      </parameter>
+  </action>
+  <action id="211" name="Armor - attack" target="32" time="118" type="mission">
+  <parameter name="Dangerous Direction" type="direction" value="44"/>
+      <parameter name="Phase lines" type="phaselinelist">
+        <parameter name="Phase line 1" type="lima" value="LD">
+          <parameter name="Location" type="location">
+            <location type="Line">
+              <point coordinates="31UEP0932598918"/>
+              <point coordinates="31UEP1076498198"/>
+              <point coordinates="31UEP1159797365"/>
+              <point coordinates="31UEP1231696873"/>
+              <point coordinates="31UEP1258196571"/>
+              <point coordinates="31UEP1261895966"/>
+              <point coordinates="31UEP1326295701"/>
+              <point coordinates="31UEP1356595511"/>
+              <point coordinates="31UEP1402095322"/>
+              <point coordinates="31UEP1447495057"/>
+              <point coordinates="31UEP1466394754"/>
+              <point coordinates="31UEP1564894413"/>
+              <point coordinates="31UEP1689994373"/>
+              <point coordinates="31UEP1777194372"/>
+              <point coordinates="31UEP1803694183"/>
+              <point coordinates="31UEP1837794296"/>
+              <point coordinates="31UEP1905994181"/>
+              <point coordinates="31UEP2027193877"/>
+              <point coordinates="31UEP2091593763"/>
+              <point coordinates="31UEP2167393800"/>
+              <point coordinates="31UEP2277293647"/>
+            </location>
+          </parameter>
+          <parameter name="Schedule" type="datetime" value="20080130T102510"/>
+        </parameter>
+        <parameter name="Phase line 2" type="lima" value="LDM">
+          <parameter name="Location" type="location">
+            <location type="Line">
+              <point coordinates="31UDP9642789412"/>
+              <point coordinates="31UDP9699488240"/>
+              <point coordinates="31UDP9733487560"/>
+              <point coordinates="31UDP9793885518"/>
+              <point coordinates="31UDP9937280566"/>
+              <point coordinates="31UEP0043179469"/>
+            </location>
+          </parameter>
+          <parameter name="Schedule" type="datetime" value="20080130T102510"/>
+        </parameter>
+        <parameter name="Phase line 3" type="lima" value="LFM">
+          <parameter name="Location" type="location">
+            <location type="Line">
+              <point coordinates="31UEQ1118003324"/>
+              <point coordinates="31UEQ1297402522"/>
+              <point coordinates="31UEQ1358502521"/>
+              <point coordinates="31UEQ1553101148"/>
+              <point coordinates="31UEQ1576000691"/>
+              <point coordinates="31UEQ1637100614"/>
+              <point coordinates="31UEQ1690500384"/>
+              <point coordinates="31UEP1801299850"/>
+              <point coordinates="31UEP1850899887"/>
+              <point coordinates="31UEP1927299658"/>
+              <point coordinates="31UEP1965399276"/>
+              <point coordinates="31UEP2026498971"/>
+              <point coordinates="31UEP2114298437"/>
+              <point coordinates="31UEP2194397979"/>
+              <point coordinates="31UEP2221097940"/>
+              <point coordinates="31UEP2305198358"/>
+              <point coordinates="31UEP2350997824"/>
+              <point coordinates="31UEP2431097595"/>
+              <point coordinates="31UEP2495997480"/>
+            </location>
+          </parameter>
+          <parameter name="Schedule" type="datetime" value="20080130T102510"/>
+        </parameter>
+      </parameter>
+        <parameter name="Limit 1" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9761085266"/>
+              <point coordinates="31UEP0240886982"/>
+              <point coordinates="31UEP0356487425"/>
+              <point coordinates="31UEP0458188085"/>
+              <point coordinates="31UEP0575388458"/>
+              <point coordinates="31UEP0755989373"/>
+              <point coordinates="31UEP0964590671"/>
+              <point coordinates="31UEP1255293068"/>
+              <point coordinates="31UEP1374294830"/>
+              <point coordinates="31UEP1753899082"/>
+              <point coordinates="31UEQ1913402827"/>
+              <point coordinates="31UEQ2029006367"/>
+              <point coordinates="31UEQ2237112639"/>
+            </location>
+        </parameter>
+        <parameter name="Limit 2" type="limit">
+            <location type="Line">
+              <point coordinates="31UEQ1601815781"/>
+              <point coordinates="31UEQ1322006659"/>
+              <point coordinates="31UEQ1259002919"/>
+              <point coordinates="31UEP1031697488"/>
+              <point coordinates="31UEP0594693362"/>
+              <point coordinates="31UEP0413692862"/>
+              <point coordinates="31UEP0192691968"/>
+              <point coordinates="31UDP9978590988"/>
+              <point coordinates="31UDP9693888373"/>
+              <point coordinates="31UDP9540489281"/>
+              <point coordinates="31UDP9443889283"/>
+              <point coordinates="31UDP9244687982"/>
+            </location>
+        </parameter>
+      <parameter name="Intelligences" type="intelligencelist"/>
+  </action>
+  <action id="211" name="Armor - attack" target="20" time="117" type="mission">
+        <parameter name="Dangerous Direction" type="direction" value="39"/>
+      <parameter name="Phase lines" type="phaselinelist">
+        <parameter name="Phase line 1" type="lima" value="LDM">
+          <parameter name="Location" type="location">
+            <location type="Line">
+              <point coordinates="31UDP9642789412"/>
+              <point coordinates="31UDP9699488240"/>
+              <point coordinates="31UDP9733487560"/>
+              <point coordinates="31UDP9793885518"/>
+              <point coordinates="31UDP9937280566"/>
+              <point coordinates="31UEP0043179469"/>
+            </location>
+          </parameter>
+          <parameter name="Schedule" type="datetime" value="20080130T102510"/>
+        </parameter>
+        <parameter name="Phase line 2" type="lima" value="LD">
+          <parameter name="Location" type="location">
+            <location type="Line">
+              <point coordinates="31UEP0932598918"/>
+              <point coordinates="31UEP1076498198"/>
+              <point coordinates="31UEP1159797365"/>
+              <point coordinates="31UEP1231696873"/>
+              <point coordinates="31UEP1258196571"/>
+              <point coordinates="31UEP1261895966"/>
+              <point coordinates="31UEP1326295701"/>
+              <point coordinates="31UEP1356595511"/>
+              <point coordinates="31UEP1402095322"/>
+              <point coordinates="31UEP1447495057"/>
+              <point coordinates="31UEP1466394754"/>
+              <point coordinates="31UEP1564894413"/>
+              <point coordinates="31UEP1689994373"/>
+              <point coordinates="31UEP1777194372"/>
+              <point coordinates="31UEP1803694183"/>
+              <point coordinates="31UEP1837794296"/>
+              <point coordinates="31UEP1905994181"/>
+              <point coordinates="31UEP2027193877"/>
+              <point coordinates="31UEP2091593763"/>
+              <point coordinates="31UEP2167393800"/>
+              <point coordinates="31UEP2277293647"/>
+            </location>
+          </parameter>
+          <parameter name="Schedule" type="datetime" value="20080130T102510"/>
+        </parameter>
+        <parameter name="Phase line 3" type="lima" value="LFM">
+          <parameter name="Location" type="location">
+            <location type="Line">
+              <point coordinates="31UEQ1118003324"/>
+              <point coordinates="31UEQ1297402522"/>
+              <point coordinates="31UEQ1358502521"/>
+              <point coordinates="31UEQ1553101148"/>
+              <point coordinates="31UEQ1576000691"/>
+              <point coordinates="31UEQ1637100614"/>
+              <point coordinates="31UEQ1690500384"/>
+              <point coordinates="31UEP1801299850"/>
+              <point coordinates="31UEP1850899887"/>
+              <point coordinates="31UEP1927299658"/>
+              <point coordinates="31UEP1965399276"/>
+              <point coordinates="31UEP2026498971"/>
+              <point coordinates="31UEP2114298437"/>
+              <point coordinates="31UEP2194397979"/>
+              <point coordinates="31UEP2221097940"/>
+              <point coordinates="31UEP2305198358"/>
+              <point coordinates="31UEP2350997824"/>
+              <point coordinates="31UEP2431097595"/>
+              <point coordinates="31UEP2495997480"/>
+            </location>
+          </parameter>
+          <parameter name="Schedule" type="datetime" value="20080130T102510"/>
+        </parameter>
+      </parameter>
+        <parameter name="Limit 1" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9647480168"/>
+              <point coordinates="31UEP0266083266"/>
+              <point coordinates="31UEP0571984304"/>
+              <point coordinates="31UEP0708684798"/>
+              <point coordinates="31UEP0856085132"/>
+              <point coordinates="31UEP1157385700"/>
+              <point coordinates="31UEP1631588683"/>
+              <point coordinates="31UEP1777791827"/>
+              <point coordinates="31UEP2013394698"/>
+              <point coordinates="31UEP2328398100"/>
+              <point coordinates="31UEP2343599044"/>
+              <point coordinates="31UEQ2521901158"/>
+              <point coordinates="31UEQ2506902178"/>
+              <point coordinates="31UEQ2667809856"/>
+            </location>
+        </parameter>
+        <parameter name="Limit 2" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9761085266"/>
+              <point coordinates="31UEP0240886982"/>
+              <point coordinates="31UEP0356487425"/>
+              <point coordinates="31UEP0458188085"/>
+              <point coordinates="31UEP0575388458"/>
+              <point coordinates="31UEP0755989373"/>
+              <point coordinates="31UEP0964590671"/>
+              <point coordinates="31UEP1255293068"/>
+              <point coordinates="31UEP1374294830"/>
+              <point coordinates="31UEP1753899082"/>
+              <point coordinates="31UEQ1913402827"/>
+              <point coordinates="31UEQ2029006367"/>
+              <point coordinates="31UEQ2237112639"/>
+            </location>
+        </parameter>
+      <parameter name="Intelligences" type="intelligencelist"/>
+  </action>
+  <action id="287" name="Logistics - deploy" target="39" time="289" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="68"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+      <parameter name="Limit 1" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9647480168"/>
+              <point coordinates="31UEP0266083266"/>
+              <point coordinates="31UEP0571984304"/>
+              <point coordinates="31UEP0708684798"/>
+              <point coordinates="31UEP0856085132"/>
+              <point coordinates="31UEP1157385700"/>
+              <point coordinates="31UEP1631588683"/>
+              <point coordinates="31UEP1777791827"/>
+              <point coordinates="31UEP2013394698"/>
+              <point coordinates="31UEP2328398100"/>
+              <point coordinates="31UEP2343599044"/>
+              <point coordinates="31UEQ2521901158"/>
+              <point coordinates="31UEQ2506902178"/>
+              <point coordinates="31UEQ2667809856"/>
+            </location>
+        </parameter>
+        <parameter name="Limit 2" type="limit">
+            <location type="Line">
+              <point coordinates="31UEQ1601815781"/>
+              <point coordinates="31UEQ1322006659"/>
+              <point coordinates="31UEQ1259002919"/>
+              <point coordinates="31UEP1031697488"/>
+              <point coordinates="31UEP0594693362"/>
+              <point coordinates="31UEP0413692862"/>
+              <point coordinates="31UEP0192691968"/>
+              <point coordinates="31UDP9978590988"/>
+              <point coordinates="31UDP9693888373"/>
+              <point coordinates="31UDP9540489281"/>
+              <point coordinates="31UDP9443889283"/>
+              <point coordinates="31UDP9244687982"/>
+            </location>
+        </parameter>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Deployment position" type="Point">
+        <location type="Point">
+          <point coordinates="31UEP0937490158"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="251" name="Engineer - perform work" target="41" time="186" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="95"/>
+        <parameter name="Phase lines" type="phaselinelist"/>
+        <parameter name="Limit 1" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9647480168"/>
+              <point coordinates="31UEP0266083266"/>
+              <point coordinates="31UEP0571984304"/>
+              <point coordinates="31UEP0708684798"/>
+              <point coordinates="31UEP0856085132"/>
+              <point coordinates="31UEP1157385700"/>
+              <point coordinates="31UEP1631588683"/>
+              <point coordinates="31UEP1777791827"/>
+              <point coordinates="31UEP2013394698"/>
+              <point coordinates="31UEP2328398100"/>
+              <point coordinates="31UEP2343599044"/>
+              <point coordinates="31UEQ2521901158"/>
+              <point coordinates="31UEQ2506902178"/>
+              <point coordinates="31UEQ2667809856"/>
+            </location>
+        </parameter>
+        <parameter name="Limit 2" type="limit">
+            <location type="Line">
+              <point coordinates="31UEQ1601815781"/>
+              <point coordinates="31UEQ1322006659"/>
+              <point coordinates="31UEQ1259002919"/>
+              <point coordinates="31UEP1031697488"/>
+              <point coordinates="31UEP0594693362"/>
+              <point coordinates="31UEP0413692862"/>
+              <point coordinates="31UEP0192691968"/>
+              <point coordinates="31UDP9978590988"/>
+              <point coordinates="31UDP9693888373"/>
+              <point coordinates="31UDP9540489281"/>
+              <point coordinates="31UDP9443889283"/>
+              <point coordinates="31UDP9244687982"/>
+            </location>
+        </parameter>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Work" type="GenObjectList">
+        <parameter name="Obstacle 1" type="obstacle" value="3">
+          <parameter name="Location" type="location">
+            <location type="Point">
+              <point coordinates="31UEP1299887297"/>
+            </location>
+          </parameter>
+        </parameter>
+        <parameter name="Obstacle 2" type="obstacle" value="3">
+          <parameter name="Location" type="location">
+            <location type="Point">
+              <point coordinates="31UEP1609388804"/>
+            </location>
+          </parameter>
+        </parameter>
+      </parameter>
+      <parameter name="Meeting point" type="Location">
+        <location type="Polygon">
+          <point coordinates="31UEP0934890361"/>
+          <point coordinates="31UEP0899189905"/>
+          <point coordinates="31UEP0939889676"/>
+          <point coordinates="31UEP0990889878"/>
+          <point coordinates="31UEP1013790106"/>
+          <point coordinates="31UEP0996090513"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="31" name="Field Artillery - operate" target="51" time="172" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="36"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+      <parameter name="Limit 1" type="limit"/>
+      <parameter name="Limit 2" type="limit"/>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Deployment area" type="ObjectKnowledge" value="700448813"/>
+      <parameter name="Counter battery" type="Bool" value="false"/>
+  </action>
+  <action id="31" name="Field Artillery - operate" target="53" time="173" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="42"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+      <parameter name="Limit 1" type="limit"/>
+      <parameter name="Limit 2" type="limit"/>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Deployment area" type="ObjectKnowledge" value="700448816"/>
+      <parameter name="Counter battery" type="Bool" value="false"/>
+  </action>
+  <action id="31" name="Field Artillery - operate" target="52" time="173" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="63"/>
+      <parameter name="Phase lines" type="phaselinelist"/>
+      <parameter name="Limit 1" type="limit"/>
+      <parameter name="Limit 2" type="limit"/>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Deployment area" type="ObjectKnowledge" value="700448814"/>
+      <parameter name="Counter battery" type="Bool" value="false"/>
+  </action>
+  <action id="348" name="Cross departure line" target="20" time="618" type="fragorder"/>
+  <action id="348" name="Cross departure line" target="32" time="618" type="fragorder"/>
+  <action id="357" name="Fire" target="51" time="593" type="fragorder">
+      <parameter name="Ammunitions" type="DotationType" value="11"/>
+      <parameter name="Shells number" type="Numeric" value="2"/>
+      <parameter name="Target" type="Point">
+        <location type="Point">
+          <point coordinates="31UEP1445699040"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="357" name="Fire" target="53" time="599" type="fragorder">
+      <parameter name="Ammunitions" type="DotationType" value="11"/>
+      <parameter name="Shells number" type="Numeric" value="3"/>
+      <parameter name="Target" type="Point">
+        <location type="Point">
+          <point coordinates="31UEP1572998721"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="357" name="Fire" target="52" time="607" type="fragorder">
+      <parameter name="Ammunitions" type="DotationType" value="13"/>
+      <parameter name="Shells number" type="Numeric" value="2"/>
+      <parameter name="Target" type="Point">
+        <location type="Point">
+          <point coordinates="31UEP1825797641"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="225" name="Armor - seize" target="26" time="826" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="343"/>
+        <parameter name="Phase lines" type="phaselinelist"/>
+         <parameter name="Limit 1" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9761085266"/>
+              <point coordinates="31UEP0240886982"/>
+              <point coordinates="31UEP0356487425"/>
+              <point coordinates="31UEP0458188085"/>
+              <point coordinates="31UEP0575388458"/>
+              <point coordinates="31UEP0755989373"/>
+              <point coordinates="31UEP0964590671"/>
+              <point coordinates="31UEP1255293068"/>
+              <point coordinates="31UEP1374294830"/>
+              <point coordinates="31UEP1753899082"/>
+              <point coordinates="31UEQ1913402827"/>
+              <point coordinates="31UEQ2029006367"/>
+              <point coordinates="31UEQ2237112639"/>
+            </location>
+        </parameter>
+        <parameter name="Limit 2" type="limit">
+            <location type="Line">
+              <point coordinates="31UEQ1601815781"/>
+              <point coordinates="31UEQ1322006659"/>
+              <point coordinates="31UEQ1259002919"/>
+              <point coordinates="31UEP1031697488"/>
+              <point coordinates="31UEP0594693362"/>
+              <point coordinates="31UEP0413692862"/>
+              <point coordinates="31UEP0192691968"/>
+              <point coordinates="31UDP9978590988"/>
+              <point coordinates="31UDP9693888373"/>
+              <point coordinates="31UDP9540489281"/>
+              <point coordinates="31UDP9443889283"/>
+              <point coordinates="31UDP9244687982"/>
+            </location>
+        </parameter>
+      <parameter name="Intelligences" type="intelligencelist"/>
+
+      <parameter name="Objective" type="Polygon">
+        <location type="Polygon">
+          <point coordinates="31UEP1597198490"/>
+          <point coordinates="31UEP1436798695"/>
+          <point coordinates="31UEP1347799687"/>
+          <point coordinates="31UEQ1368200423"/>
+          <point coordinates="31UEQ1520900522"/>
+          <point coordinates="31UEQ1620200318"/>
+          <point coordinates="31UEQ1655800089"/>
+          <point coordinates="31UEP1711899479"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="225" name="Armor - seize" target="20" time="741" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="24"/>
+      <parameter name="Phase lines" type="phaselinelist">
+        <parameter name="Phase line 1" type="lima" value="LDM">
+          <parameter name="Location" type="location">
+            <location type="Line">
+              <point coordinates="31UEQ1118003324"/>
+              <point coordinates="31UEQ1297402522"/>
+              <point coordinates="31UEQ1358502521"/>
+              <point coordinates="31UEQ1553101148"/>
+              <point coordinates="31UEQ1576000691"/>
+              <point coordinates="31UEQ1637100614"/>
+              <point coordinates="31UEQ1690500384"/>
+              <point coordinates="31UEP1801299850"/>
+              <point coordinates="31UEP1850899887"/>
+              <point coordinates="31UEP1927299658"/>
+              <point coordinates="31UEP1965399276"/>
+              <point coordinates="31UEP2026498971"/>
+              <point coordinates="31UEP2114298437"/>
+              <point coordinates="31UEP2194397979"/>
+              <point coordinates="31UEP2221097940"/>
+              <point coordinates="31UEP2305198358"/>
+              <point coordinates="31UEP2350997824"/>
+              <point coordinates="31UEP2431097595"/>
+              <point coordinates="31UEP2495997480"/>
+            </location>
+          </parameter>
+          <parameter name="Schedule" type="datetime" value="20080130T143330"/>
+        </parameter>
+        <parameter name="Phase line 2" type="lima" value="LFM">
+          <parameter name="Location" type="location">
+            <location type="Line">
+              <point coordinates="31UEQ1434915160"/>
+              <point coordinates="31UEQ1844013530"/>
+              <point coordinates="31UEQ2109112053"/>
+              <point coordinates="31UEQ2408209479"/>
+              <point coordinates="31UEQ2752908605"/>
+              <point coordinates="31UEQ2866608491"/>
+              <point coordinates="31UEQ3090006938"/>
+            </location>
+          </parameter>
+          <parameter name="Schedule" type="datetime" value="20080130T143550"/>
+        </parameter>
+      </parameter>
+      <parameter name="Limit 1" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9647480168"/>
+              <point coordinates="31UEP0266083266"/>
+              <point coordinates="31UEP0571984304"/>
+              <point coordinates="31UEP0708684798"/>
+              <point coordinates="31UEP0856085132"/>
+              <point coordinates="31UEP1157385700"/>
+              <point coordinates="31UEP1631588683"/>
+              <point coordinates="31UEP1777791827"/>
+              <point coordinates="31UEP2013394698"/>
+              <point coordinates="31UEP2328398100"/>
+              <point coordinates="31UEP2343599044"/>
+              <point coordinates="31UEQ2521901158"/>
+              <point coordinates="31UEQ2506902178"/>
+              <point coordinates="31UEQ2667809856"/>
+            </location>
+        </parameter>
+        <parameter name="Limit 2" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9761085266"/>
+              <point coordinates="31UEP0240886982"/>
+              <point coordinates="31UEP0356487425"/>
+              <point coordinates="31UEP0458188085"/>
+              <point coordinates="31UEP0575388458"/>
+              <point coordinates="31UEP0755989373"/>
+              <point coordinates="31UEP0964590671"/>
+              <point coordinates="31UEP1255293068"/>
+              <point coordinates="31UEP1374294830"/>
+              <point coordinates="31UEP1753899082"/>
+              <point coordinates="31UEQ1913402827"/>
+              <point coordinates="31UEQ2029006367"/>
+              <point coordinates="31UEQ2237112639"/>
+            </location>
+        </parameter>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Objective" type="Polygon">
+        <location type="Polygon">
+          <point coordinates="31UEQ2363203414"/>
+          <point coordinates="31UEQ2276804659"/>
+          <point coordinates="31UEQ2154604458"/>
+          <point coordinates="31UEQ2106103824"/>
+          <point coordinates="31UEQ2106002732"/>
+          <point coordinates="31UEQ2190002198"/>
+          <point coordinates="31UEQ2289201790"/>
+          <point coordinates="31UEQ2368202246"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="225" name="Armor - seize" target="32" time="826" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="26"/>
+      <parameter name="Phase lines" type="phaselinelist">
+        <parameter name="Phase line 1" type="lima" value="LDM">
+          <parameter name="Location" type="location">
+            <location type="Line">
+              <point coordinates="31UEQ1118003324"/>
+              <point coordinates="31UEQ1297402522"/>
+              <point coordinates="31UEQ1358502521"/>
+              <point coordinates="31UEQ1553101148"/>
+              <point coordinates="31UEQ1576000691"/>
+              <point coordinates="31UEQ1637100614"/>
+              <point coordinates="31UEQ1690500384"/>
+              <point coordinates="31UEP1801299850"/>
+              <point coordinates="31UEP1850899887"/>
+              <point coordinates="31UEP1927299658"/>
+              <point coordinates="31UEP1965399276"/>
+              <point coordinates="31UEP2026498971"/>
+              <point coordinates="31UEP2114298437"/>
+              <point coordinates="31UEP2194397979"/>
+              <point coordinates="31UEP2221097940"/>
+              <point coordinates="31UEP2305198358"/>
+              <point coordinates="31UEP2350997824"/>
+              <point coordinates="31UEP2431097595"/>
+              <point coordinates="31UEP2495997480"/>
+            </location>
+          </parameter>
+          <parameter name="Schedule" type="datetime" value="20080130T150430"/>
+        </parameter>
+        <parameter name="Phase line 2" type="lima" value="LFM">
+          <parameter name="Location" type="location">
+            <location type="Line">
+              <point coordinates="31UEQ1434915160"/>
+              <point coordinates="31UEQ1844013530"/>
+              <point coordinates="31UEQ2109112053"/>
+              <point coordinates="31UEQ2408209479"/>
+              <point coordinates="31UEQ2752908605"/>
+              <point coordinates="31UEQ2866608491"/>
+              <point coordinates="31UEQ3090006938"/>
+            </location>
+          </parameter>
+          <parameter name="Schedule" type="datetime" value="20080130T150630"/>
+        </parameter>
+      </parameter>
+        <parameter name="Limit 1" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9761085266"/>
+              <point coordinates="31UEP0240886982"/>
+              <point coordinates="31UEP0356487425"/>
+              <point coordinates="31UEP0458188085"/>
+              <point coordinates="31UEP0575388458"/>
+              <point coordinates="31UEP0755989373"/>
+              <point coordinates="31UEP0964590671"/>
+              <point coordinates="31UEP1255293068"/>
+              <point coordinates="31UEP1374294830"/>
+              <point coordinates="31UEP1753899082"/>
+              <point coordinates="31UEQ1913402827"/>
+              <point coordinates="31UEQ2029006367"/>
+              <point coordinates="31UEQ2237112639"/>
+            </location>
+        </parameter>
+        <parameter name="Limit 2" type="limit">
+            <location type="Line">
+              <point coordinates="31UEQ1601815781"/>
+              <point coordinates="31UEQ1322006659"/>
+              <point coordinates="31UEQ1259002919"/>
+              <point coordinates="31UEP1031697488"/>
+              <point coordinates="31UEP0594693362"/>
+              <point coordinates="31UEP0413692862"/>
+              <point coordinates="31UEP0192691968"/>
+              <point coordinates="31UDP9978590988"/>
+              <point coordinates="31UDP9693888373"/>
+              <point coordinates="31UDP9540489281"/>
+              <point coordinates="31UDP9443889283"/>
+              <point coordinates="31UDP9244687982"/>
+            </location>
+        </parameter>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Objective" type="Polygon">
+        <location type="Polygon">
+          <point coordinates="31UEQ1906011290"/>
+          <point coordinates="31UEQ1707512003"/>
+          <point coordinates="31UEQ1559711091"/>
+          <point coordinates="31UEQ1564609365"/>
+          <point coordinates="31UEQ1758008880"/>
+          <point coordinates="31UEQ1816609336"/>
+          <point coordinates="31UEQ1847209615"/>
+        </location>
+      </parameter>
+  </action>
+  <action id="210" name="Armor - support" target="26" time="123" type="mission">
+      <parameter name="Dangerous Direction" type="direction" value="28"/>  
+      <parameter name="Phase lines" type="phaselinelist">
+        <parameter name="Phase line 1" type="lima" value="LDM">
+          <parameter name="Location" type="location">
+            <location type="Line">
+              <point coordinates="31UDP9642789412"/>
+              <point coordinates="31UDP9699488240"/>
+              <point coordinates="31UDP9733487560"/>
+              <point coordinates="31UDP9793885518"/>
+              <point coordinates="31UDP9937280566"/>
+              <point coordinates="31UEP0043179469"/>
+            </location>
+          </parameter>
+          <parameter name="Schedule" type="datetime" value="20080130T101840"/>
+        </parameter>
+        <parameter name="Phase line 2" type="lima" value="LFM">
+          <parameter name="Location" type="location">
+            <location type="Line">
+              <point coordinates="31UEQ1434915160"/>
+              <point coordinates="31UEQ1844013530"/>
+              <point coordinates="31UEQ2109112053"/>
+              <point coordinates="31UEQ2408209479"/>
+              <point coordinates="31UEQ2752908605"/>
+              <point coordinates="31UEQ2866608491"/>
+              <point coordinates="31UEQ3090006938"/>
+            </location>
+          </parameter>
+          <parameter name="Schedule" type="datetime" value="20080130T101920"/>
+        </parameter>
+      </parameter>
+        <parameter name="Limit 1" type="limit">
+            <location type="Line">
+              <point coordinates="31UDP9761085266"/>
+              <point coordinates="31UEP0240886982"/>
+              <point coordinates="31UEP0356487425"/>
+              <point coordinates="31UEP0458188085"/>
+              <point coordinates="31UEP0575388458"/>
+              <point coordinates="31UEP0755989373"/>
+              <point coordinates="31UEP0964590671"/>
+              <point coordinates="31UEP1255293068"/>
+              <point coordinates="31UEP1374294830"/>
+              <point coordinates="31UEP1753899082"/>
+              <point coordinates="31UEQ1913402827"/>
+              <point coordinates="31UEQ2029006367"/>
+              <point coordinates="31UEQ2237112639"/>
+            </location>
+        </parameter>
+        <parameter name="Limit 2" type="limit">
+            <location type="Line">
+              <point coordinates="31UEQ1601815781"/>
+              <point coordinates="31UEQ1322006659"/>
+              <point coordinates="31UEQ1259002919"/>
+              <point coordinates="31UEP1031697488"/>
+              <point coordinates="31UEP0594693362"/>
+              <point coordinates="31UEP0413692862"/>
+              <point coordinates="31UEP0192691968"/>
+              <point coordinates="31UDP9978590988"/>
+              <point coordinates="31UDP9693888373"/>
+              <point coordinates="31UDP9540489281"/>
+              <point coordinates="31UDP9443889283"/>
+              <point coordinates="31UDP9244687982"/>
+            </location>
+        </parameter>
+      <parameter name="Intelligences" type="intelligencelist"/>
+      <parameter name="Unit" type="Automate" value="32"/>
+  </action>
+</actions>

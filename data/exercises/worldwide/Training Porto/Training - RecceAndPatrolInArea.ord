@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="16972129" name="ML_ReconnoiterArea" target="8" time="2011-01-19T15:10:42" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="area" type="polygon">
+      <location type="polygon">
+        <point coordinates="29TNF3331354605"/>
+        <point coordinates="29TNF3320354897"/>
+        <point coordinates="29TNF3214354751"/>
+        <point coordinates="29TNF3218154315"/>
+        <point coordinates="29TNF3331354605"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

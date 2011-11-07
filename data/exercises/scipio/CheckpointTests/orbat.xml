@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
+  <parties>
+    <party id="1051" name="BadGuys" type="friend">
+      <objects>
+        <object id="1071" name="installation" type="installation">
+          <shape type="point">
+            <points>
+              <point>31TCM2736466770</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1072" name="issue souterraine" type="metro station">
+          <shape type="point">
+            <points>
+              <point>31TCM2196264203</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1073" name="itineraire logistique" type="logistic route">
+          <shape type="ligne">
+            <points>
+              <point>31TCM1649364968</point>
+              <point>31TCM2443172863</point>
+            </points>
+          </shape>
+          <attributes>
+            <supply-route>
+              <flow>2</flow>
+              <width>3</width>
+              <length>4</length>
+              <max-weight>3</max-weight>
+              <equipped>true</equipped>
+            </supply-route>
+          </attributes>
+        </object>
+        <object id="1074" name="nuage nbc" type="nbc cloud">
+          <shape type="point">
+            <points>
+              <point>31TCM3183466589</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents state="liquid">
+              <nbc-agent type="gaz sarin"/>
+            </nbc-agents>
+            <input-toxic-cloud data-field="nom_var_shp_mesure_C" export="false" source="Romilly ponctuel 04 08 2008 1"/>
+          </attributes>
+        </object>
+        <object id="1075" name="piste" type="trail">
+          <shape type="polygone">
+            <points>
+              <point>31TCM2321054811</point>
+              <point>31TCM2515753462</point>
+              <point>31TCM2730955476</point>
+              <point>31TCM2451956902</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1076" name="plateforme" type="platform">
+          <shape type="polygone">
+            <points>
+              <point>31TCM2904466428</point>
+              <point>31TCM2737162217</point>
+              <point>31TCM3040962370</point>
+              <point>31TCM3029665100</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1077" name="plot de ravitaillement" type="logistic support area">
+          <shape type="point">
+            <points>
+              <point>31TCM0977459659</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1078" name="pont flottant continu" type="continuous pontoon bridge">
+          <shape type="point">
+            <points>
+              <point>31TCM2821374468</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>11</width>
+              <depth>11</depth>
+              <speed>1</speed>
+              <construction-needed>true</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+        <object id="1079" name="poste de controle" type="checkpoint">
+          <shape type="point">
+            <points>
+              <point>31TCM1184555822</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1080" name="pont flottant discontinu" type="discontinuous pontoon bridge">
+          <shape type="ligne">
+            <points>
+              <point>31TCM3456769107</point>
+              <point>31TCM3565861033</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>11</width>
+              <depth>11</depth>
+              <speed>1</speed>
+              <construction-needed>false</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+        <object id="1081" name="poste de tir" type="firing post">
+          <shape type="point">
+            <points>
+              <point>31TCM3114777552</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1082" name="rota" type="rota area">
+          <shape type="point">
+            <points>
+              <point>31TCM1033153586</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents state="liquid">
+              <nbc-agent type="gaz sarin"/>
+            </nbc-agents>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="1187" level="ii" name="Formation [1187]">
+          <automat engaged="true" id="1188" knowledge-group="1189" name="MILICE [1188]" type="MILICE">
+            <unit command-post="true" id="1190" name="MILICE . CDT" position="31TCM2043387103" type="MILICE . PICK UP CDT"/>
+            <unit command-post="false" id="1191" name="MILICE . Miliciens" position="31TCM2091886588" type="MILICE . PICK UP 10 Miliciens"/>
+            <unit command-post="false" id="1192" name="MILICE . Miliciens" position="31TCM2040186105" type="MILICE . PICK UP 10 Miliciens"/>
+          </automat>
+          <automat engaged="false" id="1197" knowledge-group="1189" name="SGTIA PIA [1197]" type="SGTIA PIA">
+            <unit command-post="true" id="1198" name="PC SGTIA" position="31TCM1949190732" type="PC SGTIA"/>
+            <unit command-post="false" id="1199" name="PIA Dominante ABC" position="31TCM1997690218" type="PIA Dominante ABC"/>
+            <unit command-post="false" id="1200" name="PIA Dominante INF" position="31TCM1946089734" type="PIA Dominante INF"/>
+            <unit command-post="false" id="1201" name="PIA Dominante Reco" position="31TCM1897590249" type="PIA Dominante Reco"/>
+            <unit command-post="false" id="1202" name="Groupe GEN . EBG" position="31TCM2003989826" type="GEN . Groupe EBG"/>
+          </automat>
+          <automat engaged="false" id="1207" knowledge-group="1189" name="Batterie de Tir AUF1 [1207]" type="ART - Batterie de Tir AUF1">
+            <unit command-post="true" id="1208" name="PC Batterie ASS" position="31TCM1313597574" type="ART - PC Batterie ASS"/>
+            <unit command-post="false" id="1209" name="Section de Tir AUF1 CDS OFF" position="31TCM1362097059" type="ART - Section de Tir AUF1 CDS OFF"/>
+            <unit command-post="false" id="1210" name="Section de Tir AUF1 CDS SOFF" position="31TCM1310396576" type="ART - Section de Tir AUF1 CDS SOFF"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="1189" name="Groupe de connaissance [1189]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="1052" name="GoodGuys" type="friend">
+      <objects>
+        <object id="1059" name="abattis" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>31TBN8041019072</point>
+              <point>31TBN8053616059</point>
+              <point>31TBN8311716235</point>
+              <point>31TBN8217317805</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="0.55"/>
+          </attributes>
+        </object>
+        <object id="1060" name="aire poser" type="landing area">
+          <shape type="polygone">
+            <points>
+              <point>31TBN8596517282</point>
+              <point>31TBN8595815888</point>
+              <point>31TBN8771815686</point>
+              <point>31TBN8776817262</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1061" name="aire logistique" type="logistic area">
+          <shape type="polygone">
+            <points>
+              <point>31TBN8873214003</point>
+              <point>31TBN8963711186</point>
+              <point>31TBN9202912358</point>
+              <point>31TBN9082314964</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1063" name="barricade" type="barricade">
+          <shape type="point">
+            <points>
+              <point>31TBN8241806315</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="0.6"/>
+          </attributes>
+        </object>
+        <object id="1064" name="bouchon de mines" type="mines">
+          <shape type="point">
+            <points>
+              <point>31TBN7983102758</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="0.6"/>
+            <activity-time value="3000"/>
+          </attributes>
+        </object>
+        <object id="1065" name="destruction de pont" type="bridge destruction">
+          <shape type="point">
+            <points>
+              <point>31TCN1034618953</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1066" name="destruction de route" type="road destruction">
+          <shape type="point">
+            <points>
+              <point>31TCN0133416655</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1067" name="eboulement" type="landslide">
+          <shape type="point">
+            <points>
+              <point>31TBN9841108270</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1068" name="feu" type="fire">
+          <shape type="point">
+            <points>
+              <point>31TCN0651906650</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Classe A" max-combustion-energy="500"/>
+          </attributes>
+        </object>
+        <object id="1069" name="fosse anti char" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>31TBN9954916343</point>
+              <point>31TCN0071114253</point>
+              <point>31TCN0351615270</point>
+              <point>31TCN0177017063</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1099" name="zone de mouvement interdit" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31TCN0247029570</point>
+              <point>31TCN0668425541</point>
+              <point>31TCN1089028113</point>
+              <point>31TCN1067431583</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1100" name="Zone de poser (hélicoptère) [1100]" type="landing area (helicopter)">
+          <shape type="polygone">
+            <points>
+              <point>31TCN0928821308</point>
+              <point>31TCN0844619598</point>
+              <point>31TCN0722922683</point>
+              <point>31TCN1076523325</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1101" name="Zone de tir interdit [1101]" type="firing forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31TBN9641327742</point>
+              <point>31TBN9745626431</point>
+              <point>31TBN9990326911</point>
+              <point>31TBN9871929995</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1103" name="Zone minée (linéaire) [1103]" type="mined area (linear)">
+          <shape type="polygone">
+            <points>
+              <point>31TCN1782928506</point>
+              <point>31TCN2005325062</point>
+              <point>31TCN2083728051</point>
+              <point>31TCN2017430987</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+            <activity-time value="3600"/>
+          </attributes>
+        </object>
+        <object id="1104" name="Zone minée (par dispersion) [1104]" type="mined area (scattered)">
+          <shape type="polygone">
+            <points>
+              <point>31TCN1691123393</point>
+              <point>31TCN1747220329</point>
+              <point>31TCN2243920499</point>
+              <point>31TCN2304221921</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="1106" name="Zone protégée [1106]" type="safe zone">
+          <shape type="point">
+            <points>
+              <point>31TCN2192124905</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="1107" level="ii" logistic-level="logistic-base" name="Formation [1107]">
+          <automat engaged="true" id="1108" knowledge-group="1109" logistic-level="logistic-base" name="TC2 10RC [1108]" type="LOG . TC2 10RC">
+            <unit command-post="true" id="1110" name="TC2 10RC" position="31TBM9576199425" type="LOG . TC2 10RC"/>
+          </automat>
+          <automat engaged="true" id="1111" knowledge-group="1109" name="Ssgpt Manoeuvre ALAT [1111]" type="ALAT - Ssgpt Manoeuvre">
+            <unit command-post="true" id="1112" name="PC ALAT Manoeuvre" position="31TBN9679702718" type="ALAT - PC Escadrille"/>
+            <unit command-post="false" id="1113" name="Patrouille 3HM" position="31TBN9728202203" type="ALAT - Patrouille 3HM"/>
+            <unit command-post="false" id="1114" name="Patrouille 3HM" position="31TBN9704202139" type="ALAT - Patrouille 3HM"/>
+            <unit command-post="false" id="1115" name="Patrouille 1HM SOFF" position="31TBN9628102235" type="ALAT - Patrouille 1HM SOFF"/>
+            <unit command-post="false" id="1116" name="Patrouille 1HM SOFF" position="31TBN9729802702" type="ALAT - Patrouille 1HM SOFF"/>
+            <unit command-post="false" id="1117" name="Patrouille 2HAC" position="31TBN9748902197" type="ALAT - Patrouille 2HAC"/>
+            <unit command-post="false" id="1118" name="Patrouille 2HAM" position="31TBN9726601704" type="ALAT - Patrouille 2HAM"/>
+          </automat>
+          <automat engaged="true" id="1119" knowledge-group="1109" name="Ssgpt Infanterie Char [1119]" type="INF . Ssgpt Infanterie Char">
+            <unit command-post="true" id="1120" name="Section CDT CIE INF VAB" position="31TBN8995703409" type="INF . Section CDT CIE VAB"/>
+            <unit command-post="false" id="1121" name="Section CBT INF VAB CDS OFF" position="31TBN9054303258" type="INF . Section CBT VAB CDS OFF"/>
+            <unit command-post="false" id="1122" name="Section CBT INF VAB CDS OFF" position="31TBN8992502410" type="INF . Section CBT VAB CDS OFF"/>
+            <unit command-post="false" id="1123" name="Section CBT INF VAB CDS OFF" position="31TBN8944002925" type="INF . Section CBT VAB CDS OFF"/>
+            <unit command-post="false" id="1124" name="Peloton LECLERC CDP OFF" position="31TBN9045703393" type="ABC . Peloton LECLERC CDP OFF"/>
+          </automat>
+          <automat engaged="true" id="1125" knowledge-group="1109" name="GLAISE ASA Batterie SA 13 [1125]" type="GLAISE - ASA - Batterie SA 13">
+            <unit command-post="true" id="1126" name="GLAISE ASA PC" position="31TBM8924699773" type="GLAISE - ASA - PC"/>
+            <unit command-post="false" id="1127" name="GLAISE ASA Section SA 13" position="31TBM8973199258" type="GLAISE - ASA - Section SA 13"/>
+            <unit command-post="false" id="1128" name="GLAISE ASA Section SA 13" position="31TBM8921598775" type="GLAISE - ASA - Section SA 13"/>
+          </automat>
+          <automat engaged="true" id="1129" knowledge-group="1109" name="Peloton Circulation sur VAB [1129]" type="CIRCU . Peloton Circulation sur VAB">
+            <unit command-post="true" id="1130" name="Patrouille CDT PON CIRCU VAB" position="31TBN9332705274" type="CIRCU . PC sur VAB"/>
+            <unit command-post="false" id="1131" name="Patrouille CIRCU VAB" position="31TBN9381204759" type="CIRCU . Patrouille VAB"/>
+            <unit command-post="false" id="1132" name="Patrouille CIRCU VAB" position="31TBN9329604276" type="CIRCU . Patrouille VAB"/>
+            <unit command-post="false" id="1133" name="Patrouille CIRCU VAB" position="31TBN9281104791" type="CIRCU . Patrouille VAB"/>
+            <unit command-post="false" id="1134" name="Patrouille CIRCU VAB" position="31TBN9382805258" type="CIRCU . Patrouille VAB"/>
+          </automat>
+          <automat engaged="true" id="1135" knowledge-group="1109" name="Zone Fonctionnelle Maintenance BLD [1135]" type="LOG . Secteur reparation maint mob">
+            <unit command-post="true" id="1136" name="PC LOG BLD Maintenance" position="31TBM9275996290" type="LOG . PC LOG BLD Secteur Maintenance"/>
+            <unit command-post="false" id="1137" name="Section CDT CMM (EVAC)" position="31TBM9324495775" type="LOG . Section CDT CMM (EVAC)"/>
+            <unit command-post="false" id="1138" name="Section Reparation Mob BLD  MOB" position="31TBM9272795292" type="LOG . Section Reparation Mob BLD  MOB"/>
+            <unit command-post="false" id="1139" name="Section Reparation EA BLD SREAT" position="31TBM9224295806" type="LOG . Section Reparation EA BLD SREAT"/>
+            <unit command-post="false" id="1140" name="Section Reparation Mob Feu BLD  SRMF" position="31TBM9325996274" type="LOG . Section Reparation Mob Feu BLD  SRMF"/>
+          </automat>
+          <automat engaged="true" id="1145" knowledge-group="1109" name="Zone Fonctionnelle Sante BLD [1145]" type="LOG . Secteur traitement">
+            <unit command-post="true" id="1146" name="PC LOG BLD Sante" position="31TBN9856900616" type="LOG . PC LOG BLD Secteur Sante"/>
+            <unit command-post="false" id="1147" name="Groupe VS J5" position="31TBN9905400101" type="LOG . Groupe VS J5"/>
+            <unit command-post="false" id="1148" name="Groupe VS VAB" position="31TBM9853899618" type="LOG . Groupe VS VAB"/>
+            <unit command-post="false" id="1149" name="Equipe HM EVASAN" position="31TBN9805300133" type="LOG . Equipe HM EVASAN"/>
+            <unit command-post="false" id="1150" name="Section Decontamination Medicale NBC" position="31TBN9907000600" type="LOG . Section Decontamination Medicale NBC"/>
+            <unit command-post="false" id="1151" name="Section Medico Psychologique" position="31TBN9926200095" type="LOG . Section Medico Psychologique"/>
+            <unit command-post="false" id="1152" name="Antenne Chirurgicale" position="31TBM9903899602" type="LOG . Antenne Chirurgicale"/>
+            <unit command-post="false" id="1153" name="Section Chirurgicale Modulaire" position="31TBM9853199411" type="LOG . Section Chirurgicale Modulaire"/>
+            <unit command-post="false" id="1154" name="Section Chirurgicale HMC" position="31TBM9803799634" type="LOG . Section Chirurgicale HMC"/>
+            <unit command-post="false" id="1155" name="Section de Triage modulaire" position="31TBN9784600139" type="LOG . Section Triage modulaire"/>
+            <unit command-post="false" id="1158" name="Equipe HM EVASAN glaise" position="31TBN9928400800" type="LOG . Equipe HM EVASAN BLIAT"/>
+          </automat>
+          <automat engaged="true" id="1165" knowledge-group="1109" name="Zone Fonctionnelle Ravitaillement Transport BLIAT [1165]" type="LOG . Secteur distribution stockage (SEA)">
+            <unit command-post="true" id="1166" name="PC LOG BLD Ravitaillerment" position="31TBN9757806328" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
+            <unit command-post="false" id="1167" name="Groupe Munitions BLIAT" position="31TBN9806305813" type="LOG . Groupe Munitions BLIAT"/>
+            <unit command-post="false" id="1168" name="Escouade Trspt CARB BLIAT" position="31TBN9754605329" type="LOG . Escouade Trspt CARB BLIAT"/>
+            <unit command-post="false" id="1169" name="Peloton Transport BLIAT" position="31TBN9706105844" type="LOG . Peloton Transport BLIAT"/>
+            <unit command-post="false" id="1170" name="Section Magasin CAP BLIAT" position="31TBN9807806312" type="LOG . Section Magasin CAP BLIAT"/>
+            <unit command-post="false" id="1171" name="Groupe Appro Vivre Eau BLIAT" position="31TBN9827005806" type="LOG . Groupe Appro Vivre Eau BLIAT"/>
+          </automat>
+          <automat engaged="false" id="1172" knowledge-group="1109" name="Milices LAND ROVER [1172]" type="MILICE">
+            <unit command-post="true" id="1173" name="Milice armee AK47 LAND ROVER" position="31TBM9984195734" type="MILICE . PICK UP CDT"/>
+            <unit command-post="false" id="1174" name="Milice armee LRAC LAND ROVER" position="31TCM0032695219" type="MILICE . PICK UP 14,5"/>
+            <unit command-post="false" id="1175" name="Milice armee LRAC LAND ROVER" position="31TBM9981094736" type="MILICE . PICK UP 23/2"/>
+          </automat>
+          <automat engaged="true" id="1176" knowledge-group="1109" name="Section Reco NBC [1176]" type="NRBC . Reco">
+            <unit command-post="true" id="1177" name="Patrouille Reco NBC CDT" position="31TBM8757595859" type="NRBC . PC Reco"/>
+            <unit command-post="false" id="1178" name="Patrouille Reco NBC" position="31TBM8806095344" type="NRBC . Patrouille Reco"/>
+          </automat>
+          <automat engaged="true" id="1179" knowledge-group="1109" name="Refugies x10 [1179]" type="CIV . DPRE hommes femmes et enfants">
+            <unit command-post="true" id="1180" name="Refugies 10 Pers" position="31TBM9644394487" type="Réfugiés hommes femmes et enfants"/>
+          </automat>
+          <automat engaged="true" id="1181" knowledge-group="1109" name="GLAISE RENS URH [1181]" type="GLAISE - RENS - URH">
+            <unit command-post="true" id="1182" name="GLAISE RENS Patrouille URH" position="31TBN9102806415" type="GLAISE - RENS - Patrouille URH"/>
+          </automat>
+          <lima name="Lima 1185">
+            <point>31TBM7861890937</point>
+            <point>31TCM0138984083</point>
+            <point>31TCM1633082796</point>
+            <point>31TCM3201585678</point>
+          </lima>
+          <lima name="Lima 1186">
+            <point>31TBN7984707164</point>
+            <point>31TBN9815308428</point>
+            <point>31TCN2036503432</point>
+            <point>31TCN3353904756</point>
+          </lima>
+          <limit name="Limite 1183">
+            <point>31TBN8392609593</point>
+            <point>31TBM8282284257</point>
+          </limit>
+          <limit name="Limite 1184">
+            <point>31TCN2785406674</point>
+            <point>31TCM2474779668</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="1109" name="Groupe de connaissance [1109]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="1108">
+          <subordinate id="1119"/>
+        </logistic-base>
+      </logistics>
+    </party>
+    <party id="1053" name="NeutralGuys" type="friend">
+      <objects>
+        <object id="1083" name="site de decontamination" type="decontamination site">
+          <shape type="polygone">
+            <points>
+              <point>31TBM7862858143</point>
+              <point>31TBM7914556302</point>
+              <point>31TBM8522356686</point>
+              <point>31TBM8442457910</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1084" name="site de franchissement" type="crossing site">
+          <shape type="ligne">
+            <points>
+              <point>31TBM8568163709</point>
+              <point>31TBM8896559090</point>
+              <point>31TBM9030762832</point>
+              <point>31TBM8849863743</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1085" name="terrain de largage" type="dropping area">
+          <shape type="polygone">
+            <points>
+              <point>31TBM7996366777</point>
+              <point>31TBM8153365715</point>
+              <point>31TBM8297367322</point>
+              <point>31TBM8170367734</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1086" name="zone nbc" type="nbc zone">
+          <shape type="polygone">
+            <points>
+              <point>31TBM8682567467</point>
+              <point>31TBM8838666140</point>
+              <point>31TBM9349367099</point>
+              <point>31TBM9175169497</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents state="liquid">
+              <nbc-agent type="Chimique"/>
+            </nbc-agents>
+            <input-toxic-cloud data-field="nom_var_shp_mesure_C" export="false" source="Indianapolis_Plume_1300"/>
+          </attributes>
+        </object>
+        <object id="1088" name="zone bouclee" type="seal off area">
+          <shape type="ligne">
+            <points>
+              <point>31TBM9808655077</point>
+              <point>31TBM9370555107</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1089" name="zone brouillage" type="jamming area">
+          <shape type="polygone">
+            <points>
+              <point>31TCM1166356942</point>
+              <point>31TCM0971052583</point>
+              <point>31TCM0525155225</point>
+              <point>31TCM0656858060</point>
+            </points>
+          </shape>
+          <attributes>
+            <activity-time value="10800"/>
+          </attributes>
+        </object>
+        <object id="1091" name="cobra" type="cobra deployment area">
+          <shape type="point">
+            <points>
+              <point>31TBM9911665804</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1092" name="mlrs" type="mrls deployment area">
+          <shape type="point">
+            <points>
+              <point>31TBM9471270203</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1093" name="canon" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>31TBM7631474828</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1094" name="mortier" type="mortar deployment area">
+          <shape type="point">
+            <points>
+              <point>31TCM0897268265</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="1098" name="zone de mobilite amelioree" type="mobility enhanced area">
+          <shape type="polygone">
+            <points>
+              <point>31TCM0659372494</point>
+              <point>31TCM0784169685</point>
+              <point>31TCM1136971439</point>
+              <point>31TCM0941975707</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="1211" level="i" name="Formation [1211]">
+          <automat engaged="false" id="1218" knowledge-group="1213" name="Terroriste [1218]" type="ASY . Terroristes">
+            <unit command-post="false" id="1219" name="Terroriste IED" position="31TCM1872195235" type="Terroriste IED"/>
+            <unit command-post="false" id="1220" name="Terroriste RPG" position="31TCM1920694720" type="Terroriste RPG"/>
+            <unit command-post="false" id="1221" name="Terroriste Sniper" position="31TCM1868994236" type="Terroriste Sniper"/>
+            <unit command-post="true" id="1222" name="Terroriste Sniper et IED" position="31TCM1334795975" type="Terroriste Sniper et IED"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="1213" name="Groupe de connaissance [1213]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="1055" name="Population standard BM [1055]" position="31TCM0904187640" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1051" value="0"/>
+            <adhesion party="1052" value="0"/>
+            <adhesion party="1053" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants>
+        <inhabitant id="1057" name="population1" type="popStandard">
+          <composition dead="0" healthy="300000" wounded="100"/>
+          <health-need quantity="300"/>
+          <information></information>
+          <living-area>
+            <urban-block id="3"/>
+            <urban-block id="4"/>
+            <urban-block id="6"/>
+            <urban-block id="7"/>
+            <urban-block id="10"/>
+            <urban-block id="11"/>
+            <urban-block id="12"/>
+            <urban-block id="13"/>
+            <urban-block id="14"/>
+            <urban-block id="15"/>
+            <urban-block id="16"/>
+            <urban-block id="17"/>
+            <urban-block id="18"/>
+            <urban-block id="19"/>
+            <urban-block id="20"/>
+            <urban-block id="21"/>
+            <urban-block id="22"/>
+            <urban-block id="23"/>
+            <urban-block id="24"/>
+            <urban-block id="25"/>
+            <urban-block id="27"/>
+            <urban-block id="29"/>
+            <urban-block id="30"/>
+            <urban-block id="31"/>
+            <urban-block id="32"/>
+            <urban-block id="33"/>
+            <urban-block id="34"/>
+            <urban-block id="35"/>
+            <urban-block id="36"/>
+            <urban-block id="37"/>
+            <urban-block id="38"/>
+            <urban-block id="39"/>
+            <urban-block id="40"/>
+            <urban-block id="44"/>
+            <urban-block id="45"/>
+            <urban-block id="46"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1051" value="-0.4"/>
+            <adhesion party="1052" value="0.5"/>
+            <adhesion party="1053" value="0.67"/>
+          </adhesions>
+        </inhabitant>
+        <inhabitant id="1058" name="population2" type="Population active">
+          <composition dead="0" healthy="53000" wounded="0"/>
+          <health-need quantity="53"/>
+          <information></information>
+          <living-area>
+            <urban-block id="26"/>
+            <urban-block id="27"/>
+            <urban-block id="28"/>
+            <urban-block id="40"/>
+            <urban-block id="41"/>
+            <urban-block id="42"/>
+            <urban-block id="43"/>
+            <urban-block id="47"/>
+            <urban-block id="48"/>
+            <urban-block id="50"/>
+            <urban-block id="52"/>
+            <urban-block id="53"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1051" value="0"/>
+            <adhesion party="1052" value="0"/>
+            <adhesion party="1053" value="0"/>
+          </adhesions>
+        </inhabitant>
+      </inhabitants>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1051">
+      <relationship diplomacy="neutral" party="1052"/>
+      <relationship diplomacy="neutral" party="1053"/>
+    </party>
+    <party id="1052">
+      <relationship diplomacy="neutral" party="1051"/>
+      <relationship diplomacy="neutral" party="1053"/>
+    </party>
+    <party id="1053">
+      <relationship diplomacy="neutral" party="1051"/>
+      <relationship diplomacy="neutral" party="1052"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="2536170134" -->

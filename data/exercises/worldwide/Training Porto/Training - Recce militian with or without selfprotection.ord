@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="1255124" name="ML_Reconnoitre" target="19" time="2011-01-19T14:42:02" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Elements to reconnoitre" type="list">
+      <parameter name="Elements to reconnoitre (élément 1)" type="point">
+        <location type="point">
+          <point coordinates="29TNF3405854495"/>
+        </location>
+      </parameter>
+      <parameter name="Elements to reconnoitre (élément 2)" type="point">
+        <location type="point">
+          <point coordinates="29TNF3413554385"/>
+        </location>
+      </parameter>
+      <parameter name="Elements to reconnoitre (élément 3)" type="point">
+        <location type="point">
+          <point coordinates="29TNF3386654159"/>
+        </location>
+      </parameter>
+      <parameter name="Elements to reconnoitre (élément 4)" type="point">
+        <location type="point">
+          <point coordinates="29TNF3375854062"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+</actions>

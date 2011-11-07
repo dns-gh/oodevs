@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<exercise model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/exercise.xsd">
+  <meta>
+    <name><![CDATA[9 cases demo]]></name>
+    <briefing>
+      <text lang="en"><![CDATA[
+            <h1>Sword's demo in 9 use cases</h1>
+            <p>This demo shows the main features of Sword OT v3.1. The terrain is the 9 times duplication of the same terrain (near Angers).</p>
+            <p>Thus, each case is an improvment of the previous one and allow a smooth increase in the demo complexity.</p>
+            <h2>Profiles</h2>
+            <ul>
+                <li><b>Free demo:</b> freely use this scenario</li>
+                <li><b>Scripted demo:</b> a script will interactively drives you towards the scenario with recorded orders and contextual information</li>
+            </ul>
+            <h2>Objectives</h2>
+            <ul>
+                <li>Introduction to Sword's main features</li>
+            </ul>
+        ]]></text>
+    </briefing>
+    <resources>
+      <resource file="scripts/resources/briefing.html" name="Briefing"/>
+      <resource file="docs/Global situation.html" name="Global situation"/>
+    </resources>
+  </meta>
+  <profiles file="profiles.xml"/>
+  <orbat file="orbat.xml"/>
+  <urbanstate file="urbanstate.xml"/>
+  <weather file="weather.xml"/>
+  <terrain name="Angers_x9_en"/>
+  <model dataset="ada" physical="worldwide"/>
+</exercise>
+<!-- signature="0268040740" -->

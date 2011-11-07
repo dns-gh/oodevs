@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Regional  Emergency Services" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="3" level="x" name="Monterey">
+          <automat engaged="false" id="18" knowledge-group="2" name="HS - Medical_HQ [18]" type="HS - Medical_HQ">
+            <unit command-post="true" id="19" name="HS - Med_Ambulance" position="10SFF0203751250" type="HS - Med_Ambulance"/>
+            <unit command-post="false" id="20" name="HS - Med_Ambulance" position="10SFF0254750762" type="HS - Med_Ambulance"/>
+            <unit command-post="false" id="21" name="HS - Med_Ambulance" position="10SFF0205750253" type="HS - Med_Ambulance"/>
+            <unit command-post="false" id="22" name="HS - Med_Evacuation_Helicopter" position="10SFF0154750741" type="HS - Med_Evacuation_Helicopter"/>
+          </automat>
+          <automat engaged="false" id="23" knowledge-group="2" name="Firefighter CP - Fire [23]" type="Firefighter CP - Fire">
+            <unit command-post="true" id="24" name="Firefighter - Operation Officer" position="10SEF9969650601" type="Firefighter - Operation Officer"/>
+            <unit command-post="false" id="25" name="Firefighter - Arson/Fire" position="10SFF0020750113" type="Firefighter - Arson/Fire"/>
+            <unit command-post="false" id="26" name="Firefighter - Arson/Fire" position="10SEF9971749605" type="Firefighter - Arson/Fire"/>
+            <unit command-post="false" id="27" name="Firefighter - Arson/Fire" position="10SEF9920650093" type="Firefighter - Arson/Fire"/>
+            <unit command-post="false" id="28" name="Firefighter - Arson/Fire Support" position="10SFF0019750611" type="Firefighter - Arson/Fire Support"/>
+          </automat>
+          <automat engaged="false" id="29" knowledge-group="2" name="Federal Police CP [29]" type="Federal Police CP">
+            <unit command-post="true" id="30" name="Federal Police - National Guard" position="10SEF9797951948" type="Federal Police - National Guard"/>
+            <unit command-post="false" id="31" name="Federal Police - National Guard" position="10SEF9848951460" type="Federal Police - National Guard"/>
+            <unit command-post="false" id="32" name="Federal Police - National Guard" position="10SEF9799950952" type="Federal Police - National Guard"/>
+            <unit command-post="false" id="33" name="HS - Chemical Decontamination" position="10SEF9748951440" type="HS - Chemical Decontamination"/>
+            <unit command-post="false" id="34" name="HS - Chemical Recognition" position="10SEF9847951958" type="HS - Chemical Recognition"/>
+          </automat>
+        </formation>
+        <formation id="35" level="x" name="Salinas">
+          <automat engaged="false" id="36" knowledge-group="2" name="HS - Medical_HQ [36]" type="HS - Medical_HQ">
+            <unit command-post="true" id="37" name="HS - Med_Ambulance" position="10SFF2119959195" type="HS - Med_Ambulance"/>
+            <unit command-post="false" id="38" name="HS - Med_Ambulance" position="10SFF2108359065" type="HS - Med_Ambulance"/>
+            <unit command-post="false" id="39" name="HS - Med_Ambulance" position="10SFF2096758805" type="HS - Med_Ambulance"/>
+            <unit command-post="false" id="40" name="HS - Med_Evacuation_Helicopter" position="10SFF2045659294" type="HS - Med_Evacuation_Helicopter"/>
+          </automat>
+          <automat engaged="false" id="41" knowledge-group="2" name="Firefighter CP - Fire [41]" type="Firefighter CP - Fire">
+            <unit command-post="true" id="42" name="Firefighter - Operation Officer" position="10SFF2003258728" type="Firefighter - Operation Officer"/>
+            <unit command-post="false" id="43" name="Firefighter - Arson/Fire" position="10SFF1986858075" type="Firefighter - Arson/Fire"/>
+            <unit command-post="false" id="44" name="Firefighter - Arson/Fire" position="10SFF1985057986" type="Firefighter - Arson/Fire"/>
+            <unit command-post="false" id="45" name="Firefighter - Arson/Fire" position="10SFF2005258729" type="Firefighter - Arson/Fire"/>
+            <unit command-post="false" id="46" name="Firefighter - Arson/Fire Support" position="10SFF2009958828" type="Firefighter - Arson/Fire Support"/>
+          </automat>
+          <automat engaged="false" id="47" knowledge-group="2" name="Federal Police CP [47]" type="Federal Police CP">
+            <unit command-post="true" id="48" name="Federal Police - National Guard" position="10SFF1774258612" type="Federal Police - National Guard"/>
+            <unit command-post="false" id="49" name="Federal Police - National Guard" position="10SFF1815158404" type="Federal Police - National Guard"/>
+            <unit command-post="false" id="50" name="Federal Police - National Guard" position="10SFF1760258669" type="Federal Police - National Guard"/>
+            <unit command-post="false" id="51" name="HS - Chemical Decontamination" position="10SFF1774258612" type="HS - Chemical Decontamination"/>
+            <unit command-post="false" id="52" name="HS - Chemical Recognition" position="10SFF1803258451" type="HS - Chemical Recognition"/>
+          </automat>
+          <automat engaged="false" id="75" knowledge-group="2" name="HS - Supply [75]" type="HS - Supply">
+            <unit command-post="true" id="76" name="HS - Logistic Support" position="10SFF2223264102" type="HS - Logistic Support"/>
+          </automat>
+        </formation>
+        <formation id="77" level="x" name="Laguna Seca">
+          <automat engaged="false" id="78" knowledge-group="2" name="HS - Medical_HQ [78]" type="HS - Medical_HQ">
+            <unit command-post="true" id="79" name="HS - Med_Ambulance" position="10SFF1360949737" type="HS - Med_Ambulance"/>
+            <unit command-post="false" id="80" name="HS - Med_Ambulance" position="10SFF1412049248" type="HS - Med_Ambulance"/>
+            <unit command-post="false" id="81" name="HS - Med_Ambulance" position="10SFF1363048740" type="HS - Med_Ambulance"/>
+            <unit command-post="false" id="82" name="HS - Med_Evacuation_Helicopter" position="10SFF1311949228" type="HS - Med_Evacuation_Helicopter"/>
+          </automat>
+          <automat engaged="false" id="83" knowledge-group="2" name="Firefighter CP - Fire [83]" type="Firefighter CP - Fire">
+            <unit command-post="true" id="84" name="Firefighter - Operation Officer" position="10SFF1126949088" type="Firefighter - Operation Officer"/>
+            <unit command-post="false" id="85" name="Firefighter - Arson/Fire" position="10SFF1177948600" type="Firefighter - Arson/Fire"/>
+            <unit command-post="false" id="86" name="Firefighter - Arson/Fire" position="10SFF1128948091" type="Firefighter - Arson/Fire"/>
+            <unit command-post="false" id="87" name="Firefighter - Arson/Fire" position="10SFF1077948579" type="Firefighter - Arson/Fire"/>
+            <unit command-post="false" id="88" name="Firefighter - Arson/Fire Support" position="10SFF1176949098" type="Firefighter - Arson/Fire Support"/>
+          </automat>
+          <automat engaged="false" id="89" knowledge-group="2" name="Federal Police CP [89]" type="Federal Police CP">
+            <unit command-post="true" id="90" name="Federal Police - National Guard" position="10SFF1088050182" type="Federal Police - National Guard"/>
+            <unit command-post="false" id="91" name="Federal Police - National Guard" position="10SFF1047149467" type="Federal Police - National Guard"/>
+            <unit command-post="false" id="92" name="Federal Police - National Guard" position="10SFF1152350269" type="Federal Police - National Guard"/>
+            <unit command-post="false" id="93" name="HS - Chemical Decontamination" position="10SFF1232149680" type="HS - Chemical Decontamination"/>
+            <unit command-post="false" id="94" name="HS - Chemical Recognition" position="10SFF1286948821" type="HS - Chemical Recognition"/>
+          </automat>
+          <automat engaged="false" id="95" knowledge-group="2" name="HS - Supply [95]" type="HS - Supply">
+            <unit command-post="true" id="96" name="HS - Logistic Support" position="10SFF1231050618" type="HS - Logistic Support"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Knowledge group [2]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="75">
+          <subordinate id="75"/>
+        </logistic-base>
+        <logistic-base id="95">
+          <subordinate id="95"/>
+        </logistic-base>
+      </logistics>
+    </party>
+    <party id="97" name="Terrorists" type="enemy">
+      <objects>
+        <object id="9998" name="Dirty area" type="nbc zone">
+          <shape type="point">
+            <points>
+              <point>10SFF1237249594</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents state="liquid">
+              <nbc-agent type="Chimical"/>
+            </nbc-agents>
+            <input-toxic-cloud data-field="nom_var_shp_mesure_Ct" source="C:/Documents and Settings/Jackie Scolaro/My Documents/SWORD/data/propagations/Laguna_Seca_Plume/propagation.xml"/>
+          </attributes>
+        </object>
+        <object id="9999" name="dirty cloud" type="nbc cloud (external model)">
+          <shape type="point">
+            <points>
+              <point>10SFF1188149996</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents state="gaseous">
+              <nbc-agent type="Chimical"/>
+            </nbc-agents>
+            <input-toxic-cloud data-field="nom_var_shp_mesure_C" source="C:/Documents and Settings/Jackie Scolaro/My Documents/SWORD/data/propagations/Laguna_Seca_Plume/propagation.xml"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="99" level="x" name="Terrorist 1 [99]">
+          <automat engaged="false" id="100" knowledge-group="98" name="Terrorists [100]" type="Terrorists">
+            <unit command-post="true" id="101" name="Terrorist" position="10SFF0880849132" type="Terrorist"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="98" name="Knowledge group [98]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="102" name="Population" type="friend">
+      <objects/>
+      <tactical/>
+      <communication>
+        <knowledge-group id="103" name="Knowledge group [103]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="115" name="Fan Population [115]" position="10SFF1077950292" type="Fan Crowd">
+          <composition contaminated="0" dead="0" healthy="1500" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="97" value="0"/>
+            <adhesion party="102" value="0"/>
+            <adhesion party="116" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="116" name="National Guard" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="118" level="x" name="California National Guard [118]">
+          <automat engaged="true" id="119" knowledge-group="117" name="Infantry company [119]" type="Infantry company">
+            <unit command-post="true" id="120" name="Infantry company CP" position="10SFF0753663649" type="Infantry company CP"/>
+            <unit command-post="false" id="121" name="Infantry platoon" position="10SFF0731463026" type="Infantry platoon"/>
+            <unit command-post="false" id="122" name="MRA troop" position="10SFF0786864675" type="MRA troop"/>
+            <unit command-post="false" id="123" name="Mortar troop" position="10SFF0694362334" type="Mortar troop"/>
+            <unit command-post="false" id="124" name="Light armored platoon" position="10SFF0767564237" type="Light armored platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="117" name="Knowledge group [117]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="97"/>
+      <relationship diplomacy="neutral" party="102"/>
+      <relationship diplomacy="neutral" party="116"/>
+    </party>
+    <party id="97">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="neutral" party="102"/>
+      <relationship diplomacy="neutral" party="116"/>
+    </party>
+    <party id="102">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="97"/>
+      <relationship diplomacy="neutral" party="116"/>
+    </party>
+    <party id="116">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="97"/>
+      <relationship diplomacy="neutral" party="102"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="1080770435" -->

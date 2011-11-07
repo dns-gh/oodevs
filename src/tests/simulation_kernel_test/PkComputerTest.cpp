@@ -30,7 +30,7 @@
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
 {
-    WorldInitialize( "Paris" );
+    WorldInitialize( "worldwide/Paris" );
 
     const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( "ammo" );
 
