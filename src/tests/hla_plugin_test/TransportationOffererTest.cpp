@@ -52,6 +52,7 @@ namespace
         MockInteractionSender< interactions::NetnConvoyEmbarkmentStatus > convoyEmbarkmentStatusInteractionSender;
         MockInteractionSender< interactions::NetnConvoyDisembarkmentStatus > convoyDisembarkmentStatusInteractionSender;
         MockInteractionSender< interactions::NetnConvoyDestroyedEntities > convoyDestroyedEntitiesSender;
+        MockInteractionSender< interactions::NetnServiceComplete > serviceCompleteSender;
         interactions::NetnOfferConvoy offer;
         interactions::NetnRequestConvoy request;
         tools::MessageController< sword::SimToClient_Content > messageController;
@@ -64,7 +65,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_sender_sends_announce_offer_to_clients_and_creates_flags_at_embarking_and_debarking_points, Fixture )
 {
     TransportationOfferer transportationOfferer( xis, missionResolver, offerInteractionSender, serviceStartedInteractionSender,
-                                                 convoyEmbarkmentStatusInteractionSender, convoyDisembarkmentStatusInteractionSender, convoyDestroyedEntitiesSender,
+                                                 convoyEmbarkmentStatusInteractionSender, convoyDisembarkmentStatusInteractionSender, convoyDestroyedEntitiesSender, serviceCompleteSender,
                                                  messageController, contextFactory, callsignResolver, clientPublisher );
     request.serviceType = 4; // Convoy
     request.consumer = UnicodeString( "consumer" );

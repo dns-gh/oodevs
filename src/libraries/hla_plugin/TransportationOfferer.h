@@ -15,6 +15,9 @@
 #include <hla/InteractionNotification_ABC.h>
 #include <set>
 #include <map>
+#pragma warning( push, 0 )
+#include <boost/bimap.hpp>
+#pragma warning( pop )
 
 namespace sword
 {
@@ -79,6 +82,7 @@ public:
                                     InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus >& convoyEmbarkmentStatusSender,
                                     InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus >& convoyDisembarkmentStatusSender,
                                     InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities >& convoyDestroyedEntitiesSender,
+                                    InteractionSender_ABC< interactions::NetnServiceComplete >& serviceCompleteSender,
                                     tools::MessageController_ABC< sword::SimToClient_Content >& messageController, const ContextFactory_ABC& factory,
                                     const CallsignResolver_ABC& callsignRevoler, dispatcher::ClientPublisher_ABC& clientsPublisher );
     virtual ~TransportationOfferer();
@@ -89,6 +93,7 @@ public:
     virtual void Receive( interactions::NetnRequestConvoy& request );
     virtual void Receive( interactions::NetnAcceptOffer& accept );
     virtual void Receive( interactions::NetnReadyToReceiveService& readyToReceive );
+    virtual void Receive( interactions::NetnServiceReceived& serviceReceived );
     //@}
 
 private:
@@ -102,9 +107,10 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, interactions::NetnOfferConvoy > T_Offers;
-    typedef std::map< unsigned int, std::string > T_Transporters;
+    typedef boost::bimap< unsigned int, std::string > T_Transporters;
     typedef std::set< unsigned int > T_Transported;
     typedef std::map< unsigned int, T_Transported > T_TransportedList;
+    typedef std::map< std::string, T_Transported > T_RemainingTransportedList;
     //@}
 
 private:
@@ -115,6 +121,7 @@ private:
     InteractionSender_ABC< interactions::NetnConvoyEmbarkmentStatus >& convoyEmbarkmentStatusSender_;
     InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus >& convoyDisembarkmentStatusSender_;
     InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities >& convoyDestroyedEntitiesSender_;
+    InteractionSender_ABC< interactions::NetnServiceComplete >& serviceCompleteSender_;
     tools::MessageController_ABC< sword::SimToClient_Content >& messageController_;
     const ContextFactory_ABC& factory_;
     const CallsignResolver_ABC& callsignResolver_;
@@ -125,8 +132,11 @@ private:
     T_Offers offeredOffers_;
     T_Offers acceptedOffers_;
     T_Offers startedOffers_;
+    T_Offers completetedOffers_;
+    T_Offers receivedOffers_;
     T_Transporters transporters_;
     T_TransportedList transported_;
+    T_RemainingTransportedList remainingTransported_;
     //@}
 };
 

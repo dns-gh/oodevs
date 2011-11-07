@@ -43,7 +43,7 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
                                                                     contextFactory, simulationPublisher, *pNetnRequestConvoy_,
                                                                     *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_,
                                                                     *pNetnReadyToReceiveService_, *pNetnServiceReceived_ ) )
-    , pTransportationOfferer_        ( new TransportationOfferer( xis, missionResolver, *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_, *pNetnConvoyDisembarkmentStatus_, *pNetnConvoyDestroyedEntities_,
+    , pTransportationOfferer_        ( new TransportationOfferer( xis, missionResolver, *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_, *pNetnConvoyDisembarkmentStatus_, *pNetnConvoyDestroyedEntities_, *pNetnServiceComplete_,
                                                                   controller, contextFactory, callsignResolver, clientsPublisher ) )
 {
     // NOTHING
@@ -161,7 +161,7 @@ void TransportationFacade::Receive( interactions::NetnServiceComplete& interacti
 // Name: TransportationFacade::Receive
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationFacade::Receive( interactions::NetnServiceReceived& /*interaction*/ )
+void TransportationFacade::Receive( interactions::NetnServiceReceived& interaction )
 {
-    // NOTHING
+    pTransportationOfferer_->Receive( interaction );
 }
