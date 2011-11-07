@@ -59,7 +59,6 @@ TerrainLayer::~TerrainLayer()
 void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
     parameters_.Load( modelLoaded.config_ );
-    LoadGraphics();
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +79,9 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     if( !ShouldDrawPass() || GetAlpha() == 0 )
         return;
+
+    if( !layer_.get() && !noVBOlayer_.get() && !parameters_.graphicsDirectory_.empty() )
+        LoadGraphics();
 
     if( layer_.get() || noVBOlayer_.get() )
     {
