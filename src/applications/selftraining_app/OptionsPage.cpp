@@ -70,7 +70,7 @@ OptionsPage::OptionsPage( Q3WidgetStack* pages, Page_ABC& previous, Config& conf
         combo->insertItem( tools::translate( "OptionsPage", "Administrator" ), Config::eAdministrator );
         combo->setCurrentItem( config_.GetProfile() );
         connect( combo, SIGNAL( activated( int ) ), SLOT( OnChangeProfile( int ) ) );
-   }
+    }
 
     AddContent( mainBox );
 }
@@ -105,6 +105,7 @@ void OptionsPage::Commit()
     settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
     settings.writeEntry( "/Common/Language", selectedLanguage_.c_str() );
     settings.writeEntry( "/Common/DataDirectory", dataDirectory_->text() );
+    settings.writeEntry( "/Common/UserProfile", static_cast< int >( config_.GetProfile() ) );
 }
 
 // -----------------------------------------------------------------------------

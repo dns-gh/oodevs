@@ -9,6 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "Config.h"
+#include "clients_gui/Tools.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4512 )
@@ -17,12 +18,27 @@
 
 namespace po = boost::program_options;
 
+namespace
+{
+    Config::EProfile ReadUserProfile()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+        QString value = settings.readEntry( "/Common/UserProfile", "" );
+        if( value.isEmpty() )
+            return Config::eAdministrator;
+        int intValue = value.toInt();
+        assert( intValue >= Config::eTerrain && intValue <= Config::eAdministrator );
+        return static_cast< Config::EProfile >( intValue );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Config constructor
 // Created: LDC 2008-10-27
 // -----------------------------------------------------------------------------
 Config::Config()
-    : profile_( eAdministrator )
+    : profile_( ReadUserProfile() )
 {
     // NOTHING
 }

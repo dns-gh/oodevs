@@ -32,6 +32,7 @@ HomePage::HomePage( Q3WidgetStack* pages, Config& config, const tools::Loader_AB
     prepare_ = AddLink( tools::translate( "HomePage", "Prepare" ), *editPage_, tools::translate( "HomePage", "Edit scenario" ) );
     play_ = AddLink( tools::translate( "HomePage", "Play" ), *new SelfTrainingPage( pages, *this, config, fileLoader, controllers, launcher, interpreter ), tools::translate( "HomePage", "Start single player or multiplayer training session" ) );
     replay_ = AddLink( tools::translate( "HomePage", "Replay" ), *new ReplayPage( pages, *this , config, fileLoader, controllers, launcher ), tools::translate( "HomePage", "Replay scenario" ) );
+    show();
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +79,6 @@ void HomePage::show()
     default:
         throw std::exception( "Unknown profile" );
     }
-
     MenuPage::show();
 }
 

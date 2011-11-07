@@ -25,10 +25,10 @@ public:
     //@{
     enum EProfile
     {
-        eTerrain,
-        eUser,
-        eAdvancedUser,
-        eAdministrator
+        eTerrain       = 0,
+        eUser          = 1,
+        eAdvancedUser  = 2,
+        eAdministrator = 3
     };
     //@}
 
