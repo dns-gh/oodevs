@@ -36,7 +36,6 @@ private slots:
     //@{
     void OnChangeLanguage( const QString& lang );
     void OnChangeDataDirectory();
-    void OnChangeProfile( int index );
     //@}
 
 private:

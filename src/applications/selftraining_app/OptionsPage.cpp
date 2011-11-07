@@ -61,17 +61,6 @@ OptionsPage::OptionsPage( Q3WidgetStack* pages, Page_ABC& previous, Config& conf
         QPushButton* browse = new QPushButton( tools::translate( "OptionsPage", "..." ), hbox );
         connect( browse, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
     }
-    {
-        new QLabel( tools::translate( "OptionsPage", "Profile: " ), box );
-        QComboBox* combo = new QComboBox( box );
-        combo->insertItem( tools::translate( "OptionsPage", "Terrain" ), Config::eTerrain );
-        combo->insertItem( tools::translate( "OptionsPage", "User" ), Config::eUser );
-        combo->insertItem( tools::translate( "OptionsPage", "Advanced User" ), Config::eAdvancedUser );
-        combo->insertItem( tools::translate( "OptionsPage", "Administrator" ), Config::eAdministrator );
-        combo->setCurrentItem( config_.GetProfile() );
-        connect( combo, SIGNAL( activated( int ) ), SLOT( OnChangeProfile( int ) ) );
-   }
-
     AddContent( mainBox );
 }
 
@@ -118,13 +107,4 @@ void OptionsPage::OnChangeDataDirectory()
         return;
     dataDirectory_->setText( directory );
     Commit();
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionsPage::OnChangeProfile
-// Created: JSR 2010-07-13
-// -----------------------------------------------------------------------------
-void OptionsPage::OnChangeProfile( int index )
-{
-    config_.SetProfile( static_cast< Config::EProfile >( index ) );
 }

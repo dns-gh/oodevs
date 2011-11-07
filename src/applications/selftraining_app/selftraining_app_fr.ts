@@ -415,26 +415,6 @@
         <source>...</source>
         <translation>...</translation>
     </message>
-    <message>
-        <source>Profile: </source>
-        <translation>Profil: </translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation>Terrain</translation>
-    </message>
-    <message>
-        <source>User</source>
-        <translation>Utilisation</translation>
-    </message>
-    <message>
-        <source>Advanced User</source>
-        <translation>Validation</translation>
-    </message>
-    <message>
-        <source>Administrator</source>
-        <translation>Administration</translation>
-    </message>
 </context>
 <context>
     <name>Page_ABC</name>
