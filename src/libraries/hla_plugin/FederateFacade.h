@@ -44,6 +44,7 @@ namespace hla
     class Federate_ABC;
     class RtiAmbassadorFactory_ABC;
     class LocalAgentResolver_ABC;
+    class MarkingFactory_ABC;
     class HlaClass;
 
 // =============================================================================
@@ -113,6 +114,7 @@ private:
     //! @name Member data
     //@{
     AgentSubject_ABC& subject_;
+    std::auto_ptr< MarkingFactory_ABC > markingFactory_;
     std::auto_ptr< ::hla::TimeFactory_ABC > timeFactory_;
     std::auto_ptr< ::hla::TimeIntervalFactory_ABC > intervalFactory_;
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;

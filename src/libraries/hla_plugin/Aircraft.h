@@ -33,6 +33,7 @@ namespace hla
 {
     class Agent_ABC;
     class AttributesSerializer;
+    class MarkingFactory_ABC;
 
 // =============================================================================
 /** @class  Aircraft
@@ -47,7 +48,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Aircraft( Agent_ABC& agent, unsigned int identifier,
-                            const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
+                            const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory );
     virtual ~Aircraft();
     //@}
 

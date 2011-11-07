@@ -17,6 +17,7 @@
 #include "Formation.h"
 #include "Dimension.h"
 #include "AttributesSerializer.h"
+#include "MarkingFactory_ABC.h"
 #include "rpr/EntityIdentifier.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -28,14 +29,14 @@ using namespace plugins::hla;
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned int identifier,
-                                  const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
+                                  const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory )
     : agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
     attributes_->Register( "EntityType", type );
     attributes_->Register( "EntityIdentifier", rpr::EntityIdentifier( 1, 1, static_cast< unsigned short >( identifier ) ) );
     attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
-    attributes_->Register( "AggregateMarking", AggregateMarking( name, identifier ) );
+    attributes_->Register( "AggregateMarking", markingFactory.CreateAggregateMarking( name, identifier ) );
     attributes_->Register( "AggregateState", Wrapper< unsigned char >( 1 ) ); // fully aggregated
     attributes_->Register( "Dimensions", Dimension( false ) );
     attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );

@@ -19,13 +19,21 @@ namespace plugins
 {
 namespace hla
 {
+    class MarkingFactory_ABC;
+
     template< typename T >
     class HlaObjectFactory : public HlaObjectFactory_ABC
     {
+    public:
+        explicit HlaObjectFactory( const MarkingFactory_ABC& markingFactory )
+            : markingFactory_( markingFactory )
+        {}
         virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& /*symbol*/ ) const
         {
-            return std::auto_ptr< HlaObject_ABC >( new T( agent, identifier, name, force, type ) );
+            return std::auto_ptr< HlaObject_ABC >( new T( agent, identifier, name, force, type, markingFactory_ ) );
         }
+    private:
+        const MarkingFactory_ABC& markingFactory_;
     };
     template< typename T >
     class NetnHlaObjectFactory : public HlaObjectFactory_ABC

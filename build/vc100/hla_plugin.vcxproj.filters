@@ -253,6 +253,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\DetonationFacade.cpp">
       <Filter>Source Files\Interactions\Detonation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\MarkingFactory.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -578,6 +581,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\DetonationFacade.h">
       <Filter>Source Files\Interactions\Detonation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\MarkingFactory.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\MarkingFactory_ABC.h">
+      <Filter>Source Files\Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

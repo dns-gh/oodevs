@@ -14,6 +14,7 @@
 #include "Spatial.h"
 #include "AggregateMarking.h"
 #include "AttributesSerializer.h"
+#include "MarkingFactory_ABC.h"
 #include "rpr/EntityIdentifier.h"
 #include <boost/bind.hpp>
 
@@ -24,14 +25,14 @@ using namespace plugins::hla;
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
 Aircraft::Aircraft( Agent_ABC& agent, unsigned int identifier,
-                              const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
+                              const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory )
     : agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
     attributes_->Register( "EntityType", type );
     attributes_->Register( "EntityIdentifier", rpr::EntityIdentifier( 1, 1, static_cast< unsigned short >( identifier ) ) );
     attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
-    attributes_->Register( "Marking", Marking( name, identifier ) );
+    attributes_->Register( "Marking", markingFactory.CreateMarking( name, identifier ) );
     attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
     agent_.Register( *this );
 }

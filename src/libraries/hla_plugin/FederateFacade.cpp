@@ -28,6 +28,7 @@
 #include "NetnAircraft.h"
 #include "RemoteAircraft.h"
 #include "NetnRemoteAircraft.h"
+#include "MarkingFactory.h"
 #include "protocol/Simulation.h"
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
@@ -60,9 +61,9 @@ namespace
         return federate;
     }
     template< typename Rpr, typename Netn >
-    std::auto_ptr< HlaObjectFactory_ABC > CreateFactory( xml::xisubstream xis, CallsignResolver_ABC& resolver )
+    std::auto_ptr< HlaObjectFactory_ABC > CreateFactory( xml::xisubstream xis, CallsignResolver_ABC& resolver, const MarkingFactory_ABC& markingFactory )
     {
-        std::auto_ptr< HlaObjectFactory_ABC > result( new HlaObjectFactory< Rpr >() );
+        std::auto_ptr< HlaObjectFactory_ABC > result( new HlaObjectFactory< Rpr >( markingFactory ) );
         if( xis.attribute< bool >( "netn", true ) )
             return std::auto_ptr< HlaObjectFactory_ABC >( new NetnHlaObjectFactory< Netn >( result, resolver ) );
         return result;
@@ -118,21 +119,22 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
                                 AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
                                 const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory, CallsignResolver_ABC& callsignResolver )
     : subject_           ( subject )
+    , markingFactory_    ( new MarkingFactory( xis ) )
     , timeFactory_       ( new ::hla::SimpleTimeFactory() )
     , intervalFactory_   ( new ::hla::SimpleTimeIntervalFactory() )
     , ambassador_        ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
     , federate_          ( CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
     , destructor_        ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
     , aggregateClass_    ( new HlaClass( *federate_, resolver,
-                                         CreateFactory< AggregateEntity, NetnAggregate >( xis, callsignResolver ),
+                                         CreateFactory< AggregateEntity, NetnAggregate >( xis, callsignResolver, *markingFactory_ ),
                                          CreateRemoteFactory< RemoteAggregate, NetnRemoteAggregate >( xis ),
                                          CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( xis ) ) )
     , surfaceVesselClass_( new HlaClass( *federate_, resolver,
-                                         CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis, callsignResolver ),
+                                         CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis, callsignResolver, *markingFactory_ ),
                                          CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( xis ),
                                          CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( xis ) ) )
     , aircraftClass_     ( new HlaClass( *federate_, resolver,
-                                         CreateFactory< Aircraft, NetnAircraft >( xis, callsignResolver ),
+                                         CreateFactory< Aircraft, NetnAircraft >( xis, callsignResolver, *markingFactory_ ),
                                          CreateRemoteFactory< RemoteAircraft, NetnRemoteAircraft >( xis ),
                                          CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( xis ) ) )
 {

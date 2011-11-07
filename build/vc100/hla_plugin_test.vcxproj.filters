@@ -282,5 +282,8 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAutomatChecker.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMarkingFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

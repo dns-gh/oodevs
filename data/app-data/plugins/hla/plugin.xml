@@ -110,6 +110,12 @@
                         <description lang="fr" name="Utiliser les modules NETN"><![CDATA[]]>Active la souscription et la publication NETN.</description>
                     </descriptions>
                 </setting>
+                <setting attribute="@marking-with-identifier" type="boolean" default="true">
+                    <descriptions>
+                        <description lang="en" name="Unique Marking"><![CDATA[]]>Append an identifier to make Marking and AggregateMarking attributes to make them unique.</description>
+                        <description lang="fr" name="Marking unique"><![CDATA[]]>Ajoute un identifiant aux attributs Marking et AggregateMarking pour les rendre uniques.</description>
+                    </descriptions>
+                </setting>
             </settings>
         </group>
     </settings>
