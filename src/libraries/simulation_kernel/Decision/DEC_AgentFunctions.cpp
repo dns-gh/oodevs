@@ -31,6 +31,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
@@ -502,6 +503,24 @@ bool DEC_AgentFunctions::AreHumanTransportersReady( const MIL_Agent_ABC& callerA
 bool DEC_AgentFunctions::CanMount( DEC_Decision_ABC& callerAgent )
 {
     return callerAgent.GetPion().Get< PHY_RoleInterface_UrbanLocation >().CanMount() && !callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().IsUnderground();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetInstallationTime
+// Created: JSR 2011-11-07
+// -----------------------------------------------------------------------------
+double DEC_AgentFunctions::GetInstallationTime( DEC_Decision_ABC& callerAgent )
+{
+    return MIL_Tools::ConvertSimToMinutes( callerAgent.GetPion().GetType().GetUnitType().GetInstallationTime() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetUninstallationTime
+// Created: JSR 2011-11-07
+// -----------------------------------------------------------------------------
+double DEC_AgentFunctions::GetUninstallationTime( DEC_Decision_ABC& callerAgent )
+{
+    return MIL_Tools::ConvertSimToMinutes( callerAgent.GetPion().GetType().GetUnitType().GetUninstallationTime() );
 }
 
 // -----------------------------------------------------------------------------

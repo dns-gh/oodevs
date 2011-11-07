@@ -264,6 +264,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_RecupererTransporteursSansDelai" ] =
         boost::bind( &DEC_AgentFunctions::RecoverHumanTransportersNow, boost::ref( GetPion() ) );
 
+    // Deploiement
+    brain[ "DEC_Agent_GetTempsDeploiement" ] = &DEC_AgentFunctions::GetInstallationTime;
+    brain[ "DEC_Agent_GetTempsDedeploiement" ] = &DEC_AgentFunctions::GetUninstallationTime;
+
     // Objects
     brain[ "DEC_CreerObjetSansDelais" ] =
         boost::function< void( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
