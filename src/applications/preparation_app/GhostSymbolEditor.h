@@ -59,6 +59,7 @@ public:
     //@{
     const std::string& GetSymbol() const;
     const std::string& GetLevel() const;
+    const std::string& GetNature() const;
     E_GhostType GetGhostType() const;
     bool IsLevelValid() const;
     //@}
@@ -88,12 +89,14 @@ private:
     //@{
     kernel::SymbolFactory&          symbolsFactory_;
     // Level
+    std::string                     level_;
     E_GhostType                     ghostType_;
     QString                         levelBase_;
     QComboBox*                      levelComboBox_;
     QStringList                     levelNames_;
     // Nature
     gui::NatureEditionWidget*       natureWidget_;
+    std::string                     nature_;
     // Icon
     gui::UnitPreviewIcon*           icon_;
     //@}

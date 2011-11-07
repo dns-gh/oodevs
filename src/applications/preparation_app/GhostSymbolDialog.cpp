@@ -10,13 +10,16 @@
 #include "preparation_app_pch.h"
 #include "GhostSymbolDialog.h"
 #include "moc_GhostSymbolDialog.cpp"
-#include "clients_kernel/Controllers.h"
 #include "GhostSymbolEditor.h"
-
 #include "clients_gui/NatureEditionCategory.h"
 #include "clients_gui/NatureEditionWidget.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
-
+#include "clients_kernel/TacticalHierarchies.h"
+#include "preparation/AgentHierarchies.h"
 
 // -----------------------------------------------------------------------------
 // Name: GhostSymbolDialog constructor
@@ -73,7 +76,7 @@ GhostSymbolDialog::~GhostSymbolDialog()
 void GhostSymbolDialog::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu )
 {
     selected_ = &ghost;
-    //menu.InsertItem( "Update", tr( "Change symbol" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Update", tr( "Change symbol" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,10 +87,7 @@ void GhostSymbolDialog::Show()
 {
     if( !selected_ )
         return;
-
-    symbolEditor_->Reset();
     symbolEditor_->Fill( *selected_ );
-
     exec();
 }
 
@@ -97,7 +97,20 @@ void GhostSymbolDialog::Show()
 // -----------------------------------------------------------------------------
 void GhostSymbolDialog::Validate()
 {
-    // Update ghost
+    if( !selected_ )
+        return;
+    selected_.ConstCast()->UpdateSymbol( symbolEditor_->GetLevel(), symbolEditor_->GetNature(), symbolEditor_->GetSymbol() );
+
+    if( kernel::TacticalHierarchies* pTactical = selected_.ConstCast()->Retrieve< kernel::TacticalHierarchies >() )
+    {
+        static_cast< AgentHierarchies* >( pTactical )->UpdateSymbol( selected_->GetLevelSymbol(), selected_->GetSymbol() );
+        controllers_.controller_.Update( *pTactical );
+        //pTactical->UpdateSymbol();
+        if( const kernel::CommunicationHierarchies* pCommunication = selected_->Retrieve< kernel::CommunicationHierarchies >() )
+            controllers_.controller_.Update( *pCommunication );
+    }
+    selected_ = 0;
+    accept();
 }
 
 // -----------------------------------------------------------------------------
@@ -106,6 +119,6 @@ void GhostSymbolDialog::Validate()
 // -----------------------------------------------------------------------------
 void GhostSymbolDialog::Reject()
 {
-    reject();
     selected_ = 0;
+    reject();
 }

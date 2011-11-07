@@ -38,6 +38,7 @@ public:
     std::string name_;
     std::string type_;
     std::string symbol_;
+    std::string nature_;
     std::string level_;
     //@}
 };

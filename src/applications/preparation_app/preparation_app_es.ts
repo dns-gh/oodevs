@@ -592,6 +592,10 @@
         <source>Cancel</source>
         <translation type="unfinished">Cancelar</translation>
     </message>
+    <message>
+        <source>Change symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GhostSymbolEditor</name>

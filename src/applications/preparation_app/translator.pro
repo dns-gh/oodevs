@@ -23,6 +23,8 @@ FilterManager.cpp \
 FilterOrbatReIndexer.cpp \
 FilterXsl.cpp \
 GhostsPanel.cpp \
+GhostSymbolDialog.cpp \
+GhostSymbolEditor.cpp \
 InhabitantCreationPanel.cpp \
 InitialStateDialog.cpp \
 InitialStateTableCrew.cpp \

@@ -56,11 +56,6 @@ public:
     virtual void NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu );
     //@}
 
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
 private slots:
     //! @name Slots
     //@{

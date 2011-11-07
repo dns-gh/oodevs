@@ -73,12 +73,21 @@ const std::string& GhostSymbolEditor::GetSymbol() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GhostSymbolEditor::GetNature
+// Created: ABR 2011-11-04
+// -----------------------------------------------------------------------------
+const std::string& GhostSymbolEditor::GetNature() const
+{
+    return nature_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GhostSymbolEditor::GetLevel
 // Created: ABR 2011-11-04
 // -----------------------------------------------------------------------------
 const std::string& GhostSymbolEditor::GetLevel() const
 {
-    return icon_->GetLevel();
+    return level_;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +105,7 @@ E_GhostType GhostSymbolEditor::GetGhostType() const
 // -----------------------------------------------------------------------------
 bool GhostSymbolEditor::IsLevelValid() const
 {
-    return ( levelComboBox_ ) ? levelComboBox_->currentText() != levelBase_ : false;
+    return levelComboBox_->currentText() != levelBase_;
 }
 
 // -----------------------------------------------------------------------------
@@ -105,13 +114,18 @@ bool GhostSymbolEditor::IsLevelValid() const
 // -----------------------------------------------------------------------------
 void GhostSymbolEditor::UpdateSymbol()
 {
-    std::string symbol = natureWidget_->text().ascii();
-    symbol = symbolsFactory_.CreateSymbol( symbol );
-    icon_->SetSymbol( symbol );
+    nature_ = natureWidget_->text().ascii();
+    icon_->SetSymbol( symbolsFactory_.CreateSymbol( nature_ ) );
     if( levelComboBox_->currentText() != levelBase_ )
-        icon_->SetLevel( std::string( "levels/" ) + levelComboBox_->currentText().ascii() );
+    {
+        level_ = levelComboBox_->currentText().ascii();
+        icon_->SetLevel( std::string( "levels/" ) + level_ );
+    }
     else
+    {
+        level_ = "";
         icon_->SetLevel( "" );
+    }
     icon_->UpdateSymbol();
 }
 
@@ -176,11 +190,16 @@ void GhostSymbolEditor::Reset()
 // -----------------------------------------------------------------------------
 void GhostSymbolEditor::Fill( const kernel::Ghost_ABC& ghost )
 {
-    // Fill Level Combo
-    const kernel::TacticalHierarchies* pHierarchy = ghost.Retrieve< kernel::TacticalHierarchies >();
-    assert( pHierarchy && pHierarchy->GetSuperior() );
-    FillLevelFromParent( pHierarchy->GetSuperior() );
-    assert( IsLevelValid() );
-    // found nature from ghost level
-    natureWidget_->setText( "" );
+    natureWidget_->Clear();
+    natureWidget_->SetRootSymbolRule( *symbolsFactory_.GetSymbolRule() );
+    natureWidget_->setText( "undefined/undefined/undefined/undefined" );
+    {
+        const kernel::TacticalHierarchies* pHierarchy = ghost.Retrieve< kernel::TacticalHierarchies >();
+        assert( pHierarchy && pHierarchy->GetSuperior() );
+        FillLevelFromParent( pHierarchy->GetSuperior() );
+        assert( IsLevelValid() );
+    }
+    icon_->SetSelectedParent( &ghost ); // $$$$ ABR 2011-11-07: We want color and karma from the ghost, not from his parent
+    UpdateSymbol();
+    natureWidget_->setText( ghost.GetNature().c_str() );
 }

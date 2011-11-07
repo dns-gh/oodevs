@@ -35,12 +35,13 @@ using namespace kernel;
 // Created: ABR 2011-10-14
 // -----------------------------------------------------------------------------
 GhostFactory::GhostFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
-                            IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+                            IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory )
     : controllers_          ( controllers )
     , model_                ( model )
     , staticModel_          ( staticModel )
     , idManager_            ( idManager )
     , knowledgeGroupFactory_( knowledgeGroupFactory )
+    , symbolsFactory_       ( symbolsFactory )
 {
     // NOTHING
 }
@@ -64,7 +65,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dico ) );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetLevel(), result->GetSymbol(), &parent ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( prototype.ghostType_ == eGhostType_Agent )
     {
@@ -87,11 +88,11 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
 // -----------------------------------------------------------------------------
 kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistream& xis )
 {
-    Ghost* result = new Ghost( controllers_.controller_, idManager_, xis );
+    Ghost* result = new Ghost( controllers_.controller_, idManager_, xis, symbolsFactory_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dico ) );
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetLevel(), result->GetSymbol(), &parent ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( result->GetGhostType() == eGhostType_Agent )
     {
@@ -117,7 +118,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetLevel(), result->GetSymbol(), &parent ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( result->GetGhostType() == eGhostType_Agent )
     {

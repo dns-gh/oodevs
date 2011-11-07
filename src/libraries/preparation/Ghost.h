@@ -23,6 +23,7 @@ namespace kernel
     class GlTools_ABC;
     class Entity_ABC;
     class Viewport_ABC;
+    class SymbolFactory;
 }
 
 namespace xml
@@ -48,26 +49,37 @@ public:
     //! @name Constructors/Destructor
     //@{
              Ghost( kernel::Controller& controller, IdManager& idManager, const kernel::GhostPrototype& prototype );
-             Ghost( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis );
+             Ghost( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, kernel::SymbolFactory& symbolsFactory );
              Ghost( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType );
     virtual ~Ghost();
     //@}
 
-    //! @name Operations
+    //! @name Ghost_ABC Operations
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    //@}
+
+    //! @name Ghost_ABC Accessors
+    //@{
+    virtual const QString& GetType() const;
+    virtual E_GhostType GetGhostType() const;
+    virtual bool IsConverted() const;
+    virtual const std::string& GetNature() const;
+    virtual void UpdateSymbol( const std::string& level, const std::string& nature, const std::string& symbol );
+    //@}
+
+    //! @name Operations
+    //@{
+    void InitializeSymbol() const;
     void Rename( const QString& name );
     //@}
 
     //! @name Accessors
     //@{
-    virtual const QString& GetType() const;
-    virtual E_GhostType GetGhostType() const;
-    virtual bool IsConverted() const;
-    const std::string& GetSymbol() const;
-    const std::string& GetLevel() const;
+    virtual const std::string& GetSymbol() const;
+    virtual const std::string GetLevelSymbol() const;
     //@}
 
 private:
@@ -79,11 +91,12 @@ private:
 private:
     //! @name Member data
     //@{
-    E_GhostType ghostType_;
-    QString     type_;
-    std::string symbol_;
-    std::string level_;
-    bool        converted_;
+    E_GhostType         ghostType_;
+    QString             type_;
+    mutable std::string symbol_; // $$$$ ABR 2011-11-07: Bad ... working on it
+    std::string         nature_;
+    std::string         level_;
+    bool                converted_;
     //@}
 };
 

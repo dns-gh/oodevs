@@ -41,7 +41,11 @@ public:
     //@{
     virtual const QString& GetType() const = 0;
     virtual E_GhostType GetGhostType() const = 0;
+    virtual const std::string& GetSymbol() const = 0;
+    virtual const std::string GetLevelSymbol() const = 0;
+    virtual const std::string& GetNature() const = 0;
     virtual bool IsConverted() const = 0;
+    virtual void UpdateSymbol( const std::string& level, const std::string& nature, const std::string& symbol ) = 0;
     //@}
 
     //! @name Operations

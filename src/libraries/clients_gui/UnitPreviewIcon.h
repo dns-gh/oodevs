@@ -64,6 +64,7 @@ public:
     void SetLevel( const std::string& level );
     const std::string& GetSymbol() const;
     const std::string& GetLevel() const;
+    void SetSelectedParent( const kernel::Entity_ABC* entity );
     const kernel::Entity_ABC* GetSelectedParent() const;
     //@}
 

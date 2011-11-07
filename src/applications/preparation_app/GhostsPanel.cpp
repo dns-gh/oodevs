@@ -108,6 +108,7 @@ void GhostsPanel::IconDragged()
     protoType_.type_ = typeLineEdit_->text().ascii();
     protoType_.ghostType_ = symbolEditor_->GetGhostType();
     protoType_.symbol_ = symbolEditor_->GetSymbol();
+    protoType_.nature_ = symbolEditor_->GetNature();
     protoType_.level_ = symbolEditor_->GetLevel();
     if( warningLabel_->text().isEmpty() )
     {

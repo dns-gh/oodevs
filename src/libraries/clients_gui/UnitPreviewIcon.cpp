@@ -229,3 +229,12 @@ const kernel::Entity_ABC* UnitPreviewIcon::GetSelectedParent() const
 {
     return selectedParent_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: UnitPreviewIcon::SetSelectedParent
+// Created: ABR 2011-11-07
+// -----------------------------------------------------------------------------
+void UnitPreviewIcon::SetSelectedParent( const kernel::Entity_ABC* entity )
+{
+    selectedParent_ = entity;
+}

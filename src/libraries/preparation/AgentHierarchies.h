@@ -38,6 +38,7 @@ public:
     virtual std::string GetLevel() const;
     virtual std::string GetSymbol() const;
     virtual void UpdateSymbol( bool up = true );
+    void UpdateSymbol( const std::string& level, const std::string& symbol );
     //@}
 
 private:
