@@ -111,6 +111,9 @@ private:
     //! @name Helpers
     //@{
     void SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const interactions::ListOfUnits& units, unsigned int actionType );
+    void Pause( unsigned int automat );
+    void Resume( unsigned int automat );
+    void Cancel( unsigned int automat );
     //@}
 
 private:
@@ -118,6 +121,9 @@ private:
     //@{
     const unsigned int transportIdentifier_;
     const unsigned int missionCompleteReportId_;
+    const unsigned int pauseId_;
+    const unsigned int resumeId_;
+    const unsigned int cancelId_;
     const CallsignResolver_ABC& callsignResolver_;
     const Subordinates_ABC& subordinates_;
     const ContextFactory_ABC& contextFactory_;

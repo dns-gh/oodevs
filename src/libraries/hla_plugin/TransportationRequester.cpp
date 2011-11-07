@@ -29,11 +29,11 @@ namespace bpt = boost::posix_time;
 
 namespace
 {
-    unsigned int ResolveMission( xml::xisubstream xis, const MissionResolver_ABC& resolver, const std::string& mission )
+    unsigned int Resolve( xml::xisubstream xis, const MissionResolver_ABC& resolver, const std::string& category, const std::string& mission )
     {
         std::string name;
         xis >> xml::start( "missions" )
-                >> xml::start( "request" )
+                >> xml::start( category )
                     >> xml::content( mission, name );
         return resolver.Resolve( name );
     }
@@ -108,8 +108,11 @@ TransportationRequester::TransportationRequester( xml::xisubstream xis, const Mi
                                                     InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender,
                                                     InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender,
                                                     InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender )
-    : transportIdentifier_    ( ResolveMission( xis, resolver, "transport" ) )
+    : transportIdentifier_    ( Resolve( xis, resolver, "request", "transport" ) )
     , missionCompleteReportId_( ResolveReportId( xis ) )
+    , pauseId_                ( Resolve( xis, resolver, "fragOrders", "pause" ) )
+    , resumeId_               ( Resolve( xis, resolver, "fragOrders", "resume" ) )
+    , cancelId_               ( Resolve( xis, resolver, "fragOrders", "cancel" ) )
     , callsignResolver_       ( callsignResolver )
     , subordinates_           ( subordinates )
     , contextFactory_         ( contextFactory )
@@ -180,6 +183,7 @@ void TransportationRequester::Notify( const sword::AutomatOrder& message, int /*
         CopyService( request, contextRequests_[ context ] );
         contextRequests_[ context ].transportData = request.transportData;
         requestSender_.Send( request );
+        Pause( message.tasker().id() );
     }
 }
 
@@ -218,6 +222,7 @@ void TransportationRequester::Receive( interactions::NetnOfferConvoy& interactio
     interactions::NetnAcceptOffer accept;
     CopyService( interaction, accept );
     acceptSender_.Send( accept );
+    Resume( pendingRequests_.left.find( context )->second );
     contextRequests_[ context ] = interaction;
     Transfer( pendingRequests_, acceptedRequests_, context );
 }
@@ -340,4 +345,42 @@ void TransportationRequester::Receive( interactions::NetnConvoyDestroyedEntities
         message().set_type( sword::UnitMagicAction::destroy_all );
         message.Send( publisher_ );
     }
+}
+
+namespace
+{
+    void SendFragOrder( unsigned int automat, unsigned int fragOrderType, dispatcher::SimulationPublisher_ABC& publisher )
+    {
+        simulation::FragOrder order;
+        order().mutable_tasker()->mutable_automat()->set_id( automat );
+        order().mutable_type()->set_id( fragOrderType );
+        order.Send( publisher );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Pause
+// Created: SLI 2011-11-07
+// -----------------------------------------------------------------------------
+void TransportationRequester::Pause( unsigned int automat )
+{
+    SendFragOrder( automat, pauseId_, publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Resume
+// Created: SLI 2011-11-07
+// -----------------------------------------------------------------------------
+void TransportationRequester::Resume( unsigned int automat )
+{
+    SendFragOrder( automat, resumeId_, publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Cancel
+// Created: SLI 2011-11-07
+// -----------------------------------------------------------------------------
+void TransportationRequester::Cancel( unsigned int automat )
+{
+    SendFragOrder( automat, cancelId_, publisher_ );
 }

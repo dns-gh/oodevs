@@ -30,6 +30,11 @@ BOOST_AUTO_TEST_CASE( transportation_controller_reads_transportation_mission_nam
 {
     xml::xistringstream xis( "<configuration>"
                              "    <missions>"
+                             "        <fragOrders>"
+                             "            <pause>pause</pause>"
+                             "            <resume>resume</resume>"
+                             "            <cancel>cancel</cancel>"
+                             "        </fragOrders>"
                              "        <request>"
                              "            <transport>transportation mission name</transport>"
                              "        </request>"
@@ -51,6 +56,9 @@ BOOST_AUTO_TEST_CASE( transportation_controller_reads_transportation_mission_nam
     MockInteractionSender< interactions::NetnReadyToReceiveService > readySender;
     MockInteractionSender< interactions::NetnServiceReceived > receivedSender;
     MOCK_EXPECT( resolver, Resolve ).once().with( "transportation mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver, Resolve ).once().with( "pause" ).returns( 43 );
+    MOCK_EXPECT( resolver, Resolve ).once().with( "resume" ).returns( 44 );
+    MOCK_EXPECT( resolver, Resolve ).once().with( "cancel" ).returns( 45 );
     TransportationRequester requester( xis, resolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
 }
 
@@ -62,6 +70,11 @@ namespace
         Fixture()
             : xis( "<configuration>"
                    "    <missions>"
+                   "        <fragOrders>"
+                   "            <pause>pause</pause>"
+                   "            <resume>resume</resume>"
+                   "            <cancel>cancel</cancel>"
+                   "        </fragOrders>"
                    "        <request>"
                    "            <transport>transport</transport>"
                    "        </request>"
@@ -71,10 +84,16 @@ namespace
                    "    </reports>"
                    "</configuration>" )
             , transportId( 42 )
-            , automatId  ( 42 )
+            , pauseId    ( 43 )
+            , resumeId   ( 44 )
+            , cancelId   ( 45 )
+            , automatId  ( 46 )
         {
             xis >> xml::start( "configuration" );
             MOCK_EXPECT( missionResolver, Resolve ).once().with( "transport" ).returns( transportId );
+            MOCK_EXPECT( missionResolver, Resolve ).once().with( "pause" ).returns( pauseId );
+            MOCK_EXPECT( missionResolver, Resolve ).once().with( "resume" ).returns( resumeId );
+            MOCK_EXPECT( missionResolver, Resolve ).once().with( "cancel" ).returns( cancelId );
         }
         sword::SimToClient_Content MakeTransportationMessage( unsigned int missionType )
         {
@@ -85,6 +104,9 @@ namespace
         }
         xml::xistringstream xis;
         unsigned int transportId;
+        unsigned int pauseId;
+        unsigned int resumeId;
+        unsigned int cancelId;
         unsigned long automatId;
         MockMissionResolver missionResolver;
         dispatcher::MockSimulationPublisher publisher;
@@ -115,7 +137,7 @@ namespace
     }
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mission_and_notifies_listener, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mission_and_notifies_listener_and_pauses_mission, Fixture )
 {
     TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
     const geometry::Point2d embarkingPoint;
@@ -138,10 +160,14 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mis
     AddLocation( *parameters, debarkingPoint ); // debarking point
     parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000002" ); // debarking time
     interactions::NetnRequestConvoy convoy;
+    sword::ClientToSim pauseMessage;
     MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
     MOCK_EXPECT( requestSender, Send ).once().with( mock::retrieve( convoy ) );
     MOCK_EXPECT( factory, Create ).once().returns( 1337 );
+    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( pauseMessage ) );
     messageController.Dispatch( message );
+    BOOST_CHECK( pauseMessage.message().has_frag_order() );
+    BOOST_CHECK_EQUAL( pauseMessage.message().frag_order().type().id(), pauseId );
     const int convoyServiceType = 4;
     const unsigned int noTimeout = 0;
     const int convoyTransportType = 0;
@@ -207,6 +233,7 @@ namespace
             MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
             MOCK_EXPECT( requestSender, Send ).once();
             MOCK_EXPECT( factory, Create ).once().returns( context );
+            MOCK_EXPECT( publisher, SendClientToSim ).once();
             messageController.Dispatch( message );
         }
         sword::SimToClient_Content MakeReportMessage( unsigned int automatId, unsigned int reportType )
@@ -251,11 +278,15 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_accepts_offer_if_offer_is_same_as_request_and_notifies_listener, RequestedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_controller_accepts_offer_if_offer_is_same_as_request_and_notifies_listener_and_resume_mission, RequestedFixture )
 {
     MOCK_EXPECT( acceptSender, Send ).once();
     interactions::NetnOfferConvoy offer = MakeOffer( 1, "provider" );
+    sword::ClientToSim resumeMessage;
+    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( resumeMessage ) );
     requester.Receive( offer );
+    BOOST_CHECK( resumeMessage.message().has_frag_order() );
+    BOOST_CHECK_EQUAL( resumeMessage.message().frag_order().type().id(), resumeId );
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_controller_rejects_offer_if_offer_is_partial_and_notifies_listener, RequestedFixture )
@@ -271,6 +302,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_reject_all_good_offers_if_alr
 {
     interactions::NetnOfferConvoy offer = MakeOffer( 1, "provider" );
     MOCK_EXPECT( acceptSender, Send ).once();
+    MOCK_EXPECT( publisher, SendClientToSim ).once();
     requester.Receive( offer );
     mock::verify();
     interactions::NetnOfferConvoy secondOffer = MakeOffer( 1, "provider2" );
@@ -305,6 +337,7 @@ namespace
         AcceptedFixture()
         {
             MOCK_EXPECT( acceptSender, Send ).once();
+            MOCK_EXPECT( publisher, SendClientToSim ).once();
             interactions::NetnOfferConvoy offer = MakeOffer( 1, "provider" );
             requester.Receive( offer );
         }

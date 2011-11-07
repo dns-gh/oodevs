@@ -9,6 +9,11 @@
         <automat>MBT squadron</automat>
     </types>
     <missions>
+        <fragOrders>
+            <pause>Pause maneuver</pause>
+            <resume>Resume maneuver</resume>
+            <cancel>Cancel maneuver</cancel>
+        </fragOrders>
         <request>
             <transport>Common - request transport</transport>
         </request>
