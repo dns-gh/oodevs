@@ -519,7 +519,7 @@ void MIL_AgentServer::SetTimeFactor( unsigned int timeFactor )
     else
     {
         nTimeFactor_ = timeFactor;
-        if( nSimState_ == eSimRunning )
+        if( nSimState_ == eSimRunning || nSimState_ == eSimWait )
         {
             MT_Timer_ABC::Start( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) );
             MT_LOG_INFO_MSG( MT_FormatString( "Time factor set to %d", nTimeFactor_ ).c_str() )
