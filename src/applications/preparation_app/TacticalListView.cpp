@@ -181,8 +181,7 @@ void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, ContextMenu& menu )
 {
-    if( const HierarchyLevel_ABC* root = formation.GetLevel().GetNext() )
-        AddFormationMenu( menu, *root );
+    AddFormationMenu( menu, formation.GetLevel() );
 }
 
 // -----------------------------------------------------------------------------
