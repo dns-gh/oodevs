@@ -18,6 +18,12 @@ namespace kernel
     class Controllers;
 }
 
+namespace gui
+{
+    class RichLabel;
+    class ItemFactory_ABC;
+}
+
 class CommandHandler;
 class CommandPublisher;
 class Publisher_ABC;
@@ -36,7 +42,7 @@ class MessagePanel : public QDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             MessagePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher, CommandHandler& handler );
+             MessagePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher, CommandHandler& handler, gui::ItemFactory_ABC& factory );
     virtual ~MessagePanel();
     //@}
 
@@ -72,8 +78,9 @@ private:
     //@{
     QMainWindow* mainWindow_;
     CommandHandler& handler_;
+    gui::ItemFactory_ABC& factory_;
     std::auto_ptr< CommandPublisher > publisher_;
-    QLabel* text_;
+    gui::RichLabel* text_;
     Q3ButtonGroup* buttons_;
     std::string activePrompt_;
     //@}

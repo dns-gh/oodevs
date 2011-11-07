@@ -13,6 +13,8 @@
 #include "gaming/Command.h"
 #include "gaming/CommandHandler.h"
 #include "gaming/CommandPublisher.h"
+#include "clients_gui/RichLabel.h"
+#include "clients_gui/ItemFactory_ABC.h"
 #include <string>
 
 #pragma warning( push, 0 )
@@ -24,10 +26,11 @@
 // Name: MessagePanel constructor
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
-MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher, CommandHandler& handler )
+MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher, CommandHandler& handler, gui::ItemFactory_ABC& factory )
     : QDockWidget( "message", mainWindow )
     , mainWindow_( mainWindow )
     , handler_( handler )
+    , factory_( factory )
     , publisher_( new CommandPublisher( controllers, publisher ) )
 {
     setObjectName( "message" );
@@ -42,7 +45,7 @@ MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& contro
     box->setFrameStyle( Q3Frame::Panel | Q3Frame::Sunken );
     box->setMargin( 5 );
     {
-        text_ = new QLabel( box );
+        text_ = factory_.CreateLabel( box );
         text_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Maximum );
         QFont font( text_->font() );
         font.setPixelSize( 14 );
