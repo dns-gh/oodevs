@@ -110,7 +110,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    void SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const interactions::ListOfUnits& units, unsigned int actionType );
+    void SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const interactions::ListOfUnits& units, unsigned int actionType, bool teleport );
     void Pause( unsigned int automat );
     void Resume( unsigned int automat );
     void Cancel( unsigned int automat );

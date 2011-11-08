@@ -443,14 +443,16 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_sends_destroy_all_magic_actio
     BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::destroy_all );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_sends_unload_unit_magic_action_for_every_disembarked_unit, EmbarkedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_controller_sends_unload_unit_magic_action_for_every_disembarked_unit_and_teleport_to_disembarking_point, EmbarkedFixture )
 {
     interactions::NetnConvoyDisembarkmentStatus status;
     FillService( status, "provider", 1337 );
     status.transportUnitIdentifier = UnicodeString( transportingUnitCallsign );
     status.listOfObjectDisembarked.list.push_back( NetnObjectDefinitionStruct( subordinateCallsign, subordinateNetnUniqueId, NetnObjectFeatureStruct() ) );
     sword::ClientToSim message;
+    sword::ClientToSim teleport;
     MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
+    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( teleport ) );
     MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( transportingUnitUniqueId ).returns( vesselId );
     MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
     requester.Receive( status );
@@ -462,6 +464,8 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_sends_unload_unit_magic_actio
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 1 );
     BOOST_CHECK( action.parameters().elem( 0 ).value( 0 ).has_agent() );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).agent().id(), surbordinateId );
+    BOOST_CHECK( teleport.message().has_unit_magic_action() );
+    BOOST_CHECK_EQUAL( teleport.message().unit_magic_action().type(), sword::UnitMagicAction::move_to );
 }
 
 namespace
@@ -475,7 +479,7 @@ namespace
             FillService( status, "provider", 1337 );
             status.transportUnitIdentifier = UnicodeString( transportingUnitCallsign );
             status.listOfObjectDisembarked.list.push_back( NetnObjectDefinitionStruct( subordinateCallsign, subordinateNetnUniqueId, NetnObjectFeatureStruct() ) );
-            MOCK_EXPECT( publisher, SendClientToSim ).once();
+            MOCK_EXPECT( publisher, SendClientToSim ).exactly( 2 );
             MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( transportingUnitUniqueId ).returns( vesselId );
             MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
             requester.Receive( status );

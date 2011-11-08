@@ -262,11 +262,29 @@ void TransportationRequester::Receive( interactions::NetnServiceStarted& interac
     Transfer( readyToReceiveRequests_, serviceStartedRequests_, context );
 }
 
+namespace
+{
+    void TeleportToDestination( unsigned int identifier, double latitude, double longitude, dispatcher::SimulationPublisher_ABC& publisher )
+    {
+        simulation::UnitMagicAction message;
+        message().mutable_tasker()->mutable_unit()->set_id( identifier );
+        message().set_type( sword::UnitMagicAction::move_to );
+        sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
+        parameter.set_null_value( false );
+        sword::Location& location = *parameter.add_value()->mutable_point()->mutable_location();
+        location.set_type( sword::Location::point );
+        sword::CoordLatLong& coordinates = *location.mutable_coordinates()->add_elem();
+        coordinates.set_latitude( latitude );
+        coordinates.set_longitude( longitude );
+        message.Send( publisher );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TransportationRequester::SendTransportMagicAction
 // Created: SLI 2011-10-17
 // -----------------------------------------------------------------------------
-void TransportationRequester::SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const interactions::ListOfUnits& units, unsigned int actionType )
+void TransportationRequester::SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const interactions::ListOfUnits& units, unsigned int actionType, bool teleport )
 {
     T_Requests::left_const_iterator request = serviceStartedRequests_.left.find( context );
     if( request == serviceStartedRequests_.left.end() )
@@ -282,6 +300,9 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
         message().set_type( static_cast< sword::UnitMagicAction_Type >( actionType ) );
         message().mutable_parameters()->add_elem()->add_value()->mutable_agent()->set_id( id );
         message.Send( publisher_ );
+        if( teleport )
+            TeleportToDestination( id, contextRequest.transportData.dataTransport.finalAppointment.location.Latitude(),
+                                       contextRequest.transportData.dataTransport.finalAppointment.location.Longitude(), publisher_ );
     }
 }
 
@@ -294,7 +315,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyEmbarkmentStatus&
     if( ! CheckService( interaction ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
-    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectEmbarked, sword::UnitMagicAction::load_unit );
+    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectEmbarked, sword::UnitMagicAction::load_unit, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -306,7 +327,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyDisembarkmentStat
     if( ! CheckService( interaction ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
-    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectDisembarked, sword::UnitMagicAction::unload_unit );
+    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectDisembarked, sword::UnitMagicAction::unload_unit, true );
 }
 
 // -----------------------------------------------------------------------------
