@@ -40,15 +40,105 @@ ClientsNetworker::~ClientsNetworker()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Update
+// Created: MCO 2011-11-07
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Update()
+{
+    ServerNetworker::Update();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ClientsNetworker::Receive
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Receive( const sword::SimToClient& wrapper )
+void ClientsNetworker::Receive( const sword::SimToClient& message )
 {
-    if( wrapper.message().has_control_send_current_state_begin() )
+    if( message.message().has_control_send_current_state_begin() )
         DenyConnections();
-    else if( wrapper.message().has_control_send_current_state_end() )
+    else if( message.message().has_control_send_current_state_end() )
         AllowConnections();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Activate
+// Created: MCO 2011-11-07
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Activate( const std::string& link )
+{
+    internals_[ link ] = clients_[ link ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Deactivate
+// Created: MCO 2011-11-07
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Deactivate( const std::string& link )
+{
+    internals_.erase( link );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Broadcast
+// Created: MCO 2011-11-07
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Broadcast( const sword::SimToClient& message )
+{
+    static const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< sword::SimToClient >();
+    const tools::Message m = Serialize( message );
+    for( CIT_Clients it = internals_.begin(); it != internals_.end(); ++it )
+        it->second->Send( tag, m );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::NotifyClientAuthenticated
+// Created: MCO 2011-11-07
+// -----------------------------------------------------------------------------
+void ClientsNetworker::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link, dispatcher::Profile_ABC& /*profile*/ )
+{
+    CIT_Clients it = clients_.find( link );
+    if( it != clients_.end() )
+        it->second->Activate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::NotifyClientLeft
+// Created: MCO 2011-11-07
+// -----------------------------------------------------------------------------
+void ClientsNetworker::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link )
+{
+    CIT_Clients it = clients_.find( link );
+    if( it != clients_.end() )
+        it->second->Deactivate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Register
+// Created: MCO 2011-10-28
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Register( const std::string& link, MessageSender_ABC& sender, ClientBroadcaster_ABC& broadcaster )
+{
+    MT_LOG_INFO_MSG( "Publisher registered for client '" << link << "'" );
+    boost::shared_ptr< Client >& pClient = clients_[ link ];
+    pClient.reset( new Client( sender, broadcaster, link ) );
+    services_.Send( *pClient );
+    MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Unregister
+// Created: MCO 2011-10-28
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Unregister( const std::string& link )
+{
+    MT_LOG_INFO_MSG( "Publisher unregistered for client '" << link << "'" );
+    IT_Clients it = clients_.find( link );
+    if( it != clients_.end() )
+    {
+        plugin_.NotifyClientLeft( *it->second, it->first );
+        clients_.erase( it );
+    }
+    MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +149,8 @@ void ClientsNetworker::ConnectionSucceeded( const std::string& link )
 {
     MT_LOG_INFO_MSG( "Connection received from client '" << link << "'" );
     ServerNetworker::ConnectionSucceeded( link );
-    boost::shared_ptr< ClientPublisher_ABC >& pClient = clients_[ link ];
-    pClient.reset( new Client( *this, link ) );
+    boost::shared_ptr< Client >& pClient = clients_[ link ];
+    pClient.reset( new Client( *this, *this, link ) );
     services_.Send( *pClient );
     MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }
@@ -83,10 +173,10 @@ void ClientsNetworker::ConnectionError( const std::string& link, const std::stri
 {
     MT_LOG_INFO_MSG( "Connection to '" << link << "' lost (" << reason << ")" );
     ServerNetworker::ConnectionError( link, reason );
-    T_Clients::iterator it = clients_.find( link );
+    IT_Clients it = clients_.find( link );
     if( it != clients_.end() && it->second )
     {
-        plugin_.NotifyClientLeft( *it->second );
+        plugin_.NotifyClientLeft( *it->second, it->first );
         clients_.erase( it );
     }
     MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
@@ -110,7 +200,7 @@ void ClientsNetworker::Send( const sword::SimToClient& msg )
 {
     try
     {
-        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it ) // $$$$ MCO : doesn't this bypass authentication ?
             it->second->Send( msg );
     }
     catch( std::exception& exception )
@@ -225,42 +315,4 @@ ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link )
     if( it == clients_.end() || !it->second )
         throw std::runtime_error( link + " is not a valid client" );
     return *it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::GetEndpoint
-// Created: AGE 2008-06-17
-// -----------------------------------------------------------------------------
-std::string ClientsNetworker::GetEndpoint() const
-{
-    return "";
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::Register
-// Created: MCO 2011-10-28
-// -----------------------------------------------------------------------------
-void ClientsNetworker::Register( const std::string& link, MessageSender_ABC& sender )
-{
-    MT_LOG_INFO_MSG( "Publisher registered for client '" << link << "'" );
-    boost::shared_ptr< ClientPublisher_ABC >& pClient = clients_[ link ];
-    pClient.reset( new Client( sender, link ) );
-    services_.Send( *pClient );
-    MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::Unregister
-// Created: MCO 2011-10-28
-// -----------------------------------------------------------------------------
-void ClientsNetworker::Unregister( const std::string& link )
-{
-    MT_LOG_INFO_MSG( "Publisher unregistered for client '" << link << "'" );
-    T_Clients::iterator it = clients_.find( link );
-    if( it != clients_.end() && it->second )
-    {
-        plugin_.NotifyClientLeft( *it->second );
-        clients_.erase( it );
-    }
-    MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }

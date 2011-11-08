@@ -15,10 +15,13 @@
 namespace tools
 {
     class MessageSender_ABC;
+    class Message;
 }
 
 namespace dispatcher
 {
+    class ClientBroadcaster_ABC;
+
 // =============================================================================
 /** @class  Client
     @brief  Client
@@ -30,23 +33,23 @@ class Client : public ClientPublisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Client( tools::MessageSender_ABC& sender, const std::string& endpoint );
+             Client( tools::MessageSender_ABC& sender, ClientBroadcaster_ABC& broadcaster, const std::string& endpoint );
     virtual ~Client();
     //@}
 
-    //! @name Messages
+    //! @name Operations
     //@{
+    void Activate();
+    void Deactivate();
+
     virtual void Send( const sword::AuthenticationToClient& msg );
     virtual void Send( const sword::SimToClient& msg );
     virtual void Send( const sword::ReplayToClient& msg );
     virtual void Send( const sword::AarToClient& msg );
     virtual void Send( const sword::MessengerToClient& msg );
     virtual void Send( const sword::DispatcherToClient& msg );
-    //@}
 
-    //! @name Accessors
-    //@{
-    virtual std::string GetEndpoint() const;
+    void Send( unsigned long tag, const tools::Message& message ) const;
     //@}
 
 private:
@@ -60,6 +63,7 @@ private:
     //! @name Member data
     //@{
     tools::MessageSender_ABC& sender_;
+    ClientBroadcaster_ABC& broadcaster_;
     std::string endpoint_;
     //@}
 };

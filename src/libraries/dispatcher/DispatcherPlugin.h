@@ -13,11 +13,6 @@
 #include "Plugin_ABC.h"
 #include "protocol/Protocol.h"
 
-namespace tools
-{
-    class MessageDispatcher_ABC;
-}
-
 namespace dispatcher
 {
     class Model;
@@ -25,6 +20,7 @@ namespace dispatcher
     class LinkResolver_ABC;
     class RotatingLog;
     class OrderResolver_ABC;
+    class ClientsNetworker;
 
 // =============================================================================
 /** @class  DispatcherPlugin
@@ -37,8 +33,7 @@ class DispatcherPlugin : public Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DispatcherPlugin( Model& model, SimulationPublisher_ABC& simulation,
-                               tools::MessageDispatcher_ABC& clientCommands,
+             DispatcherPlugin( Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
                                LinkResolver_ABC& links, OrderResolver_ABC& order, RotatingLog& log );
     virtual ~DispatcherPlugin();
     //@}
@@ -47,29 +42,15 @@ public:
     //@{
     virtual void Receive( const sword::SimToClient& message );
 
-    virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
-    virtual void NotifyClientLeft( ClientPublisher_ABC& client );
+    virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& link, Profile_ABC& profile );
 
     virtual void Register( dispatcher::Services& services );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DispatcherPlugin( const DispatcherPlugin& );            //!< Copy constructor
-    DispatcherPlugin& operator=( const DispatcherPlugin& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void OnReceive( const std::string& link, const sword::ClientToSim& asnMsg );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::set< ClientPublisher_ABC* > T_Clients;
-    typedef T_Clients::const_iterator      CIT_Clients;
     //@}
 
 private:
@@ -79,7 +60,6 @@ private:
     SimulationPublisher_ABC& simulation_;
     LinkResolver_ABC& links_;
     OrderResolver_ABC& order_;
-    T_Clients clients_;
     //@}
 };
 

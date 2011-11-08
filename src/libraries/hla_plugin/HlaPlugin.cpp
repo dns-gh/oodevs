@@ -179,21 +179,3 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
         logger_.LogError( "Step failed (unhandled error)." );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: HlaPlugin::NotifyClientAuthenticated
-// Created: SBO 2008-02-18
-// -----------------------------------------------------------------------------
-void HlaPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC&, dispatcher::Profile_ABC& )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: HlaPlugin::NotifyClientLeft
-// Created: SBO 2008-02-18
-// -----------------------------------------------------------------------------
-void HlaPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& )
-{
-    // NOTHING
-}

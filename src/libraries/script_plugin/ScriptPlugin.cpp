@@ -124,18 +124,18 @@ void ScriptPlugin::Receive( const sword::AarToClient& wrapper )
 // Name: ScriptPlugin::NotifyClientAuthenticated
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-void ScriptPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile )
+void ScriptPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& /*client*/, const std::string& link, Profile_ABC& profile )
 {
-    controller_->Update( events::ClientJoined( client.GetEndpoint(), profile.GetName() ) );
+    controller_->Update( events::ClientJoined( link, profile.GetName() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ScriptPlugin::NotifyClientLeft
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-void ScriptPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
+void ScriptPlugin::NotifyClientLeft( ClientPublisher_ABC& /*client*/, const std::string& link )
 {
-    controller_->Update( events::ClientLeft( client.GetEndpoint() ) );
+    controller_->Update( events::ClientLeft( link ) );
 }
 
 // -----------------------------------------------------------------------------

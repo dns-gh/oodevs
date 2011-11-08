@@ -10,19 +10,22 @@
 #ifndef __ClientsNetworker_h_
 #define __ClientsNetworker_h_
 
-#include "protocol/ClientPublisher_ABC.h"
 #include "MessageHandler_ABC.h"
 #include "LinkResolver_ABC.h"
+#include "Plugin_ABC.h"
 #include "tools/ServerNetworker.h"
 #include "shield/ClientHandler_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
+#include "protocol/ClientBroadcaster_ABC.h"
 #include <boost/shared_ptr.hpp>
+#include <map>
 
 namespace dispatcher
 {
     class Config;
     class Plugin_ABC;
     class Services;
-    class MessageSender_ABC;
+    class Client;
 
 // =============================================================================
 /** @class  ClientsNetworker
@@ -32,9 +35,10 @@ namespace dispatcher
 // =============================================================================
 class ClientsNetworker : public tools::ServerNetworker
                        , public ClientPublisher_ABC
-                       , public MessageHandler_ABC
                        , public LinkResolver_ABC
                        , public shield::ClientHandler_ABC
+                       , public Plugin_ABC
+                       , public ClientBroadcaster_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -45,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Register( const std::string& endpoint, MessageSender_ABC& sender );
+    virtual void Register( const std::string& endpoint, MessageSender_ABC& sender, ClientBroadcaster_ABC& broadcaster );
     virtual void Unregister( const std::string& endpoint );
 
     virtual void Send( const sword::SimToClient& msg );
@@ -58,7 +62,15 @@ public:
     virtual Profile_ABC&         GetProfile  ( const std::string& link );
     virtual ClientPublisher_ABC& GetPublisher( const std::string& link );
 
-    virtual std::string GetEndpoint() const;
+    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& link, dispatcher::Profile_ABC& profile );
+    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client, const std::string& link );
+
+    virtual void Update();
+
+    virtual void Activate( const std::string& link );
+    virtual void Deactivate( const std::string& link );
+
+    virtual void Broadcast( const sword::SimToClient& message );
     //@}
 
 protected:
@@ -74,7 +86,7 @@ private:
     ClientsNetworker& operator=( const ClientsNetworker& ); //!< Assignment operator
     //@}
 
-    //! @name Connection callbacks
+    //! @name Operations
     //@{
     virtual void ConnectionSucceeded( const std::string& endpoint );
     virtual void ConnectionFailed   ( const std::string& address, const std::string& error );
@@ -85,8 +97,9 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, boost::shared_ptr< ClientPublisher_ABC > > T_Clients;
-    typedef T_Clients::const_iterator                                       CIT_Clients;
+    typedef std::map< std::string, boost::shared_ptr< Client > > T_Clients;
+    typedef T_Clients::iterator                                 IT_Clients;
+    typedef T_Clients::const_iterator                          CIT_Clients;
     //@}
 
 private:
@@ -95,6 +108,7 @@ private:
     Plugin_ABC& plugin_;
     const Services& services_;
     T_Clients clients_;
+    T_Clients internals_;
     //@}
 };
 
