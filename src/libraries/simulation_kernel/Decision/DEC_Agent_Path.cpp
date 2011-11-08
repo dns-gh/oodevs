@@ -235,7 +235,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
-            if( knowledge.CanCollideWith( queryMaker_ ) && !knowledge.IsObjectInsidePathPoint( pathPoints, queryMaker_ ) ) //$$$ BOF
+            if( knowledge.CanCollideWith( queryMaker_ ) )
             {
                 if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
                     pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
@@ -565,6 +565,9 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
         Cancel();
     }
     DEC_Path_ABC::Execute( pathfind );
+    DEC_PathResult::E_State nPathState = GetState();
+    if( nPathState == DEC_Path_ABC::eImpossible )
+        queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
 
 #ifndef NDEBUG
     for( CIT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); )

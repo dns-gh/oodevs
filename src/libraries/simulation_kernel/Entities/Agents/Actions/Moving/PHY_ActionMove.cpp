@@ -120,7 +120,28 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
     if( knowledges != objectsToAvoid_ )
     {
         objectsToAvoid_ = knowledges;
+        geometrySignatures_.clear();
+        for( T_KnowledgeObjectVector::const_iterator it = knowledges.begin(); it != knowledges.end(); ++it )
+            geometrySignatures_.push_back( (*it)->GetLocalisation() );
         return true;
+    }
+    else
+    {
+        bool modified = false;
+        for( int i = 0; i < knowledges.size(); ++i )
+        {
+            if( geometrySignatures_[i] != knowledges[i]->GetLocalisation() )
+            {
+                geometrySignatures_[i] = knowledges[i]->GetLocalisation();
+                objectAvoidAttempts_.erase( knowledges[i]->GetID() );
+                modified = true;
+            }
+        }
+        if( modified )
+        {
+            objectsToAvoid_ = knowledges;
+            return true;
+        }
     }
     return false;
 }

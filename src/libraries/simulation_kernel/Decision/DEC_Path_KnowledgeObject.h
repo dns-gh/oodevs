@@ -39,6 +39,7 @@ private:
     //! @name Member data
     //@{
     TER_Localisation localisation_;
+    TER_Localisation realLocalisation_;
     double rCostIn_;
     double rCostOut_;
     double rObstructionThreshold_;
