@@ -20,6 +20,7 @@
 #include "ProfilesModel.h"
 #include "StaticModel.h"
 #include "Stocks.h"
+#include "FormationHierarchies.h"
 #include "TacticalLine_ABC.h"
 #include "TeamsModel.h"
 #include "clients_gui/Tools.h"
@@ -128,6 +129,8 @@ bool ModelConsistencyChecker::CheckConsistency( unsigned int filters /*= eAllChe
         CheckProfileInitialization();
     if( filters & eGhostExistence || filters & eGhostConverted )
         CheckGhosts();
+	//if ( filters & eFormationWithSameLevelEmptiness )
+	//	CheckFormationWithSameLevelAsParentEmptiness();
     return !errors_.empty();
 }
 
@@ -340,6 +343,28 @@ void ModelConsistencyChecker::CheckGhosts()
         }
         else
             AddError( eGhostExistence, &ghost );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckFormationWithSameLevelAsParentEmptiness
+// Created: RPD 2011-11-07
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckFormationWithSameLevelAsParentEmptiness()
+{
+    Iterator< const Formation_ABC& > formationIterator = model_.GetFormationResolver().CreateIterator();
+    while( formationIterator.HasMoreElements() )
+    {
+        const Formation_ABC& formation = formationIterator.NextElement();
+		const FormationHierarchies* hierarchy = formation.Retrieve< FormationHierarchies >();
+        if( hierarchy && hierarchy->GetSuperior() && hierarchy->CountSubordinates() != 0 )
+		{
+			const FormationHierarchies* parentHierarchy = hierarchy->GetSuperior()->Retrieve< FormationHierarchies >();
+			if ( hierarchy->GetLevel() == parentHierarchy->GetLevel() )
+			{
+				AddError( eFormationWithSameLevelEmptiness, &formation );
+			}
+		}
     }
 }
 

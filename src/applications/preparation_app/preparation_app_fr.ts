@@ -1213,6 +1213,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Une unité fantôme est présente.</translation>
     </message>
     <message>
+        <source>Formation with same level as parent must be empty.</source>
+        <translation>Une formation de même niveau que son parent doit être vide.</translation>
+    </message>
+    <message>
         <source>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</source>
         <translation>Type inconnu &apos;%1&apos;, un fantôme a été créé à la place.</translation>
     </message>

@@ -40,29 +40,32 @@ public:
     //@{
     enum E_ConsistencyCheck
     {
-        eLongNameUniqueness     = 0x0001,
-        eTeamNameUniqueness     = 0x0002,
-        eObjectNameUniqueness   = 0x0004,
-        eLimaNameUniqueness     = 0x0008,
-        eLimitNameUniqueness    = 0x0010,
-        eAllUniqueness          = eLongNameUniqueness | eTeamNameUniqueness | eObjectNameUniqueness | eLimaNameUniqueness | eLimitNameUniqueness,
+        eLongNameUniqueness              = 0x0001,
+        eTeamNameUniqueness              = 0x0002,
+        eObjectNameUniqueness            = 0x0004,
+        eLimaNameUniqueness              = 0x0008,
+        eLimitNameUniqueness             = 0x0010,
+        eAllUniqueness                   = eLongNameUniqueness | eTeamNameUniqueness | eObjectNameUniqueness | eLimaNameUniqueness | eLimitNameUniqueness,
+								         
+        eStockInitialization             = 0x0020,
+        eLogisticInitialization          = 0x0040,
+        eAllInitialization               = eStockInitialization | eLogisticInitialization,
+								         
+        eAllCheckWithoutProfile          = eAllUniqueness | eAllInitialization,
+								         
+        eProfileUniqueness               = 0x0080,
+        eProfileUnreadable               = 0x0100,
+        eProfileUnwritable               = 0x0200,
+        eAllProfile                      = eProfileUniqueness | eProfileUnreadable | eProfileUnwritable,
+									     
+        eGhostExistence                  = 0x0400,
+        eGhostConverted                  = 0x0800,
+        eAllGhost                        = eGhostExistence | eGhostConverted,
 
-        eStockInitialization    = 0x0020,
-        eLogisticInitialization = 0x0040,
-        eAllInitialization      = eStockInitialization | eLogisticInitialization,
+        eFormationWithSameLevelEmptiness = 0x1000,
+        eAllFormation                    = eFormationWithSameLevelEmptiness,
 
-        eAllCheckWithoutProfile = eAllUniqueness | eAllInitialization,
-
-        eProfileUniqueness      = 0x0080,
-        eProfileUnreadable      = 0x0100,
-        eProfileUnwritable      = 0x0200,
-        eAllProfile             = eProfileUniqueness | eProfileUnreadable | eProfileUnwritable,
-
-        eGhostExistence         = 0x0400,
-        eGhostConverted         = 0x0800,
-        eAllGhost               = eGhostExistence | eGhostConverted,
-
-        eAllChecks              = eAllCheckWithoutProfile | eAllProfile | eAllGhost
+        eAllChecks                       = eAllCheckWithoutProfile | eAllProfile | eAllGhost | eAllFormation
     };
     struct ConsistencyError
     {
@@ -102,6 +105,7 @@ private:
     void CheckProfileUniqueness();
     void CheckProfileInitialization();
     void CheckGhosts();
+	void CheckFormationWithSameLevelAsParentEmptiness();
     //@}
 
 private:

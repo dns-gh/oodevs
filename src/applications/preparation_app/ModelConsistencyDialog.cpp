@@ -75,18 +75,19 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     buttonLayout->addWidget( closeButton );
 
     // Fill errors text
-    errorDescriptions_[ ModelConsistencyChecker::eLongNameUniqueness ]     = tr( "Duplicate long name for units %1." );
-    errorDescriptions_[ ModelConsistencyChecker::eTeamNameUniqueness ]     = tr( "Duplicate name for parties %1." );
-    errorDescriptions_[ ModelConsistencyChecker::eObjectNameUniqueness ]   = tr( "Duplicate name for objects %1." );
-    errorDescriptions_[ ModelConsistencyChecker::eLimaNameUniqueness ]     = tr( "Duplicate name for limas %1." );
-    errorDescriptions_[ ModelConsistencyChecker::eLimitNameUniqueness ]    = tr( "Duplicate name for limits %1." );
-    errorDescriptions_[ ModelConsistencyChecker::eStockInitialization ]    = tr( "No stocks initialized." );
-    errorDescriptions_[ ModelConsistencyChecker::eLogisticInitialization ] = tr( "No logistic link initialized." );
-    errorDescriptions_[ ModelConsistencyChecker::eProfileUniqueness ]      = tr( "Association with multiple profiles: %1." );
-    errorDescriptions_[ ModelConsistencyChecker::eProfileUnreadable ]      = tr( "Not 'readable' to any user profile. You will not be able to see it on the game." );
-    errorDescriptions_[ ModelConsistencyChecker::eProfileUnwritable ]      = tr( "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
-    errorDescriptions_[ ModelConsistencyChecker::eGhostExistence ]         = tr( "A phantom unit is present." );
-    errorDescriptions_[ ModelConsistencyChecker::eGhostConverted ]         = tr( "Unknown type '%1', a phantom unit has been created instead." );
+    errorDescriptions_[ ModelConsistencyChecker::eLongNameUniqueness ]              = tr( "Duplicate long name for units %1." );
+    errorDescriptions_[ ModelConsistencyChecker::eTeamNameUniqueness ]              = tr( "Duplicate name for parties %1." );
+    errorDescriptions_[ ModelConsistencyChecker::eObjectNameUniqueness ]            = tr( "Duplicate name for objects %1." );
+    errorDescriptions_[ ModelConsistencyChecker::eLimaNameUniqueness ]              = tr( "Duplicate name for limas %1." );
+    errorDescriptions_[ ModelConsistencyChecker::eLimitNameUniqueness ]             = tr( "Duplicate name for limits %1." );
+    errorDescriptions_[ ModelConsistencyChecker::eStockInitialization ]             = tr( "No stocks initialized." );
+    errorDescriptions_[ ModelConsistencyChecker::eLogisticInitialization ]          = tr( "No logistic link initialized." );
+    errorDescriptions_[ ModelConsistencyChecker::eProfileUniqueness ]               = tr( "Association with multiple profiles: %1." );
+    errorDescriptions_[ ModelConsistencyChecker::eProfileUnreadable ]               = tr( "Not 'readable' to any user profile. You will not be able to see it on the game." );
+    errorDescriptions_[ ModelConsistencyChecker::eProfileUnwritable ]               = tr( "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
+    errorDescriptions_[ ModelConsistencyChecker::eGhostExistence ]                  = tr( "A phantom unit is present." );
+    errorDescriptions_[ ModelConsistencyChecker::eGhostConverted ]                  = tr( "Unknown type '%1', a phantom unit has been created instead." );
+    errorDescriptions_[ ModelConsistencyChecker::eFormationWithSameLevelEmptiness ] = tr( "Formation with same level as parent must be empty." );
 }
 
 // -----------------------------------------------------------------------------
