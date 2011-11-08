@@ -190,24 +190,24 @@
   <automat decisional-model="Sgpt Hm" id="643" name="ALAT - PUMA PC" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Patrouille HM"/>
   </automat>
-  <automat decisional-model="TAC" id="644" name="ART - OCF" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - DLART"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="644" name="ART . OCF" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . DLART"/>
   </automat>
-  <automat decisional-model="TAC" id="645" name="ART - PC DAF" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - DAFA"/>
-    <unit max-occurs="1" min-occurs="1" type="ART - DAFV"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="645" name="ART . PC DAF" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . DAFA"/>
+    <unit max-occurs="1" min-occurs="1" type="ART . DAFV"/>
   </automat>
-  <automat decisional-model="TAC" id="646" name="ART - PC RGT" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PCRA"/>
-    <unit max-occurs="1" min-occurs="1" type="ART - PCRV"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="646" name="ART . PC RGT" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . PCRA"/>
+    <unit max-occurs="1" min-occurs="1" type="ART . PCRV"/>
   </automat>
-  <automat decisional-model="TAC" id="647" name="GEN - PC RG - 2 + 2" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN - PC RG - AV 2 + 2"/>
-    <unit max-occurs="1" min-occurs="1" type="GEN - PC RG - MR 2 + 2"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="647" name="GEN . PC RG - 2 + 2" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC RG - AV 2 + 2"/>
+    <unit max-occurs="1" min-occurs="1" type="GEN . PC RG - MR 2 + 2"/>
   </automat>
-  <automat decisional-model="TAC" id="648" name="GEN - PC RG - 3 + 1" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN - PC RG - AV 3 + 1"/>
-    <unit max-occurs="1" min-occurs="1" type="GEN - PC RG - MR 3 + 1"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="648" name="GEN . PC RG - 3 + 1" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC RG - AV 3 + 1"/>
+    <unit max-occurs="1" min-occurs="1" type="GEN . PC RG - MR 3 + 1"/>
   </automat>
   <automat decisional-model="GLAISE ALFT Esc A et Reco" id="649" name="GLAISE - ALFT - Escadrille Atk" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ALFT - PC UH"/>
@@ -315,17 +315,17 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - AIR - PC SU 25"/>
     <unit max-occurs="4" min-occurs="4" type="GLAISE - ALFT- Patrouille SU 25"/>
   </automat>
-  <automat decisional-model="BIA" id="675" name="GLAISE - PC BAT" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - PC BAT PRINCIPAL"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - PC BAT AVANCE"/>
+  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="675" name="GLAISE - TRANS . PC BAT" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC BAT PRINCIPAL"/>
+    <unit max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC BAT AVANCE"/>
   </automat>
-  <automat decisional-model="BIA" id="676" name="GLAISE - PC BGDE" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - PC BGDE PRINCIPAL"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - PC BGDE AVANCE"/>
+  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="676" name="GLAISE - TRANS . PC BGDE" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC BGDE PRINCIPAL"/>
+    <unit max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC BGDE AVANCE"/>
   </automat>
-  <automat decisional-model="BIA" id="677" name="GLAISE - PC DIV" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - PC DIV PRINCIPAL"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - PC DIV AVANCE"/>
+  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="677" name="GLAISE - TRANS . PC DIV" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC DIV PRINCIPAL"/>
+    <unit max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC DIV AVANCE"/>
   </automat>
   <automat decisional-model="GLAISE URH" id="678" name="GLAISE - RENS - URH" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - RENS - PC URH"/>
@@ -371,59 +371,59 @@
     <unit type="RENS - Patrouille Recherche Radar"/>
     <unit type="RENS - Patrouille Recherche Nautique"/>
   </automat>
-  <automat decisional-model="TAC" id="689" name="ABC - PC 1 GE LECLERC" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC - PC 1 GE LECLERC"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="689" name="ABC . PC 1 GE LECLERC" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC 1 GE LECLERC"/>
   </automat>
-  <automat decisional-model="TAC" id="690" name="INF - PC 1 GTIA AMX10P" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF - PC 1 GTIA  AMX10P"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="690" name="INF . PC 1 GTIA AMX10P" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC 1 GTIA  AMX10P"/>
   </automat>
-  <automat decisional-model="TAC" id="691" name="INF - PC 1 GTIA VAB" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF - PC 1 GTIA  VAB"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="691" name="INF . PC 1 GTIA VAB" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC 1 GTIA  VAB"/>
   </automat>
-  <automat decisional-model="TAC" id="692" name="ABC - PC 2 GE LECLERC" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC - PC 2 GE LECLERC"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="692" name="ABC . PC 2 GE LECLERC" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC 2 GE LECLERC"/>
   </automat>
-  <automat decisional-model="TAC" id="693" name="INF - PC 2 GTIA AMX10P" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF - PC 2 GTIA  AMX10P"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="693" name="INF . PC 2 GTIA AMX10P" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC 2 GTIA  AMX10P"/>
   </automat>
-  <automat decisional-model="TAC" id="694" name="INF - PC 2 GTIA VAB" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF - PC 2 GTIA  VAB"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="694" name="INF . PC 2 GTIA VAB" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC 2 GTIA  VAB"/>
   </automat>
-  <automat decisional-model="TAC" id="695" name="ART - PC BAT ART 24LRM" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC BAT 24LRM"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="695" name="ART . PC BAT ART 24LRM" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . PC BAT 24LRM"/>
   </automat>
-  <automat decisional-model="TAC" id="696" name="ART - PC BAT ART 32AUF1" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC BAT 32AUF1"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="696" name="ART . PC BAT ART 32AUF1" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . PC BAT 32AUF1"/>
   </automat>
-  <automat decisional-model="TAC" id="697" name="ALAT - PC GAM602" type="Automate ALAT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC GAM602"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="697" name="ALAT . PC GAM602" type="Automate ALAT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT . PC GAM602"/>
   </automat>
-  <automat decisional-model="TAC" id="698" name="ALAT - PC GAM603" type="Automate ALAT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC GAM603"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="698" name="ALAT . PC GAM603" type="Automate ALAT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT . PC GAM603"/>
   </automat>
-  <automat decisional-model="TAC" id="699" name="ALAT - PC GAM604" type="Automate ALAT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC GAM604"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="699" name="ALAT . PC GAM604" type="Automate ALAT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT . PC GAM604"/>
   </automat>
-  <automat decisional-model="TAC" id="700" name="INF - PC GTIA Debarque" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF - PC GTIA INF Debarque"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="700" name="INF . PC GTIA Debarque" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC GTIA INF Debarque"/>
   </automat>
-  <automat decisional-model="TAC" id="701" name="ART - PC SA2R" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC SA2R"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="701" name="ART . PC SA2R" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . PC SA2R"/>
   </automat>
-  <automat decisional-model="TAC" id="702" name="ALAT - PC SGAM" type="Automate ALAT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC SGAM"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="702" name="ALAT . PC SGAM" type="Automate ALAT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT . PC SGAM"/>
   </automat>
-  <automat decisional-model="TAC" id="703" name="ABC - PC TAC GE LECLERC" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC - PC TAC GE LECLERC"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="703" name="ABC . PC TAC GE LECLERC" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC TAC GE LECLERC"/>
   </automat>
-  <automat decisional-model="TAC" id="704" name="INF - PC TAC GTIA AMX10P" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF - PC TAC GTIA AMX10P"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="704" name="INF . PC TAC GTIA AMX10P" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC TAC GTIA AMX10P"/>
   </automat>
-  <automat decisional-model="TAC" id="705" name="INF - PC TAC GTIA VAB" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF - PC TAC GTIA  VAB"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="705" name="INF . PC TAC GTIA VAB" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC TAC GTIA  VAB"/>
   </automat>
-  <automat decisional-model="TAC" id="706" name="ABC - PC et TC1 EEI" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC - Peloton CDT EEI"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="706" name="ABC . PC et TC1 EEI" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Peloton CDT EEI"/>
   </automat>
   <automat decisional-model="Viviane" id="707" name="RENS - Peloton Capteur Module Viviane" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Patrouille Rens Viviane"/>
@@ -439,13 +439,13 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Reco Lourd"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Equipe Reco M120 VAB"/>
   </automat>
-  <automat decisional-model="TAC" id="710" name="INF - GTIA AMX10P 2 + 2" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF - GTIA  AMX10P AV 2 + 2"/>
-    <unit max-occurs="1" min-occurs="1" type="INF - GTIA  AMX10P MR 2 + 2"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="710" name="INF . GTIA AMX10P 2 + 2" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . GTIA  AMX10P AV 2 + 2"/>
+    <unit max-occurs="1" min-occurs="1" type="INF . GTIA  AMX10P MR 2 + 2"/>
   </automat>
-  <automat decisional-model="TAC" id="711" name="INF - GTIA VAB 2 + 2" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF - GTIA  VAB AV 2 + 2"/>
-    <unit max-occurs="1" min-occurs="1" type="INF - GTIA  VAB MR 2 + 2"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="711" name="INF . GTIA VAB 2 + 2" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . GTIA  VAB AV 2 + 2"/>
+    <unit max-occurs="1" min-occurs="1" type="INF . GTIA  VAB MR 2 + 2"/>
   </automat>
   <automat decisional-model="CL289" id="712" name="RENS - Section Drone CL 289" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Section MO CL 289"/>
@@ -498,21 +498,21 @@
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 2HAH"/>
     <unit max-occurs="2" min-occurs="2" type="ALAT - Patrouille 1HM SOFF"/>
   </automat>
-  <automat decisional-model="TAC" id="722" name="LOG - PC BATLOG" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG - BLOG PCP"/>
-    <unit type="LOG - BLOG PCMR"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="722" name="LOG . PC BATLOG" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . BLOG PCP"/>
+    <unit type="LOG . BLOG PCMR"/>
   </automat>
-  <automat decisional-model="TAC" id="723" name="LOG - PC ZFMAINT" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG - ZFMAINT PCP"/>
-    <unit type="LOG - ZFMAINT PCMR"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="723" name="LOG . PC ZFMAINT" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ZFMAINT PCP"/>
+    <unit type="LOG . ZFMAINT PCMR"/>
   </automat>
-  <automat decisional-model="TAC" id="724" name="LOG - PC ZFRAV" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG - ZFRAV PCP"/>
-    <unit type="LOG - ZFRAV PCMR"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="724" name="LOG . PC ZFRAV" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ZFRAV PCP"/>
+    <unit type="LOG . ZFRAV PCMR"/>
   </automat>
-  <automat decisional-model="TAC" id="725" name="LOG - PC ZFSAN" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG - ZFSAN PCP"/>
-    <unit type="LOG - ZFSAN PCMR"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="725" name="LOG . PC ZFSAN" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ZFSAN PCP"/>
+    <unit type="LOG . ZFSAN PCMR"/>
   </automat>
   <automat decisional-model="URH" id="726" name="RENS - URH" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Equipe URH OFF"/>
@@ -522,8 +522,8 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - PC MO DRAC"/>
     <unit max-occurs="2" min-occurs="2" type="RENS - DRAC"/>
   </automat>
-  <automat decisional-model="TAC" id="728" name="ART - DLART" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - DLART"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="728" name="ART . DLART" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . DLART"/>
   </automat>
   <automat decisional-model="DLOP" id="729" name="ART - EOP" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - EOP"/>
@@ -534,11 +534,11 @@
   <automat decisional-model="DLO" id="731" name="ART - EO AMX10P" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - EO AMX10P"/>
   </automat>
-  <automat decisional-model="TAC" id="732" name="GEN - DLGEN" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN - DLGEN"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="732" name="GEN . DLGEN" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . DLGEN"/>
   </automat>
-  <automat decisional-model="TAC" id="733" name="GEN - PC GEN" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN - PC"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="733" name="GEN . PC GEN" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC"/>
   </automat>
   <automat decisional-model="Batterie Reco et Tir AUF1" id="734" name="ART - Batterie de Reco et Tir AUF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie AUF1"/>
@@ -1067,8 +1067,8 @@
   <automat decisional-model="Masalife.Automate.MonoPion" id="837" name="CIV . DPRE" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="1" type="Refugies"/>
   </automat>
-  <automat decisional-model="TAC" id="838" name="ASS - DLGEN" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS - DLGEN"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="838" name="ASS . DLGEN" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . DLGEN"/>
   </automat>
   <automat decisional-model="Batterie Reco et Tir LRU" id="839" name="ART - Batterie de Reco et Tir LRU" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie LRU"/>
@@ -1076,16 +1076,16 @@
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir LRU CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir LRU CDS SOFF"/>
   </automat>
-  <automat decisional-model="TAC" id="840" name="RENS - PC et TC1 BRB" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Section CDT et TC1 BRB"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="840" name="RENS . PC et TC1 BRB" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS . Section CDT et TC1 BRB"/>
   </automat>
   <automat decisional-model="Batterie Tir CEASAR" id="841" name="ART - Batterie de Tir CAESAR pour FOB" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie CAESAR"/>
     <unit type="ART - Section de Tir CAESAR pour FOB"/>
     <unit type="ART - Section Mortier 120 OFF 2 pcs Pour SIC"/>
   </automat>
-  <automat decisional-model="TAC" id="842" name="ART - CAF" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - DAFA"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="842" name="ART . CAF" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . DAFA"/>
   </automat>
   <automat decisional-model="DLO" id="843" name="ART - OA" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - EO VAB"/>
@@ -1098,9 +1098,9 @@
     <unit type="ALAT - Patrouille Tigre 3HAP"/>
     <unit type="ALAT - Patrouille Tigre 2HAP"/>
   </automat>
-  <automat decisional-model="TAC" id="845" name="ART - DAF" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - DAFA"/>
-    <unit max-occurs="1" min-occurs="1" type="ART - DAFV"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="845" name="ART . DAF" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . DAFA"/>
+    <unit max-occurs="1" min-occurs="1" type="ART . DAFV"/>
   </automat>
   <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="846" name="CIRCU . Escadron Transport Blinde" type="Automate CIRCULATION">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU . Peloton CDT ESC TRPT BLD"/>
@@ -1206,11 +1206,11 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU . PC sur PVP"/>
     <unit max-occurs="4" min-occurs="4" type="CIRCU . Patrouille PVP"/>
   </automat>
-  <automat decisional-model="TAC" id="866" name="CIRCU - EM GCR" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU - EM GCR"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="866" name="CIRCU . EM GCR" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU . EM GCR"/>
   </automat>
-  <automat decisional-model="TAC" id="867" name="CIRCU - Peloton CDT ECR" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU - Peloton  CDT ECR"/>
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="867" name="CIRCU . Peloton CDT ECR" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU . Peloton  CDT ECR"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="868" name="TRANS . Section RAC3 BIA" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC RAC3 BIA"/>
@@ -1380,4 +1380,4 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC BIE NBC"/>
   </automat>
 </automats>
-<!-- signature="3110280259" -->
+<!-- signature="1479359563" -->
