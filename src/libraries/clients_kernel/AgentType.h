@@ -68,6 +68,7 @@ public:
     bool IsLogisticSupply() const;
     bool IsLogisticMaintenance() const;
     bool IsLogisticMedical() const;
+    bool HasStocks() const;
 
     bool IsStockCategoryDefined( const LogisticSupplyClass& logClass ) const;
     //@}

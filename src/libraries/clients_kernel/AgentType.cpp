@@ -273,3 +273,12 @@ bool AgentType::IsStockCategoryDefined( const LogisticSupplyClass& logClass ) co
 {
     return stocks_.find( logClass.GetName() ) != stocks_.end();
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::HasStocks
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+bool AgentType::HasStocks() const
+{
+    return !stocks_.empty();
+}
