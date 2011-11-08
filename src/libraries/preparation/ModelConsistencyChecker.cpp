@@ -26,6 +26,7 @@
 #include "clients_gui/Tools.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentType.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
@@ -253,7 +254,7 @@ void ModelConsistencyChecker::CheckStockInitialization()
     {
         const Agent_ABC& agent = it.NextElement();
         const Stocks* stocks = agent.Retrieve< Stocks >();
-        if( stocks && !stocks->HasDotations() )
+        if( agent.GetType().HasStocks() && stocks && !stocks->HasDotations() )
             AddError( eStockInitialization, &agent );
     }
 }

@@ -284,3 +284,12 @@ unsigned int AgentType::GetStockCategoryThreshold( E_StockCategory category ) co
         return 0;
     return stock->second;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::HasStocks
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+bool AgentType::HasStocks() const
+{
+    return !stocks_.empty();
+}
