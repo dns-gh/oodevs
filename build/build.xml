@@ -1359,9 +1359,7 @@
                 </content>
             </echoxml>
             <zip destfile="${dist.dir}/SWORD_@{name}_${version.major}.otpak" filesonly="true">
-                <fileset dir="${data.dir}">
-                    <elements/>
-                </fileset>
+                <elements/>
                 <fileset dir="${out.dir}" includes="content.xml"/>
             </zip>
             <delete file="${out.dir}/content.xml"/>
@@ -1375,115 +1373,141 @@
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
         <pack name="defense-worldwide" description="defense-worldwide exercises package">
-            <include name="data/models/ada/physical/worldwide/**"/>
-            <include name="exercises/worldwide/Egypt/**"/>
-            <include name="exercises/worldwide/Paris/**"/>
-            <include name="exercises/worldwide/9_cases/**"/>
-            <include name="exercises/worldwide/Musoria Border Defense/**"/>
-            <include name="data/terrains/Nord egypt/**"/>
-            <include name="data/terrains/Paris_Est/**"/>
-            <include name="data/terrains/Angers_x9_en/**"/>
-            <include name="exercises/worldwide/Tuto_sw/**"/>
-            <include name="data/terrains/Sw_terrain2/**"/>
-            <include name="exercises/worldwide/tutorials/01 - Generalities/**"/>
-            <include name="exercises/worldwide/tutorials/02 - Gaming/**"/>
-            <include name="exercises/worldwide/tutorials/03 - Missions/**"/>
-            <include name="exercises/worldwide/tutorials/04 - Armor units/**"/>
-            <include name="exercises/worldwide/tutorials/05 - Infantry/**"/>
-            <include name="exercises/worldwide/tutorials/06 - Engineering/**"/>
-            <include name="exercises/worldwide/tutorials/07 - Artillery/**"/>
-            <include name="exercises/worldwide/tutorials/08 - Logistic/**"/>
-            <include name="exercises/worldwide/tutorials/09 - Air units/**"/>
-            <include name="exercises/worldwide/tutorials/10 - NBC/**"/>
-            <include name="exercises/worldwide/tutorials/11 - Preparation/**"/>
-            <include name="exercises/worldwide/tutorials/12 - AAR/**"/>
-            <include name="exercises/worldwide/tutorials/13 - Advanced features/**"/>          
+            <zipfileset dir="${data.dir}">
+                <include name="data/models/ada/physical/worldwide/**"/>
+                <include name="data/terrains/Nord egypt/**"/>
+                <include name="data/terrains/Paris_Est/**"/>
+                <include name="data/terrains/Angers_x9_en/**"/>
+                <include name="data/terrains/Sw_terrain2/**"/>
+            </zipfileset>
+            <zipfileset dir="${data.dir}/exercises/worldwide" prefix="exercises">
+                <include name="Egypt/**"/>
+                <include name="Paris/**"/>
+                <include name="9_cases/**"/>
+                <include name="Musoria Border Defense/**"/>
+                <include name="Tuto_sw/**"/>
+                <include name="tutorials/01 - Generalities/**"/>
+                <include name="tutorials/02 - Gaming/**"/>
+                <include name="tutorials/03 - Missions/**"/>
+                <include name="tutorials/04 - Armor units/**"/>
+                <include name="tutorials/05 - Infantry/**"/>
+                <include name="tutorials/06 - Engineering/**"/>
+                <include name="tutorials/07 - Artillery/**"/>
+                <include name="tutorials/08 - Logistic/**"/>
+                <include name="tutorials/09 - Air units/**"/>
+                <include name="tutorials/10 - NBC/**"/>
+                <include name="tutorials/11 - Preparation/**"/>
+                <include name="tutorials/12 - AAR/**"/>
+                <include name="tutorials/13 - Advanced features/**"/>
+            </zipfileset>
         </pack>
     </target>
 
     <target name="package.otpack.defense.scipio" description="package du defense-scipio Referentiel Simulation otpack">
         <pack name="defense-scipio-RefSim" description="defense-scipio exercises package">
-            <include name="data/models/ada/decisional/bms/**"/>
-            <include name="data/models/ada/decisional/directia5/**"/>
-            <include name="data/models/ada/decisional/decisional.xml"/>
-            <include name="data/models/ada/physical/scipio/**"/>
+            <zipfileset dir="${data.dir}">
+                <include name="data/models/ada/decisional/bms/**"/>
+                <include name="data/models/ada/decisional/directia5/**"/>
+                <include name="data/models/ada/decisional/decisional.xml"/>
+                <include name="data/models/ada/physical/scipio/**"/>
+            </zipfileset>
         </pack>
     </target>
 
     <target name="package.otpack.defense.scipio.VA" description="package du defense-scipio Validation Amont otpack">
         <pack name="defense-scipio-VA" description="defense-scipio Validation Amont exercises package">
-            <include name="exercises/scipio/exercisesVA/Poseidon VA Missions Communes/**"/>
-            <include name="exercises/scipio/exercisesVA/Poseidon VA pions/**"/>
-            <include name="exercises/scipio/exercisesVA/Poseidon VA AppuiCombat/**"/>
-            <include name="exercises/scipio/exercisesVA/Poseidon VA Automates/**"/>
-            <include name="exercises/scipio/exercisesVA/Poseidon VA Acteurs Civils/**"/>
-            <include name="exercises/scipio/exercisesVA/Poseidon VA Soutien/**"/>
-            <include name="exercises/scipio/exercisesVA/Poseidon VA Mix/**"/>
-            <include name="data/terrains/PortoV3Lite/**"/>
+            <zipfileset dir="${data.dir}">
+                <include name="exercises/scipio/exercisesVA/Poseidon VA Missions Communes/**"/>
+                <include name="exercises/scipio/exercisesVA/Poseidon VA pions/**"/>
+                <include name="exercises/scipio/exercisesVA/Poseidon VA AppuiCombat/**"/>
+                <include name="exercises/scipio/exercisesVA/Poseidon VA Automates/**"/>
+                <include name="exercises/scipio/exercisesVA/Poseidon VA Acteurs Civils/**"/>
+                <include name="exercises/scipio/exercisesVA/Poseidon VA Soutien/**"/>
+                <include name="exercises/scipio/exercisesVA/Poseidon VA Mix/**"/>
+                <include name="data/terrains/PortoV3Lite/**"/>
+            </zipfileset>
         </pack>
     </target>
 
     <target name="package.otpack.security.worldwide" description="package du security-worldwide otpack">
         <pack name="security-worldwide" description="security-worldwide exercises package">
-            <include name="data/models/ada/physical/worldwide/**"/>
-            <include name="data/models/ada/physical/security-fr/**"/>
-            <include name="data/propagations/test/**"/>
-            <include name="exercises/security/CODAH_JANUS/**"/>
-            <include name="data/terrains/lehavre_4.2.0/**"/>
+            <zipfileset dir="${data.dir}">
+                <include name="data/models/ada/physical/worldwide/**"/>
+                <include name="data/models/ada/physical/security-fr/**"/>
+                <include name="data/propagations/test/**"/>
+                <include name="exercises/security/CODAH_JANUS/**"/>
+                <include name="data/terrains/lehavre_4.2.0/**"/>
+            </zipfileset>
         </pack>
     </target>
 
     <target name="package.otpack.security.masa" description="package du security-masa otpack">
         <pack name="security-masa" description="security-masa exercises package">
-            <include name="data/models/ada/physical/security-fr/**"/>
-            <include name="data/propagations/test/**"/>
-            <include name="exercises/security/CODAH_JANUS/**"/>
-            <include name="data/terrains/lehavre_4.2.0/**"/>
+            <zipfileset dir="${data.dir}">
+                <include name="data/models/ada/physical/security-fr/**"/>
+                <include name="data/propagations/test/**"/>
+                <include name="exercises/security/CODAH_JANUS/**"/>
+                <include name="data/terrains/lehavre_4.2.0/**"/>
+            </zipfileset>
         </pack>
     </target>
 
     <target name="package.otpack.lossc" description="package du LOSSC otpack">
         <pack name="LOSSC" description="LOSSC exercises package">
-            <include name="exercises/worldwide/LOSSC Scenario 1/**"/>
-            <include name="exercises/worldwide/LOSSC Scenario 2/**"/>
-            <include name="exercises/worldwide/LOSSC Scenario 3/**"/>
-            <include name="data/terrains/afghan_kabuldist/**"/>
+            <zipfileset dir="${data.dir}/exercises/worldwide" prefix="exercises">
+                <include name="LOSSC Scenario 1/**"/>
+                <include name="LOSSC Scenario 2/**"/>
+                <include name="LOSSC Scenario 3/**"/>
+            </zipfileset>
+            <zipfileset dir="${data.dir}">
+                <include name="data/terrains/afghan_kabuldist/**"/>
+            </zipfileset>
         </pack>
     </target>
 
     <target name="package.otpack.trainingML" description="package de training MasaLife">
         <pack name="trainingML" description="package de training MasaLife">
-            <include name="data/models/training/physical/worldwide/**"/>
-            <include name="data/models/training/decisional/**"/>
-            <include name="exercises/worldwide/Training/**"/>
-            <include name="exercises/worldwide/Training Porto/**"/>
-            <include name="exercises/worldwide/MLTraining/**"/>
-            <include name="data/terrains/PortoV3Lite - worldwide/**"/>
-            <include name="data/terrains/Nord egypt/**"/>
-            <include name="data/terrains/Paris_Est/**"/>
+            <zipfileset dir="${data.dir}">
+                <include name="data/models/training/physical/worldwide/**"/>
+                <include name="data/models/training/decisional/**"/>
+                <include name="data/terrains/PortoV3Lite - worldwide/**"/>
+                <include name="data/terrains/Nord egypt/**"/>
+                <include name="data/terrains/Paris_Est/**"/>
+            </zipfileset>
+            <zipfileset dir="${data.dir}/exercises/worldwide" prefix="exercises">
+                <include name="Training/**"/>
+                <include name="Training Porto/**"/>
+                <include name="MLTraining/**"/>
+            </zipfileset>
         </pack>
     </target>
     
     <target name="package.otpack.decisional3" description="decisional package DIA3">
         <pack name="decisional3" description="decisional package DIA3">
-            <include name="data/models/ada/decisional/Sources/**"/>
-            <include name="data/models/ada/decisional/decisional.xml"/>
+            <zipfileset dir="${data.dir}">
+                <include name="data/models/ada/decisional/Sources/**"/>
+                <include name="data/models/ada/decisional/decisional.xml"/>
+            </zipfileset>
         </pack>
     </target>
 
     <target name="package.otpack.decisional4" description="decisional package DIA4">
         <pack name="decisional4" description="decisional package DIA4">
-            <include name="data/models/ada/decisional/bms/**"/>
-            <include name="data/models/ada/decisional/directia5/**"/>
-            <exclude name="data/models/ada/decisional/directia5/models/src/france/**"/>
-            <include name="data/models/ada/decisional/decisional.xml"/>
+            <zipfileset dir="${data.dir}">
+                <include name="data/models/ada/decisional/bms/**"/>
+                <include name="data/models/ada/decisional/directia5/**"/>
+                <exclude name="data/models/ada/decisional/directia5/models/src/france/**"/>
+                <include name="data/models/ada/decisional/decisional.xml"/>
+            </zipfileset>
         </pack>
     </target>
     
     <target name="package.otpack.decisional5" description="decisional package DIA5">
         <pack name="decisional5" description="decisional package DIA5">
-            <include name="data/models/ada/decisional/directia5/**"/>
-            <include name="data/models/ada/decisional/decisional.xml"/>
+            <zipfileset dir="${data.dir}">
+                <include name="data/models/ada/decisional/directia5/**"/>
+                <include name="data/models/ada/decisional/decisional.xml"/>
+            </zipfileset>
         </pack>
     </target>
 
