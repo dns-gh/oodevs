@@ -108,7 +108,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateAutomatChilds( kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
+    void CreateAutomatChildren( kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
     //@}
 
     //! @name Helpers

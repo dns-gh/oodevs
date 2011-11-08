@@ -82,7 +82,7 @@ Automat_ABC& AgentsModel::CreateAutomat( Entity_ABC& parent, const AutomatType& 
 void AgentsModel::CreateAutomat( Entity_ABC& parent, const AutomatType& type, const geometry::Point2f& position )
 {
     Automat_ABC& automat = CreateAutomat( parent, type );
-    CreateAutomatChilds( automat, type, position );
+    CreateAutomatChildren( automat, type, position );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,14 +93,14 @@ void AgentsModel::CreateAutomat( Ghost_ABC& ghost, const AutomatType& type, cons
 {
     Automat_ABC* automat = agentFactory_.Create( ghost, type );
     tools::Resolver< Automat_ABC >::Register( automat->GetId(), *automat );
-    CreateAutomatChilds( *automat, type, position );
+    CreateAutomatChildren( *automat, type, position );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsModel::CreateAutomatChilds
+// Name: AgentsModel::CreateAutomatChildren
 // Created: ABR 2011-10-25
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomatChilds( Automat_ABC& automat, const AutomatType& type, const geometry::Point2f& position )
+void AgentsModel::CreateAutomatChildren( Automat_ABC& automat, const AutomatType& type, const geometry::Point2f& position )
 {
     DiamondFormation formation( position );
     bool pcSet = false;

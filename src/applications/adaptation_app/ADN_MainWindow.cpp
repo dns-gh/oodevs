@@ -191,7 +191,7 @@ void ADN_MainWindow::Build()
     // Disable the menus.
     SetMenuEnabled( false );
 
-    // Build all childs interfaces
+    // Build all children interfaces
     workspace_.Build( *this );
 
     // Status Bar
