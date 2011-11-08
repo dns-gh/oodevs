@@ -88,6 +88,7 @@ TransportationOfferer::TransportationOfferer( xml::xisubstream xis, const Missio
 {
     CONNECT( messageController, *this, unit_order );
     CONNECT( messageController, *this, unit_attributes );
+    CONNECT( messageController, *this, control_end_tick );
 }
 
 // -----------------------------------------------------------------------------
@@ -264,41 +265,76 @@ void TransportationOfferer::Receive( interactions::NetnServiceReceived& serviceR
     transporters_.right.erase( serviceId );
 }
 
+// -----------------------------------------------------------------------------
+// Name: TransportationOfferer::Notify
+// Created: SLI 2011-10-12
+// -----------------------------------------------------------------------------
+void TransportationOfferer::Notify( const sword::UnitAttributes& message, int /*context*/ )
+{
+    if( !( message.has_transporting_unit() || message.has_dead() ) )
+        return;
+    if( message.has_transporting_unit() )
+        HandleConvoyStatus( message );
+    if( message.has_dead() )
+        HandleTransporterDeath( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationOfferer::Notify
+// Created: SLI 2011-11-08
+// -----------------------------------------------------------------------------
+void TransportationOfferer::Notify( const sword::ControlEndTick& /*message*/, int /*context*/ )
+{
+    droppedThisTick_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationOfferer::HandleTransporterDeath
+// Created: SLI 2011-11-08
+// -----------------------------------------------------------------------------
+void TransportationOfferer::HandleTransporterDeath( const sword::UnitAttributes& message )
+{
+    T_Transporters::left_const_iterator transporter = transporters_.left.find( message.unit().id() );
+    if( transporter == transporters_.left.end() )
+        return;
+    if( !transported_[ message.unit().id() ].empty() || !droppedThisTick_[ message.unit().id() ].empty() )
+    {
+        const interactions::NetnOfferConvoy& offer = startedOffers_[ transporter->second ];
+        interactions::NetnConvoyDestroyedEntities destruction;
+        destruction.serviceId = offer.serviceId;
+        destruction.consumer = offer.consumer;
+        destruction.provider = offer.provider;
+        destruction.serviceType = offer.serviceType;
+        BOOST_FOREACH( const unsigned int transported, transported_[ message.unit().id() ] )
+            destruction.listOfEmbarkedObjectDestroyed.list.push_back( NetnObjectDefinitionStruct(
+                                                                        callsignResolver_.ResolveCallsign( transported ),
+                                                                        callsignResolver_.ResolveUniqueId( transported ), NetnObjectFeatureStruct() ) );
+        BOOST_FOREACH( const unsigned int transported, droppedThisTick_[ message.unit().id() ] )
+            destruction.listOfEmbarkedObjectDestroyed.list.push_back( NetnObjectDefinitionStruct(
+                                                                        callsignResolver_.ResolveCallsign( transported ),
+                                                                        callsignResolver_.ResolveUniqueId( transported ), NetnObjectFeatureStruct() ) );
+        convoyDestroyedEntitiesSender_.Send( destruction );
+    }
+}
+
 namespace
 {
     template< typename T >
-    void UpdateTransported( T& oldEmbarked, T& embarked, T& debarked, const sword::UnitIdList& unitList )
+    void Send( T& status, interactions::ListOfUnits& listOfUnits, unsigned int transportedId, InteractionSender_ABC< T >& sender, const interactions::NetnService& offer, unsigned int transporterId, const CallsignResolver_ABC& callsignResolver )
     {
-        T currentEmbarked;
-        for( int i = 0; i < unitList.elem_size(); ++i )
-            currentEmbarked.insert( unitList.elem( i ).id() );
-        std::set_difference( oldEmbarked.begin(), oldEmbarked.end(), currentEmbarked.begin(), currentEmbarked.end(), std::insert_iterator< T >( debarked, debarked.begin() ) );
-        std::set_difference( currentEmbarked.begin(), currentEmbarked.end(), oldEmbarked.begin(), oldEmbarked.end(), std::insert_iterator< T >( embarked, embarked.begin() ) );
-        oldEmbarked.clear();
-        oldEmbarked.insert( currentEmbarked.begin(), currentEmbarked.end() );
-    }
-
-    template< typename T, typename U >
-    void Send( U& status, interactions::ListOfUnits& listOfUnits, const T& units, InteractionSender_ABC< U >& sender, const interactions::NetnService& offer, unsigned int transporterId, const CallsignResolver_ABC& callsignResolver )
-    {
-        if( units.empty() )
-            return;
         status.consumer = offer.consumer;
         status.provider = offer.provider;
         status.serviceId = offer.serviceId;
         status.serviceType = offer.serviceType;
         status.transportUnitIdentifier = UnicodeString( callsignResolver.ResolveCallsign( transporterId ) );
-        BOOST_FOREACH( unsigned int identifier, units )
-            listOfUnits.list.push_back( NetnObjectDefinitionStruct(
-                callsignResolver.ResolveCallsign( identifier ),
-                callsignResolver.ResolveUniqueId( identifier ), NetnObjectFeatureStruct() ) );
+        listOfUnits.list.push_back( NetnObjectDefinitionStruct(
+            callsignResolver.ResolveCallsign( transportedId ),
+            callsignResolver.ResolveUniqueId( transportedId ), NetnObjectFeatureStruct() ) );
         sender.Send( status );
     }
     template< typename T >
-    bool CheckEndOfTransportation( T& remainingTransported, const T& debarked, InteractionSender_ABC< interactions::NetnServiceComplete >& sender, const interactions::NetnOfferConvoy& offer )
+    bool CheckEndOfTransportation( T& remainingTransported, InteractionSender_ABC< interactions::NetnServiceComplete >& sender, const interactions::NetnOfferConvoy& offer )
     {
-        BOOST_FOREACH( const unsigned int unit, debarked )
-            remainingTransported.erase( unit );
         if( remainingTransported.empty() )
         {
             interactions::NetnServiceComplete complete;
@@ -314,41 +350,67 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: TransportationOfferer::Notify
-// Created: SLI 2011-10-12
+// Name: TransportationOfferer::HandleConvoyStatus
+// Created: SLI 2011-11-08
 // -----------------------------------------------------------------------------
-void TransportationOfferer::Notify( const sword::UnitAttributes& message, int /*context*/ )
+void TransportationOfferer::HandleConvoyStatus( const sword::UnitAttributes& message )
 {
-    if( !message.has_transported_units() || !message.has_dead() )
-        return;
-    T_Transporters::left_const_iterator transporter = transporters_.left.find( message.unit().id() );
-    if( transporter == transporters_.left.end() )
-        return;
-    if( message.has_transported_units() )
+    const unsigned int transported = message.unit().id();
+    unsigned int transporter = message.transporting_unit().id();
+    if( transporter != 0 )
     {
-        T_Transported embarked;
-        T_Transported debarked;
-        UpdateTransported( transported_[ message.unit().id() ], embarked, debarked, message.transported_units() );
-        const interactions::NetnOfferConvoy& offer = startedOffers_[ transporter->second ];
-        interactions::NetnConvoyEmbarkmentStatus embarkmentStatus;
-        Send( embarkmentStatus, embarkmentStatus.listOfObjectEmbarked, embarked, convoyEmbarkmentStatusSender_, offer, message.unit().id(), callsignResolver_ );
-        interactions::NetnConvoyDisembarkmentStatus disembarkmentStatus;
-        Send( disembarkmentStatus, disembarkmentStatus.listOfObjectDisembarked, debarked, convoyDisembarkmentStatusSender_, offer, message.unit().id(), callsignResolver_ );
-        if( CheckEndOfTransportation( remainingTransported_[ transporter->second ], debarked, serviceCompleteSender_, offer ) )
-            Transfer( startedOffers_, completetedOffers_, transporter->second );
+        T_Transporters::left_const_iterator it = transporters_.left.find( transporter );
+        if( it == transporters_.left.end() )
+            return;
+        if( remainingTransported_[ it->second ].find( transported ) == remainingTransported_[ it->second ].end() )
+            return;
+        transported_[ transporter ].insert( transported );
+        transportedBy_[ transported ] = transporter;
+        SendEmbarkmentStatus( transporter, transported );
     }
-    if( message.has_dead() && !transported_[ message.unit().id() ].empty() )
+    else
     {
-        const interactions::NetnOfferConvoy& offer = startedOffers_[ transporter->second ];
-        interactions::NetnConvoyDestroyedEntities destruction;
-        destruction.serviceId = offer.serviceId;
-        destruction.consumer = offer.consumer;
-        destruction.provider = offer.provider;
-        destruction.serviceType = offer.serviceType;
-        BOOST_FOREACH( const unsigned int transported, transported_[ message.unit().id() ] )
-            destruction.listOfEmbarkedObjectDestroyed.list.push_back( NetnObjectDefinitionStruct(
-                                                                        callsignResolver_.ResolveCallsign( transported ),
-                                                                        callsignResolver_.ResolveUniqueId( transported ), NetnObjectFeatureStruct() ) );
-        convoyDestroyedEntitiesSender_.Send( destruction );
+        T_TransportedBy::const_iterator transportedBy = transportedBy_.find( transported );
+        if( transportedBy == transportedBy_.end() )
+            return;
+        transporter = transportedBy->second;
+        T_Transporters::left_const_iterator it = transporters_.left.find( transporter );
+        if( it == transporters_.left.end() )
+            return;
+        remainingTransported_[ it->second ].erase( transported );
+        transportedBy_.erase( transported );
+        transported_[ transporter ].erase( transported );
+        SendDisembarkmentStatus( transporter, transported );
+        droppedThisTick_[ transporter ].insert( transported );
+        const interactions::NetnOfferConvoy& offer = startedOffers_[ it->second ];
+        if( CheckEndOfTransportation( remainingTransported_[ it->second ], serviceCompleteSender_, offer ) )
+        {
+            remainingTransported_.erase( it->second );
+            Transfer( startedOffers_, completetedOffers_, it->second );
+        }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationOfferer::SendEmbarkmentStatus
+// Created: SLI 2011-11-08
+// -----------------------------------------------------------------------------
+void TransportationOfferer::SendEmbarkmentStatus( unsigned int transporter, unsigned int transported )
+{
+    T_Transporters::left_const_iterator it = transporters_.left.find( transporter );
+    const interactions::NetnOfferConvoy& offer = startedOffers_[ it->second ];
+    interactions::NetnConvoyEmbarkmentStatus embarkmentStatus;
+    Send( embarkmentStatus, embarkmentStatus.listOfObjectEmbarked, transported, convoyEmbarkmentStatusSender_, offer, transporter, callsignResolver_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationOfferer::SendDisembarkmentStatus
+// Created: SLI 2011-11-08
+// -----------------------------------------------------------------------------
+void TransportationOfferer::SendDisembarkmentStatus( unsigned int transporter, unsigned int untransported )
+{
+    T_Transporters::left_const_iterator it = transporters_.left.find( transporter );
+    const interactions::NetnOfferConvoy& offer = startedOffers_[ it->second ];
+    interactions::NetnConvoyDisembarkmentStatus disembarkmentStatus;
+    Send( disembarkmentStatus, disembarkmentStatus.listOfObjectDisembarked, untransported, convoyDisembarkmentStatusSender_, offer, transporter, callsignResolver_ );
 }

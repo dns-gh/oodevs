@@ -24,6 +24,7 @@ namespace sword
     class SimToClient_Content;
     class UnitAttributes;
     class UnitOrder;
+    class ControlEndTick;
 }
 
 namespace dispatcher
@@ -72,6 +73,7 @@ class TransportationOfferer : public ::hla::InteractionNotification_ABC< interac
                             , public ::hla::InteractionNotification_ABC< interactions::NetnReadyToReceiveService >
                             , private tools::MessageObserver< sword::UnitAttributes >
                             , private tools::MessageObserver< sword::UnitOrder >
+                            , private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
     //! @name Constructors/Destructor
@@ -101,6 +103,16 @@ private:
     //@{
     virtual void Notify( const sword::UnitAttributes& message, int context );
     virtual void Notify( const sword::UnitOrder& message, int context );
+    virtual void Notify( const sword::ControlEndTick& message, int context );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void HandleConvoyStatus( const sword::UnitAttributes& message );
+    void HandleTransporterDeath( const sword::UnitAttributes& message );
+    void SendEmbarkmentStatus( unsigned int transporter, unsigned int transported );
+    void SendDisembarkmentStatus( unsigned int transporter, unsigned int untransported );
     //@}
 
 private:
@@ -111,6 +123,7 @@ private:
     typedef std::set< unsigned int > T_Transported;
     typedef std::map< unsigned int, T_Transported > T_TransportedList;
     typedef std::map< std::string, T_Transported > T_RemainingTransportedList;
+    typedef std::map< unsigned int, unsigned int > T_TransportedBy;
     //@}
 
 private:
@@ -137,6 +150,8 @@ private:
     T_Transporters transporters_;
     T_TransportedList transported_;
     T_RemainingTransportedList remainingTransported_;
+    T_TransportedBy transportedBy_;
+    T_TransportedList droppedThisTick_;
     //@}
 };
 
