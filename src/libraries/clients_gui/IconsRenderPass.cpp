@@ -91,7 +91,7 @@ void IconsRenderPass::RenderIcon( const T_IconTask& task )
     if( ! symbol.symbol_.empty() )
         tools_.DrawApp6Symbol( symbol.symbol_, center, 1.f, thickness );
     if( ! symbol.level_.empty() )
-        tools_.DrawApp6Symbol( symbol.level_, center, 1.f, thickness );
+        tools_.DrawApp6Symbol( symbol.level_, center, 1.f );
 
     glFlush();
     QImage image( iconSide_, iconSide_, 32 );
