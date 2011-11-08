@@ -18,8 +18,11 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "statusicons.h"
 #include "Tools.h"
+#include <boost/foreach.hpp>
+#include <set>
 
 using namespace geometry;
 using namespace kernel;
@@ -28,45 +31,46 @@ using namespace kernel;
 // Name: Attributes constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Attributes::Attributes( kernel::Entity_ABC& entity, Controller& controller, const CoordinateConverter_ABC& converter, PropertiesDictionary& dictionary, const tools::Resolver_ABC< Team_ABC >& teamResolver )
-    : entity_( entity )
-    , controller_( controller )
-    , converter_ ( converter )
-    , teamResolver_( teamResolver )
-    , vPos_( 0, 0 )
-    , nSpeed_( 0 )
-    , nAltitude_( 0 )
-    , nDirection_( 0 )
-    , nRawOpState_( 0 )
-    , nOpState_( eOperationalStatus_Operationnel )
-    , nFightRateState_( (E_ForceRatioStatus)0 )
-    , nRulesOfEngagementState_( (E_Roe)0 )
+Attributes::Attributes( kernel::Entity_ABC& entity, Controller& controller, const CoordinateConverter_ABC& converter,
+                        PropertiesDictionary& dictionary, const tools::Resolver_ABC< Team_ABC >& teamResolver )
+    : entity_                           ( entity )
+    , controller_                       ( controller )
+    , converter_                        ( converter )
+    , teamResolver_                     ( teamResolver )
+    , vPos_                             ( 0, 0 )
+    , nSpeed_                           ( 0 )
+    , nAltitude_                        ( 0 )
+    , nDirection_                       ( 0 )
+    , nRawOpState_                      ( 0 )
+    , nOpState_                         ( eOperationalStatus_Operationnel )
+    , nFightRateState_                  ( (E_ForceRatioStatus)0 )
+    , nRulesOfEngagementState_          ( (E_Roe)0 )
     , nRulesOfEngagementPopulationState_( (E_PopulationRoe)0 )
-    , nCloseCombatState_( (E_MeetingEngagementStatus)0 )
-    , bDead_( false )
-    , bNeutralized_( false )
-    , nOldPosture_( (E_UnitPosture)0 )
-    , nCurrentPosture_( (E_UnitPosture)0 )
-    , nPostureCompletionPourcentage_( 0 )
-    , nInstallationState_( 0 )
-    , nIndirectFireAvailability_( (E_FireAvailability)0 )
-    , bLoadingState_( false )
-    , bHumanTransportersReady_( false )
-    , bStealthModeEnabled_( false )
-    , bRadioEmitterSilence_( false )
-    , bRadioReceiverSilence_( false )
-    , bCommJammed_( false )
-    , knowledgeGroupJammed_( 0 )
-    , bRadarEnabled_( false )
-    , bPrisoner_( false )
-    , bUnderground_( false )
-    , surrenderedTo_( 0 )
-    , bRefugeesManaged_( false )
-    , aggregated_( false )
-    , fLodgingSatisfactionPercent_( 0.0f )
-    , fSecuritySatisfactionPercent_( 0.0f )
-    , fHealthSatisfactionPercent_( 0.0f )
-    , crowdTransported_( -1 )
+    , nCloseCombatState_                ( (E_MeetingEngagementStatus)0 )
+    , bDead_                            ( false )
+    , bNeutralized_                     ( false )
+    , nOldPosture_                      ( (E_UnitPosture)0 )
+    , nCurrentPosture_                  ( (E_UnitPosture)0 )
+    , nPostureCompletionPourcentage_    ( 0 )
+    , nInstallationState_               ( 0 )
+    , nIndirectFireAvailability_        ( (E_FireAvailability)0 )
+    , bLoadingState_                    ( false )
+    , bHumanTransportersReady_          ( false )
+    , bStealthModeEnabled_              ( false )
+    , bRadioEmitterSilence_             ( false )
+    , bRadioReceiverSilence_            ( false )
+    , bCommJammed_                      ( false )
+    , knowledgeGroupJammed_             ( 0 )
+    , bRadarEnabled_                    ( false )
+    , bPrisoner_                        ( false )
+    , bUnderground_                     ( false )
+    , surrenderedTo_                    ( 0 )
+    , bRefugeesManaged_                 ( false )
+    , aggregated_                       ( false )
+    , fLodgingSatisfactionPercent_      ( 0.0f )
+    , fSecuritySatisfactionPercent_     ( 0.0f )
+    , fHealthSatisfactionPercent_       ( 0.0f )
+    , crowdTransported_                 ( -1 )
 {
     CreateDictionary( dictionary );
 }
@@ -87,27 +91,27 @@ Attributes::~Attributes()
 void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
 {
     // $$$$ AGE 2006-06-22: unité !
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Operational state" ),               nRawOpState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Speed" ),                           nSpeed_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Heading" ),                         nDirection_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Critical intelligence" ),           criticalIntelligence_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Underground" ),                     bUnderground_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Neutralized" ),                     bNeutralized_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Stances/Current stance" ),               nCurrentPosture_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Stances/Setup state" ),                  nInstallationState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Communications/Jammed" ),                bCommJammed_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Communications/Radio Emitter silence" ), bRadioEmitterSilence_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Communications/Radio Receiver silence" ),bRadioReceiverSilence_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Operational state" ),   nOpState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Rules of engagement" ), nRulesOfEngagementState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Intention" ),           nCloseCombatState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Force ratio" ),         nFightRateState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Military state/Prisoner" ),              bPrisoner_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Military state/Surrender" ),             surrenderedTo_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Military state/Refugees picked up" ),    bRefugeesManaged_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Lodging" ),                 fLodgingSatisfactionPercent_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Security" ),                fSecuritySatisfactionPercent_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Health" ),                  fHealthSatisfactionPercent_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Info/Operational state" ),               nRawOpState_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Info/Speed" ),                           nSpeed_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Info/Heading" ),                         nDirection_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Info/Critical intelligence" ),           criticalIntelligence_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Info/Underground" ),                     bUnderground_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Info/Neutralized" ),                     bNeutralized_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Stances/Current stance" ),               nCurrentPosture_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Stances/Setup state" ),                  nInstallationState_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Communications/Jammed" ),                bCommJammed_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Communications/Radio Emitter silence" ), bRadioEmitterSilence_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Communications/Radio Receiver silence" ),bRadioReceiverSilence_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Decisional state/Operational state" ),   nOpState_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Decisional state/Rules of engagement" ), nRulesOfEngagementState_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Decisional state/Intention" ),           nCloseCombatState_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Decisional state/Force ratio" ),         nFightRateState_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Military state/Prisoner" ),              bPrisoner_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Military state/Surrender" ),             surrenderedTo_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Military state/Refugees picked up" ),    bRefugeesManaged_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Satisfaction/Lodging" ),                 fLodgingSatisfactionPercent_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Satisfaction/Security" ),                fSecuritySatisfactionPercent_ );
+    dictionary.Register( entity_, tools::translate( "Attributes", "Satisfaction/Health" ),                  fHealthSatisfactionPercent_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,23 +120,117 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
 // -----------------------------------------------------------------------------
 void Attributes::DoUpdate( const sword::UnitAttributes& message )
 {
+    std::set< std::string > updated;
+
+    if( message.has_direction() )
+    {
+        int nDirection = message.direction().heading();
+        if( nDirection != nDirection_ )
+        {
+            nDirection_ = nDirection;
+            updated.insert( "Info" );
+        }
+    }
+
+    UPDATE_PROPERTY( message, nRawOpState_, raw_operational_state, "Info", updated );
+    UPDATE_PROPERTY( message, nSpeed_, speed, "Info", updated );
+    UPDATE_PROPERTY( message, criticalIntelligence_, critical_intelligence, "Info", updated );
+    UPDATE_PROPERTY( message, bUnderground_, underground, "Info", updated );
+
+    if( message.has_neutralized() )
+    {
+        bool bNeutralized = message.neutralized();
+        if( bNeutralized != bNeutralized_ )
+        {
+            bNeutralized_ = bNeutralized;
+            updated.insert( "Info" );
+            UpdateHierarchies();
+        }
+    }
+
+    UPDATE_PROPERTY( message, nCurrentPosture_, new_posture, "Stances", updated );
+    UPDATE_PROPERTY( message, nInstallationState_, installation, "Stances", updated );
+
+    if( message.has_communications() && message.communications().has_jammed() )
+    {
+        bool bCommJammed = message.communications().jammed();
+        if( bCommJammed != bCommJammed_ )
+        {
+            bCommJammed_ = bCommJammed;
+            updated.insert( "Communications" );
+        }
+    }
+
+    UPDATE_PROPERTY( message, bRadioEmitterSilence_, radio_emitter_disabled, "Communications", updated );
+    UPDATE_PROPERTY( message, bRadioReceiverSilence_, radio_receiver_disabled, "Communications", updated );
+
+    if( message.has_operational_state() )
+    {
+        E_OperationalStatus nOpState = (E_OperationalStatus)message.operational_state();
+        if( nOpState != nOpState_ )
+        {
+            nOpState_ = nOpState;
+            updated.insert( "Decisional state" );
+            UpdateHierarchies();
+        }
+    }
+
+    UPDATE_PROPERTY( message, nRulesOfEngagementState_, roe, "Decisional state", updated );
+    UPDATE_PROPERTY( message, nCloseCombatState_, meeting_engagement, "Decisional state", updated );
+    UPDATE_PROPERTY( message, nFightRateState_, force_ratio, "Decisional state", updated );
+    UPDATE_PROPERTY( message, bPrisoner_, prisoner, "Military state", updated );
+
+    if( message.has_surrendered_unit() )
+    {
+        const kernel::Team_ABC* surrenderedTo = teamResolver_.Find( message.surrendered_unit().id() );
+        if( surrenderedTo != surrenderedTo_ )
+        {
+            surrenderedTo_ = surrenderedTo;
+            updated.insert( "Military state" );
+        }
+    }
+
+    UPDATE_PROPERTY( message, bRefugeesManaged_, refugees_managed, "Military state", updated );
+
+    if( message.has_satisfaction() )
+    {
+        if( message.satisfaction().has_lodging() )
+        {
+            float fLodgingSatisfactionPercent = 100.0f * message.satisfaction().lodging();
+            if( fLodgingSatisfactionPercent_ != fLodgingSatisfactionPercent )
+            {
+                fLodgingSatisfactionPercent_ = fLodgingSatisfactionPercent;
+                updated.insert( "Satisfaction" );
+            }
+        }
+        if( message.satisfaction().has_safety() )
+        {
+            float fSecuritySatisfactionPercent = 100.0f * message.satisfaction().safety();
+            if( fSecuritySatisfactionPercent_ != fSecuritySatisfactionPercent )
+            {
+                fSecuritySatisfactionPercent_ = fSecuritySatisfactionPercent;
+                updated.insert( "Satisfaction" );
+            }
+        }
+        if( message.satisfaction().has_access_to_health_care() )
+        {
+            float fHealthSatisfactionPercent = 100.0f * message.satisfaction().access_to_health_care();
+            if( fHealthSatisfactionPercent_ != fHealthSatisfactionPercent )
+            {
+                fHealthSatisfactionPercent_ = fHealthSatisfactionPercent;
+                updated.insert( "Satisfaction" );
+            }
+        }
+    }
+
+    if( message.has_communications() && message.communications().has_knowledge_group() )
+        knowledgeGroupJammed_ = message.communications().knowledge_group().id();
+
     if( message.has_position() )
         vPos_ = converter_.ConvertToXY( message.position() );
 
-    if( message.has_raw_operational_state() )
-        nRawOpState_ = message.raw_operational_state();
-
-    E_OperationalStatus nOpState = nOpState_;
-    if( message.has_operational_state() )
-        nOpState_ = (E_OperationalStatus)message.operational_state();
-    if( nOpState != nOpState_ )
-        UpdateHierarchies();
-
     if( message.has_indirect_fire_availability() )
         nIndirectFireAvailability_ = (E_FireAvailability)message.indirect_fire_availability();
-
-    if( message.has_new_posture()  )
-        nCurrentPosture_ = (E_UnitPosture)message.new_posture();
 
     if( message.has_old_posture()  )
         nOldPosture_ = (E_UnitPosture)message.old_posture();
@@ -140,90 +238,32 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_posture_transition() )
         nPostureCompletionPourcentage_ = message.posture_transition();
 
-    if( message.has_installation() )
-        nInstallationState_ = message.installation();
-
     if( message.has_dead() )
-        bDead_ = message.dead() != 0;
-
-    bool bNeutralized = bNeutralized_;
-    if( message.has_neutralized() )
-        bNeutralized_ = message.neutralized() != 0;
-    if( bNeutralized != bNeutralized_ )
-        UpdateHierarchies();
-
-    if( message.has_force_ratio() )
-        nFightRateState_ = (E_ForceRatioStatus)message.force_ratio();
-
-    if( message.has_roe() )
-        nRulesOfEngagementState_ = (E_Roe)message.roe();
+        bDead_ = message.dead();
 
     if( message.has_roe_crowd() )
         nRulesOfEngagementPopulationState_ = (E_PopulationRoe)message.roe_crowd();
 
-    if( message.has_meeting_engagement() )
-        nCloseCombatState_ = (E_MeetingEngagementStatus)message.meeting_engagement();
-
     if( message.has_embarked() )
-        bLoadingState_ = message.embarked() != 0;
+        bLoadingState_ = message.embarked();
 
     if( message.has_transporters_available()  )
-        bHumanTransportersReady_ = message.transporters_available() != 0;
+        bHumanTransportersReady_ = message.transporters_available();
 
     if( message.has_stealth() )
-        bStealthModeEnabled_ = message.stealth() != 0;
-
-    if( message.has_speed() )
-        nSpeed_ = message.speed();
+        bStealthModeEnabled_ = message.stealth();
 
     if( message.has_height() )
         nAltitude_ = message.height();
 
-    if( message.has_direction() )
-        nDirection_ = message.direction().heading();
-
-    if( message.has_underground() )
-        bUnderground_ = message.underground();
-
-    if( message.has_communications() && message.communications().has_jammed() )
-        bCommJammed_ = message.communications().jammed() != 0;
-
-    if( message.has_communications() && message.communications().has_knowledge_group() )
-        knowledgeGroupJammed_ = message.communications().knowledge_group().id();
-
-    if( message.has_radio_emitter_disabled() )
-        bRadioEmitterSilence_ = message.radio_emitter_disabled() != 0;
-
-    if( message.has_radio_receiver_disabled() )
-        bRadioReceiverSilence_ = message.radio_receiver_disabled() != 0;
-
     if( message.has_radar_active() )
-        bRadarEnabled_ = message.radar_active() != 0;
-
-    if( message.has_prisoner() )
-        bPrisoner_ = message.prisoner() != 0;
-
-    if( message.has_surrendered_unit() )
-        surrenderedTo_ = teamResolver_.Find( message.surrendered_unit().id() );
-
-    if( message.has_refugees_managed() )
-        bRefugeesManaged_ = message.refugees_managed() != 0;
-
-    if( message.has_critical_intelligence() )
-        criticalIntelligence_ = message.critical_intelligence();
-
-    if( message.has_satisfaction() )
-    {
-        if( message.satisfaction().has_lodging() )
-            fLodgingSatisfactionPercent_ = 100.0f * message.satisfaction().lodging();
-        if( message.satisfaction().has_safety() )
-            fSecuritySatisfactionPercent_ = 100.0f * message.satisfaction().safety();
-        if( message.satisfaction().has_access_to_health_care() )
-            fHealthSatisfactionPercent_ = 100.0f * message.satisfaction().access_to_health_care();
-    }
+        bRadarEnabled_ = message.radar_active();
 
     if( message.has_transported_crowd() )
         crowdTransported_ = message.transported_crowd();
+
+    BOOST_FOREACH( const std::string& content, updated )
+        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Attributes", content.c_str() ) ) );
 
     controller_.Update( *(Attributes_ABC*)this );
 }
@@ -305,7 +345,6 @@ void Attributes::DisplayInSummary( Displayer_ABC& displayer ) const
              .Display( tools::translate( "Attributes", "Troops:" ), bLoadingState_ ? tools::translate( "Attributes", "on-board" ) : tools::translate( "Attributes", "off-board" ) );
     if( crowdTransported_!= -1 )
         displayer.Display( tools::translate( "Attributes", "Crowd transported:" ), crowdTransported_ );
-
 }
 
 // -----------------------------------------------------------------------------

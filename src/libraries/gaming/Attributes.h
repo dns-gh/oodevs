@@ -15,6 +15,7 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Types.h"
+#include "clients_kernel/OptionalValue.h"
 #include "tools/Resolver_ABC.h"
 #include "protocol/SimulationSenders.h"
 
@@ -90,10 +91,10 @@ public:
     const kernel::CoordinateConverter_ABC& converter_;
     const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver_;
     geometry::Point2f vPos_;
-    unsigned int nSpeed_;
+    int nSpeed_;
     int nAltitude_;
     int nDirection_;
-    unsigned nRawOpState_;
+    int nRawOpState_;
     E_OperationalStatus nOpState_;
     E_ForceRatioStatus nFightRateState_;
     E_Roe nRulesOfEngagementState_;
@@ -104,7 +105,7 @@ public:
     E_UnitPosture nOldPosture_;
     E_UnitPosture nCurrentPosture_;
     uint nPostureCompletionPourcentage_;
-    uint nInstallationState_;
+    int nInstallationState_;
     E_FireAvailability nIndirectFireAvailability_;
     bool bLoadingState_;
     bool bHumanTransportersReady_;
@@ -120,7 +121,7 @@ public:
     bool bRefugeesManaged_;
     bool aggregated_;
     std::map< std::string, std::string > extensions_;
-    std::string criticalIntelligence_;
+    kernel::OptionalValue< std::string > criticalIntelligence_;
     float fLodgingSatisfactionPercent_;
     float fSecuritySatisfactionPercent_;
     float fHealthSatisfactionPercent_;

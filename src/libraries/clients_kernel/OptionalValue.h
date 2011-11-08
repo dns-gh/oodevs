@@ -47,6 +47,7 @@ public:
     T operator->() { return value_; };
     operator const T&() const { return value_; };
     OptionalValue& operator=( const T& value ) { value_ = value; set_ = true; return *this; };
+    bool operator==( const T& value ) const { return value_ == value; };
     //@}
 
 private:

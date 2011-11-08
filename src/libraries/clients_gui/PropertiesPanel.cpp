@@ -31,7 +31,7 @@ PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controll
     , selected_   ( controllers )
     , displayer_  ( displayer )
 {
-    table_ = new gui::PropertiesWidget( controllers_.controller_, this, tools::translate( "gui::PropertiesPanel", "Properties" ), factory, displayer_ );
+    table_ = new gui::PropertiesWidget( controllers_, this, tools::translate( "gui::PropertiesPanel", "Properties" ), factory, displayer_ );
     setWidget( table_ );
     setWidgetResizable( true );
     controllers_.Register( *this );

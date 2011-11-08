@@ -23,27 +23,29 @@ using namespace gui;
 // Name: PropertiesWidget constructor
 // Created: AGE 2006-10-18
 // -----------------------------------------------------------------------------
-PropertiesWidget::PropertiesWidget( kernel::Controller& controller, QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer )
+PropertiesWidget::PropertiesWidget( kernel::Controllers& controllers, QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer )
     : QWidget( parent )
-    , controller_( controller )
-    , factory_( factory )
-    , displayer_( displayer )
-    , button_( 0 )
+    , controllers_( controllers )
+    , factory_    ( factory )
+    , displayer_  ( displayer )
+    , button_     ( 0 )
+    , selected_   ( controllers )
 {
     FillUp( name, true );
-    controller_.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesWidget constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-PropertiesWidget::PropertiesWidget( kernel::Controller& controller, PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer )
+PropertiesWidget::PropertiesWidget( kernel::Controllers& controllers, PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer )
     : QWidget( parent )
-    , controller_( controller )
-    , factory_( factory )
-    , displayer_( displayer )
-    , button_( 0 )
+    , controllers_( controllers )
+    , factory_    ( factory )
+    , displayer_  ( displayer )
+    , button_     ( 0 )
+    , selected_   ( controllers )
 {
     FillUp( name );
 }
@@ -54,7 +56,7 @@ PropertiesWidget::PropertiesWidget( kernel::Controller& controller, PropertiesWi
 // -----------------------------------------------------------------------------
 PropertiesWidget::~PropertiesWidget()
 {
-    controller_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 namespace
@@ -185,7 +187,7 @@ kernel::Displayer_ABC& PropertiesWidget::SubItem( const QString& subItem, const 
 // -----------------------------------------------------------------------------
 PropertiesWidget* PropertiesWidget::CreateWidget( const QString& subItem )
 {
-    PropertiesWidget* subWidget = new PropertiesWidget( controller_, this, subItem, factory_, displayer_ );
+    PropertiesWidget* subWidget = new PropertiesWidget( controllers_, this, subItem, factory_, displayer_ );
     if( button_ )
         connect( button_, SIGNAL( toggled( bool ) ), subWidget, SLOT( setShown( bool ) ) );
     subWidgets_.push_back( subWidget );
@@ -248,26 +250,29 @@ void PropertiesWidget::NotifyDeleted( const kernel::DictionaryUpdated& message )
 // -----------------------------------------------------------------------------
 void PropertiesWidget::UpdatePath( const kernel::DictionaryUpdated& message, const QString& name, PropertiesWidget& parent )
 {
-    QStringList path = QStringList::split( '/', name );
-    CIT_SubCategories it = categories_.find( path.front() );
-    if( it != categories_.end() )
+    if( selected_ )
     {
-        std::string tmp = name.ascii();
-        path.pop_front();
-        if( !path.empty() )
-            subWidgets_[it->second]->UpdatePath( message, path.join( "/" ), parent );
-        else
-            message.GetEntity().Get< kernel::PropertiesDictionary >().DisplaySubPath( message.GetEntry(), parent );
-    }
-    else
-    {
-        if( path.front() == name )
+        QStringList path = QStringList::split( '/', name );
+        CIT_SubCategories it = categories_.find( path.front() );
+        if( it != categories_.end() )
         {
-            CreateWidget( name );
-            UpdatePath( message, name, parent );
+            std::string tmp = name.ascii();
+            path.pop_front();
+            if( !path.empty() )
+                subWidgets_[it->second]->UpdatePath( message, path.join( "/" ), parent );
+            else
+                message.GetEntity().Get< kernel::PropertiesDictionary >().DisplaySubPath( message.GetEntry(), parent );
         }
         else
-            table_->Update( name );
+        {
+            if( path.front() == name )
+            {
+                CreateWidget( name );
+                UpdatePath( message, name, parent );
+            }
+            else
+                table_->Update( name );
+        }
     }
 }
 
@@ -287,4 +292,13 @@ void PropertiesWidget::ClearPath( const QString& name )
         else
             subWidgets_[it->second]->Clear();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesWidget::NotifySelected
+// Created: LGY 2011-11-07
+// -----------------------------------------------------------------------------
+void PropertiesWidget::NotifySelected( const kernel::Entity_ABC* entity )
+{
+    selected_ = entity;
 }

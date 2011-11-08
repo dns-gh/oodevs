@@ -18,7 +18,9 @@
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include <boost/foreach.hpp>
 
 using namespace geometry;
 using namespace kernel;
@@ -222,12 +224,24 @@ void Population::DoUpdate( const sword::CrowdConcentrationDestruction& message )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const sword::CrowdUpdate& message )
 {
-    if( message.has_domination() )
-        nDomination_ = message.domination();
-    if( message.has_critical_intelligence() )
-        criticalIntelligence_ = message.critical_intelligence();
+    std::set< std::string > updated;
+
+    UPDATE_PROPERTY( message, nDomination_, domination, "Info", updated );
+    UPDATE_PROPERTY( message, criticalIntelligence_, critical_intelligence, "Info", updated );
+
     if( message.has_armed_individuals() )
-        armedIndividuals_ = static_cast< unsigned int >( 100 * message.armed_individuals() + 0.5f );
+    {
+        unsigned int armedIndividuals = static_cast< unsigned int >( 100 * message.armed_individuals() + 0.5f );
+        if( armedIndividuals_ != armedIndividuals )
+        {
+            armedIndividuals_ = armedIndividuals;
+            updated.insert( "Info" );
+        }
+    }
+
+    BOOST_FOREACH( const std::string& content, updated )
+        controllers_.controller_.Update( kernel::DictionaryUpdated( *static_cast< Entity_ABC* >( this ), tools::translate( "Crowd", content.c_str() ) ) );
+
     controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }
 

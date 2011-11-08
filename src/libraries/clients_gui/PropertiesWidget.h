@@ -12,10 +12,12 @@
 
 #include "clients_kernel/Displayer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
     class EditorFactory_ABC;
     class DictionaryUpdated;
 }
@@ -35,14 +37,15 @@ class PropertiesWidget : public QWidget
                        , public kernel::Displayer_ABC
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< kernel::DictionaryUpdated >
+                       , public tools::SelectionObserver< kernel::Entity_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesWidget( kernel::Controller& controller, QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
-             PropertiesWidget( kernel::Controller& controller, PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
+             PropertiesWidget( kernel::Controllers& controllers, QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
+             PropertiesWidget( kernel::Controllers& controllers, PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
     virtual ~PropertiesWidget();
     //@}
 
@@ -76,12 +79,13 @@ private:
 
     virtual void NotifyUpdated( const kernel::DictionaryUpdated& message );
     virtual void NotifyDeleted( const kernel::DictionaryUpdated& message );
+    virtual void NotifySelected( const kernel::Entity_ABC* entity );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
     kernel::EditorFactory_ABC& factory_;
     QGridLayout* layout_;
     QToolButton* button_;
@@ -90,6 +94,7 @@ private:
     PropertiesTable* table_;
     TableItemDisplayer& displayer_;
     Q3VBox* globalLayout;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 
