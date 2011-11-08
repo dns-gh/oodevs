@@ -12505,6 +12505,10 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
+    <stocks>
+      <stock category="Unite tranche D" threshold="10"/>
+      <stock category="Unite non tranche D" threshold="10"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -12527,6 +12531,9 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="10" type="SousOfficier"/>
     </crew-ranks>
+    <stocks>
+      <stock category="Pieces" threshold="10"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -12549,6 +12556,9 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
+    <stocks>
+      <stock category="Unite vivre" threshold="10"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -12758,6 +12768,9 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <stocks>
+      <stock category="Unite essence" threshold="10"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -12935,6 +12948,9 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <stocks>
+      <stock category="Unite essence" threshold="10"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -17149,4 +17165,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1722731698" -->
+<!-- signature="3829501883" -->
