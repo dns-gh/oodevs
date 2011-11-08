@@ -28,8 +28,8 @@ using namespace gui;
 PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory, gui::TableItemDisplayer& displayer )
     : QScrollArea( parent )
     , controllers_( controllers )
-    , selected_( controllers )
-    , displayer_( displayer )
+    , selected_   ( controllers )
+    , displayer_  ( displayer )
 {
     table_ = new gui::PropertiesWidget( controllers_.controller_, this, tools::translate( "gui::PropertiesPanel", "Properties" ), factory, displayer_ );
     setWidget( table_ );
@@ -80,7 +80,7 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
 // -----------------------------------------------------------------------------
 void PropertiesPanel::NotifyDeleted( const kernel::Entity_ABC& element )
 {
-    if( selected_ = &element )
+    if( selected_ && selected_->GetId() == element.GetId() )
     {
         NotifySelected( 0 );
         setWidget( table_ );
