@@ -14,6 +14,7 @@
 
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include <boost/shared_ptr.hpp>
 
 class MIL_AgentPion;
@@ -72,6 +73,7 @@ private:
     boost::shared_ptr< DEC_Agent_Path > pJoiningPath_;
     T_ObjectKnowledgeSet objectAvoidAttempts_;
     T_KnowledgeObjectVector objectsToAvoid_;
+    std::vector< TER_Localisation > geometrySignatures_;
 };
 
 #endif // __PHY_ActionMove_h_

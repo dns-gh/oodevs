@@ -11,6 +11,7 @@
 #include "DEC_Path_KnowledgeObject.h"
 #include "DEC_Agent_PathClass.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "entities/objects/MIL_Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeObject constructor
@@ -18,6 +19,7 @@
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge )
     : localisation_         ( knowledge.GetLocalisation() )
+    , realLocalisation_     ( knowledge.GetObjectKnown() ? knowledge.GetObjectKnown()->GetLocalisation() : localisation_ )
     , rCostIn_              ( 0 )
     , rCostOut_             ( 0 )
     , rObstructionThreshold_( pathClass.GetThreshold() )
