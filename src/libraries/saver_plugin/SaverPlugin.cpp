@@ -39,3 +39,21 @@ void SaverPlugin::Receive( const sword::SimToClient& message )
 {
     saver_->Receive( message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SaverPlugin::NotifyClientAuthenticated
+// Created: AGE 2007-08-24
+// -----------------------------------------------------------------------------
+void SaverPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& , dispatcher::Profile_ABC& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SaverPlugin::NotifyClientLeft
+// Created: AGE 2007-08-27
+// -----------------------------------------------------------------------------
+void SaverPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& )
+{
+    // NOTHING
+}

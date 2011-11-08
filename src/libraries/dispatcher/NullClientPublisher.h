@@ -38,6 +38,11 @@ public:
     virtual void Send( const sword::MessengerToClient& ) {}
     virtual void Send( const sword::DispatcherToClient& ) {}
     //@}
+
+    //! @name Accesors
+    //@{
+    virtual std::string GetEndpoint() const { return ""; }
+    //@}
 };
 
 }

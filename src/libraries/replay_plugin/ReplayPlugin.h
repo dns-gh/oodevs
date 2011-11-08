@@ -58,7 +58,8 @@ public:
     //@{
     virtual void Receive( const sword::SimToClient& message );
 
-    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& link, dispatcher::Profile_ABC& profile );
+    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
+    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
 
     virtual void Register( dispatcher::Services& services );
     virtual void Update();

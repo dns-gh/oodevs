@@ -40,6 +40,7 @@ MOCK_BASE_CLASS( MockClientPublisher, dispatcher::ClientPublisher_ABC )
     MOCK_METHOD_EXT( Send, 1, void ( const sword::AarToClient& ), SendAarToClient );
     MOCK_METHOD_EXT( Send, 1, void ( const sword::MessengerToClient& ), SendMessengerToClient );
     MOCK_METHOD_EXT( Send, 1, void ( const sword::DispatcherToClient& ), SendDispatcherToClient );
+    MOCK_METHOD( GetEndpoint, 0 );
 };
 
 #endif // __MockClientPublisher_h_

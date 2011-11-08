@@ -18,11 +18,6 @@ namespace tools
     class MessageSender_ABC;
 }
 
-namespace dispatcher
-{
-    class ClientBroadcaster_ABC;
-}
-
 namespace shield
 {
 // =============================================================================
@@ -42,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Register( const std::string& endpoint, tools::MessageSender_ABC& sender, dispatcher::ClientBroadcaster_ABC& broadcaster ) = 0;
+    virtual void Register( const std::string& endpoint, tools::MessageSender_ABC& sender ) = 0;
     virtual void Unregister( const std::string& endpoint ) = 0;
     //@}
 };

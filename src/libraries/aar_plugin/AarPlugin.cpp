@@ -72,12 +72,21 @@ void AarPlugin::Register( dispatcher::Services& services )
 // Name: AarPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AarPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string&, dispatcher::Profile_ABC& )
+void AarPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& )
 {
     ::aar::AarInformation info;
     const std::string description = "<functions/>"; // $$$$ AGE 2008-08-04:
     info().set_information( description.c_str() );
     info.Send( client );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AarPlugin::NotifyClientLeft
+// Created: AGE 2007-09-17
+// -----------------------------------------------------------------------------
+void AarPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

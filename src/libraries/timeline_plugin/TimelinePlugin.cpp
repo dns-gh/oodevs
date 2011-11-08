@@ -88,3 +88,21 @@ void TimelinePlugin::Receive( const sword::SimToClient& wrapper )
     if( wrapper.message().has_control_end_tick() )
         scenario_->Update( *publisher_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TimelinePlugin::NotifyClientAuthenticated
+// Created: JCR 2010-05-31
+// -----------------------------------------------------------------------------
+void TimelinePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelinePlugin::NotifyClientLeft
+// Created: JCR 2010-05-31
+// -----------------------------------------------------------------------------
+void TimelinePlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
+{
+    // NOTHING
+}

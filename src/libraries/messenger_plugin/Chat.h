@@ -45,8 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
-    void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
+    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
+    virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
 
     void OnReceive( const sword::TextMessage& );
     //@}

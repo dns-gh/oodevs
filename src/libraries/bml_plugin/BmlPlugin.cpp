@@ -59,3 +59,21 @@ void BmlPlugin::Receive( const sword::SimToClient& wrapper )
         publisher_->PushReports();
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: BmlPlugin::NotifyClientAuthenticated
+// Created: SBO 2008-02-29
+// -----------------------------------------------------------------------------
+void BmlPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: BmlPlugin::NotifyClientLeft
+// Created: SBO 2008-02-29
+// -----------------------------------------------------------------------------
+void BmlPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
+{
+    // NOTHING
+}

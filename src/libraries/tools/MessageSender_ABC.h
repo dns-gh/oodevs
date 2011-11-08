@@ -20,6 +20,8 @@
 
 namespace tools
 {
+    class Message;
+
 // =============================================================================
 /** @class  MessageSender_ABC
     @brief  Message sender
@@ -37,17 +39,13 @@ public:
 
     //! @name Operations
     //@{
-    template< typename Message >
-    void Send( const std::string& link, const Message& message )
+    template< typename T >
+    void Send( const std::string& link, const T& t )
     {
-        static const unsigned long tag = MessageIdentifierFactory::GetIdentifier< Message >();
-        Send( link, tag, message );
+        static const unsigned long tag = MessageIdentifierFactory::GetIdentifier< T >();
+        Send( link, tag, t );
     }
-    virtual void Send( const std::string& link, unsigned long tag, const google::protobuf::Message& message )
-    {
-        Send( link, tag, Serialize( message ) );
-    }
-    Message Serialize( const google::protobuf::Message& m ) const
+    virtual void Send( const std::string& link, unsigned long tag, const google::protobuf::Message& m )
     {
         if( !m.IsInitialized() )
             throw std::runtime_error( "Message of type \"" + m.GetDescriptor()->full_name()
@@ -57,7 +55,7 @@ public:
             throw std::runtime_error( "Error serializing message of type \"" + m.GetDescriptor()->full_name() + '"' );
         Message message;
         message.Write( (const char*)buffer.get(), m.GetCachedSize() );
-        return message;
+        Send( link, tag, message );
     }
 
     virtual void Send( const std::string& link, unsigned long tag, const Message& message ) = 0;

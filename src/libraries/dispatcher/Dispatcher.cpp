@@ -54,7 +54,6 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     , factory_            ( new PluginFactory( config, *model_, *staticModel_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_, *services_, log_, maxConnections ) )
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
-    handler_->Add( clientsNetworker_ );
     handler_->AddHandler( clientsNetworker_ );
     handler_->AddHandler( model_ );
     int argc = 0;
