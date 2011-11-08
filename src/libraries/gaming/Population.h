@@ -19,12 +19,10 @@
 
 namespace kernel
 {
-    class Team_ABC;
     class Controller;
     class PopulationType;
     class CoordinateConverter_ABC;
     class Displayer_ABC;
-    class StaticModel;
 }
 
 namespace sword

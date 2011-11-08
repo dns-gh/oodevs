@@ -9,18 +9,15 @@
 
 #include "gaming_pch.h"
 #include "Population.h"
-#include "Affinities.h"
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
 #include "PopulationPartPositionsProxy.h"
 #include "Tools.h"
-#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
-#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 
 using namespace geometry;
