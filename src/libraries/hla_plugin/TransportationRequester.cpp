@@ -343,6 +343,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyDestroyedEntities
         simulation::UnitMagicAction message;
         message().mutable_tasker()->mutable_unit()->set_id( entityIdentifier );
         message().set_type( sword::UnitMagicAction::destroy_all );
+        message().mutable_parameters();
         message.Send( publisher_ );
     }
 }
