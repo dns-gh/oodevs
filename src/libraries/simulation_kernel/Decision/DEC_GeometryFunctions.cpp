@@ -121,6 +121,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreatePoint()
 //-----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyPoint( boost::shared_ptr< MT_Vector2D > point )
 {
+    if( !point.get() )
+        throw std::runtime_error( "Invalid position" );
     boost::shared_ptr< MT_Vector2D > pVect( new MT_Vector2D( *point ) );
     return pVect;
 }
@@ -131,8 +133,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyPoint( boost::shared
 //-----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateDirection( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest )
 {
-    assert( pPosSource );
-    assert( pPosDest   );
+    if( !pPosSource || !pPosDest )
+        throw std::runtime_error( "Invalid position" );
 
     boost::shared_ptr< MT_Vector2D > pResult;
     if( *pPosSource == *pPosDest )
@@ -155,8 +157,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateDirection( MT_Vect
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateVector( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest )
 {
-    assert( pPosSource );
-    assert( pPosDest   );
+    if( !pPosSource || !pPosDest )
+        throw std::runtime_error( "Invalid position" );
 
     boost::shared_ptr< MT_Vector2D > pResult;
     MT_Vector2D* pVect = new MT_Vector2D( (*pPosDest) - (*pPosSource) );
@@ -170,8 +172,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateVector( MT_Vector2
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateOrthoDirection( MT_Vector2D* pDir, bool bCounterClockwise )
 {
-    assert( pDir );
-    assert( MT_IsZero( pDir->SquareMagnitude() - 1. ) );
+    if( !pDir || !( MT_IsZero( pDir->SquareMagnitude() - 1. ) ) )
+        throw std::runtime_error( "Invalid direction" );
 
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( *pDir ) );
 
@@ -200,7 +202,8 @@ float DEC_GeometryFunctions::ComputeDistance( boost::shared_ptr< MT_Vector2D > p
 // -----------------------------------------------------------------------------
 void DEC_GeometryFunctions::ReverseDirection( boost::shared_ptr< MT_Vector2D > pDir )
 {
-    assert( pDir.get() );
+    if( !pDir.get() )
+        throw std::runtime_error( "Invalid direction" );
     *pDir *= -1.;
 }
 
@@ -210,7 +213,8 @@ void DEC_GeometryFunctions::ReverseDirection( boost::shared_ptr< MT_Vector2D > p
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndReverseDirection( const MT_Vector2D* pDir )
 {
-    assert( pDir );
+    if( !pDir );
+        throw std::runtime_error( "Invalid direction" );
 
     boost::shared_ptr< MT_Vector2D > pNewDir( new MT_Vector2D( *pDir ) );
     *pNewDir *= -1.;
@@ -223,7 +227,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndReverseDirection(
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndRotateDirection( const MT_Vector2D* pDir, const double angle )
 {
-    assert( pDir );
+    if( !pDir )
+        throw std::runtime_error( "Invalid direction" );
 
     boost::shared_ptr< MT_Vector2D > pNewDir( new MT_Vector2D( *pDir ) );
     const double rAngle = - ( angle * MT_PI / 180. );
@@ -252,7 +257,8 @@ bool DEC_GeometryFunctions::CompareLocalisations( TER_Localisation* pLocalisatio
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( const std::vector< DEC_Decision_ABC* >& pions, TER_Localisation* pLocalisation, MT_Vector2D* pDirDanger, double rDistMaxBtwPoints )
 {
-    assert( !pions.empty() );
+    if( pions.empty() || !pLocalisation || !pDirDanger )
+        throw std::runtime_error( "Invalid arguments to ComputeLocalisationPointsForPionsInFuseau" );
 
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
 
@@ -358,6 +364,8 @@ bool DEC_GeometryFunctions::IsPointInsideLocalisation( MT_Vector2D* pPoint, TER_
 // static
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ConvertPointToLocalisation( const MT_Vector2D* pPos )
 {
+    if( !pPos )
+        throw std::runtime_error( "Invalid position" );
     boost::shared_ptr< TER_Localisation > pLoc( new TER_Localisation() );
     pLoc->Reset( *pPos );
     return pLoc;
@@ -394,7 +402,8 @@ double DEC_GeometryFunctions::Distance3D( const MT_Vector2D* p1, float altitude1
 //-----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePosition( MT_Vector2D* p1, MT_Vector2D* p2, double d )
 {
-    assert( p1 && p2 );
+    if( !p1 || !p2 )
+        throw std::runtime_error( "Invalid position" );
 
     boost::shared_ptr< MT_Vector2D > res( new MT_Vector2D() );
     if( (*p1) == (*p2) )
@@ -410,8 +419,10 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePosition( MT_Ve
 //-----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInDirection( MT_Vector2D* p1, MT_Vector2D* p2, double d )
 {
-    assert( p1 && p2 );
-    assert( MT_IsZero( p2->SquareMagnitude() - 1. ) );
+    if( !p1 || !p2 )
+        throw std::runtime_error( "Invalid position" );
+    if( !( MT_IsZero( p2->SquareMagnitude() - 1. ) ) )
+        throw std::runtime_error( "Invalid magnitude" );
 
     boost::shared_ptr< MT_Vector2D > res( new MT_Vector2D() );
     *res = *p1 + d * (*p2);
@@ -424,7 +435,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInDirec
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInVector( MT_Vector2D* position, MT_Vector2D* offset )
 {
-    assert( position && offset );
+    if( !position || !offset )
+        throw std::runtime_error( "Invalid position" );
     boost::shared_ptr< MT_Vector2D > res( new MT_Vector2D() );
     *res = *position + *offset;
     return res;
@@ -436,7 +448,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInVecto
 //-----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::ComparePositions( MT_Vector2D* p1, MT_Vector2D* p2 )
 {
-    assert( p1 && p2 );
     if( !p1 || !p2 )
         throw std::runtime_error( "Bad pointer given to DEC_Geometrie_PositionsEgales" );
 
@@ -453,7 +464,8 @@ bool DEC_GeometryFunctions::ComparePositions( MT_Vector2D* p1, MT_Vector2D* p2 )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgentToSupport, double rDist )
 {
-    assert( pAgentToSupport != 0 );
+    if( pAgentToSupport == 0 )
+        throw std::runtime_error( "Invalid agent" );
 
     const MT_Vector2D& vUnitToSupportPos = pAgentToSupport->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition ();
     const MIL_Fuseau& fuseau             = callerAgent.GetOrderManager().GetFuseau();
@@ -504,8 +516,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( 
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAmbushPosition( const MIL_AgentPion& callerAgent, MT_Vector2D* pAmbushPosition, MT_Vector2D* pRetreatPosition, double rDist )
 {
-    assert( pAmbushPosition  );
-    assert( pRetreatPosition );
+    if( !pAmbushPosition || !pRetreatPosition )throw std::runtime_error( "Invalid position" );;
 
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() );
 
@@ -630,8 +641,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
     boost::shared_ptr< MT_Vector2D > pResult;
     if( pKnowledgeEnnemy.get() && pKnowledgeEnnemy->IsValid() )
     {
-        assert( pObjective );
-
+        if( !pObjective )
+            throw std::runtime_error( "Invalid position" );
 
         double     rMinDistance = MIL_Tools::ConvertMeterToSim( rMinMeterDistance );
 
@@ -675,7 +686,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestFuseauEntr
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePosDeploiementASAOmni( const MIL_Automate& automat, int positionCount, const MT_Vector2D* center, float radius )
 {
-    assert( center );
+    if( !center )
+        throw std::runtime_error( "Invalid position" );
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( positionCount > 0 )
     {
@@ -697,7 +709,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePosDeploiementASANasse( int positionCount, const MT_Vector2D* center, float angle, float initialDistance, float spacing, const MT_Vector2D* direction )
 {
-    assert( direction && center && MT_IsZero( direction->SquareMagnitude() - 1. ) );
+    if( !direction || !center || !( MT_IsZero( direction->SquareMagnitude() - 1. ) ) )
+        throw std::runtime_error( "direction or center in ComputePosDeploiementASANasse" );
 
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( positionCount <= 0 )
@@ -734,7 +747,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau( int positionCount, const MT_Vector2D* center, float initialDistance, float lineSpacing, float pointSpacing, const MT_Vector2D* direction )
 {
-    assert( direction && center && MT_IsZero( direction->SquareMagnitude() - 1. ) );
+    if( !direction || !center || !( MT_IsZero( direction->SquareMagnitude() - 1. ) ) )
+        throw std::runtime_error( "direction or center in ComputePosDeploiementASADoubleRideau" );
 
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( positionCount <= 0 )
@@ -802,6 +816,8 @@ float DEC_GeometryFunctions::ComputeDistanceFromMiddleLine( const std::vector< D
 {
     if( selPions.empty() )
         return 0.f;
+    if( !pReferencePion )
+        throw std::runtime_error( "Invalid reference unit" );
 
     // Barycenter of the pions given
     MT_Vector2D vBarycenter;
@@ -868,10 +884,10 @@ void DEC_GeometryFunctions::StopComputingFrontAndBackLines( DEC_FrontAndBackLine
 // -----------------------------------------------------------------------------
 float DEC_GeometryFunctions::ComputeDistanceFromFrontLine( DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pPion )
 {
-    assert( pComputer );
+    if( !pComputer || !pPion )
+        throw std::runtime_error( "Invalid argument to ComputeDistanceFromFrontLine" );
 
     double rDist = 0;
-    assert( pPion );
     rDist = pComputer->ComputeDistanceFromFrontLine( pPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
 
     return( MIL_Tools::ConvertSimToMeter( rDist ) );
@@ -883,10 +899,10 @@ float DEC_GeometryFunctions::ComputeDistanceFromFrontLine( DEC_FrontAndBackLines
 // -----------------------------------------------------------------------------
 float DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine( DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pAutomate )
 {
-    assert( pComputer );
+    if( !pComputer || !pAutomate )
+        throw std::runtime_error( "Invalid argument to ComputeDistanceAutomatFromFrontLine" );
 
     double rDist = 0;
-    assert( pAutomate );
     MT_Vector2D barycenter;
     if( pAutomate->GetAutomate().GetAlivePionsBarycenter( barycenter ) )
         rDist = pComputer->ComputeDistanceFromFrontLine( barycenter );
@@ -899,10 +915,10 @@ float DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine( DEC_FrontAndBa
 // -----------------------------------------------------------------------------
 float DEC_GeometryFunctions::ComputeDistanceFromBackLine( DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pPion )
 {
-    assert( pComputer );
+    if( !pComputer || !pPion )
+        throw std::runtime_error( "Invalid argument to ComputeDistanceFromBackLine" );
 
     double rDist = 0;
-    assert( pPion );
     rDist = pComputer->ComputeDistanceFromBackLine( pPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     return MIL_Tools::ConvertSimToMeter( rDist );
 }
@@ -914,8 +930,8 @@ float DEC_GeometryFunctions::ComputeDistanceFromBackLine( DEC_FrontAndBackLinesC
 // -----------------------------------------------------------------------------
 float DEC_GeometryFunctions::ComputeDistanceAutomatFromBackLine( const MIL_Automate& /*callerAutomate*/, DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pAutomate )
 {
-    assert( pComputer );
-    assert( pAutomate );
+    if( !pComputer || !pAutomate )
+        throw std::runtime_error( "Invalid argument to ComputeDistanceAutomatFromBackLine" );
     double rDist = 0;
     MT_Vector2D barycenter;
     if( pAutomate->GetAutomate().GetAlivePionsBarycenter( barycenter ) )
@@ -995,6 +1011,8 @@ std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::Spli
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBarycenter( TER_Localisation* pLocalisation )
 {
+    if( !pLocalisation )
+        throw std::runtime_error( "Invalid location" );
     boost::shared_ptr< MT_Vector2D > pBarycenter( new MT_Vector2D( MT_ComputeBarycenter( pLocalisation->GetPoints() ) ) );
     assert( TER_World::GetWorld().IsValidPosition( *pBarycenter ) );
     return pBarycenter;
@@ -1104,7 +1122,7 @@ bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, d
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsPointInUrbanBlock( const MT_Vector2D& point, const UrbanObjectWrapper* pUrbanBlock )
 {
-    return pUrbanBlock->GetLocalisation().IsInside( point );
+    return pUrbanBlock && pUrbanBlock->GetLocalisation().IsInside( point );
 }
 
 // -----------------------------------------------------------------------------
@@ -1146,7 +1164,7 @@ bool DEC_GeometryFunctions::IsPointInCity( const MT_Vector2D& point )
 double DEC_GeometryFunctions::ComputeAreaSize( TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( "invalid localisation" );
+        throw std::runtime_error( "Invalid location" );
     return MIL_Tools::ConvertSimToMeterSquare( pLocalisation->GetArea() );
 }
 
@@ -1157,7 +1175,7 @@ double DEC_GeometryFunctions::ComputeAreaSize( TER_Localisation* pLocalisation )
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestBorder( const MT_Vector2D* position, TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( "invalid localisation" );
+        throw std::runtime_error( "Invalid location" );
 
     boost::shared_ptr< MT_Vector2D > pResult;
     MT_Vector2D vResult;
@@ -1174,7 +1192,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestBorder( co
 double DEC_GeometryFunctions::ComputeAreaDiameter( TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( "invalid localisation" );
+        throw std::runtime_error( "Invalid location" );
     return MIL_Tools::ConvertSimToMeterSquare( pLocalisation->GetLength() );
 }
 
@@ -1239,6 +1257,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBar
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_GeometryFunctions::GetFrontestPion( const std::vector< DEC_Decision_ABC* >& pions, const MT_Vector2D* pDirection )
 {
+    if( !pDirection )
+        throw std::runtime_error( "Invalid direction" );
     const MT_Line     support( MT_Vector2D( 0., 0. ), *pDirection );
     DEC_Decision_ABC* pResult = 0;
     double          rSquareDistResult = -1.;
@@ -1270,6 +1290,8 @@ DEC_Decision_ABC* DEC_GeometryFunctions::GetFrontestPion( const std::vector< DEC
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_GeometryFunctions::ComputeBackestAgent( const std::vector< DEC_Decision_ABC* >& pions, const MT_Vector2D* pDirection )
 {
+    if( !pDirection )
+        throw std::runtime_error( "Invalid direction" );
     MT_Vector2D vNewDirection = *pDirection;
     vNewDirection *= -1.;
     return GetFrontestPion( pions, &vNewDirection );
@@ -1288,7 +1310,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeCoverPosition( co
         assert( !"La liste ne doit pas etre vide" );
         return result;
     }
-    assert( pDirection );
+    if( !pDirection )
+        throw std::runtime_error( "Invalid direction" );
 
     // calcul de la première ligne de support ( perpendiculaire à la direction passant par le pion le plus avancé )
     const DEC_Decision_ABC* pFrontestPion = GetFrontestPion( pions, pDirection );
@@ -1317,7 +1340,9 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeCoverPosition( co
 // Created: JVT 2005-02-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCircle( MT_Vector2D* pCenter, float radius )
-{
+{    
+    if( !pCenter )
+        throw std::runtime_error( "Invalid center" );
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( 0., 1. ) );
     pResult->Rotate( MIL_Random::rand_io( 0., 2. * MT_PI ) );
     *pResult *= ( MIL_Tools::ConvertMeterToSim( radius ) );
@@ -1333,7 +1358,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCirc
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCircle( MT_Vector2D* pCenter, float radius )
 {
     const double rRadius_ = MIL_Tools::ConvertMeterToSim( radius );
-    assert( pCenter );
+    if( !pCenter )
+        throw std::runtime_error( "Invalid center" );
 
     // retrieve a random position in the circle (vCenter_,rRadius_)
     const double rAlpha = MIL_Random::rand_ii( -MT_PI, MT_PI );
@@ -1353,6 +1379,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCirc
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInZone( const TER_Localisation* location )
 {
+    if( !location )
+        throw std::runtime_error( "Invalid location" );
     const MT_Rect& rect = location->GetBoundingBox();
     double xMin = rect.GetLeft();
     double xMax = rect.GetRight();
@@ -1431,6 +1459,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetInterceptionPosition(
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateCircleLocalisation( const MT_Vector2D* pCenter, const double rRadius )
 {
+    if( !pCenter )
+        throw std::runtime_error( "Invalid center" );
     boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( *pCenter, rRadius ) );
     return pResult;
 }
@@ -1441,6 +1471,8 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateCircleLocalis
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateLineLocalisation( const MT_Vector2D* pPoint1, const MT_Vector2D* pPoint2 )
 {
+    if( !pPoint1 || !pPoint2 )
+        throw std::runtime_error( "Invalid position" );
     T_PointVector pointVector;
     pointVector.push_back( *pPoint1 );
     pointVector.push_back( *pPoint2 );
@@ -1479,7 +1511,9 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolygonLocali
 // Created: LDC 2011-03-29
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateScaledLocalisation( TER_Localisation* location, double length )
-{
+{    
+    if( !location )
+        throw std::runtime_error( "Invalid location" );
     boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( *location ) );
     pResult->Scale( length );
     return pResult;
@@ -1491,6 +1525,8 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateScaledLocalis
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ListLocalisationPoints( TER_Localisation* pLocalisation )
 {
+    if( !pLocalisation )
+        throw std::runtime_error( "Invalid location" );
     const std::vector< MT_Vector2D >& points = pLocalisation->GetPoints();
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
@@ -1518,6 +1554,8 @@ namespace
 
 std::vector< DEC_Decision_ABC* > DEC_GeometryFunctions::ListUncoordinatedPawns( DEC_Decision_ABC* pion, const std::vector< DEC_Decision_ABC* >& unCoordinatedPions, float minDist )
 {
+    if( !pion )
+        throw std::runtime_error( "Invalid unit" );
     const double rMinDist = MIL_Tools::ConvertMeterToSim( minDist );
     std::vector< DEC_Decision_ABC* > notCoordinatedPions( unCoordinatedPions );
     std::vector< DEC_Decision_ABC* > coordinatedPions;
@@ -1660,12 +1698,12 @@ namespace {
 
     bool CompareTerrainOpening( TER_Localisation* location1, TER_Localisation* location2 )
     {
-        return ComputeOpenTerrainRatio( *location1 ) < ComputeOpenTerrainRatio( *location2 );
+        return ( location1 ? ComputeOpenTerrainRatio( *location1 ) : 0. ) < ( location2 ? ComputeOpenTerrainRatio( *location2 ) : 0. );
     }
 
     bool CompareFuseauxOpening( MIL_Fuseau* pFuseau1, MIL_Fuseau* pFuseau2 )
     {
-        return pFuseau1->ComputeOpenTerrainRatio() < pFuseau2->ComputeOpenTerrainRatio();
+        return ( pFuseau1 ? pFuseau1->ComputeOpenTerrainRatio() : 0. ) < ( pFuseau2 ? pFuseau2->ComputeOpenTerrainRatio() : 0. );
     }
 }
 
@@ -1697,7 +1735,8 @@ std::vector< MIL_Fuseau* > DEC_GeometryFunctions::SortFuseauxAccordingToTerrainO
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ConvertFuseauToLocalisation( const MIL_Fuseau* pFuseau )
 {
-    assert( pFuseau );
+    if( !pFuseau )
+        throw std::runtime_error( "Invalid fuseau" );
 
     boost::shared_ptr< TER_Localisation > pLocalisation( new TER_Localisation( *pFuseau ) );
     return pLocalisation;
@@ -1735,6 +1774,8 @@ DEC_Objective* DEC_GeometryFunctions::GetNextObjectiveInFuseau( const MIL_Fuseau
 
     if( pFuseau )
     {
+        if( !pRefPoint )
+            throw std::runtime_error( "Invalid position" );
         double rDist = std::numeric_limits< double >::max();
 
         for( std::vector< DEC_Objective* >::const_iterator it = objectives.begin(); it != objectives.end(); ++it )
@@ -1792,6 +1833,8 @@ float DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule( const MIL_Fuseau* 
 // -----------------------------------------------------------------------------
 double DEC_GeometryFunctions::ComputeAdvanceAlongFuseau( MIL_Automate& callerAutomate, DEC_Decision_ABC* pion )
 {
+    if( !pion )
+        throw std::runtime_error( "Invalid unit" );
     MT_Vector2D position = pion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     return callerAutomate.GetOrderManager().GetFuseau().ComputeAdvance( position );
 }
@@ -1824,6 +1867,8 @@ double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseauAutomat( MIL_Auto
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetPointAlongFuseau( const MIL_Fuseau* pFuseau, double advance )
 {
+    if( !pFuseau )
+        throw std::runtime_error( "Invalid fuseau" );
     return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( pFuseau->GetPositionAtAdvance( advance ) ) );
 }
 
@@ -1880,7 +1925,8 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
 // -----------------------------------------------------------------------------
 float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, float rDistanceFromScheduled, int nSchedule )
 {
-    assert( pFuseau );
+    if( !pFuseau )
+        throw std::runtime_error( "Invalid fuseau" );
 
     // Calcul vitesse moyenne de l'automate
     double rSpeed = std::numeric_limits< double >::max();
@@ -1913,7 +1959,9 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
 // Created: MGD 2009-10-30
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeBarycenter( const TER_Localisation* localisation )
-{
+{    
+    if( !localisation )
+        throw std::runtime_error( "Invalid location" );
     boost::shared_ptr< MT_Vector2D > result;
     result.reset( new MT_Vector2D( localisation->ComputeBarycenter() ) );
     return result;
@@ -1926,7 +1974,9 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeBarycenter( const
 
 double DEC_GeometryFunctions::GetWidth( const MIL_Fuseau* pFuseau )
 {
-     return pFuseau->GetWidth();
+    if( !pFuseau )
+        throw std::runtime_error( "Invalid fuseau" );
+    return pFuseau->GetWidth();
 }
 
 // -----------------------------------------------------------------------------
@@ -1935,5 +1985,7 @@ double DEC_GeometryFunctions::GetWidth( const MIL_Fuseau* pFuseau )
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau( const MIL_Fuseau* pFuseau, const MT_Vector2D* pPoint )
 {
+    if( !pFuseau )
+        throw std::runtime_error( "Invalid fuseau" );
     return pFuseau->IsInside( *pPoint );
 }

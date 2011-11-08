@@ -92,6 +92,8 @@ template< typename T >
 std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::RecursiveSplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const double rAverageArea )
 {
     assert( pLocalisation );
+    if( !pLocalisation )
+        throw std::runtime_error( "Null location when splitting location in surfaces" );
 
     typedef std::vector< boost::shared_ptr< TER_Localisation > > T_ResultVector;
     T_ResultVector result;
@@ -145,6 +147,8 @@ std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::Spli
 template< typename T >
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau( const T& caller, TER_Localisation* pLocalisation )
 {
+    if( !pLocalisation )
+        throw std::runtime_error( "Null location when computing barycenter in fuseau" );
     // 1. Clippe le polygone dans le fuseau
     T_PointVector clippedPointVector;
     pLocalisation->GetPointsClippedByPolygon( caller.GetOrderManager().GetFuseau(), clippedPointVector );
@@ -194,7 +198,7 @@ template< typename T >
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetLeavingAreaPosition( const T& caller, TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( "invalid localisation" );
+        throw std::runtime_error( "Invalid location" );
 
     TER_Localisation scale = *pLocalisation;
     scale.Scale( 500 );
@@ -264,6 +268,8 @@ template< typename T >
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeObstaclePosition( const T& caller, MT_Vector2D* pCenter, const std::string& type, double rRadius )
 {
     assert( pCenter );
+    if( !pCenter )
+        throw std::runtime_error( "Compute obstacle position with null center" );
     boost::shared_ptr< MT_Vector2D > pResultPos ( new MT_Vector2D( *pCenter ) );
 
     const MIL_ObjectType_ABC& object = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( type );
@@ -286,6 +292,8 @@ template< typename T >
 bool DEC_GeometryFunctions::IsPointInFuseau( const T& caller, MT_Vector2D* pVect )
 {
     assert( pVect != 0 );
+    if( !pVect )
+        throw std::runtime_error( "Invalid point" );
     return caller.GetOrderManager().GetFuseau().IsInside( *pVect );
 }
 
@@ -334,6 +342,8 @@ template< typename T >
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( const T& caller, const TER_Localisation* pLocation )
 {
     assert( pLocation );
+    if( !pLocation )
+        throw std::runtime_error( "Invalid location" );
     boost::shared_ptr< MT_Vector2D > pResult;
     TER_Localisation clipped;
     if( ClipLocalisationInFuseau( *pLocation, caller.GetOrderManager().GetFuseau(), clipped ) )
@@ -354,6 +364,8 @@ template< typename T >
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau( const T& caller, const TER_Localisation* pLocation )
 {
     assert( pLocation );
+    if( !pLocation )
+        throw std::runtime_error( "Invalid location" );
     boost::shared_ptr< MT_Vector2D > pResult;
 
     TER_Localisation fuseauLocation = TER_Localisation( TER_Localisation::ePolygon, caller.GetOrderManager().GetFuseau().GetBorderPoints() );
