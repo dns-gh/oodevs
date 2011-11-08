@@ -96,6 +96,14 @@ const TER_Localisation& DEC_ObjectFunctions::GetGenObjectLocalisation( boost::sh
 {
     return knowledgeId->GetLocalisation();
 }
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::GetObjectKnowledgeLocalisation
+// Created: DDA 2011-10-26
+// -----------------------------------------------------------------------------
+const TER_Localisation& DEC_ObjectFunctions::GetObjectKnowledgeLocalisation( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    return pKnowledge->GetLocalisation();
+}
 
 // -----------------------------------------------------------------------------
 // Name: static void DEC_ObjectFunctions::ActivateObject

@@ -340,6 +340,7 @@ void RegisterEngineerObjectsFunctions( directia::brain::Brain& brain )
     brain[ "DEC_GenObject_Type" ] = &DEC_ObjectFunctions::GetGenObjectType;
     brain[ "DEC_GenObject_ExternalIdentifier" ] = &DEC_ObjectFunctions::GetGenObjectExternalIdentifier;
     brain[ "DEC_GenObject_Localisation" ] = &DEC_ObjectFunctions::GetGenObjectLocalisation;
+    brain[ "DEC_GenObjectKnowledge_Localisation" ] = &DEC_ObjectFunctions::GetObjectKnowledgeLocalisation;
     brain.Register( "DEC_GenObject_Densite", &DEC_Gen_Object::GetDensity );
     brain[ "DEC_GenObject_TypeObstacleManoeuvre" ] = &DEC_ObjectFunctions::GetGenObjectReservedObstacle;
     brain[ "DEC_GenObject_TC2" ] = &DEC_ObjectFunctions::GetGenObjectTC2;
