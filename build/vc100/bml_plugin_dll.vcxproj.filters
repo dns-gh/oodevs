@@ -10,9 +10,15 @@
     <ClInclude Include="..\..\src\libraries\bml_plugin_dll\DllConfig.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\bml_plugin_dll\PluginProcessHandler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\bml_plugin_dll\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\bml_plugin_dll\PluginProcessHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

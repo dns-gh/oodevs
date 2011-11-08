@@ -112,11 +112,6 @@ namespace
         virtual void Send( const sword::MessengerToClient& ) {}
         virtual void Send( const sword::DispatcherToClient& ) {}
 
-        virtual std::string GetEndpoint() const
-        {
-            return "";
-        }
-
     private:
         const dispatcher::Model_ABC& model_;
         tools::OutputBinaryWrapper* output_;

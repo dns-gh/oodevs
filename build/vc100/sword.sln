@@ -165,6 +165,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "order_plugin", "order_plugin.vcxproj", "{867A219D-34D0-4EB3-9BB2-3A03A6839CEC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bml_plugin_dll", "bml_plugin_dll.vcxproj", "{5E396036-6D00-4DF2-B4CB-15565E19E2D1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E761BA44-A370-4F9D-97B5-A047E068BA5B} = {E761BA44-A370-4F9D-97B5-A047E068BA5B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

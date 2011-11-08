@@ -71,7 +71,7 @@ void MessengerPlugin::Receive( const sword::SimToClient& wrapper )
 // Name: MessengerPlugin::NotifyClientAuthenticated
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void MessengerPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
+void MessengerPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& /*link*/, dispatcher::Profile_ABC& profile )
 {
     model_->SendStateToNewClient( client );
     chat_->NotifyClientAuthenticated( client, profile );
@@ -81,7 +81,7 @@ void MessengerPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC
 // Name: MessengerPlugin::NotifyClientLeft
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void MessengerPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client )
+void MessengerPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client, const std::string& /*link*/ )
 {
     chat_->NotifyClientLeft( client );
 }

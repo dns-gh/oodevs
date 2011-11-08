@@ -136,9 +136,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\bml_plugin_dll\DllConfig.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin_dll\PluginProcessHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\bml_plugin_dll\main.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin_dll\PluginProcessHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="clients_kernel.vcxproj">

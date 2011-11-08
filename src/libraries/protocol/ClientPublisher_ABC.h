@@ -48,11 +48,6 @@ public:
     virtual void Send( const sword::MessengerToClient&      message ) = 0;
     virtual void Send( const sword::DispatcherToClient&     message ) = 0;
     //@}
-
-    //! @name Accessors
-    //@{
-    virtual std::string GetEndpoint() const = 0;
-    //@}
 };
 
 }

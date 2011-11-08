@@ -78,7 +78,7 @@ LauncherPublisher& LauncherService::ResolveClient( const std::string& endpoint )
 // Name: LauncherService::Register
 // Created: MCO 2011-11-03
 // -----------------------------------------------------------------------------
-void LauncherService::Register( const std::string& endpoint, tools::MessageSender_ABC& sender )
+void LauncherService::Register( const std::string& endpoint, tools::MessageSender_ABC& sender, dispatcher::ClientBroadcaster_ABC& /*broadcaster*/ )
 {
     clients_[ endpoint ].reset( new LauncherPublisher( sender, endpoint ) );
 }
