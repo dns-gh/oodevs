@@ -2485,18 +2485,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="cobra deployment area">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="0" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -2733,18 +2721,6 @@
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="1000" type="crossing site">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
             <distance-modifier type="PosteReflexe" value="1"/>
@@ -3196,18 +3172,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="discontinuous pontoon bridge">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="500" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -3477,18 +3441,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="150" type="road destruction">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="0"/>
-            <distance-modifier type="Arret" value="0"/>
-            <distance-modifier type="PosteReflexe" value="0"/>
-            <distance-modifier type="Poste" value="0"/>
-            <distance-modifier type="PosteAmenage" value="0"/>
-            <distance-modifier type="PostePrepareGenie" value="0"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="150" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4729,18 +4681,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="0" type="decontamination site">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="0" type="logistic support area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -7226,18 +7166,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="cobra deployment area">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="0" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -7602,18 +7530,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="cobra deployment area">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="0" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -7654,4 +7570,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="4099967358" -->
+<!-- signature="0747961978" -->
