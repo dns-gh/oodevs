@@ -62,6 +62,24 @@ LoggerPlugin::~LoggerPlugin()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: LoggerPlugin::NotifyClientAuthenticated
+// Created: LDC 2010-03-17
+// -----------------------------------------------------------------------------
+void LoggerPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LoggerPlugin::NotifyClientLeft
+// Created: LDC 2010-03-17
+// -----------------------------------------------------------------------------
+void LoggerPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
+{
+    // NOTHING
+}
+
 namespace
 {
     kernel::Entity_ABC* Find( const dispatcher::Model_ABC& model, int id )

@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "Client.h"
+#include "ClientHandler_ABC.h"
 #include "ClientListener_ABC.h"
 #include "Utf8Converter.h"
 #include "DebugInfo.h"
@@ -37,10 +38,11 @@ using namespace shield;
 // Created: MCO 2010-09-30
 // -----------------------------------------------------------------------------
 Client::Client( const std::string& from, tools::MessageSender_ABC& sender, tools::MessageDispatcher_ABC& dispatcher,
-                ClientListener_ABC& listener, bool encodeStringsInUtf8 )
+                ClientHandler_ABC& handler, ClientListener_ABC& listener, bool encodeStringsInUtf8 )
     : from_               ( from )
     , sender_             ( sender )
     , dispatcher_         ( dispatcher )
+    , handler_            ( handler )
     , listener_           ( listener )
     , converter_          ( *this, *this, listener )
     , encodeStringsInUtf8_( encodeStringsInUtf8 )

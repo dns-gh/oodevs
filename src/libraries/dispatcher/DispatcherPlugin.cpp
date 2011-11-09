@@ -16,7 +16,7 @@
 #include "Model.h"
 #include "Services.h"
 #include "Logger.h"
-#include "ClientsNetworker.h"
+#include "tools/MessageDispatcher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 
@@ -26,14 +26,14 @@ using namespace dispatcher;
 // Name: DispatcherPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-DispatcherPlugin::DispatcherPlugin( Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
+DispatcherPlugin::DispatcherPlugin( Model& model, SimulationPublisher_ABC& simulation, tools::MessageDispatcher_ABC& clientCommands,
                                     LinkResolver_ABC& links, OrderResolver_ABC& order, RotatingLog& log )
     : model_     ( model )
     , simulation_( simulation )
     , links_     ( links )
     , order_     ( order )
 {
-    clients.RegisterMessage( MakeLogger( log, "Dispatcher received : ", *this, &DispatcherPlugin::OnReceive ) );
+    clientCommands.RegisterMessage( MakeLogger( log, "Dispatcher received : ", *this, &DispatcherPlugin::OnReceive ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,29 +58,40 @@ void DispatcherPlugin::Register( dispatcher::Services& services )
 // Name: DispatcherPlugin::Receive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void DispatcherPlugin::Receive( const sword::SimToClient& /*message*/ )
+void DispatcherPlugin::Receive( const sword::SimToClient& message )
 {
-    // NOTHING
+    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        (*it)->Send( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DispatcherPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void DispatcherPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& /*link*/, Profile_ABC& /*profile*/ )
+void DispatcherPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& /*profile*/ )
 {
+    clients_.insert( &client );
     model_.Send( client );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DispatcherPlugin::NotifyClientLeft
+// Created: AGE 2007-08-27
+// -----------------------------------------------------------------------------
+void DispatcherPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
+{
+    clients_.erase( &client );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DispatcherPlugin::OnReceive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void DispatcherPlugin::OnReceive( const std::string& link, const sword::ClientToSim& message )
+void DispatcherPlugin::OnReceive( const std::string& link, const sword::ClientToSim& asnMsg )
 {
-    if( links_.GetProfile( link ).CheckRights( message ) )
+    if( links_.GetProfile( link ).CheckRights( asnMsg ) )
     {
-        order_.Resolve( message );
-        simulation_.Send( message );
+        order_.Resolve( asnMsg );
+        simulation_.Send( asnMsg );
     }
 }

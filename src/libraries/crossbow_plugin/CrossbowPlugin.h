@@ -70,6 +70,8 @@ public:
     virtual void Receive( const sword::SimToClient& asnMsg );
     virtual void Send   ( const sword::MessengerToClient& msg );
     virtual void Update();
+    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
+    virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     //@}
 
 private:

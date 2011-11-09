@@ -78,6 +78,7 @@ namespace
         virtual void Send( const sword::AarToClient& ) {}
         virtual void Send( const sword::MessengerToClient& ) {}
         virtual void Send( const sword::DispatcherToClient& ) {}
+        virtual std::string GetEndpoint() const { return ""; }
         ClientPublisher_ABC* forward_;
         Model* model_;
     };

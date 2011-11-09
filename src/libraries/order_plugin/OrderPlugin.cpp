@@ -119,6 +119,24 @@ void OrderPlugin::ReadAction( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderPlugin::NotifyClientAuthenticated
+// Created: LGY 2011-09-05
+// -----------------------------------------------------------------------------
+void OrderPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderPlugin::NotifyClientLeft
+// Created: LGY 2011-09-05
+// -----------------------------------------------------------------------------
+void OrderPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrderPlugin::Receive
 // Created: LGY 2011-09-05
 // -----------------------------------------------------------------------------

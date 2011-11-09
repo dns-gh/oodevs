@@ -86,16 +86,16 @@ public:
             (*it)->Register( services );
     }
 
-    virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& link, Profile_ABC& profile )
+    virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile )
     {
         for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
-            (*it)->NotifyClientAuthenticated( client, link, profile );
+            (*it)->NotifyClientAuthenticated( client, profile );
     }
 
-    virtual void NotifyClientLeft( ClientPublisher_ABC& client, const std::string& link )
+    virtual void NotifyClientLeft( ClientPublisher_ABC& client )
     {
         for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
-            (*it)->NotifyClientLeft( client, link );
+            (*it)->NotifyClientLeft( client );
     }
 
     virtual void Update()

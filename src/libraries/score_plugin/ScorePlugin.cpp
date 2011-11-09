@@ -102,7 +102,16 @@ void ScorePlugin::OnReceive( const std::string& client, const sword::ClientToAar
 // Name: ScorePlugin::NotifyClientAuthenticated
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-void ScorePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& /*link*/, dispatcher::Profile_ABC& profile )
+void ScorePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
 {
     scores_->SendInformation( client, profile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScorePlugin::NotifyClientLeft
+// Created: AGE 2008-08-04
+// -----------------------------------------------------------------------------
+void ScorePlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& )
+{
+    // NOTHING
 }

@@ -70,7 +70,7 @@ void RightsPlugin::Receive( const sword::SimToClient& message )
 // Name: RightsPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& /*link*/, Profile_ABC& /*profile*/ )
+void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& /*profile*/ )
 {
     profiles_->Send( client );
 }
@@ -79,7 +79,7 @@ void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const
 // Name: RightsPlugin::NotifyClientLeft
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::string& /*link*/ )
+void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
 {
     for( IT_Profiles it = authenticated_.begin(); it != authenticated_.end(); ++it )
         if( &GetPublisher( it->first ) == &client )
@@ -151,7 +151,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         profile->Send( *ack().mutable_profile() );
         ack.Send( client );
         authenticated_[ link ] = profile;
-        container_.NotifyClientAuthenticated( client, link, *profile );
+        container_.NotifyClientAuthenticated( client, *profile );
         ++currentConnections_;
         MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }

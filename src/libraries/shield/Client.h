@@ -25,6 +25,7 @@ namespace tools
 
 namespace shield
 {
+    class ClientHandler_ABC;
     class ClientListener_ABC;
 
 // =============================================================================
@@ -42,7 +43,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Client( const std::string& from, tools::MessageSender_ABC& sender, tools::MessageDispatcher_ABC& dispatcher,
-                     ClientListener_ABC& listener, bool encodeStringsInUtf8 );
+                     ClientHandler_ABC& handler, ClientListener_ABC& listener, bool encodeStringsInUtf8 );
     virtual ~Client();
     //@}
 
@@ -98,6 +99,7 @@ private:
     const std::string from_;
     tools::MessageSender_ABC& sender_;
     tools::MessageDispatcher_ABC& dispatcher_;
+    ClientHandler_ABC& handler_;
     ClientListener_ABC& listener_;
     Converter converter_;
     tools::ObjectMessageService service_;

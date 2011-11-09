@@ -11,7 +11,6 @@
 #define __Plugin_ABC_h_
 
 #include "MessageHandler_ABC.h"
-#include <string>
 
 namespace dispatcher
 {
@@ -36,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/, dispatcher::Profile_ABC& /*profile*/ ) {}
-    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/ ) {}
+    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile ) = 0;
+    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client ) = 0;
 
     virtual void Register( dispatcher::Services& ) {}
     virtual void Update() {}
