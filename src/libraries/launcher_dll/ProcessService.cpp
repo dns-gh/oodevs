@@ -32,6 +32,7 @@
 #include "ConnectedProfilesMessageHandler.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/MessengerSenders.h"
 #include <boost/foreach.hpp>
 
 using namespace launcher;
@@ -445,23 +446,23 @@ void ProcessService::ChangeParameter( const std::string& endpoint, const sword::
     boost::shared_ptr< SwordFacade > client( it->second );
     SessionParameterChangeResponse parameterChangeResponse;
     parameterChangeResponse().set_error_code( sword::SessionParameterChangeResponse::success );
-	parameterChangeResponse().set_exercise( message.exercise() );
-	parameterChangeResponse().set_session( message.session() );
+    parameterChangeResponse().set_exercise( message.exercise() );
+    parameterChangeResponse().set_session( message.session() );
     if( message.has_acceleration_factor() )
     {
         simulation::ControlChangeTimeFactor request;
         request().set_time_factor( message.acceleration_factor() );
         request.Send( *client, 0 );
-		parameterChangeResponse().set_acceleration_factor( message.acceleration_factor() );
+        parameterChangeResponse().set_acceleration_factor( message.acceleration_factor() );
     }
     if( message.has_checkpoint_frequency() )
     {
         simulation::ControlCheckPointSetFrequency request;
         request().set_frequency( message.checkpoint_frequency() );
         request.Send( *client, 0 );
-		parameterChangeResponse().set_checkpoint_frequency( message.checkpoint_frequency() );
+        parameterChangeResponse().set_checkpoint_frequency( message.checkpoint_frequency() );
     }
-	parameterChangeResponse.Send( server_.ResolveClient( endpoint ) );
+    parameterChangeResponse.Send( server_.ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -482,6 +483,7 @@ void ProcessService::SendConnectedProfiles( const std::string& endpoint, const s
     request.Send( *client, context );
     ++context;
 }
+
 // -----------------------------------------------------------------------------
 // Name: ProcessService::SendSessionsStatuses
 // Created: RPD 2011-09-12
@@ -505,5 +507,22 @@ void ProcessService::SendSessionsStatuses( const std::string& endpoint )
                 statusMessage.Send( publisher );
             }
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessService::SendSessionNotification
+// Created: LGY 2011-11-09
+// -----------------------------------------------------------------------------
+void ProcessService::SendSessionNotification( const sword::SessionNotificationRequest& message ) const
+{
+    ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
+    if( it != processes_.end() )
+    {
+        boost::shared_ptr< SwordFacade > client( it->second );
+        plugins::messenger::ClientObjectCreationRequest message;
+        message().set_name( "NotifModificationAnnuaire" );
+        message().set_persistent( false );
+        message.Send( *client );
     }
 }

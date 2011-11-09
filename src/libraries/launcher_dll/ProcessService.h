@@ -68,6 +68,7 @@ public:
     virtual void NotifyError( const std::string& error, std::string commanderEndpoint = "" );
     void Update();
     void SendRunningExercices( const std::string& endpoint ) const;
+    void SendSessionNotification( const sword::SessionNotificationRequest& message ) const;
     //@}
 
 private:

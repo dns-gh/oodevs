@@ -48,6 +48,7 @@ public:
     //@{
     virtual void Send( const sword::ClientToSim& message ) const;
     virtual void Send( const sword::ClientToAuthentication& message ) const;
+    virtual void Send( const sword::ClientToMessenger& message ) const;
     //@}
 
 private:

@@ -32,10 +32,11 @@ namespace frontend
 
 namespace sword
 {
-    class ClientToSim;
     class SimToClient;
     class MessengerToClient;
+    class ClientToSim;
     class ClientToAuthentication;
+    class ClientToMessenger;
 }
 
 namespace launcher
@@ -87,6 +88,8 @@ public:
 
     void Send( const sword::ClientToSim& message ) const;
     void Send( const sword::ClientToAuthentication& message ) const;
+    void Send( const sword::ClientToMessenger& message ) const;
+
     bool IsRunning() const;
     void Update() const;
     const frontend::ProcessWrapper* GetProcess();

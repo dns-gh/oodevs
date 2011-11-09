@@ -11,6 +11,7 @@
 #include "MessageSender.h"
 #include "protocol/AuthenticationSenders.h"
 #include "protocol/SimulationSenders.h"
+#include "protocol/MessengerSenders.h"
 #include "tools/MessageSender_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -47,6 +48,15 @@ void MessageSender::Send( const sword::ClientToAuthentication& message )
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
 void MessageSender::Send( const sword::ClientToSim& message )
+{
+    sender_.Send( endpoint_, message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageSender::Send
+// Created: LGY 2011-11-09
+// -----------------------------------------------------------------------------
+void MessageSender::Send( const sword::ClientToMessenger& message )
 {
     sender_.Send( endpoint_, message );
 }

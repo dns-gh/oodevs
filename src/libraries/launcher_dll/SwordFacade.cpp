@@ -172,6 +172,16 @@ void SwordFacade::Send( const sword::ClientToAuthentication& message ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: SwordFacade::Send
+// Created: LGY 2011-11-09
+// -----------------------------------------------------------------------------
+void SwordFacade::Send( const sword::ClientToMessenger& message ) const
+{
+    if( client_.get() && IsConnected() )
+        client_->Send( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SwordFacade::OnReceiveMessage
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------

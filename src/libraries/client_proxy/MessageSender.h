@@ -14,6 +14,7 @@ namespace sword
 {
     class ClientToAuthentication;
     class ClientToSim;
+    class ClientToMessenger;
 }
 
 namespace tools
@@ -41,6 +42,7 @@ public:
     //@{
     void Send( const sword::ClientToAuthentication& message );
     void Send( const sword::ClientToSim& message );
+    void Send( const sword::ClientToMessenger& message );
     //@}
 
 private:

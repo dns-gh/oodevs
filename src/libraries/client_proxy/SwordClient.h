@@ -23,6 +23,7 @@ namespace sword
     class MessengerToClient;
     class ReplayToClient;
     class SimToClient;
+    class ClientToMessenger;
 }
 
 class ConnectionHandlerProxy;
@@ -53,6 +54,7 @@ public:
     void UnregisterMessageHandler( SwordMessageHandler_ABC& handler );
     void SendMessage( const sword::ClientToSim& message ) const;
     void SendMessage( const sword::ClientToAuthentication& message ) const;
+    void SendMessage( const sword::ClientToMessenger& message ) const;
     //@}
 
 private:
