@@ -166,21 +166,3 @@ void CrossbowPlugin::OnReceiveMessengerToClient( const std::string& /*link*/, co
     if( crossbowPublisher_.get() )
         crossbowPublisher_->Receive( message );
 }
-
-// -----------------------------------------------------------------------------
-// Name: CrossbowPlugin::NotifyClientAuthenticated
-// Created: JCR 2007-08-29
-// -----------------------------------------------------------------------------
-void CrossbowPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConnectorFacade::NotifyClientLeft
-// Created: JCR 2007-08-29
-// -----------------------------------------------------------------------------
-void CrossbowPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
-{
-    // NOTHING
-}

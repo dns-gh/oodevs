@@ -68,8 +68,6 @@ public:
     //@{
     virtual void Resolve( const sword::ClientToSim& message );
 
-    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
-    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
     virtual void Receive( const sword::SimToClient& message );
     //@}
 

@@ -10,8 +10,13 @@
 #include "Clients.h"
 #include "Client.h"
 #include "ClientHandler_ABC.h"
-
-#pragma warning( disable: 4355 )
+#include "ClientListener_ABC.h"
+#include "Utf8Converter.h"
+#include "DebugInfo.h"
+#pragma warning( push, 0 )
+#include "proto/SimToClient.pb.h"
+#pragma warning( pop )
+#include <boost/preprocessor/stringize.hpp>
 
 using namespace shield;
 
@@ -47,9 +52,9 @@ Clients::~Clients()
 void Clients::Add( const std::string& from )
 {
     clients_.erase( from );
-    boost::shared_ptr< Client > client( new Client( from, sender_, dispatcher_, handler_, listener_, utf8StringEncoding_ ) );
+    boost::shared_ptr< Client > client( new Client( from, sender_, dispatcher_, listener_, utf8StringEncoding_ ) );
     clients_.insert( std::make_pair( from, client ) );
-    handler_.Register( from, *client );
+    handler_.Register( from, *client, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,4 +131,68 @@ void Clients::ReceiveAdminToLauncher( const std::string& from, const MsgsAdminTo
     CIT_Clients it = clients_.find( from );
     if( it != clients_.end() )
         it->second->ReceiveAdminToLauncher( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Clients::Activate
+// Created: MCO 2011-11-07
+// -----------------------------------------------------------------------------
+void Clients::Activate( const std::string& link )
+{
+    actives_[ link ] = clients_[ link ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: Clients::Deactivate
+// Created: MCO 2011-11-07
+// -----------------------------------------------------------------------------
+void Clients::Deactivate( const std::string& link )
+{
+    actives_.erase( link );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Clients::Broadcast
+// Created: MCO 2011-11-07
+// -----------------------------------------------------------------------------
+void Clients::Broadcast( const sword::SimToClient& message )
+{
+    Converter converter( *this, *this, listener_ );
+    converter.ReceiveSimToClient( message );
+}
+
+#define NO_BROADCAST( MESSAGE ) \
+    void Clients::Send( MESSAGE& ) \
+    { \
+        throw std::runtime_error( "unable to broadcast message of type " BOOST_PP_STRINGIZE( MESSAGE ) ); \
+    } \
+
+NO_BROADCAST( sword::ClientToSim )
+NO_BROADCAST( sword::ClientToAuthentication )
+NO_BROADCAST( sword::ClientToReplay )
+NO_BROADCAST( sword::ClientToAar )
+NO_BROADCAST( sword::ClientToMessenger )
+NO_BROADCAST( sword::AdminToLauncher )
+NO_BROADCAST( MsgsAarToClient::MsgAarToClient )
+NO_BROADCAST( MsgsAuthenticationToClient::MsgAuthenticationToClient )
+NO_BROADCAST( MsgsDispatcherToClient::MsgDispatcherToClient )
+NO_BROADCAST( MsgsMessengerToClient::MsgMessengerToClient )
+NO_BROADCAST( MsgsReplayToClient::MsgReplayToClient )
+NO_BROADCAST( MsgsLauncherToAdmin::MsgLauncherToAdmin )
+
+// -----------------------------------------------------------------------------
+// Name: Clients::Send
+// Created: MCO 2011-11-07
+// -----------------------------------------------------------------------------
+void Clients::Send( MsgsSimToClient::MsgSimToClient& message )
+{
+    if( utf8StringEncoding_ )
+        Utf8Converter::ConvertCP1252StringsToUtf8( message );
+    static const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< MsgsSimToClient::MsgSimToClient >();
+    tools::Message m = sender_.Serialize( message );
+    for( CIT_Clients it = actives_.begin(); it != actives_.end(); ++it )
+    {
+        sender_.Send( it->first, tag, m );
+        listener_.Debug( DebugInfo< MsgsSimToClient::MsgSimToClient >( "Shield sent : ", message ) );
+    }
 }
