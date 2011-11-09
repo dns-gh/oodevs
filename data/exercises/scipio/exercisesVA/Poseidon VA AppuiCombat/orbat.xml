@@ -36,14 +36,14 @@
       </objects>
       <tactical>
         <formation id="4" level="ii" name="GTIA [4]">
-          <automat engaged="true" id="257" knowledge-group="6" name="SGTIA INF [257]" type="SGTIA INF">
-            <unit command-post="true" id="258" name="Section . CDT CIE INF VAB" position="29TNF3286759316" type="Section . CDT CIE INF VAB"/>
-            <unit command-post="false" id="260" name="Section . CBT INF VAB CDS SOFF" position="29TNF3244158863" type="Section . CBT INF VAB CDS SOFF"/>
-            <unit command-post="false" id="261" name="Section . CBT INF VAB CDS OFF" position="29TNF3324359063" type="Section . CBT INF VAB CDS OFF"/>
-            <unit command-post="false" id="264" name="Groupe GEN . EBG" position="29TNF3276959091" type="Groupe GEN . EBG"/>
+          <automat engaged="true" id="257" knowledge-group="6" name="SGTIA INF [257]" type="SGTIA INF dominante roues">
+            <unit command-post="true" id="258" name="Section . CDT CIE INF VAB" position="29TNF3286759316" type="INF . Section CDT CIE VAB"/>
+            <unit command-post="false" id="260" name="Section . CBT INF VAB CDS SOFF" position="29TNF3244158863" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit command-post="false" id="261" name="Section . CBT INF VAB CDS OFF" position="29TNF3324359063" type="INF . Section CBT VAB CDS OFF"/>
+            <unit command-post="false" id="264" name="Groupe GEN . EBG" position="29TNF3276959091" type="GEN . Groupe EBG"/>
             <unit command-post="false" id="265" name="PIA Dominante ABC" position="29TNF3347259199" type="PIA Dominante ABC"/>
             <unit command-post="false" id="266" name="PIA Dominante INF" position="29TNF3384759060" type="PIA Dominante INF"/>
-            <unit command-post="false" id="268" name="Patrouille . EI 12,7" position="29TNF3315558804" type="Patrouille . EI 12,7"/>
+            <unit command-post="false" id="268" name="Patrouille . EI 12,7" position="29TNF3315558804" type="ABC . Patrouille EI 12,7"/>
           </automat>
           <automat engaged="true" id="467" knowledge-group="6" name="ALAT - ESCADRILLE 3HAC [467]" symbol="symbols/sfgpucv" type="ALAT - ESCADRILLE 3HAC">
             <unit command-post="true" id="468" name="ALAT - PC ALAT" position="29TNF3003263612" type="ALAT - PC ALAT"/>
@@ -312,4 +312,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3090602318" -->
+<!-- signature="3601980134" -->

@@ -52,29 +52,29 @@
       </objects>
       <tactical>
         <formation id="4" level="ii" name="GTIA [4]">
-          <automat engaged="false" id="85" knowledge-group="6" name="SGTIA INF 1 [85]" type="SGTIA INF">
-            <unit command-post="true" id="86" name="Section . CDT CIE INF VAB" position="29TNF3498056437" type="Section . CDT CIE INF VAB"/>
-            <unit command-post="false" id="87" name="Section . CBT INF VAB CDS SOFF" position="29TNF3512355939" type="Section . CBT INF VAB CDS SOFF"/>
-            <unit command-post="false" id="88" name="Section . CBT INF VAB CDS SOFF" position="29TNF3521156915" type="Section . CBT INF VAB CDS SOFF"/>
-            <unit command-post="false" id="92" name="Groupe GEN . EBG" position="29TNF3466256206" type="Groupe GEN . EBG"/>
+          <automat engaged="false" id="85" knowledge-group="6" name="SGTIA INF 1 [85]" type="SGTIA INF dominante roues">
+            <unit command-post="true" id="86" name="Section . CDT CIE INF VAB" position="29TNF3498056437" type="INF . Section CDT CIE VAB"/>
+            <unit command-post="false" id="87" name="Section . CBT INF VAB CDS SOFF" position="29TNF3512355939" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit command-post="false" id="88" name="Section . CBT INF VAB CDS SOFF" position="29TNF3521156915" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit command-post="false" id="92" name="Groupe GEN . EBG" position="29TNF3466256206" type="GEN . Groupe EBG"/>
             <unit command-post="false" id="94" name="PIA Dominante INF" position="29TNF3492755863" type="PIA Dominante INF"/>
-            <unit command-post="false" id="97" name="Peloton . LECLERC CDP SOFF" position="29TNF3472856127" type="Peloton . LECLERC CDP SOFF"/>
+            <unit command-post="false" id="97" name="Peloton . LECLERC CDP SOFF" position="29TNF3472856127" type="ABC . Peloton LECLERC CDP SOFF"/>
           </automat>
-          <automat engaged="false" id="110" knowledge-group="6" name="GEN [110]" type="GEN">
-            <unit command-post="true" id="111" name="Groupe GEN . EBG" position="29TNF3594956145" type="Groupe GEN . EBG"/>
-            <unit command-post="false" id="117" name="Groupe GEN . MPG" position="29TNF3596456191" type="Groupe GEN . MPG"/>
+          <automat engaged="false" id="110" knowledge-group="6" name="GEN [110]" type="GEN . Compagnie CBT type BB BM">
+            <unit command-post="true" id="111" name="Groupe GEN . EBG" position="29TNF3594956145" type="GEN . Groupe EBG"/>
+            <unit command-post="false" id="117" name="Groupe GEN . MPG" position="29TNF3596456191" type="GEN . Groupe MPG"/>
           </automat>
           <automat engaged="false" id="173" knowledge-group="6" logistic-level="logistic-base" name="ONG 2 [173]" type="ONG">
             <unit command-post="true" id="174" name="ONG Soutien LOG" position="29TNF3922954751" type="ONG Soutien LOG"/>
             <unit command-post="false" id="175" name="ONG Intervention" position="29TNF3526555428" type="ONG Intervention"/>
             <unit command-post="false" id="176" name="ONG Intervention" position="29TNF3525255170" type="ONG Intervention"/>
           </automat>
-          <automat engaged="true" id="177" knowledge-group="6" name="SGTIA INF 2 [177]" type="SGTIA INF">
-            <unit command-post="true" id="178" name="Section . CDT CIE INF VAB" position="29TNF3617458861" type="Section . CDT CIE INF VAB"/>
-            <unit command-post="false" id="179" name="Section . CBT INF VAB CDS SOFF" position="29TNF3667658364" type="Section . CBT INF VAB CDS SOFF"/>
-            <unit command-post="false" id="181" name="Section . CBT INF VAB CDS OFF" position="29TNF3567558360" type="Section . CBT INF VAB CDS OFF"/>
-            <unit command-post="false" id="183" name="Peloton . LECLERC CDP SOFF" position="29TNF3688458365" type="Peloton . LECLERC CDP SOFF"/>
-            <unit command-post="false" id="184" name="Groupe GEN . EBG" position="29TNF3667857866" type="Groupe GEN . EBG"/>
+          <automat engaged="true" id="177" knowledge-group="6" name="SGTIA INF 2 [177]" type="SGTIA INF dominante roues">
+            <unit command-post="true" id="178" name="Section . CDT CIE INF VAB" position="29TNF3617458861" type="INF . Section CDT CIE VAB"/>
+            <unit command-post="false" id="179" name="Section . CBT INF VAB CDS SOFF" position="29TNF3667658364" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit command-post="false" id="181" name="Section . CBT INF VAB CDS OFF" position="29TNF3567558360" type="INF . Section CBT VAB CDS OFF"/>
+            <unit command-post="false" id="183" name="Peloton . LECLERC CDP SOFF" position="29TNF3688458365" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="184" name="Groupe GEN . EBG" position="29TNF3667857866" type="GEN . Groupe EBG"/>
             <unit command-post="false" id="186" name="PIA Dominante INF" position="29TNF3567857861" type="PIA Dominante INF"/>
           </automat>
           <limit name="Limite 196">
@@ -120,10 +120,10 @@
       <objects/>
       <tactical>
         <formation id="25" level="ii" name="GTIA [25]">
-          <automat engaged="false" id="30" knowledge-group="31" name="SGTIA INF [30]" type="SGTIA INF">
-            <unit command-post="true" id="32" name="Section . CDT CIE INF VAB" position="29TNF3337253427" type="Section . CDT CIE INF VAB"/>
-            <unit command-post="false" id="34" name="Section . CBT INF VAB CDS SOFF" position="29TNF3328352758" type="Section . CBT INF VAB CDS SOFF"/>
-            <unit command-post="false" id="37" name="Peloton . LECLERC CDP SOFF" position="29TNF3329352762" type="Peloton . LECLERC CDP SOFF"/>
+          <automat engaged="false" id="30" knowledge-group="31" name="SGTIA INF [30]" type="SGTIA INF dominante roues">
+            <unit command-post="true" id="32" name="Section . CDT CIE INF VAB" position="29TNF3337253427" type="INF . Section CDT CIE VAB"/>
+            <unit command-post="false" id="34" name="Section . CBT INF VAB CDS SOFF" position="29TNF3328352758" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit command-post="false" id="37" name="Peloton . LECLERC CDP SOFF" position="29TNF3329352762" type="ABC . Peloton LECLERC CDP SOFF"/>
             <unit command-post="false" id="40" name="PIA Dominante INF" position="29TNF3301952659" type="PIA Dominante INF"/>
           </automat>
           <automat engaged="false" id="149" knowledge-group="31" name="Terroristes [149]" type="ASY . Terroristes">
@@ -215,4 +215,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3997154228" -->
+<!-- signature="3292733032" -->
