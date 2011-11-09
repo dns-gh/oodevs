@@ -221,7 +221,6 @@
     <protection geniePrepared="true" max-size="1"/>
   </object>
   <object geometry="polygon" name="zone protegee" symbol="G*MPSF----****X" type="safe zone">
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="true" max-size="3"/>
@@ -457,4 +456,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="1986850227" -->
+<!-- signature="2388516569" -->
