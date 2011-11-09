@@ -101,24 +101,6 @@ void Plugin::Receive( const sword::MessengerToClient& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Plugin::NotifyClientAuthenticated
-// Created: SBO 2011-01-19
-// -----------------------------------------------------------------------------
-void Plugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Plugin::NotifyClientLeft
-// Created: SBO 2011-01-19
-// -----------------------------------------------------------------------------
-void Plugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Plugin::Create
 // Created: SBO 2011-01-20
 // -----------------------------------------------------------------------------

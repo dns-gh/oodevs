@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Register( const std::string& endpoint, tools::MessageSender_ABC& sender );
+    virtual void Register( const std::string& endpoint, tools::MessageSender_ABC& sender, dispatcher::ClientBroadcaster_ABC& broadcaster );
     virtual void Unregister( const std::string& endpoint );
     //@}
 

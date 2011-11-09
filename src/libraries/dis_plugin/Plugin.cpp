@@ -75,24 +75,6 @@ void Plugin::Receive( const sword::SimToClient& wrapper )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Plugin::NotifyClientAuthenticated
-// Created: AGE 2008-03-10
-// -----------------------------------------------------------------------------
-void Plugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC&, dispatcher::Profile_ABC& )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Plugin::NotifyClientLeft
-// Created: AGE 2008-03-10
-// -----------------------------------------------------------------------------
-void Plugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Plugin::GetTime
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------

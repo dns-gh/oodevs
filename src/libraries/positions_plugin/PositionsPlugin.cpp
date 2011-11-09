@@ -44,24 +44,6 @@ PositionsPlugin::~PositionsPlugin()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PositionsPlugin::NotifyClientAuthenticated
-// Created: ABR 2011-04-01
-// -----------------------------------------------------------------------------
-void PositionsPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PositionsPlugin::NotifyClientLeft
-// Created: ABR 2011-04-01
-// -----------------------------------------------------------------------------
-void PositionsPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: PositionsPlugin::Receive
 // Created: ABR 2011-04-01
 // -----------------------------------------------------------------------------
