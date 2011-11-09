@@ -89,6 +89,7 @@ public:
     int GetNbrRemorqueurs() const;
     int GetOrderConduiteAutomateActiverObstacle() const;
     int GetOrderConduiteChangerAmbiance() const;
+    void SetOrderConduiteChangerAmbiance( int value );
     boost::shared_ptr< MT_Vector2D > GetOrderConduiteChangerPositionDebarquement() const;
     int GetOrderConduiteChangerReglesEngagementPopulation() const;
     int GetOrderConduiteChangerReglesEngagement() const;
