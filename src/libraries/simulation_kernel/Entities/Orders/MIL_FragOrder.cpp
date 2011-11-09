@@ -11,6 +11,7 @@
 #include "MIL_FragOrder.h"
 #include "MIL_FragOrderType.h"
 #include "MIL_MissionParameterFactory.h"
+#include "MIL_EnumerationParameter.h"
 #include "MIL_OrderContext.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Tools.h"
@@ -96,6 +97,7 @@ void MIL_FragOrder::Register( directia::brain::Brain& brain )
     brain.Register( "GetnbrRemorqueurs_", &MIL_FragOrder::GetNbrRemorqueurs );
     brain.Register( "GetorderConduiteAutomateActiverObstacle_", &MIL_FragOrder::GetOrderConduiteAutomateActiverObstacle );
     brain.Register( "GetorderConduiteChangerAmbiance_", &MIL_FragOrder::GetOrderConduiteChangerAmbiance );
+    brain.Register( "SetorderConduiteChangerAmbiance_", &MIL_FragOrder::SetOrderConduiteChangerAmbiance );
     brain.Register( "GetorderConduiteChangerPositionDebarquement_", &MIL_FragOrder::GetOrderConduiteChangerPositionDebarquement );
     brain.Register( "GetorderConduiteChangerReglesEngagementPopulation_", &MIL_FragOrder::GetOrderConduiteChangerReglesEngagementPopulation );
     brain.Register( "GetorderConduiteChangerReglesEngagement_", &MIL_FragOrder::GetOrderConduiteChangerReglesEngagement );
@@ -297,6 +299,18 @@ int MIL_FragOrder::GetOrderConduiteChangerAmbiance() const
 {
     static const std::string parameterName( "orderConduiteChangerAmbiance_" );
     return GetIntegerParameter( parameterName, parameters_, type_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::GetOrderConduiteChangerAmbiance
+// Created: LMT 2011-11-08
+// -----------------------------------------------------------------------------
+void MIL_FragOrder::SetOrderConduiteChangerAmbiance( int value )
+{
+    if( !parameters_.empty() )
+        throw std::runtime_error( "Can't set parameter already exists" );
+    boost::shared_ptr< MIL_MissionParameter_ABC > parameter( new MIL_EnumerationParameter( value ) );
+    parameters_.push_back( parameter );
 }
 
 // -----------------------------------------------------------------------------
