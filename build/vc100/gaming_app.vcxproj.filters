@@ -1056,13 +1056,7 @@
     <ClInclude Include="..\..\src\applications\gaming_app\AgentList.h">
       <Filter>Source Files\Lists</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\AgentListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\TacticalList.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\TacticalListView.h">
       <Filter>Source Files\Lists</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\LinkInterpreter.h">
@@ -1434,6 +1428,12 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\UnitStateDialog.h">
       <Filter>Source Files\Dialogs\Magic actions\Unit state</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\TacticalListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\AgentListView.h">
+      <Filter>Source Files\Lists</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

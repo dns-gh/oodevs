@@ -555,9 +555,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\PropertiesPanel.h">
       <Filter>Source Files\Panels\Infos</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\CommunicationListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\AgentsLayer.h">
       <Filter>Source Files\Layers</Filter>
     </ClInclude>
@@ -870,6 +867,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\FilterProxyModel.h">
       <Filter>Source Files\Dialogs\Consistency</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\CommunicationListView.h">
+      <Filter>Source Files\Lists</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

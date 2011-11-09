@@ -10,11 +10,18 @@
 #ifndef __CommunicationListView_h_
 #define __CommunicationListView_h_
 
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_gui/ChangeSuperior_ABC.h"
 #include "clients_gui/HierarchyListView.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+
+namespace gui
+{
+    class ChangeSuperiorDialog;
+}
 
 namespace kernel
 {
+    class Automat_ABC;
     class KnowledgeGroup_ABC; // LTO
     class Team_ABC; // LTO
 }
@@ -30,8 +37,11 @@ class ModelBuilder;
 class CommunicationListView : public gui::HierarchyListView< kernel::CommunicationHierarchies >
                             , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
+                            , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC > // LTO
                             , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
+                            , public gui::ChangeSuperior_ABC
 {
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
@@ -42,19 +52,23 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
+    virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnChangeKnowledgeGroup();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CommunicationListView( const CommunicationListView& );            //!< Copy constructor
-    CommunicationListView& operator=( const CommunicationListView& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
+    virtual void hideEvent( QHideEvent* event );
     virtual void NotifyUpdated( const kernel::Entity_ABC& );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual bool Drop( const kernel::Entity_ABC& draggedEntity, const kernel::Entity_ABC& target );
     // LTO begin
     virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& knowledgegroup, kernel::ContextMenu& menu );
@@ -67,6 +81,7 @@ private:
     //@{
     gui::ItemFactory_ABC& factory_;
     ModelBuilder& modelBuilder_;
+    gui::ChangeSuperiorDialog* changeSuperiorDialog_;
     //@}
 };
 

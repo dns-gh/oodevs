@@ -226,6 +226,29 @@
     </message>
 </context>
 <context>
+    <name>gui::ChangeSuperiorDialog</name>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Superior</source>
+        <translation>Supérieur</translation>
+    </message>
+    <message>
+        <source>Select new superior</source>
+        <translation>Sélectionner le nouveau supérieur</translation>
+    </message>
+    <message>
+        <source>Select new group</source>
+        <translation>Sélectionner le nouveau groupe</translation>
+    </message>
+</context>
+<context>
     <name>gui::ComboTableItem</name>
     <message>
         <source>Unavailable</source>

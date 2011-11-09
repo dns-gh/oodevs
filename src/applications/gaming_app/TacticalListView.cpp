@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "icons.h"
 #include "TacticalListView.h"
+#include "moc_TacticalListView.cpp"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Automat.h"
@@ -19,6 +20,7 @@
 #include "gaming/Attributes.h"
 #include "gaming/StaticModel.h"
 #include "gaming/CommandPostAttributes.h"
+#include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -35,11 +37,12 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, profile, icons )
-    , actionsModel_( actionsModel )
-    , static_      ( staticModel )
-    , simulation_  ( simulation )
-    , lock_        ( MAKE_PIXMAP( lock ) )
-    , commandPost_ ( MAKE_PIXMAP( commandpost ) )
+    , actionsModel_        ( actionsModel )
+    , static_              ( staticModel )
+    , simulation_          ( simulation )
+    , lock_                ( MAKE_PIXMAP( lock ) )
+    , commandPost_         ( MAKE_PIXMAP( commandpost ) )
+    , changeSuperiorDialog_( 0 )
 {
     controllers_.Register( *this );
     addColumn( "HiddenPuce", 15 );
@@ -54,6 +57,17 @@ TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& contr
 TacticalListView::~TacticalListView()
 {
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::hideEvent
+// Created: JSR 2011-11-09
+// -----------------------------------------------------------------------------
+void TacticalListView::hideEvent( QHideEvent* event )
+{
+    if( changeSuperiorDialog_ )
+        changeSuperiorDialog_->hide();
+    gui::HierarchyListView< kernel::TacticalHierarchies >::hideEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,6 +125,56 @@ void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
     gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
     if( item )
         item->setPixmap( 1, decisions.IsEmbraye() ? lock_ : QPixmap() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::NotifyContextMenu
+// Created: JSR 2011-11-08
+// -----------------------------------------------------------------------------
+void TacticalListView::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+{
+    if( !isVisible() )
+        return;
+    if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+        if( hierarchies->GetSuperior() != 0 && dynamic_cast< const kernel::Object_ABC* >( &entity ) == 0 )
+            menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::OnChangeSuperior
+// Created: JSR 2011-11-08
+// -----------------------------------------------------------------------------
+void TacticalListView::OnChangeSuperior()
+{
+    if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() ) )
+    {
+        kernel::Entity_ABC& entity = *valuedItem->GetValue< kernel::Entity_ABC >();
+        if( !changeSuperiorDialog_ )
+            changeSuperiorDialog_ = new gui::ChangeSuperiorDialog( this, controllers_, *this, false );
+        changeSuperiorDialog_->Show( entity );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::CanChangeSuperior
+// Created: JSR 2011-11-08
+// -----------------------------------------------------------------------------
+bool TacticalListView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
+{
+    if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
+        return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0;
+    if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
+        return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0 || dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::DoChangeSuperior
+// Created: JSR 2011-11-08
+// -----------------------------------------------------------------------------
+void TacticalListView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior )
+{
+    Drop( entity, superior );
 }
 
 // -----------------------------------------------------------------------------

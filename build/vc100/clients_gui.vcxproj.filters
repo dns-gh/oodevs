@@ -844,6 +844,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\OrbatPanel.cpp">
       <Filter>Source Files\Preferences\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ChangeSuperiorDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1365,6 +1368,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ChangeSuperior_ABC.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">
@@ -1704,6 +1710,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\OrbatPanel.h">
       <Filter>Source Files\Preferences\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ChangeSuperiorDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

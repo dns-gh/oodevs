@@ -160,6 +160,10 @@
         <source>Change Knowledge Group</source>
         <translation>Changer de groupe de connaissance</translation>
     </message>
+    <message>
+        <source>Change knowledge group</source>
+        <translation>Changer de groupe de connaissance</translation>
+    </message>
 </context>
 <context>
     <name>AlarmEditor</name>
@@ -2984,6 +2988,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Change Formation Superior</source>
         <translation>Changer le supérieur de la formation</translation>
+    </message>
+    <message>
+        <source>Change superior</source>
+        <translation>Changer de supérieur</translation>
     </message>
 </context>
 <context>

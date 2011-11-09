@@ -160,6 +160,10 @@
         <source>Change Knowledge Group</source>
         <translation>Cambiar grupo de conocimeinto</translation>
     </message>
+    <message>
+        <source>Change knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AlarmEditor</name>
@@ -2984,6 +2988,10 @@ Motivo: %3
     <message>
         <source>Change Formation Superior</source>
         <translation>Cambiar Superior de formación</translation>
+    </message>
+    <message>
+        <source>Change superior</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
