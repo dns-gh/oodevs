@@ -1028,10 +1028,11 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="retreatPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="Point"/>
-      <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions ou zones de tir" optional="false" type="LocationComposite">
+      <parameter dia-name="retreatPosition" name="Positions de sauvegarde" optional="true" type="Point"/>
+      <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions ou zones de tir" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
+          <parameter type="Polygon"/>
           <parameter type="ObjectKnowledge"/>
         </choice>
       </parameter>
@@ -3308,4 +3309,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="2392053124" -->
+<!-- signature="3469668502" -->
