@@ -286,6 +286,7 @@ public:
     T_PopulationInfosVector   vPopulation_;
     ReloadingSpeedEffectInfos reloadingSpeedEffectInfos_;
     ADN_Type_Time timeBetweenNbcApplication_;
+    ADN_Type_Time decontaminationDelay_;
 };
 
 // -----------------------------------------------------------------------------

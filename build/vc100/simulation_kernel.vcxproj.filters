@@ -2517,6 +2517,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralRequest.cpp">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Funeral</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.cpp">
+      <Filter>Source Files\Entities\Populations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -4939,6 +4942,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyConvoysObserver_ABC.h">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.h">
+      <Filter>Source Files\Entities\Populations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

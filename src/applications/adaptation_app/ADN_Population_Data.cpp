@@ -795,7 +795,8 @@ ADN_Population_Data::ADN_Population_Data()
     : ADN_Data_ABC()
     , vPopulation_              ()
     , reloadingSpeedEffectInfos_()
-    , timeBetweenNbcApplication_ ( "1h" )
+    , timeBetweenNbcApplication_( "1h" )
+    , decontaminationDelay_     ( "300s" )
 {
     // NOTHING
 }
@@ -835,11 +836,17 @@ void ADN_Population_Data::Reset()
 void ADN_Population_Data::ReadArchive( xml::xistream& input )
 {
     std::string time = "1h";
+    std::string decontaminationDelay = "300s";
     input >> xml::start( "populations" )
-          >> xml::optional >> xml::start( "time-between-nbc-applications")
-          >> xml::attribute( "delay", time ) >> xml::end;
+          >> xml::optional
+          >> xml::start( "time-between-nbc-applications")
+          >> xml::attribute( "delay", time )
+          >> xml::optional
+          >> xml::attribute( "decontaminationDelay", decontaminationDelay )
+          >> xml::end;
     reloadingSpeedEffectInfos_.ReadArchive( input );
     timeBetweenNbcApplication_ = time;
+    decontaminationDelay_ = decontaminationDelay;
     input >> xml::list( "population", *this, &ADN_Population_Data::ReadPopulation )
           >> xml::end;
 }
@@ -866,6 +873,7 @@ void ADN_Population_Data::WriteArchive( xml::xostream& output )
     reloadingSpeedEffectInfos_.WriteArchive( output );
     output << xml::start( "time-between-nbc-applications" )
             << xml::attribute( "delay", timeBetweenNbcApplication_.GetData() )
+            << xml::attribute( "decontaminationDelay", decontaminationDelay_.GetData() )
            << xml::end;
     int n = 0;
     for( CIT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(); ++it, ++n )

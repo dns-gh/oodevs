@@ -14,6 +14,7 @@
 #include "ConstructionAttribute.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DecontaminationCapacity )
 
@@ -88,12 +89,24 @@ void DecontaminationCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void DecontaminationCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
 {
-    if( decontaminationQueue_.size() == 0 || object.IsMarkedForDestruction() || object.GetAttribute< ConstructionAttribute >().GetState() < 1. )
+    if( object.IsMarkedForDestruction() || object.GetAttribute< ConstructionAttribute >().GetState() < 1. )
         return;
 
-    MIL_Agent_ABC& agent = *decontaminationQueue_.front();
-    if( Decontaminate( object, agent ) )
-        decontaminationQueue_.pop_front();
+    if( !agents_.empty() )
+    {
+        MIL_Agent_ABC& agent = *agents_.front();
+        if( Decontaminate( object, agent ) )
+            agents_.pop_front();
+    }
+    else
+    {
+        if( !populations_.empty() )
+        {
+            MIL_PopulationElement_ABC& population = *populations_.front();
+            if( Decontaminate( object, population ) )
+                populations_.pop_front();
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -114,11 +127,36 @@ bool DecontaminationCapacity::Decontaminate( MIL_Object_ABC& object, MIL_Agent_A
 }
 
 // -----------------------------------------------------------------------------
+// Name: DecontaminationCapacity::Decontaminate
+// Created: LGY 2011-11-09
+// -----------------------------------------------------------------------------
+bool DecontaminationCapacity::Decontaminate( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
+{
+    if( population.GetContaminatedHumans() == 0u )
+        return true;
+    AnimatorAttribute& animators = object.GetAttribute< AnimatorAttribute >();
+    const double rRatioWorkers = animators.GetAnimatorsRatio();
+    if( rRatioWorkers > 0 )
+        population.ApplyDecontamination( rRatioWorkers );
+    return population.GetContaminatedHumans() == 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DecontaminationCapacity::QueueForDecontamination
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
 void DecontaminationCapacity::QueueForDecontamination( MIL_Agent_ABC& agent )
 {
-    if( std::find( decontaminationQueue_.begin(), decontaminationQueue_.end(), &agent ) == decontaminationQueue_.end() )
-        decontaminationQueue_.push_back( &agent );
+    if( std::find( agents_.begin(), agents_.end(), &agent ) == agents_.end() )
+        agents_.push_back( &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DecontaminationCapacity::QueueForDecontamination
+// Created: LGY 2011-11-09
+// -----------------------------------------------------------------------------
+void DecontaminationCapacity::QueueForDecontamination( MIL_PopulationElement_ABC& population )
+{
+    if( std::find( populations_.begin(), populations_.end(), &population ) == populations_.end() )
+        populations_.push_back( &population );
 }

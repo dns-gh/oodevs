@@ -25,6 +25,7 @@ class MIL_PopulationAttitude;
 class MIL_PopulationType;
 class MIL_IntoxicationEffect;
 class MIL_ContaminationEffect;
+class MIL_DecontaminationEffect;
 class MT_Circle;
 class PHY_Volume;
 class PHY_FireResults_ABC;
@@ -75,6 +76,7 @@ public:
     void ApplyBurn( const MIL_BurnEffectManipulator& burn );
     void ApplyContamination( const MIL_NbcAgentType& type );
     void ApplyIntoxication( const MIL_NbcAgentType& type );
+    void ApplyDecontamination( double rRatioWorkers );
     //@}
 
     //! @name Accessors
@@ -166,6 +168,7 @@ private:
     bool bHumansUpdated_;
     T_IntoxicationEffects intoxicationEffects_;
     T_ContaminationEffects contaminationEffects_;
+    std::auto_ptr< MIL_DecontaminationEffect > pDecontaminationEffect_;
     //@}
 };
 

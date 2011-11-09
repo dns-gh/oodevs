@@ -80,10 +80,15 @@ void ADN_Population_GUI::Build()
     // Global parameters
     Q3GroupBox* pGlobalGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Global parameters" ), pMainBox );
     Q3GroupBox* pReloadingEffectGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd effects on units firing capability" ), pGlobalGroup );
+    Q3GroupBox* pNBC = new Q3GroupBox( 3, Qt::Horizontal, tr( "NBC" ), pGlobalGroup );
 
     //Time between NBC application
-    builder.AddField< ADN_TimeField >( pGlobalGroup, tr( "Time between two NBC applications" ), vInfosConnectors[ eTimeBetweenNBCApplication ] );
+    builder.AddField< ADN_TimeField >( pNBC, tr( "Time between two NBC applications" ), vInfosConnectors[ eTimeBetweenNBCApplication ] );
     vInfosConnectors[eTimeBetweenNBCApplication]->Connect( &data_.timeBetweenNbcApplication_ );
+
+    // Decontamination delay
+    builder.AddField< ADN_TimeField >( pNBC, tr( "Decontamination delay" ), vInfosConnectors[ eDecontaminationDelay ] );
+    vInfosConnectors[eDecontaminationDelay]->Connect( &data_.decontaminationDelay_ );
 
     // Density
     builder.AddField<ADN_EditLine_Double>( pReloadingEffectGroup, tr( "Density" ), vInfosConnectors[eReloadingEffectDensity], tr( "people/m²" ), eGreaterZero );

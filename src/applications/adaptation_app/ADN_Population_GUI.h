@@ -42,6 +42,7 @@ public:
         eSpeedEffectDensity,
         eSpeedEffectMaxSpeed,
         eTimeBetweenNBCApplication,
+        eDecontaminationDelay,
         eReloadingEffectDensity,
         eReloadingEffectModifier,
         eFireEffectAttitude,

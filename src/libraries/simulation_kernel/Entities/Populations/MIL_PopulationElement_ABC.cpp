@@ -14,6 +14,7 @@
 #include "MIL_PopulationType.h"
 #include "MIL_IntoxicationEffect.h"
 #include "MIL_ContaminationEffect.h"
+#include "MIL_DecontaminationEffect.h"
 #include "Entities/Populations/Actions/PHY_FireResults_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -38,12 +39,13 @@
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_PopulationElement_ABC::MIL_PopulationElement_ABC( MIL_Population& population, unsigned int nID )
-    : pPopulation_     ( &population )
-    , nID_             ( nID )
-    , rDensity_        ( 0. )
-    , pAttitude_       ( &population.GetDefaultAttitude() )
-    , bAttitudeUpdated_( true )
-    , bHumansUpdated_  ( true )
+    : pPopulation_           ( &population )
+    , nID_                   ( nID )
+    , rDensity_              ( 0. )
+    , pAttitude_             ( &population.GetDefaultAttitude() )
+    , bAttitudeUpdated_      ( true )
+    , bHumansUpdated_        ( true )
+    , pDecontaminationEffect_( new MIL_DecontaminationEffect( humans_, pPopulation_->GetType().GetDecontaminationDelay() ) )
 {
     // NOTHING
 }
@@ -565,4 +567,13 @@ void MIL_PopulationElement_ABC::ApplyIntoxication( const MIL_NbcAgentType& type 
     else
         it->second->Update( MIL_AgentServer::GetWorkspace().GetRealTime() );
     bHumansUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::ApplyDecontamination
+// Created: LGY 2011-11-09
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::ApplyDecontamination( double rRatioWorkers )
+{
+    pDecontaminationEffect_->Apply( rRatioWorkers, MIL_AgentServer::GetWorkspace().GetCurrentTick() );
 }

@@ -55,6 +55,7 @@ public:
     double GetDefaultFlowDensity() const;
     double GetMaxSpeed() const;
     double GetDelay() const;
+    double GetDecontaminationDelay() const;
     const DEC_Model_ABC& GetModel() const;
     //@}
 
@@ -173,6 +174,7 @@ private:
     static double rEffectReloadingTimeDensity_;
     static double rEffectReloadingTimeFactor_;
     static unsigned int delay_;
+    static double decontaminationDelay_;
     //@}
 };
 

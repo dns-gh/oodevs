@@ -19,6 +19,7 @@ namespace xml
 }
 
 class MIL_Agent_ABC;
+class MIL_PopulationElement_ABC;
 
 // =============================================================================
 /** @class  DecontaminationCapacity
@@ -47,6 +48,7 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void Update( MIL_Object_ABC& object, unsigned int time );
     void QueueForDecontamination( MIL_Agent_ABC& agent );
+    void QueueForDecontamination( MIL_PopulationElement_ABC& population );
     //@}
 
 private:
@@ -58,17 +60,20 @@ private:
     //! @name Helpers
     //@{
     bool Decontaminate( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    bool Decontaminate( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population );
     //@}
 
     //! @name Types
     //@{
     typedef std::deque< MIL_Agent_ABC* > T_AgentQueue;
+    typedef std::deque< MIL_PopulationElement_ABC* > T_PopulationQueue;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_AgentQueue decontaminationQueue_;
+    T_AgentQueue agents_;
+    T_PopulationQueue populations_;
     //@}
 };
 
