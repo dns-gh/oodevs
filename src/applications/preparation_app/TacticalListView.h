@@ -10,8 +10,14 @@
 #ifndef __TacticalListView_h_
 #define __TacticalListView_h_
 
+#include "clients_gui/ChangeSuperior_ABC.h"
 #include "clients_gui/HierarchyListView.h"
 #include "clients_kernel/TacticalHierarchies.h"
+
+namespace gui
+{
+    class ChangeSuperiorDialog;
+}
 
 namespace kernel
 {
@@ -40,6 +46,7 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
                        , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                       , public gui::ChangeSuperior_ABC
 {
     Q_OBJECT
 
@@ -53,6 +60,8 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const kernel::Entity_ABC& agent, gui::ValuedListItem* item );
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
+    virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
     //@}
 
 private slots:
@@ -60,6 +69,7 @@ private slots:
     //@{
     virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     void OnRename();
+    void OnChangeSuperior();
     void Engage();
     void Disengage();
     //@}
@@ -67,6 +77,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    virtual void hideEvent( QHideEvent* event );
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );
 
@@ -94,6 +105,7 @@ private:
     const kernel::FormationLevels& levels_;
     QPixmap lock_;
     QPixmap commandPost_;
+    gui::ChangeSuperiorDialog* changeSuperiorDialog_;
     //@}
 };
 

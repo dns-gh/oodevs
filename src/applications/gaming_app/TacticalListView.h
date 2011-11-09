@@ -10,9 +10,15 @@
 #ifndef __TacticalListView_h_
 #define __TacticalListView_h_
 
+#include "clients_gui/ChangeSuperior_ABC.h"
 #include "clients_gui/HierarchyListView.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/ServerPublisher_ABC.h"
+
+namespace gui
+{
+    class ChangeSuperiorDialog;
+}
 
 namespace kernel
 {
@@ -39,7 +45,10 @@ class StaticModel;
 // =============================================================================
 class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
                        , public tools::ElementObserver_ABC< AutomatDecisions >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
+                       , public gui::ChangeSuperior_ABC
 {
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
@@ -51,17 +60,21 @@ public:
     //@{
     virtual void Display( const kernel::Entity_ABC& agent, gui::ValuedListItem* item );
     virtual void NotifyUpdated( const AutomatDecisions& decisions );
+    virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
+    virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnChangeSuperior();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TacticalListView( const TacticalListView& );            //!< Copy constructor
-    TacticalListView& operator=( const TacticalListView& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
+    virtual void hideEvent( QHideEvent* event );
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );
 
@@ -78,6 +91,7 @@ private:
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     QPixmap lock_, commandPost_;
+    gui::ChangeSuperiorDialog* changeSuperiorDialog_;
     //@}
 };
 

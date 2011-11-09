@@ -87,6 +87,10 @@
         <source>Create sub knowledge group</source>
         <translation>Créer un sous-groupe de connaissance</translation>
     </message>
+    <message>
+        <source>Change knowledge group</source>
+        <translation>Changer de groupe de connaissance</translation>
+    </message>
 </context>
 <context>
     <name>CsvExport</name>
@@ -1999,6 +2003,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Rename</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change superior</source>
+        <translation>Changer de supérieur</translation>
     </message>
 </context>
 <context>

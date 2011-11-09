@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "AgentListView.h"
+#include "moc_AgentListView.cpp"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
@@ -16,6 +17,7 @@
 #include "actions/KnowledgeGroup.h"
 #include "actions/KnowledgeGroupMagicAction.h"
 #include "actions/UnitMagicAction.h"
+#include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -38,12 +40,13 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 AgentListView::AgentListView( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : gui::HierarchyListView< kernel::CommunicationHierarchies >( pParent, controllers, factory, profile, icons )
-    , actionsModel_( actionsModel )
-    , static_( staticModel )
-    , simulation_( simulation )
-    , lock_( MAKE_PIXMAP( lock ) )
-    , scisors_( MAKE_PIXMAP( scisors ) ) // LTO
-    , commandPost_( MAKE_PIXMAP( commandpost ) )
+    , actionsModel_        ( actionsModel )
+    , static_              ( staticModel )
+    , simulation_          ( simulation )
+    , lock_                ( MAKE_PIXMAP( lock ) )
+    , scisors_             ( MAKE_PIXMAP( scisors ) ) // LTO
+    , commandPost_         ( MAKE_PIXMAP( commandpost ) )
+    , changeSuperiorDialog_( 0 )
 {
     controllers_.Register( *this );
     addColumn( "HiddenPuce", 15 );
@@ -57,6 +60,17 @@ AgentListView::AgentListView( QWidget* pParent, kernel::Controllers& controllers
 AgentListView::~AgentListView()
 {
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::hideEvent
+// Created: JSR 2011-11-09
+// -----------------------------------------------------------------------------
+void AgentListView::hideEvent( QHideEvent* event )
+{
+    if( changeSuperiorDialog_ )
+        changeSuperiorDialog_->hide();
+    gui::HierarchyListView< kernel::CommunicationHierarchies >::hideEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +124,51 @@ void AgentListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListIt
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentListView::CanChangeSuperior
+// Created: JSR 2011-11-09
+// -----------------------------------------------------------------------------
+bool AgentListView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
+{
+    const kernel::Automat_ABC*        automat = dynamic_cast< const kernel::Automat_ABC* >       ( &entity );
+    const kernel::KnowledgeGroup_ABC* group   = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &superior );
+    if( automat && group )
+        return &entity.Get< kernel::CommunicationHierarchies >().GetTop() == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
+    else if( const kernel::KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
+    {
+        const kernel::Entity_ABC* com = &knowledgegroup->Get< kernel::CommunicationHierarchies >().GetTop();
+        if( const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior ) )
+            return com == team;
+        else if( group && ( knowledgegroup != group ) )
+            return com == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::DoChangeSuperior
+// Created: JSR 2011-11-09
+// -----------------------------------------------------------------------------
+void AgentListView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior )
+{
+    Drop( entity, superior );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::OnChangeKnowledgeGroup
+// Created: JSR 2011-11-09
+// -----------------------------------------------------------------------------
+void AgentListView::OnChangeKnowledgeGroup()
+{
+    if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() ) )
+    {
+        kernel::Entity_ABC& entity = *valuedItem->GetValue< kernel::Entity_ABC >();
+        if( !changeSuperiorDialog_ )
+            changeSuperiorDialog_ = new gui::ChangeSuperiorDialog( this, controllers_, *this, true );
+        changeSuperiorDialog_->Show( entity );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentListView::NotifyUpdated
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
@@ -132,6 +191,28 @@ void AgentListView::NotifyUpdated( const kernel::KnowledgeGroup_ABC& knowledgeGr
     gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
     if( item )
         item->setPixmap( 1, !knowledgeGroup.IsActivated() ? scisors_ : QPixmap() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::NotifyContextMenu
+// Created: JSR 2011-11-09
+// -----------------------------------------------------------------------------
+void AgentListView::NotifyContextMenu( const kernel::Automat_ABC& /*automat*/, kernel::ContextMenu& menu )
+{
+    if( !isVisible() )
+        return;
+    menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::NotifyContextMenu
+// Created: JSR 2011-11-09
+// -----------------------------------------------------------------------------
+void AgentListView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC& /*group*/, kernel::ContextMenu& menu )
+{
+    if( !isVisible() )
+        return;
+    menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
 }
 
 // -----------------------------------------------------------------------------

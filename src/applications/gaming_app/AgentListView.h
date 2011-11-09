@@ -10,8 +10,14 @@
 #ifndef __AgentListView_h_
 #define __AgentListView_h_
 
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_gui/ChangeSuperior_ABC.h"
 #include "clients_gui/HierarchyListView.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+
+namespace gui
+{
+    class ChangeSuperiorDialog;
+}
 
 namespace kernel
 {
@@ -42,7 +48,11 @@ class StaticModel;
 class AgentListView : public gui::HierarchyListView< kernel::CommunicationHierarchies >
                     , public tools::ElementObserver_ABC< AutomatDecisions >
                     , public tools::ElementObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
+                    , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                    , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
+                    , public gui::ChangeSuperior_ABC
 {
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
@@ -53,16 +63,27 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
+    virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnChangeKnowledgeGroup();
     //@}
 
 private:
     //! @name Helpers
     //@{
+    virtual void hideEvent( QHideEvent* event );
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );
 
     virtual void NotifyUpdated( const AutomatDecisions& decisions );
     virtual void NotifyUpdated( const kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& group, kernel::ContextMenu& menu );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Agent_ABC& target );
     virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Automat_ABC& target );
@@ -78,6 +99,7 @@ private:
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     QPixmap lock_, commandPost_, scisors_;
+    gui::ChangeSuperiorDialog* changeSuperiorDialog_;
     //@}
 };
 

@@ -16,6 +16,7 @@
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/EntityCommunications.h"
 #include "preparation/CommandPostAttributes.h"
+#include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/Level.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -35,11 +36,12 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, EntitySymbols& icons, ModelBuilder& modelBuilder, const FormationLevels& levels )
     : HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, PreparationProfile::GetProfile(), icons )
-    , factory_     ( factory )
-    , modelBuilder_( modelBuilder )
-    , levels_      ( levels )
-    , lock_        ( MAKE_PIXMAP( lock ) )
-    , commandPost_ ( MAKE_PIXMAP( commandpost ) )
+    , factory_             ( factory )
+    , modelBuilder_        ( modelBuilder )
+    , levels_              ( levels )
+    , lock_                ( MAKE_PIXMAP( lock ) )
+    , commandPost_         ( MAKE_PIXMAP( commandpost ) )
+    , changeSuperiorDialog_( 0 )
 {
     controllers_.Register( *this );
     addColumn( "HiddenPuce", 15 );
@@ -55,6 +57,17 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
 TacticalListView::~TacticalListView()
 {
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::hideEvent
+// Created: JSR 2011-11-09
+// -----------------------------------------------------------------------------
+void TacticalListView::hideEvent( QHideEvent* event )
+{
+    if( changeSuperiorDialog_ )
+        changeSuperiorDialog_->hide();
+    HierarchyListView< kernel::TacticalHierarchies >::hideEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,11 +176,13 @@ void TacticalListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoin
 // Name: TacticalListView::NotifyContextMenu
 // Created: SBO 2007-11-09
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyContextMenu( const Entity_ABC&, ContextMenu& menu )
+void TacticalListView::NotifyContextMenu( const Entity_ABC& entity, ContextMenu& menu )
 {
     if( !isVisible() )
         return;
     menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ) );
+    if( entity.Get< kernel::TacticalHierarchies >().GetSuperior() != 0 )
+        menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,6 +229,21 @@ void TacticalListView::OnRename()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TacticalListView::OnChangeSuperior
+// Created: JSR 2011-11-08
+// -----------------------------------------------------------------------------
+void TacticalListView::OnChangeSuperior()
+{
+    if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) )
+    {
+        Entity_ABC& entity = *valuedItem->GetValue< Entity_ABC >();
+        if( !changeSuperiorDialog_ )
+            changeSuperiorDialog_ = new gui::ChangeSuperiorDialog( this, controllers_, *this, false );
+        changeSuperiorDialog_->Show( entity );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: TacticalListView::NotifyContextMenu
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
@@ -254,6 +284,33 @@ void TacticalListView::Disengage()
         if( AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
             decisions->Disengage();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::CanChangeSuperior
+// Created: JSR 2011-11-08
+// -----------------------------------------------------------------------------
+bool TacticalListView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
+{
+    if( dynamic_cast< const Agent_ABC* >( &entity ) )
+        return dynamic_cast< const Automat_ABC* >( &superior ) != 0;
+    if( dynamic_cast< const Automat_ABC* >( &entity ) )
+        return dynamic_cast< const Formation_ABC* >( &superior ) != 0;
+    if( dynamic_cast< const Formation_ABC* >( &entity ) )
+        return dynamic_cast< const Formation_ABC* >( &superior ) != 0 || dynamic_cast< const Team_ABC* >( &superior ) != 0;
+    if( const Ghost_ABC* ghost = dynamic_cast< const Ghost_ABC* >( &entity ) )
+        return ( ghost->GetGhostType() == eGhostType_Automat && dynamic_cast< const Formation_ABC* >( &superior ) != 0 )
+            || ( ghost->GetGhostType() == eGhostType_Agent && dynamic_cast< const Team_ABC* >( &superior ) != 0 );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::DoChangeSuperior
+// Created: JSR 2011-11-08
+// -----------------------------------------------------------------------------
+void TacticalListView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior )
+{
+    Drop( entity, superior );
 }
 
 // -----------------------------------------------------------------------------
