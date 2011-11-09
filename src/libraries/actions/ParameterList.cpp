@@ -45,7 +45,13 @@ ParameterList::ParameterList( const kernel::OrderParameter& parameter, const ::g
 {
     int i = 0;
     for( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >::const_iterator it = list.begin(); it != list.end(); ++it, ++i )
-        AddParameter( *factory.CreateParameter( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).ascii(), "location", false ), *it, entity ) );
+    {
+        Parameter_ABC* param = factory.CreateParameter( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).ascii(), "location", false ), *it, entity );
+        if( param )
+            AddParameter( *param );
+        else
+            throw std::runtime_error( "Invalid mission parameter" );
+    }
 }
 
 // -----------------------------------------------------------------------------
