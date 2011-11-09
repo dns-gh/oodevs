@@ -5,14 +5,14 @@
       <objects/>
       <tactical>
         <formation id="4" level="ii" name="GTIA [4]">
-          <automat engaged="false" id="5" knowledge-group="6" name="SGTIA ABC [5]" type="SGTIA ABC">
-            <unit command-post="false" id="9" name="Peloton . LECLERC CDP SOFF" position="29TNF3205553215" type="Peloton . LECLERC CDP SOFF"/>
+          <automat engaged="false" id="5" knowledge-group="6" name="SGTIA ABC [5]" type="SGTIA ABC XL">
+            <unit command-post="false" id="9" name="Peloton . LECLERC CDP SOFF" position="29TNF3205553215" type="ABC . Peloton LECLERC CDP SOFF"/>
             <unit command-post="false" id="10" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3211453250" type="ABC . Peloton LECLERC CDP OFF"/>
             <unit command-post="false" id="14" name="PIA Dominante ABC" position="29TNF3219353082" type="PIA Dominante ABC"/>
             <unit command-post="false" id="15" name="PIA Dominante INF" position="29TNF3240653367" type="PIA Dominante INF"/>
             <unit command-post="false" id="16" name="PIA Dominante Reco" position="29TNF3223053324" type="PIA Dominante Reco"/>
-            <unit command-post="false" id="17" name="Patrouille . EI 12,7" position="29TNF3218453426" type="Patrouille . EI 12,7"/>
-            <unit command-post="true" id="71" name="Section . CDT CIE INF VAB" position="29TNF3220353082" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="17" name="Patrouille . EI 12,7" position="29TNF3218453426" type="ABC . Patrouille EI 12,7"/>
+            <unit command-post="true" id="71" name="Section . CDT CIE INF VAB" position="29TNF3220353082" type="INF . Section CDT CIE VAB"/>
             <limit name="Limite 80">
               <point>29TNF3255357416</point>
               <point>29TNF3262457141</point>
@@ -31,18 +31,18 @@
               <point>29TNF3265754597</point>
             </limit>
           </automat>
-          <automat engaged="true" id="85" knowledge-group="6" name="SGTIA ABC [85]" type="SGTIA ABC">
-            <unit command-post="true" id="86" name="Peloton . LECLERC CDT ESC" position="29TNF3102551991" type="Peloton . LECLERC CDT ESC"/>
-            <unit command-post="false" id="87" name="Peloton . LECLERC CDP SOFF" position="29TNF3152751494" type="Peloton . LECLERC CDP SOFF"/>
-            <unit command-post="false" id="88" name="Peloton . LECLERC CDP SOFF" position="29TNF3102950993" type="Peloton . LECLERC CDP SOFF"/>
+          <automat engaged="true" id="85" knowledge-group="6" name="SGTIA ABC [85]" type="SGTIA ABC XL">
+            <unit command-post="true" id="86" name="Peloton . LECLERC CDT ESC" position="29TNF3102551991" type="ABC . Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="87" name="Peloton . LECLERC CDP SOFF" position="29TNF3152751494" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="88" name="Peloton . LECLERC CDP SOFF" position="29TNF3102950993" type="ABC . Peloton LECLERC CDP SOFF"/>
             <unit command-post="false" id="89" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3052651490" type="ABC . Peloton LECLERC CDP OFF"/>
-            <unit command-post="false" id="90" name="Section . CBT INF VAB CDS SOFF" position="29TNF3152551993" type="Section . CBT INF VAB CDS SOFF"/>
-            <unit command-post="false" id="91" name="Peloton . d appui direct" position="29TNF3173551495" type="Peloton . d appui direct"/>
-            <unit command-post="false" id="92" name="Groupe GEN . EBG" position="29TNF3153050996" type="Groupe GEN . EBG"/>
+            <unit command-post="false" id="90" name="Section . CBT INF VAB CDS SOFF" position="29TNF3152551993" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit command-post="false" id="91" name="Peloton . d appui direct" position="29TNF3173551495" type="ABC . Peloton d appui direct"/>
+            <unit command-post="false" id="92" name="Groupe GEN . EBG" position="29TNF3153050996" type="GEN . Groupe EBG"/>
             <unit command-post="false" id="93" name="PIA Dominante ABC" position="29TNF3103050787" type="PIA Dominante ABC"/>
             <unit command-post="false" id="94" name="PIA Dominante INF" position="29TNF3052950991" type="PIA Dominante INF"/>
             <unit command-post="false" id="95" name="PIA Dominante Reco" position="29TNF3031951489" type="PIA Dominante Reco"/>
-            <unit command-post="false" id="96" name="Patrouille . EI 12,7" position="29TNF3052451988" type="Patrouille . EI 12,7"/>
+            <unit command-post="false" id="96" name="Patrouille . EI 12,7" position="29TNF3052451988" type="ABC . Patrouille EI 12,7"/>
           </automat>
           <lima name="Lima 74">
             <point>29TNF3208755273</point>
@@ -129,16 +129,16 @@
       <objects/>
       <tactical>
         <formation id="25" level="ii" name="GTIA [25]">
-          <automat engaged="false" id="30" knowledge-group="31" name="SGTIA INF [30]" type="SGTIA INF">
-            <unit command-post="true" id="32" name="Section . CDT CIE INF VAB" position="29TNF3208959052" type="Section . CDT CIE INF VAB"/>
-            <unit command-post="false" id="34" name="Section . CBT INF VAB CDS SOFF" position="29TNF3243258682" type="Section . CBT INF VAB CDS SOFF"/>
-            <unit command-post="false" id="37" name="Peloton . LECLERC CDP SOFF" position="29TNF3244258686" type="Peloton . LECLERC CDP SOFF"/>
+          <automat engaged="false" id="30" knowledge-group="31" name="SGTIA INF [30]" type="SGTIA INF dominante roues">
+            <unit command-post="true" id="32" name="Section . CDT CIE INF VAB" position="29TNF3208959052" type="INF . Section CDT CIE VAB"/>
+            <unit command-post="false" id="34" name="Section . CBT INF VAB CDS SOFF" position="29TNF3243258682" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit command-post="false" id="37" name="Peloton . LECLERC CDP SOFF" position="29TNF3244258686" type="ABC . Peloton LECLERC CDP SOFF"/>
             <unit command-post="false" id="40" name="PIA Dominante INF" position="29TNF3216858583" type="PIA Dominante INF"/>
             <unit command-post="false" id="41" name="PIA Dominante Reco" position="29TNF3276658786" type="PIA Dominante Reco"/>
-            <unit command-post="false" id="81" name="Patrouille . EI 12,7" position="29TNF3257158493" type="Patrouille . EI 12,7"/>
-            <unit command-post="false" id="82" name="Patrouille . EI 12,7" position="29TNF3207858902" type="Patrouille . EI 12,7"/>
-            <unit command-post="false" id="83" name="Patrouille . EI 12,7" position="29TNF3281658913" type="Patrouille . EI 12,7"/>
-            <unit command-post="false" id="84" name="Peloton . d appui direct" position="29TNF3245759039" type="Peloton . d appui direct"/>
+            <unit command-post="false" id="81" name="Patrouille . EI 12,7" position="29TNF3257158493" type="ABC . Patrouille EI 12,7"/>
+            <unit command-post="false" id="82" name="Patrouille . EI 12,7" position="29TNF3207858902" type="ABC . Patrouille EI 12,7"/>
+            <unit command-post="false" id="83" name="Patrouille . EI 12,7" position="29TNF3281658913" type="ABC . Patrouille EI 12,7"/>
+            <unit command-post="false" id="84" name="Peloton . d appui direct" position="29TNF3245759039" type="ABC . Peloton d appui direct"/>
           </automat>
         </formation>
       </tactical>
