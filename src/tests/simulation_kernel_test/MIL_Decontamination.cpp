@@ -49,6 +49,10 @@ BOOST_FIXTURE_TEST_CASE( decontamination_effect, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( no_decontamination_effect, Fixture )
 {
+    effect_.Apply( 1., 9u );
+    Check( 100u, 100u, 100u, 100u );
+    effect_.Apply( 0.5, 19u );
+    Check( 100u, 100u, 100u, 100u );
     effect_.Apply( 0., 100u );
-    Check( 101u, 100u, 10u, 100u );
+    Check( 100u, 100u, 100u, 100u );
 }
