@@ -378,18 +378,26 @@ public:
     {
         const uint32 size = objectToManage.size();
         archive << size
-                << objectToManage
-                << appointment
+                << objectToManage;
+        const unsigned int padding = archive.GetSize() % 8;
+        for( unsigned int i = 0; i < padding; ++i )
+            archive << static_cast< int8 >( 0 );
+        archive << appointment
                 << finalAppointment;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
+        const unsigned int start = archive.GetSize();
         uint32 size = 0;
         archive >> size;
         objectToManage.resize( size );
-        archive >> objectToManage
-                >> appointment
+        archive >> objectToManage;
+        const unsigned int padding = ( archive.GetSize() - start ) % 8;
+        int8 junk;
+        for( unsigned int i = 0; i < padding; ++i )
+            archive >> junk;
+        archive >> appointment
                 >> finalAppointment;
     }
     //@}
