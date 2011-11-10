@@ -370,9 +370,9 @@ QString tools::ToString( E_FireAvailability nType )
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_NatureLevel nType )
+QString tools::ToString( E_NatureLevel nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToTr */  )
 {
-    return ENT_Tr::ConvertFromNatureLevel( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromNatureLevel( nType, conversion ).c_str();
 }
 
 // -----------------------------------------------------------------------------

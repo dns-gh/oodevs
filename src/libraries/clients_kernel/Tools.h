@@ -44,7 +44,7 @@ namespace tools
     QString ToString( E_PopulationRoe nType );
     QString ToString( E_MeetingEngagementStatus nType );
     QString ToString( E_FireAvailability nType );
-    QString ToString( E_NatureLevel nType );
+    QString ToString( E_NatureLevel nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
     QString ToString( E_UnitExperience nType );
     QString ToString( E_UnitMorale nType );
     QString ToString( E_UnitStress nType );

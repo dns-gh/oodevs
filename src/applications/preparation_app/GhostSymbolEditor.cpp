@@ -50,7 +50,7 @@ GhostSymbolEditor::GhostSymbolEditor( QGridLayout* layout, int row, kernel::Cont
 
     // Configuration
     for( unsigned int i = 0; i < unsigned int( eNbrNatureLevel ); ++i )
-        levelNames_ << tools::ToString( static_cast< E_NatureLevel >( i ) );
+        levelNames_ << tools::ToString( static_cast< E_NatureLevel >( i ), ENT_Tr_ABC::eToSim );
     OnSelectionChanged( 0 );
 }
 
