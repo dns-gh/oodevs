@@ -246,8 +246,8 @@ private:
     MIL_PopulationOrderManager                  orderManager_;
     boost::shared_ptr< MT_Vector2D >            vBarycenter_;
     // Pion effects
-    bool                                        bPionMaxSpeedOverloaded_;
     double                                      rOverloadedPionMaxSpeed_;
+    bool                                        bPionMaxSpeedOverloaded_;
     bool                                        bBlinded_;
     // Misc
     bool                                        bHasDoneMagicMove_;
