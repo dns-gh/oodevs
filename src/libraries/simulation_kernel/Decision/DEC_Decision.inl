@@ -172,7 +172,6 @@ void DEC_Decision< T >::Reset( std::string groupName )
 template< class T >
 void DEC_Decision< T >::CleanStateAfterCrash()
 {
-    assert( false ); // To allow debugging ...
     assert( pEntity_ );
     _clearfp();
 //    DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() ); // $$$$ LDC: Is there a way to dump lua state?
@@ -187,7 +186,11 @@ void DEC_Decision< T >::CleanStateAfterCrash()
 template< class T >
 void DEC_Decision< T >::HandleUpdateDecisionError( const std::exception* error )
 {
-    assert( pEntity_ );
+    if( !pEntity_ )
+    {
+        MT_LOG_ERROR_MSG( "Update decision error in nil entity" );
+        return;
+    }
     if( error )
         LogError( error );
     CleanStateAfterCrash();
