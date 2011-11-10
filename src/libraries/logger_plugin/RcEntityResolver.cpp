@@ -59,7 +59,9 @@ QString RcEntityResolver::CreateLink( const QString& type, unsigned long id ) co
         return QString::number( id );
     if( !entity )
         return "Unknown entity";
-    std::stringstream stream;
-    stream << entity->GetName() << " [" << entity->GetId() << "] ";
-    return stream.str().c_str();
+    QString result = entity->GetName();
+    result += " [";
+    result += QString::number( id );
+    result += "] ";
+    return result;
 }

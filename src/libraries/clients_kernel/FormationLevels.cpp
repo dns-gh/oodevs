@@ -22,7 +22,7 @@ FormationLevels::FormationLevels()
     : root_( 0 )
 {
     root_ = new Level( "b", 0 );
-    Register( root_->GetId(), root_->GetName(), *root_ );
+    Register( root_->GetId(), root_->GetName().toStdString(), *root_ );
 
     root_ = AddLevel( *root_, "o" );
     root_ = AddLevel( *root_, "c" );
@@ -54,7 +54,7 @@ Level* FormationLevels::AddLevel( Level& root, const QString& name )
 {
     Level* newLevel = new Level( name, &root );
     root.SetPrevious( *newLevel );
-    Register( newLevel->GetId(), newLevel->GetName(), *newLevel );
+    Register( newLevel->GetId(), newLevel->GetName().toStdString(), *newLevel );
     return newLevel;
 }
 
@@ -73,7 +73,7 @@ const HierarchyLevel_ABC* FormationLevels::GetRoot() const
 // -----------------------------------------------------------------------------
 const HierarchyLevel_ABC* FormationLevels::Resolve( const QString& name ) const
 {
-    return Find( name );
+    return Find( name.toStdString() );
 }
 
 // -----------------------------------------------------------------------------
