@@ -55,7 +55,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Chalands de Debarquement" id="3" name="JOINT - CDIC + 2 CTM" type="Pion JOINT">
+  <unit decisional-model="Masalife.JOINT" id="3" name="JOINT . CDIC + 2 CTM" type="Pion JOINT">
     <nature atlas-nature="None" level="ooo" nature-app6="combat service support/transportation/spod spoe"/>
     <equipments>
       <equipment count="1" crew="30" major="true" type="CDIC"/>
@@ -83,7 +83,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="PC Marine" id="4" name="JOINT - PC Marine" type="Pion JOINT">
+  <unit decisional-model="Masalife.JOINT" id="4" name="JOINT . PC Marine" type="Pion JOINT">
     <nature atlas-nature="None" level="i" nature-app6="combat support/landing support"/>
     <equipments>
       <equipment count="1" crew="30" major="true" type="Vedette"/>
@@ -1805,7 +1805,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Chalands de Debarquement" id="61" name="JOINT - 2 CTM" type="Pion JOINT">
+  <unit decisional-model="Masalife.JOINT" id="61" name="JOINT . 2 CTM" type="Pion JOINT">
     <nature atlas-nature="None" level="ooo" nature-app6="combat service support/transportation/spod spoe"/>
     <equipments>
       <equipment count="2" crew="10" major="true" type="CTM"/>
@@ -5479,7 +5479,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Pion Groupe marine" id="189" name="JOINT - Groupe Zodiac" type="Pion JOINT">
+  <unit decisional-model="Masalife.JOINT" id="189" name="JOINT . Groupe Zodiac" type="Pion JOINT">
     <nature atlas-nature="None" level="oo" nature-app6="combat service support/transportation/spod spoe"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="ZODIAC"/>
@@ -5506,7 +5506,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Pion Groupe marine" id="190" name="JOINT - Vedette garde cote" type="Pion JOINT">
+  <unit decisional-model="Masalife.JOINT" id="190" name="JOINT . Vedette garde cote" type="Pion JOINT">
     <nature atlas-nature="None" level="oo" nature-app6="combat service support/transportation/spod spoe"/>
     <equipments>
       <equipment count="1" crew="9" major="true" type="Vedette garde cote"/>
@@ -6994,7 +6994,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Pion Groupe marine" id="239" name="JOINT - PC Garde cote" type="Pion JOINT">
+  <unit decisional-model="Masalife.JOINT" id="239" name="JOINT . PC Garde cote" type="Pion JOINT">
     <nature atlas-nature="None" level="ooo" nature-app6="combat service support/transportation/spod spoe"/>
     <equipments>
       <equipment count="1" crew="9" major="true" type="Vedette garde cote"/>
@@ -16788,7 +16788,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="PC Marine" id="591" name="JOINT - Porte-avions" type="Pion JOINT">
+  <unit decisional-model="Masalife.JOINT" id="591" name="JOINT . Porte-avions" type="Pion JOINT">
     <nature atlas-nature="None" level="ooo" nature-app6="combat support/landing support"/>
     <equipments>
       <equipment count="1" crew="100" major="true" type="Porte-avions"/>
@@ -16816,4 +16816,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1983883421" -->
+<!-- signature="0340901617" -->

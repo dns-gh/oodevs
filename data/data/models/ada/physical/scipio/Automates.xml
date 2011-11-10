@@ -334,15 +334,15 @@
   <automat decisional-model="BROVAB" id="667" name="RENS - Groupe Brouillage VHF BROMURE" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Groupe BROMURE"/>
   </automat>
-  <automat decisional-model="Groupe Chalands" id="668" name="JOINT - Groupe Chalands Marine" type="Automate JOINT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="JOINT - PC Marine"/>
-    <unit max-occurs="4" min-occurs="4" type="JOINT - CDIC + 2 CTM"/>
-    <unit max-occurs="4" min-occurs="4" type="JOINT - 2 CTM"/>
+  <automat decisional-model="Masalife.Automate.JOINT.Groupe Chalands Marine" id="668" name="JOINT . Groupe Chalands Marine" type="Automate JOINT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="JOINT . PC Marine"/>
+    <unit max-occurs="4" min-occurs="4" type="JOINT . CDIC + 2 CTM"/>
+    <unit max-occurs="4" min-occurs="4" type="JOINT . 2 CTM"/>
   </automat>
-  <automat decisional-model="Automate Groupe marine" id="669" name="JOINT - Groupe Marine" type="Automate JOINT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="JOINT - PC Garde cote"/>
-    <unit type="JOINT - Groupe Zodiac"/>
-    <unit type="JOINT - Vedette garde cote"/>
+  <automat decisional-model="Masalife.Automate.JOINT.Groupe Marine" id="669" name="JOINT . Groupe Marine" type="Automate JOINT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="JOINT . PC Garde cote"/>
+    <unit type="JOINT . Groupe Zodiac"/>
+    <unit type="JOINT . Vedette garde cote"/>
   </automat>
   <automat decisional-model="Groupe Assaut AIR" id="670" name="ALAT - Groupement Aerien CAS" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Bombardiers"/>
@@ -1344,4 +1344,4 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC BIE NBC"/>
   </automat>
 </automats>
-<!-- signature="0958053080" -->
+<!-- signature="3939179885" -->
