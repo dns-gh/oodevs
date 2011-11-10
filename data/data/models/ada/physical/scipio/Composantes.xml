@@ -73,7 +73,7 @@
   </equipment>
   <equipment codeEMAT6="502913" codeEMAT8="50291301" codeLFRIL="" codeNNO="1905144977353" comment="Chaland debarquement Infanterie Chars" id="2" name="CDIC" protection="TransportBlinde" size="Gros" weight="1000">
     <speeds max="60">
-      <speed terrain="unknown" value="0"/>
+      <speed terrain="unknown" value="1"/>
       <speed terrain="forest" value="0"/>
       <speed terrain="orchard" value="0"/>
       <speed terrain="swamp" value="0"/>
@@ -94,7 +94,7 @@
       <speed terrain="secondary road" value="0"/>
       <speed terrain="stream" value="0"/>
       <speed terrain="river" value="0"/>
-      <speed terrain="main river" value="0"/>
+      <speed terrain="main river" value="3"/>
       <speed terrain="bridge" value="0"/>
       <speed terrain="cliff" value="0"/>
       <speed terrain="railroad" value="0"/>
@@ -142,7 +142,7 @@
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="S37911K1" codeLFRIL="" codeNNO="5180143740230" comment="" id="3" max-slope="0.6" name="Vedette" protection="TransportBlinde" size="Gros" weight="1000">
     <speeds max="90">
-      <speed terrain="unknown" value="0"/>
+      <speed terrain="unknown" value="1"/>
       <speed terrain="forest" value="0"/>
       <speed terrain="orchard" value="0"/>
       <speed terrain="swamp" value="0"/>
@@ -163,7 +163,7 @@
       <speed terrain="secondary road" value="0"/>
       <speed terrain="stream" value="0"/>
       <speed terrain="river" value="0"/>
-      <speed terrain="main river" value="0"/>
+      <speed terrain="main river" value="3"/>
       <speed terrain="bridge" value="0"/>
       <speed terrain="cliff" value="0"/>
       <speed terrain="railroad" value="0"/>
@@ -15701,7 +15701,7 @@
   </equipment>
   <equipment codeEMAT6="502812" codeEMAT8="50281201" codeLFRIL="" codeNNO="1940143845936" comment="chaland transport maritime" id="147" name="CTM" protection="TransportBlinde" size="Gros" weight="1000">
     <speeds max="60">
-      <speed terrain="unknown" value="0"/>
+      <speed terrain="unknown" value="1"/>
       <speed terrain="forest" value="0"/>
       <speed terrain="orchard" value="0"/>
       <speed terrain="swamp" value="0"/>
@@ -15722,7 +15722,7 @@
       <speed terrain="secondary road" value="0"/>
       <speed terrain="stream" value="0"/>
       <speed terrain="river" value="0"/>
-      <speed terrain="main river" value="0"/>
+      <speed terrain="main river" value="3"/>
       <speed terrain="bridge" value="0"/>
       <speed terrain="cliff" value="0"/>
       <speed terrain="railroad" value="0"/>
@@ -30560,7 +30560,7 @@
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="50191501" codeLFRIL="" codeNNO="1940142913233" comment="" id="315" name="ZODIAC" protection="VehiculeNonProtege" size="Moyen" weight="1000">
     <speeds max="95">
-      <speed terrain="unknown" value="0"/>
+      <speed terrain="unknown" value="1"/>
       <speed terrain="forest" value="0"/>
       <speed terrain="orchard" value="0"/>
       <speed terrain="swamp" value="0"/>
@@ -30628,7 +30628,7 @@
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="50114301" codeLFRIL="" codeNNO="1940145356536" comment="" id="316" name="Vedette garde cote" protection="BlindeLeger" size="Moyen" weight="14">
     <speeds max="80">
-      <speed terrain="unknown" value="0"/>
+      <speed terrain="unknown" value="1"/>
       <speed terrain="forest" value="0"/>
       <speed terrain="orchard" value="0"/>
       <speed terrain="swamp" value="0"/>
@@ -30649,7 +30649,7 @@
       <speed terrain="secondary road" value="0"/>
       <speed terrain="stream" value="0"/>
       <speed terrain="river" value="0"/>
-      <speed terrain="main river" value="0"/>
+      <speed terrain="main river" value="3"/>
       <speed terrain="bridge" value="0"/>
       <speed terrain="cliff" value="0"/>
       <speed terrain="railroad" value="0"/>
@@ -35184,7 +35184,7 @@
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="369" name="Porte-avions" protection="TransportBlinde" size="Gros" weight="100000">
     <speeds max="60">
-      <speed terrain="unknown" value="0"/>
+      <speed terrain="unknown" value="1"/>
       <speed terrain="forest" value="0"/>
       <speed terrain="orchard" value="0"/>
       <speed terrain="swamp" value="0"/>
@@ -35205,7 +35205,7 @@
       <speed terrain="secondary road" value="0"/>
       <speed terrain="stream" value="0"/>
       <speed terrain="river" value="0"/>
-      <speed terrain="main river" value="0"/>
+      <speed terrain="main river" value="3"/>
       <speed terrain="bridge" value="0"/>
       <speed terrain="cliff" value="0"/>
       <speed terrain="railroad" value="0"/>
@@ -35251,5 +35251,75 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="370" name="Fantassin I.L." protection="Combattant" size="Personnel" weight="0.08">
+    <speeds max="5">
+      <speed terrain="unknown" value="5"/>
+      <speed terrain="forest" value="6"/>
+      <speed terrain="orchard" value="5"/>
+      <speed terrain="swamp" value="2"/>
+      <speed terrain="dune" value="3"/>
+      <speed terrain="urban area" value="6"/>
+      <speed terrain="lake" value="0"/>
+      <speed terrain="glacier" value="5"/>
+      <speed terrain="forest edge" value="6"/>
+      <speed terrain="suburb" value="6"/>
+      <speed terrain="waterfront" value="3"/>
+      <speed terrain="orchard edge" value="4"/>
+      <speed terrain="swamp edge" value="4"/>
+      <speed terrain="dune edge" value="4"/>
+      <speed terrain="glacier edge" value="4"/>
+      <speed terrain="country road" value="6"/>
+      <speed terrain="highway" value="6"/>
+      <speed terrain="main road" value="6"/>
+      <speed terrain="secondary road" value="6"/>
+      <speed terrain="stream" value="1"/>
+      <speed terrain="river" value="1"/>
+      <speed terrain="main river" value="0"/>
+      <speed terrain="bridge" value="6"/>
+      <speed terrain="cliff" value="0"/>
+      <speed terrain="railroad" value="5"/>
+      <speed terrain="crossroad" value="6"/>
+      <speed terrain="mountain" value="0"/>
+      <speed terrain="mountain edge" value="0"/>
+    </speeds>
+    <composition>
+      <category name="munition">
+        <resource capacity="240" logistic-threshold="10" name="CART 5.56 F1A F1" normalized-consumption="30"/>
+        <resource capacity="10" logistic-threshold="10" name="Grenade offensive" normalized-consumption="1"/>
+      </category>
+      <category name="ration">
+        <resource capacity="3" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="1"/>
+        <resource capacity="18" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="6"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="2" type="I.L Fantassin"/>
+    </sensors>
+    <radars/>
+    <transports/>
+    <consumptions>
+      <consumption status="ArretMoteurEteint">
+        <resource category="ration" name="EAU MINERALE 1L T 1" value="0.25"/>
+        <resource category="ration" name="RATION DE COMBAT 1" value="0.04"/>
+      </consumption>
+    </consumptions>
+    <weapon-systems/>
+    <human-protections/>
+    <objects>
+      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
+      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
+      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
+      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
+      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
+      <object initial-construction-time="36000s" type="checkpoint"/>
+      <object initial-destruction-time="1800s" type="mrls deployment area"/>
+      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
+      <object initial-destruction-time="1800s" type="mortar deployment area"/>
+      <object initial-destruction-time="1800s" type="cobra deployment area"/>
+    </objects>
+    <equipment-category>Autres</equipment-category>
+  </equipment>
 </equipments>
-<!-- signature="3496068954" -->
+<!-- signature="4129164266" -->

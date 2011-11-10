@@ -1,114 +1,114 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <automats model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/Automats.xsd">
-  <automat decisional-model="Batterie Tir AUF1" id="592" name="ART - Artillerie Animation AUF1" type="Automate ASS">
+  <automat decisional-model="Batterie Tir AUF1" id="593" name="ART - Artillerie Animation AUF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie ASS"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Artillerie Animation AUF1"/>
   </automat>
-  <automat decisional-model="Batterie Tir LRM" id="593" name="ART - Artillerie Animation LRU" type="Automate ASS">
+  <automat decisional-model="Batterie Tir LRM" id="594" name="ART - Artillerie Animation LRU" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - Section CDT Batterie LRU"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Artillerie Animation LRU"/>
   </automat>
-  <automat decisional-model="Batterie Tir LRM" id="594" name="ART - Artillerie Animation LRM" type="Automate ASS">
+  <automat decisional-model="Batterie Tir LRM" id="595" name="ART - Artillerie Animation LRM" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - Section CDT Batterie LRM"/>
     <unit max-occurs="2" min-occurs="2" type="ART-  Artillerie Animation LRM"/>
   </automat>
-  <automat decisional-model="Batterie Reco COBRA" id="595" name="ART - Batterie Reco COBRA" type="Automate ASS">
+  <automat decisional-model="Batterie Reco COBRA" id="596" name="ART - Batterie Reco COBRA" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie COBRA"/>
     <unit max-occurs="4" min-occurs="4" type="ART - Equipe Reco COBRA"/>
   </automat>
-  <automat decisional-model="Batterie Reco SAM" id="596" name="ART - Section Reco Mortier" type="Automate ASS">
+  <automat decisional-model="Batterie Reco SAM" id="597" name="ART - Section Reco Mortier" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Equipe Reco Mortier"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Equipe Reco Mortier"/>
   </automat>
-  <automat decisional-model="Sgpt Sacp Carol" id="597" name="ART - Batterie CAROL" type="Automate ASA">
+  <automat decisional-model="Sgpt Sacp Carol" id="598" name="ART - Batterie CAROL" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie SACP CAR"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Section CAROL"/>
   </automat>
-  <automat decisional-model="Batterie COBRA" id="598" name="ART - Batterie COBRA" type="Automate ASS">
+  <automat decisional-model="Batterie COBRA" id="599" name="ART - Batterie COBRA" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie COBRA"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Station COBRA"/>
   </automat>
-  <automat decisional-model="Sgpt Samp Hawk" id="599" name="ART - Batterie HAWK" type="Automate ASA">
+  <automat decisional-model="Sgpt Samp Hawk" id="600" name="ART - Batterie HAWK" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie HAWK"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Section de Tir HAWK"/>
   </automat>
-  <automat decisional-model="Sgpt Satcp Mistral" id="600" name="ART - Batterie MISTRAL" type="Automate ASA">
+  <automat decisional-model="Sgpt Satcp Mistral" id="601" name="ART - Batterie MISTRAL" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie MISTRAL"/>
     <unit max-occurs="3" min-occurs="3" type="ART - Section MISTRAL"/>
   </automat>
-  <automat decisional-model="Batterie Tir SAM" id="601" name="ART - Batterie Mortier 120" type="Automate ASS">
+  <automat decisional-model="Batterie Tir SAM" id="602" name="ART - Batterie Mortier 120" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie Mortier"/>
     <unit max-occurs="4" min-occurs="4" type="ART - Section Mortier 120"/>
   </automat>
-  <automat decisional-model="Batterie Tir SAM" id="602" name="ART - Batterie Mortier 120  4 pieces" type="Automate ASS">
+  <automat decisional-model="Batterie Tir SAM" id="603" name="ART - Batterie Mortier 120  4 pieces" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie Mortier 120"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Groupe Mortier 120 S/OFF 2 pieces"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Groupe Mortier 120 OFF 2 pieces"/>
   </automat>
-  <automat decisional-model="Batterie Tir SAM" id="603" name="ART - Batterie Mortier 120  6 pieces" type="Automate ASS">
+  <automat decisional-model="Batterie Tir SAM" id="604" name="ART - Batterie Mortier 120  6 pieces" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie Mortier 120"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Groupe Mortier 120 OFF 3 pieces"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Groupe Mortier 120 S/OFF 3 pieces"/>
   </automat>
-  <automat decisional-model="Batterie Tir SAM" id="604" name="ART - Batterie Mortier 120  8 pieces" type="Automate ASS">
+  <automat decisional-model="Batterie Tir SAM" id="605" name="ART - Batterie Mortier 120  8 pieces" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie Mortier 120"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Groupe Mortier 120 OFF 4 pieces"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Groupe Mortier 120 S/OFF 4 pieces"/>
   </automat>
-  <automat decisional-model="Sgpt Sacp Carol" id="605" name="ART - Batterie ROLAND" type="Automate ASA">
+  <automat decisional-model="Sgpt Sacp Carol" id="606" name="ART - Batterie ROLAND" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie SACP ROL"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Section ROLAND"/>
   </automat>
-  <automat decisional-model="Batterie Reco AUF1" id="606" name="ART - Batterie de Reco AUF1" type="Automate ASS">
+  <automat decisional-model="Batterie Reco AUF1" id="607" name="ART - Batterie de Reco AUF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie de Reco AUF1"/>
     <unit max-occurs="3" min-occurs="3" type="ART - Section de Reco AUF1"/>
   </automat>
-  <automat decisional-model="Batterie Reco LRM" id="607" name="ART - Batterie de Reco LRM" type="Automate ASS">
+  <automat decisional-model="Batterie Reco LRM" id="608" name="ART - Batterie de Reco LRM" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie de Reco LRM"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Equipe de Reco LRM"/>
   </automat>
-  <automat decisional-model="Batterie Reco TRF1" id="608" name="ART - Batterie de Reco TRF1" type="Automate ASS">
+  <automat decisional-model="Batterie Reco TRF1" id="609" name="ART - Batterie de Reco TRF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie de Reco TRF1"/>
     <unit max-occurs="3" min-occurs="3" type="ART - Section de Reco TRF1"/>
   </automat>
-  <automat decisional-model="Batterie Tir AUF1" id="609" name="ART - Batterie de Tir AUF1" type="Automate ASS">
+  <automat decisional-model="Batterie Tir AUF1" id="610" name="ART - Batterie de Tir AUF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie ASS"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir AUF1 CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir AUF1 CDS SOFF"/>
   </automat>
-  <automat decisional-model="Batterie Tir LRM" id="610" name="ART - Batterie de Tir LRM" type="Automate ASS">
+  <automat decisional-model="Batterie Tir LRM" id="611" name="ART - Batterie de Tir LRM" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - Section CDT Batterie LRM"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Section de Tir LRM CDS OFF"/>
   </automat>
-  <automat decisional-model="Batterie Tir TRF1" id="611" name="ART - Batterie de Tir TRF1" type="Automate ASS">
+  <automat decisional-model="Batterie Tir TRF1" id="612" name="ART - Batterie de Tir TRF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie de Tir TRF1"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir TRF1 CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir TRF1 CDS SOFF"/>
   </automat>
-  <automat decisional-model="DLO" id="612" name="ART - DLO AMX10P" type="Automate ASS">
+  <automat decisional-model="DLO" id="613" name="ART - DLO AMX10P" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - Groupe CDT DLOP"/>
     <unit max-occurs="3" min-occurs="3" type="ART - EO CHEF OFF sur AMX10P"/>
     <unit max-occurs="1" min-occurs="1" type="ART - EO CHEF SOFF sur AMX10P"/>
   </automat>
-  <automat decisional-model="DLO" id="613" name="ART - DLO VAB" type="Automate ASS">
+  <automat decisional-model="DLO" id="614" name="ART - DLO VAB" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - Groupe CDT DLO"/>
     <unit max-occurs="3" min-occurs="3" type="ART - EO CHEF OFF sur VAB"/>
     <unit max-occurs="1" min-occurs="1" type="ART - EO CHEF SOFF sur VAB"/>
   </automat>
-  <automat decisional-model="DLOP" id="614" name="ART - DLOP" type="Automate ASS">
+  <automat decisional-model="DLOP" id="615" name="ART - DLOP" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - Groupe CDT DLOP"/>
     <unit max-occurs="2" min-occurs="2" type="ART - EOP CHEF OFF"/>
     <unit max-occurs="2" min-occurs="2" type="ART - EOP CHEF SOFF"/>
   </automat>
-  <automat decisional-model="ELGE" id="615" name="RENS - ELGE" type="Automate RENS">
+  <automat decisional-model="ELGE" id="616" name="RENS - ELGE" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Groupe ELGE"/>
   </automat>
-  <automat decisional-model="Sgpt Hap Mixte" id="616" name="ALAT - Escadrille HA" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hap Mixte" id="617" name="ALAT - Escadrille HA" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Escadrille"/>
     <unit max-occurs="3" min-occurs="3" type="ALAT - Patrouille 2HAC"/>
     <unit max-occurs="1" type="ALAT - Patrouille 1HM SOFF"/>
   </automat>
-  <automat decisional-model="Sgpt Hm" id="617" name="ALAT - Escadrille HM" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hm" id="618" name="ALAT - Escadrille HM" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Escadrille"/>
     <unit max-occurs="1" type="ALAT - Patrouille 2HAC"/>
     <unit max-occurs="1" type="ALAT - Patrouille 2HAM"/>
@@ -116,718 +116,718 @@
     <unit max-occurs="3" type="ALAT - Patrouille 1HM OFF"/>
     <unit max-occurs="2" type="ALAT - Patrouille 3HM"/>
   </automat>
-  <automat decisional-model="Sgpt Hap Mixte" id="618" name="ALAT - Escadrille HRA" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hap Mixte" id="619" name="ALAT - Escadrille HRA" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Escadrille"/>
     <unit max-occurs="1" type="ALAT - Patrouille 1HM SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 2HAH"/>
     <unit max-occurs="2" min-occurs="2" type="ALAT - Patrouille 2HR"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 3HAH"/>
   </automat>
-  <automat decisional-model="Sgpt Hap Mixte" id="619" name="ALAT - Escadrille HRAP MISTRAL" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hap Mixte" id="620" name="ALAT - Escadrille HRAP MISTRAL" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Escadrille"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 2HAC"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 2HAM"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 2HAH"/>
     <unit max-occurs="1" type="ALAT - Patrouille 1HM SOFF"/>
   </automat>
-  <automat decisional-model="Escadrille Horizon" id="620" name="ALAT - Escadrille Horizon" type="Automate RENS">
+  <automat decisional-model="Escadrille Horizon" id="621" name="ALAT - Escadrille Horizon" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Stations Horizon"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Cougar Horizon"/>
   </automat>
-  <automat decisional-model="Sgpt Hap Mixte" id="621" name="ALAT - ESCADRILLE 2HAC" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hap Mixte" id="622" name="ALAT - ESCADRILLE 2HAC" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC ALAT"/>
     <unit max-occurs="4" min-occurs="4" type="ALAT - Patrouille 2HAC"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille HAC"/>
   </automat>
-  <automat decisional-model="Sgpt Hap Mixte" id="622" name="ALAT - ESCADRILLE 2HAM" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hap Mixte" id="623" name="ALAT - ESCADRILLE 2HAM" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC ALAT"/>
     <unit max-occurs="4" min-occurs="4" type="ALAT - Patrouille 2HAM"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille HAM"/>
   </automat>
-  <automat decisional-model="Sgpt Hap Mixte" id="623" name="ALAT - ESCADRILLE 2HAV" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hap Mixte" id="624" name="ALAT - ESCADRILLE 2HAV" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC ALAT"/>
     <unit max-occurs="4" min-occurs="4" type="ALAT - Patrouille 2HAV"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille HAV"/>
   </automat>
-  <automat decisional-model="Sgpt Hap Mixte" id="624" name="ALAT - ESCADRILLE 3HAC" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hap Mixte" id="625" name="ALAT - ESCADRILLE 3HAC" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC ALAT"/>
     <unit max-occurs="3" min-occurs="3" type="ALAT - Patrouille 3HAC"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille HAC"/>
   </automat>
-  <automat decisional-model="Sgpt Hap Mixte" id="625" name="ALAT - ESCADRILLE 3HAM" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hap Mixte" id="626" name="ALAT - ESCADRILLE 3HAM" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC ALAT"/>
     <unit max-occurs="3" min-occurs="3" type="ALAT - Patrouille 3HAM"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille HAM"/>
   </automat>
-  <automat decisional-model="Sgpt Hap Mixte" id="626" name="ALAT - ESCADRILLE 3HAV" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hap Mixte" id="627" name="ALAT - ESCADRILLE 3HAV" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC ALAT"/>
     <unit max-occurs="3" min-occurs="3" type="ALAT - Patrouille 3HAV"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille HAV"/>
   </automat>
-  <automat decisional-model="Sgpt Hm" id="627" name="ALAT - ESCADRILLE 3HM" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hm" id="628" name="ALAT - ESCADRILLE 3HM" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC ALAT"/>
     <unit max-occurs="3" min-occurs="3" type="ALAT - Patrouille 3HM"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille HM"/>
   </automat>
-  <automat decisional-model="Sgpt Hm" id="628" name="ALAT - ESCADRILLE HM MIXTE" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hm" id="629" name="ALAT - ESCADRILLE HM MIXTE" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC ALAT"/>
     <unit max-occurs="2" min-occurs="2" type="ALAT - Patrouille 2HM"/>
     <unit max-occurs="4" min-occurs="4" type="ALAT - Patrouille IMEX"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille HM"/>
   </automat>
-  <automat decisional-model="Sgpt Tigre" id="629" name="ALAT - ESCADRILLE TIGRE HAD" type="Automate ALAT">
+  <automat decisional-model="Sgpt Tigre" id="630" name="ALAT - ESCADRILLE TIGRE HAD" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC ALAT"/>
     <unit max-occurs="2" min-occurs="2" type="ALAT - Patrouille Tigre 2HAD"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille Tigre 3HAD"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille Tigre"/>
   </automat>
-  <automat decisional-model="Sgpt Tigre" id="630" name="ALAT - ESCADRILLE TIGRE HAP" type="Automate ALAT">
+  <automat decisional-model="Sgpt Tigre" id="631" name="ALAT - ESCADRILLE TIGRE HAP" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC ALAT"/>
     <unit max-occurs="2" min-occurs="2" type="ALAT - Patrouille Tigre 2HAP"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille Tigre 3HAP"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille Tigre"/>
   </automat>
-  <automat decisional-model="Sgpt Hm" id="631" name="ALAT - PUMA PC" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hm" id="632" name="ALAT - PUMA PC" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Patrouille HM"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="632" name="ART . OCF" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="633" name="ART . OCF" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . DLART"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="633" name="ART . PC DAF" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="634" name="ART . PC DAF" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . DAFA"/>
     <unit max-occurs="1" min-occurs="1" type="ART . DAFV"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="634" name="ART . PC RGT" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="635" name="ART . PC RGT" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . PCRA"/>
     <unit max-occurs="1" min-occurs="1" type="ART . PCRV"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="635" name="GEN . PC RG - 2 + 2" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="636" name="GEN . PC RG - 2 + 2" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC RG - AV 2 + 2"/>
     <unit max-occurs="1" min-occurs="1" type="GEN . PC RG - MR 2 + 2"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="636" name="GEN . PC RG - 3 + 1" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="637" name="GEN . PC RG - 3 + 1" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC RG - AV 3 + 1"/>
     <unit max-occurs="1" min-occurs="1" type="GEN . PC RG - MR 3 + 1"/>
   </automat>
-  <automat decisional-model="GLAISE ALFT Esc A et Reco" id="637" name="GLAISE - ALFT - Escadrille Atk" type="Automate ALAT">
+  <automat decisional-model="GLAISE ALFT Esc A et Reco" id="638" name="GLAISE - ALFT - Escadrille Atk" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ALFT - PC UH"/>
     <unit type="GLAISE - ALFT - A 2 x OH58D"/>
     <unit type="GLAISE - ALFT - A 2 x Cobra"/>
     <unit type="GLAISE - ALFT - A 2 x Gazelle"/>
   </automat>
-  <automat decisional-model="GLAISE ALFT esc UH et UM" id="638" name="GLAISE - ALFT - Escadrille HM" type="Automate ALAT">
+  <automat decisional-model="GLAISE ALFT esc UH et UM" id="639" name="GLAISE - ALFT - Escadrille HM" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ALFT - PC UH"/>
     <unit type="GLAISE - ALFT - UH 5 x CH47"/>
     <unit type="GLAISE - ALFT - UH 5 x CH53"/>
   </automat>
-  <automat decisional-model="GLAISE ALFT esc UH et UM" id="639" name="GLAISE - ALFT - Escadrillle Reco" type="Automate ALAT">
+  <automat decisional-model="GLAISE ALFT esc UH et UM" id="640" name="GLAISE - ALFT - Escadrillle Reco" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ALFT - PC UH"/>
     <unit type="GLAISE - ALFT - UH 5 x MI8"/>
   </automat>
-  <automat decisional-model="GLAISE ASA batterie CP" id="640" name="GLAISE - ASA - Batterie SA 11" type="Automate ASA">
+  <automat decisional-model="GLAISE ASA batterie CP" id="641" name="GLAISE - ASA - Batterie SA 11" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA - PC"/>
     <unit type="GLAISE - ASA - Section SA 11"/>
   </automat>
-  <automat decisional-model="GLAISE ASA batterie CP" id="641" name="GLAISE - ASA - Batterie SA 13" type="Automate ASA">
+  <automat decisional-model="GLAISE ASA batterie CP" id="642" name="GLAISE - ASA - Batterie SA 13" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA - PC"/>
     <unit type="GLAISE - ASA - Section SA 13"/>
   </automat>
-  <automat decisional-model="GLAISE ASA Batterie MP" id="642" name="GLAISE - ASA - Batterie SA 6" type="Automate ASA">
+  <automat decisional-model="GLAISE ASA Batterie MP" id="643" name="GLAISE - ASA - Batterie SA 6" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA - PC"/>
     <unit type="GLAISE - ASA - Section SA 6"/>
   </automat>
-  <automat decisional-model="GLAISE ASA batterie CP" id="643" name="GLAISE - ASA - Batterie SA 9" type="Automate ASA">
+  <automat decisional-model="GLAISE ASA batterie CP" id="644" name="GLAISE - ASA - Batterie SA 9" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA - PC"/>
     <unit type="GLAISE - ASA - Section SA 9"/>
   </automat>
-  <automat decisional-model="GLAISE ASA section tcp independante" id="644" name="GLAISE - ASA - Section SA 14" type="Automate ASA">
+  <automat decisional-model="GLAISE ASA section tcp independante" id="645" name="GLAISE - ASA - Section SA 14" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA - PC SA14"/>
     <unit type="GLAISE - ASA - Groupe SA 14"/>
   </automat>
-  <automat decisional-model="GLAISE ASA section tcp independante" id="645" name="GLAISE - ASA - Section SA 16" type="Automate ASA">
+  <automat decisional-model="GLAISE ASA section tcp independante" id="646" name="GLAISE - ASA - Section SA 16" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA - PC SA14"/>
     <unit type="GLAISE - ASA - Groupe SA 16"/>
   </automat>
-  <automat decisional-model="GLAISE ASA section tcp independante" id="646" name="GLAISE - ASA - Section SA 7" type="Automate ASA">
+  <automat decisional-model="GLAISE ASA section tcp independante" id="647" name="GLAISE - ASA - Section SA 7" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA - PC Section"/>
     <unit type="GLAISE - ASA - Groupe SA 7"/>
   </automat>
-  <automat decisional-model="GLAISE ASA section tcp independante" id="647" name="GLAISE - ASA - Section ZSU 23 4" type="Automate ASA">
+  <automat decisional-model="GLAISE ASA section tcp independante" id="648" name="GLAISE - ASA - Section ZSU 23 4" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA - PC Section"/>
     <unit max-occurs="2" min-occurs="2" type="GLAISE - ASA - Groupe ZSU 23 4"/>
   </automat>
-  <automat decisional-model="GLAISE ASS batterie tractee" id="648" name="GLAISE - ASS - Batterie 122D30" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS batterie tractee" id="649" name="GLAISE - ASS - Batterie 122D30" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - PC"/>
     <unit max-occurs="1" min-occurs="1" type="GLAISE - ASS - Section 122D30"/>
   </automat>
-  <automat decisional-model="GLAISE ASS batterie tractee" id="649" name="GLAISE - ASS - Batterie 130M46" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS batterie tractee" id="650" name="GLAISE - ASS - Batterie 130M46" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - PC"/>
     <unit max-occurs="1" min-occurs="1" type="GLAISE - ASS - Section 130M46"/>
   </automat>
-  <automat decisional-model="GLAISE ASS batterie tractee" id="650" name="GLAISE - ASS - Batterie 2A36" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS batterie tractee" id="651" name="GLAISE - ASS - Batterie 2A36" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - PC"/>
     <unit max-occurs="1" min-occurs="1" type="GLAISE - ASS - Section 2 A 36"/>
   </automat>
-  <automat decisional-model="GLAISE ASS batterie automoteur" id="651" name="GLAISE - ASS - Batterie 2S 5" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS batterie automoteur" id="652" name="GLAISE - ASS - Batterie 2S 5" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - PC"/>
     <unit type="GLAISE - ASS - Section 2S 5"/>
   </automat>
-  <automat decisional-model="GLAISE ASS batterie automoteur" id="652" name="GLAISE - ASS - Batterie 2S 7" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS batterie automoteur" id="653" name="GLAISE - ASS - Batterie 2S 7" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - PC"/>
     <unit type="GLAISE - ASS - Section 2S 7"/>
   </automat>
-  <automat decisional-model="GLAISE ASS batterie automoteur" id="653" name="GLAISE - ASS - Batterie 2S1" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS batterie automoteur" id="654" name="GLAISE - ASS - Batterie 2S1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - PC"/>
     <unit type="GLAISE - ASS - Section 2S1"/>
   </automat>
-  <automat decisional-model="GLAISE ASS batterie automoteur" id="654" name="GLAISE - ASS - Batterie 2S3" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS batterie automoteur" id="655" name="GLAISE - ASS - Batterie 2S3" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - PC"/>
     <unit type="GLAISE - ASS - Section 2S3"/>
   </automat>
-  <automat decisional-model="GLAISE ASS batterie LRM" id="655" name="GLAISE - ASS - Batterie BM 21" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS batterie LRM" id="656" name="GLAISE - ASS - Batterie BM 21" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - PC BM 21"/>
     <unit type="GLAISE - ASS - Section BM 21"/>
   </automat>
-  <automat decisional-model="GLAISE ASS batterie LRM" id="656" name="GLAISE - ASS - Batterie BM 22" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS batterie LRM" id="657" name="GLAISE - ASS - Batterie BM 22" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - PC BM 21"/>
     <unit type="GLAISE - ASS - Section BM22"/>
   </automat>
-  <automat decisional-model="GLAISE ASS batterie LRM" id="657" name="GLAISE - ASS - Batterie BM 30" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS batterie LRM" id="658" name="GLAISE - ASS - Batterie BM 30" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - PC BM 21"/>
     <unit max-occurs="3" min-occurs="3" type="GLAISE - ASS - Section BM30"/>
   </automat>
-  <automat decisional-model="GLAISE ASS DLO" id="658" name="GLAISE - ASS - DLO" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS DLO" id="659" name="GLAISE - ASS - DLO" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - PC"/>
     <unit type="GLAISE - ASS - EO"/>
   </automat>
-  <automat decisional-model="GLAISE ASS Bat RECO" id="659" name="GLAISE - ASS - RECO" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS Bat RECO" id="660" name="GLAISE - ASS - RECO" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - RECO PC"/>
     <unit type="GLAISE - ASS - RECO"/>
   </automat>
-  <automat decisional-model="GLAISE ASS SCUD" id="660" name="GLAISE - ASS - SCUD" type="Automate ALAT">
+  <automat decisional-model="GLAISE ASS SCUD" id="661" name="GLAISE - ASS - SCUD" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - SCUD"/>
   </automat>
-  <automat decisional-model="GLAISE ASS batterie tractee" id="661" name="GLAISE - ASS - SML" type="Automate ASS">
+  <automat decisional-model="GLAISE ASS batterie tractee" id="662" name="GLAISE - ASS - SML" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS - PC SML"/>
     <unit max-occurs="2" min-occurs="2" type="GLAISE - ASS - SML"/>
   </automat>
-  <automat decisional-model="Groupe Assaut AIR" id="662" name="GLAISE - ALAT - Groupement CAS SU 25" type="Automate ALAT">
+  <automat decisional-model="Groupe Assaut AIR" id="663" name="GLAISE - ALAT - Groupement CAS SU 25" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - AIR - PC SU 25"/>
     <unit max-occurs="4" min-occurs="4" type="GLAISE - ALFT- Patrouille SU 25"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="663" name="GLAISE - TRANS . PC BAT" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="664" name="GLAISE - TRANS . PC BAT" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC BAT PRINCIPAL"/>
     <unit max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC BAT AVANCE"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="664" name="GLAISE - TRANS . PC BGDE" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="665" name="GLAISE - TRANS . PC BGDE" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC BGDE PRINCIPAL"/>
     <unit max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC BGDE AVANCE"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="665" name="GLAISE - TRANS . PC DIV" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="666" name="GLAISE - TRANS . PC DIV" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC DIV PRINCIPAL"/>
     <unit max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC DIV AVANCE"/>
   </automat>
-  <automat decisional-model="GLAISE URH" id="666" name="GLAISE - RENS - URH" type="Automate RENS">
+  <automat decisional-model="GLAISE URH" id="667" name="GLAISE - RENS - URH" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - RENS - PC URH"/>
     <unit max-occurs="1" min-occurs="1" type="GLAISE - RENS - Patrouille URH"/>
   </automat>
-  <automat decisional-model="BROVAB" id="667" name="RENS - Groupe Brouillage VHF BROMURE" type="Automate RENS">
+  <automat decisional-model="BROVAB" id="668" name="RENS - Groupe Brouillage VHF BROMURE" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Groupe BROMURE"/>
   </automat>
-  <automat decisional-model="Groupe Chalands" id="668" name="JOINT - Groupe Chalands Marine" type="Automate JOINT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="JOINT - PC Marine"/>
-    <unit max-occurs="4" min-occurs="4" type="JOINT - CDIC + 2 CTM"/>
-    <unit max-occurs="4" min-occurs="4" type="JOINT - 2 CTM"/>
+  <automat decisional-model="Masalife.Automate.JOINT.Groupe Chalands Marine" id="669" name="JOINT . Groupe Chalands Marine" type="Automate JOINT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="JOINT . PC Marine"/>
+    <unit max-occurs="4" min-occurs="4" type="JOINT . CDIC + 2 CTM"/>
+    <unit max-occurs="4" min-occurs="4" type="JOINT . 2 CTM"/>
   </automat>
-  <automat decisional-model="Automate Groupe marine" id="669" name="JOINT - Groupe Marine" type="Automate JOINT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="JOINT - PC Garde cote"/>
-    <unit type="JOINT - Groupe Zodiac"/>
-    <unit type="JOINT - Vedette garde cote"/>
+  <automat decisional-model="Masalife.Automate.JOINT.Groupe Marine" id="670" name="JOINT . Groupe Marine" type="Automate JOINT">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="JOINT . PC Garde cote"/>
+    <unit type="JOINT . Groupe Zodiac"/>
+    <unit type="JOINT . Vedette garde cote"/>
   </automat>
-  <automat decisional-model="Groupe Assaut AIR" id="670" name="ALAT - Groupement Aerien CAS" type="Automate ALAT">
+  <automat decisional-model="Groupe Assaut AIR" id="671" name="ALAT - Groupement Aerien CAS" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Bombardiers"/>
     <unit max-occurs="4" min-occurs="4" type="AIR - Patrouille CAS"/>
   </automat>
-  <automat decisional-model="Systeme Linx" id="671" name="RENS - LINX" type="Automate RENS">
+  <automat decisional-model="Systeme Linx" id="672" name="RENS - LINX" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Coge Linx"/>
     <unit max-occurs="1" min-occurs="1" type="RENS - Stations LINX"/>
   </automat>
-  <automat decisional-model="START_" id="672" name="RENS - Module Interception START" type="Automate RENS">
+  <automat decisional-model="START_" id="673" name="RENS - Module Interception START" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Module Interception START"/>
   </automat>
-  <automat decisional-model="STAIR" id="673" name="RENS - Module Localisation Radar STAIR" type="Automate RENS">
+  <automat decisional-model="STAIR" id="674" name="RENS - Module Localisation Radar STAIR" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Module STAIR"/>
   </automat>
-  <automat decisional-model="MROD_ELODEE" id="674" name="RENS - Module Localisation VUHF ELODEE" type="Automate RENS">
+  <automat decisional-model="MROD_ELODEE" id="675" name="RENS - Module Localisation VUHF ELODEE" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Section ELODEE"/>
   </automat>
-  <automat decisional-model="START_" id="675" name="RENS - Module Localisation VUHF SPRINT" type="Automate RENS">
+  <automat decisional-model="START_" id="676" name="RENS - Module Localisation VUHF SPRINT" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Module Localisation SPRINT"/>
   </automat>
-  <automat decisional-model="CDER RBRR" id="676" name="RENS - Module RBRR" type="Automate RENS">
+  <automat decisional-model="CDER RBRR" id="677" name="RENS - Module RBRR" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - PC RBRR"/>
     <unit type="RENS - Patrouille Recherche Blindee"/>
     <unit type="RENS - Patrouille Recherche Moto"/>
     <unit type="RENS - Patrouille Recherche Radar"/>
     <unit type="RENS - Patrouille Recherche Nautique"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="677" name="ABC . PC 1 GE LECLERC" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="678" name="ABC . PC 1 GE LECLERC" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC 1 GE LECLERC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="678" name="INF . PC 1 GTIA AMX10P" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="679" name="INF . PC 1 GTIA AMX10P" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC 1 GTIA  AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="679" name="INF . PC 1 GTIA VAB" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="680" name="INF . PC 1 GTIA VAB" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC 1 GTIA  VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="680" name="ABC . PC 2 GE LECLERC" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="681" name="ABC . PC 2 GE LECLERC" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC 2 GE LECLERC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="681" name="INF . PC 2 GTIA AMX10P" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="682" name="INF . PC 2 GTIA AMX10P" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC 2 GTIA  AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="682" name="INF . PC 2 GTIA VAB" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="683" name="INF . PC 2 GTIA VAB" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC 2 GTIA  VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="683" name="ART . PC BAT ART 24LRM" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="684" name="ART . PC BAT ART 24LRM" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . PC BAT 24LRM"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="684" name="ART . PC BAT ART 32AUF1" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="685" name="ART . PC BAT ART 32AUF1" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . PC BAT 32AUF1"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="685" name="ALAT . PC GAM602" type="Automate ALAT">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="686" name="ALAT . PC GAM602" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT . PC GAM602"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="686" name="ALAT . PC GAM603" type="Automate ALAT">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="687" name="ALAT . PC GAM603" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT . PC GAM603"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="687" name="ALAT . PC GAM604" type="Automate ALAT">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="688" name="ALAT . PC GAM604" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT . PC GAM604"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="688" name="INF . PC GTIA Debarque" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="689" name="INF . PC GTIA Debarque" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC GTIA INF Debarque"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="689" name="ART . PC SA2R" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="690" name="ART . PC SA2R" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . PC SA2R"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="690" name="ALAT . PC SGAM" type="Automate ALAT">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="691" name="ALAT . PC SGAM" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT . PC SGAM"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="691" name="ABC . PC TAC GE LECLERC" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="692" name="ABC . PC TAC GE LECLERC" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC TAC GE LECLERC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="692" name="INF . PC TAC GTIA AMX10P" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="693" name="INF . PC TAC GTIA AMX10P" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC TAC GTIA AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="693" name="INF . PC TAC GTIA VAB" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="694" name="INF . PC TAC GTIA VAB" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC TAC GTIA  VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="694" name="ABC . PC et TC1 EEI" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="695" name="ABC . PC et TC1 EEI" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Peloton CDT EEI"/>
   </automat>
-  <automat decisional-model="Viviane" id="695" name="RENS - Peloton Capteur Module Viviane" type="Automate RENS">
+  <automat decisional-model="Viviane" id="696" name="RENS - Peloton Capteur Module Viviane" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Patrouille Rens Viviane"/>
   </automat>
-  <automat decisional-model="Sgpt Hm" id="696" name="ALAT - Peloton Moyens  Aeriens SGAM" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hm" id="697" name="ALAT - Peloton Moyens  Aeriens SGAM" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Escadrille"/>
     <unit max-occurs="3" type="ALAT - Patrouille 1HM SOFF"/>
     <unit max-occurs="1" type="ALAT - Patrouille 1HM OFF"/>
     <unit max-occurs="1" type="ALAT - Patrouille 3HM"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 3HAC"/>
   </automat>
-  <automat decisional-model="Batterie Reco SAM" id="697" name="ART - Reco Mortier M120" type="Automate ASS">
+  <automat decisional-model="Batterie Reco SAM" id="698" name="ART - Reco Mortier M120" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Reco Lourd"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Equipe Reco M120 VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="698" name="INF . GTIA AMX10P 2 + 2" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="699" name="INF . GTIA AMX10P 2 + 2" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . GTIA  AMX10P AV 2 + 2"/>
     <unit max-occurs="1" min-occurs="1" type="INF . GTIA  AMX10P MR 2 + 2"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="699" name="INF . GTIA VAB 2 + 2" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="700" name="INF . GTIA VAB 2 + 2" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . GTIA  VAB AV 2 + 2"/>
     <unit max-occurs="1" min-occurs="1" type="INF . GTIA  VAB MR 2 + 2"/>
   </automat>
-  <automat decisional-model="CL289" id="700" name="RENS - Section Drone CL 289" type="Automate RENS">
+  <automat decisional-model="CL289" id="701" name="RENS - Section Drone CL 289" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Section MO CL 289"/>
     <unit max-occurs="6" min-occurs="6" type="RENS - Drone CL 289"/>
   </automat>
-  <automat decisional-model="SDTI" id="701" name="RENS - Section Drone SDTI" type="Automate RENS">
+  <automat decisional-model="SDTI" id="702" name="RENS - Section Drone SDTI" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Section MO SDTI"/>
     <unit max-occurs="6" min-occurs="6" type="RENS - Drone SDTI"/>
   </automat>
-  <automat decisional-model="Section RATAC" id="702" name="ART - Section RATAC" type="Automate ASS">
+  <automat decisional-model="Section RATAC" id="703" name="ART - Section RATAC" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC RATAC"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Groupe RATAC"/>
   </automat>
-  <automat decisional-model="ELGE" id="703" name="RENS - Section ROEM" type="Automate RENS">
+  <automat decisional-model="ELGE" id="704" name="RENS - Section ROEM" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - PC ROEM"/>
     <unit max-occurs="2" min-occurs="2" type="RENS - Groupe ROEM"/>
   </automat>
-  <automat decisional-model="CDER RBRR" id="704" name="RENS - Section ROHUM" type="Automate RENS">
+  <automat decisional-model="CDER RBRR" id="705" name="RENS - Section ROHUM" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Section CDT ROHUM"/>
     <unit max-occurs="5" min-occurs="5" type="RENS - Equipe de recueil information"/>
   </automat>
-  <automat decisional-model="SDTI" id="705" name="RENS - Section ROIM" type="Automate RENS">
+  <automat decisional-model="SDTI" id="706" name="RENS - Section ROIM" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Section MO DRAC"/>
     <unit max-occurs="4" min-occurs="4" type="RENS - Drone DRAC"/>
   </automat>
-  <automat decisional-model="Sgpt Hm" id="706" name="ALAT - Ssgpt Manoeuvre" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hm" id="707" name="ALAT - Ssgpt Manoeuvre" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Escadrille"/>
     <unit max-occurs="2" min-occurs="2" type="ALAT - Patrouille 3HM"/>
     <unit max-occurs="2" min-occurs="2" type="ALAT - Patrouille 1HM SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 2HAC"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 2HAM"/>
   </automat>
-  <automat decisional-model="Sgpt Hm" id="707" name="ALAT - Ssgpt Manoeuvre Sea King" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hm" id="708" name="ALAT - Ssgpt Manoeuvre Sea King" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Escadrille"/>
     <unit max-occurs="2" min-occurs="2" type="ALAT - Patrouille 1HM SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 2HAC"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 2HAM"/>
     <unit max-occurs="2" min-occurs="2" type="ALAT - Patrouille 3HM Sea King"/>
   </automat>
-  <automat decisional-model="Sgpt Hap Mixte" id="708" name="ALAT - Ssgpt Mixte" type="Automate ALAT">
+  <automat decisional-model="Sgpt Hap Mixte" id="709" name="ALAT - Ssgpt Mixte" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Escadrille"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 2HAC"/>
     <unit max-occurs="2" min-occurs="2" type="ALAT - Patrouille 2HAM"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 2HAH"/>
     <unit max-occurs="2" min-occurs="2" type="ALAT - Patrouille 1HM SOFF"/>
   </automat>
-  <automat decisional-model="Sgpt Tigre" id="709" name="ALAT - Ssgpt Tigre" type="Automate ALAT">
+  <automat decisional-model="Sgpt Tigre" id="710" name="ALAT - Ssgpt Tigre" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC Escadrille"/>
     <unit max-occurs="3" min-occurs="3" type="ALAT - Patrouille Tigre"/>
     <unit max-occurs="1" min-occurs="1" type="ALAT - Patrouille 2HAH"/>
     <unit max-occurs="2" min-occurs="2" type="ALAT - Patrouille 1HM SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="710" name="LOG . PC BATLOG" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="711" name="LOG . PC BATLOG" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . BLOG PCP"/>
     <unit type="LOG . BLOG PCMR"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="711" name="LOG . PC ZFMAINT" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="712" name="LOG . PC ZFMAINT" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ZFMAINT PCP"/>
     <unit type="LOG . ZFMAINT PCMR"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="712" name="LOG . PC ZFRAV" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="713" name="LOG . PC ZFRAV" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ZFRAV PCP"/>
     <unit type="LOG . ZFRAV PCMR"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="713" name="LOG . PC ZFSAN" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="714" name="LOG . PC ZFSAN" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ZFSAN PCP"/>
     <unit type="LOG . ZFSAN PCMR"/>
   </automat>
-  <automat decisional-model="URH" id="714" name="RENS - URH" type="Automate RENS">
+  <automat decisional-model="URH" id="715" name="RENS - URH" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Equipe URH OFF"/>
     <unit max-occurs="4" min-occurs="4" type="RENS - Equipe URH S/OFF"/>
   </automat>
-  <automat decisional-model="SDTI" id="715" name="RENS - Groupe DRAC" type="Automate RENS">
+  <automat decisional-model="SDTI" id="716" name="RENS - Groupe DRAC" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - PC MO DRAC"/>
     <unit max-occurs="2" min-occurs="2" type="RENS - DRAC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="716" name="ART . DLART" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="717" name="ART . DLART" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . DLART"/>
   </automat>
-  <automat decisional-model="DLOP" id="717" name="ART - EOP" type="Automate ASS">
+  <automat decisional-model="DLOP" id="718" name="ART - EOP" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - EOP"/>
   </automat>
-  <automat decisional-model="DLO" id="718" name="ART - EO VAB" type="Automate ASS">
+  <automat decisional-model="DLO" id="719" name="ART - EO VAB" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - EO VAB"/>
   </automat>
-  <automat decisional-model="DLO" id="719" name="ART - EO AMX10P" type="Automate ASS">
+  <automat decisional-model="DLO" id="720" name="ART - EO AMX10P" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - EO AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="720" name="GEN . DLGEN" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="721" name="GEN . DLGEN" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . DLGEN"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="721" name="GEN . PC GEN" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="722" name="GEN . PC GEN" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC"/>
   </automat>
-  <automat decisional-model="Batterie Reco et Tir AUF1" id="722" name="ART - Batterie de Reco et Tir AUF1" type="Automate ASS">
+  <automat decisional-model="Batterie Reco et Tir AUF1" id="723" name="ART - Batterie de Reco et Tir AUF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie AUF1"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir AUF1 CDS OFF Pour SIC"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir AUF1 CDS SOFF Pour SIC"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Equipe de Reco AUF1"/>
   </automat>
-  <automat decisional-model="Batterie Reco et Tir TRF1" id="723" name="ART - Batterie de Reco et Tir TRF1" type="Automate ASS">
+  <automat decisional-model="Batterie Reco et Tir TRF1" id="724" name="ART - Batterie de Reco et Tir TRF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie TRF1"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Equipe de Reco TRF1"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir TRF1 CDS OFF Pour SIC"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir TRF1 CDS SOFF Pour SIC"/>
   </automat>
-  <automat decisional-model="Batterie Reco et Tir SAM" id="724" name="ART - Batterie de Reco et Tir 120 RTF1 4 pieces" type="Automate ASS">
+  <automat decisional-model="Batterie Reco et Tir SAM" id="725" name="ART - Batterie de Reco et Tir 120 RTF1 4 pieces" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie Mortier 120"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Equipe Reco M120 VAB"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section Mortier 120 OFF 2 pcs Pour SIC"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section Mortier 120 SOFF 2 pcs Pour SIC"/>
   </automat>
-  <automat decisional-model="Batterie Reco et Tir SAM" id="725" name="ART - Batterie de Reco et Tir 120 RTF1 6 pieces" type="Automate ASS">
+  <automat decisional-model="Batterie Reco et Tir SAM" id="726" name="ART - Batterie de Reco et Tir 120 RTF1 6 pieces" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie Mortier 120"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Equipe Reco M120 VAB"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section Mortier 120 OFF 3 pcs Pour SIC"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section Mortier 120 SOFF 3 pcs Pour SIC"/>
   </automat>
-  <automat decisional-model="Batterie Reco et Tir SAM" id="726" name="ART - Batterie de Reco et Tir 120 RTF1 8 pieces" type="Automate ASS">
+  <automat decisional-model="Batterie Reco et Tir SAM" id="727" name="ART - Batterie de Reco et Tir 120 RTF1 8 pieces" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie Mortier 120"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Equipe Reco M120 VAB"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section Mortier 120 SOFF 4 pcs Pour SIC"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section Mortier 120 OFF 4 pcs Pour SIC"/>
   </automat>
-  <automat decisional-model="Batterie Reco et Tir CAESAR" id="727" name="ART - Batterie de Reco et Tir CAESAR" type="Automate ASS">
+  <automat decisional-model="Batterie Reco et Tir CAESAR" id="728" name="ART - Batterie de Reco et Tir CAESAR" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie CAESAR"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir CAESAR CDS OFF Pour SIC"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir CAESAR CDS SOFF Pour SIC"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Equipe de Reco CAESAR"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Proterre" id="728" name="ALAT . ECL ALAT" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Proterre" id="729" name="ALAT . ECL ALAT" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT . ECL PROTERRE"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Section PROTERRE"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Proterre" id="729" name="INF . Compagnie PROTERRE" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Proterre" id="730" name="INF . Compagnie PROTERRE" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT PROTERRE"/>
     <unit max-occurs="2" min-occurs="2" type="INF . Section PROTERRE"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="730" name="INF . Compagnie CBT AMX 10 P" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF" id="731" name="INF . Compagnie CBT AMX 10 P" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire AMX10P"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Section CBT AMX10P CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Section CBT AMX10P CDS SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="731" name="INF . Compagnie CBT AMX10P + APP" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF" id="732" name="INF . Compagnie CBT AMX10P + APP" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire AMX10P"/>
     <unit max-occurs="2" min-occurs="2" type="INF . Section CBT AMX10P CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Section CBT AMX10P CDS SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe INF MO81 AMX10P"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe ACMP AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="732" name="INF . Compagnie CBT VAB" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF" id="733" name="INF . Compagnie CBT VAB" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire VAB"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Section CBT VAB CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Section CBT VAB CDS SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="733" name="INF . Compagnie CBT VAB + APP" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF" id="734" name="INF . Compagnie CBT VAB + APP" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire VAB"/>
     <unit max-occurs="2" min-occurs="2" type="INF . Section CBT VAB CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Section CBT VAB CDS SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe ACMP VAB"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe INF MO81 VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="734" name="INF . Compagnie CBT quaternaire AMX 10P" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF" id="735" name="INF . Compagnie CBT quaternaire AMX 10P" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire AMX10P"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Section CBT quaternaire AMX10P CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Section CBT quaternaire AMX10P CDS SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="735" name="INF . Compagnie CBT quaternaire AMX10P + APP" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF" id="736" name="INF . Compagnie CBT quaternaire AMX10P + APP" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire AMX10P"/>
     <unit max-occurs="2" min-occurs="2" type="INF . Section CBT quaternaire CDS  X10 OFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Section CBT quaternaire CDS X10 SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe INF MO81 section quaternaire X10"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe ACMP AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="736" name="INF . Compagnie CBT quaternaire VAB" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF" id="737" name="INF . Compagnie CBT quaternaire VAB" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire VAB"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Section CBT quaternaire VAB CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Section CBT quaternaire VAB CDS SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="737" name="INF . Compagnie CBT quaternaire VAB + APP" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF" id="738" name="INF . Compagnie CBT quaternaire VAB + APP" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire VAB"/>
     <unit max-occurs="2" min-occurs="2" type="INF . Section CBT quaternaire VAB CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe INF MO81 Section quaternaire"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe ACMP VAB"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Section CBT quaternaire VAB CDS SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.PC" id="738" name="INF . PC CIE AC VAB HOT" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.PC" id="739" name="INF . PC CIE AC VAB HOT" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE VAB HOT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Milan" id="739" name="INF . Section AC AMX10 MIL" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Milan" id="740" name="INF . Section AC AMX10 MIL" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC AC MILAN"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Groupe  de tir MILAN SAC AMX 10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Milan" id="740" name="INF . Section AC AMX10P" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Milan" id="741" name="INF . Section AC AMX10P" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section AC AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Milan" id="741" name="INF . Section AC Milan" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Milan" id="742" name="INF . Section AC Milan" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC AC MILAN"/>
     <unit max-occurs="4" min-occurs="4" type="INF . Groupe AC VBL MILAN"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Milan" id="742" name="INF . Section AC VAB HOT" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Milan" id="743" name="INF . Section AC VAB HOT" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT AC VAB HOT"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Groupe AC VAB HOT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Milan" id="743" name="INF . Compagnie Anti Char HOT" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Milan" id="744" name="INF . Compagnie Anti Char HOT" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC Cie CAC"/>
     <unit max-occurs="2" min-occurs="2" type="INF . Section Antichar HOT CDP OFF"/>
     <unit max-occurs="2" min-occurs="2" type="INF . Section Antichar HOT CDP SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Milan" id="744" name="INF . Section AC VAB MILAN" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Milan" id="745" name="INF . Section AC VAB MILAN" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC AC MILAN"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Groupe AC VAB MILAN"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Section Proterre" id="745" name="INF . Section PROTERRE" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Section Proterre" id="746" name="INF . Section PROTERRE" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC Section PROTERRE"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe PROTERRE 12.7"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe PROTERRE 7.62"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe PROTERRE FAMAS"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.TE" id="746" name="INF . Section TE" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.TE" id="747" name="INF . Section TE" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC Section TE"/>
     <unit max-occurs="4" min-occurs="4" type="INF . Groupe TE"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.AC" id="747" name="INF . Ssgpt Infanterie Antichar" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.AC" id="748" name="INF . Ssgpt Infanterie Antichar" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE VAB"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Section CBT VAB CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Section MILAN"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.ABC" id="748" name="INF . Ssgpt Infanterie Char" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.ABC" id="749" name="INF . Ssgpt Infanterie Char" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE VAB"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Section CBT VAB CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Peloton LECLERC CDP OFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Commando" id="749" name="INF . Section Commandos" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Commando" id="750" name="INF . Section Commandos" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC Commando"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Groupe Commando"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Commando" id="750" name="GLAISE - INF . Section commandos" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Commando" id="751" name="GLAISE - INF . Section commandos" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - INF . PC Commando"/>
     <unit max-occurs="3" min-occurs="3" type="GLAISE - INF . Groupe commando"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.AMX-ERC" id="751" name="ABC . Escadron Blinde AMX 10 RC" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.AMX-ERC" id="752" name="ABC . Escadron Blinde AMX 10 RC" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . PLT AMX 10 RC CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . PLT AMX 10 RC CDP SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.AMX-ERC" id="752" name="ABC . Escadron Blinde ERC 90" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.AMX-ERC" id="753" name="ABC . Escadron Blinde ERC 90" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . Peloton ERC 90 CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Peloton ERC 90 CDP SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.ERIAC" id="753" name="ABC . Peloton Appui Direct EEI" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.ERIAC" id="754" name="ABC . Peloton Appui Direct EEI" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Groupe CDT Appui Direct EEI"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . Groupe Appui Direct EEI"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille EI PAD"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.ERIAC" id="754" name="ABC . Escadron ERIAC" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.ERIAC" id="755" name="ABC . Escadron ERIAC" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC CDT LOG ERIAC"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . Peloton ERIAC OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Peloton ERIAC S/OFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.ERIAC" id="755" name="ABC . PC escadron ERIAC" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.ERIAC" id="756" name="ABC . PC escadron ERIAC" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC CDT LOG ERIAC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.ERIAC" id="756" name="ABC . Peloton ERIAC" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.ERIAC" id="757" name="ABC . Peloton ERIAC" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC PLT ERIAC"/>
     <unit max-occurs="2" min-occurs="2" type="ABC . Patrouille EI MILAN"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille EI 12,7"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.XL" id="757" name="ABC . Escadron de Chars LECLERC" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.XL" id="758" name="ABC . Escadron de Chars LECLERC" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Peloton LECLERC CDT ESC"/>
     <unit max-occurs="2" min-occurs="2" type="ABC . Peloton LECLERC CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Peloton LECLERC CDP SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Peloton d appui direct"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.XL" id="758" name="ABC . Escadron LECLERC 3X3" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.XL" id="759" name="ABC . Escadron LECLERC 3X3" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Peloton LECLERC CDT ESC"/>
     <unit max-occurs="4" min-occurs="4" type="ABC . Peloton LECLERC 3X3"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.EI" id="759" name="ABC . Peloton EEI OFF" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.EI" id="760" name="ABC . Peloton EEI OFF" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Patrouille CDT PEI OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille EI 12,7"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille EI APILAS"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille EI MILAN"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.EI" id="760" name="ABC . Peloton EEI SOFF" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.EI" id="761" name="ABC . Peloton EEI SOFF" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Patrouille CDT PEI SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille EI 12,7"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille EI APILAS"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille EI MILAN"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.EI" id="761" name="ABC . Peloton Eclairage Regimentaire CDP OFF" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.EI" id="762" name="ABC . Peloton Eclairage Regimentaire CDP OFF" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Patrouille Eclairage Regimentaire CP OFF"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . Patrouille Eclairage Regimentaire CP SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.EI" id="762" name="ABC . Peloton Eclairage Regimentaire CDP SOFF" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.EI" id="763" name="ABC . Peloton Eclairage Regimentaire CDP SOFF" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC Patrouille Eclairage Regimentaire CP SOFF"/>
     <unit max-occurs="2" min-occurs="2" type="ABC . Patrouille Eclairage Regimentaire CP SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.EI" id="763" name="ABC . Section RECONNAISSANCE REGIMENTAIRE" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.EI" id="764" name="ABC . Section RECONNAISSANCE REGIMENTAIRE" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Patrouille SRR CDT"/>
     <unit max-occurs="2" min-occurs="2" type="ABC . Patrouille SRR 2SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille SRR ACMP"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille SRR 1SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.PIR" id="764" name="ABC . Peloton Protection PC" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.PIR" id="765" name="ABC . Peloton Protection PC" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Peloton Protection PC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.RASIT" id="765" name="ABC . Peloton RASIT" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.RASIT" id="766" name="ABC . Peloton RASIT" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Groupe CDT RASIT"/>
     <unit max-occurs="2" min-occurs="2" type="ABC . Groupe RASIT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.RASIT" id="766" name="ABC . Section RORAD" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.RASIT" id="767" name="ABC . Section RORAD" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Groupe CDT RASIT"/>
     <unit max-occurs="2" min-occurs="2" type="ABC . Groupe RASIT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.Blinde Ecl" id="767" name="ABC . Ssgpt Blinde Eclairage" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.Blinde Ecl" id="768" name="ABC . Ssgpt Blinde Eclairage" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC Eclairage"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . Patrouille Eclairage Regimentaire CP SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille SRR ACMP"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . PLT AMX 10 RC CDP OFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.Blinde Inf" id="768" name="ABC . Ssgpt Blinde Infanterie" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.Blinde Inf" id="769" name="ABC . Ssgpt Blinde Infanterie" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . PLT AMX 10 RC CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Section CBT VAB CDS OFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.Char Ecl" id="769" name="ABC . Ssgpt Char Eclairage" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.Char Ecl" id="770" name="ABC . Ssgpt Char Eclairage" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Peloton LECLERC CDT ESC"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . Patrouille Eclairage Regimentaire CP SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille SRR ACMP"/>
     <unit max-occurs="2" min-occurs="2" type="ABC . Peloton LECLERC CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Peloton d appui direct"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.Char Inf" id="770" name="ABC . Ssgpt Char Infanterie" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.Char Inf" id="771" name="ABC . Ssgpt Char Infanterie" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Peloton LECLERC CDT ESC"/>
     <unit max-occurs="2" min-occurs="2" type="ABC . Peloton LECLERC CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Section CBT VAB CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Peloton d appui direct"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.Ecl Blinde" id="771" name="ABC . Ssgpt Eclairage Blinde" type="Automate ABC">
+  <automat decisional-model="Masalife.Automate.ABC.Ecl Blinde" id="772" name="ABC . Ssgpt Eclairage Blinde" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC Eclairage"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . Patrouille Eclairage Regimentaire CP SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . PLT AMX 10 RC CDP OFF Eclairage"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Artillerie" id="772" name="ASS . Batterie de Tir AUF1" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.Artillerie" id="773" name="ASS . Batterie de Tir AUF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC Batterie ASS"/>
     <unit max-occurs="2" min-occurs="2" type="ASS . Section de Tir AUF1 CDS OFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="773" name="Tireurs" type="Automate ASY">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="774" name="Tireurs" type="Automate ASY">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Tireur"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.SGTIA.INF" id="774" name="SGTIA PIA" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.INF" id="775" name="SGTIA PIA" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC SGTIA"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante ABC"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante INF"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante Reco"/>
     <unit max-occurs="1" type="ABC . Patrouille EI 12,7"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ONG" id="775" name="ONG" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.ONG" id="776" name="ONG" type="Automate LOG TC2">
     <unit min-occurs="1" type="ONG Soutien LOG"/>
     <unit min-occurs="1" type="ONG Intervention"/>
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ONG PC"/>
     <unit type="ONG Transport"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Milice" id="776" name="MILICE" type="Automate MILICE">
+  <automat decisional-model="Masalife.Automate.Milice" id="777" name="MILICE" type="Automate MILICE">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="MILICE . PICK UP CDT"/>
     <unit type="MILICE . PICK UP 14,5"/>
     <unit type="MILICE . PICK UP 23/2"/>
     <unit type="MILICE . PICK UP 10 Miliciens"/>
     <unit type="MILICE . PICK UP 5 Miliciens"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Terroriste" id="777" name="ASY . Terroristes" type="Automate ASY">
+  <automat decisional-model="Masalife.Automate.Terroriste" id="778" name="ASY . Terroristes" type="Automate ASY">
     <unit type="Terroriste IED"/>
     <unit type="Terroriste Sniper"/>
     <unit command-post="true" min-occurs="1" type="Terroriste Sniper et IED"/>
     <unit type="Terroriste RPG"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN.Appui" id="778" name="GEN . Compagnie GEN APPUI" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN.Appui" id="779" name="GEN . Compagnie GEN APPUI" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC DLRG"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN.Appui" id="779" name="GEN . Compagnie Appui generique" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN.Appui" id="780" name="GEN . Compagnie Appui generique" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC Cie APP"/>
     <unit max-occurs="1" min-occurs="1" type="GEN . Groupe OT"/>
     <unit max-occurs="1" min-occurs="1" type="GEN . Groupe MATS"/>
@@ -847,121 +847,121 @@
     <unit max-occurs="1" min-occurs="1" type="GEN . Groupe Chantier"/>
     <unit max-occurs="1" type="GEN . Section Equipt Montagne"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN.Appui" id="780" name="GEN . Compagnie Contre Minage" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN.Appui" id="781" name="GEN . Compagnie Contre Minage" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC Cie APP"/>
     <unit max-occurs="2" min-occurs="2" type="GEN . Section SOUVIM"/>
     <unit max-occurs="2" min-occurs="2" type="GEN . Section Deminage Lourd D9"/>
     <unit max-occurs="4" min-occurs="4" type="GEN . Groupe MADEZ"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN.Appui" id="781" name="GEN . Compagnie Eau" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN.Appui" id="782" name="GEN . Compagnie Eau" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC EAU NRJ"/>
     <unit max-occurs="2" min-occurs="2" type="GEN . Section Traitement Eau"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN.Appui" id="782" name="GEN . Compagnie Energie" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN.Appui" id="783" name="GEN . Compagnie Energie" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC NRJ"/>
     <unit max-occurs="8" min-occurs="8" type="GEN . Groupe Energie 400 kW"/>
     <unit max-occurs="8" min-occurs="8" type="GEN . Groupe Energie 80 kW"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN.Appui" id="783" name="GEN . Compagnie Travaux Lourd" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN.Appui" id="784" name="GEN . Compagnie Travaux Lourd" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC CIE Travaux Lourd"/>
     <unit max-occurs="3" min-occurs="3" type="GEN . Section Travaux Lourd"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN.Appui" id="784" name="GEN . Compagnie PFM" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN.Appui" id="785" name="GEN . Compagnie PFM" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC Cie PFM"/>
     <unit max-occurs="2" min-occurs="2" type="GEN . Section PFM"/>
     <unit max-occurs="2" min-occurs="2" type="GEN . Groupe MATS PFM"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN.Appui" id="785" name="GEN . Section LRO" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN.Appui" id="786" name="GEN . Section LRO" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC DLRG"/>
     <unit max-occurs="3" min-occurs="3" type="GEN . DLRG"/>
     <unit max-occurs="1" min-occurs="1" type="GEN . Groupe Plongeur Intervention Offensive"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN.Appui" id="786" name="GEN . DLRG" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN.Appui" id="787" name="GEN . DLRG" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC DLRG"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN.Appui" id="787" name="GEN . Groupe plongeur" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN.Appui" id="788" name="GEN . Groupe plongeur" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC Groupe Plongeur"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="788" name="GEN . Compagnie CBT type BB BM" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN" id="789" name="GEN . Compagnie CBT type BB BM" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC CIE CBT GENIE Type BB/BM"/>
     <unit max-occurs="3" min-occurs="3" type="GEN . Section CBT"/>
     <unit max-occurs="4" min-occurs="4" type="GEN . Groupe EBG"/>
     <unit max-occurs="2" min-occurs="2" type="GEN . Groupe MPG"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="789" name="GEN . Compagnie CBT type BLB BIM BP" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN" id="790" name="GEN . Compagnie CBT type BLB BIM BP" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC CIE CBT GENIE Type BLB/BIM/BP"/>
     <unit max-occurs="3" min-occurs="3" type="GEN . Section CBT"/>
     <unit max-occurs="4" min-occurs="4" type="GEN . Groupe MPG"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="790" name="LOG . Section CDT LOG URB" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="791" name="LOG . Section CDT LOG URB" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . Section CDT et  URB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="791" name="LOG . TC2 10RC" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="792" name="LOG . TC2 10RC" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . TC2 10RC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="792" name="LOG . TC2 BAT ART 32AUF1" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="793" name="LOG . TC2 BAT ART 32AUF1" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ART . TC2 BAT 32AUF1"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="793" name="LOG . TC2 BAT ART 32TRF1" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="794" name="LOG . TC2 BAT ART 32TRF1" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ART . TC2 BAT 32TRF1"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="794" name="LOG . TC2 BON ART 24LRM" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="795" name="LOG . TC2 BON ART 24LRM" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ART . TC2 BON 24LRM"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="795" name="LOG . TC2 GAM602" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="796" name="LOG . TC2 GAM602" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . TC2 GAM602"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="796" name="LOG . TC2 GAM603" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="797" name="LOG . TC2 GAM603" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . TC2 GAM603"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="797" name="LOG . TC2 GAM604" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="798" name="LOG . TC2 GAM604" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . TC2 GAM604"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="798" name="LOG . TC2 GE40 LECLERC" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="799" name="LOG . TC2 GE40 LECLERC" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ABC . TC2 GE40 LECLERC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="799" name="LOG . TC2 GTIA INF AMX 10P" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="800" name="LOG . TC2 GTIA INF AMX 10P" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . INF . TC2 GTIA  AMX 10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="800" name="LOG . TC2 GTIA INF VAB" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="801" name="LOG . TC2 GTIA INF VAB" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . INF . TC2 GTIA  VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="801" name="LOG . TC2 Groupement Roland Mistral" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="802" name="LOG . TC2 Groupement Roland Mistral" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ART . TC2 Groupement RLD Mistral"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="802" name="LOG . TC2 LOG" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="803" name="LOG . TC2 LOG" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . TC2"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="803" name="LOG . TC2 RB ERC90" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="804" name="LOG . TC2 RB ERC90" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ABC . TC2 RB ERC90"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="804" name="LOG . TC2 RC53 LECLERC" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="805" name="LOG . TC2 RC53 LECLERC" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ABC . TC2 RC53 LECLERC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="805" name="LOG . TC2 RG BIA" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="806" name="LOG . TC2 RG BIA" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . TC2 RG BIA"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="806" name="LOG . TC2 SGAM" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="807" name="LOG . TC2 SGAM" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . ALAT . TC2 SGAM"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="807" name="LOG . Secteur appro (CAP)" type="Automate LOG BLD Ravitaillement">
+  <automat decisional-model="Masalife.Automate.LOG" id="808" name="LOG . Secteur appro (CAP)" type="Automate LOG BLD Ravitaillement">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD secteur appro"/>
     <unit type="LOG . Section Magasin CAP"/>
     <unit type="LOG . Section Magasin CAP BLIAT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="808" name="LOG . Secteur approvisionnement (SH)" type="Automate LOG BLD Ravitaillement">
+  <automat decisional-model="Masalife.Automate.LOG" id="809" name="LOG . Secteur approvisionnement (SH)" type="Automate LOG BLD Ravitaillement">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
     <unit type="LOG . Groupe Appro Vivre Eau"/>
     <unit type="LOG . Groupe Appro Vivre Eau BLIAT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="809" name="LOG . Secteur distribution stockage (SEA)" type="Automate LOG BLD Ravitaillement">
+  <automat decisional-model="Masalife.Automate.LOG" id="810" name="LOG . Secteur distribution stockage (SEA)" type="Automate LOG BLD Ravitaillement">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD secteur sea"/>
     <unit type="LOG . Escouade Trspt CARB 35m3"/>
     <unit type="LOG . Escouade Trspt CARB 60m3"/>
     <unit type="LOG . Escouade Trspt CARB180m3"/>
     <unit type="LOG . Escouade Trspt CARB BLIAT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="810" name="LOG . Secteur munitions" type="Automate LOG BLD Ravitaillement">
+  <automat decisional-model="Masalife.Automate.LOG" id="811" name="LOG . Secteur munitions" type="Automate LOG BLD Ravitaillement">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD secteur munition"/>
     <unit type="LOG . Groupe Munitions SOFF TT - D"/>
     <unit type="LOG . Groupe Munitions OFF TT- D"/>
@@ -969,7 +969,7 @@
     <unit type="LOG . Groupe Munitions SOFF TD"/>
     <unit type="LOG . Groupe Munitions BLIAT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="811" name="LOG . Secteur reparation maint mob" type="Automate LOG BLT Maintenance">
+  <automat decisional-model="Masalife.Automate.LOG" id="812" name="LOG . Secteur reparation maint mob" type="Automate LOG BLT Maintenance">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD Secteur Maintenance"/>
     <unit type="LOG . Section CDT CMM (EVAC)"/>
     <unit type="LOG . Section Reparation Mob BLD  MOB"/>
@@ -980,20 +980,20 @@
     <unit type="LOG . Section Reparation Mob Feu BLIAT SRMF"/>
     <unit type="LOG . Section Evacuation BLIAT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="812" name="LOG . Secteur reparation techniques fines" type="Automate LOG BLT Maintenance">
+  <automat decisional-model="Masalife.Automate.LOG" id="813" name="LOG . Secteur reparation techniques fines" type="Automate LOG BLT Maintenance">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD Secteur Maintenance"/>
     <unit type="LOG . Section Reparation EA BLD SREAT"/>
     <unit type="LOG . Section Reparation EA BLT SREAT"/>
     <unit type="LOG . Section Reparation EA BLIAT SREAT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="813" name="LOG . Secteur transport" type="Automate LOG BLD Ravitaillement">
+  <automat decisional-model="Masalife.Automate.LOG" id="814" name="LOG . Secteur transport" type="Automate LOG BLD Ravitaillement">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD Secteur Transport"/>
     <unit type="LOG . Peloton Transport VTLR (PT)"/>
     <unit type="LOG . Peloton Ravitaillement (PR)"/>
     <unit type="LOG . Peloton Transport TRM 10000"/>
     <unit type="LOG . Peloton Transport BLIAT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="814" name="LOG . Secteur EVASAN" type="Automate LOG BLD Sante">
+  <automat decisional-model="Masalife.Automate.LOG" id="815" name="LOG . Secteur EVASAN" type="Automate LOG BLD Sante">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD Secteur Sante"/>
     <unit type="LOG . Groupe VS J5"/>
     <unit type="LOG . Groupe VS VAB"/>
@@ -1001,7 +1001,7 @@
     <unit type="LOG . Groupe VS J5 BLIAT"/>
     <unit type="LOG . Equipe HM EVASAN BLIAT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="815" name="LOG . Secteur traitement" type="Automate LOG BLD Sante">
+  <automat decisional-model="Masalife.Automate.LOG" id="816" name="LOG . Secteur traitement" type="Automate LOG BLD Sante">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD Secteur Sante"/>
     <unit type="LOG . Section Decontamination Medicale NBC"/>
     <unit type="LOG . Section Medico Psychologique"/>
@@ -1012,49 +1012,49 @@
     <unit type="LOG . Section Medico Psychologique BLIAT"/>
     <unit type="LOG . Section Chirurgicale HMC BLIAT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="816" name="LOG . Secteur triage" type="Automate LOG BLD Sante">
+  <automat decisional-model="Masalife.Automate.LOG" id="817" name="LOG . Secteur triage" type="Automate LOG BLD Sante">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD Secteur Sante"/>
     <unit type="LOG . Section Triage modulaire"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="817" name="GLAISE - LOG . TC2" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="818" name="GLAISE - LOG . TC2" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - LOG . TC2"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="818" name="GLAISE - LOG . TC2 ALAT" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="819" name="GLAISE - LOG . TC2 ALAT" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - LOG . TC2 ALAT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="819" name="GLAISE - LOG . TC2 ART" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.LOG" id="820" name="GLAISE - LOG . TC2 ART" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - LOG . TC2 ART"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="820" name="CIV . Journalistes" type="Automate REFUGIE">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="821" name="CIV . Journalistes" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="1" type="Journalistes"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="821" name="CIV . DPRE" type="Automate REFUGIE">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="822" name="CIV . DPRE" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="1" type="Refugies"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="822" name="ASS . DLGEN" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="823" name="ASS . DLGEN" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . DLGEN"/>
   </automat>
-  <automat decisional-model="Batterie Reco et Tir LRU" id="823" name="ART - Batterie de Reco et Tir LRU" type="Automate ASS">
+  <automat decisional-model="Batterie Reco et Tir LRU" id="824" name="ART - Batterie de Reco et Tir LRU" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie LRU"/>
     <unit max-occurs="2" min-occurs="2" type="ART - Equipe de Reco LRU"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir LRU CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ART - Section de Tir LRU CDS SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="824" name="RENS . PC et TC1 BRB" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="825" name="RENS . PC et TC1 BRB" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS . Section CDT et TC1 BRB"/>
   </automat>
-  <automat decisional-model="Batterie Tir CEASAR" id="825" name="ART - Batterie de Tir CAESAR pour FOB" type="Automate ASS">
+  <automat decisional-model="Batterie Tir CEASAR" id="826" name="ART - Batterie de Tir CAESAR pour FOB" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - PC Batterie CAESAR"/>
     <unit type="ART - Section de Tir CAESAR pour FOB"/>
     <unit type="ART - Section Mortier 120 OFF 2 pcs Pour SIC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="826" name="ART . CAF" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="827" name="ART . CAF" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . DAFA"/>
   </automat>
-  <automat decisional-model="DLO" id="827" name="ART - OA" type="Automate ASS">
+  <automat decisional-model="DLO" id="828" name="ART - OA" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART - EO VAB"/>
   </automat>
-  <automat decisional-model="Sgpt Tigre" id="828" name="ALAT - ESCADRILLE TIGRE CONFIGURABLE" type="Automate ALAT">
+  <automat decisional-model="Sgpt Tigre" id="829" name="ALAT - ESCADRILLE TIGRE CONFIGURABLE" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT - PC ALAT"/>
     <unit type="ALAT - Patrouille Tigre 2HAD"/>
     <unit type="ALAT - Patrouille Tigre 3HAD"/>
@@ -1062,16 +1062,16 @@
     <unit type="ALAT - Patrouille Tigre 3HAP"/>
     <unit type="ALAT - Patrouille Tigre 2HAP"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="829" name="ART . DAF" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="830" name="ART . DAF" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ART . DAFA"/>
     <unit max-occurs="1" min-occurs="1" type="ART . DAFV"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="830" name="CIRCU . Escadron Transport Blinde" type="Automate CIRCULATION">
+  <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="831" name="CIRCU . Escadron Transport Blinde" type="Automate CIRCULATION">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU . Peloton CDT ESC TRPT BLD"/>
     <unit max-occurs="3" min-occurs="1" type="CIRCU . Peloton Transport Blindes CL100"/>
     <unit max-occurs="3" min-occurs="1" type="CIRCU . Peloton Transport Blindes CL50"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="831" name="CIRCU . Escadron de Transport Bus" type="Automate CIRCULATION">
+  <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="832" name="CIRCU . Escadron de Transport Bus" type="Automate CIRCULATION">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU . PC ESC TRANSP BUS"/>
     <unit type="CIRCU . Peloton Bus Renault"/>
     <unit type="CIRCU . Peloton Bus Mercedes"/>
@@ -1079,40 +1079,40 @@
     <unit type="CIRCU . Peloton Bus IVECO"/>
     <unit type="CIRCU . Peloton Bus MAN"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.CIRCU.Peloton Circulation" id="832" name="CIRCU . Peloton Circulation sur P4" type="Automate CIRCULATION">
+  <automat decisional-model="Masalife.Automate.CIRCU.Peloton Circulation" id="833" name="CIRCU . Peloton Circulation sur P4" type="Automate CIRCULATION">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU . PC sur P4"/>
     <unit max-occurs="4" min-occurs="4" type="CIRCU . Patrouille P4"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.CIRCU.Peloton Circulation" id="833" name="CIRCU . Peloton Circulation sur VAB" type="Automate CIRCULATION">
+  <automat decisional-model="Masalife.Automate.CIRCU.Peloton Circulation" id="834" name="CIRCU . Peloton Circulation sur VAB" type="Automate CIRCULATION">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU . PC sur VAB"/>
     <unit max-occurs="4" min-occurs="4" type="CIRCU . Patrouille VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="834" name="CIRCU . Train" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="835" name="CIRCU . Train" type="Automate SGTIA">
     <unit command-post="true" min-occurs="1" type="Train"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.NRBC.Section reco" id="835" name="NRBC . Reco" type="Automate NBC">
+  <automat decisional-model="Masalife.Automate.NRBC.Section reco" id="836" name="NRBC . Reco" type="Automate NBC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="NRBC . PC Reco"/>
     <unit max-occurs="3" min-occurs="3" type="NRBC . Patrouille Reco"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.NRBC.Section RE" id="836" name="NRBC . Reco ROTA" type="Automate NBC">
+  <automat decisional-model="Masalife.Automate.NRBC.Section RE" id="837" name="NRBC . Reco ROTA" type="Automate NBC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="NRBC . PC Reco ROTA"/>
     <unit max-occurs="3" min-occurs="3" type="NRBC . Equipe Reco ROTA"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.NRBC.Section dec" id="837" name="NRBC . Section Decontamination" type="Automate NBC">
+  <automat decisional-model="Masalife.Automate.NRBC.Section dec" id="838" name="NRBC . Section Decontamination" type="Automate NBC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="NRBC . PC deconta"/>
     <unit max-occurs="3" min-occurs="3" type="NRBC . Equipe decontamination"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.NRBC.Section reco" id="838" name="NRBC . Section Reco" type="Automate NBC">
+  <automat decisional-model="Masalife.Automate.NRBC.Section reco" id="839" name="NRBC . Section Reco" type="Automate NBC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="NRBC . PC Section Reco"/>
     <unit max-occurs="1" min-occurs="1" type="NRBC . Patrouille Reco"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="839" name="CIV . DPRE femmes et enfants" type="Automate REFUGIE">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="840" name="CIV . DPRE femmes et enfants" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="1" type="Refugiés femmes et enfants"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="840" name="CIV . DPRE hommes femmes et enfants" type="Automate REFUGIE">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="841" name="CIV . DPRE hommes femmes et enfants" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="1" type="Réfugiés hommes femmes et enfants"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.SGTIA.INF" id="841" name="SGTIA INF dominante roues" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.INF" id="842" name="SGTIA INF dominante roues" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire VAB"/>
     <unit min-occurs="1" type="INF . Section CBT quaternaire VAB CDS OFF"/>
     <unit min-occurs="2" type="INF . Section CBT quaternaire VAB CDS SOFF"/>
@@ -1121,7 +1121,7 @@
     <unit min-occurs="1" type="GEN . Section CBT + MPG"/>
     <unit type="CIRCU . Peloton Transport Blindes CL50"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.SGTIA.INF" id="842" name="SGTIA INF dominante lourde" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.INF" id="843" name="SGTIA INF dominante lourde" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire AMX10P"/>
     <unit min-occurs="1" type="GEN . Section CBT + EBG"/>
     <unit min-occurs="1" type="ABC . Peloton LECLERC CDP SOFF"/>
@@ -1130,7 +1130,7 @@
     <unit min-occurs="1" type="INF . Groupe INF MO81 AMX10P"/>
     <unit type="CIRCU . Peloton Transport Blindes CL50"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.SGTIA.ABC" id="843" name="SGTIA ABC XL" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.ABC" id="844" name="SGTIA ABC XL" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Peloton LECLERC CDT ESC"/>
     <unit min-occurs="1" type="GEN . Section CBT + EBG"/>
     <unit min-occurs="2" type="ABC . Peloton LECLERC CDP SOFF"/>
@@ -1139,7 +1139,7 @@
     <unit min-occurs="1" type="ABC . Patrouille EI MILAN"/>
     <unit type="CIRCU . Peloton Transport Blindes CL100"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.SGTIA.ABC" id="844" name="SGTIA ABC AMX10RC" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.SGTIA.ABC" id="845" name="SGTIA ABC AMX10RC" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC"/>
     <unit min-occurs="1" type="ABC . Patrouille EI 12,7"/>
     <unit min-occurs="1" type="ABC . PLT AMX 10 RC CDP OFF"/>
@@ -1148,71 +1148,71 @@
     <unit min-occurs="1" type="GEN . Section CBT + MPG"/>
     <unit type="CIRCU . Peloton Transport Blindes CL100"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.PC" id="845" name="ABC . PCL EAE" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.PC" id="846" name="ABC . PCL EAE" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE VAB HOT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Milan" id="846" name="ABC . Peloton AC HOT AE" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Milan" id="847" name="ABC . Peloton AC HOT AE" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT AC VAB HOT"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Groupe AC VAB HOT"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Milan" id="847" name="ABC . PRIAC CDP OFF AE" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Milan" id="848" name="ABC . PRIAC CDP OFF AE" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC AC MILAN"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Groupe AC VAB MILAN"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="848" name="INF . Compagnie CBT BLINDEE VBCI" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF" id="849" name="INF . Compagnie CBT BLINDEE VBCI" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT VBCI"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Section CBT VBCI"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe MO81 VBCI"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe MMP VBCI"/>
     <unit max-occurs="1" min-occurs="1" type="INF . Groupe TE VBCI"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.CIRCU.Peloton Circulation" id="849" name="CIRCU . Peloton Circulation sur PVP" type="Automate CIRCULATION">
+  <automat decisional-model="Masalife.Automate.CIRCU.Peloton Circulation" id="850" name="CIRCU . Peloton Circulation sur PVP" type="Automate CIRCULATION">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU . PC sur PVP"/>
     <unit max-occurs="4" min-occurs="4" type="CIRCU . Patrouille PVP"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="850" name="CIRCU . EM GCR" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="851" name="CIRCU . EM GCR" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU . EM GCR"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="851" name="CIRCU . Peloton CDT ECR" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="852" name="CIRCU . Peloton CDT ECR" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU . Peloton  CDT ECR"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="852" name="TRANS . Section RAC3 BIA" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="853" name="TRANS . Section RAC3 BIA" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC RAC3 BIA"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe RAC3 BIA"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe LAN"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="853" name="TRANS . MOA BDE PC" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="854" name="TRANS . MOA BDE PC" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . MOA BDE PC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="854" name="TRANS . PC 1 GE LECLERC" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="855" name="TRANS . PC 1 GE LECLERC" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC 1 GE LECLERC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="855" name="TRANS . PC 1 GTIA AMX10P" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="856" name="TRANS . PC 1 GTIA AMX10P" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC 1 GTIA AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="856" name="TRANS . PC 1 GTIA VAB" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="857" name="TRANS . PC 1 GTIA VAB" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC 1  GTIA VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="857" name="TRANS . PC 2 GE LECLERC" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="858" name="TRANS . PC 2 GE LECLERC" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC 2 GE LECLERC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="858" name="TRANS . PC 2 GTIA AMX10P" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="859" name="TRANS . PC 2 GTIA AMX10P" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC 2 GTIA AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="859" name="TRANS . PC 2 GTIA VAB" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="860" name="TRANS . PC 2 GTIA VAB" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC 2 GTIA VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="860" name="TRANS . PC BDE" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="861" name="TRANS . PC BDE" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC BDE AV"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . PC BDE MR"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="861" name="TRANS . PC BIA" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="862" name="TRANS . PC BIA" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC BIA"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.DIV" id="862" name="TRANS . PC DIV" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.DIV" id="863" name="TRANS . PC DIV" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC DIV"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.DIV" id="863" name="TRANS . PC DIV Reserve" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.DIV" id="864" name="TRANS . PC DIV Reserve" type="Automate TRANS">
     <unit max-occurs="1" min-occurs="1" type="TRANS . Section RAC2"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Section RAC3"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Section SIEX2"/>
@@ -1220,128 +1220,128 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC DIV Reserve"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Section RAC4"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="864" name="TRANS . PC GEN" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="865" name="TRANS . PC GEN" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="865" name="TRANS . PC GTIA - 2+2" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="866" name="TRANS . PC GTIA - 2+2" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . GTIA - MR - 2+2"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . GTIA - AV - 2+2"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="866" name="TRANS . PC GTIA - 3+1" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="867" name="TRANS . PC GTIA - 3+1" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . GTIA - AV - 3+1"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . GTIA - MR - 3+1"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="867" name="TRANS . PC GTIA Debarque" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="868" name="TRANS . PC GTIA Debarque" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC GTIA INF Debarque"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="868" name="TRANS . PC RGT AMX30B2 BRENNUS" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="869" name="TRANS . PC RGT AMX30B2 BRENNUS" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC RGT AMX30B2 BRENNUS"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="869" name="TRANS . PC TAC" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="870" name="TRANS . PC TAC" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC TAC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="870" name="TRANS . PC TAC GE LECLERC" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="871" name="TRANS . PC TAC GE LECLERC" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC TAC GE LECLERC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="871" name="TRANS . PC TAC GTIA AMX10P" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="872" name="TRANS . PC TAC GTIA AMX10P" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC TAC GTIA AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="872" name="TRANS . PC TAC GTIA VAB" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="873" name="TRANS . PC TAC GTIA VAB" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC TAC GTIA VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="873" name="TRANS . Section FH 1-2" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="874" name="TRANS . Section FH 1-2" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe FH 1-2"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="874" name="TRANS . Section RAC1" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="875" name="TRANS . Section RAC1" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="3" min-occurs="3" type="TRANS . Groupe ARISTOTE"/>
     <unit max-occurs="8" min-occurs="8" type="TRANS . Groupe RAC1"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="875" name="TRANS . Section RAC2" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="876" name="TRANS . Section RAC2" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="4" min-occurs="4" type="TRANS . Groupe RAC2"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe ARISTOTE"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="876" name="TRANS . Section RAC3" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="877" name="TRANS . Section RAC3" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe LAN"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe RAC3"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="877" name="TRANS . Section RAC4" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="878" name="TRANS . Section RAC4" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . CDT RAC"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe RAC4"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="878" name="TRANS . Section RAC4 de CCT" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="879" name="TRANS . Section RAC4 de CCT" type="Automate TRANS">
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe RAC4 CCT"/>
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . CDT RAC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="879" name="TRANS . Section RAC4 de RSIC" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="880" name="TRANS . Section RAC4 de RSIC" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . CDT RAC"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe RAC4 TRM"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="880" name="TRANS . Section RADIO1" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="881" name="TRANS . Section RADIO1" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . RADIO1"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="881" name="TRANS . Section RADIO2" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="882" name="TRANS . Section RADIO2" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . RADIO2"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="882" name="TRANS . Section RESEAU" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="883" name="TRANS . Section RESEAU" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="2" min-occurs="2" type="TRANS . Groupe WAN"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="883" name="TRANS . Section SACRE" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="884" name="TRANS . Section SACRE" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe SACRE"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="884" name="TRANS . Section SATELLITE" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="885" name="TRANS . Section SATELLITE" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . SATELLITE"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="885" name="TRANS . Section SIC DL1" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="886" name="TRANS . Section SIC DL1" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . CDT SIC"/>
     <unit max-occurs="3" min-occurs="3" type="TRANS . Groupe SIC DL1"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="886" name="TRANS . Section SIC DL2" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="887" name="TRANS . Section SIC DL2" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . CDT SIC"/>
     <unit max-occurs="6" min-occurs="6" type="TRANS . Groupe SIC DL2"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="887" name="TRANS . Section SIEX 1" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="888" name="TRANS . Section SIEX 1" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="3" min-occurs="3" type="TRANS . Groupe LAN"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="888" name="TRANS . Section SIEX 2" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="889" name="TRANS . Section SIEX 2" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="2" min-occurs="2" type="TRANS . Groupe LAN"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Groupe WAN"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="889" name="TRANS . Section TRANS HORISON" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="890" name="TRANS . Section TRANS HORISON" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . Section HORISON"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="890" name="TRANS . Section(s) ND" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="891" name="TRANS . Section(s) ND" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="4" min-occurs="4" type="TRANS . Node Deport"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="891" name="TRANS . Section(s) NTI" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.Compagnie TRANS" id="892" name="TRANS . Section(s) NTI" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit type="TRANS . Node Transit Integration"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="892" name="CIV . Civil" type="Automate REFUGIE">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="893" name="CIV . Civil" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="1" type="Civil"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="893" name="CIV . Notable" type="Automate REFUGIE">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="894" name="CIV . Notable" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="1" type="Notable"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="894" name="LOG . PC BIA" type="Automate TRANS">
+  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="895" name="LOG . PC BIA" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC BIA"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="895" name="NRBC . PC BIE" type="Automate NBC">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="896" name="NRBC . PC BIE" type="Automate NBC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC BIE NBC"/>
   </automat>
 </automats>
-<!-- signature="2470360527" -->
+<!-- signature="3869177381" -->
