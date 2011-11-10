@@ -34,9 +34,4 @@
 
 #include "Types.h"
 
-inline std::ostream& operator<<( std::ostream& xos, const QString& s )
-{
-    return xos << s.toStdString();
-}
-
 #endif // __clients_kernel_pch_h_
