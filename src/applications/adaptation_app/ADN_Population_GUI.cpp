@@ -96,32 +96,41 @@ void ADN_Population_GUI::Build()
     // Population parameters
     Q3GroupBox* pGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Crowd" ), pMainBox );
 
-    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Details" ), pGroup );
+    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 4, Qt::Vertical, tr( "Details" ), pGroup );
+    Q3GroupBox* pInformation = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
 
     // Name
-    builder.AddField<ADN_EditLine_String>( pPropertiesGroup, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField<ADN_EditLine_String>( pInformation, tr( "Name" ), vInfosConnectors[eName] );
 
     // Model
-    builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pPropertiesGroup, tr( "Behavior model" ), vInfosConnectors[eModel] );
+    builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInformation, tr( "Behavior model" ), vInfosConnectors[eModel] );
+
+    Q3GroupBox* pDensity = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
 
     // Concentration density
-    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Density" ), vInfosConnectors[eConcentrationDensity], tr( "people/m²" ), eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pDensity, tr( "Density" ), vInfosConnectors[eConcentrationDensity], tr( "people/m²" ), eGreaterZero );
 
     // Move nominal density
-    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Density while moving" ), vInfosConnectors[eMoveDensity], tr( "people/m²" ), eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pDensity, tr( "Density while moving" ), vInfosConnectors[eMoveDensity], tr( "people/m²" ), eGreaterZero );
 
     // Move speed
-    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Average movement speed" ), vInfosConnectors[eMoveSpeed], tr( "km/h" ), eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pDensity, tr( "Average movement speed" ), vInfosConnectors[eMoveSpeed], tr( "km/h" ), eGreaterZero );
+
+    Q3GroupBox* pHuman = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
 
     //Armed Individuals
-    builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Armed individuals" ), vInfosConnectors[ eArmedIndividuals ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pHuman, tr( "Armed individuals" ), vInfosConnectors[ eArmedIndividuals ], tr( "%" ), ePercentage );
 
     //Repartition
-    ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pPropertiesGroup, builder );
+    ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pHuman, builder );
     pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ] );
     pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemale ] );
     pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildren ] );
     pMultiPercentage->AddWarning();
+
+    Q3GroupBox* pNBC = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
+
+    builder.AddField< ADN_TimeField >( pNBC, tr( "Decontamination delay" ), vInfosConnectors[ eDecontaminationDelay ] );
 
     // Speed effects
     //@{

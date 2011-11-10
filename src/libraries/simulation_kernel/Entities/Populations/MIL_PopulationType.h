@@ -73,6 +73,7 @@ public:
     double GetDamagePH( const PHY_RoePopulation& roeFirer ) const;
     double GetUrbanDestructionDensity( const MIL_PopulationAttitude& attitude ) const;
     double GetUrbanDestructionTime( const MIL_PopulationAttitude& attitude ) const;
+    double GetDecontaminationDelay() const;
     //@}
 
 protected:
@@ -164,6 +165,7 @@ private:
     T_DamageData damageData_;
     T_UrbanDestructionData urbanDestructionData_;
     const DEC_Model_ABC* pModel_;
+    double decontaminationDelay_;
     //@}
 
 private:

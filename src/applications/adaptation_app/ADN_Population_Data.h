@@ -242,7 +242,7 @@ public:
         ADN_Type_Double                                       rMoveSpeed_;
         ADN_Type_Repartition                                  repartition_;
         ADN_Type_Int                                          armedIndividuals_;
-
+        ADN_Type_Time                                         decontaminationDelay_;
         T_SpeedEffectInfosVector                              vSpeedEffectInfos_;
         T_FireEffectInfosVector                               vFireEffectInfos_;
         T_FireEffectRoeInfosVector                            vFireEffectRoeInfos_;

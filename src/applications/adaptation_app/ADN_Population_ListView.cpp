@@ -61,6 +61,7 @@ void ADN_Population_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Population_GUI::eFemale ]->Connect( &pInfos->repartition_.female_, bConnect );
     vItemConnectors_[ADN_Population_GUI::eChildren ]->Connect( &pInfos->repartition_.children_, bConnect );
     vItemConnectors_[ADN_Population_GUI::eArmedIndividuals ]->Connect( &pInfos->armedIndividuals_, bConnect );
+    vItemConnectors_[ADN_Population_GUI::eDecontaminationDelay ]->Connect( &pInfos->decontaminationDelay_, bConnect );
     vItemConnectors_[ADN_Population_GUI::eSpeedEffectAttitude]->Connect( &pInfos->vSpeedEffectInfos_  , bConnect );
     vItemConnectors_[ADN_Population_GUI::eFireEffectAttitude] ->Connect( &pInfos->vFireEffectInfos_   , bConnect );
     vItemConnectors_[ADN_Population_GUI::eFireEffectRoe]      ->Connect( &pInfos->vFireEffectRoeInfos_, bConnect );

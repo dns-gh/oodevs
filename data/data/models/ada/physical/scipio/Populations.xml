@@ -194,6 +194,7 @@
       <urban-destruction-effect attitude="agressive" density="0.001" time="150m"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="0.3" decisional-model="Masalife.Foule" id="1" moving-base-density="0.3" moving-speed="6" name="Refugies a pied">
     <slowing-effects>
@@ -387,6 +388,7 @@
       <urban-destruction-effect attitude="agressive" density="0.001" time="150m"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="0.25" decisional-model="Masalife.Foule" id="2" moving-base-density="0.5" moving-speed="20" name="Refugies en VHL">
     <slowing-effects>
@@ -580,6 +582,7 @@
       <urban-destruction-effect attitude="agressive" density="0" time="0s"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="0.5" decisional-model="Masalife.Foule" id="3" moving-base-density="0.5" moving-speed="3" name="Manifestants">
     <slowing-effects>
@@ -773,6 +776,7 @@
       <urban-destruction-effect attitude="agressive" density="0.001" time="550m"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="0.5" decisional-model="Masalife.Foule" id="4" moving-base-density="0.5" moving-speed="3" name="Manifestants armes">
     <slowing-effects>
@@ -966,6 +970,7 @@
       <urban-destruction-effect attitude="agressive" density="0.002" time="150m"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="0.01" decisional-model="Masalife.Foule" id="5" moving-base-density="0.3" moving-speed="5" name="Foule de femmes et d'enfants">
     <slowing-effects>
@@ -1159,6 +1164,7 @@
       <urban-destruction-effect attitude="agressive" density="0.0001" time="550m"/>
     </urban-destruction-effects>
     <repartition children="0.3" female="0.7" male="0"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="0.01" decisional-model="Masalife.Foule" id="6" moving-base-density="0.3" moving-speed="5" name="Foule mixte">
     <slowing-effects>
@@ -1352,6 +1358,7 @@
       <urban-destruction-effect attitude="agressive" density="0.001" time="550m"/>
     </urban-destruction-effects>
     <repartition children="0.1" female="0.45" male="0.45"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0.5" concentration-density="0.02" decisional-model="Masalife.Foule" id="7" moving-base-density="0.3" moving-speed="6" name="Foule armée">
     <slowing-effects>
@@ -1545,6 +1552,7 @@
       <urban-destruction-effect attitude="agressive" density="0.002" time="250m"/>
     </urban-destruction-effects>
     <repartition children="0" female="0.35" male="0.65"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0.25" concentration-density="0.015" decisional-model="Masalife.Foule" id="8" moving-base-density="0.3" moving-speed="6" name="Foule manipulée">
     <slowing-effects>
@@ -1738,6 +1746,7 @@
       <urban-destruction-effect attitude="agressive" density="0.001" time="250m"/>
     </urban-destruction-effects>
     <repartition children="0.1" female="0.45" male="0.45"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
 </populations>
-<!-- signature="4262237839" -->
+<!-- signature="0570187610" -->

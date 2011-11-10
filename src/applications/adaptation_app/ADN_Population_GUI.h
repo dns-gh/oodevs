@@ -37,6 +37,7 @@ public:
         eFemale,
         eChildren,
         eArmedIndividuals,
+        eDecontaminationDelay,
         eSpeedEffectAttitude,
         eSpeedEffectVolume,
         eSpeedEffectDensity,

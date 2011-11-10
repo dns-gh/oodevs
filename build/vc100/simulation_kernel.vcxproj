@@ -136,6 +136,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -872,6 +873,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\KnowledgesVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.h" />

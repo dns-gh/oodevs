@@ -327,3 +327,16 @@ void MIL_PopulationHumans::ApplyIntoxication( double woundedPercentage, double d
     wounded_ = wounded;
     dead_ = dead;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationHumans::ApplyDecontamination
+// Created: LGY 2011-11-09
+// -----------------------------------------------------------------------------
+void MIL_PopulationHumans::ApplyDecontamination()
+{
+    if( contaminated_ > 0 )
+    {
+        --contaminated_;
+        ++healthy_;
+    }
+}

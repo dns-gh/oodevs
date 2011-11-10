@@ -318,5 +318,8 @@
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\LogisticHierarchyTest.cpp">
       <Filter>Source Files\Logistic</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MIL_DecontaminationTest.cpp">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

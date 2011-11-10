@@ -3647,6 +3647,10 @@ Asegúrese que el archivo existe.</translation>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Decontamination delay</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Population_ListView</name>

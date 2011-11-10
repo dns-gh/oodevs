@@ -139,8 +139,9 @@
     <upgrade schema="schemas/4.3.2/physical/Objects.xsd" apply="schemas/4.3.3/xsl/objects_4.3.2-4.3.3.xsl"/>
   </migration>
   <migration from="4.3.3" to="4.3.4">
-	<upgrade schema="schemas/4.3.3/physical/Physical.xsd" apply="schemas/4.3.4/xsl/Physical_4.3.3-4.3.4.xsl"/>
+    <upgrade schema="schemas/4.3.3/physical/Physical.xsd" apply="schemas/4.3.4/xsl/Physical_4.3.3-4.3.4.xsl"/>
     <upgrade schema="schemas/4.3.3/physical/Resources.xsd" apply="schemas/4.3.4/xsl/resources_4.3.3-4.3.4.xsl"/>
     <upgrade schema="schemas/4.3.3/physical/Units.xsd" apply="schemas/4.3.4/xsl/units_4.3.3-4.3.4.xsl"/>
+    <upgrade schema="schemas/4.3.3/physical/Crowds.xsd" apply="schemas/4.3.4/xsl/crowd_4.3.3-4.3.4.xsl"/>
   </migration>
 </migrations>

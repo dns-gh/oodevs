@@ -129,6 +129,13 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
         >> xml::attribute( "children", rChildren_ )
         >> xml::end;
 
+    std::string decontaminationDelay = "300s";
+    xis >> xml::start( "nbc" )
+         >> xml::attribute( "decontaminationDelay", decontaminationDelay )
+        >> xml::end;
+
+    decontaminationDelay_ = MIL_Tools::ConvertSecondsToSim( tools::DecodeTime( decontaminationDelay, decontaminationDelay_ ) );
+
     InitializeSlowDownData( xis );
     InitializeFireData    ( xis );
 
@@ -492,4 +499,13 @@ const MIL_PopulationType* MIL_PopulationType::Find( unsigned int nID )
 double MIL_PopulationType::GetDelay() const
 {
     return delay_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetDecontaminationDelay
+// Created: LGY 2011-11-10
+// -----------------------------------------------------------------------------
+double MIL_PopulationType::GetDecontaminationDelay() const
+{
+    return decontaminationDelay_;
 }

@@ -216,6 +216,7 @@
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestPk.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MIL_DecontaminationTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>

@@ -178,6 +178,7 @@
       <urban-destruction-effect attitude="agressive" density="0" time="0s"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="1.5" decisional-model="Crowd" id="1" moving-base-density="0.1" moving-speed="6" name="Fan Crowd">
     <slowing-effects>
@@ -355,6 +356,7 @@
       <urban-destruction-effect attitude="agressive" density="0" time="0s"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="1" decisional-model="security.crowd.roles.Crowd" id="2" moving-base-density="1" moving-speed="6" name="Angry Crowd">
     <slowing-effects>
@@ -392,6 +394,7 @@
       <urban-destruction-effect attitude="agressive" density="0" time="0s"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
 </populations>
-<!-- signature="3366856633" -->
+<!-- signature="0127060486" -->

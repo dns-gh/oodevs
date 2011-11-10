@@ -517,6 +517,7 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
     , rMoveSpeed_           ( 0. )
     , repartition_          ( tools::translate( "Population_Data", "Crowd" ) )
     , armedIndividuals_     ( 0 )
+    , decontaminationDelay_ ( "300s" )
     , vSpeedEffectInfos_    ()
     , vFireEffectInfos_     ()
     , vFireEffectRoeInfos_  ()
@@ -587,7 +588,8 @@ ADN_Population_Data::PopulationInfos* ADN_Population_Data::PopulationInfos::Crea
     pCopy->rMoveDensity_          = rMoveDensity_.GetData();
     pCopy->rMoveSpeed_            = rMoveSpeed_.GetData();
     pCopy->repartition_           = repartition_;
-    pCopy->armedIndividuals_     = armedIndividuals_.GetData();
+    pCopy->armedIndividuals_      = armedIndividuals_.GetData();
+    pCopy->decontaminationDelay_  = decontaminationDelay_.GetData();
 
     for( int i = 0; i < eNbrPopulationAttitude; ++i )
     {
@@ -613,7 +615,8 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "moving-base-density", rMoveDensity_ )
           >> xml::attribute( "moving-speed", rMoveSpeed_ )
           >> xml::attribute( "decisional-model", strModel )
-          >> xml::optional >> xml::attribute( "armed-individuals", rArmedIndividuals );
+          >> xml::optional
+          >> xml::attribute( "armed-individuals", rArmedIndividuals );
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindPopulationModel( strModel );
     if( !pModel )
         throw ADN_DataException( "Invalid data", tools::translate( "Population_Data", "Crowd types - Invalid behavior model '%1'" ).arg( strModel.c_str() ).ascii() );
@@ -630,8 +633,10 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( xml::xistream& input )
           >> xml::end
           >> xml::start( "urban-destruction-effects" )
             >> xml::list( "urban-destruction-effect", *this, &ADN_Population_Data::PopulationInfos::ReadUrbanEffect )
+          >> xml::end
+          >> xml::start( "nbc" )
+            >> xml::attribute( "decontaminationDelay", decontaminationDelay_ ) 
           >> xml::end;
-
     if( input.has_child("repartition") )
     {
         input >> xml::start( "repartition" );
@@ -739,6 +744,10 @@ void ADN_Population_Data::PopulationInfos::WriteArchive( xml::xostream& output, 
     output << xml::start( "repartition" );
     repartition_.WriteArchive( output );
     output  << xml::end;
+
+    output << xml::start( "nbc" )
+               << xml::attribute( "decontaminationDelay", decontaminationDelay_.GetData() )
+           << xml::end;
 
     output << xml::end;
 }
