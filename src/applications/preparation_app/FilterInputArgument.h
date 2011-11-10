@@ -12,7 +12,10 @@
 
 #include <boost/noncopyable.hpp>
 
-class FilterDescription;
+namespace kernel
+{
+    class XmlDescription;
+}
 
 // =============================================================================
 /** @class  FilterInputArgument
@@ -28,7 +31,7 @@ class FilterInputArgument : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FilterInputArgument( const std::string& argumentValue, const FilterDescription& description, const std::string exerciseDir = "" );
+    explicit FilterInputArgument( const std::string& argumentValue, const kernel::XmlDescription& description, const std::string exerciseDir = "" );
     virtual ~FilterInputArgument();
     //@}
 

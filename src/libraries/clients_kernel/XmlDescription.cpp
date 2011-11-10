@@ -7,55 +7,67 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
-#include "FilterDescription.h"
+#include "clients_kernel_pch.h"
+#include "XmlDescription.h"
+
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-namespace
-{
-    std::string GetCurrentLanguage()
-    {
-        QSettings settings;
-        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
-    }
-}
+using namespace kernel;
 
+//namespace
+//{
+//    std::string GetCurrentLanguage()
+//    {
+//        QSettings settings;
+//        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+//        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
+//    }
+//}
+//
 // -----------------------------------------------------------------------------
-// Name: FilterDescription constructor
+// Name: XmlDescription constructor
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-FilterDescription::FilterDescription()
-    : currentLanguage_( ::GetCurrentLanguage() )
+XmlDescription::XmlDescription( const std::string& currentLanguage )
+    : currentLanguage_( currentLanguage )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: FilterDescription constructor
+// Name: XmlDescription constructor
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-FilterDescription::FilterDescription( xml::xistream& xis )
-    : currentLanguage_( ::GetCurrentLanguage() )
+XmlDescription::XmlDescription( xml::xistream& xis, const std::string& currentLanguage )
+    : currentLanguage_( currentLanguage )
 {
     ReadDescriptions( xis );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FilterDescription destructor
+// Name: XmlDescription destructor
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-FilterDescription::~FilterDescription()
+XmlDescription::~XmlDescription()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: FilterDescription::GetName
+// Name: XmlDescription::SetCurrentLanguage
+// Created: ABR 2011-11-10
+// -----------------------------------------------------------------------------
+void XmlDescription::SetCurrentLanguage( const std::string& currentLanguage )
+{
+    currentLanguage_ = currentLanguage;
+}
+
+// -----------------------------------------------------------------------------
+// Name: XmlDescription::GetName
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-const std::string FilterDescription::GetName() const
+const std::string XmlDescription::GetName() const
 {
     T_Descriptions::const_iterator it = descriptions_.find( currentLanguage_ );
     if( it != descriptions_.end() )
@@ -70,10 +82,10 @@ const std::string FilterDescription::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FilterDescription::GetDescription
+// Name: XmlDescription::GetDescription
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-const std::string FilterDescription::GetDescription() const
+const std::string XmlDescription::GetDescription() const
 {
     T_Descriptions::const_iterator it = descriptions_.find( currentLanguage_ );
     if( it != descriptions_.end() )
@@ -84,34 +96,34 @@ const std::string FilterDescription::GetDescription() const
         if( it != descriptions_.end() )
             return it->second.second;
     }
-    return tools::translate( "FilterDescription", "No description available" ).ascii();
+    return tools::translate( "XmlDescription", "No description available" ).ascii();
 }
 
 // -----------------------------------------------------------------------------
-// Name: FilterDescription::GetCurrentLanguage
+// Name: XmlDescription::GetCurrentLanguage
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-const std::string FilterDescription::GetCurrentLanguage() const
+const std::string XmlDescription::GetCurrentLanguage() const
 {
     return currentLanguage_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: FilterDescription::ReadDescriptions
+// Name: XmlDescription::ReadDescriptions
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-void FilterDescription::ReadDescriptions( xml::xistream& xis )
+void XmlDescription::ReadDescriptions( xml::xistream& xis )
 {
     xis >> xml::optional >> xml::start( "descriptions" )
-            >> xml::list( "description", *this, &FilterDescription::ReadDescription )
+        >> xml::list( "description", *this, &XmlDescription::ReadDescription )
         >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
-// Name: FilterDescription::ReadDescription
+// Name: XmlDescription::ReadDescription
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-void FilterDescription::ReadDescription( xml::xistream& xis )
+void XmlDescription::ReadDescription( xml::xistream& xis )
 {
     assert( ( xis.has_attribute( "xml:lang" ) || xis.has_attribute( "lang" ) ) && xis.has_attribute( "name" ) );
     const std::string lang = xis.has_attribute( "xml:lang" ) ? xis.attribute< std::string >( "xml:lang" ) : xis.attribute< std::string >( "lang" );

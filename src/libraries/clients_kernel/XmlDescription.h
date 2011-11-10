@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __FilterDescription_h_
-#define __FilterDescription_h_
+#ifndef __XmlDescription_h_
+#define __XmlDescription_h_
 
 #include <boost/noncopyable.hpp>
 
@@ -17,21 +17,24 @@ namespace xml
     class xistream;
 }
 
+namespace kernel
+{
+
 // =============================================================================
-/** @class  FilterDescription
-    @brief  FilterDescription
+/** @class  XmlDescription
+    @brief  XmlDescription
 */
-// Created: ABR 2011-09-29
+// Created: ABR 2011-11-10
 // =============================================================================
-class FilterDescription : private boost::noncopyable
+class XmlDescription : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterDescription();
-    explicit FilterDescription( xml::xistream& xis );
-    virtual ~FilterDescription();
+             XmlDescription( const std::string& currentLanguage );
+    explicit XmlDescription( xml::xistream& xis, const std::string& currentLanguage );
+    virtual ~XmlDescription();
     //@}
 
     //! @name Operations
@@ -39,6 +42,7 @@ public:
     const std::string GetName() const;
     const std::string GetDescription() const;
     const std::string GetCurrentLanguage() const;
+    void SetCurrentLanguage( const std::string& currentLanguage );
     //@}
 
 private:
@@ -57,8 +61,10 @@ private:
     //! @name Member data
     //@{
     T_Descriptions    descriptions_;
-    const std::string currentLanguage_;
+    std::string currentLanguage_;
     //@}
 };
 
-#endif // __FilterDescription_h_
+}
+
+#endif // __XmlDescription_h_

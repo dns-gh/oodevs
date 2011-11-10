@@ -445,9 +445,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\FilterInputArgument.cpp">
       <Filter>Source Files\Dialogs\Filter</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\FilterDescription.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticLinksEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
@@ -635,9 +632,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\LogisticListView.h">
       <Filter>Source Files\Lists</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\FilterDescription.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\CsvExport.h">
       <Filter>Source Files\Dialogs\Filter</Filter>

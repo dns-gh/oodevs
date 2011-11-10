@@ -442,6 +442,9 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Ghost_ABC.cpp">
       <Filter>Source Files\Model\Entities\Ghost</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\XmlDescription.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h">
@@ -1034,6 +1037,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Finalizable_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\XmlDescription.h">
+      <Filter>Source Files\XML model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

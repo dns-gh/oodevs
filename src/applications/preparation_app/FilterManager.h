@@ -12,7 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
-#include "FilterDescription.h"
+#include "clients_kernel/XmlDescription.h"
 
 namespace tools
 {
@@ -73,7 +73,7 @@ private:
     const tools::ExerciseConfig& config_;
     const std::string            id_;
     QWidget&                     parent_;
-    FilterDescription            description_;
+    kernel::XmlDescription       description_;
     T_Filters                    filters_;
     //@}
 };

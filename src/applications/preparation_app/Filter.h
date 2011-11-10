@@ -11,7 +11,7 @@
 #define __Filter_h_
 
 #include "Filter_ABC.h"
-#include "FilterDescription.h"
+#include "clients_kernel/XmlDescription.h"
 
 namespace tools
 {
@@ -51,7 +51,7 @@ public:
 protected:
     //! @name Member data
     //@{
-    FilterDescription description_;
+    kernel::XmlDescription description_;
     //@}
 };
 

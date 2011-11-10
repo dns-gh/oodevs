@@ -434,6 +434,13 @@
     </message>
 </context>
 <context>
+    <name>XmlDescription</name>
+    <message>
+        <source>No description available</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>tools</name>
     <message>
         <source>Unknown</source>
