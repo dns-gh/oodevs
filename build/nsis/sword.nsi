@@ -90,10 +90,9 @@ Section "!${PRODUCT_NAME}"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File "resources\*.ico"
 
-    ; evaluation licence
-    !ifdef EVALUATION
-        File "${RUNDIR}\evaluation.lic"
-    !endif
+    ; Scipio licences
+    File "scipio\Scipio.lic"
+    File "scipio\ScipioMOI.lic"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ;plugin definitions
@@ -118,8 +117,8 @@ Section "!${PRODUCT_NAME}"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_UNINSTALL).lnk" "${UNINST_EXE}"
 
     SetOutPath "$INSTDIR\installation files"
-    File "Scipio-Sword_post_install.reg"
-    File "Scipio-Sword_post_install.bat"
+    File "scipio\Scipio-Sword_post_install.reg"
+    File "scipio\Scipio-Sword_post_install.bat"
 
     ; VCRedist
     File "${OUTDIR}\vcredist_${PLATFORM}.exe"
