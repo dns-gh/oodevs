@@ -609,3 +609,12 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
            analysis.CanMoveOnBurningCells( pathPoints_ ) &&
            analysis.CanMoveOnKnowledgeObject( pathPoints_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::GetPointOnPathCloseTo
+// Created: CMA 2011-11-10
+// -----------------------------------------------------------------------------
+MT_Vector2D DEC_Agent_Path::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, bool forceNextPoint ) const
+{
+    return DEC_PathResult::GetPointOnPathCloseTo( posToTest, pathPoints_, forceNextPoint );
+}

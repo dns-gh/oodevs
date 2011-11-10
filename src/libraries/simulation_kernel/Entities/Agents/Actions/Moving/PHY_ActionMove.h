@@ -54,7 +54,7 @@ public:
 private:
     //! @name Tools
     //@{
-    void CreateJoiningPath();
+    void CreateJoiningPath( bool forceNextPoint );
     void DestroyJoiningPath();
     void AvoidObstacles();
     bool UpdateObjectsToAvoid();
@@ -74,6 +74,7 @@ private:
     T_ObjectKnowledgeSet objectAvoidAttempts_;
     T_KnowledgeObjectVector objectsToAvoid_;
     std::vector< TER_Localisation > geometrySignatures_;
+    bool forceNextPoint_;
 };
 
 #endif // __PHY_ActionMove_h_

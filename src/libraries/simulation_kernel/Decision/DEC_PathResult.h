@@ -12,6 +12,7 @@
 
 #include "Decision/DEC_Path_ABC.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
+#include "MT_Tools/Mt_Vector2DTypes.h"
 
 namespace sword
 {
@@ -49,7 +50,7 @@ public:
     //! @name Tools
     //@{
             CIT_PathPointList GetCurrentKeyOnPath         ( const MT_Vector2D& vPos ) const;
-            MT_Vector2D       GetPointOnPathCloseTo       ( const MT_Vector2D& posToTest ) const;
+            MT_Vector2D       GetPointOnPathCloseTo       ( const MT_Vector2D& posToTest, const T_PointVector& pathPoints, bool forceNextPoint ) const;
             MT_Vector2D       GetFuturePosition           ( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
             bool              ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
     virtual void              InsertDecPoints             () = 0;

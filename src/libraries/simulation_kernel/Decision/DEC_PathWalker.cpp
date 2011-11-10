@@ -434,7 +434,7 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
         if( itNextPathPoint_ == pPath->GetResult().end() )
         {
             rCurrentSpeed_ = 0;
-            return eFinished;
+            return ( pathSet != ePartialPath ) ? eFinished : pathSet;
         }
 
         ComputeCurrentSpeed();
