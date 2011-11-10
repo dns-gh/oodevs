@@ -2638,7 +2638,7 @@
           <label kind="long" language="en-GB" text="Animator (ENIEX)"/>
         </labels>
       </entry>
-      <entry alias="DirEx" id="3" name="direx" option="supervisor">
+      <entry alias="DirEx" id="3" name="direx">
         <labels>
           <label kind="short" language="fr-FR" text="DIREX"/>
           <label kind="long" language="fr-FR" text="Directeur d'exercice"/>
@@ -2646,7 +2646,7 @@
           <label kind="long" language="en-GB" text="Exercise director (DIREX)"/>
         </labels>
       </entry>
-      <entry alias="Env" id="4" name="environment">
+      <entry alias="Env" id="4" name="environment" option="supervisor">
         <labels>
           <label kind="short" language="fr-FR" text="ENV"/>
           <label kind="long" language="fr-FR" text="Environnement"/>
@@ -5139,4 +5139,4 @@
     </attribute>
   </profile-attributes>
 </extensions>
-<!-- signature="0227228080" -->
+<!-- signature="1806165138" -->
