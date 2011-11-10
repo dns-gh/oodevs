@@ -418,13 +418,6 @@
     </message>
 </context>
 <context>
-    <name>FilterDescription</name>
-    <message>
-        <source>No description available</source>
-        <translation>Aucune description disponible</translation>
-    </message>
-</context>
-<context>
     <name>FilterDialog</name>
     <message>
         <source>Select filter:</source>

@@ -11,13 +11,13 @@
 #include "FilterInputArgument.h"
 #include "moc_FilterInputArgument.cpp"
 #include "clients_kernel/Tools.h"
-#include "FilterDescription.h"
+#include "clients_kernel/XmlDescription.h"
 
 // -----------------------------------------------------------------------------
 // Name: FilterInputArgument constructor
 // Created: ABR 2011-09-28
 // -----------------------------------------------------------------------------
-FilterInputArgument::FilterInputArgument( const std::string& argumentValue, const FilterDescription& description, const std::string exerciseDir /*= ""*/ )
+FilterInputArgument::FilterInputArgument( const std::string& argumentValue, const kernel::XmlDescription& description, const std::string exerciseDir /*= ""*/ )
     : exerciseDir_( exerciseDir )
     , description_( description.GetName() )
 {

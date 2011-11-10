@@ -220,6 +220,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationKnowledge_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\XmlDescription.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h" />
@@ -328,6 +329,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionDependency.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionTypes.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\XmlDescription.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ScoreFactory_ABC.h" />
     <CustomBuildStep Include="..\..\src\libraries\clients_kernel\ActionController.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Controller.h" />

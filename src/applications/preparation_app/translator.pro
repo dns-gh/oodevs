@@ -15,7 +15,6 @@ FileLoaderObserver.cpp \
 FileToolbar.cpp \
 FilterCommand.cpp \
 FilterCsv.cpp \
-FilterDescription.cpp \
 FilterDialog.cpp \
 FilterDialogs.cpp \
 FilterInputArgument.cpp \

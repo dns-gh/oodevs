@@ -23,6 +23,16 @@
 
 namespace bfs = boost::filesystem;
 
+namespace
+{
+    std::string ReadLang()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: FilterCommand constructor
 // Created: ABR 2011-06-17
@@ -102,7 +112,7 @@ void FilterCommand::ReadArgument( xml::xistream& xis )
     arguments_.push_back( std::pair< std::string, std::string >( name, ConvertArgumentVariable( value ) ) );
     if( value == "$input_file$" || value == "$input_dir$" || value == "$input$" )
     {
-        FilterDescription description( xis );
+        kernel::XmlDescription description( xis, ReadLang() );
         FilterInputArgument* inputArgument = new FilterInputArgument( value, description, config_.GetExerciseDir( config_.GetExerciseName() ) );
         inputArguments_[ arguments_.size() - 1 ] = inputArgument;
         connect( inputArgument, SIGNAL( ValueChanged() ), this, SLOT( OnValueChanged() ) );
