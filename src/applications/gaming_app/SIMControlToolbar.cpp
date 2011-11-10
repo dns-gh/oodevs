@@ -48,6 +48,7 @@ namespace
             if( event->type() == QEvent::KeyPress )
             {
                 const int key = ((QKeyEvent*)event)->key();
+                emit valueChanged( value() );
                 if( key == Qt::Key_Enter || key == Qt::Key_Return )
                     toolBar_.SlotSpeedChange();
             }
