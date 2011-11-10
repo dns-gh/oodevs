@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <populations model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Crowds.xsd">
   <reloading-time-effect modifier="1" population-density="0.25"/>
-  <time-between-nbc-applications delay="1h"/>
+  <time-between-nbc-applications decontaminationDelay="300s" delay="1h"/>
   <population armed-individuals="0" concentration-density="0.002" decisional-model="Masalife.Foule" id="0" moving-base-density="0.3" moving-speed="6" name="Foule standard">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
@@ -1740,4 +1740,4 @@
     <repartition children="0.1" female="0.45" male="0.45"/>
   </population>
 </populations>
-<!-- signature="1958733282" -->
+<!-- signature="3153405256" -->
