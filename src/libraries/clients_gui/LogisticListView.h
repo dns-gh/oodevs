@@ -87,7 +87,7 @@ private:
 
     //! @name Drag-N-Drop implementation
     //@{
-    virtual void dragMoveEvent( QDragMoveEvent *pEvent );
+    virtual void viewportDragMoveEvent( QDragMoveEvent *pEvent );
     virtual bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
     bool Drop( const kernel::Entity_ABC& source, const kernel::Entity_ABC& target );
     bool Drop( const kernel::Entity_ABC& source, const kernel::LogisticLevel& target );

@@ -298,10 +298,10 @@ void LogisticListView::NotifyDeletedInternal( const Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticListView::dragMoveEvent
+// Name: LogisticListView::viewportDragMoveEvent
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void LogisticListView::dragMoveEvent( QDragMoveEvent* pEvent )
+void LogisticListView::viewportDragMoveEvent( QDragMoveEvent* pEvent )
 {
     const Entity_ABC* entity = gui::ValuedDragObject::GetValue< Entity_ABC >( pEvent );
     if( !entity )
