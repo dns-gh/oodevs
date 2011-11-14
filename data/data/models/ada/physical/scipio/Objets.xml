@@ -262,7 +262,6 @@
     <propagation model="cloud"/>
   </object>
   <object geometry="point polygon" name="plot ravitaillement" symbol="G*SPPR----****X" type="logistic support area">
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <supply/>
   </object>
@@ -288,7 +287,6 @@
   </object>
   <object geometry="polygon" name="zone brouillage" symbol="G*EW***********" type="jamming area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <delay/>
     <interact-with-enemy/>
     <interference/>
   </object>
@@ -456,4 +454,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="2388516569" -->
+<!-- signature="2107292031" -->
