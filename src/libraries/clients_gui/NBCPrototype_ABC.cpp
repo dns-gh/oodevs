@@ -34,6 +34,7 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
     danger_ = new LoadableSpinBox( 0, 10, 1, this );
     nbcAgentsLabel_ = new RichLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent(s):" ), this );
     nbcAgents_ = new Q3ListView( this );
+    nbcAgents_->setResizeMode( Q3ListView::AllColumns );
     nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible
     nbcAgents_->addColumn( tools::translate( "gui::NBCPrototype_ABC", "Type" ) );
 
