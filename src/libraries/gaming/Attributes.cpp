@@ -122,16 +122,7 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
 {
     std::set< std::string > updated;
 
-    if( message.has_direction() )
-    {
-        int nDirection = message.direction().heading();
-        if( nDirection != nDirection_ )
-        {
-            nDirection_ = nDirection;
-            updated.insert( "Info" );
-        }
-    }
-
+    UPDATE_SUBPROPERTY( message, nDirection_, direction, heading, "Info", updated );
     UPDATE_PROPERTY( message, nRawOpState_, raw_operational_state, "Info", updated );
     UPDATE_PROPERTY( message, nSpeed_, speed, "Info", updated );
     UPDATE_PROPERTY( message, criticalIntelligence_, critical_intelligence, "Info", updated );

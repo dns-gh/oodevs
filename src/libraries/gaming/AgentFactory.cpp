@@ -182,7 +182,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new Transports( controllers_.controller_, model_.agents_, dico ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new TroopsCompatibilityVersion( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
-    result->Attach( *new Contaminations( controllers_.controller_, static_.objectTypes_, dico ) );
+    result->Attach( *new Contaminations( controllers_.controller_, *result, static_.objectTypes_, dico ) );
     result->Attach< ConvexHulls >( *new AgentConvexHulls( *result, static_.coordinateConverter_ ) );
     result->Attach( *new DecisionalStates() );
     result->Attach( *new Speeds( static_.coordinateConverter_ ) );

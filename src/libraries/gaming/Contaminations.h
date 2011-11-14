@@ -26,6 +26,7 @@ namespace kernel
     class Displayer_ABC;
     class NBCAgent;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 // =============================================================================
@@ -35,13 +36,13 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class Contaminations : public kernel::Extension_ABC
-    , public kernel::Updatable_ABC< sword::UnitAttributes >
+                     , public kernel::Updatable_ABC< sword::UnitAttributes >
                      , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Contaminations( kernel::Controller& controller, const tools::Resolver_ABC< kernel::NBCAgent >& resolver, kernel::PropertiesDictionary& dico );
+             Contaminations( kernel::Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::NBCAgent >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~Contaminations();
     //@}
 
@@ -73,6 +74,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    kernel::Entity_ABC& entity_;
     const tools::Resolver_ABC< kernel::NBCAgent >& resolver_;
     bool        bNbcProtectionSuitWorn_;
     T_NbcAgents contaminatingNbcAgents_;

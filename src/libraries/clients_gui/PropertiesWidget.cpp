@@ -250,7 +250,7 @@ void PropertiesWidget::NotifyDeleted( const kernel::DictionaryUpdated& message )
 // -----------------------------------------------------------------------------
 void PropertiesWidget::UpdatePath( const kernel::DictionaryUpdated& message, const QString& name, PropertiesWidget& parent )
 {
-    if( selected_ )
+    if( selected_ && message.GetEntity().GetId() == selected_->GetId() )
     {
         QStringList path = QStringList::split( '/', name );
         CIT_SubCategories it = categories_.find( path.front() );

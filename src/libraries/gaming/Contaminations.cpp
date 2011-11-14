@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "statusicons.h"
@@ -23,12 +24,13 @@ using namespace kernel;
 // Name: Contaminations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Contaminations::Contaminations( Controller& controller, const tools::Resolver_ABC< NBCAgent >& resolver, PropertiesDictionary& dico )
-    : controller_( controller )
-    , resolver_( resolver )
+Contaminations::Contaminations( Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< NBCAgent >& resolver, PropertiesDictionary& dico )
+    : controller_            ( controller )
+    , entity_                ( entity )
+    , resolver_              ( resolver )
     , bNbcProtectionSuitWorn_( false )
-    , nContamination_( 0 )
-    , quantity_( 0 )
+    , nContamination_        ( 0 )
+    , quantity_              ( 0 )
 {
     CreateDictionary( dico );
 }
@@ -48,10 +50,10 @@ Contaminations::~Contaminations()
 // -----------------------------------------------------------------------------
 void Contaminations::CreateDictionary( PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "NBC", "NBC/NBC suit" ), bNbcProtectionSuitWorn_ );
-    dico.Register( *this, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_ );
-    dico.Register( *this, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_ );
-    dico.Register( *this, tools::translate( "NBC", "NBC/Contamination quantity" ), quantity_ );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/NBC suit" ), bNbcProtectionSuitWorn_ );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_ );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_ );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination quantity" ), quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,15 +62,15 @@ void Contaminations::CreateDictionary( PropertiesDictionary& dico ) const
 // -----------------------------------------------------------------------------
 void Contaminations::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_contamination_state()  )
-    {
-        nContamination_ = message.contamination_state().percentage();
-        if( nContamination_ == 0 )
-            contaminatingNbcAgents_.clear();
-        quantity_ = message.contamination_state().quantity();
-    }
+    std::set< std::string > updated;
 
-   if( message.has_contamination_agents()  )
+    UPDATE_SUBPROPERTY( message, nContamination_, contamination_state, percentage, "NBC", updated );
+    UPDATE_SUBPROPERTY( message, quantity_, contamination_state, quantity, "NBC", updated );
+
+    if( nContamination_ == 0 )
+        contaminatingNbcAgents_.clear();
+
+   if( message.has_contamination_agents() )
     {
         contaminatingNbcAgents_.clear();
         contaminatingNbcAgents_.reserve( message.contamination_agents().elem_size() );
@@ -76,8 +78,10 @@ void Contaminations::DoUpdate( const sword::UnitAttributes& message )
             contaminatingNbcAgents_.push_back( &resolver_.Get( message.contamination_agents().elem( i ).id() ) );
     }
 
-    if( message.has_protective_suits()  )
-        bNbcProtectionSuitWorn_ = message.protective_suits() != 0;
+   UPDATE_PROPERTY( message, bNbcProtectionSuitWorn_, protective_suits, "NBC", updated );
+
+    if( !updated.empty() )
+        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "NBC", "NBC" ) ) );
 
     controller_.Update( *this );
 }

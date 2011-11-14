@@ -14,11 +14,13 @@
 #include <protocol/Protocol.h>
 #define BOOST_TYPEOF_SILENT
 #include <boost/typeof/typeof.hpp>
+#include <boost/function_types/result_type.hpp>
+#include <boost/type_traits.hpp>
 #undef BOOST_TYPEOF_SILENT
 
 namespace
 {
-    template< typename T, typename Message, typename Message2 >
+    template< typename T, typename Message >
     bool UpdateProperty( T& value, const Message& message, bool( Message::*checker )() const,
                          const T&( Message::*retriever )() const )
     {
@@ -42,9 +44,25 @@ namespace
         value = newValue;
         return true;
     }
+    template< typename T, typename U, typename Message, typename Message2 >
+    bool UpdateSubProperty( T& value, const Message& message, bool( Message::*checker )() const,
+                            const Message2&( Message::*retriever )() const, U( Message2::*retriever2 )() const )
+    {
+        if( !( message.*checker )() )
+            return false;
+        T newValue = static_cast< T >( ( ( message.*retriever )().*retriever2 )() );
+        if( newValue == value )
+            return false;
+        value = newValue;
+        return true;
+    }
 
 #   define UPDATE_PROPERTY( message, value, field, property, container )\
     if( UpdateProperty( value, message, &BOOST_TYPEOF( message )::has_##field, &BOOST_TYPEOF( message )::##field ) )\
+        container.insert( property );
+
+#   define UPDATE_SUBPROPERTY( message, value, parent, field, property, container )\
+    if( UpdateSubProperty( value, message, &BOOST_TYPEOF( message )::has_##parent, &BOOST_TYPEOF( message )::##parent, &boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( message )::##parent ) >::type >::type >::type::##field ) )\
         container.insert( property );
 }
 

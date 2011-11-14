@@ -82,9 +82,10 @@ void StructuralStateAttribute::DoUpdate( const sword::UrbanCreation& message )
 template< typename T >
 void StructuralStateAttribute::UpdateData( const T& message )
 {
-    if( message.has_structure() )
-    {
-        structuralState_ = message.structure().state();
-        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Block", "Info/StructuralState" ) ) );
-    }
+    std::set< std::string > updated;
+
+    UPDATE_SUBPROPERTY( message, structuralState_, structure, state, "Info", updated );
+
+    if( !updated.empty() )
+        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Block", "Info" ) ) );
 }
