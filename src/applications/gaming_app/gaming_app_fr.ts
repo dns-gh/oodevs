@@ -1643,22 +1643,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>militaires du rang</translation>
     </message>
     <message>
-        <source>Shell</source>
-        <translation>Obus</translation>
-    </message>
-    <message>
-        <source>Air missile</source>
-        <translation>Missiles air</translation>
-    </message>
-    <message>
-        <source>Ground missile</source>
-        <translation>Missiles sol</translation>
-    </message>
-    <message>
-        <source>Bullet</source>
-        <translation>Balles</translation>
-    </message>
-    <message>
         <source>Magic orders</source>
         <translation>Actions magiques</translation>
     </message>

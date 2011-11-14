@@ -56,12 +56,16 @@ SuccessFactorConditions::~SuccessFactorConditions()
 // -----------------------------------------------------------------------------
 void SuccessFactorConditions::NotifyDeleted( const Score_ABC& score )
 {
-    BOOST_FOREACH( const T_Elements::value_type condition, elements_ )
-        if( &condition.second->GetScore() == &score )
+    IT_Elements it = elements_.begin();
+    while ( it != elements_.end() )
+    {
+        IT_Elements itCur = it++;
+        if( &itCur->second->GetScore() == &score )
         {
-            delete condition.second;
-            Remove( condition.first );
+            delete itCur->second;
+            Remove( itCur->first );
         }
+    }
 }
 
 // -----------------------------------------------------------------------------

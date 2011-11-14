@@ -225,16 +225,6 @@ ADN_Tr::T_ConverterSupplyConvoyType ADN_Tr::supplyConvoyTypeConverter_[] =
     T_ConverterSupplyConvoyType( "", "", (E_SupplyConvoyType)-1 )
 };
 
-ADN_Tr::T_ConverterMunitionType ADN_Tr::munitionTypeConverter_[] =
-{
-    T_ConverterMunitionType( "Obus",       QT_TRANSLATE_NOOP( "ADN_Tr", "Shell" ),       eMunitionType_Obus ),
-    T_ConverterMunitionType( "MissileSol", QT_TRANSLATE_NOOP( "ADN_Tr", "Missile" ),     eMunitionType_MissileSol ),
-    T_ConverterMunitionType( "MissileAir", QT_TRANSLATE_NOOP( "ADN_Tr", "Air missile" ), eMunitionType_MissileAir ),
-    T_ConverterMunitionType( "Mitraille",  QT_TRANSLATE_NOOP( "ADN_Tr", "Bullet" ),      eMunitionType_Mitraille ),
-    T_ConverterMunitionType( "ALR",        QT_TRANSLATE_NOOP( "ADN_Tr", "Reduced Lethality Weapon" ), eMunitionType_ALR ),
-    T_ConverterMunitionType( "", "", (E_MunitionType)-1 )
-};
-
 ADN_Tr::T_ConverterRadarType ADN_Tr::radarTypeConverter_[] =
 {
     T_ConverterRadarType( "radar",          QT_TRANSLATE_NOOP( "ADN_Tr", "radar" ),           eRadarType_Radar ),
@@ -432,15 +422,6 @@ const std::string& ADN_Tr::ConvertFromBreakdownNTI( E_BreakdownNTI nValue, E_Con
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertFromMunitionType
-// Created: APE 2005-03-07
-// -----------------------------------------------------------------------------
-const std::string& ADN_Tr::ConvertFromMunitionType( E_MunitionType nValue, E_Conversion nConversion )
-{
-    return ADN_Tr::InverseFindInConverter( munitionTypeConverter_, nValue, nConversion );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromRadarType
 // Created: APE 2005-03-07
 // -----------------------------------------------------------------------------
@@ -626,17 +607,6 @@ E_BreakdownNTI ADN_Tr::ConvertToBreakdownNTI( const std::string& strName )
     return ADN_Tr::FindInConverter( breakdownNTIConverter_, strName );
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertToMunitionType
-// Created: APE 2005-03-07
-// -----------------------------------------------------------------------------
-E_MunitionType ADN_Tr::ConvertToMunitionType( const std::string& strName )
-{
-    return ADN_Tr::FindInConverter( munitionTypeConverter_, strName );
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToRadarType
 // Created: APE 2005-03-07
@@ -702,7 +672,6 @@ void ADN_Tr::InitTranslations()
     InitTr( protectionTypeConverter_, "ADN_Tr" );
     InitTr( breakdownTypeConverter_, "ADN_Tr" );
     InitTr( breakdownNTIConverter_, "ADN_Tr" );
-    InitTr( munitionTypeConverter_, "ADN_Tr" );
     InitTr( radarTypeConverter_, "ADN_Tr" );
     InitTr( equipmentStateConverter_, "ADN_Tr" );
     InitTr( munitionTirIndirectConverter_ , "ADN_Tr" );

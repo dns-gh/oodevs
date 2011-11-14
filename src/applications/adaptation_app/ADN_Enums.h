@@ -215,16 +215,6 @@ enum E_SupplyConvoyType
     eNbrSupplyConvoy,
 };
 
-enum E_MunitionType
-{
-    eMunitionType_Obus,
-    eMunitionType_MissileSol,
-    eMunitionType_MissileAir,
-    eMunitionType_Mitraille,
-    eMunitionType_ALR,
-    eNbrMunitionType
-};
-
 enum E_CapacityMission
 {
     eCivilianLawEnforcement,

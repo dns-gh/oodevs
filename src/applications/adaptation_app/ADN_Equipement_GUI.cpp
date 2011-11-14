@@ -159,7 +159,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeEMAT8" ), vConnectors[ eEMAT8Code ] );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeLFRIL" ), vConnectors[ eLFRILCode ] );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeNNO" ), vConnectors[ eNNOCode ] );
-    builder.AddEnumField< E_MunitionType >( pHolder, tr( "Type" ), vConnectors[ eType ], ADN_Tr::ConvertFromMunitionType );
+    builder.AddEnumField< E_MunitionType >( pHolder, tr( "Type" ), vConnectors[ eType ], ENT_Tr::ConvertFromAmmunitionType );
     builder.AddField< ADN_ComboBox_Equipment_Nature >( pHolder, tr( "Nature" ), vConnectors[ eNature ] );
     builder.AddField< ADN_ComboBox_Equipment_LogisticSupplyClass >( pHolder, tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );
     builder.AddField<ADN_CheckBox>( pHolder, tr( "Improvised explosive device" ), vConnectors[ eIsIED ] );
