@@ -1308,9 +1308,10 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
 {
     client::AutomatChangeKnowledgeGroupAck ack;
     ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
+    MIL_Automate* pAutomate = 0;
     try
     {
-        MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
+        pAutomate = TaskerToAutomat( *this, message.tasker() );
         if( !pAutomate )
             throw NET_AsnException< HierarchyModificationAck_ErrorCode >( HierarchyModificationAck::error_invalid_automate );
         pAutomate->OnReceiveChangeKnowledgeGroup( message, *armyFactory_ );
@@ -1323,16 +1324,11 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
 
     if( ack().error_code() == HierarchyModificationAck::no_error_hierarchy )
     {
-        if( message.has_parameters() && message.parameters().elem_size() == 2 )
-        {
-            client::AutomatChangeKnowledgeGroup resendMessage;
-            resendMessage().mutable_automat()->set_id( message.tasker().automat().id() );
-            if( message.parameters().elem( 0 ).value_size() == 1 && message.parameters().elem( 0 ).value().Get( 0 ).has_knowledgegroup() )
-                resendMessage().mutable_knowledge_group()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).knowledgegroup().id() );
-            if( message.parameters().elem( 1 ).value_size() == 1 && message.parameters().elem( 1 ).value().Get( 0 ).has_party() )
-                resendMessage().mutable_party()->set_id( message.parameters().elem( 1 ).value().Get( 0 ).party().id() );
-            resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
-        }
+        client::AutomatChangeKnowledgeGroup resendMessage;
+        resendMessage().mutable_automat()->set_id( pAutomate->GetID() );
+        resendMessage().mutable_party()->set_id( pAutomate->GetArmy().GetID() );
+        resendMessage().mutable_knowledge_group()->set_id( pAutomate->GetKnowledgeGroup().GetId() );
+        resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
     }
 }
 
