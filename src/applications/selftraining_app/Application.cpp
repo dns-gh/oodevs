@@ -83,6 +83,7 @@ void Application::Initialize()
     mainWindow_ = new MainWindow( *config_, *fileLoader_, *controllers_, *launcherClient_ );
     setMainWidget( mainWindow_ );
     mainWindow_->show();
+    QCoreApplication::sendEvent( mainWindow_, new QEvent( QEvent::LanguageChange ) );
 
     connect( this, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
     connect( timer_, SIGNAL( timeout() ), SLOT( OnTimer() ) );
@@ -111,7 +112,6 @@ void Application::Initialize()
         if( message.exec() == QMessageBox::Yes )
             processes.KillAll( "gaming_app.exe" );
     }
-    sessionTray_.reset( new SessionTray( mainWindow_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,15 +130,31 @@ void Application::CreateTranslators()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Application::DeleteTranslators
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void Application::DeleteTranslators()
+{
+    for( std::vector< QTranslator* >::const_iterator it = translators_.begin(); it != translators_.end(); ++it )
+        removeTranslator( *it );
+    translators_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Application::AddTranslator
 // Created: SBO 2008-04-09
 // -----------------------------------------------------------------------------
-void Application::AddTranslator( const char* t, const QString& locale )
+void Application::AddTranslator( const std::string file, const QString& locale )
 {
-    std::auto_ptr< QTranslator > trans( new QTranslator( this ) );
-    const QString file = QString( "%1_%2" ).arg( t ).arg( locale );
-    if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
-       installTranslator( trans.release() );
+    QTranslator* trans = new QTranslator( this );
+    const QString filename = QString( "%1_%2" ).arg( file.c_str() ).arg( locale );
+    if( trans->load( filename, "." ) || trans->load( filename, "resources/locales" ) )
+    {
+       installTranslator( trans );
+       translators_.push_back( trans );
+    }
+    else
+        delete trans;
 }
 
 // -----------------------------------------------------------------------------
@@ -164,4 +180,13 @@ bool Application::notify( QObject* emitter, QEvent* event )
             return true;
         }
     return QApplication::notify( emitter, event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::SetLauncherRootDir
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void Application::SetLauncherRootDir( const std::string& directory )
+{
+    launcher_->SetRootDir( directory );
 }

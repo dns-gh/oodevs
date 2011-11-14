@@ -52,8 +52,9 @@ namespace
 // Name: ExerciseList constructor
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, bool showBrief /* = true*/, bool showProfile /* =true*/, bool showParams /* = true*/, bool enableParams /* = true*/ )
-    : Q3VBox             ( parent )
+ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers,
+                            bool showBrief /* = true*/, bool showProfile /* =true*/, bool showParams /* = true*/, bool enableParams /* = true*/ )
+    : gui::LanguageChangeObserver_ABC< Q3VBox >( parent )
     , config_           ( config )
     , fileLoader_       ( fileLoader )
     , controllers_      ( controllers )
@@ -66,7 +67,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     {
         Q3VBox* leftBox = new Q3VBox( box );
         leftBox->setSpacing( 5 );
-        QLabel* label = new QLabel( tools::translate( "ExerciseList", "Exercise:" ), leftBox );
+        exerciseLabel_ = new QLabel( leftBox );
         exercises_ = new Q3ListView( leftBox );
         exercises_->addColumn( "exercise" );
         exercises_->header()->hide();
@@ -74,11 +75,11 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         exercises_->setSortColumn( 0 );
         exercises_->setResizeMode( Q3ListView::LastColumn );
 
-        label = new QLabel( tools::translate( "ExerciseList", "Profile:" ), leftBox );
+        profileLabel_ = new QLabel( leftBox );
         profiles_ = new ProfileList( leftBox, config, fileLoader_ );
         leftBox->setStretchFactor( exercises_, 3 );
         leftBox->setStretchFactor( profiles_, 1 );
-        label->setShown( showProfile );
+        profileLabel_->setShown( showProfile );
         profiles_->setShown( showProfile );
 
         connect( profiles_ , SIGNAL( Select( const frontend::Profile& ) ), this, SLOT( SelectProfile( const frontend::Profile& ) ) );
@@ -97,6 +98,16 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
 ExerciseList::~ExerciseList()
 {
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseList::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void ExerciseList::OnLanguageChanged()
+{
+    exerciseLabel_->setText( tools::translate( "ExerciseList", "Exercise:" ) );
+    profileLabel_->setText( tools::translate( "ExerciseList", "Profile:" ) );
 }
 
 // -----------------------------------------------------------------------------

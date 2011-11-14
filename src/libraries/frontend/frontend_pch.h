@@ -16,8 +16,9 @@
 #include <memory>
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
+#include <QtGui/QEvent.h>
+#include <QtGui/qtabwidget.h>
 #pragma warning( pop )
 #include <string>
-#include <QtGui/qtabwidget.h>
 
 #endif // __frontend_pch_h_

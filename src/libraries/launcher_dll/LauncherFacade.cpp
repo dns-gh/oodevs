@@ -100,3 +100,13 @@ std::string LauncherFacade::GetLastError() const
 {
     return lastError_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: LauncherFacade::SetRootDir
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void LauncherFacade::SetRootDir( const std::string& directory )
+{
+    if( IsInitialized() )
+        config_->SetRootDir( directory );
+}

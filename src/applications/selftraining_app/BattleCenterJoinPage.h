@@ -51,6 +51,12 @@ public:
     virtual ~BattleCenterJoinPage();
     //@}
 
+private:
+    //! @name Helpers
+    //@{
+    virtual void OnLanguageChanged();
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -58,13 +64,6 @@ private slots:
     void SelectExercise( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile );
     void ClearSelection();
     void UpdateExerciseList();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    BattleCenterJoinPage( const BattleCenterJoinPage& );            //!< Copy constructor
-    BattleCenterJoinPage& operator=( const BattleCenterJoinPage& ); //!< Assignment operator
     //@}
 
 private:
@@ -80,6 +79,10 @@ private:
     const frontend::Exercise_ABC* exercise_;
     frontend::Profile profile_;
     std::auto_ptr< frontend::ExerciseFilter_ABC > filter_;
+
+    QLabel* hostLabel_;
+    QLabel* portLabel_;
+    QPushButton* updateButton_;
     //@}
 };
 

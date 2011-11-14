@@ -25,12 +25,12 @@ namespace bfs = boost::filesystem;
 
 namespace
 {
-    Q3GroupBox* AddTab( QWidget* parent, QTabWidget* tabs, QString title )
+    Q3GroupBox* AddTab( QWidget* parent, QTabWidget* tabs )
     {
         Q3GroupBox* importGroup = new Q3GroupBox( 2, Qt::Horizontal, parent );
         importGroup->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
         importGroup->setMargin( 0 );
-        tabs->addTab( importGroup, title );
+        tabs->addTab( importGroup, "" );
         return importGroup;
     }
 }
@@ -40,7 +40,7 @@ namespace
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
 ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : Q3GroupBox( 2, Qt::Vertical, parent )
+    : gui::LanguageChangeObserver_ABC< Q3GroupBox >( 2, Qt::Vertical, parent )
     , config_    ( config )
     , fileLoader_( fileLoader )
     , page_      ( page )
@@ -49,21 +49,21 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
     tabs_ = new QTabWidget( this );
     connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), &page, SLOT( UpdateEditButton( QWidget* ) ) );
 
-    // Exercises
+    // eTabs_Exercise
     {
-        Q3GroupBox* box = AddTab( this, tabs_, tools::translate( "ExportWidget", "Exercise" ) );
+        Q3GroupBox* box = AddTab( this, tabs_ );
         {
-            new QLabel( tools::translate( "ExportWidget", "Package description:" ), box );
+            exerciseDescriptionLabel_ = new QLabel( box );
             exerciseDescription_ = new QTextEdit( box );
             exerciseDescription_->setMaximumHeight( 30 );
         }
         {
-            new QLabel( tools::translate( "ExportWidget", "Exercise:" ), box );
+            exerciseLabel_ = new QLabel( box );
             exerciseList_ = new Q3ListBox( box );
             connect( exerciseList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
         }
         {
-            new QLabel( tools::translate( "ExportWidget", "Package content:" ), box );
+            packageContentLabel_ = new QLabel( box );
             exerciseContent_ = new Q3ListView( box );
             exerciseContent_->addColumn( "exercise features" );
             exerciseContent_->setResizeMode( Q3ListView::AllColumns );
@@ -71,35 +71,35 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
             exerciseContent_->adjustSize();
         }
     }
-    // Terrains
+    // eTabs_Terrain
     {
-        Q3GroupBox* box = AddTab( this, tabs_, tools::translate( "ExportWidget", "Terrain" ) );
+        Q3GroupBox* box = AddTab( this, tabs_ );
         {
-            new QLabel( tools::translate( "ExportWidget", "Package description:" ), box );
+            terrainDescriptionLabel_ = new QLabel( box );
             terrainDescription_ = new QTextEdit( box );
             terrainDescription_->setMaximumHeight( 30 );
         }
         {
-            new QLabel( tools::translate( "ExportWidget", "Terrain:" ), box );
+            terrainLabel_ = new QLabel( box );
             terrainList_ = new Q3ListBox( box );
             connect( terrainList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
         }
     }
-    // Models
+    // eTabs_Models
     {
-        Q3GroupBox* box = AddTab( this, tabs_, tools::translate( "ExportWidget", "Models" ) );
+        Q3GroupBox* box = AddTab( this, tabs_ ); 
         {
-            new QLabel( tools::translate( "ExportWidget", "Package description:" ), box );
+            modelsDescriptionLabel_ = new QLabel( box );
             modelDescription_ = new QTextEdit( box );
             modelDescription_->setMaximumHeight( 30 );
         }
         {
-            new QLabel( tools::translate( "ExportWidget", "Decisional model:" ), box );
+            modelsDecisionalLabel_ = new QLabel( box );
             decisionalCheckBox_ = new QCheckBox( box );
             decisionalCheckBox_->setEnabled( false );
         }
         {
-            new QLabel( tools::translate( "ExportWidget", "Physical model:" ), box );
+            modelsPhysicalLabel_ = new QLabel( box );
             physicalList_ = new Q3ListBox( box );
             connect( physicalList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
         }
@@ -120,6 +120,26 @@ ExportWidget::~ExportWidget()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExportWidget::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void ExportWidget::OnLanguageChanged()
+{
+    tabs_->setTabText( eTabs_Exercise,  tools::translate( "ExportWidget", "Exercise" ) );
+    tabs_->setTabText( eTabs_Terrain,   tools::translate( "ExportWidget", "Terrain" ) );
+    tabs_->setTabText( eTabs_Models,    tools::translate( "ExportWidget", "Models" ) );
+
+    exerciseDescriptionLabel_->setText( tools::translate( "ExportWidget", "Package description:" ) );
+    exerciseLabel_->setText(            tools::translate( "ExportWidget", "Exercise:" ) );
+    packageContentLabel_->setText(      tools::translate( "ExportWidget", "Package content:" ) );
+    terrainDescriptionLabel_->setText(  tools::translate( "ExportWidget", "Package description:" ) );
+    terrainLabel_->setText(             tools::translate( "ExportWidget", "Terrain:" ) );
+    modelsDescriptionLabel_->setText(   tools::translate( "ExportWidget", "Package description:" ) );
+    modelsDecisionalLabel_->setText(    tools::translate( "ExportWidget", "Decisional model:" ) );
+    modelsPhysicalLabel_->setText(      tools::translate( "ExportWidget", "Physical model:" ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExportWidget::GetCurrentSelection
 // Created: ABR 2011-11-03
 // -----------------------------------------------------------------------------
@@ -128,13 +148,13 @@ Q3ListBoxItem* ExportWidget::GetCurrentSelection() const
     Q3ListBoxItem* item = 0;
     switch( tabs_->currentIndex() )
     {
-    case E_Tabs::exercise:
+    case eTabs_Exercise:
         item = exerciseList_->selectedItem();
         break;
-    case E_Tabs::terrain:
+    case eTabs_Terrain:
         item = terrainList_->selectedItem();
         break;
-    case E_Tabs::models:
+    case eTabs_Models:
         item = physicalList_->selectedItem();
         break;
     default:
@@ -151,11 +171,11 @@ QTextEdit* ExportWidget::GetCurrentDescription() const
 {
     switch( tabs_->currentIndex() )
     {
-    case E_Tabs::exercise:
+    case eTabs_Exercise:
         return exerciseDescription_;
-    case E_Tabs::terrain:
+    case eTabs_Terrain:
         return terrainDescription_;
-    case E_Tabs::models:
+    case eTabs_Models:
         return modelDescription_;
     default:
         break;
@@ -217,7 +237,7 @@ void ExportWidget::Update( Q3ListBoxItem* item /*= 0*/ )
     {
         switch( tabs_->currentIndex() )
         {
-        case E_Tabs::exercise:
+        case eTabs_Exercise:
             {
                 std::string exercise( item->text().ascii() );
                 exerciseContent_->clear();
@@ -225,7 +245,7 @@ void ExportWidget::Update( Q3ListBoxItem* item /*= 0*/ )
                 exerciseContent_->insertItem( frontend::BuildExerciseData( exercise, config_, exerciseContent_, fileLoader_ ) );
             }
             break;
-        case E_Tabs::models:
+        case eTabs_Models:
             decisionalCheckBox_->setEnabled( true );
             break;
         default:
@@ -424,11 +444,11 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
     WriteContent( archive );
     switch( tabs_->currentIndex() )
     {
-    case E_Tabs::exercise:
+    case eTabs_Exercise:
         progress_->setProgress( 0, ListViewSize( Q3ListViewItemIterator( exerciseContent_ ) ) );
         BrowseFiles( config_.GetRootDir(), Q3ListViewItemIterator( exerciseContent_ ), archive, Progress( progress_ ) );
         break;
-    case E_Tabs::terrain:
+    case eTabs_Terrain:
         {
             assert( terrainList_->selectedItem() );
             progress_->setProgress( 0, 1 );
@@ -437,7 +457,7 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
             progress_->setProgress( 1 );
         }
         break;
-    case E_Tabs::models:
+    case eTabs_Models:
         {
             assert( physicalList_->selectedItem() );
             std::string selectedText = physicalList_->selectedItem()->text().ascii();

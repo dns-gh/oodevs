@@ -33,13 +33,14 @@ namespace
 // Created: SBO 2010-11-12
 // -----------------------------------------------------------------------------
 ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, bool briefing, bool models, bool editable )
-    : Q3VBox        ( parent )
-    , config_      ( config )
-    , fileLoader_  ( fileLoader )
-    , language_    ( ReadLang() )
-    , briefingText_( 0 )
-    , terrainList_ ( 0 )
-    , dataChanged_ ( false )
+    : gui::LanguageChangeObserver_ABC< Q3VBox >( parent )
+    , config_         ( config )
+    , fileLoader_     ( fileLoader )
+    , language_       ( ReadLang() )
+    , parametersLabel_( 0 )
+    , briefingText_   ( 0 )
+    , terrainList_    ( 0 )
+    , dataChanged_    ( false )
 {
     setMinimumWidth( 200 );
     setSpacing( 5 );
@@ -62,7 +63,7 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralCon
         Q3VBox* editBox = new Q3VBox( box );
         editBox->setMinimumWidth( 200 );
         editBox->setSpacing( 5 );
-        new QLabel( tools::translate( "ExerciseProperties", "Exercise parameters:" ), editBox );
+        parametersLabel_ = new QLabel( editBox );
         {
             terrainList_ = new QComboBox( editBox );
             connect( terrainList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
@@ -82,6 +83,16 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralCon
 ExerciseProperties::~ExerciseProperties()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseProperties::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void ExerciseProperties::OnLanguageChanged()
+{
+    if( parametersLabel_ )
+        parametersLabel_->setText( tools::translate( "ExerciseProperties", "Exercise parameters:" ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -50,10 +50,17 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    BattleCenterPage( const BattleCenterPage& );            //!< Copy constructor
-    BattleCenterPage& operator=( const BattleCenterPage& ); //!< Assignment operator
+    virtual void OnLanguageChanged();
+    //@}
+
+private:
+    //! @name Data Member
+    //@{
+    QPushButton* bcLauncher_;
+    QPushButton* bcJoin_;
+    QPushButton* remoteControle_;
     //@}
 };
 

@@ -10,6 +10,9 @@
 #ifndef __ImportWidget_h_
 #define __ImportWidget_h_
 
+#include <boost/noncopyable.hpp>
+#include "clients_gui/LanguageChangeObserver_ABC.h"
+
 class ScenarioEditPage;
 
 namespace tools
@@ -23,7 +26,8 @@ namespace tools
 */
 // Created: JSR 2010-07-13
 // =============================================================================
-class ImportWidget : public Q3GroupBox
+class ImportWidget : public gui::LanguageChangeObserver_ABC< Q3GroupBox >
+                   , private boost::noncopyable
 {
     Q_OBJECT
 
@@ -42,36 +46,16 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ImportWidget( const ImportWidget& );            //!< Copy constructor
-    ImportWidget& operator=( const ImportWidget& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void InstallPackage();
+    virtual void OnLanguageChanged();
     bool ReadPackageContentFile();
-
-    // LTO begin
-    void ImportScenario();
-    void AddModelChoice( Q3GroupBox* box );
-    void AddOutput( Q3GroupBox* box );
-    void AddInput( Q3GroupBox* box );
-    void AddTerrainChoice( Q3GroupBox* box );
-    // LTO end
     //@}
 
 private slots:
     //! @name slots
     //@{
     void PackageBrowseClicked();
-    // LTO begin
-    void OnModelChanged( const QString & model );
-    void OnTerrainChanged( const QString& terrain );
-    void OnOutputName( const QString& scenario );
-    void OnChangeScenario();
-    // LTO end
     //@}
 
 private:
@@ -85,11 +69,9 @@ private:
     Q3TextEdit*                 packageDescription_;
     Q3ListBox*                  packageContent_;
     Q3ProgressBar*              packageProgress_;
-    // LTO begin
-    QString                     model_;
-    QLineEdit*                  inputEdit_;
-    QString                     outputScenario_;
-    QString                     terrain_;
+    QLabel*                     packageLabel_;
+    QLabel*                     contentLabel_;
+    QPushButton*                browseButton_;
     //@}
 };
 

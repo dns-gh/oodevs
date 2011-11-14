@@ -10,6 +10,8 @@
 #ifndef __MessageDialog_h_
 #define __MessageDialog_h_
 
+#include <boost/noncopyable.hpp>
+
 // =============================================================================
 /** @class  MessageDialog
     @brief  MessageDialog
@@ -17,6 +19,7 @@
 // Created: RDS 2008-08-20
 // =============================================================================
 class MessageDialog : public QDialog
+                    , private boost::noncopyable
 {
 
     Q_OBJECT;
@@ -36,16 +39,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MessageDialog( const MessageDialog& );            //!< Copy constructor
-    MessageDialog& operator=( const MessageDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     QSize sizeHint() const;
-    QPushButton* CreateButton( QWidget* parent, int );
+    void CreateButton( QWidget* parent, int );
     //@}
 };
 

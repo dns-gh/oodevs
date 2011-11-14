@@ -45,14 +45,9 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CreateTerrainPage( const CreateTerrainPage& );            //!< Copy constructor
-    CreateTerrainPage& operator=( const CreateTerrainPage& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
+    virtual void OnLanguageChanged();
     void Update();
     //@}
 
@@ -61,10 +56,15 @@ private:
     //@{
     const Config& config_;
     kernel::Controllers& controllers_;
+    const bool available_;
+
     ProgressPage* progressPage_;
     QLineEdit* editName_;
-    QLabel* label_;
     QStringList existingTerrains_;
+
+    QLabel* terrainLabel_;
+    QLabel* errorLabel_;
+
     //@}
 };
 

@@ -18,8 +18,8 @@
 // Name: ProgressPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ProgressPage::ProgressPage( Q3WidgetStack* pages, Page_ABC& previous, const QString& title )
-    : ContentPage( pages, title, previous, 0 )
+ProgressPage::ProgressPage( Q3WidgetStack* pages, Page_ABC& previous )
+    : ContentPage( pages, previous, 0 )
 {
     Q3VBox* box = new Q3VBox( this );
     box->layout()->setAlignment( Qt::AlignCenter );

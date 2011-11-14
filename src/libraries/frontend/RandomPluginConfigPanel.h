@@ -21,6 +21,9 @@ class QComboBox;
 class QCheckBox;
 class QLineEdit;
 class QSpinBox;
+class Q3GroupBox;
+class QLabel;
+class QPushButton;
 
 namespace frontend
 {
@@ -53,6 +56,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void OnLanguageChanged();
     virtual QString GetName() const;
     virtual void Commit( const std::string& exercise, const std::string& session );
     //@}
@@ -78,15 +82,21 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QComboBox* contextList_;
-    QComboBox* distributionList_;
-    QLineEdit* deviation_;
-    QLineEdit* mean_;
-    QCheckBox* hasSeed_;
-    QSpinBox* seed_;
-    bool bDistributions_[ eContextsNbr ];
-    double rDeviations_[ eContextsNbr ];
-    double rMeans_[ eContextsNbr ];
+    QComboBox*                  contextList_;
+    QComboBox*                  distributionList_;
+    QLineEdit*                  deviation_;
+    QLineEdit*                  mean_;
+    QCheckBox*                  hasSeed_;
+    QSpinBox*                   seed_;
+    bool                        bDistributions_[ eContextsNbr ];
+    double                      rDeviations_[ eContextsNbr ];
+    double                      rMeans_[ eContextsNbr ];
+    Q3GroupBox*                 mainBox_;
+    QLabel*                     contextLabel_;
+    QLabel*                     distributionLabel_;
+    QLabel*                     standardDeviationLabel_;
+    QLabel*                     meanLabel_;
+    QPushButton*                defaultButton_;
     //@}
 };
 }

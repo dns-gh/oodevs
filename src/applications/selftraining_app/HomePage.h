@@ -49,16 +49,21 @@ class HomePage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             HomePage( Q3WidgetStack* pages, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter );
+             HomePage( QWidget* parent, Q3WidgetStack* pages, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter );
     virtual ~HomePage();
     //@}
 
-public:
+    //! @name Operation
+    //@{
+    void InstallPackage( const QString& package );
+    //@}
+
+private:
     //! @name Helpers
     //@{
-    virtual void show();
+    virtual void OnLanguageChanged();
     virtual void OnOptions();
-    void InstallPackage( const QString& package );
+    virtual void Update();
     //@}
 
 private:

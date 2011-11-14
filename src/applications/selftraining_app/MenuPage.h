@@ -32,12 +32,11 @@ public:
     virtual ~MenuPage();
     //@}
 
-
 protected:
-
     //! @name Operations
     //@{
-    MenuButton* AddLink( const QString& title, Page_ABC& page, const QString& subtitle="", const char* slot = 0 );
+    MenuButton* AddLink( Page_ABC& page, const char* slot = 0 );
+    void SetTextAndSubtitle( QPushButton* button, const QString& text, const QString& subTitle = "" );
     //@}
 
 protected slots:
@@ -46,13 +45,6 @@ protected slots:
     //@{
     void OnSelectedItem( MenuButton* ) ;
     void OnUnSelectedItem( MenuButton* ) ;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    MenuPage( const MenuPage& );            //!< Copy constructor
-    MenuPage& operator=( const MenuPage& ); //!< Assignment operator
     //@}
 
 private:

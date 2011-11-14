@@ -11,6 +11,7 @@
 #include "SelfTrainingPage.h"
 #include "BattleCenterPage.h"
 #include "Config.h"
+#include "MenuButton.h"
 #include "ScenarioLauncherPage.h"
 #include "clients_gui/Tools.h"
 
@@ -21,8 +22,8 @@
 SelfTrainingPage::SelfTrainingPage( Q3WidgetStack* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
 {
-    AddLink( tools::translate( "SelfTrainingPage", "Single" ), *new ScenarioLauncherPage( pages, *this, controllers, config, fileLoader, launcher, interpreter ), tools::translate( "SelfTrainingPage", "Start a single training session" ) );
-    AddLink( tools::translate( "SelfTrainingPage", "Multiplayer" ), *new BattleCenterPage( pages, *this, config, fileLoader, controllers, launcher, interpreter ), tools::translate( "SelfTrainingPage", "Start or join a multiplayer training session" ) );
+    singleButton_ = AddLink( *new ScenarioLauncherPage( pages, *this, controllers, config, fileLoader, launcher, interpreter ) );
+    multiButton_ = AddLink( *new BattleCenterPage( pages, *this, config, fileLoader, controllers, launcher, interpreter ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,4 +33,15 @@ SelfTrainingPage::SelfTrainingPage( Q3WidgetStack* pages, Page_ABC& previous, co
 SelfTrainingPage::~SelfTrainingPage()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SelfTrainingPage::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void SelfTrainingPage::OnLanguageChanged()
+{
+    SetTextAndSubtitle( singleButton_, tools::translate( "SelfTrainingPage", "Single" ), tools::translate( "SelfTrainingPage", "Start a single training session" ) );
+    SetTextAndSubtitle( multiButton_, tools::translate( "SelfTrainingPage", "Multiplayer" ), tools::translate( "SelfTrainingPage", "Start or join a multiplayer training session" ) );
+    MenuPage::OnLanguageChanged();
 }

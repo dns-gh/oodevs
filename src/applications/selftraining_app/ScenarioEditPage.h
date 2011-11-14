@@ -62,6 +62,17 @@ public:
     void UpdateEditButton();
     //@}
 
+private:
+    //! @name Type
+    //@{
+    enum E_Tabs { eTabs_Edit = 0, eTabs_Create = 1, eTabs_Import = 2, eTabs_Export = 3 };
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void OnLanguageChanged();
+    //@}
+
 private slots:
     //! @name Operations
     //@{
@@ -73,13 +84,6 @@ private slots:
     void ComboChanged( int index );
     void UpdateEditButton( QWidget* );
     void ToggleChanged( bool on );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ScenarioEditPage( const ScenarioEditPage& );            //!< Copy constructor
-    ScenarioEditPage& operator=( const ScenarioEditPage& ); //!< Assignment operator
     //@}
 
 private:

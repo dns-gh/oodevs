@@ -34,21 +34,24 @@ SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralCon
     exerciseBox->setMargin( 5 );
     {
         Q3HBox* sessionBox = new Q3HBox( exerciseBox );
-        sessionBox->setStretchFactor( new QLabel( tools::translate( "SessionConfigPanel", "Session name:" ), sessionBox ), 1 );
+        nameLabel_ = new QLabel( sessionBox );
+        sessionBox->setStretchFactor( nameLabel_, 1 );
         sessionName_ = new QLineEdit( sessionBox );
         sessionBox->setStretchFactor( sessionName_, 2 );
         sessionName_->setText( "" );
     }
     {
         Q3HBox* commentBox = new Q3HBox( exerciseBox );
-        commentBox->setStretchFactor( new QLabel( tools::translate( "SessionConfigPanel", "Session comments:" ), commentBox ), 1 );
+        commentLabel_ = new QLabel( commentBox );
+        commentBox->setStretchFactor( commentLabel_, 1 );
         sessionComment_ = new Q3TextEdit( commentBox );
         commentBox->setStretchFactor( sessionComment_, 2 );
         sessionComment_->setText( "" );
     }
     {
         Q3HBox* exerciseNumberBox = new Q3HBox( exerciseBox );
-        exerciseNumberBox->setStretchFactor( new QLabel( tools::translate( "SessionConfigPanel", "Exercise number:" ), exerciseNumberBox ), 1 );
+        exerciseLabel_ = new QLabel( exerciseNumberBox );
+        exerciseNumberBox->setStretchFactor( exerciseLabel_, 1 );
         exerciseNumber_ = new QSpinBox( 1, 10, 1, exerciseNumberBox );
         exerciseNumberBox->setStretchFactor( exerciseNumber_, 2 );
         exerciseNumber_->setValue( 1 );
@@ -62,6 +65,17 @@ SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralCon
 SessionConfigPanel::~SessionConfigPanel()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionConfigPanel::OnLanguageChanged
+// Created: ABR 2011-11-10
+// -----------------------------------------------------------------------------
+void SessionConfigPanel::OnLanguageChanged()
+{
+    nameLabel_->setText( tools::translate( "SessionConfigPanel", "Session name:" ) );
+    commentLabel_->setText( tools::translate( "SessionConfigPanel", "Session comments:" ) );
+    exerciseLabel_->setText( tools::translate( "SessionConfigPanel", "Exercise number:" ) );
 }
 
 // -----------------------------------------------------------------------------

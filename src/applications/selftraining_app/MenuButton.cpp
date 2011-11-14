@@ -15,7 +15,7 @@
 // Name: MenuButton constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MenuButton::MenuButton( const QString& text, QWidget* parent )
+MenuButton::MenuButton( QWidget* parent )
     : QPushButton( parent )
     , mask_( "resources/images/selftraining/menu-mask.png" )
     , baseFont_( "Century Gothic", 16, QFont::Bold )
@@ -25,7 +25,6 @@ MenuButton::MenuButton( const QString& text, QWidget* parent )
 {
     disabledFont_.setItalic( true ) ;
     setFont( baseFont_ );
-    setText( text );
 }
 
 // -----------------------------------------------------------------------------

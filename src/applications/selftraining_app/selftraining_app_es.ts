@@ -101,10 +101,6 @@
         <source>Update</source>
         <translation>Actualizar</translation>
     </message>
-    <message>
-        <source>127.0.0.1</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BattleCenterLauncherPage</name>
@@ -324,40 +320,8 @@
         <translation>Contenido de paquete:</translation>
     </message>
     <message>
-        <source>Package</source>
-        <translation>Paquete</translation>
-    </message>
-    <message>
-        <source>Scenario</source>
-        <translation>Escenario</translation>
-    </message>
-    <message>
-        <source>Model: </source>
-        <translation>Modelo: </translation>
-    </message>
-    <message>
-        <source>Model:</source>
-        <translation>Modelo:</translation>
-    </message>
-    <message>
-        <source>Scenario Name</source>
-        <translation>Nombre de escenario</translation>
-    </message>
-    <message>
-        <source>Terrain:</source>
-        <translation>Terreno:</translation>
-    </message>
-    <message>
         <source>Select a package</source>
         <translation>Seleccionar paquete</translation>
-    </message>
-    <message>
-        <source>Output Scenario Name: </source>
-        <translation>Nombre de escenario a exportar: </translation>
-    </message>
-    <message>
-        <source>Input Scenario: </source>
-        <translation>Escenario a importar: </translation>
     </message>
     <message>
         <source>otpak corrupted: unable to load content properly</source>
@@ -400,10 +364,6 @@
 <context>
     <name>OptionsPage</name>
     <message>
-        <source>Options</source>
-        <translation>Opciones</translation>
-    </message>
-    <message>
         <source>Language: </source>
         <translation>Idioma: </translation>
     </message>
@@ -415,16 +375,24 @@
         <source>...</source>
         <translation>...</translation>
     </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Configuración</translation>
+    </message>
+    <message>
+        <source>Unsaved changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsaved changes will be lost, continue anyway ?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Page_ABC</name>
     <message>
         <source>Back</source>
         <translation>Regresar</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation>Opciones</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -441,6 +409,14 @@
     <message>
         <source>Edit</source>
         <translation>Editar</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Configuración</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -485,10 +461,6 @@
     <message>
         <source>Host:</source>
         <translation type="unfinished">Host:</translation>
-    </message>
-    <message>
-        <source>127.0.0.1</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Port:</source>

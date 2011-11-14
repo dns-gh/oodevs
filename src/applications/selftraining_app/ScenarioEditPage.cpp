@@ -28,34 +28,38 @@
 // Created: RDS 2008-09-09
 // -----------------------------------------------------------------------------
 ScenarioEditPage::ScenarioEditPage( Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
-    : LauncherClientPage( pages, tools::translate( "ScenarioEditPage", "Scenario" ), previous, eButtonBack | eButtonEdit, launcher )
+    : LauncherClientPage( pages, previous, eButtonBack | eButtonEdit, launcher )
     , config_( config )
     , fileLoader_( fileLoader )
     , controllers_( controllers )
-    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioEditPage", "Editing exercise" ) ) )
+    , progressPage_( new ProgressPage( pages, *this ) )
 {
     Q3VBox* box = new Q3VBox( this );
     box->setMargin( 5 );
     {
         mainTabs_ = new QTabWidget( box );
         connect( mainTabs_, SIGNAL( currentChanged( QWidget* ) ), this, SLOT( UpdateEditButton( QWidget* ) ) );
+        // eTabs_Edit
         {
             exercises_ = new ExerciseList( mainTabs_, config_, fileLoader_, controllers, true, false );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
-            mainTabs_->addTab( exercises_, tools::translate( "ScenarioEditPage", "Edit" ) );
+            mainTabs_->addTab( exercises_, "" );
         }
+        // eTabs_Create
         {
             createExerciceWidget_ = new CreateExerciceWidget( *this, box, config, fileLoader );
-            mainTabs_->addTab( createExerciceWidget_, tools::translate( "ScenarioEditPage", "Create" ) );
+            mainTabs_->addTab( createExerciceWidget_, "" );
         }
+        // eTabs_Import
         {
             importWidget_ = new ImportWidget( *this, mainTabs_, config );
-            mainTabs_->addTab( importWidget_, tools::translate( "ScenarioEditPage", "Import" ) );
+            mainTabs_->addTab( importWidget_, "" );
         }
+        // eTabs_Export
         {
             exportWidget_ = new ExportWidget( *this, box, config, fileLoader_ );
-            mainTabs_->addTab( exportWidget_, tools::translate( "ScenarioEditPage", "Export" ) );
+            mainTabs_->addTab( exportWidget_, "" );
         }
     }
     EnableButton( eButtonEdit, false );
@@ -69,6 +73,22 @@ ScenarioEditPage::ScenarioEditPage( Q3WidgetStack* pages, Page_ABC& previous, co
 ScenarioEditPage::~ScenarioEditPage()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::OnLanguageChanged()
+{
+    SetTitle( tools::translate( "ScenarioEditPage", "Scenario" ) );
+    progressPage_->SetTitle(  tools::translate( "ScenarioEditPage", "Editing exercise" ) );
+    mainTabs_->setTabText( eTabs_Edit, tools::translate( "ScenarioEditPage", "Edit" ) );
+    mainTabs_->setTabText( eTabs_Create, tools::translate( "ScenarioEditPage", "Create" ) );
+    mainTabs_->setTabText( eTabs_Import, tools::translate( "ScenarioEditPage", "Import" ) );
+    mainTabs_->setTabText( eTabs_Export, tools::translate( "ScenarioEditPage", "Export" ) );
+    UpdateEditButton();
+    LauncherClientPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -100,20 +120,20 @@ void ScenarioEditPage::OnEdit()
 {
     switch( mainTabs_->currentPageIndex() )
     {
-    case 0: //edit
+    case eTabs_Edit:
         if( exercise_ )
         {
             exercises_->ChangeExerciceParameters();
             Edit( exercise_->GetName().c_str() );
         }
         break;
-    case 1: // create
+    case eTabs_Create:
         createExerciceWidget_->CreateExercise();
         break;
-    case 2: // import
+    case eTabs_Import:
         importWidget_->InstallExercise();
         break;
-    case 3: // export
+    case eTabs_Export:
         exportWidget_->ExportPackage();
         break;
     default:
@@ -190,19 +210,19 @@ void ScenarioEditPage::UpdateEditButton()
     bool enable = true;
     switch( mainTabs_->currentPageIndex() )
     {
-    case 0: //edit
+    case eTabs_Edit:
         enable = exercise_ != 0;
         SetButtonText( eButtonEdit, tools::translate( "Page_ABC", "Edit" ) );
         break;
-    case 1: // create
+    case eTabs_Create:
         enable = createExerciceWidget_->EnableEditButton();
         SetButtonText( eButtonEdit, tools::translate( "ScenarioEditPage", "Create" ) );
         break;
-    case 2: // import
+    case eTabs_Import:
         enable = importWidget_->EnableEditButton();
         SetButtonText( eButtonEdit, tools::translate( "ScenarioEditPage", "Import" ) );
         break;
-    case 3: // export
+    case eTabs_Export:
         enable = exportWidget_->EnableEditButton();
         SetButtonText( eButtonEdit, tools::translate( "ScenarioEditPage", "Export" ) );
         break;

@@ -10,6 +10,9 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
+#include <boost/noncopyable.hpp>
+#include "clients_gui/LanguageChangeObserver_ABC.h"
+
 namespace kernel
 {
     class Controllers;
@@ -32,6 +35,7 @@ namespace tools
 
 class Config;
 class Q3WidgetStack;
+class SessionTray;
 
 // =============================================================================
 /** @class  MainWindow
@@ -39,7 +43,8 @@ class Q3WidgetStack;
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class MainWindow : public Q3MainWindow
+class MainWindow : public gui::LanguageChangeObserver_ABC< Q3MainWindow >
+                 , private boost::noncopyable
 {
 
     Q_OBJECT;
@@ -64,14 +69,9 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MainWindow( const MainWindow& );            //!< Copy constructor
-    MainWindow& operator=( const MainWindow& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
+    virtual void OnLanguageChanged();
     void SetStyle();
     void CenterWindow();
     //@}
@@ -79,6 +79,7 @@ private:
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< SessionTray > sessionTray_;
     std::auto_ptr< gui::LinkInterpreter_ABC > interpreter_;
     Q3WidgetStack* pages_;
     //@}

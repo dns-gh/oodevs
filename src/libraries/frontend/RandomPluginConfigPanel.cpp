@@ -125,42 +125,35 @@ RandomPluginConfigPanel::RandomPluginConfigPanel( QWidget* parent, const tools::
 {
     setMargin( 5 );
 
-    Q3GroupBox* hbox = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "RandomPluginConfigPanel", "Random Generator" ), this );
-    hasSeed_ = new QCheckBox( tools::translate( "RandomPluginConfigPanel", "Seed:" ), hbox );
+    mainBox_ = new Q3GroupBox( 2, Qt::Horizontal, this );
+    hasSeed_ = new QCheckBox( mainBox_ );
     connect( hasSeed_, SIGNAL( toggled( bool ) ), SLOT( OnSeedToggled() ) );
-    seed_ = new QSpinBox( 1, std::numeric_limits< int >::max(), 1, hbox );
+    seed_ = new QSpinBox( 1, std::numeric_limits< int >::max(), 1, mainBox_ );
     bool bHasSeed = ReadHasSeed();
     seed_->setValue( ReadSeed() );
     seed_->setEnabled( bHasSeed );
     hasSeed_->setChecked( bHasSeed );
 
-    new QLabel( tools::translate( "RandomPluginConfigPanel", "Context:" ), hbox );
-    contextList_ = new QComboBox( hbox );
-    contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Fire" ), eFire );
-    contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Wounds" ), eWounds );
-    contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Perception" ), ePerception );
-    contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Breakdowns" ), eBreakdowns );
-    contextList_->setCurrentItem( 0 );
+    contextLabel_ = new QLabel( mainBox_ );
+    contextList_ = new QComboBox( mainBox_ );
     connect( contextList_, SIGNAL( activated( int ) ), SLOT( OnContextChanged( int ) ) );
 
-    new QLabel( tools::translate( "RandomPluginConfigPanel", "Distribution:" ), hbox );
-    distributionList_ = new QComboBox( hbox );
-    distributionList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Linear" ) );
-    distributionList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Gaussian" ) );
+    distributionLabel_ = new QLabel( mainBox_ );
+    distributionList_ = new QComboBox( mainBox_ );
     connect( distributionList_, SIGNAL( activated( int ) ), SLOT( OnDistributionChanged( int ) ) );
 
-    new QLabel( tools::translate( "RandomPluginConfigPanel", "Standard deviation:" ), hbox );
-    deviation_ = new QLineEdit( hbox );
+    standardDeviationLabel_ = new QLabel( mainBox_ );
+    deviation_ = new QLineEdit( mainBox_ );
     deviation_->setValidator( new Validator( deviation_ ) );
     connect( deviation_, SIGNAL( textChanged( const QString& ) ), SLOT( OnDeviationChanged( const QString& ) ) );
 
-    new QLabel( tools::translate( "RandomPluginConfigPanel", "Mean:" ), hbox );
-    mean_ = new QLineEdit( hbox );
+    meanLabel_ = new QLabel( mainBox_ );
+    mean_ = new QLineEdit( mainBox_ );
     mean_->setValidator( new Validator( mean_ ) );
     connect( mean_, SIGNAL( textChanged( const QString& ) ), SLOT( OnMeanChanged( const QString& ) ) );
 
-    QPushButton* defaultBtn = new QPushButton( tools::translate( "RandomPluginConfigPanel", "Set as default" ), hbox );
-    connect( defaultBtn, SIGNAL( clicked() ), this, SLOT( OnDefaultClicked() ) );
+    defaultButton_ = new QPushButton( mainBox_ );
+    connect( defaultButton_, SIGNAL( clicked() ), this, SLOT( OnDefaultClicked() ) );
 
     ReadRandomValues();
     OnContextChanged( 0 );
@@ -173,6 +166,35 @@ RandomPluginConfigPanel::RandomPluginConfigPanel( QWidget* parent, const tools::
 RandomPluginConfigPanel::~RandomPluginConfigPanel()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RandomPluginConfigPanel::OnLanguageChanged
+// Created: ABR 2011-11-10
+// -----------------------------------------------------------------------------
+void RandomPluginConfigPanel::OnLanguageChanged()
+{
+    mainBox_->setTitle(               tools::translate( "RandomPluginConfigPanel", "Random Generator" ) );
+    hasSeed_->setText(                tools::translate( "RandomPluginConfigPanel", "Seed:" ) );
+    contextLabel_->setText(           tools::translate( "RandomPluginConfigPanel", "Context:" ) );
+    distributionLabel_->setText(      tools::translate( "RandomPluginConfigPanel", "Distribution:" ) );
+    standardDeviationLabel_->setText( tools::translate( "RandomPluginConfigPanel", "Standard deviation:" ) );
+    meanLabel_->setText(              tools::translate( "RandomPluginConfigPanel", "Mean:" ) );
+    defaultButton_->setText(          tools::translate( "RandomPluginConfigPanel", "Set as default" ) );
+
+    int currentIndex = ( contextList_->count() ) ? contextList_->currentIndex() : 0;
+    contextList_->clear();
+    contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Fire" ), eFire );
+    contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Wounds" ), eWounds );
+    contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Perception" ), ePerception );
+    contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Breakdowns" ), eBreakdowns );
+    contextList_->setCurrentItem( currentIndex );
+
+    currentIndex = ( distributionList_->count() ) ? distributionList_->currentIndex() : 0;
+    distributionList_->clear();
+    distributionList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Linear" ) );
+    distributionList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Gaussian" ) );
+    distributionList_->setCurrentItem( currentIndex );
 }
 
 // -----------------------------------------------------------------------------

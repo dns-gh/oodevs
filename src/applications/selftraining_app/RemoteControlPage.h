@@ -48,6 +48,12 @@ public:
     virtual ~RemoteControlPage();
     //@}
 
+private:
+    //! @name Helpers
+    //@{
+    virtual void OnLanguageChanged();
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -60,13 +66,6 @@ private slots:
     void OnStart();
     void OnReplay();
     void OnStop();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    RemoteControlPage( const RemoteControlPage& );            //!< Copy constructor
-    RemoteControlPage& operator=( const RemoteControlPage& ); //!< Assignment operator
     //@}
 
 private:
@@ -83,6 +82,14 @@ private:
     const frontend::Exercise_ABC* runningExercise_;
     std::auto_ptr< frontend::ExerciseFilter_ABC > filter_;
     std::auto_ptr< frontend::ExerciseFilter_ABC > runningFilter_;
+
+    QLabel*      hostLabel_;
+    QLabel*      portLabel_;
+    QTabWidget*  tabs_;
+    QPushButton* updateButton_;
+    QPushButton* gameButton_;
+    QPushButton* replayButton_;
+    QPushButton* stopButton_;
     //@}
 };
 

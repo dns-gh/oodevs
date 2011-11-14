@@ -25,7 +25,7 @@
 // Created: JSR 2010-07-13
 // -----------------------------------------------------------------------------
 CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : Q3GroupBox( 3, Qt::Vertical, parent )
+    : gui::LanguageChangeObserver_ABC< Q3GroupBox >( 3, Qt::Vertical, parent )
     , config_( config )
     , fileLoader_  ( fileLoader )
     , page_( page )
@@ -34,8 +34,8 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
     setMargin( 5 );
     {
         Q3HBox* saveBox = new Q3HBox( this );
-        new QLabel( tools::translate( "CreateExerciceWidget", "Create new exercise:" ), saveBox );
-        editName_ = new QLineEdit( tools::translate( "CreateExerciceWidget", "Enter exercise name" ), saveBox );
+        createLabel_ = new QLabel( saveBox );
+        editName_ = new QLineEdit( saveBox );
         connect( editName_, SIGNAL( textChanged( const QString& ) ), &page, SLOT( EditNameChanged( const QString& ) ) );
         {
             Q3VBox* box = new Q3VBox( saveBox );
@@ -48,17 +48,17 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
         }
     }
     {
-        saveAsGroupBox_ = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "CreateExerciceWidget", "Create as copy of:" ), this );
+        saveAsGroupBox_ = new Q3GroupBox( 2, Qt::Horizontal, this );
         saveAsGroupBox_->setCheckable( true );
         saveAsGroupBox_->setChecked( false );
         connect( saveAsGroupBox_, SIGNAL( toggled( bool ) ), &page, SLOT( ToggleChanged( bool ) ) );
         {
-            new QLabel( tools::translate( "CreateExerciceWidget", "Exercise to copy:" ), saveAsGroupBox_ );
+            copyLabel_ = new QLabel( saveAsGroupBox_ );
             exerciseList_ = new Q3ListBox( saveAsGroupBox_ );
             connect( exerciseList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
         }
         {
-            new QLabel( tools::translate( "CreateExerciceWidget", "Content to copy:" ), saveAsGroupBox_ );
+            copyContentLabel_ = new QLabel( saveAsGroupBox_ );
             contentList_ = new Q3ListView( saveAsGroupBox_ );
             contentList_->addColumn( "exercise features" );
             contentList_->setResizeMode( Q3ListView::AllColumns );
@@ -76,6 +76,19 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
 CreateExerciceWidget::~CreateExerciceWidget()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateExerciceWidget::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void CreateExerciceWidget::OnLanguageChanged()
+{
+    editName_->setPlaceholderText( tools::translate( "CreateExerciceWidget", "Enter exercise name" ) );
+    saveAsGroupBox_->setTitle( tools::translate( "CreateExerciceWidget", "Create as copy of:" ) );
+    createLabel_->setText( tools::translate( "CreateExerciceWidget", "Create new exercise:" ) );
+    copyLabel_->setText( tools::translate( "CreateExerciceWidget", "Exercise to copy:" ) );
+    copyContentLabel_->setText( tools::translate( "CreateExerciceWidget", "Content to copy:" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +178,6 @@ bool CreateExerciceWidget::EnableEditButton()
 {
     return editTerrainList_->currentItem() > 0 && editModelList_->currentItem() > 0
         && !editName_->text().isEmpty() && !page_.ExerciceExists( editName_->text() )
-        && editName_->text() != tools::translate( "CreateExerciceWidget", "Enter exercise name" )
         && ( !saveAsGroupBox_->isChecked() || saveAsGroupBox_->isChecked() && exerciseList_->selectedItem() != 0 );
 }
 

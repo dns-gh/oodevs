@@ -23,15 +23,8 @@ class ContentPage : public Page_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ContentPage( Q3WidgetStack* pages, const QString& title, Page_ABC& previous, unsigned short buttonFlags );
+             ContentPage( Q3WidgetStack* pages, Page_ABC& previous, unsigned short buttonFlags = 0, const QString title = QString() );
     virtual ~ContentPage();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ContentPage( const ContentPage& );            //!< Copy constructor
-    ContentPage& operator=( const ContentPage& ); //!< Assignment operator
     //@}
 };
 

@@ -60,8 +60,8 @@ private:
 private:
     //! @name Member data
     //@{
-    T_Descriptions    descriptions_;
-    std::string currentLanguage_;
+    T_Descriptions descriptions_;
+    std::string    currentLanguage_;
     //@}
 };
 

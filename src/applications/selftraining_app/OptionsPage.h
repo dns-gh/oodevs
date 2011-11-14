@@ -27,7 +27,7 @@ class OptionsPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             OptionsPage( Q3WidgetStack* pages, Page_ABC& previous, Config& config );
+             OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, Config& config );
     virtual ~OptionsPage();
     //@}
 
@@ -36,32 +36,43 @@ private slots:
     //@{
     void OnChangeLanguage( const QString& lang );
     void OnChangeDataDirectory();
+    virtual void OnApply();
+    virtual void OnBack();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    OptionsPage( const OptionsPage& );            //!< Copy constructor
-    OptionsPage& operator=( const OptionsPage& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
+    virtual void OnLanguageChanged();
+    void Reset();
     void Commit();
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< QString, std::string > T_Languages;
+    typedef std::map< std::string, QString > T_Languages;
     //@}
 
 private:
     //! @name Member data
     //@{
+    QWidget* parent_;
     Config& config_;
     T_Languages languages_;
+
     std::string selectedLanguage_;
-    QLineEdit* dataDirectory_;
+    std::string selectedDataDir_;
+
+    QLabel*      languageLabel_;
+    QComboBox*   languageCombo_;
+
+    QLabel*      dataLabel_;
+    QPushButton* dataButton_;
+
+    QLineEdit*   dataDirectory_;
+
+    bool hasChanged_;
+    bool languageHasChanged_;
     //@}
 };
 

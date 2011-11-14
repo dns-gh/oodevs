@@ -37,26 +37,6 @@ namespace
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
     }
-
-    struct DescriptionReader
-    {
-        DescriptionReader( xml::xisubstream xis, const std::string& currentLanguage )
-        {
-            xis >> xml::start( "descriptions" )
-                    >> xml::list( "description", *this, &DescriptionReader::ReadDescription, currentLanguage );
-        }
-        void ReadDescription( xml::xistream& xis, const std::string& currentLanguage )
-        {
-            const std::string lang = xis.attribute< std::string >( "lang", "en" );
-            if( lang == currentLanguage || name_.empty() )
-            {
-                name_ = xis.attribute< std::string >( "name" );
-                xis >> description_;
-            }
-        }
-        std::string name_;
-        std::string description_;
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -69,24 +49,20 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     , name_           ( xis.attribute< std::string >( "name" ) )
     , library_        ( xis.attribute< std::string >( "library", "" ) )
     , version_        ( xis.attribute< std::string >( "version" ) )
+    , description_    ( xis, ReadLang() )
 {
-    DescriptionReader reader( xis, ReadLang() );
     setMargin( 5 );
     view_ = new Q3ScrollView( this );
     view_->setHScrollBarMode( Q3ScrollView::AlwaysOff );
     view_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
     view_->setResizePolicy( Q3ScrollView::AutoOneFit );
     view_->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    box_ = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "PluginConfig", "Enable %1 plugin (v%2)" )
-                                                                 .arg( reader.name_.c_str() )
-                                                                 .arg( version_.c_str() ), view_->viewport() );
-    label_ = reader.name_.c_str();
-    QToolTip::add( box_, reader.description_.c_str() );
+    box_ = new Q3GroupBox( 2, Qt::Horizontal, view_->viewport() );
     box_->setCheckable( true );
     box_->setChecked( false );
     xis >> xml::start( "settings" )
             >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box_ )
-                >> xml::list( "group", *this, &PluginConfig::ReadGroup, box_ );
+            >> xml::list( "group", *this, &PluginConfig::ReadGroup, box_ );
     view_->addChild( box_ );
 }
 
@@ -100,12 +76,37 @@ PluginConfig::~PluginConfig()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PluginConfig::OnLanguageChanged
+// Created: ABR 2011-11-10
+// -----------------------------------------------------------------------------
+void PluginConfig::OnLanguageChanged()
+{
+    box_->setTitle( tools::translate( "PluginConfig", "Enable %1 plugin (v%2)" ).arg( label_ ).arg( version_.c_str() ) );
+
+    const std::string currentLanguage = ReadLang();
+    description_.SetCurrentLanguage( currentLanguage );
+    QToolTip::add( box_, description_.GetDescription().c_str() );
+
+    for( IT_GroupBoxDescription it = groupBoxs_.begin(); it != groupBoxs_.end(); ++it )
+    {
+        kernel::XmlDescription* desc = it->second;
+        assert( it->first && desc );
+        desc->SetCurrentLanguage( currentLanguage );
+        it->first->setTitle( desc->GetName().c_str() );
+        QToolTip::add( it->first, desc->GetDescription().c_str() );
+    }
+
+    for( IT_Settings it = settings_.begin(); it != settings_.end(); ++it )
+        ( *it )->OnLanguageChanged();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PluginConfig::GetName
 // Created: SBO 2011-05-09
 // -----------------------------------------------------------------------------
 QString PluginConfig::GetName() const
 {
-    return label_;
+    return description_.GetName().c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -180,11 +181,10 @@ void PluginConfig::ReadSetting( xml::xistream& xis, QWidget* parent )
 // -----------------------------------------------------------------------------
 void PluginConfig::ReadGroup( xml::xistream& xis, QWidget* parent )
 {
-    DescriptionReader reader( xis, ReadLang() );
-    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, reader.name_.c_str(), parent );
+    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, parent );
+    groupBoxs_[ box ] = new kernel::XmlDescription( xis, ReadLang() );
     box->setMargin( 5 );
     static_cast< Q3GroupBox* >( parent )->setColumns( 1 );
-    QToolTip::add( box_, reader.description_.c_str() );
     xis >> xml::start( "settings" )
             >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box )
             >> xml::list( "group", *this, &PluginConfig::ReadGroup, box );

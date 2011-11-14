@@ -46,6 +46,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void OnLanguageChanged();
     virtual QString GetName() const;
     virtual bool IsAvailable() const;
     virtual void Commit( const std::string& exercise, const std::string& session );
@@ -62,7 +63,9 @@ public:
 private:
     //! @name Member data
     //@{
-    QTabWidget* tabs_;
+    QTabWidget*                      parent_;
+    int                              parentTabIndex_;
+    QTabWidget*                      tabs_;
     std::vector< PluginConfig_ABC* > plugins_;
     //@}
 };

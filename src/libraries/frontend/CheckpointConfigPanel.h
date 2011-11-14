@@ -16,6 +16,7 @@ class Q3GroupBox;
 class Q3ListBox;
 class QSpinBox;
 class Q3TimeEdit;
+class QLabel;
 
 namespace tools
 {
@@ -45,6 +46,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void OnLanguageChanged();
     virtual QString GetName() const;
     virtual void Commit( const std::string& exercise, const std::string& session );
     //@}
@@ -72,14 +74,17 @@ private slots:
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
-    Q3TimeEdit* frequency_;
-    QSpinBox* keep_;
-    Q3GroupBox* checkpointsGroup_;
-    Q3GroupBox* loadGroup_;
-    Q3ListBox* sessions_;
-    CheckpointList* checkpoints_;
+    const tools::GeneralConfig&   config_;
+    Q3TimeEdit*                   frequency_;
+    QSpinBox*                     keep_;
+    Q3GroupBox*                   checkpointsGroup_;
+    Q3GroupBox*                   loadGroup_;
+    Q3ListBox*                    sessions_;
+    CheckpointList*               checkpoints_;
     const frontend::Exercise_ABC* exercise_;
+    QLabel*                       frequencyLabel_;
+    QLabel*                       keepLabel_;
+    QLabel*                       sessionLabel_;
     //@}
 };
 }

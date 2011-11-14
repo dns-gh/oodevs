@@ -36,10 +36,16 @@ public slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    QuitPage( const QuitPage& );            //!< Copy constructor
-    QuitPage& operator=( const QuitPage& ); //!< Assignment operator
+    virtual void OnLanguageChanged();
+    //@}
+
+private:
+    //! @name Member Data
+    //@{
+    QPushButton* yesButton_;
+    QPushButton* noButton_;
     //@}
 };
 

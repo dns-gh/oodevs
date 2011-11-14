@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 SessionTray::SessionTray( QWidget *parent )
     : trayMenu_ ( *new TrayMenu( parent ) )
-    , trayIcon_ ( *new TrayIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ), tools::translate( "SessionTray", "Show window" ), &trayMenu_ ) )
+    , trayIcon_ ( *new TrayIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ), "", &trayMenu_ ) )
 {
     trayIcon_.show();
     QObject::connect( &trayIcon_, SIGNAL( clicked( const QPoint& ) ), parent, SLOT( Maximize() ) );
@@ -36,3 +36,14 @@ SessionTray::~SessionTray()
     delete &trayMenu_;
     delete &trayIcon_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: SessionTray::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void SessionTray::OnLanguageChanged()
+{
+    trayIcon_.setToolTip( tools::translate( "SessionTray", "Show window" ) );
+}
+
+

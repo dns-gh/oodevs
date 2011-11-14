@@ -38,6 +38,7 @@ public:
     void Stop();
     bool IsInitialized() const;
     std::string GetLastError() const;
+    void SetRootDir( const std::string& directory );
     //@}
 
 private:

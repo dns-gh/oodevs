@@ -19,6 +19,8 @@ namespace tools
 
 class QCheckBox;
 class QSpinBox;
+class Q3GroupBox;
+class QLabel;
 
 namespace frontend
 {
@@ -39,6 +41,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void OnLanguageChanged();
     virtual QString GetName() const;
     virtual void Commit( const std::string& exercise, const std::string& session );
     //@}
@@ -47,12 +50,23 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QSpinBox* stepSpin_;
-    QSpinBox* factorSpin_;
-    QSpinBox* endtickSpin_;
-    QCheckBox* pausedCheckBox_;
-    QSpinBox* pathThreads_;
-    QSpinBox* fragmentsFrequency_;
+
+    Q3GroupBox*                 timeBox_;
+    QLabel*                     stepLabel_;
+    QSpinBox*                   stepSpin_;
+    QLabel*                     factorLabel_;
+    QSpinBox*                   factorSpin_;
+    QLabel*                     endtickLabel_;
+    QSpinBox*                   endtickSpin_;
+    QCheckBox*                  pausedCheckBox_;
+
+    Q3GroupBox*                 pathfindBox_;
+    QLabel*                     pathThreadsLabel_;
+    QSpinBox*                   pathThreadsSpin_;
+
+    Q3GroupBox*                 recordBox_;
+    QLabel*                     fragmentsFrequencyLabel_;
+    QSpinBox*                   fragmentsFrequencySpin_;
     //@}
 };
 }

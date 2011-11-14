@@ -97,7 +97,7 @@
     <name>CompositePluginConfig</name>
     <message>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugins</translation>
     </message>
 </context>
 <context>
@@ -174,150 +174,157 @@
     </message>
     <message>
         <source>success</source>
-        <translation></translation>
+        <translation>succès</translation>
     </message>
     <message>
         <source>invalid exercise name</source>
-        <translation></translation>
+        <translation>nom d&apos;exercice invalide</translation>
     </message>
     <message>
         <source>session already running</source>
-        <translation type="unfinished"></translation>
+        <translation>session déjà en cours d&apos;exécution</translation>
     </message>
     <message>
         <source>invalid session name</source>
-        <translation type="unfinished"></translation>
+        <translation>nom de session invalide</translation>
     </message>
     <message>
         <source>session not running</source>
-        <translation type="unfinished"></translation>
+        <translation>session non lancée</translation>
     </message>
     <message>
         <source>Failed to start session: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de démarer la session: %1</translation>
     </message>
     <message>
         <source>session already paused</source>
-        <translation type="unfinished"></translation>
+        <translation>session déjà en pause</translation>
     </message>
     <message>
         <source>Failed to execute command on exercise: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;exécuter la command sur l&apos;exercice: %1.</translation>
     </message>
     <message>
         <source>invalid date time</source>
-        <translation type="unfinished"></translation>
+        <translation>date/heure invalide</translation>
     </message>
 </context>
 <context>
     <name>PluginConfig</name>
     <message>
         <source>Enable %1 plugin (v%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer le plugin %1 (v%2)</translation>
+    </message>
+</context>
+<context>
+    <name>PluginSetting</name>
+    <message>
+        <source>Select a file...</source>
+        <translation>Sélectionner un fichier ...</translation>
     </message>
 </context>
 <context>
     <name>RandomPluginConfigPanel</name>
     <message>
         <source>Random Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Générateur Aléatoire</translation>
     </message>
     <message>
         <source>Seed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Graine:</translation>
     </message>
     <message>
         <source>Context:</source>
-        <translation type="unfinished"></translation>
+        <translation>Contexte:</translation>
     </message>
     <message>
         <source>Fire</source>
-        <translation type="unfinished"></translation>
+        <translation>Tir</translation>
     </message>
     <message>
         <source>Wounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Blessures</translation>
     </message>
     <message>
         <source>Perception</source>
-        <translation type="unfinished"></translation>
+        <translation>Perception</translation>
     </message>
     <message>
         <source>Breakdowns</source>
-        <translation type="unfinished"></translation>
+        <translation>Pannes</translation>
     </message>
     <message>
         <source>Distribution:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distribution:</translation>
     </message>
     <message>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Linéaire</translation>
     </message>
     <message>
         <source>Gaussian</source>
-        <translation type="unfinished"></translation>
+        <translation>Gaussienne</translation>
     </message>
     <message>
         <source>Standard deviation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecart-type:</translation>
     </message>
     <message>
         <source>Mean:</source>
-        <translation type="unfinished"></translation>
+        <translation>Moyenne:</translation>
     </message>
     <message>
         <source>Set as default</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir par défaut</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Aléatoire</translation>
     </message>
 </context>
 <context>
     <name>SessionConfigPanel</name>
     <message>
         <source>Session name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de la session:</translation>
     </message>
     <message>
         <source>Session comments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Commentaires de la session:</translation>
     </message>
     <message>
         <source>Exercise number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Numéro de l&apos;exercice:</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Session</translation>
     </message>
 </context>
 <context>
     <name>SpawnCommand</name>
     <message>
         <source>Could not start process: %1, error: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de démarrer le processus: %1, erreur: %2</translation>
     </message>
     <message>
         <source>Starting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrage...</translation>
     </message>
     <message>
         <source>Started</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarré</translation>
     </message>
 </context>
 <context>
     <name>StartExercise</name>
     <message>
         <source>Starting simulation...</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrage de la simulation...</translation>
     </message>
     <message>
         <source>Simulation started</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulation démarrée</translation>
     </message>
 </context>
 </TS>

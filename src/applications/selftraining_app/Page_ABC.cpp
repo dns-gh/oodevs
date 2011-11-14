@@ -21,14 +21,18 @@ QuitPage* Page_ABC::quitPage_ = 0;
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short flags )
-    : Q3VBox ( pages )
-    , pages_( pages )
-    , previous_( previous )
-    , startButton_( 0 )
-    , joinButton_( 0 )
-    , editButton_( 0 )
+    : gui::LanguageChangeObserver_ABC< Q3VBox >( pages )
+    , pages_         ( pages )
+    , previous_      ( previous )
+    , backButton_    ( 0 )
+    , settingsButton_( 0 )
+    , quitButton_    ( 0 )
+    , startButton_   ( 0 )
+    , joinButton_    ( 0 )
+    , editButton_    ( 0 )
+    , applyButton_   ( 0 )
+    , titleLabel_    ( 0 )
 {
-    //layout()->setAlignment( Qt::AlignTop );
     grid_ = new Q3GridLayout( layout(), 3, 2 );
     grid_->setRowStretch( 0, 1 );
     grid_->setRowStretch( 1, 10 );
@@ -40,17 +44,17 @@ Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short fla
 
     if( flags & eButtonBack )
     {
-        QPushButton* button = new MenuButton( tools::translate( "Page_ABC", "Back" ), this );
-        button->setFixedWidth( 150 );
-        buttonLayout->addWidget( button, 0, Qt::AlignBottom | Qt::AlignLeft );
-        connect( button, SIGNAL( clicked() ), this, SLOT( OnBack() ) );
+        backButton_ = new MenuButton( this );
+        backButton_->setFixedWidth( 150 );
+        buttonLayout->addWidget( backButton_, 0, Qt::AlignBottom | Qt::AlignLeft );
+        connect( backButton_, SIGNAL( clicked() ), this, SLOT( OnBack() ) );
     }
     else if( flags & eButtonOptions )
     {
-        QPushButton* button = new MenuButton( tools::translate( "Page_ABC", "Options" ), this );
-        button->setFixedWidth( 150 );
-        buttonLayout->addWidget( button, 0, Qt::AlignBottom | Qt::AlignLeft );
-        connect( button, SIGNAL( clicked() ), this, SLOT( OnOptions() ) );
+        settingsButton_ = new MenuButton( this );
+        settingsButton_->setFixedWidth( 150 );
+        buttonLayout->addWidget( settingsButton_, 0, Qt::AlignBottom | Qt::AlignLeft );
+        connect( settingsButton_, SIGNAL( clicked() ), this, SLOT( OnOptions() ) );
     }
 
     if( flags & eButtonQuit )
@@ -58,32 +62,39 @@ Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short fla
         if( !quitPage_ )
             quitPage_ = new QuitPage( pages, *this );
 
-        QPushButton* button = new MenuButton( tools::translate( "Page_ABC", "Quit" ), this );
-        button->setFixedWidth( 150 );
-        buttonLayout->addWidget( button, 0, Qt::AlignBottom | Qt::AlignRight );
-        connect( button, SIGNAL( clicked() ), this, SLOT( OnQuit() ) );
+        quitButton_ = new MenuButton( this );
+        quitButton_->setFixedWidth( 150 );
+        buttonLayout->addWidget( quitButton_, 0, Qt::AlignBottom | Qt::AlignRight );
+        connect( quitButton_, SIGNAL( clicked() ), this, SLOT( OnQuit() ) );
     }
 
     if( flags & eButtonStart )
     {
-        startButton_ = new MenuButton( tools::translate( "Page_ABC", "Start" ), this );
+        startButton_ = new MenuButton( this );
         startButton_->setFixedWidth( 150 );
         buttonLayout->addWidget( startButton_, 0, Qt::AlignBottom | Qt::AlignRight );
         connect( startButton_, SIGNAL( clicked() ), this, SLOT( OnStart() ) );
     }
     else if( flags & eButtonJoin )
     {
-        joinButton_ = new MenuButton( tools::translate( "Page_ABC", "Join" ), this );
+        joinButton_ = new MenuButton( this );
         joinButton_->setFixedWidth( 150 );
         buttonLayout->addWidget( joinButton_, 0, Qt::AlignBottom | Qt::AlignRight );
         connect( joinButton_, SIGNAL( clicked() ), this, SLOT( OnJoin() ) );
     }
     else if( flags & eButtonEdit )
     {
-        editButton_ = new MenuButton( tools::translate( "Page_ABC", "Edit" ), this );
+        editButton_ = new MenuButton( this );
         editButton_->setFixedWidth( 150 );
         buttonLayout->addWidget( editButton_, 0, Qt::AlignBottom | Qt::AlignRight );
         connect( editButton_, SIGNAL( clicked() ), this, SLOT( OnEdit() ) );
+    }
+    else if( flags & eButtonApply )
+    {
+        applyButton_ = new MenuButton( this );
+        applyButton_->setFixedWidth( 150 );
+        buttonLayout->addWidget( applyButton_, 0, Qt::AlignBottom | Qt::AlignRight );
+        connect( applyButton_, SIGNAL( clicked() ), this, SLOT( OnApply() ) );
     }
 
     layout()->setAutoAdd( false );
@@ -97,6 +108,28 @@ Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short fla
 Page_ABC::~Page_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Page_ABC::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void Page_ABC::OnLanguageChanged()
+{
+    if( backButton_ )
+        backButton_->setText(     tools::translate( "Page_ABC", "Back" ) );
+    if( settingsButton_ )
+        settingsButton_->setText( tools::translate( "Page_ABC", "Settings" ) );
+    if( quitButton_ )
+        quitButton_->setText(     tools::translate( "Page_ABC", "Quit" ) );
+    if( startButton_ )
+        startButton_->setText(    tools::translate( "Page_ABC", "Start" ) );
+    if( joinButton_ )
+        joinButton_->setText(     tools::translate( "Page_ABC", "Join" ) );
+    if( editButton_ )
+        editButton_->setText(     tools::translate( "Page_ABC", "Edit" ) );
+    if( applyButton_ )
+        applyButton_->setText(    tools::translate( "Page_ABC", "Apply" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,18 +153,33 @@ void Page_ABC::AddContent( QWidget* widget )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Page_ABC::AddTitle
+// Name: Page_ABC::SetTitle
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-void Page_ABC::AddTitle( const QString& title )
+void Page_ABC::SetTitle( const QString& title )
 {
-    QLabel* label = new QLabel( title, this );
-    QFont font( font() );
-    font.setPixelSize( 30 );
-    font.setItalic( true );
-    label->setFont( font );
-    label->setFixedHeight( 50 );
-    grid_->addMultiCellWidget( label, 0, 0, 0, 2, Qt::AlignVCenter | Qt::AlignLeft );
+    if( !titleLabel_ )
+    {
+        titleLabel_ = new QLabel( this );
+        QFont font( font() );
+        font.setPixelSize( 30 );
+        font.setItalic( true );
+        titleLabel_->setFont( font );
+        titleLabel_->setFixedHeight( 50 );
+        grid_->addMultiCellWidget( titleLabel_, 0, 0, 0, 2, Qt::AlignVCenter | Qt::AlignLeft );
+    }
+    titleLabel_->setText( title );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Page_ABC::GetTitle
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+const QString Page_ABC::GetTitle() const
+{
+    if( titleLabel_ )
+        return titleLabel_->text();
+    return "";
 }
 
 // -----------------------------------------------------------------------------
@@ -146,6 +194,8 @@ void Page_ABC::EnableButton( unsigned short flags, bool enable )
         joinButton_->setEnabled( enable );
     if( ( flags & eButtonEdit ) && editButton_ )
         editButton_->setEnabled( enable );
+    if( ( flags & eButtonApply ) && applyButton_ )
+        applyButton_->setEnabled( enable );
 }
 
 // -----------------------------------------------------------------------------

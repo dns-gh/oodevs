@@ -28,11 +28,11 @@
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 ReplayPage::ReplayPage( Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
-    : LauncherClientPage( pages, tools::translate( "ReplayPage", "Replay" ), previous, eButtonBack | eButtonStart, launcher )
+    : LauncherClientPage( pages, previous, eButtonBack | eButtonStart, launcher )
     , config_( config )
     , fileLoader_( fileLoader )
     , controllers_( controllers )
-    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ReplayPage", "Starting replay session" ) ) )
+    , progressPage_( new ProgressPage( pages, *this ) )
 {
     Q3VBox* mainBox = new Q3VBox( this );
     {
@@ -60,6 +60,17 @@ ReplayPage::ReplayPage( Q3WidgetStack* pages, Page_ABC& previous, const frontend
 ReplayPage::~ReplayPage()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayPage::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void ReplayPage::OnLanguageChanged()
+{
+    SetTitle( tools::translate( "ReplayPage", "Replay" ) );
+    progressPage_->SetTitle( tools::translate( "ReplayPage", "Starting replay session" ) );
+    LauncherClientPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------

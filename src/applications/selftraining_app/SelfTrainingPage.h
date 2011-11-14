@@ -50,10 +50,16 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    SelfTrainingPage( const SelfTrainingPage& );            //!< Copy constructor
-    SelfTrainingPage& operator=( const SelfTrainingPage& ); //!< Assignment operator
+    virtual void OnLanguageChanged();
+    //@}
+
+private:
+    //! @name Data Member
+    //@{
+    QPushButton* singleButton_;
+    QPushButton* multiButton_;
     //@}
 };
 

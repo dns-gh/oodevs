@@ -29,11 +29,12 @@ AuthoringPage::AuthoringPage( Q3WidgetStack* pages, Page_ABC& previous, const Co
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
     , config_( config )
     , controllers_( controllers )
-    , progressPage_( new ProgressPage( pages, *this, tools::translate( "AuthoringPage", "Starting Application" ) ) )
 {
-    authoring_ = AddLink( tools::translate( "AuthoringPage", "Authoring" ), *this, tools::translate( "AuthoringPage", "Launch Authoring application" ), SLOT( OnAuthoring() ) );
-    terrainGen_ = AddLink( tools::translate( "AuthoringPage", "Terrain Gen" ), *new CreateTerrainPage( pages, *this, controllers, config ), tools::translate( "AuthoringPage", "Launch Terrain Generation application" ) );
-    terrainWorkshop_ = AddLink( tools::translate( "AuthoringPage", "Terrain Workshop" ), *this, tools::translate( "AuthoringPage", "Launch Terrain Workshop application" ), SLOT( OnTerrainWorkshop() ) );
+    progressPage_ = new ProgressPage( pages, *this );
+
+    authoring_ =       AddLink( *this, SLOT( OnAuthoring() ) );
+    terrainGen_ =      AddLink( *new CreateTerrainPage( pages, *this, controllers, config ) );
+    terrainWorkshop_ = AddLink( *this, SLOT( OnTerrainWorkshop() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,10 +47,23 @@ AuthoringPage::~AuthoringPage()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AuthoringPage::show
+// Name: AuthoringPage::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void AuthoringPage::OnLanguageChanged()
+{
+    progressPage_->SetTitle( tools::translate( "AuthoringPage", "Starting Application" ) );
+    SetTextAndSubtitle( authoring_,       tools::translate( "AuthoringPage", "Authoring" ),        tools::translate( "AuthoringPage", "Launch Authoring application" ) );
+    SetTextAndSubtitle( terrainGen_,      tools::translate( "AuthoringPage", "Terrain Gen" ),      tools::translate( "AuthoringPage", "Launch Terrain Generation application" ) );
+    SetTextAndSubtitle( terrainWorkshop_, tools::translate( "AuthoringPage", "Terrain Workshop" ), tools::translate( "AuthoringPage", "Launch Terrain Workshop application" ) );
+    MenuPage::OnLanguageChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AuthoringPage::Update
 // Created: JSR 2010-07-12
 // -----------------------------------------------------------------------------
-void AuthoringPage::show()
+void AuthoringPage::Update()
 {
     switch( config_.GetProfile() )
     {
@@ -72,7 +86,6 @@ void AuthoringPage::show()
     default:
         throw std::exception( "Unknown profile" );
     }
-    MenuPage::show();
 }
 
 // -----------------------------------------------------------------------------

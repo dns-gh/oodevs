@@ -36,29 +36,29 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
     Q3VBox* vbox = new Q3VBox( this );
     vbox->setMargin( 5 );
     {
-        checkpointsGroup_ = new Q3GroupBox( 2, Qt::Vertical, tools::translate( "CheckpointConfigPanel", "Checkpoint configuration: " ), vbox );
+        checkpointsGroup_ = new Q3GroupBox( 2, Qt::Vertical, vbox );
         checkpointsGroup_->setCheckable( true );
         checkpointsGroup_->setChecked( false );
         {
             Q3HBox* frequencyBox = new Q3HBox( checkpointsGroup_ );
-            new QLabel( tools::translate( "CheckpointConfigPanel", "Frequency:" ), frequencyBox );
+            frequencyLabel_ = new QLabel( frequencyBox );
             frequency_ = new Q3TimeEdit( frequencyBox );
             frequency_->setDisplay ( Q3TimeEdit::Hours | Q3TimeEdit::Minutes | Q3TimeEdit::Seconds  );
             frequency_->setTime( QTime().addSecs( 3600 ) );
         }
         {
             Q3HBox* keepBox = new Q3HBox( checkpointsGroup_ );
-            new QLabel( tools::translate( "CheckpointConfigPanel", "Keep:" ), keepBox );
+            keepLabel_ = new QLabel( keepBox );
             keep_ = new QSpinBox( 1, 100, 1, keepBox );
         }
     }
     {
-        loadGroup_ = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "CheckpointConfigPanel", "Load checkpoint: " ), vbox );
+        loadGroup_ = new Q3GroupBox( 2, Qt::Horizontal, vbox );
         loadGroup_->setCheckable( true );
         loadGroup_->setChecked( false );
         {
             Q3VBox* box = new Q3VBox( loadGroup_ );
-            new QLabel( tools::translate( "CheckpointConfigPanel", "Session:" ), box );
+            sessionLabel_ = new QLabel( box );
             box->setSpacing( 5 );
             sessions_ = new Q3ListBox( box );
             connect( sessions_, SIGNAL( highlighted( const QString& ) ), SLOT( SessionSelected( const QString& ) ) );
@@ -79,6 +79,19 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
 CheckpointConfigPanel::~CheckpointConfigPanel()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CheckpointConfigPanel::OnLanguageChanged
+// Created: ABR 2011-11-10
+// -----------------------------------------------------------------------------
+void CheckpointConfigPanel::OnLanguageChanged()
+{
+    checkpointsGroup_->setTitle( tools::translate( "CheckpointConfigPanel", "Checkpoint configuration: " ) );
+    loadGroup_->setTitle(        tools::translate( "CheckpointConfigPanel", "Load checkpoint: " ) );
+    frequencyLabel_->setText(    tools::translate( "CheckpointConfigPanel", "Frequency:" ) );
+    keepLabel_->setText(         tools::translate( "CheckpointConfigPanel", "Keep:" ) );
+    sessionLabel_->setText(      tools::translate( "CheckpointConfigPanel", "Session:" ) );
 }
 
 // -----------------------------------------------------------------------------

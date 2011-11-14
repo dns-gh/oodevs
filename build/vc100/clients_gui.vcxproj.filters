@@ -1371,6 +1371,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\ChangeSuperior_ABC.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LanguageChangeObserver_ABC.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">

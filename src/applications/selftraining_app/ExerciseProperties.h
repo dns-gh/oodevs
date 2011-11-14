@@ -10,6 +10,9 @@
 #ifndef __ExerciseProperties_h_
 #define __ExerciseProperties_h_
 
+#include <boost/noncopyable.hpp>
+#include "clients_gui/LanguageChangeObserver_ABC.h"
+
 namespace frontend
 {
     class Exercise_ABC;
@@ -32,7 +35,8 @@ namespace xml
 */
 // Created: SBO 2010-11-12
 // =============================================================================
-class ExerciseProperties : public Q3VBox
+class ExerciseProperties : public gui::LanguageChangeObserver_ABC< Q3VBox >
+                         , private boost::noncopyable
 {
     Q_OBJECT;
 
@@ -57,14 +61,9 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ExerciseProperties( const ExerciseProperties& );            //!< Copy constructor
-    ExerciseProperties& operator=( const ExerciseProperties& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
+    virtual void OnLanguageChanged();
     void ReadBriefingText( xml::xistream& xis );
     //@}
 
@@ -74,6 +73,7 @@ private:
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC& fileLoader_;
     const QString language_;
+    QLabel* parametersLabel_;
     QLabel* briefingImage_;
     Q3TextEdit* briefingText_;
     QComboBox* terrainList_;

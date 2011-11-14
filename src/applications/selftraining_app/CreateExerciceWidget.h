@@ -11,6 +11,7 @@
 #define __CreateExerciceWidget_h_
 
 #include <boost/noncopyable.hpp>
+#include "clients_gui/LanguageChangeObserver_ABC.h"
 
 class ScenarioEditPage;
 
@@ -26,7 +27,7 @@ namespace tools
 */
 // Created: JSR 2010-07-13
 // =============================================================================
-class CreateExerciceWidget : public Q3GroupBox
+class CreateExerciceWidget : public gui::LanguageChangeObserver_ABC< Q3GroupBox >
                            , private boost::noncopyable
 {
     Q_OBJECT
@@ -48,6 +49,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    virtual void OnLanguageChanged();
     void UpdateExercises();
     //@}
 
@@ -66,9 +68,13 @@ private:
     QLineEdit*                  editName_;
     QComboBox*                  editTerrainList_;
     QComboBox*                  editModelList_;
-    Q3GroupBox*                  saveAsGroupBox_;
-    Q3ListBox*                   exerciseList_;
-    Q3ListView*                  contentList_;
+    Q3GroupBox*                 saveAsGroupBox_;
+    Q3ListBox*                  exerciseList_;
+    Q3ListView*                 contentList_;
+
+    QLabel*                     createLabel_;
+    QLabel*                     copyLabel_;
+    QLabel*                     copyContentLabel_;
     //@}
 };
 

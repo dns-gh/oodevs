@@ -23,12 +23,13 @@ using namespace frontend;
 // -----------------------------------------------------------------------------
 CompositePluginConfig::CompositePluginConfig( QTabWidget* parent )
     : PluginConfig_ABC( parent )
+    , parent_( parent )
 {
     Q3GroupBox* pluginsBox = new Q3GroupBox( 1, Qt::Vertical, this );
     pluginsBox->setMargin( 5 );
     pluginsBox->setFrameShape( Q3GroupBox::NoFrame );
     tabs_ = new QTabWidget( pluginsBox );
-    parent->addTab( this, tools::translate( "CompositePluginConfig", "Plugins" ) );
+    parentTabIndex_ = parent->addTab( this, "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,6 +39,20 @@ CompositePluginConfig::CompositePluginConfig( QTabWidget* parent )
 CompositePluginConfig::~CompositePluginConfig()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CompositePluginConfig::OnLanguageChanged
+// Created: ABR 2011-11-10
+// -----------------------------------------------------------------------------
+void CompositePluginConfig::OnLanguageChanged()
+{
+    parent_->setTabText( parentTabIndex_, tools::translate( "CompositePluginConfig", "Plugins" ) );
+    for( int i = 0; i < tabs_->count(); ++i )
+    {
+        plugins_[ i ]->OnLanguageChanged();
+        tabs_->setTabText( i, plugins_[ i ]->GetName() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +95,6 @@ void CompositePluginConfig::Add( const tools::GeneralConfig& config, xml::xistre
     if( plugin->IsAvailable() )
     {
         plugins_.push_back( plugin.release() );
-        tabs_->addTab( plugins_.back(), plugins_.back()->GetName() );
+        tabs_->addTab( plugins_.back(), "" );
     }
 }

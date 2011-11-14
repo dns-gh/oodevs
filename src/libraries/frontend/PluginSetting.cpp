@@ -13,6 +13,8 @@
 #include "moc_PluginSetting.cpp"
 #include "tools/GeneralConfig.h"
 
+#include "clients_kernel/Tools.h"
+
 #pragma warning( push, 0 )
 #include <Qt/qapplication.h>
 #include <QtGui/qcheckbox.h>
@@ -42,45 +44,30 @@ namespace
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
     }
-
-    struct DescriptionReader
-    {
-        DescriptionReader( xml::xisubstream xis, const std::string& currentLanguage )
-        {
-            xis >> xml::start( "descriptions" )
-                    >> xml::list( "description", *this, &DescriptionReader::ReadDescription, currentLanguage );
-        }
-        void ReadDescription( xml::xistream& xis, const std::string& currentLanguage )
-        {
-            const std::string lang = xis.attribute< std::string >( "lang", "en" );
-            if( lang == currentLanguage || name_.empty() )
-            {
-                name_ = xis.attribute< std::string >( "name" );
-                xis >> description_;
-            }
-        }
-        std::string name_;
-        std::string description_;
-    };
 }
 
-FileButtonEvent::FileButtonEvent( PluginSetting& plugins, QWidget* parent, const std::string& description ) 
-    : QObject( parent )
+FileButtonEvent::FileButtonEvent( PluginSetting& plugins, QWidget* parent ) 
+    : QPushButton( parent )
     , plugins_ ( plugins )
-    , fileValue_( new QPushButton( parent ) )
+    , updated_( false )
 {
-    fileValue_->setText( description.empty() ? "Select an order file..." : description.c_str() );
-    connect( fileValue_, SIGNAL( clicked() ), this, SLOT( OnFileClicked() ) );
+    connect( this, SIGNAL( clicked() ), this, SLOT( OnFileClicked() ) );
 }
 
-void FileButtonEvent::setText( const std::string& value )
+void FileButtonEvent::SetText( const std::string& value )
 {
-    fileValue_->setText( value.c_str() );
+    updated_ = true;
+    QPushButton::setText( value.c_str() );
 }
 
 void FileButtonEvent::OnFileClicked()
 {
     plugins_.OnFileClicked();
+}
+
+bool FileButtonEvent::HasBeenUpdated() const
+{
+    return updated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -91,9 +78,9 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     : attribute_ ( xis.attribute< std::string >( "attribute" ) )
     , type_ ( xis.attribute< std::string >( "type" ) )
     , config_ ( config )
+    , description_( xis, ReadLang() )
 {
-    DescriptionReader reader( xis, ReadLang() );
-    QToolTip::add( new QLabel( reader.name_.c_str(), parent ), reader.description_.c_str() );
+    label_ = new QLabel( parent );
     if( type_ == "string" )
         stringValue_ = new QLineEdit( xis.attribute< std::string >( "default", "" ).c_str(), parent );
     else if( type_ == "integer" )
@@ -118,7 +105,7 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     }
     else if( type_ == "file" )
     {
-        fileValue_.reset( new FileButtonEvent( *this, parent, reader.description_ ) );
+        fileValue_.reset( new FileButtonEvent( *this, parent ) );
     }
     else if( type_ == "enumeration" )
     {
@@ -139,6 +126,20 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
 PluginSetting::~PluginSetting()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PluginSetting::OnLanguageChanged
+// Created: ABR 2011-11-10
+// -----------------------------------------------------------------------------
+void PluginSetting::OnLanguageChanged()
+{
+    description_.SetCurrentLanguage( ReadLang() );
+    label_->setText( description_.GetName().c_str() );
+    QToolTip::add( label_, description_.GetDescription().c_str() );
+
+    if( fileValue_.get() && !fileValue_->HasBeenUpdated() )
+        fileValue_->setText( description_.GetDescription().empty() ? tools::translate( "PluginSetting", "Select a file..." ) : description_.GetDescription().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,8 +186,8 @@ void PluginSetting::OnFileClicked()
         std::string::size_type size = fileName_.length() - std::min( max_size, (int)fileName_.length() );
         std::string msg( fileName_, size, size );
         if ( fileName_.size() > max_size + 2 )
-            fileValue_->setText( ".." + msg );
+            fileValue_->SetText( ".." + msg );
         else
-            fileValue_->setText( msg );
+            fileValue_->SetText( msg );
     }
 }
