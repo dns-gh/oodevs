@@ -35,13 +35,14 @@ ENT_Tr::T_ConverterDotationFamily ENT_Tr::DotationFamilyConverter_[] =
     T_ConverterDotationFamily( "", "", (E_DotationFamily)-1 )
 };
 
-ENT_Tr::T_ConverterAmmunitionFamily ENT_Tr::AmmunitionFamilyConverter_[] =
+ENT_Tr::T_ConverterAmmunitionType ENT_Tr::AmmunitionTypeConverter_[] =
 {
-    T_ConverterAmmunitionFamily( "obus", QT_TRANSLATE_NOOP( "ENT_Tr", "shell" ), eAmmunitionFamily_Obus ),
-    T_ConverterAmmunitionFamily( "missile air", QT_TRANSLATE_NOOP( "ENT_Tr", "air missile" ), eAmmunitionFamily_MissileAir ),
-    T_ConverterAmmunitionFamily( "missile sol", QT_TRANSLATE_NOOP( "ENT_Tr", "missile" ), eAmmunitionFamily_MissileSol ),
-    T_ConverterAmmunitionFamily( "mitraille", QT_TRANSLATE_NOOP( "ENT_Tr", "bullet" ), eAmmunitionFamily_Mitraille ),
-    T_ConverterAmmunitionFamily( "", "", (E_AmmunitionFamily)-1 )
+    T_ConverterAmmunitionType( "Obus",       QT_TRANSLATE_NOOP( "ENT_Tr", "Shell" ),       eMunitionType_Obus ),
+    T_ConverterAmmunitionType( "MissileSol", QT_TRANSLATE_NOOP( "ENT_Tr", "Missile" ),     eMunitionType_MissileSol ),
+    T_ConverterAmmunitionType( "MissileAir", QT_TRANSLATE_NOOP( "ENT_Tr", "Air missile" ), eMunitionType_MissileAir ),
+    T_ConverterAmmunitionType( "Mitraille",  QT_TRANSLATE_NOOP( "ENT_Tr", "Bullet" ),      eMunitionType_Mitraille ),
+    T_ConverterAmmunitionType( "ALR",        QT_TRANSLATE_NOOP( "ENT_Tr", "ALR" ),         eMunitionType_ALR ),
+    T_ConverterAmmunitionType( "", "", (E_MunitionType)-1 )
 };
 
 ENT_Tr::T_ConverterNatureLevel ENT_Tr::NatureLevelConverter_[] =
@@ -415,7 +416,7 @@ void ENT_Tr::InitTranslations()
 {
     InitTr( LocationTypeConverter_, "ENT_Tr" );
     InitTr( DotationFamilyConverter_, "ENT_Tr" );
-    InitTr( AmmunitionFamilyConverter_, "ENT_Tr" );
+    InitTr( AmmunitionTypeConverter_, "ENT_Tr" );
     InitTr( NatureLevelConverter_, "ENT_Tr" );
     InitTr( DiplomacyConverter_, "ENT_Tr" );
     InitTr( ForceRatioStatusConverter_, "ENT_Tr" );
@@ -469,12 +470,12 @@ const std::string& ENT_Tr::ConvertFromDotationFamily( E_DotationFamily nValue, E
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromAmmunitionFamily
+// Name: ENT_Tr::ConvertFromAmmunitionType
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromAmmunitionFamily( E_AmmunitionFamily nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromAmmunitionType( E_MunitionType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( AmmunitionFamilyConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( AmmunitionTypeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -784,12 +785,12 @@ E_DotationFamily ENT_Tr::ConvertToDotationFamily( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToAmmunitionFamily
+// Name: ENT_Tr::ConvertToAmmunitionType
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_AmmunitionFamily ENT_Tr::ConvertToAmmunitionFamily( const std::string& strName )
+E_MunitionType ENT_Tr::ConvertToAmmunitionType( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( AmmunitionFamilyConverter_, strName );
+    return ENT_Tr::FindInConverter( AmmunitionTypeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

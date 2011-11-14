@@ -124,22 +124,6 @@
         <translation>nourriture/eau</translation>
     </message>
     <message>
-        <source>shell</source>
-        <translation>obus</translation>
-    </message>
-    <message>
-        <source>air missile</source>
-        <translation>missile sol-air</translation>
-    </message>
-    <message>
-        <source>missile</source>
-        <translation>missile sol-sol</translation>
-    </message>
-    <message>
-        <source>bullet</source>
-        <translation>balle</translation>
-    </message>
-    <message>
         <source>unwounded</source>
         <translation>valide</translation>
     </message>
@@ -822,6 +806,26 @@
     <message>
         <source>Invalid</source>
         <translation>Invalide</translation>
+    </message>
+    <message>
+        <source>Shell</source>
+        <translation>Obus</translation>
+    </message>
+    <message>
+        <source>Missile</source>
+        <translation>Missile sol-sol</translation>
+    </message>
+    <message>
+        <source>Air missile</source>
+        <translation>Missile sol-air</translation>
+    </message>
+    <message>
+        <source>Bullet</source>
+        <translation>Balle</translation>
+    </message>
+    <message>
+        <source>ALR</source>
+        <translation>ALR</translation>
     </message>
 </context>
 </TS>

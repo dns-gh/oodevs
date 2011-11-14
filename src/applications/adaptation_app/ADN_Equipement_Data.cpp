@@ -462,11 +462,11 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
     input >> xml::optional >> xml::attribute( "ied", bIED_ );
     if( !type.empty() )
     {
-        nType_ = ADN_Tr::ConvertToMunitionType( type );
+        nType_ = ENT_Tr::ConvertToAmmunitionType( type );
         if( nType_ == E_MunitionType( -1 ) )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid resource type '%1'" ).arg( type.c_str() ).ascii() );
     }
-
+    
     if( input.has_child( "illuminating" ) )
     {
         bIlluminating_ = true;
@@ -503,7 +503,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
 {
     output << xml::start( "resource" );
     CategoryInfo::WriteContent( output );
-    output << xml::attribute( "type", ADN_Tr::ConvertFromMunitionType( nType_.GetData() ) );
+    output << xml::attribute( "type", ENT_Tr::ConvertFromAmmunitionType( nType_.GetData() ) );
     if( bIED_.GetData() == true )
         output << xml::attribute( "ied", bIED_.GetData() );
     if( bTrancheD_.GetData() )

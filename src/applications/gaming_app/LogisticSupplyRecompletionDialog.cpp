@@ -32,6 +32,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace kernel;
 using namespace gui;
@@ -257,10 +258,11 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
 void LogisticSupplyRecompletionDialog::InitializeAmmunitions()
 {
     munitionsFamilyTable_->setNumRows( 0 );
-    AddAmmunition( eAmmunitionFamily_Obus, tr( "Shell" ) );
-    AddAmmunition( eAmmunitionFamily_MissileAir, tr( "Air missile" ) );
-    AddAmmunition( eAmmunitionFamily_MissileSol, tr( "Ground missile" ) );
-    AddAmmunition( eAmmunitionFamily_Mitraille, tr( "Bullet" ) );
+    AddAmmunition( eMunitionType_Obus,			ENT_Tr::ConvertFromAmmunitionType( eMunitionType_Obus, ENT_Tr::eToTr ).c_str() );
+    AddAmmunition( eMunitionType_MissileSol,	ENT_Tr::ConvertFromAmmunitionType( eMunitionType_MissileSol, ENT_Tr::eToTr ).c_str() );
+    AddAmmunition( eMunitionType_MissileAir,	ENT_Tr::ConvertFromAmmunitionType( eMunitionType_MissileAir, ENT_Tr::eToTr ).c_str() );
+    AddAmmunition( eMunitionType_Mitraille,		ENT_Tr::ConvertFromAmmunitionType( eMunitionType_Mitraille, ENT_Tr::eToTr ).c_str() );
+    AddAmmunition( eMunitionType_ALR,		    ENT_Tr::ConvertFromAmmunitionType( eMunitionType_ALR, ENT_Tr::eToTr ).c_str() );
     munitionsFamilyTable_->setMinimumHeight( munitionsFamilyTable_->rowHeight( 0 ) * 5 );
 }
 

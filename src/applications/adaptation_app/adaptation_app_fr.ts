@@ -4834,22 +4834,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Gravité niveau 3</translation>
     </message>
     <message>
-        <source>Shell</source>
-        <translation>Obus</translation>
-    </message>
-    <message>
-        <source>Missile</source>
-        <translation>Missile</translation>
-    </message>
-    <message>
-        <source>Air missile</source>
-        <translation>Missile sol air</translation>
-    </message>
-    <message>
-        <source>Bullet</source>
-        <translation>Balle</translation>
-    </message>
-    <message>
         <source>radar</source>
         <translation>radar</translation>
     </message>
@@ -5048,10 +5032,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>lima</source>
         <translation>lima</translation>
-    </message>
-    <message>
-        <source>Reduced Lethality Weapon</source>
-        <translation>Arme à létalité réduite</translation>
     </message>
     <message>
         <source>ResourceNetwork</source>

@@ -4866,22 +4866,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation>Gravité niveau 3</translation>
     </message>
     <message>
-        <source>Shell</source>
-        <translation>Obus</translation>
-    </message>
-    <message>
-        <source>Missile</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Air missile</source>
-        <translation>Missile sol air</translation>
-    </message>
-    <message>
-        <source>Bullet</source>
-        <translation>Balle</translation>
-    </message>
-    <message>
         <source>radar</source>
         <translation></translation>
     </message>
@@ -5043,10 +5027,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>lima</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reduced Lethality Weapon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

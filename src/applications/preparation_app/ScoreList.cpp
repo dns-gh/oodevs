@@ -46,8 +46,8 @@ ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::It
     }
     {
         generatorBox_ = new Q3HBox( this );
-        Q3Button defaultIndicators = new QPushButton( tr( "Generate default indicators" ), generatorBox_ );
-        connect( &defaultIndicators, SIGNAL( clicked() ), SLOT( OnGenerate() ) );
+        QPushButton* defaultIndicators = new QPushButton( tr( "Generate default indicators" ), generatorBox_ );
+        connect( defaultIndicators, SIGNAL( clicked() ), SLOT( OnGenerate() ) );
         generatorBox_->hide();
     }
     connect( scores_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnEdit() ) );

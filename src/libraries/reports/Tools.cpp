@@ -46,15 +46,6 @@ E_LocationType tools::LocationFromString( const QString& type )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::AmmunitionFamilyFromString
-// Created: AGE 2007-06-19
-// -----------------------------------------------------------------------------
-E_AmmunitionFamily tools::AmmunitionFamilyFromString( const QString& type )
-{
-    return type.isNull() ? (E_AmmunitionFamily)-1 : ENT_Tr::ConvertToAmmunitionFamily( type.ascii() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: tools::DotationFamilyFromString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------

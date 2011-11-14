@@ -124,22 +124,6 @@
         <translation>comida/agua</translation>
     </message>
     <message>
-        <source>shell</source>
-        <translation>cinta(shell)</translation>
-    </message>
-    <message>
-        <source>air missile</source>
-        <translation>misil aéreo</translation>
-    </message>
-    <message>
-        <source>missile</source>
-        <translation>misil</translation>
-    </message>
-    <message>
-        <source>bullet</source>
-        <translation>bala</translation>
-    </message>
-    <message>
         <source>unwounded</source>
         <translation>ileso</translation>
     </message>
@@ -821,6 +805,26 @@
     </message>
     <message>
         <source>Invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shell</source>
+        <translation>cinta(shell)</translation>
+    </message>
+    <message>
+        <source>Missile</source>
+        <translation>misil</translation>
+    </message>
+    <message>
+        <source>Air missile</source>
+        <translation>misil aéreo</translation>
+    </message>
+    <message>
+        <source>Bullet</source>
+        <translation>bala</translation>
+    </message>
+    <message>
+        <source>ALR</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

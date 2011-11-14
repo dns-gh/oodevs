@@ -25,6 +25,7 @@
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
+#include "ENT/ENT_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: ScoresModel constructor
@@ -229,9 +230,9 @@ void ScoresModel::IterateAmmunitions( const std::string& content, const std::str
     for( std::map< const std::string, std::string >::iterator it = ammunitionMap.begin(); it != ammunitionMap.end(); ++it )
     {
         it->second.erase( it->second.length() - 1 );
-        std::string newName = name + " (" + it->first + ")";
+        std::string newName = name + " (" + ENT_Tr::ConvertFromAmmunitionType( ENT_Tr::ConvertToAmmunitionType( it->first ), ENT_Tr::eToTr ) + ")";
         std::string newContent = content;
-        boost::algorithm::replace_all( newContent, name, newName);
+        boost::algorithm::replace_all( newContent, name, newName );
         boost::algorithm::replace_all( newContent, toReplace, it->second );
         if( toReplaceParties.empty() )
             CreateScoreFromString( newContent );

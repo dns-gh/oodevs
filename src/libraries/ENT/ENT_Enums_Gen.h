@@ -36,13 +36,14 @@ enum E_DotationFamily
     eNbrDotationFamily
 };
 
-enum E_AmmunitionFamily
+enum E_MunitionType
 {
-    eAmmunitionFamily_Obus,
-    eAmmunitionFamily_MissileAir,
-    eAmmunitionFamily_MissileSol,
-    eAmmunitionFamily_Mitraille,
-    eNbrAmmunitionFamily
+    eMunitionType_Obus,
+    eMunitionType_MissileSol,
+    eMunitionType_MissileAir,
+    eMunitionType_Mitraille,
+    eMunitionType_ALR,
+    eNbrMunitionType
 };
 
 enum E_NatureLevel

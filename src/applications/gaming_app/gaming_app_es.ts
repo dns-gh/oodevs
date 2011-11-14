@@ -1643,22 +1643,6 @@ Motivo: %3
         <translation>tropa regular</translation>
     </message>
     <message>
-        <source>Shell</source>
-        <translation>Cartucho</translation>
-    </message>
-    <message>
-        <source>Air missile</source>
-        <translation>Misil aereo</translation>
-    </message>
-    <message>
-        <source>Ground missile</source>
-        <translation>Misil de superficie</translation>
-    </message>
-    <message>
-        <source>Bullet</source>
-        <translation>Bala</translation>
-    </message>
-    <message>
         <source>Magic orders</source>
         <translation>Órdenes mágicas</translation>
     </message>
