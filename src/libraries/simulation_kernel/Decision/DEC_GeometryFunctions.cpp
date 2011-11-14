@@ -213,7 +213,7 @@ void DEC_GeometryFunctions::ReverseDirection( boost::shared_ptr< MT_Vector2D > p
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndReverseDirection( const MT_Vector2D* pDir )
 {
-    if( !pDir );
+    if( !pDir )
         throw std::runtime_error( "Invalid direction" );
 
     boost::shared_ptr< MT_Vector2D > pNewDir( new MT_Vector2D( *pDir ) );
