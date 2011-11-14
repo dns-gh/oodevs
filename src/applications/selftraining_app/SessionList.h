@@ -10,6 +10,9 @@
 #ifndef __SessionList_h_
 #define __SessionList_h_
 
+#include <boost/noncopyable.hpp>
+#include "clients_gui/LanguageChangeObserver_ABC.h"
+
 namespace tools
 {
     class GeneralConfig;
@@ -22,7 +25,8 @@ namespace tools
 */
 // Created: SBO 2009-12-13
 // =============================================================================
-class SessionList : public Q3VBox
+class SessionList : public gui::LanguageChangeObserver_ABC< Q3VBox >
+                  , private boost::noncopyable
 {
     Q_OBJECT;
 
@@ -51,14 +55,9 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SessionList( const SessionList& );            //!< Copy constructor
-    SessionList& operator=( const SessionList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
+    virtual void OnLanguageChanged();
     void ReadComments( const QString& session );
     //@}
 
@@ -70,6 +69,7 @@ private:
     Q3ListBox* list_;
     Q3TextEdit* comments_;
     QString exercise_;
+    QLabel* sessionLabel_;
     //@}
 };
 

@@ -11,6 +11,7 @@
 #define __ExportWidget_h_
 
 #include <boost/noncopyable.hpp>
+#include "clients_gui/LanguageChangeObserver_ABC.h"
 
 class ScenarioEditPage;
 
@@ -31,7 +32,7 @@ namespace zip
 */
 // Created: JSR 2010-07-15
 // =============================================================================
-class ExportWidget : public Q3GroupBox
+class ExportWidget : public gui::LanguageChangeObserver_ABC< Q3GroupBox >
                    , private boost::noncopyable
 {
     Q_OBJECT
@@ -59,6 +60,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    virtual void OnLanguageChanged();
     Q3ListBoxItem* GetCurrentSelection() const;
     QTextEdit* GetCurrentDescription() const;
     bool BrowseClicked();
@@ -70,7 +72,7 @@ private:
     //! @name Types
     //@{
     typedef std::pair< std::string, std::string > T_Package; // <path, filename>
-    enum E_Tabs{ exercise = 0, terrain = 1, models = 2 };
+    enum E_Tabs{ eTabs_Exercise = 0, eTabs_Terrain = 1, eTabs_Models = 2 };
     //@}
 
 private:
@@ -94,6 +96,15 @@ private:
     QTextEdit*                  modelDescription_;
     QCheckBox*                  decisionalCheckBox_;
     Q3ListBox*                  physicalList_;
+    // Labels
+    QLabel*                     exerciseDescriptionLabel_;
+    QLabel*                     exerciseLabel_;
+    QLabel*                     packageContentLabel_;
+    QLabel*                     terrainDescriptionLabel_;
+    QLabel*                     terrainLabel_;
+    QLabel*                     modelsDescriptionLabel_;
+    QLabel*                     modelsDecisionalLabel_;
+    QLabel*                     modelsPhysicalLabel_;
     //@}
 };
 

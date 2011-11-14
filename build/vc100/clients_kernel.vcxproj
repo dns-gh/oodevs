@@ -247,7 +247,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\DetectionMap.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DetectionMapIterator.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionVisitor_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Iterator.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\objecticons.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\OptionalValue.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Resolver2.h" />

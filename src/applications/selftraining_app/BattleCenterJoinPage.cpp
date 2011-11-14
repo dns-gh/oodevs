@@ -45,11 +45,11 @@ namespace
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
 BattleCenterJoinPage::BattleCenterJoinPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
-    : LauncherClientPage( pages, tools::translate( "BattleCenterJoinPage", "Join" ), previous, eButtonBack | eButtonJoin, launcher )
+    : LauncherClientPage( pages, previous, eButtonBack | eButtonJoin, launcher )
     , controllers_      ( controllers )
     , config_           ( config )
     , fileLoader_       ( fileLoader )
-    , progressPage_     ( new ProgressPage( pages, *this, tools::translate( "BattleCenterJoinPage", "Joining host" ) ) )
+    , progressPage_     ( new ProgressPage( pages, *this ) )
     , exercise_         ( 0 )
 {
     Q3VBox* box = new Q3VBox( this );
@@ -57,14 +57,14 @@ BattleCenterJoinPage::BattleCenterJoinPage( Q3WidgetStack* pages, Page_ABC& prev
     box->setSpacing( 10 );
     {
         Q3GroupBox* hbox = new Q3GroupBox( 1, Qt::Vertical, box );
-        new QLabel( tools::translate( "BattleCenterJoinPage", "Host:" ), hbox );
-        host_ = new QLineEdit( tools::translate( "BattleCenterJoinPage", "127.0.0.1" ), hbox );
-        new QLabel( tools::translate( "BattleCenterJoinPage", "Port:" ), hbox );
+        hostLabel_ = new QLabel( hbox );
+        host_ = new QLineEdit( "127.0.0.1", hbox );
+        portLabel_ = new QLabel( hbox );
         port_ = new QSpinBox( hbox );
         port_->setMaxValue( 65535 );
         port_->setValue( config.GetLauncherPort() );
-        QPushButton* pButton = new QPushButton( tools::translate( "BattleCenterJoinPage", "Update" ), hbox );
-        connect( pButton, SIGNAL( clicked() ), SLOT( UpdateExerciseList() ) );
+        updateButton_ = new QPushButton( hbox );
+        connect( updateButton_, SIGNAL( clicked() ), SLOT( UpdateExerciseList() ) );
     }
     {
         filter_.reset( new RunningExerciseFilter( *host_, *port_ ) );
@@ -84,6 +84,20 @@ BattleCenterJoinPage::BattleCenterJoinPage( Q3WidgetStack* pages, Page_ABC& prev
 BattleCenterJoinPage::~BattleCenterJoinPage()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: BattleCenterJoinPage::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void BattleCenterJoinPage::OnLanguageChanged()
+{
+    SetTitle( tools::translate( "BattleCenterJoinPage", "Join" ) );
+    progressPage_->SetTitle( tools::translate( "BattleCenterJoinPage", "Joining host" ) );
+    hostLabel_->setText(     tools::translate( "BattleCenterJoinPage", "Host:" ) );
+    portLabel_->setText(     tools::translate( "BattleCenterJoinPage", "Port:" ) );
+    updateButton_->setText(  tools::translate( "BattleCenterJoinPage", "Update" ) );
+    LauncherClientPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------

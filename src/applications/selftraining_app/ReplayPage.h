@@ -60,14 +60,9 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ReplayPage( const ReplayPage& );            //!< Copy constructor
-    ReplayPage& operator=( const ReplayPage& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
+    virtual void OnLanguageChanged();
     virtual void Update();
     void StartExercise();
     void ConfigureSession( const QString& exercise, const QString& session );

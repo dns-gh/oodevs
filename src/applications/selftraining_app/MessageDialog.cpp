@@ -92,25 +92,26 @@ MessageDialog::~MessageDialog()
 // Name: MessageDialog::CreateButton
 // Created: RDS 2008-08-21
 // -----------------------------------------------------------------------------
-QPushButton* MessageDialog::CreateButton( QWidget* parent, int button )
+void MessageDialog::CreateButton( QWidget* parent, int button )
 {
-    QPushButton* buttonWidget = 0;
+    QPushButton* buttonWidget = new MenuButton( parent );
     switch( button )
     {
     case QMessageBox::Ok:
-        buttonWidget = new MenuButton( tools::translate( "MessageDialog", "OK" ), parent );
+        buttonWidget->setText( tools::translate( "MessageDialog", "OK" ) );
         connect( buttonWidget, SIGNAL( clicked() ), this, SLOT( OnYes() ) );
         break;
     case QMessageBox::Yes:
-        buttonWidget = new MenuButton( tools::translate( "MessageDialog", "Yes" ), parent );
+        buttonWidget->setText( tools::translate( "MessageDialog", "Yes" ) );
         connect( buttonWidget, SIGNAL( clicked() ), this, SLOT( OnYes() ) );
         break;
     case QMessageBox::No:
-        buttonWidget = new MenuButton( tools::translate( "MessageDialog", "No" ), parent );
+        buttonWidget->setText( tools::translate( "MessageDialog", "No" ) );
         connect( buttonWidget, SIGNAL( clicked() ), this, SLOT( OnNo() ) );
         break;
+    default:
+        assert( false );
     }
-    return buttonWidget;
 }
 
 // -----------------------------------------------------------------------------

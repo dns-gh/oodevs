@@ -29,42 +29,42 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
 {
     Q3VBox* box = new Q3VBox( this );
     box->setMargin( 5 );
-    Q3GroupBox* timeBox = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "AdvancedConfigPanel", "Time" ), box );
+    timeBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
     {
-        Q3HBox* stepBox = new Q3HBox( timeBox );
-        new QLabel( tools::translate( "AdvancedConfigPanel", "Time step:" ), stepBox );
+        Q3HBox* stepBox = new Q3HBox( timeBox_ );
+        stepLabel_ = new QLabel( stepBox );
         stepSpin_ = new QSpinBox( 1, 100, 1, stepBox );
         stepSpin_->setValue( 10 );
     }
     {
-        Q3HBox* factorBox = new Q3HBox( timeBox );
-        new QLabel( tools::translate( "AdvancedConfigPanel", "Time factor:" ), factorBox );
+        Q3HBox* factorBox = new Q3HBox( timeBox_ );
+        factorLabel_ = new QLabel( factorBox );
         factorSpin_ = new QSpinBox( 1, 100, 1, factorBox );
         factorSpin_->setValue( 10 );
     }
     {
-        Q3HBox* endTickBox = new Q3HBox( timeBox );
-        new QLabel( tools::translate( "AdvancedConfigPanel", "End tick:" ), endTickBox );
+        Q3HBox* endTickBox = new Q3HBox( timeBox_ );
+        endtickLabel_ = new QLabel( endTickBox );
         endtickSpin_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, endTickBox );
         endtickSpin_->setValue( 0 );
     }
     {
-        pausedCheckBox_ = new QCheckBox( tools::translate( "AdvancedConfigPanel", "  Paused at startup" ), timeBox );
+        pausedCheckBox_ = new QCheckBox( timeBox_ );
         pausedCheckBox_->setChecked( false );
     }
-    Q3GroupBox* pathfindBox = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "AdvancedConfigPanel", "Pathfind" ), box );
+    pathfindBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
     {
-        Q3HBox* threadBox = new Q3HBox( pathfindBox );
-        new QLabel( tools::translate( "AdvancedConfigPanel", "Number of threads:" ), threadBox );
-        pathThreads_ = new QSpinBox( 0, 4, 1, threadBox );
-        pathThreads_->setValue( 1 );
+        Q3HBox* threadBox = new Q3HBox( pathfindBox_ );
+        pathThreadsLabel_ = new QLabel( threadBox );
+        pathThreadsSpin_ = new QSpinBox( 0, 4, 1, threadBox );
+        pathThreadsSpin_->setValue( 1 );
     }
-    Q3GroupBox* recordBox = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "AdvancedConfigPanel", "Recorder" ), box );
+    recordBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
     {
-        Q3HBox* freqBox = new Q3HBox( recordBox );
-        new QLabel( tools::translate( "AdvancedConfigPanel", "Fragmentation frequency: " ), freqBox );
-        fragmentsFrequency_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, freqBox );
-        fragmentsFrequency_->setValue( 200 );
+        Q3HBox* freqBox = new Q3HBox( recordBox_ );
+        fragmentsFrequencyLabel_ = new QLabel( freqBox );
+        fragmentsFrequencySpin_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, freqBox );
+        fragmentsFrequencySpin_->setValue( 200 );
     }
 }
 
@@ -75,6 +75,25 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
 AdvancedConfigPanel::~AdvancedConfigPanel()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdvancedConfigPanel::OnLanguageChanged
+// Created: ABR 2011-11-10
+// -----------------------------------------------------------------------------
+void AdvancedConfigPanel::OnLanguageChanged()
+{
+    timeBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Time" ) );
+    stepLabel_->setText( tools::translate( "AdvancedConfigPanel", "Time step:" ) );
+    factorLabel_->setText( tools::translate( "AdvancedConfigPanel", "Time factor:" ) );
+    endtickLabel_->setText( tools::translate( "AdvancedConfigPanel", "End tick:" ) );
+    pausedCheckBox_->setText( tools::translate( "AdvancedConfigPanel", "  Paused at startup" ) );
+
+    pathfindBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Pathfind" ) );
+    pathThreadsLabel_->setText( tools::translate( "AdvancedConfigPanel", "Number of threads:" ) );
+
+    recordBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Recorder" ) );
+    fragmentsFrequencyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Fragmentation frequency: " ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +116,7 @@ void AdvancedConfigPanel::Commit( const std::string& exercise, const std::string
     action.SetOption( "session/config/simulation/time/@factor", factorSpin_->value() );
     action.SetOption( "session/config/simulation/time/@end-tick", endtickSpin_->value() );
     action.SetOption( "session/config/simulation/time/@paused", pausedCheckBox_->isChecked() );
-    action.SetOption( "session/config/simulation/pathfinder/@threads", pathThreads_->value() );
-    action.SetOption( "session/config/dispatcher/plugins/recorder/@fragmentfreq", fragmentsFrequency_->value() );
+    action.SetOption( "session/config/simulation/pathfinder/@threads", pathThreadsSpin_->value() );
+    action.SetOption( "session/config/dispatcher/plugins/recorder/@fragmentfreq", fragmentsFrequencySpin_->value() );
     action.Commit();
 }

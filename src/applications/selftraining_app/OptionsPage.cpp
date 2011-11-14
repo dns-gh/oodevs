@@ -11,17 +11,18 @@
 #include "OptionsPage.h"
 #include "moc_OptionsPage.cpp"
 #include "Application.h"
+#include "MessageDialog.h"
 #include "clients_gui/Tools.h"
 #include "Config.h"
 #include <boost/foreach.hpp>
 
 namespace
 {
-    QString ReadLang()
+    std::string ReadLang()
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
     }
 }
 
@@ -29,50 +30,49 @@ namespace
 // Name: OptionsPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-OptionsPage::OptionsPage( Q3WidgetStack* pages, Page_ABC& previous, Config& config )
-    : ContentPage( pages, tools::translate( "OptionsPage", "Options" ), previous, eButtonBack | eButtonQuit )
-    , config_( config )
+OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, Config& config )
+    : ContentPage( pages, previous, eButtonBack | eButtonApply )
+    , parent_          ( parent )
+    , config_          ( config )
     , selectedLanguage_( ReadLang() )
+    , selectedDataDir_ ( "" )
+    , selectedProfile_ ( 0 )
+    , hasChanged_      ( false )
+    , languageHasChanged_     ( false )
 {
-    languages_[ tools::translate( "OptionsPage", "English" ) ]  = "en";
-    languages_[ tools::translate( "OptionsPage", "Français" ) ] = "fr";
-    languages_[ tools::translate( "OptionsPage", "Español" ) ] = "es";
 
     Q3VBox* mainBox = new Q3VBox( this );
     mainBox->setMargin( 10 );
     Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, mainBox );
     box->setFrameShape( Q3GroupBox::NoFrame );
+    // Language
+    languageLabel_ = new QLabel( box );
+    languageCombo_ = new QComboBox( box );
+    languages_[ "en" ] = "English";
+    languages_[ "fr" ] = "Français";
+    languages_[ "es" ] = "Español";
+    BOOST_FOREACH( const T_Languages::value_type& lang, languages_ )
     {
-        new QLabel( tools::translate( "OptionsPage", "Language: " ), box );
-        QComboBox* combo = new QComboBox( box );
-        BOOST_FOREACH( const T_Languages::value_type& lang, languages_ )
-        {
-            combo->insertItem( lang.first );
-            if( lang.second == selectedLanguage_ )
-                combo->setCurrentText( lang.first );
-        }
-        connect( combo, SIGNAL( activated( const QString& ) ), SLOT( OnChangeLanguage( const QString& ) ) );
+        languageCombo_->insertItem( lang.second );
+        if( lang.first == selectedLanguage_ )
+            languageCombo_->setCurrentText( lang.second );
     }
-    {
-        new QLabel( tools::translate( "OptionsPage", "Data directory: " ), box );
-        Q3HBox* hbox = new Q3HBox( box );
-        dataDirectory_ = new QLineEdit( hbox );
-        dataDirectory_->setText( QDir::convertSeparators( config.GetRootDir().c_str() ) );
-        QPushButton* browse = new QPushButton( tools::translate( "OptionsPage", "..." ), hbox );
-        connect( browse, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
-    }
-    {
-        new QLabel( tools::translate( "OptionsPage", "Profile: " ), box );
-        QComboBox* combo = new QComboBox( box );
-        combo->insertItem( tools::translate( "OptionsPage", "Terrain" ), Config::eTerrain );
-        combo->insertItem( tools::translate( "OptionsPage", "User" ), Config::eUser );
-        combo->insertItem( tools::translate( "OptionsPage", "Advanced User" ), Config::eAdvancedUser );
-        combo->insertItem( tools::translate( "OptionsPage", "Administrator" ), Config::eAdministrator );
-        combo->setCurrentItem( config_.GetProfile() );
-        connect( combo, SIGNAL( activated( int ) ), SLOT( OnChangeProfile( int ) ) );
-    }
+    connect( languageCombo_, SIGNAL( activated( const QString& ) ), SLOT( OnChangeLanguage( const QString& ) ) );
 
+    // Data
+    dataLabel_ = new QLabel( box );
+    Q3HBox* hbox = new Q3HBox( box );
+    dataDirectory_ = new QLineEdit( hbox );
+    dataButton_ = new QPushButton( hbox );
+    connect( dataButton_, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
+    // Profile
+    profileLabel_ = new QLabel( box );
+    profileCombo_ = new QComboBox( box );
+    connect( profileCombo_, SIGNAL( activated( int ) ), SLOT( OnChangeProfile( int ) ) );
     AddContent( mainBox );
+
+    // Init data
+    Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,37 @@ OptionsPage::OptionsPage( Q3WidgetStack* pages, Page_ABC& previous, Config& conf
 // -----------------------------------------------------------------------------
 OptionsPage::~OptionsPage()
 {
-    Commit();
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::OnLanguageChanged
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void OptionsPage::OnLanguageChanged()
+{
+    // Title
+    SetTitle( tools::translate( "OptionsPage", "Settings" ) );
+
+    // Language
+    languageLabel_->setText( tools::translate( "OptionsPage", "Language: " ) );
+
+    // Data
+    dataLabel_->setText( tools::translate( "OptionsPage", "Data directory: " ) );
+    dataButton_->setText( tools::translate( "OptionsPage", "..." ) );
+
+    // Profile
+    profileLabel_->setText( tools::translate( "OptionsPage", "Profile: " ) );
+    selectedProfile_ = ( profileCombo_->count() ) ? profileCombo_->currentIndex() : config_.GetProfile();
+    profileCombo_->clear();
+    profileCombo_->insertItem( tools::translate( "OptionsPage", "Terrain" ),       Config::eTerrain );
+    profileCombo_->insertItem( tools::translate( "OptionsPage", "User" ),          Config::eUser );
+    profileCombo_->insertItem( tools::translate( "OptionsPage", "Advanced User" ), Config::eAdvancedUser );
+    profileCombo_->insertItem( tools::translate( "OptionsPage", "Administrator" ), Config::eAdministrator );
+    profileCombo_->setCurrentItem( selectedProfile_ );
+
+    // Parent
+    ContentPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -90,22 +120,17 @@ OptionsPage::~OptionsPage()
 // -----------------------------------------------------------------------------
 void OptionsPage::OnChangeLanguage( const QString& lang )
 {
-    selectedLanguage_ = languages_[ lang ];
-    Commit();
-    static_cast< Application* >( qApp )->CreateTranslators();
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionsPage::Commit
-// Created: SBO 2009-04-08
-// -----------------------------------------------------------------------------
-void OptionsPage::Commit()
-{
-    QSettings settings;
-    settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-    settings.writeEntry( "/Common/Language", selectedLanguage_.c_str() );
-    settings.writeEntry( "/Common/DataDirectory", dataDirectory_->text() );
-    settings.writeEntry( "/Common/UserProfile", static_cast< int >( config_.GetProfile() ) );
+    BOOST_FOREACH( const T_Languages::value_type& language, languages_ )
+    {
+        if( language.second == lang )
+        {
+            selectedLanguage_ = language.first;
+            break;
+        }
+    }
+    hasChanged_ = true;
+    languageHasChanged_ = true;
+    EnableButton( eButtonApply, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +143,9 @@ void OptionsPage::OnChangeDataDirectory()
     if( directory.isEmpty() )
         return;
     dataDirectory_->setText( directory );
-    Commit();
+    selectedDataDir_ = directory.ascii();
+    hasChanged_ = true;
+    EnableButton( eButtonApply, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,5 +154,82 @@ void OptionsPage::OnChangeDataDirectory()
 // -----------------------------------------------------------------------------
 void OptionsPage::OnChangeProfile( int index )
 {
-    config_.SetProfile( static_cast< Config::EProfile >( index ) );
+    selectedProfile_ = index;
+    hasChanged_ = true;
+    EnableButton( eButtonApply, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::OnBack
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void OptionsPage::OnBack()
+{
+    if( hasChanged_ )
+    {
+        MessageDialog message( parent_, tools::translate( "OptionsPage", "Unsaved changes" ), tools::translate( "OptionsPage", "Unsaved changes will be lost, continue anyway ?" ), QMessageBox::Yes, QMessageBox::No );
+        if( message.exec() == QMessageBox::Yes )
+        {
+            Reset();
+            hasChanged_ = false;
+            languageHasChanged_ = false;
+            Page_ABC::OnBack();
+        }
+        else
+            return;
+    }
+    else
+        Page_ABC::OnBack();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::OnApply
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void OptionsPage::OnApply()
+{
+    assert( hasChanged_ );
+    if( languageHasChanged_ )
+        static_cast< Application* >( qApp )->DeleteTranslators();
+    Commit();
+    if( languageHasChanged_ )
+        static_cast< Application* >( qApp )->CreateTranslators();
+    languageHasChanged_ = false;
+    hasChanged_ = false;
+    EnableButton( eButtonApply, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::Commit
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void OptionsPage::Commit()
+{
+    QSettings settings;
+    settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+    settings.writeEntry( "/Common/Language", selectedLanguage_.c_str() );
+    settings.writeEntry( "/Common/DataDirectory", selectedDataDir_.c_str() );
+    settings.writeEntry( "/Common/UserProfile", selectedProfile_ );
+
+    static_cast< Application* >( qApp )->SetLauncherRootDir( selectedDataDir_ );
+    config_.SetRootDir( selectedDataDir_ );
+    config_.SetProfile( static_cast< Config::EProfile >( selectedProfile_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::Reset
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void OptionsPage::Reset()
+{
+    selectedLanguage_ = ReadLang();
+    selectedDataDir_ = config_.GetRootDir();
+    selectedProfile_ = static_cast< int >( config_.GetProfile() );
+
+    assert( languages_.find( selectedLanguage_ ) != languages_.end() );
+    languageCombo_->setCurrentText( languages_.find( selectedLanguage_ )->second );
+    dataDirectory_->setText( QDir::convertSeparators( selectedDataDir_.c_str() ) );
+    profileCombo_->setCurrentIndex( selectedProfile_ );
+
+    EnableButton( eButtonApply, false );
 }

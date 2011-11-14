@@ -28,7 +28,6 @@ namespace tools
 
 class Config;
 class Launcher;
-class SessionTray;
 
 // =============================================================================
 /** @class  Application
@@ -51,6 +50,8 @@ public:
     //@{
     void Initialize();
     void CreateTranslators();
+    void DeleteTranslators();
+    void SetLauncherRootDir( const std::string& directory );
     //@}
 
 private slots:
@@ -68,7 +69,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AddTranslator( const char* t, const QString& locale );
+    void AddTranslator( const std::string file, const QString& locale );
     virtual bool notify( QObject* emitter, QEvent* event );
     //@}
 
@@ -81,7 +82,7 @@ private:
     std::auto_ptr< kernel::Controllers > controllers_;
     std::auto_ptr< Launcher > launcher_;
     std::auto_ptr< frontend::LauncherClient > launcherClient_;
-    std::auto_ptr< SessionTray > sessionTray_;
+    std::vector< QTranslator* > translators_;
     Q3MainWindow* mainWindow_;
     QTimer* timer_;
     //@}

@@ -10,6 +10,7 @@
 #include "tools_pch.h"
 #include "GeneralConfig.h"
 #pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -50,6 +51,19 @@ GeneralConfig::~GeneralConfig()
 }
 
 // -----------------------------------------------------------------------------
+// Name: GeneralConfig::SetRootDir
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void GeneralConfig::SetRootDir( const std::string& directory )
+{
+    ResolveNewRelativePath( rootDir_, directory, terrainsDir_ );
+    ResolveNewRelativePath( rootDir_, directory, modelsDir_ );
+    ResolveNewRelativePath( rootDir_, directory, exercisesDir_ );
+    ResolveNewRelativePath( rootDir_, directory, populationDir_ );
+    rootDir_ = directory;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GeneralConfig::ResolveRelativePath
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
@@ -59,6 +73,19 @@ void GeneralConfig::ResolveRelativePath( const std::string& root, std::string& p
     const bfs::path p( path, bfs::native );
     if( !p.has_root_directory() )
         path = ( r / p ).native_file_string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::ResolveNewRelativePath
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void GeneralConfig::ResolveNewRelativePath( const std::string& oldRoot, const std::string& newRoot, std::string& path )
+{
+    if( boost::istarts_with( path, oldRoot ) )
+    {
+        path = path.substr( oldRoot.size() + 1 );
+        ResolveRelativePath( newRoot, path );
+    }
 }
 
 // -----------------------------------------------------------------------------

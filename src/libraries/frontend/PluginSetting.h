@@ -11,8 +11,10 @@
 #define __PluginSetting_h_
 
 #include <boost/noncopyable.hpp>
+#include "clients_kernel/XmlDescription.h"
 #pragma warning( push, 0 )
 #include <QtCore/QObject>
+#include <QtGui/QPushButton>
 #pragma warning( pop )
 
 class QCheckBox;
@@ -23,7 +25,7 @@ class QWidget;
 class QComboBox;
 class QPushButton;
 class Q3TimeEdit;
-
+class QLabel;
 
 namespace tools
 {
@@ -40,27 +42,37 @@ namespace frontend
     class PluginSettingVisitor_ABC;
     class PluginSetting;
 
-    class FileButtonEvent 
-        : public QObject, public boost::noncopyable
-    {
-        Q_OBJECT;
-    
-    public:
-        explicit FileButtonEvent( PluginSetting& plugins, QWidget* parent, const std::string& description );
-        void setText( const std::string& value );
-        
-    private slots:  
-        //! @name Slots
-        //@{
-        void OnFileClicked();
 
-    private:
-        //! @name 
-        //@{
-        QPushButton* fileValue_;
-        PluginSetting& plugins_;
-        //@}
-    };
+class FileButtonEvent : public QPushButton
+                      , public boost::noncopyable
+{
+    Q_OBJECT
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit FileButtonEvent( PluginSetting& plugins, QWidget* parent );
+    //@}
+
+    //! @name Operation
+    //@{
+    bool HasBeenUpdated() const;
+    void SetText( const std::string& value );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnFileClicked();
+    //@}
+
+private:
+    //! @name 
+    //@{
+    PluginSetting& plugins_;
+    bool           updated_;
+    //@}
+};
 
 // =============================================================================
 /** @class  PluginSetting
@@ -79,6 +91,7 @@ public:
 
     //! @name Operations
     //@{
+    void OnLanguageChanged();
     void Accept( PluginSettingVisitor_ABC& visitor );
     //@}
 
@@ -89,16 +102,18 @@ private:
 private:
     //! @name Member data
     //@{
-    const std::string attribute_;
-    const std::string type_;
-    QLineEdit* stringValue_;
-    QSpinBox* integerValue_;
-    QCheckBox* booleanValue_;
-    Q3TimeEdit* timeValue_;
-    QComboBox* enumerationValue_;
-    std::string fileName_;
+    const tools::GeneralConfig&      config_;
+    const std::string                attribute_;
+    const std::string                type_;
+    kernel::XmlDescription           description_;
+    QLabel*                          label_;
+    QLineEdit*                       stringValue_;
+    QSpinBox*                        integerValue_;
+    QCheckBox*                       booleanValue_;
+    Q3TimeEdit*                      timeValue_;
+    QComboBox*                       enumerationValue_;
+    std::string                      fileName_;
     std::auto_ptr< FileButtonEvent > fileValue_;
-    const tools::GeneralConfig& config_;
     //@}
 };
 

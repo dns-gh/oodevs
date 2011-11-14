@@ -28,6 +28,12 @@ public:
     virtual ~SessionTray();
     //@}
 
+public:
+    //! @name Operations
+    //@{
+    void OnLanguageChanged();
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

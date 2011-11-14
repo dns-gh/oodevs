@@ -41,7 +41,7 @@ namespace
 // -----------------------------------------------------------------------------
 RemoteControlPage::RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers,
                                       const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
-    : LauncherClientPage( pages, tools::translate( "RemoteControlPage", "Remote control" ), previous, eButtonBack, launcher )
+    : LauncherClientPage( pages, previous, eButtonBack, launcher )
     , controllers_      ( controllers )
     , config_           ( config )
     , fileLoader_       ( fileLoader )
@@ -53,18 +53,18 @@ RemoteControlPage::RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, 
     box->setSpacing( 10 );
     {
         Q3GroupBox* gbox = new Q3GroupBox( 1, Qt::Vertical, box );
-        new QLabel( tools::translate( "RemoteControlPage", "Host:" ), gbox );
-        host_ = new QLineEdit( tools::translate( "RemoteControlPage", "127.0.0.1" ), gbox );
-        new QLabel( tools::translate( "RemoteControlPage", "Port:" ), gbox );
+        hostLabel_ = new QLabel( gbox );
+        host_ = new QLineEdit( "127.0.0.1", gbox );
+        portLabel_ = new QLabel( gbox );
         port_ = new QSpinBox( gbox );
         port_->setMaxValue( 65535 );
         port_->setValue( config.GetLauncherPort() );
-        QPushButton* pButton = new QPushButton( tools::translate( "RemoteControlPage", "Update" ), gbox );
-        connect( pButton, SIGNAL( clicked() ), SLOT( UpdateExerciseList() ) );
+        updateButton_ = new QPushButton( gbox );
+        connect( updateButton_, SIGNAL( clicked() ), SLOT( UpdateExerciseList() ) );
     }
-    QTabWidget* tabWidget = new QTabWidget( box );
+    tabs_ = new QTabWidget( box );
     {
-        Q3HBox* hbox = new Q3HBox( tabWidget );
+        Q3HBox* hbox = new Q3HBox( tabs_ );
         {
             filter_.reset( new ExerciseFilter( *host_, *port_ ) );
             exercises_ = new ExerciseList( hbox, config, fileLoader_, controllers, false, false, false, false );
@@ -75,18 +75,18 @@ RemoteControlPage::RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, 
         {
             Q3VBox* vbox = new Q3VBox( hbox );
             {
-                QPushButton* button = new QPushButton( tools::translate( "RemoteControlPage", "Start game" ), vbox );
-                connect( button, SIGNAL( clicked() ), SLOT( OnStart() ) );
+                gameButton_ = new QPushButton( vbox );
+                connect( gameButton_, SIGNAL( clicked() ), SLOT( OnStart() ) );
             }
             {
-                QPushButton* button = new QPushButton( tools::translate( "RemoteControlPage", "Start replay" ), vbox );
-                connect( button, SIGNAL( clicked() ), SLOT( OnReplay() ) );
+                replayButton_ = new QPushButton( vbox );
+                connect( replayButton_, SIGNAL( clicked() ), SLOT( OnReplay() ) );
             }
         }
-        tabWidget->addTab( hbox, tools::translate( "RemoteControlPage", "Start" ) );
+        tabs_->addTab( hbox, "" ); // Start
     }
     {
-        Q3HBox* hbox = new Q3HBox( tabWidget );
+        Q3HBox* hbox = new Q3HBox( tabs_ );
         {
             runningFilter_.reset( new ExerciseFilter( *host_, *port_, true ) );
             runningExercises_ = new ExerciseList( hbox, config, fileLoader_, controllers, false, false, false, false );
@@ -96,10 +96,10 @@ RemoteControlPage::RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, 
         }
         {
             Q3VBox* vbox = new Q3VBox( hbox );
-            QPushButton* button = new QPushButton( tools::translate( "RemoteControlPage", "Stop running session" ), vbox );
-            connect( button, SIGNAL( clicked() ), SLOT( OnStop() ) );
+            stopButton_ = new QPushButton( vbox );
+            connect( stopButton_, SIGNAL( clicked() ), SLOT( OnStop() ) );
         }
-        tabWidget->addTab( hbox, tools::translate( "RemoteControlPage", "Control" ) );
+        tabs_->addTab( hbox, "" ); // Control
     }
     AddContent( box );
 }
@@ -111,6 +111,23 @@ RemoteControlPage::RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, 
 RemoteControlPage::~RemoteControlPage()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteControlPage::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void RemoteControlPage::OnLanguageChanged()
+{
+    SetTitle( tools::translate( "RemoteControlPage", "Remote control" ) );
+    hostLabel_->setText(    tools::translate( "RemoteControlPage", "Host:" ) );
+    portLabel_->setText(    tools::translate( "RemoteControlPage", "Port:" ) );
+    tabs_->setTabText( 0,   tools::translate( "RemoteControlPage", "Start" ) );
+    tabs_->setTabText( 1,   tools::translate( "RemoteControlPage", "Control" ) );
+    updateButton_->setText( tools::translate( "RemoteControlPage", "Update" ) );
+    gameButton_->setText(   tools::translate( "RemoteControlPage", "Start game" ) );
+    replayButton_->setText( tools::translate( "RemoteControlPage", "Start replay" ) );
+    stopButton_->setText(   tools::translate( "RemoteControlPage", "Stop running session" ) );
 }
 
 // -----------------------------------------------------------------------------

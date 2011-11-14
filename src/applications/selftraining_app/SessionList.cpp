@@ -25,13 +25,13 @@ namespace bfs = boost::filesystem;
 // Created: SBO 2009-12-13
 // -----------------------------------------------------------------------------
 SessionList::SessionList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : Q3VBox( parent )
+    : gui::LanguageChangeObserver_ABC< Q3VBox >( parent )
     , config_( config )
     , fileLoader_( fileLoader )
 {
     setSpacing( 5 );
     {
-        new QLabel( tools::translate( "SessionList", "Session:" ), this );
+        sessionLabel_ = new QLabel( this );
         list_ = new Q3ListBox( this );
         connect( list_, SIGNAL( highlighted( int ) ), this, SLOT( SelectSession( int ) ) );
     }
@@ -50,6 +50,15 @@ SessionList::SessionList( QWidget* parent, const tools::GeneralConfig& config, c
 SessionList::~SessionList()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionList::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void SessionList::OnLanguageChanged()
+{
+    sessionLabel_->setText( tools::translate( "SessionList", "Session:" ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -33,7 +33,7 @@ class ProgressPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ProgressPage( Q3WidgetStack* pages, Page_ABC& previous, const QString& title );
+             ProgressPage( Q3WidgetStack* pages, Page_ABC& previous );
     virtual ~ProgressPage();
     //@}
 
@@ -48,13 +48,6 @@ private slots:
     //! @name Slots
     //@{
     void UpdateProgress();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ProgressPage( const ProgressPage& );            //!< Copy constructor
-    ProgressPage& operator=( const ProgressPage& ); //!< Assignment operator
     //@}
 
 private:

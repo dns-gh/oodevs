@@ -27,54 +27,38 @@
 // Created: JSR 2010-07-13
 // -----------------------------------------------------------------------------
 ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config )
-    : Q3GroupBox( 1, Qt::Vertical, parent )
+    : gui::LanguageChangeObserver_ABC< Q3GroupBox >( 2, Qt::Vertical, parent )
     , page_( page )
     , config_( config )
 {
     setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-    tabs_ = new QTabWidget( this );
-    connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), &page, SLOT( UpdateEditButton( QWidget* ) ) );
+    setMargin( 0 );
+    //Q3GroupBox* importGroup = new Q3GroupBox( 2, Qt::Vertical, this );
+    //importGroup->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
+    //importGroup->setMargin( 0 );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, this );
+    group->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     {
-        Q3GroupBox* importGroup = new Q3GroupBox( 2, Qt::Vertical, parent );
-        importGroup->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-        importGroup->setMargin( 0 );
-        Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, importGroup );
-        group->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-        {
-            QLabel* label = new QLabel( tools::translate( "ImportWidget", "Package to be installed:" ), group );
-            Q3HBox* hBox = new Q3HBox( group );
-            package_ = new QLineEdit( hBox );
-            QPushButton* browseBtn = new QPushButton( tools::translate( "ImportWidget", "Browse..." ), hBox );
-            connect( browseBtn, SIGNAL( clicked() ), SLOT( PackageBrowseClicked() ) );
-        }
-        {
-            QLabel* label = new QLabel( tools::translate( "ImportWidget", "Package content:" ), group );
-            label->setAlignment( Qt::AlignTop );
-            Q3VBox* vBox = new Q3VBox( group );
-            vBox->setSpacing( 5 );
-            packageName_ = new QLineEdit( vBox );
-            packageName_->setReadOnly( true );
-            packageDescription_ = new Q3TextEdit( vBox );
-            packageDescription_->setMaximumHeight( 80 );
-            packageDescription_->setReadOnly( true );
-            packageContent_ = new Q3ListBox( vBox );
-        }
-        packageProgress_ = new Q3ProgressBar( importGroup );
-        packageProgress_->hide();
-        tabs_->addTab( importGroup, tools::translate( "ImportWidget", "Package" ) );
+        packageLabel_ = new QLabel( group );
+        Q3HBox* hBox = new Q3HBox( group );
+        package_ = new QLineEdit( hBox );
+        browseButton_ = new QPushButton( hBox );
+        connect( browseButton_, SIGNAL( clicked() ), SLOT( PackageBrowseClicked() ) );
     }
-    // LTO begin
     {
-        Q3GroupBox* hbox = new Q3GroupBox( 1, Qt::Horizontal, parent );
-        hbox->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-        hbox->setInsideSpacing( 10 );
-        AddModelChoice( hbox );
-        AddInput( hbox );
-        AddOutput( hbox );
-        AddTerrainChoice( hbox );
-        tabs_->addTab( hbox, tools::translate( "ImportWidget", "Scenario" ) );
+        contentLabel_ = new QLabel( group );
+        contentLabel_->setAlignment( Qt::AlignTop );
+        Q3VBox* vBox = new Q3VBox( group );
+        vBox->setSpacing( 5 );
+        packageName_ = new QLineEdit( vBox );
+        packageName_->setReadOnly( true );
+        packageDescription_ = new Q3TextEdit( vBox );
+        packageDescription_->setMaximumHeight( 80 );
+        packageDescription_->setReadOnly( true );
+        packageContent_ = new Q3ListBox( vBox );
     }
-    // LTO end
+    packageProgress_ = new Q3ProgressBar( this );
+    packageProgress_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -84,6 +68,17 @@ ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools
 ImportWidget::~ImportWidget()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ImportWidget::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void ImportWidget::OnLanguageChanged()
+{
+    packageLabel_->setText( tools::translate( "ImportWidget", "Package to be installed:" ) );
+    contentLabel_->setText( tools::translate( "ImportWidget", "Package content:" ) );
+    browseButton_->setText( tools::translate( "ImportWidget", "Browse..." ) );
 }
 
 namespace
@@ -107,30 +102,6 @@ namespace
 // -----------------------------------------------------------------------------
 void ImportWidget::InstallExercise()
 {
-    if( tabs_->currentPageIndex() == 0 ) // OTPAK
-        InstallPackage();
-    else if( tabs_->currentPageIndex() == 1 ) // LTO
-        ImportScenario(); // LTO
-}
-
-// -----------------------------------------------------------------------------
-// Name: ImportWidget::EnableEditButton
-// Created: JSR 2010-07-19
-// -----------------------------------------------------------------------------
-bool ImportWidget::EnableEditButton()
-{
-    if( tabs_->currentPageIndex() == 0 ) // OTPAK
-        return packageContent_->count() != 0;
-    else // LTO
-        return ( !terrain_.isEmpty() && !outputScenario_.isEmpty() && !inputEdit_->text().isEmpty() ); // LTO
-}
-
-// -----------------------------------------------------------------------------
-// Name: ImportWidget::InstallPackage
-// Created: JSR 2010-07-13
-// -----------------------------------------------------------------------------
-void ImportWidget::InstallPackage()
-{
     if( packageContent_->count() )
     {
         zip::izipfile archive( package_->text() );
@@ -147,20 +118,12 @@ void ImportWidget::InstallPackage()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ImportWidget::ImportScenario
-// Created: JSR 2010-07-13
-// LTO
+// Name: ImportWidget::EnableEditButton
+// Created: JSR 2010-07-19
 // -----------------------------------------------------------------------------
-void ImportWidget::ImportScenario()
+bool ImportWidget::EnableEditButton()
 {
-    if( !terrain_.isEmpty() && !outputScenario_.isEmpty() && !inputEdit_->text().isEmpty() )
-    {
-        const QStringList model = QStringList::split( "/", model_ );
-        frontend::CreateExercise( config_, outputScenario_.ascii(), terrain_.ascii(), model.front().ascii(), model.back().ascii() );
-        page_.LaunchScenarioImport( inputEdit_->text(), outputScenario_ );
-        // $$$$ Wait for import to complete, and then launch prepa or have import app launch prepa itself.
-        //page_.LaunchPreparation( outputScenario_ );
-    }
+    return packageContent_->count() != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -194,74 +157,6 @@ bool ImportWidget::ReadPackageContentFile()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ImportWidget::AddModelChoice
-// Created: JSR 2010-07-13
-// LTO
-// -----------------------------------------------------------------------------
-void ImportWidget::AddModelChoice( Q3GroupBox* box )
-{
-    Q3GroupBox* hbox = new Q3GroupBox( 1, Qt::Vertical, box );
-    new QLabel( tools::translate( "ImportWidget", "Model: " ), hbox );
-    QComboBox* editModelList = new QComboBox( hbox );
-    connect( editModelList, SIGNAL( activated ( const QString & ) ), SLOT( OnModelChanged( const QString & ) ) );
-    editModelList->insertItem( tools::translate( "ImportWidget", "Model:" ) );
-    QStringList decisionalModels = frontend::commands::ListModels( config_ );
-    for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
-    {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
-        for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
-            editModelList->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ) );
-    }
-    if( editModelList->count() == 2 )
-        editModelList->setCurrentItem( 1 );
-    editModelList->setShown( editModelList->count() > 2 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ImportWidget::AddOutput
-// Created: JSR 2010-07-13
-// LTO
-// -----------------------------------------------------------------------------
-void ImportWidget::AddOutput( Q3GroupBox* box )
-{
-    Q3HBox* scenarioBox = new Q3HBox( box );
-    QLabel* label = new QLabel( tools::translate( "ImportWidget", "Output Scenario Name: " ), scenarioBox );
-    scenarioBox->setStretchFactor( label, 1 );
-    QLineEdit* editName = new QLineEdit( tools::translate( "ImportWidget", "Scenario Name" ), scenarioBox );
-    scenarioBox->setStretchFactor( editName, 1 );
-    connect( editName, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnOutputName( const QString& ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ImportWidget::AddInput
-// Created: JSR 2010-07-13
-// LTO
-// -----------------------------------------------------------------------------
-void ImportWidget::AddInput( Q3GroupBox* box )
-{
-    Q3HBox* hbox = new Q3HBox( box );
-    new QLabel( tools::translate( "ImportWidget", "Input Scenario: " ), hbox );
-    Q3HBox* browseBox = new Q3HBox( hbox );
-    inputEdit_ = new QLineEdit( browseBox );
-    QPushButton* browseBtn = new QPushButton( tools::translate( "ImportWidget", "Browse..." ), browseBox );
-    connect( browseBtn, SIGNAL( clicked() ), SLOT( OnChangeScenario() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ImportWidget::AddTerrainChoice
-// Created: JSR 2010-07-13
-// LTO
-// -----------------------------------------------------------------------------
-void ImportWidget::AddTerrainChoice( Q3GroupBox* box )
-{
-    QComboBox* editTerrainList = new QComboBox( box );
-    connect( editTerrainList, SIGNAL( activated( const QString& ) ), SLOT( OnTerrainChanged( const QString& ) ) );
-    editTerrainList->clear();
-    editTerrainList->insertItem( tools::translate( "ImportWidget", "Terrain:" ) );
-    editTerrainList->insertStringList( frontend::commands::ListTerrains( config_ ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ImportWidget::PackageBrowseClicked
 // Created: JSR 2010-07-13
 // -----------------------------------------------------------------------------
@@ -269,51 +164,6 @@ void ImportWidget::PackageBrowseClicked()
 {
     const QString filename = Q3FileDialog::getOpenFileName( "", "Officer Training packages (*.otpak)", this, "", tools::translate( "ImportWidget", "Select a package" ) );
     SelectPackage( filename );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ImportWidget::OnModelChanged
-// Created: JSR 2010-07-13
-// LTO
-// -----------------------------------------------------------------------------
-void ImportWidget::OnModelChanged( const QString & model )
-{
-    model_ = model;
-    page_.UpdateEditButton();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ImportWidget::OnTerrainChanged
-// Created: JSR 2010-07-13
-// LTO
-// -----------------------------------------------------------------------------
-void ImportWidget::OnTerrainChanged( const QString& terrain )
-{
-    terrain_ = terrain;
-    page_.UpdateEditButton();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ImportWidget::OnOutputName
-// Created: JSR 2010-07-13
-// LTO
-// -----------------------------------------------------------------------------
-void ImportWidget::OnOutputName( const QString& scenario )
-{
-    outputScenario_ = scenario;
-    page_.UpdateEditButton();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ImportWidget::OnChangeScenario
-// Created: JSR 2010-07-13
-// LTO
-// -----------------------------------------------------------------------------
-void ImportWidget::OnChangeScenario()
-{
-    const QString filename = Q3FileDialog::getOpenFileName( QString::null, "*.xml", this );
-    inputEdit_->setText( filename );
-    page_.UpdateEditButton();
 }
 
 // -----------------------------------------------------------------------------

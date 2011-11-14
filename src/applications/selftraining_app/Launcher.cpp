@@ -87,3 +87,12 @@ std::string Launcher::GetLastError() const
 {
     return launcher_->GetLastError();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Launcher::SetRootDir
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void Launcher::SetRootDir( const std::string& directory )
+{
+    launcher_->SetRootDir( directory );
+}

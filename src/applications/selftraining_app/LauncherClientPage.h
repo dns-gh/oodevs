@@ -31,7 +31,7 @@ class LauncherClientPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             LauncherClientPage( Q3WidgetStack* pages, const QString& title, Page_ABC& previous, unsigned short buttonFlags, frontend::LauncherClient& launcher );
+             LauncherClientPage( Q3WidgetStack* pages, Page_ABC& previous, unsigned short buttonFlags, frontend::LauncherClient& launcher );
     virtual ~LauncherClientPage();
     //@}
 
@@ -41,12 +41,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LauncherClientPage( const LauncherClientPage& );            //!< Copy constructor
-    LauncherClientPage& operator=( const LauncherClientPage& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void OnConnectionSucceeded();

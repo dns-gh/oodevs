@@ -217,6 +217,13 @@
     </message>
 </context>
 <context>
+    <name>PluginSetting</name>
+    <message>
+        <source>Select a file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RandomPluginConfigPanel</name>
     <message>
         <source>Random Generator</source>

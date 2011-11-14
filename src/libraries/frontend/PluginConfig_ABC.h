@@ -11,6 +11,7 @@
 #define __PluginConfig_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include "clients_gui/LanguageChangeObserver_ABC.h"
 #pragma warning( push, 0 )
 #include <Qt3Support/q3hbox.h>
 #pragma warning( pop )
@@ -24,13 +25,13 @@ namespace frontend
 */
 // Created: SBO 2009-12-09
 // =============================================================================
-class PluginConfig_ABC : private boost::noncopyable
-                       , public Q3HBox
+class PluginConfig_ABC : public gui::LanguageChangeObserver_ABC< Q3HBox >
+                       , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PluginConfig_ABC( QWidget* parent ) : Q3HBox( parent ) {}
+    explicit PluginConfig_ABC( QWidget* parent ) : gui::LanguageChangeObserver_ABC< Q3HBox >( parent ) {}
     virtual ~PluginConfig_ABC() {}
     //@}
 

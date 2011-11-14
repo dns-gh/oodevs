@@ -43,6 +43,7 @@ public:
     //@{
     void Initialize( int argc, char** argv );
     bool Update();
+    void SetRootDir( const std::string& directory );
     //@}
 
     //! @name Accessors

@@ -106,58 +106,49 @@ namespace
         }
         return result;
     }
-
-    QString MakeTitle( const QString& title )
-    {
-        return title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title;
-    }
-    QString LocalizedTitle( const QString& title )
-    {
-        return tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( MakeTitle( title ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioLauncherPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter, const QString& title /* = ""*/ )
-    : LauncherClientPage( pages, MakeTitle( title ), previous, eButtonBack | eButtonStart, launcher )
+ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
+    : LauncherClientPage( pages, previous, eButtonBack | eButtonStart, launcher )
     , config_( config )
     , fileLoader_( fileLoader )
     , controllers_( controllers )
     , interpreter_( interpreter )
-    , progressPage_( new ProgressPage( pages, *this, LocalizedTitle( title ) ) )
+    , progressPage_( new ProgressPage( pages, *this ) )
     , exercise_( 0 )
 {
     Q3VBox* box = new Q3VBox( this );
     box->setMargin( 5 );
     {
-        QTabWidget* tabs = new QTabWidget( box );
+        tabs_ = new QTabWidget( box );
         {
-            exercises_ = new ExerciseList( tabs, config_, fileLoader_, controllers, true, true, true, false );
+            exercises_ = new ExerciseList( tabs_, config_, fileLoader_, controllers, true, true, true, false );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
-            tabs->addTab( exercises_, tools::translate( "ScenarioLauncherPage", "General" ) );
+            tabs_->addTab( exercises_, "" ); // General
         }
         {
-            Q3GroupBox* configBox = new Q3GroupBox( 1, Qt::Vertical, tabs );
+            Q3GroupBox* configBox = new Q3GroupBox( 1, Qt::Vertical, tabs_ );
             configBox->setMargin( 5 );
             configBox->setFrameShape( Q3GroupBox::NoFrame );
-            QTabWidget* config = new QTabWidget( configBox );
-            tabs->addTab( configBox, tools::translate( "ScenarioLauncherPage", "Settings" ) );
+            configTabs_ = new QTabWidget( configBox );
+            tabs_->addTab( configBox, "" ); // Settings
             {
-                frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >( config );
+                frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >();
                 connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), panel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
                 connect( exercises_, SIGNAL( ClearSelection() ), panel, SLOT( ClearSelection() ) );
                 connect( panel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
-                AddPlugin< frontend::SessionConfigPanel >( config );
-                AddPlugin< frontend::RandomPluginConfigPanel >( config );
-                AddPlugin< frontend::AdvancedConfigPanel >( config );
+                AddPlugin< frontend::SessionConfigPanel >();
+                AddPlugin< frontend::RandomPluginConfigPanel >();
+                AddPlugin< frontend::AdvancedConfigPanel >();
             }
         }
         {
-            frontend::PluginConfigBuilder builder( config_, tabs );
+            frontend::PluginConfigBuilder builder( config_, tabs_ );
             plugins_.push_back( builder.BuildFromXml()
                                        .Build< frontend::EdxlHavePluginConfigPanel >()
                                        .Finalize() );
@@ -168,12 +159,44 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
 }
 
 // -----------------------------------------------------------------------------
+// Name: ScenarioLauncherPage::AddPlugin
+// Created: SBO 2009-12-09
+// -----------------------------------------------------------------------------
+template< typename T >
+T* ScenarioLauncherPage::AddPlugin()
+{
+    std::auto_ptr< T > plugin( new T( configTabs_, config_ ) );
+    if( plugin.get() && plugin->IsAvailable() )
+    {
+        configTabs_->addTab( plugin.get(), "" );
+        plugins_.push_back( plugin.get() );
+        return plugin.release();
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ScenarioLauncherPage destructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 ScenarioLauncherPage::~ScenarioLauncherPage()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioLauncherPage::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void ScenarioLauncherPage::OnLanguageChanged()
+{
+    tabs_->setTabText( 0, tools::translate( "ScenarioLauncherPage", "General" ) );
+    tabs_->setTabText( 1, tools::translate( "ScenarioLauncherPage", "Settings" ) );
+    SetTitle( tools::translate( "ScenarioLauncherPage", "Scenario" ) ); // $$$$ ABR 2011-11-10: FIXME
+    progressPage_->SetTitle( tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( GetTitle() ) );
+    for( int i = 0; i < configTabs_->count() && i < plugins_.size(); ++i )
+        configTabs_->setTabText( i, plugins_[ i ]->GetName() );
+    LauncherClientPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -312,21 +335,4 @@ void ScenarioLauncherPage::OnSelectCheckpoint( const QString& session, const QSt
 {
     session_ = session;
     checkpoint_ = checkpoint;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioLauncherPage::AddPlugin
-// Created: SBO 2009-12-09
-// -----------------------------------------------------------------------------
-template< typename T >
-T* ScenarioLauncherPage::AddPlugin( QTabWidget* tabs )
-{
-    std::auto_ptr< T > plugin( new T( tabs, config_ ) );
-    if( plugin.get() && plugin->IsAvailable() )
-    {
-        tabs->addTab( plugin.get(), plugin->GetName() );
-        plugins_.push_back( plugin.get() );
-        return plugin.release();
-    }
-    return 0;
 }

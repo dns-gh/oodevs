@@ -10,6 +10,8 @@
 #ifndef __ExerciseList_h_
 #define __ExerciseList_h_
 
+#include <boost/noncopyable.hpp>
+#include "clients_gui/LanguageChangeObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace frontend
@@ -39,9 +41,10 @@ class ProfileList;
 */
 // Created: RDS 2008-08-27
 // =============================================================================
-class ExerciseList : public Q3VBox
+class ExerciseList : public gui::LanguageChangeObserver_ABC< Q3VBox >
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< frontend::Exercise_ABC >
+                   , private boost::noncopyable
 {
     Q_OBJECT;
 
@@ -80,18 +83,12 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ExerciseList( const ExerciseList& );            //!< Copy constructor
-    ExerciseList& operator=( const ExerciseList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const frontend::Exercise_ABC& exercise );
     virtual void NotifyUpdated( const frontend::Exercise_ABC& exercise );
     virtual void NotifyDeleted( const frontend::Exercise_ABC& exercise );
-
+    virtual void OnLanguageChanged();
     virtual void customEvent( QCustomEvent* e );
     const frontend::Exercise_ABC* GetSelectedExercise() const;
     QString GetExerciseDisplayName( const QString& exercise ) const;
@@ -112,6 +109,8 @@ private:
     const frontend::ExerciseFilter_ABC* filter_;
     std::auto_ptr< frontend::ExerciseFilter_ABC > defaultFilter_;
     ExerciseProperties* properties_;
+    QLabel* exerciseLabel_;
+    QLabel* profileLabel_;
  //@}
 };
 

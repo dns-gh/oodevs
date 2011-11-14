@@ -30,22 +30,16 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    BattleCenterLauncherPage( const BattleCenterLauncherPage& );            //!< Copy constructor
-    BattleCenterLauncherPage& operator=( const BattleCenterLauncherPage& ); //!< Assignment operator
+    virtual void OnLanguageChanged();
+    virtual std::string BuildSessionName() const;
     //@}
 
-
- private slots:
+private slots:
     //! @name Slots
     //@{
     virtual void OnStart();
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual std::string BuildSessionName() const;
     //@}
 };
 

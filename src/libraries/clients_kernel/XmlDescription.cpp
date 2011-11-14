@@ -15,16 +15,6 @@
 
 using namespace kernel;
 
-//namespace
-//{
-//    std::string GetCurrentLanguage()
-//    {
-//        QSettings settings;
-//        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-//        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
-//    }
-//}
-//
 // -----------------------------------------------------------------------------
 // Name: XmlDescription constructor
 // Created: ABR 2011-09-29

@@ -20,6 +20,7 @@ namespace tools
 class QLineEdit;
 class QSpinBox;
 class Q3TextEdit;
+class QLabel;
 
 namespace frontend
 {
@@ -40,6 +41,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void OnLanguageChanged();
     virtual QString GetName() const;
     virtual void Commit( const std::string& exercise, const std::string& session );
     //@}
@@ -48,9 +50,12 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QLineEdit* sessionName_;
-    Q3TextEdit* sessionComment_;
-    QSpinBox* exerciseNumber_;
+    QLineEdit*                  sessionName_;
+    Q3TextEdit*                 sessionComment_;
+    QSpinBox*                   exerciseNumber_;
+    QLabel*                     nameLabel_;
+    QLabel*                     commentLabel_;
+    QLabel*                     exerciseLabel_;
     //@}
 };
 }

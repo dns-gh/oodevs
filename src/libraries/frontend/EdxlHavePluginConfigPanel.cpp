@@ -32,38 +32,38 @@ EdxlHavePluginConfigPanel::EdxlHavePluginConfigPanel( QWidget* parent, const too
     : PluginConfig_ABC( parent )
     , config_( config )
 {
-    box_ = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "EdxlHavePluginConfigPanel", "Enable EDXL-HAVE exchange" ), this );
-    box_->setCheckable( true );
-    box_->setChecked( false );
+    mainBox_ = new Q3GroupBox( 1, Qt::Horizontal, this );
+    mainBox_->setCheckable( true );
+    mainBox_->setChecked( false );
     {
-        Q3HBox* box = new Q3HBox( box_ );
-        new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Host: " ), box );
+        Q3HBox* box = new Q3HBox( mainBox_ );
+        hostLabel_ = new QLabel( box );
         host_ = new QLineEdit( "www.ewaphoenix.com", box );
     }
     {
-        Q3HBox* box = new Q3HBox( box_ );
-        new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Use SSL: " ), box );
+        Q3HBox* box = new Q3HBox( mainBox_ );
+        sslLabel_ = new QLabel( box );
         ssl_ = new QCheckBox( box );
         ssl_->setChecked( true );
     }
     {
-        Q3HBox* box = new Q3HBox( box_ );
-        new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Log: " ), box );
+        Q3HBox* box = new Q3HBox( mainBox_ );
+        logLabel_ = new QLabel( box );
         log_ = new QCheckBox( box );
         log_->setChecked( true );
     }
     {
-        Q3GroupBox* services = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "EdxlHavePluginConfigPanel", "Services configuration:" ), box_ );
+        servicesBox_ = new Q3GroupBox( 2, Qt::Horizontal, mainBox_ );
         {
-            new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Initialization service: " ), services );
-            initializeServiceURI_ = new QLineEdit( "/EWAPhoenix-BedTracking/XMLReceive.php?message=initialize", services );
+            initLabel_ = new QLabel( servicesBox_ );
+            initializeServiceURI_ = new QLineEdit( "/EWAPhoenix-BedTracking/XMLReceive.php?message=initialize", servicesBox_ );
         }
         {
-            new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Update service: " ), services );
-            updateServiceURI_ = new QLineEdit( "/EWAPhoenix-BedTracking/XMLReceive.php?message=update", services );
+            updateLabel_ = new QLabel( servicesBox_ );
+            updateServiceURI_ = new QLineEdit( "/EWAPhoenix-BedTracking/XMLReceive.php?message=update", servicesBox_ );
 
-            new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Frequency: " ), services );
-            frequency_ = new Q3TimeEdit( services );
+            frequencyLabel_ = new QLabel( servicesBox_ );
+            frequency_ = new Q3TimeEdit( servicesBox_ );
             frequency_->setDisplay ( Q3TimeEdit::Hours | Q3TimeEdit::Minutes | Q3TimeEdit::Seconds  );
             frequency_->setTime( QTime().addSecs( 120 ) );
         }
@@ -77,6 +77,23 @@ EdxlHavePluginConfigPanel::EdxlHavePluginConfigPanel( QWidget* parent, const too
 EdxlHavePluginConfigPanel::~EdxlHavePluginConfigPanel()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EdxlHavePluginConfigPanel::OnLanguageChanged
+// Created: ABR 2011-11-10
+// -----------------------------------------------------------------------------
+void EdxlHavePluginConfigPanel::OnLanguageChanged()
+{
+    mainBox_->setTitle( tools::translate( "EdxlHavePluginConfigPanel", "Enable EDXL-HAVE exchange" ) );
+    hostLabel_->setText( tools::translate( "EdxlHavePluginConfigPanel", "Host: " ) );
+    sslLabel_->setText( tools::translate( "EdxlHavePluginConfigPanel", "Use SSL: " ) );
+    logLabel_->setText( tools::translate( "EdxlHavePluginConfigPanel", "Log: " ) );
+
+    servicesBox_->setTitle( tools::translate( "EdxlHavePluginConfigPanel", "Services configuration:" ) );
+    initLabel_->setText( tools::translate( "EdxlHavePluginConfigPanel", "Initialization service: " ) );
+    updateLabel_->setText( tools::translate( "EdxlHavePluginConfigPanel", "Update service: " ) );
+    frequencyLabel_->setText( tools::translate( "EdxlHavePluginConfigPanel", "Frequency: " ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +113,7 @@ void EdxlHavePluginConfigPanel::Commit( const std::string& exercise, const std::
 {
     boost::filesystem::path exerciceDir( config_.GetExerciseDir( exercise ) );
     boost::filesystem::path file = exerciceDir / "edxl.ini";
-    if( box_->isChecked() )
+    if( mainBox_->isChecked() )
     {
         std::ofstream of( file.string().c_str() );
         of << "edxl.host=" << host_->text().ascii() << std::endl

@@ -504,9 +504,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionVisitor_ABC.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Iterator.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\objecticons.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>

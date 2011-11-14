@@ -38,6 +38,7 @@ public:
     static std::string BuildResourceChildFile( const std::string& file );
 
     std::string GetRootDir() const;
+    void SetRootDir( const std::string& directory );
     std::string BuildPluginDirectory( const std::string& plugin ) const;
 
     std::string GetExercisesDir() const;
@@ -69,6 +70,7 @@ protected:
     //! @name Operations
     //@{
     static void ResolveRelativePath( const std::string& root, std::string& path );
+    static void ResolveNewRelativePath( const std::string& oldRoot, const std::string& newRoot, std::string& path );
     void LoadExercise( const std::string& file );
     //@}
 

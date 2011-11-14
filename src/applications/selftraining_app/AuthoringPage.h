@@ -38,10 +38,11 @@ public:
     virtual ~AuthoringPage();
     //@}
 
-public:
+private:
     //! @name Helpers
     //@{
-    virtual void show();
+    virtual void OnLanguageChanged();
+    virtual void Update();
     //@}
 
 private slots:
@@ -57,9 +58,9 @@ private:
     const Config& config_;
     kernel::Controllers& controllers_;
     ProgressPage* progressPage_;
-    MenuButton* authoring_;
-    MenuButton* terrainGen_;
-    MenuButton* terrainWorkshop_;
+    QPushButton* authoring_;
+    QPushButton* terrainGen_;
+    QPushButton* terrainWorkshop_;
     //@}
 };
 

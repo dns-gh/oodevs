@@ -53,7 +53,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers
-                 , const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter, const QString& title = "" );
+                 , const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter );
     virtual ~ScenarioLauncherPage();
     //@}
 
@@ -66,21 +66,15 @@ private slots:
     void OnSelectCheckpoint( const QString& session, const QString& checkpoint );
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    ScenarioLauncherPage( const ScenarioLauncherPage& );            //!< Copy constructor
-    ScenarioLauncherPage& operator=( const ScenarioLauncherPage& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Helpers
     //@{
+    virtual void OnLanguageChanged();
     virtual void Update();
     virtual std::string BuildSessionName() const;
     void CreateSession( const QString& exercise, const QString& session );
     template< typename T >
-    T* AddPlugin( QTabWidget* tabs );
+    T* AddPlugin();
     bool CanBeStarted() const;
     //@}
 
@@ -103,6 +97,8 @@ protected:
     QString                       session_;
     QString                       checkpoint_;
     T_Plugins                     plugins_;
+    QTabWidget*                   tabs_;
+    QTabWidget*                   configTabs_;
     //@}
 };
 

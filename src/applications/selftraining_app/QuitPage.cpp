@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "QuitPage.h"
 #include "moc_QuitPage.cpp"
+#include "MenuButton.h"
 #include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -19,8 +20,8 @@
 QuitPage::QuitPage( Q3WidgetStack* pages, Page_ABC& previous )
     : MenuPage( pages, *this, 0, tools::translate( "QuitPage", "Please confirm" )  )
 {
-    AddLink( tools::translate( "QuitPage", "Yes" ), *this, " ", SLOT( OnQuit() ) );
-    AddLink( tools::translate( "QuitPage", "No" ) , previous );
+    yesButton_ = AddLink( *this, SLOT( OnQuit() ) );
+    noButton_ = AddLink( previous );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,6 +31,17 @@ QuitPage::QuitPage( Q3WidgetStack* pages, Page_ABC& previous )
 QuitPage::~QuitPage()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: QuitPage::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void QuitPage::OnLanguageChanged()
+{
+    SetTextAndSubtitle( yesButton_, tools::translate( "QuitPage", "Yes" ) );
+    SetTextAndSubtitle( noButton_, tools::translate( "QuitPage", "No" ) );
+    MenuPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------

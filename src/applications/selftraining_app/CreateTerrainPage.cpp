@@ -24,30 +24,23 @@
 // Created: JSR 2010-06-11
 // -----------------------------------------------------------------------------
 CreateTerrainPage::CreateTerrainPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config )
-    : ContentPage( pages, tools::translate( "CreateTerrainPage", "Create Terrain" ), previous, eButtonBack | eButtonStart )
-    , config_( config )
-    , controllers_( controllers )
-    , progressPage_( new ProgressPage( pages, *this, tools::translate( "CreateTerrainPage", "Starting terrain creation" ) ) )
+    : ContentPage( pages, previous, eButtonBack | eButtonStart )
+    , config_      ( config )
+    , controllers_ ( controllers )
+    , progressPage_( new ProgressPage( pages, *this ) )
+    , available_   ( frontend::CreateTerrain::IsAvailable() )
 {
-    const bool available = frontend::CreateTerrain::IsAvailable();
-
     Q3VBox* mainBox = new Q3VBox( this );
     mainBox->setMargin( 5 );
     {
         Q3GroupBox* hbox = new Q3GroupBox( 1, Qt::Vertical, mainBox );
-        new QLabel( tools::translate( "CreateTerrainPage", "Create new terrain:" ), hbox );
-        editName_ = new QLineEdit( tools::translate( "CreateTerrainPage", "Enter terrain name" ), hbox );
+        terrainLabel_ = new QLabel( hbox );
+        editName_ = new QLineEdit( hbox );
         connect( editName_, SIGNAL( textChanged( const QString& ) ), SLOT( EditNameChanged( const QString& ) ) );
-
-        hbox->setEnabled( available );
-        EnableButton( eButtonStart, available );
-
-        label_ = new QLabel( mainBox );
+        hbox->setEnabled( available_ );
+        EnableButton( eButtonStart, available_ );
+        errorLabel_ = new QLabel( mainBox );
     }
-
-    if( !available )
-        label_->setText( tools::translate( "CreateTerrainPage", "Terrain generation tool was not found on your system." ) );
-
     AddContent( mainBox );
     EnableButton( eButtonStart, false );
     Update();
@@ -60,6 +53,21 @@ CreateTerrainPage::CreateTerrainPage( Q3WidgetStack* pages, Page_ABC& previous, 
 CreateTerrainPage::~CreateTerrainPage()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateTerrainPage::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void CreateTerrainPage::OnLanguageChanged()
+{
+    SetTitle( tools::translate( "CreateTerrainPage", "Create Terrain" ) );
+    progressPage_->SetTitle( tools::translate( "CreateTerrainPage", "Starting terrain creation" ) );
+    terrainLabel_->setText( tools::translate( "CreateTerrainPage", "Create new terrain:" ) );
+    editName_->setPlaceholderText( tools::translate( "CreateTerrainPage", "Enter terrain name" ) );
+    if( !available_ )
+        errorLabel_->setText( tools::translate( "CreateTerrainPage", "Terrain generation tool was not found on your system." ) );
+    ContentPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -86,10 +94,10 @@ void CreateTerrainPage::OnStart()
 // -----------------------------------------------------------------------------
 void CreateTerrainPage::EditNameChanged( const QString& name )
 {
-    if( name.isEmpty() || name == tools::translate( "CreateTerrainPage", "Enter terrain name" ) )
+    if( name.isEmpty() )
     {
         EnableButton( eButtonStart, false );
-        label_->setText( "" );
+        errorLabel_->setText( "" );
     }
     else
     {
@@ -103,9 +111,9 @@ void CreateTerrainPage::EditNameChanged( const QString& name )
 
         EnableButton( eButtonStart, !exists );
         if( exists )
-            label_->setText( tools::translate( "CreateTerrainPage", "A terrain with this name already exists." ) );
+            errorLabel_->setText( tools::translate( "CreateTerrainPage", "A terrain with this name already exists." ) );
         else
-            label_->setText( tools::translate( "CreateTerrainPage", "The new terrain will be created in:\n%1" ).arg( config_.GetTerrainDir( name.ascii() ).c_str() ) );
+            errorLabel_->setText( tools::translate( "CreateTerrainPage", "The new terrain will be created in:\n%1" ).arg( config_.GetTerrainDir( name.ascii() ).c_str() ) );
     }
 }
 
@@ -115,5 +123,6 @@ void CreateTerrainPage::EditNameChanged( const QString& name )
 // -----------------------------------------------------------------------------
 void CreateTerrainPage::Update()
 {
+    editName_->clear();
     existingTerrains_ = frontend::commands::ListTerrains( config_ );
 }

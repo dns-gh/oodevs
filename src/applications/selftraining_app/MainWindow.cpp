@@ -14,6 +14,7 @@
 #include "HomePage.h"
 #include "LinkInterpreter.h"
 #include "MessageDialog.h"
+#include "SessionTray.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
@@ -24,20 +25,22 @@
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient )
-    : Q3MainWindow( 0, 0, Qt::WDestructiveClose )
+    : gui::LanguageChangeObserver_ABC< Q3MainWindow >()
     , interpreter_( new LinkInterpreter( this, controllers ) )
+    , sessionTray_( 0 )
 {
-    setCaption( tools::translate( "Application", "SWORD" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
+    setWindowFlags( Qt::WDestructiveClose );
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     setFixedWidth( 800 );
     setFixedHeight( 600 );
     SetStyle();
     pages_ = new Q3WidgetStack( this );
-    HomePage* home = new HomePage( pages_, config, fileLoader, controllers, launcherClient, *interpreter_ );
+    HomePage* home = new HomePage( this, pages_, config, fileLoader, controllers, launcherClient, *interpreter_ );
     setCentralWidget( pages_ );
     CenterWindow();
     if( !config.GetPackageFile().empty() )
         home->InstallPackage( config.GetPackageFile().c_str() );
+    sessionTray_.reset( new SessionTray( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,6 +50,17 @@ MainWindow::MainWindow( Config& config, const tools::Loader_ABC& fileLoader, ker
 MainWindow::~MainWindow()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void MainWindow::OnLanguageChanged()
+{
+    setCaption( tools::translate( "Application", "SWORD" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
+    if( sessionTray_.get() )
+        sessionTray_->OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------

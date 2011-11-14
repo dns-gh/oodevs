@@ -26,7 +26,7 @@
 // Created: SBO 2008-10-15
 // -----------------------------------------------------------------------------
 BattleCenterLauncherPage::BattleCenterLauncherPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
-    : ScenarioLauncherPage( pages, previous, controllers, config, fileLoader, launcher, interpreter, tools::translate( "BattleCenterLauncherPage", "Multiplayer session" ) )
+    : ScenarioLauncherPage( pages, previous, controllers, config, fileLoader, launcher, interpreter )
 {
     // NOTHING
 }
@@ -38,6 +38,17 @@ BattleCenterLauncherPage::BattleCenterLauncherPage( Q3WidgetStack* pages, Page_A
 BattleCenterLauncherPage::~BattleCenterLauncherPage()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: BattleCenterLauncherPage::OnLanguageChanged
+// Created: ABR 2011-11-09
+// -----------------------------------------------------------------------------
+void BattleCenterLauncherPage::OnLanguageChanged()
+{
+    ScenarioLauncherPage::OnLanguageChanged();
+    SetTitle( tools::translate( "BattleCenterLauncherPage", "Multiplayer session" ) );
+    progressPage_->SetTitle( tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( GetTitle() ) );
 }
 
 // -----------------------------------------------------------------------------
