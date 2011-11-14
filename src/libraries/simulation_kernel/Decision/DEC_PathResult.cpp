@@ -75,8 +75,14 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
     assert( !_isnan( itNextPoint->rX_ ) );
     assert( !_isnan( itNextPoint->rY_ ) );
 
-    if( forceNextPoint && ( itNextPoint != (--pathPoints.end()) ) )
-        ++itNextPoint;
+    if( forceNextPoint )
+    {
+        if( itNextPoint != (--pathPoints.end()) )
+            ++itNextPoint;
+        else
+            return posToTest;
+    }
+
     return *itNextPoint;
 }
 

@@ -54,7 +54,7 @@ public:
 private:
     //! @name Tools
     //@{
-    void CreateJoiningPath( bool forceNextPoint );
+    bool CreateJoiningPath( bool forceNextPoint );
     void DestroyJoiningPath();
     void AvoidObstacles();
     bool UpdateObjectsToAvoid();

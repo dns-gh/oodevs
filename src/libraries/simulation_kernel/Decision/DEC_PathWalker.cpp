@@ -35,6 +35,7 @@ DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
     , bHasMoved_         ( false )
     , bFuelReportSent_   ( false )
     , bTerrainReportSent_( false )
+    , pathSet_           ( eFinished )
 {
     // NOTHING
 }
@@ -259,13 +260,19 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                 if( rSpeedWithinObject == 0. )
                 {
                     rCurrentSpeed_ = 0;
-                    vNewPos_ = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
+                    vNewPos_ = itCurMoveStep->vPos_;
+                    do
+                    {
+                        vNewPos_ += vNewDir_ * nDistanceBeforeBlockingObject;
+                    } while( object.IsInside( vNewPos_ ) );
+
                     movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07:
                     if( !bTerrainReportSent_ )
                     {
                         movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
                         bTerrainReportSent_ = true;
                     }
+                    pathSet_ = eBlockedByObject;
                     return false;
                 }
             }
@@ -284,13 +291,19 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
             if( rMaxSpeedForStep == 0. )
             {
                 rCurrentSpeed_ = 0;
-                vNewPos_ = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
+                vNewPos_ = itCurMoveStep->vPos_;
+                do
+                {
+                    vNewPos_ += vNewDir_ * nDistanceBeforeBlockingObject;
+                } while( object.IsInside( vNewPos_ ) );
+
                 movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: FOIREUX
                 if( !bTerrainReportSent_ )
                 {
                     movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
                     bTerrainReportSent_ = true;
                 }
+                pathSet_ = eBlockedByObject;
                 return false;
             }
         }
@@ -376,8 +389,8 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
         return eRunning;
     }
 
-	DEC_PathWalker::E_ReturnCode pathSet = SetCurrentPath( pPath );
-    if( pathSet == eItineraireMustBeJoined )
+	pathSet_ = SetCurrentPath( pPath );
+    if( pathSet_ == eItineraireMustBeJoined )
         return eItineraireMustBeJoined;
 
     bHasMoved_ = true;
@@ -421,7 +434,7 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
         if( !TryToMoveTo( *pPath, ( *itNextPathPoint_ )->GetPos(), rTimeRemaining ) )
         {
             rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
-            return pathSet;
+            return pathSet_;
         }
         bTerrainReportSent_ = false;
 
@@ -429,12 +442,12 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
 
         bool bStopOnInterestingPoint = GoToNextNavPoint( *pPath );
         if( bStopOnInterestingPoint )
-            return pathSet;
+            return pathSet_;
 
         if( itNextPathPoint_ == pPath->GetResult().end() )
         {
             rCurrentSpeed_ = 0;
-            return ( pathSet != ePartialPath ) ? eFinished : pathSet;
+            return ( pathSet_ != ePartialPath ) ? eFinished : pathSet_;
         }
 
         ComputeCurrentSpeed();
@@ -442,7 +455,7 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
         if( ( *itNextPathPoint_ )->GetPos() != vNewPos_ )
             vNewDir_ = ( ( *itNextPathPoint_ )->GetPos() - vNewPos_ ).Normalize();
     }
-    return pathSet;
+    return pathSet_;
 }
 
 // -----------------------------------------------------------------------------

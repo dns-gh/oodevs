@@ -70,14 +70,18 @@ void PHY_ActionMove::StopAction()
 // Name: PHY_ActionMove::CreateJoiningPath
 // Created: NLD 2004-09-29
 // -----------------------------------------------------------------------------
-void PHY_ActionMove::CreateJoiningPath( bool forceNextPoint )
+bool PHY_ActionMove::CreateJoiningPath( bool forceNextPoint )
 {
     assert( pMainPath_.get() );
     assert( pMainPath_->GetState() != DEC_Path_ABC::eComputing );
     assert( !pJoiningPath_.get() );
     const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    pJoiningPath_.reset( new DEC_Agent_Path( pion_, pMainPath_->GetPointOnPathCloseTo( vPionPos, forceNextPoint ), pMainPath_->GetPathType() ) );
+    const MT_Vector2D& vTestPos = pMainPath_->GetPointOnPathCloseTo( vPionPos, forceNextPoint );
+    if( vPionPos == vTestPos )
+        return false;
+    pJoiningPath_.reset( new DEC_Agent_Path( pion_, vTestPos, pMainPath_->GetPathType() ) );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pJoiningPath_ );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -214,33 +218,36 @@ void PHY_ActionMove::Execute()
     {
         role_.MoveSuspended( pCurrentPath );
         DestroyJoiningPath();
-        CreateJoiningPath ( forceNextPoint_ );
-        pCurrentPath = pJoiningPath_;
-        nReturn = role_.Move( pCurrentPath );
+        if( CreateJoiningPath( forceNextPoint_ ) )
+        {
+            pCurrentPath = pJoiningPath_;
+            nReturn = role_.Move( pCurrentPath );
+        }
+        else
+        {
+            assert( pMainPath_.get() );
+            const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+            boost::shared_ptr< DEC_Agent_Path > pNewMainPath( new DEC_Agent_Path( pion_, vPionPos, pMainPath_->GetPathType() ) );
+            MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pNewMainPath );
+
+            role_.MoveCanceled( pMainPath_ );
+            pMainPath_->Cancel();
+            pMainPath_ = pNewMainPath;
+        }
     }
     forceNextPoint_ = false;
 
     if( pCurrentPath == pJoiningPath_ )
     {
-        if( nReturn == DEC_PathWalker::eFinished )
+        if( nReturn == DEC_PathWalker::eFinished || nReturn == DEC_PathWalker::eBlockedByObject )
         {
             DestroyJoiningPath();
             nReturn = DEC_PathWalker::eRunning;
         }
         else if( nReturn == DEC_PathWalker::ePartialPath )
         {
-            const DEC_PathResult::T_PathPointList& pathPoints = pCurrentPath->GetResult();
-            if( pathPoints.size() == 2 && pathPoints.front()->GetPos().SquareDistance( pathPoints.back()->GetPos() ) < 0.001 )
-            {
-                forceNextPoint_ = true;
-                DestroyJoiningPath();
-                nReturn = DEC_PathWalker::eRunning;
-            }
-            else
-            {
-                DestroyJoiningPath();
-                nReturn = DEC_PathWalker::eRunning;
-            }
+            forceNextPoint_ = true;
+            DestroyJoiningPath();
         }
     }
 
