@@ -32,6 +32,7 @@ TemplateListView::TemplateListView( QWidget* parent, AgentsModel& agents, Format
     , types_     ( types )
 {
     addColumn( tr( "Template" ) );
+    setResizeMode( Q3ListView::AllColumns );
     header()->hide();
     setSorting( -1 );
 
