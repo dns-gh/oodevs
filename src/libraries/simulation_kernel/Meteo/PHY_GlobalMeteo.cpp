@@ -19,8 +19,8 @@
 // Name: PHY_GlobalMeteo constructor
 // Created: HBD 2010-03-25
 // -----------------------------------------------------------------------------
-PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, unsigned int timeStep )
-    : Meteo( id, xis, &light, timeStep )
+PHY_GlobalMeteo::PHY_GlobalMeteo( xml::xistream& xis, const weather::PHY_Lighting& light, unsigned int timeStep )
+    : Meteo( 1, xis, &light, timeStep )
 {
     // NOTHING
 }
