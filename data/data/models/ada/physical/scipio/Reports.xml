@@ -469,8 +469,8 @@
   <report category="operational" id="328" message="Protection active hard kill réussie"/>
   <report category="operational" id="329" message="Empoisonné"/>
   <report category="operational" id="330" message="Contaminé"/>
-  <report category="operational" id="331" message="Tir sur camp ennemi"/>
-  <report category="operational" id="332" message="Tiré par camp ennemi"/>
+  <report category="operational" client-function-trigger="FiredAlert" id="331" message="Tir sur camp ennemi"/>
+  <report category="operational" client-function-trigger="FiredAlert" id="332" message="Tiré par camp ennemi"/>
   <report category="operational" id="333" message="Le drone doit être mis en oeuvre"/>
   <report category="operational" id="334" message="Réussite du renforcement : %1 sur %2">
     <parameter type="Agent"/>
@@ -574,4 +574,4 @@
   <report category="operational" id="402" message="Unité déjà désengagée"/>
   <report category="operational" id="403" message="Aucune unité ne peut effectuer la mission principale"/>
 </reports>
-<!-- signature="3294965455" -->
+<!-- signature="1239943367" -->
