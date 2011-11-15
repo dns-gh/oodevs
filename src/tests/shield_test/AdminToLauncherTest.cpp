@@ -126,4 +126,3 @@ BOOST_FIXTURE_TEST_CASE(session_notification_to_launcher_is_converted, ContextFi
     MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { session_notification { exercise: \"name\" session: \"session\" notification { directory_change { } } } }" ) );
     converter.ReceiveAdminToLauncher( msg );
 }
-

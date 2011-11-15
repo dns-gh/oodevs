@@ -64,10 +64,9 @@ using namespace shield;
 // Name: Converter constructor
 // Created: MCO 2010-09-30
 // -----------------------------------------------------------------------------
-Converter::Converter( Server_ABC& server, Client_ABC& client, ClientListener_ABC& listener )
-    : server_  ( server )
-    , client_  ( client )
-    , listener_( listener )
+Converter::Converter( Server_ABC& server, Client_ABC& client )
+    : server_( server )
+    , client_( client )
 {
     // NOTHING
 }

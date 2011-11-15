@@ -47,10 +47,12 @@ namespace
 // Name: Server constructor
 // Created: MCO 2010-11-29
 // -----------------------------------------------------------------------------
-Server::Server( unsigned short port, tools::MessageDispatcher_ABC& dispatcher, ClientHandler_ABC& handler, Listener_ABC& listener, bool encodeStringsInUtf8, unsigned long timeOut /*= 0*/ )
+Server::Server( unsigned short port, tools::MessageDispatcher_ABC& dispatcher,
+                const Model_ABC& model, ClientHandler_ABC& handler, Listener_ABC& listener,
+                bool encodeStringsInUtf8, unsigned long timeOut /*= 0*/ )
     : tools::ServerNetworker( port, timeOut )
     , listener_( listener )
-    , clients_ ( *this, dispatcher, handler, *this, encodeStringsInUtf8 )
+    , clients_ ( *this, dispatcher, model, handler, *this, encodeStringsInUtf8 )
 {
     listener_.Info( "Starting shield server on port " + boost::lexical_cast< std::string >( port ) );
     RegisterMessage( MakeLogger( *this, *this, &Server::ReceiveClientToAar ) );

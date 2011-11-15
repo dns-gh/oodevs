@@ -70,11 +70,11 @@ Replayer::Replayer( const Config& config )
     , staticModel_     ( new StaticModel( config ) )
     , logger_          ( new ::NullMemoryLogger() )
     , model_           ( new Model( config, *staticModel_, *logger_ ) )
-    , clientsNetworker_( new ClientsNetworker( config, handler_, *services_ ) )
+    , clientsNetworker_( new ClientsNetworker( config, handler_, *services_, *model_ ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config ) )
     , plugin_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
-    , shield_          ( new Shield( config, *clientsNetworker_, *clientsNetworker_ ) )
+    , shield_          ( new Shield( config, *model_, *clientsNetworker_, *clientsNetworker_ ) )
 {
     handler_.AddHandler( model_ );
     handler_.AddHandler( clientsNetworker_ );

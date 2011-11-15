@@ -15,7 +15,6 @@
 
 namespace dispatcher
 {
-    class Model;
     class SimulationPublisher_ABC;
     class LinkResolver_ABC;
     class RotatingLog;
@@ -33,7 +32,7 @@ class DispatcherPlugin : public Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DispatcherPlugin( Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
+             DispatcherPlugin( SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
                                LinkResolver_ABC& links, OrderResolver_ABC& order, RotatingLog& log );
     virtual ~DispatcherPlugin();
     //@}
@@ -41,8 +40,6 @@ public:
     //! @name Operations
     //@{
     virtual void Receive( const sword::SimToClient& message );
-
-    virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& link, Profile_ABC& profile );
 
     virtual void Register( dispatcher::Services& services );
     //@}
@@ -56,7 +53,6 @@ private:
 private:
     //! @name Member data
     //@{
-    Model& model_;
     SimulationPublisher_ABC& simulation_;
     LinkResolver_ABC& links_;
     OrderResolver_ABC& order_;

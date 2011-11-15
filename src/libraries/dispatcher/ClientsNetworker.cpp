@@ -13,6 +13,7 @@
 #include "Config.h"
 #include "Plugin_ABC.h"
 #include "Services.h"
+#include "Model_ABC.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
 
@@ -22,10 +23,11 @@ using namespace dispatcher;
 // Name: ClientsNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin, const Services& services )
+ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin, const Services& services, const Model_ABC& model )
     : ServerNetworker( config.GetNetworkClientsParameters(), config.GetNetworkTimeout() )
     , plugin_  ( plugin )
     , services_( services )
+    , model_   ( model )
 {
     MT_LOG_INFO_MSG( "Starting dispatcher server on port " << config.GetNetworkClientsParameters() );
 }
@@ -69,7 +71,9 @@ void ClientsNetworker::Receive( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Activate( const std::string& link )
 {
-    internals_[ link ] = clients_[ link ];
+    boost::shared_ptr< Client > pClient = clients_[ link ];
+    internals_[ link ] = pClient;
+    model_.Send( *pClient );
 }
 
 // -----------------------------------------------------------------------------

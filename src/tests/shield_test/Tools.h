@@ -75,11 +75,10 @@ namespace shield
     struct Fixture
     {
         Fixture()
-            : converter( server, client, listener )
+            : converter( server, client )
         {}
         MockServer server;
         MockClient client;
-        MockClientListener listener;
         Converter converter;
     };
 

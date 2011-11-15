@@ -12,7 +12,9 @@
 #include "Config.h"
 #include "RotatingLog.h"
 #include "LogFactory.h"
+#include "Model_ABC.h"
 #include "shield/Server.h"
+#include "shield/Model_ABC.h"
 #include "shield/Listener_ABC.h"
 #include "shield/DebugInfo_ABC.h"
 #include "MT_Tools/MT_Logger.h"
@@ -48,11 +50,28 @@ namespace
         RotatingLog log_;
     };
 
-    shield::Server* CreateServer( const Config& config, tools::MessageDispatcher_ABC& dispatcher, shield::ClientHandler_ABC& handler, shield::Listener_ABC& logger )
+    class Model : public shield::Model_ABC
+    {
+    public:
+        explicit Model( dispatcher::Model_ABC& model )
+            : model_( model )
+        {
+            // NOTHING
+        }
+        virtual void Send( dispatcher::ClientPublisher_ABC& publisher ) const
+        {
+            model_.Send( publisher );
+        }
+    private:
+        dispatcher::Model_ABC& model_;
+    };
+
+    shield::Server* CreateServer( const Config& config, tools::MessageDispatcher_ABC& dispatcher,
+        const shield::Model_ABC& model, shield::ClientHandler_ABC& handler, shield::Listener_ABC& logger )
     {
         const unsigned short port = config.GetNetworkShieldParameters();
         bool useUtf8StringEncoding = config.UseShieldUtf8Encoding();
-        return port ? new shield::Server( port, dispatcher, handler, logger, useUtf8StringEncoding, config.GetNetworkTimeout() ) : 0;
+        return port ? new shield::Server( port, dispatcher, model, handler, logger, useUtf8StringEncoding, config.GetNetworkTimeout() ) : 0;
     }
 }
 
@@ -60,9 +79,10 @@ namespace
 // Name: Shield constructor
 // Created: MCO 2010-09-30
 // -----------------------------------------------------------------------------
-Shield::Shield( const Config& config, tools::MessageDispatcher_ABC& dispatcher, shield::ClientHandler_ABC& handler )
+Shield::Shield( const Config& config, Model_ABC& model, tools::MessageDispatcher_ABC& dispatcher, shield::ClientHandler_ABC& handler )
     : logger_( new Logger( config ) )
-    , server_( CreateServer( config, dispatcher, handler, *logger_ ) )
+    , model_ ( new Model( model ) )
+    , server_( CreateServer( config, dispatcher, *model_, handler, *logger_ ) )
 {
     // NOTHING
 }

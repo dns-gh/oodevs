@@ -13,11 +13,9 @@
 #include "LinkResolver_ABC.h"
 #include "Profile_ABC.h"
 #include "OrderResolver_ABC.h"
-#include "Model.h"
 #include "Services.h"
 #include "Logger.h"
 #include "ClientsNetworker.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;
@@ -26,10 +24,9 @@ using namespace dispatcher;
 // Name: DispatcherPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-DispatcherPlugin::DispatcherPlugin( Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
+DispatcherPlugin::DispatcherPlugin( SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
                                     LinkResolver_ABC& links, OrderResolver_ABC& order, RotatingLog& log )
-    : model_     ( model )
-    , simulation_( simulation )
+    : simulation_( simulation )
     , links_     ( links )
     , order_     ( order )
 {
@@ -61,15 +58,6 @@ void DispatcherPlugin::Register( dispatcher::Services& services )
 void DispatcherPlugin::Receive( const sword::SimToClient& /*message*/ )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DispatcherPlugin::NotifyClientAuthenticated
-// Created: AGE 2007-08-24
-// -----------------------------------------------------------------------------
-void DispatcherPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& /*link*/, Profile_ABC& /*profile*/ )
-{
-    model_.Send( client );
 }
 
 // -----------------------------------------------------------------------------
