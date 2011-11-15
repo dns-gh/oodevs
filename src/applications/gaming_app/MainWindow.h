@@ -39,7 +39,6 @@ namespace gui
     class LogisticList;
     class TerrainLayer;
     class Layer_ABC;
-    class Picker;
     class TerrainPicker;
     class Painter_ABC;
     class LayerFilter_ABC;
@@ -55,8 +54,6 @@ class Network;
 class MissionPanel;
 class CreationPanels;
 class LogisticListView;
-class LoginDialog;
-class Publisher_ABC;
 class LoggerProxy;
 class Simulation;
 class RcEntityResolver_ABC;

@@ -60,19 +60,12 @@
 #include "TimelinePanel.h"
 #include "UserProfileDialog.h"
 #include "WeatherLayer.h"
-#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/DetectionMap.h"
-#include "clients_kernel/ExtensionTypes.h"
-#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Options.h"
-#include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/Team_ABC.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 #include "gaming/Network.h"
-#include "gaming/Population.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Profile.h"
 #include "gaming/ProfileFilter.h"
@@ -82,11 +75,9 @@
 #include "gaming/ColorController.h"
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/GlSelector.h"
-#include "clients_gui/GraphicPreferences.h"
 #include "clients_gui/Logger.h"
 #include "clients_gui/MiscLayer.h"
 #include "clients_gui/ObjectList.h"
-#include "clients_gui/OptionsPanel.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Settings.h"
 #include "clients_gui/PopulationList.h"
@@ -95,7 +86,6 @@
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/MiniViews.h"
-#include "clients_gui/resources.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/ColorStrategy.h"
 #include "clients_gui/SelectionColorModifier.h"
@@ -145,7 +135,7 @@ using namespace kernel;
 MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation,
                         Network& network, const Profile_ABC& p, Config& config, LoggerProxy& logger,
                         const RcEntityResolver_ABC& rcResolver, const QString& license )
-                        : QMainWindow()
+    : QMainWindow()
     , controllers_     ( controllers )
     , staticModel_     ( staticModel )
     , model_           ( model )
