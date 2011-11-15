@@ -36,6 +36,7 @@ private slots:
     //@{
     void OnChangeLanguage( const QString& lang );
     void OnChangeDataDirectory();
+    void OnEditDataDirectory();
     virtual void OnApply();
     virtual void OnBack();
     //@}

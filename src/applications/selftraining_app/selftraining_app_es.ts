@@ -387,6 +387,22 @@
         <source>Unsaved changes will be lost, continue anyway ?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directory &apos;%1&apos; doesn&apos;t exist. Do you want to create it ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t create directory &apos;%1&apos;, error &apos;%2&apos; happen.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Page_ABC</name>
