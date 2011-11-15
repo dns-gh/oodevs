@@ -275,7 +275,8 @@ void ADN_Units_GUI::OnTypeChanged()
     if( strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLDRavitaillement, ENT_Tr_ABC::eToTr ).c_str()
         || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLTRavitaillement, ENT_Tr_ABC::eToTr ).c_str()
         || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGConvoi, ENT_Tr_ABC::eToTr ).c_str()
-        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGTC2, ENT_Tr_ABC::eToTr ).c_str() )
+        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGTC2, ENT_Tr_ABC::eToTr ).c_str()
+        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionOrganization, ENT_Tr_ABC::eToTr ).c_str() )
         pStockGroup_->setEnabled( true );
     else
         pStockGroup_->setEnabled( false );
