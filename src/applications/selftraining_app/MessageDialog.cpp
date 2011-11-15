@@ -49,7 +49,7 @@ namespace
 // Name: MessageDialog constructor
 // Created: RDS 2008-08-20
 // -----------------------------------------------------------------------------
-MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QString& message, int button1, int button2 )
+MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QString& message, int button1, int button2 /*= -1*/ )
     : QDialog( parent, title, true, Qt::WStyle_DialogBorder )
 {
     setCaption( title );
@@ -71,7 +71,8 @@ MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QStri
     Q3HBox* hbox = new Q3HBox( vbox );
 
     CreateButton( hbox, button1 );
-    CreateButton( hbox, button2 );
+    if( button2 != -1 )
+        CreateButton( hbox, button2 );
 
     mainLayout->addWidget( vbox );
 

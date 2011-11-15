@@ -15,6 +15,10 @@
 #include "clients_gui/Tools.h"
 #include "Config.h"
 #include <boost/foreach.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/convenience.hpp>
+
+namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -65,6 +69,7 @@ OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previ
     dataDirectory_ = new QLineEdit( hbox );
     dataButton_ = new QPushButton( hbox );
     connect( dataButton_, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
+    connect( dataDirectory_, SIGNAL( returnPressed() ), SLOT( OnEditDataDirectory() ) );
     // Profile
     profileLabel_ = new QLabel( box );
     profileCombo_ = new QComboBox( box );
@@ -142,8 +147,43 @@ void OptionsPage::OnChangeDataDirectory()
     const QString directory = QDir::convertSeparators( Q3FileDialog::getExistingDirectory( dataDirectory_->text(), this ) );
     if( directory.isEmpty() )
         return;
-    dataDirectory_->setText( directory );
     selectedDataDir_ = directory.ascii();
+    dataDirectory_->setText( directory );
+    hasChanged_ = true;
+    EnableButton( eButtonApply, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::OnEditDataDirectory
+// Created: ABR 2011-11-15
+// -----------------------------------------------------------------------------
+void OptionsPage::OnEditDataDirectory()
+{
+    const std::string directory = dataDirectory_->text().ascii();
+    if( !bfs::exists( directory ) )
+    {
+        MessageDialog message( parent_, tools::translate( "OptionsPage", "Invalid directory" ), tools::translate( "OptionsPage", "Directory \'%1\' doesn't exist. Do you want to create it ?" ).arg( directory.c_str() ), QMessageBox::Yes, QMessageBox::No );
+        if( message.exec() == QMessageBox::Yes )
+        {
+            try
+            {
+                bfs::create_directories( std::string( directory ) );
+            }
+            catch ( std::exception& e )
+            {
+                MessageDialog message( parent_, tools::translate( "OptionsPage", "Error" ), tools::translate( "OptionsPage", "Can't create directory \'%1\', error \'%2\' happen." ).arg( directory.c_str() ).arg( e.what() ), QMessageBox::Ok );
+                message.exec();
+                return;
+            }
+        }
+        else
+        {
+            dataDirectory_->setText( selectedDataDir_.c_str() );
+            return;
+        }
+    }
+    selectedDataDir_ = directory;
+    dataDirectory_->setText( selectedDataDir_.c_str() );
     hasChanged_ = true;
     EnableButton( eButtonApply, true );
 }

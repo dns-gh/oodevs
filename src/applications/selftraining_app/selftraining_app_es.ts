@@ -101,10 +101,6 @@
         <source>Update</source>
         <translation>Actualizar</translation>
     </message>
-    <message>
-        <source>127.0.0.1</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BattleCenterLauncherPage</name>
@@ -331,38 +327,6 @@
         <source>otpak corrupted: unable to load content properly</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Package</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scenario</source>
-        <translation type="unfinished">Escenario</translation>
-    </message>
-    <message>
-        <source>Model: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Model:</source>
-        <translation type="unfinished">Modelo:</translation>
-    </message>
-    <message>
-        <source>Output Scenario Name: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scenario Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input Scenario: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terrain:</source>
-        <translation type="unfinished">Terreno:</translation>
-    </message>
 </context>
 <context>
     <name>LauncherClientPage</name>
@@ -432,7 +396,31 @@
         <translation>Administración</translation>
     </message>
     <message>
-        <source>Options</source>
+        <source>Settings</source>
+        <translation type="unfinished">Configuración</translation>
+    </message>
+    <message>
+        <source>Unsaved changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsaved changes will be lost, continue anyway ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directory &apos;%1&apos; doesn&apos;t exist. Do you want to create it ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t create directory &apos;%1&apos;, error &apos;%2&apos; happen.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -459,7 +447,11 @@
         <translation>Editar</translation>
     </message>
     <message>
-        <source>Options</source>
+        <source>Settings</source>
+        <translation type="unfinished">Configuración</translation>
+    </message>
+    <message>
+        <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -532,10 +524,6 @@
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>127.0.0.1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

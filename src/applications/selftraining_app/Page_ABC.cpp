@@ -16,6 +16,18 @@
 
 QuitPage* Page_ABC::quitPage_ = 0;
 
+namespace
+{
+    QPushButton* AddButton( QWidget* parent, Q3HBoxLayout* buttonLayout, Qt::Alignment alignment, const char* slot, int width = 160 )
+    {
+        QPushButton* button =  new MenuButton( parent );
+        button->setFixedWidth( width );
+        buttonLayout->addWidget( button, 0, alignment );
+        QObject::connect( button, SIGNAL( clicked() ), parent, slot );
+        return button;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Page_ABC constructor
 // Created: SBO 2008-02-21
@@ -43,59 +55,25 @@ Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short fla
     grid_->addMultiCellLayout( buttonLayout, 2, 2, 0, 2 );
 
     if( flags & eButtonBack )
-    {
-        backButton_ = new MenuButton( this );
-        backButton_->setFixedWidth( 150 );
-        buttonLayout->addWidget( backButton_, 0, Qt::AlignBottom | Qt::AlignLeft );
-        connect( backButton_, SIGNAL( clicked() ), this, SLOT( OnBack() ) );
-    }
+        backButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignLeft, SLOT( OnBack() ) );
     else if( flags & eButtonOptions )
-    {
-        settingsButton_ = new MenuButton( this );
-        settingsButton_->setFixedWidth( 150 );
-        buttonLayout->addWidget( settingsButton_, 0, Qt::AlignBottom | Qt::AlignLeft );
-        connect( settingsButton_, SIGNAL( clicked() ), this, SLOT( OnOptions() ) );
-    }
+        settingsButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignLeft, SLOT( OnOptions() ) );
 
     if( flags & eButtonQuit )
     {
         if( !quitPage_ )
             quitPage_ = new QuitPage( pages, *this );
-
-        quitButton_ = new MenuButton( this );
-        quitButton_->setFixedWidth( 150 );
-        buttonLayout->addWidget( quitButton_, 0, Qt::AlignBottom | Qt::AlignRight );
-        connect( quitButton_, SIGNAL( clicked() ), this, SLOT( OnQuit() ) );
+        quitButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnQuit() ) );
     }
 
     if( flags & eButtonStart )
-    {
-        startButton_ = new MenuButton( this );
-        startButton_->setFixedWidth( 150 );
-        buttonLayout->addWidget( startButton_, 0, Qt::AlignBottom | Qt::AlignRight );
-        connect( startButton_, SIGNAL( clicked() ), this, SLOT( OnStart() ) );
-    }
+        startButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnStart() ) );
     else if( flags & eButtonJoin )
-    {
-        joinButton_ = new MenuButton( this );
-        joinButton_->setFixedWidth( 150 );
-        buttonLayout->addWidget( joinButton_, 0, Qt::AlignBottom | Qt::AlignRight );
-        connect( joinButton_, SIGNAL( clicked() ), this, SLOT( OnJoin() ) );
-    }
+        joinButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnJoin() ) );
     else if( flags & eButtonEdit )
-    {
-        editButton_ = new MenuButton( this );
-        editButton_->setFixedWidth( 150 );
-        buttonLayout->addWidget( editButton_, 0, Qt::AlignBottom | Qt::AlignRight );
-        connect( editButton_, SIGNAL( clicked() ), this, SLOT( OnEdit() ) );
-    }
+        editButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnEdit() ) );
     else if( flags & eButtonApply )
-    {
-        applyButton_ = new MenuButton( this );
-        applyButton_->setFixedWidth( 150 );
-        buttonLayout->addWidget( applyButton_, 0, Qt::AlignBottom | Qt::AlignRight );
-        connect( applyButton_, SIGNAL( clicked() ), this, SLOT( OnApply() ) );
-    }
+        applyButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnApply() ) );
 
     layout()->setAutoAdd( false );
     hide();

@@ -27,7 +27,7 @@ class MessageDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageDialog( QWidget* parent, const QString& title, const QString& message, int button1, int button2 );
+             MessageDialog( QWidget* parent, const QString& title, const QString& message, int button1, int button2 = -1 );
     virtual ~MessageDialog();
     //@}
 
