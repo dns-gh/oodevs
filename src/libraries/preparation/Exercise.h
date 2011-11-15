@@ -65,7 +65,7 @@ public:
     void SetName( const QString& name );
     void SetBriefing( const QString& lang, const QString& text );
     void AddResource( const QString& name, const QString& file );
-    void AddActionPlanning( const std::string& filename );
+    void SetActionPlanning( const std::string& filename );
     void ClearResources();
     //@}
 

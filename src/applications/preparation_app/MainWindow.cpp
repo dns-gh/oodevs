@@ -709,7 +709,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 // -----------------------------------------------------------------------------
 void MainWindow::OnForceSaveAndAddActionPlanning( const std::string& filename )
 {
-    model_.exercise_.AddActionPlanning( filename );
+    model_.exercise_.SetActionPlanning( filename );
     needsSaving_ = true;
     Save();
 }

@@ -24,7 +24,8 @@ namespace bfs = boost::filesystem;
 // Created: SBO 2010-03-08
 // -----------------------------------------------------------------------------
 Exercise::Exercise( kernel::Controller& controller )
-    : controller_( controller )
+    : controller_    ( controller )
+    , actionPlanning_( "" )
 {
     // NOTHING
 }
@@ -46,16 +47,20 @@ void Exercise::Load( xml::xistream& xis )
 {
     std::string name;
     xis >> xml::start( "exercise" )
-        >> xml::optional >> xml::start( "meta" )
+            >> xml::optional >> xml::start( "meta" )
                 >> xml::optional >> xml::content( "name", name )
                 >> xml::optional >> xml::start( "briefing" )
                     >> xml::list( "text", *this, &Exercise::ReadBriefing )
-                >> xml::end
+                >> xml::end // end briefing
                 >> xml::optional >> xml::start( "resources" )
                     >> xml::list( "resource", *this, &Exercise::ReadResource )
-                >> xml::end
-            >> xml::end;
-    xis >> xml::end;
+                >> xml::end // end resources
+            >> xml::end // end meta
+            >> xml::optional >> xml::start( "action-planning" )
+                >> xml::attribute< std::string >( "file", actionPlanning_ )
+            >> xml::end // end action-planning
+        >> xml::end; // end exercise
+
     name_ = name.c_str();
     controller_.Create( *this );
 }
@@ -92,6 +97,7 @@ void Exercise::Purge()
     name_ = "";
     briefings_.clear();
     resources_.clear();
+    actionPlanning_.clear();
     controller_.Update( *this );
 }
 
@@ -203,12 +209,13 @@ void Exercise::AddResource( const QString& name, const QString& file )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Exercise::AddActionPlanning
+// Name: Exercise::SetActionPlanning
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
-void Exercise::AddActionPlanning( const std::string& filename )
+void Exercise::SetActionPlanning( const std::string& filename )
 {
-    actionPlanning_ = filename;
+    if( actionPlanning_.empty() )
+        actionPlanning_ = filename;
 }
 
 // -----------------------------------------------------------------------------
