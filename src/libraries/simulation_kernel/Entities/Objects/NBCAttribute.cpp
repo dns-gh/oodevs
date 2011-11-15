@@ -114,7 +114,7 @@ void NBCAttribute::load( MIL_CheckPointInArchive& file , const unsigned int )
     file >> danger_;
     file >> nForm_;
     file >> nNbrNbcAgents;
-    while ( nNbrNbcAgents-- )
+    while( nNbrNbcAgents-- )
     {
         unsigned int nID;
         file >> nID;
@@ -135,7 +135,7 @@ void NBCAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
     file << nForm_;
     std::size_t size = agents_.size();
     file << size;
-    for ( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
+    for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
     {
         unsigned id = (*it)->GetID();
         file << id;
@@ -202,7 +202,7 @@ void NBCAttribute::WriteODB( xml::xostream& xos ) const
     else
         xos << xml::attribute( "state", "gaseous" );
     xos << xml::attribute( "danger", danger_ );
-    for ( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
+    for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
         xos << xml::start( "nbc-agent" ) << xml::attribute( "type", (*it)->GetName() )
             << xml::end;
     xos << xml::end;

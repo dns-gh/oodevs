@@ -108,7 +108,7 @@ void InputPropagationPrototype_ABC::FillInPaths()
     std::string path( BuildPropagationDir( root_, "data/propagations" ) );
     QStringList result( ListDirectories( path, &IsPropagationDir ) );
 
-    for ( QStringList::const_iterator it = result.constBegin(); it != result.constEnd(); ++it )
+    for( QStringList::const_iterator it = result.constBegin(); it != result.constEnd(); ++it )
         propagationFiles_->AddItem( *it, (*it).ascii() );
 }
 

@@ -13,7 +13,6 @@
 #include "simulation_kernel/ConsumptionComputerFactory_ABC.h"
 #include "simulation_kernel/PostureComputer_ABC.h"
 
-
 namespace dotation
 {
 // =============================================================================

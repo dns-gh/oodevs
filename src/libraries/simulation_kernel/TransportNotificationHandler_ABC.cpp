@@ -64,7 +64,6 @@ void TransportNotificationHandler_ABC::ForceUnloadedState()
 
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: TransportNotificationHandler_ABC::MagicLoadPion
 // Created: LDC 2009-10-05

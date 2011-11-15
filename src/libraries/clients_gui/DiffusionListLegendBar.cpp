@@ -43,7 +43,7 @@ DiffusionListLegendBar::~DiffusionListLegendBar()
 void DiffusionListLegendBar::paintEvent( QPaintEvent * )
 {
     QPainter paint;
-   if ( paint.begin( this ) )
+   if( paint.begin( this ) )
     {
         paint.fillRect( 0, 0, size_, size_ / 2, color_ );
         paint.drawRect( 0, 0, size_, size_ / 2 );

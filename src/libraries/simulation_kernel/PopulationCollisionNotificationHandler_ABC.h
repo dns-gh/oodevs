@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #ifndef __population_PopulationCollisionNotificationHandler_ABC_H__
 #define __population_PopulationCollisionNotificationHandler_ABC_H__
 

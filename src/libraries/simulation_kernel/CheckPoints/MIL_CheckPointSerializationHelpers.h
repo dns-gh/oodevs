@@ -28,5 +28,4 @@ namespace boost
     }
 }
 
-
 #endif // __MIL_CheckPointSerializationHelpers_h_

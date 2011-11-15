@@ -7,12 +7,10 @@
 //
 // *****************************************************************************
 
-
 #include "simulation_kernel_pch.h"
 #include "MIL_Effect_ScatterPopulation.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_ScatterPopulation constructor

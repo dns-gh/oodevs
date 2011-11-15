@@ -56,7 +56,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
         production_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
         connect( production_, SIGNAL( valueChanged( int ) ), this, SLOT( OnProductionChanged( int ) ) );
     }
-    generateProduction_ = new QPushButton( tools::translate( "gui::ResourceLinksDialog_ABC", "Automatic production" ), groupBox_ ); 
+    generateProduction_ = new QPushButton( tools::translate( "gui::ResourceLinksDialog_ABC", "Automatic production" ), groupBox_ );
     connect( generateProduction_, SIGNAL( clicked() ), this, SLOT( GenerateProduction() ) );
     generateProduction_->hide();
     {

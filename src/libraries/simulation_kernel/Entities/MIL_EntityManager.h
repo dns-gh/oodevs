@@ -227,7 +227,6 @@ private:
     void ProcessTransferEquipmentRequest    ( const sword::UnitMagicAction&      message, MIL_AgentPion& pion );
     //@}
 
-
 private:
     //! @name Init
     //@{

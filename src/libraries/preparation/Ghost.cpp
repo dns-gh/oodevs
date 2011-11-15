@@ -84,7 +84,7 @@ Ghost::Ghost( Controller& controller, IdManager& idManager, xml::xistream& xis, 
         kernel::App6Symbol::SetKarma( symbol_, pHierarchy->GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
 
         std::string levelSymbol = pHierarchy->GetLevel();
-        if ( !levelSymbol.empty() )
+        if( !levelSymbol.empty() )
             level_ = MergingTacticalHierarchies::DecreaseLevel( levelSymbol );
     }
 

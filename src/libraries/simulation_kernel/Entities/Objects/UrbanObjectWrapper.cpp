@@ -314,7 +314,7 @@ void UrbanObjectWrapper::UpdateState()
     SendCapacity< StructuralCapacity >( *message().mutable_attributes() );
     SendCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
     SendCapacity< InfrastructureCapacity >( *message().mutable_attributes() );
-    if ( message().attributes().has_structure() || message().attributes().has_infrastructures() )
+    if( message().attributes().has_structure() || message().attributes().has_infrastructures() )
         message.Send( NET_Publisher_ABC::Publisher() );
     size_t notSendableAttributes = RetrieveAttribute< MaterialAttribute >() ? 1 : 0;
     if( CountAttributes() > notSendableAttributes )

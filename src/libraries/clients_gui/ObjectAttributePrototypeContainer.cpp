@@ -48,7 +48,7 @@ ObjectAttributePrototypeContainer::~ObjectAttributePrototypeContainer()
 void ObjectAttributePrototypeContainer::NotifyUpdated()
 {
     tools::Iterator< const ObjectType& > it = resolver_.CreateIterator();
-    while ( it.HasMoreElements() )
+    while( it.HasMoreElements() )
         Load( it.NextElement() );
 }
 

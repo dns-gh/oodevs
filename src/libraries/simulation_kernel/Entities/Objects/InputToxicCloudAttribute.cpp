@@ -23,7 +23,6 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 
-
 namespace bpt = boost::posix_time;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InputToxicCloudAttribute )
@@ -332,7 +331,7 @@ void InputToxicCloudAttribute::BuildConvexHull( TER_Polygon& polygon ) const
 {
     T_PointVector vector( export_.size() );
     IT_PointVector to = vector.begin();
-    for ( CIT_QuantityContainer it = export_.begin(); it != export_.end();  ++it )
+    for( CIT_QuantityContainer it = export_.begin(); it != export_.end();  ++it )
         *(to++) = MT_Vector2D( it->first.rY_, it->first.rX_ );
     polygon.Reset( vector, true /*convexhull*/ );
 }

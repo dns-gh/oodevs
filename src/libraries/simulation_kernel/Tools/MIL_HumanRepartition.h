@@ -18,7 +18,6 @@ namespace xml
     class xostream;
 }
 
-
 // =============================================================================
 /** @class  MIL_HumanRepartition
     @brief  MIL_HumanRepartition

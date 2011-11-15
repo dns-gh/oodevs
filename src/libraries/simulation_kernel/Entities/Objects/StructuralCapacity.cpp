@@ -169,8 +169,8 @@ bool StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Loc
     const float oldStructuralState = structuralState_;
 
     structuralState_ = static_cast< float >( std::max( 0., (double)structuralState_ - ratio * factor ) );
-    if ( ( 1. - MIL_Random::rand_io( MIL_Random::eFire ) ) <= oldStructuralState - structuralState_ )
-        for ( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
+    if( ( 1. - MIL_Random::rand_io( MIL_Random::eFire ) ) <= oldStructuralState - structuralState_ )
+        for( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
             ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
     object.ApplyStructuralState( structuralState_ );
     return oldStructuralState != structuralState_;

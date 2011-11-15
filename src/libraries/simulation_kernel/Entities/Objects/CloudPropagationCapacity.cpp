@@ -135,16 +135,16 @@ void CloudPropagationCapacity::Update( MIL_Object_ABC& object, unsigned int /*ti
 bool CloudPropagationCapacity::UpdateLocalisation( double angle, TER_Localisation& newLocalisation )
 {
     const weather::Meteo::sWindData& wind = MIL_Tools::GetWind( origin_ );
-    if ( wind.rSpeed_ <= MIL_Tools::ConvertSpeedMosToSim( MIL_NbcAgentType::GetMinPropagationSpeed() ) || angle >= MT_PI )
+    if( wind.rSpeed_ <= MIL_Tools::ConvertSpeedMosToSim( MIL_NbcAgentType::GetMinPropagationSpeed() ) || angle >= MT_PI )
     {
-        if ( wind.rSpeed_ <= 0. )
+        if( wind.rSpeed_ <= 0. )
             return false;
         rCurrentCircleRadius_ += wind.rSpeed_;
     }
     else
         rCurrentPropagationLenght_ = std::max( rCurrentPropagationLenght_, rCurrentCircleRadius_ ) + wind.rSpeed_;
 
-    if ( rCurrentCircleRadius_ >= rCurrentPropagationLenght_ || angle >= MT_PI )
+    if( rCurrentCircleRadius_ >= rCurrentPropagationLenght_ || angle >= MT_PI )
     {
         T_PointVector points;
         points.push_back( origin_ );

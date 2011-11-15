@@ -35,5 +35,4 @@ public:
     //@}
 };
 
-
 #endif // __ConsumptionOperator_ABC_h_

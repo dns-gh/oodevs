@@ -34,7 +34,7 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_Knowledge
     : type_( type )
 {
     const sword::MissionParameters& parameters = asn.parameters();
-    if ( (int)type.GetParameters().size() != parameters.elem_size() )
+    if( (int)type.GetParameters().size() != parameters.elem_size() )
     {
         MT_LOG_ERROR_MSG( std::string( "Frag Order " ) + type_.GetName() + " invalid parameters" );
         throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
@@ -162,7 +162,7 @@ namespace
                 if( parameters[i]->ToAutomatList( result ) )
                     return result;
                 else
-                    return std::vector< DEC_Decision_ABC* >(); 
+                    return std::vector< DEC_Decision_ABC* >();
             }
         }
         throw std::runtime_error( std::string( "Unknown parameter: " ) + name );
@@ -196,7 +196,7 @@ namespace
                 if( parameters[i]->ToPolygon( result ) )
                     return result;
                 else
-                    return boost::shared_ptr< TER_Localisation >(); 
+                    return boost::shared_ptr< TER_Localisation >();
             }
         }
         throw std::runtime_error( std::string( "Unknown parameter: " ) + name );
@@ -358,7 +358,7 @@ MIL_FragOrder::T_MedicalPriorityVector MIL_FragOrder::GetOrderConduiteModifierPr
             if( parameters_[i]->ToMedicalPriorities( result ) )
                 return result;
             else
-                return MIL_FragOrder::T_MedicalPriorityVector(); 
+                return MIL_FragOrder::T_MedicalPriorityVector();
         }
     }
     throw std::runtime_error( "Unknown parameter orderConduiteModifierPrioritesBlesses_" );
@@ -379,7 +379,7 @@ MIL_FragOrder::T_MaintenancePriorityVector MIL_FragOrder::GetOrderConduiteModifi
             if( parameters_[i]->ToMaintenancePriorities( result ) )
                 return result;
             else
-                return MIL_FragOrder::T_MaintenancePriorityVector(); 
+                return MIL_FragOrder::T_MaintenancePriorityVector();
         }
     }
     throw std::runtime_error( "Unknown parameter orderConduiteModifierPrioritesReparations_" );

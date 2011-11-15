@@ -49,7 +49,7 @@ public:
     //@{
              LogisticList( kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile,
                            const EntitySymbols& symbols, ModelBuilder& modelBuilder );
-             LogisticList( kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, 
+             LogisticList( kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile,
                            const EntitySymbols& symbols, actions::ActionsModel& actionsModel,
                            const ::StaticModel& staticModel, const kernel::Time_ABC& simulation );
     virtual ~LogisticList();

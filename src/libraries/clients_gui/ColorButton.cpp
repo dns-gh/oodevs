@@ -53,7 +53,7 @@ void ColorButton::drawButton( QPainter* )
 void ColorButton::paintEvent( QPaintEvent* )
 {
      QPainter paint;
-    if ( paint.begin( this ) )
+    if( paint.begin( this ) )
     {
         paint.fillRect( 4, 4, width() - 8, height() - 8, current_ );
         paint.drawRect( 4, 4, width() - 8, height() - 8 );

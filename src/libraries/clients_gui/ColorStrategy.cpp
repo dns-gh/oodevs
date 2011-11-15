@@ -261,7 +261,6 @@ void ColorStrategy::SelectColor( const kernel::Team_ABC& )
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor
 // Created: SBO 2008-06-02

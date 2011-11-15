@@ -14,7 +14,6 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_HumanRepartition )
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_HumanRepartition constructor
 // Created: MMC 2011-10-07
@@ -84,7 +83,7 @@ void MIL_HumanRepartition::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_HumanRepartition::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> male_ 
+    file >> male_
          >> female_
          >> children_;
 }

@@ -34,7 +34,6 @@ TrafficabilityAttribute::TrafficabilityAttribute( const sword::MissionParameter_
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: TrafficabilityAttribute constructor
 // Created: LGY 2011-08-23

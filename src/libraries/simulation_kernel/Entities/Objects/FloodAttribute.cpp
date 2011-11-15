@@ -100,7 +100,6 @@ bool FloodAttribute::Update( const FloodAttribute& rhs )
     return NeedUpdate( eOnUpdate );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: FloodAttribute::serialize
 // Created: JSR 2011-10-07

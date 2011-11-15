@@ -1061,7 +1061,7 @@ MT_Vector2D MIL_Fuseau::GetPositionAtAdvance( double advance ) const
     {
         advance -= firstPoint.Distance( *it );
         if( advance <= 0 )
-        {    
+        {
             return *it + ( *it - firstPoint ).Normalize() * advance ;
         }
         firstPoint = *it;

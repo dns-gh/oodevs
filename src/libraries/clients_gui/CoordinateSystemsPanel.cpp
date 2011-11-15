@@ -32,7 +32,7 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent, kernel::Control
     listCoordSys_ = new QComboBox( box );
     listCoordSys_->setEditable( false );
 
-    for ( kernel::CoordinateSystems::CIT_spatialReference it = coordinateSystems_.systems_.begin(); it != coordinateSystems_.systems_.end(); it++ )
+    for( kernel::CoordinateSystems::CIT_spatialReference it = coordinateSystems_.systems_.begin(); it != coordinateSystems_.systems_.end(); it++ )
         listCoordSys_->insertItem( it->second->c_str(), it->first );
 
     setWidget( box );

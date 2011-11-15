@@ -33,7 +33,7 @@ ObjectPanel::ObjectPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& c
     : InfoPanel_ABC( parent, panel, tools::translate( "gui::ObjectPanel", "Object state" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
-{    
+{
     pWidget_ = new Q3VBox( this );
     display_ = new DisplayBuilder( pWidget_, factory );
     setWidget( pWidget_ );

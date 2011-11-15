@@ -273,7 +273,7 @@ namespace boost
             unsigned int nNbr;
 
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 MIL_AutomateLOG* pLogAutomata;
 
@@ -978,7 +978,7 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( id.value().Get(0).identifier() );
     if( !pType )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
-    if(  !pBrainLogistic_.get() && IsLogistic( *pType ) )
+    if( !pBrainLogistic_.get() && IsLogistic( *pType ) )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
     const sword::MissionParameter& location = msg.parameters().elem( 1 );
     if( location.value_size() != 1 || !location.value().Get(0).has_point() )
@@ -986,10 +986,10 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
     const sword::Point& point = location.value().Get(0).point();
     if( point.location().type() != sword::Location::point || point.location().coordinates().elem_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-    if ( msg.parameters().elem_size() >= 3 )
+    if( msg.parameters().elem_size() >= 3 )
         if( msg.parameters().elem( 2 ).value_size() != 1 || !msg.parameters().elem( 2 ).value().Get(0).has_acharstr() )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-    if ( msg.parameters().elem_size() >= 4 )
+    if( msg.parameters().elem_size() >= 4 )
         if( msg.parameters().elem( 3 ).value_size() != 1 || !msg.parameters().elem( 3 ).value().Get(0).has_booleanvalue() )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
 
@@ -997,15 +997,15 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), position );
     try
     {
-        if ( msg.parameters().elem_size() >= 3 )
+        if( msg.parameters().elem_size() >= 3 )
         {
             std::string name = msg.parameters().elem( 2 ).value().Get( 0 ).acharstr();
             MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, name, nCtx ); // Auto-registration
 
-            if ( msg.parameters().elem_size() >= 4 )
+            if( msg.parameters().elem_size() >= 4 )
             {
                 bool isPc =  msg.parameters().elem( 3 ).value().Get( 0 ).booleanvalue();
-                if ( isPc )
+                if( isPc )
                     pion.SetPionAsPostCommand();
             }
         }
@@ -1056,7 +1056,7 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         break;
     default:
         {
-            if ( !pPionPC_ )
+            if( !pPionPC_ )
                 throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
             pPionPC_->OnReceiveUnitMagicAction( msg, armies );
         }
@@ -1111,7 +1111,7 @@ void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& 
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
 
     unsigned int knowledgeGroupId = 0, partyId = 0;
-    if ( partyParamFirst )
+    if( partyParamFirst )
     {
         partyId = msg.parameters().elem( 0 ).value().Get( 0 ).party().id();
         knowledgeGroupId = msg.parameters().elem( 1 ).value().Get( 0 ).knowledgegroup().id();

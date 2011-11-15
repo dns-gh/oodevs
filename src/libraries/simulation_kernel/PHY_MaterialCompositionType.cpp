@@ -110,7 +110,7 @@ const std::string& PHY_MaterialCompositionType::GetName() const
 PHY_MaterialCompositionType::AttritionData* PHY_MaterialCompositionType::FindAttrition( const std::string& protection ) const
 {
     CIT_AttritionInfos it = attritions_.find( protection );
-    if ( it != attritions_.end() )
+    if( it != attritions_.end() )
         return it->second;
     return 0;
 }

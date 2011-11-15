@@ -57,9 +57,9 @@ void SizeButton::OnValueChanged( int value )
     changed_ = true;
     if( valueLabel_ )
     {
-        if ( size_ == 10 )
+        if( size_ == 10 )
             label_.setText( QString( name() ).append( " " ).append( QString::number( size_ ) ).append( prefix_ ) );
-        else if ( size_ == floor( size_ ) )
+        else if( size_ == floor( size_ ) )
             label_.setText( QString( name() ).append( "   " ).append( QString::number( size_ ) ).append( prefix_ ) );
         else
             label_.setText( QString( name() ).append( QString::number( size_ ) ).append( prefix_ ) );
@@ -106,9 +106,9 @@ void SizeButton::Revert()
     size_ = previous_;
     if( valueLabel_ )
     {
-        if ( size_ == 10 )
+        if( size_ == 10 )
             label_.setText( QString( name() ).append( " " ).append( QString::number( size_ ) ).append( prefix_ ) );
-        else if ( size_ == floor( size_ ) )
+        else if( size_ == floor( size_ ) )
             label_.setText( QString( name() ).append( "   " ).append( QString::number( size_ ) ).append( prefix_ ) );
         else
             label_.setText( QString( name() ).append( "" ).append( QString::number( size_ ) ).append( prefix_ ) );

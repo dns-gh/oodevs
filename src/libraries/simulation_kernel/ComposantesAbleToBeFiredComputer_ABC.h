@@ -10,7 +10,6 @@
 #ifndef __ComposantesAbleToBeFiredComputer_ABC_h_
 #define __ComposantesAbleToBeFiredComputer_ABC_h_
 
-
 #include "simulation_kernel/OnComponentComputer_ABC.h"
 #include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 

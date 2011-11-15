@@ -1232,14 +1232,14 @@ void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, un
 {
     client::ChangeDiplomacyAck ack;
     int party1 ( 0 ), party2 ( 0 );
-    if ( message.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
+    if( message.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
         party1 = message.parameters().elem( 0 ).value().Get( 0 ).identifier();
-    else if ( message.parameters().elem( 0 ).value().Get( 0 ).has_party() )
+    else if( message.parameters().elem( 0 ).value().Get( 0 ).has_party() )
         party1 = message.parameters().elem( 0 ).value().Get( 0 ).party().id();
 
-    if ( message.parameters().elem( 1 ).value().Get( 0 ).has_identifier() )
+    if( message.parameters().elem( 1 ).value().Get( 0 ).has_identifier() )
         party2 = message.parameters().elem( 1 ).value().Get( 0 ).identifier();
-    else if ( message.parameters().elem( 1 ).value().Get( 0 ).has_party() )
+    else if( message.parameters().elem( 1 ).value().Get( 0 ).has_party() )
         party2 = message.parameters().elem( 1 ).value().Get( 0 ).party().id();
 
     ack().mutable_party1()->set_id( party1 );
@@ -1574,7 +1574,7 @@ void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const KnowledgeMagicAction&
     try
     {
         MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroupFromParents( message.knowledge_group().id() );
-        if ( pReceiver && ( !pReceiver->IsJammed()
+        if( pReceiver && ( !pReceiver->IsJammed()
                             || message.type() == sword::KnowledgeMagicAction::add_knowledge ) )
             pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
         else
@@ -1878,7 +1878,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "orbat" );
-    if ( infiniteDotations_ )
+    if( infiniteDotations_ )
         xos << xml::start( "resources" )
                 << xml::attribute( "infinite", infiniteDotations_ )
             << xml::end;
@@ -1983,10 +1983,10 @@ namespace
 {
     void FindKnowledgeGroupFromParent( MIL_KnowledgeGroup** ppKnowledgetGroupFound, unsigned int nID, MIL_KnowledgeGroup& curKG )
     {
-        if ( *ppKnowledgetGroupFound )
+        if( *ppKnowledgetGroupFound )
             return;
         MIL_KnowledgeGroup* pKG = curKG.FindKnowledgeGroup( nID );
-        if ( pKG )
+        if( pKG )
             *ppKnowledgetGroupFound = pKG;
     }
 }
@@ -1999,7 +1999,7 @@ namespace
 MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroupFromParents( unsigned int nID )
 {
     MIL_KnowledgeGroup* pCurKG = knowledgeGroupFactory_->Find( nID );
-    if ( pCurKG )
+    if( pCurKG )
         return pCurKG;
     knowledgeGroupFactory_->Apply( boost::bind( &FindKnowledgeGroupFromParent, &pCurKG, nID, _1 ) );
     return pCurKG;

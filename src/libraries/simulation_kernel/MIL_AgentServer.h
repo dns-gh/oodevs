@@ -206,5 +206,4 @@ private:
 
 #include "MIL_AgentServer.inl"
 
-
 #endif // __MIL_AgentServer_h_

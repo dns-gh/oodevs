@@ -87,7 +87,7 @@ ObjectPrototypeShapeFileLoader::~ObjectPrototypeShapeFileLoader()
 // -----------------------------------------------------------------------------
 bool ObjectPrototypeShapeFileLoader::CanLoadLayer( OGRLayer& layer, const kernel::ObjectType& objectType, QString& unloadableExplanation )
 {
-    if ( !layer.GetSpatialRef() )
+    if( !layer.GetSpatialRef() )
     {
         unloadableExplanation = tools::translate( "gui::ObjectPrototypeShapeFileLoader", "no spatial reference" );
         return false;

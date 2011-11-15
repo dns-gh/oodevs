@@ -186,7 +186,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
     {
         std::size_t nNbr;
         file >> nNbr;
-        while ( nNbr-- )
+        while( nNbr-- )
         {
             unsigned long index;
             file >> index;
@@ -196,7 +196,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
     {
         std::size_t nNbr;
         file >> nNbr;
-        while ( nNbr-- )
+        while( nNbr-- )
         {
             unsigned long index;
             file >> index;
@@ -206,7 +206,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
     {
         std::size_t nNbr;
         file >> nNbr;
-        while ( nNbr-- )
+        while( nNbr-- )
         {
             unsigned long index;
             file >> index;
@@ -216,7 +216,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
     {
         std::size_t nNbr;
         file >> nNbr;
-        while ( nNbr-- )
+        while( nNbr-- )
         {
             unsigned long index;
             file >> index;
@@ -226,7 +226,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
     {
         std::size_t nNbr;
         file >> nNbr;
-        while ( nNbr-- )
+        while( nNbr-- )
         {
             unsigned long index;
             file >> index;
@@ -256,7 +256,7 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
     {
         std::size_t size = knowledgeGroups_.size();
         file << size;
-        for ( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         {
             file << it->first
                  << it->second;
@@ -265,7 +265,7 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
     {
         std::size_t size = tools::Resolver< MIL_Population >::elements_.size();
         file << size;
-        for ( std::map< unsigned long, MIL_Population* >::const_iterator it = tools::Resolver< MIL_Population >::elements_.begin(); it != tools::Resolver< MIL_Population >::elements_.end(); ++it )
+        for( std::map< unsigned long, MIL_Population* >::const_iterator it = tools::Resolver< MIL_Population >::elements_.begin(); it != tools::Resolver< MIL_Population >::elements_.end(); ++it )
         {
             file << it->first
                 << it->second;
@@ -274,7 +274,7 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
     {
         std::size_t size = tools::Resolver< MIL_Inhabitant >::elements_.size();
         file << size;
-        for ( std::map< unsigned long, MIL_Inhabitant* >::const_iterator it = tools::Resolver< MIL_Inhabitant >::elements_.begin(); it != tools::Resolver< MIL_Inhabitant >::elements_.end(); ++it )
+        for( std::map< unsigned long, MIL_Inhabitant* >::const_iterator it = tools::Resolver< MIL_Inhabitant >::elements_.begin(); it != tools::Resolver< MIL_Inhabitant >::elements_.end(); ++it )
         {
             file << it->first
                  << it->second;
@@ -283,7 +283,7 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
     {
         std::size_t size = tools::Resolver< MIL_Formation >::elements_.size();
         file << size;
-        for ( std::map< unsigned long, MIL_Formation* >::const_iterator it = tools::Resolver< MIL_Formation >::elements_.begin(); it != tools::Resolver< MIL_Formation >::elements_.end(); ++it )
+        for( std::map< unsigned long, MIL_Formation* >::const_iterator it = tools::Resolver< MIL_Formation >::elements_.begin(); it != tools::Resolver< MIL_Formation >::elements_.end(); ++it )
         {
             file << it->first
                  << it->second;
@@ -292,7 +292,7 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
     {
         std::size_t size = tools::Resolver< MIL_Object_ABC >::elements_.size();
         file << size;
-        for ( std::map< unsigned long, MIL_Object_ABC* >::const_iterator it = tools::Resolver< MIL_Object_ABC >::elements_.begin(); it != tools::Resolver< MIL_Object_ABC >::elements_.end(); ++it )
+        for( std::map< unsigned long, MIL_Object_ABC* >::const_iterator it = tools::Resolver< MIL_Object_ABC >::elements_.begin(); it != tools::Resolver< MIL_Object_ABC >::elements_.end(); ++it )
         {
             file << it->first
                  << it->second;
@@ -704,9 +704,9 @@ void MIL_Army::SendKnowledge() const
 void MIL_Army::OnReceiveChangeDiplomacy( const sword::MissionParameters& parameters )
 {
     int party2 ( 0 );
-    if ( parameters.elem( 1 ).value().Get( 0 ).has_identifier() )
+    if( parameters.elem( 1 ).value().Get( 0 ).has_identifier() )
         party2 = parameters.elem( 1 ).value().Get( 0 ).identifier();
-    else if ( parameters.elem( 1 ).value().Get( 0 ).has_party() )
+    else if( parameters.elem( 1 ).value().Get( 0 ).has_party() )
         party2 = parameters.elem( 1 ).value().Get( 0 ).party().id();
 
     MIL_Army_ABC* pArmy2 = armyFactory_.Find( party2 );

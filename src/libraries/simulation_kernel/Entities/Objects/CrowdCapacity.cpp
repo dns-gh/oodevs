@@ -112,7 +112,7 @@ void CrowdCapacity::Instanciate( MIL_Object_ABC& object ) const
 double CrowdCapacity::ApplySpeedPolicy( const MIL_Entity_ABC& entity ) const
 {
     double rMaxSpeed = std::numeric_limits< double >::max();
-    if ( type_ )
+    if( type_ )
     {
         std::set< const PHY_Volume* > volumes_;
         const PHY_RolePion_Composantes* role = entity.RetrieveRole< PHY_RolePion_Composantes >();

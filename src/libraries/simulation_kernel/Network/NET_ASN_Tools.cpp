@@ -482,7 +482,6 @@ void NET_ASN_Tools::WriteLocationList( const T_LocalisationPtrVector& locaList, 
         WriteLocation( **it, *asnList.mutable_elem( static_cast< int >( it - locaList.begin() ) ) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WriteListPolygon
 // Created: AGN 03-08-18

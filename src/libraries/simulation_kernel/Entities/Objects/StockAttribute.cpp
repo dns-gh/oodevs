@@ -118,7 +118,7 @@ void StockAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
     std::size_t size;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
        >> size;
-    while ( size-- )
+    while( size-- )
     {
         std::string type;
 
@@ -140,7 +140,7 @@ void StockAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) co
     std::size_t size = stockDotations_.size();
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << size;
-    for ( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
+    for( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
     {
         ar << it->first->GetName()
            << it->second.stock_ << it->second.maxStock_;
@@ -154,7 +154,7 @@ void StockAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) co
 void StockAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "stock" );
-    for ( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
+    for( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
     {
         xos << xml::start( "resource" )
             << xml::attribute( "type", it->first->GetName() )

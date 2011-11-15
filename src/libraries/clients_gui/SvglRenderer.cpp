@@ -110,7 +110,7 @@ void SvglRenderer::Render( svg::Node_ABC* node, const std::string& style, const 
     if( it == lists_.end() )
     {
         listId = GenerateList( node, style, viewport, vWidth, vHeight );
-        if ( !listId )
+        if( !listId )
             return;
         lists_[ node ] = listId;
     }

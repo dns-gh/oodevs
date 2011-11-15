@@ -145,10 +145,9 @@ void EquipmentType::ReadResource( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void EquipmentType::ReadLogSupplyFunction( xml::xistream& xis )
 {
-    if ( xis.has_child( "carrying" ) )
+    if( xis.has_child( "carrying" ) )
         carryingLogSupplyFunction_ = true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: EquipmentType::IsLogSupplyFunctionCarrying

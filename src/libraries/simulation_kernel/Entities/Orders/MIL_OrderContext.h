@@ -21,7 +21,6 @@ namespace sword
 
 class MIL_LimaFunction;
 
-
 // =============================================================================
 /** @class  MIL_OrderContext
     @brief  MIL_OrderContext

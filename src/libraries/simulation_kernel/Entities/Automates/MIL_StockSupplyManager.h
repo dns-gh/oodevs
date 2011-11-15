@@ -21,7 +21,7 @@ class PHY_DotationCategory;
 class MIL_Automate;
 template < typename T > class PHY_ActionLogistic;
 
-namespace logistic 
+namespace logistic
 {
     class SupplyRequestBuilder_ABC;
     class SupplyRequestContainer;

@@ -205,7 +205,7 @@ void MedicalTreatmentAttribute::MedicalCapacity::Update( const sword::MedicalTre
 {
     if( capacity.has_type_id() )
         type_ = MIL_MedicalTreatmentType::Find( capacity.type_id() );
-    if ( type_ )
+    if( type_ )
     {
         if( capacity.has_baseline_count() )
             baseline_ = capacity.baseline_count();
@@ -339,7 +339,7 @@ void MedicalTreatmentAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "medical-treatement" );
 
-    for ( T_TreatmentCapacityVector::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+    for( T_TreatmentCapacityVector::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
     {
         xos << xml::start( "bed-capacity" )
                 << xml::attribute( "type" , it->second.type_->GetName() )

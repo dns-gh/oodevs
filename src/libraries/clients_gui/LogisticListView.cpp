@@ -102,7 +102,7 @@ ValuedListItem* LogisticListView::FindOrCreateOrReplace( const Entity_ABC* entit
 // -----------------------------------------------------------------------------
 const LogisticLevel& LogisticListView::GetLogisticLevel( const Entity_ABC& entity ) const
 {
-    if(  entity.GetTypeName() == Formation_ABC::typeName_ )
+    if( entity.GetTypeName() == Formation_ABC::typeName_ )
         return static_cast< const Formation_ABC* >( &entity )->GetLogisticLevel();
     else if( entity.GetTypeName() == Automat_ABC::typeName_ )
         return static_cast< const Automat_ABC* >( &entity )->GetLogisticLevel();

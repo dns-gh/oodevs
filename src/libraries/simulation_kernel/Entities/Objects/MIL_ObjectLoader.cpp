@@ -176,7 +176,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& 
 
     try
     {
-        if ( message.elem_size() < 5 )
+        if( message.elem_size() < 5 )
             attributes_->Initialize( *pObject );
         else
             attributes_->Create( *pObject, message.elem( 4 ) );

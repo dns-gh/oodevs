@@ -53,7 +53,7 @@ int main( int argc, char* argv[] )
         JOBOBJECT_EXTENDED_LIMIT_INFORMATION extendedJobInfo;;
         QueryInformationJobObject( launcherJob, JobObjectExtendedLimitInformation, &extendedJobInfo, sizeof( extendedJobInfo ), 0 );
         extendedJobInfo.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE | JOB_OBJECT_LIMIT_DIE_ON_UNHANDLED_EXCEPTION;
-        if ( !SetInformationJobObject( launcherJob, JobObjectExtendedLimitInformation, &extendedJobInfo, sizeof( extendedJobInfo ) ) )
+        if( !SetInformationJobObject( launcherJob, JobObjectExtendedLimitInformation, &extendedJobInfo, sizeof( extendedJobInfo ) ) )
             throw std::runtime_error( "Launcher Service not initialized" );
         LauncherService::Initialize( path );
         LauncherService& service = LauncherService::Instance();

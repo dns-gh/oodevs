@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #ifndef __terrain_ObjectCollisionNotificationHandler_ABC_H__
 #define __terrain_ObjectCollisionNotificationHandler_ABC_H__
 

@@ -103,7 +103,6 @@ void SubItemDisplayer::EndDisplay()
     current_->setText( 1, message_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SubItemDisplayer::LastChild
 // Created: MMC 2011-09-28
@@ -129,7 +128,7 @@ Q3ListViewItem* SubItemDisplayer::FindChild( const QString& name )
     Q3ListViewItem* child = parent_->firstChild();
     while( child )
     {
-        if ( child->text( 0 ) == name )
+        if( child->text( 0 ) == name )
             return child;
         child = child->nextSibling();
     }
@@ -149,7 +148,7 @@ Q3ListViewItem* SubItemDisplayer::FindAddChild( const QString& name )
     if( find( children_.begin(), children_.end(), name ) == children_.end() )
         AddChild( name );
     Q3ListViewItem* foundItem = FindChild( name );
-    if ( foundItem )
+    if( foundItem )
         return foundItem;
 
     Q3ListViewItem* newItem = factory_.CreateItem( parent_, LastSibling() );

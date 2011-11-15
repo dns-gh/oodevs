@@ -427,7 +427,6 @@ void MissionPanel::OnCancel()
     Close();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MissionPanel::closeEvent
 // Created: MMC 2011-10-14

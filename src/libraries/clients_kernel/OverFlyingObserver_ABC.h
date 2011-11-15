@@ -39,7 +39,6 @@ public:
     //@}
 };
 
-
 // =============================================================================
 /** @class  OverFlyingObserver_Base
     @brief  OverFlyingObserver_Base
@@ -62,7 +61,6 @@ public:
     virtual void OverFly( const T& element ) = 0;
     //@}
 };
-
 
 // =============================================================================
 /** @class  OverFlyingObserver

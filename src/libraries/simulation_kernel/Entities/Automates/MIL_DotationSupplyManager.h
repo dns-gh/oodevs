@@ -20,7 +20,7 @@
 class MIL_Automate;
 class PHY_DotationCategory;
 
-namespace logistic 
+namespace logistic
 {
     class SupplyRequestBuilder_ABC;
     class SupplyRequestContainer;

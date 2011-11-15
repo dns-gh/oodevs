@@ -176,13 +176,13 @@ void LodgingAttribute::ManageResident( MIL_AgentPion& pion )
     unsigned int nbrResidents = GetNbrManagedHumansResidents();
     Residents_.push_back( &pion );
 
-    if ( capacity_ <= nbrResidents )
+    if( capacity_ <= nbrResidents )
         return;
 
     PHY_RolePion_Refugee* pRefugeeRole = pion.RetrieveRole< PHY_RolePion_Refugee >();
     PHY_RolePion_Surrender* pSurrenderRole = pion.RetrieveRole< PHY_RolePion_Surrender >();
 
-    if ( !pRefugeeRole && !pSurrenderRole )
+    if( !pRefugeeRole && !pSurrenderRole )
         return;
 
     unsigned nbrFreeLodging = capacity_ - nbrResidents;
@@ -191,16 +191,16 @@ void LodgingAttribute::ManageResident( MIL_AgentPion& pion )
 
     if( nbrHumans <= nbrFreeLodging  )
     {
-        if ( pRefugeeRole )
+        if( pRefugeeRole )
             pRefugeeRole->UpdateLodging( nbrHumans );
-        if ( pSurrenderRole )
+        if( pSurrenderRole )
             pSurrenderRole->UpdateLodging( nbrHumans );
     }
     else
     {
-        if ( pRefugeeRole )
+        if( pRefugeeRole )
             pRefugeeRole->UpdateLodging( nbrFreeLodging );
-        if ( pSurrenderRole )
+        if( pSurrenderRole )
             pSurrenderRole->UpdateLodging( nbrFreeLodging );
         MIL_Report::PostEvent( pion, MIL_Report::eReport_PrisonersCampFull );
     }
@@ -219,44 +219,44 @@ void LodgingAttribute::UnmanageResident( MIL_AgentPion& pion )
     PHY_RolePion_Refugee* pRefugeeRole = pion.RetrieveRole< PHY_RolePion_Refugee >();
     PHY_RolePion_Surrender* pSurrenderRole = pion.RetrieveRole< PHY_RolePion_Surrender >();
 
-    if ( !pRefugeeRole && !pSurrenderRole )
+    if( !pRefugeeRole && !pSurrenderRole )
         return;
 
     unsigned nbrFreeLodging = pRefugeeRole ? pRefugeeRole->GetNbrHumansCampManaged() : pSurrenderRole->GetNbrHumansCampManaged();
-    if ( pRefugeeRole )
+    if( pRefugeeRole )
         pRefugeeRole->UpdateLodging( 0 );
-    if ( pSurrenderRole )
+    if( pSurrenderRole )
         pSurrenderRole->UpdateLodging( 0 );
 
     Residents_.erase( it );
 
     for( CIT_ResidentsVector itResident = Residents_.begin(); itResident != Residents_.end(); ++itResident )
     {
-        if ( nbrFreeLodging == 0 )
+        if( nbrFreeLodging == 0 )
             break;
 
         MIL_AgentPion* pPion = *itResident;
         PHY_RolePion_Refugee* pCurRefugeeRole = pPion->RetrieveRole< PHY_RolePion_Refugee >();
         PHY_RolePion_Surrender* pCurSurrenderRole = pPion->RetrieveRole< PHY_RolePion_Surrender >();
 
-        if ( !pCurRefugeeRole && !pCurSurrenderRole )
+        if( !pCurRefugeeRole && !pCurSurrenderRole )
             continue;
 
         unsigned int unmanaged = pCurRefugeeRole ? pCurRefugeeRole->GetNbrHumansCampUnmanaged() : pCurSurrenderRole->GetNbrHumansCampUnmanaged();
         if( unmanaged >= nbrFreeLodging )
         {
-            if ( pCurRefugeeRole )
+            if( pCurRefugeeRole )
                 pCurRefugeeRole->UpdateLodging( nbrFreeLodging );
-            if ( pCurSurrenderRole )
+            if( pCurSurrenderRole )
                 pCurSurrenderRole->UpdateLodging( nbrFreeLodging );
             break;
         }
         else
         {
             nbrFreeLodging -= unmanaged;
-            if ( pCurRefugeeRole )
+            if( pCurRefugeeRole )
                 pCurRefugeeRole->UpdateLodging( unmanaged );
-            if ( pCurSurrenderRole )
+            if( pCurSurrenderRole )
                 pSurrenderRole->UpdateLodging( unmanaged );
         }
     }
@@ -275,7 +275,7 @@ unsigned int LodgingAttribute::GetNbrManagedHumansResidents() const
         PHY_RolePion_Refugee* pRefugeeRole = pPion->RetrieveRole< PHY_RolePion_Refugee >();
         PHY_RolePion_Surrender* pSurrenderRole = pPion->RetrieveRole< PHY_RolePion_Surrender >();
 
-        if ( !pRefugeeRole && !pSurrenderRole )
+        if( !pRefugeeRole && !pSurrenderRole )
             continue;
 
         count += pRefugeeRole ? pRefugeeRole->GetNbrHumansCampManaged() : pSurrenderRole->GetNbrHumansCampManaged();
