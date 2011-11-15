@@ -5420,6 +5420,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Preparer bascule"/>
+        <mission name="PION LOGISTIQUE Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -5456,6 +5457,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Preparer bascule"/>
+        <mission name="PION LOGISTIQUE Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -5529,6 +5531,13 @@
           <fragorder name="Modifier Priorites Blesses"/>
         </mission>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
+        <mission name="PION LOGISTIQUE Se Deployer">
+          <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Transferer VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9705,6 +9714,32 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.AIR.Assaut">
+      <missions>
+        <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
+        <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
+        <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
+        <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE HLA Atterrir"/>
+        <mission name="AUTOMATE HLA Decoller"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </automat>
   </automats>
   <crowd>
     <crowd dia-type="france.military.crowd.roles.Foule" file="BMCrowd.bms" masalife="true" name="Masalife.Foule">
@@ -9737,4 +9772,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1944656222" -->
+<!-- signature="1730966994" -->
