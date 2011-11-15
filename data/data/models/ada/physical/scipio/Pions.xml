@@ -10893,6 +10893,13 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
+    <stocks>
+      <stock logistic-supply-class="Unite essence" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite vivre" threshold="10"/>
+      <stock logistic-supply-class="Pieces" threshold="10"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -16844,4 +16851,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3322953403" -->
+<!-- signature="2890196393" -->
