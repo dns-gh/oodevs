@@ -5420,6 +5420,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Preparer bascule"/>
+        <mission name="PION LOGISTIQUE Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -5456,6 +5457,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Preparer bascule"/>
+        <mission name="PION LOGISTIQUE Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -5529,6 +5531,13 @@
           <fragorder name="Modifier Priorites Blesses"/>
         </mission>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
+        <mission name="PION LOGISTIQUE Se Deployer">
+          <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+          <fragorder name="Pion Renforcer En VSRAM"/>
+          <fragorder name="Pion Transferer VSRAM"/>
+          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -9737,4 +9746,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3773129465" -->
+<!-- signature="0906966388" -->
