@@ -175,7 +175,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mis
     BOOST_CHECK_EQUAL( convoy.serviceId.eventCount, 1337 );
     BOOST_CHECK_EQUAL( convoy.serviceId.issuingObjectIdentifier.str(), "SWORD" );
     BOOST_CHECK_EQUAL( convoy.consumer.str(), "SWORD" );
-    BOOST_CHECK_EQUAL( convoy.provider.str(), "Any carrier" );
+    BOOST_CHECK( convoy.provider.str().empty() );
     BOOST_CHECK_EQUAL( convoy.serviceType, convoyServiceType );
     BOOST_CHECK_EQUAL( convoy.requestTimeOut, noTimeout );
     BOOST_CHECK_EQUAL( convoy.transportData.convoyType, convoyTransportType );

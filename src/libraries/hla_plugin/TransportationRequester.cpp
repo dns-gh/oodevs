@@ -171,7 +171,7 @@ void TransportationRequester::Notify( const sword::AutomatOrder& message, int /*
         interactions::NetnRequestConvoy request;
         request.serviceId = NetnEventIdentifier( context, "SWORD" );
         request.consumer = UnicodeString( "SWORD" );
-        request.provider = UnicodeString( "Any carrier" );
+        request.provider = UnicodeString(); // empty provider
         request.serviceType = 4; // convoy
         request.requestTimeOut = 0; // no timeout
         NetnDataTStruct transport;
