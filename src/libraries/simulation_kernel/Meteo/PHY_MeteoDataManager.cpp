@@ -20,7 +20,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
-unsigned int PHY_MeteoDataManager::localCounter_ = 1;
+unsigned int PHY_MeteoDataManager::localCounter_ = 2;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
@@ -71,7 +71,7 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
-    pGlobalMeteo_ = new PHY_GlobalMeteo( 0, xis, pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
+    pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
     AddMeteo( *pGlobalMeteo_ );
     xis >> xml::end;
 }
