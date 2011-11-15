@@ -387,6 +387,10 @@
         <source>Infrastructure/Role</source>
         <translation>Infrastructure/Rôle</translation>
     </message>
+    <message>
+        <source>Info</source>
+        <translation>Info</translation>
+    </message>
 </context>
 <context>
     <name>Crowd</name>
