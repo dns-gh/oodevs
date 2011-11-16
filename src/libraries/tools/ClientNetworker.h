@@ -62,7 +62,7 @@ public:
     using MessageSender_ABC::Send;
     using MessageDispatcher_ABC::RegisterMessage;
 
-    virtual void Send( const std::string& endpoint, unsigned long tag, const Message& message );
+    virtual void Send( const std::string& endpoint, unsigned long tag, Message& message );
     //@}
 
     //! @name Accessors

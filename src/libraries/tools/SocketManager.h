@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     void Add( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket );
-    virtual void Send( const std::string& endpoint, unsigned long tag, const Message& message );
+    virtual void Send( const std::string& endpoint, unsigned long tag, Message& message );
 
     void Disconnect();
     void Disconnect( const std::string& endpoint );

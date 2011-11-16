@@ -35,6 +35,28 @@ Message::Message( std::size_t size )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Message constructor
+// Created: LDC 2011-11-15
+// -----------------------------------------------------------------------------
+Message::Message( const Message& rhs )
+    : readOffset_( rhs.readOffset_ )
+    , data_      ( rhs.data_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Message::operator=
+// Created: LDC 2011-11-15
+// -----------------------------------------------------------------------------
+Message& Message::operator=( const Message& rhs )
+{
+    readOffset_ = rhs.readOffset_;
+    data_ = rhs.data_;
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Message destructor
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
@@ -107,7 +129,7 @@ BOOST_STATIC_ASSERT( sizeof( unsigned long ) == 4 );
 // Name: Message::MakeOutputBuffer
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-boost::asio::const_buffers_1 Message::MakeOutputBuffer( unsigned long tag ) const
+boost::asio::const_buffers_1 Message::MakeOutputBuffer( unsigned long tag )
 {
     if( ! data_ || data_->size() < 2 * sizeof( unsigned long ) )
         return boost::asio::const_buffers_1( boost::asio::const_buffer() );

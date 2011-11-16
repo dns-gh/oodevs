@@ -64,7 +64,7 @@ Config::~Config()
 void Config::Connect( Network& network ) const
 {
     if( ! host_.empty() )
-        network.Connect( host_ );
+        network.DoConnect( host_ );
     else
         LoadSession( network );
 }
@@ -87,7 +87,7 @@ void Config::LoadSession( Network& network ) const
                     >> xml::start( "gaming" )
                         >> xml::start( "network" )
                             >> xml::attribute( "server", host );
-        network.Connect( host );
+        network.DoConnect( host );
     }
     catch( ... )
     {

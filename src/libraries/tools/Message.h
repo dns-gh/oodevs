@@ -37,6 +37,8 @@ public:
     //@{
               Message();
      explicit Message( std::size_t size );
+              Message( const Message& rhs );
+     Message& operator=( const Message& rhs );
      virtual ~Message();
     //@}
 
@@ -53,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    boost::asio::const_buffers_1   MakeOutputBuffer( unsigned long tag ) const;
+    boost::asio::const_buffers_1   MakeOutputBuffer( unsigned long tag );
     boost::asio::mutable_buffers_1 MakeInputBuffer();
     //@}
 

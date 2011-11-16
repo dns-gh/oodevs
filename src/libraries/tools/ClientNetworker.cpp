@@ -158,7 +158,7 @@ void ClientNetworker::Stop()
 // Name: ClientNetworker::Send
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ClientNetworker::Send( const std::string& endpoint, unsigned long tag, const Message& message )
+void ClientNetworker::Send( const std::string& endpoint, unsigned long tag, Message& message )
 {
     sockets_->Send( endpoint, tag, message );
 }

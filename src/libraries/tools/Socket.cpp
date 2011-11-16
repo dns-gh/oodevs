@@ -11,6 +11,7 @@
 #include "Socket.h"
 #include "Message.h"
 #include "MessageCallback_ABC.h"
+#include "MT_Tools/MT_Logger.h"
 #include <boost/bind.hpp>
 
 using namespace tools;
@@ -52,11 +53,21 @@ void Socket::Close()
 // Name: Socket::Send
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void Socket::Send( unsigned long tag, const Message& message )
+int Socket::Send( unsigned long tag, Message& message )
 {
-    boost::asio::async_write( *socket_, message.MakeOutputBuffer( tag ),
-                              boost::bind( &Socket::Sent, shared_from_this(),
-                                           message, boost::asio::placeholders::error ) );
+    int size = 0;
+    std::pair< unsigned long, Message > pair( tag, message );
+    {
+        boost::mutex::scoped_lock locker( mutex_ );
+        bool idle = queue_.empty();
+        queue_.push_back( pair );
+        if( idle )
+            boost::asio::async_write( *socket_, message.MakeOutputBuffer( tag ),
+                                  boost::bind( &Socket::Sent, shared_from_this(),
+                                               message, boost::asio::placeholders::error ) );
+        size = queue_.size();
+    }
+    return size;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,6 +80,19 @@ void Socket::Sent( const Message&, const boost::system::error_code& error )
     {
         previous_ = error;
         message_->OnError( endpoint_, error.message() );
+    }
+    {
+        boost::mutex::scoped_lock locker( mutex_ );
+        queue_.pop_front();
+        if( !queue_.empty() )
+        {
+            std::pair< unsigned long, Message >& pair = queue_.front();
+            tools::Message& message = pair.second;
+            boost::asio::async_write( *socket_, message.MakeOutputBuffer( pair.first ),
+                                  boost::bind( &Socket::Sent, shared_from_this(),
+                                               message, boost::asio::placeholders::error ) );
+        }
+        //MT_LOG_INFO_MSG( "Still " << queue_.size() << " messages queued for " << endpoint_ );
     }
 }
 
