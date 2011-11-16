@@ -2346,7 +2346,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions ou zones de tir" optional="true" type="LocationComposite">
+      <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions ou zones de deploiement" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -3316,4 +3316,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3040769679" -->
+<!-- signature="2514320020" -->
