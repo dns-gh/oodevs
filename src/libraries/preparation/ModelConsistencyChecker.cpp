@@ -153,7 +153,7 @@ void ModelConsistencyChecker::FillEntitiesCopy( E_ConsistencyCheck type )
             if( !attribute )
                 return;
             EntityWithLongNameExtractor functor( entities_ );
-            if( attribute->Extends( "units") )
+            if( attribute->Extends( "unit") )
                 model_.agents_.Resolver< Agent_ABC >::Apply( functor );
             if( attribute->Extends( "automat" ) )
                 model_.agents_.Resolver< Automat_ABC >::Apply( functor );
