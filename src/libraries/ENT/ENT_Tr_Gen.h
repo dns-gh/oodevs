@@ -78,6 +78,7 @@ public:
     static E_UnitMorale ConvertToUnitMorale( const std::string& );
     static E_UnitExperience ConvertToUnitExperience( const std::string& );
     static E_UnitStress ConvertToUnitStress( const std::string& );
+    static E_LightingType ConvertToLightingType( const std::string& );
     static E_WeatherType ConvertToWeatherType( const std::string& );
     static E_LogMaintenanceHandlingStatus ConvertToLogMaintenanceHandlingStatus( const std::string& );
     static E_LogSupplyHandlingStatus ConvertToLogSupplyHandlingStatus( const std::string& );

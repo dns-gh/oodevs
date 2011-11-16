@@ -113,7 +113,7 @@ public:
                                        , public ADN_DataTreeNode_ABC
     {
     public:
-        explicit ModificatorIlluminationInfos( const E_TimeCategory& e );
+        explicit ModificatorIlluminationInfos( const E_LightingType& e );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -122,14 +122,14 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        E_TimeCategory eType_;
+        E_LightingType eType_;
         ADN_Type_Double rCoeff_;
 
     public:
         class Cmp : public std::unary_function< ModificatorIlluminationInfos*, bool >
         {
         public:
-            explicit Cmp( const E_TimeCategory& val ) : val_( val ) {}
+            explicit Cmp( const E_LightingType& val ) : val_( val ) {}
             virtual ~Cmp() {}
 
             bool operator()( ModificatorIlluminationInfos* tgtnfos ) const
@@ -138,7 +138,7 @@ public:
             }
 
         private:
-            E_TimeCategory val_;
+            E_LightingType val_;
         };
     };
 

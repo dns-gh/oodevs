@@ -46,28 +46,6 @@ enum E_PerceptionResult
     eIdentification = 3,
 };
 
-enum E_DayLightingType
-{
-    eDayLightingJourSansNuage,
-    eDayLightingJourPeuNuageux,
-    eDayLightingJourMoyennementNuageux,
-    eDayLightingJourAssezNuageux,
-    eDayLightingJourTresNuageux,
-
-    eNbrDayLightingType
-};
-
-enum E_NightLightingType
-{
-    eNightLightingNuitPleineLune,
-    eNightLightingNuitTroisQuartDeLune,
-    eNightLightingNuitDemiLune,
-    eNightLightingNuitQuartDeLune,
-    eNightLightingNuitNouvelleLune,
-
-    eNbrNightLightingType
-};
-
 enum E_FuncLimaType
 {
     eLimaFuncLD     = 0, // Ligne de débouché

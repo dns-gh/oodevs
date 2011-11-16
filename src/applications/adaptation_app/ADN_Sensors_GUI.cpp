@@ -430,7 +430,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     pTable->setTopMargin( 0 );
 
     pTable->setNumRows( 2 );
-    pTable->setNumCols( static_cast< int >( 6 + sizes.size() + materials.size() + eNbrSensorWeatherModifiers + eNbrTimeCategory + eNbrVisionObjects + eNbrUnitPosture * 2 ) );
+    pTable->setNumCols( static_cast< int >( 6 + sizes.size() + materials.size() + eNbrSensorWeatherModifiers + eNbrLightingType + eNbrVisionObjects + eNbrUnitPosture * 2 ) );
     for( int n = 0; n < pTable->numCols(); ++n )
         pTable->horizontalHeader()->setLabel( n, "" );
 
@@ -452,7 +452,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     nCol += static_cast< int >( sizes.size() );
 
     ::AddHeaders( pTable, nCol, tr( "Weather modifiers" ), ADN_Tr::ConvertFromSensorWeatherModifiers, eNbrSensorWeatherModifiers );
-    ::AddHeaders( pTable, nCol, tr( "Illumination modifiers" ), ADN_Tr::ConvertFromTimeCategory, eNbrTimeCategory );
+    ::AddHeaders( pTable, nCol, tr( "Illumination modifiers" ), ENT_Tr::ConvertFromLightingType, eNbrLightingType );
     ::AddHeaders( pTable, nCol, tr( "Environement modifiers" ), ADN_Tr::ConvertFromVisionObject, eNbrVisionObjects );
     AddHeaders( pTable, nCol, tr( "UrbanBlock material modifiers" ), materials );
     ::AddHeaders( pTable, nCol, tr( "Stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
@@ -479,7 +479,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
         int nCol = 6;
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifSizes_, static_cast< int >( sizes.size() ) );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifWeather_, eNbrSensorWeatherModifiers );
-        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifIlluminations_, eNbrTimeCategory );
+        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifIlluminations_, eNbrLightingType );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifEnvironments_, eNbrVisionObjects );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifUrbanBlocks_, static_cast< int >( materials.size() ) );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifStance_, eNbrUnitPosture );

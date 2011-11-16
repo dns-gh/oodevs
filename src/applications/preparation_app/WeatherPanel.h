@@ -76,8 +76,8 @@ private:
     QDateTimeEdit* time_;
     QTimeEdit* sunrise_;
     QTimeEdit* sunset_;
-    gui::ValuedComboBox< kernel::E_DayLightingType >* dayLighting_;
-    gui::ValuedComboBox< kernel::E_NightLightingType >* nightLighting_;
+    gui::ValuedComboBox< E_LightingType >* dayLighting_;
+    gui::ValuedComboBox< E_LightingType >* nightLighting_;
     QDateTimeEdit* endTime_;
     //@}
 };

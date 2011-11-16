@@ -173,18 +173,18 @@ enum E_UnitStress
 
 enum E_LightingType
 {
-    eLightingType_JourSansNuage,
-    eLightingType_JourPeuNuageux,
-    eLightingType_JourMoyennementNuageux,
-    eLightingType_JourAssezNuageux,
-    eLightingType_JourTresNuageux,
-    eLightingType_NuitPleineLune,
-    eLightingType_NuitTroisQuartDeLune,
-    eLightingType_NuitDemiLune,
-    eLightingType_NuitQuartDeLune,
-    eLightingType_NuitNouvelleLune,
-    eLightingType_Eclairant,
-    eNbrLightingType
+    eLightingType_JourSansNuage          = 0,
+    eLightingType_JourPeuNuageux         = 1,
+    eLightingType_JourMoyennementNuageux = 2,
+    eLightingType_JourAssezNuageux       = 3,
+    eLightingType_JourTresNuageux        = 4,
+    eLightingType_NuitPleineLune         = 5,
+    eLightingType_NuitTroisQuartDeLune   = 6,
+    eLightingType_NuitDemiLune           = 7,
+    eLightingType_NuitQuartDeLune        = 8,
+    eLightingType_NuitNouvelleLune       = 9,
+    eLightingType_Eclairant              = 10,
+    eNbrLightingType                     = 11
 };
 
 enum E_WeatherType

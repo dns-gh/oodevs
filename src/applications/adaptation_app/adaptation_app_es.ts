@@ -4554,50 +4554,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation>En travaux</translation>
     </message>
     <message>
-        <source>Very sunny day</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Sunny day</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Partly cloudy day</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Cloudy day</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Very cloudy day</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Full moon night</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Waning moon night</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Quarter moon night</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Crescent moon night</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>New moon night</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Illumination shell</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Ground</source>
         <translation></translation>
     </message>

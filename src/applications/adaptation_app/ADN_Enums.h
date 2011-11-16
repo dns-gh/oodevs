@@ -30,22 +30,6 @@ enum E_ConsumptionType
     eNbrConsumptionType
 };
 
-enum E_TimeCategory
-{
-    eTimeTypeDay_NoCloud = 0,
-    eTimeTypeDay_LightCloud,
-    eTimeTypeDay_MiddleCloud,
-    eTimeTypeDay_HeavyCloud,
-    eTimeTypeDay_FullCloud,
-    eTimeTypeNight_FullMoon,
-    eTimeTypeNight_ThreeQuarterMoon,
-    eTimeTypeNight_HalfMoon,
-    eTimeTypeNight_OneQuarterMoon,
-    eTimeTypeNight_NewMoon,
-    eTimeTypeNight_LightingRocket,
-    eNbrTimeCategory
-};
-
 enum E_VisionObject
 {
     eVisionGround = 0,

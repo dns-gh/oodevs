@@ -166,7 +166,7 @@ void ADN_Sensors_Data::ModificatorSizeInfos::WriteArchive( xml::xostream& output
 // Name: ModificatorIlluminationInfos::ModificatorIlluminationInfos
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorIlluminationInfos::ModificatorIlluminationInfos(const E_TimeCategory& e)
+ADN_Sensors_Data::ModificatorIlluminationInfos::ModificatorIlluminationInfos(const E_LightingType& e)
 : ADN_Ref_ABC()
 , ADN_DataTreeNode_ABC()
 , eType_(e)
@@ -183,7 +183,7 @@ ADN_Sensors_Data::ModificatorIlluminationInfos::ModificatorIlluminationInfos(con
 std::string ADN_Sensors_Data::ModificatorIlluminationInfos::GetNodeName()
 {
     std::string strResult( "à la luminosité " );
-    return strResult + ADN_Tr::ConvertFromTimeCategory( eType_, ENT_Tr_ABC::eToTr );
+    return strResult + ENT_Tr::ConvertFromLightingType( eType_, ENT_Tr_ABC::eToTr );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +192,7 @@ std::string ADN_Sensors_Data::ModificatorIlluminationInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Sensors_Data::ModificatorIlluminationInfos::GetItemName()
 {
-    return ADN_Tr::ConvertFromTimeCategory( eType_, ENT_Tr_ABC::eToTr );
+    return ENT_Tr::ConvertFromLightingType( eType_, ENT_Tr_ABC::eToTr );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +211,7 @@ void ADN_Sensors_Data::ModificatorIlluminationInfos::ReadArchive( xml::xistream&
 void ADN_Sensors_Data::ModificatorIlluminationInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "distance-modifier" )
-            << xml::attribute( "type", ADN_Tr::ConvertFromTimeCategory( eType_ ) )
+            << xml::attribute( "type", ENT_Tr::ConvertFromLightingType( eType_ ) )
             << xml::attribute( "value", rCoeff_ )
            << xml::end;
 }
@@ -722,9 +722,9 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
 
     // initialize illumination modificator infos
     unsigned int i = 0;
-    for( i = 0; i< eNbrTimeCategory; ++i )
+    for( i = 0; i< eNbrLightingType; ++i )
     {
-        ModificatorIlluminationInfos* pInfo = new ModificatorIlluminationInfos((E_TimeCategory)i);
+        ModificatorIlluminationInfos* pInfo = new ModificatorIlluminationInfos((E_LightingType)i);
         vModifIlluminations_.AddItem( pInfo );
     }
 
@@ -823,7 +823,7 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
     // LTO end
 
     uint i;
-    for( i= 0 ; i< eNbrTimeCategory ; ++i)
+    for( i= 0 ; i< eNbrLightingType ; ++i)
         pCopy->vModifIlluminations_[i]->rCoeff_ = vModifIlluminations_[i]->rCoeff_.GetData();
 
     // initialize meteo modificator infos
@@ -915,7 +915,7 @@ void ADN_Sensors_Data::SensorInfos::ReadPrecipitation( xml::xistream& input )
 void ADN_Sensors_Data::SensorInfos::ReadVisibility( xml::xistream& input )
 {
     const std::string type = input.attribute< std::string >( "type" );
-    E_TimeCategory n = ADN_Tr::ConvertToTimeCategory( type );
+    E_LightingType n = ENT_Tr::ConvertToLightingType( type );
     vModifIlluminations_.at( n )->ReadArchive( input );
 }
 

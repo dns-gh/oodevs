@@ -64,33 +64,6 @@
     </message>
 </context>
 <context>
-    <name>E_DayLightingType</name>
-    <message>
-        <source>JourSansNuage</source>
-        <translation>JourSansNuage</translation>
-    </message>
-    <message>
-        <source>JourPeuNuageux</source>
-        <translation>JourPeuNuageux</translation>
-    </message>
-    <message>
-        <source>JourMoyennementNuageux</source>
-        <translation>JourMoyennementNuageux</translation>
-    </message>
-    <message>
-        <source>JourAssezNuageux</source>
-        <translation>JourAssezNuageux</translation>
-    </message>
-    <message>
-        <source>JourTresNuageux</source>
-        <translation>JourTresNuageux</translation>
-    </message>
-    <message>
-        <source>Eclairant</source>
-        <translation>Eclairant</translation>
-    </message>
-</context>
-<context>
     <name>E_FuncLimaType</name>
     <message>
         <source>LD</source>
@@ -171,33 +144,6 @@
     <message>
         <source>Recognition and reception line (RRL)</source>
         <translation>Ligne d&apos;Identification et d&apos;Accueil (LIA)</translation>
-    </message>
-</context>
-<context>
-    <name>E_NightLightingType</name>
-    <message>
-        <source>NuitPleineLune</source>
-        <translation>NuitPleineLune</translation>
-    </message>
-    <message>
-        <source>NuitTroisQuartDeLune</source>
-        <translation>NuitTroisQuartDeLune</translation>
-    </message>
-    <message>
-        <source>NuitDemiLune</source>
-        <translation>NuitDemiLune</translation>
-    </message>
-    <message>
-        <source>NuitQuartDeLune</source>
-        <translation>NuitQuartDeLune</translation>
-    </message>
-    <message>
-        <source>NuitNouvelleLune</source>
-        <translation>NuitNouvelleLune</translation>
-    </message>
-    <message>
-        <source>Eclairant</source>
-        <translation>Eclairant</translation>
     </message>
 </context>
 <context>
@@ -442,46 +388,6 @@
 </context>
 <context>
     <name>tools</name>
-    <message>
-        <source>No clouds</source>
-        <translation>Sans nuage</translation>
-    </message>
-    <message>
-        <source>Slightly cloudy</source>
-        <translation>Peu nuageux</translation>
-    </message>
-    <message>
-        <source>Moderately cloudy</source>
-        <translation>Moyennement nuageux</translation>
-    </message>
-    <message>
-        <source>Quite cloudy</source>
-        <translation>Assez nuageux</translation>
-    </message>
-    <message>
-        <source>Very cloudy</source>
-        <translation>Très nuageux</translation>
-    </message>
-    <message>
-        <source>Full moon</source>
-        <translation>Pleine lune</translation>
-    </message>
-    <message>
-        <source>Three quarter moon</source>
-        <translation>Trois quarts de lune</translation>
-    </message>
-    <message>
-        <source>Half moon</source>
-        <translation>Demi lune</translation>
-    </message>
-    <message>
-        <source>Quarter moon</source>
-        <translation>Quart de lune</translation>
-    </message>
-    <message>
-        <source>New moon</source>
-        <translation>Nouvelle lune</translation>
-    </message>
     <message>
         <source>Unknown</source>
         <translation>Inconnu</translation>

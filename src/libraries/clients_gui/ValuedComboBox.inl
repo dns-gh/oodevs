@@ -77,48 +77,6 @@ void ValuedComboBox< T >::AddItem( const std::string& label, const T& value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ValuedComboBox::AddItem
-// Created: APE 2004-06-23
-// -----------------------------------------------------------------------------
-//template< typename T >
-//void ValuedComboBox<T>::AddItem( const QPixmap& pixmap, const T& value )
-//{
-//    insertItem( pixmap, values_.size() );
-//    values_.push_back( value );
-//}
-
-// -----------------------------------------------------------------------------
-// Name: ValuedComboBox::AddItem
-/** @param  pixmap
-    @param  strLabel
-    @param  value
-*/
-// Created: APE 2004-06-23
-// -----------------------------------------------------------------------------
-//template< typename T >
-//void ValuedComboBox<T>::AddItem( const QPixmap& pixmap, const QString& strLabel, const T& value )
-//{
-//    if( !sorting_ )
-//    {
-//        insertItem( pixmap, strLabel, values_.size() );
-//        values_.push_back( value );
-//    }
-//    else
-//    {
-//        // sorted insertion
-//        int nInsertPos = 0;
-//        for( int i = 0; i < count(); ++i )
-//        {
-//            if( strLabel.compare( text( i ) ) < 0 )
-//                break;
-//            ++nInsertPos;
-//        }
-//        insertItem( pixmap, strLabel, nInsertPos );
-//        values_.insert( values_.begin() + nInsertPos, value );
-//    }
-//}
-
-// -----------------------------------------------------------------------------
 // Name: ValuedComboBox::ChangeItem
 // Created: APE 2004-06-23
 // -----------------------------------------------------------------------------
@@ -130,36 +88,6 @@ void ValuedComboBox<T>::ChangeItem( const QString& label, const T& value )
         return;
     changeItem( label, n );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ValuedComboBox::ChangeItem
-// Created: APE 2004-06-23
-// -----------------------------------------------------------------------------
-//template< typename T >
-//void ValuedComboBox<T>::ChangeItem( const QPixmap& pixmap, const T& value )
-//{
-//    int n = GetItemIndex( value );
-//    if( n == -1 )
-//        return;
-//    changeItem( pixmap, n );
-//}
-
-// -----------------------------------------------------------------------------
-// Name: ValuedComboBox::ChangeItem
-/** @param  pixmap
-    @param  strLabel
-    @param  value
-*/
-// Created: APE 2004-06-23
-// -----------------------------------------------------------------------------
-//template< typename T >
-//void ValuedComboBox<T>::ChangeItem( const QPixmap& pixmap, const QString& strLabel, const T& value )
-//{
-//    int n = GetItemIndex( value );
-//    if( n == -1 )
-//        return;
-//    changeItem( pixmap, strLabel, n );
-//}
 
 // -----------------------------------------------------------------------------
 // Name: ValuedComboBox::RemoveItem

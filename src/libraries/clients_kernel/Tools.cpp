@@ -88,46 +88,6 @@ QString tools::ToString( E_PerceptionResult nResult )
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
-// Created: JSR 2010-07-09
-// -----------------------------------------------------------------------------
-QString tools::ToString( E_DayLightingType lighting )
-{
-    static const QString lightings[] =
-    {
-        tools::translate( "E_DayLightingType", "JourSansNuage" ),
-        tools::translate( "E_DayLightingType", "JourPeuNuageux" ),
-        tools::translate( "E_DayLightingType", "JourMoyennementNuageux" ),
-        tools::translate( "E_DayLightingType", "JourAssezNuageux" ),
-        tools::translate( "E_DayLightingType", "JourTresNuageux" ),
-        tools::translate( "E_DayLightingType", "Eclairant" )
-    };
-    if( lighting >= 0 && lighting < eNbrDayLightingType )
-        return lightings[ lighting ];
-    return Unknown();
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::ToString
-// Created: JSR 2010-07-09
-// -----------------------------------------------------------------------------
-QString tools::ToString( E_NightLightingType lighting )
-{
-    static const QString lightings[] =
-    {
-        tools::translate( "E_NightLightingType", "NuitPleineLune" ),
-        tools::translate( "E_NightLightingType", "NuitTroisQuartDeLune" ),
-        tools::translate( "E_NightLightingType", "NuitDemiLune" ),
-        tools::translate( "E_NightLightingType", "NuitQuartDeLune" ),
-        tools::translate( "E_NightLightingType", "NuitNouvelleLune" ),
-        tools::translate( "E_NightLightingType", "Eclairant" )
-    };
-    if( lighting >= 0 && lighting < eNbrNightLightingType )
-        return lightings[ lighting ];
-    return Unknown();
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::ToString
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_WeatherType weather )
@@ -166,50 +126,6 @@ QString tools::ToDisplayedString( E_WeatherType weather )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::ToDisplayedString
-// Created: JSR 2010-07-09
-// -----------------------------------------------------------------------------
-QString tools::ToDisplayedString( E_DayLightingType lighting )
-{
-    switch( lighting )
-    {
-    case eDayLightingJourSansNuage:
-    default:
-        return tools::translate( "tools", "No clouds" );
-    case eDayLightingJourPeuNuageux:
-        return tools::translate( "tools", "Slightly cloudy" );
-    case eDayLightingJourMoyennementNuageux:
-        return tools::translate( "tools", "Moderately cloudy" );
-    case eDayLightingJourAssezNuageux:
-        return tools::translate( "tools", "Quite cloudy" );
-    case eDayLightingJourTresNuageux:
-        return tools::translate( "tools", "Very cloudy" );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::ToDisplayedString
-// Created: JSR 2010-07-09
-// -----------------------------------------------------------------------------
-QString tools::ToDisplayedString( E_NightLightingType lighting )
-{
-    switch( lighting )
-    {
-    case eNightLightingNuitPleineLune:
-    default:
-        return tools::translate( "tools", "Full moon" );
-    case eNightLightingNuitTroisQuartDeLune:
-        return tools::translate( "tools", "Three quarter moon" );
-    case eNightLightingNuitDemiLune:
-        return tools::translate( "tools", "Half moon" );
-    case eNightLightingNuitQuartDeLune:
-        return tools::translate( "tools", "Quarter moon" );
-    case eNightLightingNuitNouvelleLune:
-        return tools::translate( "tools", "New moon" );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: tools::GetXmlSection
 // Created: AGE 2005-03-31
 // -----------------------------------------------------------------------------
@@ -244,42 +160,6 @@ const char* tools::GetXmlSection( E_WeatherType weather )
         case eWeatherType_Rain:      return "Pluie";
         case eWeatherType_Snow:      return "Neige";
         case eWeatherType_Smoke:     return "Fumigene";
-        default:
-            return "Unknown";
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::GetXmlSection
-// Created: JSR 2010-07-09
-// -----------------------------------------------------------------------------
-const char* tools::GetXmlSection( E_DayLightingType nLightingType )
-{
-    switch( nLightingType )
-    {
-        case eDayLightingJourSansNuage:            return "JourSansNuage";
-        case eDayLightingJourPeuNuageux:           return "JourPeuNuageux";
-        case eDayLightingJourMoyennementNuageux:   return "JourMoyennementNuageux";
-        case eDayLightingJourAssezNuageux:         return "JourAssezNuageux";
-        case eDayLightingJourTresNuageux:          return "JourTresNuageux";
-        default:
-            return "Unknown";
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::GetXmlSection
-// Created: JSR 2010-07-09
-// -----------------------------------------------------------------------------
-const char* tools::GetXmlSection( E_NightLightingType nLightingType )
-{
-    switch( nLightingType )
-    {
-        case eNightLightingNuitPleineLune:           return "NuitPleineLune";
-        case eNightLightingNuitTroisQuartDeLune:     return "NuitTroisQuartDeLune";
-        case eNightLightingNuitDemiLune:             return "NuitDemiLune";
-        case eNightLightingNuitQuartDeLune:          return "NuitQuartDeLune";
-        case eNightLightingNuitNouvelleLune:         return "NuitNouvelleLune";
         default:
             return "Unknown";
     }

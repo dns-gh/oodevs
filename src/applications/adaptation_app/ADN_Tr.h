@@ -16,19 +16,17 @@
 
 // =============================================================================
 /** @class  ADN_Tr
-@brief  ADN_Tr
+    @brief  ADN_Tr
 */
 // Created: APE 2005-02-17
 // =============================================================================
-class ADN_Tr
-    : public ENT_Tr_ABC
+class ADN_Tr : public ENT_Tr_ABC
 {
 public:
     //! @name Convert From functions
     //@{
     static const std::string& ConvertFromLocation ( E_Location , E_Conversion = eToSim );
     static const std::string& ConvertFromConsumptionType ( E_ConsumptionType, E_Conversion = eToSim );
-    static const std::string& ConvertFromTimeCategory( E_TimeCategory, E_Conversion = eToSim );
     static const std::string& ConvertFromVisionObject( E_VisionObject, E_Conversion = eToSim );
     static const std::string& ConvertFromKeyPoint( E_KeyPoint, E_Conversion = eToSim );
     static const std::string& ConvertFromAgentTypePion( E_AgentTypePion, E_Conversion = eToSim );
@@ -52,7 +50,6 @@ public:
     //@{
     static E_Location        ConvertToLocation         ( const std::string& );
     static E_ConsumptionType ConvertToConsumptionType  ( const std::string& );
-    static E_TimeCategory    ConvertToTimeCategory     ( const std::string& );
     static E_VisionObject    ConvertToVisionObject     ( const std::string& );
     static E_KeyPoint        ConvertToKeyPoint         ( const std::string& );
     static E_AgentTypePion   ConvertToAgentTypePion    ( const std::string& );
@@ -72,14 +69,16 @@ public:
     static E_SupplyConvoyType   ConvertToSupplyConvoyType( const std::string& );
     //@}
 
+    //! @name Initializer
+    //@{
     static void InitTranslations();
+    //@}
 
 public:
-    //! @name typdefs
+    //! @name Types
     //@{
     typedef converter<E_Location>                   T_ConverterLocation;
     typedef converter<E_ConsumptionType>            T_ConverterConsumptionType;
-    typedef converter<E_TimeCategory>               T_ConverterTimeCategory;
     typedef converter<E_VisionObject>               T_ConverterVisionObject;
     typedef converter<E_KeyPoint>                   T_ConverterKeyPoint;
     typedef converter<E_AgentTypePion>              T_ConverterAgentTypePion;
@@ -99,10 +98,9 @@ public:
     typedef converter<E_SupplyConvoyType>           T_ConverterSupplyConvoyType;
     //@}
 
-    //! @name Convertors
+    //! @name Converters
     //@{
     static T_ConverterConsumptionType   consumptionTypeConverter_[];
-    static T_ConverterTimeCategory      timeCategoryConverter_[];
     static T_ConverterVisionObject      visionObjectConverter_[];
     static T_ConverterKeyPoint          keyPointConverter_[];
     static T_ConverterAgentTypePion     agentTypePionConverter_[];

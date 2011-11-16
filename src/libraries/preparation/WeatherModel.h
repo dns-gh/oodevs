@@ -87,8 +87,8 @@ public:
     QDateTime                       time_;
     QTime                           sunrise_;
     QTime                           sunset_;
-    kernel::E_DayLightingType       dayLighting_;
-    kernel::E_NightLightingType     nightLighting_;
+    E_LightingType                  dayLighting_;
+    E_LightingType                  nightLighting_;
     std::auto_ptr< weather::Meteo > globalWeather_;
     //@}
 };

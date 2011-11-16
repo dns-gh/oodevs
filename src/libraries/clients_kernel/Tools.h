@@ -29,8 +29,6 @@ namespace tools
 
     QString ToString( kernel::E_TroopHealthState nState );
     QString ToString( kernel::E_PerceptionResult nResult );
-    QString ToString( kernel::E_DayLightingType lighting );
-    QString ToString( kernel::E_NightLightingType lighting );
     QString ToString( E_WeatherType weather );
     QString ToString( kernel::E_FuncLimaType nType );
     QString ToShortString( kernel::E_FuncLimaType nType );
@@ -66,13 +64,9 @@ namespace tools
 
     QString ToDisplayedString( E_LightingType lighting );
     QString ToDisplayedString( E_WeatherType weather );
-    QString ToDisplayedString( kernel::E_DayLightingType lighting );
-    QString ToDisplayedString( kernel::E_NightLightingType lighting );
 
     const char* GetXmlSection( E_UnitPosture nPosture );
     const char* GetXmlSection( E_WeatherType nWeatherType );
-    const char* GetXmlSection( kernel::E_DayLightingType nLightingType );
-    const char* GetXmlSection( kernel::E_NightLightingType nLightingType );
 
     E_DotationFamily        DotationFamilyFromString( const std::string& type );
     E_NatureLevel           NatureLevelFromString   ( const std::string& type );

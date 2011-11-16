@@ -45,22 +45,6 @@ ADN_Tr::T_ConverterConsumptionType ADN_Tr::consumptionTypeConverter_[] =
     T_ConverterConsumptionType( "" , "" , (E_ConsumptionType)-1 )
 };
 
-ADN_Tr::T_ConverterTimeCategory ADN_Tr::timeCategoryConverter_[] =
-{
-    T_ConverterTimeCategory( "JourSansNuage"         , QT_TRANSLATE_NOOP("ADN_Tr" ,"Very sunny day"),       eTimeTypeDay_NoCloud            ),
-    T_ConverterTimeCategory( "JourPeuNuageux"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"Sunny day"),            eTimeTypeDay_LightCloud         ),
-    T_ConverterTimeCategory( "JourMoyennementNuageux", QT_TRANSLATE_NOOP("ADN_Tr" ,"Partly cloudy day"),    eTimeTypeDay_MiddleCloud        ),
-    T_ConverterTimeCategory( "JourAssezNuageux"      , QT_TRANSLATE_NOOP("ADN_Tr" ,"Cloudy day"),           eTimeTypeDay_HeavyCloud         ),
-    T_ConverterTimeCategory( "JourTresNuageux"       , QT_TRANSLATE_NOOP("ADN_Tr" ,"Very cloudy day"),      eTimeTypeDay_FullCloud          ),
-    T_ConverterTimeCategory( "NuitPleineLune"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"Full moon night"),      eTimeTypeNight_FullMoon         ),
-    T_ConverterTimeCategory( "NuitTroisQuartDeLune"  , QT_TRANSLATE_NOOP("ADN_Tr" ,"Waning moon night"),    eTimeTypeNight_ThreeQuarterMoon ),
-    T_ConverterTimeCategory( "NuitDemiLune"          , QT_TRANSLATE_NOOP("ADN_Tr" ,"Quarter moon night"),   eTimeTypeNight_HalfMoon         ),
-    T_ConverterTimeCategory( "NuitQuartDeLune"       , QT_TRANSLATE_NOOP("ADN_Tr" ,"Crescent moon night"),  eTimeTypeNight_OneQuarterMoon   ),
-    T_ConverterTimeCategory( "NuitNouvelleLune"      , QT_TRANSLATE_NOOP("ADN_Tr" ,"New moon night"),       eTimeTypeNight_NewMoon          ),
-    T_ConverterTimeCategory( "Eclairant"             , QT_TRANSLATE_NOOP("ADN_Tr" ,"Illumination shell"),   eTimeTypeNight_LightingRocket   ),
-    T_ConverterTimeCategory( "", "", (E_TimeCategory)-1 )
-};
-
 ADN_Tr::T_ConverterVisionObject ADN_Tr::visionObjectConverter_[] =
 {
     T_ConverterVisionObject( "Sol"   , QT_TRANSLATE_NOOP("ADN_Tr" ,"Ground"),     eVisionGround ),
@@ -289,7 +273,6 @@ const std::string& ADN_Tr::ConvertFromLocation( E_Location  nValue, E_Conversion
     return ENT_Tr::ConvertFromLocation( nValue, nConversion );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromConsumptionType
 // Created: APE 2005-02-18
@@ -298,17 +281,6 @@ const std::string& ADN_Tr::ConvertFromConsumptionType( E_ConsumptionType nValue,
 {
     return ADN_Tr::InverseFindInConverter( consumptionTypeConverter_, nValue, nConversion );
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertFromTimeCategory
-// Created: APE 2005-02-18
-// -----------------------------------------------------------------------------
-const std::string& ADN_Tr::ConvertFromTimeCategory( E_TimeCategory nValue, E_Conversion nConversion )
-{
-    return ADN_Tr::InverseFindInConverter( timeCategoryConverter_, nValue, nConversion );
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromVisionObject
@@ -327,7 +299,6 @@ const std::string& ADN_Tr::ConvertFromKeyPoint( E_KeyPoint nValue, E_Conversion 
 {
     return ADN_Tr::InverseFindInConverter( keyPointConverter_, nValue, nConversion );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromAgentTypePion
@@ -356,7 +327,6 @@ const std::string& ADN_Tr::ConvertFromNatureAtlasType( E_NatureAtlasType nValue,
     return ADN_Tr::InverseFindInConverter( natureAtlasTypeConverter_, nValue, nConversion );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromSpeedImpact
 // Created: APE 2005-02-23
@@ -365,7 +335,6 @@ const std::string& ADN_Tr::ConvertFromSpeedImpact( E_SpeedImpact nValue, E_Conve
 {
     return ADN_Tr::InverseFindInConverter( speedImpactConverter_, nValue, nConversion );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromCrossingHeight
@@ -376,7 +345,6 @@ const std::string& ADN_Tr::ConvertFromCrossingHeight( E_CrossingHeight nValue, E
     return ADN_Tr::InverseFindInConverter( crossingHeightConverter_, nValue, nConversion );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromSensorWeatherModifiers
 // Created: APE 2005-03-07
@@ -385,7 +353,6 @@ const std::string& ADN_Tr::ConvertFromSensorWeatherModifiers( E_SensorWeatherMod
 {
     return ADN_Tr::InverseFindInConverter( sensorWeatherModifiersConverter_, nValue, nConversion );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromDoctorSkills
@@ -396,7 +363,6 @@ const std::string& ADN_Tr::ConvertFromDoctorSkills( E_DoctorSkills nValue, E_Con
     return ADN_Tr::InverseFindInConverter( doctorSkillsConverter_, nValue, nConversion );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromProtectionType
 // Created: APE 2005-03-07
@@ -405,7 +371,6 @@ const std::string& ADN_Tr::ConvertFromProtectionType( E_ProtectionType nValue, E
 {
     return ADN_Tr::InverseFindInConverter( protectionTypeConverter_, nValue, nConversion );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromBreakdownType
@@ -486,15 +451,6 @@ E_Location ADN_Tr::ConvertToLocation( const std::string& strName )
 E_ConsumptionType ADN_Tr::ConvertToConsumptionType( const std::string& strName )
 {
     return ADN_Tr::FindInConverter( consumptionTypeConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertToTimeCategory
-// Created: APE 2005-02-18
-// -----------------------------------------------------------------------------
-E_TimeCategory ADN_Tr::ConvertToTimeCategory( const std::string& strName )
-{
-    return ADN_Tr::FindInConverter( timeCategoryConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -663,7 +619,6 @@ E_SupplyConvoyType ADN_Tr::ConvertToSupplyConvoyType( const std::string& strName
 void ADN_Tr::InitTranslations()
 {
     InitTr( consumptionTypeConverter_, "ADN_Tr" );
-    InitTr( timeCategoryConverter_, "ADN_Tr" );
     InitTr( visionObjectConverter_, "ADN_Tr" );
     InitTr( keyPointConverter_, "ADN_Tr" );
     InitTr( agentTypePionConverter_, "ADN_Tr" );

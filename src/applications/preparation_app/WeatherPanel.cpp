@@ -18,6 +18,7 @@
 #include "meteo/MeteoLocal.h"
 #include "preparation/WeatherModel.h"
 #include "WeatherListView.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace kernel;
 
@@ -45,13 +46,13 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Control
         new QLabel( tr( "Sunset:" ), group );
         sunset_ = new QTimeEdit( group );
         new QLabel( tr( "Day lighting:" ), group );
-        dayLighting_ = new gui::ValuedComboBox< E_DayLightingType >( group );
-        for( int i = 0; i < static_cast< int >( eNbrDayLightingType ); ++i )
-            dayLighting_->AddItem( tools::ToDisplayedString( static_cast< E_DayLightingType>( i ) ), static_cast< E_DayLightingType>( i ) );
+        dayLighting_ = new gui::ValuedComboBox< E_LightingType >( group );
+        for( int i = 0; i < static_cast< int >( eLightingType_NuitPleineLune ); ++i )
+            dayLighting_->AddItem( ENT_Tr::ConvertFromLightingType( static_cast< E_LightingType >( i ), ENT_Tr::eToTr ), static_cast< E_LightingType >( i ) );
         new QLabel( tr( "Night lighting:" ), group );
-        nightLighting_ = new gui::ValuedComboBox< E_NightLightingType >( group );
-        for( int i = 0; i < static_cast< int >( eNbrNightLightingType ); ++i )
-            nightLighting_->AddItem( tools::ToDisplayedString( static_cast< E_NightLightingType>( i ) ), static_cast< E_NightLightingType>( i ) );
+        nightLighting_ = new gui::ValuedComboBox< E_LightingType >( group );
+        for( int i = static_cast< int >( eLightingType_NuitPleineLune ); i < static_cast< int >( eLightingType_Eclairant ); ++i )
+            nightLighting_->AddItem( ENT_Tr::ConvertFromLightingType( static_cast< E_LightingType >( i ), ENT_Tr::eToTr ), static_cast< E_LightingType >( i ) );
     }
 
     // Global Weather

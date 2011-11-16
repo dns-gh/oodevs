@@ -64,33 +64,6 @@
     </message>
 </context>
 <context>
-    <name>E_DayLightingType</name>
-    <message>
-        <source>JourSansNuage</source>
-        <translation>Dia sin nubes</translation>
-    </message>
-    <message>
-        <source>JourPeuNuageux</source>
-        <translation>Dia poco nublado</translation>
-    </message>
-    <message>
-        <source>JourMoyennementNuageux</source>
-        <translation>Dia mayormente nublado</translation>
-    </message>
-    <message>
-        <source>JourAssezNuageux</source>
-        <translation>Dia bastante nublado</translation>
-    </message>
-    <message>
-        <source>JourTresNuageux</source>
-        <translation>Dia totalmente nublado</translation>
-    </message>
-    <message>
-        <source>Eclairant</source>
-        <translation>Dia despejado</translation>
-    </message>
-</context>
-<context>
     <name>E_FuncLimaType</name>
     <message>
         <source>LD</source>
@@ -171,33 +144,6 @@
     <message>
         <source>Recognition and reception line (RRL)</source>
         <translation>Línea de reconocimiento y recepciónl (RRL)</translation>
-    </message>
-</context>
-<context>
-    <name>E_NightLightingType</name>
-    <message>
-        <source>NuitPleineLune</source>
-        <translation>Luna llena</translation>
-    </message>
-    <message>
-        <source>NuitTroisQuartDeLune</source>
-        <translation>Luna tres cuartos</translation>
-    </message>
-    <message>
-        <source>NuitDemiLune</source>
-        <translation>Semi-Luna</translation>
-    </message>
-    <message>
-        <source>NuitQuartDeLune</source>
-        <translation>Luna un cuarto</translation>
-    </message>
-    <message>
-        <source>NuitNouvelleLune</source>
-        <translation>Luna nueva</translation>
-    </message>
-    <message>
-        <source>Eclairant</source>
-        <translation>Despejado</translation>
     </message>
 </context>
 <context>
@@ -445,46 +391,6 @@
     <message>
         <source>Unknown</source>
         <translation>Desconocido</translation>
-    </message>
-    <message>
-        <source>No clouds</source>
-        <translation>Despejado</translation>
-    </message>
-    <message>
-        <source>Slightly cloudy</source>
-        <translation>Ligeramente nublado</translation>
-    </message>
-    <message>
-        <source>Moderately cloudy</source>
-        <translation>Moderadamente nublado</translation>
-    </message>
-    <message>
-        <source>Quite cloudy</source>
-        <translation>Bastante nublado</translation>
-    </message>
-    <message>
-        <source>Very cloudy</source>
-        <translation>Muy nublado</translation>
-    </message>
-    <message>
-        <source>Full moon</source>
-        <translation>Luna llena</translation>
-    </message>
-    <message>
-        <source>Three quarter moon</source>
-        <translation>Luna tres cuartos</translation>
-    </message>
-    <message>
-        <source>Half moon</source>
-        <translation>Semi luna</translation>
-    </message>
-    <message>
-        <source>Quarter moon</source>
-        <translation>Luna un cuarto</translation>
-    </message>
-    <message>
-        <source>New moon</source>
-        <translation>Luna nueva</translation>
     </message>
 </context>
 </TS>
