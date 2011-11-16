@@ -137,6 +137,10 @@ ADN_Tr::T_ConverterAgentTypeAutomate ADN_Tr::agentTypeAutomateConverter_[] =
     T_ConverterAgentTypeAutomate( "Automate JOINT"                  ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Joint" ),                              eAgentTypeAutomateJOINT ),
     T_ConverterAgentTypeAutomate( "Automate ASY"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Asymetric threat" ),                   eAgentTypeAutomateASY ),
     T_ConverterAgentTypeAutomate( "Automate Emergency"              ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Emergency management" ),               eAgentTypeAutomateEmergency ),
+    T_ConverterAgentTypeAutomate( "Automate Organization"           ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Organization" ),                       eAgentTypeAutomateOrganization ),
+    T_ConverterAgentTypeAutomate( "Automate Notable"                ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Notable" ),                            eAgentTypeAutomateNotable ),
+    T_ConverterAgentTypeAutomate( "Automate Journalist"             ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Journalist" ),                         eAgentTypeAutomateJournalist ),
+    T_ConverterAgentTypeAutomate( "Automate Civilian"               ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Civilian" ),                           eAgentTypeAutomateCivilian ),
     T_ConverterAgentTypeAutomate( "", "", (E_AgentTypeAutomate)-1 )
 };
 

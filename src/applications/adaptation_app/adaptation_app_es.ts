@@ -5094,6 +5094,22 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Commander, Organization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Notable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Journalist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Civilian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Real</source>
         <translation type="unfinished"></translation>
     </message>

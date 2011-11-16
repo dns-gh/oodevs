@@ -123,6 +123,10 @@ enum E_AgentTypeAutomate
     eAgentTypeAutomateJOINT,
     eAgentTypeAutomateASY,
     eAgentTypeAutomateEmergency,
+    eAgentTypeAutomateOrganization,
+    eAgentTypeAutomateNotable,
+    eAgentTypeAutomateJournalist,
+    eAgentTypeAutomateCivilian,
     eNbrAgentTypeAutomate
 };
 
