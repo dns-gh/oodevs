@@ -1028,7 +1028,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="retreatPosition" name="Positions de sauvegarde" optional="true" type="Point"/>
+      <parameter dia-name="retreatPosition" name="Position de sauvegarde" optional="true" type="Point"/>
       <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions ou zones de tir" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2346,7 +2346,14 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="area" name="Zone" optional="false" type="Polygon"/>
+      <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions ou zones de tir" optional="true" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="ObjectKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="retreatPosition" name="Position de sauvegarde" optional="true" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.SeRecompleter" dia-type="france.military.company.tasks.SeRecompleter" id="1021" mrt-dia-behavior="france.military.company.tasks.SeRecompleter" name="AUTOMATE COMMUNES Se Recompleter" package="none">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -3309,4 +3316,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3469668502" -->
+<!-- signature="3040769679" -->
