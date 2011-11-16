@@ -55,7 +55,6 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
     handler_->Add( clientsNetworker_ );
-    handler_->AddHandler( clientsNetworker_ );
     handler_->AddHandler( model_ );
     int argc = 0;
     qapp_.reset( new Application_ABC( argc, 0 ) );
