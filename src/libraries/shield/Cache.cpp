@@ -49,7 +49,7 @@ void Cache::Send( const std::string& link )
     if( messages_.empty() )
         model_.Send( *this );
     static const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< MsgsSimToClient::MsgSimToClient >();
-    for( CIT_Messages it = messages_.begin(); it != messages_.end(); ++it )
+    for( IT_Messages it = messages_.begin(); it != messages_.end(); ++it )
         sender_.Send( link, tag, *it );
 }
 
@@ -80,7 +80,8 @@ void Cache::Send( MsgsSimToClient::MsgSimToClient& message )
 {
     if( utf8StringEncoding_ )
         Utf8Converter::ConvertCP1252StringsToUtf8( message );
-    tools::Message m = sender_.Serialize( message );
+    tools::Message m;
+    sender_.Serialize( message, m );
     messages_.push_back( m );
 }
 

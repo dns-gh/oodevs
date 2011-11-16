@@ -100,7 +100,6 @@ void SocketManager::Send( const std::string& endpoint, unsigned long tag, Messag
     const CIT_Sockets it = sockets_.find( endpoint );
     if( it == sockets_.end() )
         throw std::runtime_error( "Not connected to " + endpoint );
-    int nMessagesQueued = it->second->Send( tag, message );
-    // MT_LOG_INFO_MSG( "Queued " << nMessagesQueued << " messages for " << endpoint );
+    it->second->Send( tag, message );
     ++nbMessagesSent_;
 }
