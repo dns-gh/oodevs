@@ -13,7 +13,6 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "gaming/AvailableProfile.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace kernel
