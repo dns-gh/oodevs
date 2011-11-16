@@ -20,7 +20,6 @@ SensorType::SensorType( const std::string& name, xml::xistream& xis )
     : strName_             ( name )
     , postureSourceFactors_( eNbrUnitPosture, 0. )
     , weatherFactors_      ( eNbrWeatherType, 0. )
-    , lightingFactors_     ( eNbrDayLightingType + eNbrNightLightingType, 0. )
 {
     InitializeAngle    ( xis );
     InitializeDistances( xis );
@@ -186,11 +185,6 @@ float SensorType::ComputeEnvironementFactor( bool inForest, bool inTown, bool in
 // -----------------------------------------------------------------------------
 float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material ) const
 {
-//    assert( rCurrentNRJ <= rDetectionDist_ );
-//    assert( rCurrentNRJ > 0 );
-
-//    rDistanceModificator *= lightingFactors_[ env.GetMeteo().GetLighting() ];
-//    rDistanceModificator *= weatherFactors_ [ env.GetMeteo().GetWeather() ];
     bool bIsAroundBU = false;
     bIsAroundBU = ComputeUrbanExtinction( rCurrentNRJ, distance, material );
     if( rCurrentNRJ > 0 && !material )

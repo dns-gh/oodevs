@@ -88,7 +88,6 @@ private:
 
     // Modificateurs
     T_FactorVector postureSourceFactors_;
-    T_FactorVector lightingFactors_;
     T_FactorVector weatherFactors_;
 
     T_MaterialFactorMap urbanBlockFactors_;
