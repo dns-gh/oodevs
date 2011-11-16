@@ -41,6 +41,7 @@ public:
     //@{
     virtual kernel::Team_ABC* CreateTeam() = 0;
     virtual kernel::Team_ABC* CreateTeam( xml::xistream& xis ) = 0;
+    virtual kernel::Team_ABC* CreateNoSideTeam() = 0;
     //@}
 };
 

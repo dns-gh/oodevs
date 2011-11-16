@@ -16,6 +16,26 @@
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element ref="party" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="no-party" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Defines elements without party</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="objects">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Defines objects belonging to party.</xs:documentation>
+												<xs:documentation xml:lang="fr">Définit les objets appartenant au camp.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="object" minOccurs="0" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
 						</xs:sequence>
 					</xs:complexType>
 					<!-- Constraints -->

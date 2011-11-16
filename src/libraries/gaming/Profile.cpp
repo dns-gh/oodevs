@@ -232,6 +232,9 @@ bool Profile::IsSupervision() const
 // -----------------------------------------------------------------------------
 bool Profile::IsVisible( const Entity_ABC& entity ) const
 {
+    if( const kernel::TacticalHierarchies* tacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+        if( supervision_ && entity.GetTypeName() == Object_ABC::typeName_ && tacticalHierarchies->GetTop().GetId() == 0 )
+            return true;
     return IsInHierarchy( entity, readEntities_, false );
 }
 
@@ -353,7 +356,6 @@ bool Profile::IsInHierarchy( const Entity_ABC& entityToTest, const T_Entities& e
         const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
         if( hierarchy && tactical && hierarchy->GetSuperior() == 0 && tactical->IsSubordinateOf( **it ) )
             return true;
-
         bool isObject = ( entityToTest.GetTypeName() == Object_ABC::typeName_ );
         if( AreInSameKnowledgeGroup( entityToTest, **it, isObject ) )
             return true;

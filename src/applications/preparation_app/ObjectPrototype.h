@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Object_ABC;
+    class Team_ABC;
 }
 
 namespace tools
@@ -37,7 +38,7 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel, gui::ParametersLayer& layer, const tools::GeneralConfig& config );
+             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const kernel::Team_ABC& noSideTeam, gui::ParametersLayer& layer, const tools::GeneralConfig& config );
     virtual ~ObjectPrototype();
     //@}
 

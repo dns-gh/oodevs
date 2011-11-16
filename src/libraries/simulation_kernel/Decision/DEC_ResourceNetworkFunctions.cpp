@@ -83,7 +83,7 @@ void DEC_ResourceNetworkFunctions::CreateResourceNetworkLink( DEC_Decision_ABC* 
     MIL_Object_ABC* objectTarget = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( target->GetObjectId() );
     if( !objectTarget || !objectTarget->Retrieve< ResourceNetworkCapacity >())
         return;
-    MIL_Object_ABC* objectSource = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( type, caller->GetPion().GetArmy(), *pLocalisation );
+    MIL_Object_ABC* objectSource = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( type, &caller->GetPion().GetArmy(), *pLocalisation );
     if( ResourceNetworkCapacity* capacitySource = objectSource->Retrieve< ResourceNetworkCapacity >() )
         capacitySource->CreateLink( objectTarget->GetID(), resourceType->GetId(), production );
 }
@@ -102,7 +102,7 @@ unsigned int DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkReturn( DEC_
     MIL_Object_ABC* objectTarget = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( target->GetObjectId() );
     if( !objectTarget || !objectTarget->Retrieve< ResourceNetworkCapacity >())
         return 0;
-    MIL_Object_ABC* objectSource = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( type, caller->GetPion().GetArmy(), *pLocalisation );
+    MIL_Object_ABC* objectSource = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( type, &caller->GetPion().GetArmy(), *pLocalisation );
     if( ResourceNetworkCapacity* capacitySource = objectSource->Retrieve< ResourceNetworkCapacity >() )
         capacitySource->CreateLink( objectTarget->GetID(), resourceType->GetId(), production );
 

@@ -71,7 +71,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_ABC& army, double phCoef, T_TargetVector& targets ) const;
+    void ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_ABC* army, double phCoef, T_TargetVector& targets ) const;
     double GetUnitDensityFirePercentage( const PHY_Volume& volume ) const;
     //@}
 

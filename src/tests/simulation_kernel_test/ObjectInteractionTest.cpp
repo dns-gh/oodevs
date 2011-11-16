@@ -60,7 +60,7 @@ namespace
         MockBuilder builder;
         MOCK_EXPECT( builder, GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder, Build ).once();
-        BOOST_CHECK_NO_THROW( pObject = loader.CreateObject( builder, army ); );
+        BOOST_CHECK_NO_THROW( pObject = loader.CreateObject( builder, &army ); );
         builder.verify();
         BOOST_REQUIRE( pObject != 0 );
         return pObject;

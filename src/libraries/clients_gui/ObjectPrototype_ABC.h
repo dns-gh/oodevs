@@ -28,6 +28,7 @@ namespace kernel
     class ModelUnLoaded;
     class GlTools_ABC;
     class CoordinateConverter_ABC;
+    class Team_ABC;
 }
 
 namespace gui
@@ -61,7 +62,7 @@ public:
     //@{
              ObjectPrototype_ABC( QWidget* parent, kernel::Controllers& controllers,
                                   const kernel::CoordinateConverter_ABC& coordinateConverter,
-                                  const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver,
+                                  const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const kernel::Team_ABC& noSideTeam,
                                   ParametersLayer& layer, std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory );
     virtual ~ObjectPrototype_ABC();
     //@}

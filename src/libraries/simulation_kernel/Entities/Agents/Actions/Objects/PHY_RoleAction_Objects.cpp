@@ -208,7 +208,7 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
         const unsigned int nDotationRecovered = attribute.GetDotationRecoveredWhenDestroying( rDeltaPercentage );
         object().Destroy( rDeltaPercentage );
 
-        if( nDotationRecovered && pion_.GetArmy() == *pObject->GetArmy() )
+        if( nDotationRecovered && pObject->GetArmy() && pion_.GetArmy() == *pObject->GetArmy() )
         {
             BuildableCapacity* pCapacity = object.Retrieve< BuildableCapacity >();
             if( pCapacity )

@@ -760,6 +760,13 @@ Détail: %1.</translation>
     </message>
 </context>
 <context>
+    <name>TeamFactory</name>
+    <message>
+        <source>No side</source>
+        <translation>Pas de camp</translation>
+    </message>
+</context>
+<context>
     <name>TimeLimitedAttribute</name>
     <message>
         <source>Info/Mine parameters/Activity time</source>

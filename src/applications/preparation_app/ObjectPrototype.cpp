@@ -247,9 +247,9 @@ namespace
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model,
-                                  ObjectsModel& objectsModel, const UrbanModel& urbanModel,
+                                  ObjectsModel& objectsModel, const UrbanModel& urbanModel, const Team_ABC& noSideTeam,
                                   ParametersLayer& layer, const tools::GeneralConfig& config )
-    : ObjectPrototype_ABC( parent, controllers, model.coordinateConverter_, model.objectTypes_, layer,
+    : ObjectPrototype_ABC( parent, controllers, model.coordinateConverter_, model.objectTypes_, noSideTeam, layer,
                            FactoryBuilder( controllers, model.objectTypes_, model.detection_, objectsModel, urbanModel, config, creation_ ) )
     , model_   ( objectsModel )
     , creation_( 0 )

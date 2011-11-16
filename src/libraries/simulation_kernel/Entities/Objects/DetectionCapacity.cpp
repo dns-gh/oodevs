@@ -228,7 +228,7 @@ void DetectionCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_AB
         // LTO end
         }
         // LTO begin
-        else if( !detector )
+        else if( !detector && object.GetArmy() )
         {
             if( it->second + rIdentificationTime_ < currentTime )
             {

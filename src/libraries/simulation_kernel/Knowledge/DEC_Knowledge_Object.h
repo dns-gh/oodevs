@@ -113,7 +113,7 @@ public:
     const MIL_ObjectType_ABC& GetType() const;
     const TER_Localisation& GetLocalisation() const;
     const TER_Localisation& GetAvoidanceLocalisation() const;
-    const MIL_Army_ABC& GetArmy() const;
+    const MIL_Army_ABC* GetArmy() const;
     double GetMaxInteractionHeight() const;
     E_Tristate IsAnEnemy( const MIL_Army_ABC& army ) const;
     E_Tristate IsAFriend( const MIL_Army_ABC& army ) const;

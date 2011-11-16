@@ -392,7 +392,7 @@ void MIL_Army::ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory 
 {
     try
     {
-        objectFactory.CreateObject( xis, *this );
+        objectFactory.CreateObject( xis, this );
     }
     catch( std::exception& e)
     {

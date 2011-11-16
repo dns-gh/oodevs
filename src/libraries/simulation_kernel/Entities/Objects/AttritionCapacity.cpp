@@ -145,7 +145,7 @@ bool AttritionCapacity::HasInteractionCapabilities( MIL_Object_ABC& object ) con
 // -----------------------------------------------------------------------------
 void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    if( !object.GetArmy() || object.GetArmy()->GetID() == agent.GetArmy().GetID() || !HasInteractionCapabilities( object ) )
+    if( ( object.GetArmy() && object.GetArmy()->GetID() == agent.GetArmy().GetID() ) || !HasInteractionCapabilities( object ) )
         return;
     ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();
     if( ! ( construction && construction->HasDotation( *dotation_ ) && dotation_->HasAttritions() ) )

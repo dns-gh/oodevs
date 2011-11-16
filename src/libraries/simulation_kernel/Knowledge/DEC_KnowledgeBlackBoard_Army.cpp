@@ -366,7 +366,7 @@ namespace
             if( !filter_.Test( knowledge->GetType() ) )
                 return;
 
-            if( pArmy_->IsAFriend( knowledge->GetArmy() ) != eTristate_True )
+            if( !knowledge->GetArmy() || pArmy_->IsAFriend( *knowledge->GetArmy() ) != eTristate_True )
                 return;
 
             const double rDist = knowledge->GetLocalisation().ComputeBarycenter().Distance( pos_ );

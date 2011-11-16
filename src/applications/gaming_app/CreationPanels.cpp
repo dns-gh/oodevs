@@ -9,13 +9,15 @@
 
 #include "gaming_app_pch.h"
 #include "CreationPanels.h"
+#include "gaming/DrawingsModel.h"
+#include "gaming/Model.h"
 #include "gaming/StaticModel.h"
+#include "gaming/TeamsModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/DrawerPanel.h"
 #include "clients_gui/PopulationsPanel.h"
 #include "clients_gui/UnitsPanel.h"
-#include "gaming/DrawingsModel.h"
 #include "protocol/SimulationSenders.h"
 #include "FireCreationPanel.h"
 #include "ObjectCreationPanel.h"
@@ -29,9 +31,9 @@ using namespace actions;
 // Name: CreationPanels constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, ItemFactory_ABC& factory, ActionsModel& actionsModel,
+CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, ItemFactory_ABC& factory, const Model& model,
                                 const Time_ABC& simulation, ParametersLayer& paramLayer, ::WeatherLayer& weatherLayer, GlTools_ABC& tools, SymbolIcons& icons,
-                                ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings, const tools::ExerciseConfig& config )
+                                ColorStrategy_ABC& colorStrategy, const tools::ExerciseConfig& config )
     : Panels      ( parent )
     , controllers_( controllers )
 {
@@ -39,10 +41,10 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     AddPanel( units_ = new UnitsPanel( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
     AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_, factory ) );
-    AddPanel( objects_ = new ObjectCreationPanel( box, *this, controllers, actionsModel, staticModel, simulation, paramLayer, tools ) );
-    AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, drawings, config ) );
-    AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, actionsModel, simulation, staticModel, paramLayer, tools ) );
-    AddPanel( weather_ = new ::WeatherPanel( this, *this, controllers, actionsModel, staticModel, simulation, weatherLayer ) );
+    AddPanel( objects_ = new ObjectCreationPanel( box, *this, controllers, model.actions_, staticModel, simulation, model.teams_.GetNoSideTeam(), paramLayer, tools ) );
+    AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, model.drawings_, config ) );
+    AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, model.actions_, simulation, staticModel, paramLayer, tools ) );
+    AddPanel( weather_ = new ::WeatherPanel( this, *this, controllers, model.actions_, staticModel, simulation, weatherLayer ) );
     controllers_.Register( *this );
 }
 

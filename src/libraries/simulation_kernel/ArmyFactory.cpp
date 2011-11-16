@@ -8,15 +8,16 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "simulation_kernel/AgentFactory.h"
-#include "simulation_kernel/ArmyFactory.h"
-#include "simulation_kernel/AutomateFactory.h"
-#include "simulation_kernel/Entities/MIL_Army.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectManager.h"
-#include "simulation_kernel/FormationFactory_ABC.h"
-#include "simulation_kernel/PopulationFactory_ABC.h"
-#include "simulation_kernel/InhabitantFactory_ABC.h"
-#include "simulation_kernel/knowledge/KnowledgeGroupFactory_ABC.h" // LTO
+#include "AgentFactory.h"
+#include "ArmyFactory.h"
+#include "AutomateFactory.h"
+#include "Entities/MIL_Army.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManager.h"
+#include "FormationFactory_ABC.h"
+#include "PopulationFactory_ABC.h"
+#include "InhabitantFactory_ABC.h"
+#include "knowledge/KnowledgeGroupFactory_ABC.h" // LTO
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/map.hpp>
@@ -100,11 +101,39 @@ ArmyFactory::~ArmyFactory()
 // Name: ArmyFactory::Create
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-MIL_Army_ABC* ArmyFactory::Create( xml::xistream& xis )
+MIL_Army_ABC* ArmyFactory::Create( const std::string& tag, xml::xistream& xis )
 {
-    MIL_Army_ABC* army = new MIL_Army( xis, *this, formationFactory_, automateFactory_, objectFactory_, populationFactory_, inhabitantFactory_, knowledgeGroupFactory_, *diplomacyConverter_ );
-    Register( army->GetID(), *army );
+    MIL_Army_ABC* army = 0;
+    if( tag == "party")
+    {
+        MIL_Army_ABC* army = new MIL_Army( xis, *this, formationFactory_, automateFactory_, objectFactory_, populationFactory_, inhabitantFactory_, knowledgeGroupFactory_, *diplomacyConverter_ );
+        Register( army->GetID(), *army );
+    }
+    else if( tag == "no-party" )
+    {
+        xis >> xml::optional >> xml::start( "objects" )
+            >> xml::list( "object", *this, &ArmyFactory::ReadNoSideObject )
+            >> xml::end;
+    }
+    else
+        xis.error( "Unknown tag in parties" );
     return army;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ArmyFactory::ReadNoSideObject
+// Created: JSR 2011-11-15
+// -----------------------------------------------------------------------------
+void ArmyFactory::ReadNoSideObject( xml::xistream& xis )
+{
+    try
+    {
+        objectFactory_.CreateObject( xis, 0 );
+    }
+    catch( std::exception& e)
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

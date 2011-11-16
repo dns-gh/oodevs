@@ -322,7 +322,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pCreationWnd->setObjectName( "creation" );
     addDockWidget( Qt::RightDockWidgetArea, pCreationWnd );
     pCreationWnd->hide();
-    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, model_.actions_, simulation, *paramLayer, *meteoLayer, *glProxy_, *symbols, *strategy_, model_.drawings_, config_ );
+    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, model_, simulation, *paramLayer, *meteoLayer, *glProxy_, *symbols, *strategy_, config_ );
     pCreationWnd->setWidget( creationPanels );
     pCreationWnd->setWindowTitle( tr( "Creation" ) );
 

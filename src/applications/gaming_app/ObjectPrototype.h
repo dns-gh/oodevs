@@ -15,6 +15,7 @@
 
 namespace kernel
 {
+    class Team_ABC;
     class Time_ABC;
 }
 
@@ -40,7 +41,7 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, gui::ParametersLayer& layer );
+             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, const kernel::Team_ABC& noSideTeam, gui::ParametersLayer& layer );
     virtual ~ObjectPrototype();
     //@}
 

@@ -26,6 +26,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Color_ABC.h"
+#include "clients_kernel/Karma.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -91,5 +92,38 @@ Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );
     result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, 0 ) );
     result->Polish();
+    return result;
+}
+
+namespace
+{
+    class NoSideDiplomacy : public Diplomacies_ABC
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+         NoSideDiplomacy() {}
+        ~NoSideDiplomacy() {}
+        //@}
+
+    public:
+        //! @name Operations
+        //@{
+        virtual const Karma& GetDiplomacy( const Entity_ABC& ) const { return Karma::unknown_; } // neutral?
+        virtual const Karma& GetKarma() const { return Karma::unknown_; }
+        //@}
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamFactory::CreateNoSideTeam
+// Created: JSR 2011-11-10
+// -----------------------------------------------------------------------------
+Team_ABC* TeamFactory::CreateNoSideTeam()
+{
+    Team_ABC* result = new EntityImplementation< Team_ABC >( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ) );
+    result->Attach( *new Objects() );
+    result->Attach< Diplomacies_ABC >( *new NoSideDiplomacy() );
+    // TODO other extensions needed?
     return result;
 }

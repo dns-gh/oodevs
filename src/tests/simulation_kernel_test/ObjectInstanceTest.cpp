@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
         MockBuilder builder;
         MOCK_EXPECT( builder, GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder, Build ).once();
-        BOOST_CHECK_NO_THROW( pObject.reset( loader.CreateObject( builder, army ) ) );
+        BOOST_CHECK_NO_THROW( pObject.reset( loader.CreateObject( builder, &army ) ) );
         builder.verify();
     }
 

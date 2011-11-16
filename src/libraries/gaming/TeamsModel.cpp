@@ -23,7 +23,8 @@ using namespace kernel;
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
 TeamsModel::TeamsModel( TeamFactory_ABC& factory )
-    : factory_( factory )
+    : factory_   ( factory )
+    , noSideTeam_( factory.CreateNoSideTeam() )
 {
     // NOTHING
 }
@@ -89,7 +90,9 @@ void TeamsModel::DestroyFormation( const sword::FormationDestruction& message )
 // -----------------------------------------------------------------------------
 Team_ABC& TeamsModel::GetTeam( unsigned long id )
 {
-    return tools::Resolver< Team_ABC >::Get( id );
+    if( id != 0 )
+        return tools::Resolver< Team_ABC >::Get( id );
+    return *noSideTeam_;
 }
 
 // -----------------------------------------------------------------------------
@@ -102,6 +105,15 @@ Team_ABC* TeamsModel::FindTeam( const QString& team )
         if( it->second->GetName() == team )
             return it->second;
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::GetNoSideTeam
+// Created: JSR 2011-11-10
+// -----------------------------------------------------------------------------
+const kernel::Team_ABC& TeamsModel::GetNoSideTeam() const
+{
+    return *noSideTeam_;
 }
 
 // -----------------------------------------------------------------------------

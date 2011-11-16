@@ -725,10 +725,9 @@ unsigned int DEC_Knowledge_Object::GetObjectId() const
 // Name: DEC_Knowledge_Object::GetArmy
 // Created: NLD 2006-01-05
 // -----------------------------------------------------------------------------
-const MIL_Army_ABC& DEC_Knowledge_Object::GetArmy() const
+const MIL_Army_ABC* DEC_Knowledge_Object::GetArmy() const
 {
-    assert( pOwnerArmy_ );
-    return *pOwnerArmy_;
+    return pOwnerArmy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -897,7 +896,9 @@ void DEC_Knowledge_Object::Invalidate()
 // -----------------------------------------------------------------------------
 E_Tristate DEC_Knowledge_Object::IsAnEnemy( const MIL_Army_ABC& army ) const
 {
-    return army.IsAnEnemy( GetArmy() );
+    if( pOwnerArmy_ )
+        return army.IsAnEnemy( *pOwnerArmy_ );
+    return eTristate_False;
 }
 
 // -----------------------------------------------------------------------------
@@ -906,7 +907,9 @@ E_Tristate DEC_Knowledge_Object::IsAnEnemy( const MIL_Army_ABC& army ) const
 // -----------------------------------------------------------------------------
 E_Tristate DEC_Knowledge_Object::IsAFriend( const MIL_Army_ABC& army ) const
 {
-    return army.IsAFriend( GetArmy() );
+    if( pOwnerArmy_ )
+        return army.IsAFriend( *pOwnerArmy_ );
+    return eTristate_False;
 }
 
 // -----------------------------------------------------------------------------

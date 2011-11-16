@@ -477,7 +477,7 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
     assert( armyFactory_->Count() == 0 );
 
     xis >> xml::start( "parties" )
-        >> xml::list( "party", boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _1 ) )
+        >> xml::list( boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _2, _3 ) )
         >> xml::end;
 
     pObjectManager_->FinalizeObjects();
@@ -544,7 +544,7 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
+void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army_ABC* army )
 {
     pObjectManager_->CreateObject( xis, army );
 }
@@ -553,7 +553,7 @@ void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation,
+MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC* army, const std::string& type, const TER_Localisation* pLocalisation,
                                                  ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier )
 {
     return pObjectManager_->CreateObject( army, type, pLocalisation, obstacleType, externalIdentifier );
@@ -563,7 +563,7 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const std::
 // Name: MIL_EntityManager::CreateObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
+MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation )
 {
     return pObjectManager_->CreateObject( type, army, localisation );
 }
@@ -572,7 +572,7 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Ar
 // Name: MIL_EntityManager::CreateObject
 // Created: JSR 2011-10-26
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, unsigned int id )
+MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation, unsigned int id )
 {
     return pObjectManager_->CreateObject( type, army, localisation, id );
 }
@@ -581,7 +581,7 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Ar
 // Name: MIL_EntityManager::CreateObject
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder )
+MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC* army, const MIL_ObjectBuilder_ABC& builder )
 {
     return pObjectManager_->CreateObject( army, builder );
 }
@@ -590,7 +590,7 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const MIL_O
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& /*type*/, MIL_Army_ABC& /*army*/, const TER_Localisation& /*localisation*/, const std::string& /*strOption*/, const std::string& /*strExtra*/, double /*rCompletion*/, double /*rMining*/, double /*rBypass*/ )
+MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& /*type*/, MIL_Army_ABC* /*army*/, const TER_Localisation& /*localisation*/, const std::string& /*strOption*/, const std::string& /*strExtra*/, double /*rCompletion*/, double /*rMining*/, double /*rBypass*/ )
 {
     throw std::exception( __FUNCTION__ " not implemented" );
     // return pObjectManager_->CreateObject( type, army, localisation, strOption, strExtra, rCompletion, rMining, rBypass );
@@ -1884,6 +1884,7 @@ void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
             << xml::end;
     xos     << xml::start( "parties" );
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteODB, _1, boost::ref( xos ) ) );
+                pObjectManager_->WriteODB( xos );
     xos     << xml::end
             << xml::start( "diplomacy" );
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteDiplomacyODB, _1, boost::ref( xos ) ) );

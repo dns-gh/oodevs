@@ -88,7 +88,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
         MOCK_EXPECT( builder, GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder, Build ).once();
         MOCK_EXPECT( army, RegisterObject ).once();
-        pObject.reset( loader.CreateObject( builder, army ) );
+        pObject.reset( loader.CreateObject( builder, &army ) );
         builder.verify();
         army.verify();
     }

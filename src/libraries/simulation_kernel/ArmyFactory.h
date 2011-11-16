@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_Army_ABC* Create( xml::xistream& xis );
+    virtual MIL_Army_ABC* Create( const std::string& tag, xml::xistream& xis );
     virtual void Finalize();
     //@}
 
@@ -58,6 +58,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    void ReadNoSideObject( xml::xistream& xis );
     void InitializeDiplomacies();
     //@}
 

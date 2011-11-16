@@ -38,7 +38,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers,
                                          const kernel::CoordinateConverter_ABC& coordinateConverter,
-                                         const tools::Resolver_ABC< ObjectType, std::string >& resolver,
+                                         const tools::Resolver_ABC< ObjectType, std::string >& resolver, const Team_ABC& noSideTeam,
                                          ParametersLayer& layer, std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory )
     : QWidget( parent )
     , coordinateConverter_( coordinateConverter )
@@ -59,6 +59,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 
         new QLabel( tr( "Side:" ), infoBox );
         teams_ = new ValuedComboBox< const Team_ABC* >( infoBox );
+        teams_->AddItem( noSideTeam.GetName(), &noSideTeam );
 
         new QLabel( tr( "Type:" ), infoBox );
         objectTypes_ = new ValuedComboBox< const ObjectType* >( infoBox );

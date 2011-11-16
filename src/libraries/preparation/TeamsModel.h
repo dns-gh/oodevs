@@ -56,6 +56,7 @@ public:
     void CreateTeam();
     kernel::Team_ABC* FindTeam( const QString& name ) const;
     kernel::Team_ABC* FindTeam( unsigned int id ) const;
+    const kernel::Team_ABC& GetNoSideTeam() const;
     void Serialize( xml::xostream& xos ) const;
     tools::Iterator< const kernel::Entity_ABC& > CreateEntityIterator() const;
     bool CheckValidity( ModelChecker_ABC& checker ) const;
@@ -66,7 +67,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
-    void ReadTeam( xml::xistream& xis, Model& model, std::string& loadingErrors );
+    void ReadTeam( const std::string& tag, xml::xistream& xis, Model& model, std::string& loadingErrors );
     void ReadDiplomacy( xml::xistream& xis );
     void ReadLogistic( xml::xistream& xis, Model& model );
     void ReadLogisticLink( xml::xistream& xis, Model& model, kernel::Entity_ABC& superior );
@@ -78,6 +79,7 @@ private:
     kernel::Controllers& controllers_;
     TeamFactory_ABC& factory_;
     bool infiniteDotations_;
+    std::auto_ptr< kernel::Team_ABC > noSideTeam_;
     //@}
 };
 

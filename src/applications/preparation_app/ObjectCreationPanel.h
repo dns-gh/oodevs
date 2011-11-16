@@ -24,6 +24,7 @@ namespace kernel
     class Controllers;
     class GlTools_ABC;
     class ModelLoaded;
+    class Team_ABC;
     class Viewport_ABC;
 }
 
@@ -54,7 +55,7 @@ class ObjectCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config );
+             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const kernel::Team_ABC& noSideTeam, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config );
     virtual ~ObjectCreationPanel();
     //@}
 

@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     virtual kernel::Team_ABC* CreateTeam( const sword::PartyCreation& message );
+    virtual kernel::Team_ABC* CreateNoSideTeam();
     virtual kernel::Formation_ABC* CreateFormation( const sword::FormationCreation& message );
     //@}
 

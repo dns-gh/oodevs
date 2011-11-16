@@ -183,16 +183,16 @@ void ControlZoneCapacity::RetrieveTargets( const MIL_Object_ABC& object, T_Targe
                                 ? 0
                                 : controller_->GetRole< human::PHY_RoleInterface_Humans >().GetNbrUsableHumans() / area;
     targets.clear();
-    object.ProcessAgentsInside( boost::bind( &ControlZoneCapacity::ControlTarget, this, _1, boost::cref( *object.GetArmy() ), rPHCoeff, boost::ref( targets ) ) );
+    object.ProcessAgentsInside( boost::bind( &ControlZoneCapacity::ControlTarget, this, _1, object.GetArmy(), rPHCoeff, boost::ref( targets ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ControlZoneCapacity::ControlTarget
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
-void ControlZoneCapacity::ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_ABC& army, double phCoef, T_TargetVector& targets ) const
+void ControlZoneCapacity::ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_ABC* army, double phCoef, T_TargetVector& targets ) const
 {
-    if( army.IsAFriend( agent->GetArmy() ) == eTristate_True )
+    if( army && army->IsAFriend( agent->GetArmy() ) == eTristate_True )
         return;
     PHY_Composante_ABC::T_ComposanteVector compTargets;
     agent->GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( compTargets );

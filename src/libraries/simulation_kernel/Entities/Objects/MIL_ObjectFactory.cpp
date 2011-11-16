@@ -55,7 +55,7 @@ const MIL_ObjectType_ABC& MIL_ObjectFactory::FindType( const std::string& type )
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-05-29
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC& army )
+MIL_Object_ABC* MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC* army )
 {
     return MIL_ObjectLoader::GetLoader().CreateObject( xis, army );
 }
@@ -64,7 +64,7 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const sword::MissionParameters& msg, MIL_Army_ABC& army, sword::ObjectMagicActionAck_ErrorCode& value )
+MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const sword::MissionParameters& msg, MIL_Army_ABC* army, sword::ObjectMagicActionAck_ErrorCode& value )
 {
     return MIL_ObjectLoader::GetLoader().CreateObject( msg, army, value );
 }
@@ -73,7 +73,7 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const sword::MissionParameters& 
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation,
+MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation,
                                                 sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier, unsigned int forcedId /*=0*/ )
 {
     return MIL_ObjectLoader::GetLoader().CreateObject( name, type, army, localisation, obstacleType == sword::ObstacleType_DemolitionTargetType_reserved, externalIdentifier, forcedId );
@@ -83,7 +83,7 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& name, const s
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army )
+MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army )
 {
     return MIL_ObjectLoader::GetLoader().CreateObject( builder, army );
 }

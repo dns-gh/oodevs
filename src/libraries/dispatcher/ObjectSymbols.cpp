@@ -16,6 +16,8 @@
 
 using namespace dispatcher;
 
+// $$$$ _RC_ JSR 2011-11-15: A déplacer dans crossbow (utilisé que là a priori)
+
 // -----------------------------------------------------------------------------
 // Name: ObjectSymbols constructor
 // Created: SBO 2008-02-14

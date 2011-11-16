@@ -122,7 +122,7 @@ void MIL_ObjectLoader::ReadCapacity( const std::string& capacity, xml::xistream&
 // Name: MIL_ObjectLoader::CreateObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& location,
+MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& location,
                                                 bool reserved, unsigned int externalIdentifier, unsigned int forcedId ) const
 {
     CIT_Prototypes it = prototypes_.find( type );
@@ -138,7 +138,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& name, const s
 // Name: MIL_ObjectLoader::ReadObject
 // Created: JCR 2008-05-23
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC& army ) const
+MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC* army ) const
 {
     const std::string type( xis.attribute< std::string >( "type" ) );
 
@@ -160,7 +160,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC
 // Name: MIL_ObjectLoader::CreateObject
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& message, MIL_Army_ABC& army, sword::ObjectMagicActionAck_ErrorCode& value ) const
+MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& message, MIL_Army_ABC* army, sword::ObjectMagicActionAck_ErrorCode& value ) const
 {
     CIT_Prototypes it = prototypes_.find( message.elem( 0 ).value( 0 ).acharstr() );
     if( it == prototypes_.end() )
@@ -197,7 +197,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& 
 // Name: MIL_ObjectLoader::CreateObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army ) const
+MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army ) const
 {
     CIT_Prototypes it = prototypes_.find( builder.GetType().GetName() );
     if( it == prototypes_.end() )

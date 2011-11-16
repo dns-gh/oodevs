@@ -46,6 +46,7 @@ SuccessFactorsModel.cpp \
 SupplyRouteAttribute.cpp \
 TacticalLine_ABC.cpp \
 Team.cpp \
+TeamFactory.cpp \
 TeamsModel.cpp \
 TimeLimitedAttribute.cpp \
 TrafficabilityAttribute.cpp \

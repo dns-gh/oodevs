@@ -18,6 +18,7 @@
 #include "ObjectsModel.h"
 #include "AgentsModel.h"
 #include "Diplomacies.h"
+#include "Objects.h"
 #include "Tools.h"
 #include "ModelChecker_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -38,6 +39,7 @@ TeamsModel::TeamsModel( Controllers& controllers, TeamFactory_ABC& factory )
     : controllers_      ( controllers )
     , factory_          ( factory )
     , infiniteDotations_( false )
+    , noSideTeam_       ( factory.CreateNoSideTeam() )
 {
     controllers_.Register( *this );
 }
@@ -97,6 +99,15 @@ Team_ABC* TeamsModel::FindTeam( unsigned int id ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: TeamsModel::GetNoSideTeam
+// Created: JSR 2011-11-10
+// -----------------------------------------------------------------------------
+const kernel::Team_ABC& TeamsModel::GetNoSideTeam() const
+{
+    return *noSideTeam_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TeamsModel::NotifyDeleted
 // Created: SBO 2006-09-05
 // -----------------------------------------------------------------------------
@@ -117,6 +128,12 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
         xos << xml::start( "party" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
+        xos << xml::end;
+    }
+    if( noSideTeam_->Get< Objects >().Count() )
+    {
+        xos << xml::start( "no-party" );
+        noSideTeam_->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         xos << xml::end;
     }
     xos << xml::end;
@@ -154,7 +171,7 @@ void TeamsModel::Load( xml::xistream& xis, Model& model, std::string& loadingErr
                 >> xml::attribute( "infinite", infiniteDotations_ )
             >> xml::end
             >> xml::start( "parties" )
-                >> xml::list( "party", *this, &TeamsModel::ReadTeam, model, loadingErrors )
+                >> xml::list( *this, &TeamsModel::ReadTeam, model, loadingErrors )
             >> xml::end
             >> xml::start( "diplomacy" )
                 >> xml::list( "party", *this, &TeamsModel::ReadDiplomacy )
@@ -166,10 +183,18 @@ void TeamsModel::Load( xml::xistream& xis, Model& model, std::string& loadingErr
 // Name: TeamsModel::ReadTeam
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void TeamsModel::ReadTeam( xml::xistream& xis, Model& model, std::string& loadingErrors )
+void TeamsModel::ReadTeam( const std::string& tag, xml::xistream& xis, Model& model, std::string& loadingErrors )
 {
-    Team_ABC* team = factory_.CreateTeam( xis );
-    Register( team->GetId(), *team );
+    Team_ABC* team = 0;
+    if( tag == "party" )
+    {
+        team = factory_.CreateTeam( xis );
+        Register( team->GetId(), *team );
+    }
+    else if( tag == "no-party" )
+        team = noSideTeam_.get();
+    else
+        xis.error( "Unknown tag in \"parties\"" );
 
     // $$$$ SBO 2006-10-05: forward to communications extension?
     xis >> xml::optional >> xml::start( "communication" )
@@ -207,8 +232,7 @@ void TeamsModel::ReadDiplomacy( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void TeamsModel::ReadLogistic( xml::xistream& xis, Model& model )
 {
-    int id;
-    xis >> xml::attribute( "id", id );
+    int id = xis.attribute< int >( "id" );
     Entity_ABC* entity = model.formations_.Find( id );
     if( !entity )
         entity = model.agents_.FindAutomat( id );
@@ -222,8 +246,7 @@ void TeamsModel::ReadLogistic( xml::xistream& xis, Model& model )
 // -----------------------------------------------------------------------------
 void TeamsModel::ReadLogisticLink( xml::xistream& xis, Model& model, kernel::Entity_ABC& superior )
 {
-    int id;
-    xis >> xml::attribute( "id", id );
+    int id = xis.attribute< int >( "id" );
     Entity_ABC* entity = model.formations_.Find( id );
     if( !entity )
         entity = model.agents_.FindAutomat( id );

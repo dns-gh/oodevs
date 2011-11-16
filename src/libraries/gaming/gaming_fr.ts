@@ -1402,6 +1402,13 @@
     </message>
 </context>
 <context>
+    <name>TeamFactory</name>
+    <message>
+        <source>No side</source>
+        <translation>Pas de camp</translation>
+    </message>
+</context>
+<context>
     <name>Transports</name>
     <message>
         <source>Transports/Tow trucks</source>

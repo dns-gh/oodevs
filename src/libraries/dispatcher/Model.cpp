@@ -117,6 +117,48 @@ void Model::Reset()
     urbanBlocks_           .DeleteAll();
 }
 
+namespace
+{
+    class NoSide : public Team_ABC
+    {
+    public:
+        NoSide() : Team_ABC( 0 ) {}
+        virtual ~NoSide() {}
+
+    public:
+        virtual const kernel::Karma& GetKarma() const
+        {
+            return kernel::Karma::neutral_;
+        }
+        virtual void Register( dispatcher::Object_ABC& object )
+        {
+            objects_.Register( object.GetId(), object );
+        }
+        virtual void Remove( dispatcher::Object_ABC& object )
+        {
+            objects_.Remove( object.GetId() );
+        }
+        virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const
+        {
+            objects_.Apply( boost::bind( &dispatcher::Object_ABC::Accept, _1, boost::ref( visitor ) ) );
+        }
+        virtual void Register       ( dispatcher::Formation_ABC& )      {}
+        virtual void Remove         ( dispatcher::Formation_ABC& )      {}
+        virtual void Register       ( dispatcher::Population_ABC& )     {}
+        virtual void Remove         ( dispatcher::Population_ABC& )     {}
+        virtual void Register       ( dispatcher::Inhabitant_ABC& )     {}
+        virtual void Remove         ( dispatcher::Inhabitant_ABC& )     {}
+        virtual void Register       ( dispatcher::KnowledgeGroup_ABC& ) {}
+        virtual void Remove         ( dispatcher::KnowledgeGroup_ABC& ) {}
+        virtual void SendCreation   ( ClientPublisher_ABC& ) const      {}
+        virtual void SendFullUpdate ( ClientPublisher_ABC& ) const      {}
+        virtual void SendDestruction( ClientPublisher_ABC& ) const      {}
+
+    private:
+        tools::Resolver< dispatcher::Object_ABC > objects_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: Model::Receive
 // Created: AGE 2007-07-05
@@ -126,6 +168,7 @@ void Model::Receive( const sword::SimToClient& wrapper )
     if( wrapper.message().has_control_send_current_state_begin() )
     {
         Reset();
+        sides_.Register( 0, *( new NoSide() ) );
         MT_LOG_INFO_MSG( "Dispatcher - Initializing model" );
     }
     else if( wrapper.message().has_control_send_current_state_end() )

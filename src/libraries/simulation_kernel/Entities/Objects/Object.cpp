@@ -28,8 +28,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 // Name: Object constructor
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, bool reserved )
-    : MIL_Object( &army, builder.GetType(), xis.attribute< unsigned long >( "id" ) )
+Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army, const TER_Localisation* pLocation, bool reserved )
+    : MIL_Object( army, builder.GetType(), xis.attribute< unsigned long >( "id" ) )
     , name_( xis.attribute< std::string >( "name", "" ) )
 {
     MIL_Object_ABC::Register();
@@ -44,9 +44,9 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
 // Name: Object constructor
 // Created: SBO 2009-12-14
 // -----------------------------------------------------------------------------
-Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation,
+Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army, const TER_Localisation* pLocation,
                 unsigned int externalIdentifier, const std::string& name /*= std::string()*/, bool reserved /*= true*/, unsigned int forcedId /*= 0u*/ )
-    : MIL_Object( &army, builder.GetType(), forcedId )
+    : MIL_Object( army, builder.GetType(), forcedId )
     , name_              ( name )
     , externalIdentifier_( externalIdentifier )
 {
@@ -173,7 +173,7 @@ void Object::SendCreation() const
     asn().mutable_object()->set_id( GetID() );
     asn().set_name( name_ );
     asn().mutable_type()->set_id( GetType().GetName() );
-    asn().mutable_party()->set_id( GetArmy()->GetID() );
+    asn().mutable_party()->set_id( GetArmy() ? GetArmy()->GetID() : 0 );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs
     if( externalIdentifier_ != 0u )

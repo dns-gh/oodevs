@@ -760,6 +760,13 @@ Detallado: %1.</translation>
     </message>
 </context>
 <context>
+    <name>TeamFactory</name>
+    <message>
+        <source>No side</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TimeLimitedAttribute</name>
     <message>
         <source>Info/Mine parameters/Activity time</source>

@@ -182,7 +182,7 @@ unsigned int MIL_ObjectManager::ConvertUrbanIdToSimId( unsigned int urbanId )
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
+MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_ABC* army )
 {
     MIL_Object_ABC* pObject = builder_->BuildObject( xis, army );
     if( !pObject )
@@ -202,14 +202,17 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
 
     MIL_Army_ABC* pArmy = 0;
     const sword::MissionParameter_Value& value = message.elem( 3 ).value( 0 );
-    if( value.has_identifier() )
-        pArmy = armies.Find( value.identifier() );
-    else if( value.has_party() )
-        pArmy = armies.Find( value.party().id() );
-    if( !pArmy )
+    if( ! ( value.has_identifier() || value.has_party() ) )
         return sword::ObjectMagicActionAck::error_invalid_party;
+    unsigned int id = value.has_identifier() ? value.identifier() : value.party().id();
+    if( id != 0 )
+    {
+        pArmy = armies.Find( id );
+        if( !pArmy )
+            return sword::ObjectMagicActionAck::error_invalid_party;
+    }
     sword::ObjectMagicActionAck_ErrorCode errorCode = sword::ObjectMagicActionAck::no_error;
-    MIL_Object_ABC* pObject = builder_->BuildObject( message, *pArmy, errorCode );
+    MIL_Object_ABC* pObject = builder_->BuildObject( message, pArmy, errorCode );
     if( pObject && pObject->RetrieveAttribute< AltitudeModifierAttribute >() )
     {
         const TER_Localisation& localisation = pObject->GetLocalisation();
@@ -226,7 +229,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
 // Name: MIL_ObjectManager::CreateObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation )
 {
     MIL_Object_ABC* pObject = builder_->BuildObject( "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u );
     RegisterObject( pObject );
@@ -237,7 +240,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // Name: MIL_ObjectManager::CreateObject
 // Created: JSR 2011-10-26
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, unsigned int forcedId )
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation, unsigned int forcedId )
 {
     MIL_Object_ABC* pObject = builder_->BuildObject( "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u, forcedId );
     RegisterObject( pObject );
@@ -248,7 +251,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation,
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const std::string& type, const TER_Localisation* pLocalisation,
                                                  sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier )
 {
     if( pLocalisation )
@@ -264,7 +267,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::
 // Name: MIL_ObjectManager::CreateObject
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder )
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const MIL_ObjectBuilder_ABC& builder )
 {
     MIL_Object_ABC* pObject = builder_->BuildObject( builder, army );
     RegisterObject( pObject );
@@ -290,6 +293,32 @@ MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( const urban::TerrainObject
 void MIL_ObjectManager::UpdateCapacity( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object )
 {
     MIL_ObjectLoader::GetLoader().GetCapacityFactory().Update( object, capacity, xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::WriteODB
+// Created: JSR 2011-11-15
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::WriteODB( xml::xostream& xos ) const
+{
+    bool noSideObjectsFound = false;
+    for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    {
+        MIL_Object_ABC* obj = it->second;
+        if( obj && dynamic_cast< UrbanObjectWrapper* >( obj ) == 0 && obj->GetArmy() == 0  )
+        {
+            if( !noSideObjectsFound )
+            {
+                noSideObjectsFound = true;
+                xos << xml::start( "no-party")
+                        << xml::start( "objects" );
+            }
+            obj->WriteODB( xos );
+        }
+    }
+    if( noSideObjectsFound )
+        xos << xml::end  // no-party
+            << xml::end; // objects
 }
 
 // -----------------------------------------------------------------------------

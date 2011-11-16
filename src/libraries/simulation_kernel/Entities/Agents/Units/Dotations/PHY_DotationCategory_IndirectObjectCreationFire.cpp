@@ -89,14 +89,11 @@ void PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect( const MIL_Age
 
     try
     {
-        if( pFirer )
-        {
-            MIL_Object_ABC* pObject = MIL_Singletons::GetEntityManager().CreateObject( objectType_, pFirer->GetArmy(), localisation );
-            ConstructionAttribute* pAttribute = pObject->RetrieveAttribute< ConstructionAttribute >();
-            if( pAttribute )
-                pAttribute->Build( 1. );
-            pObject->GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( nLifeDuration_ );
-        }
+        MIL_Object_ABC* pObject = MIL_Singletons::GetEntityManager().CreateObject( objectType_, pFirer ? &pFirer->GetArmy() : 0, localisation );
+        ConstructionAttribute* pAttribute = pObject->RetrieveAttribute< ConstructionAttribute >();
+        if( pAttribute )
+            pAttribute->Build( 1. );
+        pObject->GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( nLifeDuration_ );
     }
     catch( std::runtime_error& )
     {

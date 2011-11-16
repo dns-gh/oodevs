@@ -46,7 +46,7 @@ class Team : public kernel::EntityImplementation< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( kernel::Controllers& controllers,IdManager& idManager );
+             Team( kernel::Controllers& controllers, IdManager& idManager );
              Team( xml::xistream& xis, kernel::Controllers& controllers, IdManager& idManager );
     virtual ~Team();
     //@}

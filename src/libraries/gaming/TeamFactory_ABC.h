@@ -35,13 +35,14 @@ class TeamFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamFactory_ABC() {};
-    virtual ~TeamFactory_ABC() {};
+             TeamFactory_ABC() {}
+    virtual ~TeamFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::Team_ABC*      CreateTeam     ( const sword::PartyCreation& message ) = 0;
+    virtual kernel::Team_ABC* CreateTeam( const sword::PartyCreation& message ) = 0;
+    virtual kernel::Team_ABC* CreateNoSideTeam() = 0;
     virtual kernel::Formation_ABC* CreateFormation( const sword::FormationCreation& message ) = 0;
     //@}
 };

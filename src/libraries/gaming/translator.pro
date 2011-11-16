@@ -57,6 +57,7 @@ StructuralStateAttribute.cpp \
 SupplyRouteAttribute.cpp \
 SupplyStates.cpp \
 Team.cpp \
+TeamFactory.cpp \
 TimeLimitedAttribute.cpp \
 TrafficabilityAttribute.cpp \
 Transports.cpp \

@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_Army_ABC* Create( xml::xistream& xis ) = 0;
+    virtual MIL_Army_ABC* Create( const std::string& tag, xml::xistream& xis ) = 0;
     virtual void Finalize() = 0;
     //@}
 

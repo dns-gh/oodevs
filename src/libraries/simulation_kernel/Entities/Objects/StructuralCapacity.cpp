@@ -332,7 +332,7 @@ void StructuralCapacity::CreateCrumbling( MIL_Object_ABC& object, const TER_Loca
         {
             MIL_Random::random_shuffle( lines );
             TER_Localisation localisation( TER_Localisation::ePolygon, CreatePolygon( lines.front() ) );
-            MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "landslide", army, localisation );
+            MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "landslide", &army, localisation );
         }
     }
 }

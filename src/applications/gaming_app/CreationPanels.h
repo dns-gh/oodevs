@@ -39,14 +39,9 @@ namespace gui
     class UnitsPanel;
 }
 
-namespace actions
-{
-    class ActionsModel;
-}
-
-class DrawingsModel;
 class FireCreationPanel;
 class ObjectCreationPanel;
+class Model;
 class StaticModel;
 class WeatherLayer;
 class WeatherPanel;
@@ -65,9 +60,9 @@ class CreationPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-    CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel,
+    CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, const Model& model,
                     const kernel::Time_ABC& simulation, gui::ParametersLayer& paramLayer, ::WeatherLayer& weatherLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons,
-                    gui::ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings, const tools::ExerciseConfig& config );
+                    gui::ColorStrategy_ABC& colorStrategy, const tools::ExerciseConfig& config );
     virtual ~CreationPanels();
     //@}
 

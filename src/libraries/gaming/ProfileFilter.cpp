@@ -76,7 +76,7 @@ bool ProfileFilter::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
 {
     if( !forward_.IsKnowledgeVisible( knowledge ) )
         return false;
-    if( !entity_ )
+    if( !entity_ || !cHierarchies_ )
         return !forward_.IsSupervision();
     const AgentKnowledges* filteredGroup = 0;
     const AgentKnowledges* knowledgeToCheckGroup = 0;
@@ -84,7 +84,7 @@ bool ProfileFilter::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
         filteredGroup = superior->Retrieve< AgentKnowledges >();
     for( const Entity_ABC* superior = &knowledge.GetOwner(); superior && !knowledgeToCheckGroup; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
         knowledgeToCheckGroup = superior->Retrieve< AgentKnowledges >();
-    if( filteredGroup == knowledgeToCheckGroup && filteredGroup )
+    if( filteredGroup && filteredGroup == knowledgeToCheckGroup )
         return true;
     if( !knowledgeToCheckGroup && &knowledge.GetOwner() == &cHierarchies_->GetTop() )
         return true;
