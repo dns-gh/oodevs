@@ -11,6 +11,7 @@
 #include "FloodModel.h"
 #include <windows.h>
 #include <gl/gl.h>
+#include <graphics/extensions.h>
 
 using namespace flood;
 using namespace geometry;
@@ -92,7 +93,7 @@ void FloodDrawer::RenderTexture()
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-    glTexImage2D( GL_TEXTURE_2D, 0, 4, 512, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0 );
+    gl::glTexImage2D( GL_TEXTURE_2D, 0, 4, 512, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0 );
     glBindTexture( GL_TEXTURE_2D, 0 );
     // push
     glPushMatrix();
