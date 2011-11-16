@@ -161,6 +161,9 @@
     <Filter Include="Source Files\Dialogs\Magic actions\Unit state">
       <UniqueIdentifier>{a616015c-fb09-44ee-b04d-7fddc560343e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Panels\Profiles">
+      <UniqueIdentifier>{73648679-2390-4a48-98e3-73cf550eb177}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\gaming_app\Application.cpp">
@@ -783,6 +786,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\InfoFuneralDialog.cpp">
       <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ProfilesPanel.cpp">
+      <Filter>Source Files\Panels\Profiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1434,6 +1440,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\AgentListView.h">
       <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ProfilesPanel.h">
+      <Filter>Source Files\Panels\Profiles</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

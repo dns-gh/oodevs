@@ -48,6 +48,7 @@
 #include "PopulationKnowledgesLayer.h"
 #include "PopulationsLayer.h"
 #include "ProfilingPanel.h"
+#include "ProfilesPanel.h"
 #include "Properties.h"
 #include "ReplayerToolbar.h"
 #include "ResourceLinksDialog.h"
@@ -340,6 +341,12 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
         connect( timelinePanel, SIGNAL( PlanificationModeChange() ), this, SLOT( OnPlanifStateChange() ) );
         connect( timelinePanel, SIGNAL( PlanificationModeChange() ), this, SLOT( OnNameChanged() ) );
         timelinePanel->hide();
+    }
+    // Profiles panel
+    {
+        ProfilesPanel* profilesPanel = new ProfilesPanel( this, controllers_ );
+        addDockWidget( Qt::RightDockWidgetArea, profilesPanel );
+        profilesPanel->hide();
     }
     // Score panel
     {

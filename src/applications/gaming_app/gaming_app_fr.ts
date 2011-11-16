@@ -2600,6 +2600,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>Profiles</name>
+    <message>
+        <source>Profiles</source>
+        <translation>Profils</translation>
+    </message>
+</context>
+<context>
     <name>ProfilingPanel</name>
     <message>
         <source>Network</source>

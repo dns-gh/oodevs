@@ -98,6 +98,7 @@ PopulationKnowledgePanel.cpp \
 PopulationMagicOrdersInterface.cpp \
 PopulationOptionChooser.cpp \
 ProfilingPanel.cpp \
+ProfilesPanel.cpp \
 RcEntityResolver.cpp \
 ReplayerToolbar.cpp \
 ReportFilterOptions.cpp \

@@ -2600,6 +2600,13 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>Profiles</name>
+    <message>
+        <source>Profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfilingPanel</name>
     <message>
         <source>Network</source>
