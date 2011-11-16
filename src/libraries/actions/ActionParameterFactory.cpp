@@ -122,6 +122,8 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         return new parameters::Agent( parameter, message.agent().id(), entities_, controller_ );
     if( message.has_areal() )
         return new parameters::Numeric( parameter, message.areal() );
+    if( message.has_intvalue() )
+        return new parameters::Numeric( parameter, static_cast< float >( message.intvalue() ) );
     if( message.has_automat() )
         return new parameters::Automat( parameter, message.automat().id(), entities_, controller_ );
     if( message.has_heading() )

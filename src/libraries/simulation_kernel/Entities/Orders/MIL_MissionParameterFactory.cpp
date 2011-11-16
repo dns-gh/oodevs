@@ -93,6 +93,8 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         ptr = new MIL_BoolParameter( message.booleanvalue() );
     else if( message.has_areal() )
         ptr = new MIL_RealParameter( message.areal() );
+    else if( message.has_intvalue() )
+        ptr = new MIL_RealParameter( static_cast< float >( message.intvalue() ) );
     else if( message.has_enumeration() )
         ptr = new MIL_EnumerationParameter( message.enumeration() );
     else if( message.has_path() )
