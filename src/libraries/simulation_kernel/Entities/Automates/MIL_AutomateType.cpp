@@ -54,16 +54,15 @@ struct MIL_AutomateType::LoadingWrapper
 void MIL_AutomateType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing automate types" );
-    automateTypeAllocators_[ "Automate SGTIA"                  ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate INF"                    ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate ASA"                    ] = &MIL_AutomateTypeASA    ::Create;
-    automateTypeAllocators_[ "Automate ALAT"                   ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate RENS"                   ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate NBC"                    ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate ABC"                    ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate GEN"                    ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate ALAT"                   ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate ASA"                    ] = &MIL_AutomateTypeASA    ::Create;
     automateTypeAllocators_[ "Automate ASS"                    ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate TRANS"                  ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate ASY"                    ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate CIRCULATION"            ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate GEN"                    ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate INF"                    ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate JOINT"                  ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate LOG TC2"                ] = &MIL_AutomateTypeLOG    ::Create;
     automateTypeAllocators_[ "Automate LOG BLD Sante"          ] = &MIL_AutomateTypeLOG    ::Create;
     automateTypeAllocators_[ "Automate LOG BLD Maintenance"    ] = &MIL_AutomateTypeLOG    ::Create;
@@ -71,12 +70,17 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
     automateTypeAllocators_[ "Automate LOG BLT Sante"          ] = &MIL_AutomateTypeLOG    ::Create;
     automateTypeAllocators_[ "Automate LOG BLT Maintenance"    ] = &MIL_AutomateTypeLOG    ::Create;
     automateTypeAllocators_[ "Automate LOG BLT Ravitaillement" ] = &MIL_AutomateTypeLOG    ::Create;
-    automateTypeAllocators_[ "Automate JOINT"                  ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate CIRCULATION"            ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate REFUGIE"                ] = &MIL_AutomateTypeREFUGIE::Create;
     automateTypeAllocators_[ "Automate MILICE"                 ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate ASY"                    ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate NBC"                    ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate REFUGIE"                ] = &MIL_AutomateTypeREFUGIE::Create;
+    automateTypeAllocators_[ "Automate RENS"                   ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate TRANS"                  ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate SGTIA"                  ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate Emergency"              ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate Organization"           ] = &MIL_AutomateTypeLOG    ::Create;
+    automateTypeAllocators_[ "Automate Notable"                ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate Journalist"             ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate Civilian"               ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate Injured Human"          ] = &MIL_AutomateTypeInjuredHuman::Create;
 
     LoadingWrapper loader;

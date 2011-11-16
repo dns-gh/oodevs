@@ -2638,7 +2638,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Symbol</source>
-        <translation type="unfinished">Symbole</translation>
+        <translation>Symbole</translation>
     </message>
 </context>
 <context>
@@ -3563,7 +3563,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>%</source>
-        <translation type="unfinished">%</translation>
+        <translation>%</translation>
     </message>
     <message>
         <source>Females</source>
@@ -5037,6 +5037,22 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>ResourceNetwork</source>
         <translation>reseau de ressource</translation>
     </message>
+    <message>
+        <source>Commander, Organization</source>
+        <translation>Commandant, Organisation</translation>
+    </message>
+    <message>
+        <source>Commander, Notable</source>
+        <translation>Commandant, Notable</translation>
+    </message>
+    <message>
+        <source>Commander, Journalist</source>
+        <translation>Commandant, Journaliste</translation>
+    </message>
+    <message>
+        <source>Commander, Civilian</source>
+        <translation>Commandant, Civil</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
@@ -5294,15 +5310,15 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Units/</source>
-        <translation type="unfinished">Pions/</translation>
+        <translation>Pions/</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished">Pions</translation>
+        <translation>Pions</translation>
     </message>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished">Capteurs</translation>
+        <translation>Capteurs</translation>
     </message>
 </context>
 <context>
@@ -5317,11 +5333,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Add class</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une classe</translation>
     </message>
     <message>
         <source>Remove class</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer une classe</translation>
     </message>
 </context>
 <context>
@@ -5553,19 +5569,19 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Create new</source>
-        <translation type="unfinished">Créer</translation>
+        <translation>Créer</translation>
     </message>
     <message>
         <source>Create a copy of:</source>
-        <translation type="unfinished">Créer une copie de:</translation>
+        <translation>Créer une copie de:</translation>
     </message>
     <message>
         <source>Weapon systems</source>
-        <translation type="unfinished">Systèmes d&apos;armes</translation>
+        <translation>Systèmes d&apos;armes</translation>
     </message>
     <message>
         <source>New weapon creation</source>
-        <translation type="unfinished">Création d&apos;une nouvelle arme</translation>
+        <translation>Création d&apos;une nouvelle arme</translation>
     </message>
 </context>
 <context>
@@ -5700,7 +5716,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Stress</source>
-        <translation type="unfinished"></translation>
+        <translation>Stress</translation>
     </message>
 </context>
 <context>
@@ -6119,7 +6135,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>Composantes_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
@@ -6428,37 +6444,37 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>helpers::ADN_UrbanModifiersTable</name>
     <message>
         <source>Material</source>
-        <translation type="unfinished">Matériau</translation>
+        <translation>Matériau</translation>
     </message>
     <message>
         <source>Modifiers</source>
-        <translation type="unfinished">Modificateurs</translation>
+        <translation>Modificateurs</translation>
     </message>
 </context>
 <context>
     <name>helpers::ArmorInfos</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Categories - Invalid armor type &apos;%1&apos;</source>
-        <translation type="unfinished">Catégories - Type de blindage &apos;%1&apos; non valide</translation>
+        <translation>Catégories - Type de blindage &apos;%1&apos; non valide</translation>
     </message>
     <message>
         <source>Categories - Duplicated armor type name</source>
-        <translation type="unfinished">Catégories - Le nom de blindage existe déjà</translation>
+        <translation>Catégories - Le nom de blindage existe déjà</translation>
     </message>
 </context>
 <context>
     <name>helpers::AttritionEffectOnHuman</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Categories - Invalid equipment state &apos;%1&apos;</source>
-        <translation type="unfinished">Catégories - Etat d&apos;équipement &apos;%1&apos; non valide</translation>
+        <translation>Catégories - Etat d&apos;équipement &apos;%1&apos; non valide</translation>
     </message>
 </context>
 </TS>
