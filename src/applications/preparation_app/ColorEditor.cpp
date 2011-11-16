@@ -121,7 +121,17 @@ void ColorEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu&
 {
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
     menu.InsertItem( "Color", tools::translate( "ColorEditor", "Change color" ), this, SLOT( Show() ) );
-    if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC>() )
+    if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC >() )
         if( pColor->IsOverride() )
             menu.InsertItem( "Color", tools::translate( "ColorEditor", "Reset color" ), this, SLOT( Reset() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorEditor::NotifyCreated
+// Created: LGY 2011-11-16
+// -----------------------------------------------------------------------------
+void ColorEditor::NotifyCreated( const kernel::Entity_ABC& entity )
+{
+    if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC >() )
+        colorEditor_.Add( entity, colorStrategy_.FindColor( entity ) );
 }

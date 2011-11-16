@@ -12,6 +12,7 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -43,6 +44,7 @@ class ColorEditor : public QObject
                   , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                   , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                   , public kernel::ContextMenuObserver_ABC< kernel::Ghost_ABC >
+                  , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                   , private boost::noncopyable
 {
     Q_OBJECT;
@@ -62,6 +64,8 @@ public:
     virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Ghost_ABC& entity, kernel::ContextMenu& menu );
+
+    virtual void NotifyCreated( const kernel::Entity_ABC& entity );
     //@}
 
 private:
