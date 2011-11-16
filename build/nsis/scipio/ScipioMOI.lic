@@ -1,9 +1,10 @@
 PACKAGE sword_pkg bkmasa 1.0 COMPONENTS="sword sword-runtime \
 	sword-preparation sword-dispatcher sword-workshop \
 	sword-authoring sword-terrain-generation sword-gaming \
-	sword-replayer" SIGN="179A 07CA 7412 B0EC 9C8C A0BA 3D3F 3916 \
-	CBDC 47B2 8597 C392 9FC6 23DE 17B0 11B4 32E5 E18A 0A33 438E \
-	8A42 1287 77FC 9DFD 929D C3A5 FC47 5EB2 8362 A5EC"
+	sword-replayer brain.runtime brain.tools" SIGN="0EF3 F92B C5BE \
+	3635 0CA8 1F2B EEC6 D223 D8B9 3183 4A90 693E CB19 9812 4563 \
+	01CE 8957 BDEE EBAA 1ABE C2ED 5F2F D504 A26A 7465 F4C4 3C60 \
+	9F0E E18B 4A11"
 FEATURE sword_pkg bkmasa 1.0 01-jul-2012 uncounted VENDOR_STRING=200 \
 	HOSTID="02215ef055bc 02215ef053e0 70f395024a30 70f3950045a5 \
 	70f395004601 00215ef04f2d 00215ef056ad 782bcb9b396a \
