@@ -112,7 +112,7 @@ void Client::Send( const sword::DispatcherToClient& msg )
 // Name: Client::Send
 // Created: MCO 2011-11-07
 // -----------------------------------------------------------------------------
-void Client::Send( unsigned long tag, const tools::Message& message ) const
+void Client::Send( unsigned long tag, tools::Message& message ) const
 {
     sender_.Send( endpoint_, tag, message );
 }

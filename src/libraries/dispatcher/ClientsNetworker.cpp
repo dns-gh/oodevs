@@ -92,7 +92,8 @@ void ClientsNetworker::Deactivate( const std::string& link )
 void ClientsNetworker::Broadcast( const sword::SimToClient& message )
 {
     static const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< sword::SimToClient >();
-    const tools::Message m = Serialize( message );
+    tools::Message m;
+    Serialize( message, m );
     for( CIT_Clients it = internals_.begin(); it != internals_.end(); ++it )
         it->second->Send( tag, m );
 }

@@ -89,7 +89,7 @@ private:
 
     //! @name Operations
     //@{
-    virtual void Send( const std::string& endpoint, unsigned long tag, const Message& message );
+    virtual void Send( const std::string& endpoint, unsigned long tag, Message& message );
     virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
     //@}

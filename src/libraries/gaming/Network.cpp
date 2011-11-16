@@ -59,14 +59,14 @@ Network::~Network()
 // -----------------------------------------------------------------------------
 bool Network::Connect( const std::string& strHostName, unsigned short nPort )
 {
-    return Connect( strHostName + ":" + boost::lexical_cast< std::string >( nPort ) );
+    return DoConnect( strHostName + ":" + boost::lexical_cast< std::string >( nPort ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Network::Connect
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-bool Network::Connect( const std::string& strHost )
+bool Network::DoConnect( const std::string& strHost )
 {
     if( IsConnected() )
         return false;

@@ -57,7 +57,7 @@ namespace
         return message;
     }
     template< typename M >
-    void CheckOutputBuffer( const M& message )
+    void CheckOutputBuffer( M& message )
     {
         std::vector< unsigned long > expected;
         expected.push_back( static_cast< unsigned long >( message.Size() ) - sizeof( unsigned long ) );

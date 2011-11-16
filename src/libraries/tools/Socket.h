@@ -11,7 +11,10 @@
 #define __Socket_h_
 
 #include "asio.h"
+#include "Message.h"
+#include <deque>
 #include <boost/enable_shared_from_this.hpp>
+#include <boost/thread/mutex.hpp>
 
 namespace tools
 {
@@ -36,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    void Send( unsigned long tag, const Message& message );
+    int Send( unsigned long tag, Message& message );
     void StartReading();
     void Close();
     //@}
@@ -62,6 +65,8 @@ private:
     boost::shared_ptr< MessageCallback_ABC > message_;
     std::string endpoint_;
     boost::system::error_code previous_;
+    std::deque< std::pair< unsigned long, Message > > queue_;
+    boost::mutex mutex_;
     //@}
 };
 

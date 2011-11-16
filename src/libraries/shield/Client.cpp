@@ -142,7 +142,7 @@ void Client::Send( const std::string& link, unsigned long tag, const google::pro
 // Name: Client::Send
 // Created: MCO 2011-11-03
 // -----------------------------------------------------------------------------
-void Client::Send( const std::string&, unsigned long, const tools::Message& )
+void Client::Send( const std::string&, unsigned long, tools::Message& )
 {
     throw std::runtime_error( __FUNCTION__ ); // $$$$ MCO : pretty crappy but can actually never happen...
 }

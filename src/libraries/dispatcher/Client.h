@@ -49,7 +49,7 @@ public:
     virtual void Send( const sword::MessengerToClient& msg );
     virtual void Send( const sword::DispatcherToClient& msg );
 
-    void Send( unsigned long tag, const tools::Message& message ) const;
+    void Send( unsigned long tag, tools::Message& message ) const;
     //@}
 
 private:

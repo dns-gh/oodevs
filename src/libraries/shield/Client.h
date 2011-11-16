@@ -56,7 +56,7 @@ public:
     void ReceiveAdminToLauncher       ( const MsgsAdminToLauncher::MsgAdminToLauncher& msg );
 
     virtual void Send( const std::string& link, unsigned long tag, const google::protobuf::Message& m );
-    virtual void Send( const std::string& link, unsigned long tag, const tools::Message& message );
+    virtual void Send( const std::string& link, unsigned long tag, tools::Message& message );
     //@}
 
     //! @name Accessors

@@ -196,7 +196,8 @@ void Clients::Send( MsgsSimToClient::MsgSimToClient& message )
     if( utf8StringEncoding_ )
         Utf8Converter::ConvertCP1252StringsToUtf8( message );
     static const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< MsgsSimToClient::MsgSimToClient >();
-    tools::Message m = sender_.Serialize( message );
+    tools::Message m;
+    sender_.Serialize( message, m );
     for( CIT_Clients it = actives_.begin(); it != actives_.end(); ++it )
     {
         sender_.Send( it->first, tag, m );

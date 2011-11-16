@@ -45,9 +45,11 @@ public:
     }
     virtual void Send( const std::string& link, unsigned long tag, const google::protobuf::Message& message )
     {
-        Send( link, tag, Serialize( message ) );
+        Message toolsMessage;
+        Serialize( message, toolsMessage );
+        Send( link, tag, toolsMessage );
     }
-    Message Serialize( const google::protobuf::Message& m ) const
+    void Serialize( const google::protobuf::Message& m, Message& message ) const
     {
         if( !m.IsInitialized() )
             throw std::runtime_error( "Message of type \"" + m.GetDescriptor()->full_name()
@@ -55,12 +57,10 @@ public:
         boost::shared_array< google::protobuf::uint8 > buffer( new google::protobuf::uint8[ m.ByteSize() ] );
         if( !m.SerializeWithCachedSizesToArray( buffer.get() ) )
             throw std::runtime_error( "Error serializing message of type \"" + m.GetDescriptor()->full_name() + '"' );
-        Message message;
         message.Write( (const char*)buffer.get(), m.GetCachedSize() );
-        return message;
     }
 
-    virtual void Send( const std::string& link, unsigned long tag, const Message& message ) = 0;
+    virtual void Send( const std::string& link, unsigned long tag, Message& message ) = 0;
     //@}
 
     //! @name Accessors
