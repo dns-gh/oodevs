@@ -17,7 +17,6 @@
 #include "GlTooltip.h"
 #include "SvglProxy.h"
 #include "TacticalGraphics.h"
-#include <graphics/extensions.h>
 
 using namespace geometry;
 using namespace kernel;
@@ -132,7 +131,7 @@ void GlToolsBase::BindIcon( const char** xpm )
             QImage resizedImage = image.copy( 0, 0, nWidth, nHeight );
             glGenTextures( 1, & texture );
             glBindTexture( GL_TEXTURE_2D, texture );
-            gl::glTexImage2D( GL_TEXTURE_2D, 0, 4, resizedImage.width(), resizedImage.height(), 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, resizedImage.bits() );
+            glTexImage2D( GL_TEXTURE_2D, 0, 4, resizedImage.width(), resizedImage.height(), 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, resizedImage.bits() );
             glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
             glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
         }
