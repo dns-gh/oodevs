@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE( FactoriesTest_ArmyFactory )
          "    <logistics/>"
          "</party>" );
      xis >> xml::start( "party" );
-     armyFactory.Create( "parties", xis );
+     armyFactory.Create( "party", xis );
      xis >> xml::end;
      BOOST_TODO;
 }
