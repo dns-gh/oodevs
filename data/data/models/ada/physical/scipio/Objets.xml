@@ -47,7 +47,7 @@
     <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
-    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+    <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
           <resource count="10" name="mine classique"/>
@@ -188,7 +188,6 @@
   <object geometry="point" name="destruction pont" symbol="G*MPORC---****X" type="bridge destruction">
     <activable/>
     <avoidable distance="100"/>
-    <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
@@ -454,4 +453,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="0058682307" -->
+<!-- signature="1224223256" -->
