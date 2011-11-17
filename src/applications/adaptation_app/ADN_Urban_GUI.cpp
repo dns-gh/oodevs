@@ -162,9 +162,12 @@ void ADN_Urban_GUI::Build()
     ADN_GroupBox* medical = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Medical" ), pGroupInfrastructures );
     {
         vInfrastructureInfosConnectors[ eMedicalCapacityPresent ] = &medical->GetConnector();
-        builder.AddField< ADN_EditLine_Int >( medical, tr( "Doctor night rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_NightRate ], 0, eGreaterEqualZero );
-        builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency doctor rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_EmergencyDoctorRate ], 0, eGreaterEqualZero );
-        builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency bed rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_EmergencyBedRate ], 0, eGreaterEqualZero );
+        builder.AddField< ADN_EditLine_Int >( medical, tr( "Doctor night rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_NightRate ] );
+        builder.SetValidator( new ADN_IntValidator( 0, 5000, this ) );
+        builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency doctor rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_EmergencyDoctorRate ] );
+        builder.SetValidator( new ADN_IntValidator( 0, 5000, this ) );
+        builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency bed rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_EmergencyBedRate ] );
+        builder.SetValidator( new ADN_IntValidator( 0, 5000, this ) );
     }
 
     Q3GroupBox* pTemplates = new Q3HGroupBox( tr( "Templates" ), pBox );
