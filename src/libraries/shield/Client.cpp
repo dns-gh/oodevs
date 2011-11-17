@@ -42,7 +42,7 @@ Client::Client( const std::string& from, tools::MessageSender_ABC& sender, tools
     , sender_             ( sender )
     , dispatcher_         ( dispatcher )
     , listener_           ( listener )
-    , converter_          ( *this, *this, listener )
+    , converter_          ( *this, *this )
     , encodeStringsInUtf8_( encodeStringsInUtf8 )
 {
     service_.RegisterMessage< sword::AarToClient >( boost::bind( &Converter::ReceiveAarToClient, &converter_, _2 ) );

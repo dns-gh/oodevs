@@ -12,8 +12,8 @@
 
 #include "Server_ABC.h"
 #include "Client_ABC.h"
+#include "Cache.h"
 #include "protocol/ClientBroadcaster_ABC.h"
-#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <map>
 
@@ -58,6 +58,7 @@ namespace shield
     class ClientHandler_ABC;
     class ClientListener_ABC;
     class Listener_ABC;
+    class Model_ABC;
     class Client;
 
 // =============================================================================
@@ -73,7 +74,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Clients( tools::MessageSender_ABC& sender, tools::MessageDispatcher_ABC& dispatcher,
-                      ClientHandler_ABC& handler, ClientListener_ABC& listener,
+                      const Model_ABC& model, ClientHandler_ABC& handler, ClientListener_ABC& listener,
                       bool encodeStringsInUtf8 );
     virtual ~Clients();
     //@}
@@ -127,8 +128,10 @@ private:
     //@{
     tools::MessageSender_ABC& sender_;
     tools::MessageDispatcher_ABC& dispatcher_;
+    const Model_ABC& model_;
     ClientHandler_ABC& handler_;
     ClientListener_ABC& listener_;
+    Cache cache_;
     bool utf8StringEncoding_;
     T_Clients clients_;
     T_Clients actives_;

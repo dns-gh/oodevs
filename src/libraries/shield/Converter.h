@@ -47,7 +47,6 @@ namespace shield
 {
     class Client_ABC;
     class Server_ABC;
-    class ClientListener_ABC;
 
 // =============================================================================
 /** @class  Converter
@@ -60,7 +59,7 @@ class Converter : boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Converter( Server_ABC& server, Client_ABC& client, ClientListener_ABC& listener );
+             Converter( Server_ABC& server, Client_ABC& client );
     virtual ~Converter();
     //@}
 
@@ -88,7 +87,6 @@ private:
     const std::string from_;
     Server_ABC& server_;
     Client_ABC& client_;
-    ClientListener_ABC& listener_;
     //@}
 };
 

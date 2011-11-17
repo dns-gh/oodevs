@@ -25,11 +25,13 @@ using namespace shield;
 // Created: MCO 2010-11-29
 // -----------------------------------------------------------------------------
 Clients::Clients( tools::MessageSender_ABC& sender, tools::MessageDispatcher_ABC& dispatcher,
-                  ClientHandler_ABC& handler, ClientListener_ABC& listener, bool encodeStringsInUtf8 )
-    : sender_            ( sender )
+                  const Model_ABC& model, ClientHandler_ABC& handler, ClientListener_ABC& listener, bool encodeStringsInUtf8 )
+    : model_             ( model )
+    , sender_            ( sender )
     , dispatcher_        ( dispatcher )
     , handler_           ( handler )
     , listener_          ( listener )
+    , cache_             ( sender, model, encodeStringsInUtf8 )
     , utf8StringEncoding_( encodeStringsInUtf8 )
 {
     // NOTHING
@@ -140,6 +142,7 @@ void Clients::ReceiveAdminToLauncher( const std::string& from, const MsgsAdminTo
 void Clients::Activate( const std::string& link )
 {
     actives_[ link ] = clients_[ link ];
+    cache_.Send( link );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,8 +160,12 @@ void Clients::Deactivate( const std::string& link )
 // -----------------------------------------------------------------------------
 void Clients::Broadcast( const sword::SimToClient& message )
 {
-    Converter converter( *this, *this, listener_ );
-    converter.ReceiveSimToClient( message );
+    cache_.Clear();
+    if( ! actives_.empty() )
+    {
+        Converter converter( *this, *this );
+        converter.ReceiveSimToClient( message );
+    }
 }
 
 #define NO_BROADCAST( MESSAGE ) \

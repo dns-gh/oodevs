@@ -16,6 +16,7 @@
 namespace shield
 {
     class Server;
+    class Model_ABC;
     class Listener_ABC;
     class ClientHandler_ABC;
 }
@@ -27,6 +28,7 @@ namespace tools
 
 namespace dispatcher
 {
+    class Model_ABC;
     class Config;
 
 // =============================================================================
@@ -40,7 +42,7 @@ class Shield : boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Shield( const Config& config, tools::MessageDispatcher_ABC& dispatcher, shield::ClientHandler_ABC& handler );
+             Shield( const Config& config, Model_ABC& model, tools::MessageDispatcher_ABC& dispatcher, shield::ClientHandler_ABC& handler );
     virtual ~Shield();
     //@}
 
@@ -53,6 +55,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< shield::Listener_ABC > logger_;
+    std::auto_ptr< shield::Model_ABC > model_;
     std::auto_ptr< shield::Server > server_;
     //@}
 };

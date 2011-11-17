@@ -50,6 +50,7 @@ namespace shield
 {
     class ClientHandler_ABC;
     class Listener_ABC;
+    class Model_ABC;
     class Client;
 
 // =============================================================================
@@ -67,7 +68,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Server( unsigned short port, tools::MessageDispatcher_ABC& dispatcher,
-                     ClientHandler_ABC& handler, Listener_ABC& listener,
+                     const Model_ABC& model, ClientHandler_ABC& handler, Listener_ABC& listener,
                      bool encodeStringsInUtf8, unsigned long timeOut = 0 );
     virtual ~Server();
     //@}

@@ -25,7 +25,7 @@ namespace dispatcher
     class Config;
     class Plugin_ABC;
     class Services;
-    class Client;
+    class Model_ABC;
 
 // =============================================================================
 /** @class  ClientsNetworker
@@ -43,7 +43,7 @@ class ClientsNetworker : public tools::ServerNetworker
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientsNetworker( const Config& config, Plugin_ABC& plugin, const Services& services );
+             ClientsNetworker( const Config& config, Plugin_ABC& plugin, const Services& services, const Model_ABC& model );
     virtual ~ClientsNetworker();
     //@}
 
@@ -110,6 +110,7 @@ private:
     //@{
     Plugin_ABC& plugin_;
     const Services& services_;
+    const Model_ABC& model_;
     T_Clients clients_;
     T_Clients internals_;
     T_Broadcasters broadcasters_;

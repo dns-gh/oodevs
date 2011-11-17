@@ -53,7 +53,7 @@ PluginFactory::PluginFactory( const Config& config, Model& model, const dispatch
 {
     handler_.Add( rights_ );
     handler_.Add( pOrder_ );
-    handler_.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights_, *pOrder_, log ) );
+    handler_.Add( new DispatcherPlugin( simulation_, clients_, *rights_, *pOrder_, log ) );
 }
 
 // -----------------------------------------------------------------------------

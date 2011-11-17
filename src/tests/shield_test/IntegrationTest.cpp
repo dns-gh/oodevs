@@ -12,6 +12,7 @@
 #include "shield/Listener_ABC.h"
 #include "shield/DebugInfo_ABC.h"
 #include "shield/ClientHandler_ABC.h"
+#include "shield/Model_ABC.h"
 #pragma warning( push, 0 )
 #include "shield/proto/ClientToSim.pb.h"
 #include "shield/proto/SimToClient.pb.h"
@@ -47,6 +48,10 @@ namespace
     {
         MOCK_METHOD( Register, 3 )
         MOCK_METHOD( Unregister, 1 )
+    };
+    MOCK_BASE_CLASS( MockModel, shield::Model_ABC )
+    {
+        MOCK_METHOD( Send, 1 )
     };
 
     template< typename C, typename F >
@@ -86,13 +91,14 @@ namespace
     struct Fixture : ListenerFixture
     {
         Fixture()
-            : shield( PORT, dispatcher, handler, listener, true )
+            : shield( PORT, dispatcher, model, handler, listener, true )
         {
-            int notified = 3;
+            int notified = 4;
             MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy received connection from" ) ).calls( --bl::var( notified ) );
             MOCK_EXPECT( handler, Register ).once().with( mock::any, mock::retrieve( sender ), mock::retrieve( broadcaster ) )
                 .calls( (--bl::var( notified ), bl::bind( &dispatcher::ClientBroadcaster_ABC::Activate, &bl::_3, bl::_1 )) );
             MOCK_EXPECT( client, ConnectionSucceeded ).once().with( mock::retrieve( client.host ) ).calls( --bl::var( notified ) );
+            MOCK_EXPECT( model, Send ).once().calls( --bl::var( notified ) );
             wait( bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
             mock::verify();
             mock::reset();
@@ -105,6 +111,7 @@ namespace
         }
         MockMessageDispatcher dispatcher;
         MockClientHandler handler;
+        MockModel model;
         shield::Server shield;
         Client client;
         tools::MessageSender_ABC* sender;
