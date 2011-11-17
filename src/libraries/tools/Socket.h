@@ -67,6 +67,7 @@ private:
     boost::system::error_code previous_;
     std::deque< std::pair< unsigned long, Message > > queue_;
     boost::mutex mutex_;
+    bool needCleanup_;
     //@}
 };
 
