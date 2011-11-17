@@ -62,6 +62,10 @@ PluginConfigBuilder& PluginConfigBuilder::BuildFromXml()
                     *xis >> xml::start( "plugin" );
                     composite_->Add( config_, *xis );
                 }
+                catch( xml::exception& e )
+                {
+                    observer.NotifyInvalidXml( it->path().string(), e );
+                }
                 catch( ... )
                 {
                     // NOTHING

@@ -154,8 +154,8 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+				  lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix},
-                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}">
             <syslibset libs="shell32,user32"/>
             <defineset define="BML_PLUGIN_DLL_EXPORTS"/>
@@ -452,7 +452,7 @@
         </build-lib>
     </target>
 
-    <target name="application.dispatcher_dll" depends="library.dispatcher,library.actions,library.clients_kernel,library.ENT,library.plugins,library.shield" description="build Sword Dispatcher dll with crossbow">
+    <target name="application.dispatcher_dll" depends="library.dispatcher,library.actions,library.clients_kernel,library.ENT,library.plugins,library.shield" description="build Sword Dispatcher dll">
         <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="boost,terrain,qt4,xerces,xalan,protobuf" pattern="dispatcher-${platform}-mt"
             libs="masalloc,tools,
                   Qt3Support4,
@@ -526,7 +526,7 @@
         </build-app>
     </target>
 
-    <target name="application.replayer_app" depends="application.dispatcher_dll,library.dispatcher,library.3a,library.score_plugin" description="build Sword replayer executable with crossbow">
+    <target name="application.replayer_app" depends="application.dispatcher_dll,library.dispatcher,library.3a,library.score_plugin" description="build Sword replayer executable">
         <build-app name="replayer_app" depends="terrain,boost,flexlm,qt4,xerces,xalan,protobuf" pattern="replayer_app"
             libs="tools,directia-${platform}-mt-4_6,
                   Qt3Support4,
