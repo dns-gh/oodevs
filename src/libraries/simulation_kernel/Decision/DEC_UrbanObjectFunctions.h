@@ -31,6 +31,7 @@ public:
     //@{
     static float GetCurrentRecceProgress( const MIL_AgentPion& pion, UrbanObjectWrapper* pUrbanObject );
     static boost::shared_ptr< MT_Vector2D > GetCurrentBarycenter( UrbanObjectWrapper* pUrbanObject );
+    static boost::shared_ptr< MT_Vector2D > GetBarycenter( UrbanObjectWrapper* pUrbanObject );
     static std::vector< boost::shared_ptr< MT_Vector2D > > GetBoundingBox( UrbanObjectWrapper* pUrbanObject );
     static float GetPathfindCost( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
     static float GetRapForLocal( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
