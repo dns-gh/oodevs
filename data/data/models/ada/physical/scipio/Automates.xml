@@ -805,7 +805,7 @@
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante Reco"/>
     <unit max-occurs="1" type="ABC . Patrouille EI 12,7"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ONG" id="776" name="ONG" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.ONG" id="776" name="ONG" type="Automate Organization">
     <unit min-occurs="1" type="ONG Soutien LOG"/>
     <unit min-occurs="1" type="ONG Intervention"/>
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ONG PC"/>
@@ -1025,7 +1025,7 @@
   <automat decisional-model="Masalife.Automate.LOG" id="820" name="GLAISE - LOG . TC2 ART" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - LOG . TC2 ART"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="821" name="CIV . Journalistes" type="Automate REFUGIE">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="821" name="CIV . Journalistes" type="Automate Journalist">
     <unit command-post="true" min-occurs="1" type="Journalistes"/>
   </automat>
   <automat decisional-model="Masalife.Automate.MonoPion" id="822" name="CIV . DPRE" type="Automate REFUGIE">
@@ -1331,10 +1331,10 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit type="TRANS . Node Transit Integration"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="893" name="CIV . Civil" type="Automate REFUGIE">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="893" name="CIV . Civil" type="Automate Civilian">
     <unit command-post="true" min-occurs="1" type="Civil"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.MonoPion" id="894" name="CIV . Notable" type="Automate REFUGIE">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="894" name="CIV . Notable" type="Automate Notable">
     <unit command-post="true" min-occurs="1" type="Notable"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.BIA" id="895" name="LOG . PC BIA" type="Automate TRANS">
@@ -1344,4 +1344,4 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC BIE NBC"/>
   </automat>
 </automats>
-<!-- signature="4197222608" -->
+<!-- signature="0790266252" -->
