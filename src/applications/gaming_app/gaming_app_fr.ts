@@ -698,7 +698,7 @@ Reason: %3
     <name>ExtensionsPanel</name>
     <message>
         <source>Change extension</source>
-        <translation>Changer l'extension</translation>
+        <translation>Changer l&apos;extension</translation>
     </message>
     <message>
         <source>Validate</source>

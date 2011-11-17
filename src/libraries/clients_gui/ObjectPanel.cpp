@@ -34,9 +34,9 @@ ObjectPanel::ObjectPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& c
     , controllers_ ( controllers )
     , selected_    ( controllers )
 {
-    pWidget_ = new Q3VBox( this );
-    display_ = new DisplayBuilder( pWidget_, factory );
-    setWidget( pWidget_ );
+    pLayout_ = new QVBoxLayout();
+    setLayout( pLayout_ );
+    display_ = new DisplayBuilder( this, factory );
     controllers_.Register( *this );
 }
 

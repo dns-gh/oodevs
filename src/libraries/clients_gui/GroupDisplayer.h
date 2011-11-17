@@ -14,6 +14,8 @@
 #include <map>
 #include <Qt3Support/q3groupbox.h>
 
+class QVBoxLayout;
+
 namespace gui
 {
     class LabelDisplayer;
@@ -61,6 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
+    QVBoxLayout* layout_;
     ItemFactory_ABC& factory_;
     T_Items items_;
     //@}

@@ -17,11 +17,13 @@ using namespace gui;
 // Name: CheckBoxDisplayer constructor
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-CheckBoxDisplayer::CheckBoxDisplayer( QWidget* parent, const QString& name )
+CheckBoxDisplayer::CheckBoxDisplayer( QBoxLayout* parent, const QString& name )
 {
-    parent->layout()->addWidget( new QLabel( name, parent ) );
-    box_ = new QCheckBox( parent );
-    parent->layout()->addWidget( box_ );
+    QHBoxLayout* layout = new QHBoxLayout();
+    parent->addLayout( layout );
+    layout->addWidget( new QLabel( name ) );
+    box_ = new QCheckBox();
+    layout->addWidget( box_ );
 }
 
 // -----------------------------------------------------------------------------

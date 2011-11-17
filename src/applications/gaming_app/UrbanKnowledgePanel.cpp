@@ -35,12 +35,12 @@ UrbanKnowledgePanel::UrbanKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     , selected_    ( controllers )
     , subSelected_ ( controllers )
 {
-    Q3VBox* box = new Q3VBox( this );
-    box->setMinimumWidth( 200 );
-    pKnowledgeListView_ = new ListDisplayer< UrbanKnowledgePanel >( box, *this, factory );
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    pKnowledgeListView_ = new ListDisplayer< UrbanKnowledgePanel >( this, *this, factory );
     pKnowledgeListView_->AddColumn( tools::translate( "Urban", "Known blocks" ) );
+    layout->addWidget( pKnowledgeListView_ );
 
-    display_ = new DisplayBuilder( box, factory );
+    display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tr( "Details" ) )
                 .AddLabel( tr( "Identifier:" ) )
                 .AddLabel( tr( "Associated block:" ) )
@@ -48,10 +48,9 @@ UrbanKnowledgePanel::UrbanKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
                 .AddLabel( tr( "Progress:" ) )
                 .AddLabel( tr( "Maximum Progress:" ) );
 
-    pPerceptionListView_ = new ListDisplayer< UrbanKnowledgePanel >( box, *this, factory );
+    pPerceptionListView_ = new ListDisplayer< UrbanKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( tr( "Agent" ) );
-
-    setWidget( box );
+    layout->addWidget( pPerceptionListView_ );
 
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
     connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );

@@ -28,7 +28,7 @@ class CheckBoxDisplayer : public kernel::Displayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CheckBoxDisplayer( QWidget* parent, const QString& name );
+             CheckBoxDisplayer( QBoxLayout* parent, const QString& name );
     virtual ~CheckBoxDisplayer();
     //@}
 

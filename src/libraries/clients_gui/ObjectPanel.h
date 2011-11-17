@@ -124,7 +124,7 @@ protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    QWidget* pWidget_;
+    QBoxLayout* pLayout_;
     //@}
 
 private:

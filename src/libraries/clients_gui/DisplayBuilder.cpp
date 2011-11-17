@@ -44,6 +44,7 @@ GroupDisplayer& DisplayBuilder::AddGroup( const QString& name )
     if( group )
         throw std::runtime_error( "Group '" + std::string( name.ascii() ) + "' already exists" );
     group = new GroupDisplayer( parent_, name, factory_ );
+    parent_->layout()->addWidget( group );
     return *group;
 }
 

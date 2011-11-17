@@ -25,8 +25,8 @@ GroupDisplayer::GroupDisplayer( QWidget* parent, const QString& name, ItemFactor
     : QGroupBox( name, parent )
     , factory_( factory )
 {
-    setLayout( new QVBoxLayout() );
-    parent->layout()->addWidget( this );
+    layout_ = new QVBoxLayout( this );
+    setLayout( layout_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ GroupDisplayer& GroupDisplayer::AddLabel( const QString& name, bool bold )
     Displayer_ABC*& item = items_[ name ];
     if( item )
         throw std::runtime_error( "Item '" + std::string( name.ascii() ) + "' already added" );
-    item = new LabelDisplayer( this, name, bold, factory_ );
+    item = new LabelDisplayer( layout_, name, bold, factory_ );
     return *this;
 }
 
@@ -61,7 +61,7 @@ GroupDisplayer& GroupDisplayer::AddSpinBox( const QString& name, int min, int ma
     Displayer_ABC*& item = items_[ name ];
     if( item )
         throw std::runtime_error( "Item '" + std::string( name.ascii() ) + "' already added" );
-    item = new SpinBoxDisplayer( this, name, min, max, step );
+    item = new SpinBoxDisplayer( layout_, name, min, max, step );
     return *this;
 }
 
@@ -74,7 +74,7 @@ GroupDisplayer& GroupDisplayer::AddCheckBox( const QString& name )
     Displayer_ABC*& item = items_[ name ];
     if( item )
         throw std::runtime_error( "Item '" + std::string( name.ascii() ) + "' already added" );
-    item = new CheckBoxDisplayer( this, name );
+    item = new CheckBoxDisplayer( layout_, name );
     return *this;
 }
 

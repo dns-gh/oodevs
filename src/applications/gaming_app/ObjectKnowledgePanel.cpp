@@ -39,12 +39,12 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
     , selected_    ( controllers )
     , subSelected_ ( controllers )
 {
-    Q3VBox* box = new Q3VBox( this );
-    box->setMinimumWidth( 200 );
-    pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( box, *this, factory );
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
     pKnowledgeListView_->AddColumn( tools::translate( "ObjectKnowledgePanel", "Known objects" ) );
+    layout->addWidget( pKnowledgeListView_ );
 
-    display_ = new DisplayBuilder( box, factory );
+    display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tools::findTranslation( "Object", "Information" ) )
                 .AddLabel( tools::findTranslation( "Object", "Identifier:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Associated object:" ) )
@@ -91,10 +91,9 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( tools::findTranslation( "Object", "Fire class:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Fire temperature:" ) );
 
-    pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( box, *this, factory );
+    pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( tools::translate( "ObjectKnowledgePanel", "Agent" ) );
-
-    setWidget( box );
+    layout->addWidget( pPerceptionListView_ );
 
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
     connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );

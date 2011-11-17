@@ -41,12 +41,12 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     , selectionCandidate_( controllers )
     , display_     ( 0 )
 {
-    Q3VBox* box = new Q3VBox( this );
-    box->setMinimumWidth( 200 );
-    pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( box, *this, factory );
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
     pKnowledgeListView_->AddColumn( tools::translate( "AgentKnowledge", "Known units" ) );
+    layout->addWidget( pKnowledgeListView_ );
 
-    display_ = new DisplayBuilder( box, factory );
+    display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tools::translate( "AgentKnowledge", "Details" ) )
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Identifier:" ) )
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Associated agent:" ) )
@@ -65,12 +65,11 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Command post:" ) )
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Relevance:" ) )
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Critical intelligence:" ) );
-
-    pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( box, *this, factory );
+    
+    pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( tools::translate( "AgentKnowledge", "Unit" ) ).
                           AddColumn( tools::translate( "AgentKnowledge", "Perception level" ) );
-
-    setWidget( box );
+    layout->addWidget( pPerceptionListView_ );
 
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
     connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );
