@@ -173,6 +173,7 @@
     <ClCompile Include="..\..\src\libraries\launcher_dll\LauncherPublisher.cpp" />
     <ClCompile Include="..\..\src\libraries\launcher_dll\LauncherService.cpp" />
     <ClCompile Include="..\..\src\libraries\launcher_dll\ProcessService.cpp" />
+    <ClCompile Include="..\..\src\libraries\launcher_dll\SessionStatusMessageHandler.cpp" />
     <ClCompile Include="..\..\src\libraries\launcher_dll\SwordFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\launcher_dll\CheckpointMessageHandler.cpp" />
     <ClCompile Include="..\..\src\libraries\launcher_dll\ClientMessageHandlerBase.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="..\..\src\libraries\launcher_dll\LauncherPublisher.h" />
     <ClInclude Include="..\..\src\libraries\launcher_dll\LauncherService.h" />
     <ClInclude Include="..\..\src\libraries\launcher_dll\ProcessService.h" />
+    <ClInclude Include="..\..\src\libraries\launcher_dll\SessionStatusMessageHandler.h" />
     <ClInclude Include="..\..\src\libraries\launcher_dll\SwordFacade.h" />
     <ClInclude Include="..\..\src\libraries\launcher_dll\CheckpointMessageHandler.h" />
     <ClInclude Include="..\..\src\libraries\launcher_dll\ClientMessageHandlerBase.h" />
