@@ -30,6 +30,7 @@
 #include "ControlInformationMessageHandler.h"
 #include "ControlEndTickMessageHandler.h"
 #include "ConnectedProfilesMessageHandler.h"
+#include "SessionStatusMessageHandler.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessengerSenders.h"
@@ -189,6 +190,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlEndTickMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+    wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new SessionStatusMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     return sword::SessionStartResponse::success;
 }
 

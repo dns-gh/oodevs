@@ -45,9 +45,6 @@ bool PauseResumeMessageHandler::OnReceiveMessage( const sword::SimToClient& mess
                                    sword::SessionCommandExecutionResponse::session_already_paused );
         response().set_running( false );
         Send( response );
-        SessionStatus statusMessage;
-        statusMessage().set_status( sword::SessionStatus::paused );
-        Send( statusMessage );
     }
     if( message.message().has_control_resume_ack() )
     {
@@ -57,9 +54,6 @@ bool PauseResumeMessageHandler::OnReceiveMessage( const sword::SimToClient& mess
                                    sword::SessionCommandExecutionResponse::session_already_running );
         response().set_running( true );
         Send( response );
-        SessionStatus statusMessage;
-        statusMessage().set_status( sword::SessionStatus::running );
-        Send( statusMessage );
     }
     return true;
 }
