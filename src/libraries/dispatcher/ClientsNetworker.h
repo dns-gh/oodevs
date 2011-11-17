@@ -26,6 +26,7 @@ namespace dispatcher
     class Plugin_ABC;
     class Services;
     class Model_ABC;
+    class Client;
 
 // =============================================================================
 /** @class  ClientsNetworker
