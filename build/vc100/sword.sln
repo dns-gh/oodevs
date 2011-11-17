@@ -27,6 +27,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MT_Tools", "MT_Tools.vcxproj", "{8979D7D9-B248-4739-A7BE-04AC0112AC08}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tools", "tools.vcxproj", "{C11D1C79-D437-4299-A75A-98DD97036D5B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8979D7D9-B248-4739-A7BE-04AC0112AC08} = {8979D7D9-B248-4739-A7BE-04AC0112AC08}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "frontend", "frontend.vcxproj", "{B878605D-F426-451F-B852-2FEA60F02918}"
 EndProject
@@ -89,6 +92,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "reports", "reports.vcxproj", "{7A4771DC-54FD-4642-AC32-700B665DF543}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dispatcher_test", "dispatcher_test.vcxproj", "{3FF4382F-3172-4A3E-90F1-93BB3380663E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8979D7D9-B248-4739-A7BE-04AC0112AC08} = {8979D7D9-B248-4739-A7BE-04AC0112AC08}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "saver_plugin", "saver_plugin.vcxproj", "{34B94A85-1528-4861-B702-E57F8909E48F}"
 EndProject
@@ -101,10 +107,16 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "resource_network", "resource_network.vcxproj", "{D347E92A-6823-4B4A-A092-A445E51835FB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "actions_test", "actions_test.vcxproj", "{FA5F9A7A-AF37-4E8B-96F5-B787D6C2C396}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8979D7D9-B248-4739-A7BE-04AC0112AC08} = {8979D7D9-B248-4739-A7BE-04AC0112AC08}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "timeline_plugin", "timeline_plugin.vcxproj", "{2C350ECC-D359-432F-B3FF-63AEB71CDE97}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "protocol_test", "protocol_test.vcxproj", "{C74AFDE9-A874-408E-812B-1A7D4DEB4F6B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8979D7D9-B248-4739-A7BE-04AC0112AC08} = {8979D7D9-B248-4739-A7BE-04AC0112AC08}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shield", "shield.vcxproj", "{A8F0871A-A5FC-4709-99A7-E0EFA3D0B241}"
 EndProject
@@ -139,6 +151,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mission_tester_app", "mission_tester_app.vcxproj", "{A293AD65-97C8-46AD-BA01-3ED533F1B895}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shield_app", "shield_app.vcxproj", "{5B0F540A-6926-4858-9112-DF39063FF625}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8979D7D9-B248-4739-A7BE-04AC0112AC08} = {8979D7D9-B248-4739-A7BE-04AC0112AC08}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "positions_plugin", "positions_plugin.vcxproj", "{B35507EE-6644-47DF-9E2F-469CD09751A1}"
 EndProject
