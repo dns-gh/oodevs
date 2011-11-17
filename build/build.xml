@@ -28,7 +28,7 @@
                                       library.clients_kernel,library.clients_gui,library.actions,library.actions,library.actions_gui,library.reports,
                                       library.gaming,library.preparation,library.plugins,library.3a,library.mission_tester,library.license_gui" description="build all libraries"/>
 
-    <target name="library.tools" description="build tools static library">
+    <target name="library.tools" depends="library.MT_Tools" description="build tools static library">
         <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
             <defineset>
@@ -155,6 +155,7 @@
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}">
             <syslibset libs="shell32,user32"/>
             <defineset define="BML_PLUGIN_DLL_EXPORTS"/>
@@ -179,6 +180,7 @@
                   lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_actions-${platform}-mt@{suffix},
                   lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}">
             <syslibset libs="shell32,user32"/>
             <defineset define="CROSSBOW_PLUGIN_DLL_EXPORTS"/>
@@ -558,7 +560,7 @@
                          lib${ant.project.name}_ENT-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
                          lib${ant.project.name}_clients_kernel-${platform}-mt,
-                         lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
+                         lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt,
                          lib${ant.project.name}_license_gui-${platform}-mt@{suffix}" pch-excludes="qt4undo.cpp">
             <syslibset libs="gdi32,advapi32,user32,shell32"/>
@@ -593,6 +595,7 @@
         <build-app name="loadtester_app" subsystem="console" depends="boost,protobuf"
                    libs="lib${ant.project.name}_protocol-${platform}-mt,
                          Qt3Support4,
+                         lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt">
             <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32"/>
             <defineset define="QT3_SUPPORT"/>
@@ -662,6 +665,7 @@
                   Qt3Support4,
                   lib${ant.project.name}_client_proxy-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}">
             <includepath path="${include.dir}/wise"/>
             <defineset define="_USRDLL"/>
@@ -800,7 +804,10 @@
     </target>
 
     <target name="tools_test" depends="library.tools">
-        <build-test name="tools" depends="boost,xerces,xalan" libs="lib${ant.project.name}_tools-${platform}-mt@{suffix},tools"/>
+        <build-test name="tools" depends="boost,xerces,xalan" 
+            libs="lib${ant.project.name}_tools-${platform}-mt@{suffix},
+                  tools,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}"/>
     </target>
 
     <target name="plugins_test" depends="library.hla_plugin,library.tic,library.script_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin">
@@ -840,7 +847,10 @@
 
     <target name="shield_test" depends="library.shield">
         <build-test name="shield" depends="boost,protobuf" excludes="**/*.h"
-            libs="lib${ant.project.name}_tools-${platform}-mt,lib${ant.project.name}_shield-${platform}-mt,lib${ant.project.name}_protocol-${platform}-mt"/>
+            libs="lib${ant.project.name}_tools-${platform}-mt,
+                 lib${ant.project.name}_MT_Tools-${platform}-mt,
+                 lib${ant.project.name}_shield-${platform}-mt,
+                 lib${ant.project.name}_protocol-${platform}-mt"/>
     </target>
 
     <target name="clients_test" depends="library.indicators,library.preparation">
@@ -1162,7 +1172,10 @@
 
     <target name="protocol_test" description="build protocol test application" depends="library.protocol,library.tools">
         <build-test name="protocol" depends="boost,protobuf"
-                    libs="masalloc,lib${ant.project.name}_tools-${platform}-mt@{suffix},lib${ant.project.name}_protocol-${platform}-mt@{suffix}"/>
+            libs="masalloc,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix},
+                  lib${ant.project.name}_protocol-${platform}-mt@{suffix}"/>
     </target>
 
     <macrodef name="count">

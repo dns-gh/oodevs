@@ -26,6 +26,7 @@ Socket::Socket( boost::shared_ptr< boost::asio::ip::tcp::socket > socket,
     : socket_  ( socket )
     , message_ ( message )
     , endpoint_( endpoint )
+    , needCleanup_( false )
 {
     // NOTHING
 }
@@ -49,6 +50,12 @@ void Socket::Close()
     socket_->close( code );
 }
 
+namespace
+{
+    const int bigSize = 1000;
+    const int reclaimSize = 100;    
+}
+
 // -----------------------------------------------------------------------------
 // Name: Socket::Send
 // Created: AGE 2007-09-06
@@ -66,6 +73,10 @@ int Socket::Send( unsigned long tag, Message& message )
                                   boost::bind( &Socket::Sent, shared_from_this(),
                                                message, boost::asio::placeholders::error ) );
         size = queue_.size();
+        if( size % bigSize )
+        {
+            MT_LOG_INFO_MSG( "Queuing " << size << " messages queued for " << endpoint_ );
+        }
     }
     return size;
 }
@@ -92,7 +103,18 @@ void Socket::Sent( const Message&, const boost::system::error_code& error )
                                   boost::bind( &Socket::Sent, shared_from_this(),
                                                message, boost::asio::placeholders::error ) );
         }
-        //MT_LOG_INFO_MSG( "Still " << queue_.size() << " messages queued for " << endpoint_ );
+        int size = queue_.size();
+        if( size && ( 0 == size % bigSize ) )
+        {
+            MT_LOG_INFO_MSG( "There are " << size << " messages queued for " << endpoint_ );
+            needCleanup_ = true;
+        }
+        if( needCleanup_ && size < reclaimSize )
+        {
+            std::deque< std::pair< unsigned long, Message > > queue( queue_ );
+		    queue_.swap( queue );
+            needCleanup_ = false;
+        }
     }
 }
 

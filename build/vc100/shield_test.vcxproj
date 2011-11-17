@@ -148,6 +148,9 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="MT_Tools.vcxproj">
+      <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
+    </ProjectReference>
     <ProjectReference Include="protocol.vcxproj">
       <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
     </ProjectReference>

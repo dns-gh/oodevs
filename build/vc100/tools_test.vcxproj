@@ -120,6 +120,9 @@
     <ClInclude Include="..\..\src\tests\tools_test\tools_test_pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="MT_Tools.vcxproj">
+      <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
+    </ProjectReference>
     <ProjectReference Include="tools.vcxproj">
       <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
     </ProjectReference>
