@@ -53,7 +53,7 @@ void Socket::Close()
 namespace
 {
     const int bigSize = 1000;
-    const int reclaimSize = 100;    
+    const int reclaimSize = 100;
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +112,7 @@ void Socket::Sent( const Message&, const boost::system::error_code& error )
         if( needCleanup_ && size < reclaimSize )
         {
             std::deque< std::pair< unsigned long, Message > > queue( queue_ );
-		    queue_.swap( queue );
+            queue_.swap( queue );
             needCleanup_ = false;
         }
     }

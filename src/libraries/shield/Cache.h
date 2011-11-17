@@ -76,7 +76,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< tools::Message > T_Messages;
-    typedef T_Messages::const_iterator  CIT_Messages;
+    typedef T_Messages::iterator  IT_Messages;
     //@}
 
 private:
