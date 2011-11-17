@@ -1495,6 +1495,8 @@
             <include name="exercises/scipio/exercisesVA/Poseidon VA Acteurs Civils/**"/>
             <include name="exercises/scipio/exercisesVA/Poseidon VA Soutien/**"/>
             <include name="exercises/scipio/exercisesVA/Poseidon VA Mix/**"/>
+            <include name="exercises/scipio/exercisesVA/VEM_Foule/**"/>
+            <include name="exercises/scipio/exercisesVA/VEM_Meteo/**"/>
             <include name="data/terrains/PortoV3Lite/**"/>
         </pack>
     </target>

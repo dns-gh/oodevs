@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party color="0x647dff" id="1" name="Bleu" type="friend">
+      <objects>
+        <object id="5" name="Destruction de pont" type="bridge destruction">
+          <shape type="point">
+            <points>
+              <point>29TNF3346854523</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="14" name="zone nbc [14]" type="nbc zone">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3237555224</point>
+              <point>29TNF3250854731</point>
+              <point>29TNF3364854863</point>
+              <point>29TNF3358055358</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <nbc-agents state="liquid">
+              <nbc-agent type="Biologique"/>
+            </nbc-agents>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation color="0x647dff" id="16" level="ii" name="GTIA">
+          <automat color="0x647dff" engaged="false" id="17" knowledge-group="18" name="SGTIA PIA [17]" type="SGTIA PIA">
+            <unit color="0x647dff" command-post="true" id="19" name="PC SGTIA" position="29TNF3211855747" type="PC SGTIA">
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="NomLong" value="PCSGTIA.SGTIAPIA1"/>
+              </extensions>
+            </unit>
+            <unit color="0x647dff" command-post="false" id="20" name="PIA Dominante ABC" position="29TNF3207955649" type="PIA Dominante ABC">
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="NomLong" value="PIADOMINANTEABC.S"/>
+              </extensions>
+            </unit>
+            <unit color="0x647dff" command-post="false" id="21" name="PIA Dominante INF" position="29TNF3218655804" type="PIA Dominante INF">
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="NomLong" value="PIADOMINANTEINF.S"/>
+              </extensions>
+            </unit>
+            <unit color="0x647dff" command-post="false" id="22" name="PIA Dominante Reco" position="29TNF3218755749" type="PIA Dominante Reco">
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="NomLong" value="PIADOMINANTERECO."/>
+              </extensions>
+            </unit>
+            <unit color="0x647dff" command-post="false" id="23" name="ABC . Patrouille EI 12,7" position="29TNF3562254261" type="ABC . Patrouille EI 12,7">
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="NomLong" value="ABC.PATROUILLEEI1"/>
+              </extensions>
+            </unit>
+            <extensions>
+              <entry key="DiffusionList" value=""/>
+              <entry key="NomLong" value="SGTIAPIA17.GTIA.B"/>
+            </extensions>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="59" knowledge-group="18" name="SGTIA PIA [59]" type="SGTIA PIA">
+            <unit color="0x647dff" command-post="true" id="60" name="PC SGTIA" position="29TNF4223255107" type="PC SGTIA"/>
+            <unit color="0x647dff" command-post="false" id="61" name="PIA Dominante ABC" position="29TNF4274654622" type="PIA Dominante ABC"/>
+            <unit color="0x647dff" command-post="false" id="62" name="PIA Dominante INF" position="29TNF4225954110" type="PIA Dominante INF"/>
+            <unit color="0x647dff" command-post="false" id="63" name="PIA Dominante Reco" position="29TNF4174554595" type="PIA Dominante Reco"/>
+            <unit color="0x647dff" command-post="false" id="64" name="ABC . Patrouille EI 12,7" position="29TNF4273355120" type="ABC . Patrouille EI 12,7"/>
+          </automat>
+          <extensions>
+            <entry key="DiffusionList" value=""/>
+            <entry key="NomLong" value="GTIA.BLEU"/>
+          </extensions>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="18" name="Groupe de connaissance [18]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="4" name="Foule standard [4]" position="29TNF3396552863" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="33" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="58" name="Foule armée [58]" position="29TNF3749256202" type="Foule armée">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.5"/>
+          <repartition children="0.35" female="0.35" male="0.65"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="33" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party color="0xff0000" id="33" name="Rouge" type="friend">
+      <objects/>
+      <tactical>
+        <formation color="0xff0000" id="34" level="ii" name="Formation [34]">
+          <automat color="0xff0000" engaged="true" id="35" knowledge-group="36" name="SGTIA INF dominante lourde [35]" type="SGTIA INF dominante lourde">
+            <unit color="0xff0000" command-post="true" id="37" name="INF . Section CDT CIE quaternaire AMX10P" position="29TNF3868657091" type="INF . Section CDT CIE quaternaire AMX10P"/>
+            <unit color="0xff0000" command-post="false" id="38" name="GEN . Section CBT + EBG" position="29TNF3920056607" type="GEN . Section CBT + EBG"/>
+            <unit color="0xff0000" command-post="false" id="39" name="ABC . Peloton LECLERC CDP SOFF" position="29TNF3871356095" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit color="0xff0000" command-post="false" id="40" name="INF . Section CBT quaternaire AMX10P CDS OFF" position="29TNF3819956579" type="INF . Section CBT quaternaire AMX10P CDS OFF"/>
+            <unit color="0xff0000" command-post="false" id="41" name="INF . Section CBT quaternaire AMX10P CDS SOFF" position="29TNF3918757105" type="INF . Section CBT quaternaire AMX10P CDS SOFF"/>
+            <unit color="0xff0000" command-post="false" id="42" name="INF . Section CBT quaternaire AMX10P CDS SOFF" position="29TNF3940756612" type="INF . Section CBT quaternaire AMX10P CDS SOFF"/>
+            <unit color="0xff0000" command-post="false" id="43" name="INF . Groupe INF MO81 AMX10P" position="29TNF3921356109" type="INF . Groupe INF MO81 AMX10P"/>
+            <unit color="0xff0000" command-post="false" id="44" name="CIRCU . Peloton Transport Blindes CL50" position="29TNF3871855889" type="CIRCU . Peloton Transport Blindes CL50"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="48" knowledge-group="36" name="CIV . DPRE [48]" type="CIV . DPRE">
+            <unit color="0xff0000" command-post="true" id="49" name="Refugies" position="29TNF3826954651" type="Refugies"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="51" knowledge-group="36" logistic-level="logistic-base" name="ONG [51]" type="ONG">
+            <unit color="0xff0000" command-post="false" id="52" name="ONG Soutien LOG" position="29TNF3791654821" type="ONG Soutien LOG"/>
+            <unit color="0xff0000" command-post="false" id="53" name="ONG Intervention" position="29TNF3843054336" type="ONG Intervention"/>
+            <unit color="0xff0000" command-post="true" id="54" name="ONG PC" position="29TNF3794353824" type="ONG PC"/>
+            <unit color="0xff0000" command-post="false" id="55" name="ONG Transport" position="29TNF3743054309" type="ONG Transport"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="56" knowledge-group="36" name="CIV . Journalistes [56]" type="CIV . Journalistes">
+            <unit color="0xff0000" command-post="true" id="57" name="Journalistes" position="29TNF3900854587" type="Journalistes"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="36" name="Groupe de connaissance [36]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="50" name="Foule standard [50]" position="29TNF3572257797" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="33" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="33"/>
+    </party>
+    <party id="33">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="1236778148" -->

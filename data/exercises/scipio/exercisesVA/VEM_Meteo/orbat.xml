@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party color="0x647dff" id="1" name="Bleu" type="friend">
+      <objects/>
+      <tactical>
+        <formation color="0x647dff" id="3" level="xxx" name="Formation [3]">
+          <formation color="0x647dff" id="4" level="ii" name="Land">
+            <automat color="0x647dff" engaged="false" id="14" knowledge-group="15" name="INF . Compagnie CBT AMX 10 P [14]" type="INF . Compagnie CBT AMX 10 P">
+              <unit color="0x647dff" command-post="true" id="16" name="INF . Section CDT CIE quaternaire AMX10P" position="29TNF4130049774" type="INF . Section CDT CIE quaternaire AMX10P"/>
+              <unit color="0x647dff" command-post="false" id="17" name="INF . Section CBT AMX10P CDS OFF" position="29TNF4116750316" type="INF . Section CBT AMX10P CDS OFF"/>
+              <unit color="0x647dff" command-post="false" id="18" name="INF . Section CBT AMX10P CDS OFF" position="29TNF4123750049" type="INF . Section CBT AMX10P CDS OFF"/>
+              <unit color="0x647dff" command-post="false" id="19" name="INF . Section CBT AMX10P CDS OFF" position="29TNF4231262699" type="INF . Section CBT AMX10P CDS OFF"/>
+              <unit color="0x647dff" command-post="false" id="20" name="INF . Section CBT AMX10P CDS SOFF" position="29TNF4143049988" type="INF . Section CBT AMX10P CDS SOFF"/>
+              <unit color="0x647dff" command-post="false" id="22" name="INF . Fantassin lunette" position="29TNF4180850209" type="INF . Fantassin lunette"/>
+              <unit color="0x647dff" command-post="false" id="23" name="INF . Fantassin oeil" position="29TNF4160850160" type="INF . Fantassin oeil"/>
+            </automat>
+          </formation>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="15" name="Groupe de connaissance [15]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party color="0xff0000" id="2" name="Rouge" type="enemy">
+      <objects/>
+      <tactical>
+        <formation color="0xff0000" id="5" level="xxxx" name="Formation [5]">
+          <formation color="0xff0000" id="6" level="ii" name="Land">
+            <automat color="0xff0000" engaged="false" id="7" knowledge-group="8" name="INF . Compagnie CBT AMX 10 P [7]" type="INF . Compagnie CBT AMX 10 P">
+              <unit color="0xff0000" command-post="true" id="9" name="INF . Section CDT CIE quaternaire AMX10P" position="29TNF3891163051" type="INF . Section CDT CIE quaternaire AMX10P"/>
+              <unit color="0xff0000" command-post="false" id="10" name="INF . Section CBT AMX10P CDS OFF" position="29TNF4157453055" type="INF . Section CBT AMX10P CDS OFF"/>
+              <unit color="0xff0000" command-post="false" id="11" name="INF . Section CBT AMX10P CDS OFF" position="29TNF4138252890" type="INF . Section CBT AMX10P CDS OFF"/>
+              <unit color="0xff0000" command-post="false" id="12" name="INF . Section CBT AMX10P CDS OFF" position="29TNF4149953217" type="INF . Section CBT AMX10P CDS OFF"/>
+              <unit color="0xff0000" command-post="false" id="13" name="INF . Section CBT AMX10P CDS SOFF" position="29TNF4145652920" type="INF . Section CBT AMX10P CDS SOFF"/>
+            </automat>
+          </formation>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="8" name="Groupe de connaissance [8]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="2487097434" -->
