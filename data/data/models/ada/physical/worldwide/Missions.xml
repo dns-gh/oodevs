@@ -2101,6 +2101,18 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="MIS_Pion_Transporter" dia-type="T_Mission_Pion_Transporter" id="4440" name="Common - offer transport">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="unitesATransporter_" max-occurs="unbounded" min-occurs="1" name="Units to transport" optional="false" type="Agent"/>
+      <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
+      <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
+      <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Boolean"/>
+      <parameter dia-name="requestIssuingObjectIdentifier_" name="Request identifier" optional="false" type="String"/>
+      <parameter dia-name="isPartialOffer_" name="Is partial offer" optional="false" type="Boolean"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="ArmyAviation - resupply">
@@ -3453,4 +3465,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2570581925" -->
+<!-- signature="3407878464" -->

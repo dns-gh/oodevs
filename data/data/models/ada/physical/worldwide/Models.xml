@@ -42,6 +42,7 @@
         </mission>
         <mission name="Common - transport embark"/>
         <mission name="Common - transport disembark"/>
+        <mission name="Common - offer transport"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -1075,6 +1076,7 @@
         <mission name="Common - transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
+        <mission name="Common - offer transport"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2463,6 +2465,7 @@
         </mission>
         <mission name="Common - transport embark"/>
         <mission name="Common - transport disembark"/>
+        <mission name="Common - offer transport"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3877,4 +3880,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2130553341" -->
+<!-- signature="3255494460" -->
