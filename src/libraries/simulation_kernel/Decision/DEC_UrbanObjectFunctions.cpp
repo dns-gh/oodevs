@@ -69,6 +69,34 @@ boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetCurrentBarycenter(
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_UrbanObjectFunctions::GetBarycenter
+// Created: LGY 2011-11-17
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetBarycenter( UrbanObjectWrapper* pUrbanObject )
+{
+    if( pUrbanObject )
+    {
+        boost::shared_ptr< MT_Vector2D > pBaryventer( new MT_Vector2D( pUrbanObject->GetLocalisation().ComputeBarycenter() ) );
+        if(  pUrbanObject->GetLocalisation().IsInside( *pBaryventer ) )
+            return pBaryventer;
+        const T_PointVector& points = pUrbanObject->GetLocalisation().GetPoints();
+        MT_Vector2D point( pBaryventer->rX_, pBaryventer->rY_ );
+        double distance = std::numeric_limits< double >::max();
+        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+        {
+            double result = pBaryventer->Distance( *it );
+            if( result < distance )
+            {
+                point = MT_Vector2D( it->rX_, it->rY_ );
+                distance = result;
+            }
+        }
+        return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( point ) );
+    }
+    return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_UrbanObjectFunctions::GetBoundingBox
 // Created: LGY 2010-10-11
 // -----------------------------------------------------------------------------
@@ -177,7 +205,7 @@ void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, U
     StructuralCapacity* capacity = const_cast< StructuralCapacity* >( pUrbanObject->Retrieve< StructuralCapacity >() );
     if( capacity )
     {
-        if (const PHY_DotationCategory_IndirectFire_ABC* firedata = category->GetIndirectFireData())
+        if( const PHY_DotationCategory_IndirectFire_ABC* firedata = category->GetIndirectFireData() )
         {
             const PHY_RoleInterface_Location& location = callerAgent.Get< PHY_RoleInterface_Location >();
             TER_Localisation localisation( location.GetPosition(), firedata->GetRadius() );

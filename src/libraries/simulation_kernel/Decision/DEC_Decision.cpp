@@ -236,6 +236,7 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
 void RegisterUrbanBlockFunctions( directia::brain::Brain& brain )
 {
     brain[ "DEC_ConnaissanceUrbanBlock_Barycentre" ] = &DEC_UrbanObjectFunctions::GetCurrentBarycenter;
+    brain[ "DEC_ConnaissanceUrbanBlock_BarycentreDansBU" ] = &DEC_UrbanObjectFunctions::GetBarycenter;
     brain[ "DEC_ConnaissanceUrbanBlock_Lisiere" ] = &DEC_UrbanObjectFunctions::GetBoundingBox;
     brain[ "DEC_NiveauDeProtectionMaterielComposantes" ] = &DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel;
     brain[ "DEC_PolygoneBlocUrbain" ] = &DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock;
