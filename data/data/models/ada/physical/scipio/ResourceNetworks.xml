@@ -6,19 +6,19 @@
     <defaults production="900000"/>
   </resource-network>
   <resource-network name="eau courante">
-    <resource id="147"/>
+    <resource id="148"/>
     <color rgb="0x00aaff"/>
     <defaults production="900000"/>
   </resource-network>
   <resource-network name="nourriture">
-    <resource id="149"/>
+    <resource id="150"/>
     <color rgb="0x00aa00"/>
     <defaults production="9000000"/>
   </resource-network>
   <resource-network name="carburant">
-    <resource id="148"/>
+    <resource id="149"/>
     <color rgb="0xaa007f"/>
     <defaults production="900000"/>
   </resource-network>
 </resource-networks>
-<!-- signature="2126017973" -->
+<!-- signature="3916719103" -->
