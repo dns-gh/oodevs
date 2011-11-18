@@ -171,7 +171,6 @@ void TransportationOfferer::Receive( interactions::NetnRequestConvoy& request )
     offer.requestTimeOut = 0u; // No timeout
     offer.serviceId = request.serviceId;
     offer.consumer = request.consumer;
-    offer.provider = UnicodeString( "SWORD" );
     offer.serviceType = request.serviceType;
     offer.offerType = 1; // RequestAcknowledgePositive
     offer.transportData = request.transportData;
@@ -222,8 +221,6 @@ void TransportationOfferer::Receive( interactions::NetnAcceptOffer& accept )
     const std::string serviceId = ServiceIdentifier( accept );
     if( offeredOffers_.find( serviceId ) == offeredOffers_.end() )
         return;
-    if( accept.provider.str() != "SWORD" )
-        return;
     BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, offeredOffers_[ serviceId ].transportData.dataTransport.objectToManage )
         remainingTransported_[ serviceId ].insert( callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId.str() ) );
     Transfer( offeredOffers_, acceptedOffers_, serviceId );
@@ -237,8 +234,6 @@ void TransportationOfferer::Receive( interactions::NetnReadyToReceiveService& re
 {
     const std::string serviceId = ServiceIdentifier( readyToReceive );
     if( acceptedOffers_.find( serviceId ) == acceptedOffers_.end() )
-        return;
-    if( readyToReceive.provider.str() != "SWORD" )
         return;
     Transfer( acceptedOffers_, startedOffers_, serviceId );
     interactions::NetnServiceStarted serviceStarted;
@@ -257,8 +252,6 @@ void TransportationOfferer::Receive( interactions::NetnServiceReceived& serviceR
 {
     const std::string serviceId = ServiceIdentifier( serviceReceived );
     if( completetedOffers_.find( serviceId ) == completetedOffers_.end() )
-        return;
-    if( serviceReceived.provider.str() != "SWORD" )
         return;
     Transfer( completetedOffers_, receivedOffers_, serviceId );
     remainingTransported_.erase( serviceId );
