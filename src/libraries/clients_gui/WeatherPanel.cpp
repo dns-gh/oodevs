@@ -38,9 +38,6 @@ WeatherPanel::WeatherPanel( QWidget* parent, PanelStack_ABC& panel, WeatherLayer
     layout->setMargin( 5 );
     layout->setAlignment( Qt::AlignTop );
 
-    Q3VBox* mainLayout = new Q3VBox( this );
-    mainLayout->layout()->setAlignment( Qt::AlignTop );
-
     headerLayout_ = new Q3VBox( box );
     layout->addWidget( headerLayout_ );
     Q3VBox* contentLayout = new Q3VBox( box );
