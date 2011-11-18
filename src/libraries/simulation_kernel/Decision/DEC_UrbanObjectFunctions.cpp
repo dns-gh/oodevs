@@ -76,10 +76,11 @@ boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetBarycenter( UrbanO
 {
     if( pUrbanObject )
     {
-        boost::shared_ptr< MT_Vector2D > pBaryventer( new MT_Vector2D( pUrbanObject->GetLocalisation().ComputeBarycenter() ) );
-        if(  pUrbanObject->GetLocalisation().IsInside( *pBaryventer ) )
+        TER_Localisation localisation = pUrbanObject->GetLocalisation();
+        boost::shared_ptr< MT_Vector2D > pBaryventer( new MT_Vector2D( localisation.ComputeBarycenter() ) );
+        if( localisation.IsInside( *pBaryventer ) )
             return pBaryventer;
-        const T_PointVector& points = pUrbanObject->GetLocalisation().GetPoints();
+        const T_PointVector& points = localisation.GetPoints();
         MT_Vector2D point( pBaryventer->rX_, pBaryventer->rY_ );
         double distance = std::numeric_limits< double >::max();
         for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
