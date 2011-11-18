@@ -241,9 +241,7 @@ void ADN_UnitSymbols_Data::Load( const tools::Loader_ABC& /*fileLoader*/ )
     if( ADN_Workspace::GetWorkspace().ShowSymbols() )
     {
         pSymbolFactory_ = &ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolFactory();
-        
         const std::string strUndefined = "undefined";
-        symbols_.AddItem( new UnitSymbolInfo( strUndefined, pSymbolFactory_->CreateSymbol( strUndefined ) ) );
         const std::vector< std::string >& symbols = pSymbolFactory_->GetAvailableSymbols();
         for ( unsigned int i=0; i < symbols.size(); ++i )
         {
