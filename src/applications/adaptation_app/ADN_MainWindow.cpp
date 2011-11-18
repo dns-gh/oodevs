@@ -411,8 +411,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        if( settings.readNumEntry( "/Common/NoSignatureCheck", 0 ) != 1 )
-            QMessageBox::warning( this, qApp->translate( "Application", "SWORD" )
+        QMessageBox::warning( this, qApp->translate( "Application", "SWORD" )
                     , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + fileLoaderObserver_->GetInvalidSignedFiles().c_str() );
     }
     pProjectLoadAction_->setVisible( false );
