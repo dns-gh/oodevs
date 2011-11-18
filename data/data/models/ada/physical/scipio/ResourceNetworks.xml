@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <resource-networks model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/ResourceNetworks.xsd">
   <resource-network name="electricite">
-    <resource id="137"/>
+    <resource id="147"/>
     <color rgb="0xffff7f"/>
     <defaults production="900000"/>
   </resource-network>
@@ -21,4 +21,4 @@
     <defaults production="900000"/>
   </resource-network>
 </resource-networks>
-<!-- signature="3916719103" -->
+<!-- signature="2158546623" -->
