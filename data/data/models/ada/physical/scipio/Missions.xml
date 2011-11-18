@@ -1634,14 +1634,14 @@
       <parameter dia-name="area" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="munitions" name="Munitions" optional="false" type="ResourceType"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.air.tasks.FaireMouvement" dia-type="france.military.platoon.combat.support.air.tasks.FaireMouvement" id="2475" name="PION JOINT Faire Mouvement" package="attack">
+    <mission dia-behavior="france.military.platoon.combat.support.air.tasks.FaireMouvement" dia-type="france.military.platoon.combat.support.air.tasks.FaireMouvement" id="2475" name="PION AIR Faire Mouvement" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.air.tasks.Suivre" dia-type="france.military.platoon.combat.support.air.tasks.Suivre" id="2476" name="PION JOINT Suivre" package="move">
+    <mission dia-behavior="france.military.platoon.combat.support.air.tasks.Suivre" dia-type="france.military.platoon.combat.support.air.tasks.Suivre" id="2476" name="PION AIR Suivre" package="move">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -3002,6 +3002,22 @@
         </choice>
       </parameter>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.air.tasks.FaireMouvement" dia-type="france.military.company.combat.support.air.tasks.FaireMouvement" id="28766" mrt-dia-behavior="france.military.company.combat.support.air.tasks.FaireMouvement" name="AUTOMATE AIR Faire Mouvement">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.air.tasks.Suivre" dia-type="france.military.company.combat.support.air.tasks.Suivre" id="28767" mrt-dia-behavior="france.military.company.combat.support.air.tasks.Suivre" name="AUTOMATE AIR Suivre">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="objective" name="Unite a suivre" optional="false" type="Agent"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -3242,4 +3258,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="1087407325" -->
+<!-- signature="0012092125" -->

@@ -5962,10 +5962,41 @@
         <mission name="PION JOINT Effectuer Raid">
           <fragorder name="Modifier altitude"/>
         </mission>
-        <mission name="PION JOINT Faire Mouvement">
+        <mission name="PION AIR Faire Mouvement">
           <fragorder name="Modifier altitude"/>
         </mission>
-        <mission name="PION JOINT Suivre">
+        <mission name="PION AIR Suivre">
+          <fragorder name="Modifier altitude"/>
+        </mission>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.AIR.PC">
+      <missions>
+        <mission name="PION AIR Faire Mouvement">
+          <fragorder name="Modifier altitude"/>
+        </mission>
+        <mission name="PION AIR Suivre">
           <fragorder name="Modifier altitude"/>
         </mission>
       </missions>
@@ -9523,10 +9554,12 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.AIR.Assaut">
       <missions>
-        <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
-        <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
-        <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
-        <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE AIR Faire Mouvement">
+          <fragorder name="Modifier altitude"/>
+        </mission>
+        <mission name="AUTOMATE AIR Suivre">
+          <fragorder name="Modifier altitude"/>
+        </mission>
         <mission name="AUTOMATE HLA Atterrir"/>
         <mission name="AUTOMATE HLA Decoller"/>
       </missions>
@@ -9579,4 +9612,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2517212064" -->
+<!-- signature="3293076209" -->
