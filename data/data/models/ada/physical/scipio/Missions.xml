@@ -3052,6 +3052,10 @@
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="france.military.crowd.tasks.SeFaireDecontaminer" dia-type="france.military.crowd.tasks.SeFaireDecontaminer" id="3009" name="FOULES COMMUNES Se Faire Decontaminer" package="none">
+      <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="destination" name="Destination" optional="false" type="Point"/>
+    </mission>
   </populations>
   <fragorders>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="335" name="Mettre Tenue NBC"/>
@@ -3258,4 +3262,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="0012092125" -->
+<!-- signature="2761271293" -->

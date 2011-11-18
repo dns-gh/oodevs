@@ -359,3 +359,11 @@ int DEC_PopulationFunctions::GetActualNumber( const MIL_Population& callerPopula
 {
     return callerPopulation.GetHealthyHumans();
 }
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetContaminatedHumans
+// Created: LMT 2011-11-18
+// -----------------------------------------------------------------------------
+int DEC_PopulationFunctions::GetContaminatedHumans( const MIL_Population& callerPopulation )
+{
+    return callerPopulation.GetContaminatedHumans();
+}

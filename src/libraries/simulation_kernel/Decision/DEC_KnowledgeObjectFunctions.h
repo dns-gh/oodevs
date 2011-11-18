@@ -17,6 +17,7 @@ class MIL_Entity_ABC;
 class MT_Vector2D;
 class PHY_DotationCategory;
 class TER_Localisation;
+class MIL_Population;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -38,6 +39,7 @@ public:
     static bool IsKnowledgeValid( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
     static int QueueForDecontamination( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int PopulationQueueForDecontamination( MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool CanBeAnimated( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static float GetConstructionLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
     static float GetBurningLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);

@@ -575,5 +575,6 @@ void MIL_PopulationElement_ABC::ApplyIntoxication( const MIL_NbcAgentType& type 
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::ApplyDecontamination( double rRatioWorkers )
 {
-    pDecontaminationEffect_->Apply( rRatioWorkers, MIL_AgentServer::GetWorkspace().GetCurrentTick() );
+    if( pDecontaminationEffect_->Apply( rRatioWorkers, MIL_AgentServer::GetWorkspace().GetCurrentTick() ) )
+        bHumansUpdated_ = true;
 }

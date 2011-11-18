@@ -24,11 +24,13 @@
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_OrdersFunctions.h"
 #include "Decision/DEC_UrbanObjectFunctions.h"
+#include "Decision/DEC_KnowledgeObjectFunctions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionUrbanDestruction.h"
 #include <boost/serialization/vector.hpp>
+#include <boost/bind.hpp>
 #include <boost/lambda/lambda.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationDecision )
@@ -164,7 +166,9 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
         boost::function< boost::shared_ptr< MT_Vector2D >() >( boost::bind( &DEC_PopulationFunctions::GetBarycenter, boost::cref( GetPopulation() ) ) );
     brain[ "DEC_GetNombrePersonne" ] =
         boost::function< int () >( boost::bind( &DEC_PopulationFunctions::GetActualNumber, boost::cref( GetPopulation() ) ) );
-
+    brain[ "DEC_GetNombrePersonneContaminee" ] =
+        boost::function< int () >( boost::bind( &DEC_PopulationFunctions::GetContaminatedHumans, boost::cref( GetPopulation() ) ) );
+    
     // Agents
     brain[ "DEC_Agent_EstDansFoule" ] =
         boost::function< bool(  DEC_Decision_ABC* ) >( boost::bind( &DEC_PopulationFunctions::IsAgentInside, boost::ref( GetPopulation() ), _1 ) );
@@ -249,6 +253,10 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     brain[ "DEC_GetUrbanBlockAngriness" ] =
         boost::function< double() >( boost::bind( &DEC_PopulationFunctions::GetUrbanBlockAngriness, boost::ref( GetPopulation() ) ) );
     brain[ "DEC_ReintegrateUrbanBlock" ] = boost::function< void() >( boost::bind( &DEC_PopulationFunctions::ReintegrateUrbanBlock, boost::ref( GetPopulation() ) ) );
+
+    // nbc
+    brain[ "DEC_ConnaissanceObjet_DemandeDeDecontamination" ] =
+        boost::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::PopulationQueueForDecontamination, boost::ref( GetPopulation() ), _1 ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    void Apply( double rRatioWorkers, unsigned int tick );
+    bool Apply( double rRatioWorkers, unsigned int tick );
     //@}
 
 private:

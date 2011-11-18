@@ -9590,6 +9590,9 @@
         <mission name="FOULES COMMUNES Suivre">
           <fragorder name="Population Changer Attitude"/>
         </mission>
+        <mission name="FOULES COMMUNES Se Faire Decontaminer">
+          <fragorder name="Population Changer Attitude"/>
+        </mission>
         <mission name="FOULES Agresser">
           <fragorder name="Population Changer Attitude"/>
         </mission>
@@ -9612,4 +9615,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3293076209" -->
+<!-- signature="3153558657" -->

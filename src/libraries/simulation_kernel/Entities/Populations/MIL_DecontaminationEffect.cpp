@@ -36,11 +36,12 @@ MIL_DecontaminationEffect::~MIL_DecontaminationEffect()
 // Name: MIL_DecontaminationEffect::Apply
 // Created: LGY 2011-11-09
 // -----------------------------------------------------------------------------
-void MIL_DecontaminationEffect::Apply( double rRatioWorkers, unsigned int tick )
+bool MIL_DecontaminationEffect::Apply( double rRatioWorkers, unsigned int tick )
 {
     if( rRatioWorkers > 0 && tick - tick_ >= ( delay_ / rRatioWorkers ) )
     {
-        humans_.ApplyDecontamination();
         tick_ = tick;
+        return humans_.ApplyDecontamination();
     }
+    return false;
 }
