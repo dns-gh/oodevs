@@ -49,17 +49,11 @@ public:
     virtual ~PluginProcessHandler();
     //@}
 
-    //! @name Process management
-    //@{
-    void Start();
-    void Stop();
-    //@}
-
     //! @name Inherited from Plugin_ABC
     //@{
     void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ ) {};
     void NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ ) {};
-    void Receive( const sword::SimToClient& /*message*/ ) {};
+    void Receive( const sword::SimToClient& message );
     //@}
 
 private:
@@ -67,6 +61,12 @@ private:
     //@{
     PluginProcessHandler( const PluginProcessHandler& );            //!< Copy constructor
     PluginProcessHandler& operator=( const PluginProcessHandler& ); //!< Assignment operator
+    //@}
+
+    //! @name Process management
+    //@{
+    void Start();
+    void Stop();
     //@}
 
     //! @name Process arguments
@@ -77,13 +77,13 @@ private:
     //@}
     
     struct InternalData;
-    class ThreadDelayed;
 
 private:
-    std::string commandLine_;
+    const std::string processName_;
     std::string workingDir_;
+    std::string commandLine_;
+    dispatcher::Logger_ABC& logger_;
     std::auto_ptr< InternalData > internal_;
-    std::auto_ptr< ThreadDelayed > thread_;
 };
 
 }

@@ -11,17 +11,16 @@
 #include "dispatcher/Logger_ABC.h"
 #include "dispatcher/StaticModel.h"
 #include "dispatcher/Config.h"
+#include "protocol/Simulation.h"
 #include <windows.h>
 #include <winbase.h>
 #include <tlhelp32.h>
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push, 0 )
-#include <boost/thread.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
+#include <boost/algorithm/string.hpp>
 
 using namespace plugins::bml;
 namespace bfs = boost::filesystem;
@@ -32,47 +31,20 @@ struct PluginProcessHandler::InternalData
     InternalData() { ZeroMemory( &pid_ , sizeof( pid_ ) ); }
 };
 
-
-class PluginProcessHandler::ThreadDelayed : public boost::thread
-{
-public:
-    ThreadDelayed( PluginProcessHandler& process, long delay )
-        : boost::thread( boost::bind( &PluginProcessHandler::ThreadDelayed::Run, this ) )
-        , process_ ( process )
-        , delay_ ( delay )
-    {
-        // NOTHING
-    }
-
-private:
-    void Run()
-    {
-        boost::this_thread::sleep( boost::posix_time::milliseconds( delay_ ) );
-        process_.Start();
-    }
-
-private:
-    PluginProcessHandler& process_;
-    const long delay_;
-};
-
 // -----------------------------------------------------------------------------
 // Name: PluginProcessHandler constructor
 // Created: JCR 2011-10-27
 // -----------------------------------------------------------------------------
 PluginProcessHandler::PluginProcessHandler( const dispatcher::Config& config, const std::string& process_name, dispatcher::Logger_ABC& logger, xml::xistream& xis )
-    : commandLine_  ( process_name )
-    , workingDir_   ( "." )
-    , internal_     ( new InternalData() )
+    : processName_ ( process_name )
+    , workingDir_  ( config.BuildPluginDirectory( "bml" ) )
+    , commandLine_ ( workingDir_ + "/" + process_name )
+    , logger_      ( logger )
 {
     LoadSimulationConfig( config );
     LoadPluginConfig( xis, config );
-    const long delay = 10000;
-    logger.LogInfo( "[Sword BML Service]: Waiting " + boost::lexical_cast< std::string >( delay / 1000 ) + "s before launching " + process_name + " process." ); 
-    thread_.reset( new PluginProcessHandler::ThreadDelayed( *this, delay ) );
-    thread_->join();
+    logger_.LogInfo( "[Sword BML Service]: Wait the first simulation tick before before launching " + process_name + " process." );
 }
-            
 
 // -----------------------------------------------------------------------------
 // Name: PluginProcessHandler destructor
@@ -80,7 +52,50 @@ PluginProcessHandler::PluginProcessHandler( const dispatcher::Config& config, co
 // -----------------------------------------------------------------------------
 PluginProcessHandler::~PluginProcessHandler()
 {
-    Stop();
+    if( internal_.get() )
+        Stop();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PluginProcessHandler::Receive
+// Created: JCR 2011-11-18
+// -----------------------------------------------------------------------------
+void PluginProcessHandler::Receive( const sword::SimToClient& message )
+{
+    if( message.message().has_control_end_tick() && !internal_.get() )
+    {
+        try
+        {
+            logger_.LogInfo( "[Sword BML Service]: Starting " + processName_ + " process." );
+            internal_.reset( new InternalData() );
+            Start();
+            logger_.LogInfo( "[Sword BML Service]: Started." );
+        }
+        catch ( std::exception& e )
+        {
+            logger_.LogError( e.what());
+        }
+    }
+}
+
+namespace 
+{
+    std::string GetLastErrorMessage()
+    {
+        LPVOID lpMsgBuf;
+        FormatMessage(
+            FORMAT_MESSAGE_ALLOCATE_BUFFER |
+            FORMAT_MESSAGE_FROM_SYSTEM |
+            FORMAT_MESSAGE_IGNORE_INSERTS,
+            NULL,
+            GetLastError(),
+            MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),
+            (LPTSTR) &lpMsgBuf,
+            0, NULL );
+        const std::string result( static_cast< char* >( lpMsgBuf ) );
+        LocalFree( lpMsgBuf );
+        return boost::algorithm::erase_last_copy( result, "\r\n" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +111,7 @@ void PluginProcessHandler::Start()
         0, 0, 0,
         0, 0, 0
     };
-    
+ 
     if( !CreateProcessA( 0,                             // lpApplicationName
                  (LPSTR)commandLine_.c_str(),           // lpCommandLine
                  0,                                     // lpProcessAttributes
@@ -108,11 +123,9 @@ void PluginProcessHandler::Start()
                  &startupInfo,                          // lpStartupInfo
                  &internal_->pid_ ) )                   // lpProcessInformation
     {
-        DWORD errCode = GetLastError();
-        const std::string error( "[BML::ProcessHandler]: Could not start process: " + commandLine_ + " error: " + boost::lexical_cast< std::string >( (unsigned long)errCode ) + "\"" );
-        throw std::exception( error.c_str() );
+        const std::string error( "[Sword BML Service]: Could not start process: " + commandLine_ + " error: " + GetLastErrorMessage() + "\"" );
+        throw std::runtime_error( error );
     }
-    
     static const std::string JOB_NAME = "";
     if ( HANDLE jobObject = OpenJobObject( JOB_OBJECT_ALL_ACCESS, TRUE, JOB_NAME.c_str() ) )
         AssignProcessToJobObject( jobObject, internal_->pid_.hProcess );
