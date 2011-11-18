@@ -15,6 +15,8 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
+#include "MIL_AgentServer.h"
+#include "Entities/MIL_EntityManager.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ConstructionAttribute )
 
@@ -30,7 +32,8 @@ ConstructionAttribute::ConstructionAttribute()
     , nCurrentNbrDotation_    ( 0 )
     , constructionPercentage_ ( 1., 0.05, 0., 1.)
     , dotation_               ( 0 )
-    , bBuildByGen_           ( false )
+    , bBuildByGen_            ( false )
+    , density_                ( 1.0f )
 {
     // NOTHING
 }
@@ -39,12 +42,13 @@ ConstructionAttribute::ConstructionAttribute()
 // Name: ConstructionAttribute constructor
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, unsigned int nFullNbrDotation )
+ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, unsigned int nFullNbrDotation, float density /* = 1.0f */ )
     : nFullNbrDotation_       ( nFullNbrDotation )
     , nCurrentNbrDotation_    ( nFullNbrDotation )
     , constructionPercentage_ ( 1., 0.05, 0., 1.)
     , dotation_               ( &dotation )
     , bBuildByGen_            ( false )
+    , density_                ( density )
 {
     // NOTHING
 }
@@ -59,6 +63,7 @@ ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotati
     , constructionPercentage_ ( 1., 0.05, 0., 1.)
     , dotation_               ( &dotation )
     , bBuildByGen_            ( false )
+    , density_                ( asn.construction().density() )
 {
     // NOTHING
 }
@@ -111,6 +116,7 @@ ConstructionAttribute& ConstructionAttribute::operator=( const ConstructionAttri
     nCurrentNbrDotation_ = rhs.nCurrentNbrDotation_;
     constructionPercentage_ = rhs.constructionPercentage_;
     dotation_ = rhs.dotation_;
+    density_ = rhs.density_;
     return *this;
 }
 
@@ -139,6 +145,12 @@ bool ConstructionAttribute::Update( const ConstructionAttribute& rhs )
     if( constructionPercentage_.NeedToBeSent() )
         NotifyAttributeUpdated( eOnUpdate );
 
+    if ( density_ != rhs.density_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        density_ = rhs.density_;
+    }
+
     return NeedUpdate( eOnUpdate );
 }
 
@@ -153,7 +165,8 @@ void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const unsigned in
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
        >> dotation
        >> nFullNbrDotation_
-       >> nCurrentNbrDotation_;
+       >> nCurrentNbrDotation_
+       >> density_;
 
     double tmp;
     ar >> tmp;
@@ -180,7 +193,8 @@ void ConstructionAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned i
        ar << emptyString;
     ar << nFullNbrDotation_
        << nCurrentNbrDotation_
-       << (double)constructionPercentage_.Get();
+       << (double)constructionPercentage_.Get()
+       << density_;
 }
 
 // -----------------------------------------------------------------------------
@@ -206,6 +220,7 @@ void ConstructionAttribute::SendFullState( sword::ObjectAttributes& asn ) const
         asn.mutable_construction()->set_dotation( nCurrentNbrDotation_ );
     }
     asn.mutable_construction()->set_percentage( unsigned int( constructionPercentage_.Send() * 100. ) );
+    asn.mutable_construction()->set_density( density_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -336,4 +351,13 @@ void ConstructionAttribute::NotifyBuildByGen()
 void ConstructionAttribute::NotifyStopBuildByGen()
 {
     bBuildByGen_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConstructionAttribute::GetPercentage
+// Created: MMC 2011-11-18
+// -----------------------------------------------------------------------------
+double ConstructionAttribute::GetDensity() const
+{
+    return density_;
 }

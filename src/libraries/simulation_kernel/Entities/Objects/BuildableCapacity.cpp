@@ -141,7 +141,8 @@ void BuildableCapacity::Instanciate( MIL_Object_ABC& object ) const
     else if( unitType_ == ConstructionCapacity::eDensity && dotation_ )
     {
         const TER_Localisation& location = object.GetLocalisation();
-        object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, unsigned int( nFullNbrDotation_ * location.GetArea() ) );
+        float density = location.GetArea() > 1e-6 ? 1.0f / static_cast< float >( location.GetArea() ) : 1.0f;
+        object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, unsigned int( nFullNbrDotation_ * location.GetArea() ), density );
     }
 }
 

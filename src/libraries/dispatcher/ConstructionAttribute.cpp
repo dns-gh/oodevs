@@ -22,6 +22,7 @@ ConstructionAttribute::ConstructionAttribute( const sword::ObjectAttributes& asn
     , dotation_                   ( 0 )
     , nNbrDotationForConstruction_( 0 )
     , nPercentageConstruction_    ( 0 )
+    , density_                    ( 1.0f )
 {
     Update( asnMsg );
 }
@@ -52,6 +53,8 @@ void ConstructionAttribute::Update( const sword::ObjectAttributes& asnMsg )
             nNbrDotationForConstruction_ = asnMsg.construction().dotation();
         if( asnMsg.construction().has_percentage() )
             nPercentageConstruction_ = asnMsg.construction().percentage();
+        if( asnMsg.construction().has_density() )
+            density_ = asnMsg.construction().density();
     }
 }
 
@@ -67,4 +70,5 @@ void ConstructionAttribute::Send( sword::ObjectAttributes& asnMsg ) const
         asnMsg.mutable_construction()->set_dotation( nNbrDotationForConstruction_ );
     }
     asnMsg.mutable_construction()->set_percentage( nPercentageConstruction_ );
+    asnMsg.mutable_construction()->set_density( density_ );
 }
