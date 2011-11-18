@@ -5957,6 +5957,40 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
+    <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.AIR.Patrouille Assaut">
+      <missions>
+        <mission name="PION JOINT Effectuer Raid">
+          <fragorder name="Modifier altitude"/>
+        </mission>
+        <mission name="PION JOINT Faire Mouvement">
+          <fragorder name="Modifier altitude"/>
+        </mission>
+        <mission name="PION JOINT Suivre">
+          <fragorder name="Modifier altitude"/>
+        </mission>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+      </fragorders>
+    </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.JOINT">
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
@@ -9545,4 +9579,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0200928978" -->
+<!-- signature="2517212064" -->
