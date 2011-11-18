@@ -73,7 +73,7 @@ int Socket::Send( unsigned long tag, Message& message )
                                   boost::bind( &Socket::Sent, shared_from_this(),
                                                message, boost::asio::placeholders::error ) );
         size = queue_.size();
-        if( size % bigSize )
+        if( 0 == size % bigSize )
         {
             MT_LOG_INFO_MSG( "Queuing " << size << " messages queued for " << endpoint_ );
         }
