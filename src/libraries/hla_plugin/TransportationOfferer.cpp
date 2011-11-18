@@ -191,6 +191,7 @@ void TransportationOfferer::Notify( const sword::UnitOrder& message, int /*conte
         if( it == pendingOffers_.end() )
             return;
         interactions::NetnOfferConvoy& offer = it->second;
+        offer.provider = UnicodeString( callsignResolver_.ResolveCallsign( message.tasker().id() ) );
         offer.transportData.dataTransport.appointment.location = ReadLocation( message.parameters().elem( 6 ) );
         offer.transportData.dataTransport.finalAppointment.location = ReadLocation( message.parameters().elem( 5 ) );
         offer.listOfTransporters.list.push_back( NetnObjectDefinitionStruct( callsignResolver_.ResolveCallsign( message.tasker().id() ),
