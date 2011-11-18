@@ -109,6 +109,7 @@ private:
     QStackedWidget* pPopulations_;
     QStackedWidget* pUnits_;
     QStackedWidget* pInformations_;
+    QLabel* informationControls_;
     std::vector< std::string > supervisors_;
     //@}
 };

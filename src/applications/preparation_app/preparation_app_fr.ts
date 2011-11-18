@@ -2172,6 +2172,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Duplicate login: &apos;%1&apos;.</source>
         <translation>Profil en double: &apos;%1&apos;.</translation>
     </message>
+    <message>
+        <source>&apos;View&apos; permission allows you to see an unit.</source>
+        <translation>&apos;Vue&apos; permet de voir une unité.</translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>

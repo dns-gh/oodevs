@@ -104,9 +104,9 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         pInformations_ = new QStackedWidget( group );
         QLabel* informationRights = new QLabel( tr( "'Read' permission allows you to see an unit.\n"
                                                     "'Write' permission allows you to control an unit." ), group );
-        QLabel* informationControls = new QLabel( tr( "'Control' permission allows you to control an unit." ), group );
+        informationControls_ = new QLabel( tr( "'Control' permission allows you to control an unit." ), group );
         pInformations_->addWidget( informationRights );
-        pInformations_->addWidget( informationControls );
+        pInformations_->addWidget( informationControls_ );
     }
     SetEnabled( false );
     controllers_.Register( *this );
@@ -296,6 +296,8 @@ void UserProfileWidget::ActivateControls()
     if( profile_ )
     {
         bool supervisor = std::find( supervisors_.begin(), supervisors_.end(), profile_->GetUserRole() ) != supervisors_.end();
+        informationControls_->setText( supervisor ? tr( "'View' permission allows you to see an unit." )
+                                                  : tr( "'Control' permission allows you to control an unit." ) );
         dynamic_cast< UserProfileControls_ABC* >( pUnits_->widget( 1 ) )->Update( supervisor );
         dynamic_cast< UserProfileControls_ABC* >( pPopulations_->widget( 1 ) )->Update( supervisor );
         OnSupervisorChanged( supervisor );
