@@ -91,6 +91,7 @@
     <ClCompile Include="..\..\src\libraries\shield\AarToClient.cpp" />
     <ClCompile Include="..\..\src\libraries\shield\AdminToLauncher.cpp" />
     <ClCompile Include="..\..\src\libraries\shield\AuthenticationToClient.cpp" />
+    <ClCompile Include="..\..\src\libraries\shield\Cache.cpp" />
     <ClCompile Include="..\..\src\libraries\shield\Client.cpp" />
     <ClCompile Include="..\..\src\libraries\shield\Clients.cpp" />
     <ClCompile Include="..\..\src\libraries\shield\ClientToAuthentication.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="..\..\src\libraries\shield\AarToClient.h" />
     <ClInclude Include="..\..\src\libraries\shield\AdminToLauncher.h" />
     <ClInclude Include="..\..\src\libraries\shield\AuthenticationToClient.h" />
+    <ClInclude Include="..\..\src\libraries\shield\Cache.h" />
     <ClInclude Include="..\..\src\libraries\shield\Client.h" />
     <ClInclude Include="..\..\src\libraries\shield\Clients.h" />
     <ClInclude Include="..\..\src\libraries\shield\Client_ABC.h" />

@@ -55,6 +55,9 @@
     <ClCompile Include="..\..\src\libraries\shield\Clients.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\shield\Cache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\shield\AarToClient.h">
@@ -133,6 +136,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\shield\Clients.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\shield\Cache.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
