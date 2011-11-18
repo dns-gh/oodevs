@@ -88,6 +88,20 @@ int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_Agent_ABC& caller
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::PopulationQueueForDecontamination
+// Created: LGY 2011-11-18
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::PopulationQueueForDecontamination( MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( DecontaminationCapacity* pCapacity = IsValidObjectCapacity< DecontaminationCapacity >( pKnowledge ) )
+    {
+        pCapacity->QueueForDecontamination( callerPopulation );
+        return static_cast< int >( eQueryValid );
+    }
+    return static_cast< int >( eQueryInvalid );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::CanBeAnimated
 // Created: NLD 2004-11-03
 // -----------------------------------------------------------------------------

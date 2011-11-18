@@ -55,7 +55,7 @@ public:
     unsigned int ApplyNumberOfDead( unsigned int dead );
     unsigned int ApplyWounds( unsigned int wounds );
     void ApplyContamination();
-    void ApplyDecontamination();
+    bool ApplyDecontamination();
     void ApplyIntoxication( double woundedPercentage, double deadPercentage );
     void PullFrom( unsigned int number, MIL_PopulationHumans& humans );
     void ReintegrateUrbanBlock();
