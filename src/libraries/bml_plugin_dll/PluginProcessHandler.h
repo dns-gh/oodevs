@@ -21,6 +21,7 @@
 namespace dispatcher
 {
     class Config;
+    class Logger_ABC;
 }
 
 namespace xml
@@ -44,8 +45,14 @@ class PluginProcessHandler : public dispatcher::Plugin_ABC
 public: 
     //! @name Constructors/Destructor
     //@{
-             PluginProcessHandler( const dispatcher::Config& config, const std::string& process_name, xml::xistream& xis );        
+             PluginProcessHandler( const dispatcher::Config& config, const std::string& process_name, dispatcher::Logger_ABC& logger, xml::xistream& xis );        
     virtual ~PluginProcessHandler();
+    //@}
+
+    //! @name Process management
+    //@{
+    void Start();
+    void Stop();
     //@}
 
     //! @name Inherited from Plugin_ABC
@@ -62,12 +69,6 @@ private:
     PluginProcessHandler& operator=( const PluginProcessHandler& ); //!< Assignment operator
     //@}
 
-    //! @name Process management
-    //@{
-    void Start();
-    void Stop();
-    //@}
-
     //! @name Process arguments
     //@{
     void LoadSimulationConfig( const dispatcher::Config& config );
@@ -76,11 +77,13 @@ private:
     //@}
     
     struct InternalData;
+    class ThreadDelayed;
 
 private:
     std::string commandLine_;
     std::string workingDir_;
     std::auto_ptr< InternalData > internal_;
+    std::auto_ptr< ThreadDelayed > thread_;
 };
 
 }

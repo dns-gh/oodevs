@@ -30,7 +30,7 @@ BML_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC
     try
     {
         logger.LogInfo( "[Sword BML Service]: Registrating..." );
-        plugins::bml::PluginProcessHandler* result = new plugins::bml::PluginProcessHandler( config, "sword_bml_service.exe", xis );
+        plugins::bml::PluginProcessHandler* result = new plugins::bml::PluginProcessHandler( config, "sword_bml_service.exe", logger, xis );
         logger.LogInfo( "[Sword BML Service]: Registred." );
         return result;
     }

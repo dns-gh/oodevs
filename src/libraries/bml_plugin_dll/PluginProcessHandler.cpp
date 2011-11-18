@@ -15,10 +15,13 @@
 #include <winbase.h>
 #include <tlhelp32.h>
 #include <xeumeuleu/xml.hpp>
+#pragma warning( push, 0 )
+#include <boost/thread.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#pragma warning( pop )
 
 using namespace plugins::bml;
 namespace bfs = boost::filesystem;
@@ -29,18 +32,45 @@ struct PluginProcessHandler::InternalData
     InternalData() { ZeroMemory( &pid_ , sizeof( pid_ ) ); }
 };
 
+
+class PluginProcessHandler::ThreadDelayed : public boost::thread
+{
+public:
+    ThreadDelayed( PluginProcessHandler& process, long delay )
+        : boost::thread( boost::bind( &PluginProcessHandler::ThreadDelayed::Run, this ) )
+        , process_ ( process )
+        , delay_ ( delay )
+    {
+        // NOTHING
+    }
+
+private:
+    void Run()
+    {
+        boost::this_thread::sleep( boost::posix_time::milliseconds( delay_ ) );
+        process_.Start();
+    }
+
+private:
+    PluginProcessHandler& process_;
+    const long delay_;
+};
+
 // -----------------------------------------------------------------------------
 // Name: PluginProcessHandler constructor
 // Created: JCR 2011-10-27
 // -----------------------------------------------------------------------------
-PluginProcessHandler::PluginProcessHandler( const dispatcher::Config& config, const std::string& process_name, xml::xistream& xis )
+PluginProcessHandler::PluginProcessHandler( const dispatcher::Config& config, const std::string& process_name, dispatcher::Logger_ABC& logger, xml::xistream& xis )
     : commandLine_  ( process_name )
     , workingDir_   ( "." )
     , internal_     ( new InternalData() )
 {
     LoadSimulationConfig( config );
     LoadPluginConfig( xis, config );
-    Start();
+    const long delay = 10000;
+    logger.LogInfo( "[Sword BML Service]: Waiting " + boost::lexical_cast< std::string >( delay / 1000 ) + "s before launching " + process_name + " process." ); 
+    thread_.reset( new PluginProcessHandler::ThreadDelayed( *this, delay ) );
+    thread_->join();
 }
             
 
