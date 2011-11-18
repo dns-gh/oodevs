@@ -21,6 +21,7 @@
       <terrain type="suburb" value="7"/>
     </heuristic>
     <interact-with-enemy/>
+    <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
     <time-limited/>
@@ -38,6 +39,7 @@
       </buildable>
     </constructor>
     <interact-with-enemy/>
+    <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
     <time-limited/>
@@ -55,6 +57,7 @@
       </buildable>
     </constructor>
     <interact-with-enemy/>
+    <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
     <time-limited/>
@@ -77,6 +80,7 @@
       <terrain type="main road" value="5"/>
     </heuristic>
     <interact-with-enemy/>
+    <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
@@ -104,6 +108,7 @@
       <terrain type="secondary road" value="1"/>
     </heuristic>
     <interact-with-enemy/>
+    <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
@@ -131,6 +136,7 @@
       <terrain type="urban area" value="2"/>
     </heuristic>
     <interact-with-enemy/>
+    <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
@@ -156,6 +162,7 @@
       <terrain type="highway" value="2"/>
       <terrain type="main road" value="5"/>
     </heuristic>
+    <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
     <trafficability default="true" max-weight="0.1"/>
@@ -182,6 +189,7 @@
       <terrain type="main road" value="5"/>
       <terrain type="highway" value="1"/>
     </heuristic>
+    <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
@@ -203,6 +211,7 @@
     <heuristic>
       <terrain type="bridge" value="10"/>
     </heuristic>
+    <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0"/>
   </object>
@@ -281,12 +290,14 @@
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <contamination max-toxic="1"/>
+    <interaction-height height="100"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <spawn action-range="0" nbc="true" object="nbc cloud"/>
   </object>
   <object geometry="polygon" name="zone brouillage" symbol="G*EW***********" type="jamming area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <interact-with-enemy/>
+    <interaction-height height="100"/>
     <interference/>
   </object>
   <object geometry="polygon" name="aire poser" symbol="G*GPGAL---****X" type="landing area">
@@ -352,6 +363,7 @@
   <object geometry="polygon" name="terrain largage" symbol="G*GPGAD---****X" type="dropping area">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <interaction-height height="2"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="zone interdite mouvement" symbol="G*MPOGZ---****X" type="movement forbidden area">
@@ -383,6 +395,7 @@
   </object>
   <object geometry="point" name="installation" symbol="S*GPI-----*****" type="installation">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <interaction-height height="2"/>
   </object>
   <object geometry="polygon" name="bloc urbain" symbol="G*MPOGZ---****X" type="urban block">
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
@@ -395,14 +408,18 @@
   <object geometry="line" name="zone bouclee" symbol="G*MPOGZ---****X" type="seal off area">
     <avoidable distance="10"/>
     <interact-with-enemy/>
+    <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0"/>
     <workable max-animator="10"/>
   </object>
   <object geometry="point" name="incendie" symbol="O*VPA-----*****" type="fire">
     <burn/>
+    <interaction-height height="100"/>
   </object>
-  <object geometry="polygon" name="mouvement population" symbol="" type="population moving"/>
+  <object geometry="polygon" name="mouvement population" symbol="" type="population moving">
+    <interaction-height height="2"/>
+  </object>
   <object geometry="point" name="station de metro" symbol="G*EXIT*********" type="metro station">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
@@ -438,14 +455,17 @@
     <universal/>
   </object>
   <object geometry="polygon" name="terrain mouille" symbol="G*MPOGZ---****X" type="wet terrain">
+    <interaction-height height="2"/>
     <mobility default-speed="80" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <universal/>
   </object>
   <object geometry="polygon" name="terrain enneige" symbol="G*MPOGZ---****X" type="snowed terrain">
+    <interaction-height height="2"/>
     <mobility default-speed="50" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <universal/>
   </object>
   <object geometry="polygon" name="terrain gele" symbol="G*MPOGZ---****X" type="iced terrain">
+    <interaction-height height="2"/>
     <mobility default-speed="30" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <universal/>
   </object>
@@ -453,4 +473,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="1224223256" -->
+<!-- signature="2128706027" -->
