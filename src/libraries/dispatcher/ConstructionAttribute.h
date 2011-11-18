@@ -43,6 +43,7 @@ private:
     unsigned int dotation_;
     unsigned int nPercentageConstruction_;
     unsigned int nNbrDotationForConstruction_;
+    float density_;
     //@}
 
 };

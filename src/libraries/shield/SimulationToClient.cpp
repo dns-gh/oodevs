@@ -9,6 +9,9 @@
 
 #include "SimulationToClient.h"
 #include "SimulationTools.h"
+#include <boost/date_time/posix_time/posix_time.hpp>
+
+namespace bpt = boost::posix_time;
 
 using namespace shield;
 
@@ -228,6 +231,11 @@ void SimulationToClient::Convert( const sword::LogSupplyChangeQuotasAck& from, M
                                                   ( sword::LogSupplyChangeQuotasAck::error_invalid_dotation, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_dotation ));
 }
 
+namespace
+{
+    int tickDuration = 0;
+}
+
 // -----------------------------------------------------------------------------
 // Name: SimulationToClient::Convert
 // Created: MCO 2010-11-09
@@ -244,6 +252,9 @@ void SimulationToClient::Convert( const sword::ControlInformation& from, MsgsSim
     CONVERT( send_vision_cones );
     CONVERT( profiling_enabled );
     CONVERT_DATE( checkpoint_real_time );
+    
+    if ( from.has_tick_duration() )
+        tickDuration = from.tick_duration();
 }
 
 // -----------------------------------------------------------------------------
@@ -1100,14 +1111,23 @@ namespace
     template< typename From, typename To >
     void ConvertObjectAttributeObstacle( const From& from, To* to )
     {
-        to->mutable_obstacle()->set_type( from.obstacle().type() == sword::ObstacleType::preliminary ?
-                                          Common::ObstacleType::preliminary : Common::ObstacleType::reserved );
+        to->mutable_obstacle()->set_type( from.obstacle().type() == sword::ObstacleType::preliminary ? Common::ObstacleType::preliminary : Common::ObstacleType::reserved );
         if( from.obstacle().has_activated() )
             to->mutable_obstacle()->set_activated( from.obstacle().activated() );
         if( from.obstacle().has_activation_time() )
             to->mutable_activity_time()->set_activation_time( from.obstacle().activation_time() );
         if( from.obstacle().has_activity_time() )
             to->mutable_activity_time()->set_activity_time( from.obstacle().activity_time() );
+        if( from.obstacle().has_activation_time() )
+        {
+            std::string startTime =  bpt::to_iso_string( bpt::from_time_t( 0 ) + bpt::seconds( tickDuration * from.obstacle().activation_time() ) );
+            to->mutable_activity_time()->mutable_start_activity()->set_data( startTime );
+            if( from.obstacle().has_activity_time() )
+            {
+                std::string endTime = bpt::to_iso_string( bpt::from_time_t( 0 ) + bpt::seconds( tickDuration * ( from.obstacle().activation_time() + from.obstacle().activity_time() ) ) );
+                to->mutable_activity_time()->mutable_end_activity()->set_data( endTime );
+            }
+        }
     }
     template< typename From, typename To >
     void ConvertObjectAttributeMine( const From& from, To* to )
