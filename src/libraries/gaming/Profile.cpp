@@ -16,7 +16,7 @@
 #include "Services.h"
 #include "Simulation.h"
 #include "TeamsModel.h"
-#include "Tools.h"
+#include "reports/Tools.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
