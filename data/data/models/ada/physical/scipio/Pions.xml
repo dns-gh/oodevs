@@ -1854,6 +1854,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3750s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -1887,6 +1888,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3450s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -1916,6 +1918,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1650s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -1948,6 +1951,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="2550s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -1979,6 +1983,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1800s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -2011,6 +2016,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="2550s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -2042,6 +2048,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1800s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -2070,6 +2077,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -2100,6 +2108,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="2250s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -2130,6 +2139,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1800s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -2160,6 +2170,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="2250s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -2190,6 +2201,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1800s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -2218,6 +2230,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3410,6 +3423,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="2400s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3567,6 +3581,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="7350s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3714,6 +3729,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1650s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3928,6 +3944,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="9000s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -5552,6 +5569,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="7350s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5582,6 +5600,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -5605,6 +5624,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="8250s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -5628,6 +5648,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="7350s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5658,6 +5679,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -5681,6 +5703,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="8250s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15396,6 +15419,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="450s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15417,6 +15441,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="150s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -15450,6 +15475,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="5100s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15471,6 +15497,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1500s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15520,6 +15547,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="450s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15543,6 +15571,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1350s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15565,6 +15594,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="8250s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15587,6 +15617,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1350s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15609,6 +15640,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1350s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15634,6 +15666,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="5100s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15657,6 +15690,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="450s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15681,6 +15715,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="450s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15704,6 +15739,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="150s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15725,6 +15761,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="8250s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15746,6 +15783,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="8250s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15768,6 +15806,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1800s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15789,6 +15828,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1350s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15810,6 +15850,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="450s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15836,6 +15877,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15862,6 +15904,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15886,6 +15929,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15910,6 +15954,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15931,6 +15976,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15954,6 +16000,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="300s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15977,6 +16024,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="300s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -15998,6 +16046,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="150s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16030,6 +16079,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3750s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16062,6 +16112,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="2550s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16092,6 +16143,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="2250s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16125,6 +16177,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3450s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16156,6 +16209,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1800s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16186,6 +16240,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1800s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16219,6 +16274,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16246,6 +16302,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16275,6 +16332,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="9300s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16300,6 +16358,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16329,6 +16388,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="8250s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16350,6 +16410,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="4350s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16372,6 +16433,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1650s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16405,6 +16467,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="8700s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16438,6 +16501,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16461,6 +16525,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1650s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16489,6 +16554,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16517,6 +16583,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16553,6 +16620,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="9000s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16578,6 +16646,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="300s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16605,6 +16674,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="300s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16626,6 +16696,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="8250s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16647,6 +16718,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="8250s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16672,6 +16744,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1350s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16697,6 +16770,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="5100s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16721,6 +16795,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1350s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16748,6 +16823,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1350s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16769,6 +16845,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="8250s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16791,6 +16868,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
+    <setup installation-time="45m" uninstallation-time="10m"/>
     <nbc decontamination-delay="1350s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -16851,4 +16929,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0371394174" -->
+<!-- signature="0770311522" -->
