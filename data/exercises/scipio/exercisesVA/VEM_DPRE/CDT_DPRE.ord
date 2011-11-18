@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="2046" name="PION COMMUNES Faire Mouvement" target="28" time="2011-11-10T08:27:56" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Itineraire" type="list">
+      <parameter name="Itineraire (élément 1)" type="location">
+        <location type="point">
+          <point coordinates="29SNE9098222016"/>
+        </location>
+      </parameter>
+      <parameter name="Itineraire (élément 2)" type="location">
+        <location type="point">
+          <point coordinates="29SNE9011122358"/>
+        </location>
+      </parameter>
+      <parameter name="Itineraire (élément 3)" type="location">
+        <location type="point">
+          <point coordinates="29SNE8879721860"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="2046" name="PION COMMUNES Faire Mouvement" target="19" time="2011-11-10T08:31:46" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Itineraire" type="list">
+      <parameter name="Itineraire (élément 1)" type="location">
+        <location type="point">
+          <point coordinates="29SNE9097122032"/>
+        </location>
+      </parameter>
+      <parameter name="Itineraire (élément 2)" type="location">
+        <location type="point">
+          <point coordinates="29SNE9073023527"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="2101" name="PION MELEE Animer Poste De Controle" target="18" time="2011-11-10T08:34:26" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="29SNE8967922178"/>
+      </location>
+    </parameter>
+    <parameter name="Pourcentage de foule a desarmer" type="numeric" value="0"/>
+  </action>
+  <action id="2046" name="PION COMMUNES Faire Mouvement" target="19" time="2011-11-10T09:53:36" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Itineraire" type="list">
+      <parameter name="Itineraire (élément 1)" type="location">
+        <location type="point">
+          <point coordinates="29SNE8887421971"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="2058" name="PION COMMUNES Escorter Refugies Vers Camp" target="19" time="2011-11-10T10:48:06" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Refugies" type="list">
+      <parameter name="Refugies (élément 1)" type="agentknowledge" value="28"/>
+    </parameter>
+    <parameter name="Camp de refugies" type="objectknowledge" value="82"/>
+  </action>
+  <action id="2057" name="PION COMMUNES Se Faire Transporter" target="28" time="2011-11-10T11:38:56" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Point d'embarquement" type="point">
+      <location type="point">
+        <point coordinates="29SNE8700621052"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="2142" name="PION LOGISTIQUE Transporter Unites" target="43" time="2011-11-10T12:48:56" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Unites a transporter" type="list">
+      <parameter name="Unites a transporter (élément 1)" type="agent" value="28"/>
+    </parameter>
+    <parameter name="Position d'embarquement" type="point">
+      <location type="point">
+        <point coordinates="29SNE8698621089"/>
+      </location>
+    </parameter>
+    <parameter name="Destination" type="point">
+      <location type="point">
+        <point coordinates="29SNE8930521992"/>
+      </location>
+    </parameter>
+    <parameter name="Point de regroupement" type="point">
+      <location type="point">
+        <point coordinates="29SNE8732521152"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="change_critical_intelligence" name="Modifier le renseignement critique" target="28" time="2011-11-10T14:38:06" type="magicunit">
+    <parameter name="Name" type="string" value="Yann est le terroriste"/>
+  </action>
+  <action id="2046" name="PION COMMUNES Faire Mouvement" target="19" time="2011-11-10T15:09:56" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Itineraire" type="list">
+      <parameter name="Itineraire (élément 1)" type="location">
+        <location type="point">
+          <point coordinates="29SNE8906122263"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="2046" name="PION COMMUNES Faire Mouvement" target="19" time="2011-11-10T17:02:46" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Itineraire" type="list">
+      <parameter name="Itineraire (élément 1)" type="location">
+        <location type="point">
+          <point coordinates="29SNE8946122147"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="2129" name="PION COMMUNES Interroger" target="19" time="2011-11-10T17:33:56" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Entite" type="agentknowledge" value="28"/>
+  </action>
+</actions>

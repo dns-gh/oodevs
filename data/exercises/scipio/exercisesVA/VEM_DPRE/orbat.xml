@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party color="0x647dff" id="1" name="Bleu" type="friend">
+      <objects>
+        <object id="82" name="Camp" type="refugees camp">
+          <shape type="polygone">
+            <points>
+              <point>29SNE8696824932</point>
+              <point>29SNE8672523016</point>
+              <point>29SNE8921823374</point>
+              <point>29SNE8864524950</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <lodging capacity="5000"/>
+            <logistic-base id="63"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation color="0x647dff" id="3" level="xxx" name="Formation [3]">
+          <formation color="0x647dff" id="4" level="ii" name="Land">
+            <automat color="0x647dff" engaged="false" id="14" knowledge-group="15" name="INF . Compagnie CBT AMX 10 P [14]" type="INF . Compagnie CBT AMX 10 P">
+              <unit color="0x647dff" command-post="true" id="16" name="INF . Section CDT CIE quaternaire AMX10P" position="29SNE9011719011" type="INF . Section CDT CIE quaternaire AMX10P"/>
+              <unit color="0x647dff" command-post="false" id="18" name="INF . Section CBT AMX10P CDS OFF" position="29SNE8776221221" type="INF . Section CBT AMX10P CDS OFF"/>
+              <unit color="0x647dff" command-post="false" id="19" name="INF . Section CBT AMX10P CDS OFF" position="29SNE8924521799" type="INF . Section CBT AMX10P CDS OFF"/>
+            </automat>
+            <automat color="0x647dff" engaged="false" id="40" knowledge-group="15" name="CIRCU . Escadron de Transport Bus [40]" type="CIRCU . Escadron de Transport Bus">
+              <unit color="0x647dff" command-post="true" id="41" name="CIRCU . PC ESC TRANSP BUS" position="29SNE8620819683" type="CIRCU . PC ESC TRANSP BUS"/>
+              <unit color="0x647dff" command-post="false" id="43" name="CIRCU . Peloton Bus Mercedes" position="29SNE8699820716" type="CIRCU . Peloton Bus Mercedes"/>
+            </automat>
+            <automat color="0x647dff" engaged="true" id="63" knowledge-group="15" logistic-level="logistic-base" name="LOG . TC2 LOG [63]" type="LOG . TC2 LOG">
+              <unit color="0x647dff" command-post="true" id="64" name="LOG . TC2" position="29SNE8764618233" type="LOG . TC2">
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="NomLong" value="LOG.TC2.LOG.TC2LO"/>
+                </extensions>
+              </unit>
+            </automat>
+          </formation>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="15" name="Groupe de connaissance [15]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="63">
+          <subordinate id="14"/>
+          <subordinate id="40"/>
+        </logistic-base>
+      </logistics>
+    </party>
+    <party color="0x4bbedc" id="24" name="DPRE" type="friend">
+      <objects/>
+      <tactical>
+        <formation color="0x4bbedc" id="25" level="ii" name="Formation [25]">
+          <automat color="0x4bbedc" engaged="false" id="26" knowledge-group="27" name="CIV . DPRE [26]" type="CIV . DPRE">
+            <unit color="0x4bbedc" command-post="true" id="28" name="Refugies" position="29SNE9062922997" type="Refugies"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="27" name="Groupe de connaissance [27]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="neutral" party="24"/>
+    </party>
+    <party id="24">
+      <relationship diplomacy="neutral" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="0579282919" -->
