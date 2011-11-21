@@ -90,7 +90,8 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 // Name: Object::DisplayInSummary
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-void Object::DisplayInSummary( kernel::Displayer_ABC& /*displayer*/ ) const
+void Object::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
-    // NOTHING
+    if( !type_.GetDescription().empty() )
+        displayer.Display( tools::translate( "Object", "Description:" ), type_.GetDescription() );
 }

@@ -1165,6 +1165,10 @@ Voulez-vous le supprimer?</translation>
         <source>Load from file</source>
         <translation>Charger depuis un fichier</translation>
     </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
 </context>
 <context>
     <name>gui::ObstaclePrototype_ABC</name>

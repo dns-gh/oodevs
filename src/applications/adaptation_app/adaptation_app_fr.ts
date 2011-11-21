@@ -3310,6 +3310,10 @@ du tireur</translation>
         <source>Crowd attrition</source>
         <translation>Attrition sur les foules</translation>
     </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

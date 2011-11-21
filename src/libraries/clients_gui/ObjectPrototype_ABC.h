@@ -137,6 +137,8 @@ private:
     std::auto_ptr< ObjectPrototypeLoader_ABC > loader_;
     QPushButton* loadFromFileButton_;
     QLabel* loadFromFilePathLabel_;
+    QGroupBox* descriptionBox_;
+    QLabel* descriptionLabel_;
 };
 
 }

@@ -74,6 +74,7 @@ void SummariesDisplayer::EndDisplay()
         lbl->setText( currentItem_ );
         names_[currentItem_] = lbl;
         value = new QLabel( parent_ );
+        value->setWordWrap( true );
         parent_->layout()->addWidget( value );
     }
     value->setText( message_ );

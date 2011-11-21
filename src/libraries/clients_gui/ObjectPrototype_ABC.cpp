@@ -82,6 +82,17 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
         loadFromFilePathLabel_ = new QLabel( infoBox );
     }
 
+    // Description box
+    {
+        descriptionBox_ = new QGroupBox( tr( "Description" ), parent );
+        descriptionBox_->setVisible( false );
+        descriptionLabel_ = new QLabel( descriptionBox_ );
+        descriptionLabel_->setWordWrap( true );
+        QBoxLayout* boxLayout = new QBoxLayout( QBoxLayout::TopToBottom, descriptionBox_ );
+        boxLayout->addWidget( descriptionLabel_ );
+        layout->addWidget( descriptionBox_ );
+    }
+
     // Attribute box
     {
         Q3GroupBox* attributBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Attributes" ), parent );
@@ -275,6 +286,8 @@ void ObjectPrototype_ABC::OnTypeChanged()
         locationCreator_->Allow( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
         if( location_ && !location_->IsValid() )
             ResetLocation();
+        descriptionBox_->setVisible( !type->GetDescription().empty() );
+        descriptionLabel_->setText( type->GetDescription().c_str() );
         attributes_->Select( *type );
     }
 }

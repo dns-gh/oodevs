@@ -1306,6 +1306,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\UnitsFilter.cpp">
       <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TextEdit_ABC.cpp">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1989,6 +1992,9 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TextEdit.h">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2094,6 +2100,9 @@
       <Filter>Translations</Filter>
     </None>
     <None Include="..\..\src\applications\adaptation_app\style_scipio.css" />
+    <None Include="..\..\src\applications\adaptation_app\ADN_TextEdit.inl">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.h">
@@ -2386,6 +2395,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\UnitsFilter.h">
       <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TextEdit_ABC.h">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -10,6 +10,7 @@
 #ifndef __ObjectType_h_
 #define __ObjectType_h_
 
+#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
 namespace xml
@@ -27,7 +28,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-16
 // =============================================================================
-class ObjectType
+class ObjectType : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -39,8 +40,8 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, boost::shared_ptr< xml::xibufferstream > >  T_Capacities;
-    typedef T_Capacities::const_iterator                                       CIT_Capacities;
+    typedef std::map< std::string, boost::shared_ptr< xml::xibufferstream > > T_Capacities;
+    typedef T_Capacities::const_iterator                                    CIT_Capacities;
     //@}
 
 public:
@@ -49,6 +50,7 @@ public:
     const std::string& GetName() const;
     const std::string& GetType() const;
     const std::string& GetSymbol() const;
+    const std::string& GetDescription() const;
 
     CIT_Capacities CapacitiesBegin() const;
     CIT_Capacities CapacitiesEnd() const;
@@ -70,12 +72,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectType( const ObjectType& );            //!< Copy constructor
-    ObjectType& operator=( const ObjectType& ); //!< Assignment operator
-    //@}
-
     //! @name Helper
     //@{
     void ReadCapacities( const std::string& capacity, xml::xistream& xis );
@@ -90,6 +86,7 @@ private:
     const std::string type_;
     const std::string symbol_;
     const std::string geometry_;
+    const std::string description_;
     T_Capacities capacities_;
     bool canBeValorized_;
     bool canBeBypassed_;

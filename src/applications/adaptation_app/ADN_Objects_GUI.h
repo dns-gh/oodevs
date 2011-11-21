@@ -36,6 +36,7 @@ public:
         eGeometry,
         ePointSize,
         eSymbol,
+        eDescription,
         eActivableCapacityPresent,
         eAttitudeModifierCapacityPresent,
         eAttitudeModifierCapacity_Attitude,

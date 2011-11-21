@@ -3308,6 +3308,10 @@ tirador</translation>
         <source>Crowd attrition</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

@@ -18,11 +18,12 @@ using namespace kernel;
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
 ObjectType::ObjectType( xml::xistream& xis )
-    : name_( xis.attribute< std::string >( "name" ) )
-    , type_( xis.attribute< std::string >( "type" ) )
-    , symbol_ ( xis.attribute< std::string >( "symbol", "" ) )
-    , geometry_( xis.attribute< std::string >( "geometry", "" ) )
-    , canBeValorized_ ( false )
+    : name_          ( xis.attribute< std::string >( "name" ) )
+    , type_          ( xis.attribute< std::string >( "type" ) )
+    , symbol_        ( xis.attribute< std::string >( "symbol", "" ) )
+    , geometry_      ( xis.attribute< std::string >( "geometry", "" ) )
+    , description_   ( xis.attribute< std::string >( "description", "" ) )
+    , canBeValorized_( false )
     , canBeBypassed_ ( false )
 {
     xis >> xml::optional() >> xml::start( "constructor" )
@@ -83,6 +84,15 @@ const std::string& ObjectType::GetType() const
 const std::string& ObjectType::GetSymbol() const
 {
     return symbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::GetDescription
+// Created: JSR 2011-11-21
+// -----------------------------------------------------------------------------
+const std::string& ObjectType::GetDescription() const
+{
+    return description_;
 }
 
 // -----------------------------------------------------------------------------

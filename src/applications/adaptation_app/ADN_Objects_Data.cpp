@@ -1280,6 +1280,7 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( const std::string& type )
 {
     symbol_.SetParentNode( *this );
     geometries_.SetParentNode( *this );
+    description_.SetParentNode( *this );
     InitializeCapacities();
 }
 
@@ -1294,6 +1295,7 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos()
     , pointSize_ ( 0. )
 {
     symbol_.SetParentNode( *this );
+    geometries_.SetParentNode( *this );
     geometries_.SetParentNode( *this );
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
     symbol_.SetVector( drawingsData.GetGeometryDrawings( geometries_.GetData() ) );
@@ -1403,6 +1405,7 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& xis )
         >> xml::attribute( "geometry", geometries_ )
         >> xml::optional >> xml::attribute( "symbol", code )
         >> xml::optional >> xml::attribute( "point-size", pointSize_ )
+        >> xml::optional >> xml::attribute( "description", description_ )
         >> xml::list( *this, &ADN_Objects_Data::ObjectInfos::ReadCapacityArchive );
 
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
@@ -1427,6 +1430,8 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& xos )
         xos << xml::attribute( "type", strName_ );
     else
         xos << xml::attribute( "type", strType_ );
+    if( !description_.GetData().empty() )
+        xos << xml::attribute( "description", description_ );
 
     for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
         if( it->second->bPresent_.GetData() )

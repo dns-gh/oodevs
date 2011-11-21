@@ -1270,6 +1270,10 @@
         <source>Trafficability:</source>
         <translation>Traficabilité:</translation>
     </message>
+    <message>
+        <source>Description:</source>
+        <translation>Description:</translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>

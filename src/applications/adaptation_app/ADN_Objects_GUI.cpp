@@ -19,6 +19,7 @@
 #include "ADN_ListView_Objects.h"
 #include "ADN_Table_Objects_LocationScore.h"
 #include "ADN_Table_Objects_FirePropagationModifier.h"
+#include "ADN_TextEdit.h"
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
 #include "ADN_GuiBuilder.h"
@@ -113,6 +114,7 @@ void ADN_Objects_GUI::Build()
     pPointDistance_->SetAutoEnabled( false );
     QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pHolder, tr( "Symbol"), vInfosConnectors[ eSymbol ] );
     combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
+    builder.AddField< ADN_TextEdit_String >( pHolder, tr( "Description"), vInfosConnectors[ eDescription ] );
 
     Q3GroupBox* hBox = new Q3GroupBox( 2, Qt::Horizontal, tr( "Capacities" ), pGroup_ );
 
