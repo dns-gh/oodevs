@@ -10639,7 +10639,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Artillerie.Sol Air.PC MISTRAL" id="365" name="ART . PC Batterie MISTRAL" type="Pion ASA">
+  <unit decisional-model="Masalife.Artillerie.Sol Air.PC" id="365" name="ART . PC Batterie MISTRAL" type="Pion ASA">
     <nature atlas-nature="ASA" level="i" nature-app6="combat/air defense/missile/light/motorized avenger"/>
     <equipments>
       <equipment count="2" crew="2" type="VTC P4"/>
@@ -10740,7 +10740,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="10000012" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Artillerie.Sol Air.PC HAWK" id="368" name="ART . PC Batterie HAWK" type="Pion ASA">
+  <unit decisional-model="Masalife.Artillerie.Sol Air.PC" id="368" name="ART . PC Batterie HAWK" type="Pion ASA">
     <nature atlas-nature="ASA" level="i" nature-app6="combat/air defense/missile/medium"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="GBC CWAR"/>
@@ -17175,4 +17175,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3928969384" -->
+<!-- signature="3971684042" -->
