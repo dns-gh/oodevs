@@ -40,7 +40,7 @@ DEC_PathResult::~DEC_PathResult()
 // Name: DEC_PathResult::GetPointOnPathCloseTo
 // Created: AGN 03-01-13
 //-----------------------------------------------------------------------------
-MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const T_PointVector& pathPoints, bool forceNextPoint ) const
+MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const T_PointVector& pathPoints, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint ) const
 {
     assert( !resultList_.empty() );
     CIT_PathPointList itStart = resultList_.begin();
@@ -57,7 +57,11 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
     for( itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
         if( itNextPoint->SquareDistance( (*itStart)->GetPos() ) < precision )
+        {
+            if( lastJoiningPoint != MT_Vector2D( 0, 0 ) && itNextPoint->SquareDistance( lastJoiningPoint ) < precision )
+                break;
             useNextPoint = true;
+        }
 
         MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
         MT_Vector2D vClosest = vLine.ClosestPointOnLine( posToTest );

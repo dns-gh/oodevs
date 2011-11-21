@@ -434,6 +434,8 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
         if( !TryToMoveTo( *pPath, ( *itNextPathPoint_ )->GetPos(), rTimeRemaining ) )
         {
             rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
+            if( pathSet_ == eBlockedByObject )
+                Apply();
             return pathSet_;
         }
         bTerrainReportSent_ = false;
