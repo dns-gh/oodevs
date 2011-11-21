@@ -207,7 +207,7 @@ private:
     //@{
     const MIL_KnowledgeGroupType* type_;
     unsigned int                  id_;
-    std::string                   name_;  
+    std::string                   name_;
     MIL_Army_ABC*           army_;
     MIL_KnowledgeGroup*     parent_; // LTO
     DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;

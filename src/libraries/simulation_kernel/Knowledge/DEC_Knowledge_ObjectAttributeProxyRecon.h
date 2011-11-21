@@ -77,6 +77,4 @@ bool DEC_Knowledge_ObjectAttributeProxyRecon< T >::UpdateOnCollision( const DEC_
     return UpdateAttributeFromSource( collision );
 }
 
-
-
 #endif // __DEC_Knowledge_ObjectAttributeProxyRecon_h_

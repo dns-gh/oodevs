@@ -43,7 +43,6 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/bind.hpp>
 
-
 MIL_IDManager MIL_KnowledgeGroup::idManager_;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_KnowledgeGroup )
@@ -376,7 +375,7 @@ bool MIL_KnowledgeGroup::IsPerceptionDistanceHacked( MIL_Agent_ABC& agentKnown )
     boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = GetKnowledge().GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
     if( !pKnowledge.get() )
         return false;
-    
+
     return pKnowledge->IsPerceptionDistanceHacked();
 }
 
@@ -894,19 +893,19 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
         perception = message.elem( 1 ).value().Get( 0 ).quantity();
     else if( message.elem( 1 ).value().Get( 0 ).has_enumeration() )
         perception = PHY_PerceptionLevel::ConvertFromMsgIdToSimId( static_cast< sword::UnitIdentification_Level >( message.elem( 1 ).value().Get( 0 ).enumeration() ) );
-    if ( perception < 1 || 3 < perception )
+    if( perception < 1 || 3 < perception )
         throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_perception );
 
-    if ( pAgent )
+    if( pAgent )
     {
-        if ( pAgent->GetKnowledgeGroup().GetId() == this->GetId() )
+        if( pAgent->GetKnowledgeGroup().GetId() == this->GetId() )
             return false;
 
         DEC_Knowledge_Agent& knowledgeAgent = GetAgentKnowledgeToUpdate( *pAgent );
         knowledgeAgent.HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
         HackPerceptionLevelFromParentKnowledgeGroup( *pAgent, perception );
     }
-    else if ( pObject )
+    else if( pObject )
     {
         boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = GetObjectKnowledgeToUpdate( *pObject );
         if( !knowledgeObject.get() )
@@ -914,7 +913,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
         knowledgeObject->HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
         HackPerceptionLevelFromParentKnowledgeGroup( *pObject, perception );
     }
-    else if ( pPopulation )
+    else if( pPopulation )
     {
         DEC_Knowledge_Population& knowledgePopulation = GetPopulationKnowledgeToUpdate( *pPopulation );
         knowledgePopulation.HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
@@ -935,7 +934,7 @@ void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_
     for( MIL_KnowledgeGroup::IT_KnowledgeGroupVector itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
     {
         MIL_KnowledgeGroup* pKnowledgeGroup = *itKG;
-        if ( pKnowledgeGroup )
+        if( pKnowledgeGroup )
         {
             DEC_Knowledge_Agent& curKnowledgeAgent = pKnowledgeGroup->GetAgentKnowledgeToUpdate( agent );
             curKnowledgeAgent.HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
@@ -952,16 +951,16 @@ void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object
 {
     DEC_BlackBoard_CanContainKnowledgeObject& armyKnowledgeContainer = army_->GetKnowledge().GetKnowledgeObjectContainer();
     DEC_Knowledge_Object* knowledgeObject = armyKnowledgeContainer.RetrieveKnowledgeObject( object );
-    if ( knowledgeObject )
+    if( knowledgeObject )
         knowledgeObject->HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
-    else 
+    else
         for( MIL_KnowledgeGroup::IT_KnowledgeGroupVector itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
         {
             MIL_KnowledgeGroup* pKnowledgeGroup = *itKG;
-            if ( pKnowledgeGroup )
+            if( pKnowledgeGroup )
             {
                 boost::shared_ptr< DEC_Knowledge_Object > curKnowledgeObject = pKnowledgeGroup->GetObjectKnowledgeToUpdate( object );
-                if ( curKnowledgeObject.get() )
+                if( curKnowledgeObject.get() )
                     curKnowledgeObject->HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
                 pKnowledgeGroup->HackPerceptionLevelFromParentKnowledgeGroup( object, perception );
             }
@@ -977,7 +976,7 @@ void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Popula
     for( MIL_KnowledgeGroup::IT_KnowledgeGroupVector itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
     {
         MIL_KnowledgeGroup* pKnowledgeGroup = *itKG;
-        if ( pKnowledgeGroup )
+        if( pKnowledgeGroup )
         {
             DEC_Knowledge_Population& curKnowledgePopulation = pKnowledgeGroup->GetPopulationKnowledgeToUpdate( population );
             curKnowledgePopulation.HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
@@ -1218,7 +1217,7 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::GetObjectKnowledge
 DEC_BlackBoard_CanContainKnowledgeObject& MIL_KnowledgeGroup::GetKnowledgeObjectContainer() const
 {
     DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer = GetKnowledge().GetKnowledgeObjectContainer();
-    if ( pKnowledgeObjectContainer )
+    if( pKnowledgeObjectContainer )
         return *pKnowledgeObjectContainer;
     return army_->GetKnowledge().GetKnowledgeObjectContainer();
 }

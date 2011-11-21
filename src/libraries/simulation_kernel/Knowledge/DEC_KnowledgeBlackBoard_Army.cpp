@@ -153,9 +153,9 @@ namespace
 
         void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( filter_.Test( knowledge->GetType() ) 
+            if( filter_.Test( knowledge->GetType() )
             && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() )
-            && knowledge->GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ 
+            && knowledge->GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_
             && knowledge->IsValid() )
                 pContainer_->push_back( knowledge );
         }
@@ -196,9 +196,9 @@ namespace
 
         void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( filter_.Test( knowledge->GetType() ) 
-            && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) 
-            && pZone_->IsInside( knowledge->GetLocalisation().ComputeBarycenter() ) 
+            if( filter_.Test( knowledge->GetType() )
+            && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() )
+            && pZone_->IsInside( knowledge->GetLocalisation().ComputeBarycenter() )
             && knowledge->IsValid() )
                 pContainer_->push_back( knowledge );
         }
@@ -245,7 +245,7 @@ namespace
 
         void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( filter_.Test( knowledge->GetType() ) 
+            if( filter_.Test( knowledge->GetType() )
             && rHeight_ <= knowledge->GetMaxInteractionHeight() ///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
             && knowledge->IsValid() )
                 pContainer_->push_back( knowledge );
@@ -573,7 +573,6 @@ DEC_BlackBoard_CanContainKnowledgeUrban& DEC_KnowledgeBlackBoard_Army::GetKnowle
     assert( pKnowledgeUrbanContainer_ );
     return *pKnowledgeUrbanContainer_;
 }
-
 
 namespace
 {

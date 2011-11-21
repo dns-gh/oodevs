@@ -45,7 +45,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::load( MIL_CheckPointInA
 {
     std::size_t nNbr;
     file >> nNbr;
-    while ( nNbr-- )
+    while( nNbr-- )
     {
         MIL_Object_ABC* pObject;
         file >> pObject;
@@ -61,7 +61,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::save( MIL_CheckPointOut
 {
     std::size_t size = knowledgeObjectPerceptionMap_.size();
     file << size;
-    for ( CIT_KnowledgeObjectPerceptionMap it = knowledgeObjectPerceptionMap_.begin(); it != knowledgeObjectPerceptionMap_.end(); ++it )
+    for( CIT_KnowledgeObjectPerceptionMap it = knowledgeObjectPerceptionMap_.begin(); it != knowledgeObjectPerceptionMap_.end(); ++it )
     {
         file << it->first
              << it->second;

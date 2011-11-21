@@ -79,7 +79,7 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
     std::size_t nNbr;
     unsigned int nID;
     file >> nNbr;
-    while ( nNbr-- )
+    while( nNbr-- )
     {
         file >> nID;
         visionVolumes_.insert( PHY_Volume::FindVolume( nID ) );
@@ -116,7 +116,7 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << rPopulationDensity_;
     std::size_t size = visionVolumes_.size();
     file << size;
-    for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
+    for( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
     {
         unsigned id = (*it)->GetID();
         file << id;

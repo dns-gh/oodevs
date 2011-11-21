@@ -82,7 +82,6 @@ DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion destructor
 // Created: NLD 2004-03-11
@@ -397,7 +396,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectDi
 
     container.clear();
     container.reserve( objectsColliding.size() );
-    for ( CIT_KnowledgeObjectCollisionVector itObjectColliding = objectsColliding.begin(); itObjectColliding != objectsColliding.end(); ++itObjectColliding )
+    for( CIT_KnowledgeObjectCollisionVector itObjectColliding = objectsColliding.begin(); itObjectColliding != objectsColliding.end(); ++itObjectColliding )
     {
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().ResolveKnowledgeObject( (**itObjectColliding).GetObject() );
         assert( pKnowledge && pKnowledge->IsValid() );

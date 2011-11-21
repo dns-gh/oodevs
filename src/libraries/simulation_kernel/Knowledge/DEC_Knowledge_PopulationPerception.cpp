@@ -74,7 +74,7 @@ namespace boost
         {
             std::size_t size = map.size();
             file << size;
-            for ( DEC_Knowledge_PopulationPerception::CIT_ConcentrationMap it = map.begin(); it != map.end(); ++it )
+            for( DEC_Knowledge_PopulationPerception::CIT_ConcentrationMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
                      << it->second;
@@ -86,7 +86,7 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 MIL_PopulationConcentration* pConcentration;
                 file >> pConcentration;
@@ -106,7 +106,7 @@ namespace boost
         {
             std::size_t size = map.size();
             file << size;
-            for ( DEC_Knowledge_PopulationPerception::CIT_FlowMap it = map.begin(); it != map.end(); ++it )
+            for( DEC_Knowledge_PopulationPerception::CIT_FlowMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
                      << it->second;
@@ -118,7 +118,7 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 MIL_PopulationFlow* pFlow;
                 file >> pFlow;

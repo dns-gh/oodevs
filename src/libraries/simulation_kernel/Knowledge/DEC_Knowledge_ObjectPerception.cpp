@@ -72,7 +72,6 @@ void DEC_Knowledge_ObjectPerception::load( MIL_CheckPointInArchive& file, const 
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmp );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectPerception::save
 // Created: JVT 2005-03-23
@@ -108,7 +107,6 @@ void DEC_Knowledge_ObjectPerception::Update( const PHY_PerceptionLevel& percepti
     if( perceptionLevel > *pCurrentPerceptionLevel_ )
         pCurrentPerceptionLevel_ = &perceptionLevel;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectPerception::UpdateOnNetwork

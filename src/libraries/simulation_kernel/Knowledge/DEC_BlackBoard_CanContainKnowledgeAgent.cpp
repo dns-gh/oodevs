@@ -87,7 +87,7 @@ namespace boost
         {
             const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::size_type size = map.size();
             file << size;
-            for ( DEC_BlackBoard_CanContainKnowledgeAgent::CIT_KnowledgeAgentMap it = map.begin(); it != map.end(); ++it )
+            for( DEC_BlackBoard_CanContainKnowledgeAgent::CIT_KnowledgeAgentMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
                      << *it->second;
@@ -99,7 +99,7 @@ namespace boost
         {
             DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::size_type nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 MIL_Agent_ABC*       pAgent;
                 boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge( new DEC_Knowledge_Agent() );

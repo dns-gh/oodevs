@@ -34,7 +34,7 @@ DEC_BlackBoard_CanContainKnowledgeObjectCollision::DEC_BlackBoard_CanContainKnow
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObjectCollision::~DEC_BlackBoard_CanContainKnowledgeObjectCollision()
 {
-    while ( !knowledgeObjectCollisionMap_.empty() )
+    while( !knowledgeObjectCollisionMap_.empty() )
         DestroyKnowledgeObjectCollision( *knowledgeObjectCollisionMap_.begin()->second );
 }
 
@@ -56,7 +56,7 @@ namespace boost
         {
             const std::size_t size = map.size();
             file << size;
-            for ( DEC_BlackBoard_CanContainKnowledgeObjectCollision::CIT_KnowledgeObjectCollisionMap it = map.begin(); it != map.end(); ++it )
+            for( DEC_BlackBoard_CanContainKnowledgeObjectCollision::CIT_KnowledgeObjectCollisionMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first;
                 file << it->second;
@@ -68,7 +68,7 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 MIL_Object_ABC* pObject;
 

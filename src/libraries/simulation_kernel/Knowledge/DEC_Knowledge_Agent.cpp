@@ -131,7 +131,7 @@ namespace boost
         {
             std::size_t size = map.size();
             file << size;
-            for ( DEC_Knowledge_Agent::CIT_PerceptionAutomateSourceMap it = map.begin(); it != map.end(); ++it )
+            for( DEC_Knowledge_Agent::CIT_PerceptionAutomateSourceMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first;
                 unsigned id = it->second->GetID();
@@ -144,7 +144,7 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                  MIL_Automate* pAutomate;
                 const PHY_PerceptionLevel* pLevel;
@@ -385,7 +385,7 @@ void DEC_Knowledge_Agent::UpdateRelevance(int currentTimeStep)
     // Degradation : effacement quand l'unité réelle et l'unité connnue sont distantes de X metres
     const double rDistanceBtwKnowledgeAndKnown = dataDetection_.GetPosition().Distance( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     const double rDistRelevanceDegradation     = bPerceptionDistanceHacked_? 0.0 : rDistanceBtwKnowledgeAndKnown / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit();
-    
+
     ChangeRelevance( std::max( 0., rRelevance_ - rTimeRelevanceDegradation - rDistRelevanceDegradation ) );
     nTimeLastUpdate_ = currentTimeStep;
 }
@@ -583,7 +583,7 @@ double DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target, bool bU
     const PHY_ComposantePion* pTargetMajorComposante = target.GetRole< PHY_RolePion_Composantes >().GetMajorComposante();
     if( !pTargetMajorComposante )
         return 0.;
-    const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();    
+    const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
     const MT_Vector2D& position2d = targetLocation.GetPosition();
     const MT_Vector3D vTargetPosition( position2d.rX_, position2d.rY_, targetLocation.GetAltitude() );
     const PHY_ComposanteType_ABC& targetType = pTargetMajorComposante->GetType();

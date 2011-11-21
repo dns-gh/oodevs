@@ -89,7 +89,6 @@ public:
     }
     //@}
 
-
 private:
 
     //! @name CheckPoints

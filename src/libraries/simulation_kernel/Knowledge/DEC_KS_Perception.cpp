@@ -81,7 +81,7 @@ namespace boost
         {
             std::size_t size = map.size();
             file << size;
-            for ( DEC_KS_Perception::CIT_AgentPerceptionMap it = map.begin(); it != map.end(); ++it )
+            for( DEC_KS_Perception::CIT_AgentPerceptionMap it = map.begin(); it != map.end(); ++it )
             {
                 unsigned id = it->second->GetID();
                 file << it->first
@@ -94,7 +94,7 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 MIL_Agent_ABC* pAgent;
                 file >> pAgent;
@@ -277,7 +277,6 @@ void DEC_KS_Perception::NotifyPerception( MIL_PopulationFlow& flowPerceived, con
 
     pKnowledge->Update( flowPerceived, level, shape );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Perception::NotifyPerception

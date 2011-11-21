@@ -248,7 +248,6 @@ bool DEC_Knowledge_Population::Clean()
     return concentrations_.empty() && flows_.empty();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::Secure
 // Created: NLD 2005-12-02
@@ -302,7 +301,6 @@ double DEC_Knowledge_Population::GetDangerosity( const MIL_AgentPion& target ) c
     assert( pPopulationKnown_ );
     return pPopulationKnown_->GetDangerosity( target );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::GetAttitude
@@ -532,7 +530,6 @@ void DEC_Knowledge_Population::CopyFrom( const DEC_Knowledge_Population& knowled
     bDecStateUpdated_ = true;
     bCriticalIntelligenceUpdated_ = true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::HackPerceptionLevel

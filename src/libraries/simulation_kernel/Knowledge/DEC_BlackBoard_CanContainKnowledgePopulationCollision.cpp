@@ -33,7 +33,7 @@ DEC_BlackBoard_CanContainKnowledgePopulationCollision::DEC_BlackBoard_CanContain
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgePopulationCollision::~DEC_BlackBoard_CanContainKnowledgePopulationCollision()
 {
-    while ( !knowledgePopulationCollisionMap_.empty() )
+    while( !knowledgePopulationCollisionMap_.empty() )
         DestroyKnowledgePopulationCollision( *knowledgePopulationCollisionMap_.begin()->second );
 }
 
@@ -45,7 +45,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::load( MIL_CheckPoint
 {
     std::size_t nNbr;
     file >> nNbr;
-    while ( nNbr-- )
+    while( nNbr-- )
     {
         MIL_Population* pPopulation;
         file >> pPopulation;
@@ -61,7 +61,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPoint
 {
     std::size_t size = knowledgePopulationCollisionMap_.size();
     file << size;
-    for ( CIT_KnowledgePopulationCollisionMap it = knowledgePopulationCollisionMap_.begin(); it != knowledgePopulationCollisionMap_.end(); ++it )
+    for( CIT_KnowledgePopulationCollisionMap it = knowledgePopulationCollisionMap_.begin(); it != knowledgePopulationCollisionMap_.end(); ++it )
     {
         file << it->first
              << it->second;

@@ -56,7 +56,7 @@ namespace boost
         {
             std::size_t size = map.size();
             file << size;
-            for ( DEC_BlackBoard_CanContainKnowledgeAgentPerception::CIT_KnowledgeAgentPerceptionMap it = map.begin(); it != map.end(); ++it )
+            for( DEC_BlackBoard_CanContainKnowledgeAgentPerception::CIT_KnowledgeAgentPerceptionMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
                      << it->second;
@@ -68,7 +68,7 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 MIL_Agent_ABC* pAgent;
 
