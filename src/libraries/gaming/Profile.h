@@ -32,6 +32,7 @@ namespace sword
     class AuthenticationResponse;
     class Profile;
     class ProfileUpdate;
+    class ConnectedProfileList;
 }
 
 class Model;
@@ -67,12 +68,14 @@ public:
     void Login( const std::string& login, const std::string& password ) const;
     void Update( const sword::AuthenticationResponse& message );
     void Update( const Model& model, const sword::ProfileUpdate& message );
+    void Update( const sword::ConnectedProfileList& message );
     //@}
 
     //! @name Accessors
     //@{
     QString GetLogin() const;
     bool IsLoggedIn() const;
+    unsigned int GetProfileCount( const std::string& login ) const;
     virtual bool IsSupervision() const;
     //@}
 
@@ -98,6 +101,10 @@ private:
 
     typedef std::set< const kernel::Entity_ABC* > T_Entities;
     typedef T_Entities::const_iterator          CIT_Entities;
+
+    typedef std::map< std::string, unsigned int > T_Profiles;
+    typedef T_Profiles::iterator                 IT_Profiles;
+    typedef T_Profiles::const_iterator          CIT_Profiles;
     //@}
 
     //! @name Helpers
@@ -148,6 +155,7 @@ private:
     T_Ids writePopulations_;
     T_Ids readFormations_;
     T_Ids writeFormations_;
+    T_Profiles profiles_;
     //@}
 };
 

@@ -69,6 +69,8 @@ private:
     T_UserProfiles profiles_;
     QIcon star_;
     QIcon profile_;
+    QIcon red_;
+    QIcon green_;
     QString current_;
     //@}
 };

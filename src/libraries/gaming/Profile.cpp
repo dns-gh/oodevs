@@ -125,6 +125,24 @@ void Profile::Update( const sword::AuthenticationResponse& message )
 
 // -----------------------------------------------------------------------------
 // Name: Profile::Update
+// Created: LGY 2011-11-21
+// -----------------------------------------------------------------------------
+void Profile::Update( const sword::ConnectedProfileList& message )
+{
+    profiles_.clear();
+    for( int i = 0; i < message.elem_size(); ++i )
+    {
+        const std::string& login = message.elem( i ).login();
+        IT_Profiles it = profiles_.find( login );
+        if( it == profiles_.end() )
+            profiles_[ login ] = 0u;
+        profiles_[ login ] ++;
+    }
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Update
 // Created: SBO 2007-01-23
 // -----------------------------------------------------------------------------
 void Profile::Update( const Model& model, const sword::ProfileUpdate& message )
@@ -566,3 +584,14 @@ void Profile::NotifyUpdated( const Services& services )
         Login();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Profile::GetProfileCount
+// Created: LGY 2011-11-21
+// -----------------------------------------------------------------------------
+unsigned int Profile::GetProfileCount( const std::string& login ) const
+{
+    CIT_Profiles it = profiles_.find( login );
+    if( it != profiles_.end() )
+        return it->second;
+    return 0u;
+}

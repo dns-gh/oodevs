@@ -22,15 +22,17 @@
 ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers )
     : QDockWidget( "Profiles", mainWindow )
     , controllers_( controllers )
-    , star_       ( "resources/images/gaming/star.png")
-    , profile_    ( "resources/images/gaming/current.png")
+    , star_       ( "resources/images/gaming/star.png" )
+    , profile_    ( "resources/images/gaming/current.png" )
+    , red_        ( "resources/images/gaming/red.png" )
+    , green_      ( "resources/images/gaming/green.png" )
 {
     setObjectName( "ProfilesPanel" );
     QWidget* main = new QWidget( this );
     QVBoxLayout* mainLayout = new QVBoxLayout( main );
     setCaption( tools::translate( "Profiles", "Profiles" ) );
     dataModel_ = new QStandardItemModel();
-    dataModel_->setColumnCount( 3 );
+    dataModel_->setColumnCount( 5 );
 
     proxyModel_ = new QSortFilterProxyModel();
     proxyModel_->setDynamicSortFilter( true );
@@ -48,6 +50,8 @@ ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& cont
     tableView_->horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
     tableView_->setColumnWidth( 0, 20 );
     tableView_->setColumnWidth( 2, 25 );
+    tableView_->setColumnWidth( 3, 25 );
+    tableView_->setColumnWidth( 4, 25 );
     mainLayout->addWidget( tableView_ );
     setWidget( main );
     controllers_.Register( *this );
@@ -64,9 +68,17 @@ ProfilesPanel::~ProfilesPanel()
 
 namespace
 {
-    QStandardItem* CreateItem()
+    QStandardItem* CreateItem( const std::string& text )
+    {
+        QStandardItem* item = new QStandardItem( text.c_str() );
+        item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+        return item;
+    }
+
+    QStandardItem* CreateItem( const QIcon& icon )
     {
         QStandardItem* item = new QStandardItem();
+        item->setIcon( icon );
         item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
         return item;
     }
@@ -80,9 +92,11 @@ void ProfilesPanel::NotifyCreated( const UserProfile& profile )
 {
     profiles_.push_back( &profile );
     const int rows = dataModel_->rowCount();
-    dataModel_->setItem( rows, 0, CreateItem() );
-    dataModel_->setItem( rows, 1, CreateItem() );
-    dataModel_->setItem( rows, 2, CreateItem() );
+    dataModel_->setItem( rows, 0, CreateItem( "" ) );
+    dataModel_->setItem( rows, 1, CreateItem( "" ) );
+    dataModel_->setItem( rows, 2, CreateItem( "" ) );
+    dataModel_->setItem( rows, 3, CreateItem( red_ ) );
+    dataModel_->setItem( rows, 4, CreateItem( "(0)" ) );
     proxyModel_->sort( 1 );
 }
 
@@ -96,14 +110,12 @@ void ProfilesPanel::NotifyUpdated( const UserProfile& profile )
     if( it != profiles_.end() )
     {
         const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
-        QStandardItem* active = dataModel_->item( index, 0 );
-        if( active )
+        if( QStandardItem* active = dataModel_->item( index, 0 ) )
             active->setIcon( profile.GetLogin() == current_ ? profile_ : QIcon( "" ) );
         QStandardItem* item = dataModel_->item( index, 1 );
         if( item && item->text() != profile.GetLogin() )
             item->setText( profile.GetLogin() );
-        QStandardItem* admin = dataModel_->item( index, 2 );
-        if( admin )
+        if( QStandardItem* admin = dataModel_->item( index, 2 ) )
             admin->setIcon( profile.IsSupervisor() ? star_ : QIcon( "" ) );
         proxyModel_->sort( 1 );
     }
@@ -132,4 +144,13 @@ void ProfilesPanel::NotifyUpdated( const Profile& profile )
 {
     if( profile.IsLoggedIn() )
         current_ = profile.GetLogin();
+    for( int i = 0; i < dataModel_->rowCount(); ++i )
+        if(  QStandardItem* item = dataModel_->item( i, 1 ) )
+        {
+            unsigned int count = profile.GetProfileCount( item->text().ascii() );
+            if( QStandardItem* connected = dataModel_->item( i, 3 ) )
+                connected->setIcon( count ? green_ : red_ );
+            if( QStandardItem* number = dataModel_->item( i, 4 ) )
+                number->setText( "(" + QString::number( count ) + ")" );
+        }
 }

@@ -1437,6 +1437,15 @@ void AgentServerMsgMgr::OnReceiveAuthenticationResponse( const sword::Authentica
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveConnectedProfiles
+// Created: LGY 2011-11-21
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveConnectedProfiles( const sword::ConnectedProfileList& message )
+{
+    GetProfile().Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveFolkCreation
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
@@ -2020,6 +2029,8 @@ void AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient( const std::string& ,
         OnReceiveProfileDestruction          ( wrapper.message().profile_destruction() );
     else if( wrapper.message().has_profile_destruction_request_ack() )
         OnReceiveProfileDestructionRequestAck( wrapper.message().profile_destruction_request_ack() );
+    else if( wrapper.message().has_connected_profile_list() )
+        OnReceiveConnectedProfiles( wrapper.message().connected_profile_list() );
     else
         UnhandledMessage( &wrapper.message() );
 }

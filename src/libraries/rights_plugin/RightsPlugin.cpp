@@ -28,7 +28,8 @@ using namespace dispatcher;
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
 RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base, dispatcher::CompositeRegistrable& registrables, int maxConnections )
-    : config_            ( config )
+    : clients_           ( clients )
+    , config_            ( config )
     , profiles_          ( new ProfileManager( model, clients, config ) )
     , container_         ( container )
     , base_              ( base )
@@ -86,6 +87,7 @@ void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::str
         {
             authenticated_.erase( it );
             --currentConnections_;
+            SendProfiles();
             MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
             return;
         }
@@ -153,6 +155,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         authenticated_[ link ] = profile;
         container_.NotifyClientAuthenticated( client, link, *profile );
         ++currentConnections_;
+        SendProfiles();
         MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }
 }
@@ -244,4 +247,16 @@ ClientPublisher_ABC& RightsPlugin::GetPublisher( const std::string& link )
         return base_.GetPublisher( link );
     static NullClientPublisher publisher;
     return publisher;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RightsPlugin::SendProfiles
+// Created: LGY 2011-11-21
+// -----------------------------------------------------------------------------
+void RightsPlugin::SendProfiles() const
+{
+    authentication::ConnectedProfileList response;
+    for( T_Profiles::const_iterator it = authenticated_.begin(); it != authenticated_.end(); ++it )
+        it->second->Send( *response().add_elem() );
+    response.Send( clients_ );
 }

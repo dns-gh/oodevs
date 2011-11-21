@@ -100,8 +100,15 @@ private:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void SendProfiles() const;
+    //@}
+
+private:
     //! @name Member data
     //@{
+    dispatcher::ClientPublisher_ABC&            clients_;
     const dispatcher::Config&                   config_;
     dispatcher::Plugin_ABC&                     container_;
     dispatcher::LinkResolver_ABC&               base_;

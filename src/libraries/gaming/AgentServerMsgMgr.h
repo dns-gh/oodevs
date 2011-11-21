@@ -197,6 +197,7 @@ namespace sword
     class UrbanKnowledgeDestruction;
     class UrbanKnowledgeUpdate;
     class UrbanUpdate;
+    class ConnectedProfileList;
 }
 
 namespace tools
@@ -297,6 +298,7 @@ private:
     void OnReceiveUnitDestruction             ( const sword::UnitDestruction& message );
     void OnReceiveChangeDiplomacy             ( const sword::ChangeDiplomacy& message );
     void OnReceiveAuthenticationResponse      ( const sword::AuthenticationResponse& message );
+    void OnReceiveConnectedProfiles           ( const sword::ConnectedProfileList& message );
     void OnReceiveControlMeteoGlobal          ( const sword::ControlGlobalWeather& message );
     void OnReceiveControlMeteoLocalCreation   ( const sword::ControlLocalWeatherCreation& message );
     void OnReceiveControlMeteoLocalDestruction( const sword::ControlLocalWeatherDestruction& message );
