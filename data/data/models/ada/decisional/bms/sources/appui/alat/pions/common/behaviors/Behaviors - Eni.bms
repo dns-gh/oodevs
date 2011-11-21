@@ -322,7 +322,6 @@ node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
                         self.eEtatAttaque = eActionEnCours
                                                 do
                                                         self:SendFeedback( eActionEffectuee )
-                            Halt( self )
                             do return end
 
                         end
