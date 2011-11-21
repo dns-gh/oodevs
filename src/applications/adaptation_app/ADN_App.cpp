@@ -100,6 +100,7 @@ namespace
 bool ADN_App::Initialize( const std::string& inputFile, const std::string& outputFile, bool nosymbols, int argc, char** argv )
 {
     const QString locale = ReadLang();
+    AddTranslator( locale, "qt" );
     AddTranslator( locale, "adaptation" );
     AddTranslator( locale, "adaptation_app" );
     AddTranslator( locale, "ENT" );
