@@ -36,7 +36,7 @@ namespace
         xis >> xml::start( "missions" )
                 >> xml::start( "offer" )
                     >> xml::content( mission, name );
-        return resolver.Resolve( name );
+        return resolver.ResolveUnit( name );
     }
 
     unsigned int ResolveReportId( xml::xisubstream xis )

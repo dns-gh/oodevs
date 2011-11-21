@@ -39,6 +39,7 @@ namespace sword
 {
     class SimToClient_Content;
     class AutomatOrder;
+    class UnitOrder;
     class Report;
 }
 
@@ -60,6 +61,7 @@ namespace hla
 // Created: SLI 2011-10-06
 // =============================================================================
 class TransportationRequester : private tools::MessageObserver< sword::AutomatOrder >
+                              , private tools::MessageObserver< sword::UnitOrder >
                               , private tools::MessageObserver< sword::Report >
                               , private ::hla::InteractionNotification_ABC< interactions::NetnOfferConvoy >
                               , private ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted >
@@ -97,6 +99,7 @@ private:
     //! @name Operations
     //@{
     virtual void Notify( const sword::AutomatOrder& message, int context );
+    virtual void Notify( const sword::UnitOrder& message, int context );
     virtual void Notify( const sword::Report& message, int context );
     //@}
 
@@ -111,15 +114,16 @@ private:
     //! @name Helpers
     //@{
     void SendTransportMagicAction( unsigned int context, const std::string& transporterCallsign, const interactions::ListOfUnits& units, unsigned int actionType, bool teleport );
-    void Pause( unsigned int automat );
-    void Resume( unsigned int automat );
-    void Cancel( unsigned int automat );
+    void Pause( unsigned int entity );
+    void Resume( unsigned int entity );
+    void Cancel( unsigned int entity );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const unsigned int transportIdentifier_;
+    const unsigned int transportAutomatId_;
+    const unsigned int transportUnitId_;
     const unsigned int missionCompleteReportId_;
     const unsigned int pauseId_;
     const unsigned int resumeId_;

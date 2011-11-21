@@ -42,7 +42,7 @@ namespace
             , transportId( 42 )
         {
             xis >> xml::start( "configuration" );
-            MOCK_EXPECT( missionResolver, Resolve ).once().with( "transport" ).returns( transportId );
+            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "transport" ).returns( transportId );
         }
         xml::xistringstream xis;
         unsigned int transportId;

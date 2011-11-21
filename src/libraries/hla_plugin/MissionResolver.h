@@ -46,13 +46,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual unsigned int Resolve( const std::string& name ) const;
+    virtual unsigned int ResolveAutomat( const std::string& name ) const;
+    virtual unsigned int ResolveUnit( const std::string& name ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, unsigned int > T_Missions;
+    typedef std::pair< unsigned int, unsigned int > T_Mission;
+    typedef std::map< std::string, T_Mission > T_Missions;
     //@}
 
 private:

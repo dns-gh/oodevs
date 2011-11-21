@@ -29,13 +29,13 @@ namespace bpt = boost::posix_time;
 
 namespace
 {
-    unsigned int Resolve( xml::xisubstream xis, const MissionResolver_ABC& resolver, const std::string& category, const std::string& mission )
+    std::string GetName( xml::xisubstream xis, const std::string& category, const std::string& mission )
     {
         std::string name;
         xis >> xml::start( "missions" )
                 >> xml::start( category )
                     >> xml::content( mission, name );
-        return resolver.Resolve( name );
+        return name;
     }
 
     unsigned int ResolveReportId( xml::xisubstream xis )
@@ -73,8 +73,11 @@ namespace
 
     geometry::Point2d ReadLocation( const sword::MissionParameter& parameter )
     {
-        return geometry::Point2d( parameter.value( 0 ).location().coordinates().elem( 0 ).latitude(),
-                                  parameter.value( 0 ).location().coordinates().elem( 0 ).longitude() );
+        if( parameter.value( 0 ).has_location() )
+            return geometry::Point2d( parameter.value( 0 ).location().coordinates().elem( 0 ).latitude(),
+                                      parameter.value( 0 ).location().coordinates().elem( 0 ).longitude() );
+        return geometry::Point2d( parameter.value( 0 ).point().location().coordinates().elem( 0 ).latitude(),
+                                  parameter.value( 0 ).point().location().coordinates().elem( 0 ).longitude() );
     }
 
     long long ReadTime( const sword::MissionParameter& parameter )
@@ -100,19 +103,20 @@ namespace
 // Created: SLI 2011-10-06
 // -----------------------------------------------------------------------------
 TransportationRequester::TransportationRequester( xml::xisubstream xis, const MissionResolver_ABC& resolver,
-                                                    tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                                    const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
-                                                    const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher,
-                                                    InteractionSender_ABC< interactions::NetnRequestConvoy >& requestSender,
-                                                    InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptSender,
-                                                    InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender,
-                                                    InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender,
-                                                    InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender )
-    : transportIdentifier_    ( Resolve( xis, resolver, "request", "transport" ) )
+                                                  tools::MessageController_ABC< sword::SimToClient_Content >& controller,
+                                                  const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
+                                                  const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher,
+                                                  InteractionSender_ABC< interactions::NetnRequestConvoy >& requestSender,
+                                                  InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptSender,
+                                                  InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender,
+                                                  InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender,
+                                                  InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender )
+    : transportAutomatId_     ( resolver.ResolveAutomat( GetName( xis, "request", "transport" ) ) )
+    , transportUnitId_        ( resolver.ResolveUnit( GetName( xis, "request", "transport" ) ) )
     , missionCompleteReportId_( ResolveReportId( xis ) )
-    , pauseId_                ( Resolve( xis, resolver, "fragOrders", "pause" ) )
-    , resumeId_               ( Resolve( xis, resolver, "fragOrders", "resume" ) )
-    , cancelId_               ( Resolve( xis, resolver, "fragOrders", "cancel" ) )
+    , pauseId_                ( resolver.ResolveAutomat( GetName( xis, "fragOrders", "pause" ) ) )
+    , resumeId_               ( resolver.ResolveAutomat( GetName( xis, "fragOrders", "resume" ) ) )
+    , cancelId_               ( resolver.ResolveAutomat( GetName( xis, "fragOrders", "cancel" ) ) )
     , callsignResolver_       ( callsignResolver )
     , subordinates_           ( subordinates )
     , contextFactory_         ( contextFactory )
@@ -124,6 +128,7 @@ TransportationRequester::TransportationRequester( xml::xisubstream xis, const Mi
     , receivedSender_         ( receivedSender )
 {
     CONNECT( controller, *this, automat_order );
+    CONNECT( controller, *this, unit_order );
     CONNECT( controller, *this, report );
 }
 
@@ -159,7 +164,7 @@ namespace
 // -----------------------------------------------------------------------------
 void TransportationRequester::Notify( const sword::AutomatOrder& message, int /*context*/ )
 {
-    if( message.type().id() == transportIdentifier_ && message.parameters().elem_size() == 8 )
+    if( message.type().id() == transportAutomatId_ && message.parameters().elem_size() == 8 )
     {
         const geometry::Point2d embarkmentPoint = ReadLocation( message.parameters().elem( 4 ) );
         const long long embarkmentTime = ReadTime( message.parameters().elem( 5 ) );
@@ -171,7 +176,7 @@ void TransportationRequester::Notify( const sword::AutomatOrder& message, int /*
         interactions::NetnRequestConvoy request;
         request.serviceId = NetnEventIdentifier( context, "SWORD" );
         request.consumer = UnicodeString( "SWORD" );
-        request.provider = UnicodeString(); // empty provider
+        request.provider = UnicodeString(); // Empty provider
         request.serviceType = 4; // convoy
         request.requestTimeOut = 0; // no timeout
         NetnDataTStruct transport;
@@ -179,6 +184,39 @@ void TransportationRequester::Notify( const sword::AutomatOrder& message, int /*
         transport.finalAppointment = NetnAppointmentStruct( debarkmentTime, rpr::WorldLocation( debarkmentPoint.X(), debarkmentPoint.Y(), 0. ) );
         SubordinatesVisitor subordinatesVisitor( transport.objectToManage );
         subordinates_.Apply( message.tasker().id(), subordinatesVisitor );
+        request.transportData = NetnTransportStruct( transport );
+        CopyService( request, contextRequests_[ context ] );
+        contextRequests_[ context ].transportData = request.transportData;
+        requestSender_.Send( request );
+        Pause( message.tasker().id() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Notify
+// Created: SLI 2011-10-06
+// -----------------------------------------------------------------------------
+void TransportationRequester::Notify( const sword::UnitOrder& message, int /*context*/ )
+{
+    if( message.type().id() == transportUnitId_ && message.parameters().elem_size() == 8 )
+    {
+        const geometry::Point2d embarkmentPoint = ReadLocation( message.parameters().elem( 4 ) );
+        const long long embarkmentTime = ReadTime( message.parameters().elem( 5 ) );
+        const geometry::Point2d debarkmentPoint = ReadLocation( message.parameters().elem( 6 ) );
+        const long long debarkmentTime = ReadTime( message.parameters().elem( 7 ) );
+        const unsigned int context = contextFactory_.Create();
+        pendingRequests_.right.erase( message.tasker().id() );
+        pendingRequests_.insert( T_Requests::value_type( context, message.tasker().id() ) );
+        interactions::NetnRequestConvoy request;
+        request.serviceId = NetnEventIdentifier( context, "SWORD" );
+        request.consumer = UnicodeString( "SWORD" );
+        request.provider = UnicodeString(); // Empty provider
+        request.serviceType = 4; // convoy
+        request.requestTimeOut = 0; // no timeout
+        NetnDataTStruct transport;
+        transport.appointment = NetnAppointmentStruct( embarkmentTime, rpr::WorldLocation( embarkmentPoint.X(), embarkmentPoint.Y(), 0. ) );
+        transport.finalAppointment = NetnAppointmentStruct( debarkmentTime, rpr::WorldLocation( debarkmentPoint.X(), debarkmentPoint.Y(), 0. ) );
+        transport.objectToManage.push_back( NetnObjectDefinitionStruct( callsignResolver_.ResolveCallsign( message.tasker().id() ), callsignResolver_.ResolveUniqueId( message.tasker().id() ), NetnObjectFeatureStruct() ) );
         request.transportData = NetnTransportStruct( transport );
         CopyService( request, contextRequests_[ context ] );
         contextRequests_[ context ].transportData = request.transportData;
@@ -233,12 +271,12 @@ void TransportationRequester::Receive( interactions::NetnOfferConvoy& interactio
 // -----------------------------------------------------------------------------
 void TransportationRequester::Notify( const sword::Report& message, int /*context*/ )
 {
-    if( !message.source().has_automat() )
+    if( !( message.source().has_automat() || message.source().has_unit() ) )
         return;
     if( message.type().id() != missionCompleteReportId_ )
         return;
-    const unsigned int automatId = message.source().automat().id();
-    T_Requests::right_const_iterator request = acceptedRequests_.right.find( automatId );
+    const unsigned int identifier = message.source().has_automat() ? message.source().automat().id() : message.source().unit().id();
+    T_Requests::right_const_iterator request = acceptedRequests_.right.find( identifier );
     if( request == acceptedRequests_.right.end() )
         return;
     const unsigned int context = request->second;
@@ -384,25 +422,25 @@ namespace
 // Name: TransportationRequester::Pause
 // Created: SLI 2011-11-07
 // -----------------------------------------------------------------------------
-void TransportationRequester::Pause( unsigned int automat )
+void TransportationRequester::Pause( unsigned int entity )
 {
-    SendFragOrder( automat, pauseId_, publisher_ );
+    SendFragOrder( entity, pauseId_, publisher_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TransportationRequester::Resume
 // Created: SLI 2011-11-07
 // -----------------------------------------------------------------------------
-void TransportationRequester::Resume( unsigned int automat )
+void TransportationRequester::Resume( unsigned int entity )
 {
-    SendFragOrder( automat, resumeId_, publisher_ );
+    SendFragOrder( entity, resumeId_, publisher_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TransportationRequester::Cancel
 // Created: SLI 2011-11-07
 // -----------------------------------------------------------------------------
-void TransportationRequester::Cancel( unsigned int automat )
+void TransportationRequester::Cancel( unsigned int entity )
 {
-    SendFragOrder( automat, cancelId_, publisher_ );
+    SendFragOrder( entity, cancelId_, publisher_ );
 }

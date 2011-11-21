@@ -12,6 +12,7 @@
         <mission name="Common - adopt transportation posture"/>
         <mission name="JointAir - bombing"/>
         <mission name="JointAir - air strike (total)"/>
+        <mission name="Common - request transport"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3880,4 +3881,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3255494460" -->
+<!-- signature="3012195172" -->

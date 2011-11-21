@@ -26,7 +26,7 @@
 
 using namespace plugins::hla;
 
-BOOST_AUTO_TEST_CASE( transportation_controller_reads_transportation_mission_name_from_xml )
+BOOST_AUTO_TEST_CASE( transportation_requester_reads_transportation_mission_name_from_xml )
 {
     xml::xistringstream xis( "<configuration>"
                              "    <missions>"
@@ -55,10 +55,11 @@ BOOST_AUTO_TEST_CASE( transportation_controller_reads_transportation_mission_nam
     MockInteractionSender< interactions::NetnRejectOfferConvoy > rejectSender;
     MockInteractionSender< interactions::NetnReadyToReceiveService > readySender;
     MockInteractionSender< interactions::NetnServiceReceived > receivedSender;
-    MOCK_EXPECT( resolver, Resolve ).once().with( "transportation mission name" ).returns( 42 );
-    MOCK_EXPECT( resolver, Resolve ).once().with( "pause" ).returns( 43 );
-    MOCK_EXPECT( resolver, Resolve ).once().with( "resume" ).returns( 44 );
-    MOCK_EXPECT( resolver, Resolve ).once().with( "cancel" ).returns( 45 );
+    MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "transportation mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver, ResolveUnit ).once().with( "transportation mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "pause" ).returns( 43 );
+    MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "resume" ).returns( 44 );
+    MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "cancel" ).returns( 45 );
     TransportationRequester requester( xis, resolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
 }
 
@@ -83,17 +84,20 @@ namespace
                    "        <mission-complete>1338</mission-complete>"
                    "    </reports>"
                    "</configuration>" )
-            , transportId( 42 )
-            , pauseId    ( 43 )
-            , resumeId   ( 44 )
-            , cancelId   ( 45 )
-            , automatId  ( 46 )
+            , transportAutomatId( 42 )
+            , transportUnitId   ( 43 )
+            , pauseId           ( 44 )
+            , resumeId          ( 45 )
+            , cancelId          ( 46 )
+            , automatId         ( 47 )
+            , unitId            ( 48 )
         {
             xis >> xml::start( "configuration" );
-            MOCK_EXPECT( missionResolver, Resolve ).once().with( "transport" ).returns( transportId );
-            MOCK_EXPECT( missionResolver, Resolve ).once().with( "pause" ).returns( pauseId );
-            MOCK_EXPECT( missionResolver, Resolve ).once().with( "resume" ).returns( resumeId );
-            MOCK_EXPECT( missionResolver, Resolve ).once().with( "cancel" ).returns( cancelId );
+            MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "transport" ).returns( transportAutomatId );
+            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "transport" ).returns( transportUnitId );
+            MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "pause" ).returns( pauseId );
+            MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "resume" ).returns( resumeId );
+            MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "cancel" ).returns( cancelId );
         }
         sword::SimToClient_Content MakeTransportationMessage( unsigned int missionType )
         {
@@ -103,11 +107,13 @@ namespace
             return message;
         }
         xml::xistringstream xis;
-        unsigned int transportId;
+        unsigned int transportAutomatId;
+        unsigned int transportUnitId;
         unsigned int pauseId;
         unsigned int resumeId;
         unsigned int cancelId;
         unsigned long automatId;
+        unsigned long unitId;
         MockMissionResolver missionResolver;
         dispatcher::MockSimulationPublisher publisher;
         tools::MessageController< sword::SimToClient_Content > messageController;
@@ -135,9 +141,17 @@ namespace
         latLong->set_latitude( point.X() );
         latLong->set_longitude( point.Y() );
     }
+    void AddPoint( sword::MissionParameters& parameters, const geometry::Point2d& point )
+    {
+        sword::Location* location = parameters.add_elem()->add_value()->mutable_point()->mutable_location();
+        location->set_type( sword::Location::point );
+        sword::CoordLatLong* latLong = location->mutable_coordinates()->add_elem();
+        latLong->set_latitude( point.X() );
+        latLong->set_longitude( point.Y() );
+    }
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mission_and_notifies_listener_and_pauses_mission, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_transportation_mission_and_notifies_listener_and_pauses_mission, Fixture )
 {
     TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
     const geometry::Point2d embarkingPoint;
@@ -147,7 +161,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mis
     const std::string subordinateCallsign = "subordinate callsign";
     const std::string subordinateNetnUniqueId = "143";
     const std::string transportingUnitCallsign = "transporting callsign";
-    sword::SimToClient_Content message = MakeTransportationMessage( transportId );
+    sword::SimToClient_Content message = MakeTransportationMessage( transportAutomatId );
     sword::AutomatOrder* automatOrder = message.mutable_automat_order();
     automatOrder->mutable_tasker()->set_id( automatId );
     sword::MissionParameters* parameters = automatOrder->mutable_parameters();
@@ -191,10 +205,46 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_listens_to_transportation_mis
     BOOST_CHECK_EQUAL( convoy.transportData.dataTransport.objectToManage[ 0 ].objectFeature.featureLevel, noDetail );
 }
 
+BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_unit_transportation_mission_and_notifies_listener_and_pauses_mission, Fixture )
+{
+    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
+    const geometry::Point2d embarkingPoint( 1., 2. );
+    const geometry::Point2d debarkingPoint( -1., -2. );
+    const std::string unitCallsign = "callsign";
+    const std::string unitNetnUniqueId = "143";
+    sword::SimToClient_Content message;
+    sword::UnitOrder* unitOrder = message.mutable_unit_order();
+    unitOrder->mutable_type()->set_id( transportUnitId );
+    unitOrder->mutable_tasker()->set_id( unitId );
+    sword::MissionParameters* parameters = unitOrder->mutable_parameters();
+    parameters->add_elem();// danger direction
+    parameters->add_elem();// phase lines
+    parameters->add_elem();// limit 1
+    parameters->add_elem();// limit 2
+    AddPoint( *parameters, embarkingPoint ); // embarking point
+    parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000001" ); // embarking time
+    AddPoint( *parameters, debarkingPoint ); // debarking point
+    parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000002" ); // debarking time
+    interactions::NetnRequestConvoy convoy;
+    sword::ClientToSim pauseMessage;
+    MOCK_EXPECT( requestSender, Send ).once().with( mock::retrieve( convoy ) );
+    MOCK_EXPECT( factory, Create ).once().returns( 1337 );
+    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( pauseMessage ) );
+    MOCK_EXPECT( callsignResolver, ResolveUniqueId ).once().with( unitId ).returns( unitNetnUniqueId );
+    MOCK_EXPECT( callsignResolver, ResolveCallsign ).once().with( unitId ).returns( unitCallsign );
+    messageController.Dispatch( message );
+    BOOST_CHECK( pauseMessage.message().has_frag_order() );
+    BOOST_CHECK_EQUAL( pauseMessage.message().frag_order().type().id(), pauseId );
+    BOOST_CHECK_CLOSE( convoy.transportData.dataTransport.appointment.location.Latitude(), embarkingPoint.X(), 0.00001 );
+    BOOST_CHECK_CLOSE( convoy.transportData.dataTransport.appointment.location.Longitude(), embarkingPoint.Y(), 0.00001 );
+    BOOST_CHECK_CLOSE( convoy.transportData.dataTransport.finalAppointment.location.Latitude(), debarkingPoint.X(), 0.00001 );
+    BOOST_CHECK_CLOSE( convoy.transportData.dataTransport.finalAppointment.location.Longitude(), debarkingPoint.Y(), 0.00001 );
+}
+
 BOOST_FIXTURE_TEST_CASE( transporation_controller_does_nothing_if_mission_is_not_transportation, Fixture )
 {
     TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
-    const unsigned int unknownMission = transportId + 1;
+    const unsigned int unknownMission = transportAutomatId + 100;
     messageController.Dispatch( MakeTransportationMessage( unknownMission ) );
 }
 
@@ -218,7 +268,7 @@ namespace
             , transportingUnitUniqueId    ( "77777" )
         {
             listOfTransporters.list.push_back( NetnObjectDefinitionStruct( transportingUnitCallsign, transportingUnitUniqueId, NetnObjectFeatureStruct() ) );
-            sword::SimToClient_Content message = MakeTransportationMessage( transportId );
+            sword::SimToClient_Content message = MakeTransportationMessage( transportAutomatId );
             sword::AutomatOrder* automatOrder = message.mutable_automat_order();
             automatOrder->mutable_tasker()->set_id( automatId );
             sword::MissionParameters* parameters = automatOrder->mutable_parameters();
@@ -278,7 +328,7 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_accepts_offer_if_offer_is_same_as_request_and_notifies_listener_and_resume_mission, RequestedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_accepts_offer_if_offer_is_same_as_request_and_notifies_listener_and_resume_mission, RequestedFixture )
 {
     MOCK_EXPECT( acceptSender, Send ).once();
     interactions::NetnOfferConvoy offer = MakeOffer( 1, "provider" );
@@ -289,7 +339,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_accepts_offer_if_offer_is_sam
     BOOST_CHECK_EQUAL( resumeMessage.message().frag_order().type().id(), resumeId );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_rejects_offer_if_offer_is_partial_and_notifies_listener, RequestedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_rejects_offer_if_offer_is_partial_and_notifies_listener, RequestedFixture )
 {
     interactions::NetnOfferConvoy offer = MakeOffer( 2, "provider" );
     interactions::NetnRejectOfferConvoy reject;
@@ -298,7 +348,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_rejects_offer_if_offer_is_par
     BOOST_CHECK_EQUAL( reject.reason, "Offering only partial offer" );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_reject_all_good_offers_if_already_accepted, RequestedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_reject_all_good_offers_if_already_accepted, RequestedFixture )
 {
     interactions::NetnOfferConvoy offer = MakeOffer( 1, "provider" );
     MOCK_EXPECT( acceptSender, Send ).once();
@@ -313,7 +363,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_reject_all_good_offers_if_alr
     BOOST_CHECK_EQUAL( reject.provider.str(), "provider2" );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_does_nothing_when_report_mission_complete_but_offer_rejected, RequestedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_does_nothing_when_report_mission_complete_but_offer_rejected, RequestedFixture )
 {
     interactions::NetnOfferConvoy offer = MakeOffer( 2, "provider" );
     MOCK_EXPECT( rejectSender, Send ).once();
@@ -322,7 +372,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_does_nothing_when_report_miss
     messageController.Dispatch( message );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_does_nothing_if_service_id_is_not_known, RequestedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_does_nothing_if_service_id_is_not_known, RequestedFixture )
 {
     interactions::NetnOfferConvoy offer = MakeOffer( 2, "provider" );
     offer.serviceId.eventCount++;
@@ -344,20 +394,20 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_notifies_ready_to_receive_service_when_receiving_mission_complete_report, AcceptedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_notifies_ready_to_receive_service_when_receiving_mission_complete_report, AcceptedFixture )
 {
     MOCK_EXPECT( readySender, Send ).once();
     sword::SimToClient_Content message = MakeReportMessage( automatId, missionCompleteId );
     messageController.Dispatch( message );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_does_nothing_when_report_is_not_mission_complete_report, AcceptedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_does_nothing_when_report_is_not_mission_complete_report, AcceptedFixture )
 {
     sword::SimToClient_Content message = MakeReportMessage( automatId, missionCompleteId + 1 );
     messageController.Dispatch( message );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_does_nothing_when_report_is_not_for_transported_automat, AcceptedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_does_nothing_when_report_is_not_for_transported_automat, AcceptedFixture )
 {
     sword::SimToClient_Content message = MakeReportMessage( automatId + 1, missionCompleteId );
     messageController.Dispatch( message );
@@ -380,7 +430,7 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_sends_load_unit_magic_action_for_every_embarked_unit, ReadyAndStartedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_sends_load_unit_magic_action_for_every_embarked_unit, ReadyAndStartedFixture )
 {
     const unsigned int vesselId = 888;
     const unsigned int surbordinateId = 999;
@@ -427,7 +477,7 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_sends_destroy_all_magic_action_for_every_destroyed_entity, EmbarkedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_sends_destroy_all_magic_action_for_every_destroyed_entity, EmbarkedFixture )
 {
     interactions::NetnConvoyDestroyedEntities destroyed;
     FillService( destroyed, "provider", 1337 );
@@ -443,7 +493,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_controller_sends_destroy_all_magic_actio
     BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::destroy_all );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_sends_unload_unit_magic_action_for_every_disembarked_unit_and_teleport_to_disembarking_point, EmbarkedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_sends_unload_unit_magic_action_for_every_disembarked_unit_and_teleport_to_disembarking_point, EmbarkedFixture )
 {
     interactions::NetnConvoyDisembarkmentStatus status;
     FillService( status, "provider", 1337 );
@@ -487,7 +537,7 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_controller_notifies_service_received_when_complete, DebarkedFixture )
+BOOST_FIXTURE_TEST_CASE( transportation_requester_notifies_service_received_when_complete, DebarkedFixture )
 {
     MOCK_EXPECT( receivedSender, Send ).once();
     interactions::NetnServiceComplete complete;

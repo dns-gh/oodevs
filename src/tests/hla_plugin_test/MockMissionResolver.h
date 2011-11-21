@@ -25,7 +25,8 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockMissionResolver, MissionResolver_ABC )
 {
-    MOCK_METHOD( Resolve, 1 )
+    MOCK_METHOD( ResolveAutomat, 1 )
+    MOCK_METHOD( ResolveUnit, 1 )
 };
 
 }

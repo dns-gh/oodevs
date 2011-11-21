@@ -35,7 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual unsigned int Resolve( const std::string& name ) const = 0;
+    virtual unsigned int ResolveAutomat( const std::string& name ) const = 0;
+    virtual unsigned int ResolveUnit( const std::string& name ) const = 0;
     //@}
 };
 
