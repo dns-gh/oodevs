@@ -10446,7 +10446,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Artillerie" id="358" name="ASS . Section de Tir AUF1 CDS OFF" type="Pion ASS">
+  <unit decisional-model="Masalife.Artillerie.Tir.AUF1" id="358" name="ASS . Section de Tir AUF1 CDS OFF" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="Char AUF1"/>
@@ -10609,7 +10609,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Artillerie" id="364" name="ASS . PC Batterie ASS" type="Pion ASS">
+  <unit decisional-model="Masalife.Artillerie.Tir.AUF1" id="364" name="ASS . PC Batterie ASS" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -17010,5 +17010,35 @@
     <efficiencies combat="10" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="Masalife.Artillerie.Reco.AUF1" id="596" name="ASS . Section de Reco AUF1" type="Pion ASS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="VAB VIT"/>
+      <equipment count="1" crew="3" type="VAB 7,62"/>
+      <equipment count="1" crew="2" type="VTC P4 7,62"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1050s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="2608620945" -->
+<!-- signature="1845586803" -->

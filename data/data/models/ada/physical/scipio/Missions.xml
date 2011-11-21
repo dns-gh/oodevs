@@ -1654,6 +1654,14 @@
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.ReconnaitreZoneDeploiement" dia-type="france.military.platoon.combat.support.artillery.tasks.ReconnaitreZoneDeploiement" id="2477" name="PION ASS Reconaitre Zone Deploiement" package="support">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Zone deploiement" optional="false" type="Polygon"/>
+      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="true" type="Point"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AUTOMATE ALAT Aller Se Recompleter" package="none">
@@ -3018,6 +3026,14 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Unite a suivre" optional="false" type="Agent"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.RecoEtDeploiement" dia-type="france.military.company.combat.support.artillery.tasks.RecoEtDeploiement" id="28768" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.RecoEtDeploiement" name="AUTOMATE ASS Reconnaissance Et Deploiement">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Zones deploiement" optional="false" type="Polygon"/>
+      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="true" type="Point"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -3262,4 +3278,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="2761271293" -->
+<!-- signature="1924799421" -->
