@@ -354,9 +354,9 @@ void Profile::Update( const sword::ProfileUpdateRequest& message )
 
     authentication::ProfileUpdate updatemessage;
     updatemessage().set_login( message.login() );
-    if( updatemessage().profile().has_password()  )
+    if( !strPassword_.empty() )
         updatemessage().mutable_profile()->set_password( strPassword_ );
-    if( updatemessage().profile().has_role()  )
+    if( roleId_ != -1 )
         updatemessage().mutable_profile()->mutable_role()->set_id( roleId_ );
     Send( *updatemessage().mutable_profile() );
     updatemessage.Send( clients_ );
