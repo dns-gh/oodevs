@@ -274,7 +274,7 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Equipe ERYX" codeEMAT8="Equipe ERYX" codeLFRIL="Equipe ERYX" codeNNO="2320 14 502 4149" comment="Soldier with Short Range Antitank Weapon" id="5" name="SRAW soldier" protection="Combatant" size="Personal" weight="0.3">
+  <equipment codeEMAT6="Equipe ERYX" codeEMAT8="Equipe ERYX" codeLFRIL="Equipe ERYX" codeNNO="2320 14 502 4157" comment="Soldier with Short Range Antitank Weapon" id="5" name="SRAW soldier" protection="Combatant" size="Personal" weight="0.3">
     <speeds max="6">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -621,7 +621,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Tigre" codeEMAT8="Tigre" codeLFRIL="Tigre" codeNNO="6910 14 369 0987" comment="Tigre" id="9" name="Tigre helicopter" protection="Aircraft" size="Small" weight="2.1">
+  <equipment codeEMAT6="Tigre" codeEMAT8="Tigre" codeLFRIL="Tigre" codeNNO="6910 14 369 0985" comment="Tigre" id="9" name="Tigre helicopter" protection="Aircraft" size="Small" weight="2.1">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -4420,7 +4420,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Fantassin Appui AC" codeEMAT8="Fantassin Appui AC" codeLFRIL="Fantassin Appui AC" codeNNO="2320 14 502 4149" comment="(84 confined space) Very short range missile" id="42" name="VSRAW soldier" protection="Combatant" size="Personal" weight="0.08">
+  <equipment codeEMAT6="Fantassin Appui AC" codeEMAT8="Fantassin Appui AC" codeLFRIL="Fantassin Appui AC" codeNNO="2320 14 502 4150" comment="(84 confined space) Very short range missile" id="42" name="VSRAW soldier" protection="Combatant" size="Personal" weight="0.08">
     <speeds max="5">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -5297,7 +5297,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB PC ABC" codeEMAT8="VAB PC ABC" codeLFRIL="VAB PC ABC" codeNNO="2320 14 490 5095" comment="" id="51" name="7.62-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" weight="14">
+  <equipment codeEMAT6="VAB PC ABC" codeEMAT8="VAB PC ABC" codeLFRIL="VAB PC ABC" codeNNO="2320 14 490 5097" comment="" id="51" name="7.62-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -6377,7 +6377,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320 14 521 4466" comment="" id="61" name="Light Medium Tactical 7.62-mm Armed Vehicle" protection="UnarmouredVehicle" size="Medium" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320 14 490 2695" comment="" id="61" name="Light Medium Tactical 7.62-mm Armed Vehicle" protection="UnarmouredVehicle" size="Medium" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -9892,7 +9892,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Gazelle HAM MISTRAL" codeEMAT8="Gazelle HAM MISTRAL" codeLFRIL="Gazelle HAM MISTRAL" codeNNO="6910 14 369 0987" comment="" id="100" name="Air Defence Helicopter" protection="Aircraft" size="Small" weight="2">
+  <equipment codeEMAT6="Gazelle HAM MISTRAL" codeEMAT8="Gazelle HAM MISTRAL" codeLFRIL="Gazelle HAM MISTRAL" codeNNO="6910 14 370 0740" comment="" id="100" name="Air Defence Helicopter" protection="Aircraft" size="Small" weight="2">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -15813,4 +15813,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="4026459282" -->
+<!-- signature="3075219596" -->
