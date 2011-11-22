@@ -201,7 +201,7 @@
     <objects/>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Fantassin" codeEMAT8="6666664" codeLFRIL="Fantassin" codeNNO="Fantassin" comment="" id="4" name="Infantry Soldiers" protection="Combatant" size="Personal" weight="0.08">
+  <equipment codeEMAT6="Fantassin" codeEMAT8="6666664" codeLFRIL="Fantassin" codeNNO="2320 14 502 4149" comment="" id="4" name="Infantry Soldiers" protection="Combatant" size="Personal" weight="0.08">
     <speeds max="5">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -274,7 +274,7 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Equipe ERYX" codeEMAT8="Equipe ERYX" codeLFRIL="Equipe ERYX" codeNNO="Equipe ERYX" comment="Soldier with Short Range Antitank Weapon" id="5" name="SRAW soldier" protection="Combatant" size="Personal" weight="0.3">
+  <equipment codeEMAT6="Equipe ERYX" codeEMAT8="Equipe ERYX" codeLFRIL="Equipe ERYX" codeNNO="2320 14 502 4149" comment="Soldier with Short Range Antitank Weapon" id="5" name="SRAW soldier" protection="Combatant" size="Personal" weight="0.3">
     <speeds max="6">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -519,7 +519,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Gazelle HAC HOT" codeEMAT8="Gazelle HAC HOT" codeLFRIL="Gazelle HAC HOT" codeNNO="Gazelle HAC HOT" comment="" id="8" name="Antitank Helicopter" protection="Aircraft" size="Small" weight="2.1">
+  <equipment codeEMAT6="Gazelle HAC HOT" codeEMAT8="Gazelle HAC HOT" codeLFRIL="Gazelle HAC HOT" codeNNO="6910 14 369 0987" comment="" id="8" name="Antitank Helicopter" protection="Aircraft" size="Small" weight="2.1">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -621,7 +621,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Tigre" codeEMAT8="Tigre" codeLFRIL="Tigre" codeNNO="Tigre" comment="Tigre" id="9" name="Tigre helicopter" protection="Aircraft" size="Small" weight="2.1">
+  <equipment codeEMAT6="Tigre" codeEMAT8="Tigre" codeLFRIL="Tigre" codeNNO="6910 14 369 0987" comment="Tigre" id="9" name="Tigre helicopter" protection="Aircraft" size="Small" weight="2.1">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -705,7 +705,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Gazelle HAC CN20" codeEMAT8="Gazelle HAC CN20" codeLFRIL="Gazelle HAC CN20" codeNNO="Gazelle HAC CN20" comment="" id="10" name="20-mm Chain Gun Helicopter" protection="Aircraft" size="Small" weight="2">
+  <equipment codeEMAT6="Gazelle HAC CN20" codeEMAT8="Gazelle HAC CN20" codeLFRIL="Gazelle HAC CN20" codeNNO="6910 14 370 0742" comment="" id="10" name="20-mm Chain Gun Helicopter" protection="Aircraft" size="Small" weight="2">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -807,7 +807,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Leclerc" codeEMAT8="FRL28709010" codeLFRIL="Leclerc" codeNNO="" comment="" id="11" name="Main Battle Tank" protection="HeavyTank" size="Heavy" weight="54">
+  <equipment codeEMAT6="Leclerc" codeEMAT8="FRL28709010" codeLFRIL="Leclerc" codeNNO="2350 14 531 9980" comment="" id="11" name="Main Battle Tank" protection="HeavyTank" size="Heavy" weight="54">
     <speeds max="70">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="1"/>
@@ -952,7 +952,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Puma HM" codeEMAT8="Puma HM" codeLFRIL="Puma HM" codeNNO="Puma HM" comment="Helicoptere de transport" id="12" name="Transport helicopter" protection="Aircraft" size="Medium" weight="5.5">
+  <equipment codeEMAT6="Puma HM" codeEMAT8="Puma HM" codeLFRIL="Puma HM" codeNNO="6910 14 370 0741" comment="Helicoptere de transport" id="12" name="Transport helicopter" protection="Aircraft" size="Medium" weight="5.5">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -1057,7 +1057,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB GEN" codeEMAT8="VAB GEN" codeLFRIL="VAB GEN" codeNNO="VAB GEN" comment="" id="13" name="Engineer VPC" protection="ArmouredCarrier" size="Medium" weight="13">
+  <equipment codeEMAT6="VAB GEN" codeEMAT8="VAB GEN" codeLFRIL="VAB GEN" codeNNO="2320 14 540 1100" comment="" id="13" name="Engineer VPC" protection="ArmouredCarrier" size="Medium" weight="13">
     <speeds max="80">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -1201,7 +1201,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="AMX 10 RC" codeEMAT8="AMX 10 RC" codeLFRIL="AMX 10 RC" codeNNO="AMX 10 RC" comment="" id="14" name="Medium Tank" protection="MediumTank" size="Heavy" weight="17">
+  <equipment codeEMAT6="AMX 10 RC" codeEMAT8="AMX 10 RC" codeLFRIL="AMX 10 RC" codeNNO="2350 14 521 4549" comment="" id="14" name="Medium Tank" protection="MediumTank" size="Heavy" weight="17">
     <speeds max="90">
       <speed terrain="unknown" value="10"/>
       <speed terrain="forest" value="1"/>
@@ -1464,7 +1464,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VBL 7,62" codeEMAT8="VBL 7,62" codeLFRIL="VBL 7,62" codeNNO="VBL 7,62" comment="" id="16" name="Light Armored Vehicle 7.62-mm" protection="LightTank" size="Small" weight="4">
+  <equipment codeEMAT6="VBL 7,62" codeEMAT8="VBL 7,62" codeLFRIL="VBL 7,62" codeNNO="2355 14 551 3661" comment="" id="16" name="Light Armored Vehicle 7.62-mm" protection="LightTank" size="Small" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="50"/>
@@ -1577,7 +1577,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB CAN 20" codeEMAT8="VAB CAN 20" codeLFRIL="VAB CAN 20" codeNNO="VAB CAN 20" comment="" id="17" name="20-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" weight="15">
+  <equipment codeEMAT6="VAB CAN 20" codeEMAT8="VAB CAN 20" codeLFRIL="VAB CAN 20" codeNNO="2320 14 526 0053" comment="" id="17" name="20-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" weight="15">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -1856,7 +1856,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB PC" codeEMAT8="VAB PC" codeLFRIL="VAB PC" codeNNO="VAB PC" comment="" id="19" name="Armoured Personnel Carrier Command Post" protection="ArmouredCarrier" size="Medium" weight="10">
+  <equipment codeEMAT6="VAB PC" codeEMAT8="VAB PC" codeLFRIL="VAB PC" codeNNO="2320 14 490 5095" comment="" id="19" name="Armoured Personnel Carrier Command Post" protection="ArmouredCarrier" size="Medium" weight="10">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -2760,7 +2760,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB Decontamination NBC" codeEMAT8="VAB Decontamination NBC" codeLFRIL="VAB Decontamination NBC" codeNNO="VAB Decontamination NBC" comment="" id="27" name="RSV decontamination NBC" protection="LightTank" size="Small" weight="4">
+  <equipment codeEMAT6="VAB Decontamination NBC" codeEMAT8="VAB Decontamination NBC" codeLFRIL="VAB Decontamination NBC" codeNNO="2320 14 490 5143" comment="" id="27" name="RSV decontamination NBC" protection="LightTank" size="Small" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -2985,7 +2985,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="AUF1" codeEMAT8="AUF1" codeLFRIL="AUF1" codeNNO="AUF1" comment="" id="29" name="155-mm Artillery Tank" protection="HeavyTank" size="Heavy" weight="44">
+  <equipment codeEMAT6="AUF1" codeEMAT8="AUF1" codeLFRIL="AUF1" codeNNO="6610 14 502 0502" comment="" id="29" name="155-mm Artillery Tank" protection="HeavyTank" size="Heavy" weight="44">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -3622,7 +3622,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Drone SDTI" codeEMAT8="Drone SDTI" codeLFRIL="Drone SDTI" codeNNO="Drone SDTI" comment="" id="34" name="Real Time Drone" protection="Aircraft" size="Stealth" weight="0.2">
+  <equipment codeEMAT6="Drone SDTI" codeEMAT8="Drone SDTI" codeLFRIL="Drone SDTI" codeNNO="1550 14 537 7975" comment="" id="34" name="Real Time Drone" protection="Aircraft" size="Stealth" weight="0.2">
     <speeds max="500">
       <speed terrain="unknown" value="220"/>
       <speed terrain="forest" value="220"/>
@@ -3680,7 +3680,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Moto RBRR" codeEMAT8="Moto RBRR" codeLFRIL="Moto RBRR" codeNNO="Moto RBRR" comment="" id="35" name="Motocycle" protection="UnarmouredVehicle" size="Small" weight="0.2">
+  <equipment codeEMAT6="Moto RBRR" codeEMAT8="Moto RBRR" codeLFRIL="Moto RBRR" codeNNO="2340 14 553 6901" comment="" id="35" name="Motocycle" protection="UnarmouredVehicle" size="Small" weight="0.2">
     <speeds max="60">
       <speed terrain="unknown" value="45"/>
       <speed terrain="forest" value="30"/>
@@ -4420,7 +4420,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Fantassin Appui AC" codeEMAT8="Fantassin Appui AC" codeLFRIL="Fantassin Appui AC" codeNNO="Fantassin Appui AC" comment="(84 confined space) Very short range missile" id="42" name="VSRAW soldier" protection="Combatant" size="Personal" weight="0.08">
+  <equipment codeEMAT6="Fantassin Appui AC" codeEMAT8="Fantassin Appui AC" codeLFRIL="Fantassin Appui AC" codeNNO="2320 14 502 4149" comment="(84 confined space) Very short range missile" id="42" name="VSRAW soldier" protection="Combatant" size="Personal" weight="0.08">
     <speeds max="5">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -5297,7 +5297,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB PC ABC" codeEMAT8="VAB PC ABC" codeLFRIL="VAB PC ABC" codeNNO="VAB PC ABC" comment="" id="51" name="7.62-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" weight="14">
+  <equipment codeEMAT6="VAB PC ABC" codeEMAT8="VAB PC ABC" codeLFRIL="VAB PC ABC" codeNNO="2320 14 490 5095" comment="" id="51" name="7.62-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -5420,7 +5420,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="52" name="12.7-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2355 14 560 1891" comment="" id="52" name="12.7-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -5784,7 +5784,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="55" name="Light Medium Tactical Vehicle" protection="Combatant" size="Medium" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320 14 521 4466" comment="" id="55" name="Light Medium Tactical Vehicle" protection="Combatant" size="Medium" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -6377,7 +6377,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="61" name="Light Medium Tactical 7.62-mm Armed Vehicle" protection="UnarmouredVehicle" size="Medium" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320 14 521 4466" comment="" id="61" name="Light Medium Tactical 7.62-mm Armed Vehicle" protection="UnarmouredVehicle" size="Medium" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -8353,7 +8353,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Reconnaissance and support vehicule" id="82" name="RSV" protection="LightTank" size="Medium" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320 14 490 5143" comment="Reconnaissance and support vehicule" id="82" name="RSV" protection="LightTank" size="Medium" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -9276,7 +9276,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="92" name="RSV reconnaissance NBC" protection="LightTank" size="Medium" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320 14 490 5143" comment="" id="92" name="RSV reconnaissance NBC" protection="LightTank" size="Medium" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -9892,7 +9892,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Gazelle HAM MISTRAL" codeEMAT8="Gazelle HAM MISTRAL" codeLFRIL="Gazelle HAM MISTRAL" codeNNO="Gazelle HAM MISTRAL" comment="" id="100" name="Air Defence Helicopter" protection="Aircraft" size="Small" weight="2">
+  <equipment codeEMAT6="Gazelle HAM MISTRAL" codeEMAT8="Gazelle HAM MISTRAL" codeLFRIL="Gazelle HAM MISTRAL" codeNNO="6910 14 369 0987" comment="" id="100" name="Air Defence Helicopter" protection="Aircraft" size="Small" weight="2">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -15813,4 +15813,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0451542053" -->
+<!-- signature="4026459282" -->
