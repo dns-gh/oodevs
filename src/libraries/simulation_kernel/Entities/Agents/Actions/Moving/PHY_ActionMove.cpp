@@ -40,7 +40,6 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
     , role_                         ( pion.GetRole< moving::PHY_RoleAction_Moving >() )
     , pMainPath_                    ( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
     , forceNextPoint_               ( false )
-    , isTreatingJoining_            ( false )
 {
     // NOTHING
 }
@@ -177,25 +176,6 @@ void PHY_ActionMove::AvoidObstacles()
     if( objectAvoidAttempts_.find( nObjectToAvoidDiaID ) != objectAvoidAttempts_.end() )
         return;
     objectAvoidAttempts_.insert( nObjectToAvoidDiaID );
-
-    if( !isTreatingJoining_ )
-    {
-        if( pJoiningPath_.get() )
-        {
-            MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
-            if( !CreateJoiningPath( lastJoiningPoint, forceNextPoint_ ) )
-                CreateFinalPath();
-        }
-        else
-        {
-            assert( pMainPath_.get() );
-            boost::shared_ptr< DEC_Agent_Path > pNewMainPath( new DEC_Agent_Path( *pMainPath_ ) );
-            MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pNewMainPath ); // $$$ à déplacer dans DEC_Agent_Path::Initialize()
-            role_.MoveCanceled( pMainPath_ );
-            pMainPath_->Cancel();
-            pMainPath_ = pNewMainPath;
-        }
-    }
 }
 
 // =============================================================================
@@ -221,40 +201,22 @@ void PHY_ActionMove::Execute()
 
     if( nReturn == DEC_PathWalker::eItineraireMustBeJoined )
     {
-        role_.MoveSuspended( pCurrentPath );
         MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
-        if( CreateJoiningPath( lastJoiningPoint, forceNextPoint_ ) )
-        {
-            pCurrentPath = pJoiningPath_;
-            nReturn = role_.Move( pCurrentPath );
-        }
-        else
-            CreateFinalPath();
+        nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint );
         forceNextPoint_ = false;
-        isTreatingJoining_ = false;
     }
     else if( nReturn == DEC_PathWalker::eBlockedByObject )
     {
-        isTreatingJoining_ = false;
         if( ( pCurrentPath != pJoiningPath_ && !pJoiningPath_.get() ) || pCurrentPath == pJoiningPath_ )
         {
-            role_.MoveSuspended( pCurrentPath );
             DestroyJoiningPath();
-            if( CreateJoiningPath( MT_Vector2D(), forceNextPoint_ ) )
-            {
-                pCurrentPath = pJoiningPath_;
-                nReturn = role_.Move( pCurrentPath );
-            }
-            else
-                CreateFinalPath();
-            isTreatingJoining_ = true;
+            nReturn = CreateAdaptedPath( pCurrentPath, MT_Vector2D() );
         }
         forceNextPoint_ = false;
     }
     else if( pCurrentPath == pJoiningPath_ )
     {
         forceNextPoint_ = false;
-        isTreatingJoining_ = false;
         if( nReturn == DEC_PathWalker::eFinished )
         {
             DestroyJoiningPath();
@@ -262,15 +224,13 @@ void PHY_ActionMove::Execute()
         }
         else if( nReturn == DEC_PathWalker::ePartialPath )
         {
-            DestroyJoiningPath();
             forceNextPoint_ = true;
+            MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
+            nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint );
         }
     }
     else
-    {
         forceNextPoint_ = false;
-        isTreatingJoining_ = false;
-    }
 
     Callback( nReturn );
 }
@@ -300,4 +260,20 @@ void PHY_ActionMove::CreateFinalPath()
     role_.MoveCanceled( pMainPath_ );
     pMainPath_->Cancel();
     pMainPath_ = pNewMainPath;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionMove::CreateAdaptedPath
+// Bypassd: CMA 2011-11-22
+// -----------------------------------------------------------------------------
+int PHY_ActionMove::CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint )
+{
+    role_.MoveSuspended( pCurrentPath );
+    if( CreateJoiningPath( lastJoiningPoint, forceNextPoint_ ) )
+    {
+        pCurrentPath = pJoiningPath_;
+        return role_.Move( pCurrentPath );
+    }
+    CreateFinalPath();
+    return DEC_PathWalker::eRunning;
 }
