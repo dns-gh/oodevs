@@ -225,16 +225,13 @@ bool PHY_RolePion_Transported::HasHumanTransportersReady() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
 {
-
-    if( !pTransporter_ )
-        return;
-    pion_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pTransporter_ );
-
     if( HasChanged() )
     {
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
+    if( pTransporter_ )
+        pion_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pTransporter_ );
 }
 
 // -----------------------------------------------------------------------------
