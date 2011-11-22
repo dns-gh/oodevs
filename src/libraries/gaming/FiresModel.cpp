@@ -41,6 +41,7 @@ FiresModel::~FiresModel()
 void FiresModel::Purge()
 {
     Clear();
+    targets_.Clear();
 }
 
 // -----------------------------------------------------------------------------
