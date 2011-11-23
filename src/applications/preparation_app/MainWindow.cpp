@@ -450,7 +450,6 @@ void MainWindow::DoLoad( QString filename )
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
     config_.LoadExercise( filename.ascii() );
-    pScoreDialog_->Load();
     if( Load() )
     {
         SetWindowTitle( true );
@@ -523,6 +522,7 @@ bool MainWindow::Load()
         if( logisticListView_ )
             logisticListView_->Purge();
         model_.Purge();
+        pScoreDialog_->Load();
         selector_->Close();
         selector_->Load();
         SetProgression( 20, tr( "Loading physical model ..." ) );
