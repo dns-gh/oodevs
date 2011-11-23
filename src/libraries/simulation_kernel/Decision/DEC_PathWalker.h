@@ -152,7 +152,7 @@ private:
     bool bFuelReportSent_;
     bool bTerrainReportSent_;
     boost::shared_ptr< DEC_PathResult > pCurrentPath_;
-    DEC_PathWalker::E_ReturnCode pathSet_;
+    E_ReturnCode pathSet_;
     //@}
 };
 
