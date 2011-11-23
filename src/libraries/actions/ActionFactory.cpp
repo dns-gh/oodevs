@@ -513,6 +513,8 @@ actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis,
         const unsigned long targetid = xis.attribute< unsigned long >( "target" );
         target = entities_.FindObject( targetid );
         if( !target )
+            target = entities_.FindUrbanObject( targetid );
+        if( !target )
             throw TargetNotFound( targetid );
     }
 
