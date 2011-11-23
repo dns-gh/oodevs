@@ -397,6 +397,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION ASA Defendre"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -594,7 +595,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION GENIE Activer Obstacles"/>
         <mission name="PION GENIE Appui Mobilite"/>
-        <mission name="PION GENIE Contourner obstacles">
+        <mission name="PION GENIE Brecher obstacles">
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION MELEE Controler">
@@ -709,7 +710,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION GENIE Appui Mobilite"/>
-        <mission name="PION GENIE Contourner obstacles">
+        <mission name="PION GENIE Brecher obstacles">
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION GENIE Degager Obstacles">
@@ -9796,4 +9797,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0868084804" -->
+<!-- signature="2692339360" -->
