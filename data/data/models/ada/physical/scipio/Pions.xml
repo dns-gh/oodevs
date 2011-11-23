@@ -10701,7 +10701,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="10000050" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Artillerie.Sol Air.SAMP HAWK" id="367" name="ART . Section de Tir HAWK" type="Pion ASA">
@@ -10737,7 +10737,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="10000012" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Artillerie.Sol Air.PC" id="368" name="ART . PC Batterie HAWK" type="Pion ASA">
@@ -17175,4 +17175,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0082511318" -->
+<!-- signature="2993475448" -->
