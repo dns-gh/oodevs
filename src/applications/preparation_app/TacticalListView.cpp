@@ -318,6 +318,9 @@ void TacticalListView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Ent
 // -----------------------------------------------------------------------------
 bool TacticalListView::Drop( const Entity_ABC& item, const Entity_ABC& target )
 {
+    if( item.GetId() == target.GetId() )
+        return false;
+
     const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &item );
     if( agent )
         return Drop( *agent, target );
