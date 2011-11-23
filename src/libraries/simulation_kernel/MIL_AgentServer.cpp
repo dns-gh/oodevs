@@ -78,10 +78,11 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     ReadStaticData();
     ReadUrbanModel();
     if( config_.HasCheckpoint() )
-        pCheckPointManager_->LoadCheckPoint( config_ );
+        MIL_CheckPointManager::LoadCheckPoint( config_ );
     else
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
+        pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pProfilerMgr_, config_.ReadGCParameter_setPause(), config.ReadGCParameter_setStepMul() );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
@@ -135,8 +136,8 @@ void MIL_AgentServer::ReadStaticData()
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation tick duration : %d seconds", nTimeStepDuration_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
     ReadTerData();
-    pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
+    PHY_MeteoDataManager::Initialize();
     MIL_EntityManager::Initialize( config_, *this );
     pAgentServer_ = new NET_AgentServer( config_, *this, *this );
     if( !config_.IsDataTestMode() )
@@ -362,7 +363,7 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
          << nSimTime_
          << pEntityManager_
 //         << pWorkspaceDIA_        // uniquement données statiques
-//         << pMeteoDataManager_    // données statiques + météo locales gérées par MOS
+         << pMeteoDataManager_    // données statiques + météo locales gérées par MOS
 //         << timerManager_         // pas de données ( MIL_AgentServer::Initialize )
 //         << pTacticalLineManager_ // plus de limit et de lima
 //         << pPathFindManager_     // pas stockés
@@ -389,7 +390,7 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> nSimTime_
          >> pEntityManager_
 //         >> pWorkspaceDIA_
-//         >> pMeteoDataManager_
+         >> pMeteoDataManager_
 //         >> timerManager_
 //         >> pTacticalLineManager_
 //         >> pPathFindManager_

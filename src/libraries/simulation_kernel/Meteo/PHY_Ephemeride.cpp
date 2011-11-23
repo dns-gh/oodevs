@@ -22,6 +22,16 @@ namespace bpt = boost::posix_time;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Ephemeride constructor
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+PHY_Ephemeride::PHY_Ephemeride()
+    : bIsNight_( false )
+{
+        // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Ephemeride constructor
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
 PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
@@ -75,6 +85,38 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
 PHY_Ephemeride::~PHY_Ephemeride()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Ephemeride::load
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+void PHY_Ephemeride::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    unsigned int dayId;
+    unsigned int nightId;
+    file >> bIsNight_
+         >> sunriseTime_
+         >> sunsetTime_
+         >> dayId
+         >> nightId;
+    pDayBase_ = weather::PHY_Lighting::FindLighting( static_cast< sword::WeatherAttributes::EnumLightingType >( dayId ) );
+    pNightBase_ = weather::PHY_Lighting::FindLighting( static_cast< sword::WeatherAttributes::EnumLightingType >( nightId ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Ephemeride::save
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+void PHY_Ephemeride::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    unsigned int dayId = pDayBase_->GetAsnID();
+    unsigned int nightId = pNightBase_->GetAsnID();
+    file << bIsNight_
+         << sunriseTime_
+         << sunsetTime_
+         << dayId
+         << nightId;
 }
 
 //-----------------------------------------------------------------------------

@@ -42,6 +42,8 @@ public:
     virtual ~MeteoManager_ABC() {}
     //@}
 
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
+
     //! @name Operations
     //@{
     virtual void AddMeteo( weather::Meteo& element ) = 0;

@@ -103,7 +103,7 @@ void MIL_FireClass::ReadExtinguisherAgent( xml::xistream& xis )
 
     effect.pExtinguisherAgent_ = PHY_DotationType::FindDotationCategory( agent );
     if( !effect.pExtinguisherAgent_ )
-        xis.error( "Unknow extinguisher agent " + agent );
+        xis.error( "Unknown extinguisher agent " + agent );
 
     for( T_ExtinguisherAgentEffectVector::const_iterator it = extinguisherAgentEffects_.begin(); it != extinguisherAgentEffects_.end(); ++it )
         if( it->pExtinguisherAgent_ == effect.pExtinguisherAgent_ )
@@ -125,7 +125,7 @@ void MIL_FireClass::ReadWeatherEffect( xml::xistream& xis )
 
     const weather::PHY_Precipitation* pWeather = weather::PHY_Precipitation::FindPrecipitation( weather );
     if( !pWeather )
-        throw std::runtime_error( "Unknow weather " + weather );
+        throw std::runtime_error( "Unknown weather " + weather );
 
     weatherEffects_.insert( std::make_pair( pWeather, effect ) );
 }
@@ -143,7 +143,7 @@ void MIL_FireClass::ReadInjury( xml::xistream& xis )
 
     const PHY_HumanWound* pType = PHY_HumanWound::Find( type );
     if( !pType )
-        xis.error( "Unknow injury type " + type );
+        xis.error( "Unknown injury type " + type );
 
     injuries_.insert( std::make_pair( pType, injury ) );
 }

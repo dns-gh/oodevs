@@ -22,6 +22,17 @@
 
 namespace bpt = boost::posix_time;
 
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_LocalMeteo )
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LocalMeteo constructor
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+PHY_LocalMeteo::PHY_LocalMeteo()
+{
+        // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_LocalMeteo constructor
 // Created: SLG 2010-03-18
@@ -63,6 +74,21 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MissionParameters&
 PHY_LocalMeteo::~PHY_LocalMeteo()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LocalMeteo::serialize
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_LocalMeteo::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< weather::Meteo >( *this )
+         & startTime_
+         & endTime_
+         & upLeft_
+         & downRight_
+         & bIsPatched_;
 }
 
 // -----------------------------------------------------------------------------

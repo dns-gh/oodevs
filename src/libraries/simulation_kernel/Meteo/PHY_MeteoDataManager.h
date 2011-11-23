@@ -10,6 +10,7 @@
 #ifndef __PHY_MeteoDataManager_h_
 #define __PHY_MeteoDataManager_h_
 
+#include "MIL.h"
 #include "meteo/MeteoManager_ABC.h"
 #include "meteo/PHY_Precipitation.h"
 #include "meteo/Meteo.h"
@@ -42,8 +43,14 @@ class PHY_MeteoDataManager : private boost::noncopyable
 public:
     //! @name Constructor/Destructor
     //@{
+             PHY_MeteoDataManager();
     explicit PHY_MeteoDataManager( MIL_Config& config );
     virtual ~PHY_MeteoDataManager();
+    //@}
+
+    //! @name Operations
+    //@{
+    static void Initialize();
     //@}
 
     //! @name Raw Data management
@@ -65,6 +72,14 @@ public:
     virtual void OnReceiveMsgMeteo( const sword::MagicAction& msg, unsigned int context );
     //@}
 
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    //@}
+
 private:
     //! @name Registration
     //@{
@@ -75,7 +90,7 @@ private:
     //@{
     void ReadPatchLocal( xml::xistream& xis );
     void ReadPatchGlobal( xml::xistream& xis );
-    void Initialize( xml::xistream& xis, MIL_Config& config );
+    void Load( xml::xistream& xis, MIL_Config& config );
     //@}
 
 private:
@@ -94,6 +109,8 @@ private:
     static unsigned int localCounter_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_MeteoDataManager )
 
 #include "PHY_MeteoDataManager.inl"
 

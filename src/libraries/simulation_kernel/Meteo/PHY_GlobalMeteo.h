@@ -33,8 +33,14 @@ class PHY_GlobalMeteo : public weather::Meteo
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_GlobalMeteo();
              PHY_GlobalMeteo( xml::xistream& xis, const weather::PHY_Lighting& light, unsigned int timeStep );
     virtual ~PHY_GlobalMeteo();
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Operations
@@ -42,5 +48,17 @@ public:
     virtual void SendCreation() const;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: PHY_GlobalMeteo::serialize
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_GlobalMeteo::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< weather::Meteo >( *this );
+}
+
+BOOST_CLASS_EXPORT_KEY( PHY_GlobalMeteo )
 
 #endif // __PHY_GlobalMeteo_h_
