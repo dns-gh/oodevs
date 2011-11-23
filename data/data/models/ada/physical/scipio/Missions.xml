@@ -3032,7 +3032,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Zones deploiement" optional="false" type="Polygon"/>
-      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="true" type="Point"/>
+      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
   </automats>
   <populations>
@@ -3278,4 +3278,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="1924799421" -->
+<!-- signature="2924497415" -->
