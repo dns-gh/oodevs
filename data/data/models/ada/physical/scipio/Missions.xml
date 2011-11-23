@@ -432,16 +432,6 @@
       <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_JOINT_MARINE_Transporter" dia-type="T_Mission_Pion_JOINT_MARINE_Transporter" id="1009" name="PION JOINT MARINE Transporter" package="move">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="unitesATransporter_" max-occurs="unbounded" min-occurs="1" name="Unites a transporter" optional="false" type="Agent"/>
-      <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
-      <parameter dia-name="pointEmbarquement_" name="Point embarquement" optional="false" type="Point"/>
-      <parameter dia-name="avecMateriel_" name="Avec materiel" optional="false" type="Boolean"/>
-    </mission>
     <mission dia-behavior="MIS_Pion_RENS_ROHUM_RenseignerSur" dia-type="T_Mission_Pion_RENS_ROHUM_RenseignerSur" id="157" name="PION RENS ROHUM Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -1060,7 +1050,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Zone" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" dia-type="france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" id="2114" name="PION GENIE Contourner obstacles" package="support">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" dia-type="france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" id="2114" name="PION GENIE Brecher obstacles" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2423,14 +2413,6 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.tasks.ProtegerPC" dia-type="france.military.company.combat.tasks.ProtegerPC" id="5006" mrt-dia-behavior="france.military.company.combat.tasks.ProtegerPC" name="AUTOMATE MELEE Proteger PC" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="objective" name="Compagnie dont le PC doit etre protege" optional="false" type="Automat"/>
-    </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.Ratisser" dia-type="france.military.company.tasks.Ratisser" id="1032" mrt-dia-behavior="france.military.company.tasks.Ratisser" name="AUTOMATE MELEE Ratisser" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2754,14 +2736,6 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
-    </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.ConstruireCamps" dia-type="france.military.company.combat.support.engineer.tasks.ConstruireCamps" id="1058" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.ConstruireCamps" name="AUTOMATE GENIE Realiser Camps" package="none">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.DegagerObstacles" dia-type="france.military.company.combat.support.engineer.tasks.DegagerObstacles" id="1056" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.DegagerObstacles" name="AUTOMATE GENIE Degager Obstacles" package="support">
@@ -3278,4 +3252,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="2924497415" -->
+<!-- signature="3230570150" -->
