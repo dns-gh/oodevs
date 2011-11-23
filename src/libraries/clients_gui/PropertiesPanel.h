@@ -64,7 +64,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::PropertiesWidget* table_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    const kernel::Entity_ABC* selected_;
     gui::TableItemDisplayer& displayer_;
     //@}
 };
