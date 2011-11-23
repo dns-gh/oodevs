@@ -46,7 +46,7 @@ void WeatherListView::CommitTo( WeatherModel& model )
         if( weather->IsValid() )
             model.Resolver< weather::MeteoLocal >::Register( weather->GetId(), *weather );
         else
-            QMessageBox::warning( this, tr( weather->GetName() ), tr( "Time parameters or location are incorrect" ) );
+            QMessageBox::warning( this, weather->GetName().c_str(), tr( "Time parameters or location are incorrect" ) );
     }
 }
 
@@ -64,7 +64,7 @@ void WeatherListView::Update( const WeatherModel& model )
         weather->SetCreated( true );
         weathers_.push_back( weather );
         Q3ListViewItem* item = new Q3ListViewItem( this );
-        item->setText( 0, weather->GetName() );
+        item->setText( 0, weather->GetName().c_str() );
     }
 }
 
@@ -77,6 +77,6 @@ void WeatherListView::CreateItem()
     boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).ascii() ) );
     weather->SetCreated( true );
     Q3ListViewItem* item = new Q3ListViewItem( this );
-    item->setText( 0, weather->GetName() );
+    item->setText( 0, weather->GetName().c_str() );
     weathers_.push_back( weather );
 }

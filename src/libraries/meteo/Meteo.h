@@ -17,6 +17,9 @@
 #include <geometry/Types.h>
 #include <cassert>
 #include <boost/shared_ptr.hpp>
+#include <boost/serialization/extended_type_info.hpp>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/split_member.hpp>
 
 class QString;
 
@@ -53,7 +56,7 @@ namespace weather
 */
 // Created: ABR 2011-06-01
 // =============================================================================
-class Meteo : public kernel::Entity_ABC
+class Meteo
 {
 public:
     struct sWindData
@@ -75,6 +78,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             Meteo();
              Meteo( unsigned int id, unsigned int timeStep, const std::string& name = "" );
              Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, unsigned int timeStep,
                     const std::string& name = "" );
@@ -86,8 +90,17 @@ public:
     virtual ~Meteo();
     //@}
 
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template< typename Archive > void load( Archive&, const unsigned int );
+    template< typename Archive > void save( Archive&, const unsigned int ) const;
+    //@}
+
     //! @name Accessors
     //@{
+    unsigned long GetId() const;
+    const std::string& GetName() const;
     const PHY_Precipitation& GetPrecipitation   () const;
     const PHY_Lighting&      GetLighting        () const;
     const sWindData&         GetWind            () const;
@@ -102,15 +115,6 @@ public:
     void SetTemperature  ( int temperature );
     void SetCloud        ( const sCloudData& cloud );
     void SetModified     ( bool modified );
-    //@}
-
-    //! @name Entity implementation
-    //@{
-    virtual QString GetName() const;
-    virtual unsigned long GetId() const;
-    virtual void Select( kernel::ActionController& controller ) const;
-    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( kernel::ActionController& controller ) const;
     //@}
 
     //! @name Operations
@@ -153,4 +157,59 @@ protected:
 #include "Meteo.inl"
 
 }
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::serialize
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void weather::Meteo::load( Archive& file, const unsigned int )
+{
+    unsigned int lighting = 0;
+    unsigned int precipitation = 0;
+    file >> id_
+         >> name_
+         >> wind_.eAngle_
+         >> wind_.rSpeed_
+         >> wind_.vDirection_
+         >> cloud_.nCeiling_
+         >> cloud_.nDensityPercentage_
+         >> cloud_.nFloor_
+         >> cloud_.rDensity_
+         >> temperature_
+         >> lighting
+         >> precipitation
+         >> conversionFactor_
+         >> modified_;
+    pLighting_ = PHY_Lighting::FindLighting( static_cast< sword::WeatherAttributes::EnumLightingType >( lighting) );
+    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( static_cast< sword::WeatherAttributes::EnumPrecipitationType >( precipitation ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::serialize
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void weather::Meteo::save( Archive& file, const unsigned int ) const
+{
+    unsigned int lighting = pLighting_->GetAsnID();
+    unsigned int precipitation = pPrecipitation_->GetAsnID();
+    file <<  id_
+         << name_
+         << wind_.eAngle_
+         << wind_.rSpeed_
+         << wind_.vDirection_
+         << cloud_.nCeiling_
+         << cloud_.nDensityPercentage_
+         << cloud_.nFloor_
+         << cloud_.rDensity_
+         << temperature_
+         << lighting
+         << precipitation
+         << conversionFactor_
+         << modified_;
+}
+
+BOOST_CLASS_EXPORT_KEY( weather::Meteo )
+
 #endif // __weather_Meteo_h_

@@ -139,7 +139,7 @@ void WeatherPanel::Commit()
                 }
                 else
                 {
-                    QMessageBox::warning( this, tr( "SWORD" ), tr( "Invalid local weather %1, please correct time or position settings" ).arg( local->GetName() ) );
+                    QMessageBox::warning( this, tr( "SWORD" ), tr( "Invalid local weather %1, please correct time or position settings" ).arg( local->GetName().c_str() ) );
                     continue;
                 }
             }

@@ -41,16 +41,67 @@ MeteoModel::~MeteoModel()
     // NOTHING
 }
 
+namespace
+{
+    class MeteoGlobal : public weather::Meteo
+                      , public kernel::Entity_ABC
+    {
+    public:
+        MeteoGlobal( unsigned int id, const sword::WeatherAttributes& attributes, unsigned int timeStep )
+            : weather::Meteo( id, attributes, timeStep )
+        {
+            // NOTHING
+        }
+        ~MeteoGlobal()
+        {
+            // NOTHING
+        }
+
+        //! @name Entity implementation
+        //@{
+        virtual QString GetName() const { return name_.c_str(); }
+        virtual unsigned long GetId() const { return id_; }
+        virtual void Select( kernel::ActionController& ) const {}
+        virtual void ContextMenu( kernel::ActionController&, const QPoint& ) const {}
+        virtual void Activate( kernel::ActionController& ) const {}
+        //@}
+    };
+
+    class MeteoLocal : public weather::MeteoLocal
+                     , public kernel::Entity_ABC
+    {
+    public:
+        MeteoLocal( const sword::ControlLocalWeatherCreation& msg, unsigned int timeStep, const std::string& name )
+            : weather::MeteoLocal( msg, timeStep, name )
+        {
+            // NOTHING
+        }
+        ~MeteoLocal()
+        {
+            // NOTHING
+        }
+
+        //! @name Entity implementation
+        //@{
+        virtual QString GetName() const { return name_.c_str(); }
+        virtual unsigned long GetId() const { return id_; }
+        virtual void Select( kernel::ActionController& ) const {}
+        virtual void ContextMenu( kernel::ActionController&, const QPoint& ) const {}
+        virtual void Activate( kernel::ActionController& ) const {}
+        //@}
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MeteoModel::Accept
 // Created: HBD 2010-03-31
 // -----------------------------------------------------------------------------
 void MeteoModel::Accept( kernel::ModelVisitor_ABC& visitor )
 {
-    if( globalMeteo_.get() )
-        visitor.Visit( *globalMeteo_ );
+    if( MeteoGlobal* global = static_cast< MeteoGlobal* >( globalMeteo_.get() ) )
+        visitor.Visit( *global );
     for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
-        visitor.Visit( **it );
+        visitor.Visit( static_cast< MeteoLocal& >( **it ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,8 +114,9 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg
         globalMeteo_->Update( msg.attributes() );
     else
     {
-        globalMeteo_.reset( new weather::Meteo( msg.weather().id(), msg.attributes(), config_.GetTickDuration() ) );
-        model_.AddExtensions( *static_cast< weather::Meteo* >( globalMeteo_.get() ) );
+        MeteoGlobal* meteo = new MeteoGlobal( msg.weather().id(), msg.attributes(), config_.GetTickDuration() );
+        globalMeteo_.reset( meteo );
+        model_.AddExtensions( *meteo );
     }
  }
 
@@ -92,7 +144,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
     }
     else
     {
-        weather::MeteoLocal* weather = new weather::MeteoLocal( msg, config_.GetTickDuration(), "" );
+        MeteoLocal* weather = new MeteoLocal( msg, config_.GetTickDuration(), "" );
         model_.AddExtensions( *weather );
         AddMeteo( *weather );
     }

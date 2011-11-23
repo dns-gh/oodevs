@@ -36,7 +36,7 @@ namespace
 // Created: ABR 2011-06-01
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( const MeteoLocal& meteo )
-    : Meteo( meteo.GetId(), meteo.GetLighting(), meteo.GetPrecipitation(), 0, meteo.GetTemperature(), meteo.GetName().ascii() )
+    : Meteo( meteo.GetId(), meteo.GetLighting(), meteo.GetPrecipitation(), 0, meteo.GetTemperature(), meteo.GetName() )
     , converter_( &meteo.GetCoordinateConverter() )
     , created_( false )
 {

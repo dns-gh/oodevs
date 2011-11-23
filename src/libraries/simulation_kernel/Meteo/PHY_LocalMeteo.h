@@ -33,6 +33,7 @@ class PHY_LocalMeteo : public weather::Meteo
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_LocalMeteo();
              PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, unsigned int timeStep );
              PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& message, const weather::PHY_Lighting& light, unsigned int timeStep );
     virtual ~PHY_LocalMeteo();
@@ -42,6 +43,11 @@ public:
     //@{
     virtual void UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision, boost::shared_ptr< weather::Meteo > meteo );
     virtual void Update( const sword::MissionParameters& msg );
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -62,5 +68,7 @@ private:
     bool bIsPatched_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_LocalMeteo )
 
 #endif // __PHY_LocalMeteo_h_

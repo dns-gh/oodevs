@@ -50,7 +50,7 @@ void WeatherListView::Update( const MeteoModel& model )
         weathers_.push_back( weather );
         maxId = ( maxId > weather->GetId() ) ? maxId : weather->GetId();
         Q3ListViewItem* item = new Q3ListViewItem( this );
-        item->setText( 0, weather->GetName() );
+        item->setText( 0, weather->GetName().c_str() );
     }
     weather::MeteoLocal::localCounter_ = maxId + 1;
 }
@@ -65,7 +65,7 @@ void WeatherListView::CreateItem()
     weather->SetCreated( true );
     weather->SetPeriod( simulation_.GetDateTime(), simulation_.GetDateTime() );
     Q3ListViewItem* item = new Q3ListViewItem( this );
-    item->setText( 0, weather->GetName() );
+    item->setText( 0, weather->GetName().c_str() );
     weathers_.push_back( weather );
 }
 

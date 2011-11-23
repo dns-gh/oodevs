@@ -22,6 +22,20 @@
 
 unsigned int PHY_MeteoDataManager::localCounter_ = 2;
 
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MeteoDataManager )
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager constructor
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+PHY_MeteoDataManager::PHY_MeteoDataManager()
+    : pEphemeride_ ( 0 )
+    , pGlobalMeteo_( 0 )
+    , pRawData_    ( 0 )
+{
+    // NOTHING
+}
+
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
 // Created: JVT 02-10-21
@@ -31,18 +45,25 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
     , pGlobalMeteo_( 0 )
     , pRawData_    ( 0 )
 {
-    weather::PHY_Precipitation::Initialize();
-    weather::PHY_Lighting::Initialize();
-
-    config.GetLoader().LoadFile( config.GetWeatherFile(), boost::bind( &PHY_MeteoDataManager::Initialize, this, _1, boost::ref( config ) ) );
+    config.GetLoader().LoadFile( config.GetWeatherFile(), boost::bind( &PHY_MeteoDataManager::Load, this, _1, boost::ref( config ) ) );
     config.AddFileToCRC( config.GetWeatherFile() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::Initialize
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+void PHY_MeteoDataManager::Initialize()
+{
+    weather::PHY_Precipitation::Initialize();
+    weather::PHY_Lighting::Initialize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager::Load
 // Created: LDC 2010-12-02
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::Initialize( xml::xistream& xis, MIL_Config& config )
+void PHY_MeteoDataManager::Load( xml::xistream& xis, MIL_Config& config )
 {
     xis >> xml::start( "weather" );
     pEphemeride_ = new PHY_Ephemeride( xis );
@@ -132,6 +153,51 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
         }
         client::ControlLocalWeatherAck replyMsg;
         replyMsg.Send( NET_Publisher_ABC::Publisher(), context );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager::load
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    std::size_t size = 0;
+    file >> boost::serialization::base_object< weather::MeteoManager_ABC >( *this )
+         >> localCounter_
+         >> pGlobalMeteo_
+         >> pEphemeride_
+         >> size;
+    tools::WorldParameters terrainConfig = tools::WorldParameters( MIL_AgentServer::GetWorkspace().GetConfig() );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, terrainConfig );
+    meteos_.insert( boost::shared_ptr< weather::Meteo >( pGlobalMeteo_ ) );
+    PHY_LocalMeteo* meteo = 0;
+    for( ;size > 0; size-- )
+    {
+        file >> meteo;
+        meteos_.insert( boost::shared_ptr< weather::Meteo >( meteo ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager::save
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+void PHY_MeteoDataManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    assert( meteos_.size() > 0 );
+    std::size_t size = meteos_.size() - 1;
+    file << boost::serialization::base_object< weather::MeteoManager_ABC >( *this )
+         << localCounter_
+         << pGlobalMeteo_
+         << pEphemeride_
+         << size;
+    CIT_MeteoSet it = meteos_.begin();
+    ++it;
+    for( ; it != meteos_.end(); ++it )
+    {
+        PHY_LocalMeteo* local = static_cast< PHY_LocalMeteo* >( it->get() );
+        file << local;
     }
 }
 

@@ -18,12 +18,23 @@
 
 using namespace weather;
 
+BOOST_CLASS_EXPORT_IMPLEMENT( Meteo )
+
 namespace
 {
     double ConvertSpeedMosToSim( unsigned int timeStep )
     {
         return ( timeStep ) ? 1000. * timeStep / 3600. : 1.;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo constructor
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+Meteo::Meteo()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -347,43 +358,6 @@ void Meteo::SendCreation() const
 // Created: HBD 2010-03-31
 // -----------------------------------------------------------------------------
 void Meteo::SendDestruction( dispatcher::ClientPublisher_ABC& ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Meteo::GetName
-// Created: ABR 2011-06-01
-// -----------------------------------------------------------------------------
-inline
-QString Meteo::GetName() const
-{
-    return name_.c_str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Meteo::Select
-// Created: ABR 2011-06-01
-// -----------------------------------------------------------------------------
-void Meteo::Select( kernel::ActionController& /*controller*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Meteo::ContextMenu
-// Created: ABR 2011-06-01
-// -----------------------------------------------------------------------------
-void Meteo::ContextMenu( kernel::ActionController& /*controller*/, const QPoint& /*where*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Meteo::Activate
-// Created: ABR 2011-06-01
-// -----------------------------------------------------------------------------
-void Meteo::Activate( kernel::ActionController& /*controller*/ ) const
 {
     // NOTHING
 }

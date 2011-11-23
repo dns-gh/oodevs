@@ -15,6 +15,17 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_GlobalMeteo )
+
+// -----------------------------------------------------------------------------
+// Name: PHY_GlobalMeteo constructor
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+PHY_GlobalMeteo::PHY_GlobalMeteo()
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_GlobalMeteo constructor
 // Created: HBD 2010-03-25
