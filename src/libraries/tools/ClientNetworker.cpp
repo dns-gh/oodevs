@@ -198,3 +198,12 @@ unsigned long ClientNetworker::GetNbMessagesSent() const
 {
     return sockets_->GetNbMessagesSent();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ClientNetworker::HasAnsweredSinceLastTick
+// Created: LDC 2011-11-23
+// -----------------------------------------------------------------------------
+bool ClientNetworker::HasAnsweredSinceLastTick( const std::string& endpoint )
+{
+    return sockets_->HasAnsweredSinceLastTick( endpoint );
+}

@@ -93,6 +93,8 @@ private:
     virtual void Deactivate( const std::string& link );
 
     virtual void Broadcast( const sword::SimToClient& message );
+
+    void OnNewTick();
     //@}
 
 private:

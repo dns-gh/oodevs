@@ -108,7 +108,7 @@ private:
     typedef std::vector< std::string > T_Errors;
     typedef T_Errors::const_iterator CIT_Errors;
     //@}
-
+    
 private:
     //! @name Member data
     //@{

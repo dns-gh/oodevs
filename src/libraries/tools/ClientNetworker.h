@@ -69,6 +69,7 @@ public:
     //@{
     virtual unsigned long GetNbMessagesReceived() const; // $$$$ MCO : make a proxy on MessageDispatcher_ABC instead
     virtual unsigned long GetNbMessagesSent() const; // $$$$ MCO : make a proxy on MessageSender_ABC instead
+    virtual bool HasAnsweredSinceLastTick( const std::string& endpoint );
     //@}
 
 protected:

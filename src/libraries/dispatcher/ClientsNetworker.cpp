@@ -60,6 +60,8 @@ void ClientsNetworker::Receive( const sword::SimToClient& message )
         DenyConnections();
     else if( message.message().has_control_send_current_state_end() )
         AllowConnections();
+    else if( message.message().has_control_begin_tick() )
+        OnNewTick();
     Broadcast( message );
     for( CIT_Broadcasters it = broadcasters_.begin(); it != broadcasters_.end(); ++it )
         (*it)->Broadcast( message );
@@ -324,4 +326,22 @@ ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link )
     if( it == clients_.end() || !it->second )
         throw std::runtime_error( link + " is not a valid client" );
     return *it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::OnNewTick
+// Created: LDC 2011-11-22
+// -----------------------------------------------------------------------------
+void ClientsNetworker::OnNewTick()
+{
+    std::vector< std::string > errors;
+    for( IT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+    {
+        if( false == it->second->HasAnsweredSinceLastTick() )
+            errors.push_back( it->first );
+    }
+    for( std::vector< std::string >::const_iterator it = errors.begin(); it != errors.end(); ++it )
+    {
+        ConnectionError( *it, "Client hasn't answered messages from last tick." );
+    }
 }

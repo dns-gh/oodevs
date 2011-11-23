@@ -69,6 +69,7 @@ public:
     //@{
     virtual unsigned long GetNbMessagesSent() const;
     virtual unsigned long GetNbMessagesReceived() const;
+    virtual bool HasAnsweredSinceLastTick( const std::string& endpoint );
     //@}
 
 protected:

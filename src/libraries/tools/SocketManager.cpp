@@ -103,3 +103,15 @@ void SocketManager::Send( const std::string& endpoint, unsigned long tag, Messag
     it->second->Send( tag, message );
     ++nbMessagesSent_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: SocketManager::HasAnsweredSinceLastTick
+// Created: LDC 2011-11-23
+// -----------------------------------------------------------------------------
+bool SocketManager::HasAnsweredSinceLastTick( const std::string& endpoint )
+{
+    const CIT_Sockets it = sockets_.find( endpoint );
+    if( it == sockets_.end() )
+        return false;
+    return it->second->HasAnsweredSinceLastTick();
+}

@@ -42,6 +42,9 @@ public:
     int Send( unsigned long tag, Message& message );
     void StartReading();
     void Close();
+    const std::string& Endpoint() const;
+
+    bool HasAnsweredSinceLastTick();
     //@}
 
 private:
@@ -68,6 +71,7 @@ private:
     std::deque< std::pair< unsigned long, Message > > queue_;
     boost::mutex mutex_;
     bool needCleanup_;
+    bool answered_;
     //@}
 };
 

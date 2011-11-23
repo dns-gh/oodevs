@@ -157,6 +157,15 @@ unsigned long Client::GetNbMessagesSent() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Client::HasAnsweredSinceLastTick
+// Created: JSR 2011-11-23
+// -----------------------------------------------------------------------------
+bool Client::HasAnsweredSinceLastTick( const std::string& endpoint )
+{
+    return sender_.HasAnsweredSinceLastTick( endpoint );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------

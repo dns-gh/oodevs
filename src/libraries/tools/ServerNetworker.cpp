@@ -198,3 +198,12 @@ unsigned long ServerNetworker::GetNbMessagesSent() const
 {
     return sockets_->GetNbMessagesSent();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ServerNetworker::HasAnsweredSinceLastTick
+// Created: LDC 2011-11-23
+// -----------------------------------------------------------------------------
+bool ServerNetworker::HasAnsweredSinceLastTick( const std::string& endpoint )
+{
+    return sockets_->HasAnsweredSinceLastTick( endpoint );
+}
