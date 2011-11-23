@@ -365,7 +365,14 @@ void HierarchyListView_ABC::viewportDragEnterEvent( QDragEnterEvent* pEvent )
 void HierarchyListView_ABC::viewportDragMoveEvent( QDragMoveEvent* pEvent )
 {
     ListView< HierarchyListView_ABC >::viewportDragMoveEvent( pEvent );
-    pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
+    const Entity_ABC* entity = gui::ValuedDragObject::GetValue< Entity_ABC >( pEvent );
+    if( !entity )
+    {
+        pEvent->ignore();
+        return;
+    }
+    QPoint position = viewport()->mapFromParent( pEvent->pos() );
+    pEvent->accept( CanDrop( entity, position ) && ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -404,4 +411,32 @@ bool HierarchyListView_ABC::Drop( const Entity_ABC& entity, ValuedListItem& targ
 bool HierarchyListView_ABC::Drop( const Entity_ABC& , const Entity_ABC& )
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::CanChangeSuperior
+// Created: LGY 2011-11-23
+// -----------------------------------------------------------------------------
+bool HierarchyListView_ABC::CanChangeSuperior( const kernel::Entity_ABC& /*entity*/, const kernel::Entity_ABC& /*superior*/ ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::CanDrop
+// Created: LGY 2011-11-23
+// -----------------------------------------------------------------------------
+bool HierarchyListView_ABC::CanDrop( const kernel::Entity_ABC* entity, QPoint position ) const
+{
+    ValuedListItem* item = static_cast< ValuedListItem* >( itemAt( position ) );
+    if( !entity || !item )
+        return false;
+    if( !item->IsA< const Entity_ABC >() )
+        return false;
+    const Entity_ABC* target = item->GetValue< const Entity_ABC >();
+    if( !target )
+        return false;
+    if( entity->GetId() == target->GetId() )
+        return false;
+    return CanChangeSuperior( *entity, *target );
 }

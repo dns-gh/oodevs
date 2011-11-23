@@ -298,22 +298,6 @@ void LogisticListView::NotifyDeletedInternal( const Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticListView::viewportDragMoveEvent
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void LogisticListView::viewportDragMoveEvent( QDragMoveEvent* pEvent )
-{
-    const Entity_ABC* entity = gui::ValuedDragObject::GetValue< Entity_ABC >( pEvent );
-    if( !entity )
-    {
-        pEvent->ignore();
-        return;
-    }
-    QPoint position = viewport()->mapFromParent( pEvent->pos() );
-    pEvent->accept( CanDrop( entity, position ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticListView::Drop
 // Created: ABR 2011-09-15
 // -----------------------------------------------------------------------------
@@ -417,4 +401,3 @@ bool LogisticListView::CanDrop( const Entity_ABC* srcEntity, QPoint dstPosition 
                 return false; // cannot drop on item on his parent
     return true;
 }
-

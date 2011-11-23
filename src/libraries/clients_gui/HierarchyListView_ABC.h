@@ -71,6 +71,7 @@ protected slots:
     //@{
     virtual void OnSelectionChange( Q3ListViewItem* item );
     virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
     void OnRequestCenter();
     void Update();
     //@}
@@ -103,6 +104,7 @@ private:
     virtual void viewportDragEnterEvent( QDragEnterEvent* pEvent );
     virtual bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
+    virtual bool CanDrop( const kernel::Entity_ABC* entity, QPoint position ) const;
     bool HasAnyChildVisible( gui::ValuedListItem* item, boost::function< bool ( gui::ValuedListItem* ) > func );
     //@}
 
