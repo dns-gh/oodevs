@@ -50,6 +50,8 @@ public:
     virtual void Send( const sword::DispatcherToClient& msg );
 
     void Send( unsigned long tag, tools::Message& message ) const;
+
+    bool HasAnsweredSinceLastTick();
     //@}
 
 private:

@@ -27,6 +27,7 @@ Socket::Socket( boost::shared_ptr< boost::asio::ip::tcp::socket > socket,
     , message_ ( message )
     , endpoint_( endpoint )
     , needCleanup_( false )
+    , answered_( false )
 {
     // NOTHING
 }
@@ -87,6 +88,7 @@ int Socket::Send( unsigned long tag, Message& message )
 // -----------------------------------------------------------------------------
 void Socket::Sent( const Message&, const boost::system::error_code& error )
 {
+    answered_ = true;
     if( error && error != boost::asio::error::operation_aborted && error != previous_)
     {
         previous_ = error;
@@ -169,4 +171,24 @@ void Socket::Read( Message& message, const boost::system::error_code& error )
     }
     else
         message_->OnError( endpoint_, error.message() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Socket::Endpoint
+// Created: LDC 2011-11-17
+// -----------------------------------------------------------------------------
+const std::string& Socket::Endpoint() const
+{
+    return endpoint_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Socket::HasAnsweredSinceLastTick
+// Created: LDC 2011-11-22
+// -----------------------------------------------------------------------------
+bool Socket::HasAnsweredSinceLastTick()
+{
+    bool result = queue_.empty() || answered_;
+    answered_ = false;
+    return result;
 }

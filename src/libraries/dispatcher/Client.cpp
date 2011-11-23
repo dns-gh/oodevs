@@ -116,3 +116,12 @@ void Client::Send( unsigned long tag, tools::Message& message ) const
 {
     sender_.Send( endpoint_, tag, message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Client::HasAnsweredSinceLastTick
+// Created: LDC 2011-11-22
+// -----------------------------------------------------------------------------
+bool Client::HasAnsweredSinceLastTick()
+{
+    return sender_.HasAnsweredSinceLastTick( endpoint_ );
+}

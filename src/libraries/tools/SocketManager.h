@@ -49,6 +49,7 @@ public:
     //! @name Statistics
     //@{
     virtual unsigned long GetNbMessagesSent() const { return nbMessagesSent_; }
+    virtual bool HasAnsweredSinceLastTick( const std::string& endpoint );
     //@}
 
 private:

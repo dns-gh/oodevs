@@ -66,6 +66,7 @@ public:
     //! @name Accessors
     //@{
     virtual unsigned long GetNbMessagesSent() const = 0;
+    virtual bool HasAnsweredSinceLastTick( const std::string& endpoint ) = 0;
     //@}
 };
 
