@@ -43,7 +43,7 @@ PluginProcessHandler::PluginProcessHandler( const dispatcher::Config& config, co
 {
     LoadSimulationConfig( config );
     LoadPluginConfig( xis, config );
-    logger_.LogInfo( "[Sword BML Service]: Wait the first simulation tick before before launching " + process_name + " process." );
+    logger_.LogInfo( LOG_MESSAGE( "Wait the first simulation tick before before launching " + process_name + " process." ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,14 +66,14 @@ void PluginProcessHandler::Receive( const sword::SimToClient& message )
     {
         try
         {
-            logger_.LogInfo( "[Sword BML Service]: Starting " + processName_ + " process." );
+            logger_.LogInfo( LOG_MESSAGE( "Starting " + processName_ + " process." ) );
             internal_.reset( new InternalData() );
             Start();
-            logger_.LogInfo( "[Sword BML Service]: Started." );
+            logger_.LogInfo( LOG_MESSAGE( "Started." ) );
         }
         catch ( std::exception& e )
         {
-            logger_.LogError( e.what());
+            logger_.LogError( LOG_MESSAGE( e.what() ) );
         }
     }
 }
@@ -123,7 +123,7 @@ void PluginProcessHandler::Start()
                  &startupInfo,                          // lpStartupInfo
                  &internal_->pid_ ) )                   // lpProcessInformation
     {
-        const std::string error( "[Sword BML Service]: Could not start process: " + commandLine_ + " error: " + GetLastErrorMessage() + "\"" );
+        const std::string error( "Could not start process: " + commandLine_ + " error: " + GetLastErrorMessage() + "\"" );
         throw std::runtime_error( error );
     }
     static const std::string JOB_NAME = "";
@@ -233,9 +233,13 @@ void PluginProcessHandler::LoadSimulationConfig( const dispatcher::Config& confi
         xif >> xml::start( "profiles" )
             >> xml::list( "profile", boost::bind( &::ReadProfile, _1, boost::ref( profile ), boost::ref( password ) ) );
     }
+	catch( const xml::exception& e ) 
+	{
+		logger_.LogWarning( LOG_MESSAGE( e.what() ) );
+	}
     catch( ... )
     {
-        // NOTHING
+        logger_.LogWarning( LOG_MESSAGE( "Unable to load profile information. Try to load anonymous profile." ) );
     }
     if( profile.empty() )
     {

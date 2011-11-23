@@ -29,18 +29,18 @@ BML_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC
 {
     try
     {
-        logger.LogInfo( "[Sword BML Service]: Registrating..." );
+        logger.LogInfo( LOG_MESSAGE( "Registrating..." ) );
         plugins::bml::PluginProcessHandler* result = new plugins::bml::PluginProcessHandler( config, "sword_bml_service.exe", logger, xis );
-        logger.LogInfo( "[Sword BML Service]: Registred." );
+        logger.LogInfo( LOG_MESSAGE( "Registred." ) );
         return result;
     }
     catch( std::exception& e )
     {
-        logger.LogError( std::string( "[Sword BML Service]: Initialization failed cause: " ) + e.what() );
+        logger.LogError( LOG_MESSAGE( "Initialization failed cause: " + e.what() ) );
     }
     catch( ... )
     {
-        logger.LogError( "[Sword BML Service]: Initialization failed (unhandled error)." );
+        logger.LogError( LOG_MESSAGE( "Initialization failed (unhandled error)." ) );
     }
     return 0;
 }
@@ -53,17 +53,17 @@ BML_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, dispatc
 {
     try
     {
-        logger.LogInfo( "[Sword BML Service]: Unloading..." );
+        logger.LogInfo( LOG_MESSAGE( "Unloading..." ) );
         delete plugin;
-        logger.LogInfo( "[Sword BML Service]: Unloaded." );
+        logger.LogInfo( LOG_MESSAGE( "Unloaded." ) );
     }
     catch( std::exception& e )
     {
-        logger.LogError( std::string( "[Sword BML Service]: Destruction failed cause: " ) + e.what() );
+        logger.LogError( LOG_MESSAGE( "Destruction failed cause: " ) + e.what() );
     }
     catch( ... )
     {
-        logger.LogError( "[Sword BML Service]: Destruction failed (unhandled error)." );
+        logger.LogError( LOG_MESSAGE( "Destruction failed (unhandled error)." ) );
     }
 }
 

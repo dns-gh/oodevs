@@ -48,7 +48,7 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_protobuf.props" />
-    <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -60,7 +60,7 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_protobuf.props" />
-    <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -72,7 +72,7 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_protobuf.props" />
-    <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -84,7 +84,7 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_protobuf.props" />
-    <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -93,18 +93,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>bml_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(RunDir)plugins\bml\$(TargetFileName)</OutputFile>
       <ProgramDatabaseFile>$(RunDir)plugins\bml\$(TargetName)_d.pdb</ProgramDatabaseFile>
     </Link>
     <ClCompile>
-      <PreprocessorDefinitions>bml_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BML_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(RunDir)plugins\bml\$(TargetFileName)</OutputFile>
       <ProgramDatabaseFile>$(RunDir)plugins\bml\$(TargetName)_d.pdb</ProgramDatabaseFile>
     </Link>
@@ -115,7 +113,6 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(RunDir)plugins\bml\$(TargetFileName)</OutputFile>
       <ProgramDatabaseFile>$(RunDir)plugins\bml\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
@@ -126,7 +123,6 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(RunDir)plugins\bml\$(TargetFileName)</OutputFile>
       <ProgramDatabaseFile>$(RunDir)plugins\bml\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
@@ -136,13 +132,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\bml_plugin_dll\DllConfig.h" />
+    <ClInclude Include="..\..\src\libraries\bml_plugin_dll\PluginProcessHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\bml_plugin_dll\main.cpp" />
+    <ClCompile Include="..\..\src\libraries\bml_plugin_dll\PluginProcessHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="clients_kernel.vcxproj">
       <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
+    </ProjectReference>
+    <ProjectReference Include="dispatcher.vcxproj">
+      <Project>{e761ba44-a370-4f9d-97b5-a047e068ba5b}</Project>
     </ProjectReference>
     <ProjectReference Include="ENT.vcxproj">
       <Project>{f03cbc87-1ed6-45ad-8ed7-9a94c248b556}</Project>

@@ -11,9 +11,9 @@
 #define __bml_plugin_dll_config_h_
 
 #ifdef BML_PLUGIN_DLL_EXPORTS
-#define BML_PLUGIN_DLL_API extern "C" __declspec(dllexport)
+# define BML_PLUGIN_DLL_API extern "C" __declspec(dllexport)
 #else
-#define BML_PLUGIN_DLL_API extern "C" __declspec(dllimport)
+# define BML_PLUGIN_DLL_API extern "C" __declspec(dllimport)
 #endif
 
 #endif // __bml_plugin_dll_config_h_
