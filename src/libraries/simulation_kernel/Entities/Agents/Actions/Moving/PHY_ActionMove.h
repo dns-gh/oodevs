@@ -15,6 +15,7 @@
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include "Decision/DEC_PathResult.h"
 #include <boost/shared_ptr.hpp>
 
 class MIL_AgentPion;
@@ -54,10 +55,12 @@ public:
 private:
     //! @name Tools
     //@{
-    void CreateJoiningPath();
-    void DestroyJoiningPath();
+    bool CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint );
+    MT_Vector2D DestroyJoiningPath();
     void AvoidObstacles();
     bool UpdateObjectsToAvoid();
+    void CreateFinalPath();
+    int  CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint );
     //@}
 
 private:
@@ -74,6 +77,7 @@ private:
     T_ObjectKnowledgeSet objectAvoidAttempts_;
     T_KnowledgeObjectVector objectsToAvoid_;
     std::vector< TER_Localisation > geometrySignatures_;
+    bool forceNextPoint_;
 };
 
 #endif // __PHY_ActionMove_h_

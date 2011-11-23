@@ -20,6 +20,7 @@
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DEC_PathPoint.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -35,9 +36,10 @@
 // -----------------------------------------------------------------------------
 PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath )
     : PHY_DecisionCallbackAction_ABC( pion )
-    , pion_     ( pion )
-    , role_     ( pion.GetRole< moving::PHY_RoleAction_Moving >() )
-    , pMainPath_( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
+    , pion_                         ( pion )
+    , role_                         ( pion.GetRole< moving::PHY_RoleAction_Moving >() )
+    , pMainPath_                    ( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
+    , forceNextPoint_               ( false )
 {
     if( pMainPath_.get() )
         Callback( static_cast< int >( DEC_PathWalker::eRunning ) );
@@ -71,27 +73,33 @@ void PHY_ActionMove::StopAction()
 // Name: PHY_ActionMove::CreateJoiningPath
 // Created: NLD 2004-09-29
 // -----------------------------------------------------------------------------
-void PHY_ActionMove::CreateJoiningPath()
+bool PHY_ActionMove::CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint )
 {
     assert( pMainPath_.get() );
     assert( pMainPath_->GetState() != DEC_Path_ABC::eComputing );
     assert( !pJoiningPath_.get() );
     const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    pJoiningPath_.reset( new DEC_Agent_Path( pion_, pMainPath_->GetPointOnPathCloseTo( vPionPos ), pMainPath_->GetPathType() ) );
+    const MT_Vector2D& vTestPos = pMainPath_->GetPointOnPathCloseTo( vPionPos, lastJoiningPoint, forceNextPoint );
+    if( vPionPos == vTestPos )
+        return false;
+    pJoiningPath_.reset( new DEC_Agent_Path( pion_, vTestPos, pMainPath_->GetPathType() ) );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pJoiningPath_ );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionMove::DestroyJoiningPath
 // Created: NLD 2004-09-29
 // -----------------------------------------------------------------------------
-void PHY_ActionMove::DestroyJoiningPath()
+MT_Vector2D PHY_ActionMove::DestroyJoiningPath()
 {
     if( !pJoiningPath_.get() )
-        return;
+        return MT_Vector2D();
     role_.MoveCanceled( pJoiningPath_ );
     pJoiningPath_->Cancel();
+    MT_Vector2D lastPoint = pJoiningPath_->GetResult().back()->GetPos();
     pJoiningPath_.reset();
+    return lastPoint;
 }
 
 namespace
@@ -171,23 +179,6 @@ void PHY_ActionMove::AvoidObstacles()
     if( objectAvoidAttempts_.find( nObjectToAvoidDiaID ) != objectAvoidAttempts_.end() )
         return;
     objectAvoidAttempts_.insert( nObjectToAvoidDiaID );
-
-    if( pJoiningPath_.get() )
-    {
-        DestroyJoiningPath();
-        CreateJoiningPath ();
-    }
-    else
-    {
-        assert( pMainPath_.get() );
-        boost::shared_ptr< DEC_Agent_Path > pNewMainPath( new DEC_Agent_Path( *pMainPath_ ) );
-        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pNewMainPath ); // $$$ à déplacer dans DEC_Agent_Path::Initialize()
-
-        role_.MoveCanceled( pMainPath_ );
-        pMainPath_->Cancel();
-
-        pMainPath_ = pNewMainPath;
-    }
 }
 
 // =============================================================================
@@ -213,18 +204,36 @@ void PHY_ActionMove::Execute()
 
     if( nReturn == DEC_PathWalker::eItineraireMustBeJoined )
     {
-        role_.MoveSuspended( pCurrentPath );
-        DestroyJoiningPath();
-        CreateJoiningPath ();
-        pCurrentPath = pJoiningPath_;
-        nReturn      = role_.Move( pCurrentPath );
+        MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
+        nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint );
+        forceNextPoint_ = false;
     }
-
-    if( pCurrentPath == pJoiningPath_ && nReturn == DEC_PathWalker::eFinished )
+    else if( nReturn == DEC_PathWalker::eBlockedByObject )
     {
-        DestroyJoiningPath();
-        nReturn      = DEC_PathWalker::eRunning;
+        if( ( pCurrentPath != pJoiningPath_ && !pJoiningPath_.get() ) || pCurrentPath == pJoiningPath_ )
+        {
+            DestroyJoiningPath();
+            nReturn = CreateAdaptedPath( pCurrentPath, MT_Vector2D() );
+        }
+        forceNextPoint_ = false;
     }
+    else if( pCurrentPath == pJoiningPath_ )
+    {
+        forceNextPoint_ = false;
+        if( nReturn == DEC_PathWalker::eFinished )
+        {
+            DestroyJoiningPath();
+            nReturn = DEC_PathWalker::eRunning;
+        }
+        else if( nReturn == DEC_PathWalker::ePartialPath )
+        {
+            forceNextPoint_ = true;
+            MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
+            nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint );
+        }
+    }
+    else
+        forceNextPoint_ = false;
 
     Callback( nReturn );
 }
@@ -239,4 +248,35 @@ void PHY_ActionMove::ExecuteSuspended()
     if( pCurrentPath )
         role_.MoveSuspended( pCurrentPath );
     Callback( static_cast< int >( DEC_PathWalker::ePaused ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionMove::CreateFinalPath
+// Bypassd: CMA 2011-11-21
+// -----------------------------------------------------------------------------
+void PHY_ActionMove::CreateFinalPath()
+{
+    assert( pMainPath_.get() );
+    const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    boost::shared_ptr< DEC_Agent_Path > pNewMainPath( new DEC_Agent_Path( pion_, vPionPos, pMainPath_->GetPathType() ) );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pNewMainPath );
+    role_.MoveCanceled( pMainPath_ );
+    pMainPath_->Cancel();
+    pMainPath_ = pNewMainPath;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionMove::CreateAdaptedPath
+// Bypassd: CMA 2011-11-22
+// -----------------------------------------------------------------------------
+int PHY_ActionMove::CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint )
+{
+    role_.MoveSuspended( pCurrentPath );
+    if( CreateJoiningPath( lastJoiningPoint, forceNextPoint_ ) )
+    {
+        pCurrentPath = pJoiningPath_;
+        return role_.Move( pCurrentPath );
+    }
+    CreateFinalPath();
+    return DEC_PathWalker::eRunning;
 }

@@ -48,12 +48,15 @@ DEC_Path_KnowledgeObject::~DEC_Path_KnowledgeObject()
 double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData&, double weight ) const
 {
     const MT_Line line( from, to );
-    if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) )
+    if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) || localisation_.IsInside( from ) )
     {
-        if( ( rMaxTrafficability_ != 0. ) && ( weight > rMaxTrafficability_ ) )
-            return -1.f; //$$$$ CMA in order to block the unit if there is a non-trafficable object
-        if( rCostIn_ >= rObstructionThreshold_ ) //$$$$ SLG put the value in pathfind xml
-            return -1;  //$$$$ SLG in order to block the unit if there is an object
+        if( realLocalisation_.IsInside( to ) || realLocalisation_.IsInside( from ) )
+        {
+            if( ( rMaxTrafficability_ != 0. ) && ( weight > rMaxTrafficability_ ) )
+                return -1.f; //$$$$ CMA in order to block the unit if there is a non-trafficable object
+            if( rCostIn_ >= rObstructionThreshold_ ) //$$$$ SLG put the value in pathfind xml
+                return -1;  //$$$$ SLG in order to block the unit if there is an object
+        }
         return rCostIn_;
     }
     return std::numeric_limits< double >::min();

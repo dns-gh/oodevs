@@ -41,7 +41,8 @@ public:
         eNotAllowed, // Neutralized
         eAlreadyMoving,
         eItineraireMustBeJoined,
-        ePartialPath
+        ePartialPath,
+        eBlockedByObject
     };
     //@}
 
@@ -151,6 +152,7 @@ private:
     bool bFuelReportSent_;
     bool bTerrainReportSent_;
     boost::shared_ptr< DEC_PathResult > pCurrentPath_;
+    E_ReturnCode pathSet_;
     //@}
 };
 

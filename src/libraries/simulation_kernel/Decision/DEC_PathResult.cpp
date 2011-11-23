@@ -37,31 +37,57 @@ DEC_PathResult::~DEC_PathResult()
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_PathResult::GetClosestPointOnPath
+// Name: DEC_PathResult::GetPointOnPathCloseTo
 // Created: AGN 03-01-13
 //-----------------------------------------------------------------------------
-MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest ) const
+MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const T_PointVector& pathPoints, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint ) const
 {
     assert( !resultList_.empty() );
     CIT_PathPointList itStart = resultList_.begin();
     CIT_PathPointList itEnd   = resultList_.begin();
     ++itEnd;
-    MT_Vector2D result( (*itStart)->GetPos() );
+
+    double precision = 0.0001;
+    CIT_PointVector itNextPoint = pathPoints.begin();
+    assert( itNextPoint->SquareDistance( (*itStart)->GetPos() ) < precision );
+    ++itNextPoint;
+
     double rDistance = std::numeric_limits< double >::max();
+    bool useNextPoint = false;
     for( itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
+        if( itNextPoint->SquareDistance( (*itStart)->GetPos() ) < precision )
+        {
+            if( lastJoiningPoint != MT_Vector2D( 0, 0 ) && itNextPoint->SquareDistance( lastJoiningPoint ) < precision )
+                break;
+            useNextPoint = true;
+        }
+
         MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
         MT_Vector2D vClosest = vLine.ClosestPointOnLine( posToTest );
         double rCurrentDistance = vClosest.SquareDistance( posToTest );
         if( rCurrentDistance < rDistance )
         {
             rDistance = rCurrentDistance;
-            result = vClosest;
+            if( useNextPoint )
+            {
+                ++itNextPoint;
+                useNextPoint = false;
+            }
         }
     }
-    assert( !_isnan( result.rX_ ) );
-    assert( !_isnan( result.rY_ ) );
-    return result;
+    assert( !_isnan( itNextPoint->rX_ ) );
+    assert( !_isnan( itNextPoint->rY_ ) );
+
+    if( forceNextPoint )
+    {
+        if( itNextPoint != (--pathPoints.end()) )
+            ++itNextPoint;
+        else
+            return posToTest;
+    }
+
+    return *itNextPoint;
 }
 
 // -----------------------------------------------------------------------------
