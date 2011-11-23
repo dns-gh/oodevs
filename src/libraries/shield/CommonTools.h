@@ -113,8 +113,9 @@ namespace shield
     {
         CONVERT_ID( automat );
         CONVERT_ID( formation );
-        //CONVERT_SIMPLE_LIST( party );
         CONVERT_ID( knowledge_group );
+        for( int i = 0; i < from.party().size(); ++i )
+            to->add_party()->set_id( from.party( i ).id() );
     }
     template< typename From, typename To >
     void ConvertPointsToLocation( const From& from, To* to )
