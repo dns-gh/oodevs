@@ -1355,24 +1355,28 @@ Motivo: %3
 <context>
     <name>LoginDialog</name>
     <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Password: </source>
-        <translation>Clave:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
         <source>Anonymous</source>
         <translation>Anónimo</translation>
     </message>
     <message>
         <source>Select user profile</source>
         <translation>Seleccionar perfil de usuario</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter the password...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -77,7 +77,7 @@ private:
     const Profile& profile_;
     Network& network_;
     Q3IconView* users_;
-    Q3HBox* passwordBox_;
+    QWidget* widget_;
     QLineEdit* password_;
     T_Profiles profiles_;
     //@}

@@ -57,44 +57,52 @@ LoginDialog::LoginDialog( QWidget* pParent, const Profile& profile, Network& net
 {
     setCaption( tools::translate( "LoginDialog", "Select user profile" ) );
 
-    Q3GridLayout* grid = new Q3GridLayout( this, 3, 2, 0, 5 );
-    grid->setMargin( 5 );
-    grid->setRowStretch( 0, 10 );
-    grid->setColStretch( 0, 3 );
+    QVBoxLayout* mainLayout = new QVBoxLayout( this );
 
-    {
-        users_ = new Q3IconView( this );
-        users_->setGridX( 300 );
-        users_->setGridY( 30 );
-        users_->setMinimumSize( 345, 200 );
-        users_->setWordWrapIconText( true );
-        users_->setSorting( true );
-        users_->setItemsMovable( false );
-        users_->setHScrollBarMode( Q3ScrollView::AlwaysOff );
-        users_->setItemTextPos( Q3IconView::Right );
-        users_->setResizeMode( Q3IconView::Adjust );
-        connect( users_, SIGNAL( selectionChanged( Q3IconViewItem* ) ), SLOT( OnSelectItem( Q3IconViewItem* ) ) );
-        connect( users_, SIGNAL( doubleClicked( Q3IconViewItem* ) ), SLOT( OnAccept() ) );
-        connect( users_, SIGNAL( returnPressed( Q3IconViewItem* ) ), SLOT( OnAccept() ) );
-        grid->addMultiCellWidget( users_, 0, 0, 0, 2 );
-    }
-    {
-        passwordBox_ = new Q3HBox( this );
-        QLabel* label = new QLabel( tools::translate( "LoginDialog", "Password: " ), passwordBox_ );
-        password_ = new QLineEdit( passwordBox_ );
-        password_->setEchoMode( QLineEdit::Password );
-        label->setBuddy( password_ );
-        grid->addWidget( passwordBox_, 1, 0, Qt::AlignLeft );
-        passwordBox_->hide();
-    }
-    {
-        QPushButton* ok     = new QPushButton( tools::translate( "LoginDialog", "Ok" ), this );
-        QPushButton* cancel = new QPushButton( tools::translate( "LoginDialog", "Cancel" ), this );
-        grid->addWidget( ok, 1, 1 );
-        grid->addWidget( cancel, 1, 2 );
-        connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );
-        connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
-    }
+    users_ = new Q3IconView( this );
+    users_->setGridX( 300 );
+    users_->setGridY( 30 );
+    users_->setMinimumSize( 345, 200 );
+    users_->setWordWrapIconText( true );
+    users_->setSorting( true );
+    users_->setItemsMovable( false );
+    users_->setHScrollBarMode( Q3ScrollView::AlwaysOff );
+    users_->setItemTextPos( Q3IconView::Right );
+    users_->setResizeMode( Q3IconView::Adjust );
+    connect( users_, SIGNAL( selectionChanged( Q3IconViewItem* ) ), SLOT( OnSelectItem( Q3IconViewItem* ) ) );
+    connect( users_, SIGNAL( doubleClicked( Q3IconViewItem* ) ), SLOT( OnAccept() ) );
+    connect( users_, SIGNAL( returnPressed( Q3IconViewItem* ) ), SLOT( OnAccept() ) );
+    mainLayout->addWidget( users_ );
+
+    widget_ = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout( widget_ );
+    QHBoxLayout* informationLayout = new QHBoxLayout();
+    QLabel* information = new QLabel( tools::translate( "LoginDialog", "Please enter the password..." ) );
+    QFont font;
+    font.setBold( true );
+    information->setFont( font );
+    information->setAlignment( Qt::AlignHCenter );
+    informationLayout->addWidget( information );
+    QHBoxLayout* passwordLayout = new QHBoxLayout();
+    QLabel* label = new QLabel( tools::translate( "LoginDialog", "Password: " ) );
+    password_ = new QLineEdit();
+    password_->setEchoMode( QLineEdit::Password );
+    label->setBuddy( password_ );
+    passwordLayout->addWidget( label );
+    passwordLayout->addWidget( password_ );
+    widget_->hide();
+    layout->addLayout( informationLayout );
+    layout->addLayout( passwordLayout );
+    mainLayout->addWidget( widget_ );
+
+    QHBoxLayout* buttonBox = new QHBoxLayout();
+    QPushButton* ok = new QPushButton( tools::translate( "LoginDialog", "Ok" ) );
+    QPushButton* cancel = new QPushButton( tools::translate( "LoginDialog", "Cancel" ) );
+    connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );
+    connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
+    buttonBox->addWidget( ok );
+    buttonBox->addWidget( cancel );
+    mainLayout->addLayout( buttonBox );
     controllers_.Register( *this );
 }
 
@@ -133,7 +141,7 @@ void LoginDialog::showEvent( QShowEvent* /*ev*/ )
 // -----------------------------------------------------------------------------
 void LoginDialog::OnAccept()
 {
-    if( passwordBox_->isShown() && password_->text().isEmpty() )
+    if( widget_->isShown() && password_->text().isEmpty() )
         return;
     if( UserItem* item = static_cast< UserItem* >( users_->currentItem() ) )
     {
@@ -161,6 +169,6 @@ void LoginDialog::OnReject()
 void LoginDialog::OnSelectItem( Q3IconViewItem* item )
 {
     UserItem* user = static_cast< UserItem* >( item );
-    passwordBox_->setShown( user->RequiresPassword() );
+    widget_->setShown( user->RequiresPassword() );
     password_->clear();
 }

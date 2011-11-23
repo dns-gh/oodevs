@@ -1355,24 +1355,28 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>LoginDialog</name>
     <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Password: </source>
-        <translation>Mot de passe:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
         <source>Anonymous</source>
         <translation>Anonyme</translation>
     </message>
     <message>
         <source>Select user profile</source>
         <translation>Sélectionner un profil utilisateur</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Please enter the password...</source>
+        <translation>Veuillez renseigner un mot de passe...</translation>
+    </message>
+    <message>
+        <source>Password: </source>
+        <translation>Mot de passe:</translation>
     </message>
 </context>
 <context>
