@@ -56,7 +56,7 @@
   <report category="operational" id="39" message="En progression vers l'ennemi : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report category="operational" id="40" message="Decroche"/>
+  <report category="operational" id="40" message="Décroche"/>
   <report category="operational" id="41" message="Ennemi sur objectif : %1">
     <parameter type="AgentKnowledge"/>
   </report>
@@ -78,7 +78,7 @@
   <report category="operational" id="57" message="Activation du brouillage"/>
   <report category="operational" id="58" message="Désactivation du brouillage"/>
   <report category="operational" id="59" message="Activation du système d'écoute"/>
-  <report category="operational" id="60" message="Désactivation du système écoute"/>
+  <report category="operational" id="60" message="Désactivation du système d'écoute"/>
   <report category="operational" id="61" message="Activation du système d'écoute radar"/>
   <report category="operational" id="62" message="Désactivation du système d'écoute radar"/>
   <report category="operational" id="63" message="Début de liaison"/>
@@ -153,7 +153,7 @@
   <report category="operational" id="103" message="Allocation consentie bientôt épuisée : %1">
     <parameter type="ResourceType"/>
   </report>
-  <report category="operational" id="104" message="Dépassément des capacités de stockage"/>
+  <report category="operational" id="104" message="Dépassement des capacités de stockage"/>
   <report category="operational" id="105" message="Seuil logistique en dotations dépassé en %1">
     <parameter type="ResourceType"/>
   </report>
@@ -164,7 +164,7 @@
   <report category="operational" id="108" message="Ravitaillement en stock effectué"/>
   <report category="operational" id="109" message="Ravitaillement en dotations annulé"/>
   <report category="operational" id="110" message="Ravitaillement en stock annulé"/>
-  <report category="operational" id="111" message="Humain retour de santé"/>
+  <report category="operational" id="111" message="Humain de retour de santé"/>
   <report category="operational" id="112" message="Alerte disponibilité en moyens de relève"/>
   <report category="operational" id="113" message="Alerte disponibilité en moyens de ramassage"/>
   <report category="operational" id="114" message="Alerte disponibilité médecins"/>
@@ -211,8 +211,8 @@
   <report category="operational" id="151" message="Tenue de protection NBC enlevée"/>
   <report category="operational" client-function-trigger="NBCAlert" id="152" message="Alerte NBC niveau4"/>
   <report category="operational" id="153" message="Fin d'alerte NBC niveau4"/>
-  <report category="operational" id="154" message="Site de décontamination anime"/>
-  <report category="operational" id="155" message="Site de décontamination desactive"/>
+  <report category="operational" id="154" message="Site de décontamination animé"/>
+  <report category="operational" id="155" message="Site de décontamination désactivé"/>
   <report category="operational" id="156" message="Demande de décontamination"/>
   <report category="operational" id="157" message="Zone reconnue"/>
   <report category="operational" id="158" message="Zone décontaminée"/>
@@ -284,13 +284,13 @@
   <report category="operational" id="220" message="Trace id : %1">
     <parameter type="Integer"/>
   </report>
-  <report category="operational" id="221" message="Emploi de la force interdit face àux foules"/>
-  <report category="operational" id="222" message="Maintien à distance par des moyens non létaux face àux foules"/>
-  <report category="operational" id="223" message="Armes létales autorisées face àux foules"/>
+  <report category="operational" id="221" message="Emploi de la force interdit face aux foules"/>
+  <report category="operational" id="222" message="Maintien à distance par des moyens non létaux face aux foules"/>
+  <report category="operational" id="223" message="Armes létales autorisées face aux foules"/>
   <report category="operational" client-function-trigger="CrowAlert" id="224" message="Foule détectée : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" client-function-trigger="FiredAlert" id="225" message="Prise à partie par la foule : %1">
+  <report category="operational" client-function-trigger="FiredAlert" id="225" message="Pris à partie par la foule : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="226" message="Riposte contre la foule : %1">
@@ -461,10 +461,10 @@
   <report category="operational" id="320" message="Embarquement - interruption"/>
   <report category="operational" id="321" message="Embarquement - reprise"/>
   <report category="operational" id="322" message="Embarquement - fin"/>
-  <report category="operational" id="323" message="Debarquement - début"/>
-  <report category="operational" id="324" message="Debarquement - interruption"/>
-  <report category="operational" id="325" message="Debarquement - reprise"/>
-  <report category="operational" id="326" message="Debarquement - fin"/>
+  <report category="operational" id="323" message="Débarquement - début"/>
+  <report category="operational" id="324" message="Débarquement - interruption"/>
+  <report category="operational" id="325" message="Débarquement - reprise"/>
+  <report category="operational" id="326" message="Débarquement - fin"/>
   <report category="operational" id="327" message="Protection active réussie"/>
   <report category="operational" id="328" message="Protection active hard kill réussie"/>
   <report category="operational" id="329" message="Empoisonné"/>
@@ -560,18 +560,18 @@
   <report category="exceptional" id="388" message="Rencontre de réfugiés ou de population civile"/>
   <report category="exceptional" id="389" message="DPREs ou prisonniers sans ravitaillement"/>
   <report category="exceptional" id="390" message="Capacité du camp dépassée"/>
-  <report category="operational" id="391" message="Pas de positions pour détruire les cibles"/>
-  <report category="operational" id="392" message="Pas de positions pour neutraliser les cibles"/>
-  <report category="operational" id="393" message="Pas de positions pour se mettre à couvert"/>
-  <report category="operational" id="394" message="Pas de positions pour observer les cibles"/>
-  <report category="operational" id="395" message="Pas de positions pour atteindre les cibles"/>
+  <report category="operational" id="391" message="Pas de position pour détruire les cibles"/>
+  <report category="operational" id="392" message="Pas de position pour neutraliser les cibles"/>
+  <report category="operational" id="393" message="Pas de position pour se mettre à couvert"/>
+  <report category="operational" id="394" message="Pas de position pour observer les cibles"/>
+  <report category="operational" id="395" message="Pas de position pour atteindre les cibles"/>
   <report category="operational" id="396" message="Reconnaissance impossible (l'objectif n'est pas accessible)"/>
   <report category="operational" id="397" message="L'objectif n'est pas accessible"/>
-  <report category="operational" id="398" message="Pas de points clés dans la zone"/>
+  <report category="operational" id="398" message="Pas de point clés dans la zone"/>
   <report category="operational" id="399" message="Etat engagé"/>
   <report category="operational" id="400" message="Etat désengagé"/>
   <report category="operational" id="401" message="Unité déjà engagée"/>
   <report category="operational" id="402" message="Unité déjà désengagée"/>
   <report category="operational" id="403" message="Aucune unité ne peut effectuer la mission principale"/>
 </reports>
-<!-- signature="1239943367" -->
+<!-- signature="0220990275" -->
