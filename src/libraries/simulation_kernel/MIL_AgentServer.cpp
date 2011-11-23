@@ -361,9 +361,9 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
          << nTimeFactor_
          << nCurrentTimeStep_
          << nSimTime_
+         << pMeteoDataManager_    // données statiques + météo locales gérées par MOS
          << pEntityManager_
 //         << pWorkspaceDIA_        // uniquement données statiques
-         << pMeteoDataManager_    // données statiques + météo locales gérées par MOS
 //         << timerManager_         // pas de données ( MIL_AgentServer::Initialize )
 //         << pTacticalLineManager_ // plus de limit et de lima
 //         << pPathFindManager_     // pas stockés
@@ -388,9 +388,9 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> nTimeFactor_
          >> nCurrentTimeStep_
          >> nSimTime_
+         >> pMeteoDataManager_
          >> pEntityManager_
 //         >> pWorkspaceDIA_
-         >> pMeteoDataManager_
 //         >> timerManager_
 //         >> pTacticalLineManager_
 //         >> pPathFindManager_
