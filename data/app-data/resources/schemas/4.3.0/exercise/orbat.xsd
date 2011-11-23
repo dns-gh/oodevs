@@ -435,6 +435,7 @@
                 <xs:documentation xml:lang="fr">Définit les attributs spécifiques à l'objet.</xs:documentation>
               </xs:annotation>
             </xs:element>
+            <xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
           </xs:choice>
           <xs:attribute name="type" type="xs:string" use="required">
             <xs:annotation>
@@ -1136,6 +1137,7 @@
           <xs:documentation xml:lang="fr">Définit la liste des points caractérisant une ligne brisée.</xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
     </xs:sequence>
     <xs:attribute name="name" type="xs:string" use="required">
       <xs:annotation>
