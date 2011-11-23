@@ -28,7 +28,7 @@ using namespace gui;
 PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory, gui::TableItemDisplayer& displayer )
     : QScrollArea( parent )
     , controllers_( controllers )
-    , selected_   ( controllers )
+    , selected_   ( 0 )
     , displayer_  ( displayer )
 {
     table_ = new gui::PropertiesWidget( controllers_.controller_, this, tools::translate( "gui::PropertiesPanel", "Properties" ), factory, displayer_ );
