@@ -220,7 +220,7 @@ void ProfilesPanel::Filter()
 void ProfilesPanel::Clean()
 {
     dataModel_->clear();
-    dataModel_->setColumnCount( 5 );
+    dataModel_->setColumnCount( 6 );
     tableView_->horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
     tableView_->setColumnWidth( 0, 20 );
     tableView_->setColumnWidth( 2, 25 );
@@ -228,4 +228,3 @@ void ProfilesPanel::Clean()
     tableView_->setColumnWidth( 4, 25 );
     tableView_->setColumnWidth( 5, 25 );
 }
-
