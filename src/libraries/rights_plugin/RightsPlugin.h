@@ -95,8 +95,8 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, dispatcher::Profile* > T_Profiles;
-    typedef T_Profiles::iterator                             IT_Profiles;
-    typedef T_Profiles::const_iterator                      CIT_Profiles;
+    typedef T_Profiles::iterator                         IT_Profiles;
+    typedef T_Profiles::const_iterator                  CIT_Profiles;
     //@}
 
 private:

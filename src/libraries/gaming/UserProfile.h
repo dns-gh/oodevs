@@ -62,6 +62,7 @@ public:
     QString GetPassword() const;
     int GetRole() const;
     bool IsSupervisor() const;
+    bool IsPasswordProtected() const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     void SetPassword( const QString& password );

@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "UserProfile.h"
-
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -231,6 +230,15 @@ int UserProfile::GetRole() const
 bool UserProfile::IsSupervisor() const
 {
     return supervision_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::IsPasswordProtected
+// Created: LGY 2011-11-22
+// -----------------------------------------------------------------------------
+bool UserProfile::IsPasswordProtected() const
+{
+    return password_ != "";
 }
 
 namespace

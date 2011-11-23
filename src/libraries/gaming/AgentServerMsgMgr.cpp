@@ -2166,6 +2166,16 @@ void AgentServerMsgMgr::SetElements( Model& model, Profile& profile )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::Reconnect
+// Created: LGY 2011-11-22
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::Reconnect( const std::string& login, const std::string& password )
+{
+    GetModel().Purge();
+    GetProfile().Login( login, password );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::GetModel
 // Created: SBO 2006-07-06
 // -----------------------------------------------------------------------------

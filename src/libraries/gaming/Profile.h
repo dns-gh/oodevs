@@ -109,8 +109,8 @@ private:
 
     //! @name Helpers
     //@{
-    void Update( const sword::Profile& profile );
     void Clean();
+    void Update( const sword::Profile& profile );
     void ResolveEntities( const Model& model );
     template< typename Entity >
     void ResolveEntities( const tools::Resolver_ABC< Entity >& resolver, const T_Ids& readIds, const T_Ids& readWriteIds );

@@ -139,6 +139,9 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         ack.Send( client );
         return;
     }
+    CIT_Profiles it = authenticated_.find( link );
+    if( it != authenticated_.end() )
+        container_.NotifyClientLeft( client, link );
     Profile* profile = profiles_->Authenticate( message.login(), message.password() );
     if( !profile )
     {

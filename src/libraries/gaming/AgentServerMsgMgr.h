@@ -244,6 +244,7 @@ public:
     virtual void Send( const sword::ClientToMessenger& message ) ;
 
     void SetElements( Model& model, Profile& profile );
+    void Reconnect( const std::string& login, const std::string& password );
     //@}
 
     //! @name Callbacks/listeners

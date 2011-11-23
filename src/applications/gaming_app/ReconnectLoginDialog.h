@@ -7,44 +7,42 @@
 //
 // *****************************************************************************
 
-#ifndef __LoginDialog_h_
-#define __LoginDialog_h_
+#ifndef __ReconnectLoginDialog_h_
+#define __ReconnectLoginDialog_h_
 
-#include <boost/noncopyable.hpp>
+#include "LoginDialog.h"
+
+class UserProfile;
+class Network;
 
 // =============================================================================
-/** @class  LoginDialog
-    @brief  Login dialog
+/** @class  ReconnectLoginDialog
+    @brief  Reconnect login dialog
 */
-// Created: AGE 2006-10-11
+// Created: LGY 2011-11-23
 // =============================================================================
-class LoginDialog : public QDialog
-                  , private boost::noncopyable
+class ReconnectLoginDialog : public LoginDialog
 {
-    Q_OBJECT
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LoginDialog( QWidget* pParent );
-    virtual ~LoginDialog();
+             ReconnectLoginDialog( QWidget* pParent, const UserProfile& profile, Network& network );
+    virtual ~ReconnectLoginDialog();
     //@}
 
-private slots:
-    //! @name Slots
+private:
+    //! @name Operations
     //@{
     virtual void OnAccept();
-    virtual void OnReject();
     virtual void OnSelectItem( Q3IconViewItem* item );
     //@}
 
-protected:
+private:
     //! @name Member data
     //@{
-    Q3IconView* users_;
-    QWidget* widget_;
-    QLineEdit* password_;
+    const UserProfile& profile_;
+    Network& network_;
     //@}
 };
 
-#endif // __LoginDialog_h_
+#endif // __ReconnectLoginDialog_h_

@@ -21,6 +21,7 @@ namespace kernel
 
 class UserProfile;
 class Profile;
+class Network;
 
 // =============================================================================
 /** @class  ProfilesPanel
@@ -39,7 +40,7 @@ class ProfilesPanel : public QDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers );
+             ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Network& network );
     virtual ~ProfilesPanel();
     //@}
 
@@ -53,6 +54,14 @@ private:
     virtual void NotifyUpdated( const Profile& profile );
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    void Reconnect();
+    void Filter();
+    //@}
+
+private:
     //! @name Types
     //@{
     typedef std::vector< const UserProfile* > T_UserProfiles;
@@ -60,14 +69,22 @@ private:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void Clean();
+    //@}
+
+private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    Network& network_;
     QTableView* tableView_;
     QSortFilterProxyModel* proxyModel_;
     QStandardItemModel* dataModel_;
     T_UserProfiles profiles_;
     QIcon star_;
+    QIcon lock_;
     QIcon profile_;
     QIcon red_;
     QIcon green_;

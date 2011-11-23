@@ -790,6 +790,12 @@
     <ClCompile Include="..\..\src\applications\gaming_app\ProfilesPanel.cpp">
       <Filter>Source Files\Panels\Profiles</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ConnectLoginDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ReconnectLoginDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1139,6 +1145,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\InfoFuneralDialog.h">
       <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ConnectLoginDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\ReconnectLoginDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

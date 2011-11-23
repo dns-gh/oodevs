@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\gaming_app\Application.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\Config.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\ConnectLoginDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\gaming_app_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -162,6 +163,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\EventToolbar.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\OrbatToolbar.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ProfilesPanel.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\ReconnectLoginDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ReplayerToolbar.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\SIMControlToolbar.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\StatusBar.cpp" />
@@ -379,6 +381,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h" />
+    <ClInclude Include="..\..\src\applications\gaming_app\ConnectLoginDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\gaming_app_pch.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\InfoFuneralDialog.h" />
@@ -909,6 +912,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\gaming_app\ReconnectLoginDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\ResourceLinksDialog.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\UserProfileDialog.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>

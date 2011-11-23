@@ -152,7 +152,7 @@ void Profile::Update( const Model& model, const sword::ProfileUpdate& message )
         Update( message.profile() );
         ResolveEntities( model );
         controller_.Update( *this );
-        controller_.Update( *static_cast< Profile_ABC* >(this ) );
+        controller_.Update( *static_cast< Profile_ABC* >( this ) );
     }
 }
 

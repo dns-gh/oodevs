@@ -10,29 +10,36 @@
 #include "gaming_app_pch.h"
 #include "ProfilesPanel.h"
 #include "moc_ProfilesPanel.cpp"
+#include "ReconnectLoginDialog.h"
 #include "gaming/Profile.h"
 #include "gaming/UserProfile.h"
+#include "gaming/Network.h"
+#include "gaming/AgentServerMsgMgr.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
+
+#pragma warning( disable : 4355 )
 
 // -----------------------------------------------------------------------------
 // Name: ProfilesPanel constructor
 // Created: LGY 2011-11-15
 // -----------------------------------------------------------------------------
-ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers )
+ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Network& network )
     : QDockWidget( "Profiles", mainWindow )
-    , controllers_( controllers )
-    , star_       ( "resources/images/gaming/star.png" )
-    , profile_    ( "resources/images/gaming/current.png" )
-    , red_        ( "resources/images/gaming/red.png" )
-    , green_      ( "resources/images/gaming/green.png" )
+    , controllers_ ( controllers )
+    , network_     ( network )
+    , star_        ( "resources/images/gaming/star.png" )
+    , lock_        ( "resources/images/gaming/lock.png" )
+    , profile_     ( "resources/images/gaming/current.png" )
+    , red_         ( "resources/images/gaming/red.png" )
+    , green_       ( "resources/images/gaming/green.png" )
 {
     setObjectName( "ProfilesPanel" );
     QWidget* main = new QWidget( this );
     QVBoxLayout* mainLayout = new QVBoxLayout( main );
     setCaption( tools::translate( "Profiles", "Profiles" ) );
     dataModel_ = new QStandardItemModel();
-    dataModel_->setColumnCount( 5 );
+    dataModel_->setColumnCount( 6 );
 
     proxyModel_ = new QSortFilterProxyModel();
     proxyModel_->setDynamicSortFilter( true );
@@ -42,17 +49,27 @@ ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& cont
     tableView_ = new QTableView();
     tableView_->setModel( proxyModel_ );
     tableView_->setSortingEnabled( true );
+    tableView_->setAlternatingRowColors( true );
     tableView_->setSelectionBehavior( QAbstractItemView::SelectRows );
     tableView_->setSelectionMode( QAbstractItemView::SingleSelection );
     tableView_->verticalHeader()->setVisible( false );
     tableView_->horizontalHeader()->setVisible( false );
-    tableView_->setAlternatingRowColors( true );
     tableView_->horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
     tableView_->setColumnWidth( 0, 20 );
     tableView_->setColumnWidth( 2, 25 );
     tableView_->setColumnWidth( 3, 25 );
     tableView_->setColumnWidth( 4, 25 );
+    tableView_->setColumnWidth( 5, 25 );
     mainLayout->addWidget( tableView_ );
+
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    QPushButton* reconnect = new QPushButton( "Reconnect with..." );
+    QPushButton* filter = new QPushButton( "Filter view" );
+    buttonLayout->addWidget( reconnect );
+    buttonLayout->addWidget( filter );
+    connect( reconnect, SIGNAL( clicked() ), this, SLOT( Reconnect() ) );
+    connect( filter, SIGNAL( clicked() ), this, SLOT( Filter() ) );
+    mainLayout->addLayout( buttonLayout );
     setWidget( main );
     controllers_.Register( *this );
 }
@@ -95,8 +112,9 @@ void ProfilesPanel::NotifyCreated( const UserProfile& profile )
     dataModel_->setItem( rows, 0, CreateItem( "" ) );
     dataModel_->setItem( rows, 1, CreateItem( "" ) );
     dataModel_->setItem( rows, 2, CreateItem( "" ) );
-    dataModel_->setItem( rows, 3, CreateItem( red_ ) );
-    dataModel_->setItem( rows, 4, CreateItem( "(0)" ) );
+    dataModel_->setItem( rows, 3, CreateItem( "" ) );
+    dataModel_->setItem( rows, 4, CreateItem( red_ ) );
+    dataModel_->setItem( rows, 5, CreateItem( "(0)" ) );
     proxyModel_->sort( 1 );
 }
 
@@ -117,6 +135,8 @@ void ProfilesPanel::NotifyUpdated( const UserProfile& profile )
             item->setText( profile.GetLogin() );
         if( QStandardItem* admin = dataModel_->item( index, 2 ) )
             admin->setIcon( profile.IsSupervisor() ? star_ : QIcon( "" ) );
+        if( QStandardItem* lock = dataModel_->item( index, 3 ) )
+            lock->setIcon( profile.IsPasswordProtected() ? lock_ : QIcon( "" ) );
         proxyModel_->sort( 1 );
     }
 }
@@ -148,9 +168,64 @@ void ProfilesPanel::NotifyUpdated( const Profile& profile )
         if(  QStandardItem* item = dataModel_->item( i, 1 ) )
         {
             unsigned int count = profile.GetProfileCount( item->text().ascii() );
-            if( QStandardItem* connected = dataModel_->item( i, 3 ) )
+            if( QStandardItem* connected = dataModel_->item( i, 4 ) )
                 connected->setIcon( count ? green_ : red_ );
-            if( QStandardItem* number = dataModel_->item( i, 4 ) )
+            if( QStandardItem* number = dataModel_->item( i, 5 ) )
                 number->setText( "(" + QString::number( count ) + ")" );
         }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesPanel::Reconnect
+// Created: LGY 2011-11-21
+// -----------------------------------------------------------------------------
+void ProfilesPanel::Reconnect()
+{
+    QModelIndex index = proxyModel_->mapToSource( tableView_->currentIndex() );
+    if( index.row() != -1 )
+    {
+        const UserProfile* profile = profiles_.at( index.row() );
+        if( profile )
+        {
+            const std::string& login = profile->GetLogin().ascii();
+            if( profile->IsPasswordProtected() )
+            {
+                ReconnectLoginDialog* pLoginDialog = new ReconnectLoginDialog( this, *profile, network_ );
+                int result = pLoginDialog->exec();
+                if( result == QDialog::Accepted )
+                    Clean();
+            }
+            else
+            {
+                network_.GetMessageMgr().Reconnect( login, "" );
+                Clean();
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesPanel::Filter
+// Created: LGY 2011-11-22
+// -----------------------------------------------------------------------------
+void ProfilesPanel::Filter()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesPanel::Clean
+// Created: LGY 2011-11-23
+// -----------------------------------------------------------------------------
+void ProfilesPanel::Clean()
+{
+    dataModel_->clear();
+    dataModel_->setColumnCount( 5 );
+    tableView_->horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
+    tableView_->setColumnWidth( 0, 20 );
+    tableView_->setColumnWidth( 2, 25 );
+    tableView_->setColumnWidth( 3, 25 );
+    tableView_->setColumnWidth( 4, 25 );
+    tableView_->setColumnWidth( 5, 25 );
+}
+
