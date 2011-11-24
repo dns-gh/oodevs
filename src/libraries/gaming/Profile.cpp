@@ -307,7 +307,7 @@ bool Profile::CanDoMagic( const Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsChildOfCommunicationHierarchy
+// Name: Profile::IsChildOfCommunicationHierarchy
 // Created: SBO 2007-11-15
 // -----------------------------------------------------------------------------
 bool IsChildOfCommunicationHierarchy( const CommunicationHierarchies& target, const Entity_ABC& entity )

@@ -25,9 +25,9 @@
 OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter,
                             gui::AutomatsLayer& automats, gui::FormationLayer& formations )
     : Q3HBox( parent )
-    , controllers_    ( controllers )
-    , filter_         ( filter )
-    , entity_         ( controllers_ )
+    , controllers_( controllers )
+    , filter_     ( filter )
+    , entity_     ( controllers_ )
 {
     setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
     setBackgroundMode( Qt::PaletteButton );

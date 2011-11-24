@@ -134,7 +134,7 @@ using namespace kernel;
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation,
-                        Network& network, const Profile_ABC& profile, Config& config, LoggerProxy& logger,
+                        Network& network, const Profile_ABC& p, Config& config, LoggerProxy& logger,
                         const RcEntityResolver_ABC& rcResolver, const QString& license )
     : QMainWindow()
     , controllers_     ( controllers )
@@ -163,7 +163,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     planifName_ = tools::translate( "Application", "SWORD" ) + tr( " - Not connected" );
     setCaption( planifName_ );
 
-    ProfileFilter& profileFilter = *new ProfileFilter( controllers, profile ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr // $$$$ AGE 2007-06-19: tégé !
+    ProfileFilter& profile = *new ProfileFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr // $$$$ AGE 2007-06-19: tégé !
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
@@ -192,7 +192,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     selector_->AddIcon( xpm_construction   ,  200, 150 );
     selector_->AddIcon( xpm_observe        ,  200, 150 );
 
-    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, profileFilter );
+    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, profile );
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     // Logger
@@ -243,7 +243,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pListDockWnd_->setObjectName( "agentList" );
     addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd_ );
     Q3VBox* box = new Q3VBox( pListDockWnd_ );
-    new OrbatToolbar( box, controllers, profileFilter, *automatsLayer, *formationLayer );
+    new OrbatToolbar( box, controllers, profile, *automatsLayer, *formationLayer );
     QTabWidget* pListsTabWidget = new QTabWidget( box );
 
     pListsTabWidget->addTab( new TacticalList( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Tactical" ) );
@@ -291,11 +291,11 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     addDockWidget( Qt::BottomDockWidgetArea, chatDock );
     chatDock->hide();
 
-    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, profileFilter );
+    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, profile );
     new ClientCommandFacade( this, controllers_, publisher );
 
     // Info
-    QDockWidget* infoWnd = new InfoDock( this, controllers_, profile, *icons, *factory, staticModel_, model_.actions_, simulation ); // $$$$ ABR 2011-08-09: p or profile ???
+    QDockWidget* infoWnd = new InfoDock( this, controllers_, p, *icons, *factory, staticModel_, model_.actions_, simulation ); // $$$$ ABR 2011-08-09: p or profile ???
     addDockWidget( Qt::BottomDockWidgetArea, infoWnd );
 
     // Clock
@@ -674,7 +674,7 @@ void MainWindow::NotifyUpdated( const Profile& profile )
         // $$$$ AGE 2006-10-11: exec would create a reentrance...
         QTimer::singleShot( 0, dialog, SLOT(exec()) );
     }
-    else
+        else
         profile_ = profile.GetLogin();
 }
 
