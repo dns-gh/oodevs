@@ -1372,7 +1372,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Please enter the password...</source>
-        <translation>Veuillez renseigner un mot de passe...</translation>
+        <translation>Veuillez renseigner le mot de passe...</translation>
     </message>
     <message>
         <source>Password: </source>
