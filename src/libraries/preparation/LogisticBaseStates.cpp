@@ -18,6 +18,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -99,10 +100,15 @@ void LogisticBaseStates::Load( xml::xistream& xis, const kernel::Entity_ABC* sup
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::ReadDotation( xml::xistream& xis )
 {
-    Dotation* dotation = new Dotation( xis, resolver_ );
-    item_->AddDotation( *dotation );
-    tools::Resolver< Dotation >::Register( dotation->type_->GetId(), *dotation );
-    controller_.Update( *this );
+    if( item_ )
+    {
+        Dotation* dotation = new Dotation( xis, resolver_ );
+        item_->AddDotation( *dotation );
+        tools::Resolver< Dotation >::Register( dotation->type_->GetId(), *dotation );
+        controller_.Update( *this );
+    }
+    else
+        MT_LOG_ERROR_MSG( "Defining quotas on automat which doesn't allow them." );
 }
 
 // -----------------------------------------------------------------------------
