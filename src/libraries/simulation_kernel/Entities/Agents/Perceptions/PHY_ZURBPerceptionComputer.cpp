@@ -64,15 +64,21 @@ const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::ComputePerception( const 
     ComputeParametersPerception( target, bestSensorParameters );
     TER_Polygon polygon;
     const PHY_RoleInterface_UrbanLocation& role = target.GetRole< PHY_RoleInterface_UrbanLocation >();
-    ComputePerceptionPolygon( bestSensorParameters.identificationDist_, polygon );
-    if( roll_ < role.ComputeRatioPionInside( polygon, roll_ ) )
-        return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::identified_ );
-    ComputePerceptionPolygon( bestSensorParameters.recognitionDist_, polygon );
-    if( roll_ < role.ComputeRatioPionInside( polygon, roll_ ) )
-        return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::recognized_ );
     ComputePerceptionPolygon( bestSensorParameters.detectionDist_, polygon );
     if( roll_ < role.ComputeRatioPionInside( polygon, roll_ ) )
-        return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::detected_ );
+    {
+        ComputePerceptionPolygon( bestSensorParameters.recognitionDist_, polygon );
+        if( roll_ < role.ComputeRatioPionInside( polygon, roll_ ) )
+        {
+            ComputePerceptionPolygon( bestSensorParameters.identificationDist_, polygon );
+            if( roll_ < role.ComputeRatioPionInside( polygon, roll_ ) )
+                return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::identified_ );
+            else
+                return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::recognized_ );
+        }
+        else
+            return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::detected_ );;
+    }
     return PHY_PerceptionLevel::notSeen_;
 }
 
