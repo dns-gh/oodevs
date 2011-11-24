@@ -65,11 +65,11 @@ void HlaClass::Created( Agent_ABC& agent, unsigned int identifier, const std::st
 // Name: HlaClass::Create
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-HlaObject_ABC& HlaClass::Create( const ::hla::ObjectIdentifier& /*objectID*/, const std::string& objectName )
+HlaObject_ABC& HlaClass::Create( const ::hla::ObjectIdentifier& objectID, const std::string& /*objectName*/ )
 {
-    T_Entity& entity = remoteEntities_[ objectName ];
-    entity.reset( remoteFactory_->Create( objectName, *pListeners_ ).release() );
-    pListeners_->Created( objectName );
+    T_Entity& entity = remoteEntities_[ objectID.ToString() ];
+    entity.reset( remoteFactory_->Create( objectID.ToString(), *pListeners_ ).release() );
+    pListeners_->Created( objectID.ToString() );
     return *entity;
 }
 
