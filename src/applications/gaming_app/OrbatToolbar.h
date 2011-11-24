@@ -28,7 +28,7 @@ namespace gui
 }
 
 class Simulation;
-class ProfileFilter;
+class UnitFilter;
 
 // =============================================================================
 /** @class  OrbatToolbar
@@ -40,14 +40,14 @@ class OrbatToolbar : public Q3HBox
                    , public tools::Observer_ABC
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                    , public tools::ElementObserver_ABC< Simulation >
-                   , public tools::ElementObserver_ABC< ProfileFilter >
+                   , public tools::ElementObserver_ABC< UnitFilter >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter,
+             OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, UnitFilter& filter,
                            gui::AutomatsLayer& automats, gui::FormationLayer& formations );
     virtual ~OrbatToolbar();
     //@}
@@ -71,7 +71,7 @@ private:
     virtual QSize minimumSizeHint() const;
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const Simulation& simu );
-    virtual void NotifyUpdated( const ProfileFilter& filter );
+    virtual void NotifyUpdated( const UnitFilter& filter );
 
     void Filter( const kernel::Entity_ABC& entity );
     //@}
@@ -80,7 +80,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ProfileFilter& filter_;
+    UnitFilter& filter_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     gui::AggregateToolbar* pAggregateToolbar_;
     QToolButton* filterBtn_;

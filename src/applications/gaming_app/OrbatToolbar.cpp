@@ -15,14 +15,14 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/AggregateToolbar.h"
-#include "gaming/ProfileFilter.h"
+#include "gaming/UnitFilter.h"
 #include "gaming/Simulation.h"
 
 // -----------------------------------------------------------------------------
 // Name: OrbatToolbar constructor
 // Created: SBO 2007-03-05
 // -----------------------------------------------------------------------------
-OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter,
+OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, UnitFilter& filter,
                             gui::AutomatsLayer& automats, gui::FormationLayer& formations )
     : Q3HBox( parent )
     , controllers_( controllers )
@@ -106,7 +106,7 @@ void OrbatToolbar::OnClearFilter()
 // Name: OrbatToolbar::NotifyUpdated
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
-void OrbatToolbar::NotifyUpdated( const ProfileFilter& filter )
+void OrbatToolbar::NotifyUpdated( const UnitFilter& filter )
 {
     entity_ = filter.GetFilter();
     if( entity_ == 0 )

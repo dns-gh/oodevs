@@ -11,7 +11,7 @@
 #include "LinkInterpreter.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "gaming/ProfileFilter.h"
+#include "gaming/UnitFilter.h"
 
 using namespace kernel;
 using namespace gui;
@@ -20,10 +20,10 @@ using namespace gui;
 // Name: LinkInterpreter constructor
 // Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
-LinkInterpreter::LinkInterpreter( QObject* parent, Controllers& controllers, ProfileFilter& filter )
+LinkInterpreter::LinkInterpreter( QObject* parent, Controllers& controllers, UnitFilter& filter )
      : LinkInterpreter_ABC( parent, controllers.actions_ )
-     , controllers_       ( controllers )
-     , filter_            ( filter )
+     , controllers_( controllers )
+     , filter_     ( filter )
 {
     controllers_.Register( *this );
 }

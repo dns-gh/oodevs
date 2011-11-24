@@ -69,7 +69,7 @@
 #include "gaming/Network.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Profile.h"
-#include "gaming/ProfileFilter.h"
+#include "gaming/UnitFilter.h"
 #include "gaming/VisionConesToggler.h"
 #include "gaming/ActionsScheduler.h"
 #include "gaming/Tools.h"
@@ -163,7 +163,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     planifName_ = tools::translate( "Application", "SWORD" ) + tr( " - Not connected" );
     setCaption( planifName_ );
 
-    ProfileFilter& profile = *new ProfileFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr // $$$$ AGE 2007-06-19: tégé !
+    UnitFilter& profile = *new UnitFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr // $$$$ AGE 2007-06-19: tégé !
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
 

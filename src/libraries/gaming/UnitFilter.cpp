@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "ProfileFilter.h"
+#include "UnitFilter.h"
 #include "AgentKnowledges.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -19,10 +19,10 @@
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter constructor
+// Name: UnitFilter constructor
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-ProfileFilter::ProfileFilter( Controllers& controllers, const Profile_ABC& forward )
+UnitFilter::UnitFilter( Controllers& controllers, const Profile_ABC& forward )
      : controller_  ( controllers.controller_ )
      , forward_     ( forward )
      , entity_      ( controllers )
@@ -33,28 +33,28 @@ ProfileFilter::ProfileFilter( Controllers& controllers, const Profile_ABC& forwa
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter destructor
+// Name: UnitFilter destructor
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-ProfileFilter::~ProfileFilter()
+UnitFilter::~UnitFilter()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::GetLogin
+// Name: UnitFilter::GetLogin
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
-QString ProfileFilter::GetLogin() const
+QString UnitFilter::GetLogin() const
 {
     return forward_.GetLogin();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsVisible
+// Name: UnitFilter::IsVisible
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsVisible( const Entity_ABC& entity ) const
+bool UnitFilter::IsVisible( const Entity_ABC& entity ) const
 {
     return ( IsInKnowledgeGroup( entity ) || IsObjectOfSameTeam( entity ) || IsInHierarchy( entity ) ) && forward_.IsVisible( entity );
 }
@@ -69,10 +69,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsKnowledgeVisible
+// Name: UnitFilter::IsKnowledgeVisible
 // Created: HBD 2010-08-03
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
+bool UnitFilter::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
 {
     if( !forward_.IsKnowledgeVisible( knowledge ) )
         return false;
@@ -94,37 +94,37 @@ bool ProfileFilter::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::CanBeOrdered
+// Name: UnitFilter::CanBeOrdered
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-bool ProfileFilter::CanBeOrdered( const Entity_ABC& entity ) const
+bool UnitFilter::CanBeOrdered( const Entity_ABC& entity ) const
 {
     return IsInHierarchy( entity ) && forward_.CanBeOrdered( entity );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::CanDoMagic
+// Name: UnitFilter::CanDoMagic
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-bool ProfileFilter::CanDoMagic( const Entity_ABC& entity ) const
+bool UnitFilter::CanDoMagic( const Entity_ABC& entity ) const
 {
     return IsInHierarchy( entity ) && forward_.CanDoMagic( entity );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsSupervision
+// Name: UnitFilter::IsSupervision
 // Created: SBO 2007-06-18
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsSupervision() const
+bool UnitFilter::IsSupervision() const
 {
     return forward_.IsSupervision();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::SetFilter
+// Name: UnitFilter::SetFilter
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-void ProfileFilter::SetFilter( const Entity_ABC& entity )
+void UnitFilter::SetFilter( const Entity_ABC& entity )
 {
     entity_ = & entity;
     tHierarchies_ = entity.Retrieve< TacticalHierarchies >();
@@ -134,10 +134,10 @@ void ProfileFilter::SetFilter( const Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::RemoveFilter
+// Name: UnitFilter::RemoveFilter
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-void ProfileFilter::RemoveFilter()
+void UnitFilter::RemoveFilter()
 {
     entity_ = 0;
     tHierarchies_ = 0;
@@ -147,19 +147,19 @@ void ProfileFilter::RemoveFilter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::GetFilter
+// Name: UnitFilter::GetFilter
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
-const Entity_ABC* ProfileFilter::GetFilter() const
+const Entity_ABC* UnitFilter::GetFilter() const
 {
     return entity_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsInHierarchy
+// Name: UnitFilter::IsInHierarchy
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsInHierarchy( const Entity_ABC& entity ) const
+bool UnitFilter::IsInHierarchy( const Entity_ABC& entity ) const
 {
     if( ! entity_ || entity_ == &entity )
         return true;
@@ -174,11 +174,11 @@ bool ProfileFilter::IsInHierarchy( const Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsChildSubordinateOf
+// Name: UnitFilter::IsChildSubordinateOf
 // Created: SBO 2007-11-15
 // -----------------------------------------------------------------------------
 template< typename D, typename U >
-bool ProfileFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
+bool UnitFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
 {
     tools::Iterator< const Entity_ABC& > children = down.CreateSubordinateIterator();
     while( children.HasMoreElements() )
@@ -191,10 +191,10 @@ bool ProfileFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsKnown
+// Name: UnitFilter::IsKnown
 // Created: LDC 2010-03-25
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsKnown( const TacticalHierarchies* t, const CommunicationHierarchies* c, const Entity_ABC& entity ) const
+bool UnitFilter::IsKnown( const TacticalHierarchies* t, const CommunicationHierarchies* c, const Entity_ABC& entity ) const
 {
     if( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
         return true;
@@ -206,10 +206,10 @@ bool ProfileFilter::IsKnown( const TacticalHierarchies* t, const CommunicationHi
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsInKnowledgeGroup
+// Name: UnitFilter::IsInKnowledgeGroup
 // Created: LDC 2010-03-25
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsInKnowledgeGroup( const Entity_ABC& other ) const
+bool UnitFilter::IsInKnowledgeGroup( const Entity_ABC& other ) const
 {
     if( !entity_ || entity_ == &other )
         return true;
@@ -237,10 +237,10 @@ bool ProfileFilter::IsInKnowledgeGroup( const Entity_ABC& other ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsObjectOfSameTeam
+// Name: UnitFilter::IsObjectOfSameTeam
 // Created: LDC 2010-03-26
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsObjectOfSameTeam( const Entity_ABC& entity ) const
+bool UnitFilter::IsObjectOfSameTeam( const Entity_ABC& entity ) const
 {
     if( !entity_ || entity_ == &entity || entity.GetTypeName() != Object_ABC::typeName_ )
         return false;

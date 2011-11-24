@@ -424,9 +424,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\Profile.cpp">
       <Filter>Source Files\Model\Simulation</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\gaming\ProfileFilter.cpp">
-      <Filter>Source Files\Model\Simulation</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\Profiling.cpp">
       <Filter>Source Files\Model\Simulation</Filter>
     </ClCompile>
@@ -796,6 +793,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\CommandPostAttributes.cpp">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\UnitFilter.cpp">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1108,9 +1108,6 @@
       <Filter>Source Files\Model\Simulation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\Profile.h">
-      <Filter>Source Files\Model\Simulation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\gaming\ProfileFilter.h">
       <Filter>Source Files\Model\Simulation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\Profiling.h">
@@ -1505,6 +1502,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\CommandPostAttributes.h">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\UnitFilter.h">
+      <Filter>Source Files\Model\Simulation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

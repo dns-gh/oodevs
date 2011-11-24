@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ProfileFilter_h_
-#define __ProfileFilter_h_
+#ifndef __UnitFilter_h_
+#define __UnitFilter_h_
 
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/SafePointer.h"
@@ -23,18 +23,18 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  ProfileFilter
-    @brief  ProfileFilter
+/** @class  UnitFilter
+    @brief  UnitFilter
 */
 // Created: AGE 2006-11-29
 // =============================================================================
-class ProfileFilter : public kernel::Profile_ABC
+class UnitFilter : public kernel::Profile_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileFilter( kernel::Controllers& controllers, const kernel::Profile_ABC& forward );
-    virtual ~ProfileFilter();
+             UnitFilter( kernel::Controllers& controllers, const kernel::Profile_ABC& forward );
+    virtual ~UnitFilter();
     //@}
 
     //! @name Operations
@@ -53,8 +53,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    ProfileFilter( const ProfileFilter& );            //!< Copy constructor
-    ProfileFilter& operator=( const ProfileFilter& ); //!< Assignment operator
+    UnitFilter( const UnitFilter& );            //!< Copy constructor
+    UnitFilter& operator=( const UnitFilter& ); //!< Assignment operator
    //@}
 
     //! @name Helpers
@@ -79,4 +79,4 @@ private:
     //@}
 };
 
-#endif // __ProfileFilter_h_
+#endif // __UnitFilter_h_

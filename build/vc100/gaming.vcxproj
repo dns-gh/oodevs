@@ -200,7 +200,7 @@
     <ClCompile Include="..\..\src\libraries\gaming\AgentKnowledgePositions.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\AvailableProfile.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Profile.cpp" />
-    <ClCompile Include="..\..\src\libraries\gaming\ProfileFilter.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\UnitFilter.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Profiling.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Simulation.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Population.cpp" />
@@ -430,7 +430,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\AgentKnowledgePositions.h" />
     <ClInclude Include="..\..\src\libraries\gaming\AvailableProfile.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Profile.h" />
-    <ClInclude Include="..\..\src\libraries\gaming\ProfileFilter.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\UnitFilter.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Profiling.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Simulation.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Population.h" />

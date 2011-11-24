@@ -21,7 +21,9 @@
 // Name: CommandFacade constructor
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-CommandFacade::CommandFacade( QMainWindow* parent, kernel::Controllers& controllers, tools::ExerciseConfig& config, CommandHandler& handler, gui::LinkInterpreter_ABC& interpreter, gui::View_ABC& view, ProfileFilter& profile )
+CommandFacade::CommandFacade( QMainWindow* parent, kernel::Controllers& controllers, tools::ExerciseConfig& config,
+                              CommandHandler& handler, gui::LinkInterpreter_ABC& interpreter, gui::View_ABC& view,
+                              UnitFilter& profile )
     : QObject( parent )
 {
     Add( new CenterViewCommand  ( handler, interpreter ) );
