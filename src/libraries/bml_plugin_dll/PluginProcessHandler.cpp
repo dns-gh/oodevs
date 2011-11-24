@@ -316,6 +316,7 @@ void PluginProcessHandler::LoadLoginProfile()
     }
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: PluginProcessHandler::LoadPluginConfig
 // Created: JCR 2011-10-27
@@ -323,7 +324,7 @@ void PluginProcessHandler::LoadLoginProfile()
 void PluginProcessHandler::LoadPluginConfig( xml::xistream& xis, const dispatcher::Config& config )
 {
 	bool use_ssl = false;
-	bool use_log = true;
+	bool use_log = false;
 	bool use_report = false;
 	std::string url;
 	std::string proxy_user;
@@ -347,13 +348,10 @@ void PluginProcessHandler::LoadPluginConfig( xml::xistream& xis, const dispatche
 		
 	std::string sessionDir( config.GetSessionDir() );
 	AddArgument( "--bml.server.url=\"" + url + "\"" );
-	if( use_ssl )
-		AddArgument( "--bml.ssl=true" );
+	AddArgument( "--bml.ssl=" + std::string( use_ssl ? "true" : "false" ) );
+	AddArgument( "--log=" + std::string( use_log ? "true" : "false" ) );
 	if( use_log )
-	{
-		AddArgument( "--log=true" );
 		AddArgument( "--log.file=\"" + bfs::path( sessionDir + "/sword_bml_service.log" ).native_file_string() + "\"" );
-	}
 	AddArgument( "--bml.proxy.user=\"" + proxy_user + "\"" );
 	AddArgument( "--bml.proxy.pass=\"" + proxy_pass + "\"" );
 	if( use_report )
