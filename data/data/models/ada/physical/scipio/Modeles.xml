@@ -1382,34 +1382,6 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" masalife="false" name="Patrouille AIR Assaut">
-      <missions>
-        <mission name="PION JOINT AIR Effectuer Raid"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Suivre"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
     <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\model.bms" masalife="false" name="PC Alat">
       <missions>
         <mission name="PION Faire Mouvement"/>
@@ -9671,4 +9643,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2056427702" -->
+<!-- signature="1650184026" -->
