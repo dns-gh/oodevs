@@ -11,6 +11,8 @@
 #define __ProfilesPanel_h_
 
 #include "tools/ElementObserver_ABC.h"
+#include "gaming/AvailableProfile.h"
+#include "gaming/Simulation.h"
 #include <boost/noncopyable.hpp>
 #include <vector>
 
@@ -34,6 +36,8 @@ class ProfilesPanel : public QDockWidget
                     , public tools::Observer_ABC
                     , public tools::ElementObserver_ABC< UserProfile >
                     , public tools::ElementObserver_ABC< Profile >
+                    , public tools::ElementObserver_ABC< AvailableProfile >
+                    , public tools::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT
 
@@ -52,6 +56,8 @@ private:
     virtual void NotifyDeleted( const UserProfile& profile );
 
     virtual void NotifyUpdated( const Profile& profile );
+    virtual void NotifyUpdated( const AvailableProfile& profile );
+    virtual void NotifyUpdated( const Simulation& simulation );
     //@}
 
 private slots:
@@ -72,6 +78,9 @@ private:
     //! @name Helpers
     //@{
     void Clean();
+    void AddProfile( unsigned int index );
+    template< typename T >
+    void UpdateProfile( unsigned int index, const T& profile );
     //@}
 
 private:

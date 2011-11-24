@@ -148,6 +148,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         ack().set_error_code( sword::AuthenticationResponse::invalid_login );
         profiles_->Send( ack() );
         ack.Send( client );
+        SendProfiles();
     }
     else
     {

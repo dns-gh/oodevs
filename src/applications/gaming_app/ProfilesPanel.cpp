@@ -83,24 +83,6 @@ ProfilesPanel::~ProfilesPanel()
     controllers_.Unregister( *this );
 }
 
-namespace
-{
-    QStandardItem* CreateItem( const std::string& text )
-    {
-        QStandardItem* item = new QStandardItem( text.c_str() );
-        item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-        return item;
-    }
-
-    QStandardItem* CreateItem( const QIcon& icon )
-    {
-        QStandardItem* item = new QStandardItem();
-        item->setIcon( icon );
-        item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-        return item;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ProfilesPanel::NotifyCreated
 // Created: LGY 2011-11-15
@@ -108,14 +90,7 @@ namespace
 void ProfilesPanel::NotifyCreated( const UserProfile& profile )
 {
     profiles_.push_back( &profile );
-    const int rows = dataModel_->rowCount();
-    dataModel_->setItem( rows, 0, CreateItem( "" ) );
-    dataModel_->setItem( rows, 1, CreateItem( "" ) );
-    dataModel_->setItem( rows, 2, CreateItem( "" ) );
-    dataModel_->setItem( rows, 3, CreateItem( "" ) );
-    dataModel_->setItem( rows, 4, CreateItem( red_ ) );
-    dataModel_->setItem( rows, 5, CreateItem( "(0)" ) );
-    proxyModel_->sort( 1 );
+    AddProfile( dataModel_->rowCount() );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,15 +103,7 @@ void ProfilesPanel::NotifyUpdated( const UserProfile& profile )
     if( it != profiles_.end() )
     {
         const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
-        if( QStandardItem* active = dataModel_->item( index, 0 ) )
-            active->setIcon( profile.GetLogin() == current_ ? profile_ : QIcon( "" ) );
-        QStandardItem* item = dataModel_->item( index, 1 );
-        if( item && item->text() != profile.GetLogin() )
-            item->setText( profile.GetLogin() );
-        if( QStandardItem* admin = dataModel_->item( index, 2 ) )
-            admin->setIcon( profile.IsSupervisor() ? star_ : QIcon( "" ) );
-        if( QStandardItem* lock = dataModel_->item( index, 3 ) )
-            lock->setIcon( profile.IsPasswordProtected() ? lock_ : QIcon( "" ) );
+        UpdateProfile( index, **it );
         proxyModel_->sort( 1 );
     }
 }
@@ -163,7 +130,16 @@ void ProfilesPanel::NotifyDeleted( const UserProfile& profile )
 void ProfilesPanel::NotifyUpdated( const Profile& profile )
 {
     if( profile.IsLoggedIn() )
+    {
+        if( current_ == "" )
+            Clean();
         current_ = profile.GetLogin();
+    }
+    else if( current_ != "" )
+    {
+        Clean();
+        current_ = "";
+    }
     for( int i = 0; i < dataModel_->rowCount(); ++i )
         if(  QStandardItem* item = dataModel_->item( i, 1 ) )
         {
@@ -176,6 +152,28 @@ void ProfilesPanel::NotifyUpdated( const Profile& profile )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfilesPanel::NotifyUpdated
+// Created: LGY 2011-11-23
+// -----------------------------------------------------------------------------
+void ProfilesPanel::NotifyUpdated( const AvailableProfile& profile )
+{
+    const int index = dataModel_->rowCount();
+    AddProfile( index );
+    UpdateProfile( index, profile );
+    proxyModel_->sort( 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesPanel::NotifyUpdated
+// Created: LGY 2011-11-24
+// -----------------------------------------------------------------------------
+void ProfilesPanel::NotifyUpdated( const Simulation& simulation )
+{
+    if( !simulation.IsConnected() )
+        Clean();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfilesPanel::Reconnect
 // Created: LGY 2011-11-21
 // -----------------------------------------------------------------------------
@@ -183,16 +181,13 @@ void ProfilesPanel::Reconnect()
 {
     QModelIndex index = proxyModel_->mapToSource( tableView_->currentIndex() );
     if( index.row() != -1 )
-    {
-        const UserProfile* profile = profiles_.at( index.row() );
-        if( profile )
+        if( const UserProfile* profile = profiles_.at( index.row() ) )
         {
             const std::string& login = profile->GetLogin().ascii();
             if( profile->IsPasswordProtected() )
             {
                 ReconnectLoginDialog* pLoginDialog = new ReconnectLoginDialog( this, *profile, network_ );
-                int result = pLoginDialog->exec();
-                if( result == QDialog::Accepted )
+                if( pLoginDialog->exec() == QDialog::Accepted )
                     Clean();
             }
             else
@@ -201,7 +196,6 @@ void ProfilesPanel::Reconnect()
                 Clean();
             }
         }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -211,6 +205,57 @@ void ProfilesPanel::Reconnect()
 void ProfilesPanel::Filter()
 {
     // NOTHING
+}
+
+namespace
+{
+    QStandardItem* CreateItem( const std::string& text )
+    {
+        QStandardItem* item = new QStandardItem( text.c_str() );
+        item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+        return item;
+    }
+
+    QStandardItem* CreateItem( const QIcon& icon )
+    {
+        QStandardItem* item = new QStandardItem();
+        item->setIcon( icon );
+        item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+        return item;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesPanel::Profile
+// Created: LGY 2011-11-23
+// -----------------------------------------------------------------------------
+void ProfilesPanel::AddProfile( unsigned int index )
+{
+    dataModel_->setItem( index, 0, CreateItem( "" ) );
+    dataModel_->setItem( index, 1, CreateItem( "" ) );
+    dataModel_->setItem( index, 2, CreateItem( "" ) );
+    dataModel_->setItem( index, 3, CreateItem( "" ) );
+    dataModel_->setItem( index, 4, CreateItem( red_ ) );
+    dataModel_->setItem( index, 5, CreateItem( "(0)" ) );
+    proxyModel_->sort( 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesPanel::UpdateProfile
+// Created: LGY 2011-11-24
+// -----------------------------------------------------------------------------
+template< typename T >
+void ProfilesPanel::UpdateProfile( unsigned int index, const T& profile )
+{
+    if( QStandardItem* active = dataModel_->item( index, 0 ) )
+        active->setIcon( profile.GetLogin() == current_ ? profile_ : QIcon( "" ) );
+    QStandardItem* item = dataModel_->item( index, 1 );
+    if( item && item->text() != profile.GetLogin() )
+        item->setText( profile.GetLogin() );
+    if( QStandardItem* admin = dataModel_->item( index, 2 ) )
+        admin->setIcon( profile.IsSupervisor() ? star_ : QIcon( "" ) );
+    if( QStandardItem* lock = dataModel_->item( index, 3 ) )
+        lock->setIcon( profile.IsPasswordProtected() ? lock_ : QIcon( "" ) );
 }
 
 // -----------------------------------------------------------------------------

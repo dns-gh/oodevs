@@ -55,6 +55,7 @@ ReconnectLoginDialog::ReconnectLoginDialog( QWidget* pParent, const UserProfile&
     Q3IconViewItem* item = users_->firstItem();
     if( item )
         users_->setCurrentItem( item );
+    password_->setFocus( Qt::MouseFocusReason );
 }
 
 // -----------------------------------------------------------------------------
