@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
   <parties>
-    <party id="1" name="Camp Bleu" type="friend">
+    <party color="0x647dff" id="1" name="Camp Bleu" type="friend">
       <objects>
         <object id="104" name="zone protegee [104]" type="safe zone">
           <shape type="point">
@@ -13,29 +13,29 @@
         </object>
       </objects>
       <tactical>
-        <formation id="10" level="ii" name="INF [10]">
-          <automat engaged="false" id="11" knowledge-group="95" name="SGTIA INF [11]" type="SGTIA INF dominante roues">
-            <unit command-post="true" id="12" name="Section . CDT CIE INF VAB" position="29TNF3245158128" type="INF . Section CDT CIE VAB">
+        <formation color="0x647dff" id="10" level="ii" name="INF [10]">
+          <automat color="0x647dff" engaged="false" id="11" knowledge-group="95" name="SGTIA INF [11]" type="SGTIA INF dominante roues">
+            <unit color="0x647dff" command-post="true" id="12" name="Section . CDT CIE INF VAB" position="29TNF3245158128" type="INF . Section CDT CIE VAB">
               <extensions>
+                <entry key="DiffusionList" value=""/>
                 <entry key="Nationalite" value="84"/>
                 <entry key="NomLong" value="PC.3.31BB.FR"/>
-                <entry key="PC" value="True"/>
                 <entry key="TypePC" value="1"/>
                 <entry key="TypeSIOC" value="6"/>
               </extensions>
             </unit>
-            <unit command-post="false" id="13" name="Section . CBT INF VAB CDS SOFF" position="29TNF3323557555" type="INF . Section CBT VAB CDS SOFF"/>
-            <unit command-post="false" id="14" name="Section . CBT INF VAB CDS SOFF" position="29TNF3200157688" type="INF . Section CBT VAB CDS SOFF"/>
-            <unit command-post="false" id="15" name="Section . CBT INF VAB CDS OFF" position="29TNF3166157811" type="INF . Section CBT VAB CDS OFF"/>
-            <unit command-post="false" id="16" name="Groupe . MO81 VAB" position="29TNF3250457725" type="INF . Groupe INF MO81 VAB"/>
-            <unit command-post="false" id="17" name="Peloton . LECLERC CDP SOFF" position="29TNF3203057892" type="ABC . Peloton LECLERC CDP SOFF"/>
-            <unit command-post="false" id="18" name="Groupe GEN . EBG" position="29TNF3277957761" type="GEN . Groupe EBG"/>
-            <unit command-post="false" id="19" name="PIA Dominante ABC" position="29TNF3309757657" type="PIA Dominante ABC"/>
-            <unit command-post="false" id="20" name="PIA Dominante INF" position="29TNF3271057443" type="PIA Dominante INF"/>
-            <unit command-post="false" id="21" name="PIA Dominante Reco" position="29TNF3330158136" type="PIA Dominante Reco"/>
+            <unit color="0x647dff" command-post="false" id="13" name="Section . CBT INF VAB CDS SOFF" position="29TNF3323557555" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit color="0x647dff" command-post="false" id="14" name="Section . CBT INF VAB CDS SOFF" position="29TNF3200157688" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit color="0x647dff" command-post="false" id="15" name="Section . CBT INF VAB CDS OFF" position="29TNF3166157811" type="INF . Section CBT VAB CDS OFF"/>
+            <unit color="0x647dff" command-post="false" id="16" name="Groupe . MO81 VAB" position="29TNF3250457725" type="INF . Groupe INF MO81 VAB"/>
+            <unit color="0x647dff" command-post="false" id="17" name="Peloton . LECLERC CDP SOFF" position="29TNF3203057892" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit color="0x647dff" command-post="false" id="18" name="Groupe GEN . EBG" position="29TNF3277957761" type="GEN . Groupe EBG"/>
+            <unit color="0x647dff" command-post="false" id="19" name="PIA Dominante ABC" position="29TNF3309757657" type="PIA Dominante ABC"/>
+            <unit color="0x647dff" command-post="false" id="20" name="PIA Dominante INF" position="29TNF3271057443" type="PIA Dominante INF"/>
+            <unit color="0x647dff" command-post="false" id="21" name="PIA Dominante Reco" position="29TNF3330158136" type="PIA Dominante Reco"/>
           </automat>
-          <automat engaged="true" id="34" knowledge-group="95" logistic-level="logistic-base" name="TC2 [34]" type="LOG . TC2 LOG">
-            <unit command-post="true" id="35" name="PC" position="29TNF3106659198" type="LOG . TC2">
+          <automat color="0x647dff" engaged="true" id="34" knowledge-group="95" logistic-level="logistic-base" name="TC2 [34]" type="LOG . TC2 LOG">
+            <unit color="0x647dff" command-post="true" id="35" name="PC" position="29TNF3106659198" type="LOG . TC2">
               <stocks>
                 <resource name="CART 12.7 SBP" quantity="56200"/>
                 <resource name="CART 7.62 N BD PAN" quantity="68300"/>
@@ -72,23 +72,22 @@
               </stocks>
             </unit>
           </automat>
-          <automat engaged="true" id="182" knowledge-group="7" name="ART - Batterie de Reco et Tir AUF1 [182]" type="ART - Batterie de Reco et Tir AUF1">
-            <unit command-post="true" id="183" name="ART - PC Batterie ASS" position="29TNF3232560375" type="ART - PC Batterie ASS">
+          <automat color="0x647dff" engaged="true" id="182" knowledge-group="7" name="ART - Batterie de Reco et Tir AUF1 [182]" type="ART - Batterie de Reco et Tir AUF1">
+            <unit color="0x647dff" command-post="true" id="183" name="ART - PC Batterie ASS" position="29TNF3232560375" type="ART - PC Batterie ASS">
               <extensions>
-                <entry key="IdCdB" value="HAA"/>
+                <entry key="DiffusionList" value=""/>
                 <entry key="IndOpe" value="PBR2"/>
                 <entry key="IndRadio" value="50"/>
                 <entry key="Nationalite" value="84"/>
                 <entry key="NomLong" value="EO.21.DL2.35BA.FR"/>
-                <entry key="PC" value="True"/>
                 <entry key="TypePC" value="1"/>
                 <entry key="TypeSIOC" value="1"/>
               </extensions>
             </unit>
-            <unit command-post="false" id="184" name="ART - Section de Tir AUF1 CDS OFF Pour SIC" position="29TNF3282859878" type="ART - Section de Tir AUF1 CDS OFF Pour SIC"/>
-            <unit command-post="false" id="185" name="ART - Section de Tir AUF1 CDS SOFF Pour SIC" position="29TNF3232959377" type="ART - Section de Tir AUF1 CDS SOFF Pour SIC"/>
-            <unit command-post="false" id="186" name="ART - Equipe de Reco AUF1" position="29TNF3182759874" type="ART - Equipe de Reco AUF1"/>
-            <unit command-post="false" id="187" name="ART - Equipe de Reco AUF1" position="29TNF3282560377" type="ART - Equipe de Reco AUF1"/>
+            <unit color="0x647dff" command-post="false" id="184" name="ART - Section de Tir AUF1 CDS OFF Pour SIC" position="29TNF3282859878" type="ART - Section de Tir AUF1 CDS OFF Pour SIC"/>
+            <unit color="0x647dff" command-post="false" id="185" name="ART - Section de Tir AUF1 CDS SOFF Pour SIC" position="29TNF3232959377" type="ART - Section de Tir AUF1 CDS SOFF Pour SIC"/>
+            <unit color="0x647dff" command-post="false" id="186" name="ART - Equipe de Reco AUF1" position="29TNF3182759874" type="ART - Equipe de Reco AUF1"/>
+            <unit color="0x647dff" command-post="false" id="187" name="ART - Equipe de Reco AUF1" position="29TNF3282560377" type="ART - Equipe de Reco AUF1"/>
           </automat>
           <limit name="Limite 90">
             <point>29TNF2690165242</point>
@@ -103,21 +102,21 @@
             <point>29TNF3670250590</point>
           </limit>
         </formation>
-        <formation id="92" level="ii" name="ABC [92]">
-          <automat engaged="true" id="22" knowledge-group="94" name="SGTIA ABC [22]" type="SGTIA ABC XL">
-            <unit command-post="true" id="23" name="Peloton . LECLERC CDT ESC" position="29TNF3462859298" type="ABC . Peloton LECLERC CDT ESC"/>
-            <unit command-post="false" id="24" name="Peloton . LECLERC CDP SOFF" position="29TNF3480558372" type="ABC . Peloton LECLERC CDP SOFF"/>
-            <unit command-post="false" id="25" name="Peloton . LECLERC CDP SOFF" position="29TNF3489958215" type="ABC . Peloton LECLERC CDP SOFF"/>
-            <unit command-post="false" id="26" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3414458329" type="ABC . Peloton LECLERC CDP OFF"/>
-            <unit command-post="false" id="27" name="Section . CBT INF VAB CDS SOFF" position="29TNF3503958595" type="INF . Section CBT VAB CDS SOFF"/>
-            <unit command-post="false" id="28" name="Peloton . d appui direct" position="29TNF3418358939" type="ABC . Peloton d appui direct"/>
-            <unit command-post="false" id="29" name="Groupe GEN . EBG" position="29TNF3450458846" type="GEN . Groupe EBG"/>
-            <unit command-post="false" id="30" name="PIA Dominante ABC" position="29TNF3460258815" type="PIA Dominante ABC"/>
-            <unit command-post="false" id="31" name="PIA Dominante INF" position="29TNF3416858526" type="PIA Dominante INF"/>
-            <unit command-post="false" id="32" name="PIA Dominante Reco" position="29TNF3513058899" type="PIA Dominante Reco"/>
+        <formation color="0x647dff" id="92" level="ii" name="ABC [92]">
+          <automat color="0x647dff" engaged="true" id="22" knowledge-group="94" name="SGTIA ABC [22]" type="SGTIA ABC XL">
+            <unit color="0x647dff" command-post="true" id="23" name="Peloton . LECLERC CDT ESC" position="29TNF3462859298" type="ABC . Peloton LECLERC CDT ESC"/>
+            <unit color="0x647dff" command-post="false" id="24" name="Peloton . LECLERC CDP SOFF" position="29TNF3480558372" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit color="0x647dff" command-post="false" id="25" name="Peloton . LECLERC CDP SOFF" position="29TNF3489958215" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit color="0x647dff" command-post="false" id="26" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3414458329" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit color="0x647dff" command-post="false" id="27" name="Section . CBT INF VAB CDS SOFF" position="29TNF3503958595" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit color="0x647dff" command-post="false" id="28" name="Peloton . d appui direct" position="29TNF3418358939" type="ABC . Peloton d appui direct"/>
+            <unit color="0x647dff" command-post="false" id="29" name="Groupe GEN . EBG" position="29TNF3450458846" type="GEN . Groupe EBG"/>
+            <unit color="0x647dff" command-post="false" id="30" name="PIA Dominante ABC" position="29TNF3460258815" type="PIA Dominante ABC"/>
+            <unit color="0x647dff" command-post="false" id="31" name="PIA Dominante INF" position="29TNF3416858526" type="PIA Dominante INF"/>
+            <unit color="0x647dff" command-post="false" id="32" name="PIA Dominante Reco" position="29TNF3513058899" type="PIA Dominante Reco"/>
           </automat>
-          <automat engaged="true" id="110" knowledge-group="94" logistic-level="logistic-base" name="TC2 [110]" type="LOG . TC2 LOG">
-            <unit command-post="true" id="111" name="PC" position="29TNF3419761369" type="LOG . TC2">
+          <automat color="0x647dff" engaged="true" id="110" knowledge-group="94" logistic-level="logistic-base" name="TC2 [110]" type="LOG . TC2 LOG">
+            <unit color="0x647dff" command-post="true" id="111" name="PC" position="29TNF3419761369" type="LOG . TC2">
               <stocks>
                 <resource name="CART 12.7 SBP" quantity="55400"/>
                 <resource name="CART 7.62 N BD PAN" quantity="92100"/>
@@ -151,69 +150,69 @@
             </unit>
           </automat>
         </formation>
-        <formation id="108" level="x" logistic-level="logistic-base" name="BLD">
-          <formation id="109" level="iii" name="ZRAV">
-            <automat engaged="true" id="118" knowledge-group="7" name="SH [118]" type="LOG . Secteur approvisionnement (SH)">
-              <unit command-post="true" id="119" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF3251065928" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
-              <unit command-post="false" id="120" name="LOG . Groupe Appro Vivre Eau" position="29TNF3301365432" type="LOG . Groupe Appro Vivre Eau"/>
+        <formation color="0x647dff" id="108" level="x" logistic-level="logistic-base" name="BLD">
+          <formation color="0x647dff" id="109" level="iii" name="ZRAV">
+            <automat color="0x647dff" engaged="true" id="118" knowledge-group="7" name="SH [118]" type="LOG . Secteur approvisionnement (SH)">
+              <unit color="0x647dff" command-post="true" id="119" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF3251065928" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
+              <unit color="0x647dff" command-post="false" id="120" name="LOG . Groupe Appro Vivre Eau" position="29TNF3301365432" type="LOG . Groupe Appro Vivre Eau"/>
             </automat>
-            <automat engaged="true" id="129" knowledge-group="7" name="MUN [129]" type="LOG . Secteur munitions">
-              <unit command-post="true" id="130" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF3228765676" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
-              <unit command-post="false" id="131" name="LOG . Groupe Munitions SOFF TT - D" position="29TNF3278965180" type="LOG . Groupe Munitions SOFF TT - D"/>
-              <unit command-post="false" id="132" name="LOG . Groupe Munitions OFF TT- D" position="29TNF3229164679" type="LOG . Groupe Munitions OFF TT- D"/>
-              <unit command-post="false" id="133" name="LOG . Groupe Munitions OFF TD" position="29TNF3178865175" type="LOG . Groupe Munitions OFF TD"/>
-              <unit command-post="false" id="134" name="LOG . Groupe Munitions SOFF TD" position="29TNF3278765678" type="LOG . Groupe Munitions SOFF TD"/>
+            <automat color="0x647dff" engaged="true" id="129" knowledge-group="7" name="MUN [129]" type="LOG . Secteur munitions">
+              <unit color="0x647dff" command-post="true" id="130" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF3228765676" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
+              <unit color="0x647dff" command-post="false" id="131" name="LOG . Groupe Munitions SOFF TT - D" position="29TNF3278965180" type="LOG . Groupe Munitions SOFF TT - D"/>
+              <unit color="0x647dff" command-post="false" id="132" name="LOG . Groupe Munitions OFF TT- D" position="29TNF3229164679" type="LOG . Groupe Munitions OFF TT- D"/>
+              <unit color="0x647dff" command-post="false" id="133" name="LOG . Groupe Munitions OFF TD" position="29TNF3178865175" type="LOG . Groupe Munitions OFF TD"/>
+              <unit color="0x647dff" command-post="false" id="134" name="LOG . Groupe Munitions SOFF TD" position="29TNF3278765678" type="LOG . Groupe Munitions SOFF TD"/>
             </automat>
-            <automat engaged="true" id="163" knowledge-group="7" name="TRANSP [163]" type="LOG . Secteur transport">
-              <unit command-post="true" id="164" name="LOG . PC LOG BLD Secteur Transport" position="29TNF3219364946" type="LOG . PC LOG BLD Secteur Transport"/>
-              <unit command-post="false" id="165" name="LOG . Peloton Transport VTLR (PT)" position="29TNF3269564449" type="LOG . Peloton Transport VTLR (PT)"/>
-              <unit command-post="false" id="166" name="LOG . Peloton Ravitaillement (PR)" position="29TNF3219763949" type="LOG . Peloton Ravitaillement (PR)"/>
-              <unit command-post="false" id="167" name="LOG . Peloton Transport TRM 10000" position="29TNF3169464445" type="LOG . Peloton Transport TRM 10000"/>
+            <automat color="0x647dff" engaged="true" id="163" knowledge-group="7" name="TRANSP [163]" type="LOG . Secteur transport">
+              <unit color="0x647dff" command-post="true" id="164" name="LOG . PC LOG BLD Secteur Transport" position="29TNF3219364946" type="LOG . PC LOG BLD Secteur Transport"/>
+              <unit color="0x647dff" command-post="false" id="165" name="LOG . Peloton Transport VTLR (PT)" position="29TNF3269564449" type="LOG . Peloton Transport VTLR (PT)"/>
+              <unit color="0x647dff" command-post="false" id="166" name="LOG . Peloton Ravitaillement (PR)" position="29TNF3219763949" type="LOG . Peloton Ravitaillement (PR)"/>
+              <unit color="0x647dff" command-post="false" id="167" name="LOG . Peloton Transport TRM 10000" position="29TNF3169464445" type="LOG . Peloton Transport TRM 10000"/>
             </automat>
-            <automat engaged="true" id="177" knowledge-group="7" logistic-level="logistic-base" name="TC2 [177]" type="LOG . TC2 LOG">
-              <unit command-post="true" id="178" name="PC" position="29TNF3335765338" type="LOG . TC2"/>
-            </automat>
-          </formation>
-          <formation id="112" level="iii" name="ZSAN">
-            <automat engaged="true" id="123" knowledge-group="7" name="EVASAN [123]" type="LOG . Secteur EVASAN">
-              <unit command-post="true" id="124" name="LOG . PC LOG BLD Secteur Sante" position="29TNF3711765712" type="LOG . PC LOG BLD Secteur Sante"/>
-              <unit command-post="false" id="125" name="LOG . Groupe VS J5" position="29TNF3762065216" type="LOG . Groupe VS J5"/>
-              <unit command-post="false" id="126" name="LOG . Groupe VS VAB" position="29TNF3712164715" type="LOG . Groupe VS VAB"/>
-              <unit command-post="false" id="127" name="LOG . Equipe HM EVASAN" position="29TNF3661965212" type="LOG . Equipe HM EVASAN"/>
-            </automat>
-            <automat engaged="true" id="151" knowledge-group="7" name="Trait [151]" type="LOG . Secteur traitement">
-              <unit command-post="true" id="152" name="LOG . PC LOG BLD Secteur Sante" position="29TNF3672365100" type="LOG . PC LOG BLD Secteur Sante"/>
-              <unit command-post="false" id="153" name="LOG . Section Decontamination Medicale NBC" position="29TNF3722664603" type="LOG . Section Decontamination Medicale NBC"/>
-              <unit command-post="false" id="154" name="LOG . Section Medico Psychologique" position="29TNF3672864103" type="LOG . Section Medico Psychologique"/>
-              <unit command-post="false" id="155" name="LOG . Antenne Chirurgicale" position="29TNF3622564599" type="LOG . Antenne Chirurgicale"/>
-              <unit command-post="false" id="156" name="LOG . Section Chirurgicale Modulaire" position="29TNF3722465102" type="LOG . Section Chirurgicale Modulaire"/>
-              <unit command-post="false" id="157" name="LOG . Section Chirurgicale HMC" position="29TNF3743364604" type="LOG . Section Chirurgicale HMC"/>
-            </automat>
-            <automat engaged="true" id="169" knowledge-group="7" name="Tri [169]" type="LOG . Secteur triage">
-              <unit command-post="true" id="170" name="LOG . PC LOG BLD Secteur Sante" position="29TNF3612764695" type="LOG . PC LOG BLD Secteur Sante"/>
-              <unit command-post="false" id="171" name="LOG . Section Triage modulaire" position="29TNF3663064199" type="LOG . Section Triage modulaire"/>
-            </automat>
-            <automat engaged="true" id="173" knowledge-group="7" logistic-level="logistic-base" name="TC2 [173]" type="LOG . TC2 LOG">
-              <unit command-post="true" id="174" name="PC" position="29TNF3615864546" type="LOG . TC2"/>
+            <automat color="0x647dff" engaged="true" id="177" knowledge-group="7" logistic-level="logistic-base" name="TC2 [177]" type="LOG . TC2 LOG">
+              <unit color="0x647dff" command-post="true" id="178" name="PC" position="29TNF3335765338" type="LOG . TC2"/>
             </automat>
           </formation>
-          <formation id="113" level="iii" name="ZMAINT">
-            <automat engaged="true" id="114" knowledge-group="7" name="CAP [114]" type="LOG . Secteur appro (CAP)">
-              <unit command-post="true" id="115" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF2780565348" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
-              <unit command-post="false" id="116" name="LOG . Section Magasin CAP" position="29TNF2830864851" type="LOG . Section Magasin CAP"/>
+          <formation color="0x647dff" id="112" level="iii" name="ZSAN">
+            <automat color="0x647dff" engaged="true" id="123" knowledge-group="7" name="EVASAN [123]" type="LOG . Secteur EVASAN">
+              <unit color="0x647dff" command-post="true" id="124" name="LOG . PC LOG BLD Secteur Sante" position="29TNF3711765712" type="LOG . PC LOG BLD Secteur Sante"/>
+              <unit color="0x647dff" command-post="false" id="125" name="LOG . Groupe VS J5" position="29TNF3762065216" type="LOG . Groupe VS J5"/>
+              <unit color="0x647dff" command-post="false" id="126" name="LOG . Groupe VS VAB" position="29TNF3712164715" type="LOG . Groupe VS VAB"/>
+              <unit color="0x647dff" command-post="false" id="127" name="LOG . Equipe HM EVASAN" position="29TNF3661965212" type="LOG . Equipe HM EVASAN"/>
             </automat>
-            <automat engaged="true" id="139" knowledge-group="7" name="MOB [139]" type="LOG . Secteur reparation maint mob">
-              <unit command-post="true" id="140" name="LOG . PC LOG BLD Secteur Maintenance" position="29TNF2868565065" type="LOG . PC LOG BLD Secteur Maintenance"/>
-              <unit command-post="false" id="141" name="LOG . Section CDT CMM (EVAC)" position="29TNF2918864568" type="LOG . Section CDT CMM (EVAC)"/>
-              <unit command-post="false" id="142" name="LOG . Section Reparation Mob BLD  MOB" position="29TNF2868964067" type="LOG . Section Reparation Mob BLD  MOB"/>
-              <unit command-post="false" id="143" name="LOG . Section Reparation Mob Feu BLD  SRMF" position="29TNF2818764564" type="LOG . Section Reparation Mob Feu BLD  SRMF"/>
+            <automat color="0x647dff" engaged="true" id="151" knowledge-group="7" name="Trait [151]" type="LOG . Secteur traitement">
+              <unit color="0x647dff" command-post="true" id="152" name="LOG . PC LOG BLD Secteur Sante" position="29TNF3672365100" type="LOG . PC LOG BLD Secteur Sante"/>
+              <unit color="0x647dff" command-post="false" id="153" name="LOG . Section Decontamination Medicale NBC" position="29TNF3722664603" type="LOG . Section Decontamination Medicale NBC"/>
+              <unit color="0x647dff" command-post="false" id="154" name="LOG . Section Medico Psychologique" position="29TNF3672864103" type="LOG . Section Medico Psychologique"/>
+              <unit color="0x647dff" command-post="false" id="155" name="LOG . Antenne Chirurgicale" position="29TNF3622564599" type="LOG . Antenne Chirurgicale"/>
+              <unit color="0x647dff" command-post="false" id="156" name="LOG . Section Chirurgicale Modulaire" position="29TNF3722465102" type="LOG . Section Chirurgicale Modulaire"/>
+              <unit color="0x647dff" command-post="false" id="157" name="LOG . Section Chirurgicale HMC" position="29TNF3743364604" type="LOG . Section Chirurgicale HMC"/>
             </automat>
-            <automat engaged="true" id="147" knowledge-group="7" name="SREAT [147]" type="LOG . Secteur reparation techniques fines">
-              <unit command-post="true" id="148" name="LOG . PC LOG BLD Secteur Maintenance" position="29TNF2925464799" type="LOG . PC LOG BLD Secteur Maintenance"/>
-              <unit command-post="false" id="149" name="LOG . Section Reparation EA BLD SREAT" position="29TNF2975764302" type="LOG . Section Reparation EA BLD SREAT"/>
+            <automat color="0x647dff" engaged="true" id="169" knowledge-group="7" name="Tri [169]" type="LOG . Secteur triage">
+              <unit color="0x647dff" command-post="true" id="170" name="LOG . PC LOG BLD Secteur Sante" position="29TNF3612764695" type="LOG . PC LOG BLD Secteur Sante"/>
+              <unit color="0x647dff" command-post="false" id="171" name="LOG . Section Triage modulaire" position="29TNF3663064199" type="LOG . Section Triage modulaire"/>
             </automat>
-            <automat engaged="true" id="175" knowledge-group="7" logistic-level="logistic-base" name="TC2 [175]" type="LOG . TC2 LOG">
-              <unit command-post="true" id="176" name="PC" position="29TNF2911464351" type="LOG . TC2"/>
+            <automat color="0x647dff" engaged="true" id="173" knowledge-group="7" logistic-level="logistic-base" name="TC2 [173]" type="LOG . TC2 LOG">
+              <unit color="0x647dff" command-post="true" id="174" name="PC" position="29TNF3615864546" type="LOG . TC2"/>
+            </automat>
+          </formation>
+          <formation color="0x647dff" id="113" level="iii" name="ZMAINT">
+            <automat color="0x647dff" engaged="true" id="114" knowledge-group="7" name="CAP [114]" type="LOG . Secteur appro (CAP)">
+              <unit color="0x647dff" command-post="true" id="115" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF2780565348" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
+              <unit color="0x647dff" command-post="false" id="116" name="LOG . Section Magasin CAP" position="29TNF2830864851" type="LOG . Section Magasin CAP"/>
+            </automat>
+            <automat color="0x647dff" engaged="true" id="139" knowledge-group="7" name="MOB [139]" type="LOG . Secteur reparation maint mob">
+              <unit color="0x647dff" command-post="true" id="140" name="LOG . PC LOG BLD Secteur Maintenance" position="29TNF2868565065" type="LOG . PC LOG BLD Secteur Maintenance"/>
+              <unit color="0x647dff" command-post="false" id="141" name="LOG . Section CDT CMM (EVAC)" position="29TNF2918864568" type="LOG . Section CDT CMM (EVAC)"/>
+              <unit color="0x647dff" command-post="false" id="142" name="LOG . Section Reparation Mob BLD  MOB" position="29TNF2868964067" type="LOG . Section Reparation Mob BLD  MOB"/>
+              <unit color="0x647dff" command-post="false" id="143" name="LOG . Section Reparation Mob Feu BLD  SRMF" position="29TNF2818764564" type="LOG . Section Reparation Mob Feu BLD  SRMF"/>
+            </automat>
+            <automat color="0x647dff" engaged="true" id="147" knowledge-group="7" name="SREAT [147]" type="LOG . Secteur reparation techniques fines">
+              <unit color="0x647dff" command-post="true" id="148" name="LOG . PC LOG BLD Secteur Maintenance" position="29TNF2925464799" type="LOG . PC LOG BLD Secteur Maintenance"/>
+              <unit color="0x647dff" command-post="false" id="149" name="LOG . Section Reparation EA BLD SREAT" position="29TNF2975764302" type="LOG . Section Reparation EA BLD SREAT"/>
+            </automat>
+            <automat color="0x647dff" engaged="true" id="175" knowledge-group="7" logistic-level="logistic-base" name="TC2 [175]" type="LOG . TC2 LOG">
+              <unit color="0x647dff" command-post="true" id="176" name="PC" position="29TNF2911464351" type="LOG . TC2"/>
             </automat>
           </formation>
         </formation>
@@ -265,7 +264,7 @@
         </logistic-base>
       </logistics>
     </party>
-    <party id="2" name="Camp Rouge" type="enemy">
+    <party color="0xff3232" id="2" name="Camp Rouge" type="enemy">
       <objects>
         <object id="100" name="zone minee lineaire [100]" type="mined area (linear)">
           <shape type="polygone">
@@ -332,26 +331,26 @@
         </object>
       </objects>
       <tactical>
-        <formation id="33" level="ii" name="ENI [33]">
-          <automat engaged="false" id="64" knowledge-group="8" name="SGTIA INF [64]" type="SGTIA INF dominante roues">
-            <unit command-post="true" id="65" name="Section . CDT CIE INF VAB" position="29TNF3132452702" type="INF . Section CDT CIE VAB"/>
-            <unit command-post="false" id="66" name="Section . CBT INF VAB CDS SOFF" position="29TNF3143352943" type="INF . Section CBT VAB CDS SOFF"/>
-            <unit command-post="false" id="67" name="Section . CBT INF VAB CDS SOFF" position="29TNF3165252860" type="INF . Section CBT VAB CDS SOFF"/>
-            <unit command-post="false" id="70" name="Peloton . LECLERC CDP SOFF" position="29TNF3213052750" type="ABC . Peloton LECLERC CDP SOFF"/>
-            <unit command-post="false" id="71" name="Groupe GEN . EBG" position="29TNF3183152456" type="GEN . Groupe EBG"/>
+        <formation color="0xff3232" id="33" level="ii" name="ENI [33]">
+          <automat color="0xff3232" engaged="false" id="64" knowledge-group="8" name="SGTIA INF [64]" type="SGTIA INF dominante roues">
+            <unit color="0xff3232" command-post="true" id="65" name="Section . CDT CIE INF VAB" position="29TNF3132452702" type="INF . Section CDT CIE VAB"/>
+            <unit color="0xff3232" command-post="false" id="66" name="Section . CBT INF VAB CDS SOFF" position="29TNF3143352943" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit color="0xff3232" command-post="false" id="67" name="Section . CBT INF VAB CDS SOFF" position="29TNF3165252860" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit color="0xff3232" command-post="false" id="70" name="Peloton . LECLERC CDP SOFF" position="29TNF3213052750" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit color="0xff3232" command-post="false" id="71" name="Groupe GEN . EBG" position="29TNF3183152456" type="GEN . Groupe EBG"/>
           </automat>
-          <automat engaged="true" id="75" knowledge-group="8" name="SGTIA ABC [75]" type="SGTIA ABC XL">
-            <unit command-post="true" id="76" name="Peloton . LECLERC CDT ESC" position="29TNF3330852046" type="ABC . Peloton LECLERC CDT ESC"/>
-            <unit command-post="false" id="78" name="Peloton . LECLERC CDP SOFF" position="29TNF3268452315" type="ABC . Peloton LECLERC CDP SOFF"/>
-            <unit command-post="false" id="80" name="Section . CBT INF VAB CDS SOFF" position="29TNF3311552256" type="INF . Section CBT VAB CDS SOFF"/>
-            <unit command-post="false" id="81" name="Peloton . d appui direct" position="29TNF3265652105" type="ABC . Peloton d appui direct"/>
+          <automat color="0xff3232" engaged="true" id="75" knowledge-group="8" name="SGTIA ABC [75]" type="SGTIA ABC XL">
+            <unit color="0xff3232" command-post="true" id="76" name="Peloton . LECLERC CDT ESC" position="29TNF3330852046" type="ABC . Peloton LECLERC CDT ESC"/>
+            <unit color="0xff3232" command-post="false" id="78" name="Peloton . LECLERC CDP SOFF" position="29TNF3268452315" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit color="0xff3232" command-post="false" id="80" name="Section . CBT INF VAB CDS SOFF" position="29TNF3311552256" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit color="0xff3232" command-post="false" id="81" name="Peloton . d appui direct" position="29TNF3265652105" type="ABC . Peloton d appui direct"/>
           </automat>
-          <automat engaged="true" id="82" knowledge-group="8" name="SGTIA ABC [82]" type="SGTIA ABC XL">
-            <unit command-post="true" id="83" name="Peloton . LECLERC CDT ESC" position="29TNF3635452123" type="ABC . Peloton LECLERC CDT ESC"/>
-            <unit command-post="false" id="86" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3622952858" type="ABC . Peloton LECLERC CDP OFF"/>
-            <unit command-post="false" id="87" name="Section . CBT INF VAB CDS SOFF" position="29TNF3670753093" type="INF . Section CBT VAB CDS SOFF"/>
-            <unit command-post="false" id="88" name="Peloton . d appui direct" position="29TNF3659152712" type="ABC . Peloton d appui direct"/>
-            <unit command-post="false" id="89" name="Groupe GEN . EBG" position="29TNF3714553049" type="GEN . Groupe EBG"/>
+          <automat color="0xff3232" engaged="true" id="82" knowledge-group="8" name="SGTIA ABC [82]" type="SGTIA ABC XL">
+            <unit color="0xff3232" command-post="true" id="83" name="Peloton . LECLERC CDT ESC" position="29TNF3635452123" type="ABC . Peloton LECLERC CDT ESC"/>
+            <unit color="0xff3232" command-post="false" id="86" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3622952858" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit color="0xff3232" command-post="false" id="87" name="Section . CBT INF VAB CDS SOFF" position="29TNF3670753093" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit color="0xff3232" command-post="false" id="88" name="Peloton . d appui direct" position="29TNF3659152712" type="ABC . Peloton d appui direct"/>
+            <unit color="0xff3232" command-post="false" id="89" name="Groupe GEN . EBG" position="29TNF3714553049" type="GEN . Groupe EBG"/>
           </automat>
           <limit name="Limite 90">
             <point>29TNF3041953732</point>
@@ -391,7 +390,7 @@
       <inhabitants/>
       <logistics/>
     </party>
-    <party id="3" name="Camp Vert" type="neutral">
+    <party color="0x00aa00" id="3" name="Camp Vert" type="neutral">
       <objects/>
       <tactical/>
       <communication>
@@ -418,4 +417,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0891172303" -->
+<!-- signature="1484930337" -->

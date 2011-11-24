@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<exercise model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/exercise.xsd">
+<exercise model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/exercise.xsd">
   <meta>
     <name><![CDATA[Poseidon LOG]]></name>
     <briefing/>
@@ -12,4 +12,4 @@
   <terrain name="PortoV3Lite"/>
   <model dataset="ada" physical="scipio"/>
 </exercise>
-<!-- signature="3473772427" -->
+<!-- signature="2123455614" -->
