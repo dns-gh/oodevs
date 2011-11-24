@@ -59,6 +59,8 @@ public:
     void Receive( const sword::SimToClient& message );
     //@}
 
+	void SetLoginProfile( const std::string& profile, const std::string& password );
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -74,7 +76,9 @@ private:
 
     //! @name Process arguments
     //@{
-    void LoadSimulationConfig( const dispatcher::Config& config );
+    class ProfileInfo;
+	void LoadLoginProfile();
+	void LoadSimulationConfig( const dispatcher::Config& config );
     void LoadPluginConfig( xml::xistream& xis, const dispatcher::Config& config );
     void AddArgument( const std::string& arg );
     //@}
@@ -82,10 +86,15 @@ private:
     struct InternalData;
 
 private:
-    const std::string processName_;
+    dispatcher::Logger_ABC& logger_;
+	std::string processName_;
     std::string workingDir_;
     std::string commandLine_;
-    dispatcher::Logger_ABC& logger_;
+
+	const dispatcher::Config& config_;
+	std::auto_ptr< xml::xistream > xis_;
+	
+	std::auto_ptr< ProfileInfo > profile_;
     std::auto_ptr< InternalData > internal_;
 };
 

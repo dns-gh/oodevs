@@ -21,6 +21,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/noncopyable.hpp>
 
 using namespace plugins::bml;
 namespace bfs = boost::filesystem;
@@ -31,19 +32,68 @@ struct PluginProcessHandler::InternalData
     InternalData() { ZeroMemory( &pid_ , sizeof( pid_ ) ); }
 };
 
+class PluginProcessHandler::ProfileInfo
+{
+public:
+	explicit PluginProcessHandler::ProfileInfo( const std::string& path ) 
+		: config_path_ ( path ) {}
+	
+	void LoadProfile( dispatcher::Logger_ABC& logger )
+	{
+		/* TODO concurrency with gaming application */
+		try 
+		{
+			xml::xifstream xif( config_path_ );
+			xif >> xml::start( "profiles" )
+				>> xml::list( "profile", boost::bind( &ProfileInfo::ReadProfile, *this, _1 ) );
+		}
+		catch( const xml::exception& e ) 
+		{
+			logger.LogWarning( LOG_MESSAGE( e.what() ) );
+		}
+		catch( ... )
+		{
+			logger.LogWarning( LOG_MESSAGE( "Unable to load profile information. Try to load anonymous profile." ) );
+		}
+	}
+
+private:
+	void ReadProfile( xml::xistream& xis )
+    {
+        if ( profile_.empty() && xis.attribute< bool >( "supervision" ) )
+        {
+            xis >> xml::attribute( "name", profile_ )
+                >> xml::attribute( "password", password_ );
+        }
+    }
+
+private:
+	ProfileInfo& operator=( const ProfileInfo& );
+
+public:
+	std::string profile_;
+	std::string password_;
+
+private:
+	const std::string config_path_;
+};
+
 // -----------------------------------------------------------------------------
 // Name: PluginProcessHandler constructor
 // Created: JCR 2011-10-27
 // -----------------------------------------------------------------------------
 PluginProcessHandler::PluginProcessHandler( const dispatcher::Config& config, const std::string& process_name, dispatcher::Logger_ABC& logger, xml::xistream& xis )
-    : processName_ ( process_name )
-    , workingDir_  ( config.BuildPluginDirectory( "bml" ) )
-    , commandLine_ ( workingDir_ + "/" + process_name )
-    , logger_      ( logger )
+    : logger_ ( logger )
+	, processName_ ( process_name )
+	, workingDir_  ( config.BuildPluginDirectory( "bml" ) )
+    , commandLine_ ( workingDir_ + "/" + processName_ )
+	, config_	   ( config )
+	, profile_     ( new ProfileInfo( config_.GetProfilesFile() ) )
+	, internal_    ()
 {
-    LoadSimulationConfig( config );
-    LoadPluginConfig( xis, config );
-    logger_.LogInfo( LOG_MESSAGE( "Wait the first simulation tick before before launching " + process_name + " process." ) );
+	LoadSimulationConfig( config );
+	LoadPluginConfig( xis, config );
+	logger_.LogInfo( LOG_MESSAGE( "Wait the first simulation tick before before launching " + processName_ + " process." ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,6 +104,36 @@ PluginProcessHandler::~PluginProcessHandler()
 {
     if( internal_.get() )
         Stop();
+}
+
+namespace 
+{
+	struct LocalLogger : public dispatcher::Logger_ABC
+	{
+		void LogInfo( const std::string& message )
+		{
+			std::fstream out( "bml.log", std::ios_base::out | std::ios_base::app );
+			if ( !out.bad() )
+				out << "Info " << message << std::endl;
+			out.close();
+		}
+
+		void LogError( const std::string& message ) 
+		{
+			std::fstream out( "bml.log", std::ios_base::out | std::ios_base::app );
+			if ( !out.bad() )
+				out << "Error " << message << std::endl;
+			out.close();
+		}
+		
+		void LogWarning( const std::string& message )
+		{
+			std::fstream out( "bml.log", std::ios_base::out | std::ios_base::app );
+			if ( !out.bad() )
+				out << "Warning " << message << std::endl;
+			out.close();
+		}
+	};
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +147,8 @@ void PluginProcessHandler::Receive( const sword::SimToClient& message )
         try
         {
             logger_.LogInfo( LOG_MESSAGE( "Starting " + processName_ + " process." ) );
-            internal_.reset( new InternalData() );
+			LoadLoginProfile();
+			internal_.reset( new InternalData() );
             Start();
             logger_.LogInfo( LOG_MESSAGE( "Started." ) );
         }
@@ -201,94 +282,82 @@ void PluginProcessHandler::Stop()
 
 #define TODO std::string( "" )
 
-namespace 
-{
-    void ReadProfile( xml::xistream& xis, std::string& profile, std::string& password )
-    {
-        if ( profile.empty() && xis.attribute< bool >( "supervision" ) )
-        {
-            xis >> xml::attribute( "name", profile )
-                >> xml::attribute( "password", password );
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PluginProcessHandler::LoadSimulationConfig
 // Created: JCR 2011-10-27
 // -----------------------------------------------------------------------------
 void PluginProcessHandler::LoadSimulationConfig( const dispatcher::Config& config )
 {
-    const std::string network( config.GetNetworkSimulationParameters() );
-    std::string server = network.substr( 0, network.find( ':' ) ) + ":" + 
-                            boost::lexical_cast< std::string >( config.GetNetworkClientsParameters() );
-    AddArgument( "--sword.server=\"" + server + "\"" );
-    AddArgument( "--sword.exercise=\"" + config.GetExerciseName() + "\"" );
-        
-    std::string profile;
-    std::string password;
-    try 
-    {
-        xml::xifstream xif( config.GetProfilesFile() );
-        xif >> xml::start( "profiles" )
-            >> xml::list( "profile", boost::bind( &::ReadProfile, _1, boost::ref( profile ), boost::ref( password ) ) );
-    }
-	catch( const xml::exception& e ) 
-	{
-		logger_.LogWarning( LOG_MESSAGE( e.what() ) );
-	}
-    catch( ... )
-    {
-        logger_.LogWarning( LOG_MESSAGE( "Unable to load profile information. Try to load anonymous profile." ) );
-    }
-    if( profile.empty() )
+    std::string network( config.GetNetworkSimulationParameters() );
+	std::string server( network.substr( 0, network.find( ':' ) ) + ":" + 
+                            boost::lexical_cast< std::string >( config.GetNetworkClientsParameters() ) );
+
+	AddArgument( "--sword.server=\"" + server + "\"" );
+	AddArgument( "--sword.exercise=\"" + config.GetExerciseName() + "\"" );
+	AddArgument( "--sword.data-dir=\"" + bfs::path( config.GetPhysicalFile(), bfs::native ).branch_path().string() + "\"" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PluginProcessHandler::LoadLoginProfile
+// Created: JCR 2011-11-24
+// -----------------------------------------------------------------------------
+void PluginProcessHandler::LoadLoginProfile()
+{
+	profile_->LoadProfile( logger_ );
+	if( profile_.get() || profile_->profile_.empty() )
     {
         AddArgument( "--sword.profile=\"anonymous\"" );
         AddArgument( "--sword.password=\"\"" );
     }
     else
     {
-        AddArgument( "--sword.profile=\"" + profile + "\"" );
-        AddArgument( "--sword.password=\"" + password + "\"" );
+        AddArgument( "--sword.profile=\"" + profile_->profile_ + "\"" );
+        AddArgument( "--sword.password=\"" + profile_->password_ + "\"" );
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PluginProcessHandler::LoadPluginConfig
 // Created: JCR 2011-10-27
 // -----------------------------------------------------------------------------
 void PluginProcessHandler::LoadPluginConfig( xml::xistream& xis, const dispatcher::Config& config )
 {
-    // Load Server Info
-    xis >> xml::start( "server" );
-    {
-        AddArgument( "--bml.server.url=\"" + xis.attribute< std::string >( "url" ) + "\"" );
-        
-        bool use_ssl = false;
-        xis >> xml::optional >> xml::attribute( "ssl", use_ssl );
-        if( use_ssl )
-            AddArgument( "--bml.ssl=true" );
-        
-        bool use_log = true;
-        xis >> xml::optional >> xml::attribute( "log", use_log );
-        if( use_log )
-        {
-            AddArgument( "--log=true" );
-            AddArgument( "--log.file=\"" + bfs::path( config.GetSessionDir() + "/sword_bml_service.log" ).native_file_string() + "\"" );
-        }
-        xis >> xml::start( "proxy" );
-        AddArgument( "--bml.proxy.user=\"" + xis.attribute< std::string >( "user" ) + "\"" );
-        AddArgument( "--bml.proxy.pass=\"" + xis.attribute< std::string >( "pass" ) + "\"" );
-        xis >> xml::end;
-    }
-    xis >> xml::end
-        >> xml::start( "reports" );
+	bool use_ssl = false;
+	bool use_log = true;
+	bool use_report = false;
+	std::string url;
+	std::string proxy_user;
+	std::string proxy_pass;
+	std::string report_frequency;
 
-    bool use_report = false;
-    xis >> xml::optional >> xml::attribute( "activate", use_report );
-
-    if( use_report )
-        AddArgument( "--bml.update.frequency=" + xis.attribute< std::string >( "frequency" ) );
+	// Load Server Info
+	xis >> xml::start( "server" )
+			>> xml::attribute( "url", url )
+			>> xml::optional >> xml::attribute( "ssl", use_ssl )
+			>> xml::optional >> xml::attribute( "log", use_log )
+			>> xml::start( "proxy" )
+				>> xml::attribute( "user", proxy_user )
+				>> xml::attribute( "pass", proxy_pass )
+			>> xml::end
+		>> xml::end
+		>> xml::start( "reports" )
+			>> xml::attribute( "activate", use_report )
+			>> xml::optional >> xml::attribute( "frequency", report_frequency )
+		>> xml::end;
+		
+	std::string sessionDir( config.GetSessionDir() );
+	AddArgument( "--bml.server.url=\"" + url + "\"" );
+	if( use_ssl )
+		AddArgument( "--bml.ssl=true" );
+	if( use_log )
+	{
+		AddArgument( "--log=true" );
+		AddArgument( "--log.file=\"" + bfs::path( sessionDir + "/sword_bml_service.log" ).native_file_string() + "\"" );
+	}
+	AddArgument( "--bml.proxy.user=\"" + proxy_user + "\"" );
+	AddArgument( "--bml.proxy.pass=\"" + proxy_pass + "\"" );
+	if( use_report )
+		AddArgument( "--bml.update.frequency=" + report_frequency );
 }
 
 // -----------------------------------------------------------------------------

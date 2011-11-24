@@ -21,6 +21,29 @@ namespace dispatcher
     class StaticModel;
 }
 
+#include <iostream>
+#include <fstream>
+
+namespace 
+{
+	class NullPlugin : public dispatcher::Plugin_ABC
+	{
+	public: 
+		//! @name Constructors/Destructor
+		//@{
+				NullPlugin() {};
+		virtual ~NullPlugin() {};
+		//@}
+
+		//! @name Inherited from Plugin_ABC
+		//@{
+		void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ ) {};
+		void NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ ) {};
+		void Receive( const sword::SimToClient& message ) {};
+		//@}
+	};
+}
+
 // -----------------------------------------------------------------------------
 // Name: CreateInstance
 // Created: JMT 2011-09-19
