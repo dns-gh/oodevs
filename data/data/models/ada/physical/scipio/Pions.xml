@@ -27,7 +27,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="PC AIR" id="2" name="ALAT - PC Bombardiers" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Masalife.AIR.PC" id="2" name="AIR . PC Bombardiers" type="Pion ALAT">
     <nature atlas-nature="None" level="i" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="Bombardier"/>
@@ -5441,7 +5441,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="PC AIR" id="187" name="GLAISE - AIR - PC SU 25" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Masalife.AIR.PC" id="187" name="GLAISE - AIR . PC SU 25" type="Pion ALAT">
     <nature atlas-nature="None" level="i" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="SU 25"/>
@@ -5469,7 +5469,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Patrouille AIR Assaut" id="188" name="GLAISE - ALFT- Patrouille SU 25" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Masalife.AIR.Patrouille Assaut" id="188" name="GLAISE - ALFT . Patrouille SU 25" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="SU 25"/>
@@ -6808,7 +6808,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="HUMUS RENS SMP" id="232" name="HUMUS - RENS - Societe Militaire Privee" type="Pion RENS">
+  <unit decisional-model="Masalife.Milice" id="232" name="HUMUS - RENS . Societe Militaire Privee" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Vehicule 4X4 civil _ H"/>
@@ -11639,28 +11639,6 @@
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="900s"/>
-      <posture name="Poste" setup-time="1800s"/>
-      <posture name="PosteAmenage" setup-time="3600s"/>
-      <posture name="PostePrepareGenie" setup-time="5400s"/>
-    </postures>
-    <setup installation-time="2m" uninstallation-time="2m"/>
-    <nbc decontamination-delay="2250s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="404" name="GLAISE . PC PL" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
-    <equipments>
-      <equipment count="1" crew="2" loadable="true" major="true" type="UAZ 469"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="1" type="SousOfficier"/>
     </crew-ranks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -17034,62 +17012,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Masalife.AIR.PC" id="596" name="ALAT . PC Bombardiers" type="Pion ALAT">
-    <nature atlas-nature="None" level="i" nature-app6="combat/aviation/rotary wing/attack"/>
-    <equipments>
-      <equipment count="2" crew="2" major="true" type="Bombardier"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="4" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="300s"/>
-    </postures>
-    <nbc decontamination-delay="120s"/>
-    <distance-before-points>
-      <distance-before-point type="forest" value="500"/>
-      <distance-before-point type="urban area" value="500"/>
-      <distance-before-point type="crossroad" value="500"/>
-      <distance-before-point type="bridge" value="500"/>
-    </distance-before-points>
-    <drill-blow length="100" width="100"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit can-fly="true" decisional-model="Masalife.AIR.Patrouille Assaut" id="597" name="GLAISE . ALFT . Patrouille SU 25" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/attack"/>
-    <equipments>
-      <equipment count="2" crew="2" major="true" type="SU 25"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="4" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="1800s"/>
-    </postures>
-    <nbc decontamination-delay="900s"/>
-    <distance-before-points>
-      <distance-before-point type="forest" value="500"/>
-      <distance-before-point type="urban area" value="500"/>
-      <distance-before-point type="crossroad" value="500"/>
-      <distance-before-point type="bridge" value="500"/>
-    </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Masalife.JOINT" id="598" name="JOINT . Porte-avions" type="Pion JOINT">
+  <unit decisional-model="Masalife.JOINT" id="597" name="JOINT . Porte-avions" type="Pion JOINT">
     <nature atlas-nature="None" level="ooo" nature-app6="combat support/landing support"/>
     <equipments>
       <equipment count="1" crew="100" major="true" type="Porte-avions"/>
@@ -17116,7 +17039,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="599" name="INF . Fantassin I.L." type="Pion INF">
+  <unit decisional-model="Masalife.INF.Groupe.PROTERRE" id="598" name="INF . Fantassin I.L." type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Fantassin I.L."/>
@@ -17144,7 +17067,7 @@
     <efficiencies combat="10" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Artillerie.Reco.AUF1" id="600" name="ASS . Section de Reco AUF1" type="Pion ASS">
+  <unit decisional-model="Masalife.Artillerie.Reco.AUF1" id="599" name="ASS . Section de Reco AUF1" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VAB VIT"/>
@@ -17174,5 +17097,2179 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="Masalife.INF" id="600" name="HUMUS - INF . Section BTR60" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="2" major="true" type="BTR 60 PB"/>
+      <equipment count="1" crew="1" loadable="true" type="Fantassin RPG7"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Terroriste" id="601" name="HUMUS - ASY .  Activiste" type="Pion ASY">
+    <nature atlas-nature="Indefini" level="o" nature-app6="combat"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="Terroriste IED"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.AMX" id="602" name="HUMUS - ABC . Peloton T55" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/medium"/>
+    <equipments>
+      <equipment count="3" crew="4" major="true" type="Char T55"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1800s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="300"/>
+      <distance-before-point type="urban area" value="400"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+      <distance-before-point type="lima" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="500"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF.HOT" id="603" name="HUMUS - INF . Groupe AC" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor/armored/wheeled"/>
+    <equipments>
+      <equipment count="2" crew="2" type="Vehicule 4X4 civil _ H"/>
+      <equipment count="2" crew="2" loadable="true" major="true" type="Equipe SR 75"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Mortier" id="604" name="HUMUS - INF . Grp mortier 82" type="Pion INF">
+    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery"/>
+    <equipments>
+      <equipment count="3" crew="2" loadable="true" major="true" type="Equipe Mortier 82 H"/>
+      <equipment count="9" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="2" major="true" type="BTR 60 PB"/>
+      <equipment count="1" crew="2" type="ZIL 131"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1500s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Mortier" id="605" name="HUMUS - INF . Grp mortier 60" type="Pion INF">
+    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery"/>
+    <equipments>
+      <equipment count="3" crew="3" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="2" major="true" type="BTR 60 PB"/>
+      <equipment count="1" crew="2" type="ZIL 131"/>
+      <equipment count="3" crew="2" loadable="true" type="Equipe Mortier 60 H"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1500s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="606" name="HUMUS - INF . Section BMP1" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="2" major="true" type="BMP 1"/>
+      <equipment count="1" crew="1" loadable="true" type="Fantassin RPG7"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="607" name="HUMUS - INF . Section GAZ66" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="12" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="2" major="true" type="GAZ 66"/>
+      <equipment count="1" crew="1" loadable="true" type="Fantassin RPG7"/>
+      <equipment count="2" crew="1" loadable="true" type="Fantassin 12.7 H"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="608" name="HUMUS - INF . Section ZIL 131" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="12" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="2" major="true" type="ZIL 131"/>
+      <equipment count="1" crew="1" loadable="true" type="Fantassin RPG7"/>
+      <equipment count="2" crew="1" loadable="true" type="Fantassin 12.7 H"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="609" name="HUMUS - INF . Section Cdo BTR60" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="6" major="true" type="BTR 60 PB"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPG7"/>
+      <equipment count="1" crew="1" loadable="true" type="Fantassin SA7"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Milice" id="610" name="HUMUS - INF . Section Cdo Toyota" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/wheeled/medium"/>
+    <equipments>
+      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="6" major="true" type="Toyota Cdo Humus (SA7)"/>
+      <equipment count="1" crew="1" loadable="true" type="Fantassin SA7"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPG7"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.EI" id="611" name="HUMUS - ABC . Patrouille BRDM2" type="Pion ABC">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="BRDM 2"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.EI" id="612" name="HUMUS - ABC . Patrouille PickUp" type="Pion ABC">
+    <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="PICK UP 23/2"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF.PC" id="613" name="HUMUS - INF . PC" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="PICK UP"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Milice" id="614" name="HUMUS - INF . Section Cdo BMP1" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/wheeled/medium"/>
+    <equipments>
+      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="2" major="true" type="BMP 1"/>
+      <equipment count="1" crew="1" loadable="true" type="Fantassin SA7"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPG7"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.PC" id="615" name="HUMUS - ABC . PC" type="Pion ABC">
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="PICK UP"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="616" name="GLAISE - CIRCU . PL FAP 2026B" type="Pion CIRCULATION">
+    <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="PL FAP 2026BS"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="3600s"/>
+      <posture name="PostePrepareGenie" setup-time="5400s"/>
+    </postures>
+    <setup installation-time="2m" uninstallation-time="2m"/>
+    <nbc decontamination-delay="8850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.EI" id="617" name="GLAISE - ABC . Section AC BRDM2 AT5" type="Pion ABC">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="4" crew="3" major="true" type="BRDM 2 AT5"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="618" name="GLAISE - INF . masalife.inf BTR 80" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="BTR 80"/>
+      <equipment count="19" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Elite"/>
+      <equipment count="2" crew="5" loadable="true" type="Eqp AT7"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="8" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Mortier" id="619" name="GLAISE - INF . Groupe Mortier 81" type="Pion INF">
+    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery"/>
+    <equipments>
+      <equipment count="2" crew="3" type="BTR 70"/>
+      <equipment count="2" crew="3" loadable="true" major="true" type="Eqp Mortier 81 glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="1000" logistic-threshold="30" name="CPLT 81 EXPL MLE F2" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF.HOT" id="620" name="GLAISE - AC . Section BRDM2 AT 5" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/anti armor/armored/wheeled"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="BRDM 2 AT5"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF.HOT" id="621" name="GLAISE - AC . Section toyota 106 SR" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/anti armor/armored/wheeled"/>
+    <equipments>
+      <equipment count="5" crew="4" major="true" type="Toyota 106 SR"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.AMX" id="622" name="GLAISE - ABC . Section T62" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/medium"/>
+    <equipments>
+      <equipment count="3" crew="4" major="true" type="Char T62"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.AMX" id="623" name="GLAISE - ABC . Section CHIEFTAIN" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/medium"/>
+    <equipments>
+      <equipment count="3" crew="4" major="true" type="Char CHIEFTAIN"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.PC" id="624" name="GLAISE - ABC . PC Escadron T62" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/wheeled/medium"/>
+    <equipments>
+      <equipment count="1" crew="4" major="true" type="Char T62"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.PC" id="625" name="GLAISE - ABC . PC Escadron T72 BM" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/wheeled/medium"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="Char T72 BM"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.PC" id="626" name="GLAISE - ABC . PC Escadron CHIEFTAIN" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/wheeled/medium"/>
+    <equipments>
+      <equipment count="1" crew="4" major="true" type="Char CHIEFTAIN"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.EI" id="627" name="GLAISE - ABC . Patrouille EI BMP 2" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="oo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="BMP 2 + AT5"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <drill-blow length="500" width="500"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="628" name="GLAISE - INF . Section BMP 1" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="BMP 1 + AT4"/>
+      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin LGI glaise"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF.PC" id="629" name="GLAISE - INF . PC Cie BMP 1" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="BMP 1"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF.PC" id="630" name="GLAISE - INF . PC Cie BMP 2" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="BMP 2"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF.HOT" id="631" name="GLAISE - ABC . Section Reco NBC BRDM 2" type="Pion NBC">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/anti armor/armored/wheeled"/>
+    <equipments>
+      <equipment count="1" crew="4" major="true" type="BRDM 2 RKh"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.NRBC.Reco" id="632" name="GLAISE - NRBC . Equipe Reco RKh" type="Pion NBC">
+    <nature atlas-nature="Blinde" level="o" nature-app6="combat support/nbc"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="RKh M"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.PAA - EFA - PFM" id="633" name="GLAISE - GEN . Groupe MTU 72" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="MTU 72"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.PAA - EFA - PFM" id="634" name="GLAISE - GEN . Groupe GSP" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/recon"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="GSP"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="635" name="GLAISE - GEN . Groupe BTM" type="Pion GEN">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/engineer"/>
+    <equipments>
+      <equipment count="2" crew="1" major="true" type="BTM"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="636" name="GLAISE - GEN . Groupe BAT2" type="Pion GEN">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/engineer"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="BAT2"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="637" name="GLAISE - GEN . Groupe GMZ 3" type="Pion GEN">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="4" major="true" type="GMZ 3"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="638" name="GLAISE - GEN . Groupe MDK2" type="Pion GEN">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="1" major="true" type="MDK2"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie" id="639" name="GLAISE - GEN . Section combat" type="Pion GEN">
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
+    <equipments>
+      <equipment count="1" crew="3" type="ZIL 131"/>
+      <equipment count="3" crew="9" major="true" type="BTR 70 GEN"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.PC" id="640" name="GLAISE - GEN . PC Cie Genie" type="Pion GEN">
+    <nature atlas-nature="None" level="i" nature-app6="combat/engineer/combat/light"/>
+    <equipments>
+      <equipment count="3" crew="10" major="true" type="BTR 70 GEN"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.PAA - EFA - PFM" id="641" name="GLAISE - GEN . Groupe PMP" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="PMP"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.EI" id="642" name="GLAISE - ABC . Patrouille EI BRDM2" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="oo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="2" crew="4" major="true" type="BRDM 2"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <drill-blow length="500" width="500"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="643" name="GLAISE - INF . Section BMP 2 sans AT" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="3" major="true" type="BMP 2"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin LGI glaise"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="644" name="GLAISE - INF . Section BMP 1 sans AT" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="3" major="true" type="BMP 1"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin LGI glaise"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF.PC" id="645" name="GLAISE - INF . PC Cie BTR70" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="BTR 70"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="646" name="GLAISE - INF . Section BTR70" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="3" major="true" type="BTR 70"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin LGI glaise"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.EI" id="647" name="GLAISE - ABC . Peloton SCORPION" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/medium"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="SCORPION"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="2700s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="300"/>
+      <distance-before-point type="urban area" value="400"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+      <distance-before-point type="lima" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="500"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.EI" id="648" name="GLAISE - ABC . Patrouille EI BMP 1" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="oo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="BMP 1 + AT4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <drill-blow length="500" width="500"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.PC" id="649" name="GLAISE - ABC . PC Peloton EI" type="Pion ABC">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="1" crew="4" major="true" type="BRDM 2"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="650" name="GLAISE - INF . Section BMP 2" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="BMP 2 + AT5"/>
+      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin LGI glaise"/>
+      <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.AMX" id="651" name="GLAISE - ABC . Section T72 BM" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="Char T72 BM"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="120s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.LOG.TC2" id="652" name="GLAISE - LOG . TC2 char" type="Pion LOG TC2">
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
+    <equipments>
+      <equipment count="14" crew="7" type="UAZ 469"/>
+      <equipment convoyer="true" count="10" crew="3" type="KAMAZ 5320"/>
+      <equipment count="4" crew="3" type="ZIL 131"/>
+      <equipment count="3" crew="3" major="true" type="BREM 1"/>
+      <equipment count="4" crew="3" type="Kraz 255B-atelier"/>
+      <equipment count="2" crew="3" major="true" type="Kraz 255B-citerne"/>
+      <equipment convoyer="true" count="25" crew="3" type="KrAZ 255B"/>
+      <equipment convoyer="true" count="3" crew="2" major="true" type="ZIL 151 citerne"/>
+      <equipment count="1" crew="7" type="UAZ 469 SAN"/>
+      <equipment count="3" crew="4" type="BRDM 2 SAN"/>
+      <equipment count="2" crew="2" type="MAZ 537"/>
+      <equipment convoyer="true" count="5" crew="2" type="GAZ 66"/>
+      <equipment count="2" crew="2" major="true" type="Eqp NTI1 EA glaise"/>
+      <equipment count="3" crew="2" major="true" type="Eqp NTI1 MOB glaise"/>
+      <equipment count="7" crew="2" major="true" type="Eqp UMR MOB CHAR glaise"/>
+      <equipment count="5" crew="2" major="true" type="Eqp UMR TCT CHAR glaise"/>
+      <equipment count="5" crew="1" type="Eqp diagnostic"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="7" type="Officier"/>
+      <crew-rank count="57" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="2700s"/>
+      <posture name="PostePrepareGenie" setup-time="2700s"/>
+    </postures>
+    <setup installation-time="60s" uninstallation-time="60s"/>
+    <nbc decontamination-delay="21600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF.HOT" id="653" name="GLAISE - INF . Groupe AC 106 SR" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor/armored/wheeled"/>
+    <equipments>
+      <equipment count="5" crew="3" major="true" type="Toyota 106 SR"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="2550s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF.HOT" id="654" name="GLAISE - INF . Groupe AC BRDM2 AT5" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor/armored/wheeled"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="BRDM 2 AT5"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="2550s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.PC" id="655" name="GLAISE - ABC . PC Escadron RECO" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="i" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="1" crew="4" major="true" type="BRDM 2"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF.PC" id="656" name="GLAISE - INF . Section CDT BRDM 2 AT5" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/anti armor/armored"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="BMP 2"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.PAA - EFA - PFM" id="657" name="GLAISE - GEN . Groupe TMM" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/capacity/naval"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="TMM"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="658" name="GLAISE - GEN . Groupe PMR-3" type="Pion GEN">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="5" major="true" type="PMR-3 + ZIL 157"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.PAA - EFA - PFM" id="659" name="GLAISE - GEN . Groupe PTS" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/recon"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="PTS"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="660" name="GLAISE - GEN . Groupe PZM" type="Pion GEN">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="3" crew="1" major="true" type="PZM-2"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.PC" id="661" name="GLAISE - GEN . Section CDT genie franchissement" type="Pion GEN">
+    <nature atlas-nature="None" level="i" nature-app6="combat/engineer/combat/light"/>
+    <equipments>
+      <equipment count="3" crew="10" major="true" type="BTR 70 GEN"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Genie.PC" id="662" name="GLAISE - GEN . Section CDT genie organisation terrain" type="Pion GEN">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/engineer/combat/light"/>
+    <equipments>
+      <equipment count="3" crew="10" major="true" type="BTR 70 GEN"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="663" name="GLAISE - CIRCU . PL KAMAZ 4310" type="Pion CIRCULATION">
+    <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="PL KAMAZ 4310"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="3600s"/>
+      <posture name="PostePrepareGenie" setup-time="5400s"/>
+    </postures>
+    <setup installation-time="2m" uninstallation-time="2m"/>
+    <nbc decontamination-delay="8850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="664" name="GLAISE - CIRCU . PL KAMAZ 5320" type="Pion CIRCULATION">
+    <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="PL KAMAZ 5320"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="3600s"/>
+      <posture name="PostePrepareGenie" setup-time="5400s"/>
+    </postures>
+    <setup installation-time="2m" uninstallation-time="2m"/>
+    <nbc decontamination-delay="8850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="665" name="GLAISE - CIRCU . PL MAZ 500" type="Pion CIRCULATION">
+    <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="PL MAZ 500"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="3600s"/>
+      <posture name="PostePrepareGenie" setup-time="5400s"/>
+    </postures>
+    <setup installation-time="2m" uninstallation-time="2m"/>
+    <nbc decontamination-delay="8850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="666" name="GLAISE - CIRCU . PL OURAL 4320" type="Pion CIRCULATION">
+    <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="PL OURAL 4320"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="3600s"/>
+      <posture name="PostePrepareGenie" setup-time="5400s"/>
+    </postures>
+    <setup installation-time="2m" uninstallation-time="2m"/>
+    <nbc decontamination-delay="8850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.LOG.PC" id="667" name="GLAISE - LOG . PC PL" type="Pion LOG BLD Ravitaillement">
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
+    <equipments>
+      <equipment count="1" crew="2" loadable="true" major="true" type="UAZ 469"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="3600s"/>
+      <posture name="PostePrepareGenie" setup-time="5400s"/>
+    </postures>
+    <setup installation-time="2m" uninstallation-time="2m"/>
+    <nbc decontamination-delay="2250s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="668" name="GLAISE - CIRCU . PL humanitaire" type="Pion CIRCULATION">
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
+    <equipments>
+      <equipment count="5" crew="3" major="true" type="PL OURAL 4320"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="3600s"/>
+      <posture name="PostePrepareGenie" setup-time="5400s"/>
+    </postures>
+    <setup installation-time="2m" uninstallation-time="2m"/>
+    <nbc decontamination-delay="8850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="669" name="GLAISE - INF . Section CDT CAC" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="BRDM 2 AT5"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="670" name="GLAISE - INF . Section CAC" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="BRDM 2 AT5"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Masalife.AIR.Patrouille Assaut" id="671" name="GLAISE - ALFT- Patrouille SU 25" type="Pion ALAT">
+    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/attack"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="SU 25"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.EI" id="672" name="GLAISE - ABC . PC Peloton EI BRDM2" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="2" crew="4" major="true" type="BRDM 2"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <drill-blow length="500" width="500"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.INF" id="673" name="GLAISE - INF . Cie CDT CAC" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/anti armor/armored/wheeled"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="BRDM 2 AT5"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.NRBC.Reco" id="674" name="GLAISE - NRBC . PC Reco RKh" type="Pion NBC">
+    <nature atlas-nature="Blinde" level="oo" nature-app6="combat support/nbc"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="RKh M"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="675" name="GLAISE - CIRCU . PC MAZ 500" type="Pion CIRCULATION">
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="PL MAZ 500"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="3600s"/>
+      <posture name="PostePrepareGenie" setup-time="5400s"/>
+    </postures>
+    <setup installation-time="2m" uninstallation-time="2m"/>
+    <nbc decontamination-delay="8850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.PC" id="676" name="GLAISE - ABC . PC Escadron T72" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/wheeled/medium"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="Char T72"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ABC.AMX" id="677" name="GLAISE - ABC . Section T72" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="Char T72"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="120s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="0579663912" -->
+<!-- signature="3017075939" -->
