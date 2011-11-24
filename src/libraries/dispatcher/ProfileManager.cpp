@@ -71,11 +71,11 @@ void ProfileManager::Receive( const sword::SimToClient& wrapper )
     if( wrapper.message().has_control_checkpoint_save_end() )
     {
         try
-        {            
+        {
             std::string strPath = config_.GetCheckpointDirectory( wrapper.message().control_checkpoint_save_end().name() );
             MT_LOG_INFO_MSG( "Begin save checkpoint " << strPath );
             const bfs::path p( strPath, bfs::native );
-            if ( !bfs::exists( p ) )
+            if( !bfs::exists( p ) )
                 bfs::create_directories( p );
             Save( strPath );
         }

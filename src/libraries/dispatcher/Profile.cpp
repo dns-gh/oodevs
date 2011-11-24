@@ -442,10 +442,10 @@ void Profile::SetRoleIdFromString( const std::string& role )
 {
     roleId_ = -1;
     DictionaryType* dictionary = model_.GetExtensionTypes().tools::StringResolver< DictionaryType >::Find( "T_User_Role" );
-    if ( dictionary )
+    if( dictionary )
     {
         DictionaryEntryType* entry = dictionary->Find( role );
-        if ( entry )
+        if( entry )
         {
             roleId_ = entry->GetId();
         }

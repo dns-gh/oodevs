@@ -44,7 +44,7 @@ void ConstructionAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_construction()  )
     {
-        if ( asnMsg.construction().has_resource() )
+        if( asnMsg.construction().has_resource() )
         {
             hasDotation_ = true;
             dotation_ = asnMsg.construction().resource().id();

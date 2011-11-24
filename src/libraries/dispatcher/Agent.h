@@ -123,7 +123,7 @@ private:
         float female_;
         float children_;
 
-        HumanRepartition( float male, float female, float children ) : male_( male ), female_( female ), children_( children ) {} 
+        HumanRepartition( float male, float female, float children ) : male_( male ), female_( female ), children_( children ) {}
     };
     typedef std::map< unsigned long, float > T_Affinities;
     typedef T_Affinities::const_iterator   CIT_Affinities;

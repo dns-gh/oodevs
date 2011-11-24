@@ -38,7 +38,7 @@ LodgingAttribute::~LodgingAttribute()
 // -----------------------------------------------------------------------------
 void LodgingAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
-    if ( asnMsg.has_lodging() )
+    if( asnMsg.has_lodging() )
         capacity_ = asnMsg.lodging().capacity();
 }
 

@@ -35,7 +35,7 @@ void MedicalTreatmentAttribute::MedicalCapacity::Update( const sword::MedicalTre
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::MedicalCapacity::Send( sword::MedicalTreatmentBedCapacity& capacity ) const
 {
-    if ( typeId_ >= 0 )
+    if( typeId_ >= 0 )
     {
         capacity.set_type_id( typeId_ );
         capacity.set_baseline_count( baseline_ );
@@ -82,11 +82,11 @@ void MedicalTreatmentAttribute::Update( const sword::ObjectAttributes& message )
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::Update( const sword::ObjectAttributeMedicalTreatment& message )
 {
-    if ( message.has_doctors() )
+    if( message.has_doctors() )
         doctors_ = message.doctors();
-    if ( message.has_available_doctors() )
+    if( message.has_available_doctors() )
         availableDoctors_ = message.available_doctors();
-    if ( message.has_external_reference_id() )
+    if( message.has_external_reference_id() )
         referenceID_ = message.external_reference_id();
     if( message.has_facility_status() )
         status_ = message.facility_status();
@@ -108,6 +108,6 @@ void MedicalTreatmentAttribute::Send( sword::ObjectAttributes& message ) const
     message.mutable_medical_treatment()->set_available_doctors      ( availableDoctors_ );
     message.mutable_medical_treatment()->set_external_reference_id  ( referenceID_ );
     message.mutable_medical_treatment()->set_facility_status        ( status_ );
-    for ( T_TreatmentCapacityVector::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+    for( T_TreatmentCapacityVector::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
         it->second.Send( *message.mutable_medical_treatment()->add_bed_capacities() );
 }

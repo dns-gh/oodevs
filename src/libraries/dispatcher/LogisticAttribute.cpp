@@ -44,7 +44,7 @@ LogisticAttribute::~LogisticAttribute()
 // -----------------------------------------------------------------------------
 void LogisticAttribute::Update( const sword::ObjectAttributes& msg )
 {
-    if ( msg.has_logistic() && msg.logistic().has_logistic_superior() )
+    if( msg.has_logistic() && msg.logistic().has_logistic_superior() )
     {
         if( msg.logistic().logistic_superior().has_automat() )
         {

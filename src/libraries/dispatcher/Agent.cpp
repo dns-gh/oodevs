@@ -89,7 +89,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , statisfaction_              ( 0 )
     , humanRepartition_           ( 0 )
 {
-    if ( msg.has_repartition() )
+    if( msg.has_repartition() )
         humanRepartition_.reset( new HumanRepartition( msg.repartition().male(), msg.repartition().female(), msg.repartition().children() ) );
 
     automat_->Register( *this );
@@ -412,7 +412,7 @@ void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
     message().set_pc( bPC_ );
     if( color_.IsInitialized() )
         *message().mutable_color() = color_;
-    if ( humanRepartition_.get() )
+    if( humanRepartition_.get() )
     {
         message().mutable_repartition()->set_male( humanRepartition_->male_ );
         message().mutable_repartition()->set_female( humanRepartition_->female_ );
