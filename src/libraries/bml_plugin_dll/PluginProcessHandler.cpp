@@ -304,7 +304,7 @@ void PluginProcessHandler::LoadSimulationConfig( const dispatcher::Config& confi
 void PluginProcessHandler::LoadLoginProfile()
 {
 	profile_->LoadProfile( logger_ );
-	if( profile_.get() || profile_->profile_.empty() )
+	if( profile_->profile_.empty() )
     {
         AddArgument( "--sword.profile=\"anonymous\"" );
         AddArgument( "--sword.password=\"\"" );
