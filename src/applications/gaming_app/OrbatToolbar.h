@@ -12,6 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/Filter_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -28,7 +29,8 @@ namespace gui
 }
 
 class Simulation;
-class UnitFilter;
+class ProfileFilter;
+class Filter_ABC;
 
 // =============================================================================
 /** @class  OrbatToolbar
@@ -40,14 +42,14 @@ class OrbatToolbar : public Q3HBox
                    , public tools::Observer_ABC
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                    , public tools::ElementObserver_ABC< Simulation >
-                   , public tools::ElementObserver_ABC< UnitFilter >
+                   , public tools::ElementObserver_ABC< kernel::Filter_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, UnitFilter& filter,
+             OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter,
                            gui::AutomatsLayer& automats, gui::FormationLayer& formations );
     virtual ~OrbatToolbar();
     //@}
@@ -71,7 +73,7 @@ private:
     virtual QSize minimumSizeHint() const;
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const Simulation& simu );
-    virtual void NotifyUpdated( const UnitFilter& filter );
+    virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
 
     void Filter( const kernel::Entity_ABC& entity );
     //@}
@@ -80,7 +82,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    UnitFilter& filter_;
+    ProfileFilter& filter_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     gui::AggregateToolbar* pAggregateToolbar_;
     QToolButton* filterBtn_;

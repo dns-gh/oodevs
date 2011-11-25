@@ -14,7 +14,8 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Population_ABC.h"
-#include "protocol/AuthenticationSenders.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile constructor
@@ -52,21 +53,21 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
 // Created: SBO 2007-03-29
 // -----------------------------------------------------------------------------
 UserProfile::UserProfile( const UserProfile& p )
-    : controller_       ( p.controller_ )
-    , publisher_        ( p.publisher_ )
-    , registered_       ( false )
-    , login_            ( p.login_ )
-    , password_         ( p.password_ )
-    , supervision_      ( p.supervision_ )
-    , role_             ( p.role_ )
-    , readSides_        ( p.readSides_ )
-    , readFormations_   ( p.readFormations_ )
-    , readAutomats_     ( p.readAutomats_ )
-    , readPopulations_  ( p.readPopulations_ )
-    , writeSides_       ( p.writeSides_ )
-    , writeFormations_  ( p.writeFormations_ )
-    , writeAutomats_    ( p.writeAutomats_ )
-    , writePopulations_ ( p.writePopulations_ )
+    : controller_      ( p.controller_ )
+    , publisher_       ( p.publisher_ )
+    , registered_      ( false )
+    , login_           ( p.login_ )
+    , password_        ( p.password_ )
+    , supervision_     ( p.supervision_ )
+    , role_            ( p.role_ )
+    , readSides_       ( p.readSides_ )
+    , readFormations_  ( p.readFormations_ )
+    , readAutomats_    ( p.readAutomats_ )
+    , readPopulations_ ( p.readPopulations_ )
+    , writeSides_      ( p.writeSides_ )
+    , writeFormations_ ( p.writeFormations_ )
+    , writeAutomats_   ( p.writeAutomats_ )
+    , writePopulations_( p.writePopulations_ )
 {
     // NOTHING
 }
@@ -169,40 +170,31 @@ namespace
 void UserProfile::SetProfile( const sword::Profile& profile )
 {
     login_ = profile.login().c_str();
-    if( profile.has_password()  )
+    if( profile.has_password() )
         password_ = profile.password().c_str();
     supervision_ = profile.supervisor();
     if( profile.has_role() )
         role_ = profile.role().id();
-    if( profile.has_read_only_parties()  )
+    if( profile.has_read_only_parties() )
         CopyList( profile.read_only_parties(), readSides_);
-    if( profile.has_read_only_formations()  )
+    if( profile.has_read_only_formations() )
         CopyList( profile.read_only_formations(), readFormations_ );
-    if( profile.has_read_only_automates()  )
+    if( profile.has_read_only_automates() )
         CopyList( profile.read_only_automates(), readAutomats_ );
-    if( profile.has_read_only_crowds()  )
+    if( profile.has_read_only_crowds() )
         CopyList( profile.read_only_crowds(), readPopulations_ );
 
-    if( profile.has_read_write_parties()  )
+    if( profile.has_read_write_parties() )
         CopyList( profile.read_write_parties(), writeSides_);
-    if( profile.has_read_write_formations()  )
+    if( profile.has_read_write_formations() )
         CopyList( profile.read_write_formations(), writeFormations_ );
-    if( profile.has_read_write_automates()  )
+    if( profile.has_read_write_automates() )
         CopyList( profile.read_write_automates(), writeAutomats_ );
-    if( profile.has_read_write_crowds()  )
+    if( profile.has_read_write_crowds() )
         CopyList( profile.read_write_crowds(), writePopulations_ );
 
     if( registered_ )
         controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::GetLogin
-// Created: SBO 2007-01-19
-// -----------------------------------------------------------------------------
-QString UserProfile::GetLogin() const
-{
-    return login_;
 }
 
 // -----------------------------------------------------------------------------
@@ -221,15 +213,6 @@ QString UserProfile::GetPassword() const
 int UserProfile::GetRole() const
 {
     return role_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::IsSupervisor
-// Created: SBO 2007-01-19
-// -----------------------------------------------------------------------------
-bool UserProfile::IsSupervisor() const
-{
-    return supervision_;
 }
 
 // -----------------------------------------------------------------------------
@@ -336,4 +319,71 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
         SetRight( id, writeAutomats_, writeable );
     else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
         SetRight( id, writePopulations_, writeable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::GetLogin
+// Created: LGY 2011-11-24
+// -----------------------------------------------------------------------------
+QString UserProfile::GetLogin() const
+{
+    return login_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::IsKnowledgeVisible
+// Created: LGY 2011-11-24
+// -----------------------------------------------------------------------------
+bool UserProfile::IsKnowledgeVisible( const kernel::Knowledge_ABC& /*knowledge*/ ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::IsVisible
+// Created: LGY 2011-11-24
+// -----------------------------------------------------------------------------
+bool UserProfile::IsVisible( const kernel::Entity_ABC& entity ) const
+{
+    if( const kernel::TacticalHierarchies* tacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+        if( supervision_ && entity.GetTypeName() == kernel::Object_ABC::typeName_ && tacticalHierarchies->GetTop().GetId() == 0 )
+            return true;
+
+    if( IsReadable( entity ) ||IsWriteable( entity ) )
+        return true;
+
+    if( const kernel::TacticalHierarchies* tactical = entity.Retrieve< kernel::TacticalHierarchies >() )
+    {
+        if( const kernel::Entity_ABC* superior = tactical->GetSuperior() )
+            return IsVisible( *superior );
+        return false;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::CanBeOrdered
+// Created: LGY 2011-11-24
+// -----------------------------------------------------------------------------
+bool UserProfile::CanBeOrdered( const kernel::Entity_ABC& /*entity*/ ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::CanDoMagic
+// Created: LGY 2011-11-24
+// -----------------------------------------------------------------------------
+bool UserProfile::CanDoMagic( const kernel::Entity_ABC& /*entity*/ ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::IsSupervision
+// Created: LGY 2011-11-24
+// -----------------------------------------------------------------------------
+bool UserProfile::IsSupervision() const
+{
+    return supervision_;
 }

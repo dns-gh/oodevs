@@ -35,7 +35,7 @@ public:
     //@{
     const QString& GetLogin() const;
     bool IsPasswordProtected() const;
-    bool IsSupervisor() const;
+    bool IsSupervision() const;
     AvailableProfile& operator=( const AvailableProfile& );
     //@}
 

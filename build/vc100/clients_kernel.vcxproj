@@ -225,6 +225,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Filter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Finalizable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\FormationLevels.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\GhostPrototype.h" />

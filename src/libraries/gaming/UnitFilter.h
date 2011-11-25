@@ -11,6 +11,7 @@
 #define __UnitFilter_h_
 
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/Filter_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -29,6 +30,7 @@ namespace kernel
 // Created: AGE 2006-11-29
 // =============================================================================
 class UnitFilter : public kernel::Profile_ABC
+                 , public kernel::Filter_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -45,9 +47,11 @@ public:
     virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
     virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const;
     virtual bool IsSupervision() const;
-    void SetFilter( const kernel::Entity_ABC& entity );
-    void RemoveFilter();
-    const kernel::Entity_ABC* GetFilter() const;
+
+    virtual QString GetFilter() const;
+    virtual void SetFilter( const kernel::Entity_ABC& entity );
+    virtual void SetFilter( const kernel::Profile_ABC& profile );
+    virtual void RemoveFilter();
     //@}
 
 private:

@@ -15,6 +15,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/AggregateToolbar.h"
+#include "gaming/ProfileFilter.h"
 #include "gaming/UnitFilter.h"
 #include "gaming/Simulation.h"
 
@@ -22,7 +23,7 @@
 // Name: OrbatToolbar constructor
 // Created: SBO 2007-03-05
 // -----------------------------------------------------------------------------
-OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, UnitFilter& filter,
+OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter,
                             gui::AutomatsLayer& automats, gui::FormationLayer& formations )
     : Q3HBox( parent )
     , controllers_( controllers )
@@ -106,17 +107,14 @@ void OrbatToolbar::OnClearFilter()
 // Name: OrbatToolbar::NotifyUpdated
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
-void OrbatToolbar::NotifyUpdated( const UnitFilter& filter )
+void OrbatToolbar::NotifyUpdated( const kernel::Filter_ABC& filter )
 {
-    entity_ = filter.GetFilter();
-    if( entity_ == 0 )
-    {
-        filterBtn_->setTextLabel( "" );
+    const QString name = filter.GetFilter();
+    filterBtn_->setTextLabel( name );
+    if( name == "" )
         filterBtn_->hide();
-    }
     else
     {
-        filterBtn_->setTextLabel( entity_->GetName() );
         filterBtn_->show();
         filterBtn_->repaint();
     }

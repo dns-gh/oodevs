@@ -13,7 +13,7 @@
 #include "gaming/CommandHandler_ABC.h"
 
 class CommandHandler;
-class UnitFilter;
+class ProfileFilter;
 
 // =============================================================================
 /** @class  FilterViewCommand
@@ -26,7 +26,7 @@ class FilterViewCommand : public CommandHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterViewCommand( CommandHandler& handler, UnitFilter& filter );
+             FilterViewCommand( CommandHandler& handler, ProfileFilter& filter );
     virtual ~FilterViewCommand();
     //@}
 
@@ -46,7 +46,7 @@ private:
     //! @name Member data
     //@{
     CommandHandler& handler_;
-    UnitFilter& filter_;
+    ProfileFilter& filter_;
     //@}
 };
 

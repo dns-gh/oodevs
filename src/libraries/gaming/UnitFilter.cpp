@@ -130,7 +130,16 @@ void UnitFilter::SetFilter( const Entity_ABC& entity )
     tHierarchies_ = entity.Retrieve< TacticalHierarchies >();
     cHierarchies_ = entity.Retrieve< CommunicationHierarchies >();
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
-    controller_.Update( *this );
+    controller_.Update( *static_cast< Filter_ABC* >( this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitFilter::SetFilter
+// Created: LGY 2011-11-24
+// -----------------------------------------------------------------------------
+void UnitFilter::SetFilter( const  kernel::Profile_ABC& /*profile*/ )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -143,16 +152,18 @@ void UnitFilter::RemoveFilter()
     tHierarchies_ = 0;
     cHierarchies_ = 0;
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
-    controller_.Update( *this );
+    controller_.Update( *static_cast< Filter_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UnitFilter::GetFilter
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
-const Entity_ABC* UnitFilter::GetFilter() const
+QString UnitFilter::GetFilter() const
 {
-    return entity_;
+    if( entity_ )
+        return entity_->GetName();
+    return "";
 }
 
 // -----------------------------------------------------------------------------

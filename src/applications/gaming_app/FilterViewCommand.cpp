@@ -11,14 +11,14 @@
 #include "FilterViewCommand.h"
 #include "gaming/Command.h"
 #include "gaming/CommandHandler.h"
-#include "gaming/UnitFilter.h"
+#include "gaming/ProfileFilter.h"
 #include <string>
 
 // -----------------------------------------------------------------------------
 // Name: FilterViewCommand constructor
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
-FilterViewCommand::FilterViewCommand( CommandHandler& handler, UnitFilter& filter )
+FilterViewCommand::FilterViewCommand( CommandHandler& handler, ProfileFilter& filter )
     : handler_( handler )
     , filter_ ( filter )
 {

@@ -69,7 +69,7 @@
 #include "gaming/Network.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Profile.h"
-#include "gaming/UnitFilter.h"
+#include "gaming/ProfileFilter.h"
 #include "gaming/VisionConesToggler.h"
 #include "gaming/ActionsScheduler.h"
 #include "gaming/Tools.h"
@@ -151,7 +151,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , glProxy_         ( 0 )
     , connected_       ( false )
     , onPlanif_        ( false )
-
+    , pProfile_        ( new ProfileFilter( controllers, p ) )
 {
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
@@ -162,8 +162,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     planifName_ = tools::translate( "Application", "SWORD" ) + tr( " - Not connected" );
     setCaption( planifName_ );
-
-    UnitFilter& profile = *new UnitFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr // $$$$ AGE 2007-06-19: tégé !
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
@@ -192,7 +190,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     selector_->AddIcon( xpm_construction   ,  200, 150 );
     selector_->AddIcon( xpm_observe        ,  200, 150 );
 
-    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, profile );
+    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, *pProfile_ );
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     // Logger
@@ -209,7 +207,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
     gui::GisToolbar* gToolBar = new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
-    EventToolbar* eToolBar = new EventToolbar( this, controllers, profile );
+    EventToolbar* eToolBar = new EventToolbar( this, controllers, *pProfile_ );
     gui::DisplayToolbar* dToolBar = new gui::DisplayToolbar( this, controllers );
     SIMControlToolbar* sToolBar = new SIMControlToolbar( this, controllers, network, publisher, *pLogPanel_ );
 
@@ -223,36 +221,36 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     gui::LocationEditorToolbar* LocEditToolBar = new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer );
     addToolBar( LocEditToolBar );
     gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_, *LocEditToolBar );
-    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
-    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, simulation, network_.GetMessageMgr(), model.agents_, *simpleFilter_ );
-    ::FormationLayer* formationLayer = new ::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_, *simpleFilter_ );
+    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, *pProfile_, *simpleFilter_ );
+    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, simulation, network_.GetMessageMgr(), model.agents_, *simpleFilter_ );
+    ::FormationLayer* formationLayer = new ::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_, *simpleFilter_ );
 
     addToolBarBreak();
 
     //Dialogs
-    new Dialogs( this, controllers, model_, staticModel, publisher, model_.actions_, simulation, profile, network.GetCommands(), config, rcResolver, *factory, *paramLayer );
+    new Dialogs( this, controllers, model_, staticModel, publisher, model_.actions_, simulation, *pProfile_, network.GetCommands(), config, rcResolver, *factory, *paramLayer );
 
     // Profile
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
-    UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, profile, *icons, model_.userProfileFactory_ );
+    UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, *pProfile_, *icons, model_.userProfileFactory_ );
 
     // Agent list panel
     QDockWidget* pListDockWnd_ = new QDockWidget( this );
     pListDockWnd_->setObjectName( "agentList" );
     addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd_ );
     Q3VBox* box = new Q3VBox( pListDockWnd_ );
-    new OrbatToolbar( box, controllers, profile, *automatsLayer, *formationLayer );
+    new OrbatToolbar( box, controllers, *pProfile_, *automatsLayer, *formationLayer );
     QTabWidget* pListsTabWidget = new QTabWidget( box );
 
-    pListsTabWidget->addTab( new TacticalList( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Tactical" ) );
-    pListsTabWidget->addTab( new AgentList( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Communication" ) );
-    logisticListView_ = new gui::LogisticList< ::LogisticListView >( controllers, *factory, profile, *icons, model_.actions_, staticModel, simulation );
+    pListsTabWidget->addTab( new TacticalList( controllers, model_.actions_, staticModel, simulation, *factory, *pProfile_, *icons ), tr( "Tactical" ) );
+    pListsTabWidget->addTab( new AgentList( controllers, model_.actions_, staticModel, simulation, *factory, *pProfile_, *icons ), tr( "Communication" ) );
+    logisticListView_ = new gui::LogisticList< ::LogisticListView >( controllers, *factory, *pProfile_, *icons, model_.actions_, staticModel, simulation );
     pListsTabWidget->addTab( logisticListView_, tr( "Logistic" ) );
-    pListsTabWidget->addTab( new gui::ObjectList( controllers, *factory, profile ), tr( "Objects" ) );
-    pListsTabWidget->addTab( new gui::PopulationList( controllers, *factory, profile ), tr( "Crowds" ) );
-    pListsTabWidget->addTab( new gui::InhabitantList( controllers, *factory, profile ), tr( "Populations" ) );
+    pListsTabWidget->addTab( new gui::ObjectList( controllers, *factory, *pProfile_ ), tr( "Objects" ) );
+    pListsTabWidget->addTab( new gui::PopulationList( controllers, *factory, *pProfile_ ), tr( "Crowds" ) );
+    pListsTabWidget->addTab( new gui::InhabitantList( controllers, *factory, *pProfile_ ), tr( "Populations" ) );
     pListDockWnd_->setWidget( box );
     pListDockWnd_->setWindowTitle( tr( "Orbat" ) );
 
@@ -281,7 +279,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pInfoDockWnd_->hide();
 
      // Mission panel
-    pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
+    pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, *pProfile_, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
     addDockWidget( Qt::LeftDockWidgetArea, pMissionPanel_ );
     pMissionPanel_->setProperty( "notAppropriate", QVariant( true ) );
     pMissionPanel_->hide();
@@ -291,7 +289,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     addDockWidget( Qt::BottomDockWidgetArea, chatDock );
     chatDock->hide();
 
-    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, profile );
+    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, *pProfile_ );
     new ClientCommandFacade( this, controllers_, publisher );
 
     // Info
@@ -327,7 +325,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pCreationWnd->setWidget( creationPanels );
     pCreationWnd->setWindowTitle( tr( "Creation" ) );
 
-    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *paramLayer, profile );
+    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *paramLayer, *pProfile_ );
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
     addToolBar( replayerToolbar );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );
@@ -336,7 +334,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Actions panel
     {
-        TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler, config_, *factory, profile );
+        TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler, config_, *factory, *pProfile_ );
         addDockWidget( Qt::TopDockWidgetArea, timelinePanel );
         connect( timelinePanel, SIGNAL( PlanificationModeChange() ), this, SLOT( OnPlanifStateChange() ) );
         connect( timelinePanel, SIGNAL( PlanificationModeChange() ), this, SLOT( OnNameChanged() ) );
@@ -344,7 +342,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     }
     // Profiles panel
     {
-        ProfilesPanel* profilesPanel = new ProfilesPanel( this, controllers_, network_ );
+        ProfilesPanel* profilesPanel = new ProfilesPanel( this, controllers_, network_, *pProfile_, model_.teams_ );
         addDockWidget( Qt::RightDockWidgetArea, profilesPanel );
         profilesPanel->hide();
     }
@@ -373,7 +371,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     }
     // Extensions panel
     {
-        pExtensionsPanel_ = new ExtensionsPanel( this, controllers, model, staticModel_, simulation, *factory, *icons, profile, "ExtensionsPanel" );
+        pExtensionsPanel_ = new ExtensionsPanel( this, controllers, model, staticModel_, simulation, *factory, *icons, *pProfile_, "ExtensionsPanel" );
         addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel_ );
         pExtensionsPanel_->hide();
     }
@@ -381,7 +379,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
     setMenuBar( new Menu( this, controllers, staticModel_, *prefDialog, *profileDialog, *factory, license, *help, *interpreter, network_, logger ) );
 
-    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *formationLayer, *terrainLayer, *meteoLayer, *profilerLayer, *prefDialog, profile, simulation, *picker );
+    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *formationLayer, *terrainLayer, *meteoLayer, *profilerLayer, *prefDialog, *pProfile_, simulation, *picker );
     ::StatusBar* pStatus_ = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );

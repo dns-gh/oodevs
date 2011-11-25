@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/ServerPublisher_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "protocol/AuthenticationSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
@@ -38,6 +38,7 @@ class Publisher_ABC;
 // =============================================================================
 class UserProfile : public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< sword::ProfileUpdate >
+                  , public kernel::Profile_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -58,10 +59,15 @@ public:
 
     //! @name Accessors
     //@{
-    QString GetLogin() const;
+    virtual QString GetLogin() const;
+    virtual bool IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const;
+    virtual bool IsVisible( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanBeOrdered ( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const;
+    virtual bool IsSupervision() const;
+
     QString GetPassword() const;
     int GetRole() const;
-    bool IsSupervisor() const;
     bool IsPasswordProtected() const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;

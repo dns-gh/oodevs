@@ -31,7 +31,7 @@ namespace tools
 class CommandHandler_ABC;
 class CommandHandler;
 class QMainWindow;
-class UnitFilter;
+class ProfileFilter;
 
 // =============================================================================
 /** @class  CommandFacade
@@ -46,7 +46,7 @@ public:
     //@{
              CommandFacade( QMainWindow* parent, kernel::Controllers& controllers, tools::ExerciseConfig& config,
                             CommandHandler& handler, gui::LinkInterpreter_ABC& interpreter, gui::View_ABC& view,
-                            UnitFilter& profile );
+                            ProfileFilter& profile );
     virtual ~CommandFacade();
     //@}
 

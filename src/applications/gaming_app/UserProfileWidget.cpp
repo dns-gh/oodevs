@@ -84,7 +84,7 @@ void UserProfileWidget::Display( const UserProfile& profile )
         role_->setText( "Role = " + QString::number( role ) );
         role_->show();
     }
-    supervisor_->setChecked( editedProfile_->IsSupervisor() );
+    supervisor_->setChecked( editedProfile_->IsSupervision() );
     unitRights_->Display( *editedProfile_ );
     populationRights_->Display( *editedProfile_ );
     selectedProfile_ = &profile;
@@ -137,6 +137,6 @@ bool UserProfileWidget::NeedsSaving() const
     if( !isVisible() || !selectedProfile_ )
         return false;
     return selectedProfile_->GetLogin() != login_->text() || selectedProfile_->GetPassword() != password_->text()
-        || selectedProfile_->IsSupervisor() != supervisor_->isChecked()
+        || selectedProfile_->IsSupervision() != supervisor_->isChecked()
         || unitRights_->NeedsSaving() || populationRights_->NeedsSaving();
 }

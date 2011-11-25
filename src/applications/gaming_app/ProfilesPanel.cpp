@@ -15,8 +15,11 @@
 #include "gaming/UserProfile.h"
 #include "gaming/Network.h"
 #include "gaming/AgentServerMsgMgr.h"
+#include "gaming/ProfileFilter.h"
+#include "gaming/TeamsModel.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
 
 #pragma warning( disable : 4355 )
 
@@ -24,10 +27,13 @@
 // Name: ProfilesPanel constructor
 // Created: LGY 2011-11-15
 // -----------------------------------------------------------------------------
-ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Network& network )
+ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers,
+                              Network& network, ProfileFilter& filter, TeamsModel& teams )
     : QDockWidget( "Profiles", mainWindow )
     , controllers_ ( controllers )
     , network_     ( network )
+    , filter_      ( filter )
+    , teams_       ( teams )
     , star_        ( "resources/images/gaming/star.png" )
     , lock_        ( "resources/images/gaming/lock.png" )
     , profile_     ( "resources/images/gaming/current.png" )
@@ -63,12 +69,12 @@ ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& cont
     mainLayout->addWidget( tableView_ );
 
     QHBoxLayout* buttonLayout = new QHBoxLayout();
-    QPushButton* reconnect = new QPushButton( "Reconnect with..." );
-    QPushButton* filter = new QPushButton( "Filter view" );
-    buttonLayout->addWidget( reconnect );
-    buttonLayout->addWidget( filter );
-    connect( reconnect, SIGNAL( clicked() ), this, SLOT( Reconnect() ) );
-    connect( filter, SIGNAL( clicked() ), this, SLOT( Filter() ) );
+    QPushButton* bReconnect = new QPushButton( "Reconnect with..." );
+    QPushButton* bFilter = new QPushButton( "Filter view" );
+    buttonLayout->addWidget( bReconnect );
+    buttonLayout->addWidget( bFilter );
+    connect( bReconnect, SIGNAL( clicked() ), this, SLOT( Reconnect() ) );
+    connect( bFilter, SIGNAL( clicked() ), this, SLOT( Filter() ) );
     mainLayout->addLayout( buttonLayout );
     setWidget( main );
     controllers_.Register( *this );
@@ -204,7 +210,13 @@ void ProfilesPanel::Reconnect()
 // -----------------------------------------------------------------------------
 void ProfilesPanel::Filter()
 {
-    // NOTHING
+    QModelIndex index = proxyModel_->mapToSource( tableView_->currentIndex() );
+    if( index.row() != -1 )
+        if( const UserProfile* profile = profiles_.at( index.row() ) )
+        {
+            filter_.SetFilter( *profile );
+            controllers_.controller_.Update( *static_cast< const kernel::Profile_ABC* >( profile ) );
+        }
 }
 
 namespace
@@ -253,7 +265,7 @@ void ProfilesPanel::UpdateProfile( unsigned int index, const T& profile )
     if( item && item->text() != profile.GetLogin() )
         item->setText( profile.GetLogin() );
     if( QStandardItem* admin = dataModel_->item( index, 2 ) )
-        admin->setIcon( profile.IsSupervisor() ? star_ : QIcon( "" ) );
+        admin->setIcon( profile.IsSupervision() ? star_ : QIcon( "" ) );
     if( QStandardItem* lock = dataModel_->item( index, 3 ) )
         lock->setIcon( profile.IsPasswordProtected() ? lock_ : QIcon( "" ) );
 }

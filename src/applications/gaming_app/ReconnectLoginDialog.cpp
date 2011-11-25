@@ -24,7 +24,7 @@ namespace
             , profile_( profile )
         {
             setText( profile_.GetLogin().isEmpty() ? tools::translate( "LoginDialog", "Anonymous" ) : profile_.GetLogin() );
-            const QString pixmap = QString( "images/gaming/profile/%1%2.png" ).arg( profile_.IsSupervisor() ? "supervisor" : "standard" )
+            const QString pixmap = QString( "images/gaming/profile/%1%2.png" ).arg( profile_.IsSupervision() ? "supervisor" : "standard" )
                 .arg( profile_.IsPasswordProtected() ? "_password" : "" );
             QImage img( tools::ExerciseConfig::BuildResourceChildFile( pixmap.ascii() ).c_str() );
             img = img.scaled( 30, 30 );

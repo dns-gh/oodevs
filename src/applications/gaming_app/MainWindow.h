@@ -58,6 +58,7 @@ class LoggerProxy;
 class Simulation;
 class RcEntityResolver_ABC;
 class ColorController;
+class ProfileFilter;
 
 // =============================================================================
 /** @class  MainWindow
@@ -154,6 +155,7 @@ private:
     QDockWidget* pExtensionsPanel_;
     QString planifName_;
     bool onPlanif_;
+    std::auto_ptr< ProfileFilter > pProfile_;
     QString savedState_;
     //@}
 };

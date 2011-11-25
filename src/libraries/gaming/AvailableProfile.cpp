@@ -72,10 +72,10 @@ bool AvailableProfile::IsPasswordProtected() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AvailableProfile::IsSupervisor
+// Name: AvailableProfile::IsSupervision
 // Created: SBO 2009-12-18
 // -----------------------------------------------------------------------------
-bool AvailableProfile::IsSupervisor() const
+bool AvailableProfile::IsSupervision() const
 {
     return supervisor_;
 }

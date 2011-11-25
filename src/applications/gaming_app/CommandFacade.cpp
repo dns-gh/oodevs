@@ -23,7 +23,7 @@
 // -----------------------------------------------------------------------------
 CommandFacade::CommandFacade( QMainWindow* parent, kernel::Controllers& controllers, tools::ExerciseConfig& config,
                               CommandHandler& handler, gui::LinkInterpreter_ABC& interpreter, gui::View_ABC& view,
-                              UnitFilter& profile )
+                              ProfileFilter& profile )
     : QObject( parent )
 {
     Add( new CenterViewCommand  ( handler, interpreter ) );

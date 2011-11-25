@@ -23,7 +23,9 @@ namespace kernel
 
 class UserProfile;
 class Profile;
+class ProfileFilter;
 class Network;
+class TeamsModel;
 
 // =============================================================================
 /** @class  ProfilesPanel
@@ -44,7 +46,8 @@ class ProfilesPanel : public QDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Network& network );
+             ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers,
+                            Network& network, ProfileFilter& filter, TeamsModel& teams );
     virtual ~ProfilesPanel();
     //@}
 
@@ -88,6 +91,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Network& network_;
+    ProfileFilter& filter_;
+    TeamsModel& teams_;
     QTableView* tableView_;
     QSortFilterProxyModel* proxyModel_;
     QStandardItemModel* dataModel_;

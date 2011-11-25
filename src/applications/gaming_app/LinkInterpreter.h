@@ -19,7 +19,7 @@ namespace kernel
     class Entity_ABC;
 }
 
-class UnitFilter;
+class ProfileFilter;
 
 // =============================================================================
 /** @class  LinkInterpreter
@@ -34,7 +34,7 @@ class LinkInterpreter : public gui::LinkInterpreter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LinkInterpreter( QObject* parent, kernel::Controllers& controllers, UnitFilter& filter );
+             LinkInterpreter( QObject* parent, kernel::Controllers& controllers, ProfileFilter& filter );
     virtual ~LinkInterpreter();
     //@}
 
@@ -56,7 +56,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    UnitFilter& filter_;
+    ProfileFilter& filter_;
     //@}
 };
 
