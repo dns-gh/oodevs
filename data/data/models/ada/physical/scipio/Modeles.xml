@@ -1382,61 +1382,6 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" masalife="false" name="Patrouille AIR Assaut">
-      <missions>
-        <mission name="PION JOINT AIR Effectuer Raid"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Suivre"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="AirCP" file="Air\Pions\PC\model.bms" masalife="false" name="PC AIR">
-      <missions>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Suivre"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
     <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\model.bms" masalife="false" name="PC Alat">
       <missions>
         <mission name="PION Faire Mouvement"/>
@@ -7578,28 +7523,6 @@
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
     </automat>
-    <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="Groupe Assaut AIR">
-      <missions>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Suivre"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
     <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" masalife="false" name="Sgpt Satcp Mistral">
       <missions>
         <mission name="AUTOMATE Decrocher"/>
@@ -8723,38 +8646,6 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
-    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" masalife="false" name="Peloton RASIT">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-        <mission name="AUTOMATE Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" masalife="false" name="GLAISE ASS batterie automoteur">
       <missions>
         <mission name="AUTOMATE ASS Se Deployer"/>
@@ -9168,51 +9059,6 @@
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Changer Parametres Recompletement ALAT"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="appui\PC de CIE\automates\model.bms" masalife="false" name="PC CIE">
-      <missions>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre">
-          <fragorder name="Poursuivre"/>
-          <fragorder name="Interrompre"/>
-          <fragorder name="Changer Ambiance"/>
-          <fragorder name="Mettre Tenue NBC"/>
-          <fragorder name="Enlever Tenue NBC"/>
-        </mission>
-        <mission name="AUTOMATE Franchir"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner">
-          <fragorder name="Passer En Silence Radio Total"/>
-          <fragorder name="Arreter Silence Radio"/>
-          <fragorder name="Attendre Se Poster"/>
-          <fragorder name="Mettre Tenue NBC"/>
-          <fragorder name="Enlever Tenue NBC"/>
-          <fragorder name="Poursuivre"/>
-          <fragorder name="Changer Ambiance"/>
-        </mission>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="EscadrilleAssaut" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="GLAISE ASS SCUD">
@@ -9797,4 +9643,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2692339360" -->
+<!-- signature="2371501392" -->
