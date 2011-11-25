@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Population_PathfinderRule.h"
 #include "DEC_Population_Path.h"
+#include "DEC_Path_KnowledgeObject_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include <spatialcontainer/TerrainData.h>
 
@@ -79,6 +80,38 @@ float DEC_Population_PathfinderRule::GetTerrainCost( const TerrainData& nToTerra
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Population_PathfinderRule::GetObjectsCost
+// Created: CMA 2011-11-24
+// -----------------------------------------------------------------------------
+float DEC_Population_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
+{
+    // default cost : outside all objects
+    double rObjectCost = path_.GetCostOutsideOfAllObjects();
+    const DEC_Population_Path::T_PathKnowledgeObjectByTypesVector& knowledgesByTypes = path_.GetPathKnowledgeObjects();
+    for( DEC_Population_Path::CIT_PathKnowledgeObjectByTypesVector itType = knowledgesByTypes.begin(); itType != knowledgesByTypes.end(); ++itType )
+    {
+        bool bInsideObjectType = false;
+        const DEC_Population_Path::T_PathKnowledgeObjectVector& knowledges = *itType;
+        for( DEC_Population_Path::CIT_PathKnowledgeObjectVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
+        {
+            double rCurrentObjectCost = ( *itKnowledge )->ComputeCost( from, to, nToTerrainType, nLinkTerrainType, 0. );
+            if( rCurrentObjectCost != std::numeric_limits< double >::min()  )
+            {
+                if( !bInsideObjectType )
+                {
+                    rObjectCost -= ( *itKnowledge )->GetCostOut();
+                    bInsideObjectType = true;
+                }
+                if( rCurrentObjectCost < 0. ) // Impossible move (for example destroyed bridge)
+                    return (float) rCurrentObjectCost;
+                rObjectCost += rCurrentObjectCost;
+            }
+        }
+    }
+    return (float) rObjectCost;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Population_PathfinderRule::GetCost
 // Created: AGE 2005-03-08
 // -----------------------------------------------------------------------------
@@ -97,13 +130,22 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
     if( ( ( terrainTo.Linear() & river ) || ( terrainTo.Area() & waterZone ) || ( terrainTo.Linear() & cliff ) ) && !terrainBetween.IsRoad() )
         return -1.f;
 
+    // Cost computation taken various dynamic terrain items into account
     float rDynamicCost = 0.;
 
+    // terrain type
     const float rTerrainCost = GetTerrainCost( terrainTo, terrainBetween );
     rDynamicCost += rTerrainCost;
 
+    // population channel
     const float rChannelingCost = GetChannelingCost( vFrom, vTo, terrainTo, terrainBetween );
     rDynamicCost += rChannelingCost;
+
+    // objects
+    const float rObjectsCost = GetObjectsCost( vFrom, vTo, terrainTo, terrainBetween );
+    if( rObjectsCost < 0 )
+        return -1.f;
+    rDynamicCost += rObjectsCost;
 
     const float rDistance = from.Distance( to );
     return ( rDistance * rDynamicCost );

@@ -5086,6 +5086,9 @@
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_OrdersFunctions.inl">
       <Filter>Source Files\Decision\Functions</Filter>
     </None>
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_PathClass.inl">
+      <Filter>Source Files\Decision\Path\Population\Type</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuildStep Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_OrderContext.h">

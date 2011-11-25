@@ -15,6 +15,7 @@
 
 class DEC_Knowledge_Object;
 class DEC_Agent_PathClass;
+class DEC_Population_PathClass;
 
 // =============================================================================
 // Created: NLD 2004-04-06
@@ -25,6 +26,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
+             DEC_Path_KnowledgeObject( const DEC_Population_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
     virtual ~DEC_Path_KnowledgeObject();
     //@}
 

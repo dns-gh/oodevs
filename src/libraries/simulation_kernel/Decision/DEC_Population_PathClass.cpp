@@ -9,7 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Population_PathClass.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 DEC_Population_PathClass::T_Rules DEC_Population_PathClass::rules_;
@@ -88,12 +91,15 @@ const DEC_Population_PathClass& DEC_Population_PathClass::GetPathClass( const st
 DEC_Population_PathClass::DEC_Population_PathClass( xml::xistream& xis, const DEC_Population_PathClass* pCopyFrom /*= 0*/ )
     : rCostOutsideOfChanneling_( 10.f )
     , rChannelingRange_( 1000.f )
+    , bAvoidObjects_( true )
+    , rObstructionThreshold_( 10000 )
 {
     if( pCopyFrom )
         *this = *pCopyFrom;
 
     xis >> xml::optional >> xml::attribute( "cost-out-of-channeling", rCostOutsideOfChanneling_ )
-        >> xml::optional >> xml::attribute( "channeling-range", rChannelingRange_ );
+        >> xml::optional >> xml::attribute( "channeling-range", rChannelingRange_ )
+        >> xml::list( "object-costs", *this, &DEC_Population_PathClass::ReadObjectsCost );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,19 +112,45 @@ DEC_Population_PathClass::~DEC_Population_PathClass()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Population_PathClass::GetCostOutsideOfChanneling
-// Created: SBO 2006-03-27
+// Name: DEC_Population_PathClass::ReadObjectsCost
+// Created: CMA 2011-11-24
 // -----------------------------------------------------------------------------
-double DEC_Population_PathClass::GetCostOutsideOfChanneling() const
+void DEC_Population_PathClass::ReadObjectsCost( xml::xistream& xis )
 {
-    return rCostOutsideOfChanneling_;
+    xis >> xml::attribute( "avoid", bAvoidObjects_ )
+        >> xml::attribute( "threshold", rObstructionThreshold_ )
+        >> xml::list( "object-cost", *this, &DEC_Population_PathClass::ReadObject );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Population_PathClass::GetChannelingRange
-// Created: SBO 2006-03-27
+// Name: DEC_Population_PathClass::ReadObject
+// Created: CMA 2011-11-24
 // -----------------------------------------------------------------------------
-double DEC_Population_PathClass::GetChannelingRange() const
+void DEC_Population_PathClass::ReadObject( xml::xistream& xis )
 {
-    return rChannelingRange_;
+    std::string strType( xis.attribute< std::string >( "type", std::string() ) );
+    try
+    {
+        const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
+        unsigned int id = objectType.GetID();
+        if( objectCosts_.size() <= id )
+            objectCosts_.resize( id + 1, 0 );
+        assert( objectCosts_.size() > id );
+        xis >> xml::attribute( "value", objectCosts_[ id ] );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_PathClass::GetObjectCost
+// Created: CMA 2011-11-24
+// -----------------------------------------------------------------------------
+double DEC_Population_PathClass::GetObjectCost( const MIL_ObjectType_ABC& objectType ) const
+{
+   if( objectCosts_.size() <= objectType.GetID() )
+        return 0.;
+    return objectCosts_[ objectType.GetID() ];
 }

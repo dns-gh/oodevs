@@ -91,8 +91,8 @@ public:
 
     //! @name Interactions
     //@{
-    virtual bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
-    virtual bool CanInteractWith( const MIL_PopulationElement_ABC& population ) const;
+    virtual bool CanInteractWith      ( const MIL_Agent_ABC& agent ) const;
+    virtual bool CanInteractWithEntity() const;
     //@}
 
     //! @name Interaction events
