@@ -150,13 +150,13 @@ void PHY_RolePion_Reinforcement::CancelReinforcement()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::Update( bool bIsDead )
 {
-    if( !pPionReinforced_ )
-        return;
-
-    if( bIsDead )
-        CancelReinforcement();
-    else
-        pion_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pPionReinforced_ );
+    if( pPionReinforced_ )
+    {
+        if( bIsDead )
+            CancelReinforcement();
+        else
+            pion_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pPionReinforced_ );
+    }
 
     if( HasChanged() )
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
