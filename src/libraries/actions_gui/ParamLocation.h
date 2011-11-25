@@ -55,7 +55,6 @@ public:
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( QWidget* parent );
-    virtual bool CheckValidity();
     virtual void Handle( kernel::Location_ABC& location );
     void SetShapeFilter( bool point, bool line, bool polygon, bool circle, bool rectangle );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
@@ -65,29 +64,20 @@ public:
 protected:
     //! @name Helpers
     //@{
-    template< typename Concrete, typename Stub >
+    template< typename Concrete >
     void Commit( actions::ParameterContainer_ABC& action ) const
     {
-        std::auto_ptr< actions::Parameter_ABC > param;
-        if( location_.get() )
-        {
-            param.reset( new Concrete( parameter_, converter_, *location_ ) );
-            param->Set( location_->IsValid() );
-        }
+        if( IsChecked() && location_.get() && location_->IsValid() )
+            action.AddParameter( *new Concrete( parameter_, converter_, *location_ ) );
         else
-        {
-            Stub stub;
-            param.reset( new Concrete( parameter_, converter_, stub ) );
-            param->Set( false );
-        }
-        action.AddParameter( *param.release() );
+            action.AddParameter( *new Concrete( parameter_, converter_ ) );
     }
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual bool IsOptional() const;
+    virtual bool InternalCheckValidity() const;
     //@}
 
     //! @name Types
@@ -107,7 +97,6 @@ private:
     kernel::OrderParameter parameter_;
     ::gui::ParametersLayer& layer_;
     ::gui::LocationCreator* creator_;
-    ::gui::RichLabel* pLabel_;
     QLabel* pShapeLabel_;
     std::auto_ptr< kernel::Location_ABC > location_;
     kernel::ActionController* controller_; // $$$$ AGE 2006-04-03: sucks

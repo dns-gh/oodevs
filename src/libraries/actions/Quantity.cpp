@@ -18,6 +18,16 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Quantity constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+Quantity::Quantity( const kernel::OrderParameter& parameter )
+    : Parameter< int >( parameter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Quantity constructor
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
 Quantity::Quantity( const kernel::OrderParameter& parameter, int value )
@@ -31,9 +41,10 @@ Quantity::Quantity( const kernel::OrderParameter& parameter, int value )
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
 Quantity::Quantity( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< int >( parameter, xis.attribute< int >( "value" ) )
+    : Parameter< int >( parameter )
 {
-    // NOTHING
+    if( xis.has_attribute( "value" ) )
+        SetValue( xis.attribute< int >( "value" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +100,8 @@ void Quantity::Accept( ParameterVisitor_ABC& visitor ) const
 void Quantity::Serialize( xml::xostream& xos ) const
 {
     Parameter< int >::Serialize( xos );
-    xos << xml::attribute( "value", GetValue() );
+    if( IsSet() )
+        xos << xml::attribute( "value", GetValue() );
 }
 
 // -----------------------------------------------------------------------------

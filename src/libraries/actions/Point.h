@@ -33,6 +33,7 @@ class Point : public Location
 public:
     //! @name Constructors/Destructor
     //@{
+             Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
              Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Point& message );
              Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
@@ -51,15 +52,9 @@ private:
     //@{
     virtual std::string SerializeType() const;
     //@}
-
-    //! @name Copy/Assignment
-    //@{
-    Point( const Point& );            //!< Copy constructor
-    Point& operator=( const Point& ); //!< Assignment operator
-    //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterPoint_h_

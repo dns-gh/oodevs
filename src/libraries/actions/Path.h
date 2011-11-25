@@ -40,6 +40,7 @@ class Path : public Parameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
+             Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
              Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Location& message );
              Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
@@ -63,12 +64,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Path( const Path& );            //!< Copy constructor
-    Path& operator=( const Path& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;

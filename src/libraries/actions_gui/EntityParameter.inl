@@ -13,7 +13,7 @@
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
 EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller )
-    : EntityParameterBase( parent, parameter.GetName().c_str() )
+    : EntityParameterBase( parent, parameter.GetName().c_str(), parameter.IsOptional() )
     , controller_        ( controller )
     , parameter_         ( parameter )
     , potential_         ( 0 )
@@ -28,7 +28,7 @@ EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kerne
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
 EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, const ConcreteEntity& entity, kernel::Controller& controller )
-    : EntityParameterBase( parent, parameter.GetName().c_str() )
+    : EntityParameterBase( parent, parameter.GetName().c_str(), parameter.IsOptional() )
     , controller_        ( controller )
     , parameter_         ( parameter )
     , potential_         ( &entity )
@@ -59,15 +59,13 @@ void EntityParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity&
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityParameter::CheckValidity
+// Name: EntityParameter::InternalCheckValidity
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-bool EntityParameter< ConcreteEntity >::CheckValidity()
+bool EntityParameter< ConcreteEntity >::InternalCheckValidity() const
 {
-    if( ! IsOptional() && ! selected_ )
-        return Invalid();
-    return true;
+    return selected_ != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +92,8 @@ void EntityParameter< ConcreteEntity >::CommitTo( int& message ) const
 template< typename ConcreteEntity >
 void EntityParameter< ConcreteEntity >::CommitTo( actions::parameters::Entity< ConcreteEntity >& parameter ) const
 {
-    parameter.SetValue( selected_ );
+    if( IsChecked() && selected_ )
+        parameter.SetValue( selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +104,9 @@ template< typename ConcreteEntity >
 void EntityParameter< ConcreteEntity >::MenuItemValidated()
 {
     selected_ = potential_;
-    Display( selected_ ? selected_->GetName() : "---" ); // $$$$ AGE 2006-03-14: use a displayer
+    Display( selected_ ? selected_->GetName() : "---" );
+    if( group_ && IsOptional() )
+        group_->setChecked( selected_ != 0 );
     NotifyChange();
 }
 
@@ -123,14 +124,4 @@ void EntityParameter< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& ent
         selected_ = 0;
         Display( "---" );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityParameter::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-bool EntityParameter< ConcreteEntity >::IsOptional() const
-{
-    return parameter_.IsOptional();
 }

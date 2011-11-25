@@ -52,6 +52,8 @@ void EntityListParameter< ConcreteEntity >::MenuItemValidated()
     CIT_Entities it = entities_.find( potential_ );
     if( it != entities_.end() )
         it->second->MenuItemValidated();
+    if( group_ && IsOptional() )
+        group_->setChecked( it != entities_.end() );
 }
 
 // -----------------------------------------------------------------------------

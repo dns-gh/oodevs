@@ -22,12 +22,23 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Lima constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+Lima::Lima( const kernel::OrderParameter& parameter )
+    : Parameter< QString >( parameter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lima constructor
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
 Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )
     : Parameter< QString >( parameter )
 {
     AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, location ) );
+    Set( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,15 +61,18 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 Lima::Lima( const CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : Parameter< QString >( OrderParameter( xis.attribute< std::string >( "name" ), "lima", false ) )
+    : Parameter< QString >( OrderParameter( xis.attribute< std::string >( "name" ), "phaseline", false ) )
 {
-    std::string value;
-    xis >> xml::attribute( "value", value )
-        >> xml::list( "parameter", *this, &Lima::ReadParameter, converter );
-    QStringList functions = QStringList::split( ", ", value.c_str() );
-    for( int i = 0; i < functions.size(); ++i )
-        functions[i] = tools::ToShortString( tools::LimaTypeFromXmlString( functions[i] ) );
-    SetValue( functions.join( ", " ) );
+    if( xis.has_attribute( "value" ) )
+    {
+        std::string value;
+        xis >> xml::attribute( "value", value )
+            >> xml::list( "parameter", *this, &Lima::ReadParameter, converter );
+        QStringList functions = QStringList::split( ", ", value.c_str() );
+        for( int i = 0; i < functions.size(); ++i )
+            functions[i] = tools::ToShortString( tools::LimaTypeFromXmlString( functions[i] ) );
+        SetValue( functions.join( ", " ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -87,12 +101,14 @@ void Lima::AddFunction( unsigned int i )
 // -----------------------------------------------------------------------------
 void Lima::Serialize( xml::xostream& xos ) const
 {
-    QStringList functions = QStringList::split( ", ", GetValue() );
-    for( int i = 0; i < functions.size(); ++i )
-        functions[i] = tools::LimaTypeShortToXmlString( functions[i] );
     Parameter< QString >::Serialize( xos );
-    xos << xml::attribute( "type", "lima" )
-        << xml::attribute( "value", functions.join( ", " ).ascii() );
+    if( IsSet() )
+    {
+        QStringList functions = QStringList::split( ", ", GetValue() );
+        for( int i = 0; i < functions.size(); ++i )
+            functions[i] = tools::LimaTypeShortToXmlString( functions[i] );
+        xos << xml::attribute( "value", functions.join( ", " ).ascii() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -158,9 +174,7 @@ void Lima::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-    {
         CommitTo( *message.mutable_value()->Add()->mutable_phaseline()->add_elem() );
-    }
 }
 // -----------------------------------------------------------------------------
 // Name: Lima::CommitTo
@@ -169,9 +183,7 @@ void Lima::CommitTo( sword::MissionParameter& message ) const
 void Lima::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-    {
         CommitTo( *message.mutable_phaseline()->add_elem() );
-    }
 }
 
 // -----------------------------------------------------------------------------

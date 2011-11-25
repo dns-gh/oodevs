@@ -12,6 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -38,6 +39,7 @@ class ActionsToolbar : public Q3HBox
                      , public tools::ElementObserver_ABC< Simulation >
                      , public tools::ElementObserver_ABC< Services >
                      , public tools::ElementObserver_ABC< Simulation::sCheckPoint >
+                     , private boost::noncopyable
 {
     Q_OBJECT;
 
@@ -54,12 +56,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ActionsToolbar( const ActionsToolbar& );            //!< Copy constructor
-    ActionsToolbar& operator=( const ActionsToolbar& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void PurgeConfirmed( int result );

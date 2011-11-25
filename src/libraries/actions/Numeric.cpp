@@ -18,6 +18,17 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Numeric constructor
+// Created: ABR 2011-11-16
+// -----------------------------------------------------------------------------
+Numeric::Numeric( const kernel::OrderParameter& parameter )
+    : Parameter< float >( parameter )
+{
+    SetValue( 0 );
+    Set( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Numeric constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 Numeric::Numeric( const kernel::OrderParameter& parameter, float value )
@@ -31,9 +42,10 @@ Numeric::Numeric( const kernel::OrderParameter& parameter, float value )
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 Numeric::Numeric( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< float >( parameter, xis.attribute< float >( "value" ) )
+    : Parameter< float >( parameter )
 {
-    // NOTHING
+    if( xis.has_attribute( "value" ) )
+        SetValue( xis.attribute< float >( "value" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +64,8 @@ Numeric::~Numeric()
 void Numeric::Serialize( xml::xostream& xos ) const
 {
     Parameter< float >::Serialize( xos );
-    xos << xml::attribute( "value", GetValue() );
+    if( IsSet() )
+        xos << xml::attribute( "value", GetValue() );
 }
 
 // -----------------------------------------------------------------------------

@@ -22,7 +22,7 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamBool::ParamBool( QObject* parent, const kernel::OrderParameter& parameter, bool defaultValue /* = false*/ )
     : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str() )
+    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
     , parameter_( parameter )
     , value_( defaultValue )
 {
@@ -44,10 +44,14 @@ ParamBool::~ParamBool()
 // -----------------------------------------------------------------------------
 QWidget* ParamBool::BuildInterface( QWidget* parent )
 {
-    QCheckBox* checkBox = new QCheckBox( GetName(), parent );
+    Param_ABC::BuildInterface( parent );
+    QHBoxLayout* layout = new QHBoxLayout( group_ );
+    layout->setAlignment( Qt::AlignCenter );
+    QCheckBox* checkBox = new QCheckBox( parent );
     checkBox->setChecked( value_ );
+    layout->addWidget( checkBox, Qt::AlignCenter );
     connect( checkBox, SIGNAL( clicked() ), SLOT( OnClicked() ) );
-    return checkBox;
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +60,10 @@ QWidget* ParamBool::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamBool::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new actions::parameters::Bool( parameter_, value_ ) );
+    if( IsChecked() )
+        action.AddParameter( *new actions::parameters::Bool( parameter_, value_ ) );
+    else
+        action.AddParameter( *new actions::parameters::Bool( parameter_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,13 +73,4 @@ void ParamBool::CommitTo( actions::ParameterContainer_ABC& action ) const
 void ParamBool::OnClicked()
 {
     value_ = !value_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamBool::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamBool::IsOptional() const
-{
-    return parameter_.IsOptional();
 }

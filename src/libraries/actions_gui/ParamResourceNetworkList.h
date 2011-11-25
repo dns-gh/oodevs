@@ -43,12 +43,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamResourceNetworkList( const ParamResourceNetworkList& );            //!< Copy constructor
-    ParamResourceNetworkList& operator=( const ParamResourceNetworkList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual Param_ABC* CreateElement();

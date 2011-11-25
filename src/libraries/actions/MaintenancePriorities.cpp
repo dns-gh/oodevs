@@ -49,11 +49,14 @@ MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, c
 MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, const tools::Resolver_ABC< EquipmentType >& resolver, xml::xistream& xis )
     : Parameter< std::string >( parameter )
 {
-    std::string value;
-    xis >> xml::attribute( "value", value );
-    QStringList list = QStringList::split( ";", value.c_str() );
-    for( int i = 0; i < list.count(); ++i )
-        AddPriority( resolver.Get( list[i].toUInt() ) );
+    if( xis.has_attribute( "value" ) )
+    {
+        std::string value;
+        xis >> xml::attribute( "value", value );
+        QStringList list = QStringList::split( ";", value.c_str() );
+        for( int i = 0; i < list.count(); ++i )
+            AddPriority( resolver.Get( list[i].toUInt() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -127,10 +130,13 @@ void MaintenancePriorities::CommitTo( std::string& content ) const
 void MaintenancePriorities::Serialize( xml::xostream& xos ) const
 {
     Parameter< std::string >::Serialize( xos );
-    QString value( "" );
-    for( T_Priorities::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
-        value += ( !value.isEmpty() ? ";" : "" ) + QString::number( (*it)->GetId() );
-    xos << xml::attribute( "value", value.ascii() );
+    if( IsSet() )
+    {
+        QString value( "" );
+        for( T_Priorities::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
+            value += ( !value.isEmpty() ? ";" : "" ) + QString::number( (*it)->GetId() );
+        xos << xml::attribute( "value", value.ascii() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +145,7 @@ void MaintenancePriorities::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 bool MaintenancePriorities::IsSet() const
 {
-    return true;
+    return !priorities_.empty();
 }
 
 // -----------------------------------------------------------------------------

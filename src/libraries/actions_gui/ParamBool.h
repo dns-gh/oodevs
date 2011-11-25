@@ -53,12 +53,6 @@ private slots:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    virtual bool IsOptional() const;
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::OrderParameter parameter_;

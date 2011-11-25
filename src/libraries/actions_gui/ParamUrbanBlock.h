@@ -40,13 +40,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamUrbanBlock( const ParamUrbanBlock& );            //!< Copy constructor
-    ParamUrbanBlock& operator=( const ParamUrbanBlock& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::OrderParameter parameter_;

@@ -567,9 +567,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Rectangle.h">
       <Filter>Source Files\Tools\Locations</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\LocationDrawer_ABC.h">
-      <Filter>Source Files\Tools\Locations\Visitors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\LocationProximityComputer.h">
       <Filter>Source Files\Tools\Locations\Visitors</Filter>
     </ClInclude>

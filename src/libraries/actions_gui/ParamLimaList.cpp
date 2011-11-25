@@ -73,7 +73,7 @@ Param_ABC* ParamLimaList::CreateElement()
 {
     if( potential_ )
     {
-        LimaParameter* lima = new LimaParameter( this, tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ), converter_, currentDate_, *potential_ );
+        LimaParameter* lima = new LimaParameter( this, tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ), converter_, currentDate_, *potential_, false );
         limas_[potential_] = lima;
         return lima;
     }
@@ -129,6 +129,8 @@ void ParamLimaList::MenuItemValidated( int index )
     CIT_Limas it = limas_.find( potential_ );
     if( it != limas_.end() )
         it->second->MenuItemValidated( index );
+    if( group_ && IsOptional() )
+        group_->setChecked( it != limas_.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,13 +149,4 @@ void ParamLimaList::NotifyDeleted( const kernel::TacticalLine_ABC& entity )
         Select( *it->second );
         OnDeleteSelectedItem();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLimaList::IsOptional
-// Created: SBO 2008-03-06
-// -----------------------------------------------------------------------------
-bool ParamLimaList::IsOptional() const
-{
-    return parameter_.IsOptional();
 }

@@ -25,13 +25,14 @@ using namespace actions::gui;
 // Name: LimaParameter constructor
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-LimaParameter::LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate, const kernel::TacticalLine_ABC& line )
+LimaParameter::LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate, const kernel::TacticalLine_ABC& line, bool optional )
     : QObject( parent )
-    , Param_ABC( name )
-    , converter_  ( converter )
-    , currentDate_( currentDate )
-    , line_       ( &line )
-    , schedule_   ( 0 )
+    , Param_ABC( name, optional )
+    , converter_   ( converter )
+    , currentDate_ ( currentDate )
+    , clickedLine_ ( &line )
+    , selectedLine_( &line )
+    , schedule_    ( 0 )
 {
     // NOTHING
 }
@@ -41,12 +42,13 @@ LimaParameter::LimaParameter( QObject* parent, const QString& name, const kernel
 // Created: MGD 2010-10-27
 // -----------------------------------------------------------------------------
 LimaParameter::LimaParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate )
-: QObject( parent )
-, Param_ABC( parameter.GetName().c_str() )
-, converter_  ( converter )
-, currentDate_( currentDate )
-, line_       ( 0 )
-, schedule_   ( 0 )
+    : QObject( parent )
+    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
+    , converter_   ( converter )
+    , currentDate_ ( currentDate )
+    , clickedLine_ ( 0 )
+    , selectedLine_( 0 )
+    , schedule_    ( 0 )
 {
     // NOTHING
 }
@@ -61,12 +63,12 @@ LimaParameter::~LimaParameter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LimaParameter::CheckValidity
+// Name: LimaParameter::InternalCheckValidity
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-bool LimaParameter::CheckValidity()
+bool LimaParameter::InternalCheckValidity() const
 {
-    return line_ && ( schedule_ && schedule_->CheckValidity() );
+    return selectedLine_ && schedule_ && schedule_->CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,22 +77,31 @@ bool LimaParameter::CheckValidity()
 // -----------------------------------------------------------------------------
 QWidget* LimaParameter::BuildInterface( QWidget* parent )
 {
-    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, GetName(), parent );
-    new QLabel( tools::translate( "LimaParameter", "Line" ), group );
-    entityLabel_ = new QLabel( "---", group );
+    Param_ABC::BuildInterface( parent );
+    QGridLayout* layout = new QGridLayout( group_ );
+
+    entityLabel_ = new QLabel( "---", parent );
     entityLabel_->setMinimumWidth( 100 );
     entityLabel_->setAlignment( Qt::AlignCenter );
     entityLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
-    new QLabel( tools::translate( "LimaParameter", "Functions" ), group );
-    functions_ = new Q3ListBox( group );
+
+    functions_ = new Q3ListBox( parent );
     functions_->setSelectionMode( Q3ListBox::Multi );
     for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
         functions_->insertItem( tools::ToShortString( (kernel::E_FuncLimaType)i ), i );
     functions_->setRowMode( Q3ListBox::FitToHeight );
-    functions_->setFixedSize( 150, functions_->itemHeight( 0 ) * 4 );
+    //functions_->setFixedSize( 150, functions_->itemHeight( 0 ) * 4 );
+    functions_->setFixedHeight( functions_->itemHeight( 0 ) * 4 );
     schedule_ = new ParamDateTime( this, tools::translate( "LimaParameter", "Schedule" ), currentDate_, true ); // $$$$ SBO 2007-05-14: optional
-    schedule_->BuildInterface( group );
-    return group;
+    QWidget* scheduleBox = schedule_->BuildInterface( parent );
+
+    layout->addWidget( new QLabel( tools::translate( "LimaParameter", "Line" ), parent ), 0, 0 );
+    layout->addWidget( entityLabel_, 0, 1 );
+    layout->addWidget( new QLabel( tools::translate( "LimaParameter", "Functions" ), parent ), 1, 0 );
+    layout->addWidget( functions_, 1, 1 );
+    layout->addWidget( scheduleBox, 2, 0, 1, 2 );
+
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -100,18 +111,18 @@ QWidget* LimaParameter::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( line_ )
+    if( selectedLine_ )
     {
         glPushAttrib( GL_CURRENT_BIT );
             glColor4f( 1, 0, 0, 0.5f );
-            line_->Interface().Apply( &kernel::Drawable_ABC::Draw, point, viewport, tools ); // $$$$ SBO 2007-05-02:
+            selectedLine_->Interface().Apply( &kernel::Drawable_ABC::Draw, point, viewport, tools ); // $$$$ SBO 2007-05-02:
             // $$$$ AGE 2007-05-09: pourquoi pas juste Draw ??
             glColor3f( 0.7f, 0, 0 );
             QStringList functions;
             for( unsigned int i = 0; i < functions_->count(); ++i )
                 if( functions_->isSelected( i ) )
                     functions.append( tools::ToShortString( (kernel::E_FuncLimaType)i ) );
-            const geometry::Point2f position = line_->Get< kernel::Positions >().GetPosition();
+            const geometry::Point2f position = selectedLine_->Get< kernel::Positions >().GetPosition();
             const geometry::Vector2f lineFeed = geometry::Vector2f( 0, -18.f * tools.Pixels() ); // $$$$ SBO 2007-05-15: hard coded \n
             if( ! functions.isEmpty() )
                 tools.Print( functions.join( ", " ).ascii(), position + lineFeed, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
@@ -126,7 +137,12 @@ void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport
 // -----------------------------------------------------------------------------
 void LimaParameter::MenuItemValidated( int index )
 {
-    entityLabel_->setText( line_->GetName() );
+    assert( clickedLine_ != 0 );
+    selectedLine_ = clickedLine_;
+    clickedLine_ = 0;
+    if( group_ && IsOptional() )
+        group_->setChecked( true );
+    entityLabel_->setText( selectedLine_->GetName() );
     functions_->setSelected( index, !functions_->isSelected( index ) );
 }
 
@@ -138,11 +154,7 @@ void LimaParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
 {
     if( entity.IsLimit() )
         return;
-    if( !line_ )
-        line_ = &entity;
-    if( line_ != &entity )
-        return;
-
+    clickedLine_ = &entity;
     Q3PopupMenu* limaMenu = new Q3PopupMenu( menu );
     for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
     {
@@ -188,16 +200,18 @@ namespace
 // -----------------------------------------------------------------------------
 void LimaParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
-    kernel::Lines lines;
-    if( line_ )
+    if( IsChecked() && selectedLine_ )
     {
+        kernel::Lines lines;
         GeometrySerializer serializer( lines, converter_ );
-        line_->Get< kernel::Positions >().Accept( serializer );
+        selectedLine_->Get< kernel::Positions >().Accept( serializer );
+        std::auto_ptr< actions::parameters::Lima > param( new actions::parameters::Lima( kernel::OrderParameter( GetName().ascii(), "phaseline", false ), converter_, lines ) );
+        for( unsigned int i = 0; i < functions_->count(); ++i )
+            if( functions_->isSelected( i ) )
+                param->AddFunction( i );
+        schedule_->CommitTo( *param );
+        parameter.AddParameter( *param.release() );
     }
-    std::auto_ptr< actions::parameters::Lima > param( new actions::parameters::Lima( kernel::OrderParameter( GetName().ascii(), "lima", false ), converter_, lines ) );
-    for( unsigned int i = 0; i < functions_->count(); ++i )
-        if( functions_->isSelected( i ) )
-            param->AddFunction( i );
-    schedule_->CommitTo( *param );
-    parameter.AddParameter( *param.release() );
+    else
+        parameter.AddParameter( *new actions::parameters::Lima( kernel::OrderParameter( GetName().ascii(), "phaseline", false ) ) );
 }

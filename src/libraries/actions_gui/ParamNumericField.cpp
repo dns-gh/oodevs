@@ -21,10 +21,9 @@ using namespace actions::gui;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamNumericField::ParamNumericField( const kernel::OrderParameter& parameter, bool isReal )
-    : Param_ABC( parameter.GetName().c_str() )
+    : Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
     , parameter_( parameter )
     , isReal_( isReal )
-    , pLabel_( 0 )
     , pEdit_ ( 0 )
 {
     // NOTHING
@@ -45,14 +44,13 @@ ParamNumericField::~ParamNumericField()
 // -----------------------------------------------------------------------------
 QWidget* ParamNumericField::BuildInterface( QWidget* parent )
 {
-    Q3HBox* box = new Q3HBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new ::gui::RichLabel( GetName(), box );
-    pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-    pEdit_ = new QLineEdit( "0", box );
+    Param_ABC::BuildInterface( parent );
+    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    pEdit_ = new QLineEdit( parent );
+    layout->addWidget( pEdit_ );
+    pEdit_->setPlaceholderText( "0" );
     SetLimits( 0.f, 99999.f );
-    box->setStretchFactor( pEdit_, 1 );
-    return box;
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,19 +68,16 @@ void ParamNumericField::SetLimits( float min, float max )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamNumericField::CheckValidity
+// Name: ParamNumericField::InternalCheckValidity
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-bool ParamNumericField::CheckValidity()
+bool ParamNumericField::InternalCheckValidity() const
 {
-    int pos;
-    QString txt = pEdit_->text();
-    if( pEdit_->validator()->validate( txt, pos ) != QValidator::Acceptable )
-    {
-        pLabel_->Warn( 3000 );
+    if( !pEdit_ )
         return false;
-    }
-    return true;
+    QString txt = pEdit_->text();
+    int pos;
+    return !txt.isEmpty() && pEdit_->validator()->validate( txt, pos ) == QValidator::Acceptable;
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +86,10 @@ bool ParamNumericField::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamNumericField::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new actions::parameters::Numeric( parameter_, pEdit_->text().toFloat() ) );
+    if( IsChecked() && !pEdit_->text().isEmpty() )
+        action.AddParameter( *new actions::parameters::Numeric( parameter_, pEdit_->text().toFloat() ) );
+    else
+        action.AddParameter( *new actions::parameters::Numeric( parameter_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,11 +98,8 @@ void ParamNumericField::CommitTo( actions::ParameterContainer_ABC& action ) cons
 // -----------------------------------------------------------------------------
 void ParamNumericField::Show()
 {
-    if( pLabel_ && pEdit_ )
-    {
-        pLabel_->show();
-        pEdit_->show();
-    }
+    if( group_ )
+        group_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -113,18 +108,6 @@ void ParamNumericField::Show()
 // -----------------------------------------------------------------------------
 void ParamNumericField::Hide()
 {
-    if( pLabel_ && pEdit_ )
-    {
-        pLabel_->hide();
-        pEdit_->hide();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamNumericField::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamNumericField::IsOptional() const
-{
-    return parameter_.IsOptional();
+    if( group_ )
+        group_->hide();
 }

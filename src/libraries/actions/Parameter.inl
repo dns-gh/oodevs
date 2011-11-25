@@ -62,6 +62,7 @@ template< typename T >
 void Parameter< T >::SetValue( const T& value )
 {
     value_ = value;
+    Set( true );
     NotifyValueSet();
 }
 
@@ -82,8 +83,12 @@ const T& Parameter< T >::GetValue() const
 template< typename T >
 void Parameter< T >::Display( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Item( tools::translate( "Parameter", "Parameter" ) ).Display( GetName() )
-             .Item( tools::translate( "Parameter", "Value" ) ).Display( value_ );
+    if( IsSet() )
+        displayer.Item( tools::translate( "Parameter", "Parameter" ) ).Display( GetName() )
+                 .Item( tools::translate( "Parameter", "Value" ) ).Display( value_ );
+    else
+        displayer.Item( tools::translate( "Parameter", "Parameter" ) ).Display( GetName() )
+                 .Item( tools::translate( "Parameter", "Value" ) ).Display( tools::translate( "ParameterList", "Not set" ) );
 }
 
 // -----------------------------------------------------------------------------

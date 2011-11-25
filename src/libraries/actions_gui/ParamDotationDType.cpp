@@ -22,7 +22,7 @@ using namespace actions::gui;
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
 ParamDotationDType::ParamDotationDType( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver, const kernel::Entity_ABC& agent )
-: ParamComboBox< int /*sword::DotationType*/ >( parameter )
+    : ParamComboBox< int >( parameter )
     , resolver_( resolver )
     , parameter_( parameter )
     , agent_( agent )
@@ -69,23 +69,17 @@ QWidget* ParamDotationDType::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamDotationDType::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new actions::parameters::DotationType( parameter_, GetValue(), resolver_ ) );
+    if( IsChecked() && GetValue() != 0 )
+        action.AddParameter( *new actions::parameters::DotationType( parameter_, GetValue(), resolver_ ) );
+    else
+        action.AddParameter( *new actions::parameters::DotationType( parameter_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamDotationDType::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamDotationDType::IsOptional() const
-{
-    return parameter_.IsOptional();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamDotationDType::CheckValidity
+// Name: ParamDotationDType::InternalCheckValidity
 // Created: LDC 2011-09-05
 // -----------------------------------------------------------------------------
-bool ParamDotationDType::CheckValidity()
+bool ParamDotationDType::InternalCheckValidity() const
 {
     return GetValue() != 0;
 }

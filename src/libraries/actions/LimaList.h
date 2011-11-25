@@ -56,12 +56,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LimaList( const LimaList& );            //!< Copy constructor
-    LimaList& operator=( const LimaList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
@@ -69,7 +63,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterLimaList_h_

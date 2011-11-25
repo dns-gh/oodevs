@@ -10,7 +10,7 @@
 #include "actions_pch.h"
 #include "ResourceNetwork.h"
 #include "ParameterVisitor_ABC.h"
-#include "String.h"
+#include "Resource.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
@@ -20,6 +20,16 @@
 
 using namespace actions;
 using namespace parameters;
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetwork constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+ResourceNetwork::ResourceNetwork( const kernel::OrderParameter& parameter, kernel::Controller& controller )
+    : Entity< kernel::Object_ABC >( parameter, controller )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetwork constructor
@@ -53,12 +63,15 @@ ResourceNetwork::ResourceNetwork( const kernel::OrderParameter& parameter, const
 ResourceNetwork::ResourceNetwork( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Entity< kernel::Object_ABC >( parameter, controller )
 {
-    unsigned long id = xis.attribute< unsigned long >( "value" );
-    const kernel::Object_ABC* object = resolver.FindUrbanObject( id );
-    if( !object )
-        object = resolver.FindObject( id );
-    SetValue( object );
-    xis >> xml::list( "parameter", *this, &ResourceNetwork::ReadParameter );
+    if( xis.has_attribute( "value" ) )
+    {
+        unsigned long id = xis.attribute< unsigned long >( "value" );
+        const kernel::Object_ABC* object = resolver.FindUrbanObject( id );
+        if( !object )
+            object = resolver.FindObject( id );
+        SetValue( object );
+        xis >> xml::list( "parameter", *this, &ResourceNetwork::ReadParameter );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -117,8 +130,9 @@ void ResourceNetwork::Draw( const geometry::Point2f&, const kernel::Viewport_ABC
 // -----------------------------------------------------------------------------
 geometry::Point2f ResourceNetwork::GetPosition() const
 {
-    if( const kernel::UrbanPositions_ABC* positions = GetValue()->Retrieve< kernel::UrbanPositions_ABC >() )
-        return positions->Barycenter();
+    if( IsSet() )
+        if( const kernel::UrbanPositions_ABC* positions = GetValue()->Retrieve< kernel::UrbanPositions_ABC >() )
+            return positions->Barycenter();
     return Entity< kernel::Object_ABC >::GetPosition();
 }
 
@@ -149,7 +163,7 @@ void ResourceNetwork::CommitTo( sword::MissionParameter_Value& message ) const
 // -----------------------------------------------------------------------------
 void ResourceNetwork::AddResourceParameter( const std::string& resource )
 {
-    AddParameter( *new String( kernel::OrderParameter( tools::translate( "Parameter", "Resource" ).ascii(), "resource", false ), resource ) );
+    AddParameter( *new Resource( kernel::OrderParameter( tools::translate( "Parameter", "Resource" ).ascii(), "resource", false ), resource ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +185,7 @@ void ResourceNetwork::CommitTo( sword::ResourceNetworkElement& resourceNetwork )
     Entity< kernel::Object_ABC >::CommitTo( *resourceNetwork.mutable_object() );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         if( it->second->GetType() == "resource" )
-            static_cast< const String* >( it->second )->CommitTo( *resourceNetwork.mutable_resource()->mutable_name() );
+            static_cast< const Resource* >( it->second )->CommitTo( *resourceNetwork.mutable_resource()->mutable_name() );
 }
 
 // -----------------------------------------------------------------------------

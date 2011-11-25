@@ -46,11 +46,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    virtual bool IsOptional() const;
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< std::pair< QString, T > > T_Values;
@@ -71,7 +66,7 @@ private:
 // -----------------------------------------------------------------------------
 template< typename T >
 ParamComboBox<T>::ParamComboBox( const kernel::OrderParameter& parameter )
-    : Param_ABC( parameter.GetName().c_str() )
+    : Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
     , parameter_( parameter )
     , comboBox_( 0 )
 {
@@ -95,16 +90,15 @@ ParamComboBox<T>::~ParamComboBox()
 template< typename T >
 QWidget* ParamComboBox<T>::BuildInterface( QWidget* parent )
 {
-    Q3HBox* box = new Q3HBox( parent );
-    box->setSpacing( 5 );
-    QLabel* label = new QLabel( GetName(), box );
-    label->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-    comboBox_ = new ::gui::ValuedComboBox<T>( box );
+    Param_ABC::BuildInterface( parent );
+    QVBoxLayout* layout = new QVBoxLayout( group_ );
+
+    comboBox_ = new ::gui::ValuedComboBox<T>( parent );
     comboBox_->setSorting( true );
     for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
         comboBox_->AddItem( it->first, it->second );
-    box->setStretchFactor( comboBox_, 1 );
-    return box;
+    layout->addWidget( comboBox_ );
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +118,10 @@ void ParamComboBox<T>::AddItem( const QString& name, T value )
 template< typename T >
 void ParamComboBox<T>::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new actions::parameters::Enumeration( parameter_, GetValue() ) );
+    if( IsChecked() )
+        action.AddParameter( *new actions::parameters::Enumeration( parameter_, GetValue() ) );
+    else
+        action.AddParameter( *new actions::parameters::Enumeration( parameter_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,16 +132,6 @@ template< typename T >
 T ParamComboBox<T>::GetValue() const
 {
     return ( comboBox_ && comboBox_->count() ) ? comboBox_->GetValue() : 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamComboBox::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-template< typename T >
-bool ParamComboBox<T>::IsOptional() const
-{
-    return parameter_.IsOptional();
 }
 
     }

@@ -50,7 +50,6 @@ public:
     //! @name Operations
     //@{
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
-    virtual bool CheckValidity();
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
     virtual QWidget* BuildInterface( QWidget* parent );
@@ -65,7 +64,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual bool IsOptional() const;
+    virtual bool InternalCheckValidity() const;
     //@}
 
 private:
@@ -73,7 +72,6 @@ private:
     //@{
     kernel::OrderParameter parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
-    ::gui::RichLabel* pLabel_;
     QLabel*           pPosLabel_;
     geometry::Point2f popupPoint_;
     geometry::Point2f paramPoint_;

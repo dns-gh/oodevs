@@ -33,6 +33,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit Numeric( const kernel::OrderParameter& parameter );
              Numeric( const kernel::OrderParameter& parameter, float value );
              Numeric( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~Numeric();
@@ -47,12 +48,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Numeric( const Numeric& );            //!< Copy constructor
-    Numeric& operator=( const Numeric& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;

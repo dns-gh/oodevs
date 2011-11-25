@@ -12,7 +12,6 @@
 #include "moc_TimelinePanel.cpp"
 #include "ActionsToolbar.h"
 #include "TimelineWidget.h"
-#include "TabWidget.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionsFilter_ABC.h"
 #include "actions/ActionTasker.h"
@@ -85,25 +84,39 @@ namespace
 TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, const Config& config, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
     : QDockWidget( "timeline", parent )
 {
+    // Init
     setObjectName( "timeLine" );
     setCaption( tools::translate( "TimelinePanel", "Actions timeline" ) );
-    Q3VBox* box = new Q3VBox( this );
-    toolbar_ = new ActionsToolbar( box, model, config, controllers );
-    tabs_ = new TabWidget( box );
-    timeline_ = new TimelineWidget( box, controllers, model, scheduler, factory );
-    connect( toolbar_, SIGNAL(PlanificationModeChange() ), this, SIGNAL( PlanificationModeChange()) );
-    static_cast< TabWidget* >( tabs_ )->setConnect( timeline_, filters_, toolbar_ );
-    {
-        Q3VBox* box = new Q3VBox( tabs_ );
-        filters_.push_back( new GlobalFilter( profile ) );
-        tabs_->addTab( box, tools::translate( "TimelinePanel", "Global view" ) );
-    }
-    {
-        Q3VBox* box = new Q3VBox( tabs_ );
-        filters_.push_back( new CurrentSessionFilter( profile ) );
-        tabs_->addTab( box, tools::translate( "TimelinePanel", "Current session" ) );
-    }
+    QWidget* box = new QWidget( this );
+    QVBoxLayout* layout = new QVBoxLayout( box );
     setWidget( box );
+    // Toolbar
+    toolbar_ = new ActionsToolbar( this, model, config, controllers );
+    connect( toolbar_, SIGNAL( PlanificationModeChange() ), this, SIGNAL( PlanificationModeChange() ) );
+    // Radio buttons
+    QGroupBox* groupBox = new QGroupBox();
+    {
+        globalView_ = new QRadioButton( tools::translate( "TimelinePanel", "Global view" ) );
+        currentView_ = new QRadioButton( tools::translate( "TimelinePanel", "Current session" ) );
+        connect( globalView_, SIGNAL( clicked() ), this, SLOT( OnViewChanged() ) );
+        connect( currentView_, SIGNAL( clicked() ), this, SLOT( OnViewChanged() ) );
+        globalView_->setChecked( true );
+        QHBoxLayout* hbox = new QHBoxLayout( groupBox );
+        hbox->setMargin( 0 );
+        hbox->addWidget( globalView_ );
+        hbox->addWidget( currentView_ );
+        hbox->addStretch( 1 );
+    }
+    // Timeline
+    timeline_ = new TimelineWidget( this, controllers, model, scheduler, factory );
+    // Layout
+    layout->addWidget( toolbar_ );
+    layout->addWidget( groupBox );
+    layout->addWidget( timeline_, 1 );
+    // Filters
+    filters_.push_back( new GlobalFilter( profile ) );
+    filters_.push_back( new CurrentSessionFilter( profile ) );
+    OnViewChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -117,5 +130,12 @@ TimelinePanel::~TimelinePanel()
 
 // -----------------------------------------------------------------------------
 // Name: TimelinePanel::OnViewChanged
-// Created: SBO 2010-05-06
+// Created: ABR 2011-11-25
 // -----------------------------------------------------------------------------
+void TimelinePanel::OnViewChanged()
+{
+    const actions::ActionsFilter_ABC& filter = filters_.at( ( globalView_->isChecked() ? 0 : 1 ) );
+    toolbar_->SetFilter( filter );
+    timeline_->SetFilter( filter );
+}
+

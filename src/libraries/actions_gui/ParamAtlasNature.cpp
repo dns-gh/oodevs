@@ -25,7 +25,7 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamAtlasNature::ParamAtlasNature( QObject* parent, const kernel::OrderParameter& parameter, const kernel::AtlasNatures& natures )
     : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str() )
+    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
     , parameter_( parameter )
     , natures_  ( natures )
 {
@@ -47,16 +47,21 @@ ParamAtlasNature::~ParamAtlasNature()
 // -----------------------------------------------------------------------------
 QWidget* ParamAtlasNature::BuildInterface( QWidget* parent )
 {
-    Q3ButtonGroup* group = new Q3ButtonGroup( 2, Qt::Horizontal, GetName(), parent );
+    Param_ABC::BuildInterface( parent );
+    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    Q3ButtonGroup* buttonGroup = new Q3ButtonGroup( 2, Qt::Horizontal, parent );
+    buttonGroup->setMargin( 0 );
+    buttonGroup->setFlat( true );
     tools::Iterator< const kernel::AtlasNature& > it( natures_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const kernel::AtlasNature& nature = it.NextElement();
-        new QCheckBox( nature.GetName(), group );
+        new QCheckBox( nature.GetName(), buttonGroup );
         fields_.push_back( &nature );
     }
-    connect( group, SIGNAL( clicked( int ) ), SLOT( OnClicked( int ) ) );
-    return group;
+    connect( buttonGroup, SIGNAL( clicked( int ) ), SLOT( OnClicked( int ) ) );
+    layout->addWidget( buttonGroup );
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +70,10 @@ QWidget* ParamAtlasNature::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamAtlasNature::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new actions::parameters::AtlasNature( parameter_, nature_ ) );
+    if( IsChecked() )
+        action.AddParameter( *new actions::parameters::AtlasNature( parameter_, nature_ ) );
+    else
+        action.AddParameter( *new actions::parameters::AtlasNature( parameter_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,13 +83,4 @@ void ParamAtlasNature::CommitTo( actions::ParameterContainer_ABC& action ) const
 void ParamAtlasNature::OnClicked( int id )
 {
     nature_.Toggle( *fields_[id] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAtlasNature::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamAtlasNature::IsOptional() const
-{
-    return parameter_.IsOptional();
 }

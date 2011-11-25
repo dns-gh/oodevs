@@ -26,6 +26,7 @@ class String : public Parameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit String( const kernel::OrderParameter& parameter );
              String( const kernel::OrderParameter& parameter, const std::string& value );
              String( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~String();
@@ -39,12 +40,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    String( const String& );            //!< Copy constructor
-    String& operator=( const String& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
@@ -52,7 +47,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterString_h_

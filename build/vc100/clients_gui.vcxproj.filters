@@ -847,6 +847,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ChangeSuperiorDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichGroupBox.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1716,6 +1719,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ChangeSuperiorDialog.h">
       <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\RichGroupBox.h">
+      <Filter>Source Files\Tools</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

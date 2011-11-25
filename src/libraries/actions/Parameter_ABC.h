@@ -12,6 +12,7 @@
 
 #include "ParameterContainer_ABC.h"
 #include <geometry/types.h>
+#include <boost/noncopyable.hpp>
 
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
@@ -47,6 +48,7 @@ namespace actions
 // Created: SBO 2007-03-12
 // =============================================================================
 class Parameter_ABC : public ParameterContainer_ABC
+                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -80,19 +82,13 @@ public:
     void Set( bool isSet );
     virtual bool IsSet() const;
     virtual bool CheckKnowledgeValidity() const;
+    virtual void RetrieveKnowledgeIfPossible();
     //@}
 
 protected:
     //! @name Helpers
     //@{
     void DrawToolTip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Parameter_ABC( const Parameter_ABC& );            //!< Copy constructor
-    Parameter_ABC& operator=( const Parameter_ABC& ); //!< Assignment operator
     //@}
 
 private:

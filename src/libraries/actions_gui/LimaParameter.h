@@ -41,14 +41,14 @@ class LimaParameter : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate, const kernel::TacticalLine_ABC& line );
+             LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate, const kernel::TacticalLine_ABC& line, bool optional );
              LimaParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate );
     virtual ~LimaParameter();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity();
+    virtual bool InternalCheckValidity() const;
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
 
@@ -72,7 +72,8 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const QDateTime currentDate_;
-    const kernel::TacticalLine_ABC* line_;
+    const kernel::TacticalLine_ABC* clickedLine_;
+    const kernel::TacticalLine_ABC* selectedLine_;
     Q3ListBox* functions_;
     QLabel* entityLabel_;
     ParamDateTime* schedule_;

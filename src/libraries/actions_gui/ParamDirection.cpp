@@ -24,11 +24,12 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamDirection::ParamDirection( QObject* parent, const kernel::OrderParameter& parameter )
     : QObject   ( parent )
-    , Param_ABC ( ENT_Tr::ConvertFromActionParameter( ENT_Tr::ConvertToActionParameter( parameter.GetName().c_str() ), ENT_Tr_ABC::eToTr ).c_str() )
+    , Param_ABC ( ENT_Tr::ConvertFromActionParameter( ENT_Tr::ConvertToActionParameter( parameter.GetName().c_str() ), ENT_Tr_ABC::eToTr ).c_str(), parameter.IsOptional() )
     , parameter_( parameter )
     , value_    ( 180 )
 {
-    // NOTHING
+    if( name_.isEmpty() )
+        name_ = parameter_.GetName().c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -46,16 +47,16 @@ ParamDirection::~ParamDirection()
 // -----------------------------------------------------------------------------
 QWidget* ParamDirection::BuildInterface( QWidget* parent )
 {
-    Q3HBox* box = new Q3HBox( parent ); // $$$$ SBO 2007-03-16: should be removed... but need some changes in order context interface
-    box->setSpacing( 5 );
-    new QLabel( GetName(), box );
-    QDial* dial = new QDial( 0, 359, 1, 0, box );
+    Param_ABC::BuildInterface( parent );
+    QHBoxLayout* layout = new QHBoxLayout( group_ );
+    QDial* dial = new QDial( 0, 359, 1, 0, parent );
+    layout->addWidget( dial );
     dial->setWrapping( true );
     dial->setMaximumSize( 50, 50 );
     connect( dial, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
     dial->setValue( value_ );
-    box->setStretchFactor( dial, 1 );
-    return box;
+    layout->addWidget( dial, Qt::AlignCenter );
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +65,10 @@ QWidget* ParamDirection::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamDirection::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new actions::parameters::Direction( parameter_, value_ ) );
+    if( IsChecked() )
+        action.AddParameter( *new actions::parameters::Direction( parameter_, value_ ) );
+    else
+        action.AddParameter( *new actions::parameters::Direction( parameter_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,13 +78,4 @@ void ParamDirection::CommitTo( actions::ParameterContainer_ABC& action ) const
 void ParamDirection::OnValueChanged( int value )
 {
     value_ = value + ( value > 180 ? -180 : 180 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamDirection::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamDirection::IsOptional() const
-{
-    return parameter_.IsOptional();
 }

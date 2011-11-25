@@ -9,8 +9,11 @@
 
 #include "actions_gui_pch.h"
 #include "ParamLocationComposite.h"
+#include "moc_ParamLocationComposite.cpp"
 #include "InterfaceBuilder_ABC.h"
 #include "actions/Parameter_ABC.h"
+#include "actions/Parameter.h"
+#include "actions/Location.h"
 #include <Qt3Support/Q3widgetstack.h>
 
 class QWidget;
@@ -30,7 +33,7 @@ namespace
         {}
         virtual void Visit( const std::string& type )
         {
-            kernel::OrderParameter orderParam( name_, type, true );
+            kernel::OrderParameter orderParam( name_, type, paramcomposite_.IsOptional() );
             Param_ABC* param = &builder_.Build( orderParam, false );
             parameters_.push_back( param );
             param->RegisterListener( paramcomposite_ );
@@ -50,10 +53,11 @@ namespace
 // Name: ParamLocationComposite constructor
 // Created: LDC 2010-08-18
 // -----------------------------------------------------------------------------
-ParamLocationComposite::ParamLocationComposite( const kernel::OrderParameter& parameter, const InterfaceBuilder_ABC& builder )
-: Param_ABC( parameter.GetName().c_str() )
-, parameter_( parameter )
-, selectedParam_( 0 )
+ParamLocationComposite::ParamLocationComposite( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const InterfaceBuilder_ABC& builder )
+    : Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
+    , parameter_( parameter )
+    , converter_( converter )
+    , selectedParam_( 0 )
 {
     ChoiceVisitor visitor( *this, GetName().ascii(), params_, builder );
     parameter.Accept( visitor );
@@ -106,7 +110,11 @@ QWidget* ParamLocationComposite::BuildInterface( QWidget* parent )
 {
     stack_ = new Q3WidgetStack( parent );
     for( CIT_Params it = params_.begin(); it != params_.end(); ++it )
-        widgets_.push_back( (*it)->BuildInterface( stack_ ) );
+    {
+        QWidget* widget = (*it)->BuildInterface( stack_ );
+        connect( static_cast< QGroupBox* >( widget ), SIGNAL( clicked( bool ) ), this, SLOT( OnChecked( bool ) ) );
+        widgets_.push_back( widget );
+    }
     return stack_;
 }
 
@@ -116,11 +124,13 @@ QWidget* ParamLocationComposite::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 bool ParamLocationComposite::CheckValidity()
 {
-    if( parameter_.IsOptional() )
-        return true;
-    if( selectedParam_ && selectedParam_->CheckValidity() )
-        return true;
-    return false;
+    if( IsChecked() && ( !selectedParam_ || !selectedParam_->CheckValidity() ) )
+    {
+        for( std::vector< QWidget* >::iterator it = widgets_.begin(); it != widgets_.end(); ++it )
+            static_cast< ::gui::RichGroupBox* >( *it )->Warn();
+        return false;
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -132,11 +142,7 @@ void ParamLocationComposite::CommitTo( actions::ParameterContainer_ABC& containe
     if( selectedParam_ )
         selectedParam_->CommitTo( container );
     else
-    {
-        std::auto_ptr< actions::Parameter_ABC > emptyParam( new actions::Parameter_ABC( QString::null ) );
-        emptyParam->Set( false );
-        container.AddParameter( *emptyParam.release() );
-    }
+        container.AddParameter( *new actions::parameters::Location( parameter_, converter_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,12 +163,28 @@ void ParamLocationComposite::NotifyChanged( Param_ABC& param )
         }
     }
 }
+
 // -----------------------------------------------------------------------------
-// Name: ParamLocationComposite::IsOptional
-// Created: GGE 2011-08-02
+// Name: ParamLocationComposite::IsChecked
+// Created: ABR 2011-11-22
 // -----------------------------------------------------------------------------
-bool ParamLocationComposite::IsOptional() const
+bool ParamLocationComposite::IsChecked() const
 {
-    return parameter_.IsOptional();
+    if( IsOptional() && !widgets_.empty() )
+        return static_cast< const QGroupBox* >( widgets_[ 0 ] )->isChecked();
+    return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::OnChecked
+// Created: ABR 2011-11-22
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::OnChecked( bool checked )
+{
+    for( std::vector< QWidget* >::iterator it = widgets_.begin(); it != widgets_.end(); ++it )
+    {
+        disconnect( static_cast< QGroupBox* >( *it ), SIGNAL( clicked( bool ) ), this, SLOT( OnChecked( bool ) ) );
+        static_cast< QGroupBox* >( *it )->setChecked( checked );
+        connect( static_cast< QGroupBox* >( *it ), SIGNAL( clicked( bool ) ), this, SLOT( OnChecked( bool ) ) );
+    }
+}

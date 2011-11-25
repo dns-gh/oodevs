@@ -4882,10 +4882,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Connaissance Objet</translation>
     </message>
     <message>
-        <source>Objective</source>
-        <translation>Objectif</translation>
-    </message>
-    <message>
         <source>Path</source>
         <translation>Itinéraire</translation>
     </message>

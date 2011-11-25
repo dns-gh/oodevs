@@ -24,14 +24,27 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: DateTime constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+DateTime::DateTime( const kernel::OrderParameter& parameter )
+    : Parameter< QString >( parameter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DateTime constructor
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
 DateTime::DateTime( const kernel::OrderParameter& parameter, xml::xistream& xis )
     : Parameter< QString >( parameter )
 {
-    xis >> xml::attribute( "value", time_ );
-    bpt::ptime time( bpt::from_iso_string( time_ ) );
-    SetValue( bpt::to_simple_string( time ).c_str() );
+    if( xis.has_attribute( "value" ) )
+    {
+        xis >> xml::attribute( "value", time_ );
+        bpt::ptime time( bpt::from_iso_string( time_ ) );
+        SetValue( bpt::to_simple_string( time ).c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +107,8 @@ void DateTime::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
 void DateTime::Serialize( xml::xostream& xos ) const
 {
     Parameter< QString >::Serialize( xos );
-    xos << xml::attribute( "value", time_ );
+    if( IsSet() && !time_.empty() )
+        xos << xml::attribute( "value", time_ );
 }
 
 // -----------------------------------------------------------------------------

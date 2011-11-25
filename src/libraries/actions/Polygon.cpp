@@ -18,6 +18,16 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Polygon constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+Polygon::Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
+    : Location( parameter, converter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Polygon constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
 Polygon::Polygon( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )

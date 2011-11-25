@@ -23,7 +23,6 @@ namespace kernel
     class OrderType;
 }
 
-class Q3ScrollView;
 class QTabWidget;
 class QPushButton;
 

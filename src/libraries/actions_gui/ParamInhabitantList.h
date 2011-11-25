@@ -46,12 +46,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamInhabitantList( const ParamInhabitantList& );            //!< Copy constructor
-    ParamInhabitantList& operator=( const ParamInhabitantList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void AddToMenu( kernel::ContextMenu& menu );

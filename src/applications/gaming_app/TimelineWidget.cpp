@@ -61,7 +61,7 @@ TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controller
     Q3VBox* box = new Q3VBox( splitter );
     TimelineRuler* ruler = new TimelineRuler( box, controllers, list_->header()->height() );
     view_ = new TimelineView( box, new TimelineCanvas( this, 25 ), controllers, model, scheduler, *ruler );
-    new ActionProperties( this, controllers, factory );
+    new ActionProperties( splitter, controllers, factory );
 
     connect( view_, SIGNAL( contentsMoving( int, int ) ), list_, SLOT( setContentsPos( int, int ) ) );
     connect( list_, SIGNAL( contentsMoving( int, int ) ), view_, SLOT( setContentsPos( int, int ) ) );

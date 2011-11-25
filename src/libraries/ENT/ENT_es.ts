@@ -652,18 +652,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>danger direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>limit 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>limit 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>calm</source>
         <translation type="unfinished"></translation>
     </message>
@@ -825,6 +813,18 @@
     </message>
     <message>
         <source>ALR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limit 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limit 2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

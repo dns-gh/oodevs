@@ -15,6 +15,7 @@
 namespace kernel
 {
     class ActionController;
+    class CoordinateConverter_ABC;
     class OrderParameter;
 }
 
@@ -36,7 +37,7 @@ class ParamLocationCompositeList : public ListParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLocationCompositeList( QObject* parent, const kernel::OrderParameter& parameter, const InterfaceBuilder_ABC& builder, kernel::ActionController& controller );
+             ParamLocationCompositeList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const InterfaceBuilder_ABC& builder, kernel::ActionController& controller );
     virtual ~ParamLocationCompositeList();
     //@}
 
@@ -55,6 +56,7 @@ private:
     //! @name Member data
     //@{
     const kernel::OrderParameter& parameter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     const InterfaceBuilder_ABC& builder_;
     unsigned int count_;
     //@}

@@ -44,11 +44,14 @@ MedicalPriorities::MedicalPriorities( const OrderParameter& parameter, const swo
 MedicalPriorities::MedicalPriorities( const kernel::OrderParameter& parameter, xml::xistream& xis )
     : Parameter< QString >( parameter )
 {
-    std::string value;
-    xis >> xml::optional >> xml::attribute( "value", value );
-    QStringList list = QStringList::split( ";", value.c_str() );
-    for( int i = 0; i < list.count(); ++i )
-        AddMedicalPriority( E_HumanWound( list[i].toUInt() ) );
+    if( xis.has_attribute( "value" ) )
+    {
+        std::string value;
+        xis >> xml::optional >> xml::attribute( "value", value );
+        QStringList list = QStringList::split( ";", value.c_str() );
+        for( int i = 0; i < list.count(); ++i )
+            AddMedicalPriority( E_HumanWound( list[i].toUInt() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -15,6 +15,11 @@
 
 class Q3WidgetStack;
 
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
 namespace actions
 {
     class Parameter_ABC;
@@ -28,14 +33,17 @@ namespace actions
 */
 // Created: LDC 2010-08-18
 // =============================================================================
-class ParamLocationComposite: public Param_ABC
+class ParamLocationComposite: public QObject
+                            , public Param_ABC
 {
+    Q_OBJECT
+
     typedef actions::gui::Param_ABC* (Functor)( const kernel::OrderParameter& parameter );
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamLocationComposite( const kernel::OrderParameter& parameter, const InterfaceBuilder_ABC& builder );
+    ParamLocationComposite( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const InterfaceBuilder_ABC& builder );
     virtual ~ParamLocationComposite();
     //@}
 
@@ -46,7 +54,6 @@ public:
 
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( QWidget* parent );
-    virtual bool CheckValidity();
     virtual void CommitTo( actions::ParameterContainer_ABC& container ) const;
     //@}
 
@@ -61,17 +68,25 @@ private:
     //@{
     typedef std::vector<Param_ABC*>  T_Params;
     typedef T_Params::const_iterator CIT_Params;
-    virtual bool IsOptional() const;
+    virtual bool CheckValidity();
+    virtual bool IsChecked() const;
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnChecked( bool checked );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
-    std::vector<Param_ABC*> params_;
-    std::vector<QWidget*> widgets_;
-    Q3WidgetStack* stack_;
-    Param_ABC* selectedParam_;
+    const kernel::OrderParameter&          parameter_;
+    const kernel::CoordinateConverter_ABC& converter_;
+    std::vector< Param_ABC* >              params_;
+    std::vector< QWidget* >                widgets_;
+    Q3WidgetStack*                         stack_;
+    Param_ABC*                             selectedParam_;
     //@}
 };
 

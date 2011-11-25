@@ -35,6 +35,12 @@
     <Filter Include="Translations">
       <UniqueIdentifier>{210d4a31-0f11-439e-8a90-53fcc185e466}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Parameters\Resource Network">
+      <UniqueIdentifier>{25b723ce-7010-4d3b-b996-36dae1f840b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parameters\Common">
+      <UniqueIdentifier>{4b392959-f263-4fb0-8447-d8e46962e1c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\actions_gui\actions_gui_pch.cpp">
@@ -42,42 +48,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\resources.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamBool.cpp">
-      <Filter>Source Files\Parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamDateTime.cpp">
-      <Filter>Source Files\Parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamDirection.cpp">
-      <Filter>Source Files\Parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamMissionObjective.cpp">
-      <Filter>Source Files\Parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamMissionObjectiveList.cpp">
-      <Filter>Source Files\Parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamNumericField.cpp">
-      <Filter>Source Files\Parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamNumericList.cpp">
-      <Filter>Source Files\Parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamObstacle.cpp">
-      <Filter>Source Files\Parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamObstacleList.cpp">
-      <Filter>Source Files\Parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetwork.cpp">
-      <Filter>Source Files\Parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetworkList.cpp">
-      <Filter>Source Files\Parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamStringField.cpp">
-      <Filter>Source Files\Parameters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\LimaParameter.cpp">
       <Filter>Source Files\Parameters\Tactical lines</Filter>
@@ -193,6 +163,36 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.cpp">
       <Filter>Source Files\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamBool.cpp">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamDateTime.cpp">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamDirection.cpp">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamNumericField.cpp">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamNumericList.cpp">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetwork.cpp">
+      <Filter>Source Files\Parameters\Resource Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetworkList.cpp">
+      <Filter>Source Files\Parameters\Resource Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamStringField.cpp">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamObstacle.cpp">
+      <Filter>Source Files\Parameters\Static model types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamObstacleList.cpp">
+      <Filter>Source Files\Parameters\Static model types</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\actions_gui\actions_gui_pch.h">
@@ -200,30 +200,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\resources.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamComboBox.h">
-      <Filter>Source Files\Parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamMissionObjective.h">
-      <Filter>Source Files\Parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamMissionObjectiveList.h">
-      <Filter>Source Files\Parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamNumericField.h">
-      <Filter>Source Files\Parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamNumericList.h">
-      <Filter>Source Files\Parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamObstacleList.h">
-      <Filter>Source Files\Parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamResourceNetworkList.h">
-      <Filter>Source Files\Parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamStringField.h">
-      <Filter>Source Files\Parameters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamAgent.h">
       <Filter>Source Files\Parameters\Entities</Filter>
@@ -264,9 +240,6 @@
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamLocation.h">
       <Filter>Source Files\Parameters\Locations</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamLocationComposite.h">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamLocationCompositeList.h">
       <Filter>Source Files\Parameters\Locations</Filter>
     </ClInclude>
@@ -285,9 +258,6 @@
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamPolygonList.h">
       <Filter>Source Files\Parameters\Locations</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\Param_ABC.h">
-      <Filter>Source Files\Parameters\Base</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamDotationDType.h">
       <Filter>Source Files\Parameters\Static model types</Filter>
     </ClInclude>
@@ -299,6 +269,24 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\InterfaceBuilder_ABC.h">
       <Filter>Source Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\ParamNumericList.h">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\ParamComboBox.h">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\ParamNumericField.h">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\ParamResourceNetworkList.h">
+      <Filter>Source Files\Parameters\Resource Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\ParamStringField.h">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\ParamObstacleList.h">
+      <Filter>Source Files\Parameters\Static model types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -316,21 +304,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamBool.h">
-      <Filter>Source Files\Parameters</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamDateTime.h">
-      <Filter>Source Files\Parameters</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamDirection.h">
-      <Filter>Source Files\Parameters</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamObstacle.h">
-      <Filter>Source Files\Parameters</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamResourceNetwork.h">
-      <Filter>Source Files\Parameters</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\LimaParameter.h">
       <Filter>Source Files\Parameters\Tactical lines</Filter>
     </CustomBuild>
@@ -375,6 +348,27 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\translator.pro">
       <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\Param_ABC.h">
+      <Filter>Source Files\Parameters\Base</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamLocationComposite.h">
+      <Filter>Source Files\Parameters\Locations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamBool.h">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamDateTime.h">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamDirection.h">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamResourceNetwork.h">
+      <Filter>Source Files\Parameters\Resource Network</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamObstacle.h">
+      <Filter>Source Files\Parameters\Static model types</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

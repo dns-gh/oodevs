@@ -33,6 +33,7 @@ class Location : public Parameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
+             Location( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
              Location( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Location( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Location& message );
              Location( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
@@ -59,12 +60,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Location( const Location& );            //!< Copy constructor
-    Location& operator=( const Location& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
@@ -72,7 +67,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterLocation_h_

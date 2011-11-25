@@ -18,6 +18,16 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: AtlasNature constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+AtlasNature::AtlasNature( const kernel::OrderParameter& parameter )
+    : Parameter< kernel::AtlasNature >( parameter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AtlasNature constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const kernel::AtlasNature& nature )
@@ -41,9 +51,10 @@ AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const sword::
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::AtlasNatures& natures )
-    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( xis.attribute< unsigned short >( "value" ) ) )
+    : Parameter< kernel::AtlasNature >( parameter )
 {
-    // NOTHING
+    if( xis.has_attribute( "value" ) )
+        SetValue( natures.MakeNature( xis.attribute< unsigned short >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +73,8 @@ AtlasNature::~AtlasNature()
 void AtlasNature::Serialize( xml::xostream& xos ) const
 {
     Parameter< kernel::AtlasNature >::Serialize( xos );
-    xos << xml::attribute( "value", GetValue().GetValue() );
+    if( IsSet() )
+        xos << xml::attribute( "value", GetValue().GetValue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,8 +103,12 @@ void AtlasNature::CommitTo( sword::MissionParameter_Value& message ) const
 // -----------------------------------------------------------------------------
 void AtlasNature::Display( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Item( tools::translate( "Parameter", "Parameter" ) ).Display( GetName() )
-             .Item( tools::translate( "Parameter", "Value" ) ).Display( GetValue().GetName() ); // $$$$ SBO 2007-05-24: make a displayer
+    if( IsSet() )
+        displayer.Item( tools::translate( "Parameter", "Parameter" ) ).Display( GetName() )
+                 .Item( tools::translate( "Parameter", "Value" ) ).Display( GetValue().GetName() );
+    else
+        displayer.Item( tools::translate( "Parameter", "Parameter" ) ).Display( GetName() )
+                 .Item( tools::translate( "Parameter", "Value" ) ).Display( tools::translate( "AtlasNature", "Not set" ) );
 }
 
 // -----------------------------------------------------------------------------

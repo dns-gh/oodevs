@@ -21,13 +21,12 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ListParameter::ListParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller )
     : QObject       ( parent )
-    , Param_ABC     ( parameter.GetName().c_str() )
+    , Param_ABC     ( parameter.GetName().c_str(), parameter.IsOptional() )
     , controller_   ( controller )
     , list_         ( 0 )
     , selected_     ( 0 )
     , min_          ( parameter.MinOccurs() )
     , max_          ( parameter.MaxOccurs() )
-    , optional_     ( parameter.IsOptional() )
     , createEnabled_( true )
 {
     // NOTHING
@@ -45,22 +44,19 @@ ListParameter::~ListParameter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListParameter::CheckValidity
+// Name: ListParameter::InternalCheckValidity
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-bool ListParameter::CheckValidity()
+bool ListParameter::InternalCheckValidity() const
 {
     if( !list_ )
-        return Invalid();
-    if( !optional_ )
-    {
-        unsigned int children = list_->childCount();
-        if( min_ > children || max_ < children )
-            return Invalid();
-    }
+        return false;
+    unsigned int children = list_->childCount();
+    if( min_ > children || max_ < children )
+        return false;
     if( selected_ )
         if( Param_ABC* param = static_cast< const ::gui::ValuedListItem* >( selected_ )->GetValue< Param_ABC >() )
-            return param->CheckValidity() ? true : Invalid();
+            return param->CheckValidity();
     return true;
 }
 
@@ -70,15 +66,19 @@ bool ListParameter::CheckValidity()
 // -----------------------------------------------------------------------------
 QWidget* ListParameter::BuildInterface( QWidget* parent )
 {
-    Q3VBox* box = new Q3VBox( parent );
-    list_ = new Q3ListView( box );
+    Param_ABC::BuildInterface( parent );
+    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    Q3VBox* vbox = new Q3VBox( parent );
+    list_ = new Q3ListView( vbox );
     list_->setSorting( -1 );
     list_->setMaximumHeight( 100 );
     list_->addColumn( GetName() );
+    list_->header()->hide();
     list_->setResizeMode( Q3ListView::LastColumn );
     connect( list_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
     connect( list_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( Q3ListViewItem*, const QPoint& ) ) );
-    return box;
+    layout->addWidget( vbox );
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -114,13 +114,17 @@ void ListParameter::OnCreate()
     if( ! list_ || ( list_->childCount() && ! CheckValidity() ) )
         return;
     Param_ABC* param = CreateElement();
-    Q3VBox* widget = new Q3VBox( list_->parentWidget() );
-    widgets_[param] = widget;
-    param->BuildInterface( widget );
-    ::gui::ValuedListItem* item = new ::gui::ValuedListItem( list_, list_->lastItem() );
-    item->SetValue( param );
-    item->setText( 0, param->GetName() );
-    list_->setSelected( item, true );
+    if( param )
+    {
+        param->SetOptional( false );
+        Q3VBox* widget = new Q3VBox( list_->parentWidget() );
+        widgets_[param] = widget;
+        param->BuildInterface( widget );
+        ::gui::ValuedListItem* item = new ::gui::ValuedListItem( list_, list_->lastItem() );
+        item->SetValue( param );
+        item->setText( 0, param->GetName() );
+        list_->setSelected( item, true );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -288,15 +292,6 @@ void ListParameter::TurnHeaderBlack()
 {
     if( list_ )
         list_->header()->setPaletteForegroundColor( Qt::black );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ListParameter::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ListParameter::IsOptional() const
-{
-    return optional_;
 }
 
 // -----------------------------------------------------------------------------

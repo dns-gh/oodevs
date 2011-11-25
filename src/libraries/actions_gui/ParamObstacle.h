@@ -59,7 +59,7 @@ public:
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( QWidget* parent );
-    virtual bool CheckValidity();
+    virtual bool InternalCheckValidity() const;
 
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
@@ -77,12 +77,6 @@ private slots:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    virtual bool IsOptional() const;
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::OrderParameter parameter_;
@@ -95,7 +89,6 @@ private:
     ParamLocation* location_;
     ParamNumericField* density_;
     ParamAutomat* tc2_;
-    bool optional_;
     //@}
 };
 

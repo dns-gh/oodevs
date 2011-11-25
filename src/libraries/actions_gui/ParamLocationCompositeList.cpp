@@ -22,11 +22,12 @@ using namespace actions::gui;
 // Name: ParamLocationCompositeList constructor
 // Created: LDC 2010-09-20
 // -----------------------------------------------------------------------------
-ParamLocationCompositeList::ParamLocationCompositeList( QObject* parent, const kernel::OrderParameter& parameter, const InterfaceBuilder_ABC& builder, kernel::ActionController& controller )
+ParamLocationCompositeList::ParamLocationCompositeList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const InterfaceBuilder_ABC& builder, kernel::ActionController& controller )
     : ListParameter( parent, parameter, controller )
     , parameter_( parameter )
-    , builder_( builder )
-    , count_( 0 )
+    , converter_( converter )
+    , builder_  ( builder )
+    , count_    ( 0 )
 {
     // NOTHING
 }
@@ -79,5 +80,5 @@ Param_ABC* ParamLocationCompositeList::CreateElement()
     kernel::OrderParameter parameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "location", false );
     ChoiceVisitor chooser( parameter );
     parameter_.Accept( chooser );
-    return new ParamLocationComposite( parameter, builder_ );
+    return new ParamLocationComposite( parameter, converter_, builder_ );
 }

@@ -97,6 +97,13 @@
     </message>
 </context>
 <context>
+    <name>AtlasNature</name>
+    <message>
+        <source>Not set</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FragOrder</name>
     <message>
         <source>Entity &apos;%1&apos; (id: %2) cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
@@ -149,11 +156,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Objective location</source>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParameterList</name>
+    <message>
+        <source>Not set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resource</source>
+        <source>List</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

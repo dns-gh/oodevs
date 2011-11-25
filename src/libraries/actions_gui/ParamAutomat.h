@@ -40,13 +40,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamAutomat( const ParamAutomat& );            //!< Copy constructor
-    ParamAutomat& operator=( const ParamAutomat& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::OrderParameter parameter_;

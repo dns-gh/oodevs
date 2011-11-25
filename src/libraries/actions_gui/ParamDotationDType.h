@@ -55,8 +55,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual bool IsOptional() const;
-    virtual bool CheckValidity();
+    virtual bool InternalCheckValidity() const;
     //@}
 
 private:

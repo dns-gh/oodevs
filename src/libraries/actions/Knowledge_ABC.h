@@ -38,6 +38,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Serialize( xml::xostream& xos ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void NotifyDestruction();
     template< typename M >
@@ -51,7 +52,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void Serialize( xml::xostream& xos ) const;
     virtual void NotifyValueSet();
     //@}
 

@@ -22,13 +22,24 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Location constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+Location::Location( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
+    : Parameter< QString >( parameter )
+    , LocationBase( converter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Location constructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
 Location::Location( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )
     : Parameter< QString >( parameter )
     , LocationBase( converter, location )
 {
-    // NOTHING
+    Set( IsValid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +50,7 @@ Location::Location( const OrderParameter& parameter, const CoordinateConverter_A
     : Parameter< QString >( parameter )
     , LocationBase( converter, message )
 {
-    // NOTHING
+    Set( IsValid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +61,7 @@ Location::Location( const OrderParameter& parameter, const CoordinateConverter_A
     : Parameter< QString >( parameter )
     , LocationBase( converter, xis )
 {
-    // NOTHING
+    Set( IsValid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +108,8 @@ geometry::Point2f Location::GetPosition() const
 void Location::Serialize( xml::xostream& xos ) const
 {
     Parameter< QString >::Serialize( xos );
-    LocationBase::Serialize( xos );
+    if( IsSet() )
+        LocationBase::Serialize( xos );
 }
 
 // -----------------------------------------------------------------------------

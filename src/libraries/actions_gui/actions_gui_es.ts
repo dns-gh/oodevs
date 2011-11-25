@@ -58,11 +58,11 @@
     <name>MissionInteface_ABC</name>
     <message>
         <source>Doctrine</source>
-        <translation>Doctrina</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Usage</source>
-        <translation>Uso</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -84,11 +84,11 @@
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Help</source>
-        <translation>Ayuda</translation>
+        <source>Add to planning</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add to planning</source>
+        <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -97,17 +97,6 @@
     <message>
         <source>%1: add item as</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ParamMissionObjective</name>
-    <message>
-        <source>Location</source>
-        <translation>Posición</translation>
-    </message>
-    <message>
-        <source>Schedule</source>
-        <translation>Cronograma</translation>
     </message>
 </context>
 <context>
@@ -147,20 +136,20 @@
         <translation type="unfinished">Tipo de blanco de demolición:</translation>
     </message>
     <message>
+        <source>Obstacle type</source>
+        <translation type="unfinished">Tipo de obstáculo</translation>
+    </message>
+    <message>
         <source>Density</source>
-        <translation type="unfinished">Densidad</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TC2</source>
-        <translation type="unfinished">TC2</translation>
+        <translation type="unfinished">TC2: {2?}</translation>
     </message>
     <message>
-        <source>Location</source>
-        <translation type="unfinished">Posición</translation>
-    </message>
-    <message>
-        <source>Obstacle type</source>
-        <translation type="unfinished">Tipo de obstáculo</translation>
+        <source>Obstacle location</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

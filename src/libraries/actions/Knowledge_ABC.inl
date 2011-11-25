@@ -49,7 +49,7 @@ Knowledge_ABC< ConcreteEntity >::~Knowledge_ABC()
 template< typename ConcreteEntity >
 void Knowledge_ABC< ConcreteEntity >::Display( kernel::Displayer_ABC& displayer ) const
 {
-    if( isEntityValid_ )
+    if( !IsSet() || isEntityValid_ )
         Entity< ConcreteEntity >::Display( displayer );
     else
         displayer.Item( tools::translate( "Parameter", "Parameter" ) ).Display( GetName() )
@@ -74,7 +74,8 @@ template< typename ConcreteEntity >
 void Knowledge_ABC< ConcreteEntity >::Serialize( xml::xostream& xos ) const
 {
     Parameter< const ConcreteEntity* >::Serialize( xos );
-    xos << xml::attribute( "value", id_ ); // $$$$ SBO 2007-05-24:
+    if( IsSet() )
+        xos << xml::attribute( "value", id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +85,7 @@ void Knowledge_ABC< ConcreteEntity >::Serialize( xml::xostream& xos ) const
 template< typename ConcreteEntity >
 void Knowledge_ABC< ConcreteEntity >::NotifyValueSet()
 {
-    if( ! GetValue() )
+    if( !GetValue() )
         isEntityValid_ = false;
     else
     {

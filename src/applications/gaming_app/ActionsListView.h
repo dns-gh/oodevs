@@ -52,12 +52,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ActionsListView( const ActionsListView& );            //!< Copy constructor
-    ActionsListView& operator=( const ActionsListView& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const actions::Action_ABC& action );

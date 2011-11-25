@@ -16,27 +16,18 @@
 using namespace actions;
 using namespace parameters;
 
-namespace
-{
-    bool IsOptional( xml::xistream& xis )
-    {
-        return xis.attribute< std::string >( "type" ) == "string" || xis.attribute< unsigned long >( "value" ) == 0;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgeOrder constructor
 // Created: LGY 2011-07-07
 // -----------------------------------------------------------------------------
 PopulationKnowledgeOrder::PopulationKnowledgeOrder( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver,
                                                     kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller )
-     : PopulationKnowledge( parameter, 0, controller )
+     : PopulationKnowledge( parameter, controller )
      , converter_  ( converter )
      , owner_      ( owner )
-     , optional_   ( IsOptional( xis ) )
      , pPopulation_( 0 )
 {
-    if( !optional_ )
+    if( xis.has_attribute( "value" ) )
     {
         pPopulation_ = resolver.FindPopulation( xis.attribute< unsigned long >( "value" ) );
         if( !pPopulation_ )
@@ -54,14 +45,30 @@ PopulationKnowledgeOrder::~PopulationKnowledgeOrder()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledgeOrder::CheckKnowledgeValidity
-// Created: LGY 2011-07-08
+// Name: PopulationKnowledgeOrder::RetrieveId
+// Created: ABR 2011-11-24
 // -----------------------------------------------------------------------------
-bool PopulationKnowledgeOrder::CheckKnowledgeValidity() const
+unsigned long PopulationKnowledgeOrder::RetrieveId() const
 {
-    if( optional_ )
-        return true;
-    return converter_.Find( *pPopulation_, owner_ ) ? true : false;
+    if( pPopulation_ != 0 )
+    {
+        const kernel::PopulationKnowledge_ABC* pKnowledge = converter_.Find( *pPopulation_, owner_ );
+        if( pKnowledge )
+            return pKnowledge->GetEntity()->GetId();
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledgeOrder::Serialize
+// Created: ABR 2011-11-24
+// -----------------------------------------------------------------------------
+void PopulationKnowledgeOrder::Serialize( xml::xostream& xos ) const
+{
+    PopulationKnowledge::Serialize( xos );
+    unsigned long id = RetrieveId();
+    if( id != 0 )
+        xos << xml::attribute( "value", id );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,18 +77,10 @@ bool PopulationKnowledgeOrder::CheckKnowledgeValidity() const
 // -----------------------------------------------------------------------------
 void PopulationKnowledgeOrder::CommitTo( sword::MissionParameter& message ) const
 {
-    if( optional_ )
-        message.set_null_value( true );
-    else
-    {
-        const kernel::PopulationKnowledge_ABC* pKnowledge = converter_.Find( *pPopulation_, owner_ );
-        if( pKnowledge )
-        {
-            message.set_null_value( false );
-            sword::CrowdKnowledgeId& id = *message.mutable_value()->Add()->mutable_crowdknowledge();
-            id.set_id( pKnowledge->GetEntity()->GetId() );
-        }
-    }
+    unsigned long id = RetrieveId();
+    message.set_null_value( id == 0 );
+    if( id != 0 )
+        message.mutable_value()->Add()->mutable_crowdknowledge()->set_id( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,12 +89,20 @@ void PopulationKnowledgeOrder::CommitTo( sword::MissionParameter& message ) cons
 // -----------------------------------------------------------------------------
 void PopulationKnowledgeOrder::CommitTo( sword::MissionParameter_Value& message ) const
 {
-    if( !optional_ )
-    {
-        const kernel::PopulationKnowledge_ABC* pKnowledge = converter_.Find( *pPopulation_, owner_ );
-        if( pKnowledge )
-            message.mutable_crowdknowledge()->set_id( pKnowledge->GetEntity()->GetId() );
-    }
+    unsigned long id = RetrieveId();
+    if( id != 0 )
+        message.mutable_crowdknowledge()->set_id( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledgeOrder::CheckKnowledgeValidity
+// Created: LGY 2011-07-08
+// -----------------------------------------------------------------------------
+bool PopulationKnowledgeOrder::CheckKnowledgeValidity() const
+{
+    if( pPopulation_ == 0 )
+        return true;
+    return converter_.Find( *pPopulation_, owner_ ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -104,5 +111,5 @@ void PopulationKnowledgeOrder::CommitTo( sword::MissionParameter_Value& message 
 // -----------------------------------------------------------------------------
 bool PopulationKnowledgeOrder::IsSet() const
 {
-    return CheckKnowledgeValidity();
+    return RetrieveId() != 0;
 }

@@ -45,7 +45,7 @@ public:
     //! @name Operations
     //@{
     virtual QWidget* BuildInterface( QWidget* parent );
-    virtual bool CheckValidity();
+    virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
@@ -61,7 +61,6 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual bool IsOptional() const;
     void Move( Q3ListView* from, Q3ListView* to );
     //@}
 

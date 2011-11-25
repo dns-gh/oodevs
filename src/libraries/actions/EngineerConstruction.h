@@ -41,6 +41,7 @@ class EngineerConstruction : public Parameter< std::string >
     public:
     //! @name Constructors/Destructor
     //@{
+             EngineerConstruction( const kernel::OrderParameter& parameter );
              EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::ObjectType& type );
              EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, const sword::PlannedWork& message, kernel::Controller& controller );
              EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller );
@@ -50,7 +51,6 @@ class EngineerConstruction : public Parameter< std::string >
 
     //! @name Operations
     //@{
-
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
@@ -65,12 +65,6 @@ class EngineerConstruction : public Parameter< std::string >
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    EngineerConstruction( const EngineerConstruction& );            //!< Copy constructor
-    EngineerConstruction& operator=( const EngineerConstruction& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller );
@@ -82,11 +76,11 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::ObjectType& type_;
+    const kernel::ObjectType* type_;
     //@}
-
 };
 
-} }
+}
+}
 
 #endif // __ActionParameter_EngineerConstruction_h_

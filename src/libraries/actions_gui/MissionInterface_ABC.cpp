@@ -22,16 +22,23 @@ namespace
 {
     Q3VBox* CreateTab( QTabWidget* parent, const QString& title, bool enabled = true )
     {
-        Q3ScrollView* sc = new Q3ScrollView( parent );
-        sc->setResizePolicy( Q3ScrollView::AutoOneFit );
-        sc->setFrameStyle( Q3Frame::NoFrame );
-        Q3VBox* tab = new Q3VBox( sc );
+        // Scroll
+        QScrollArea* scrollArea = new QScrollArea( parent );
+        scrollArea->setFrameStyle( QFrame::Box | QFrame::Sunken );
+        scrollArea->setWidgetResizable( true );
+        // Box
+        QWidget* box = new QWidget( parent );
+        QVBoxLayout* layout = new QVBoxLayout( box );
+        // Tab
+        Q3VBox* tab = new Q3VBox( parent );
         tab->setMargin( 5 );
         tab->setSpacing( 5 );
-        sc->addChild( tab );
-        tab->layout()->setAlignment( Qt::AlignTop );
-        parent->addTab( sc, title );
-        parent->setTabEnabled( sc, enabled );
+        // Parent
+        scrollArea->setWidget( box );
+        parent->addTab( scrollArea, title );
+        parent->setTabEnabled( scrollArea, enabled );
+        layout->addWidget( tab );
+        layout->addStretch( 10 );
         return tab;
     }
 }
@@ -46,7 +53,7 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
     , controller_( controller )
     , entity_    ( entity )
 {
-    setMinimumSize( 280, 250 ); // $$$$ SBO 2007-04-27:
+    setMinimumSize( 280, 250 );
     CreateTitle( title_ );
     tabs_ = new QTabWidget( this );
     mainTab_ = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Mandatory" ) );

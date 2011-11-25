@@ -57,5 +57,6 @@ void AutomatMission::Publish( Publisher_ABC& publisher, int ) const
     message().mutable_tasker()->set_id( GetEntity().GetId());
     message().mutable_type()->set_id( GetType().GetId());
     CommitTo( *message().mutable_parameters() );
+    std::string tmp = message().DebugString();
     message.Send( publisher );
 }

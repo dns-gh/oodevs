@@ -46,12 +46,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MedicalPriorities( const MedicalPriorities& );            //!< Copy constructor
-    MedicalPriorities& operator=( const MedicalPriorities& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
@@ -70,7 +64,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterMedicalPriorities_h_

@@ -17,12 +17,23 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Bool constructor
+// Created: ABR 2011-11-16
+// -----------------------------------------------------------------------------
+Bool::Bool( const kernel::OrderParameter& parameter )
+    : Parameter< bool >( parameter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Bool constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 Bool::Bool( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< bool >( parameter, xis.attribute< bool >( "value" ) )
+    : Parameter< bool >( parameter )
 {
-    // NOTHING
+    if( xis.has_attribute( "value" ) )
+        SetValue( xis.attribute< bool >( "value" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +62,8 @@ Bool::~Bool()
 void Bool::Serialize( xml::xostream& xos ) const
 {
     Parameter< bool >::Serialize( xos );
-    xos << xml::attribute( "value", GetValue() );
+    if( IsSet() )
+        xos << xml::attribute( "value", GetValue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +72,7 @@ void Bool::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Bool::CommitTo( sword::MissionParameter& message ) const
 {
-    message.set_null_value ( !IsSet() );
+    message.set_null_value( !IsSet() );
     if( IsSet() )
        message.mutable_value()->Add()->set_booleanvalue( GetValue() );
 }

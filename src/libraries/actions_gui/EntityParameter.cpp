@@ -18,9 +18,9 @@ using namespace actions::gui;
 // Name: EntityParameterBase constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-EntityParameterBase::EntityParameterBase( QObject* parent, const QString& name )
+EntityParameterBase::EntityParameterBase( QObject* parent, const QString& name, bool optional )
     : QObject( parent )
-    , Param_ABC( name )
+    , Param_ABC( name, optional )
 {
     // NOTHING
 }
@@ -40,15 +40,13 @@ EntityParameterBase::~EntityParameterBase()
 // -----------------------------------------------------------------------------
 QWidget* EntityParameterBase::BuildInterface( QWidget* parent )
 {
-    Q3HBox* box = new Q3HBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new ::gui::RichLabel( GetName(), false, box );
-    entityLabel_ = new QLabel( "---", box );
+    Param_ABC::BuildInterface( parent );
+    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    entityLabel_ = new QLabel( "---", parent );
+    layout->addWidget( entityLabel_ );
     entityLabel_->setMinimumWidth( 100 );
-    entityLabel_->setAlignment( Qt::AlignCenter );
-    entityLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
-    box->setStretchFactor( entityLabel_, 1 );
-    return box;
+    entityLabel_->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -57,8 +55,7 @@ QWidget* EntityParameterBase::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void EntityParameterBase::Show()
 {
-    pLabel_->show();
-    entityLabel_->show();
+    group_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -67,18 +64,7 @@ void EntityParameterBase::Show()
 // -----------------------------------------------------------------------------
 void EntityParameterBase::Hide()
 {
-    pLabel_->hide();
-    entityLabel_->hide();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityParameterBase::Invalid
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-bool EntityParameterBase::Invalid()
-{
-    pLabel_->Warn( 3000 );
-    return false;
+    group_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -106,6 +92,6 @@ void EntityParameterBase::Display( const QString& what )
 // -----------------------------------------------------------------------------
 void EntityParameterBase::SetLabel( const QString& label )
 {
-    if( pLabel_ )
-        pLabel_->setText( label );
+    if( group_ )
+        group_->setTitle( label );
 }

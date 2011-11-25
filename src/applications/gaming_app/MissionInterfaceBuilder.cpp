@@ -31,8 +31,6 @@
 #include "actions_gui/ParamLocationComposite.h"
 #include "actions_gui/ParamLocationCompositeList.h"
 #include "actions_gui/ParamLocationList.h"
-#include "actions_gui/ParamMissionObjective.h"
-#include "actions_gui/ParamMissionObjectiveList.h"
 #include "actions_gui/ParamNumericField.h"
 #include "actions_gui/ParamNumericList.h"
 #include "actions_gui/ParamObstacle.h"
@@ -88,8 +86,6 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     builderFunctors_["automatlist"]         = &MissionInterfaceBuilder::BuildAutomatList;
     builderFunctors_["plannedwork"]         = &MissionInterfaceBuilder::BuildGenObject;
     builderFunctors_["plannedworklist"]     = &MissionInterfaceBuilder::BuildGenObjectList;
-    builderFunctors_["objective"]           = &MissionInterfaceBuilder::BuildMissionObjective;
-    builderFunctors_["objectivelist"]       = &MissionInterfaceBuilder::BuildMissionObjectiveList;
     builderFunctors_["resourcetype"]        = &MissionInterfaceBuilder::BuildDotation;
     builderFunctors_["natureatlas"]         = &MissionInterfaceBuilder::BuildAtlasNature;
 
@@ -399,7 +395,7 @@ actions::gui::Param_ABC& MissionInterfaceBuilder::BuildLocation( const OrderPara
 // -----------------------------------------------------------------------------
 actions::gui::Param_ABC& MissionInterfaceBuilder::BuildLocationComposite( const kernel::OrderParameter& parameter ) const
 {
-    return *new actions::gui::ParamLocationComposite( parameter, *this );
+    return *new actions::gui::ParamLocationComposite( parameter, converter_, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -408,7 +404,7 @@ actions::gui::Param_ABC& MissionInterfaceBuilder::BuildLocationComposite( const 
 // -----------------------------------------------------------------------------
 actions::gui::Param_ABC& MissionInterfaceBuilder::BuildLocationCompositeList( const kernel::OrderParameter& parameter ) const
 {
-    return *new actions::gui::ParamLocationCompositeList( missionInterface_, parameter, *this, controllers_.actions_ );
+    return *new actions::gui::ParamLocationCompositeList( missionInterface_, parameter, converter_, *this, controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -436,24 +432,6 @@ actions::gui::Param_ABC& MissionInterfaceBuilder::BuildGenObject( const OrderPar
 actions::gui::Param_ABC& MissionInterfaceBuilder::BuildGenObjectList( const OrderParameter& parameter ) const
 {
     return *new actions::gui::ParamObstacleList( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_, controllers_.actions_, controllers_.controller_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::BuildMissionObjective
-// Created: SBO 2007-05-14
-// -----------------------------------------------------------------------------
-actions::gui::Param_ABC& MissionInterfaceBuilder::BuildMissionObjective( const kernel::OrderParameter& parameter ) const
-{
-    return *new actions::gui::ParamMissionObjective( parameter, layer_, simulation_.GetDateTime(), converter_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::BuildMissionObjectiveList
-// Created: SBO 2007-05-14
-// -----------------------------------------------------------------------------
-actions::gui::Param_ABC& MissionInterfaceBuilder::BuildMissionObjectiveList( const kernel::OrderParameter& parameter ) const
-{
-    return *new actions::gui::ParamMissionObjectiveList( missionInterface_, parameter, layer_, simulation_.GetDateTime(), converter_, controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------

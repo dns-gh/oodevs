@@ -27,7 +27,7 @@ using namespace actions;
 Parameter_ABC::Parameter_ABC( const QString& name )
     : name_    ( name )
     , position_()
-    , isSet_   ( true )
+    , isSet_   ( false )
 {
     // NOTHING
 }
@@ -231,4 +231,13 @@ void Parameter_ABC::CommitTo( sword::MissionParameter_Value& /*message*/ ) const
 bool Parameter_ABC::CheckKnowledgeValidity() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parameter_ABC::RetrieveKnowledgeIfPossible
+// Created: ABR 2011-11-24
+// -----------------------------------------------------------------------------
+void Parameter_ABC::RetrieveKnowledgeIfPossible()
+{
+    // Nothing
 }

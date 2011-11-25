@@ -13,7 +13,6 @@
 #include "Lima.h"
 #include "LimaList.h"
 #include "EngineerConstruction.h"
-#include "Objective.h"
 #include "Direction.h"
 #include "Location.h"
 #include "Point.h"
@@ -94,16 +93,8 @@ ActionParameterFactory::~ActionParameterFactory()
 // -----------------------------------------------------------------------------
 Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const sword::MissionParameter& message, const kernel::Entity_ABC& entity ) const
 {
-    // $$$$ SBO 2007-10-11: we should create a parameter of the real type in order to be able (later) to edit parameters
-    if( message.null_value() || message.value_size() == 0 )
-    {
-        if( parameter.IsList() )
-            return new parameters::ParameterList( parameter );
-        else
-            return new parameters::String( parameter, "0" );
-    }
-    else if( ( !parameter.IsList() && message.value_size() == 1 ) )
-        return CreateParameter( parameter, message.value().Get( 0 ), entity );
+    if( ( !parameter.IsList() && message.value_size() == 1 ) )
+        return CreateParameter( parameter, message.value().Get( 0 ), entity, message.null_value() );
     else
         return new parameters::ParameterList( parameter, message.value(), *this, entity );
 }
@@ -112,83 +103,83 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
 // Name: ActionParameterFactory::CreateParameter
 // Created: MGD 2010-11-09
 // -----------------------------------------------------------------------------
-Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const sword::MissionParameter_Value& message, const kernel::Entity_ABC& entity ) const
+Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const sword::MissionParameter_Value& message, const kernel::Entity_ABC& entity, bool nullValue /*= false*/ ) const
 {
     if( message.has_booleanvalue() )
-        return new parameters::Bool( parameter, message.booleanvalue() != 0 );
+        return ( nullValue ) ? new parameters::Bool( parameter )                            : new parameters::Bool( parameter, message.booleanvalue() != 0 );
     if( message.has_acharstr() )
-        return new parameters::String( parameter, message.acharstr().c_str() );
+        return ( nullValue ) ? new parameters::String( parameter )                          : new parameters::String( parameter, message.acharstr().c_str() );
     if( message.has_agent() )
-        return new parameters::Agent( parameter, message.agent().id(), entities_, controller_ );
+        return ( nullValue ) ? new parameters::Agent( parameter, controller_ )              : new parameters::Agent( parameter, message.agent().id(), entities_, controller_ );
     if( message.has_areal() )
-        return new parameters::Numeric( parameter, message.areal() );
+        return ( nullValue ) ? new parameters::Numeric( parameter )                         : new parameters::Numeric( parameter, message.areal() );
     if( message.has_intvalue() )
-        return new parameters::Numeric( parameter, static_cast< float >( message.intvalue() ) );
+        return ( nullValue ) ? new parameters::Numeric( parameter )                         : new parameters::Numeric( parameter, static_cast< float >( message.intvalue() ) );
     if( message.has_automat() )
-        return new parameters::Automat( parameter, message.automat().id(), entities_, controller_ );
+        return ( nullValue ) ? new parameters::Automat( parameter, controller_ )            : new parameters::Automat( parameter, message.automat().id(), entities_, controller_ );
     if( message.has_heading() )
-        return new parameters::Direction( parameter, message.heading().heading() );
+        return ( nullValue ) ? new parameters::Direction( parameter )                       : new parameters::Direction( parameter, message.heading().heading() );
     if( message.has_enumeration() )
-        return new parameters::Enumeration( parameter, message.enumeration() );
+        return ( nullValue ) ? new parameters::Enumeration( parameter )                     : new parameters::Enumeration( parameter, message.enumeration() );
     if( message.has_path() )
-        return new parameters::Path( parameter, converter_, message.path().location() );
+        return ( nullValue ) ? new parameters::Path( parameter, converter_ )                : new parameters::Path( parameter, converter_, message.path().location() );
     if( message.has_agentknowledge() )
-        return new parameters::AgentKnowledge( parameter, message.agentknowledge().id(), agentKnowledgeConverter_, entity, controller_, entities_ );
+        return ( nullValue ) ? new parameters::AgentKnowledge( parameter, controller_ )     : new parameters::AgentKnowledge( parameter, message.agentknowledge().id(), agentKnowledgeConverter_, entity, controller_, entities_ );
     if( message.has_objectknowledge() )
-        return new parameters::ObjectKnowledge( parameter, message.objectknowledge().id(), objectKnowledgeConverter_, entity, controller_, entities_ );
+        return ( nullValue ) ? new parameters::ObjectKnowledge( parameter, controller_ )    : new parameters::ObjectKnowledge( parameter, message.objectknowledge().id(), objectKnowledgeConverter_, entity, controller_, entities_ );
     if( message.has_crowdknowledge() )
-        return new parameters::PopulationKnowledge( parameter, message.crowdknowledge().id(), agentKnowledgeConverter_, entity, controller_, entities_ );
+        return ( nullValue ) ? new parameters::PopulationKnowledge( parameter, controller_ ): new parameters::PopulationKnowledge( parameter, message.crowdknowledge().id(), agentKnowledgeConverter_, entity, controller_, entities_ );
     if( message.has_location() )
-        return new parameters::Location( parameter, converter_, message.location() );
+        return ( nullValue ) ? new parameters::Location( parameter, converter_ )            : new parameters::Location( parameter, converter_, message.location() );
     if( message.has_plannedwork() )
-        return new parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, message.plannedwork(), controller_ );
+        return ( nullValue ) ? new parameters::EngineerConstruction( parameter )            : new parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, message.plannedwork(), controller_ );
     if( message.has_nature() )
-        return new parameters::AtlasNature( parameter, message.nature(), staticModel_.atlasNatures_ );
+        return ( nullValue ) ? new parameters::AtlasNature( parameter )                     : new parameters::AtlasNature( parameter, message.nature(), staticModel_.atlasNatures_ );
     if( message.has_missionobjective() )
-        return new parameters::Objective( parameter, converter_, message.missionobjective() );
+        return 0; // $$$$ ABR 2011-11-22: Unused and unsupported now, need to modify .proto
     if( message.has_point() )
-        return new parameters::Point( parameter, converter_, message.point() );
+        return ( nullValue ) ? new parameters::Point( parameter, converter_ )               : new parameters::Point( parameter, converter_, message.point() );
     if( message.has_area() )
-        return new parameters::Polygon( parameter, converter_, message.area().location() );
+        return ( nullValue ) ? new parameters::Polygon( parameter, converter_ )             : new parameters::Polygon( parameter, converter_, message.area().location() );
     if( message.has_resourcetype() )
-        return new parameters::DotationType( parameter, message.resourcetype().id(), staticModel_.objectTypes_ );
+        return ( nullValue ) ? new parameters::DotationType( parameter )                    : new parameters::DotationType( parameter, message.resourcetype().id(), staticModel_.objectTypes_ );
     if( message.has_equipmenttype() )
         return 0;
     if( message.has_logmaintenancepriorities() )
-        return new parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, message.logmaintenancepriorities() );
+        return ( nullValue ) ? new parameters::MaintenancePriorities( parameter )           : new parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, message.logmaintenancepriorities() );
     if( message.has_logmedicalpriorities() )
-        return new parameters::MedicalPriorities( parameter, message.logmedicalpriorities() );
+        return ( nullValue ) ? new parameters::MedicalPriorities( parameter )               : new parameters::MedicalPriorities( parameter, message.logmedicalpriorities() );
     if( message.has_indirectfire() ) // $$$$ SBO 2007-05-21: reports only, not to be used!
         return 0;
     if( message.has_limit() )
-        return new parameters::Limit( parameter, converter_, message.limit() );
+        return ( nullValue ) ? new parameters::Limit( parameter, converter_ )               : new parameters::Limit( parameter, converter_, message.limit() );
     if( message.has_phaseline() )
     {
         if( message.phaseline().elem_size() > 1 )
-            return new parameters::LimaList( parameter, converter_, message.phaseline() );
+            return ( nullValue ) ? new parameters::LimaList( parameter )                    : new parameters::LimaList( parameter, converter_, message.phaseline() );
         else if( message.phaseline().elem_size() == 1 )
-            return new parameters::Lima( parameter, converter_, message.phaseline().elem(0) );
+            return ( nullValue ) ? new parameters::Lima( parameter )                        : new parameters::Lima( parameter, converter_, message.phaseline().elem(0) );
     }
     if( message.has_datetime() )
-        return new parameters::DateTime( parameter, message.datetime() );
+        return ( nullValue ) ? new parameters::DateTime( parameter )                        : new parameters::DateTime( parameter, message.datetime() );
     if( message.has_urbanknowledge() )  // $$$$ _RC_ LGY 2011-02-24: urban block id
-        return new parameters::UrbanBlock( parameter, message.urbanknowledge().id(), entities_, controller_ );
+        return ( nullValue ) ? new parameters::UrbanBlock( parameter, controller_ )         : new parameters::UrbanBlock( parameter, message.urbanknowledge().id(), entities_, controller_ );
     if( message.has_party() )
-        return new parameters::Army( parameter, message.party().id(), entities_, controller_ );
+        return ( nullValue ) ? new parameters::Army( parameter, controller_ )               : new parameters::Army( parameter, message.party().id(), entities_, controller_ );
     if( message.has_formation() )
-        return new parameters::Formation( parameter, message.formation().id(), entities_, controller_ );
+        return ( nullValue ) ? new parameters::Formation( parameter, controller_ )          : new parameters::Formation( parameter, message.formation().id(), entities_, controller_ );
     if( message.has_quantity() )
-        return new parameters::Quantity( parameter, message.quantity() );
+        return ( nullValue ) ? new parameters::Quantity( parameter )                        : new parameters::Quantity( parameter, message.quantity() );
     if( message.has_identifier() )
-        return new parameters::Identifier( parameter, message.identifier() );
+        return ( nullValue ) ? new parameters::Identifier( parameter )                      : new parameters::Identifier( parameter, message.identifier() );
     if( message.has_knowledgegroup() )
-        return new parameters::KnowledgeGroup( parameter, message.knowledgegroup().id(), entities_, controller_ );
+        return ( nullValue ) ? new parameters::KnowledgeGroup( parameter, controller_ )     : new parameters::KnowledgeGroup( parameter, message.knowledgegroup().id(), entities_, controller_ );
     if( message.has_resourcenetwork() )
-        return new parameters::ResourceNetwork( parameter, message.resourcenetwork(), entities_, controller_ );
+        return ( nullValue ) ? new parameters::ResourceNetwork( parameter, controller_ )    : new parameters::ResourceNetwork( parameter, message.resourcenetwork(), entities_, controller_ );
     if( message.list_size() )
         return new parameters::ParameterList( parameter );
     if( message.has_extensionlist() )
-        return new parameters::ExtensionList( parameter, message.extensionlist() );
+        return ( nullValue ) ? new parameters::ExtensionList( parameter )                   : new parameters::ExtensionList( parameter, message.extensionlist() );
     if( message.has_push_flow_parameters() )
         return new parameters::PushFlowParameters( parameter, converter_ );
     if( message.has_pull_flow_parameters() )
@@ -312,8 +303,6 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
     else if( type == "natureatlas" )
         param.reset( new parameters::AtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );
-    else if( type == "objective" )
-        param.reset( new parameters::Objective( parameter, xis, converter_ ) );
     else if( type == "medicalpriorities" )
         param.reset( new parameters::MedicalPriorities( parameter, xis ) );
     else if( type == "maintenancepriorities" )

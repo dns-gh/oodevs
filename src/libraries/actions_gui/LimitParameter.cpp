@@ -27,15 +27,16 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 LimitParameter::LimitParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller )
     : QObject    ( parent )
-    , Param_ABC  ( ENT_Tr::ConvertFromActionParameter( ENT_Tr::ConvertToActionParameter( parameter.GetName().c_str() ), ENT_Tr_ABC::eToTr ).c_str() )
+    , Param_ABC  ( ENT_Tr::ConvertFromActionParameter( ENT_Tr::ConvertToActionParameter( parameter.GetName().c_str() ), ENT_Tr_ABC::eToTr ).c_str(), parameter.IsOptional() )
     , controller_( controller )
     , parameter_ ( parameter )
     , converter_ ( converter )
-    , pLabel_    ( 0 )
     , potential_ ( 0 )
     , selected_  ( 0 )
 {
     controller_.Register( *this );
+    if( name_.isEmpty() )
+        name_ = parameter_.GetName().c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,29 +54,22 @@ LimitParameter::~LimitParameter()
 // -----------------------------------------------------------------------------
 QWidget* LimitParameter::BuildInterface( QWidget* parent )
 {
-    Q3HBox* box = new Q3HBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new ::gui::RichLabel( GetName(), false, box );
-    entityLabel_ = new QLabel( "---", box );
+    Param_ABC::BuildInterface( parent );
+    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    entityLabel_ = new QLabel( "---", parent );
     entityLabel_->setMinimumWidth( 100 );
     entityLabel_->setAlignment( Qt::AlignCenter );
-    entityLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
-    box->setStretchFactor( entityLabel_, 1 );
-    return box;
+    layout->addWidget( entityLabel_ );
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: LimitParameter::CheckValidity
+// Name: LimitParameter::InternalCheckValidity
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-bool LimitParameter::CheckValidity()
+bool LimitParameter::InternalCheckValidity() const
 {
-    if( ! parameter_.IsOptional() && !selected_ )
-    {
-        pLabel_->Warn( 3000 );
-        return false;
-    }
-    return true;
+    return selected_ != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -101,6 +95,8 @@ void LimitParameter::MenuItemValidated()
 {
     selected_ = potential_;
     Display( selected_ ? selected_->GetName() : "---" ); // $$$$ AGE 2006-03-14: use a displayer
+    if( group_ && IsOptional() )
+        group_->setChecked( selected_ != 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,21 +172,17 @@ namespace
 // -----------------------------------------------------------------------------
 void LimitParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
-    kernel::Lines lines;
-    if( selected_ )
+    if( IsChecked() && selected_ )
     {
-        GeometrySerializer serializer( lines, converter_ );
-        selected_->Get< kernel::Positions >().Accept( serializer );
+        kernel::Lines lines;
+        if( selected_ )
+        {
+            GeometrySerializer serializer( lines, converter_ );
+            selected_->Get< kernel::Positions >().Accept( serializer );
+        }
+        std::auto_ptr< actions::parameters::Limit > param( new actions::parameters::Limit( parameter_, converter_, lines ) );
+        parameter.AddParameter( *param.release() );
     }
-    std::auto_ptr< actions::parameters::Limit > param( new actions::parameters::Limit( parameter_, converter_, lines ) );
-    parameter.AddParameter( *param.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitParameter::IsOptional
-// Created: SBO 2008-03-06
-// -----------------------------------------------------------------------------
-bool LimitParameter::IsOptional() const
-{
-    return parameter_.IsOptional();
+    else
+        parameter.AddParameter( *new actions::parameters::Limit( parameter_, converter_ ) );
 }

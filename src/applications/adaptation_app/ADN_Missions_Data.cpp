@@ -652,17 +652,17 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
     // MGD 2010-10-03 : Hack to hide context @TODO remove with context deletion
     xml::xistringstream unitContextFlow(
         "<context>"
-        "   <parameter dia-name='dangerDirection_' name='direction dangereuse' optional='false' type='Heading'/>"
-        "   <parameter dia-name='phaseLines_' max-occurs='unbounded' min-occurs='1' name='Limas' optional='true' type='PhaseLine'/>"
-        "   <parameter dia-name='boundaryLimit1_' name='Limit 1' optional='true' type='Limit'/>"
-        "   <parameter dia-name='boundaryLimit2_' name='Limit 2' optional='true' type='Limit'/>"
+        "  <parameter dia-name='dangerDirection_' name='Direction dangereuse' optional='false' type='Heading'/>"
+        "  <parameter dia-name='phaseLines_' max-occurs='unbounded' min-occurs='1' name='Limas' optional='true' type='PhaseLine'/>"
+        "  <parameter dia-name='boundaryLimit1_' name='Limit 1' optional='true' type='Limit'/>"
+        "  <parameter dia-name='boundaryLimit2_' name='Limit 2' optional='true' type='Limit'/>"
         "</context>" );
     xml::xistringstream automatContextFlow(
         "<context>"
-        "<parameter dia-name='dangerDirection_' name='direction dangereuse' optional='false' type='Heading'/>"
-        "<parameter dia-name='phaseLines_' max-occurs='unbounded' min-occurs='1' name='Limas' optional='true' type='PhaseLine'/>"
-        "<parameter dia-name='boundaryLimit1_' name='Limit 1' optional='false' type='Limit'/>"
-        "<parameter dia-name='boundaryLimit2_' name='Limit 2' optional='false' type='Limit'/>"
+        "  <parameter dia-name='dangerDirection_' name='Direction dangereuse' optional='false' type='Heading'/>"
+        "  <parameter dia-name='phaseLines_' max-occurs='unbounded' min-occurs='1' name='Limas' optional='true' type='PhaseLine'/>"
+        "  <parameter dia-name='boundaryLimit1_' name='Limit 1' optional='false' type='Limit'/>"
+        "  <parameter dia-name='boundaryLimit2_' name='Limit 2' optional='false' type='Limit'/>"
         "</context>" );
     xml::xistringstream crowContextFlow( "<context></context>" );
     ReadContext( unitContextFlow, unitContext_ );
@@ -728,7 +728,6 @@ void ADN_Missions_Data::ReadContextParameter( xml::xistream& input, T_MissionPar
     spNew->ReadArchive( input );
     context.AddItem( spNew.release() );
 }
-
 
 namespace
 {

@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual QWidget* BuildInterface( QWidget* parent );
-    virtual bool CheckValidity();
+    virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
@@ -49,12 +49,6 @@ private slots:
     //! @name Slots
     //@{
     void OnChanged( const QDateTime& );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual bool IsOptional() const;
     //@}
 
 private:

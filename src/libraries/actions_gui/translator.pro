@@ -11,7 +11,6 @@ ParamHumanWoundList.cpp \
 ParamLimaList.cpp \
 ParamLocationCompositeList.cpp \
 ParamLocationList.cpp \
-ParamMissionObjective.cpp \
 ParamMissionObjectiveList.cpp \
 ParamNumericList.cpp \
 ParamObjectKnowledgeList.cpp \

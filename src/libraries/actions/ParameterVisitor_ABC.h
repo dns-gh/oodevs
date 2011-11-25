@@ -15,7 +15,6 @@ namespace actions
     namespace parameters {
         class Numeric;
         class EngineerConstruction;
-        class Objective;
         class Lima;
         class Location;
         class Path;
@@ -54,7 +53,6 @@ public:
     //@{
     virtual void Visit( const parameters::Numeric&             ) {}
     virtual void Visit( const parameters::EngineerConstruction&) {}
-    virtual void Visit( const parameters::Objective&           ) {}
     virtual void Visit( const parameters::Lima&                ) {}
     virtual void Visit( const parameters::Path&                ) {}
     virtual void Visit( const parameters::PathPoint&           ) {}

@@ -22,6 +22,17 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Path constructor
+// Created: ABR 2011-11-16
+// -----------------------------------------------------------------------------
+Path::Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
+    : Parameter< QString >( parameter )
+    , converter_( converter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 Path::Path( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )

@@ -18,6 +18,16 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Identifier constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+Identifier::Identifier( const kernel::OrderParameter& parameter )
+    : Parameter< unsigned int >( parameter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Identifier constructor
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
 Identifier::Identifier( const kernel::OrderParameter& parameter, unsigned int value )
@@ -31,9 +41,10 @@ Identifier::Identifier( const kernel::OrderParameter& parameter, unsigned int va
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
 Identifier::Identifier( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< unsigned int >( parameter, xis.attribute< unsigned int >( "value" ) )
+    : Parameter< unsigned int >( parameter )
 {
-    // NOTHING
+    if( xis.has_attribute( "value" ) )
+        SetValue( xis.attribute< unsigned int >( "value" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +101,8 @@ void Identifier::Accept( ParameterVisitor_ABC& visitor ) const
 void Identifier::Serialize( xml::xostream& xos ) const
 {
     Parameter< unsigned int >::Serialize( xos );
-    xos << xml::attribute( "value", GetValue() );
+    if( IsSet() )
+        xos << xml::attribute( "value", GetValue() );
 }
 
 // -----------------------------------------------------------------------------

@@ -40,5 +40,5 @@ ParamPolygon::~ParamPolygon()
 // -----------------------------------------------------------------------------
 void ParamPolygon::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    Commit< actions::parameters::Polygon, kernel::Polygon >( action );
+    Commit< actions::parameters::Polygon >( action );
 }

@@ -33,6 +33,7 @@ class DateTime : public Parameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
+             DateTime( const kernel::OrderParameter& parameter );
              DateTime( const kernel::OrderParameter& parameter, xml::xistream& xis );
              DateTime( const kernel::OrderParameter& parameter, const sword::DateTime& date );
              DateTime( const kernel::OrderParameter& parameter, const QDateTime& date );
@@ -48,12 +49,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DateTime( const DateTime& );            //!< Copy constructor
-    DateTime& operator=( const DateTime& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;

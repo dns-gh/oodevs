@@ -45,6 +45,7 @@ class LocationBase : public kernel::LocationVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit LocationBase( const kernel::CoordinateConverter_ABC& converter );
              LocationBase( const kernel::CoordinateConverter_ABC& converter, const sword::Location& message );
              LocationBase( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              LocationBase( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
@@ -71,12 +72,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LocationBase( const LocationBase& );            //!< Copy constructor
-    LocationBase& operator=( const LocationBase& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void ReadPoint( xml::xistream& xis );
@@ -97,11 +92,10 @@ private:
     E_LocationType type_;
     T_PointVector points_;
     geometry::Rectangle2f boundingBox_;
-    bool valid_;
     //@}
 };
 
-    }
+}
 }
 
 #endif // __LocationBase_h_

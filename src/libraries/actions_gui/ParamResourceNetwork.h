@@ -48,8 +48,7 @@ public:
     //@{
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& ) const;
-    virtual void Show();
-    virtual void Hide();
+    virtual bool InternalCheckValidity() const;
     //@}
 
 public slots:
@@ -71,14 +70,12 @@ private:
     kernel::OrderParameter parameter_;
     const kernel::Object_ABC* current_;
     const kernel::Object_ABC* selected_;
-    QLabel* objectLabel_;
     QLabel* objectName_;
-    QLabel* resourceLabel_;
     QLabel* resourceName_;
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ParamResourceNetwork_h_

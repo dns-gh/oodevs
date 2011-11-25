@@ -13,6 +13,7 @@
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/OrderParameter.h"
+#include "clients_gui/RichGroupBox.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -20,6 +21,11 @@ namespace kernel
     class ActionController;
     class GlTools_ABC;
     class Viewport_ABC;
+}
+
+namespace gui
+{
+    class RichGroupBox;
 }
 
 namespace actions
@@ -42,7 +48,7 @@ class Param_ABC : public tools::Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Param_ABC( const QString& name );
+    explicit Param_ABC( const QString& name, bool optional = false );
     virtual ~Param_ABC();
     //@}
 
@@ -52,15 +58,18 @@ public:
     virtual void RegisterIn( kernel::ActionController& controller );
 
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual QWidget* BuildInterface( QWidget* parent ) = 0;
+    virtual QWidget* BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
+    virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& ) const = 0;
     //@}
 
     //! @name Accessors
     //@{
     virtual QString GetName() const;
+    virtual bool IsChecked() const;
     virtual bool IsOptional() const;
+    void SetOptional( bool optional );
     //@}
 
     //! @name Helpers
@@ -74,6 +83,8 @@ protected:
     //! @name Member data
     //@{
     QString name_;
+    ::gui::RichGroupBox* group_;
+    bool optional_;
     //@}
 
 private:

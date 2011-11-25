@@ -32,6 +32,7 @@ class Formation : public Entity< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
+             Formation( const kernel::OrderParameter& parameter, kernel::Controller& controller );
              Formation( const kernel::OrderParameter& parameter, const kernel::Formation_ABC& formation, kernel::Controller& controller );
              Formation( const kernel::OrderParameter& parameter, const int& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
              Formation( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
@@ -50,15 +51,9 @@ private:
     //@{
     virtual std::string SerializeType() const;
     //@}
-
-    //! @name Copy/Assignment
-    //@{
-    Formation( const Formation& );            //!< Copy constructor
-    Formation& operator=( const Formation& ); //!< Assignment operator
-    //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterFormation_h_

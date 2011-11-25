@@ -32,6 +32,7 @@ class DotationType : public Parameter< std::string >
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit DotationType( const kernel::OrderParameter& parameter );
              DotationType( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::DotationType >& resolver );
              DotationType( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& resolver );
     virtual ~DotationType();
@@ -46,12 +47,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DotationType( const DotationType& );            //!< Copy constructor
-    DotationType& operator=( const DotationType& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
@@ -61,10 +56,11 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::DotationType& type_;
+    const kernel::DotationType* type_;
     //@}
 };
-    }
+
+}
 }
 
 #endif // __ActionParameterDotationType_h_
