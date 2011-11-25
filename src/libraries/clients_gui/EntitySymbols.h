@@ -15,7 +15,6 @@
 namespace kernel
 {
     class Entity_ABC;
-    class Intelligence_ABC;
     class Knowledge_ABC;
 }
 

@@ -30,7 +30,6 @@ namespace sword
     class AutomatCreation;
     class AutomatDestruction;
     class AutomatOrder;
-    class AutomatOrderAck;
     class BurningCellRequestAck;
     class ChangeDiplomacy;
     class ChangeDiplomacyAck;
@@ -72,7 +71,6 @@ namespace sword
     class CrowdKnowledgeUpdate;
     class CrowdMagicActionAck;
     class CrowdOrder;
-    class CrowdOrderAck;
     class CrowdUpdate;
     class DebugPoints;
     class DecisionalState;
@@ -86,12 +84,6 @@ namespace sword
     class FragOrder;
     class FragOrderAck;
     class Indicator;
-    class IntelligenceCreation;
-    class IntelligenceCreationRequestAck;
-    class IntelligenceDestruction;
-    class IntelligenceDestructionRequestAck;
-    class IntelligenceUpdate;
-    class IntelligenceUpdateRequestAck;
     class InvalidateReport;
     class KnowledgeGroupCreation;
     class KnowledgeGroupCreationAck;
@@ -188,7 +180,6 @@ namespace sword
     class UnitKnowledgeUpdate;
     class UnitMagicActionAck;
     class UnitOrder;
-    class UnitOrderAck;
     class UnitPathFind;
     class UnitVisionCones;
     class UrbanCreation;
@@ -208,7 +199,6 @@ namespace tools
 
 namespace kernel
 {
-    class Agent_ABC;
     class Logger_ABC;
     class Entity_ABC;
 }
@@ -526,15 +516,14 @@ private:
     //@{
     tools::MessageDispatcher_ABC& dispatcher_;
     tools::MessageSender_ABC& sender_;
-
-    std::string          host_;
-    Model*               model_;
-    Profile*             profile_;
-    Services&            services_;
-    Simulation&          simulation_;
-    kernel::Logger_ABC&  logger_;
-    CommandHandler&      commands_;
-    T_Listeners          listeners_;
+    std::string               host_;
+    Model*                    model_;
+    Profile*                  profile_;
+    Services&                 services_;
+    Simulation&               simulation_;
+    kernel::Logger_ABC&       logger_;
+    CommandHandler&           commands_;
+    T_Listeners               listeners_;
     //@}
 };
 
