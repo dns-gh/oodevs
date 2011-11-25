@@ -17,6 +17,10 @@
 #include <boost/foreach.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
+#pragma warning( push, 1 )
+#pragma warning( disable : 4512 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 
@@ -26,8 +30,23 @@ namespace
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        std::string result = settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
-        return ( result.empty() ) ? "en" : result;
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
+    }
+
+    bool TransformLang( std::string& language )
+    {
+        if( language != "fr" && language != "en" && language != "es" )
+        {
+            language = boost::algorithm::to_lower_copy( language );
+            if( language.find( "fr" ) != std::string::npos )
+                language = "fr";
+            else if( language.find( "es" ) != std::string::npos )
+                language = "es";
+            else
+                language = "en";
+            return true;
+        }
+        return false;
     }
 }
 
@@ -44,6 +63,11 @@ OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previ
     , hasChanged_        ( false )
     , languageHasChanged_( false )
 {
+    if( TransformLang( selectedLanguage_ ) )
+    {
+        hasChanged_ = true;
+        EnableButton( eButtonApply, true );
+    }
     Q3VBox* mainBox = new Q3VBox( this );
     mainBox->setMargin( 10 );
     Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, mainBox );
@@ -233,12 +257,18 @@ void OptionsPage::Commit()
 // -----------------------------------------------------------------------------
 void OptionsPage::Reset()
 {
+    bool enableApplyButton = false;
     selectedLanguage_ = ReadLang();
+    if( TransformLang( selectedLanguage_ ) )
+    {
+        hasChanged_ = true;
+        enableApplyButton = true;
+    }
     selectedDataDir_ = config_.GetRootDir();
 
     assert( languages_.find( selectedLanguage_ ) != languages_.end() );
     languageCombo_->setCurrentText( languages_.find( selectedLanguage_ )->second );
     dataDirectory_->setText( QDir::convertSeparators( selectedDataDir_.c_str() ) );
 
-    EnableButton( eButtonApply, false );
+    EnableButton( eButtonApply, enableApplyButton );
 }
