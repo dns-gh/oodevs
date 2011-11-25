@@ -371,16 +371,15 @@
     </category>
     <category name="Objects tactiques graphiques" id="graphics">
         <description>Objets et obstacles</description>
-        <template code="G*MPOS----****X" name="Abattis" type="polygon">
-            <marker-start unit='%'>
+        <template code="G*MPOS----****X" name="Abattis" type="point">
+            <marker-start>
                 <g stroke='currentColor' stroke-width='4px'>
-                    <line y1='0' y2='0.15' x1='-0.30' x2='-0.15'/>
-                    <line y1='0.15' y2='0' x1='-0.15' x2='0'/>
+                    <line y1="0" y2="150" x1="-300" x2="-150"/>
+                    <line y1="150" y2="0" x1="-150" x2="0"/>
+                    <line y1="0" y2="0" x1="0" x2="300"/>
                 </g>
             </marker-start>
-            <segment>
-                <line stroke='currentColor' stroke-width='4px' x2='1'/>
-            </segment>
+			<segment/>
         </template>
         <template code="G*SPAR----****X" name="Plot de ravitaillement" type="polygon">
             <segment unit="%">
@@ -394,17 +393,19 @@
                 </g>
             </marker>
         </template>
-        <template code="G*GPGAL---****X" name="Zone d'atterrissage" type="polygon">
-            <segment unit="%">
-                <line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
-            </segment>
-            <marker unit="%">
-                <g font-family="Arial" font-size="0.25" fill="currentColor">
-                    <g transform="matrix( 1 0 0 -1 0 0 )">
-                        <text x="-0.1" y="0.1">LZ</text>
+        <template code="G*GPGAL---****X" name="Zone d'atterrissage" type="point">
+            <segment/>
+            <marker-start>
+                <g stroke='currentColor' stroke-width='3px'>
+                    <polygon fill="#ffffff" fill-opacity="0.5" points="0,0 -250,300 -250,1000 250,1000 250,300"/>
+                    <line x1='-250' y1='300' x2='250' y2='300'/>
+                    <g font-family="Arial" font-size="220" fill="currentColor">
+                        <g transform="matrix( 1 0 0 -1 0 0 )">
+                            <text x="-100" y="-800">LZ</text>
+                        </g>
                     </g>
                 </g>
-            </marker>
+            </marker-start>
         </template>
         <template code="G*MPORP---****X" name="Barricade I (planifie)" type="point">
             <marker-start>
@@ -508,21 +509,21 @@
                 </g>
             </marker>
         </template>
-        <template code="G*MPOADU--****X" name="Fosse anti-char (en construction)" type="polygon">
+        <template code="G*MPOADU--****X" name="Fosse anti-char (en construction)" type="line">
             <segment unit="%">
                 <g fill="none" stroke="currentColor" stroke-width="3px">
                     <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
                 </g>
             </segment>
         </template>
-        <template code="G*MPOADC--****X" name="Fosse anti-char (complet)" type="polygon">
+        <template code="G*MPOADC--****X" name="Fosse anti-char (complet)" type="line">
             <segment unit="%">
                 <g fill="currentColor">
                     <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
                 </g>
             </segment>
         </template>
-        <template code="G*MPOAR---****X" name="Fosse anti-char (renforce par des mines)" type="polygon">
+        <template code="G*MPOAR---****X" name="Fosse anti-char (renforce par des mines)" type="line">
             <segment unit="%">
                 <g fill="currentColor">
                     <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
@@ -614,7 +615,7 @@
                 </g>
             </marker-start>
         </template>
-        <template code="G*ROTA*********" name="Site ROTA" type="point">
+        <template code="G*ROTA*********" name="Site ROTA" type="polygon">
             <segment/>
             <marker-start>
                 <g stroke='currentColor' stroke-width='3px'>
@@ -696,14 +697,14 @@
                 </g>
             </segment>
         </template>
-        <template code="G*MPNR----****X" name="Zone NBC" type="polygon">
+        <template code="G*MPNR----****X" name="Zone NBC" type="circle">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
             </segment>
             <marker unit="%">
                 <g font-family="Arial" font-size="0.25" fill="currentColor">
                     <g transform="matrix( 1 0 0 -1 0 0 )">
-                        <text x="-0.15" y="0.1">NBC</text>
+                        <text x="-0.25" y="0.1">NBC</text>
                     </g>
                 </g>
             </marker>
@@ -846,4 +847,4 @@
         </template>
     </category>
 </templates>
-<!-- signature="2648207846" -->
+<!-- signature="2341072829" -->
