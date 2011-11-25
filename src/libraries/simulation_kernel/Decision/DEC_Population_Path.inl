@@ -30,6 +30,26 @@ const DEC_Population_Path::T_PopulationPathChannelerVector& DEC_Population_Path:
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::GetPathKnowledgeObjects
+// Created: CMA 2011-11-24
+// -----------------------------------------------------------------------------
+inline
+const DEC_Population_Path::T_PathKnowledgeObjectByTypesVector& DEC_Population_Path::GetPathKnowledgeObjects() const
+{
+    return pathKnowledgeObjects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::GetCostOutsideOfAllObjects
+// Created: CMA 2011-11-24
+// -----------------------------------------------------------------------------
+inline
+double DEC_Population_Path::GetCostOutsideOfAllObjects() const
+{
+    return rCostOutsideOfAllObjects_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Population_Path::NeedRefine
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------

@@ -171,10 +171,10 @@ bool MIL_Object_ABC::CanInteractWith( const MIL_Agent_ABC& /*agent*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::CanInteractWith
-// Created: NLD 2005-12-10
+// Name: MIL_Object_ABC::CanInteractWithEntity
+// Created: CMA 2011-11-24
 // -----------------------------------------------------------------------------
-bool MIL_Object_ABC::CanInteractWith( const MIL_PopulationElement_ABC& /*population*/ ) const
+bool MIL_Object_ABC::CanInteractWithEntity() const
 {
     return CanCollideWithEntity();
 }

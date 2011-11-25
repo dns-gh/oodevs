@@ -12,12 +12,23 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Population_Path.h"
 #include "DEC_Population_PathClass.h"
+#include "DEC_Path_KnowledgeObject.h"
+#include "DEC_Path_KnowledgeObjectFlood.h"
+#include "DEC_Path_KnowledgeObjectBurnSurface.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
 #include "Decision/DEC_Population_PathSection.h"
 #include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_PathFind_Manager.h"
+#include "Entities/MIL_Army.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/FloodCapacity.h"
+#include "Entities/Objects/BurnSurfaceCapacity.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Scipio_enum.h"
 #include "MIL_AgentServer.h"
 
 //-----------------------------------------------------------------------------
@@ -27,7 +38,8 @@
 DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const MT_Vector2D& start, const MT_Vector2D& destination )
     : pathClass_ ( DEC_Population_PathClass::GetPathClass( "base" ) ) //$$$ n'importe quoi
     , population_( population )
-    , profiler_  ()
+    , rCostOutsideOfAllObjects_( 0. )
+    , profiler_()
 {
     T_PointVector pointsTmp;
     pointsTmp.reserve( 2 );
@@ -43,7 +55,9 @@ DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, cons
 //-----------------------------------------------------------------------------
 DEC_Population_Path::~DEC_Population_Path()
 {
-    // NOTHING
+    for( CIT_PathKnowledgeObjectByTypesVector itTypes = pathKnowledgeObjects_.begin(); itTypes != pathKnowledgeObjects_.end(); ++itTypes )
+        for( CIT_PathKnowledgeObjectVector it = itTypes->begin(); it != itTypes->end(); ++it )
+            delete *it;
 }
 
  // -----------------------------------------------------------------------------
@@ -57,6 +71,7 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
     channelers_.reserve( channelingLocations.size() );
     for( DEC_PopulationKnowledge::CIT_LocationVector itChanLocation = channelingLocations.begin(); itChanLocation != channelingLocations.end(); ++itChanLocation )
         channelers_.push_back( DEC_Population_Path_Channeler( pathClass_, *itChanLocation ) );
+    InitializePathKnowledges( points );
     assert( !points.empty() );
     const MT_Vector2D* pLastPoint = 0;
     for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
@@ -67,6 +82,40 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
             RegisterPathSection( *pSection );
         }
         pLastPoint = &*itPoint;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::InitializePathKnowledges
+// Created: CMA 2011-11-24
+// -----------------------------------------------------------------------------
+void DEC_Population_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
+{
+    // Objects
+    if( pathClass_.AvoidObjects() )
+    {
+        T_KnowledgeObjectVector knowledgesObject;
+        population_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
+        for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
+        {
+            const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
+            if( knowledge.CanCollideWithEntity() )
+            {
+                if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
+                    pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
+                assert( pathKnowledgeObjects_.size() > knowledge.GetType().GetID() );
+
+                T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
+                if( knowledge.GetType().GetCapacity< FloodCapacity >() )
+                    pathKnowledges.push_back( new DEC_Path_KnowledgeObjectFlood( eCrossingHeightNever, knowledge ) );
+                else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
+                    pathKnowledges.push_back( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) );
+                else
+                    pathKnowledges.push_back( new DEC_Path_KnowledgeObject( pathClass_, knowledge ) );
+                if( pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
+                    rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
+            }
+        }
     }
 }
 

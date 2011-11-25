@@ -695,12 +695,30 @@ bool DEC_Knowledge_Object::CanCollideWith( const MIL_Agent_ABC& agent ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::CanCollideWithEntity
+// Created: CMA 2011-11-24
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::CanCollideWithEntity() const
+{
+    return ( !IsReservedObstacle() || IsReservedObstacleActivated() ) && !IsBypassed() && CanInteractWithEntity();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::CanInteractWith
 // Created: LDC 2011-03-30
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Object::CanInteractWith( const MIL_Agent_ABC& agent ) const
 {
     return !pObjectKnown_ || pObjectKnown_->CanInteractWith( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::CanInteractWithEntity
+// Created: CMA 2011-11-24
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::CanInteractWithEntity() const
+{
+    return !pObjectKnown_ || pObjectKnown_->CanInteractWithEntity();
 }
 
 // -----------------------------------------------------------------------------

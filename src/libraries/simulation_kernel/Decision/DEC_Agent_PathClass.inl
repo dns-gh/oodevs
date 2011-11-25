@@ -248,7 +248,7 @@ double DEC_Agent_PathClass::GetPopulationMaximumCost() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathClass::GetPopulationMaximumCost
+// Name: DEC_Agent_PathClass::GetThreshold
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
 inline
@@ -257,3 +257,12 @@ double DEC_Agent_PathClass::GetThreshold() const
     return rObstructionThreshold_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathClass::GetCostOutsideOfPopulation
+// Created: SBO 2006-03-27
+// -----------------------------------------------------------------------------
+inline
+double DEC_Agent_PathClass::GetCostOutsideOfPopulation() const
+{
+    return rCostOutsideOfPopulation_;
+}

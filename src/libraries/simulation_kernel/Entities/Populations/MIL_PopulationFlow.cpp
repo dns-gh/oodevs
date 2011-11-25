@@ -277,7 +277,7 @@ double MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*envir
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::CanObjectInteractWith( const MIL_Object_ABC& object ) const
 {
-    return object.CanInteractWith( *this );
+    return object.CanInteractWithEntity();
 }
 
 // -----------------------------------------------------------------------------

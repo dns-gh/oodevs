@@ -250,7 +250,7 @@ void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
     for( CIT_PopulationSet it = populationInsideSet_.begin(); it != populationInsideSet_.end(); ++it )
     {
         object.PreprocessPopulation( **it );
-        if( object.CanInteractWith( **it ) )
+        if( object.CanInteractWithEntity() )
             object.ProcessPopulationInside( **it );
     }
 

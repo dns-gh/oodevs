@@ -109,7 +109,6 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_Pa
     , bFlying_                           ( xis.attribute< bool >( "flying" ) )
     , rPreferedTerrainCost_              ( 0 )
     , rAvoidedTerrainCost_               ( 0 )
-    , objectCosts_                       ( )
     , rAltitudePreference_               ( 0 )
     , rMaximumFuseauDistance_            ( 1000 )
     , rMaximumFuseauDistanceWithAutomata_( 10000 )
@@ -352,13 +351,4 @@ double DEC_Agent_PathClass::GetPopulationAttitudeCost( const MIL_PopulationAttit
     if( it == populationAttitudeCosts_.end() )
         return 0.0f;
     return it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathClass::GetCostOutsideOfPopulation
-// Created: SBO 2006-03-27
-// -----------------------------------------------------------------------------
-double DEC_Agent_PathClass::GetCostOutsideOfPopulation() const
-{
-    return rCostOutsideOfPopulation_;
 }

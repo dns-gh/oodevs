@@ -1642,6 +1642,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_PathClass.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Network\NET_AsnException.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposantePion.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposanteTypePion.inl" />
