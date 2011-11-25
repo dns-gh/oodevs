@@ -25,7 +25,7 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamHumanWoundList::ParamHumanWoundList( QObject* parent, const kernel::OrderParameter& parameter )
     : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str() )
+    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
     , parameter_( parameter )
     , list_( 0 )
 {
@@ -47,8 +47,10 @@ ParamHumanWoundList::~ParamHumanWoundList()
 // -----------------------------------------------------------------------------
 QWidget* ParamHumanWoundList::BuildInterface( QWidget* parent )
 {
-    Q3HBox* hBox = new Q3HBox( parent );
-    list_ = new Q3ListView( hBox );
+    Param_ABC::BuildInterface( parent );
+    QGridLayout* layout = new QGridLayout( group_ );
+
+    list_ = new Q3ListView( parent );
     list_->addColumn( "", 0 );
     list_->addColumn( "" );
     list_->header()->hide();
@@ -56,17 +58,19 @@ QWidget* ParamHumanWoundList::BuildInterface( QWidget* parent )
     list_->setResizeMode( Q3ListView::LastColumn );
     list_->setAllColumnsShowFocus( true );
 
-    Q3VBox* buttonBox = new Q3VBox( hBox );
-    buttonBox->layout()->setAlignment( Qt::AlignVCenter );
-    QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, buttonBox );
+    QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, parent );
     upBtn->setFixedSize( 32, 32 );
-    QPushButton* downBtn = new QPushButton( MAKE_ICON( arrow_down ), QString::null, buttonBox );
+    QPushButton* downBtn = new QPushButton( MAKE_ICON( arrow_down ), QString::null, parent );
     downBtn->setFixedSize( 32, 32 );
+
+    layout->addWidget( list_, 0, 0, 2, 1 );
+    layout->addWidget( upBtn, 0, 1 );
+    layout->addWidget( downBtn, 1, 1 );
 
     connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
     connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
     connect( list_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnContextMenu( Q3ListViewItem*, const QPoint&, int ) ) );
-    return hBox;
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,8 +80,9 @@ QWidget* ParamHumanWoundList::BuildInterface( QWidget* parent )
 void ParamHumanWoundList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
     std::auto_ptr< actions::parameters::MedicalPriorities > param( new actions::parameters::MedicalPriorities( parameter_ ) );
-    for( Q3ListViewItemIterator it( list_ ); it.current(); ++it )
-        param->AddMedicalPriority( E_HumanWound( it.current()->text( 0 ).toUInt() ) );
+    if( IsChecked() )
+        for( Q3ListViewItemIterator it( list_ ); it.current(); ++it )
+            param->AddMedicalPriority( E_HumanWound( it.current()->text( 0 ).toUInt() ) );
     action.AddParameter( *param.release() );
 }
 
@@ -148,19 +153,10 @@ void ParamHumanWoundList::OnContextMenu( Q3ListViewItem* item, const QPoint& poi
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamHumanWoundList::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamHumanWoundList::IsOptional() const
-{
-    return parameter_.IsOptional();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamHumanWoundList::CheckValidity
+// Name: ParamHumanWoundList::InternalCheckValidity
 // Created: LDC 2009-11-12
 // -----------------------------------------------------------------------------
-bool ParamHumanWoundList::CheckValidity()
+bool ParamHumanWoundList::InternalCheckValidity() const
 {
-    return IsOptional() || (0 != list_->childCount());
+    return list_ && list_->childCount() != 0;
 }

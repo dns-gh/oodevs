@@ -272,7 +272,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Point.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Polygon.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Rectangle.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\LocationDrawer_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LocationProximityComputer.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LocationVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\SimpleLocationDrawer.h" />

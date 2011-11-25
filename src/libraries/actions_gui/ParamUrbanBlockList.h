@@ -46,12 +46,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamUrbanBlockList( const ParamUrbanBlockList& );            //!< Copy constructor
-    ParamUrbanBlockList& operator=( const ParamUrbanBlockList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void AddToMenu( kernel::ContextMenu& menu );

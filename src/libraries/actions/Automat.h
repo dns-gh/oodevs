@@ -53,15 +53,9 @@ private:
     //@{
     virtual std::string SerializeType() const;
     //@}
-
-    //! @name Copy/Assignment
-    //@{
-    Automat( const Automat& );            //!< Copy constructor
-    Automat& operator=( const Automat& ); //!< Assignment operator
-    //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterAutomat_h_

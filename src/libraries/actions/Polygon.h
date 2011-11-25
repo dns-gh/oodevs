@@ -26,6 +26,7 @@ class Polygon : public Location
 public:
     //! @name Constructors/Destructor
     //@{
+             Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
              Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Location& message );
              Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
@@ -44,15 +45,9 @@ private:
     //@{
     virtual std::string SerializeType() const;
     //@}
-
-    //! @name Copy/Assignment
-    //@{
-    Polygon( const Polygon& );            //!< Copy constructor
-    Polygon& operator=( const Polygon& ); //!< Assignment operator
-    //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterPolygon_h_

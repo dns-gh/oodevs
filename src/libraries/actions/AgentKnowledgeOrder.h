@@ -34,6 +34,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Serialize( xml::xostream& xos ) const;
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     virtual bool CheckKnowledgeValidity() const;
@@ -41,11 +42,16 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    unsigned long RetrieveId() const;
+    //@}
+
+private:
     //! @name Member Data
     //@{
     const kernel::AgentKnowledgeConverter_ABC& converter_;
     const kernel::Entity_ABC& owner_;
-    bool optional_;
     const kernel::Agent_ABC* pAgent_;
     //@}
 };

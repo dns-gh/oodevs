@@ -26,14 +26,12 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamResourceNetwork::ParamResourceNetwork( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller )
     : QObject       ( parent )
+    , Param_ABC     ( parameter.GetName().c_str(), parameter.IsOptional() )
     , controller_   ( controller )
-    , Param_ABC     ( parameter.GetName().c_str() )
     , parameter_    ( parameter )
     , current_      ( 0 )
     , selected_     ( 0 )
-    , objectLabel_  ( 0 )
     , objectName_   ( 0 )
-    , resourceLabel_( 0 )
     , resourceName_ ( 0 )
 {
     // NOTHING
@@ -54,18 +52,24 @@ ParamResourceNetwork::~ParamResourceNetwork()
 // -----------------------------------------------------------------------------
 QWidget* ParamResourceNetwork::BuildInterface( QWidget* parent )
 {
-    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, GetName(), parent );
-    objectLabel_ = new ::gui::RichLabel( tools::translate( "ParamResourceNetwork", "Object" ), false, group );
-    objectName_ = new QLabel( "---", group );
+    Param_ABC::BuildInterface( parent );
+    QGridLayout* layout = new QGridLayout( group_ );
+
+    objectName_ = new QLabel( "---", parent );
     objectName_->setMinimumWidth( 100 );
     objectName_->setAlignment( Qt::AlignCenter );
     objectName_->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    resourceLabel_ = new ::gui::RichLabel( tools::translate( "ParamResourceNetwork", "Resource" ), false, group );
-    resourceName_ = new QLabel( "---", group );
+
+    resourceName_ = new QLabel( "---", parent );
     resourceName_->setMinimumWidth( 100 );
     resourceName_->setAlignment( Qt::AlignCenter );
     resourceName_->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    return group;
+
+    layout->addWidget( new ::gui::RichLabel( tools::translate( "ParamResourceNetwork", "Object" ), false, parent ), 0, 0 );
+    layout->addWidget( objectName_, 0, 1 );
+    layout->addWidget( new ::gui::RichLabel( tools::translate( "ParamResourceNetwork", "Resource" ), false, parent ), 1, 0 );
+    layout->addWidget( resourceName_, 1, 1 );
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,8 +78,10 @@ QWidget* ParamResourceNetwork::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamResourceNetwork::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
-    if( selected_ )
+    if( IsChecked() && selected_ )
         parameter.AddParameter( *new actions::parameters::ResourceNetwork( parameter_, *selected_, resourceName_->text().ascii(), controller_ ) );
+    else
+        parameter.AddParameter( *new actions::parameters::ResourceNetwork( parameter_, controller_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,6 +109,8 @@ void ParamResourceNetwork::MenuItemValidated( int index )
         objectName_->setText( "---" );
         resourceName_->setText( "---" );
     }
+    if( group_ && IsOptional() )
+        group_->setChecked( selected_ != 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,25 +141,10 @@ void ParamResourceNetwork::NotifyContextMenu( const kernel::Object_ABC& entity, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamResourceNetwork::Show
-// Created: JSR 2011-05-02
+// Name: ParamResourceNetwork::InternalCheckValidity
+// Created: ABR 2011-11-22
 // -----------------------------------------------------------------------------
-void ParamResourceNetwork::Show()
+bool ParamResourceNetwork::InternalCheckValidity() const
 {
-    objectLabel_->show();
-    objectName_->show();
-    resourceLabel_->show();
-    resourceName_->show();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamResourceNetwork::Hide
-// Created: JSR 2011-05-02
-// -----------------------------------------------------------------------------
-void ParamResourceNetwork::Hide()
-{
-    objectLabel_->hide();
-    objectName_->hide();
-    resourceLabel_->hide();
-    resourceName_->hide();
+    return selected_ != 0;
 }

@@ -19,6 +19,16 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, kernel::Controller& controller )
+    : Entity< KnowledgeGroup_ABC >( parameter, controller )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup constructor
 // Created: JSR 2010-04-19
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
@@ -32,9 +42,10 @@ KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, unsigne
 // Created: JSR 2010-04-19
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< KnowledgeGroup_ABC >( parameter, &resolver.GetKnowledgeGroup( xis.attribute< unsigned long >( "value" ) ), controller )
+    : Entity< KnowledgeGroup_ABC >( parameter, controller )
 {
-    // NOTHING
+    if( xis.has_attribute( "value " ) )
+        SetValue( &resolver.GetKnowledgeGroup( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------

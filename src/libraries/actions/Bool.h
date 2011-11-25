@@ -34,6 +34,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit Bool( const kernel::OrderParameter& parameter );
              Bool( const kernel::OrderParameter& parameter, xml::xistream& xis );
              Bool( const kernel::OrderParameter& parameter, bool value );
     virtual ~Bool();
@@ -47,12 +48,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Bool( const Bool& );            //!< Copy constructor
-    Bool& operator=( const Bool& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;

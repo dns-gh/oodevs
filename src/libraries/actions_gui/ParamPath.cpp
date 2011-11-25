@@ -29,12 +29,11 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamPath::ParamPath( QObject* parent, const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& entity )
     : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str() )
+    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
     , parameter_( parameter )
     , converter_( converter )
     , layer_( layer )
     , entity_( entity )
-    , pLabel_( 0 )
     , location_()
 {
     // NOTHING
@@ -55,15 +54,13 @@ ParamPath::~ParamPath()
 // -----------------------------------------------------------------------------
 QWidget* ParamPath::BuildInterface( QWidget* parent )
 {
-    Q3HBox* box = new Q3HBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new ::gui::RichLabel( GetName(), false, box );
-    pPosLabel_ = new QLabel( "---", box );
+    Param_ABC::BuildInterface( parent );
+    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    pPosLabel_ = new QLabel( "---", parent );
     pPosLabel_->setMinimumWidth( 100 );
     pPosLabel_->setAlignment( Qt::AlignCenter );
-    pPosLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
-    box->setStretchFactor( pPosLabel_, 1 );
-    return box;
+    layout->addWidget( pPosLabel_ );
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,17 +74,12 @@ void ParamPath::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , c
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamPath::CheckValidity
+// Name: ParamPath::InternalCheckValidity
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-bool ParamPath::CheckValidity()
+bool ParamPath::InternalCheckValidity() const
 {
-    if( !parameter_.IsOptional() && ( !location_.get() || !location_->IsValid() ) )
-    {
-        pLabel_->Warn( 3000 );
-        return false;
-    }
-    return true;
+    return location_.get() && location_->IsValid();
 }
 
 // -----------------------------------------------------------------------------
@@ -96,19 +88,10 @@ bool ParamPath::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamPath::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::Parameter_ABC > param;
-    if( location_.get() )
-    {
-        param.reset( new actions::parameters::Path( parameter_, converter_, *location_ ) );
-        param->Set( location_->IsValid() );
-    }
+    if( IsChecked() && location_.get() && location_->IsValid() )
+        action.AddParameter( *new actions::parameters::Path( parameter_, converter_, *location_ ) );
     else
-    {
-        kernel::Point stub;
-        param.reset( new actions::parameters::Path( parameter_, converter_, stub ) );
-        param->Set( false );
-    }
-    action.AddParameter( *param.release() );
+        action.AddParameter( *new actions::parameters::Path( parameter_, converter_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,13 +124,4 @@ void ParamPath::Handle( kernel::Location_ABC& location )
         pPosLabel_->setText( location.GetName() );
         NotifyChange();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPath::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamPath::IsOptional() const
-{
-    return parameter_.IsOptional();
 }

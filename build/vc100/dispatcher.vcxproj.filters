@@ -264,9 +264,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\Localisation.cpp">
       <Filter>Source Files\Model\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\Objective.cpp">
-      <Filter>Source Files\Model\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\Population.cpp">
       <Filter>Source Files\Model\Population</Filter>
     </ClCompile>
@@ -663,9 +660,6 @@
       <Filter>Source Files\Model\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\Localisation.h">
-      <Filter>Source Files\Model\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\Objective.h">
       <Filter>Source Files\Model\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\Population.h">

@@ -48,7 +48,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual bool IsOptional() const;
+    virtual bool InternalCheckValidity() const;
     //@}
 
 private:

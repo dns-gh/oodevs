@@ -54,7 +54,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual bool IsOptional() const;
     virtual Param_ABC* CreateElement();
     //@}
 

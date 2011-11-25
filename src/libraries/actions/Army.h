@@ -53,16 +53,9 @@ private:
     //@{
     virtual std::string SerializeType() const;
     //@}
-
-    //! @name Copy/Assignment
-    //@{
-    Army( const Army& );            //!< Copy constructor
-    Army& operator=( const Army& ); //!< Assignment operator
-    //@}
-
 };
 
-    }
+}
 }
 
 #endif // __Army_h_

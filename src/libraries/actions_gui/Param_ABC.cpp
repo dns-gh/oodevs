@@ -18,10 +18,12 @@ using namespace actions::gui;
 // Name: Param_ABC constructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-Param_ABC::Param_ABC( const QString& name )
-    : name_( name )
+Param_ABC::Param_ABC( const QString& name, bool optional /*= false*/ )
+    : name_      ( name )
     , controller_( 0 )
-    , listener_( 0 )
+    , listener_  ( 0 )
+    , group_     ( 0 )
+    , optional_  ( optional )
 {
     // NOTHING
 }
@@ -70,6 +72,21 @@ void Param_ABC::Draw( const geometry::Point2f&, const kernel::Viewport_ABC&, con
 // -----------------------------------------------------------------------------
 bool Param_ABC::CheckValidity()
 {
+    if( IsChecked() && !InternalCheckValidity() )
+    {
+        if( group_ )
+            group_->Warn();
+        return false;
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::InternalCheckValidity
+// Created: ABR 2011-11-22
+// -----------------------------------------------------------------------------
+bool Param_ABC::InternalCheckValidity() const
+{
     return true;
 }
 
@@ -88,7 +105,7 @@ QString Param_ABC::GetName() const
 // -----------------------------------------------------------------------------
 bool Param_ABC::IsOptional() const
 {
-    return false;
+    return optional_;
 }
 
 // -----------------------------------------------------------------------------
@@ -117,4 +134,37 @@ void Param_ABC::NotifyChange()
 void Param_ABC::NotifyChanged( Param_ABC& /*param*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::BuildInterface
+// Created: ABR 2011-11-21
+// -----------------------------------------------------------------------------
+QWidget* Param_ABC::BuildInterface( QWidget* parent )
+{
+    group_ = new ::gui::RichGroupBox( GetName(), parent );
+    group_->setCheckable( IsOptional() );
+    if( group_->isCheckable() )
+        group_->setChecked( false );
+    return group_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::IsSet
+// Created: ABR 2011-11-21
+// -----------------------------------------------------------------------------
+bool Param_ABC::IsChecked() const
+{
+    if( IsOptional() && group_ )
+        return group_->isChecked();
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::SetOptional
+// Created: ABR 2011-11-24
+// -----------------------------------------------------------------------------
+void Param_ABC::SetOptional( bool optional )
+{
+    optional_ = optional;
 }

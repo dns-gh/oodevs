@@ -24,7 +24,7 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamEquipmentList::ParamEquipmentList( QObject* parent, const kernel::OrderParameter& parameter, const tools::Resolver< kernel::EquipmentType >& resolver )
     : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str() )
+    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
     , parameter_( parameter )
     , resolver_ ( resolver )
     , list_     ( 0 )
@@ -60,9 +60,10 @@ namespace
 // -----------------------------------------------------------------------------
 QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
 {
-    Q3HBox* hBox = new Q3HBox( parent );
+    Param_ABC::BuildInterface( parent );
+    QGridLayout* layout = new QGridLayout( group_ );
     {
-        baseList_ = CreateList( hBox );
+        baseList_ = CreateList( parent );
         baseList_->setSorting( 0, true );
         tools::Iterator< const kernel::EquipmentType& > it( resolver_.CreateIterator() );
         while( it.HasMoreElements() )
@@ -71,31 +72,38 @@ QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
             ::gui::ValuedListItem* item = new ::gui::ValuedListItem( baseList_ );
             item->SetNamed( type );
         }
-        Q3VBox* buttonBox = new Q3VBox( hBox );
-        buttonBox->layout()->setAlignment( Qt::AlignVCenter );
-        QPushButton* addBtn = new QPushButton( MAKE_ICON( right_arrow ), QString::null, buttonBox );
+
+        QPushButton* addBtn = new QPushButton( MAKE_ICON( right_arrow ), QString::null, parent );
         addBtn->setFixedSize( 32, 32 );
-        QPushButton* removeBtn = new QPushButton( MAKE_ICON( left_arrow ), QString::null, buttonBox );
+        QPushButton* removeBtn = new QPushButton( MAKE_ICON( left_arrow ), QString::null, parent );
         removeBtn->setFixedSize( 32, 32 );
+
+        layout->addWidget( baseList_, 0, 0, 2, 1 );
+        layout->addWidget( addBtn, 0, 1 );
+        layout->addWidget( removeBtn, 1, 1 );
 
         connect( addBtn, SIGNAL( clicked() ), SLOT( OnAdd() ) );
         connect( baseList_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnAdd() ) );
         connect( removeBtn, SIGNAL( clicked() ), SLOT( OnRemove() ) );
     }
     {
-        list_ = CreateList( hBox );
+        list_ = CreateList( parent );
         list_->setSorting( -1, true );
-        Q3VBox* buttonBox = new Q3VBox( hBox );
-        buttonBox->layout()->setAlignment( Qt::AlignVCenter );
-        QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, buttonBox );
+
+        QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, parent );
         upBtn->setFixedSize( 32, 32 );
-        QPushButton* downBtn = new QPushButton( MAKE_ICON( arrow_down ), QString::null, buttonBox );
+        QPushButton* downBtn = new QPushButton( MAKE_ICON( arrow_down ), QString::null, parent );
         downBtn->setFixedSize( 32, 32 );
+
+        layout->addWidget( list_, 0, 2, 2, 1 );
+        layout->addWidget( upBtn, 0, 3 );
+        layout->addWidget( downBtn, 1, 3 );
+
         connect( list_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnRemove() ) );
         connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
         connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
     }
-    return hBox;
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -105,8 +113,9 @@ QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
 void ParamEquipmentList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
     std::auto_ptr< actions::parameters::MaintenancePriorities > param( new actions::parameters::MaintenancePriorities( parameter_ ) );
-    for( Q3ListViewItemIterator it( list_ ); it.current(); ++it )
-        param->AddPriority( *static_cast< const ::gui::ValuedListItem* >( it.current() )->GetValue< kernel::EquipmentType >() );
+    if( IsChecked() )
+        for( Q3ListViewItemIterator it( list_ ); it.current(); ++it )
+            param->AddPriority( *static_cast< const ::gui::ValuedListItem* >( it.current() )->GetValue< kernel::EquipmentType >() );
     action.AddParameter( *param.release() );
 }
 
@@ -166,19 +175,10 @@ void ParamEquipmentList::Move( Q3ListView* from, Q3ListView* to )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamEquipmentList::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamEquipmentList::IsOptional() const
-{
-    return parameter_.IsOptional();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamEquipmentList::CheckValidity
+// Name: ParamEquipmentList::InternalCheckValidity
 // Created: LGY 2010-08-06
 // -----------------------------------------------------------------------------
-bool ParamEquipmentList::CheckValidity()
+bool ParamEquipmentList::InternalCheckValidity() const
 {
-    return true;
+    return list_ && list_->childCount() != 0;
 }

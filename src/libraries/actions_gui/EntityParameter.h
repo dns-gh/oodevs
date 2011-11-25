@@ -48,7 +48,7 @@ class EntityParameterBase : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityParameterBase( QObject* parent, const QString& name );
+             EntityParameterBase( QObject* parent, const QString& name, bool optional );
     virtual ~EntityParameterBase();
     //@}
 
@@ -68,7 +68,6 @@ private slots:
 protected:
     //! @name Helpers
     //@{
-    bool Invalid();
     void AddToMenu( kernel::ContextMenu& menu );
     void Display( const QString& what );
     void SetLabel( const QString& label );
@@ -103,7 +102,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity();
+    virtual bool InternalCheckValidity() const;
     void CommitTo( int& message ) const;
     void CommitTo( actions::parameters::Entity< ConcreteEntity >& parameter ) const;
     virtual void MenuItemValidated();
@@ -112,7 +111,6 @@ public:
 protected:
     //! @name Helpers
     //@{
-    virtual bool IsOptional() const;
     virtual void NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const ConcreteEntity& ) {};
     virtual void NotifyDeleted( const ConcreteEntity& entity );

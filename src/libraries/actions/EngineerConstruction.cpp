@@ -28,11 +28,22 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: EngineerConstruction constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+EngineerConstruction::EngineerConstruction( const kernel::OrderParameter& parameter )
+    : Parameter< std::string >( parameter )
+    , type_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EngineerConstruction constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const ObjectType& type )
     : Parameter< std::string >( parameter, type.GetName() )
-    , type_( type )
+    , type_( &type )
 {
     // NOTHING
 }
@@ -43,10 +54,10 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // -----------------------------------------------------------------------------
 EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, const sword::PlannedWork& message, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
-    , type_( types.Get( message.type() ) )
+    , type_( &types.Get( message.type() ) )
 {
     AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Obstacle location" ).ascii(), "location", false ), converter, message.position() ) );
-    SetValue( type_.GetName() );
+    SetValue( type_->GetName() );
     SetParameters( message, entities, controller );
 }
 
@@ -74,10 +85,13 @@ void EngineerConstruction::SetParameters( const sword::PlannedWork& message, con
 // -----------------------------------------------------------------------------
 EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
-    , type_( types.Get( xis.attribute< std::string >( "value" ) ) )
+    , type_( 0 )
 {
+    if( xis.has_attribute( "value" ) )
+        type_ = &types.Get( xis.attribute< std::string >( "value" ) );
     xis >> xml::list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
-    SetValue( type_.GetName() );
+    if( type_ )
+        SetValue( type_->GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,10 +100,13 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // -----------------------------------------------------------------------------
 EngineerConstruction::EngineerConstruction( const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller )
     : Parameter< std::string >( OrderParameter( xis.attribute< std::string >( "name" ).c_str(), "genobject", false ) )
-    , type_ ( types.Get( xis.attribute< std::string >( "value" ) ) )
+    , type_( 0 )
 {
+    if( xis.has_attribute( "value" ) )
+        type_ = &types.Get( xis.attribute< std::string >( "value" ) );
     xis >> xml::list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
-    SetValue( type_.GetName() );
+    if( type_ )
+        SetValue( type_->GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,8 +141,8 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
 void EngineerConstruction::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     Parameter< std::string >::Draw( where, viewport, tools );
-//    if( const kernel::Location_ABC* location = GetLocation() ) // $$$$ SBO 2009-06-05: TODO
-//        tools.DrawTacticalGraphics( type_.GetSymbol(), *location, tools.ShouldDisplay() );
+//    if( const kernel::Location_ABC* location = GetLocation() && type_ ) // $$$$ SBO 2009-06-05: TODO
+//        tools.DrawTacticalGraphics( type_->GetSymbol(), *location, tools.ShouldDisplay() );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +152,8 @@ void EngineerConstruction::Draw( const geometry::Point2f& where, const Viewport_
 void EngineerConstruction::Serialize( xml::xostream& xos ) const
 {
     Parameter< std::string >::Serialize( xos );
-    xos << xml::attribute( "value", type_.GetType() );
+    if( IsSet() && type_ )
+        xos << xml::attribute( "value", type_->GetType() );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +182,9 @@ void EngineerConstruction::CommitTo( sword::MissionParameter_Value& message ) co
 // -----------------------------------------------------------------------------
 void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
 {
-    message.set_type( type_.GetType().c_str() );
+    if( !IsSet() || !type_ )
+        return;
+    message.set_type( type_->GetType().c_str() );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         const std::string type = it->second->GetType();

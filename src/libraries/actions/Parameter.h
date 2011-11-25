@@ -47,12 +47,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Parameter( const Parameter& );            //!< Copy constructor
-    Parameter& operator=( const Parameter& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyValueSet() {};
@@ -67,7 +61,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #include "Parameter.inl"

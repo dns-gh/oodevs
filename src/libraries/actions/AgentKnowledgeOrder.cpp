@@ -17,27 +17,18 @@ using namespace kernel;
 using namespace actions;
 using namespace parameters;
 
-namespace
-{
-    bool IsOptional( xml::xistream& xis )
-    {
-        return xis.attribute< std::string >( "type" ) == "string" || xis.attribute< unsigned long >( "value" ) == 0;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeOrder constructor
 // Created: LGY 2011-07-07
 // -----------------------------------------------------------------------------
 AgentKnowledgeOrder::AgentKnowledgeOrder( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver,
                                           const AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : AgentKnowledge( parameter, 0, controller )
+    : AgentKnowledge( parameter, controller )
     , converter_( converter )
     , owner_    ( owner )
-    , optional_ ( IsOptional( xis ) )
     , pAgent_   ( 0 )
 {
-    if( !optional_ )
+    if( xis.has_attribute( "value" ) )
     {
         pAgent_ = resolver.FindAgent( xis.attribute< unsigned long >( "value" ) );
         if( !pAgent_ )
@@ -55,14 +46,30 @@ AgentKnowledgeOrder::~AgentKnowledgeOrder()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgeOrder::CheckKnowledgeValidity
-// Created: LGY 2011-07-08
+// Name: AgentKnowledgeOrder::RetrieveId
+// Created: ABR 2011-11-24
 // -----------------------------------------------------------------------------
-bool AgentKnowledgeOrder::CheckKnowledgeValidity() const
+unsigned long AgentKnowledgeOrder::RetrieveId() const
 {
-    if( optional_ )
-        return true;
-    return converter_.Find( *pAgent_, owner_ ) ? true : false;
+    if( pAgent_ != 0 )
+    {
+        const kernel::AgentKnowledge_ABC* pKnowledge = converter_.Find( *pAgent_, owner_ );
+        if( pKnowledge )
+            return pKnowledge->GetEntity()->GetId();
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgeOrder::Serialize
+// Created: ABR 2011-11-24
+// -----------------------------------------------------------------------------
+void AgentKnowledgeOrder::Serialize( xml::xostream& xos ) const
+{
+    AgentKnowledge::Serialize( xos );
+    unsigned long id = RetrieveId();
+    if( id != 0 )
+        xos << xml::attribute( "value", id );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,18 +78,10 @@ bool AgentKnowledgeOrder::CheckKnowledgeValidity() const
 // -----------------------------------------------------------------------------
 void AgentKnowledgeOrder::CommitTo( sword::MissionParameter& message ) const
 {
-    if( optional_ )
-        message.set_null_value( true );
-    else
-    {
-        const kernel::AgentKnowledge_ABC* pKnowledge = converter_.Find( *pAgent_, owner_ );
-        if( pKnowledge )
-        {
-            message.set_null_value( false );
-            sword::UnitKnowledgeId& id = *message.mutable_value()->Add()->mutable_agentknowledge();
-            id.set_id( pKnowledge->GetEntity()->GetId() );
-        }
-    }
+    unsigned long id = RetrieveId();
+    message.set_null_value( id == 0 );
+    if( id != 0 )
+        message.mutable_value()->Add()->mutable_agentknowledge()->set_id( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,12 +90,20 @@ void AgentKnowledgeOrder::CommitTo( sword::MissionParameter& message ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledgeOrder::CommitTo( sword::MissionParameter_Value& message ) const
 {
-    if( !optional_ )
-    {
-        const kernel::AgentKnowledge_ABC* pKnowledge = converter_.Find( *pAgent_, owner_ );
-        if( pKnowledge )
-            message.mutable_agentknowledge()->set_id( pKnowledge->GetEntity()->GetId() );
-    }
+    unsigned long id = RetrieveId();
+    if( id != 0 )
+        message.mutable_agentknowledge()->set_id( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgeOrder::CheckKnowledgeValidity
+// Created: LGY 2011-07-08
+// -----------------------------------------------------------------------------
+bool AgentKnowledgeOrder::CheckKnowledgeValidity() const
+{
+    if( pAgent_ == 0 )
+        return true;
+    return converter_.Find( *pAgent_, owner_ ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -105,5 +112,5 @@ void AgentKnowledgeOrder::CommitTo( sword::MissionParameter_Value& message ) con
 // -----------------------------------------------------------------------------
 bool AgentKnowledgeOrder::IsSet() const
 {
-    return CheckKnowledgeValidity();
+    return RetrieveId() != 0;
 }

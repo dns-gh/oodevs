@@ -12,7 +12,7 @@
 #include "moc_ParamDateTime.cpp"
 #include "actions/DateTime.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include <Qt3Support/q3datetimeedit.h>
+#include <QtGui/qdatetimeedit.h>
 
 using namespace actions::gui;
 
@@ -22,7 +22,7 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamDateTime::ParamDateTime( QObject* parent, const kernel::OrderParameter& parameter, const QDateTime& current )
     : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str() )
+    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
     , parameter_( parameter )
     , date_( current )
 {
@@ -35,7 +35,7 @@ ParamDateTime::ParamDateTime( QObject* parent, const kernel::OrderParameter& par
 // -----------------------------------------------------------------------------
 ParamDateTime::ParamDateTime( QObject* parent, const QString& name, const QDateTime& current, bool optional )
     : QObject( parent )
-    , Param_ABC( name )
+    , Param_ABC( name, optional )
     , parameter_( name.ascii(), "datetime", optional )
     , date_( current )
 {
@@ -57,23 +57,22 @@ ParamDateTime::~ParamDateTime()
 // -----------------------------------------------------------------------------
 QWidget* ParamDateTime::BuildInterface( QWidget* parent )
 {
-    Q3HBox* box = new Q3HBox( parent );
-    box->setSpacing( 5 );
-    new QLabel( GetName(), box );
-    Q3DateTimeEdit* edit = new Q3DateTimeEdit( box );
+    Param_ABC::BuildInterface( parent );
+    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    QDateTimeEdit* edit = new QDateTimeEdit( parent );
     edit->setDateTime( date_ );
-    box->setStretchFactor( edit, 1 );
-    connect( edit, SIGNAL( valueChanged( const QDateTime& ) ), SLOT( OnChanged( const QDateTime& ) ) );
-    return box;
+    connect( edit, SIGNAL( dateTimeChanged( const QDateTime& ) ), SLOT( OnChanged( const QDateTime& ) ) );
+    layout->addWidget( edit );
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamDateTime::CheckValidity
+// Name: ParamDateTime::InternalCheckValidity
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-bool ParamDateTime::CheckValidity()
+bool ParamDateTime::InternalCheckValidity() const
 {
-    return IsOptional() || !date_.isNull(); // $$$$ SBO 2007-05-14: check with current date (allow date in the past?)
+    return !date_.isNull(); // $$$$ SBO 2007-05-14: check with current date (allow date in the past?)
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +81,10 @@ bool ParamDateTime::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamDateTime::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
-    parameter.AddParameter( *new actions::parameters::DateTime( parameter_, date_ ) );
+    if( IsChecked() )
+        parameter.AddParameter( *new actions::parameters::DateTime( parameter_, date_ ) );
+    else
+        parameter.AddParameter( *new actions::parameters::DateTime( parameter_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,15 +103,5 @@ void ParamDateTime::OnChanged( const QDateTime& date )
 void ParamDateTime::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC&, const kernel::GlTools_ABC& tools ) const
 {
     if( date_.isValid() )
-        tools.Print( date_.toString( "dd-MM-yy hh:mm:ss" ).ascii(), point
-                   , QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamDateTime::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamDateTime::IsOptional() const
-{
-    return parameter_.IsOptional();
+        tools.Print( date_.toString( "dd-MM-yy hh:mm:ss" ).ascii(), point, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
 }

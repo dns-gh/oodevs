@@ -39,7 +39,7 @@ class PushFlowParameters : public Parameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
+             PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
              PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis );
     virtual ~PushFlowParameters();
     //@}
@@ -67,12 +67,6 @@ private:
     };
     typedef std::map< const kernel::Automat_ABC*, Recipient >    T_Recipients;
     typedef std::map< const kernel::EquipmentType*, unsigned long > T_Equipments;
-    //@}
-
-    //! @name Copy/Assignment
-    //@{
-    PushFlowParameters( const PushFlowParameters& );            //!< Copy constructor
-    PushFlowParameters& operator=( const PushFlowParameters& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

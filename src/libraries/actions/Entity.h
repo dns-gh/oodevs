@@ -63,12 +63,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Entity( const Entity& );            //!< Copy constructor
-    Entity& operator=( const Entity& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyDeleted( const ConcreteEntity& );
@@ -92,6 +86,8 @@ Entity< ConcreteEntity >::Entity( const kernel::OrderParameter& parameter, kerne
     , controller_( controller )
 {
     controller_.Register( *this );
+    SetValue( 0 );
+    Set( false );
 }
 
 // -----------------------------------------------------------------------------

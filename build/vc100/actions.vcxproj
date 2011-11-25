@@ -131,7 +131,6 @@
     <ClCompile Include="..\..\src\libraries\actions\MaintenancePriorities.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\MedicalPriorities.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\Numeric.cpp" />
-    <ClCompile Include="..\..\src\libraries\actions\Objective.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\ObjectKnowledge.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\ObjectKnowledgeOrder.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\ObstacleType.cpp" />
@@ -144,6 +143,7 @@
     <ClCompile Include="..\..\src\libraries\actions\PullFlowParameters.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\PushFlowParameters.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\Quantity.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\Resource.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\ResourceNetwork.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\String.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\UrbanBlock.cpp" />
@@ -208,7 +208,6 @@
     <ClInclude Include="..\..\src\libraries\actions\MaintenancePriorities.h" />
     <ClInclude Include="..\..\src\libraries\actions\MedicalPriorities.h" />
     <ClInclude Include="..\..\src\libraries\actions\Numeric.h" />
-    <ClInclude Include="..\..\src\libraries\actions\Objective.h" />
     <ClInclude Include="..\..\src\libraries\actions\ObjectKnowledge.h" />
     <ClInclude Include="..\..\src\libraries\actions\ObjectKnowledgeOrder.h" />
     <ClInclude Include="..\..\src\libraries\actions\ObstacleType.h" />
@@ -221,6 +220,7 @@
     <ClInclude Include="..\..\src\libraries\actions\PullFlowParameters.h" />
     <ClInclude Include="..\..\src\libraries\actions\PushFlowParameters.h" />
     <ClInclude Include="..\..\src\libraries\actions\Quantity.h" />
+    <ClInclude Include="..\..\src\libraries\actions\Resource.h" />
     <ClInclude Include="..\..\src\libraries\actions\ResourceNetwork.h" />
     <ClInclude Include="..\..\src\libraries\actions\String.h" />
     <ClInclude Include="..\..\src\libraries\actions\UrbanBlock.h" />

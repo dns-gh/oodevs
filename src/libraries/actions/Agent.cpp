@@ -32,9 +32,10 @@ Agent::Agent( const OrderParameter& parameter, kernel::Controller& controller )
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
 Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Agent_ABC >( parameter, &resolver.GetAgent( xis.attribute< unsigned long >( "value" ) ), controller )
+    : Entity< Agent_ABC >( parameter, controller )
 {
-    // NOTHING
+    if( xis.has_attribute( "value" ) )
+        SetValue( &resolver.GetAgent( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,9 +53,10 @@ Agent::Agent( const OrderParameter& parameter, unsigned int id, const kernel::En
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 Agent::Agent( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Agent_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), "agent", false ), &resolver.GetAgent( xis.attribute< unsigned long >( "value" ) ), controller )
+    : Entity< Agent_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), "agent", false ), controller )
 {
-    // NOTHING
+    if( xis.has_attribute( "value" ) )
+        SetValue( &resolver.GetAgent( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------

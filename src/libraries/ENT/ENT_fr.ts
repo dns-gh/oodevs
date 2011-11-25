@@ -652,16 +652,16 @@
         <translation>bord de montagne</translation>
     </message>
     <message>
-        <source>danger direction</source>
-        <translation>direction dangereuse</translation>
+        <source>Danger direction</source>
+        <translation>Direction dangereuse</translation>
     </message>
     <message>
-        <source>limit 1</source>
-        <translation>limit 1</translation>
+        <source>Limit 1</source>
+        <translation>Limit 1</translation>
     </message>
     <message>
-        <source>limit 2</source>
-        <translation>limit 2</translation>
+        <source>Limit 2</source>
+        <translation>Limit 2</translation>
     </message>
     <message>
         <source>calm</source>

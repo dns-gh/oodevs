@@ -40,7 +40,7 @@ public:
     //@{
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    virtual bool CheckValidity();
+    virtual bool InternalCheckValidity() const;
     //@}
 
 private slots:
@@ -51,12 +51,6 @@ private slots:
     void OnAdd( int index );
     void OnRemove();
     void OnContextMenu( Q3ListViewItem* item, const QPoint& point, int col );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual bool IsOptional() const;
     //@}
 
 private:

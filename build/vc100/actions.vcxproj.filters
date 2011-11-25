@@ -133,9 +133,6 @@
     <ClCompile Include="..\..\src\libraries\actions\Numeric.cpp">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions\Objective.cpp">
-      <Filter>Source Files\Parameters\Types</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions\ObjectKnowledge.cpp">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClCompile>
@@ -224,6 +221,9 @@
       <Filter>Source Files\Parameters\Types</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions\PushFlowParameters.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\Resource.cpp">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClCompile>
   </ItemGroup>
@@ -360,9 +360,6 @@
     <ClInclude Include="..\..\src\libraries\actions\Numeric.h">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions\Objective.h">
-      <Filter>Source Files\Parameters\Types</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions\ObjectKnowledge.h">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClInclude>
@@ -454,6 +451,9 @@
       <Filter>Source Files\Parameters\Types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions\PushFlowParameters.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\Resource.h">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClInclude>
   </ItemGroup>

@@ -27,12 +27,22 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: LocationBase constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter )
+    : converter_( converter )
+    , type_     ( eNbrLocationType )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationBase constructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
 LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, const sword::Location& message )
     : converter_( converter )
     , type_     ( E_LocationType( message.type() ) )
-    , valid_    ( true )
 {
     const unsigned int count = message.coordinates().elem_size();
     if( count )
@@ -49,7 +59,6 @@ LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, co
 // -----------------------------------------------------------------------------
 LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
     : converter_( converter )
-    , valid_    ( location.IsValid() )
 {
     location.Accept( *this );
 }
@@ -68,7 +77,6 @@ LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, xm
                 >> xml::list( "point", *this, &LocationBase::ReadPoint )
             >> xml::end;
     type_ = tools::LocationFromString( type.c_str() );
-    valid_ = CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -320,5 +328,5 @@ bool LocationBase::CheckValidity() const
 // -----------------------------------------------------------------------------
 bool LocationBase::IsValid() const
 {
-    return valid_;
+    return CheckValidity();
 }

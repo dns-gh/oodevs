@@ -31,6 +31,7 @@ class Limit : public Location
 public:
     //! @name Constructors/Destructor
     //@{
+             Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
              Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Line& line );
              Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
@@ -54,15 +55,9 @@ private:
     //@{
     virtual std::string SerializeType() const;
     //@}
-
-    //! @name Copy/Assignment
-    //@{
-    Limit( const Limit& );            //!< Copy constructor
-    Limit& operator=( const Limit& ); //!< Assignment operator
-    //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterLimit_h_

@@ -61,12 +61,3 @@ Param_ABC* ParamObstacleList::CreateElement()
 {
     return new ParamObstacle(this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "plannedwork", false ), objectTypes_, layer_, converter_, controller_ );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ParamObstacleList::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamObstacleList::IsOptional() const
-{
-    return parameter_.IsOptional();
-}

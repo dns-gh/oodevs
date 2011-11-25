@@ -150,7 +150,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\UndergroundAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\GenObject.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Localisation.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\Objective.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Population.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\PopulationConcentration.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\PopulationFlow.cpp" />
@@ -286,7 +285,6 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\UndergroundAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\GenObject.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Localisation.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\Objective.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Population.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Population_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\PopulationConcentration.h" />

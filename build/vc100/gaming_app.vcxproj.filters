@@ -727,9 +727,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\TimeTableRequestDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\TabWidget.cpp">
-      <Filter>Source Files\Panels\Actions\Timeline</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\UnitStateDialog.cpp">
       <Filter>Source Files\Dialogs\Magic actions\Unit state</Filter>
     </ClCompile>
@@ -1419,9 +1416,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\WeatherListView.h">
       <Filter>Source Files\Creation\Weather</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\TabWidget.h">
-      <Filter>Source Files\Panels\Actions\Timeline</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantExtractCrowdDialog.h">
       <Filter>Source Files\Dialogs\Magic actions\Inhabitant</Filter>

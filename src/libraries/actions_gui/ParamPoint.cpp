@@ -27,10 +27,9 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamPoint::ParamPoint( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
     : QObject   ( parent )
-    , Param_ABC ( parameter.GetName().c_str() )
+    , Param_ABC ( parameter.GetName().c_str(), parameter.IsOptional() )
     , parameter_( parameter )
     , converter_( converter )
-    , pLabel_   ( 0 )
     , isSet_    ( false )
 {
     // NOTHING
@@ -51,29 +50,22 @@ ParamPoint::~ParamPoint()
 // -----------------------------------------------------------------------------
 QWidget* ParamPoint::BuildInterface( QWidget* parent )
 {
-    Q3HBox* box = new Q3HBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new ::gui::RichLabel( GetName(), false, box );
-    pPosLabel_ = new QLabel( "---", box );
+    Param_ABC::BuildInterface( parent );
+    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    pPosLabel_ = new QLabel( "---", parent );
     pPosLabel_->setMinimumWidth( 100 );
     pPosLabel_->setAlignment( Qt::AlignCenter );
-    pPosLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
-    box->setStretchFactor( pPosLabel_, 1 );
-    return box;
+    layout->addWidget( pPosLabel_ );
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamPoint::CheckValidity
+// Name: ParamPoint::InternalCheckValidity
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
-bool ParamPoint::CheckValidity()
+bool ParamPoint::InternalCheckValidity() const
 {
-    if( !parameter_.IsOptional() && !isSet_ )
-    {
-        pLabel_->Warn( 3000 );
-        return false;
-    }
-    return true;
+    return isSet_;
 }
 
 // -----------------------------------------------------------------------------
@@ -95,9 +87,14 @@ void ParamPoint::CommitTo( actions::ParameterContainer_ABC& action ) const
     kernel::Point point;
     if( isSet_ )
         point.AddPoint( paramPoint_ );
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::Point( parameter_, converter_, point ) );
-    param->Set( isSet_ );
-    action.AddParameter( *param.release() );
+    if( IsChecked() && isSet_ )
+    {
+        kernel::Point point;
+        point.AddPoint( paramPoint_ );
+        action.AddParameter( *new actions::parameters::Point( parameter_, converter_, point ) );
+    }
+    else
+        action.AddParameter( *new actions::parameters::Point( parameter_, converter_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,13 +117,4 @@ void ParamPoint::AcceptPopupMenuPoint()
     pPosLabel_->setText( converter_.ConvertToMgrs( paramPoint_ ).c_str() );
     isSet_ = true;
     NotifyChange();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamPoint::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamPoint::IsOptional() const
-{
-    return parameter_.IsOptional();
 }

@@ -38,6 +38,7 @@ class AtlasNature : public Parameter< kernel::AtlasNature >
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit AtlasNature( const kernel::OrderParameter& parameter );
              AtlasNature( const kernel::OrderParameter& parameter, const kernel::AtlasNature& nature );
              AtlasNature( const kernel::OrderParameter& parameter, const sword::Nature& asn, const kernel::AtlasNatures& natures );
              AtlasNature( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::AtlasNatures& natures );
@@ -52,12 +53,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AtlasNature( const AtlasNature& );            //!< Copy constructor
-    AtlasNature& operator=( const AtlasNature& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;

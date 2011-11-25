@@ -47,16 +47,9 @@ public:
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual std::string SerializeType() const;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Agent( const Agent& );            //!< Copy constructor
-    Agent& operator=( const Agent& ); //!< Assignment operator
-    //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterAgent_h_

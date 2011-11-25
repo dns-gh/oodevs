@@ -15,6 +15,16 @@ using namespace actions::parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
+    : Location( parameter, converter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limit constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
 Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Line& line )

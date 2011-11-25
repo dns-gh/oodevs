@@ -39,6 +39,7 @@ class ResourceNetwork : public Entity< kernel::Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
+             ResourceNetwork( const kernel::OrderParameter& parameter, kernel::Controller& controller );
              ResourceNetwork( const kernel::OrderParameter& parameter, const kernel::Object_ABC& object, const std::string& resource, kernel::Controller& controller );
              ResourceNetwork( const kernel::OrderParameter& parameter, const sword::ResourceNetworkElement& resourceNetwork, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
              ResourceNetwork( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );

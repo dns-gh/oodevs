@@ -27,13 +27,12 @@ using namespace actions::gui;
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
 ParamLocation::ParamLocation( const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter )
-    : Param_ABC  ( parameter.GetName().c_str() )
+    : Param_ABC  ( parameter.GetName().c_str(), parameter.IsOptional() )
     , parameter_ ( parameter )
     , converter_ ( converter )
     , layer_     ( layer )
     , creator_   ( 0 )
     , controller_( 0 )
-    , pLabel_    ( 0 )
     , location_  ()
     , filter_    ( true, true, true, true, true )
 {
@@ -55,17 +54,15 @@ ParamLocation::~ParamLocation()
 // -----------------------------------------------------------------------------
 QWidget* ParamLocation::BuildInterface( QWidget* parent )
 {
-    Q3HBox* box = new Q3HBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new ::gui::RichLabel( GetName(), false, box );
-    pShapeLabel_ = new QLabel( "---", box );
+    Param_ABC::BuildInterface( parent );
+    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    pShapeLabel_ = new QLabel( "---", parent );
     pShapeLabel_->setMinimumWidth( 100 );
     pShapeLabel_->setAlignment( Qt::AlignCenter );
-    pShapeLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
-    creator_ = new ::gui::LocationCreator( box, GetName(), layer_, *this );
+    creator_ = new ::gui::LocationCreator( parent, GetName(), layer_, *this );
     SetShapeFilter( filter_.point_, filter_.line_, filter_.polygon_, filter_.circle_, filter_.rectangle_ );
-    box->setStretchFactor( pShapeLabel_, 1 );
-    return box;
+    layout->addWidget( pShapeLabel_ );
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -91,17 +88,12 @@ void ParamLocation::RegisterIn( kernel::ActionController& controller )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLocation::CheckValidity
+// Name: ParamLocation::InternalCheckValidity
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-bool ParamLocation::CheckValidity()
+bool ParamLocation::InternalCheckValidity() const
 {
-    if( ! parameter_.IsOptional() && ! ( location_.get() && location_->IsValid() ) )
-    {
-        pLabel_->Warn( 3000 );
-        return false;
-    }
-    return true;
+    return location_.get() && location_->IsValid();
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +102,7 @@ bool ParamLocation::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamLocation::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    Commit< actions::parameters::Location, kernel::Point >( action );
+    Commit< actions::parameters::Location >( action );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,23 +147,14 @@ void ParamLocation::Draw( const geometry::Point2f& , const kernel::Viewport_ABC&
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLocation::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamLocation::IsOptional() const
-{
-    return parameter_.IsOptional();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ParamLocation::SetName
 // Created: ABR 2011-01-21
 // -----------------------------------------------------------------------------
 void ParamLocation::SetName( const QString& name )
 {
     this->name_ = name;
-    if( pLabel_ )
-        pLabel_->setText( name );
+    if( group_ )
+        group_->setTitle( name );
     if( creator_ )
         creator_->setName( name );
 }

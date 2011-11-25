@@ -23,13 +23,24 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: DotationType constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+DotationType::DotationType( const kernel::OrderParameter& parameter )
+    : Parameter< std::string >( parameter )
+    , type_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DotationType constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 DotationType::DotationType( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::DotationType >& resolver )
     : Parameter< std::string >( parameter )
-    , type_( resolver.Get( id ) )
+    , type_( &resolver.Get( id ) )
 {
-    SetValue( type_.GetName() );
+    SetValue( type_->GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,9 +49,13 @@ DotationType::DotationType( const kernel::OrderParameter& parameter, unsigned in
 // -----------------------------------------------------------------------------
 DotationType::DotationType( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& resolver )
     : Parameter< std::string >( parameter )
-    , type_( resolver.Get( xis.attribute< unsigned int >( "value" ) ) )
+    , type_( 0 )
 {
-    SetValue( type_.GetName() );
+    if( xis.has_attribute( "value" ) )
+    {
+        type_ = &resolver.Get( xis.attribute< unsigned int >( "value" ) );
+        SetValue( type_->GetName() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +74,8 @@ DotationType::~DotationType()
 void DotationType::Serialize( xml::xostream& xos ) const
 {
     Parameter< std::string >::Serialize( xos );
-    xos << xml::attribute( "value", type_.GetId() );
+    if( IsSet() && type_ )
+        xos << xml::attribute( "value", type_->GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +84,8 @@ void DotationType::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void DotationType::CommitTo( std::string& content ) const
 {
-    content += boost::lexical_cast< std::string >( type_.GetId() );
+    if( IsSet() && type_ )
+        content += boost::lexical_cast< std::string >( type_->GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +95,8 @@ void DotationType::CommitTo( std::string& content ) const
 void DotationType::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-   message.mutable_value()->Add()->mutable_resourcetype()->set_id( type_.GetId() );
+    if( IsSet() && type_ )
+        message.mutable_value()->Add()->mutable_resourcetype()->set_id( type_->GetId() );
 }
 // -----------------------------------------------------------------------------
 // Name: DotationType::CommitTo
@@ -86,7 +104,8 @@ void DotationType::CommitTo( sword::MissionParameter& message ) const
 // -----------------------------------------------------------------------------
 void DotationType::CommitTo( sword::MissionParameter_Value& message ) const
 {
-    message.mutable_resourcetype()->set_id( type_.GetId() );
+    if( IsSet() && type_ )
+        message.mutable_resourcetype()->set_id( type_->GetId() );
 }
 
 // -----------------------------------------------------------------------------

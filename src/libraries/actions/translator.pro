@@ -12,7 +12,6 @@ Knowledge_ABC.inl \
 Lima.cpp \
 LimaList.cpp \
 Mission.cpp \
-Objective.cpp \
 Parameter.inl \
 ParameterList.cpp \
 Parameter_ABC.cpp \

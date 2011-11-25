@@ -44,11 +44,14 @@ PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
     : Parameter< QString >( parameter )
     , converter_          ( converter )
 {
-    xis >> xml::list( "recipient", *this, &PushFlowParameters::ReadRecipient, entityResolver, dotationTypeResolver )
-        >> xml::list( "transporter", *this, &PushFlowParameters::ReadTransporter, equipmentTypeResolver )
-        >> xml::start( "wayBackPath" )
-            >> xml::list( "point", *this, &PushFlowParameters::ReadPoint, wayBackPath_ )
-        >> xml::end;
+    if( xis.has_child( "wayBackPath" ) )
+    {
+        xis >> xml::list( "recipient", *this, &PushFlowParameters::ReadRecipient, entityResolver, dotationTypeResolver )
+            >> xml::list( "transporter", *this, &PushFlowParameters::ReadTransporter, equipmentTypeResolver )
+            >> xml::start( "wayBackPath" )
+                >> xml::list( "point", *this, &PushFlowParameters::ReadPoint, wayBackPath_ )
+            >> xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -31,6 +31,16 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: Direction constructor
+// Created: ABR 2011-11-16
+// -----------------------------------------------------------------------------
+Direction::Direction( const kernel::OrderParameter& parameter )
+    : Parameter< int >( parameter )
+{
+        // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Direction constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 Direction::Direction( const kernel::OrderParameter& parameter, int value )
@@ -44,9 +54,13 @@ Direction::Direction( const kernel::OrderParameter& parameter, int value )
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 Direction::Direction( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< int >( parameter, xis.attribute< int >( "value" ) )
+    : Parameter< int >( parameter )
 {
-    direction_ = ComputeDirection( GetValue() );
+    if( xis.has_attribute( "value" ) )
+    {
+        SetValue( xis.attribute< int >( "value" ) );
+        direction_ = ComputeDirection( GetValue() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +94,8 @@ void Direction::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC
 void Direction::Serialize( xml::xostream& xos ) const
 {
     Parameter< int >::Serialize( xos );
-    xos << xml::attribute( "value", GetValue() );
+    if( IsSet() )
+        xos << xml::attribute( "value", GetValue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,15 +116,6 @@ void Direction::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
         message.mutable_heading()->set_heading( GetValue() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Direction::IsSet
-// Created: SBO 2008-03-19
-// -----------------------------------------------------------------------------
-bool Direction::IsSet() const
-{
-    return !direction_.IsNull();
 }
 
 // -----------------------------------------------------------------------------

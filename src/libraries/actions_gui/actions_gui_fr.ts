@@ -100,17 +100,6 @@
     </message>
 </context>
 <context>
-    <name>ParamMissionObjective</name>
-    <message>
-        <source>Location</source>
-        <translation>Position</translation>
-    </message>
-    <message>
-        <source>Schedule</source>
-        <translation>Horaire</translation>
-    </message>
-</context>
-<context>
     <name>ParamResourceNetwork</name>
     <message>
         <source>Resource network</source>
@@ -147,20 +136,20 @@
         <translation type="unfinished">Type de cible de démolition:</translation>
     </message>
     <message>
+        <source>Obstacle type</source>
+        <translation>Type d&apos;obstacle</translation>
+    </message>
+    <message>
         <source>Density</source>
-        <translation type="unfinished">Densité</translation>
+        <translation>Densité</translation>
     </message>
     <message>
         <source>TC2</source>
-        <translation type="unfinished">TC2</translation>
+        <translation>TC2</translation>
     </message>
     <message>
-        <source>Location</source>
-        <translation type="unfinished">Position</translation>
-    </message>
-    <message>
-        <source>Obstacle type</source>
-        <translation type="unfinished">Type d&apos;obstacle</translation>
+        <source>Obstacle location</source>
+        <translation>Position de l&apos;obstacle</translation>
     </message>
 </context>
 </TS>

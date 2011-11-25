@@ -20,13 +20,28 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Enumeration constructor
+// Created: ABR 2011-11-16
+// -----------------------------------------------------------------------------
+Enumeration::Enumeration( const kernel::OrderParameter& parameter )
+    : Parameter< std::string >( parameter )
+    , value_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Enumeration constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 Enumeration::Enumeration( const OrderParameter& parameter, xml::xistream& xis )
     : Parameter< std::string >( parameter )
-    , value_( parameter.GetValue( xis.attribute< unsigned long >( "value" ) ) )
+    , value_( 0 )
 {
-    SetValue( value_.GetName() );
+    if( xis.has_attribute( "value" ) )
+    {
+        value_ = new OrderParameterValue( parameter.GetValue( xis.attribute< unsigned long >( "value" ) ) );
+        SetValue( value_->GetName() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -35,9 +50,9 @@ Enumeration::Enumeration( const OrderParameter& parameter, xml::xistream& xis )
 // -----------------------------------------------------------------------------
 Enumeration::Enumeration( const OrderParameter& parameter, unsigned int value )
     : Parameter< std::string >( parameter )
-    , value_( parameter.GetValue( value ) )
+    , value_( new OrderParameterValue( parameter.GetValue( value ) ) )
 {
-    SetValue( value_.GetName() );
+    SetValue( value_->GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +61,7 @@ Enumeration::Enumeration( const OrderParameter& parameter, unsigned int value )
 // -----------------------------------------------------------------------------
 Enumeration::~Enumeration()
 {
-    // NOTHING
+    delete value_;
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +71,8 @@ Enumeration::~Enumeration()
 void Enumeration::Serialize( xml::xostream& xos ) const
 {
     Parameter< std::string >::Serialize( xos );
-    xos << xml::attribute( "value", value_.GetId() );
+    if( IsSet() && value_ )
+        xos << xml::attribute( "value", value_->GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,8 +82,8 @@ void Enumeration::Serialize( xml::xostream& xos ) const
 void Enumeration::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    if( IsSet() )
-       message.mutable_value()->Add()->set_enumeration( value_.GetId() );
+    if( IsSet() && value_ )
+       message.mutable_value()->Add()->set_enumeration( value_->GetId() );
 }
 // -----------------------------------------------------------------------------
 // Name: Enumeration::CommitTo
@@ -75,8 +91,8 @@ void Enumeration::CommitTo( sword::MissionParameter& message ) const
 // -----------------------------------------------------------------------------
 void Enumeration::CommitTo( sword::MissionParameter_Value& message ) const
 {
-    if( IsSet() )
-        message.set_enumeration( value_.GetId() );
+    if( IsSet() && value_ )
+        message.set_enumeration( value_->GetId() );
 }
 
 // -----------------------------------------------------------------------------

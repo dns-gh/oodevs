@@ -233,6 +233,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const sword::AutomatOrder& mes
     AddTiming( *action, message );
     action->Attach( *new ActionTasker( &tasker ) );
     action->Polish();
+    std::string tmp = message.DebugString();
     AddParameters( *action, mission, message.parameters() );
     return action.release();
 }

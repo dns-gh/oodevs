@@ -20,7 +20,7 @@ using namespace actions::gui;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamStringField::ParamStringField( const kernel::OrderParameter& parameter )
-    : Param_ABC( parameter.GetName().c_str() )
+    : Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
     , parameter_( parameter )
     , pLabel_( 0 )
     , pEdit_ ( 0 )
@@ -43,13 +43,21 @@ ParamStringField::~ParamStringField()
 // -----------------------------------------------------------------------------
 QWidget* ParamStringField::BuildInterface( QWidget* parent )
 {
-    Q3HBox* box = new Q3HBox( parent );
-    box->setSpacing( 5 );
-    pLabel_ = new ::gui::RichLabel( GetName(), box );
-    pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-    pEdit_ = new QLineEdit( "", box );
-    box->setStretchFactor( pEdit_, 1 );
-    return box;
+    Param_ABC::BuildInterface( parent );
+    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    pEdit_ = new QLineEdit( parent );
+    pEdit_->setPlaceholderText( "Enter your text here" );
+    layout->addWidget( pEdit_ );
+    return group_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamStringField::InternalCheckValidity
+// Created: ABR 2011-11-21
+// -----------------------------------------------------------------------------
+bool ParamStringField::InternalCheckValidity() const
+{
+    return !pEdit_->text().isEmpty();
 }
 
 // -----------------------------------------------------------------------------
@@ -58,14 +66,8 @@ QWidget* ParamStringField::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamStringField::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new actions::parameters::String( parameter_, pEdit_->text().ascii() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamStringField::IsOptional
-// Created: SBO 2008-03-10
-// -----------------------------------------------------------------------------
-bool ParamStringField::IsOptional() const
-{
-    return parameter_.IsOptional();
+    if( IsChecked() && !pEdit_->text().isEmpty() )
+        action.AddParameter( *new actions::parameters::String( parameter_, pEdit_->text().ascii() ) );
+    else
+        action.AddParameter( *new actions::parameters::String( parameter_ ) );
 }

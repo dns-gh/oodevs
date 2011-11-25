@@ -78,7 +78,12 @@ std::string ParameterList::GetType() const
 // -----------------------------------------------------------------------------
 void ParameterList::Display( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Item( tools::translate( "Action", "Parameter" ) ).Display( GetName() );
+    if( IsSet() )
+        displayer.Item( tools::translate( "Action", "Parameter" ) ).Display( GetName() )
+                 .Item( tools::translate( "Parameter", "Value" ) ).Display( tools::translate( "ParameterList", "List" ) );
+    else
+        displayer.Item( tools::translate( "Action", "Parameter" ) ).Display( GetName() )
+                 .Item( tools::translate( "Parameter", "Value" ) ).Display( tools::translate( "ParameterList", "Not set" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,16 +95,6 @@ void ParameterList::DisplayTooltip( const kernel::Viewport_ABC& viewport, const 
     Parameter< QString >::DisplayTooltip( viewport, tools );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayTooltip( viewport, tools );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParameterList::Serialize
-// Created: JSR 2010-04-15
-// -----------------------------------------------------------------------------
-void ParameterList::Serialize( xml::xostream& xos ) const
-{
-    Parameter_ABC::Serialize( xos );
-    xos << xml::attribute( "type", "list" );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,6 +189,15 @@ void ParameterList::AddString( const std::string& name, const std::string& value
 std::string ParameterList::SerializeType() const
 {
     return GetType();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterList::IsSet
+// Created: ABR 2011-11-23
+// -----------------------------------------------------------------------------
+bool ParameterList::IsSet() const
+{
+    return !elements_.empty();
 }
 
 }

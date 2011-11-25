@@ -53,12 +53,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MaintenancePriorities( const MaintenancePriorities& );            //!< Copy constructor
-    MaintenancePriorities& operator=( const MaintenancePriorities& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
@@ -77,7 +71,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterMaintenancePriorities_h_

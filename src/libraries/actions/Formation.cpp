@@ -20,6 +20,16 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Formation constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+Formation::Formation( const kernel::OrderParameter& parameter, kernel::Controller& controller )
+    : Entity< Formation_ABC >( parameter, controller )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
 Formation::Formation( const OrderParameter& parameter, const Formation_ABC& formation, kernel::Controller& controller )
@@ -43,9 +53,10 @@ Formation::Formation( const OrderParameter& parameter, const int& message, const
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 Formation::Formation( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Formation_ABC >( parameter, &resolver.GetFormation( xis.attribute< unsigned long >( "value" ) ), controller )
+    : Entity< Formation_ABC >( parameter, controller )
 {
-    // NOTHING
+    if( xis.has_attribute( "value" ) )
+        SetValue( &resolver.GetFormation( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------

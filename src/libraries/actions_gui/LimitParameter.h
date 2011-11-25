@@ -60,7 +60,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity();
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
@@ -75,7 +74,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual bool IsOptional() const;
+    virtual bool InternalCheckValidity() const;
     void Display( const QString& what );
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::TacticalLine_ABC& entity );
@@ -87,8 +86,7 @@ private:
     kernel::Controller& controller_;
     kernel::OrderParameter parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
-    ::gui::RichLabel* pLabel_;
-    QLabel* entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
+    QLabel* entityLabel_;
     const kernel::TacticalLine_ABC* potential_;
     const kernel::TacticalLine_ABC* selected_;
     //@}

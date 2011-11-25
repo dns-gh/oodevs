@@ -26,6 +26,7 @@ class Direction : public Parameter< int >
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit Direction( const kernel::OrderParameter& parameter );
              Direction( const kernel::OrderParameter& parameter, int value );
              Direction( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~Direction();
@@ -36,16 +37,9 @@ public:
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
-    virtual bool IsSet() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Direction( const Direction& );            //!< Copy constructor
-    Direction& operator=( const Direction& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
@@ -59,7 +53,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterDirection_h_

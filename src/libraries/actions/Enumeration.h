@@ -26,6 +26,7 @@ class Enumeration : public Parameter< std::string >
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit Enumeration( const kernel::OrderParameter& parameter );
              Enumeration( const kernel::OrderParameter& parameter, xml::xistream& xis );
              Enumeration( const kernel::OrderParameter& parameter, unsigned int value );
     virtual ~Enumeration();
@@ -38,12 +39,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Enumeration( const Enumeration& );            //!< Copy constructor
-    Enumeration& operator=( const Enumeration& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
@@ -53,11 +48,11 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameterValue value_;
+    kernel::OrderParameterValue* value_;
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterEnumeration_h_

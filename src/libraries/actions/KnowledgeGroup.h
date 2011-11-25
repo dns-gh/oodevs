@@ -32,6 +32,7 @@ class KnowledgeGroup : public Entity< kernel::KnowledgeGroup_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
+             KnowledgeGroup( const kernel::OrderParameter& parameter, kernel::Controller& controller );
              KnowledgeGroup( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
              KnowledgeGroup( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
              KnowledgeGroup( const kernel::OrderParameter& parameter, const kernel::KnowledgeGroup_ABC& group, kernel::Controller& controller );
@@ -53,7 +54,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __KnowledgeGroup_h_

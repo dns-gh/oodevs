@@ -43,17 +43,14 @@ public:
     virtual void Show();
     virtual void Hide();
     virtual QWidget* BuildInterface( QWidget* parent );
-
-    virtual bool CheckValidity();
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-
     void SetLimits( float min, float max );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual bool IsOptional() const;
+    virtual bool InternalCheckValidity() const;
     //@}
 
 private:
@@ -61,7 +58,6 @@ private:
     //@{
     kernel::OrderParameter parameter_;
     bool isReal_;
-    ::gui::RichLabel* pLabel_;
     QLineEdit* pEdit_;
     //@}
 };

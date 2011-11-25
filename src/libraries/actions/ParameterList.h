@@ -62,9 +62,10 @@ public:
     virtual std::string GetType() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void Serialize( xml::xostream& xos ) const;
+    //virtual void Serialize( xml::xostream& xos ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     virtual void CommitTo( std::string& content ) const;
+    virtual bool IsSet() const;
 
     ParameterList& AddList      ( const std::string& name );
 
@@ -87,7 +88,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ParameterList_h_

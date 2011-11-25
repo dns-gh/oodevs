@@ -4934,10 +4934,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation>Connaissance Objet</translation>
     </message>
     <message>
-        <source>Objective</source>
-        <translation>Objectif</translation>
-    </message>
-    <message>
         <source>Path</source>
         <translation>Itinéraire</translation>
     </message>

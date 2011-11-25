@@ -17,6 +17,16 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Point constructor
+// Created: ABR 2011-11-17
+// -----------------------------------------------------------------------------
+Point::Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
+    : Location( parameter, converter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Point constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
 Point::Point( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )

@@ -318,9 +318,9 @@ ENT_Tr::T_ConverterLocation ENT_Tr::LocationConverter_[] =
 
 ENT_Tr::T_ConverterActionParameter ENT_Tr::ActionParameterConverter_[] =
 {
-    T_ConverterActionParameter( "direction dangereuse", QT_TRANSLATE_NOOP( "ENT_Tr", "danger direction" ), eActionParameter_DangerDirection ),
-    T_ConverterActionParameter( "limit 1"             , QT_TRANSLATE_NOOP( "ENT_Tr", "limit 1" )         , eActionParameter_Limit1          ),
-    T_ConverterActionParameter( "limit 2"             , QT_TRANSLATE_NOOP( "ENT_Tr", "limit 2" )         , eActionParameter_Limit2          ),
+    T_ConverterActionParameter( "direction dangereuse", QT_TRANSLATE_NOOP( "ENT_Tr", "Danger direction" ), eActionParameter_DangerDirection ),
+    T_ConverterActionParameter( "limit 1"             , QT_TRANSLATE_NOOP( "ENT_Tr", "Limit 1" )         , eActionParameter_Limit1          ),
+    T_ConverterActionParameter( "limit 2"             , QT_TRANSLATE_NOOP( "ENT_Tr", "Limit 2" )         , eActionParameter_Limit2          ),
     T_ConverterActionParameter( "", "", ( E_ActionParameter ) - 1 )
 };
 

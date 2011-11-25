@@ -47,6 +47,7 @@ public:
     //@{
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual bool InternalCheckValidity() const;
     //@}
 
 private slots:
@@ -58,7 +59,6 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual bool IsOptional() const;
     void AddItem( const QString& parent, const QString& child, unsigned id );
     //@}
 

@@ -44,7 +44,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity();
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
@@ -52,6 +51,7 @@ public:
 protected:
     //! @name Operations
     //@{
+    virtual bool InternalCheckValidity() const;
     unsigned int Count() const;
     void CommitChildrenTo( actions::ParameterContainer_ABC& parent ) const;
     void Select( const Param_ABC& param );
@@ -74,7 +74,6 @@ protected slots:
 private:
     //! @name Helpers
     //@{
-    virtual bool IsOptional() const;
     virtual Param_ABC* CreateElement() = 0;
     void DeleteItem( Q3ListViewItem* item );
     void Clear();
@@ -95,7 +94,6 @@ private:
     T_Widgets widgets_;
     unsigned int min_;
     unsigned int max_;
-    bool optional_;
     bool createEnabled_;
     //@}
 };

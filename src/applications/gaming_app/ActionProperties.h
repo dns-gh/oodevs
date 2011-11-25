@@ -13,6 +13,7 @@
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -38,10 +39,11 @@ namespace gui
 */
 // Created: SBO 2010-05-04
 // =============================================================================
-class ActionProperties : public Q3VBox
+class ActionProperties : public QSplitter
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< actions::ActionTiming >
                        , public tools::SelectionObserver< actions::Action_ABC >
+                       , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -51,12 +53,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ActionProperties( const ActionProperties& );            //!< Copy constructor
-    ActionProperties& operator=( const ActionProperties& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const actions::Action_ABC* action );

@@ -23,7 +23,7 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamDotationTypeList::ParamDotationTypeList( QObject* parent, const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver )
     : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str() )
+    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
     , resolver_( resolver )
     , parameter_( parameter )
     , list_( 0 )
@@ -46,6 +46,9 @@ ParamDotationTypeList::~ParamDotationTypeList()
 // -----------------------------------------------------------------------------
 QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
 {
+    Param_ABC::BuildInterface( parent );
+    QVBoxLayout* layout = new QVBoxLayout( parent );
+
     list_ = new Q3ListView( parent );
     list_->setRootIsDecorated( true );
     list_->addColumn( "name" );
@@ -54,7 +57,6 @@ QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
     list_->header()->hide();
     list_->header()->setResizeEnabled( false, 1 );
     list_->hideColumn( 1 );
-
     list_->setSelectionMode( Q3ListView::Multi );
 
     tools::Iterator< const kernel::DotationType& > it = resolver_.CreateIterator();
@@ -63,9 +65,9 @@ QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
         const kernel::DotationType& type = it.NextElement();
         AddItem( type.GetName().c_str(), type.GetName().c_str(), type.GetId() );
     }
-
     connect( list_, SIGNAL( clicked( Q3ListViewItem* ) ), SLOT( Clicked( Q3ListViewItem* ) ) );
-    return list_;
+    layout->addWidget( list_ );
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -105,28 +107,30 @@ void ParamDotationTypeList::AddItem( const QString& parent, const QString& child
 // -----------------------------------------------------------------------------
 void ParamDotationTypeList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    if( ! list_ )
+    if( !list_ )
         return;
-
     std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::DotationTypeList( parameter_ ) );
-    Q3ListViewItemIterator it( list_ );
-    while( it.current() )
+    if( IsChecked() )
     {
-        if( it.current()->isSelected() )
+        Q3ListViewItemIterator it( list_ );
+        while( it.current() )
         {
-            const unsigned id = it.current()->text( 1 ).toUInt();
-            param->AddParameter( *new actions::parameters::DotationType( parameter_, id, resolver_ ) );
+            if( it.current()->isSelected() )
+            {
+                const unsigned id = it.current()->text( 1 ).toUInt();
+                param->AddParameter( *new actions::parameters::DotationType( parameter_, id, resolver_ ) );
+            }
+            ++it;
         }
-        ++it;
     }
     action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamDotationTypeList::IsOptional
-// Created: SBO 2008-03-10
+// Name: ParamDotationTypeList::InternalCheckValidity
+// Created: ABR 2011-11-22
 // -----------------------------------------------------------------------------
-bool ParamDotationTypeList::IsOptional() const
+bool ParamDotationTypeList::InternalCheckValidity() const
 {
-    return parameter_.IsOptional();
+    return list_ && list_->childCount() != 0;
 }

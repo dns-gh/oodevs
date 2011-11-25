@@ -108,8 +108,6 @@ private:
     actions::gui::Param_ABC& BuildLocationCompositeList( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildGenObject            ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildGenObjectList        ( const kernel::OrderParameter& parameter ) const;
-    actions::gui::Param_ABC& BuildMissionObjective     ( const kernel::OrderParameter& parameter ) const;
-    actions::gui::Param_ABC& BuildMissionObjectiveList ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildMaintenancePriorities( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildMedicalPriorities    ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildEnumeration          ( const kernel::OrderParameter& parameter ) const;

@@ -218,9 +218,7 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
         return type;
     if( std::find( aliases_.begin(), aliases_.end(), type ) != aliases_.end() )
         return type;
-    if( type_ == "phaseline" )
-        return "phaseline";
-    if( type == "phaselinelist" )
+    if( type_ == "phaseline" || type == "phaselinelist" )
         return "phaseline";
     if( type == "direction" )
         return "heading";
@@ -230,5 +228,7 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
         return "numeric";
     if( type == "list" || type == "string" )
         return type_;
+    if( type == "location" && type_ == "locationcomposite")
+        return type;
     return "";
 }

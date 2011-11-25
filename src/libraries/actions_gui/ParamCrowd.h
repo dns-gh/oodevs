@@ -42,13 +42,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamCrowd( const ParamCrowd& );            //!< Copy constructor
-    ParamCrowd& operator=( const ParamCrowd& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::OrderParameter parameter_;

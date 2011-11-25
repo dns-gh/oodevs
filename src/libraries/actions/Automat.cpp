@@ -52,9 +52,10 @@ Automat::Automat( const kernel::OrderParameter& parameter, unsigned int id, cons
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
 Automat::Automat( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Automat_ABC >( parameter, &resolver.GetAutomat( xis.attribute< unsigned long >( "value" ) ), controller )
+    : Entity< Automat_ABC >( parameter, controller )
 {
-    // NOTHING
+    if( xis.has_attribute( "value" ) )
+        SetValue( &resolver.GetAutomat( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,9 +63,10 @@ Automat::Automat( const OrderParameter& parameter, xml::xistream& xis, const ker
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 Automat::Automat( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Automat_ABC >( OrderParameter( xis.attribute< std::string >("name" ), xis.attribute< std::string >( "type" ), false ), &resolver.GetAutomat( xis.attribute< unsigned long >( "value" ) ), controller )
+    : Entity< Automat_ABC >( OrderParameter( xis.attribute< std::string >("name" ), xis.attribute< std::string >( "type" ), false ), controller )
 {
-    // NOTHING
+    if( xis.has_attribute( "value" ) )
+        SetValue( &resolver.GetAutomat( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------

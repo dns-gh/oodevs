@@ -11,6 +11,7 @@
 #define __TimelinePanel_h_
 
 #include <boost/ptr_container/ptr_vector.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -41,6 +42,7 @@ class TimelineWidget;
 // Created: SBO 2007-07-04
 // =============================================================================
 class TimelinePanel : public QDockWidget
+                    , private boost::noncopyable
 {
     Q_OBJECT;
 
@@ -51,6 +53,12 @@ public:
     virtual ~TimelinePanel();
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    void OnViewChanged();
+    //@}
+
 signals:
     //! @name Signal
     //@{
@@ -58,15 +66,8 @@ signals:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TimelinePanel( const TimelinePanel& );            //!< Copy constructor
-    TimelinePanel& operator=( const TimelinePanel& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
-public:
     typedef boost::ptr_vector< actions::ActionsFilter_ABC > T_Filters;
     //@}
 
@@ -75,7 +76,8 @@ private:
     //@{
     ActionsToolbar* toolbar_;
     TimelineWidget* timeline_;
-    QTabWidget*     tabs_;
+    QRadioButton *  globalView_;
+    QRadioButton *  currentView_;
     T_Filters       filters_;
     //@}
 };

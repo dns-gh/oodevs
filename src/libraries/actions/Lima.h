@@ -39,6 +39,7 @@ class Lima : public Parameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
+             Lima( const kernel::OrderParameter& parameter );
              Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::PhaseLineOrder& message );
              Lima( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
@@ -59,12 +60,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Lima( const Lima& );            //!< Copy constructor
-    Lima& operator=( const Lima& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
@@ -73,7 +68,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterLima_h_

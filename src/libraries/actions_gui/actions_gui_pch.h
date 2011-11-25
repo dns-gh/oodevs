@@ -27,6 +27,7 @@
 #include <QtGui/qpixmap.h>
 #include <Qt3Support/q3popupmenu.h>
 #include <QtGui/qpushbutton.h>
+#include <QtGui/qscrollarea.h>
 #include <Qtcore/qtimer.h>
 #include <Qt3Support/q3vbox.h>
 #pragma warning( pop )

@@ -17,6 +17,16 @@ using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: String constructor
+// Created: ABR 2011-11-16
+// -----------------------------------------------------------------------------
+String::String( const kernel::OrderParameter& parameter )
+    : Parameter< QString >( parameter )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: String constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
 String::String( const kernel::OrderParameter& parameter, const std::string& value )
@@ -30,9 +40,10 @@ String::String( const kernel::OrderParameter& parameter, const std::string& valu
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 String::String( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< QString >( parameter, xis.attribute< std::string >( "value" ).c_str() )
+    : Parameter< QString >( parameter )
 {
-    // NOTHING
+    if( xis.has_attribute( "value" ) )
+        SetValue( xis.attribute< std::string >( "value" ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,8 +61,8 @@ String::~String()
 // -----------------------------------------------------------------------------
 void String::CommitTo( std::string& message ) const
 {
-    const QString value = GetValue();
-    message = value.isNull() ? "" : value.ascii();
+    if( IsSet() )
+        message = GetValue().ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +92,8 @@ void String::CommitTo( sword::MissionParameter_Value& message ) const
 void String::Serialize( xml::xostream& xos ) const
 {
     Parameter< QString >::Serialize( xos );
-    xos << xml::attribute( "value", GetValue().ascii() );
+    if( IsSet() )
+        xos << xml::attribute( "value", GetValue().ascii() );
 }
 
 // -----------------------------------------------------------------------------

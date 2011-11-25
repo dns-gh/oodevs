@@ -61,7 +61,6 @@ public:
     //@{
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
-    virtual bool CheckValidity();
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Handle( kernel::Location_ABC& location );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
@@ -76,7 +75,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual bool IsOptional() const;
+    virtual bool InternalCheckValidity() const;
     //@}
 
 private:
@@ -86,10 +85,8 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     ::gui::ParametersLayer& layer_;
     const kernel::Entity_ABC& entity_;
-    ::gui::RichLabel*     pLabel_;
     QLabel*               pPosLabel_;
     std::auto_ptr< kernel::Location_ABC > location_;
-    bool optional_;
     //@}
 };
 
