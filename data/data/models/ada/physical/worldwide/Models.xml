@@ -1680,6 +1680,7 @@
         <mission name="Engineer - resume work"/>
         <mission name="Engineer - restore a route"/>
         <mission name="Common - defend area"/>
+        <mission name="Engineer - support a new crossing site"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3881,4 +3882,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3012195172" -->
+<!-- signature="3844799527" -->
