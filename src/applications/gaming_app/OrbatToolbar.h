@@ -31,6 +31,7 @@ namespace gui
 class Simulation;
 class ProfileFilter;
 class Filter_ABC;
+class Profile;
 
 // =============================================================================
 /** @class  OrbatToolbar
@@ -42,6 +43,7 @@ class OrbatToolbar : public Q3HBox
                    , public tools::Observer_ABC
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                    , public tools::ElementObserver_ABC< Simulation >
+                   , public tools::ElementObserver_ABC< Profile >
                    , public tools::ElementObserver_ABC< kernel::Filter_ABC >
 {
     Q_OBJECT;
@@ -74,6 +76,7 @@ private:
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const Simulation& simu );
     virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
+    virtual void NotifyUpdated( const Profile& profile );
 
     void Filter( const kernel::Entity_ABC& entity );
     //@}
@@ -86,6 +89,7 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     gui::AggregateToolbar* pAggregateToolbar_;
     QToolButton* filterBtn_;
+    QString current_;
     //@}
 };
 

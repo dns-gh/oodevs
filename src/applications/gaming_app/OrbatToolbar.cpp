@@ -16,6 +16,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/AggregateToolbar.h"
 #include "gaming/ProfileFilter.h"
+#include "gaming/Profile.h"
 #include "gaming/UnitFilter.h"
 #include "gaming/Simulation.h"
 
@@ -138,6 +139,19 @@ void OrbatToolbar::NotifyUpdated( const Simulation& simu )
 {
     if( ! simu.IsConnected() )
         OnClearFilter();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyUpdated
+// Created: LGY 2011-11-25
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyUpdated( const Profile& profile )
+{
+    if( current_ != profile.GetLogin() )
+    {
+        OnClearFilter();
+        current_ = profile.GetLogin();
+    }
 }
 
 // -----------------------------------------------------------------------------

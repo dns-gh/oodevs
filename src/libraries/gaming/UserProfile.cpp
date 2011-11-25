@@ -21,14 +21,17 @@
 // Name: UserProfile constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher )
+UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller,
+                          Publisher_ABC& publisher, const Model& model )
     : controller_ ( controller )
     , publisher_  ( publisher )
+    , model_      ( model )
     , registered_ ( true )
     , login_      ( "" )
     , supervision_( false )
     , role_       ( -1 )
 {
+    controller_.Register( *this );
     controller_.Create( *this );
     SetProfile( message.profile() );
 }
@@ -37,15 +40,17 @@ UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Control
 // Name: UserProfile constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher )
+UserProfile::UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher,
+                          const Model& model )
     : controller_ ( controller )
     , publisher_  ( publisher )
+    , model_      ( model )
     , registered_ ( false )
     , login_      ( login )
     , supervision_( false )
     , role_       ( -1 )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,21 +60,22 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
 UserProfile::UserProfile( const UserProfile& p )
     : controller_      ( p.controller_ )
     , publisher_       ( p.publisher_ )
+    , model_           ( p.model_ )
     , registered_      ( false )
     , login_           ( p.login_ )
     , password_        ( p.password_ )
     , supervision_     ( p.supervision_ )
     , role_            ( p.role_ )
-    , readSides_       ( p.readSides_ )
-    , readFormations_  ( p.readFormations_ )
-    , readAutomats_    ( p.readAutomats_ )
-    , readPopulations_ ( p.readPopulations_ )
-    , writeSides_      ( p.writeSides_ )
-    , writeFormations_ ( p.writeFormations_ )
-    , writeAutomats_   ( p.writeAutomats_ )
-    , writePopulations_( p.writePopulations_ )
+
 {
-    // NOTHING
+    controller_.Register( *this );
+    readTeams_ = p.readTeams_;
+    readFormations_ = p.readFormations_;
+    readAutomats_ = p.readAutomats_;
+    readPopulations_ = p.readPopulations_;
+    writeTeams_ = p.writeTeams_;
+    writeFormations_ = p.writeFormations_;
+    writePopulations_ = p.writePopulations_;
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +86,7 @@ UserProfile::~UserProfile()
 {
     if( registered_ )
         controller_.Delete( *this );
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,8 +136,8 @@ void UserProfile::RequestUpdate( const QString& newLogin )
     profile.set_supervisor( supervision_ );
     if( role_ != -1 )
         profile.mutable_role()->set_id( role_ );
-    CopyList( readSides_, *profile.mutable_read_only_parties() );
-    CopyList( writeSides_, *profile.mutable_read_write_parties() );
+    CopyList( readTeams_, *profile.mutable_read_only_parties() );
+    CopyList( writeTeams_, *profile.mutable_read_write_parties() );
     CopyList( readFormations_, *profile.mutable_read_only_formations() );
     CopyList( writeFormations_, *profile.mutable_read_write_formations() );
     CopyList( readAutomats_, *profile.mutable_read_only_automates() );
@@ -176,7 +183,7 @@ void UserProfile::SetProfile( const sword::Profile& profile )
     if( profile.has_role() )
         role_ = profile.role().id();
     if( profile.has_read_only_parties() )
-        CopyList( profile.read_only_parties(), readSides_);
+        CopyList( profile.read_only_parties(), readTeams_);
     if( profile.has_read_only_formations() )
         CopyList( profile.read_only_formations(), readFormations_ );
     if( profile.has_read_only_automates() )
@@ -185,7 +192,7 @@ void UserProfile::SetProfile( const sword::Profile& profile )
         CopyList( profile.read_only_crowds(), readPopulations_ );
 
     if( profile.has_read_write_parties() )
-        CopyList( profile.read_write_parties(), writeSides_);
+        CopyList( profile.read_write_parties(), writeTeams_);
     if( profile.has_read_write_formations() )
         CopyList( profile.read_write_formations(), writeFormations_ );
     if( profile.has_read_write_automates() )
@@ -239,7 +246,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool UserProfile::IsReadable( const kernel::Entity_ABC& entity ) const
 {
-    return FindIn( entity.GetId(), readSides_ )
+    return FindIn( entity.GetId(), readTeams_ )
         || FindIn( entity.GetId(), readFormations_ )
         || FindIn( entity.GetId(), readAutomats_ )
         || FindIn( entity.GetId(), readPopulations_ );
@@ -251,7 +258,7 @@ bool UserProfile::IsReadable( const kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool UserProfile::IsWriteable( const kernel::Entity_ABC& entity ) const
 {
-    return FindIn( entity.GetId(), writeSides_ )
+    return FindIn( entity.GetId(), writeTeams_ )
         || FindIn( entity.GetId(), writeFormations_ )
         || FindIn( entity.GetId(), writeAutomats_ )
         || FindIn( entity.GetId(), writePopulations_ );
@@ -295,7 +302,7 @@ void UserProfile::SetReadable( const kernel::Entity_ABC& entity, bool readable )
 {
     const unsigned long id = entity.GetId();
     if( dynamic_cast< const kernel::Team_ABC* >( &entity ) )
-        SetRight( id, readSides_, readable );
+        SetRight( id, readTeams_, readable );
     else if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
         SetRight( id, readFormations_, readable );
     else if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
@@ -312,7 +319,7 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
 {
     const unsigned long id = entity.GetId();
     if( dynamic_cast< const kernel::Team_ABC* >( &entity ) )
-        SetRight( id, writeSides_, writeable );
+        SetRight( id, writeTeams_, writeable );
     else if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
         SetRight( id, writeFormations_, writeable );
     else if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
@@ -328,55 +335,6 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
 QString UserProfile::GetLogin() const
 {
     return login_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::IsKnowledgeVisible
-// Created: LGY 2011-11-24
-// -----------------------------------------------------------------------------
-bool UserProfile::IsKnowledgeVisible( const kernel::Knowledge_ABC& /*knowledge*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::IsVisible
-// Created: LGY 2011-11-24
-// -----------------------------------------------------------------------------
-bool UserProfile::IsVisible( const kernel::Entity_ABC& entity ) const
-{
-    if( const kernel::TacticalHierarchies* tacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
-        if( supervision_ && entity.GetTypeName() == kernel::Object_ABC::typeName_ && tacticalHierarchies->GetTop().GetId() == 0 )
-            return true;
-
-    if( IsReadable( entity ) ||IsWriteable( entity ) )
-        return true;
-
-    if( const kernel::TacticalHierarchies* tactical = entity.Retrieve< kernel::TacticalHierarchies >() )
-    {
-        if( const kernel::Entity_ABC* superior = tactical->GetSuperior() )
-            return IsVisible( *superior );
-        return false;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::CanBeOrdered
-// Created: LGY 2011-11-24
-// -----------------------------------------------------------------------------
-bool UserProfile::CanBeOrdered( const kernel::Entity_ABC& /*entity*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::CanDoMagic
-// Created: LGY 2011-11-24
-// -----------------------------------------------------------------------------
-bool UserProfile::CanDoMagic( const kernel::Entity_ABC& /*entity*/ ) const
-{
-    return true;
 }
 
 // -----------------------------------------------------------------------------

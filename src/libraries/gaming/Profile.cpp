@@ -9,29 +9,20 @@
 
 #include "gaming_pch.h"
 #include "Profile.h"
-#include "AgentKnowledges.h"
-#include "AgentsModel.h"
 #include "AvailableProfile.h"
-#include "Model.h"
 #include "Services.h"
 #include "Simulation.h"
-#include "TeamsModel.h"
 #include "reports/Tools.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Knowledge_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Object_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/AuthenticationSenders.h"
-#include <boost/bind.hpp>
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 
 using namespace kernel;
 
@@ -150,7 +141,7 @@ void Profile::Update( const Model& model, const sword::ProfileUpdate& message )
     if( message.login() == login_ )
     {
         Update( message.profile() );
-        ResolveEntities( model );
+        RightsResolver::Update( model );
         controller_.Update( *this );
         controller_.Update( *static_cast< Profile_ABC* >( this ) );
     }
@@ -191,33 +182,6 @@ void Profile::Update( const sword::Profile& profile )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Profile::ResolveEntities
-// Created: SBO 2008-07-25
-// -----------------------------------------------------------------------------
-template< typename Entity >
-void Profile::ResolveEntities( const tools::Resolver_ABC< Entity >& resolver, const T_Ids& readIds, const T_Ids& readWriteIds )
-{
-    std::for_each( readIds.begin(), readIds.end()
-                 , boost::bind( &Profile::Add, this, boost::bind( &tools::Resolver_ABC< Entity >::Get, boost::ref( resolver ), _1 ), readIds, readWriteIds ) );
-    std::for_each( readWriteIds.begin(), readWriteIds.end()
-                 , boost::bind( &Profile::Add, this, boost::bind( &tools::Resolver_ABC< Entity >::Get, boost::ref( resolver ), _1 ), readIds, readWriteIds ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::ResolveEntities
-// Created: SBO 2008-07-25
-// -----------------------------------------------------------------------------
-void Profile::ResolveEntities( const Model& model )
-{
-    readWriteEntities_.clear();
-    readEntities_.clear();
-    ResolveEntities< Team_ABC >      ( model.GetTeamResolver() , readTeams_      , writeTeams_ );
-    ResolveEntities< Formation_ABC > ( model.GetFormationResolver() , readFormations_ , writeFormations_ );
-    ResolveEntities< Automat_ABC >   ( model.GetAutomatResolver(), readAutomats_   , writeAutomats_ );
-    ResolveEntities< Population_ABC >( model.GetPopulationResolver(), readPopulations_, writePopulations_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Profile::GetLogin
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
@@ -253,40 +217,9 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
     if( const kernel::TacticalHierarchies* tacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( supervision_ && entity.GetTypeName() == Object_ABC::typeName_ && tacticalHierarchies->GetTop().GetId() == 0 )
             return true;
-    return IsInHierarchy( entity, readEntities_, false );
+    return RightsResolver::IsVisible( entity );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Profile::IsKnowledgeVisible
-// Created: HBD 2010-08-03
-// -----------------------------------------------------------------------------
-bool Profile::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
-{
-    return IsInHierarchy( knowledge.GetOwner(), readEntities_, false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::IsKnowledgeVisibleByEntity
-// Created: JSR 2010-10-20
-// -----------------------------------------------------------------------------
-bool Profile::IsKnowledgeVisibleByEntity( const kernel::Knowledge_ABC& knowledge, const kernel::Entity_ABC& entity ) const
-{
-    if( AreInSameKnowledgeGroup( knowledge.GetOwner(), entity, false ) )
-        return true;
-    const CommunicationHierarchies* communication = entity.Retrieve< CommunicationHierarchies >();
-    if( !communication )
-        return true;
-    const AgentKnowledges* knowledgeToCheckGroup = 0;
-    for( const Entity_ABC* superior = &knowledge.GetOwner(); superior && !knowledgeToCheckGroup; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
-        knowledgeToCheckGroup = superior->Retrieve< AgentKnowledges >();
-    if( !knowledgeToCheckGroup && &knowledge.GetOwner() == &communication->GetTop() && !communication->IsJammed() )
-        return true;
-    if( &communication->GetTop() == &entity )
-        if( const CommunicationHierarchies* c = knowledge.GetOwner().Retrieve< CommunicationHierarchies >() )
-            if( c && c->GetSuperior() == &entity )
-                return true;
-    return false;
-}
 
 // -----------------------------------------------------------------------------
 // Name: Profile::CanBeOrdered
@@ -294,7 +227,7 @@ bool Profile::IsKnowledgeVisibleByEntity( const kernel::Knowledge_ABC& knowledge
 // -----------------------------------------------------------------------------
 bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
 {
-    return simulation_ && IsInHierarchy( entity, readWriteEntities_, true );
+    return simulation_ && RightsResolver::CanBeOrdered( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -303,241 +236,7 @@ bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool Profile::CanDoMagic( const Entity_ABC& entity ) const
 {
-    return simulation_ && supervision_ && CanBeOrdered( entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::IsChildOfCommunicationHierarchy
-// Created: SBO 2007-11-15
-// -----------------------------------------------------------------------------
-bool IsChildOfCommunicationHierarchy( const CommunicationHierarchies& target, const Entity_ABC& entity )
-{
-    const kernel::TacticalHierarchies* tacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
-    if( !tacticalHierarchies )
-        return false;
-
-    tools::Iterator< const Entity_ABC& > children = tacticalHierarchies->CreateSubordinateIterator();
-    while( children.HasMoreElements() )
-    {
-        const Entity_ABC& child = children.NextElement();
-        const CommunicationHierarchies* childCommunicationHierarchies = child.Retrieve< CommunicationHierarchies >();
-        if( childCommunicationHierarchies )
-        {
-            if( &child == &target.GetEntity() )
-                return true;
-            if( childCommunicationHierarchies->IsSubordinateOf( target.GetEntity() ) )
-                return true;
-            if( target.IsSubordinateOf( child ) )
-                return true;
-        }
-        return IsChildOfCommunicationHierarchy( target, child );
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::IsInHierarchy
-// Created: AGE 2006-10-11
-// -----------------------------------------------------------------------------
-bool Profile::IsInHierarchy( const Entity_ABC& entityToTest, const T_Entities& entities, bool childOnly )
-{
-    //$$$$ NLD - 2010-11-10 - hum, compliqué :)
-    if( entities.find( &entityToTest ) != entities.end() )
-        return true;
-    const TacticalHierarchies* tactical = entityToTest.Retrieve< TacticalHierarchies >();
-    const CommunicationHierarchies* communication = entityToTest.Retrieve< CommunicationHierarchies >();
-    if( !tactical && !communication )
-        return true;
-    if( ( IsInSpecificHierarchy( entityToTest, tactical, entities, childOnly ) && !( communication && communication->IsJammed() ) ) )
-        return true;
-    if( childOnly )
-        return IsInSpecificHierarchy( entityToTest, communication, entities, childOnly );
-
-    // Knowledges specific case
-    if( entityToTest.GetTypeName() == KnowledgeGroup_ABC::typeName_ )
-    {
-        if( !communication )
-            return false;
-        if( IsInSpecificHierarchy( entityToTest, communication, entities, childOnly ) )
-            return true;
-        for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
-        {
-            const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
-            if( !hierarchy ) // = (*it) est une formation ?
-                return IsChildOfCommunicationHierarchy( *communication, **it );
-        }
-        return false;
-    }
-    for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
-    {
-        const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
-        if( hierarchy && tactical && hierarchy->GetSuperior() == 0 && tactical->IsSubordinateOf( **it ) )
-            return true;
-        bool isObject = ( entityToTest.GetTypeName() == Object_ABC::typeName_ );
-        if( AreInSameKnowledgeGroup( entityToTest, **it, isObject ) )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::AreInSameKnowledgeGroup
-// Created: JSR 2010-10-20
-// -----------------------------------------------------------------------------
-bool Profile::AreInSameKnowledgeGroup( const Entity_ABC& entity1, const Entity_ABC& entity2, bool compareTop )
-{
-    const CommunicationHierarchies* hierarchy1 = entity1.Retrieve< CommunicationHierarchies >();
-    const CommunicationHierarchies* hierarchy2 = entity2.Retrieve< CommunicationHierarchies >();
-    if( hierarchy1 && hierarchy2 )
-    {
-        const AgentKnowledges* entityKnowledges1 = 0;
-        const AgentKnowledges* entityKnowledges2 = 0;
-        for( const Entity_ABC* superior1 = &entity1; superior1; superior1 = superior1->Get< CommunicationHierarchies >().GetSuperior() )
-        {
-            entityKnowledges1 = superior1->Retrieve< AgentKnowledges >();
-            if( entityKnowledges1 )
-            {
-                for( const Entity_ABC* superior2 = &entity2; superior2; superior2 = superior2->Get< CommunicationHierarchies >().GetSuperior() )
-                {
-                    entityKnowledges2 = superior2->Retrieve< AgentKnowledges >();
-                    if( entityKnowledges2 )
-                        return entityKnowledges2 == entityKnowledges1;
-                }
-                return false;
-            }
-        }
-        return compareTop ? &hierarchy1->GetTop() == &hierarchy2->GetTop() : false;
-    }
-    else if( compareTop && !hierarchy2 )
-        if( const TacticalHierarchies* tacticalHierarchies1 = entity1.Retrieve< kernel::TacticalHierarchies >() )
-            if( const TacticalHierarchies* tacticalHierarchies2 = entity2.Retrieve< kernel::TacticalHierarchies >() )
-                return &tacticalHierarchies1->GetTop() == &tacticalHierarchies2->GetTop();
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::IsInSpecificHierarchy
-// Created: JSR 2010-10-20
-// -----------------------------------------------------------------------------
-bool Profile::IsInSpecificHierarchy( const Entity_ABC& entity, const Hierarchies* hierarchy, const T_Entities& entities, bool childOnly )
-{
-    if( !hierarchy )
-        return false;
-    for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
-        if( IsInHierarchy( entity, *hierarchy, **it, childOnly ) )
-            return true;
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::IsInHierarchy
-// Created: AGE 2006-10-13
-// -----------------------------------------------------------------------------
-bool Profile::IsInHierarchy( const Entity_ABC& entity, const Hierarchies& hierarchy, const Entity_ABC& other, bool childOnly )
-{
-    if( hierarchy.IsSubordinateOf( other ) )
-        return true;
-    if( childOnly )
-        return false;
-    const Hierarchies* otherHierarchies = hierarchy.RetrieveHierarchies( other );
-    return otherHierarchies && otherHierarchies->IsSubordinateOf( entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::NotifyCreated
-// Created: AGE 2006-10-11
-// -----------------------------------------------------------------------------
-void Profile::NotifyCreated( const Automat_ABC& automat )
-{
-    Add( automat, readAutomats_, writeAutomats_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::NotifyDeleted
-// Created: AGE 2006-10-11
-// -----------------------------------------------------------------------------
-void Profile::NotifyDeleted( const Automat_ABC& automat )
-{
-    Remove( automat );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::NotifyCreated
-// Created: AGE 2006-10-11
-// -----------------------------------------------------------------------------
-void Profile::NotifyCreated( const Population_ABC& popu )
-{
-    Add( popu, readPopulations_, writePopulations_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::NotifyDeleted
-// Created: AGE 2006-10-11
-// -----------------------------------------------------------------------------
-void Profile::NotifyDeleted( const Population_ABC& popu )
-{
-    Remove( popu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::NotifyCreated
-// Created: AGE 2006-10-11
-// -----------------------------------------------------------------------------
-void Profile::NotifyCreated( const Team_ABC& team )
-{
-    Add( team, readTeams_, writeTeams_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::NotifyDeleted
-// Created: AGE 2006-10-11
-// -----------------------------------------------------------------------------
-void Profile::NotifyDeleted( const Team_ABC& team )
-{
-    Remove( team );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::NotifyCreated
-// Created: AGE 2006-10-20
-// -----------------------------------------------------------------------------
-void Profile::NotifyCreated( const Formation_ABC& formation )
-{
-    Add( formation, readFormations_, writeFormations_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::NotifyDeleted
-// Created: AGE 2006-10-20
-// -----------------------------------------------------------------------------
-void Profile::NotifyDeleted( const Formation_ABC& formation )
-{
-    Remove( formation );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::Add
-// Created: AGE 2006-10-11
-// -----------------------------------------------------------------------------
-void Profile::Add( const Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds )
-{
-    const unsigned long id = entity.GetId();
-    const bool canBeOrdered = std::find( readWriteIds.begin(), readWriteIds.end(), id ) != readWriteIds.end();
-    const bool isVisible = canBeOrdered  || std::find( readIds.begin(), readIds.end(), id ) != readIds.end();
-    if( canBeOrdered )
-        readWriteEntities_.insert( &entity );
-    if( isVisible )
-        readEntities_.insert( &entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::Remove
-// Created: AGE 2006-10-11
-// -----------------------------------------------------------------------------
-void Profile::Remove( const Entity_ABC& entity )
-{
-    readEntities_.erase( &entity );
-    readWriteEntities_.erase( &entity );
+    return simulation_ && supervision_ && RightsResolver::CanBeOrdered( entity );
 }
 
 // -----------------------------------------------------------------------------

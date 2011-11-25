@@ -58,6 +58,8 @@ bool ProfileFilter::IsVisible( const kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool ProfileFilter::IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const
 {
+    if( profile_ )
+        return profile_->IsKnowledgeVisible( knowledge ) && profile_->IsKnowledgeVisible( knowledge );
     return pUnitFilter_->IsKnowledgeVisible( knowledge );
 }
 

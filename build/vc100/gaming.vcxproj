@@ -101,6 +101,7 @@
     <ClCompile Include="..\..\src\libraries\gaming\HumanState.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\LogFuneralConsign.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\ProfileFilter.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\RightsResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\statusicons.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\SupplyResourceRequest.cpp" />
@@ -323,6 +324,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\HumanState.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogFuneralConsign.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ProfileFilter.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\RightsResolver.h" />
     <ClInclude Include="..\..\src\libraries\gaming\statusicons.h" />
     <ClInclude Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.h" />
     <ClInclude Include="..\..\src\libraries\gaming\SupplyResourceRequest.h" />

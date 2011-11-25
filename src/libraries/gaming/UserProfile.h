@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Profile_ABC.h"
+#include "RightsResolver.h"
 #include "protocol/AuthenticationSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
@@ -29,6 +29,7 @@ namespace sword
 }
 
 class Publisher_ABC;
+class Model;
 
 // =============================================================================
 /** @class  UserProfile
@@ -38,13 +39,15 @@ class Publisher_ABC;
 // =============================================================================
 class UserProfile : public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< sword::ProfileUpdate >
-                  , public kernel::Profile_ABC
+                  , public RightsResolver
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher );
-             UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher );
+             UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller,
+                          Publisher_ABC& publisher, const Model& model );
+             UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher,
+                          const Model& model );
              UserProfile( const UserProfile& );
     virtual ~UserProfile();
     //@}
@@ -60,10 +63,6 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetLogin() const;
-    virtual bool IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const;
-    virtual bool IsVisible( const kernel::Entity_ABC& entity ) const;
-    virtual bool CanBeOrdered ( const kernel::Entity_ABC& entity ) const;
-    virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const;
     virtual bool IsSupervision() const;
 
     QString GetPassword() const;
@@ -98,19 +97,12 @@ private:
     //@{
     kernel::Controller& controller_;
     Publisher_ABC& publisher_;
+    const Model& model_;
     bool registered_;
     QString login_;
     QString password_;
     bool supervision_;
     int role_;
-    T_Ids readSides_;
-    T_Ids readFormations_;
-    T_Ids readAutomats_;
-    T_Ids readPopulations_;
-    T_Ids writeSides_;
-    T_Ids writeFormations_;
-    T_Ids writeAutomats_;
-    T_Ids writePopulations_;
     //@}
 };
 
