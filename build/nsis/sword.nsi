@@ -211,6 +211,10 @@ FunctionEnd
 
 ; ------------------------------------------------------------------------------
 Function un.onInit
+!if ${PLATFORM} == "vc100_x64"
+    SetRegView 64
+!endif
+
     !insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
