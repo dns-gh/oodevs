@@ -348,8 +348,7 @@ bool Profile::IsInHierarchy( const Entity_ABC& entityToTest, const T_Entities& e
     const CommunicationHierarchies* communication = entityToTest.Retrieve< CommunicationHierarchies >();
     if( !tactical && !communication )
         return true;
-    if( ( IsInSpecificHierarchy( entityToTest, tactical, entities, childOnly ) && !( communication && communication->IsJammed() ) ) ||
-        IsInSpecificHierarchy( entityToTest, 0, entities, childOnly ) )
+    if( ( IsInSpecificHierarchy( entityToTest, tactical, entities, childOnly ) && !( communication && communication->IsJammed() ) ) )
         return true;
     if( childOnly )
         return IsInSpecificHierarchy( entityToTest, communication, entities, childOnly );
