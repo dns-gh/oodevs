@@ -26,7 +26,8 @@ namespace
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
+        std::string result = settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
+        return ( result.empty() ) ? "en" : result;
     }
 }
 
@@ -36,13 +37,13 @@ namespace
 // -----------------------------------------------------------------------------
 OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, Config& config )
     : ContentPage( pages, previous, eButtonBack | eButtonApply )
-    , parent_          ( parent )
-    , config_          ( config )
-    , selectedLanguage_( ReadLang() )
-    , selectedDataDir_ ( "" )
-    , selectedProfile_ ( 0 )
-    , hasChanged_      ( false )
-    , languageHasChanged_     ( false )
+    , parent_            ( parent )
+    , config_            ( config )
+    , selectedLanguage_  ( ReadLang() )
+    , selectedDataDir_   ( "" )
+    , selectedProfile_   ( 0 )
+    , hasChanged_        ( false )
+    , languageHasChanged_( false )
 {
 
     Q3VBox* mainBox = new Q3VBox( this );
