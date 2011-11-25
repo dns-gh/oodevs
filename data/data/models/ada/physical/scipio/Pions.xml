@@ -18582,6 +18582,13 @@
       <crew-rank count="7" type="Officier"/>
       <crew-rank count="57" type="SousOfficier"/>
     </crew-ranks>
+    <stocks>
+      <stock category="Unite essence" threshold="50"/>
+      <stock category="Unite tranche D" threshold="50"/>
+      <stock category="Unite non tranche D" threshold="50"/>
+      <stock category="Unite vivre" threshold="50"/>
+      <stock category="Pieces" threshold="50"/>
+    </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -19245,4 +19252,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3187027810" -->
+<!-- signature="1748523745" -->
