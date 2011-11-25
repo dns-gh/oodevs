@@ -70,7 +70,7 @@ OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previ
     dataDirectory_ = new QLineEdit( hbox );
     dataButton_ = new QPushButton( hbox );
     connect( dataButton_, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
-    connect( dataDirectory_, SIGNAL( returnPressed() ), SLOT( OnEditDataDirectory() ) );
+    connect( dataDirectory_, SIGNAL( textChanged( const QString& ) ), SLOT( OnEditDataDirectory( const QString& ) ) );
     // Profile
     profileLabel_ = new QLabel( box );
     profileCombo_ = new QComboBox( box );
@@ -156,38 +156,49 @@ void OptionsPage::OnChangeDataDirectory()
 
 // -----------------------------------------------------------------------------
 // Name: OptionsPage::OnEditDataDirectory
-// Created: ABR 2011-11-15
+// Created: ABR 2011-11-25
 // -----------------------------------------------------------------------------
-void OptionsPage::OnEditDataDirectory()
+void OptionsPage::OnEditDataDirectory( const QString& text )
 {
-    const std::string directory = dataDirectory_->text().ascii();
-    if( !bfs::exists( directory ) )
-    {
-        MessageDialog message( parent_, tools::translate( "OptionsPage", "Invalid directory" ), tools::translate( "OptionsPage", "Directory \'%1\' doesn't exist. Do you want to create it ?" ).arg( directory.c_str() ), QMessageBox::Yes, QMessageBox::No );
-        if( message.exec() == QMessageBox::Yes )
-        {
-            try
-            {
-                bfs::create_directories( std::string( directory ) );
-            }
-            catch ( std::exception& e )
-            {
-                MessageDialog message( parent_, tools::translate( "OptionsPage", "Error" ), tools::translate( "OptionsPage", "Can't create directory \'%1\', error \'%2\' happen." ).arg( directory.c_str() ).arg( e.what() ), QMessageBox::Ok );
-                message.exec();
-                return;
-            }
-        }
-        else
-        {
-            dataDirectory_->setText( selectedDataDir_.c_str() );
-            return;
-        }
-    }
-    selectedDataDir_ = directory;
-    dataDirectory_->setText( selectedDataDir_.c_str() );
+    selectedDataDir_ = text.ascii();
     hasChanged_ = true;
     EnableButton( eButtonApply, true );
 }
+
+//// -----------------------------------------------------------------------------
+//// Name: OptionsPage::OnEditDataDirectory
+//// Created: ABR 2011-11-15
+//// -----------------------------------------------------------------------------
+//void OptionsPage::OnEditDataDirectory()
+//{
+//    const std::string directory = dataDirectory_->text().ascii();
+//    if( !bfs::exists( directory ) )
+//    {
+//        MessageDialog message( parent_, tools::translate( "OptionsPage", "Invalid directory" ), tools::translate( "OptionsPage", "Directory \'%1\' doesn't exist. Do you want to create it ?" ).arg( directory.c_str() ), QMessageBox::Yes, QMessageBox::No );
+//        if( message.exec() == QMessageBox::Yes )
+//        {
+//            try
+//            {
+//                bfs::create_directories( std::string( directory ) );
+//            }
+//            catch ( std::exception& e )
+//            {
+//                MessageDialog message( parent_, tools::translate( "OptionsPage", "Error" ), tools::translate( "OptionsPage", "Can't create directory \'%1\', error \'%2\' happen." ).arg( directory.c_str() ).arg( e.what() ), QMessageBox::Ok );
+//                message.exec();
+//                return;
+//            }
+//        }
+//        else
+//        {
+//            dataDirectory_->setText( selectedDataDir_.c_str() );
+//            return;
+//        }
+//    }
+//    selectedDataDir_ = directory;
+//    dataDirectory_->setText( selectedDataDir_.c_str() );
+//    hasChanged_ = true;
+//    EnableButton( eButtonApply, true );
+//}
 
 // -----------------------------------------------------------------------------
 // Name: OptionsPage::OnChangeProfile
@@ -224,11 +235,47 @@ void OptionsPage::OnBack()
 }
 
 // -----------------------------------------------------------------------------
+// Name: OptionsPage::CreateDataDirectory
+// Created: ABR 2011-11-25
+// -----------------------------------------------------------------------------
+void OptionsPage::CreateDataDirectory()
+{
+    const std::string directory = dataDirectory_->text().ascii();
+    if( !bfs::exists( directory ) )
+    {
+        MessageDialog message( parent_, tools::translate( "OptionsPage", "Invalid directory" ), tools::translate( "OptionsPage", "Directory \'%1\' doesn't exist. Do you want to create it ?" ).arg( directory.c_str() ), QMessageBox::Yes, QMessageBox::No );
+        if( message.exec() == QMessageBox::Yes )
+        {
+            try
+            {
+                selectedDataDir_ = directory;
+                bfs::create_directories( std::string( directory ) );
+            }
+            catch ( std::exception& e )
+            {
+                selectedDataDir_ = config_.GetRootDir();
+                dataDirectory_->setText( selectedDataDir_.c_str() );
+                MessageDialog message( parent_, tools::translate( "OptionsPage", "Error" ), tools::translate( "OptionsPage", "Can't create directory \'%1\', error \'%2\' happen." ).arg( directory.c_str() ).arg( e.what() ), QMessageBox::Ok );
+                message.exec();
+                return;
+            }
+        }
+        else
+        {
+            selectedDataDir_ = config_.GetRootDir();
+            dataDirectory_->setText( selectedDataDir_.c_str() );
+            return;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: OptionsPage::OnApply
 // Created: ABR 2011-11-08
 // -----------------------------------------------------------------------------
 void OptionsPage::OnApply()
 {
+    CreateDataDirectory();
     assert( hasChanged_ );
     if( languageHasChanged_ )
         static_cast< Application* >( qApp )->DeleteTranslators();
