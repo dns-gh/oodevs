@@ -55,7 +55,7 @@ private:
     void ReadArgument( xml::xistream& xis );
     void ComputeArgument();
     void ComputePath();
-    std::string ConvertArgumentVariable( std::string value );
+    std::string ConvertArgumentVariable( const std::string& value ) const;
     //@}
 
 private slots:
