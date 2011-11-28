@@ -234,6 +234,7 @@ void LogisticSupplyRecompletionDialog::AddPersonal( unsigned nPos, const QString
 void LogisticSupplyRecompletionDialog::InitializeDotations()
 {
     dotationsTable_->setNumRows( 0 );
+    catetoriesNames_.clear();
     const tools::Resolver_ABC< DotationType >& dotations = static_.objectTypes_;
     tools::Iterator< const DotationType& > it = dotations.CreateIterator();
     std::set< unsigned long > inserted;
@@ -245,9 +246,9 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
         const unsigned nPos = dotationsTable_->numRows();
         dotationsTable_->insertRows( nPos, 1 );
         dotationsTable_->setItem( nPos, 0, new Q3CheckTableItem( dotationsTable_, 0 ) );
-        dotationsTable_->setText( nPos, 1, type.GetCategory().c_str() );
+        dotationsTable_->setText( nPos, 1, type.GetCategoryDisplay().c_str() );
         dotationsTable_->setItem( nPos, 2, new SpinTableItem< int >( dotationsTable_, 0, 100, 1 ) );
-        category_[ type.GetCategory().c_str() ] = type.GetFamily();
+        catetoriesNames_.push_back( type.GetCategoryName().c_str() );
     }
     dotationsTable_->setMinimumHeight( dotationsTable_->rowHeight( 0 ) * 5 );
 }
@@ -409,13 +410,9 @@ void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::Param
             if( !pDotationItemCheckBox->isChecked() )
                 continue;
 
-            CIT_Category it = category_.find( name );
-            if( it != category_.end() )
-            {
-                ParameterList& personalList = list.AddList( CreateName( "Dotation", index ) );
-                personalList.AddIdentifier( "Dotation", it->second );
-                personalList.AddQuantity( "Number", pPercentageItem->text().toInt() );
-            }
+            ParameterList& personalList = list.AddList( CreateName( "Dotation", index ) );
+            personalList.AddIdentifier( "Dotation", tools::DotationFamilyFromString( catetoriesNames_[ nRow ] ) );
+            personalList.AddQuantity( "Number", pPercentageItem->text().toInt() );
         }
     }
 }
@@ -527,7 +524,6 @@ void LogisticSupplyRecompletionDialog::Validate()
     action->RegisterAndPublish( actionsModel_ );
 
     selected_ = 0;
-    category_.clear();
 }
 
 // -----------------------------------------------------------------------------

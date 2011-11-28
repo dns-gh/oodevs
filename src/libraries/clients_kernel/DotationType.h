@@ -43,7 +43,8 @@ public:
     unsigned long GetFamily() const;
 
     const std::string& GetName() const; // $$$$ AGE 2006-04-28: category and name are kind of mixed up
-    const std::string GetCategory() const;
+    const std::string GetCategoryDisplay() const;
+    const std::string GetCategoryName() const;
     const std::string& GetType() const;
     const LogisticSupplyClass& GetLogisticSupplyClass() const;
 

@@ -62,12 +62,21 @@ const std::string& DotationType::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DotationType::GetCategoryDisplay
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+const std::string DotationType::GetCategoryDisplay() const
+{
+    return tools::ToString( static_cast< E_DotationFamily >( categoryId_ ), ENT_Tr_ABC::eToTr ).ascii();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DotationType::GetCategory
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-const std::string DotationType::GetCategory() const
+const std::string DotationType::GetCategoryName() const
 {
-    return tools::ToString( static_cast< E_DotationFamily >( categoryId_ ), ENT_Tr_ABC::eToTr ).ascii();
+    return tools::ToString( static_cast< E_DotationFamily >( categoryId_ ), ENT_Tr_ABC::eToSim ).ascii();
 }
 
 // -----------------------------------------------------------------------------

@@ -264,7 +264,7 @@ void InitialState::FillResources( tools::Iterator< const kernel::DotationCapacit
 const QString InitialState::RetrieveResourceCategory( const QString& resourceName ) const
 {
     const kernel::DotationType& category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( resourceName.ascii() );
-    return category.GetCategory().c_str();
+    return category.GetCategoryName().c_str();
 }
 
 // -----------------------------------------------------------------------------

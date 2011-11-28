@@ -93,9 +93,9 @@ void UnitStateTableResource::contextMenuEvent( QContextMenuEvent* e )
         const kernel::DotationType& dotation = dotationIterator.NextElement();
         if( IsDotationAlreadyPresent( dotation.GetName().c_str() ) )
             continue;
-        if( categoryMap.find( dotation.GetCategory() ) == categoryMap.end() )
-            categoryMap[ dotation.GetCategory() ] = new Q3PopupMenu( &targetMenu );
-        categoryMap[ dotation.GetCategory() ]->insertItem( dotation.GetName().c_str(), dotation.GetId() );
+        if( categoryMap.find( dotation.GetCategoryDisplay() ) == categoryMap.end() )
+            categoryMap[ dotation.GetCategoryDisplay() ] = new Q3PopupMenu( &targetMenu );
+        categoryMap[ dotation.GetCategoryDisplay() ]->insertItem( dotation.GetName().c_str(), dotation.GetId() );
     }
     for( std::map< std::string, Q3PopupMenu* >::iterator it = categoryMap.begin(); it != categoryMap.end(); ++it )
     {
@@ -143,7 +143,7 @@ void UnitStateTableResource::AddItem( int id )
 {
     const kernel::DotationType* dotation = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Find( id );
     assert( dotation != 0 );
-    AddLine( dotation->GetName().c_str(), dotation->GetCategory().c_str() );
+    AddLine( dotation->GetName().c_str(), dotation->GetCategoryDisplay().c_str() );
 }
 
 // -----------------------------------------------------------------------------
