@@ -208,7 +208,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         ThrowUnexpected( parameter, xis );
     std::auto_ptr< Parameter_ABC > param;
     bool found = DoCreateParameter( parameter, xis, entity, type, param );
-    if( found == false )
+    if( found == false || !param.get() )
         found = DoCreateParameter( parameter, xis, type, param );
     if( found == false )
         throw std::runtime_error( "Unknown parameter type '" + type + "'" );
