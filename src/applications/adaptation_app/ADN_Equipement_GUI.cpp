@@ -201,7 +201,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     QWidget* pIndirectGroupHolder = builder.AddFieldHolder( pIndirectGroup );
     pIndirectTypeCombo_ = builder.AddEnumField< E_TypeMunitionTirIndirect >( pIndirectGroupHolder, tr( "Type" ), vConnectors[ eIndirectType ], ADN_Tr::ConvertFromTypeMunitionTirIndirect );
     pIndirectGroup->connect( pIndirectTypeCombo_, SIGNAL( activated( int ) ), this, SLOT( IndirectTypeComboActivated( int ) ) );
-    builder.AddField< ADN_EditLine_Int >( pIndirectGroupHolder, tr( "Intervention" ), vConnectors[ eIntervention ], 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pIndirectGroupHolder, tr( "Intervention" ), vConnectors[ eIntervention ], 0, eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pIndirectGroupHolder, tr( "X Dispersion" ), vConnectors[ eDispersionX ], tr( "m" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pIndirectGroupHolder, tr( "Y Dispersion" ), vConnectors[ eDispersionY ], tr( "m" ), eGreaterZero );
     
