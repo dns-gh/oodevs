@@ -356,7 +356,7 @@
       <terrain type="bridge" value="8"/>
       <terrain type="railroad" value="5"/>
     </heuristic>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <mobility default-speed="1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <population-filter density="0.5"/>
     <workable max-animator="3"/>
   </object>
@@ -473,4 +473,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="2761612076" -->
+<!-- signature="1263216392" -->
