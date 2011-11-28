@@ -66,7 +66,7 @@ unsigned long ObjectKnowledgeOrder::RetrieveId() const
 // -----------------------------------------------------------------------------
 void ObjectKnowledgeOrder::Serialize( xml::xostream& xos ) const
 {
-    ObjectKnowledge::Serialize( xos );
+    Parameter< const kernel::ObjectKnowledge_ABC* >::Serialize( xos );
     unsigned long id = RetrieveId();
     if( id != 0 )
         xos << xml::attribute( "value", id );

@@ -65,7 +65,7 @@ unsigned long PopulationKnowledgeOrder::RetrieveId() const
 // -----------------------------------------------------------------------------
 void PopulationKnowledgeOrder::Serialize( xml::xostream& xos ) const
 {
-    PopulationKnowledge::Serialize( xos );
+    Parameter< const kernel::PopulationKnowledge_ABC* >::Serialize( xos );
     unsigned long id = RetrieveId();
     if( id != 0 )
         xos << xml::attribute( "value", id );

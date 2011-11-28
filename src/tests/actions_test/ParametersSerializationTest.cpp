@@ -558,6 +558,9 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_PopulationKnowledge, KnowledgeF
     MOCK_EXPECT( converter, FindPopulationKnowledgeFromPopulation ).once().in( s ).with( mock::same( population ), mock::same( owner ) ).returns( &knowledge );
     MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &population );
     MOCK_EXPECT( population, GetId ).once().in( s ).returns( 42u );
+    MOCK_EXPECT( converter, FindPopulationKnowledgeFromPopulation ).once().in( s ).with( mock::same( population ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &population );
+    MOCK_EXPECT( population, GetId ).once().in( s ).returns( 42u );
 
     std::auto_ptr< sword::MissionParameter > message( Serialize( "crowdknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
@@ -581,6 +584,9 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_ObjectKnowledge, KnowledgeFixtu
     MOCK_EXPECT( converter, FindObjectKnowledgeFromObjectWithEntity ).in( s ).once().with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
     MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &object );
     MOCK_EXPECT( object, GetId ).once().in( s ).returns( 42u );
+    MOCK_EXPECT( converter, FindObjectKnowledgeFromObjectWithEntity ).in( s ).once().with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &object );
+    MOCK_EXPECT( object, GetId ).once().in( s ).returns( 42u );
 
     std::auto_ptr< sword::MissionParameter > message( Serialize( "objectknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::ObjectKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
@@ -601,6 +607,9 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_AgentKnowledge, KnowledgeFixtur
     MockAgent owner;
     MockAgentKnowledgeConverter converter;
     MockAgentKnowledge knowledge;
+    MOCK_EXPECT( converter, FindAgentKnowledgeFromAgent ).once().in( s ).with( mock::same( agent ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &agent );
+    MOCK_EXPECT( agent, GetId ).once().in( s ).returns( 42u );
     MOCK_EXPECT( converter, FindAgentKnowledgeFromAgent ).once().in( s ).with( mock::same( agent ), mock::same( owner ) ).returns( &knowledge );
     MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &agent );
     MOCK_EXPECT( agent, GetId ).once().in( s ).returns( 42u );

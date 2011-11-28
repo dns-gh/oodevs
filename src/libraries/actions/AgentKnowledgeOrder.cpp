@@ -66,7 +66,7 @@ unsigned long AgentKnowledgeOrder::RetrieveId() const
 // -----------------------------------------------------------------------------
 void AgentKnowledgeOrder::Serialize( xml::xostream& xos ) const
 {
-    AgentKnowledge::Serialize( xos );
+    Parameter< const kernel::AgentKnowledge_ABC* >::Serialize( xos );
     unsigned long id = RetrieveId();
     if( id != 0 )
         xos << xml::attribute( "value", id );
