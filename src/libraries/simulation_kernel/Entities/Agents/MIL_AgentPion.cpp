@@ -1411,7 +1411,11 @@ void MIL_AgentPion::Apply2( boost::function< void( PHY_Dotation& ) > visitor ) c
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::Apply2( boost::function< void( PHY_DotationStock& ) > visitor ) const
 {
-    GetRole< PHY_RoleInterface_Supply >().Apply( visitor );
+    const PHY_RoleInterface_Supply* itf = RetrieveRole< PHY_RoleInterface_Supply >();
+    if( itf )
+        itf->Apply( visitor );
+    else
+        MT_LOG_ERROR_MSG( "Unit " << GetName() << " is not a logistic unit." );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,10 +13,14 @@
 #define __MIL_LogisticVisitor_h_
 
 #include "Entities/MIL_EntityVisitor_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConfig.h"
 #include "Entities/Agents/Roles/Logistic/FuneralPackagingResource.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include <boost/foreach.hpp>
 
