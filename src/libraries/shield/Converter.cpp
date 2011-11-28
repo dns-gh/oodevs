@@ -203,6 +203,10 @@ void Converter::ReceiveSimToClient( const sword::SimToClient& msg )
         client_.Send( out );
         return;
     }
+	if ( msg.message().has_object_creation() && msg.message().object_creation().type().id() !=  "seal off area" && msg.message().object_creation().type().id() !=  "controle de zone" )
+	{
+		FORWARD( client_, SimulationToClient, object_creation )
+	}
     FORWARD( client_, SimulationToClient, frag_order_ack )
     FORWARD( client_, SimulationToClient, set_automat_mode_ack )
     FORWARD( client_, SimulationToClient, unit_creation_request_ack )
@@ -265,7 +269,6 @@ void Converter::ReceiveSimToClient( const sword::SimToClient& msg )
     FORWARD( client_, SimulationToClient, unit_order )
     FORWARD( client_, SimulationToClient, automat_order )
     FORWARD( client_, SimulationToClient, crowd_order )
-    FORWARD( client_, SimulationToClient, object_creation )
     FORWARD( client_, SimulationToClient, object_destruction )
     FORWARD( client_, SimulationToClient, object_update )
     FORWARD( client_, SimulationToClient, object_knowledge_creation )
