@@ -147,6 +147,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , glProxy_          ( 0 )
     , menu_             ( 0 )
     , fileToolBar_      ( 0 )
+    , pExtensionsPanel_ ( 0 )
     , needsSaving_      ( false )
     , loading_          ( false )
     , progressDialog_   ( 0 )
