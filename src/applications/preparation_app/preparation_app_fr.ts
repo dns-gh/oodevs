@@ -538,7 +538,7 @@
     </message>
     <message>
         <source>Diplomacy</source>
-        <translation>Diplomacie</translation>
+        <translation>Diplomatie</translation>
     </message>
     <message>
         <source>Parties:</source>
