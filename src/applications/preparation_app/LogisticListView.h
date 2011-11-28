@@ -55,6 +55,13 @@ private:
     virtual void NotifyUpdated( const LogisticLevelAttritube& hierarchy );
     virtual const kernel::Entity_ABC* RetrieveSuperior( const kernel::Entity_ABC& entity ) const;
     virtual void SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* superior );
+    virtual void keyPressEvent( QKeyEvent* event );
+    //@}
+
+private:
+    //! @name Member Data
+    //@{
+    ModelBuilder& modelBuilder_;
     //@}
 };
 
