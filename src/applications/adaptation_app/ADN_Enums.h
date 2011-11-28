@@ -371,4 +371,11 @@ enum E_MissionParameterType
     eNbrMissionParameterType
 };
 
+enum E_AnchorType
+{
+    eNoAnchor,
+    eStart,
+    eEnd,
+    eNbrAnchorType
+};
 #endif // __ADN_Enums_h_

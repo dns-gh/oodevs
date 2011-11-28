@@ -1300,6 +1300,12 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\UnitsFilter.cpp">
       <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DateEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AnchorType.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1982,6 +1988,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AnchorType.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

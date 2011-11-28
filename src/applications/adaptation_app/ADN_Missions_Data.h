@@ -92,6 +92,7 @@ public:
     public:
         ADN_Type_String                                                   strName_;
         ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType > type_;
+        ADN_Type_Enum< E_AnchorType, eNbrAnchorType >                     anchor_;
         ADN_Type_Bool                                                     isOptional_;
         ADN_Type_Int                                                      min_;
         ADN_Type_Int                                                      max_;

@@ -2527,6 +2527,10 @@ du tireur</translation>
         <source>DirectIA name</source>
         <translation>Nom DirectIA</translation>
     </message>
+    <message>
+        <source>Anchor</source>
+        <translation>Point d&apos;attache</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Mission_ConfigurationDlg</name>
@@ -5048,6 +5052,18 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Commander, Civilian</source>
         <translation>Commandant, Civil</translation>
+    </message>
+    <message>
+        <source>start</source>
+        <translation>début</translation>
+    </message>
+    <message>
+        <source>end</source>
+        <translation>fin</translation>
+    </message>
+    <message>
+        <source>nothing</source>
+        <translation>aucun</translation>
     </message>
 </context>
 <context>

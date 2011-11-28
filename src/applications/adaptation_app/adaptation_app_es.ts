@@ -2525,6 +2525,10 @@ tirador</translation>
         <source>Range max</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Anchor</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Mission_ConfigurationDlg</name>
@@ -5043,6 +5047,18 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Commander, Civilian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nothing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -97,6 +97,7 @@ ADN_Missions_Data::MissionParameter::MissionParameter()
     , max_( 1 )
 {
     ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType >::SetConverter( &ADN_Tr::ConvertFromMissionParameterType );
+    ADN_Type_Enum< E_AnchorType, eNbrAnchorType >::SetConverter( &ADN_Tr::ConvertFromAnchorType );
     FillChoices();
 }
 
@@ -127,6 +128,7 @@ ADN_Missions_Data::MissionParameter* ADN_Missions_Data::MissionParameter::Create
     MissionParameter* newParam = new MissionParameter();
     newParam->strName_    = strName_.GetData();
     newParam->type_       = type_.GetData();
+    newParam->anchor_       = anchor_.GetData();
     newParam->isOptional_ = isOptional_.GetData();
     newParam->min_        = min_.GetData();
     newParam->max_        = max_.GetData();
@@ -154,17 +156,20 @@ void ADN_Missions_Data::MissionParameter::ReadArchive( xml::xistream& input )
 {
     std::string type;
     std::string max;
+    std::string anchor;
     input >> xml::attribute( "name", strName_ )
             >> xml::attribute( "type", type )
             >> xml::optional >> xml::attribute( "optional", isOptional_ )
             >> xml::attribute( "dia-name", diaName_ )
             >> xml::optional >> xml::attribute( "min-occurs", min_ )
-            >> xml::optional >> xml::attribute( "max-occurs", max );
+            >> xml::optional >> xml::attribute( "max-occurs", max )
+            >> xml::optional >> xml::attribute( "anchor", anchor );
     if( max == "unbounded" )
         max_ = std::numeric_limits< int >::max();
     else
         input >> xml::optional >> xml::attribute( "max-occurs", max_ );
     type_ = ADN_Tr::ConvertToMissionParameterType( type );
+    anchor_ = ADN_Tr::ConvertToAnchorType( anchor );
     input >> xml::list( "value", *this, &ADN_Missions_Data::MissionParameter::ReadValue );
     input >> xml::optional() >> xml::start( "choice" )
             >> xml::list( "parameter", *this, &ADN_Missions_Data::MissionParameter::ReadChoice )
@@ -243,6 +248,8 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
             << xml::attribute( "type", ADN_Tr::ConvertFromMissionParameterType( type_.GetData() ) )
             << xml::attribute( "optional", isOptional_ )
             << xml::attribute( "dia-name", diaName );
+    if( anchor_.GetData() != "" )
+        output << xml::attribute( "anchor", ADN_Tr::ConvertFromAnchorType( anchor_.GetData() ) );
     if( max_ != 1 )
     {
         output << xml::attribute( "min-occurs", min_ );

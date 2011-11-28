@@ -133,6 +133,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AnchorType.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_App.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
@@ -1848,6 +1849,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AnchorType.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_App.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\UnitsFilter.h">
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>

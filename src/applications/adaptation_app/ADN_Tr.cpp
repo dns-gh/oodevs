@@ -271,6 +271,15 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "", "", (E_MissionParameterType)-1 )
 };
 
+ADN_Tr::T_ConverterAnchorType ADN_Tr::anchorTypeConverter_[] =
+{
+    T_ConverterAnchorType( "nothing",      QT_TRANSLATE_NOOP("ADN_Tr", "nothing" ), eNoAnchor ),
+    T_ConverterAnchorType( "start", QT_TRANSLATE_NOOP("ADN_Tr", "start" ), eStart ),
+    T_ConverterAnchorType( "end",   QT_TRANSLATE_NOOP("ADN_Tr", "end" ), eEnd ),
+
+    T_ConverterAnchorType( "", "", (E_AnchorType)-1 )
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromLocation
 // Created: APE 2005-02-18
@@ -453,6 +462,15 @@ const std::string& ADN_Tr::ConvertFromMissionParameterType( E_MissionParameterTy
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromAnchorType
+// Created: LGY 2011-11-28
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromAnchorType( E_AnchorType nValue, E_Conversion nConverterType )
+{
+    return ADN_Tr::InverseFindInConverter( anchorTypeConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToLocation
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -630,6 +648,15 @@ E_MissionParameterType ADN_Tr::ConvertToMissionParameterType( const std::string&
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToAnchorType
+// Created: LGY 2011-11-28
+// -----------------------------------------------------------------------------
+E_AnchorType ADN_Tr::ConvertToAnchorType( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( anchorTypeConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -653,4 +680,5 @@ void ADN_Tr::InitTranslations()
     InitTr( equipmentStateConverter_, "ADN_Tr" );
     InitTr( munitionTirIndirectConverter_ , "ADN_Tr" );
     InitTr( missionParameterTypeConverter_, "ADN_Tr" );
+    InitTr( anchorTypeConverter_, "ADN_Tr" );
 }

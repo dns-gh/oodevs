@@ -16,6 +16,7 @@
 #include "ADN_MissionParameterType.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Tr.h"
+#include "ADN_AnchorType.h"
 
 namespace
 {
@@ -39,6 +40,7 @@ namespace
             ADN_TableItem_CheckItem*  itemOptional = new ADN_TableItem_CheckItem ( &tab_, obj );
             ADN_TableItem_Int*        itemMin      = new ADN_TableItem_Int       ( &tab_, obj );
             ADN_TableItem_Int*        itemMax      = new ADN_TableItem_Int       ( &tab_, obj );
+            ADN_AnchorType*           itemAnchor   = new ADN_AnchorType          ( &tab_, obj, itemConnectors_ );
 
             tab_.setItem( i, 0, itemName );
             tab_.setItem( i, 1, itemDiaName );
@@ -46,10 +48,12 @@ namespace
             tab_.setItem( i, 3, itemOptional );
             tab_.setItem( i, 4, itemMin );
             tab_.setItem( i, 5, itemMax );
+            tab_.setItem( i, 6, itemAnchor );
 
             itemName->GetConnector().Connect( &param->strName_ );
             itemDiaName->GetConnector().Connect( &param->diaName_ );
             itemType->GetConnector().Connect( &param->type_ );
+            itemAnchor->GetConnector().Connect( &param->anchor_ );
             itemOptional->GetConnector().Connect( &param->isOptional_ );
             itemMin->GetConnector().Connect( &param->min_ );
             itemMax->GetConnector().Connect( &param->max_ );
@@ -72,12 +76,13 @@ ADN_MissionParameters_Table::ADN_MissionParameters_Table( QWidget* parent /* = 0
 {
     verticalHeader()->hide();
     setLeftMargin( 0 );
-    setNumCols( 6 );
+    setNumCols( 7 );
     setColumnWidth( 1, 170 );
     setColumnWidth( 2, 170 );
     setColumnWidth( 3, 60 );
     setColumnWidth( 4, 60 );
     setColumnWidth( 5, 60 );
+    setColumnWidth( 6, 60 );
     setNumRows( 0 );
     horizontalHeader()->setLabel( 0, tr( "Name" ) );
     horizontalHeader()->setLabel( 1, tr( "DirectIA name" ) );
@@ -85,6 +90,7 @@ ADN_MissionParameters_Table::ADN_MissionParameters_Table( QWidget* parent /* = 0
     horizontalHeader()->setLabel( 3, tr( "Optional" ) );
     horizontalHeader()->setLabel( 4, tr( "Range min" ) );
     horizontalHeader()->setLabel( 5, tr( "Range max" ) );
+    horizontalHeader()->setLabel( 6, tr( "Anchor" ) );
     pConnector_ = new ADN_CT_MissionParameters( *this, itemConnectors_ );
 
     connect( this, SIGNAL( selectionChanged() ), this, SLOT( OnSelectionChanged() ) );
