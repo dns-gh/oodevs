@@ -196,6 +196,14 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
         pParentAutomate_->RegisterAutomate( *this );
     }
 
+    if( type.IsLogistic() )
+    {
+        pBrainLogistic_.reset( new MIL_AutomateLOG( *this, PHY_LogisticLevel::logistic_base_ ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_.get() ) );
+        RegisterAction( pLogisticAction_ );
+        pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, *pBrainLogistic_, false /* no quotas*/ ) );
+    }
+
     SendCreation ( context );
     SendFullState();
     SendKnowledge();
