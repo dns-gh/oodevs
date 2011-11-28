@@ -12,7 +12,13 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateLOG.h"
 #include "MIL_AutomateTypeLOG.h"
+#include "ConsumeDotationNotificationHandler_ABC.h"
+#include "LogisticHierarchy.h"
+#include "LogisticLink_ABC.h"
+#include "MIL_LogisticVisitors.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/MIL_Formation.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
@@ -24,7 +30,6 @@
 #include "Entities/Agents/Roles/Logistic/SupplyRequestContainer.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConsign_ABC.h"
 #include "Entities/Agents/Roles/Logistic/FuneralPackagingResource.h"
-#include "ConsumeDotationNotificationHandler_ABC.h"
 #include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -32,14 +37,10 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "MT_Tools/MT_Logger.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "MIL_LogisticVisitors.h"
-#include "LogisticHierarchy.h"
-#include "LogisticLink_ABC.h"
-#include "Entities/MIL_Formation.h"
-#include "Checkpoints/SerializationTools.h"
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -357,7 +358,11 @@ MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion&
         return 0;
     const MT_Vector2D& location = pConvoyAutomate->GetPionPC().GetRole<PHY_RoleInterface_Location>().GetPosition();
     MIL_AgentPion* convoyPion = &pConvoyAutomate->CreatePion( type, location );
-    convoyPion->GetRole< PHY_RoleInterface_Supply >().AssignConvoy( convoy );
+    PHY_RoleInterface_Supply* itf = convoyPion->RetrieveRole< PHY_RoleInterface_Supply >();
+    if( itf )
+        itf->AssignConvoy( convoy );
+    else
+        MT_LOG_ERROR_MSG( "No role interface supply in convoy " << convoyPion->GetName() );
     return convoyPion;
 }
 
@@ -367,7 +372,11 @@ MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion&
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::SupplyDestroyConvoyPion( MIL_AgentPion& convoyPion )
 {
-    convoyPion.GetRole< PHY_RoleInterface_Supply >().UnassignConvoy();
+    PHY_RoleInterface_Supply* itf = convoyPion.RetrieveRole< PHY_RoleInterface_Supply >();
+    if( itf )
+        itf->UnassignConvoy();
+    else
+        MT_LOG_ERROR_MSG( "No role interface supply in convoy " << convoyPion.GetName() );
     convoyPion.GetAutomate().DestroyPion( convoyPion );
 }
 
