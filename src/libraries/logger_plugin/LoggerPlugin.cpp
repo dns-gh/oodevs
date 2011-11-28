@@ -92,7 +92,7 @@ bool LoggerPlugin::Initialize()
         if( !services_.HasService< replay::Service >() )
         {
             if( !pLogger_.get() )
-                pLogger_.reset( new MT_FileLogger( filename_.c_str(), MT_Logger_ABC::eLogLevel_All, false, MT_Logger_ABC::eLoggerPlugin ) );
+                pLogger_.reset( new MT_FileLogger( filename_.c_str(), MT_Logger_ABC::eLogLevel_All, true, MT_Logger_ABC::eLoggerPlugin ) );
         }
         else
             enabled_ = false;
