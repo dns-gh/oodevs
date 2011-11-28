@@ -3332,10 +3332,6 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
 <context>
     <name>WeatherListView</name>
     <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Local weather </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3360,6 +3356,10 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
     </message>
     <message>
         <source>Weather parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local Weather Destruction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

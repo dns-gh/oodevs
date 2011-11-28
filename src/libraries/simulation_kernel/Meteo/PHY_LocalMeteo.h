@@ -54,7 +54,7 @@ private:
     //! @name Helpers
     //@{
     virtual void SendCreation() const;
-    virtual void SendDestruction();
+    virtual void SendDestruction() const;
     void LocalUpdate( const sword::MissionParameters& msg, bool isCreation = false );
     //@}
 

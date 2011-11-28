@@ -39,6 +39,7 @@ LogisticLinks.cpp \
 MaintenanceStates.cpp \
 MedicalStates.cpp \
 MedicalTreatmentAttribute.cpp \
+MeteoModel.cpp \
 MineAttribute.cpp \
 NBCAttribute.cpp \
 Network.cpp \

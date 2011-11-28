@@ -795,4 +795,11 @@ Détail: %1.</translation>
         <translation>Info/Souterrain/Réseau</translation>
     </message>
 </context>
+<context>
+    <name>WeatherModel</name>
+    <message>
+        <source>Local weather </source>
+        <translation>Météo locale </translation>
+    </message>
+</context>
 </TS>

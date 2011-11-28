@@ -54,6 +54,16 @@ public:
                 return ( *it ).get();
         return 0;
     }
+    bool Remove( unsigned long id )
+    {
+        for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+            if( ( *it )->GetId() == id )
+            {
+                meteos_.erase( *it );
+                return true;
+            }
+        return false;
+    }
     //@}
 
 protected:

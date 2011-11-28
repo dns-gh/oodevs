@@ -50,5 +50,6 @@ TeamsModel.cpp \
 TimeLimitedAttribute.cpp \
 TrafficabilityAttribute.cpp \
 UndergroundAttribute.cpp \
+WeatherModel.cpp \
 
 TRANSLATIONS = preparation_fr.ts preparation_es.ts

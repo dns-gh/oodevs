@@ -94,7 +94,7 @@ gui::ValuedListItem* TimelineListView::FindListItem( const actions::Action_ABC& 
         return gui::FindItem( tasker->GetTasker(), firstChild() );
     }
     const std::string& actionTypeName = action.GetType().GetName();
-    if( actionTypeName == "global_weather" || actionTypeName == "local_weather" )
+    if( actionTypeName == "global_weather" || actionTypeName == "local_weather" || actionTypeName == "local_weather_destruction" )
     {
         actionType = eTypeWeather;
         return gui::FindItem( &Action_ABC::actionTypeWeather_, firstChild() );;

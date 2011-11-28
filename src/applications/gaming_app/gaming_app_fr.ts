@@ -3331,10 +3331,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>WeatherListView</name>
     <message>
-        <source>Add</source>
-        <translation>Ajouter</translation>
-    </message>
-    <message>
         <source>Local weather </source>
         <translation>Météo locale </translation>
     </message>
@@ -3360,6 +3356,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Weather parameters</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local Weather Destruction</source>
+        <translation>Destruction de météo locale</translation>
     </message>
 </context>
 <context>

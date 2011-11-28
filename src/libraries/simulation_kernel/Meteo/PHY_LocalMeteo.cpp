@@ -191,7 +191,7 @@ void PHY_LocalMeteo::SendCreation() const
 // Name: PHY_LocalMeteo::SendDestruction
 // Created: HBD 2010-03-26
 // -----------------------------------------------------------------------------
-void PHY_LocalMeteo::SendDestruction()
+void PHY_LocalMeteo::SendDestruction() const
 {
     client::ControlLocalWeatherDestruction msg;
     msg().mutable_weather()->set_id( id_ );
