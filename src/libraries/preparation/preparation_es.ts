@@ -802,4 +802,11 @@ Detallado: %1.</translation>
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>WeatherModel</name>
+    <message>
+        <source>Local weather </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

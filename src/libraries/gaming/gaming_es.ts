@@ -967,6 +967,13 @@
     </message>
 </context>
 <context>
+    <name>MeteoModel</name>
+    <message>
+        <source>Local weather </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NBC</name>
     <message>
         <source>NBC</source>

@@ -70,12 +70,33 @@ void WeatherListView::CreateItem()
 }
 
 // -----------------------------------------------------------------------------
-// Name: WeatherListView::ContextMenuRequested
-// Created: ABR 2011-06-08
+// Name: WeatherListView::DeleteItem
+// Created: ABR 2011-11-28
 // -----------------------------------------------------------------------------
-void WeatherListView::ContextMenuRequested( Q3ListViewItem* /*item*/, const QPoint& point, int /*column*/ )
+void WeatherListView::DeleteItem()
 {
-    Q3PopupMenu* menu = new Q3PopupMenu( this );
-    menu->insertItem( tr( "Add" ), this, SLOT( CreateItem() ) );
-    menu->exec( point );
+    if( selectedItem() )
+    {
+        const QString text = selectedItem()->text( 0 );
+        for( IT_Weathers it = weathers_.begin(); it != weathers_.end(); ++it )
+            if( (*it)->GetName() == text.ascii() )
+            {
+                trashedWeather_.push( ( *it )->GetId() );
+                break;
+            }
+            removeItem( selectedItem() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherListView::PopTrashedWeather
+// Created: ABR 2011-11-28
+// -----------------------------------------------------------------------------
+unsigned long WeatherListView::PopTrashedWeather()
+{
+    if( trashedWeather_.size() == 0 )
+        return 0;
+    unsigned long result = trashedWeather_.front();
+    trashedWeather_.pop();
+    return result;
 }

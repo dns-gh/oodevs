@@ -37,11 +37,11 @@
 WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel,
                             const StaticModel& model, const kernel::Time_ABC& simulation, WeatherLayer& layer )
     : gui::WeatherPanel( parent, panel, layer )
-    , controllers_    ( controllers )
-    , actionsModel_   ( actionsModel )
-    , model_          ( model )
-    , simulation_     ( simulation )
-    , currentModel_   ( 0 )
+    , controllers_ ( controllers )
+    , actionsModel_( actionsModel )
+    , model_       ( model )
+    , simulation_  ( simulation )
+    , currentModel_( 0 )
 {
     // Global Weather
     globalWidget_ = new WeatherWidget( globalLayout_, tr( "Weather parameters" ) );
@@ -71,6 +71,9 @@ void WeatherPanel::Reset()
 {
     layer_.Clear();
     selectedLocal_ = 0;
+    if( localWeathers_ != 0 )
+        while( static_cast< WeatherListView* >( localWeathers_ )->PopTrashedWeather() != 0 )
+            ;
     if( currentModel_ )
         NotifyUpdated( *currentModel_ );
 }
@@ -107,6 +110,7 @@ void WeatherPanel::Commit()
     }
     else
     {
+        // Creation / Update
         CommitLocalWeather();
         bool hasCommited = false;
         const gui::WeatherListView::T_Weathers& weathers = localWeathers_->GetLocalWeathers();
@@ -143,6 +147,18 @@ void WeatherPanel::Commit()
                     continue;
                 }
             }
+        }
+        // Destruction
+        while( unsigned long trashedWeather = static_cast< WeatherListView* >( localWeathers_ )->PopTrashedWeather() )
+        {
+            kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( "local_weather_destruction" );
+            actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, tr( "Local Weather Destruction" ), true );
+            tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+
+            action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), trashedWeather ) );
+            action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+            action->RegisterAndPublish( actionsModel_ );
+            hasCommited = true;
         }
         if( hasCommited )
             Reset();

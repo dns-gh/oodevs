@@ -115,8 +115,9 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_burning_cell_request() )
         workspace.GetEntityManager().OnReceiveBurningCellRequest( wrapper.message().burning_cell_request(), nCtx );
     else if( wrapper.message().has_magic_action() )
-        if( wrapper.message().magic_action().type() == sword::MagicAction::global_weather
-         || wrapper.message().magic_action().type() == sword::MagicAction::local_weather )
+        if( wrapper.message().magic_action().type() == sword::MagicAction::global_weather ||
+            wrapper.message().magic_action().type() == sword::MagicAction::local_weather ||
+            wrapper.message().magic_action().type() == sword::MagicAction::local_weather_destruction )
             workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                   ( wrapper.message().magic_action()                       , nCtx );
         else if( wrapper.message().magic_action().type() == sword::MagicAction::change_diplomacy )
             workspace.GetEntityManager        ().OnReceiveChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx );

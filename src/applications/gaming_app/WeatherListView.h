@@ -11,6 +11,7 @@
 #define __WeatherListView_h_
 
 #include "clients_gui/WeatherListView.h"
+#include <queue>
 
 namespace kernel
 {
@@ -40,19 +41,26 @@ public:
     //! @name Operations
     //@{
     void Update( const MeteoModel& model );
+    unsigned long PopTrashedWeather();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void DeleteItem();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    virtual void ContextMenuRequested( Q3ListViewItem* item, const QPoint& point, int column );
     virtual void CreateItem();
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::Time_ABC& simulation_;
+    const kernel::Time_ABC&     simulation_;
+    std::queue< unsigned long > trashedWeather_;
     //@}
 };
 

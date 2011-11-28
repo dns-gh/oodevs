@@ -66,7 +66,7 @@ private slots:
     //@{
     virtual void ContextMenuRequested( Q3ListViewItem* item, const QPoint& point, int column );
     virtual void CreateItem() = 0;
-    void DeleteItem();
+    virtual void DeleteItem();
     //@}
 
 protected:

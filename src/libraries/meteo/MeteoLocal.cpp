@@ -18,7 +18,7 @@
 
 using namespace weather;
 
-unsigned int MeteoLocal::localCounter_ = 2;
+unsigned int MeteoLocal::localCounter_ = 1;
 
 namespace
 {
@@ -55,7 +55,7 @@ MeteoLocal::MeteoLocal( const MeteoLocal& meteo )
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( const kernel::CoordinateConverter_ABC& converter, const std::string& name /*= ""*/ )
-    : Meteo( localCounter_, 0, name + QString::number( localCounter_ - 1).ascii() )
+    : Meteo( localCounter_, 0, name + QString::number( localCounter_ ).ascii() )
     , converter_( &converter )
     , created_( false )
 {
@@ -67,7 +67,7 @@ MeteoLocal::MeteoLocal( const kernel::CoordinateConverter_ABC& converter, const 
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const std::string& name /*= ""*/ )
-    : Meteo( localCounter_, xis, 0, 0, name + QString::number( localCounter_ - 1 ).ascii() )
+    : Meteo( localCounter_, xis, 0, 0, name + QString::number( localCounter_ ).ascii() )
     , converter_( &converter )
     , created_  ( false )
 {
@@ -88,7 +88,7 @@ MeteoLocal::MeteoLocal( xml::xistream& xis, const kernel::CoordinateConverter_AB
 // Created: ABR 2011-06-06
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( const sword::ControlLocalWeatherCreation& msg, const kernel::CoordinateConverter_ABC& converter, unsigned int timeStep, const std::string& name /*= ""*/ )
-    : Meteo( msg.weather().id(), msg.attributes(), timeStep, name + QString::number( msg.weather().id() - 1 ).ascii() )
+    : Meteo( msg.weather().id(), msg.attributes(), timeStep, name + QString::number( msg.weather().id() ).ascii() )
     , converter_( &converter )
     , created_  ( false )
 {

@@ -128,6 +128,7 @@ public:
     virtual void Update( const Meteo& );
     virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision, boost::shared_ptr< Meteo > meteo );
     virtual void SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction() const;
     virtual void SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendCreation() const;

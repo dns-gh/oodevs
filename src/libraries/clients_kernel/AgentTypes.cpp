@@ -443,6 +443,7 @@ void AgentTypes::CreateMagicActionTypes()
     // Other Magic Actions
     RegisterActionType( *new MagicActionType( "global_weather", sword::MagicAction::global_weather ) );
     RegisterActionType( *new MagicActionType( "local_weather", sword::MagicAction::local_weather ) );
+    RegisterActionType( *new MagicActionType( "local_weather_destruction", sword::MagicAction::local_weather_destruction ) );
     RegisterActionType( *new MagicActionType( "change_diplomacy", sword::MagicAction::change_diplomacy ) );
     RegisterActionType( *new MagicActionType( "create_knowledge_group", sword::MagicAction::create_knowledge_group ) );
     RegisterActionType( *new MagicActionType( "change_resource_links", sword::MagicAction::change_resource_network_properties ) );

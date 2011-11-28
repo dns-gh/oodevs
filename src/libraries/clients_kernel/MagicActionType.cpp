@@ -229,6 +229,10 @@ void MagicActionType::Initialize()
             CreateOrderParameter( "ID", "identifier" );
         }
     }
+    else if( name == "local_weather_destruction" )
+    {
+        CreateOrderParameter( "WeatherID", "identifier" );
+    }
     else if( name == "change_diplomacy" )
     {
         CreateOrderParameter( "Camp1", "identifier" );

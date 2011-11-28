@@ -31,9 +31,8 @@ const PHY_Ephemeride& PHY_MeteoDataManager::GetEphemeride() const
 // Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
 inline
-void PHY_MeteoDataManager::AddMeteo( weather::Meteo& element )
+void PHY_MeteoDataManager::AddMeteo( weather::Meteo& meteo )
 {
-    weather::Meteo& meteo = static_cast< weather::Meteo& >( element );
     meteo.Update( pEphemeride_->GetLightingBase() );
     if( ! meteos_.insert( boost::shared_ptr< weather::Meteo >( &meteo ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );

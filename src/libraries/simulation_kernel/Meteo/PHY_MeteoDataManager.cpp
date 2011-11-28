@@ -20,7 +20,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
-unsigned int PHY_MeteoDataManager::localCounter_ = 2;
+unsigned int PHY_MeteoDataManager::localCounter_ = 1;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MeteoDataManager )
 
@@ -81,6 +81,7 @@ void PHY_MeteoDataManager::Load( xml::xistream& xis, MIL_Config& config )
 PHY_MeteoDataManager::~PHY_MeteoDataManager()
 {
     delete pRawData_;
+    delete pGlobalMeteo_;
     weather::PHY_Lighting::Terminate();
     weather::PHY_Precipitation::Terminate();
 }
@@ -93,7 +94,7 @@ void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
     pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
-    AddMeteo( *pGlobalMeteo_ );
+    pGlobalMeteo_->Update( pEphemeride_->GetLightingBase() );
     xis >> xml::end;
 }
 
@@ -139,7 +140,8 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
         {
             const sword::MissionParameter& idParameter = msg.parameters().elem( 10 );
             if( idParameter.value_size() != 1 || !idParameter.value().Get( 0 ).has_identifier() )
-                throw std::exception( "Local Meteo : bad ID parameter." );
+                throw std::exception( "Local meteo: bad ID parameter." );
+
             id = idParameter.value().Get( 0 ).identifier();
         }
         if( id == 0 )
@@ -148,11 +150,27 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
         {
             weather::Meteo* meteo = Find( id );
             if( !meteo )
-                throw std::exception( "Local Meteo : unknown id." );
+                throw std::exception( "Local meteo: unknown id." );
             static_cast< PHY_LocalMeteo* >( meteo )->Update( msg.parameters() );
         }
         client::ControlLocalWeatherAck replyMsg;
         replyMsg.Send( NET_Publisher_ABC::Publisher(), context );
+    }
+    else if( msg.type() == sword::MagicAction::local_weather_destruction )
+    {
+        if( msg.parameters().elem_size() != 1 || msg.parameters().elem( 0 ).value_size() != 1 || !msg.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
+            throw std::exception( "Local meteo destruction: bad ID parameter." );
+        unsigned int id = msg.parameters().elem( 0 ).value().Get( 0 ).identifier();
+
+        weather::Meteo* meteo = Find( id );
+        if( !meteo )
+            throw std::exception( "Local meteo: unknown id." );
+        {
+            client::ControlLocalWeatherAck replyMsg;
+            replyMsg.Send( NET_Publisher_ABC::Publisher(), context );
+        }
+        meteo->SendDestruction();
+        Remove( id );
     }
 }
 
@@ -170,9 +188,8 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
          >> size;
     tools::WorldParameters terrainConfig = tools::WorldParameters( MIL_AgentServer::GetWorkspace().GetConfig() );
     pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, terrainConfig );
-    meteos_.insert( boost::shared_ptr< weather::Meteo >( pGlobalMeteo_ ) );
     PHY_LocalMeteo* meteo = 0;
-    for( ;size > 0; size-- )
+    for( ; size > 0; --size )
     {
         file >> meteo;
         meteos_.insert( boost::shared_ptr< weather::Meteo >( meteo ) );
@@ -192,9 +209,7 @@ void PHY_MeteoDataManager::save( MIL_CheckPointOutArchive& file, const unsigned 
          << pGlobalMeteo_
          << pEphemeride_
          << size;
-    CIT_MeteoSet it = meteos_.begin();
-    ++it;
-    for( ; it != meteos_.end(); ++it )
+    for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
     {
         PHY_LocalMeteo* local = static_cast< PHY_LocalMeteo* >( it->get() );
         file << local;
@@ -232,9 +247,11 @@ void PHY_MeteoDataManager::Update( unsigned int date )
     if( pEphemeride_->UpdateNight( date ) )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "Ephemeris is now: %s", pEphemeride_->GetLightingBase().GetName().c_str() ) );
+        pGlobalMeteo_->Update( pEphemeride_->GetLightingBase() );
         for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
             ( *it )->Update( pEphemeride_->GetLightingBase() );
     }
+    pGlobalMeteo_->UpdateMeteoPatch( date, *pRawData_, boost::shared_ptr< weather::Meteo >() );
     for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
         ( *it )->UpdateMeteoPatch( date, *pRawData_, *it );
 }
@@ -245,6 +262,7 @@ void PHY_MeteoDataManager::Update( unsigned int date )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::SendStateToNewClient()
 {
+    pGlobalMeteo_->SendCreation();
     for( IT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
       ( *it )->SendCreation();
 }
