@@ -1991,7 +1991,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Create side</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer un camp</translation>
     </message>
     <message>
         <source>Rename</source>
