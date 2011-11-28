@@ -3020,6 +3020,13 @@
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Zones deploiement" optional="false" type="Polygon"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.ReconaitreZoneDeploiement" dia-type="france.military.company.combat.support.artillery.tasks.ReconaitreZoneDeploiement" id="28769" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.ReconaitreZoneDeploiement" name="AUTOMATE ASS Reconnaitre Zone Deploiement">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Zones deploiement" optional="false" type="Polygon"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -3264,4 +3271,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="2688204836" -->
+<!-- signature="3880630226" -->
