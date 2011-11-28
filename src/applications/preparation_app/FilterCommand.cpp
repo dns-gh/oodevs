@@ -31,6 +31,11 @@ namespace
         settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
     }
+
+    bool IsInputArgument( const std::string& argument )
+    {
+        return argument == "$input_file$" || argument == "$input_dir$" || argument == "$input$";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +95,28 @@ bool FilterCommand::NeedToReloadExercise() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: FilterCommand::ConvertArgumentVariable
+// Created: ABR 2011-09-29
+// -----------------------------------------------------------------------------
+std::string FilterCommand::ConvertArgumentVariable( const std::string& value ) const
+{
+    std::string result = value;
+    if( value == "$rootdir$" )
+        result = config_.GetRootDir();
+    else if( value == "$exercise$" )
+        result = config_.GetExerciseName();
+    else if( value == "$exercise_dir$" )
+        result = config_.GetExerciseDir( config_.GetExerciseName() );
+    else if( value == "$orbat_file$" )
+        result = config_.GetOrbatFile();
+    else if( value == "$language$" )
+        result = description_.GetCurrentLanguage();
+    else if( value == "$input$" || value == "$input_file$" || value == "$input_dir$" || value.empty() ) // $$$$ ABR 2011-09-28: Cf FilterInputArgument
+        return value;
+    return "\"" + result + "\"";
+}
+
+// -----------------------------------------------------------------------------
 // Name: FilterCommand::ReadArguments
 // Created: ABR 2011-06-21
 // -----------------------------------------------------------------------------
@@ -110,7 +137,7 @@ void FilterCommand::ReadArgument( xml::xistream& xis )
     const std::string name = xis.attribute< std::string >( "name" );
     const std::string value = xis.attribute< std::string >( "value", "" );
     arguments_.push_back( std::pair< std::string, std::string >( name, ConvertArgumentVariable( value ) ) );
-    if( value == "$input_file$" || value == "$input_dir$" || value == "$input$" )
+    if( IsInputArgument( value ) )
     {
         kernel::XmlDescription description( xis, ReadLang() );
         FilterInputArgument* inputArgument = new FilterInputArgument( value, description, config_.GetExerciseDir( config_.GetExerciseName() ) );
@@ -127,7 +154,12 @@ void FilterCommand::ComputeArgument()
 {
     argumentsLine_.clear();
     for( IT_Arguments it = arguments_.begin(); it != arguments_.end(); ++it )
-        argumentsLine_ += ( it->second.empty() ) ? " " + it->first : " " + it->first + "=" + it->second;
+    {
+        if( IsInputArgument(  it->second ) )
+            argumentsLine_ += " " + it->first + "=\"\"";
+        else
+            argumentsLine_ += ( it->second.empty() ) ? " " + it->first : " " + it->first + "=" + it->second;
+    }
     if( commandLabel_ )
         commandLabel_->setText( ( command_ + argumentsLine_ ).c_str() );
 }
@@ -179,32 +211,6 @@ void FilterCommand::ComputePath()
         }
     }
     emit statusChanged( IsValid() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FilterCommand::ConvertArgumentVariable
-// Created: ABR 2011-09-29
-// -----------------------------------------------------------------------------
-std::string FilterCommand::ConvertArgumentVariable( std::string value )
-{
-    std::string result = value;
-    if( value == "$rootdir$" )
-        result = config_.GetRootDir();
-    else if( value == "$exercise$" )
-        result = config_.GetExerciseName();
-    else if( value == "$exercise_dir$" )
-        result = config_.GetExerciseDir( config_.GetExerciseName() );
-    else if( value == "$orbat_file$" )
-        result = config_.GetOrbatFile();
-    else if( value == "$language$" )
-        result = description_.GetCurrentLanguage();
-    else if( value == "$input$" ) // $$$$ ABR 2011-09-28: Cf FilterInputArgument
-        result = "";
-    else if( value == "$input_file$" )
-        result = "";
-    else if( value == "$input_dir$" )
-        result = "";
-    return "\"" + result + "\"";
 }
 
 // -----------------------------------------------------------------------------
@@ -260,11 +266,12 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
 void FilterCommand::Execute()
 {
     // $$$$ ABR 2011-10-18: Hack, should not be hard coded, add an attribute to Filters.xml instead (when the ICD will no longer be frozen)
-    std::string lowerCommand = command_;
-    std::transform( lowerCommand.begin(), lowerCommand.end(), lowerCommand.begin(), tolower);
-    if( lowerCommand.find( "melmil.exe" ) != std::string::npos && reloadExercise_ )
-        emit ForceSaveAndAddActionPlanning( "melmil.xml" );
-
+    {
+        std::string lowerCommand = command_;
+        std::transform( lowerCommand.begin(), lowerCommand.end(), lowerCommand.begin(), tolower);
+        if( lowerCommand.find( "melmil.exe" ) != std::string::npos && reloadExercise_ )
+            emit ForceSaveAndAddActionPlanning( "melmil.xml" );
+    }
     assert( !path_.empty() );
     boost::shared_ptr< frontend::SpawnCommand > command(
         new frontend::SpawnCommand( config_, ( bfs::path( bfs::path( path_, bfs::native ) / bfs::path( command_, bfs::native ) ).string() + argumentsLine_ ).c_str(), true ) );
