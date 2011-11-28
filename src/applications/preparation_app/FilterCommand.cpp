@@ -194,20 +194,27 @@ void FilterCommand::ComputePath()
             if( done < 512 )
                 *it = result;
         }
-        if( bfs::exists( *it ) && bfs::is_directory( *it ) )
+        try
         {
-            bfs::directory_iterator end_itr;
-            for( bfs::directory_iterator dir_it( *it ); dir_it != end_itr && !founded; ++dir_it )
-                if( !bfs::is_directory( dir_it->path() ) )
-                {
-                    std::string file = dir_it->path().leaf();
-                    size_t pos = file.rfind( ".exe" );
-                    if( pos != std::string::npos && pos == file.size() - 4 && file == command_ )
+            if( bfs::exists( *it ) && bfs::is_directory( *it ) )
+            {
+                bfs::directory_iterator end_itr;
+                for( bfs::directory_iterator dir_it( *it ); dir_it != end_itr && !founded; ++dir_it )
+                    if( !bfs::is_directory( dir_it->path() ) )
                     {
-                        path_ = *it;
-                        founded = true;
+                        std::string file = dir_it->path().leaf();
+                        size_t pos = file.rfind( ".exe" );
+                        if( pos != std::string::npos && pos == file.size() - 4 && file == command_ )
+                        {
+                            path_ = *it;
+                            founded = true;
+                        }
                     }
-                }
+            }
+        }
+        catch ( std::exception& e )
+        {
+            // NOTHING, here to prevent bfs::exists to throw an exception when tested path is on an unknown hard drive
         }
     }
     emit statusChanged( IsValid() );
