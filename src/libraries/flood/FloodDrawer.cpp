@@ -84,8 +84,10 @@ void FloodDrawer::ResetTexture()
 void FloodDrawer::RenderTexture()
 {
     // TODO voir si on peut créer la texture une fois pour toute au début?
-    // TODO créer la texture totalement offscreen?
     // create texture
+    glDrawBuffer( GL_AUX0 );
+    glReadBuffer( GL_AUX0 );
+
     glGenTextures( 1, &textureId_ );
     glBindTexture( GL_TEXTURE_2D, textureId_ );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
@@ -121,6 +123,9 @@ void FloodDrawer::RenderTexture()
     // pop
     glPopMatrix();
     glViewport( coords[ 0 ], coords[ 1 ], coords[ 2 ], coords[ 3 ] );
+
+    glDrawBuffer( GL_BACK );
+    glReadBuffer( GL_BACK );
 }
 
 // -----------------------------------------------------------------------------
