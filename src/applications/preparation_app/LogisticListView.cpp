@@ -16,6 +16,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/LogisticLevel.h"
+#include "clients_gui/ValuedListItem.h"
 #include "preparation/LogisticBaseStates.h"
 #include "preparation/LogisticLevelAttritube.h"
 
@@ -28,6 +29,7 @@ using namespace kernel;
 LogisticListView::LogisticListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, const Profile_ABC& profile,
                                     const gui::EntitySymbols& symbols, ModelBuilder& modelBuilder )
     : gui::LogisticListView( pParent, controllers, factory, profile, symbols, true )
+    , modelBuilder_( modelBuilder )
 {
     connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), &modelBuilder, SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
     controllers_.Register( *this );
@@ -92,4 +94,16 @@ void LogisticListView::SetSuperior( const Entity_ABC& entity, const Entity_ABC* 
     LogisticHierarchiesBase* hierarchy = const_cast< Entity_ABC& >( entity ).Retrieve< LogisticHierarchiesBase >();
     assert( hierarchy );
     hierarchy->SetLogisticSuperior( ( superior ) ? superior : LogisticBaseSuperior() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticListView::keyPressEvent
+// Created: LGY 2011-11-28
+// -----------------------------------------------------------------------------
+void LogisticListView::keyPressEvent( QKeyEvent* event )
+{
+    if( selectedItem() && event->key() == Qt::Key_Delete )
+        modelBuilder_.DeleteEntity( *((gui::ValuedListItem*)selectedItem())->GetValue< const Entity_ABC >() );
+    else
+        Q3ListView::keyPressEvent( event );
 }

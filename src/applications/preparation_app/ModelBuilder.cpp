@@ -164,12 +164,12 @@ void ModelBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::
 
 namespace
 {
-    bool HasHierarchy( const Entity_ABC* entity )
+    bool HasHierarchy( const Entity_ABC& entity )
     {
-        const kernel::Hierarchies* hierarchy = entity->Retrieve< kernel::TacticalHierarchies >();
+        const kernel::Hierarchies* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
         if( !hierarchy || !hierarchy->CreateSubordinateIterator().HasMoreElements() )
         {
-            hierarchy = entity->Retrieve< kernel::CommunicationHierarchies >();
+            hierarchy = entity.Retrieve< kernel::CommunicationHierarchies >();
             if( !hierarchy || !hierarchy->CreateSubordinateIterator().HasMoreElements() )
                 return false;
         }
@@ -184,24 +184,32 @@ namespace
 void ModelBuilder::OnDelete()
 {
     if( toDelete_ )
-    {
-        if( HasHierarchy( toDelete_ ) )
-            confirmation_->setText( tr( "Delete '%1' and all its subordinates?" ).arg( toDelete_->GetName() ) );
-        else
-            confirmation_->setText( tr( "Delete '%1'?" ).arg( toDelete_->GetName() ) );
-        confirmation_->adjustSize();
-        confirmation_->show();
-    }
+        DeleteEntity( *toDelete_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModelBuilder::OnDelete
+// Name: ModelBuilder::Delete
+// Created: LGY 2011-11-28
+// -----------------------------------------------------------------------------
+void ModelBuilder::DeleteEntity( const kernel::Entity_ABC& entity )
+{
+    toDelete_ = &entity;
+    if( HasHierarchy( entity ) )
+        confirmation_->setText( tr( "Delete '%1' and all its subordinates?" ).arg( entity.GetName() ) );
+    else
+        confirmation_->setText( tr( "Delete '%1'?" ).arg( entity.GetName() ) );
+    confirmation_->adjustSize();
+    confirmation_->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::OnConfirmDeletion
 // Created: SBO 2010-03-22
 // -----------------------------------------------------------------------------
 void ModelBuilder::OnConfirmDeletion( int result )
 {
     if( result == QMessageBox::Yes && toDelete_ )
-        DeleteEntity( *toDelete_ );
+        Delete( *toDelete_ );
 }
 
 namespace
@@ -224,16 +232,16 @@ namespace
     }
 }
 // -----------------------------------------------------------------------------
-// Name: ModelBuilder::DeleteEntity
+// Name: ModelBuilder::Delete
 // Created: AGE 2006-11-28
 // -----------------------------------------------------------------------------
-void ModelBuilder::DeleteEntity( const Entity_ABC& entity )
+void ModelBuilder::Delete( const Entity_ABC& entity )
 {
     if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
     {
         tools::Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
         while( it.HasMoreElements() )
-            DeleteEntity( it.NextElement() );
+            Delete( it.NextElement() );
     }
     if( const kernel::CommunicationHierarchies* hierarchies = entity.Retrieve< kernel::CommunicationHierarchies >() )
     {
@@ -243,7 +251,7 @@ void ModelBuilder::DeleteEntity( const Entity_ABC& entity )
             subordinate.push_back( &it.NextElement() );
         EntityToDelete( subordinate );   // $$$$ _RC_ SLG 2010-11-12: supprime les automates d'automates afin d'éviter un crash de la sim
         for( std::vector< const Entity_ABC* >::iterator it = subordinate.begin(); it != subordinate.end(); ++it )
-            DeleteEntity( **it );
+            Delete( **it );
     }
     delete &entity;
 }

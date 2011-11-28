@@ -60,7 +60,7 @@ public:
     void ClearSelection();
     bool CanCreateLine() const;
     void CreateLimit( const T_PointVector& points );
-    void CreateLima ( const T_PointVector& points );
+    void CreateLima( const T_PointVector& points );
     void DeleteEntity( const kernel::Entity_ABC& entity );
     //@}
 
@@ -82,7 +82,7 @@ private:
     ModelBuilder& operator=( const ModelBuilder& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
+    //! @name Operations
     //@{
     virtual void BeforeSelection();
     virtual void AfterSelection();
@@ -93,6 +93,12 @@ private:
     virtual void Select( const kernel::Formation_ABC& element );
     virtual void Select( const kernel::Ghost_ABC& element );
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void Delete( const kernel::Entity_ABC& entity );
     //@}
 
 private:
