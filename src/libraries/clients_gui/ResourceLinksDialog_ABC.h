@@ -67,6 +67,7 @@ private slots:
     void OnValueChanged( int i, int j );
     void Validate();
     void OnChangeLink( int resourceId );
+    void OnCreateNode( int resourceId );
     void GenerateProduction();
     //@}
 

@@ -313,18 +313,32 @@ void ResourceLinksDialog_ABC::NotifyContextMenu( const Object_ABC& object, Conte
     if( resources_.Count() == 0 )
         return;
     const ResourceNetwork_ABC* node = object.Retrieve< ResourceNetwork_ABC >();
-    if( !node || !selected_ || selected_ == node )
+    if( !node || !selected_ )
         return;
-    linkToChange_ = &object;
+    if( selected_ != node )
+        linkToChange_ = &object;
     Q3PopupMenu* subMenu = menu.SubMenu( "Resource", tr( "Resource networks" ) );
     tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
     int resourceId = 0;
     while( it.HasMoreElements() )
     {
         const ResourceNetworkType& resource = it.NextElement();
-        Q3PopupMenu* resourceMenu = new Q3PopupMenu( subMenu );
-        subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
-        resourceMenu->insertItem( tr( "Add/Remove link" ), this , SLOT( OnChangeLink( int ) ), 0, resourceId++ );
+        if( selected_ == node )
+        {
+            if( !selected_->FindResourceNode( resource.GetName() ) )
+            {
+                Q3PopupMenu* resourceMenu = new Q3PopupMenu( subMenu );
+                subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
+                resourceMenu->insertItem( tr( "Create node" ), this , SLOT( OnCreateNode( int ) ), 0, resourceId );
+            }
+            ++resourceId;
+        }
+        else
+        {
+            Q3PopupMenu* resourceMenu = new Q3PopupMenu( subMenu );
+            subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
+            resourceMenu->insertItem( tr( "Add/Remove link" ), this , SLOT( OnChangeLink( int ) ), 0, resourceId++ );
+        }
     }
 }
 
@@ -395,6 +409,28 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
         }
     }
     linkToChange_ = 0;
+    Show();
+    DoValidate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::OnCreateNode
+// Created: JSR 2011-11-28
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::OnCreateNode( int resourceId )
+{
+    tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
+    int index = 0;
+    while( it.HasMoreElements() )
+    {
+        const ResourceNetworkType& resource = it.NextElement();
+        if( index++ == resourceId )
+        {
+            selected_->FindOrCreateResourceNode( resource.GetName() );
+            controllers_.controller_.Update( *selected_ );
+            break;
+        }
+    }
     Show();
     DoValidate();
 }
