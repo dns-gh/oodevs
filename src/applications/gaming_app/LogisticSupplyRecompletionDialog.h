@@ -108,6 +108,7 @@ private:
 
     typedef std::map< QString, const Equipment* > T_Equipments;
     typedef std::map< QString, const Dotation* >  T_Dotations;
+    typedef std::vector< QString > T_CatetoriesNames;
     //@}
 
 private:
@@ -131,6 +132,7 @@ private:
     Q3Table*          munitionsFamilyTable_;
     Q3Table*          stockTable_;
     T_Dotations      stocks_;
+    T_CatetoriesNames catetoriesNames_;
     //@}
 };
 
