@@ -58,6 +58,7 @@ Elevation3dLayer::~Elevation3dLayer()
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
+    Purge();
     Load( modelLoaded.config_ );
     reset_ = true;
 }
@@ -206,7 +207,6 @@ void Elevation3dLayer::CreateTextures()
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::Reset()
 {
-    Purge();
     lastFrustum_ = ViewFrustum();
     usrp_.reset();
     normals_.reset();
