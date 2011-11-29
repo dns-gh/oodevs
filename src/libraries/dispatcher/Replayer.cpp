@@ -104,6 +104,7 @@ Replayer::~Replayer()
 // -----------------------------------------------------------------------------
 void Replayer::Update()
 {
+    clientsNetworker_->Update();
     handler_.Update();
     shield_->Update();
 }
