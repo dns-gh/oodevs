@@ -1457,6 +1457,10 @@ Voulez-vous le supprimer?</translation>
         <source>Automatic production</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Create node</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::ResourceNetworkPrototype_ABC</name>
