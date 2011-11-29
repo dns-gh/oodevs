@@ -104,7 +104,7 @@ MT_Vector2D PHY_ActionMove::DestroyJoiningPath()
         return MT_Vector2D();
     }
     boost::shared_ptr< DEC_PathPoint > lastPoint = pathResult.back();
-    MT_Vector2D point = lastPoint.get() ? back->GetPos() : MT_Vector2D();
+    MT_Vector2D point = lastPoint.get() ? lastPoint->GetPos() : MT_Vector2D();
     pJoiningPath_.reset();
     return point;
 }
