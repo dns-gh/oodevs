@@ -93,105 +93,28 @@
         </template>
     </category>
     <category name='Taches' id="tasks">
-        <template name='IdReconnaitre_Poly-ligne' type="line">
-            <segment unit='%'>
-                <path fill='none' stroke='currentColor' stroke-width='4px' d='M0,0 L0.55,0.1 L0.45,-0.1 L1,0'/>
+        <template name='IdInterdire_Point' type="point">
+            <segment unit="%">
+                <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
             </segment>
-            <marker-end unit='px'>
-                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
-            </marker-end>
-            <marker unit="%">
-                <g font-family="Arial" font-size="0.25" fill="currentColor">
-                    <g transform="matrix( 1 0 0 -1 0 0 )">
-                        <text x="-0.15" y="0.1">RECO</text>
-                    </g>
+            <marker-start>
+                <g stroke="currentColor" stroke-width="4px">
+                    <line x1="-350" x2="350" y1="0" y2="0"/>
+                    <line x1="-200" x2="200" y1="-200" y2="200"/>
+                    <line x1="150" x2="200" y1="200" y2="200"/>
+                    <line x1="200" x2="200" y1="200" y2="150"/>
+                    <line x1="315" x2="350" y1="-35" y2="0"/>
+                    <line x1="350" x2="315" y1="0" y2="35"/>
                 </g>
-            </marker>
-        </template>
-        <template name='IdEclairer_Poly-ligne' type="line">
-            <segment unit='%'>
-                <path fill='none' stroke='currentColor' stroke-width='4px' d='M0,0 L0.55,0.1 L0.45,-0.1 L1,0'/>
-            </segment>
-            <marker-end unit='px'>
-                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
-            </marker-end>
-            <marker unit="%">
-                <g font-family="Arial" font-size="0.25" fill="currentColor">
-                    <g transform="matrix( 1 0 0 -1 0 0 )">
-                        <text x="-0.15" y="0.1">ECL</text>
-                    </g>
-                </g>
-            </marker>
-        </template>
-        <template name='IdFreiner_Poly-ligne' type="line">
-            <marker-start unit='px'>
-                <path fill='none' stroke='currentColor' stroke-width='3px' d='M0,-20 A11,10 0 0 0 0,0'/>
             </marker-start>
-            <segment>
-                <line stroke='currentColor' stroke-width='4px' x2='1'/>
-            </segment>
-            <marker-end unit='px'>
-                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
-            </marker-end>
-            <marker unit="%">
-                <g font-family="Arial" font-size="0.25" fill="currentColor">
-                    <g transform="matrix( 1 0 0 -1 0 0 )">
-                        <text x="-0.15" y="0.1">FRN</text>
-                    </g>
-                </g>
-            </marker>
         </template>
-        <template name='IdJalonner_Poly-ligne' type="line">
-            <marker-start unit='px'>
-                <path fill='none' stroke='currentColor' stroke-width='3px' d='M0,-20 A11,10 0 0 0 0,0'/>
-            </marker-start>
+        <template name='IdFleche_Poly-ligne' type="line">
             <segment>
                 <line stroke='currentColor' stroke-width='4px' x2='1'/>
             </segment>
             <marker-end unit='px'>
                 <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
             </marker-end>
-        </template>
-        <template name='IdSoutenir_Poly-ligne' type="line">
-            <marker-start unit='px'>
-                <path fill='currentColor' stroke='none' d='M0,8 V-8 H20 L28,0 20,8 H0z'/>
-            </marker-start>
-            <segment>
-                <line stroke='currentColor' stroke-width='4px' x2='1'/>
-            </segment>
-            <marker-end unit='px'>
-                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
-            </marker-end>
-        </template>
-        <template name='IdRaid_Poly-ligne' type="line">
-            <segment>
-                <line stroke='currentColor' stroke-width='4px' x2='1'/>
-            </segment>
-            <marker-end unit='px'>
-                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
-            </marker-end>
-            <marker unit="%">
-                <g font-family="Arial" font-size="0.25" fill="currentColor">
-                    <g transform="matrix( 1 0 0 -1 0 0 )">
-                        <text x="-0.15" y="0.1">RAID</text>
-                    </g>
-                </g>
-            </marker>
-        </template>
-        <template name='IdRenseigner_Poly-ligne' type="line">
-            <segment>
-                <line stroke='currentColor' stroke-width='4px' x2='1'/>
-            </segment>
-            <marker-end unit='px'>
-                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
-            </marker-end>
-            <marker unit="%">
-                <g font-family="Arial" font-size="0.25" fill="currentColor">
-                    <g transform="matrix( 1 0 0 -1 0 0 )">
-                        <text x="-0.15" y="0.1">RENS</text>
-                    </g>
-                </g>
-            </marker>
         </template>
         <template name='IdAppuyer_Poly-ligne' type="line">
             <segment>
@@ -265,32 +188,110 @@
                 </g>
             </marker>
         </template>
-        <template name='IdDefendre_Polygone' type="polygon">
-            <segment unit="%">
-                <g fill="currentColor">
-                    <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
+        <template name='IdEclairer_Poly-ligne' type="line">
+            <segment unit='%'>
+                <path fill='none' stroke='currentColor' stroke-width='4px' d='M0,0 L0.55,0.1 L0.45,-0.1 L1,0'/>
+            </segment>
+            <marker-end unit='px'>
+                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
+            </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">ECL</text>
+                    </g>
                 </g>
-            </segment>
+            </marker>
         </template>
-        <template name='IdDetruire_Polygone' type="polygon">
-            <segment unit="%">
-                <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
+        <template name='IdRaid_Poly-ligne' type="line">
+            <segment>
+                <line stroke='currentColor' stroke-width='4px' x2='1'/>
             </segment>
-        </template>
-        <template name='IdInterdire_Point' type="point">
-            <segment unit="%">
-                <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
-            </segment>
-            <marker-start>
-                <g stroke="currentColor" stroke-width="4px">
-                    <line x1="-350" x2="350" y1="0" y2="0"/>
-                    <line x1="-200" x2="200" y1="-200" y2="200"/>
-                    <line x1="150" x2="200" y1="200" y2="200"/>
-                    <line x1="200" x2="200" y1="200" y2="150"/>
-                    <line x1="315" x2="350" y1="-35" y2="0"/>
-                    <line x1="350" x2="315" y1="0" y2="35"/>
+            <marker-end unit='px'>
+                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
+            </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">RAID</text>
+                    </g>
                 </g>
+            </marker>
+        </template>
+        <template name='IdFreiner_Poly-ligne' type="line">
+            <marker-start unit='px'>
+                <path fill='none' stroke='currentColor' stroke-width='3px' d='M0,-20 A11,10 0 0 0 0,0'/>
             </marker-start>
+            <segment>
+                <line stroke='currentColor' stroke-width='4px' x2='1'/>
+            </segment>
+            <marker-end unit='px'>
+                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
+            </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">FRN</text>
+                    </g>
+                </g>
+            </marker>
+        </template>
+        <template name='IdJalonner_Poly-ligne' type="line">
+            <marker-start unit='px'>
+                <path fill='none' stroke='currentColor' stroke-width='3px' d='M0,-20 A11,10 0 0 0 0,0'/>
+            </marker-start>
+            <segment>
+                <line stroke='currentColor' stroke-width='4px' x2='1'/>
+            </segment>
+            <marker-end unit='px'>
+                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
+            </marker-end>
+        </template>
+        <template name='IdReconnaitre_Poly-ligne' type="line">
+            <segment unit='%'>
+                <path fill='none' stroke='currentColor' stroke-width='4px' d='M0,0 L0.55,0.1 L0.45,-0.1 L1,0'/>
+            </segment>
+            <marker-end unit='px'>
+                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
+            </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">RECO</text>
+                    </g>
+                </g>
+            </marker>
+        </template>
+        <template name='IdRenseigner_Poly-ligne' type="line">
+            <segment>
+                <line stroke='currentColor' stroke-width='4px' x2='1'/>
+            </segment>
+            <marker-end unit='px'>
+                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
+            </marker-end>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">RENS</text>
+                    </g>
+                </g>
+            </marker>
+        </template>
+        <template name='IdSoutenir_Poly-ligne' type="line">
+            <marker-start unit='px'>
+                <path fill='currentColor' stroke='none' d='M0,8 V-8 H20 L28,0 20,8 H0z'/>
+            </marker-start>
+            <segment>
+                <line stroke='currentColor' stroke-width='4px' x2='1'/>
+            </segment>
+            <marker-end unit='px'>
+                <path stroke='none' fill='currentColor' d='M-3,8 L15,0 -3,-8 0,0 z'/>
+            </marker-end>
+        </template>
+        <template name='IdPolygone' type="polygon">
+            <segment unit="%">
+                <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
+            </segment>
         </template>
         <template name='IdControler_Polygone' type="polygon">
             <segment unit="%">
@@ -315,6 +316,18 @@
                     </g>
                 </g>
             </marker>
+        </template>
+        <template name='IdDetruire_Polygone' type="polygon">
+            <segment unit="%">
+                <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
+            </segment>
+        </template>
+        <template name='IdDefendre_Polygone' type="polygon">
+            <segment unit="%">
+                <g fill="currentColor">
+                    <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
+                </g>
+            </segment>
         </template>
     </category>
     <category name="Marqueurs">
@@ -847,4 +860,4 @@
         </template>
     </category>
 </templates>
-<!-- signature="2341072829" -->
+<!-- signature="0225270686" -->
