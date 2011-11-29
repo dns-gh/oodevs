@@ -285,6 +285,16 @@ void TacticalListView::Disengage()
     }
 }
 
+namespace
+{
+    bool IsSubordinateOf( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
+    {
+        if( const kernel::TacticalHierarchies* pTactical = superior.Retrieve< kernel::TacticalHierarchies >() )
+            return pTactical->IsSubordinateOf( entity );
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TacticalListView::CanChangeSuperior
 // Created: JSR 2011-11-08
@@ -296,7 +306,7 @@ bool TacticalListView::CanChangeSuperior( const kernel::Entity_ABC& entity, cons
     if( dynamic_cast< const Automat_ABC* >( &entity ) )
         return dynamic_cast< const Formation_ABC* >( &superior ) != 0;
     if( dynamic_cast< const Formation_ABC* >( &entity ) )
-        return dynamic_cast< const Formation_ABC* >( &superior ) != 0 || dynamic_cast< const Team_ABC* >( &superior ) != 0;
+        return ( !IsSubordinateOf( entity, superior ) && dynamic_cast< const Formation_ABC* >( &superior ) != 0 ) || dynamic_cast< const Team_ABC* >( &superior ) != 0 ;
     if( const Ghost_ABC* ghost = dynamic_cast< const Ghost_ABC* >( &entity ) )
         return ( ghost->GetGhostType() == eGhostType_Automat && dynamic_cast< const Formation_ABC* >( &superior ) != 0 )
             || ( ghost->GetGhostType() == eGhostType_Agent && dynamic_cast< const Team_ABC* >( &superior ) != 0 );
@@ -413,7 +423,7 @@ bool TacticalListView::Drop( const Automat_ABC& item, const Entity_ABC& target )
 bool TacticalListView::Drop( const Formation_ABC& formation, const Entity_ABC& target )
 {
     const Formation_ABC* targetFormation = dynamic_cast< const Formation_ABC* >( &target );
-    if( targetFormation )
+    if( targetFormation && !IsSubordinateOf( formation, *targetFormation ) )
         return ChangeSuperior( formation, target );
 
     const Team_ABC* team = dynamic_cast< const Team_ABC* >( &target );
