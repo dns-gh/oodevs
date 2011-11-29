@@ -78,6 +78,7 @@ private:
     T_KnowledgeObjectVector objectsToAvoid_;
     std::vector< TER_Localisation > geometrySignatures_;
     bool forceNextPoint_;
+    bool isTreatingJoining_;
 };
 
 #endif // __PHY_ActionMove_h_

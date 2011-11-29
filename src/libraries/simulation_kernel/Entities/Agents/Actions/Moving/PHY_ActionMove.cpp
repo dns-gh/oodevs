@@ -15,6 +15,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_PathWalker.h"
 #include "Decision/DEC_Agent_Path.h"
@@ -40,6 +41,7 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
     , role_                         ( pion.GetRole< moving::PHY_RoleAction_Moving >() )
     , pMainPath_                    ( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
     , forceNextPoint_               ( false )
+    , isTreatingJoining_            ( false )
 {
     if( pMainPath_.get() )
         Callback( static_cast< int >( DEC_PathWalker::eRunning ) );
@@ -186,6 +188,14 @@ void PHY_ActionMove::AvoidObstacles()
     if( objectAvoidAttempts_.find( nObjectToAvoidDiaID ) != objectAvoidAttempts_.end() )
         return;
     objectAvoidAttempts_.insert( nObjectToAvoidDiaID );
+
+    if( !isTreatingJoining_ )
+    {
+        MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
+        if( !CreateJoiningPath( lastJoiningPoint, forceNextPoint_ ) )
+            CreateFinalPath();
+        role_.SendRC( MIL_Report::eReport_DifficultTerrain );
+    }
 }
 
 // =============================================================================
@@ -214,19 +224,23 @@ void PHY_ActionMove::Execute()
         MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
         nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint );
         forceNextPoint_ = false;
+        isTreatingJoining_ = false;
     }
     else if( nReturn == DEC_PathWalker::eBlockedByObject )
     {
+        isTreatingJoining_ = false;
         if( ( pCurrentPath != pJoiningPath_ && !pJoiningPath_.get() ) || pCurrentPath == pJoiningPath_ )
         {
             DestroyJoiningPath();
             nReturn = CreateAdaptedPath( pCurrentPath, MT_Vector2D() );
+            isTreatingJoining_ = true;
         }
         forceNextPoint_ = false;
     }
     else if( pCurrentPath == pJoiningPath_ )
     {
         forceNextPoint_ = false;
+        isTreatingJoining_ = false;
         if( nReturn == DEC_PathWalker::eFinished )
         {
             DestroyJoiningPath();
@@ -240,7 +254,10 @@ void PHY_ActionMove::Execute()
         }
     }
     else
+    {
         forceNextPoint_ = false;
+        isTreatingJoining_ = false;
+    }
 
     Callback( nReturn );
 }
