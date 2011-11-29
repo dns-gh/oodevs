@@ -61,6 +61,15 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
     ghostLayout->addWidget( pGhostColor_ );
     mainLayout->addLayout( ghostLayout );
 
+    if( controllers_.options_.GetOption( "Color/Neutralized", QString( "" ) ).To< QString >() == "" )
+        controllers_.options_.Change( "Color/Neutralized", pNColor_->GetColor().name() );
+    if( controllers_.options_.GetOption( "Color/TacticallyDestroyed", QString( "" ) ).To< QString >() == "" )
+        controllers_.options_.Change( "Color/TacticallyDestroyed", pADColor_->GetColor().name() );
+    if( controllers_.options_.GetOption( "Color/TotallyDestroyed", QString( "" ) ).To< QString >() == "" )
+        controllers_.options_.Change( "Color/TotallyDestroyed", pODColor_->GetColor().name() );
+    if( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() == "" )
+        controllers_.options_.Change( "Color/Phantom", pGhostColor_->GetColor().name() );
+
     setWidget( main );
     controllers_.Register( *this );
 }
