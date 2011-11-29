@@ -190,6 +190,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ExtentResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FormationCreater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaClass.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaFactories.h" />

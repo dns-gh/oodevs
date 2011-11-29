@@ -198,6 +198,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextHandler.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockEntityTypeResolver.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockExtentResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederate.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederateAmbassadorFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockHlaObject.h" />

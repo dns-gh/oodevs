@@ -54,6 +54,7 @@ namespace hla
     class ComponentTypes_ABC;
     class CallsignResolver_ABC;
     class AutomatTypeResolver_ABC;
+    class ExtentResolver_ABC;
     class AutomatDisengager;
     class FormationCreater;
     class AutomatCreater;
@@ -76,7 +77,8 @@ public:
              SimulationFacade( xml::xisubstream xis, const ContextFactory_ABC& contextFactory, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
                                const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
-                               RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger );
+                               RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
+                               dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent );
     virtual ~SimulationFacade();
     //@}
 

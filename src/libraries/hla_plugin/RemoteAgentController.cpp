@@ -12,6 +12,7 @@
 #include "RemoteAgentSubject_ABC.h"
 #include "ContextHandler_ABC.h"
 #include "UnitTypeResolver_ABC.h"
+#include "ExtentResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/Logger_ABC.h"
@@ -43,13 +44,15 @@ RemoteAgentController::RemoteAgentController( RemoteAgentSubject_ABC& agentSubje
                                               ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                               ContextHandler_ABC< sword::UnitCreation >& unitHandler,
                                               const tools::Resolver_ABC< dispatcher::Team_ABC >& sides,
-                                              const UnitTypeResolver_ABC& typeResolver, dispatcher::Logger_ABC& logger )
+                                              const UnitTypeResolver_ABC& typeResolver, dispatcher::Logger_ABC& logger,
+                                              const ExtentResolver_ABC& extent )
     : agentSubject_  ( agentSubject )
     , automatHandler_( automatHandler )
     , unitHandler_   ( unitHandler )
     , sides_         ( sides )
     , typeResolver_  ( typeResolver )
     , logger_        ( logger )
+    , extent_        ( extent )
 {
     automatHandler_.Register( *this );
     agentSubject_.Register( *this );
@@ -116,6 +119,8 @@ void RemoteAgentController::Destroyed( const std::string& /*identifier*/ )
 void RemoteAgentController::Moved( const std::string& identifier, double latitude, double longitude )
 {
     if( unitCreations_.find( identifier ) == unitCreations_.end() )
+        return;
+    if( !extent_.IsInBoundaries( geometry::Point2d( latitude, longitude ) ) )
         return;
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     sword::Location* location = message().mutable_parameters()->mutable_elem( 1 )->add_value()->mutable_point()->mutable_location();

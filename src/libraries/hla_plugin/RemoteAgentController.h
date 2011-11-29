@@ -45,6 +45,7 @@ namespace hla
     class RemoteAgentSubject_ABC;
     template< typename Response > class ContextHandler_ABC;
     class UnitTypeResolver_ABC;
+    class ExtentResolver_ABC;
 
 // =============================================================================
 /** @class  RemoteAgentController
@@ -62,7 +63,8 @@ public:
                                     ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                     ContextHandler_ABC< sword::UnitCreation >& unitHandler,
                                     const tools::Resolver_ABC< dispatcher::Team_ABC >& sides,
-                                    const UnitTypeResolver_ABC& typeResolver, dispatcher::Logger_ABC& logger );
+                                    const UnitTypeResolver_ABC& typeResolver, dispatcher::Logger_ABC& logger,
+                                    const ExtentResolver_ABC& extent );
     virtual ~RemoteAgentController();
     //@}
 
@@ -111,6 +113,7 @@ private:
     const tools::Resolver_ABC< dispatcher::Team_ABC >& sides_;
     const UnitTypeResolver_ABC& typeResolver_;
     dispatcher::Logger_ABC& logger_;
+    const ExtentResolver_ABC& extent_;
     T_UnitCreations unitCreations_;
     T_Parties parties_;
     T_Karmas karmas_;

@@ -66,6 +66,7 @@ namespace hla
     class AutomatChecker_ABC;
     class Subordinates_ABC;
     class Transporters_ABC;
+    class ExtentResolver_ABC;
     class InteractionBuilder;
     class SimulationFacade;
     class DetonationFacade;
@@ -125,6 +126,7 @@ private:
     std::auto_ptr< Subordinates_ABC > pSubordinates_;
     std::auto_ptr< tools::MessageController< sword::SimToClient_Content > > pMessageController_;
     std::auto_ptr< AutomatChecker_ABC > pAutomatChecker_;
+    std::auto_ptr< ExtentResolver_ABC > pExtentResolver_;
     std::auto_ptr< AgentController > pSubject_;
     std::auto_ptr< FederateFacade > pFederate_;
     std::auto_ptr< InteractionBuilder > pInteractionBuilder_;

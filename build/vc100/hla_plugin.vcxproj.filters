@@ -591,5 +591,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender.h">
       <Filter>Source Files\Interactions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ExtentResolver_ABC.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -33,9 +33,11 @@
 #include "AutomatChecker.h"
 #include "Transporters.h"
 #include "InteractionBuilder.h"
+#include "ExtentResolver_ABC.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
 #include "dispatcher/StaticModel.h"
@@ -78,6 +80,20 @@ namespace
     private:
         dispatcher::Logger_ABC& logger_;
     };
+    class ExtentResolver : public ExtentResolver_ABC
+    {
+    public:
+        explicit ExtentResolver( const dispatcher::Config& config )
+            : converter_( new kernel::CoordinateConverter( config ) )
+        {}
+        virtual bool IsInBoundaries( const geometry::Point2d& geoPoint ) const
+        {
+            const geometry::Point2f xyPoint = converter_->ConvertFromGeo( geoPoint );
+            return converter_->IsInBoundaries( xyPoint );
+        }
+    private:
+        std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -116,6 +132,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pSubordinates_              ( new Subordinates( *pCallsignResolver_, dynamicModel.Automats() ) )
     , pMessageController_         ( new tools::MessageController< sword::SimToClient_Content >() )
     , pAutomatChecker_            ( new AutomatChecker( dynamicModel.Agents() ) )
+    , pExtentResolver_            ( new ExtentResolver( config ) )
     , pSubject_                   ( 0 )
     , pFederate_                  ( 0 )
     , pInteractionBuilder_        ( 0 )
@@ -156,7 +173,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
                                                   config_.BuildPluginDirectory( "hla" ), *pCallsignResolver_ ) );
             pInteractionBuilder_.reset( new InteractionBuilder( logger_, *pFederate_ ) );
-            pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, simulationPublisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_, logger_ ) );
+            pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, simulationPublisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_, logger_, *pExtentResolver_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pDetonationFacade_.reset( new DetonationFacade( simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_ ) );
             pSideChecker_.reset( new SideChecker( *pSubject_, *pFederate_, *pRemoteAgentResolver_ ) );

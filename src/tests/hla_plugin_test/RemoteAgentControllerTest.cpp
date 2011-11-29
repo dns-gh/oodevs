@@ -16,6 +16,7 @@
 #include "MockTeam.h"
 #include "MockRemoteAgentSubject.h"
 #include "MockContextHandler.h"
+#include "MockExtentResolver.h"
 #include "MockUnitTypeResolver.h"
 #include "MockLogger.h"
 #include <boost/shared_ptr.hpp>
@@ -75,6 +76,7 @@ namespace
         MockContextHandler< sword::UnitCreation > unitCreation;
         tools::MockResolver< dispatcher::Team_ABC > teamResolver;
         MockUnitTypeResolver unitTypeResolver;
+        MockExtentResolver extentResolver;
         dispatcher::MockLogger logger;
         const unsigned long party;
         const double latitude;
@@ -86,7 +88,7 @@ namespace
     {
     public:
         AutomatFixture()
-            : remoteController( remoteSubject, automatCreation, unitCreation, teamResolver, unitTypeResolver, logger )
+            : remoteController( remoteSubject, automatCreation, unitCreation, teamResolver, unitTypeResolver, logger, extentResolver )
         {
             BOOST_REQUIRE( automatCreationHandler );
             BOOST_REQUIRE( remoteAgentListener );
@@ -114,6 +116,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
     remoteAgentListener->TypeChanged( "identifier", entityType );
     simulation::UnitMagicAction actual;
     MOCK_EXPECT( unitCreation, Send ).once().with( mock::retrieve( actual ), "identifier" );
+    MOCK_EXPECT( extentResolver, IsInBoundaries ).once().returns( true );
     remoteAgentListener->Moved( "identifier", latitude, longitude );
     mock::verify();
     const sword::UnitMagicAction& action = actual();
@@ -137,8 +140,24 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_s
     MOCK_EXPECT( unitTypeResolver, Resolve ).once().returns( 4242 );
     remoteAgentListener->TypeChanged( "identifier", rpr::EntityType() );
     MOCK_EXPECT( unitCreation, Send ).once();
+    MOCK_EXPECT( extentResolver, IsInBoundaries ).once().returns( true );
     remoteAgentListener->Moved( "identifier", latitude, longitude );
     mock::verify();
+    remoteAgentListener->Moved( "identifier", latitude, longitude );
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_out_of_bounds_agent_only_when_moving_inside_extent, AutomatFixture )
+{
+    remoteAgentListener->Created( "identifier" );
+    remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
+    remoteAgentListener->NameChanged( "identifier", "name" );
+    MOCK_EXPECT( unitTypeResolver, Resolve ).once().returns( 4242 );
+    remoteAgentListener->TypeChanged( "identifier", rpr::EntityType() );
+    MOCK_EXPECT( extentResolver, IsInBoundaries ).once().returns( false );
+    remoteAgentListener->Moved( "identifier", latitude, longitude );
+    mock::verify();
+    MOCK_EXPECT( extentResolver, IsInBoundaries ).once().returns( true );
+    MOCK_EXPECT( unitCreation, Send ).once();
     remoteAgentListener->Moved( "identifier", latitude, longitude );
 }
 
