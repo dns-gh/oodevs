@@ -97,9 +97,16 @@ MT_Vector2D PHY_ActionMove::DestroyJoiningPath()
         return MT_Vector2D();
     role_.MoveCanceled( pJoiningPath_ );
     pJoiningPath_->Cancel();
-    MT_Vector2D lastPoint = pJoiningPath_->GetResult().back()->GetPos();
+    const DEC_PathResult::T_PathPointList& pathResult = pJoiningPath_->GetResult();
+    if( pathResult.empty() )
+    {
+        pJoiningPath_.reset();
+        return MT_Vector2D();
+    }
+    boost::shared_ptr< DEC_PathPoint > lastPoint = pathResult.back();
+    MT_Vector2D point = lastPoint.get() ? back->GetPos() : MT_Vector2D();
     pJoiningPath_.reset();
-    return lastPoint;
+    return point;
 }
 
 namespace
