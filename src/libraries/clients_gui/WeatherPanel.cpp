@@ -31,6 +31,7 @@ WeatherPanel::WeatherPanel( QWidget* parent, PanelStack_ABC& panel, WeatherLayer
     , layer_        ( layer )
     , selectedLocal_( 0 )
     , currentType_  ( eWeatherGlobal )
+    , localWeathers_( 0 )
 {
     // Layouts
     QWidget* box = new QWidget( this );
