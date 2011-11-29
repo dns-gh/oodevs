@@ -99,6 +99,7 @@ private:
     typedef std::map< std::string, T_UnitCreation > T_UnitCreations;
     typedef std::map< unsigned long, unsigned long > T_Parties;
     typedef std::map< kernel::Karma, unsigned long > T_Karmas;
+    typedef std::map< std::string, rpr::ForceIdentifier > T_WaitingAutomats;
     //@}
 
 private:
@@ -113,6 +114,7 @@ private:
     T_UnitCreations unitCreations_;
     T_Parties parties_;
     T_Karmas karmas_;
+    T_WaitingAutomats waitingAutomats_;
     //@}
 };
 

@@ -17,6 +17,7 @@
 #include "dispatcher/Logger_ABC.h"
 #include "clients_kernel/Karma.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -81,6 +82,8 @@ void RemoteAgentController::Notify( const sword::AutomatCreation& message, const
 {
     logger_.LogInfo( "parties[ " + boost::lexical_cast< std::string >( message.party().id() ) + " ] = " + boost::lexical_cast< std::string >( message.automat().id() ) + " (" + identifier + ")" );
     parties_[ message.party().id() ] = message.automat().id();
+    BOOST_FOREACH( const T_WaitingAutomats::value_type& waiting, waitingAutomats_ )
+        SideChanged( waiting.first, waiting.second );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,9 +137,12 @@ void RemoteAgentController::SideChanged( const std::string& identifier, rpr::For
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     const unsigned long automat = FindAutomat( side );
     if( automat == 0 )
-        throw std::runtime_error( "Army '" + GetKarma( side ).GetName().toStdString() + "' does not exist for remote agent '" + identifier + "'" );
-    message().mutable_tasker()->mutable_automat()->set_id( automat );
-    Send( message, identifier );
+        waitingAutomats_[ identifier ] = side;
+    else
+    {
+        message().mutable_tasker()->mutable_automat()->set_id( automat );
+        Send( message, identifier );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -217,14 +223,11 @@ unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) c
     const kernel::Karma& karma = GetKarma( force );
     T_Karmas::const_iterator itKarma = karmas_.find( karma );
     if( itKarma == karmas_.end() )
-    {
-        logger_.LogError( "Karma not found: " + karma.GetName().toStdString() );
-        return 0;
-    }
+        throw std::runtime_error( "Karma '" + karma.GetName().toStdString() + "' not found in scenario" );
     T_Parties::const_iterator itParty = parties_.find( itKarma->second );
     if( itParty == parties_.end() )
     {
-        logger_.LogError( "Party not found: " + boost::lexical_cast< std::string >( itKarma->second ) );
+        logger_.LogWarning( "Party '" + boost::lexical_cast< std::string >( itKarma->second ) + "' not existing yet" );
         return 0;
     }
     return itParty->second;
