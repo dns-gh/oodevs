@@ -18,6 +18,7 @@
 namespace kernel
 {
     class Controllers;
+    class TacticalHierarchies;
 }
 
 // =============================================================================
@@ -54,6 +55,7 @@ private:
     void AddSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor, const boost::optional< QColor >& oldColor = boost::none );
     void RemoveSubordinate( const kernel::Entity_ABC& entity, const QColor& color );
     void UpdateHierarchies( const kernel::Entity_ABC& entity );
+    void UpdateLogisticBaseStates( const kernel::TacticalHierarchies& tactical );
     //@}
 
 private:

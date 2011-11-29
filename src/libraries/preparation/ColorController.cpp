@@ -9,6 +9,8 @@
 
 #include "preparation_pch.h"
 #include "ColorController.h"
+#include "LogisticHierarchiesBase.h"
+#include "LogisticBaseStates.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -135,6 +137,28 @@ void ColorController::UpdateHierarchies( const kernel::Entity_ABC& entity )
             controllers_.controller_.Update( *pCommunication );
         else if( const kernel::CommunicationHierarchies* pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
             controllers_.controller_.Update( *pCommunication );
+        if( const LogisticBaseStates* pLogistic = static_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() ) )
+            controllers_.controller_.Update( *pLogistic );
+        UpdateLogisticBaseStates( *pTactical );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorController::UpdateLogisticBaseStates
+// Created: LGY 2011-11-29
+// -----------------------------------------------------------------------------
+void ColorController::UpdateLogisticBaseStates( const kernel::TacticalHierarchies& tactical )
+{
+    tools::Iterator< const kernel::Entity_ABC& > children = tactical.CreateSubordinateIterator();
+    while( children.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& child = children.NextElement();
+        if( const kernel::TacticalHierarchies* pTactical = child.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            if( const LogisticBaseStates* pLogistic = static_cast< const LogisticBaseStates* >( child.Retrieve< LogisticHierarchiesBase >() ) )
+                controllers_.controller_.Update( *pLogistic );
+            UpdateLogisticBaseStates( *pTactical );
+        }
     }
 }
 
