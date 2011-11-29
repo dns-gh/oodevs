@@ -28,14 +28,14 @@ class DEC_Population_PathClass
 public:
     //! @name Manager
     //@{
-    static       void                      Initialize  ( xml::xistream& xis );
+    static       void                      Initialize  ( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects );
     static       void                      Terminate   ();
     static const DEC_Population_PathClass& GetPathClass( const std::string& type );
     //@}
 
     //! @name Constructors/Destructor
     //@{
-             DEC_Population_PathClass( xml::xistream& xis, const DEC_Population_PathClass* pCopyFrom = 0 );
+             DEC_Population_PathClass( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects, const DEC_Population_PathClass* pCopyFrom = 0 );
     virtual ~DEC_Population_PathClass();
     //@}
 
@@ -51,7 +51,7 @@ public:
     //! @name Helpers
     //@{
     struct LoadingWrapper;
-    static void ReadPopulationRule( xml::xistream& xis );
+    static void ReadPopulationRule( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects );
     //@}
 
 private:

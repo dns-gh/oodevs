@@ -33,7 +33,7 @@ class DEC_Agent_PathClass
 public:
     //! @name Manager
     //@{
-    static       void                 Initialize  ( xml::xistream& xis );
+    static       void                 Initialize  ( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects );
     static       void                 Terminate   ();
     static const DEC_Agent_PathClass& GetPathClass( const DEC_PathType& pathType, const MIL_Agent_ABC& pion );
     //@}
@@ -41,7 +41,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_PathClass* pCopyFrom = 0 );
+             DEC_Agent_PathClass( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects, const DEC_Agent_PathClass* pCopyFrom = 0 );
     virtual ~DEC_Agent_PathClass();
     //@}
 
@@ -106,7 +106,7 @@ private:
     //! @name Helpers
     //@{
     struct LoadingWrapper;
-    static void ReadUnitRule( xml::xistream& xis );
+    static void ReadUnitRule( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects );
     void ReadObject         ( xml::xistream& xis );
     void ReadTerrain        ( xml::xistream& xis, TerrainData& data );
     void ReadPopulation     ( xml::xistream& xis );

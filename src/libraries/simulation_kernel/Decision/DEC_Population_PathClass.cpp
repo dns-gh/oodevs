@@ -19,9 +19,9 @@ DEC_Population_PathClass::T_Rules DEC_Population_PathClass::rules_;
 
 struct DEC_Population_PathClass::LoadingWrapper
 {
-    void ReadPopulationRule( xml::xistream& xis )
+    void ReadPopulationRule( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
     {
-        DEC_Population_PathClass::ReadPopulationRule( xis );
+        DEC_Population_PathClass::ReadPopulationRule( xis, dangerousObjects );
     }
 };
 
@@ -29,11 +29,11 @@ struct DEC_Population_PathClass::LoadingWrapper
 // Name: DEC_Population_PathClass::Initialize
 // Created: SBO 2006-03-27
 // -----------------------------------------------------------------------------
-void DEC_Population_PathClass::Initialize( xml::xistream& xis )
+void DEC_Population_PathClass::Initialize( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
 {
     LoadingWrapper loader;
     xis >> xml::start( "population-rules" )
-            >> xml::list( "rule", loader, &LoadingWrapper::ReadPopulationRule )
+            >> xml::list( "rule", loader, &LoadingWrapper::ReadPopulationRule, dangerousObjects )
         >> xml::end;
 }
 
@@ -41,7 +41,7 @@ void DEC_Population_PathClass::Initialize( xml::xistream& xis )
 // Name: DEC_Population_PathClass::ReadPopulationRule
 // Created: ABL 2007-07-25
 // -----------------------------------------------------------------------------
-void DEC_Population_PathClass::ReadPopulationRule( xml::xistream& xis )
+void DEC_Population_PathClass::ReadPopulationRule( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
 {
     std::string strType;
 
@@ -60,7 +60,7 @@ void DEC_Population_PathClass::ReadPopulationRule( xml::xistream& xis )
     DEC_Population_PathClass*& pRule = rules_[ strType ];
     if( pRule )
         xis.error( "Rule '" + strType + "' already defined" );
-    pRule = new DEC_Population_PathClass( xis, pBase );
+    pRule = new DEC_Population_PathClass( xis, dangerousObjects, pBase );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ const DEC_Population_PathClass& DEC_Population_PathClass::GetPathClass( const st
 // Name: DEC_Population_PathClass constructor
 // Created: SBO 2006-03-27
 // -----------------------------------------------------------------------------
-DEC_Population_PathClass::DEC_Population_PathClass( xml::xistream& xis, const DEC_Population_PathClass* pCopyFrom /*= 0*/ )
+DEC_Population_PathClass::DEC_Population_PathClass( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects, const DEC_Population_PathClass* pCopyFrom /*= 0*/ )
     : rCostOutsideOfChanneling_( 10.f )
     , rChannelingRange_( 1000.f )
     , bAvoidObjects_( true )
@@ -96,6 +96,15 @@ DEC_Population_PathClass::DEC_Population_PathClass( xml::xistream& xis, const DE
 {
     if( pCopyFrom )
         *this = *pCopyFrom;
+    else
+        for( std::vector< unsigned int >::const_iterator it = dangerousObjects.begin(); it != dangerousObjects.end(); ++it )
+        {
+            unsigned int id = *it;
+            if( objectCosts_.size() <= id )
+                objectCosts_.resize( id + 1, 0 );
+            assert( objectCosts_.size() > id );
+            objectCosts_[ id ] = rObstructionThreshold_;
+        }
 
     xis >> xml::optional >> xml::attribute( "cost-out-of-channeling", rCostOutsideOfChanneling_ )
         >> xml::optional >> xml::attribute( "channeling-range", rChannelingRange_ )

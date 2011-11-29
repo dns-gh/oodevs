@@ -17,6 +17,13 @@
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MIL_ObjectFilter.h"
+#include "Entities/Objects/AttritionCapacity.h"
+#include "Entities/Objects/ContaminationCapacity.h"
+#include "Entities/Objects/InterferenceCapacity.h"
+#include "Entities/Objects/AvoidanceCapacity.h"
 #include "Tools/MIL_Config.h"
 #include "tools/Loader_ABC.h"
 #include "tools/xmlcodecs.h"
@@ -24,6 +31,20 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
+
+namespace
+{
+    class MIL_DangerousObjectFilter : public MIL_ObjectFilter
+    {
+        virtual bool Test( const MIL_ObjectType_ABC& type ) const
+        {
+            return type.GetCapacity< AttritionCapacity >() != 0 ||
+                   type.GetCapacity< ContaminationCapacity >() != 0 ||
+                   type.GetCapacity< InterferenceCapacity >() != 0 ||
+                   type.GetCapacity< AvoidanceCapacity >() != 0;
+        }
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager constructor
@@ -34,8 +55,13 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {
-    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "pathfinder", boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1 ) );
+    std::vector< unsigned int > dangerousObjects;
+    MIL_DangerousObjectFilter filter;
+    MIL_ObjectFactory::FindDangerousIDs( dangerousObjects, filter );
+
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "pathfinder", boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1, dangerousObjects ) );
     config.AddFileToCRC( fileLoaded );
+
     bUseInSameThread_ = config.GetPathFinderThreads() == 0;
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
     if( bUseInSameThread_ ) // juste one "thread" that will never start
@@ -49,20 +75,20 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
 // Name: DEC_PathFind_Manager::ReadPathfind
 // Created: LDC 2010-11-30
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xisPathfind )
+void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
 {
-    xisPathfind >> xml::start( "pathfind" )
-                    >> xml::start( "configuration" )
-                        >> xml::attribute( "distance-threshold", rDistanceThreshold_ );
-    if( tools::ReadTimeAttribute( xisPathfind, "max-calculation-time", nMaxComputationDuration_ ) && nMaxComputationDuration_ <= 0 )
+    xis >> xml::start( "pathfind" )
+            >> xml::start( "configuration" )
+                >> xml::attribute( "distance-threshold", rDistanceThreshold_ );
+    if( tools::ReadTimeAttribute( xis, "max-calculation-time", nMaxComputationDuration_ ) && nMaxComputationDuration_ <= 0 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pathfind configuration : max-calculation-time w<= 0" );
 
-    xisPathfind     >> xml::end;
+    xis     >> xml::end;
 
     DEC_PathType   ::Initialize();
-    DEC_PathFactory::Initialize( xisPathfind );
+    DEC_PathFactory::Initialize( xis, dangerousObjects );
 
-    xisPathfind >> xml::end;
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -73,7 +73,7 @@ private:
     boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage( unsigned int nThread );
     void AddPendingJob( boost::shared_ptr< DEC_Path_ABC > pPath );
     T_Requests& GetRequests();
-    void ReadPathfind( xml::xistream& xis );
+    void ReadPathfind( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects );
     //@}
 
 private:

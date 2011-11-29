@@ -23,9 +23,9 @@ DEC_Agent_PathClass::T_Rules DEC_Agent_PathClass::rules_;
 
 struct DEC_Agent_PathClass::LoadingWrapper
 {
-    void ReadUnitRule( xml::xistream& xis )
+    void ReadUnitRule( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
     {
-        DEC_Agent_PathClass::ReadUnitRule( xis );
+        DEC_Agent_PathClass::ReadUnitRule( xis, dangerousObjects );
     }
 };
 
@@ -53,11 +53,11 @@ void DEC_Agent_PathClass::CheckRulesExistence()
 // Name: DEC_Agent_PathClass::Initialize
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::Initialize( xml::xistream& xis )
+void DEC_Agent_PathClass::Initialize( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
 {
     LoadingWrapper loader;
     xis >> xml::start( "unit-rules" )
-            >> xml::list( "rule", loader, &LoadingWrapper::ReadUnitRule )
+            >> xml::list( "rule", loader, &LoadingWrapper::ReadUnitRule, dangerousObjects )
         >> xml::end;
     CheckRulesExistence();
 }
@@ -66,7 +66,7 @@ void DEC_Agent_PathClass::Initialize( xml::xistream& xis )
 // Name: DEC_Agent_PathClass::ReadUnitRule
 // Created: ABL 2007-07-25
 // -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::ReadUnitRule( xml::xistream& xis )
+void DEC_Agent_PathClass::ReadUnitRule( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
 {
     std::string strType;
     bool bFlying;
@@ -87,7 +87,7 @@ void DEC_Agent_PathClass::ReadUnitRule( xml::xistream& xis )
     DEC_Agent_PathClass*& pRule = rules_[ T_RuleType( strType, T_BooleanPair( bFlying, bAutonomous ) ) ];
     if( pRule )
         xis.error( "Rule '" + strType + "' already defined" );
-    pRule = new DEC_Agent_PathClass( xis, pBase );
+    pRule = new DEC_Agent_PathClass( xis, dangerousObjects, pBase );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,9 +103,10 @@ void DEC_Agent_PathClass::Terminate()
 // Name: DEC_Agent_PathClass constructor
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-DEC_Agent_PathClass::DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_PathClass* pCopyFrom /*= 0*/ )
+DEC_Agent_PathClass::DEC_Agent_PathClass( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects, const DEC_Agent_PathClass* pCopyFrom /*= 0*/ )
     : bShort_                            ( false )
     , bAvoidObjects_                     ( true )
+    , rObstructionThreshold_             ( 10000 )
     , bFlying_                           ( xis.attribute< bool >( "flying" ) )
     , rPreferedTerrainCost_              ( 0 )
     , rAvoidedTerrainCost_               ( 0 )
@@ -128,6 +129,16 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_Pa
 {
     if( pCopyFrom )
         *this = *pCopyFrom;
+    else
+        for( std::vector< unsigned int >::const_iterator it = dangerousObjects.begin(); it != dangerousObjects.end(); ++it )
+        {
+            unsigned int id = *it;
+            if( objectCosts_.size() <= id )
+                objectCosts_.resize( id + 1, 0 );
+            assert( objectCosts_.size() > id );
+            objectCosts_[ id ] = rObstructionThreshold_;
+        }
+
     xis >> xml::optional
         >> xml::start( "optimisation" )
             >> xml::attribute( "shortest", bShort_ )

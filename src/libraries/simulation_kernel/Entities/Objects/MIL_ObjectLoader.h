@@ -38,6 +38,7 @@ class TER_Localisation;
 class MIL_Object_ABC;
 class MIL_Army_ABC;
 class MIL_ObjectBuilder_ABC;
+class MIL_ObjectFilter;
 
 // =============================================================================
 /** @class  MIL_ObjectLoader
@@ -69,6 +70,7 @@ public:
     //@{
     const MIL_ObjectType_ABC& GetType( const std::string& type ) const;
     const CapacityFactory& GetCapacityFactory() const;
+    const void GetDangerousIDs( std::vector< unsigned int >& dangerousIDs, const MIL_ObjectFilter& filter ) const;
     //@}
 
     //! @name Singleton
@@ -96,6 +98,13 @@ private:
     void ReadAttributes( const std::string& attribute, xml::xistream& xis, Object& object ) const;
     sword::ObjectMagicActionAck_ErrorCode InitializeLocation( Object& object, const sword::Location& asn ) const;
     //@}
+
+    template< class UnaryFunction >
+    void ApplyOnPrototypes( UnaryFunction& functor ) const
+    {
+        for( CIT_Prototypes it = prototypes_.begin(); it != prototypes_.end(); ++it )
+            functor( *it->second );
+    }
 
 private:
     //! @name Member data
