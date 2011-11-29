@@ -361,7 +361,6 @@
     <workable max-animator="3"/>
   </object>
   <object geometry="polygon" name="terrain largage" symbol="G*GPGAD---****X" type="dropping area">
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <interaction-height height="2"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
@@ -473,4 +472,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="1263216392" -->
+<!-- signature="1016158114" -->
