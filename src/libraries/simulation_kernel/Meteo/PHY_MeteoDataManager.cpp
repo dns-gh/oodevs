@@ -202,8 +202,7 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    assert( meteos_.size() > 0 );
-    std::size_t size = meteos_.size() - 1;
+    std::size_t size = meteos_.size();
     file << boost::serialization::base_object< weather::MeteoManager_ABC >( *this )
          << localCounter_
          << pGlobalMeteo_
