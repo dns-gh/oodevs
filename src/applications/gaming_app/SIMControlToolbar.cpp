@@ -419,7 +419,7 @@ void SIMControlToolbar::SlotNamedCheckPoint()
 void SIMControlToolbar::RequestCheckpoint( const std::string& name )
 {
     simulation::ControlCheckPointSaveNow message;
-    if( message().has_name() )
+    if( !name.empty() )
         message().set_name ( name.c_str() );
     message.Send( publisher_ );
     pCheckpointButton_->popup()->hide();
