@@ -36,6 +36,14 @@ LinkGenerator::~LinkGenerator()
     // NOTHING
 }
 
+namespace
+{
+    bool IsAutomat( const kernel::Entity_ABC& entity )
+    {
+        return entity.GetTypeName() == kernel::Automat_ABC::typeName_;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LinkGenerator::GenerateFromAutomat
 // Created: LGY 2011-10-12
@@ -43,7 +51,7 @@ LinkGenerator::~LinkGenerator()
 void LinkGenerator::GenerateFromAutomat( const kernel::Entity_ABC& automat )
 {
     const kernel::Entity_ABC& formation = automat.Get< kernel::TacticalHierarchies >().GetUp();
-    CreateLink( formation, automat, !boost::bind( &LinkGenerator::IsLogisticBase, this, _1 ) );
+    CreateLink( formation, automat, !boost::bind( &LinkGenerator::IsLogisticBase, this, _1 ) && boost::bind( &::IsAutomat, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
