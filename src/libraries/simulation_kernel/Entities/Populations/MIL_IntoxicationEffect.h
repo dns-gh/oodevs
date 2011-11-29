@@ -26,7 +26,7 @@ class MIL_IntoxicationEffect : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_IntoxicationEffect( MIL_PopulationHumans& humans, unsigned int delay, unsigned int time );
+             MIL_IntoxicationEffect( MIL_PopulationHumans& humans, double delay, unsigned int time );
     virtual ~MIL_IntoxicationEffect();
     //@}
 
@@ -46,7 +46,7 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned int delay_;
+    double delay_;
     MIL_PopulationHumans& humans_;
     unsigned int time_;
     T_Effects effects_;

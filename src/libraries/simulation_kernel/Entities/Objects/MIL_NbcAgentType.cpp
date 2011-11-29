@@ -158,9 +158,11 @@ void MIL_NbcAgentType::ReadGaz( xml::xistream& xis )
     bCanBeVaporized_ = true;
     if( ReadPoisonousData( xis, gasPoisonous_ ) )
         bGasPoisonous_ = true;
-    xis >> xml::optional >> xml::attribute( "contamination", bGasContaminating_ );
-
-    tools::ReadTimeAttribute( xis, "life-time", nGasLifeTime_ );
+    std::string nGasLifeTime = "6h";
+    xis >> xml::optional >> xml::attribute( "contamination", bGasContaminating_ )
+        >> xml::optional >> xml::attribute( "life-time", nGasLifeTime );
+    tools::DecodeTime( nGasLifeTime, nGasLifeTime_ );
+    nGasLifeTime_ = MIL_Tools::ConvertSecondsToSim( nGasLifeTime_ );
     if( nGasLifeTime_ <= 0 )
         xis.error( "effects: life-time <= 0" );
 

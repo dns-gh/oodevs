@@ -133,7 +133,7 @@ bool MIL_NbcAgentType::IsLiquidPoisonous() const
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
 inline
-unsigned int MIL_NbcAgentType::GetGasLifeTime() const
+double MIL_NbcAgentType::GetGasLifeTime() const
 {
     return nGasLifeTime_;
 }

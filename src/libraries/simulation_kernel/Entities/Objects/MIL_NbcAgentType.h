@@ -51,7 +51,7 @@ public:
     bool                  IsGasContaminating    () const;
     bool                  IsGasPoisonous        () const;
     const PHY_HumanWound& GetGasRandomWound     () const;
-    unsigned int          GetGasLifeTime        () const;
+    double                GetGasLifeTime        () const;
     double                GetGasPropagationAngle() const;
     bool                  CanBeVaporized        () const;
     void                  InitializePopulationEffect( MIL_IntoxicationEffect& effect ) const;
@@ -112,7 +112,7 @@ private:
     T_HumanPoisonousVector gasPoisonous_;
     bool bGasPoisonous_;
     bool bGasContaminating_;
-    unsigned int nGasLifeTime_;
+    double nGasLifeTime_;
     double rGasPropagationAngle_;
     static T_NbcAgentTypeMap nbcAgentTypes_;
     static double rCoefMaxSpeedModificator_;

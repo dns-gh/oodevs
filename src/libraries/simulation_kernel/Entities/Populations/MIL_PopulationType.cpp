@@ -26,7 +26,7 @@
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
 double MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;
 double MIL_PopulationType::rEffectReloadingTimeFactor_  = 0.;
-unsigned int MIL_PopulationType::delay_                 = 0u;
+double MIL_PopulationType::delay_                       = 0u;
 
 struct MIL_PopulationType::LoadingWrapper
 {
@@ -42,7 +42,7 @@ struct MIL_PopulationType::LoadingWrapper
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::Initialize( xml::xistream& xis )
 {
-    std::string delay;
+    std::string delay = "1h";
     MT_LOG_INFO_MSG( "Initializing population types" );
     xis >> xml::start( "populations" )
             >> xml::start( "reloading-time-effect" )
@@ -53,8 +53,9 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
                 >> xml::start( "time-between-nbc-applications" )
                     >> xml::attribute( "delay", delay )
                 >> xml::end;
-    if( delay != "" )
-        tools::DecodeTime( delay, delay_ );
+    tools::DecodeTime( delay, delay_ );
+    delay_ = MIL_Tools::ConvertSecondsToSim( delay_ );
+
     if( rEffectReloadingTimeDensity_ < 0 )
         xis.error( "reloading-time-effet: population-density < 0" );
     if( rEffectReloadingTimeFactor_ < 1 )
@@ -133,8 +134,8 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     xis >> xml::start( "nbc" )
          >> xml::attribute( "decontaminationDelay", decontaminationDelay )
         >> xml::end;
-
-    decontaminationDelay_ = MIL_Tools::ConvertSecondsToSim( tools::DecodeTime( decontaminationDelay, decontaminationDelay_ ) );
+    tools::DecodeTime( decontaminationDelay, decontaminationDelay_ );
+    decontaminationDelay_ = MIL_Tools::ConvertSecondsToSim( decontaminationDelay_ );
 
     InitializeSlowDownData( xis );
     InitializeFireData    ( xis );

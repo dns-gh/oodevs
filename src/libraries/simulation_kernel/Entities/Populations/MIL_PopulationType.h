@@ -174,7 +174,7 @@ private:
     static T_PopulationMap populations_;
     static double rEffectReloadingTimeDensity_;
     static double rEffectReloadingTimeFactor_;
-    static unsigned int delay_;
+    static double delay_;
     //@}
 };
 

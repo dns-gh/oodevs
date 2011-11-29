@@ -542,11 +542,11 @@ void MIL_PopulationElement_ABC::ApplyContamination( const MIL_NbcAgentType& type
     IT_ContaminationEffects it = contaminationEffects_.find( type.GetID() );
     if( it == contaminationEffects_.end() )
     {
-        boost::shared_ptr< MIL_ContaminationEffect > pEffect( new MIL_ContaminationEffect( humans_, static_cast< unsigned int >( populationType.GetDelay() ), MIL_AgentServer::GetWorkspace().GetRealTime() ) );
+        boost::shared_ptr< MIL_ContaminationEffect > pEffect( new MIL_ContaminationEffect( humans_, static_cast< unsigned int >( populationType.GetDelay() ), MIL_AgentServer::GetWorkspace().GetCurrentTick() ) );
         contaminationEffects_[ type.GetID() ] = pEffect;
     }
     else
-        it->second->Update( MIL_AgentServer::GetWorkspace().GetRealTime() );
+        it->second->Update( MIL_AgentServer::GetWorkspace().GetCurrentTick() );
     bHumansUpdated_ = true;
 }
 
@@ -560,12 +560,12 @@ void MIL_PopulationElement_ABC::ApplyIntoxication( const MIL_NbcAgentType& type 
     IT_IntoxicationEffects it = intoxicationEffects_.find( type.GetID() );
     if( it == intoxicationEffects_.end() )
     {
-        boost::shared_ptr< MIL_IntoxicationEffect > pEffect( new MIL_IntoxicationEffect( humans_, static_cast< unsigned int >( populationType.GetDelay() ), MIL_AgentServer::GetWorkspace().GetRealTime() ) );
+        boost::shared_ptr< MIL_IntoxicationEffect > pEffect( new MIL_IntoxicationEffect( humans_, static_cast< unsigned int >( populationType.GetDelay() ), MIL_AgentServer::GetWorkspace().GetCurrentTick() ) );
         type.InitializePopulationEffect( *pEffect );
         intoxicationEffects_[ type.GetID() ] = pEffect;
     }
     else
-        it->second->Update( MIL_AgentServer::GetWorkspace().GetRealTime() );
+        it->second->Update( MIL_AgentServer::GetWorkspace().GetCurrentTick() );
     bHumansUpdated_ = true;
 }
 

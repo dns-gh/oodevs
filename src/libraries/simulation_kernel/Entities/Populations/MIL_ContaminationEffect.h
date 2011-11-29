@@ -25,7 +25,7 @@ class MIL_ContaminationEffect : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ContaminationEffect( MIL_PopulationHumans& humans, unsigned int delay, unsigned int time );
+             MIL_ContaminationEffect( MIL_PopulationHumans& humans, double delay, unsigned int time );
     virtual ~MIL_ContaminationEffect();
     //@}
 
@@ -37,7 +37,7 @@ public:
 private:
     //! @name Member data
     //@{
-    unsigned int delay_;
+    double delay_;
     MIL_PopulationHumans& humans_;
     unsigned int time_;
     //@}

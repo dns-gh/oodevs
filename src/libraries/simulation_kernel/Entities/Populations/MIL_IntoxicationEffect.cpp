@@ -16,7 +16,7 @@
 // Name: MIL_IntoxicationEffect constructor
 // Created: LGY 2011-03-31
 // -----------------------------------------------------------------------------
-MIL_IntoxicationEffect::MIL_IntoxicationEffect( MIL_PopulationHumans& humans, unsigned int delay, unsigned int time )
+MIL_IntoxicationEffect::MIL_IntoxicationEffect( MIL_PopulationHumans& humans, double delay, unsigned int time )
     : delay_ ( delay )
     , humans_( humans )
     , time_  ( time )

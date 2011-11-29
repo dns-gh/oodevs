@@ -79,14 +79,14 @@ void CloudPropagationCapacity::Register( MIL_Object_ABC& object )
 void CloudPropagationCapacity::Finalize( MIL_Object_ABC& object )
 {
     origin_ = object.GetLocalisation().ComputeBarycenter();
-    time_ = MIL_AgentServer::GetWorkspace().GetRealTime();
+    time_ = MIL_AgentServer::GetWorkspace().GetCurrentTick();
 }
 
 namespace
 {
-    unsigned int GetDestructionDelay( const NBCAttribute::T_NBCAgents& agents )
+    double GetDestructionDelay( const NBCAttribute::T_NBCAgents& agents )
     {
-        unsigned int delay = 0u;
+        double delay = 0;
         for( NBCAttribute::CIT_NBCAgents it = agents.begin(); it != agents.end(); ++it )
             if( (*it)->IsGasPoisonous() )
                 if( (*it)->GetGasLifeTime() > delay )
@@ -109,13 +109,13 @@ namespace
 // Name: CloudPropagationCapacity::Update
 // Created: LGY 2011-07-04
 // -----------------------------------------------------------------------------
-void CloudPropagationCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
+void CloudPropagationCapacity::Update( MIL_Object_ABC& object, unsigned int time )
 {
     const NBCAttribute* pNBC = object.RetrieveAttribute< NBCAttribute >();
     if( !pNBC )
         return;
     const NBCAttribute::T_NBCAgents& agents = pNBC->GetNBCAgents();
-    if( MIL_AgentServer::GetWorkspace().GetRealTime() - time_ >= GetDestructionDelay( agents ) )
+    if( time - time_ >= GetDestructionDelay( agents ) )
     {
         object.MarkForDestruction();
         return;

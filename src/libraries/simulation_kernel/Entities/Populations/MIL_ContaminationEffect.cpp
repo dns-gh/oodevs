@@ -15,12 +15,12 @@
 // Name: MIL_ContaminationEffect constructor
 // Created: LGY 2011-04-29
 // -----------------------------------------------------------------------------
-MIL_ContaminationEffect::MIL_ContaminationEffect( MIL_PopulationHumans& humans, unsigned int delay, unsigned int time )
+MIL_ContaminationEffect::MIL_ContaminationEffect( MIL_PopulationHumans& humans, double delay, unsigned int time )
     : delay_ ( delay )
     , humans_( humans )
     , time_  ( time )
 {
-    humans_.ApplyContamination();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
