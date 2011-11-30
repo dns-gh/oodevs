@@ -116,6 +116,12 @@
                         <description lang="fr" name="Marking unique"><![CDATA[]]>Ajoute un identifiant aux attributs Marking et AggregateMarking pour les rendre uniques.</description>
                     </descriptions>
                 </setting>
+                <setting attribute="@extent" type="boolean" default="false">
+                    <descriptions>
+                        <description lang="en" name="Use extent"><![CDATA[]]>Use extent to avoid outside units creation.</description>
+                        <description lang="fr" name="Utiliser l'empreinte terrain"><![CDATA[]]>Utiliser l'empreinte terrain pour éviter la création des unités en dehors.</description>
+                    </descriptions>
+                </setting>
             </settings>
         </group>
     </settings>

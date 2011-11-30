@@ -46,6 +46,7 @@
 #include "rpr/EntityTypeResolver.h"
 #include <hla/HLAException.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
 
@@ -83,15 +84,33 @@ namespace
     class ExtentResolver : public ExtentResolver_ABC
     {
     public:
-        explicit ExtentResolver( const dispatcher::Config& config )
-            : converter_( new kernel::CoordinateConverter( config ) )
+        ExtentResolver( xml::xisubstream xis, dispatcher::Logger_ABC& logger, const dispatcher::Config& config )
+            : logger_   ( logger )
+            , useExtent_( xis.attribute< bool >( "extent", false ) )
+            , converter_( new kernel::CoordinateConverter( config ) )
         {}
         virtual bool IsInBoundaries( const geometry::Point2d& geoPoint ) const
         {
-            const geometry::Point2f xyPoint = converter_->ConvertFromGeo( geoPoint );
+            if( !useExtent_ )
+                return true;
+            geometry::Point2f xyPoint;
+            try
+            {
+                xyPoint = converter_->ConvertFromGeo( geoPoint );
+            }
+            catch( std::exception& e )
+            {
+                logger_.LogError( "Failed to convert point "
+                    "Latitude '"  + boost::lexical_cast< std::string >( geoPoint.X() ) + "' "
+                    "Longitude '" + boost::lexical_cast< std::string >( geoPoint.Y() ) + "' "
+                    ": " + e.what() );
+                return false;
+            }
             return converter_->IsInBoundaries( xyPoint );
         }
     private:
+        dispatcher::Logger_ABC& logger_;
+        const bool useExtent_;
         std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     };
 }
@@ -132,7 +151,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pSubordinates_              ( new Subordinates( *pCallsignResolver_, dynamicModel.Automats() ) )
     , pMessageController_         ( new tools::MessageController< sword::SimToClient_Content >() )
     , pAutomatChecker_            ( new AutomatChecker( dynamicModel.Agents() ) )
-    , pExtentResolver_            ( new ExtentResolver( config ) )
+    , pExtentResolver_            ( new ExtentResolver( *pXis_, logger_, config ) )
     , pSubject_                   ( 0 )
     , pFederate_                  ( 0 )
     , pInteractionBuilder_        ( 0 )
