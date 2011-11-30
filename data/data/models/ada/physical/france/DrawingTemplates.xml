@@ -338,7 +338,7 @@
         <template code="G*MPOMC---****X" name="Bouchon de mine" type="point">
             <marker-start unit="m">
                 <g fill="none" stroke="currentColor" stroke-width="4px" transform="translate(-300,0)">
-                    <path d="M0,0 A300,300 300 0 0 600,0 z" stroke-dasharray="200,100"/>
+                    <path d="M0,0 A300,300 0 0 0 600,0 z" stroke-dasharray="200,100"/>
                 </g>
             </marker-start>
             <segment/>
@@ -700,4 +700,4 @@
         </template>
     </category>
 </templates>
-<!-- signature="1909602356" -->
+<!-- signature="1390349405" -->
