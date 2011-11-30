@@ -12,7 +12,8 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
-#include "tools.h"
+#include "clients_kernel/Tools.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 

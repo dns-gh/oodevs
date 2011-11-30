@@ -9,10 +9,11 @@
 
 #include "gaming_pch.h"
 #include "Team.h"
-#include "Tools.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Tools.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 

@@ -10,12 +10,9 @@
 #include "gaming_pch.h"
 #include "AgentKnowledge.h"
 #include "Diplomacies.h"
-#include "Tools.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentNature.h"
@@ -24,6 +21,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;

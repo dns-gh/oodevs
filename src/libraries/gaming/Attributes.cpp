@@ -19,6 +19,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/DictionaryUpdated.h"
+#include "clients_kernel/Tools.h"
 #include "statusicons.h"
 #include "Tools.h"
 #include <boost/foreach.hpp>

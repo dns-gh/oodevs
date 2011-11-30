@@ -10,12 +10,9 @@
 #include "gaming_pch.h"
 #include "Automat.h"
 #include "Diplomacies.h"
-#include "Tools.h"
-#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -23,6 +20,7 @@
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 

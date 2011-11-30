@@ -15,10 +15,9 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "AutomatDecisions.h"
 #include "statusicons.h"
 

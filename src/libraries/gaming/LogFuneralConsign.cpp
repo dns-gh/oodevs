@@ -10,7 +10,6 @@
 #include "gaming_pch.h"
 #include "LogFuneralConsign.h"
 #include "LogisticConsigns.h"
-#include "Tools.h"
 #include "Simulation.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -20,6 +19,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
 using namespace geometry;

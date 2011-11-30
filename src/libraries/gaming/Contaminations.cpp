@@ -9,14 +9,15 @@
 
 #include "gaming_pch.h"
 #include "Contaminations.h"
+#include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Tools.h"
 #include "statusicons.h"
-#include "Tools.h"
 
 using namespace kernel;
 

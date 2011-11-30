@@ -9,10 +9,10 @@
 
 #include "gaming_pch.h"
 #include "KnowledgeGroup.h"
-#include "Tools.h"
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
+#include "clients_kernel/Tools.h"
+#include "protocol/SimulationSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor

@@ -10,7 +10,6 @@
 #include "gaming_pch.h"
 #include "LogSupplyConsign.h"
 #include "LogisticConsigns.h"
-#include "Tools.h"
 #include "Simulation.h"
 #include "SupplyRecipientResourcesRequest.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -21,8 +20,8 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include <boost/foreach.hpp>
 
 using namespace geometry;

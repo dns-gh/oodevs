@@ -20,6 +20,8 @@
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Tools.h"
+#include "protocol/SimulationSenders.h"
 #include <boost/foreach.hpp>
 
 using namespace geometry;

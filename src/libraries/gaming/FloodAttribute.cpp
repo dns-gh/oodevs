@@ -10,9 +10,10 @@
 #include "gaming_pch.h"
 #include "FloodAttribute.h"
 #include "FloodProxy.h"
-#include "Tools.h"
 #include "clients_kernel/AltitudeModified.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Tools.h"
+#include "protocol/SimulationSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: FloodAttribute constructor

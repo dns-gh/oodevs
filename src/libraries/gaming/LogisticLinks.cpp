@@ -10,16 +10,15 @@
 #include "gaming_pch.h"
 #include "LogisticLinks.h"
 #include "LogisticLink.h"
-#include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "clients_kernel/Positions.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 #include <boost/foreach.hpp>
 

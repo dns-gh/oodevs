@@ -9,13 +9,11 @@
 
 #include "gaming_pch.h"
 #include "Equipments.h"
-#include "clients_kernel/Controller.h"
 #include "Equipment.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "ENT/ENT_Enums_Gen.h"
 
 using namespace kernel;

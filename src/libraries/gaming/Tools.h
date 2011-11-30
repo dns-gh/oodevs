@@ -10,8 +10,7 @@
 #ifndef __Gaming_Tools_h_
 #define __Gaming_Tools_h_
 
-#include "reports/Tools.h"
-#include <protocol/Protocol.h>
+#include "protocol/Protocol.h"
 #define BOOST_TYPEOF_SILENT
 #include <boost/typeof/typeof.hpp>
 #include <boost/function_types/result_type.hpp>

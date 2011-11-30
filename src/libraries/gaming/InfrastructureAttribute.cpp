@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "InfrastructureAttribute.h"
-#include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -18,6 +17,7 @@
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
+#include "clients_gui/Tools.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;

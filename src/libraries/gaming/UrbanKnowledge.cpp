@@ -10,7 +10,8 @@
 #include "gaming_pch.h"
 #include "UrbanKnowledge.h"
 #include "clients_gui/TerrainObjectProxy.h"
-#include "Tools.h"
+#include "clients_gui/Tools.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 

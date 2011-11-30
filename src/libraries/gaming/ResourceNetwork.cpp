@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "ResourceNetwork.h"
-#include "Tools.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -21,6 +20,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 #include <time.h>
 

@@ -9,9 +9,9 @@
 
 #include "gaming_pch.h"
 #include "Lima.h"
-#include "Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"

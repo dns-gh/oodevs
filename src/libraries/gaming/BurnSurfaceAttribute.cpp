@@ -11,9 +11,9 @@
 #include "BurnSurfaceAttribute.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
-#include "Tools.h"
 
 using namespace kernel;
 

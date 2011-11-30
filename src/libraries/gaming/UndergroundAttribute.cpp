@@ -9,9 +9,10 @@
 
 #include "gaming_pch.h"
 #include "UndergroundAttribute.h"
-#include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Tools.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 

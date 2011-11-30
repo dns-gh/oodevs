@@ -9,8 +9,6 @@
 
 #include "gaming_pch.h"
 #include "AltitudeModifierAttribute.h"
-#include "Simulation.h"
-#include "Tools.h"
 #include "clients_kernel/AltitudeModified.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
@@ -19,6 +17,8 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Units.h"
+#include "clients_kernel/Tools.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 

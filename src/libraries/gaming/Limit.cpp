@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Limit.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
 #include "protocol/MessengerSenders.h"

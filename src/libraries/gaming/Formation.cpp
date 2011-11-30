@@ -9,18 +9,18 @@
 
 #include "gaming_pch.h"
 #include "Formation.h"
-#include "Tools.h"
-#include "Diplomacies.h"
-#include "clients_kernel/StaticModel.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/App6Symbol.h"
-#include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Tools.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 

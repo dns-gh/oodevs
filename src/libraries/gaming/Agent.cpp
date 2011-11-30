@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Agent.h"
+#include "Diplomacies.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -17,8 +18,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Styles.h"
-#include "Diplomacies.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 

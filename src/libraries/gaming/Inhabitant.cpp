@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Inhabitant.h"
-#include "Tools.h"
 #include "UrbanModel.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DotationType.h"
@@ -18,7 +17,9 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Styles.h"
+#include "clients_kernel/Tools.h"
 #include "clients_gui/TerrainObjectProxy.h"
+#include "protocol/SimulationSenders.h"
 #include <boost/foreach.hpp>
 
 using namespace geometry;
