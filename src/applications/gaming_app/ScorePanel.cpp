@@ -15,11 +15,11 @@
 #include "IndicatorPlotFactory.h"
 #include "IndicatorReportDialog.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
 #include "clients_gui/ValuedDragObject.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Score.h"
 #include "gaming/ScoreModel.h"
-#include "gaming/Tools.h"
 
 namespace
 {

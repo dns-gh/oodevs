@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ClockDock.h"
 #include "ClockWidget.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ClockDock constructor

@@ -10,20 +10,14 @@
 #include "gaming_app_pch.h"
 #include "AgentKnowledgePanel.h"
 #include "moc_AgentKnowledgePanel.cpp"
-
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/Units.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "gaming/AgentKnowledges.h"
 #include "gaming/PerceptionMap.h"
-#include "gaming/Tools.h"
 #include "clients_gui/DisplayBuilder.h"
-#include "clients_gui/GroupDisplayer.h"
-#include "clients_gui/LabelDisplayer.h"
 #include "clients_gui/ListDisplayer.h"
 
 using namespace kernel;

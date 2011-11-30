@@ -14,9 +14,9 @@
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
-#include "clients_gui/TerrainObjectProxy.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/TerrainObjectProxy.h"
 #include "clients_gui/InternalLinks.h"
 
 using namespace kernel;

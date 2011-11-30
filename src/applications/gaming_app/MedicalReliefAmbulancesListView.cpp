@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "MedicalReliefAmbulancesListView.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MedicalReliefAmbulancesListView constructor

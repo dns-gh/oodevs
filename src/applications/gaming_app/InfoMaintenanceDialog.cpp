@@ -13,7 +13,7 @@
 #include "MaintenanceConsignsWidget.h"
 #include "MaintenanceHaulersListView.h"
 #include "MaintenanceRepairersListView.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoMaintenanceDialog constructor

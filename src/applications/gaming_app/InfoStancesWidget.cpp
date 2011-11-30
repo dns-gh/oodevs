@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "InfoStancesWidget.h"
 #include "gaming/Attributes.h"
-#include "gaming/tools.h"
+#include "clients_kernel/tools.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"

@@ -11,10 +11,10 @@
 #include "IndicatorReportDialog.h"
 #include "moc_IndicatorReportDialog.cpp"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include "gaming/Score.h"
 #include "gaming/ScoreModel.h"
-#include "gaming/Tools.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/regex.hpp>

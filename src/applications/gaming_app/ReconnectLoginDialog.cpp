@@ -10,7 +10,7 @@
 #include "ReconnectLoginDialog.h"
 #include "gaming/Network.h"
 #include "gaming/UserProfile.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "tools/ExerciseConfig.h"
 

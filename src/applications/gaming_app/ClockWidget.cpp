@@ -11,7 +11,7 @@
 #include "ClockWidget.h"
 #include "AlarmsWidget.h"
 #include "ClockEditDialog.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "tools/GeneralConfig.h"
 #include "icons.h"

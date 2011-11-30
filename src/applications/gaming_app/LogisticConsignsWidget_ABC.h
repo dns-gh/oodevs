@@ -17,7 +17,7 @@
 #include "clients_gui/ListDisplayer.h"
 #include "clients_gui/SubItemDisplayer.h"
 #include "gaming/LogisticConsigns.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 
 namespace gui
 {

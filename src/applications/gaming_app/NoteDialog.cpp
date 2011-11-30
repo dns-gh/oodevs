@@ -11,8 +11,7 @@
 #include "NoteDialog.h"
 #include "moc_NoteDialog.cpp"
 #include "gaming/Note.h"
-#include "gaming/Simulation.h"
-#include "gaming/Tools.h"
+#include "clients_kernel//Tools.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 

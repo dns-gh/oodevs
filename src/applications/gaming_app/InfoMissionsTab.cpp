@@ -14,7 +14,7 @@
 #include "actions/ActionTiming.h"
 #include "actions/Parameter_ABC.h"
 #include "gaming/MissionParameters.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "icons.h"
 
 using namespace actions;

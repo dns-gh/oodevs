@@ -13,7 +13,7 @@
 #include "gaming/SupplyStates.h"
 #include "gaming/SupplyRecipientResourcesRequest.h"
 #include "gaming/SupplyResourceRequest.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Automat_ABC.h"
 
 // -----------------------------------------------------------------------------

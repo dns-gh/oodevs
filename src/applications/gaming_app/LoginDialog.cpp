@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "LoginDialog.h"
 #include "moc_LoginDialog.cpp"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

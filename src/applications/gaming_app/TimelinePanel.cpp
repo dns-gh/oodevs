@@ -16,7 +16,7 @@
 #include "actions/ActionsFilter_ABC.h"
 #include "actions/ActionTasker.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace actions;
 

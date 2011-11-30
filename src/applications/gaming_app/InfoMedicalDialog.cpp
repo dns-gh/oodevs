@@ -14,7 +14,7 @@
 #include "MedicalReliefAmbulancesListView.h"
 #include "MedicalCollectAmbulancesListView.h"
 #include "MedicalDoctorsListView.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoMedicalDialog constructor

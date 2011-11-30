@@ -11,7 +11,7 @@
 #include "MaintenanceConsignsWidget.h"
 #include "gaming/LogMaintenanceConsign.h"
 #include "gaming/MaintenanceStates.h"
-#include "gaming/tools.h"
+#include "clients_kernel/tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceConsignsWidget constructor

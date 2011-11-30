@@ -12,21 +12,16 @@
 #include "moc_KnowledgeAddInGroupDialog.cpp"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
-#include "actions/Agent.h"
 #include "actions/Identifier.h"
 #include "actions/KnowledgeGroupMagicAction.h"
 #include "actions/Quantity.h"
-#include "gaming/Profile.h"
-#include "gaming/Tools.h"
 #include "gaming/StaticModel.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Types.h"
 
 using namespace actions;
 using namespace kernel;

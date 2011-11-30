@@ -11,7 +11,7 @@
 #include "InfoDock.h"
 #include "InfoWidget.h"
 #include "clients_kernel/Controllers.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoDock constructor

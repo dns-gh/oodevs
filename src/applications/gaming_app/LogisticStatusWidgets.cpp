@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "LogisticStatusWidgets.h"
-#include "gaming/tools.h"
+#include "clients_kernel/tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceStatusWidget constructor

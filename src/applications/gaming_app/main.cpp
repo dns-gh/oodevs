@@ -13,7 +13,7 @@
 #include "tools/Version.h"
 #include "tools/WinArguments.h"
 #include "tools/Win32/BugTrap.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 #include <windows.h>
 
 //#define NO_LICENSE_CHECK

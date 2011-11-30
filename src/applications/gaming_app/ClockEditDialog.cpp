@@ -10,10 +10,9 @@
 #include "gaming_app_pch.h"
 #include "ClockEditDialog.h"
 #include "moc_ClockEditDialog.cpp"
-#include "clients_kernel/Controllers.h"
 #include "gaming/ActionsScheduler.h"
-#include "gaming/Simulation.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ClockEditDialog constructor
@@ -22,7 +21,7 @@
 ClockEditDialog::ClockEditDialog( QWidget* parent, kernel::Controllers& controllers, ActionsScheduler& scheduler )
     : QDialog( parent, "ClockEditDialog" )
     , controllers_( controllers )
-    , scheduler_( scheduler )
+    , scheduler_  ( scheduler )
 {
     setCaption( tr( "Edit current time" ) );
     Q3GridLayout* pLayout = new Q3GridLayout( this, 2, 1 );

@@ -14,10 +14,10 @@
 #include "gaming/Equipment.h"
 #include "gaming/Casualties.h"
 #include "gaming/Explosions.h"
-#include "gaming/Tools.h"
 #include "clients_gui/SubItemDisplayer.h"
 #include "clients_gui/ItemFactory_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 using namespace gui;

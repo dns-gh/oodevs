@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "InfoFuneralDialog.h"
 #include "FuneralConsignsWidget.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoFuneralDialog constructor

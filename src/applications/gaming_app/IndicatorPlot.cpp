@@ -13,7 +13,7 @@
 #include "IndicatorExportDialog.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Simulation.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ValuedDragObject.h"
 #include "protocol/Protocol.h"

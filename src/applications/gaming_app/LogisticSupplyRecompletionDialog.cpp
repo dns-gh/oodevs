@@ -21,17 +21,16 @@
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "gaming/Troops.h"
-#include "gaming/tools.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "clients_gui/SpinTableItem.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
+#include "reports/Tools.h"
 #include "ENT/ENT_Tr.h"
 
 using namespace kernel;

@@ -50,16 +50,14 @@
 #include "actions_gui/ParamStringField.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Time_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/OrderParameterValue.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
-#include "gaming/Simulation.h"
 #include "gaming/StaticModel.h"
-#include "gaming/Tools.h"
 
 using namespace kernel;
 

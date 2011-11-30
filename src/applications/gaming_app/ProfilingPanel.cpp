@@ -11,9 +11,8 @@
 #include "ProfilingPanel.h"
 #include "StatisticsWidget.h"
 #include "gaming/Network.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
-
 #include <sstream>
 
 using namespace kernel;

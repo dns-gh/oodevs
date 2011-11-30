@@ -13,7 +13,7 @@
 #include "HumansListView.h"
 #include "LendingsListView.h"
 #include "BorrowingsListView.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/Equipments.h"
 #include "gaming/Lendings.h"
 

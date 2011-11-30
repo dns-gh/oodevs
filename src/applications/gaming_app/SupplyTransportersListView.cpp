@@ -9,8 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "SupplyTransportersListView.h"
-#include "gaming/Tools.h"
-#include "gaming/SupplyAvailability.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: SupplyTransportersListView constructor

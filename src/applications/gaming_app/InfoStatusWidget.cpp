@@ -13,7 +13,7 @@
 #include "gaming/Attributes.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/Reinforcements.h"
-#include "gaming/tools.h"
+#include "clients_kernel/tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/TacticalHierarchies.h"

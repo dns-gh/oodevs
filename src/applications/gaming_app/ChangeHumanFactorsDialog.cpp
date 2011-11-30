@@ -15,7 +15,6 @@
 #include "actions/Enumeration.h"
 #include "actions/UnitMagicAction.h"
 #include "gaming/HumanFactors.h"
-#include "gaming/tools.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Troops.h"
 #include "clients_kernel/Agent_ABC.h"

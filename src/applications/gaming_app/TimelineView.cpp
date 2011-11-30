@@ -12,15 +12,14 @@
 #include "TimelineMarker.h"
 #include "TimelineActionItem.h"
 #include "TimelineRuler.h"
+#include "icons.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionsFilter_ABC.h"
 #include "actions/ActionTasker.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OrderType.h"
-#include "gaming/Simulation.h"
-#include "gaming/Tools.h"
-#include "icons.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 using namespace actions;

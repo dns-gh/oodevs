@@ -11,7 +11,7 @@
 #include "IndicatorExportDialog.h"
 #include "moc_IndicatorExportDialog.cpp"
 #include "gaming/IndicatorRequest.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 #include <boost/foreach.hpp>
 #include <fstream>
 

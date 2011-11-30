@@ -24,7 +24,6 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "gaming/StaticModel.h"
-#include "gaming/tools.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace kernel;

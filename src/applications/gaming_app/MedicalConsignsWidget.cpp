@@ -11,7 +11,7 @@
 #include "MedicalConsignsWidget.h"
 #include "gaming/LogMedicalConsign.h"
 #include "gaming/MedicalStates.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MedicalConsignsWidget constructor

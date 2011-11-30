@@ -10,14 +10,12 @@
 #include "gaming_app_pch.h"
 #include "TimelineActionItem.h"
 #include "moc_TimelineActionItem.cpp"
-#include "TimelineView.h"
 #include "TimelineRuler.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
-#include "gaming/Tools.h"
-#include "clients_kernel/ActionController.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 
 using namespace actions;

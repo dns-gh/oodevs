@@ -9,9 +9,9 @@
 #include "gaming_app_pch.h"
 #include "ConnectLoginDialog.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/Network.h"
 #include "gaming/Profile.h"
-#include "gaming/Tools.h"
 #include "tools/ExerciseConfig.h"
 
 namespace

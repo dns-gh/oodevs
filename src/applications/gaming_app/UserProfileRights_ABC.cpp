@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "UserProfileRights_ABC.h"
 #include "icons.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/UserProfile.h"
 #include "clients_gui/ValuedListItem.h"
 
@@ -22,11 +22,11 @@ using namespace kernel;
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
 UserProfileRights_ABC::UserProfileRights_ABC( Q3ListView* listView )
-    : listView_( listView )
+    : listView_       ( listView )
     , selectedProfile_( 0 )
-    , needsSaving_( false )
-    , check_     ( MAKE_PIXMAP( check ) )
-    , check_grey_( MAKE_PIXMAP( check_grey ) )
+    , needsSaving_    ( false )
+    , check_          ( MAKE_PIXMAP( check ) )
+    , check_grey_     ( MAKE_PIXMAP( check_grey ) )
 {
     listView_->header()->show();
     listView_->addColumn( tools::translate( "UserProfileRights", "Read" ) , 40 );
