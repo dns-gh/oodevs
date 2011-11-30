@@ -19,10 +19,10 @@ DEC_PathFactory* DEC_PathFactory::pInstance_ = 0;
 // Name: DEC_PathFactory::Initialize
 // Created: SBO 2006-03-27
 // -----------------------------------------------------------------------------
-void DEC_PathFactory::Initialize( xml::xistream& xis )
+void DEC_PathFactory::Initialize( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
 {
     if( !pInstance_ )
-        pInstance_ = new DEC_PathFactory( xis );
+        pInstance_ = new DEC_PathFactory( xis, dangerousObjects );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,10 +49,10 @@ const DEC_PathFactory& DEC_PathFactory::GetInstance()
 // Name: DEC_PathFactory constructor
 // Created: SBO 2006-03-27
 // -----------------------------------------------------------------------------
-DEC_PathFactory::DEC_PathFactory( xml::xistream& xis )
+DEC_PathFactory::DEC_PathFactory( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
 {
-    DEC_Agent_PathClass::Initialize( xis );
-    DEC_Population_PathClass::Initialize( xis );
+    DEC_Agent_PathClass::Initialize( xis, dangerousObjects );
+    DEC_Population_PathClass::Initialize( xis, dangerousObjects );
 }
 
 // -----------------------------------------------------------------------------

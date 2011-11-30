@@ -32,6 +32,7 @@ class MIL_Object_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_ObjectLoader;
 class MIL_ObjectType_ABC;
+class MIL_ObjectFilter;
 class TER_Localisation;
 
 // =============================================================================
@@ -67,6 +68,7 @@ public:
     //! @name Accessors
     //@{
     static const MIL_ObjectType_ABC& FindType( const std::string& type );
+    static const void FindDangerousIDs( std::vector< unsigned int >& dangerousIDs, const MIL_ObjectFilter& filter );
     //@}
 
 private:

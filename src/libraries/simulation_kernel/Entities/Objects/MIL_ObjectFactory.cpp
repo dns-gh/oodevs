@@ -52,6 +52,15 @@ const MIL_ObjectType_ABC& MIL_ObjectFactory::FindType( const std::string& type )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ObjectFactory::FindDangerousIDs
+// Created: CMA 2011-11-28
+// -----------------------------------------------------------------------------
+const void MIL_ObjectFactory::FindDangerousIDs( std::vector< unsigned int >& dangerousIDs, const MIL_ObjectFilter& filter )
+{
+    MIL_ObjectLoader::GetLoader().GetDangerousIDs( dangerousIDs, filter );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-05-29
 // -----------------------------------------------------------------------------

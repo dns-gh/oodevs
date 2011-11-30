@@ -23,7 +23,7 @@ class DEC_PathFactory
 public:
     //! @name Singleton
     //@{
-    static void Initialize( xml::xistream& xis );
+    static void Initialize( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects );
     static void Terminate ();
     static const DEC_PathFactory& GetInstance();
     //@}
@@ -31,7 +31,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_PathFactory( xml::xistream& xis );
+    explicit DEC_PathFactory( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects );
     virtual ~DEC_PathFactory();
     //@}
 

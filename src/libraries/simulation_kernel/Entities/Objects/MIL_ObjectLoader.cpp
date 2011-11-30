@@ -16,6 +16,7 @@
 #include "ObjectPrototype.h"
 #include "UrbanObjectWrapper.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -242,4 +243,38 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectLoader::InitializeLocation( Obje
         return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
     object.Initialize( location );
     return sword::ObjectMagicActionAck::no_error;
+}
+
+namespace
+{
+    class AvoidableObjectInserter : boost::noncopyable
+    {
+    public:
+        AvoidableObjectInserter( std::vector< unsigned int >& container, const MIL_ObjectFilter& filter )
+            : container_( container )
+            , filter_    ( filter )
+        {
+            // NOTHING
+        }
+
+        void operator()( const ObjectPrototype& prototype )
+        {
+            if( filter_.Test( prototype.GetType() ) )
+                container_.push_back( prototype.GetID() );
+        }
+
+    private:
+        std::vector< unsigned int >& container_;
+        const MIL_ObjectFilter& filter_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectLoader::GetDangerousIDs
+// Created: CMA 2011-11-28
+// -----------------------------------------------------------------------------
+const void MIL_ObjectLoader::GetDangerousIDs( std::vector< unsigned int >& dangerousIDs, const MIL_ObjectFilter& filter ) const
+{
+    AvoidableObjectInserter functor( dangerousIDs, filter );
+    ApplyOnPrototypes( functor );
 }
