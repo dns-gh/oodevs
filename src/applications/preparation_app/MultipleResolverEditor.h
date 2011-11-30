@@ -38,7 +38,7 @@ public:
     virtual std::vector< Entity* > GetValue();
     //@}
 
-private slots:
+private:
     //! @name Slots
     //@{
     virtual void accept();
