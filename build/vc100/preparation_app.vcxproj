@@ -493,6 +493,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\MultipleResolverEditor.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\preparation_app_pch.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\PreparationProfile.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\CreationPanels.h" />
@@ -1510,6 +1511,7 @@
     <ClInclude Include="..\..\src\applications\preparation_app\FileLoaderObserver.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\applications\preparation_app\MultipleResolverEditor.inl" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_fr.ts" />
     <CustomBuild Include="..\..\src\applications\preparation_app\translator.pro">

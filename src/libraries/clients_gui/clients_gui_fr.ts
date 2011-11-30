@@ -1453,6 +1453,10 @@ Voulez-vous le supprimer?</translation>
         <source>Automatic production</source>
         <translation>Production automatique</translation>
     </message>
+    <message>
+        <source>Create node</source>
+        <translation>Créer un nouveau noeud</translation>
+    </message>
 </context>
 <context>
     <name>gui::ResourceNetworkPrototype_ABC</name>

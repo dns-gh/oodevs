@@ -56,19 +56,20 @@ void PropertiesTableDisplayer::Call( const Enum_DemolitionTargetType& value )
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesTableDisplayer::Call
+// Created: ABR 2011-11-29
+// -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const Enum_NbcState & value )
+{
+    AddToDisplay( value.ToString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
 void PropertiesTableDisplayer::Call( const DotationsItem& /*value*/ )
 {
     AddToDisplay( tools::translate( "PropertiesTableDisplayer", "<Edit Property Group...>" ) );
-//    tools::Iterator< const Dotation& > it = value.CreateIterator();
-//    QString result;
-//    while( it.HasMoreElements() )
-//    {
-//        const Dotation& dotation = it.NextElement();
-//        result.append( dotation.type_->GetName() ).append( " " );
-//    }
-//    AddToDisplay( result );
 }
 
 // -----------------------------------------------------------------------------

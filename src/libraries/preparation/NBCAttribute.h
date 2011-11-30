@@ -13,6 +13,8 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "tools/Resolver_ABC.h"
+#include "EnumTypes.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -33,7 +35,8 @@ namespace xml
 // Created: AGE 2006-02-14
 // =============================================================================
 class NBCAttribute : public kernel::NBCAttribute_ABC
-                    , public kernel::Serializable_ABC
+                   , public kernel::Serializable_ABC
+                   , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -63,12 +66,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    NBCAttribute( const NBCAttribute& );            //!< Copy constructor
-    NBCAttribute& operator=( const NBCAttribute& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico );
@@ -78,9 +75,9 @@ private:
 public:
     //! @name Member data
     //@{
-    T_NBCAgents agents_;
-    std::string state_;
-    int danger_;
+    T_NBCAgents   agents_;
+    Enum_NbcState state_;
+    int           danger_;
     //@}
 };
 

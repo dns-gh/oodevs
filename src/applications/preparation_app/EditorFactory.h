@@ -51,6 +51,7 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< kernel::EntityLogisticLevel* >
                     , public tools::Caller< Enum_PopulationAttitude* >
                     , public tools::Caller< Enum_DemolitionTargetType* >
+                    , public tools::Caller< Enum_NbcState* >
                     , public tools::Caller< DotationsItem** >
                     , public tools::Caller< kernel::Moveable_ABC** >
                     , public tools::Caller< PopulationRepartition** >
@@ -71,6 +72,7 @@ public:
     virtual void Call( std::vector< kernel::NBCAgent* >* const& value );
     virtual void Call( Enum_PopulationAttitude* const& value );
     virtual void Call( Enum_DemolitionTargetType* const& value );
+    virtual void Call( Enum_NbcState* const& value );
     virtual void Call( DotationsItem** const& value );
     virtual void Call( kernel::LogisticLevel** const& value );
     virtual void Call( kernel::EntityLogisticLevel* const& value );

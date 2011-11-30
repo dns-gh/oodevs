@@ -9,7 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "SaveModelChecker.h"
-#include "preparation/Tools.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: SaveModelChecker constructor

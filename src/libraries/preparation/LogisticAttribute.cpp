@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "LogisticAttribute.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "LogisticLevelAttritube.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"

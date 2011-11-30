@@ -12,7 +12,7 @@
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
 #include "clients_kernel/Controller.h"
-#include "preparation/Tools.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ProfileEditor constructor

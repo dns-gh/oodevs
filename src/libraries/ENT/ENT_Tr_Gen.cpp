@@ -402,10 +402,17 @@ ENT_Tr::T_ConverterStockCategory ENT_Tr::stockCategoryConverter_[] =
 
 ENT_Tr::T_ConverterGhostType ENT_Tr::GhostTypeConverter_ [] =
 {
-    T_ConverterGhostType( "agent",   QT_TRANSLATE_NOOP( "ENT_Tr", "Agent" ), eGhostType_Agent ),
+    T_ConverterGhostType( "agent",   QT_TRANSLATE_NOOP( "ENT_Tr", "Agent" ),   eGhostType_Agent ),
     T_ConverterGhostType( "automat", QT_TRANSLATE_NOOP( "ENT_Tr", "Automat" ), eGhostType_Automat ),
     T_ConverterGhostType( "invalid", QT_TRANSLATE_NOOP( "ENT_Tr", "Invalid" ), eGhostType_Invalid ),
     T_ConverterGhostType( "", "", ( E_GhostType ) - 1 )
+};
+
+ENT_Tr::T_ConverterNbcState ENT_Tr::NbcStateConverter_ [] =
+{
+    T_ConverterNbcState( "liquid",  QT_TRANSLATE_NOOP( "ENT_Tr", "Liquid" ),  eNbcState_Liquid ),
+    T_ConverterNbcState( "gaseous", QT_TRANSLATE_NOOP( "ENT_Tr", "Gaseous" ), eNbcState_Gaseous ),
+    T_ConverterNbcState( "", "", ( E_NbcState ) - 1 )
 };
 
 //-----------------------------------------------------------------------------
@@ -449,6 +456,7 @@ void ENT_Tr::InitTranslations()
     InitTr( InjuriesSeriousnessConverter_, "ENT_Tr" );
     InitTr( stockCategoryConverter_, "ENT_Tr" );
     InitTr( GhostTypeConverter_, "ENT_Tr" );
+    InitTr( NbcStateConverter_, "ENT_Tr" );
 }
 
 //-----------------------------------------------------------------------------
@@ -722,7 +730,7 @@ const std::string& ENT_Tr::ConvertFromHumanState( E_HumanState nValue, ENT_Tr_AB
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertFromHumanLocation
+// Name: ENT_Tr::ConvertFromHumanLocation
 // Created: ABR 2011-07-25
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromHumanLocation( E_HumanLocation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
@@ -758,12 +766,21 @@ const std::string& ENT_Tr::ConvertFromStockCategory( E_StockCategory nValue, E_C
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertFromGhostType
+// Name: ENT_Tr::ConvertFromGhostType
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromGhostType( E_GhostType nValue, E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( GhostTypeConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromNbcState
+// Created: ABR 2011-11-29
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromNbcState( E_NbcState nValue, E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( NbcStateConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1064,10 +1081,19 @@ E_StockCategory ENT_Tr::ConvertToStockCategory( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertToGhostType
+// Name: ENT_Tr::ConvertToGhostType
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
 E_GhostType ENT_Tr::ConvertToGhostType( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( GhostTypeConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToNbcState
+// Created: ABR 2011-11-29
+// -----------------------------------------------------------------------------
+E_NbcState ENT_Tr::ConvertToNbcState( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( NbcStateConverter_, strName );
 }

@@ -49,3 +49,12 @@ std::string NBCAgent::GetName() const
 {
     return name_;
 }
+//
+//// -----------------------------------------------------------------------------
+//// Name: NBCAgent::Update
+//// Created: ABR 2011-11-29
+//// -----------------------------------------------------------------------------
+//void NBCAgent::Update()
+//{
+//    controller_.Update( kernel::DictionaryUpdated( owner_, propertyName_ ) );
+//}

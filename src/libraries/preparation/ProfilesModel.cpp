@@ -13,7 +13,7 @@
 #include "ProfileFactory_ABC.h"
 #include "ModelChecker_ABC.h"
 #include "Model.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "AgentsModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"

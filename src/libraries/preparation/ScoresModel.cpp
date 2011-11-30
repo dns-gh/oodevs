@@ -13,7 +13,7 @@
 #include "Score_ABC.h"
 #include "ScoreFactory_ABC.h"
 #include "TeamsModel.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"

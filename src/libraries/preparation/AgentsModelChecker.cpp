@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "AgentsModelChecker.h"
 #include "AgentsModel.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "ModelChecker_ABC.h"
 #include "CommandPostAttributes.h"
 #include "clients_kernel/Automat_ABC.h"

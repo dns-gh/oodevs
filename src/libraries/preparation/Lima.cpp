@@ -11,7 +11,7 @@
 #include "Lima.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 

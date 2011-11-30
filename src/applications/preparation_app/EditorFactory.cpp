@@ -12,6 +12,7 @@
 #include "LogisticSuperiorEditor.h"
 #include "DotationsEditor.h"
 #include "LogisticLevelEditor.h"
+#include "MultipleResolverEditor.h"
 #include "preparation/LogisticSuperior.h"
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
@@ -29,6 +30,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/CoordinateSystems.h"
+#include "clients_kernel/Tools.h"
 #include "PopulationRepartitionEditor.h"
 #include "PositionEditor.h"
 
@@ -166,65 +168,6 @@ void EditorFactory::Call( kernel::NBCAgent** const& value )
 
 namespace
 {
-    template< typename Entity, typename Resolver >
-    class MultipleResolverEditor : public Q3ListBox
-                                 , public kernel::ValueEditor< std::vector< Entity* > >
-    {
-    public:
-        MultipleResolverEditor( QWidget* parent, const Resolver& resolver )
-            : Q3ListBox( parent )
-        {
-            tools::Iterator< const Entity& > it = resolver.CreateIterator();
-            while( it.HasMoreElements() )
-            {
-                const Entity& entity = it.NextElement();
-                AddItem( entity.GetName().c_str(), &entity );
-            }
-            setSelectionMode( Q3ListBox::Multi );
-            setMinimumHeight( 3 * itemHeight() );
-        }
-        virtual ~MultipleResolverEditor() {}
-
-        void AddItem( const QString& name, Entity const* const& entity )
-        {
-            insertItem( name );
-            entities_.push_back( entity );
-        }
-
-        void SetCurrentItem( const std::vector< Entity* >& entity )
-        {
-            for( unsigned int i = 0; i < count(); ++i )
-                setSelected( i, std::find( entity.begin(), entity.end(), entities_[i] ) != entity.end() ) ;
-        }
-
-        virtual std::vector< Entity* > GetValue()
-        {
-            std::vector< Entity* > result;
-            for( unsigned int i = 0; i < count(); ++i )
-                if( isSelected( i ) )
-                    result.push_back( const_cast< Entity* >( entities_[i] ) );
-            return result;
-        }
-
-    private:
-        std::vector< const Entity* > entities_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: EditorFactory::Call
-// Created: SBO 2006-10-31
-// -----------------------------------------------------------------------------
-void EditorFactory::Call( std::vector< kernel::NBCAgent* >* const& value )
-{
-    typedef tools::Resolver_ABC< kernel::NBCAgent, unsigned long > T_Resolver;
-    MultipleResolverEditor< kernel::NBCAgent, T_Resolver >* editor = new MultipleResolverEditor< kernel::NBCAgent, T_Resolver >( parent_, (T_Resolver&)( staticModel_.objectTypes_ ));
-    editor->SetCurrentItem( *value );
-    result_ = editor;
-}
-
-namespace
-{
     template< typename Enum >
     class EnumEditor : public QComboBox
                      , public kernel::ValueEditor< Enum >
@@ -247,7 +190,6 @@ namespace
         {
             return Enum( currentItem() );
         }
-
     };
 }
 
@@ -271,6 +213,48 @@ void EditorFactory::Call( Enum_DemolitionTargetType* const& value )
     EnumEditor< Enum_DemolitionTargetType >* editor = new EnumEditor< Enum_DemolitionTargetType >( parent_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: ABR 2011-11-29
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( Enum_NbcState* const& value )
+{
+    EnumEditor< Enum_NbcState >* editor = new EnumEditor< Enum_NbcState >( parent_ );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
+}
+
+namespace
+{
+    typedef tools::Resolver_ABC< kernel::NBCAgent, unsigned long > T_NBCResolver;
+
+    class NBCAgentEditor : public MultipleResolverEditor< kernel::NBCAgent, T_NBCResolver >
+    {
+    public:
+        NBCAgentEditor( QDialog*& self, QWidget* parent, const T_NBCResolver& resolver )
+            : MultipleResolverEditor< kernel::NBCAgent, T_NBCResolver >( self, parent, resolver )
+        {
+            setCaption( tools::translate( "EditorFactory", "NBC agent(s) editor" ) );
+        }
+        virtual ~NBCAgentEditor() {}
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2006-10-31
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( std::vector< kernel::NBCAgent* >* const& value )
+{
+    if( !modalDialog_ || !modalDialog_->isActiveWindow() )
+    {
+        delete modalDialog_;
+        NBCAgentEditor* editor = new NBCAgentEditor( modalDialog_, parent_, static_cast< T_NBCResolver& >( staticModel_.objectTypes_ ) );
+        editor->SetCurrentItem( *value );
+        result_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------

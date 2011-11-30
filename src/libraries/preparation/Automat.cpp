@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "Automat.h"
 #include "IdManager.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "LogisticLevelAttritube.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/AutomatType.h"

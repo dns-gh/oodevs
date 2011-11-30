@@ -11,7 +11,7 @@
 #include "UserProfileControls_ABC.h"
 #include "icons.h"
 #include "ControlsChecker_ABC.h"
-#include "preparation/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "preparation/UserProfile.h"
 #include "clients_gui/ValuedListItem.h"
 #include <boost/foreach.hpp>

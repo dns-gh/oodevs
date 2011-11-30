@@ -11,7 +11,7 @@
 #include "Object.h"
 #include "IdManager.h"
 #include "ObjectPositions.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/ObjectType.h"

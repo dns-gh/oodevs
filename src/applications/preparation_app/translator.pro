@@ -8,6 +8,7 @@ CommunicationListView.cpp \
 ControlsChecker.cpp \
 CsvExport.cpp \
 DotationsEditor.cpp \
+EditorFactory.cpp \
 ExerciseCreationDialog.cpp \
 ExerciseDialog.cpp \
 FileLoaderObserver.cpp \

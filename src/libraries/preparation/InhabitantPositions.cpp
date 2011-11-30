@@ -16,7 +16,7 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/TerrainObjectProxy.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>

@@ -18,7 +18,7 @@
 #include "ObjectsModel.h"
 #include "AgentsModel.h"
 #include "Diplomacies.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "ModelChecker_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"

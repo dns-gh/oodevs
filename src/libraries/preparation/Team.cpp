@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "Team.h"
 #include "IdManager.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PropertiesDictionary.h"

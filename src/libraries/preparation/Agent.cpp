@@ -10,7 +10,6 @@
 #include "preparation_pch.h"
 #include "Agent.h"
 #include "IdManager.h"
-#include "Tools.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Controller.h"
@@ -20,6 +19,7 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.hpp>
 

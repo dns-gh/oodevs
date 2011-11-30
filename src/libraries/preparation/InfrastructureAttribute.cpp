@@ -14,7 +14,7 @@
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;

@@ -17,7 +17,7 @@
 #include "preparation/Model.h"
 #include "clients_kernel/Controllers.h"
 #include "ENT/ENT_Tr.h"
-#include "preparation/Tools.h"
+#include "clients_kernel/Tools.h"
 
 namespace
 {

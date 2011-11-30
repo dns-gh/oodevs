@@ -13,7 +13,7 @@
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

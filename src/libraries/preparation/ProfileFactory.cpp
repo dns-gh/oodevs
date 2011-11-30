@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "ProfileFactory.h"
 #include "UserProfile.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "Model.h"
 #include "ProfilesModel.h"
 

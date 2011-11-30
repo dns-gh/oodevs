@@ -12,7 +12,7 @@
 #include "tools/WinArguments.h"
 #include "tools/Version.h"
 #include "tools/Win32/BugTrap.h"
-#include "preparation/Tools.h"
+#include "clients_kernel/Tools.h"
 
 //#define NO_LICENSE_CHECK
 

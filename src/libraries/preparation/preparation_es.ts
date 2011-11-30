@@ -389,6 +389,10 @@
         <source>Info/NBC attributes/NBC agents</source>
         <translation>Info/Atributos NBC/Agentes NBC</translation>
     </message>
+    <message>
+        <source>Info/NBC attributes/Danger</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Object</name>

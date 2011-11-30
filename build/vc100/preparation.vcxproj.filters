@@ -148,9 +148,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\TacticalHierarchies.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\Tools.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\Team.cpp">
       <Filter>Source Files\Model\Team</Filter>
     </ClCompile>
@@ -562,9 +559,6 @@
       <Filter>Source Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\TacticalHierarchies.h">
-      <Filter>Source Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\Tools.h">
       <Filter>Source Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\Team.h">

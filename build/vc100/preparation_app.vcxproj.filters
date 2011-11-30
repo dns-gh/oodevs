@@ -642,6 +642,9 @@
     <ClInclude Include="..\..\src\applications\preparation_app\GhostsLayer.h">
       <Filter>Source Files\Layers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\MultipleResolverEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts">
@@ -649,6 +652,9 @@
     </None>
     <None Include="..\..\src\applications\preparation_app\preparation_app_fr.ts">
       <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\applications\preparation_app\MultipleResolverEditor.inl">
+      <Filter>Source Files\Dialogs\Editors</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
