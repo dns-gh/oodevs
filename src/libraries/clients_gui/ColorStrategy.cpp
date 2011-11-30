@@ -187,7 +187,11 @@ namespace
 QColor ColorStrategy::FindColor( const Knowledge_ABC& knowledge )
 {
     if( const Team_ABC* team = knowledge.GetTeam() )
+    {
+        if( const Entity_ABC* entity = knowledge.GetEntity() )
+            return FindColor( *entity );
         return FindColor( *team );
+    }
     return QColor( 255, 220, 000 );
 }
 
