@@ -46,7 +46,19 @@ Simulation::~Simulation()
 // -----------------------------------------------------------------------------
 void Simulation::OnReceive( const sword::SimToClient& msg )
 {
-    handler_.Receive( msg );
+    try
+    {
+        handler_.Receive( msg );
+    }
+    catch( std::exception& e )
+    {
+        if( msg.message().has_control_end_tick() )
+        {
+            dispatcher::CtrlDispatcherTickAck msg;
+            msg.Send( *this );
+        }
+        throw;
+    }
     if( msg.message().has_control_end_tick() )
     {
         dispatcher::CtrlDispatcherTickAck msg;
