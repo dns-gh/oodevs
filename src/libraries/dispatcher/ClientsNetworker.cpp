@@ -342,6 +342,6 @@ void ClientsNetworker::OnNewTick()
     }
     for( std::vector< std::string >::const_iterator it = errors.begin(); it != errors.end(); ++it )
     {
-        ConnectionError( *it, "Client hasn't answered messages from last tick." );
+        MT_LOG_ERROR_MSG( "Client hasn't answered messages from last tick! Client should be checked or disconnected: " << *it );
     }
 }
