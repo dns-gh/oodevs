@@ -807,5 +807,13 @@
         <source>ALR</source>
         <translation>ALR</translation>
     </message>
+    <message>
+        <source>Liquid</source>
+        <translation>Liquide</translation>
+    </message>
+    <message>
+        <source>Gaseous</source>
+        <translation>Gazeux</translation>
+    </message>
 </context>
 </TS>

@@ -30,6 +30,7 @@ class PopulationRepartition;
 class PropertiesTableDisplayer : public gui::TableItemDisplayer
                                , public tools::Caller< Enum_PopulationAttitude >
                                , public tools::Caller< Enum_DemolitionTargetType >
+                               , public tools::Caller< Enum_NbcState >
                                , public tools::Caller< DotationsItem >
                                , public tools::Caller< geometry::Point2f >
                                , public tools::Caller< kernel::Moveable_ABC >
@@ -46,6 +47,7 @@ public:
     //@{
     virtual void Call( const Enum_PopulationAttitude& value );
     virtual void Call( const Enum_DemolitionTargetType & value );
+    virtual void Call( const Enum_NbcState & value );
     virtual void Call( const DotationsItem& value );
     virtual void Call( const geometry::Point2f& value );
     virtual void Call( const kernel::Moveable_ABC& value );

@@ -231,6 +231,13 @@
     </message>
 </context>
 <context>
+    <name>EditorFactory</name>
+    <message>
+        <source>NBC agent(s) editor</source>
+        <translation>Editeur d&apos;agent(s) NBC</translation>
+    </message>
+</context>
+<context>
     <name>ExerciseCreationDialog</name>
     <message>
         <source>Exercise Creation</source>

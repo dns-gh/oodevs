@@ -12,7 +12,9 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
+#include "clients_kernel/SubTypes.h"
+#include "ENT/ENT_Tr.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -22,6 +24,7 @@ using namespace kernel;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 NBCAttribute::NBCAttribute( kernel::PropertiesDictionary& dico )
+    : state_ ( "gaseous" )
 {
     CreateDictionary( dico );
 }
@@ -31,9 +34,9 @@ NBCAttribute::NBCAttribute( kernel::PropertiesDictionary& dico )
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
 NBCAttribute::NBCAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents, kernel::PropertiesDictionary& dico )
-    : state_ ( "gaseous" )
+    : state_ ( xis.attribute< std::string >( "state", "gaseous" ) )
+    , danger_( xis.attribute< int >( "danger", 0 ) )
 {
-    xis >> xml::optional >> xml::attribute( "state", state_ );
     xis >> xml::list( "nbc-agent", *this, &NBCAttribute::ReadNbcAgent, nbcAgents );
     CreateDictionary( dico );
 }
@@ -65,7 +68,7 @@ void NBCAttribute::ReadNbcAgent( xml::xistream& xis, const tools::Resolver_ABC< 
 void NBCAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "NBC", "NBC" ) )
-             .Display( tools::translate( "NBC", "NBC state:" ), state_ )
+             .Display( tools::translate( "NBC", "NBC state:" ), state_.GetValue() )
              .Display( tools::translate( "NBC", "Danger:" ), danger_ )
              .Display( tools::translate( "NBC", "NBC agent(s):" ), agents_ );
 }
@@ -86,7 +89,7 @@ void NBCAttribute::AddAgent( const kernel::NBCAgent& agent )
 // -----------------------------------------------------------------------------
 void NBCAttribute::SetState( const std::string& state )
 {
-    state_ = state;
+    state_ = ENT_Tr::ConvertToNbcState( state );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,8 +108,8 @@ void NBCAttribute::SetDanger( const unsigned int value )
 void NBCAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "nbc-agents" );
-    if( state_ != "" )
-        xos << xml::attribute( "state", state_ );
+    xos << xml::attribute( "state", state_.ToXml() );
+    xos << xml::attribute( "danger", danger_ );
     for( T_NBCAgents::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
     {
         xos << xml::start( "nbc-agent" )
@@ -122,6 +125,9 @@ void NBCAttribute::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void NBCAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
+    //const NBCAttribute& constThis = *this;
+
     dico.Register( *this, tools::translate( "NBCAttribute", "Info/NBC attributes/NBC state" ), state_ );
+    dico.Register( *this, tools::translate( "NBCAttribute", "Info/NBC attributes/Danger" ), danger_ );
     dico.Register( *this, tools::translate( "NBCAttribute", "Info/NBC attributes/NBC agents" ), agents_ );
 }

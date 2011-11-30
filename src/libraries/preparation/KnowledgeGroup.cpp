@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "KnowledgeGroup.h"
 #include "IdManager.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h" // LTO

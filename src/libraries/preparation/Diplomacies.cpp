@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "Diplomacies.h"
 #include "TeamKarmas.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Controller.h"

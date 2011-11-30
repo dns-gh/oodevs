@@ -13,7 +13,7 @@
 #include "IdManager.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

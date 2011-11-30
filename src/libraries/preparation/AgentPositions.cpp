@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "AgentPositions.h"
-#include "Tools.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -20,6 +19,7 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.hpp>
 

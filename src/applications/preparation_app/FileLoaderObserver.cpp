@@ -9,7 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "FileLoaderObserver.h"
-#include "preparation/Tools.h"
+#include "clients_kernel/Tools.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 

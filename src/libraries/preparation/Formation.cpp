@@ -24,7 +24,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "LogisticLevelAttritube.h"
 #include "clients_kernel/App6Symbol.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <QtGui/qmessagebox.h>
 

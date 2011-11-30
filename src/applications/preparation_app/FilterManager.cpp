@@ -12,7 +12,7 @@
 
 #include "FilterCommand.h"
 #include "FilterXsl.h"
-#include "preparation/Tools.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace

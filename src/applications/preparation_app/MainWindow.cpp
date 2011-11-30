@@ -112,7 +112,7 @@
 #include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamsModel.h"
-#include "preparation/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "preparation/ColorController.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"

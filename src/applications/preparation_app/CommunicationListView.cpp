@@ -22,7 +22,7 @@
 #include "clients_gui/ValuedListItem.h" // LTO
 #include "preparation/AutomatCommunications.h"
 #include "preparation/KnowledgeGroupCommunications.h" // LTO
-#include "preparation/Tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 

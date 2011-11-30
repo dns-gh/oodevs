@@ -399,4 +399,11 @@ enum E_GhostType
     eNbrGhostType      = 3
 };
 
+enum E_NbcState
+{
+    eNbcState_Liquid  = 0,
+    eNbcState_Gaseous = 1,
+    eNbrNbcState      = 2
+};
+
 #endif // __ENT_Enums_Gen_h_

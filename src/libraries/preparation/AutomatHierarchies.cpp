@@ -12,7 +12,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

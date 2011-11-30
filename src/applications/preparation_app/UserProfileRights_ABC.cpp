@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "UserProfileRights_ABC.h"
 #include "icons.h"
-#include "preparation/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "preparation/UserProfile.h"
 #include "clients_gui/ValuedListItem.h"
 

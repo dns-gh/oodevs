@@ -60,6 +60,7 @@ public:
     static const std::string& ConvertFromEquipmentState( E_EquipmentState, E_Conversion = eToSim );
     static const std::string& ConvertFromInjuriesSeriousness( E_InjuriesSeriousness, E_Conversion = eToSim );
     static const std::string& ConvertFromGhostType( E_GhostType, E_Conversion = eToSim );
+    static const std::string& ConvertFromNbcState( E_NbcState, E_Conversion = eToSim );
 
     // ConvertTo functions
     static E_LocationType ConvertToLocationType( const std::string& );
@@ -96,6 +97,7 @@ public:
     static E_EquipmentState ConvertToEquipmentState( const std::string& );
     static E_InjuriesSeriousness ConvertToInjuriesSeriousness( const std::string& );
     static E_GhostType ConvertToGhostType( const std::string& );
+    static E_NbcState ConvertToNbcState( const std::string& );
 
 private:
     // Typedefs
@@ -133,6 +135,7 @@ private:
     typedef ENT_Tr::converter<E_EquipmentState> T_ConverterEquipmentState;
     typedef ENT_Tr::converter<E_InjuriesSeriousness> T_ConverterInjuriesSeriousness;
     typedef ENT_Tr::converter<E_GhostType> T_ConverterGhostType;
+    typedef ENT_Tr::converter<E_NbcState> T_ConverterNbcState;
 
     // Converters
     static T_ConverterLocationType LocationTypeConverter_ [];
@@ -169,6 +172,7 @@ private:
     static T_ConverterEquipmentState EquipmentStateConverter_ [];
     static T_ConverterInjuriesSeriousness InjuriesSeriousnessConverter_ [];
     static T_ConverterGhostType GhostTypeConverter_ [];
+    static T_ConverterNbcState NbcStateConverter_ [];
 };
 
 #endif // __ENT_Tr_Gen_h_

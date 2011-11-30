@@ -12,7 +12,7 @@
 #include "ModelChecker_ABC.h"
 #include "SuccessFactor.h"
 #include "SuccessFactorFactory_ABC.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter_ABC.h"

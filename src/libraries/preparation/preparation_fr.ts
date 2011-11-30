@@ -383,11 +383,15 @@
     <name>NBCAttribute</name>
     <message>
         <source>Info/NBC attributes/NBC state</source>
-        <translation>Info/Atributs NBC/Etat NBC</translation>
+        <translation>Info/Attributs NBC/Etat NBC</translation>
     </message>
     <message>
         <source>Info/NBC attributes/NBC agents</source>
-        <translation>Info/Atributs NBC/Agents NBC</translation>
+        <translation>Info/Attributs NBC/Agents NBC</translation>
+    </message>
+    <message>
+        <source>Info/NBC attributes/Danger</source>
+        <translation>Info/Attributs NBC/Danger</translation>
     </message>
 </context>
 <context>

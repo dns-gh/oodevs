@@ -11,7 +11,7 @@
 #include "BypassAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;

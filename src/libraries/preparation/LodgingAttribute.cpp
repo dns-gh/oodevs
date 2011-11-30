@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "LodgingAttribute.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include <xeumeuleu/xml.hpp>

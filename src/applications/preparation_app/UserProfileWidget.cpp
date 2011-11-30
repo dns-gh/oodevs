@@ -25,7 +25,7 @@
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
 #include "preparation/Model.h"
-#include "preparation/Tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 

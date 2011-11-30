@@ -807,5 +807,13 @@
         <source>Limit 2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Liquid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gaseous</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
