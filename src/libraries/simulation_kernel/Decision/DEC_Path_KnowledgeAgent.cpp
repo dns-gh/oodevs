@@ -34,10 +34,7 @@ DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pat
 
     rSquareSecurityDistance_ = maxRangeToFire * maxRangeToFire;
     rOffset_ = pathClass.GetEnemyCostAtSecurityRange();
-    if( pathClass.GetEnemyCostOnContact() > 0. )
-        rFactor_ = 100. / pathClass.GetEnemyCostOnContact();
-    else
-        rFactor_ = 0.;
+    rFactor_ = pathClass.GetEnemyCostOnContact() / 100.;
 }
 
 // -----------------------------------------------------------------------------
@@ -57,6 +54,7 @@ DEC_Path_KnowledgeAgent::~DEC_Path_KnowledgeAgent()
 double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData& ) const
 {
     static const double pi = std::acos( -1. );
+    static const double epsilon = 1; // in metres
 
     const MT_Line lineLink( from, to );
     MT_Vector2D vPositionProjection = lineLink.ClosestPointOnLine( vEnemyPosition_ );
@@ -67,7 +65,7 @@ double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT_V
         DEC_PerceptionFunctions::IsPointVisible( *pKnowledgeAgent_, &vPositionProjection )*/ ) // TODO: code commented since it sometimes provokes a crash in the simulation. One needs to copy the perception surface in the class in order to fix the problem
     {
         // Inverse-square law
-        double intensity = rSquareSecurityDistance_ / ( rFactor_ * pi * rSqDistBtwUnitAndEnemy );
+        double intensity = rSquareSecurityDistance_ * rFactor_ / ( pi * rSqDistBtwUnitAndEnemy + epsilon );
         return rOffset_ * intensity;
     }
     return 0.;

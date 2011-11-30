@@ -101,8 +101,8 @@ private:
     //@{
     dispatcher::Model_ABC& model_;
     const dispatcher::Config& config_;
-    dispatcher::CompositeRegistrable& registrables_;
     std::auto_ptr< kernel::Controller > controller_;
+    dispatcher::CompositeRegistrable& registrables_;
     std::auto_ptr< kernel::CoordinateConverter > converter_;
     std::auto_ptr< ExtensionFactory > factory_;
     boost::ptr_vector< Script > scripts_;
