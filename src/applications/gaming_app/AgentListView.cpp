@@ -136,8 +136,9 @@ bool AgentListView::CanChangeSuperior( const kernel::Entity_ABC& entity, const k
     else if( const kernel::KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
     {
         const kernel::Entity_ABC* com = &knowledgegroup->Get< kernel::CommunicationHierarchies >().GetTop();
-        if( const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior ) )
-            return com == team;
+        const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior );
+        if( com && com == team )
+            return true;
         else if( group && ( knowledgegroup != group ) )
             return com == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
     }
