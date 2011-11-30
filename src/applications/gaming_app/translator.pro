@@ -116,6 +116,7 @@ TimelineActionItem.cpp \
 TimelineListView.cpp \
 TimelinePanel.cpp \
 TimelineView.cpp \
+TimeTableRequestDialog.cpp \
 UnitMagicOrdersInterface.cpp \
 UnitStateDialog.cpp \
 UnitStateTableCrew.cpp \

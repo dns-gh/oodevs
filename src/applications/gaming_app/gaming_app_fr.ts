@@ -3013,6 +3013,33 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>TimeTableRequestDialog</name>
+    <message>
+        <source>Time Table Request</source>
+        <translation>Requête de Table de Temps</translation>
+    </message>
+    <message>
+        <source>Time range</source>
+        <translation>Plage temporelle</translation>
+    </message>
+    <message>
+        <source>Begin tick:</source>
+        <translation>Tic de début:</translation>
+    </message>
+    <message>
+        <source>End tick:</source>
+        <translation>Tic de fin:</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
     <name>TimelineActionItem</name>
     <message>
         <source>Delete</source>
