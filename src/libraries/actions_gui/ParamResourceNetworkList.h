@@ -37,11 +37,6 @@ public:
     virtual ~ParamResourceNetworkList();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    //@}
-
 private:
     //! @name Helpers
     //@{

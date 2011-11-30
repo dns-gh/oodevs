@@ -26,7 +26,6 @@ using namespace actions::gui;
 ParamLimaList::ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& actions, kernel::Controller& controller, const QDateTime& currentDate )
     : ListParameter( parent, parameter, actions )
     , controller_ ( controller )
-    , parameter_  ( parameter )
     , converter_  ( converter )
     , currentDate_( currentDate )
     , count_      ( 0 )
@@ -52,17 +51,6 @@ QWidget* ParamLimaList::BuildInterface( QWidget* parent )
 {
     EnableCreation( false );
     return ListParameter::BuildInterface( parent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLimaList::CommitTo
-// Created: SBO 2007-04-16
-// -----------------------------------------------------------------------------
-void ParamLimaList::CommitTo( actions::ParameterContainer_ABC& action ) const
-{
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::LimaList( parameter_ ) );
-    CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

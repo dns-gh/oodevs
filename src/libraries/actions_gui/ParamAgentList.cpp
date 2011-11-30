@@ -27,7 +27,6 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamAgentList::ParamAgentList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller )
     : EntityListParameter< kernel::Agent_ABC >( parent, parameter, actions, controller )
-    , parameter_( parameter )
     , count_( 0 )
     , superior_( 0 )
 {
@@ -59,17 +58,6 @@ void ParamAgentList::AddToMenu( kernel::ContextMenu& menu )
 EntityParameter< kernel::Agent_ABC >* ParamAgentList::CreateElement( const kernel::Agent_ABC& potential )
 {
     return new ParamAgent( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "agent", false ), potential, controller_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAgentList::CommitTo
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-void ParamAgentList::CommitTo( actions::ParameterContainer_ABC& action ) const
-{
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
-    CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

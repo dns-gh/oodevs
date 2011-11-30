@@ -36,17 +36,6 @@ ParamResourceNetworkList::~ParamResourceNetworkList()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamResourceNetworkList::CommitTo
-// Created: LDC 2011-05-11
-// -----------------------------------------------------------------------------
-void ParamResourceNetworkList::CommitTo( actions::ParameterContainer_ABC& action ) const
-{
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
-    CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ParamResourceNetworkList::CreateElement
 // Created: LDC 2011-05-11
 // -----------------------------------------------------------------------------

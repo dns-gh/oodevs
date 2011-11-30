@@ -47,7 +47,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
     void SetName( const QString& name );
@@ -70,7 +69,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     unsigned int count_;
     const kernel::Entity_ABC* superior_; // $$$$ AGE 2007-10-15: deletions !
     //@}

@@ -38,11 +38,6 @@ public:
     virtual ~ParamAutomatList();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    //@}
-
 private:
     //! @name Helpers
     //@{
@@ -53,7 +48,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     unsigned int count_;
     //@}
 };

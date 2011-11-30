@@ -10,6 +10,7 @@
 #include "actions_gui_pch.h"
 #include "ListParameter.h"
 #include "moc_ListParameter.cpp"
+#include "actions/ParameterList.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/Tools.h"
 
@@ -22,6 +23,7 @@ using namespace actions::gui;
 ListParameter::ListParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller )
     : QObject       ( parent )
     , Param_ABC     ( parameter.GetName().c_str(), parameter.IsOptional() )
+    , parameter_    ( parameter )
     , controller_   ( controller )
     , list_         ( 0 )
     , selected_     ( 0 )
@@ -123,6 +125,8 @@ void ListParameter::OnCreate()
         item->SetValue( param );
         item->setText( 0, param->GetName() );
         list_->setSelected( item, true );
+        if( group_ && IsOptional() )
+            group_->setChecked( true );
     }
 }
 
@@ -133,7 +137,11 @@ void ListParameter::OnCreate()
 void ListParameter::OnDeleteSelectedItem()
 {
     if( list_ )
+    {
         DeleteItem( list_->selectedItem() );
+        if( group_ && IsOptional() )
+            group_->setChecked( list_->childCount() != 0 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -143,6 +151,8 @@ void ListParameter::OnDeleteSelectedItem()
 void ListParameter::OnClear()
 {
     Clear();
+    if( group_ && IsOptional() )
+        group_->setChecked( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,15 +259,19 @@ unsigned int ListParameter::Count() const
 // Name: ListParameter::CommitChildrenTo
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void ListParameter::CommitChildrenTo( actions::ParameterContainer_ABC& parent ) const
+bool ListParameter::CommitChildrenTo( actions::ParameterContainer_ABC& parent ) const
 {
-    if( !list_ )
-        return;
+    bool result = false;
+    if( !list_ || !IsChecked() )
+        return result;
     for( Q3ListViewItemIterator it = Q3ListViewItemIterator( list_ ); it.current(); ++it )
     {
         ::gui::ValuedListItem* item = static_cast< ::gui::ValuedListItem* >( it.current() );
         item->GetValue< Param_ABC >()->CommitTo( parent );
+        if( !result )
+            result = true;
     }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -304,4 +318,15 @@ void ListParameter::SetLabel( const QString& label )
         assert( list_->columns() == 1 );
         list_->setColumnText( 0, label );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::CommitTo
+// Created: ABR 2011-11-30
+// -----------------------------------------------------------------------------
+void ListParameter::CommitTo( actions::ParameterContainer_ABC& action ) const
+{
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
+    param->Set( CommitChildrenTo( *param ) );
+    action.AddParameter( *param.release() );
 }

@@ -23,7 +23,6 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamObstacleList::ParamObstacleList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::ObjectTypes& objectTypes, ::gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& actions, kernel::Controller& controller )
     : ListParameter( parent, parameter, actions )
-    , parameter_( parameter )
     , converter_( converter )
     , controller_( controller )
     , objectTypes_( objectTypes )
@@ -40,17 +39,6 @@ ParamObstacleList::ParamObstacleList( QObject* parent, const kernel::OrderParame
 ParamObstacleList::~ParamObstacleList()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamObstacleList::CommitTo
-// Created: SBO 2007-04-16
-// -----------------------------------------------------------------------------
-void ParamObstacleList::CommitTo( actions::ParameterContainer_ABC& action ) const
-{
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
-    CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

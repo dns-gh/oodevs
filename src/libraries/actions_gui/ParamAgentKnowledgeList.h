@@ -43,11 +43,6 @@ public:
     virtual ~ParamAgentKnowledgeList();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    //@}
-
 private:
     //! @name Helpers
     //@{
@@ -59,7 +54,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     kernel::AgentKnowledgeConverter_ABC& converter_;
     const kernel::Entity_ABC& agent_;
     unsigned int count_;
