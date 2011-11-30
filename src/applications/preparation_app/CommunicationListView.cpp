@@ -105,8 +105,9 @@ bool CommunicationListView::CanChangeSuperior( const kernel::Entity_ABC& entity,
     else if( const KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const KnowledgeGroup_ABC* >( &entity ) )
     {
         const Entity_ABC* com = &knowledgegroup->Get< CommunicationHierarchies >().GetTop();
-        if( const Entity_ABC* team = dynamic_cast< const Entity_ABC* >( &superior ) )
-            return com == team;
+        const Entity_ABC* team = dynamic_cast< const Entity_ABC* >( &superior );
+        if( com && com == team )
+            return true;
         else if( group && ( knowledgegroup != group ) )
             return com == &superior.Get< CommunicationHierarchies >().GetTop();
     }
