@@ -101,9 +101,9 @@ namespace
             catch( std::exception& e )
             {
                 logger_.LogError( "Failed to convert point "
-                    "Latitude '"  + boost::lexical_cast< std::string >( geoPoint.X() ) + "' "
-                    "Longitude '" + boost::lexical_cast< std::string >( geoPoint.Y() ) + "' "
-                    ": " + e.what() );
+                                  "Latitude '"  + boost::lexical_cast< std::string >( geoPoint.X() ) + "' "
+                                  "Longitude '" + boost::lexical_cast< std::string >( geoPoint.Y() ) + "' "
+                                  ": " + e.what() );
                 return false;
             }
             return converter_->IsInBoundaries( xyPoint );

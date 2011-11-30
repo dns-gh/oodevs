@@ -120,7 +120,7 @@ void RemoteAgentController::Moved( const std::string& identifier, double latitud
 {
     if( unitCreations_.find( identifier ) == unitCreations_.end() )
         return;
-    if( !extent_.IsInBoundaries( geometry::Point2d( latitude, longitude ) ) )
+    if( !extent_.IsInBoundaries( geometry::Point2d( longitude, latitude ) ) ) // $$$$ _RC_ SLI 2011-11-30: geocoord invert latitude/longitude???
         return;
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     sword::Location* location = message().mutable_parameters()->mutable_elem( 1 )->add_value()->mutable_point()->mutable_location();
