@@ -13,7 +13,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/MedicalTreatmentType.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace kernel;

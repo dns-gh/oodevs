@@ -11,7 +11,7 @@
 #include "UserProfilesModel.h"
 #include "UserProfileFactory_ABC.h"
 #include "UserProfile.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfilesModel constructor

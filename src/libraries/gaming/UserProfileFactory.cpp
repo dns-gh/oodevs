@@ -12,8 +12,8 @@
 #include "UserProfile.h"
 #include "Model.h"
 #include "UserProfilesModel.h"
-#include "Tools.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileFactory constructor
