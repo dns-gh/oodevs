@@ -2982,23 +2982,50 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>TimeTableDialog</name>
     <message>
         <source>Time Table</source>
-        <translation type="unfinished">Table de Temps</translation>
+        <translation>Table de Temps</translation>
     </message>
     <message>
         <source>Tick</source>
-        <translation type="unfinished">Pas de temps</translation>
+        <translation>Pas de temps</translation>
     </message>
     <message>
         <source>Sim time</source>
-        <translation type="unfinished">Temps Sim</translation>
+        <translation>Temps Sim</translation>
     </message>
     <message>
         <source>Real time</source>
-        <translation type="unfinished">Temps réel</translation>
+        <translation>Temps réel</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
+    </message>
+</context>
+<context>
+    <name>TimeTableRequestDialog</name>
+    <message>
+        <source>Time Table Request</source>
+        <translation>Requête de Table de Temps</translation>
+    </message>
+    <message>
+        <source>Time range</source>
+        <translation>Plage temporelle</translation>
+    </message>
+    <message>
+        <source>Begin tick:</source>
+        <translation>Tic de début:</translation>
+    </message>
+    <message>
+        <source>End tick:</source>
+        <translation>Tic de fin:</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>

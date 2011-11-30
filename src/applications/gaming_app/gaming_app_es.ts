@@ -3002,6 +3002,33 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>TimeTableRequestDialog</name>
+    <message>
+        <source>Time Table Request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Begin tick:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End tick:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TimelineActionItem</name>
     <message>
         <source>Delete</source>
