@@ -119,7 +119,7 @@ void IndicatorPlot::Add( const IndicatorRequest& request )
         return;
     gui::GQ_PlotData* data = new gui::GQ_PlotData( static_cast< unsigned >( datas_.size() + 1 ), *this );
     plotNames_->setText( plotNames_->text() + "<font color='" + GetPlotColor( static_cast< unsigned >( datas_.size() ) ).name() + "'>" + request.GetName() + "</font>" + "<br />" );
-    plotNames_->setMaximumHeight( datas_.size() * ( plotNames_->fontMetrics().height() + 10 ) + 30 );
+    plotNames_->setMaximumHeight( static_cast< unsigned int >( datas_.size() ) * ( plotNames_->fontMetrics().height() + 10 ) + 30 );
     data->SetLinePen( GetPlotColor( static_cast< unsigned >( datas_.size() ) ) );
     UpdatePlot( data, request, 0 );
     RegisterPlotData( *data );
