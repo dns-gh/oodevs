@@ -40,13 +40,8 @@ class ParamLocationList : public ListParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamLocationList( QObject* parent, const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
+             ParamLocationList( QObject* parent, const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
     virtual ~ParamLocationList();
-
-    //! @name Operations
-    //@{
-    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    //@}
 
 protected:
     //! @name Types
@@ -58,7 +53,6 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::OrderParameter& parameter_;
     ::gui::ParametersLayer& layer_;
     unsigned int count_;
     //@}

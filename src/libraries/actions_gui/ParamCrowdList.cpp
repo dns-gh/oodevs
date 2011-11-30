@@ -22,7 +22,6 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamCrowdList::ParamCrowdList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller )
     : EntityListParameter< kernel::Population_ABC >( parent, parameter, actions, controller )
-    , parameter_( parameter )
     , count_( 0 )
 {
     // NOTHING
@@ -53,17 +52,6 @@ void ParamCrowdList::AddToMenu( kernel::ContextMenu& menu )
 EntityParameter< kernel::Population_ABC >* ParamCrowdList::CreateElement( const kernel::Population_ABC& potential )
 {
     return new ParamCrowd( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "agent", false ), potential, controller_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamCrowdList::CommitTo
-// Created: FPO 2011-05-30
-// -----------------------------------------------------------------------------
-void ParamCrowdList::CommitTo( actions::ParameterContainer_ABC& action ) const
-{
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
-    CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

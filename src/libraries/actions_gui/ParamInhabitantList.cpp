@@ -22,7 +22,6 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamInhabitantList::ParamInhabitantList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller )
     : EntityListParameter< kernel::Inhabitant_ABC >( parent, parameter, actions, controller )
-    , parameter_( parameter )
     , count_( 0 )
 {
     // NOTHING
@@ -53,17 +52,6 @@ void ParamInhabitantList::AddToMenu( kernel::ContextMenu& menu )
 EntityParameter< kernel::Inhabitant_ABC >* ParamInhabitantList::CreateElement( const kernel::Inhabitant_ABC& potential )
 {
     return new ParamInhabitant( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "agent", false ), potential, controller_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamInhabitantList::CommitTo
-// Created: FPO 2011-05-30
-// -----------------------------------------------------------------------------
-void ParamInhabitantList::CommitTo( actions::ParameterContainer_ABC& action ) const
-{
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
-    CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

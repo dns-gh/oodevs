@@ -44,11 +44,6 @@ namespace actions
             virtual ~ParamNumericList();
             //@}
 
-            //! @name Operations
-            //@{
-            virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-            //@}
-
         private:
             //! @name Helpers
             //@{
@@ -58,7 +53,6 @@ namespace actions
         private:
             //! @name Member data
             //@{
-            kernel::OrderParameter parameter_;
             bool isReal_;
             unsigned int count_;
             //@}

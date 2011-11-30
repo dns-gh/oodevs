@@ -32,21 +32,10 @@ public:
     virtual ~ParamPointList();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    //@}
-
 private:
     //! @name Helpers
     //@{
     virtual Param_ABC* CreateElement();
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::OrderParameter parameter_;
     //@}
 };
 

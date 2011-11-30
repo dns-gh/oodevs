@@ -51,7 +51,6 @@ public:
     //! @name Operations
     //@{
     virtual QWidget* BuildInterface( QWidget* parent );
-    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
 private slots:
@@ -81,7 +80,6 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
-    kernel::OrderParameter parameter_;
     const QDateTime currentDate_;
     unsigned int count_;
     T_Limas limas_;

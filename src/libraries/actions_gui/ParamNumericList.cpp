@@ -23,7 +23,6 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamNumericList::ParamNumericList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, bool isReal )
     : ListParameter( parent, parameter, actions )
-    , parameter_( parameter )
     , isReal_( isReal )
     , count_( 0 )
 {
@@ -37,17 +36,6 @@ ParamNumericList::ParamNumericList( QObject* parent, const kernel::OrderParamete
 ParamNumericList::~ParamNumericList()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamNumericList::CommitTo
-// Created: MMC 2011-03-22
-// -----------------------------------------------------------------------------
-void ParamNumericList::CommitTo( actions::ParameterContainer_ABC& action ) const
-{
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
-    CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

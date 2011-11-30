@@ -46,11 +46,6 @@ public:
     virtual ~ParamObstacleList();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    //@}
-
 private:
     //! @name Helpers
     //@{
@@ -60,7 +55,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::Controller& controller_;
     const kernel::ObjectTypes& objectTypes_;

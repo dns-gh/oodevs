@@ -23,7 +23,6 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamAutomatList::ParamAutomatList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller )
     : EntityListParameter< kernel::Automat_ABC >( parent, parameter, actions, controller )
-    , parameter_( parameter )
     , count_( 0 )
 {
     // NOTHING
@@ -54,15 +53,4 @@ void ParamAutomatList::AddToMenu( kernel::ContextMenu& menu )
 EntityParameter< kernel::Automat_ABC >* ParamAutomatList::CreateElement( const kernel::Automat_ABC& potential )
 {
     return new ParamAutomat( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "automat", false ), potential, controller_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAutomatList::CommitTo
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-void ParamAutomatList::CommitTo( actions::ParameterContainer_ABC& action ) const
-{
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
-    CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );
 }

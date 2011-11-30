@@ -41,17 +41,6 @@ ParamLocationCompositeList::~ParamLocationCompositeList()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: ParamLocationCompositeList::CommitTo
-// Created: LDC 2010-09-20
-// -----------------------------------------------------------------------------
-void ParamLocationCompositeList::CommitTo( actions::ParameterContainer_ABC& action ) const
-{
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
-    CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );
-}
-
 namespace
 {
     class ChoiceVisitor : private boost::noncopyable

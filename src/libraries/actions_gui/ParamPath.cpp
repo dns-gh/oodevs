@@ -110,6 +110,8 @@ void ParamPath::NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& 
 void ParamPath::StartPath()
 {
     layer_.StartPath( *this, entity_.Get< kernel::Positions >() );
+    if( group_ && IsOptional() )
+        group_->setChecked( true );
 }
 
 // -----------------------------------------------------------------------------

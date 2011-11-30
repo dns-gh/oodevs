@@ -25,7 +25,6 @@ using namespace actions::gui;
 ParamLocationList::ParamLocationList( QObject* parent, const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller )
     : ListParameter( parent, parameter, controller )
     , converter_( converter )
-    , parameter_( parameter )
     , layer_( layer )
     , count_( 0 )
 {
@@ -39,17 +38,6 @@ ParamLocationList::ParamLocationList( QObject* parent, const kernel::OrderParame
 ParamLocationList::~ParamLocationList()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamLocationList::CommitTo
-// Created: SBO 2007-04-25
-// -----------------------------------------------------------------------------
-void ParamLocationList::CommitTo( actions::ParameterContainer_ABC& action ) const
-{
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
-    CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

@@ -25,7 +25,6 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ParamUrbanBlockList::ParamUrbanBlockList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller )
     : EntityListParameter< kernel::Object_ABC >( parent, parameter, actions, controller )
-    , parameter_( parameter )
     , count_( 0 )
 {
     // NOTHING
@@ -66,15 +65,4 @@ void ParamUrbanBlockList::SetName( const QString& name )
 {
     this->name_ = name;
     ListParameter::SetLabel( name );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamUrbanBlockList::CommitTo
-// Created: FPO 2011-05-31
-// -----------------------------------------------------------------------------
-void ParamUrbanBlockList::CommitTo( actions::ParameterContainer_ABC& action ) const
-{
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
-    CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );
 }

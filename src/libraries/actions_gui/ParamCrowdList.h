@@ -41,7 +41,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     void SetName( const QString& name );
     //@}
 
@@ -54,7 +53,6 @@ public:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     unsigned int count_;
     //@}
 };

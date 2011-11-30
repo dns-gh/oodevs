@@ -46,6 +46,7 @@ public:
     //@{
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
 protected:
@@ -53,7 +54,7 @@ protected:
     //@{
     virtual bool InternalCheckValidity() const;
     unsigned int Count() const;
-    void CommitChildrenTo( actions::ParameterContainer_ABC& parent ) const;
+    bool CommitChildrenTo( actions::ParameterContainer_ABC& parent ) const;
     void Select( const Param_ABC& param );
     virtual void DeleteElement( Param_ABC& param );
     void EnableCreation( bool enabled );
@@ -89,6 +90,7 @@ private:
     //! @name Member data
     //@{
     kernel::ActionController& controller_;
+    const kernel::OrderParameter& parameter_;
     Q3ListView* list_;
     Q3ListViewItem* selected_;
     T_Widgets widgets_;

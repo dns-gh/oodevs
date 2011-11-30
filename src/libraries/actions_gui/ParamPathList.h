@@ -45,11 +45,6 @@ public:
     virtual ~ParamPathList();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    //@}
-
 private:
     //! @name Helpers
     //@{
@@ -60,7 +55,6 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    kernel::OrderParameter parameter_;
     ::gui::ParametersLayer& layer_;
     const kernel::Entity_ABC& entity_;
     unsigned int count_;

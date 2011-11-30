@@ -24,7 +24,6 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamAgentKnowledgeList::ParamAgentKnowledgeList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
     : EntityListParameter< kernel::AgentKnowledge_ABC >( parent, parameter, actions, controller )
-    , parameter_( parameter )
     , converter_( converter )
     , agent_    ( agent )
     , count_    ( 0 )
@@ -68,15 +67,4 @@ void ParamAgentKnowledgeList::NotifyContextMenu( const kernel::Agent_ABC& entity
     const kernel::AgentKnowledge_ABC* knowledge = converter_.Find( entity, agent_ );
     if( knowledge )
         EntityListParameter< kernel::AgentKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAgentKnowledgeList::CommitTo
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-void ParamAgentKnowledgeList::CommitTo( actions::ParameterContainer_ABC& action ) const
-{
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
-    CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );
 }

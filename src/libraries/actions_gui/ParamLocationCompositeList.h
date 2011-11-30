@@ -41,11 +41,6 @@ public:
     virtual ~ParamLocationCompositeList();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    //@}
-
 protected:
     //! @name Types
     //@{
