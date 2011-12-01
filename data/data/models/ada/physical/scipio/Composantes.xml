@@ -1489,6 +1489,7 @@
       <breakdown origin="attrition" percentage="7" type="Panne TCT NTI3"/>
     </breakdowns>
     <equipment-category>Autres</equipment-category>
+    <operational-information information-origin="Jane's" native-country="France" starting-country="France, EAU" starting-date="1992-01-01"/>
   </equipment>
   <equipment codeEMAT6="200742" codeEMAT8="20014202" codeLFRIL="" codeNNO="1520145478019" comment="Helicoptere de transport" id="18" max-slope="1" name="Puma HM" protection="Aeronef" size="Moyen" weight="5.5">
     <speeds max="240">
@@ -35322,4 +35323,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="4129164266" -->
+<!-- signature="3420176217" -->
