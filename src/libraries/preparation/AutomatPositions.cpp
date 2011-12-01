@@ -146,7 +146,7 @@ void AutomatPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& v
 // -----------------------------------------------------------------------------
 void AutomatPositions::Move( const geometry::Point2f& point )
 {
-    const geometry::Vector2f vect( GetPosition( true ), point );
+    const geometry::Vector2f vect( GetPosition( false ), point );
     tools::Iterator< const Entity_ABC& > children = automat_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
