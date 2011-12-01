@@ -115,6 +115,7 @@ void MIL_FragOrder::Register( directia::brain::Brain& brain )
     brain.Register( "GetsiteFranchissementOriginal_", &MIL_FragOrder::GetSiteFranchissementOriginal );
     brain.Register( "GetsiteFranchissementVariante_", &MIL_FragOrder::GetSiteFranchissementVariante );
     brain.Register( "GetAgentKnowledge_", &MIL_FragOrder::GetAgentKnowledge );
+    brain.Register( "GetObjectKnowledge_", &MIL_FragOrder::GetObjectKnowledge );
     brain.Register( "GetAgent_", &MIL_FragOrder::GetAgent );
 }
 
@@ -514,6 +515,28 @@ boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() cons
                 return result;
             else
                 return boost::shared_ptr< DEC_Knowledge_Agent >();
+        }
+    }
+    throw std::runtime_error( std::string( "Unknown parameter: " ) + parameterName );
+}
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::GetObjectKnowledge
+// Created: GGE 2011-11-17
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< DEC_Knowledge_Object > > MIL_FragOrder::GetObjectKnowledge() const
+{
+    static const std::string parameterName( "objectKnowledge_" );
+
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for (unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == parameterName )
+        {
+            std::vector< boost::shared_ptr< DEC_Knowledge_Object > > result;
+            if( parameters_[i]->ToObjectKnowledgeList( result ) )
+                return result;
+            else
+                return std::vector< boost::shared_ptr< DEC_Knowledge_Object > >();
         }
     }
     throw std::runtime_error( std::string( "Unknown parameter: " ) + parameterName );

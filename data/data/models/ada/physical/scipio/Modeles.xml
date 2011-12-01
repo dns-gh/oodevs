@@ -607,6 +607,7 @@
         <mission name="PION GENIE Depolluer zone"/>
         <mission name="PION GENIE Ouvrir Itineraire"/>
         <mission name="PION GENIE Realiser Travaux">
+          <fragorder name="Activer Obstacles"/>
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION GENIE Reconnaitre"/>
@@ -719,6 +720,7 @@
         <mission name="PION GENIE Depolluer zone"/>
         <mission name="PION GENIE Ouvrir Itineraire"/>
         <mission name="PION GENIE Realiser Travaux">
+          <fragorder name="Activer Obstacles"/>
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION GENIE Reprendre Travaux">
@@ -961,6 +963,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION GENIE Realiser Travaux">
+          <fragorder name="Activer Obstacles"/>
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION GENIE Reprendre Travaux">
@@ -1092,6 +1095,7 @@
         <mission name="PION GENIE Appui Mobilite"/>
         <mission name="PION GENIE Ouvrir Itineraire"/>
         <mission name="PION GENIE Realiser Travaux">
+          <fragorder name="Activer Obstacles"/>
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION GENIE Retablir Itineraire">
@@ -7162,6 +7166,7 @@
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
+        <fragorder name="Activer Obstacles"/>
       </fragorders>
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.GEN.Appui">
@@ -9675,4 +9680,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1570591853" -->
+<!-- signature="0221215319" -->
