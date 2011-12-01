@@ -158,8 +158,11 @@ void ModelBuilder::CreateLima( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void ModelBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    toDelete_ = &entity;
-    menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ) );
+    if( &entity != &model_.teams_.GetNoSideTeam() )
+    {
+        toDelete_ = &entity;
+        menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ) );
+    }
 }
 
 namespace
@@ -193,6 +196,8 @@ void ModelBuilder::OnDelete()
 // -----------------------------------------------------------------------------
 void ModelBuilder::DeleteEntity( const kernel::Entity_ABC& entity )
 {
+    if( &entity == &model_.teams_.GetNoSideTeam() )
+        return;
     toDelete_ = &entity;
     if( HasHierarchy( entity ) )
         confirmation_->setText( tr( "Delete '%1' and all its subordinates?" ).arg( entity.GetName() ) );
