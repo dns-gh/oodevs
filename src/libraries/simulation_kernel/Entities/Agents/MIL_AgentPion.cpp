@@ -454,40 +454,47 @@ void MIL_AgentPion::UpdateDecision( float duration )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::UpdatePhysicalState()
 {
-    const bool bIsDead = IsDead();
-    GetRole< dotation::PHY_RolePion_Dotations >().Update( bIsDead );
-    GetRole< human::PHY_RolePion_Humans >().Update( bIsDead );
-    GetRole< PHY_RolePion_Composantes >().Update( bIsDead );
-    GetRole< PHY_RolePion_Posture >().Update( bIsDead );
-    GetRole< PHY_RolePion_Reinforcement >().Update( bIsDead );
-    GetRole< PHY_RolePion_Location >().Update( bIsDead );
-    GetRole< nbc::PHY_RolePion_NBC >().Update( bIsDead );
-    GetRole< PHY_RolePion_Communications >().Update( bIsDead );
-    GetRole< PHY_RolePion_HumanFactors >().Update( bIsDead );
-    GetRole< transport::PHY_RolePion_Transported >().Update( bIsDead );
-    GetRole< surrender::PHY_RolePion_Surrender >().Update( bIsDead );
-    GetRole< refugee::PHY_RolePion_Refugee >().Update( bIsDead );
-    GetRole< PHY_RolePion_Population >().Update( bIsDead );
-    GetRole< PHY_RolePion_Perceiver >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes $$$ pourri - utiliser des observers
-    GetRole< transport::PHY_RoleAction_Loading >().Update( bIsDead );
-    GetRole< transport::PHY_RoleAction_Transport >().Update( bIsDead );
-    GetRole< crowdtransport::PHY_RoleAction_CrowdTransport >().Update( bIsDead );
-    GetRole< PHY_RoleAction_Objects >().Update( bIsDead );
-    GetRole< moving::PHY_RoleAction_Moving >().Update( bIsDead );
-    GetRole< PHY_RoleAction_InterfaceFlying >().Update( bIsDead );
-    GetRole< firing::PHY_RoleAction_DirectFiring >().Update( bIsDead );
-    GetRole< firing::PHY_RoleAction_IndirectFiring >().Update( bIsDead );
-    GetRole< PHY_RoleAction_FolkInfluence >().Update( bIsDead );
-    GetRole< PHY_RoleAction_MovingUnderground >().Update( bIsDead );
-    PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >(); //@TODO add update to new role interface
-    if( role )
-        role->Update( bIsDead );
-    PHY_RoleInterface_Medical* role2 = RetrieveRole< PHY_RoleInterface_Medical >();
-    if( role2 )
-        role2->Update( bIsDead );
-    PHY_RoleInterface_Supply* role3 = RetrieveRole< PHY_RoleInterface_Supply >();
-    if( role3 )
-        role3->Update( bIsDead );
+    try
+    {
+        const bool bIsDead = IsDead();
+        GetRole< dotation::PHY_RolePion_Dotations >().Update( bIsDead );
+        GetRole< human::PHY_RolePion_Humans >().Update( bIsDead );
+        GetRole< PHY_RolePion_Composantes >().Update( bIsDead );
+        GetRole< PHY_RolePion_Posture >().Update( bIsDead );
+        GetRole< PHY_RolePion_Reinforcement >().Update( bIsDead );
+        GetRole< PHY_RolePion_Location >().Update( bIsDead );
+        GetRole< nbc::PHY_RolePion_NBC >().Update( bIsDead );
+        GetRole< PHY_RolePion_Communications >().Update( bIsDead );
+        GetRole< PHY_RolePion_HumanFactors >().Update( bIsDead );
+        GetRole< transport::PHY_RolePion_Transported >().Update( bIsDead );
+        GetRole< surrender::PHY_RolePion_Surrender >().Update( bIsDead );
+        GetRole< refugee::PHY_RolePion_Refugee >().Update( bIsDead );
+        GetRole< PHY_RolePion_Population >().Update( bIsDead );
+        GetRole< PHY_RolePion_Perceiver >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes $$$ pourri - utiliser des observers
+        GetRole< transport::PHY_RoleAction_Loading >().Update( bIsDead );
+        GetRole< transport::PHY_RoleAction_Transport >().Update( bIsDead );
+        GetRole< crowdtransport::PHY_RoleAction_CrowdTransport >().Update( bIsDead );
+        GetRole< PHY_RoleAction_Objects >().Update( bIsDead );
+        GetRole< moving::PHY_RoleAction_Moving >().Update( bIsDead );
+        GetRole< PHY_RoleAction_InterfaceFlying >().Update( bIsDead );
+        GetRole< firing::PHY_RoleAction_DirectFiring >().Update( bIsDead );
+        GetRole< firing::PHY_RoleAction_IndirectFiring >().Update( bIsDead );
+        GetRole< PHY_RoleAction_FolkInfluence >().Update( bIsDead );
+        GetRole< PHY_RoleAction_MovingUnderground >().Update( bIsDead );
+        PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >(); //@TODO add update to new role interface
+        if( role )
+            role->Update( bIsDead );
+        PHY_RoleInterface_Medical* role2 = RetrieveRole< PHY_RoleInterface_Medical >();
+        if( role2 )
+            role2->Update( bIsDead );
+        PHY_RoleInterface_Supply* role3 = RetrieveRole< PHY_RoleInterface_Supply >();
+        if( role3 )
+            role3->Update( bIsDead );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error updating unit " << GetID() << " : " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -505,15 +512,22 @@ void MIL_AgentPion::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::UpdateNetwork()
 {
-    GetRole< network::NET_RolePion_Dotations >().SendChangedState();
-    GetRole< network::NET_RolePion_Dotations >().Clean();
-    if( pAffinities_->HasChanged() || pExtensions_->HasChanged() )
+    try
     {
-        client::UnitAttributes msg;
-        msg().mutable_unit()->set_id( GetID() );
-        pAffinities_->UpdateNetwork( msg );
-        pExtensions_->UpdateNetwork( msg );
-        msg.Send( NET_Publisher_ABC::Publisher() );
+        GetRole< network::NET_RolePion_Dotations >().SendChangedState();
+        GetRole< network::NET_RolePion_Dotations >().Clean();
+        if( pAffinities_->HasChanged() || pExtensions_->HasChanged() )
+        {
+            client::UnitAttributes msg;
+            msg().mutable_unit()->set_id( GetID() );
+            pAffinities_->UpdateNetwork( msg );
+            pExtensions_->UpdateNetwork( msg );
+            msg.Send( NET_Publisher_ABC::Publisher() );
+        }
+    }
+    catch( std::exception & e )
+    {
+        MT_LOG_ERROR_MSG( "Error updating network for unit " << GetID() << " : " << e.what() );
     }
 }
 
@@ -1415,7 +1429,7 @@ void MIL_AgentPion::Apply2( boost::function< void( PHY_DotationStock& ) > visito
     if( itf )
         itf->Apply( visitor );
     else
-        MT_LOG_ERROR_MSG( "Unit " << GetName() << " is not a logistic unit." );
+        MT_LOG_ERROR_MSG( "Unit " << GetID() << " is not a logistic unit." );
 }
 
 // -----------------------------------------------------------------------------

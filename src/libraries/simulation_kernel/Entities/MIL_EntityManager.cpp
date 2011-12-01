@@ -621,11 +621,18 @@ const MIL_ObjectType_ABC& MIL_EntityManager::FindObjectType( const std::string& 
 void MIL_EntityManager::UpdateKnowledges()
 {
     profiler_.Start();
-    int currentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::UpdateKnowledges, _1, boost::ref( currentTimeStep ) ) );
-    populationFactory_->Apply( boost::bind( &MIL_Population::UpdateKnowledges, _1 ) );
-    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::CleanKnowledges, _1 ) );
-    populationFactory_->Apply( boost::bind( &MIL_Population::CleanKnowledges, _1 ) );
+    try
+    {
+        int currentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+        armyFactory_->Apply( boost::bind( &MIL_Army_ABC::UpdateKnowledges, _1, boost::ref( currentTimeStep ) ) );
+        populationFactory_->Apply( boost::bind( &MIL_Population::UpdateKnowledges, _1 ) );
+        armyFactory_->Apply( boost::bind( &MIL_Army_ABC::CleanKnowledges, _1 ) );
+        populationFactory_->Apply( boost::bind( &MIL_Population::CleanKnowledges, _1 ) );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error updating knowledges: " << e.what() );
+    }
     rKnowledgesTime_ = profiler_.Stop();
 }
 
@@ -724,7 +731,6 @@ void MIL_EntityManager::UpdateStates()
 {
     profiler_.Start();
     // !! Automate avant Pions (?? => LOG ??)
-    formationFactory_->Apply( boost::bind( &MIL_Formation::UpdateState, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateState, _1 ) );
@@ -756,12 +762,18 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::UpdateKnowledgeGroups
 // Created:  FHD 2009-12-18:
-// LTO
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateKnowledgeGroups()
 {
     profiler_.Start();
-    knowledgeGroupFactory_->Apply( boost::bind( &MIL_KnowledgeGroup::UpdateKnowledgeGroup, _1 ) );
+    try
+    {
+        knowledgeGroupFactory_->Apply( boost::bind( &MIL_KnowledgeGroup::UpdateKnowledgeGroup, _1 ) );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error updating knowledge groups: " << e.what() );
+    }
     rStatesTime_ = profiler_.Stop();
 }
 

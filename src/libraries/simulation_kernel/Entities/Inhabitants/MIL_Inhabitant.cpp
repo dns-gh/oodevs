@@ -19,6 +19,7 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "MT_Tools/MT_Logger.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -248,30 +249,37 @@ void MIL_Inhabitant::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::UpdateState()
 {
-    pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime(), MIL_AgentServer::GetWorkspace().GetTickDuration() );
-    // $$$$ _RC_ JSR 2011-03-23: L'objet doit être créé dans le livingarea, dans startmoving, et détruit dans finishmoving!!!
-    if ( pSchedule_->IsMoving() && !pPopulationMovingObject_ )
-        CreateInhabitantMovingObject();
-    if( !pSchedule_->IsMoving() && pPopulationMovingObject_ )
-        DestroyInhabitantMovingObject();
-    pSatisfactions_->IncreaseSafety( type_.GetSafetyGainPerHour() );
-    pSatisfactions_->SetLodgingSatisfaction( pLivingArea_->ComputeOccupationFactor() );
-    const MIL_InhabitantType::T_ConsumptionsMap& consumptions = type_.GetConsumptions();
-    MIL_LivingArea::T_Blocks angryBlocks;
-    for( MIL_InhabitantType::CIT_ConsumptionsMap it = consumptions.begin(); it != consumptions.end(); ++it )
+    try
     {
-        float satisfaction = pLivingArea_->Consume( *it->first, static_cast< unsigned int >( it->second ), angryBlocks );
-        pSatisfactions_->SetResourceSatisfaction( *it->first, satisfaction );
-    }
-    std::map< std::string, unsigned int > occupations;
-    pLivingArea_->GetUsagesOccupation( occupations );
-    pSatisfactions_->ComputeMotivationSatisfactions( occupations, nNbrHealthyHumans_ + nNbrWoundedHumans_ );
-    pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
+        pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime(), MIL_AgentServer::GetWorkspace().GetTickDuration() );
+        // $$$$ _RC_ JSR 2011-03-23: L'objet doit être créé dans le livingarea, dans startmoving, et détruit dans finishmoving!!!
+        if( pSchedule_->IsMoving() && !pPopulationMovingObject_ )
+            CreateInhabitantMovingObject();
+        if( !pSchedule_->IsMoving() && pPopulationMovingObject_ )
+            DestroyInhabitantMovingObject();
+        pSatisfactions_->IncreaseSafety( type_.GetSafetyGainPerHour() );
+        pSatisfactions_->SetLodgingSatisfaction( pLivingArea_->ComputeOccupationFactor() );
+        const MIL_InhabitantType::T_ConsumptionsMap& consumptions = type_.GetConsumptions();
+        MIL_LivingArea::T_Blocks angryBlocks;
+        for( MIL_InhabitantType::CIT_ConsumptionsMap it = consumptions.begin(); it != consumptions.end(); ++it )
+        {
+            float satisfaction = pLivingArea_->Consume( *it->first, static_cast< unsigned int >( it->second ), angryBlocks );
+            pSatisfactions_->SetResourceSatisfaction( *it->first, satisfaction );
+        }
+        std::map< std::string, unsigned int > occupations;
+        pLivingArea_->GetUsagesOccupation( occupations );
+        pSatisfactions_->ComputeMotivationSatisfactions( occupations, nNbrHealthyHumans_ + nNbrWoundedHumans_ );
+        pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
 
-    // $$$$ BCI 2011-03-18: gestion des foules en colère => comment faire pour ne pas mettre ça en dur dans la sim?
-    if( !type_.GetAngryCrowdMissionType().empty() )
-        BOOST_FOREACH( MIL_LivingAreaBlock* block, angryBlocks )
-            block->ManageAngryCrowd( type_, *pArmy_ );
+        // $$$$ BCI 2011-03-18: gestion des foules en colère => comment faire pour ne pas mettre ça en dur dans la sim?
+        if( !type_.GetAngryCrowdMissionType().empty() )
+            BOOST_FOREACH( MIL_LivingAreaBlock* block, angryBlocks )
+                block->ManageAngryCrowd( type_, *pArmy_ );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error updating inhabitant " << GetID() << " : " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -280,23 +288,30 @@ void MIL_Inhabitant::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::UpdateNetwork()
 {
-    client::PopulationUpdate msg;
-    msg().mutable_id()->set_id( nID_ );
-    if( healthStateChanged_ )
+    try
     {
-        msg().set_healthy( nNbrHealthyHumans_ );
-        msg().set_wounded( nNbrWoundedHumans_ );
-        msg().set_dead( nNbrDeadHumans_ );
+        client::PopulationUpdate msg;
+        msg().mutable_id()->set_id( nID_ );
+        if( healthStateChanged_ )
+        {
+            msg().set_healthy( nNbrHealthyHumans_ );
+            msg().set_wounded( nNbrWoundedHumans_ );
+            msg().set_dead( nNbrDeadHumans_ );
+        }
+        if( pSchedule_.get() )
+            pSchedule_->UpdateNetwork( msg );
+        pLivingArea_->UpdateNetwork( msg );
+        pSatisfactions_->UpdateNetwork( msg );
+        pAffinities_->UpdateNetwork( msg );
+        pExtensions_->UpdateNetwork( msg );
+        if( healthStateChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() || msg().has_adhesions() || msg().has_extension() || msg().has_motivation() )
+            msg.Send( NET_Publisher_ABC::Publisher() );
+        healthStateChanged_ = false;
     }
-    if( pSchedule_.get() )
-        pSchedule_->UpdateNetwork( msg );
-    pLivingArea_->UpdateNetwork( msg );
-    pSatisfactions_->UpdateNetwork( msg );
-    pAffinities_->UpdateNetwork( msg );
-    pExtensions_->UpdateNetwork( msg );
-    if( healthStateChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() || msg().has_adhesions() || msg().has_extension() || msg().has_motivation() )
-        msg.Send( NET_Publisher_ABC::Publisher() );
-    healthStateChanged_ = false;
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error updating network for inhabitant " << GetID() << " : " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

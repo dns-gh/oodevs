@@ -430,35 +430,42 @@ void MIL_Population::UpdateDecision( float duration )
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateState()
 {
-    for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-        delete *it;
-    trashedConcentrations_.clear();
-    for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-        delete *it;
-    trashedFlows_.clear();
-    // Flows
-    for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); )
+    try
     {
-        MIL_PopulationFlow* pFlow = *itFlow;
-        if( !pFlow->Update() )
+        for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
+            delete *it;
+        trashedConcentrations_.clear();
+        for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
+            delete *it;
+        trashedFlows_.clear();
+        // Flows
+        for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); )
         {
-            itFlow = flows_.erase( itFlow );
-            trashedFlows_.push_back( pFlow );
+            MIL_PopulationFlow* pFlow = *itFlow;
+            if( !pFlow->Update() )
+            {
+                itFlow = flows_.erase( itFlow );
+                trashedFlows_.push_back( pFlow );
+            }
+            else
+                ++itFlow;
         }
-        else
-            ++itFlow;
+        // Concentrations
+        for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
+        {
+            MIL_PopulationConcentration* pConcentration = *itConcentration;
+            if( !pConcentration->Update() )
+            {
+                itConcentration = concentrations_.erase( itConcentration );
+                trashedConcentrations_.push_back( pConcentration );
+            }
+            else
+                ++itConcentration;
+        }
     }
-    // Concentrations
-    for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
+    catch( std::exception& e )
     {
-        MIL_PopulationConcentration* pConcentration = *itConcentration;
-        if( !pConcentration->Update() )
-        {
-            itConcentration = concentrations_.erase( itConcentration );
-            trashedConcentrations_.push_back( pConcentration );
-        }
-        else
-            ++itConcentration;
+        MT_LOG_ERROR_MSG( "Error updating population " << GetName().c_str() << " : " << e.what() );
     }
 }
 
@@ -1357,36 +1364,43 @@ void MIL_Population::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateNetwork()
 {
-    if( GetRole< DEC_PopulationDecision >().HasStateChanged() || criticalIntelligenceChanged_ || armedIndividualsChanged_ || pAffinities_->HasChanged() || pExtensions_->HasChanged() || HasHumansChanged() )
+    try
     {
-        client::CrowdUpdate asnMsg;
-        asnMsg().mutable_crowd()->set_id( nID_ );
-        GetRole< DEC_PopulationDecision >().SendChangedState( asnMsg );
-        if( criticalIntelligenceChanged_ )
-            asnMsg().set_critical_intelligence( criticalIntelligence_ );
-        if( armedIndividualsChanged_ )
-            asnMsg().set_armed_individuals( static_cast< float >( rArmedIndividuals_ ) );
-        criticalIntelligenceChanged_ = false;
-        armedIndividualsChanged_ = false;
-        pAffinities_->UpdateNetwork( asnMsg );
-        pExtensions_->UpdateNetwork( asnMsg );
-        if( HasHumansChanged() )
+        if( GetRole< DEC_PopulationDecision >().HasStateChanged() || criticalIntelligenceChanged_ || armedIndividualsChanged_ || pAffinities_->HasChanged() || pExtensions_->HasChanged() || HasHumansChanged() )
         {
-            asnMsg().set_healthy( GetHealthyHumans() );
-            asnMsg().set_wounded( GetWoundedHumans() );
-            asnMsg().set_contaminated( GetContaminatedHumans() );
-            asnMsg().set_dead( GetDeadHumans() );
+            client::CrowdUpdate asnMsg;
+            asnMsg().mutable_crowd()->set_id( nID_ );
+            GetRole< DEC_PopulationDecision >().SendChangedState( asnMsg );
+            if( criticalIntelligenceChanged_ )
+                asnMsg().set_critical_intelligence( criticalIntelligence_ );
+            if( armedIndividualsChanged_ )
+                asnMsg().set_armed_individuals( static_cast< float >( rArmedIndividuals_ ) );
+            criticalIntelligenceChanged_ = false;
+            armedIndividualsChanged_ = false;
+            pAffinities_->UpdateNetwork( asnMsg );
+            pExtensions_->UpdateNetwork( asnMsg );
+            if( HasHumansChanged() )
+            {
+                asnMsg().set_healthy( GetHealthyHumans() );
+                asnMsg().set_wounded( GetWoundedHumans() );
+                asnMsg().set_contaminated( GetContaminatedHumans() );
+                asnMsg().set_dead( GetDeadHumans() );
+            }
+            asnMsg.Send( NET_Publisher_ABC::Publisher() );
         }
-        asnMsg.Send( NET_Publisher_ABC::Publisher() );
+        for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+            ( **it ).SendChangedState();
+        for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
+            ( **it ).SendChangedState();
+        for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+            ( **it ).SendChangedState();
+        for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
+            ( **it ).SendChangedState();
     }
-    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        ( **it ).SendChangedState();
-    for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-        ( **it ).SendChangedState();
-    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        ( **it ).SendChangedState();
-    for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-        ( **it ).SendChangedState();
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error updating network for population " << GetID() << " : " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

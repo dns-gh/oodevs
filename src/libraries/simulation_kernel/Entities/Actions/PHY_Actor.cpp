@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Actor.h"
 #include "PHY_Action_ABC.h"
+#include "MT_Tools/MT_Logger.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Actor constructor
@@ -38,7 +39,17 @@ PHY_Actor::~PHY_Actor()
 void PHY_Actor::UpdateActions()
 {
     for( std::map< unsigned int, boost::shared_ptr< PHY_Action_ABC > >::const_iterator it = actions_.begin(); it != actions_.end(); ++it )
-        (*it).second->Update();
+    {
+        try
+        {
+            (*it).second->Update();
+
+        }
+        catch( std::runtime_error& e )
+        {
+            MT_LOG_ERROR_MSG( "Action failure : " << e.what() );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

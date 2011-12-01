@@ -577,22 +577,29 @@ void MIL_Automate::CleanKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_Automate::UpdateNetwork() const
 {
-    if( bAutomateModeChanged_ || GetRole< DEC_AutomateDecision >().HasStateChanged() || pExtensions_->HasChanged() )
+    try
     {
-        client::AutomatAttributes msg;
-        msg().mutable_automat()->set_id( nID_ );
-        if( bAutomateModeChanged_ )
-            msg().set_mode( bEngaged_ ? sword::engaged : sword::disengaged );
-        GetRole< DEC_AutomateDecision >().SendChangedState( msg );
-        pExtensions_->UpdateNetwork( msg );
-        msg.Send( NET_Publisher_ABC::Publisher() );
+        if( bAutomateModeChanged_ || GetRole< DEC_AutomateDecision >().HasStateChanged() || pExtensions_->HasChanged() )
+        {
+            client::AutomatAttributes msg;
+            msg().mutable_automat()->set_id( nID_ );
+            if( bAutomateModeChanged_ )
+                msg().set_mode( bEngaged_ ? sword::engaged : sword::disengaged );
+            GetRole< DEC_AutomateDecision >().SendChangedState( msg );
+            pExtensions_->UpdateNetwork( msg );
+            msg.Send( NET_Publisher_ABC::Publisher() );
+        }
+        if( pBrainLogistic_.get() )
+            pBrainLogistic_->SendChangedState();
+        else
+            pLogisticHierarchy_->SendChangedState();
+        pDotationSupplyManager_->SendChangedState();
+        pStockSupplyManager_->SendChangedState();
     }
-    if( pBrainLogistic_.get() )
-        pBrainLogistic_->SendChangedState();
-    else
-        pLogisticHierarchy_->SendChangedState();
-    pDotationSupplyManager_->SendChangedState();
-    pStockSupplyManager_->SendChangedState();
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error updating network for " << GetID() << " : " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -601,10 +608,15 @@ void MIL_Automate::UpdateNetwork() const
 // -----------------------------------------------------------------------------
 void MIL_Automate::UpdateState()
 {
-    if( pBrainLogistic_.get() )
-        pBrainLogistic_->UpdateState();
-    pDotationSupplyManager_->Update();
-    pStockSupplyManager_   ->Update();
+    try
+    {
+        pDotationSupplyManager_->Update();
+        pStockSupplyManager_   ->Update();
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error updating automat " << GetID() << " : " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

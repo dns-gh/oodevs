@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_EffectManager.h"
 #include "MIL_Effect_ABC.h"
+#include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_ScipioException.h"
 
 namespace
@@ -69,7 +70,16 @@ void MIL_EffectManager::Update()
     for( IT_EffectSet it = effects_.begin(); it != effects_.end(); )
     {
         MIL_Effect_ABC& effect = **it;
-        if( effect.Execute() )
+        bool executed = false;
+        try
+        {
+            executed = effect.Execute();
+        }
+        catch( std::exception& e )
+        {
+            MT_LOG_ERROR_MSG( "Effect error : " << e.what() );
+        }
+        if( executed )
             ++it;
         else
             it = effects_.erase( it );
