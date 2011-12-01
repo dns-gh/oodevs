@@ -144,6 +144,8 @@ void LongNameEditor::Generate()
             entity = pTactical->GetSuperior();
             if( entity )
             {
+                if( entity->GetTypeName() == Team_ABC::typeName_ )
+                    break;
                 longName += "." + GetEntityName( *entity );
                 pTactical = entity->Retrieve< TacticalHierarchies >();
             }
