@@ -57,8 +57,10 @@ void PopulationConditions::RegisterIn( directia::brain::Brain& brain )
 
 namespace directia
 {
-    template< > inline void UsedByDIA    ( dispatcher::Population* ) { }
-    template< > inline void ReleasedByDIA( dispatcher::Population* ) { }
+    void UsedByDIA    ( dispatcher::Population* ) { }
+    void ReleasedByDIA( dispatcher::Population* ) { }
+    void UsedByDIA( PopulationConditions* ) {}
+    void ReleasedByDIA( PopulationConditions* ) {}
 }
 
 namespace

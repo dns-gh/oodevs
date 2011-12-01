@@ -47,8 +47,10 @@ void ObjectConditions::RegisterIn( directia::brain::Brain& brain )
 
 namespace directia
 {
-    template<> inline void UsedByDIA    ( dispatcher::Object_ABC* ) {}
-    template<> inline void ReleasedByDIA( dispatcher::Object_ABC* ) {}
+    void UsedByDIA    ( dispatcher::Object_ABC* ) {}
+    void ReleasedByDIA( dispatcher::Object_ABC* ) {}
+    void UsedByDIA    ( ObjectConditions* ) {}
+    void ReleasedByDIA( ObjectConditions* ) {}
 }
 
 // -----------------------------------------------------------------------------

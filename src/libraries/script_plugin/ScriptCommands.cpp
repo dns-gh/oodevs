@@ -34,6 +34,12 @@ ScriptCommands::~ScriptCommands()
     // NOTHING
 }
 
+namespace directia
+{
+    void UsedByDIA( ScriptCommands* ) {}
+    void ReleasedByDIA( ScriptCommands* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: ScriptCommands::RegisterIn
 // Created: SBO 2008-07-02
