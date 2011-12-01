@@ -66,8 +66,8 @@ private:
     std::auto_ptr< dispatcher::StaticModel >  staticModel_;
     std::auto_ptr< MemoryLogger_ABC >     memoryLogger_;
     boost::shared_ptr< Model >            model_;
-    std::auto_ptr< CompositeRegistrable > registrables_;
     std::auto_ptr< CompositePlugin >      handler_;
+    std::auto_ptr< CompositeRegistrable > registrables_;
     std::auto_ptr< Services >             services_;
     RotatingLog                           log_;
     boost::shared_ptr< ClientsNetworker > clientsNetworker_;

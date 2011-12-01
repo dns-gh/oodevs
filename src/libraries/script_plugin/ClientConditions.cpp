@@ -42,6 +42,12 @@ ClientConditions::~ClientConditions()
     // NOTHING
 }
 
+namespace directia
+{
+    void UsedByDIA( ClientConditions* ) {}
+    void ReleasedByDIA( ClientConditions* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: ClientConditions::RegisterIn
 // Created: SBO 2008-06-27

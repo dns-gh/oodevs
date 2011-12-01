@@ -89,6 +89,12 @@ Actions::~Actions()
     // NOTHING
 }
 
+namespace directia
+{
+    void UsedByDIA( Actions* ) {}
+    void ReleasedByDIA( Actions* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Actions::RegisterIn
 // Created: AGE 2008-07-16

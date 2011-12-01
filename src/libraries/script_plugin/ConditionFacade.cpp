@@ -50,6 +50,12 @@ ConditionFacade::~ConditionFacade()
     // NOTHING
 }
 
+namespace directia
+{
+    void UsedByDIA( ConditionFacade* ) {}
+    void ReleasedByDIA( ConditionFacade* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: ConditionFacade::RegisterIn
 // Created: AGE 2008-06-25

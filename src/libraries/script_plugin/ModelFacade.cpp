@@ -47,8 +47,10 @@ void ModelFacade::RegisterIn( directia::brain::Brain& brain )
 
 namespace directia
 {
-    template< > inline void UsedByDIA    ( const AgentManipulator* ) { }
-    template< > inline void ReleasedByDIA( const AgentManipulator* ) { }
+    void UsedByDIA    ( AgentManipulator* ) { }
+    void ReleasedByDIA( AgentManipulator* ) { }
+    void UsedByDIA    ( ModelFacade* ) { }
+    void ReleasedByDIA( ModelFacade* ) { }
 }
 
 // -----------------------------------------------------------------------------

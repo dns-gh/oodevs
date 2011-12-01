@@ -36,6 +36,12 @@ IndicatorConditions::~IndicatorConditions()
     // NOTHING
 }
 
+namespace directia
+{
+    void UsedByDIA( IndicatorConditions* ) {}
+    void ReleasedByDIA( IndicatorConditions* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: IndicatorConditions::RegisterIn
 // Created: SBO 2009-06-03

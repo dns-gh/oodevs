@@ -46,6 +46,12 @@ namespace
     }
 }
 
+namespace directia
+{
+    void UsedByDIA( SimulationCommands* ) {}
+    void ReleasedByDIA( SimulationCommands* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: SimulationCommands::RegisterIn
 // Created: AGE 2008-06-12

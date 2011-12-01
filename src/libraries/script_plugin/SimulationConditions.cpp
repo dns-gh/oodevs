@@ -35,6 +35,12 @@ SimulationConditions::~SimulationConditions()
     // NOTHING
 }
 
+namespace directia
+{
+    void UsedByDIA( SimulationConditions* ) {}
+    void ReleasedByDIA( SimulationConditions* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: SimulationConditions::RegisterIn
 // Created: AGE 2008-06-12

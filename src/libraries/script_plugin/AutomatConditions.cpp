@@ -35,6 +35,12 @@ AutomatConditions::~AutomatConditions()
     // NOTHING
 }
 
+namespace directia
+{
+    void UsedByDIA( AutomatConditions* ) {}
+    void ReleasedByDIA( AutomatConditions* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: AutomatConditions::RegisterIn
 // Created: SBO 2008-08-13

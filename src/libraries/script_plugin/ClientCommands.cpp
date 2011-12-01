@@ -36,6 +36,12 @@ ClientCommands::~ClientCommands()
     // NOTHING
 }
 
+namespace directia
+{
+    void UsedByDIA( ClientCommands* ) {}
+    void ReleasedByDIA( ClientCommands* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: ClientCommands::RegisterIn
 // Created: AGE 2008-06-24

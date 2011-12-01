@@ -212,6 +212,12 @@ void ScriptPlugin::LoadScript( const std::string& file )
     }
 }
 
+namespace directia
+{
+    void UsedByDIA( ScriptPlugin* ) {}
+    void ReleasedByDIA( ScriptPlugin* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: ScriptPlugin::RegisterIn
 // Created: AGE 2008-07-09

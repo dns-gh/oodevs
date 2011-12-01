@@ -35,6 +35,12 @@ ScriptConditions::~ScriptConditions()
     // NOTHING
 }
 
+namespace directia
+{
+    void UsedByDIA( ScriptConditions* ) {}
+    void ReleasedByDIA( ScriptConditions* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: ScriptConditions::RegisterIn
 // Created: SBO 2008-07-02

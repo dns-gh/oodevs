@@ -61,8 +61,10 @@ void AgentConditions::RegisterIn( directia::brain::Brain& brain )
 
 namespace directia
 {
-    template< > inline void UsedByDIA    ( dispatcher::Agent* ) { }
-    template< > inline void ReleasedByDIA( dispatcher::Agent* ) { }
+    void UsedByDIA    ( dispatcher::Agent* ) { }
+    void ReleasedByDIA( dispatcher::Agent* ) { }
+    void UsedByDIA( AgentConditions* ) {}
+    void ReleasedByDIA( AgentConditions* ) {}
 }
 
 namespace
