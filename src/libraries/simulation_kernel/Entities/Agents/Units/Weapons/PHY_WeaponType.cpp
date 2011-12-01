@@ -322,15 +322,18 @@ double PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PH
     if( !pDirectFireData_ )
         return 0.;
     assert( pDotationCategory_ );
-    if( dotation && dotation != pDotationCategory_ )
-        return 0.;
+    if( dotation )
+    {
+        if( dotation != pDotationCategory_ )
+            return 0.;
 
-    dotation::DefaultDotationComputer dotationComputer;
-    MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
-    localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
+        dotation::DefaultDotationComputer dotationComputer;
+        MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
+        localFirer.Execute< dotation::DotationComputer_ABC >( dotationComputer );
 
-    if( !dotationComputer.HasDotation( *pDotationCategory_ ) )
-        return 0.;
+        if( !dotationComputer.HasDotation( *pDotationCategory_ ) )
+            return 0.;
+    }
     return pDirectFireData_->GetMaxRangeToFireOn( targetComposanteType, rWantedPH );
 }
 
