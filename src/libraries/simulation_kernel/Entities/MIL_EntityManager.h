@@ -252,7 +252,7 @@ private:
     void UpdateActions();
     void UpdateEffects();
     void UpdateStates();
-    void UpdateKnowledgeGroups(); // LTO
+    void UpdateKnowledgeGroups();
 
     void PreprocessRandomBreakdowns();
     //@}

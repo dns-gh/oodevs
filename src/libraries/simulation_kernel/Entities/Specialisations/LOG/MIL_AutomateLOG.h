@@ -88,7 +88,6 @@ public:
     //! @name Operations
     //@{
     void UpdateLogistic();
-    void UpdateState   ();
     void Clean         ();
     //@}
 

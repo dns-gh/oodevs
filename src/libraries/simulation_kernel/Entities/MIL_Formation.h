@@ -99,7 +99,6 @@ public:
 
     //! @name TMP - Renettoyer les boucles d'updates .. Cf. Scipio
     //@{
-    void UpdateState     ();
     void UpdateNetwork   ();
     void Clean           ();
     //@}

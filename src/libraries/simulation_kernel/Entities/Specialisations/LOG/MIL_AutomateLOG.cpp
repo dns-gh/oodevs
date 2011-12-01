@@ -528,14 +528,6 @@ void MIL_AutomateLOG::UpdateLogistic()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::UpdateState
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::UpdateState()
-{
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::Clean
 // Created: NLD 2005-01-31
 // -----------------------------------------------------------------------------
@@ -567,9 +559,16 @@ void MIL_AutomateLOG::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::SendChangedState() const
 {
-    pLogisticHierarchy_->SendChangedState();
-    BOOST_FOREACH( const T_SupplyRequests::value_type& data, supplyRequests_ )
-        data->SendChangedState();
+    try
+    {
+        pLogisticHierarchy_->SendChangedState();
+        BOOST_FOREACH( const T_SupplyRequests::value_type& data, supplyRequests_ )
+            data->SendChangedState();
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error sending states of log automat " << GetID() << " : " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

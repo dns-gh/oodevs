@@ -25,6 +25,7 @@
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "protocol/ClientSenders.h"
 #include <urban/TerrainObject_ABC.h>
@@ -84,7 +85,16 @@ void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 void MIL_ObjectManager::ProcessEvents()
 {
     for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
-        it->second->ProcessEvents();
+    {
+        try
+        {
+            it->second->ProcessEvents();
+        }
+        catch( std::exception& e )
+        {
+            MT_LOG_ERROR_MSG( "Object event error : " << it->second->GetID() << " : " << e.what() );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -98,18 +108,25 @@ void MIL_ObjectManager::UpdateStates()
         MIL_Object_ABC& object = *it->second;
         if( object.IsReadyForDeletion() )
         {
-            if( const AltitudeModifierAttribute* altitude = object.RetrieveAttribute< AltitudeModifierAttribute >() )
+            try
             {
-                const TER_Localisation& localisation = object.GetLocalisation();
-                altitude->ResetAltitude( localisation );
-                for( IT_ObjectMap obj = objects_.begin(); obj != objects_.end(); ++obj )
-                    if( FloodAttribute* flood = obj->second->RetrieveAttribute< FloodAttribute >() )
-                        if( localisation.IsIntersecting( flood->GetLocalisation() ) )
-                            flood->GenerateFlood( true );
+                if( const AltitudeModifierAttribute* altitude = object.RetrieveAttribute< AltitudeModifierAttribute >() )
+                {
+                    const TER_Localisation& localisation = object.GetLocalisation();
+                    altitude->ResetAltitude( localisation );
+                    for( IT_ObjectMap obj = objects_.begin(); obj != objects_.end(); ++obj )
+                        if( FloodAttribute* flood = obj->second->RetrieveAttribute< FloodAttribute >() )
+                            if( localisation.IsIntersecting( flood->GetLocalisation() ) )
+                                flood->GenerateFlood( true );
+                }
+                object.SendDestruction();
+                if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object ) )
+                    urbanObjects_.erase( &wrapper->GetObject() );
             }
-            object.SendDestruction();
-            if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object ) )
-                urbanObjects_.erase( &wrapper->GetObject() );
+            catch( std::exception& e )
+            {
+                MT_LOG_ERROR_MSG( "Error updating object " << object.GetID() << " before destruction : " << e.what() );
+            }
             delete &object;
             it = objects_.erase( it );
         }
