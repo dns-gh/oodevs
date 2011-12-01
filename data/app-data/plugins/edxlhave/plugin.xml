@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plugin name="edxlhave" version="1.0" 
+	library="edxlhave_plugin-vc100-mt.dll"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\resources\schemas\4.3.1\plugins\plugin.xsd">
+	<descriptions>
+		<description lang="en" name="EDXL-HAVE"><![CDATA[EDXL-HAVE communication plugin.]]></description>
+		<description lang="fr" name="EDXL-HAVE"><![CDATA[Plugin de communication EDXL-HAVE.]]></description>
+	</descriptions>
+	<settings>
+        <setting attribute="services/@host" type="string" default="www.ewaphoenix.com">
+            <descriptions>
+                <description name="URL: " lang="en"><![CDATA[]]></description>
+                <description name="URL: " lang="fr"><![CDATA[]]></description>
+            </descriptions>
+        </setting>
+        <setting attribute="services/@ssl" type="boolean" default="false">
+            <descriptions>
+                <description name="ssl: " lang="en"><![CDATA[Use SSL connection]]></description>
+                <description name="ssl: " lang="fr"><![CDATA[Utiliser une connection SSL]]></description>
+            </descriptions>
+        </setting>
+        <setting attribute="services/@log" type="boolean" default="true">
+            <descriptions>
+                <description name="Log: " lang="en"><![CDATA[Log]]></description>
+                <description name="Journal: " lang="fr"><![CDATA[Journal]]></description>
+            </descriptions>
+        </setting>
+		<group>
+			<descriptions>
+				<description lang="en" name="Service configuration"><![CDATA[Service configuration]]></description>
+				<description lang="fr" name="Configuration des services"><![CDATA[Configuration des services]]></description>
+			</descriptions>
+			<settings>
+                <setting attribute="services/initialization/@serviceURI" type="string" default="/EWAPhoenix-BedTracking/XMLReceive.php?message=initialize">
+                    <descriptions>
+                        <description name="Initialization service: " lang="en"><![CDATA[Proxy username]]></description>
+                        <description name="Service d'initialization: " lang="fr"><![CDATA[Proxy username]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="services/update/@serviceURI" type="string" default="/EWAPhoenix-BedTracking/XMLReceive.php?message=update">
+                    <descriptions>
+                        <description name="Update service: " lang="en"><![CDATA[Proxy username]]></description>
+                        <description name="Service de mise à jour: " lang="fr"><![CDATA[Proxy username]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="services/update/@frequency" type="time" default="120">
+                    <descriptions>
+                        <description name="Frequency: " lang="en"><![CDATA[Update Frequency]]></description>
+                        <description name="Fréquence: " lang="fr"><![CDATA[Fréquence des mises à jour]]></description>
+                    </descriptions>
+                </setting>
+			</settings>
+		</group>
+	</settings>
+</plugin>

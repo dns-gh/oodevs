@@ -23,7 +23,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/noncopyable.hpp>
 
-using namespace plugins::bml;
+using namespace plugins::edxl;
 namespace bfs = boost::filesystem;
 
 struct PluginProcessHandler::InternalData
@@ -44,18 +44,19 @@ public:
         // NOTHING
     }
 
-    std::string GetSimulationHost() const 
+    void LoadSimulationNetwork( std::string& host, std::string& port ) const 
     {
         xml::xifstream xis( session_ );
 
+        std::string network;
         xis >> xml::start( "session" ) >> xml::start( "config" )
-                >> xml::start( "dispatcher" ) >> xml::start( "network" );
-        std::string network( xis.attribute< std::string >( "client" ) );
+                >> xml::start( "dispatcher" ) >> xml::start( "network" )
+                >> xml::attribute( "client", network );
 
-        return network.substr( 0, network.find( ':' ) ) + ":" + 
-                            boost::lexical_cast< std::string >( xis.attribute< std::string >( "server" ) );
+        host = network.substr( 0, network.find( ':' ) );
+        port = xis.attribute< std::string >( "server" );
     }
-    
+
     std::string GetExerciseName() const
     {
         return bfs::path( exercise_, bfs::native ).leaf();
@@ -69,6 +70,11 @@ public:
     std::string GetPhysicalDir() const 
     {
         return bfs::path( data_, bfs::native ).parent_path().string();
+    }
+
+    std::string GetDataDir() const 
+    {
+        return bfs::path( exercise_, bfs::native ).parent_path().parent_path().string();
     }
 
     void LoadProfile( std::string& profile, std::string& password ) const
@@ -123,7 +129,7 @@ private:
 PluginProcessHandler::PluginProcessHandler( const dispatcher::Config& config, const std::string& process_name, dispatcher::Logger_ABC& logger, xml::xistream& xis )
     : logger_ ( logger )
     , processName_ ( process_name )
-    , workingDir_  ( config.BuildPluginDirectory( "bml" ) )
+    , workingDir_  ( config.BuildPluginDirectory( "edxlhave" ) )
     , sessionDir_  ( config.GetSessionFile() )
     , physicalDir_ ( config.GetPhysicalFile() )
     , commandLine_ ( workingDir_ + "/" + processName_ )
@@ -266,23 +272,21 @@ void PluginProcessHandler::Stop()
     }
 }
     /*
-      --sword.server arg (=localhost:10001) Sword server (host:port)
-      --sword.data arg                      Sword data directory
-      --sword.exercise arg                  Sword exercise name
-      --sword.profile arg (=Godseye)        Sword profile
-      --sword.password arg                  Sword password
-      --sword.waitconnection arg (=0)       Wait indefinitely for an available
-                                            sword server connection.
-
-      --bml.server.url arg                  BML server service url
-      --bml.proxy.user arg                  BML proxy server user name
-      --bml.proxy.pass arg                  BML proxy server password
-
-      --bml.update.frequency arg (=60s)     BML poll frequency ?
-      --bml.ssl arg (=1)                    Use SSL to connect to BML service
-
-      --log arg (=1)                        Activate log
-      --log.file arg                        Log to file
+    sword.server", po::value< std::string >()->default_value( "localhost" ), "Sword server" )
+    sword.root", po::value< std::string >()->required(), "Sword root directory" )
+    sword.exercise", po::value< std::string >()->required(), "Sword exercise name" )
+    sword.port", po::value< std::string >()->default_value( "10001" ), "Sword server port" )
+    sword.profile", po::value< std::string >()->default_value( "Godseye" ), "Sword profile" )
+    sword.password", po::value< std::string >()->default_value( "" ), "Sword password" )
+    sword.waitconnection", po::value< bool >()->default_value( false ), "Wait indefinitely for an available sword server connection." )
+    edxl.host", po::value< std::string >()->default_value( "www.ewaphoenix.com" ), "EDXL host name" )
+    edxl.initialization.serviceURI", po::value< std::string >()->default_value( "/EWAPhoenix-BedTracking/XMLReceive.php?message=initialize" ), "EDXL initilialization URL" )
+    edxl.update.serviceURI", po::value< std::string >()->default_value( "/EWAPhoenix-BedTracking/XMLReceive.php?message=update" ), "EDXL update URL" )
+    edxl.update.frequency", po::value< std::string >()->default_value( "60s" ), "EDXL update frequency" )
+    edxl.ssl", po::value< bool >()->default_value( true ), "Use SSL to connect to EDXL service" )
+    log", po::value< bool >()->default_value( true ), "Activate log" )
+    log.file", po::value< std::string >(), "Log to file" )
+    ini", po::value< std::string >(), "load options from ini file" )
 
       --ini arg                             load options from ini file (toutes
     ces options sont écrites et chargées dans un .ini)
@@ -295,9 +299,20 @@ void PluginProcessHandler::Stop()
 // -----------------------------------------------------------------------------
 void PluginProcessHandler::LoadSimulationConfig( const PluginConfig& config )
 {
-    AddArgument( "--sword.server=\"" + config.GetSimulationHost() + "\"" );
+    std::string host, port;
+
+    config.LoadSimulationNetwork( host, port );
+    AddArgument( "--sword.server=\"" + host + "\"" );
+    AddArgument( "--sword.port=\"" + port + "\"" );
     AddArgument( "--sword.exercise=\"" + config.GetExerciseName() + "\"" );
-    AddArgument( "--sword.data-dir=\"" + config.GetPhysicalDir() + "\"" );
+    AddArgument( "--sword.root=\"" + config.GetDataDir() + "\"" );
+    // AddArgument( "--sword.data-dir=\"" + config.GetPhysicalDir() + "\"" );
+
+    AddArgument( "--sword.waitconnection=true" );
+    
+    // bfs::path iniFile = bfs::path( config.GetExerciseDir( exercise.ascii() ) ) / "edxl.ini";
+    // mustRun_ = bfs::exists( iniFile );
+    // AddArgument( QString( "--ini=\"" ) + iniFile.string().c_str() + "\"" );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,14 +326,12 @@ void PluginProcessHandler::LoadLoginProfile()
     
     config_->LoadProfile( profile, password );
     if( profile.empty() )
-    {
         AddArgument( "--sword.profile=\"anonymous\"" );
-        AddArgument( "--sword.password=\"\"" );
-    }
     else
     {
         AddArgument( "--sword.profile=\"" + profile + "\"" );
-        AddArgument( "--sword.password=\"" + password + "\"" );
+        if ( !password.empty() )
+			AddArgument( "--sword.password=\"" + password + "\"" );
     }
 }
 
@@ -331,37 +344,32 @@ void PluginProcessHandler::LoadPluginConfig( xml::xistream& xis, const PluginCon
 {
     bool use_ssl = false;
     bool use_log = false;
-    bool use_report = false;
-    std::string url;
-    std::string proxy_user;
-    std::string proxy_pass;
-    std::string report_frequency;
+    std::string host;
+    std::string init_uri;
+    std::string update_uri;
+    std::string update_frequency;
 
     // Load Server Info
-    xis >> xml::start( "server" )
-            >> xml::attribute( "url", url )
+    xis >> xml::start( "services" )
+            >> xml::attribute( "host", host )
             >> xml::optional >> xml::attribute( "ssl", use_ssl )
             >> xml::optional >> xml::attribute( "log", use_log )
-            >> xml::start( "proxy" )
-                >> xml::attribute( "user", proxy_user )
-                >> xml::attribute( "pass", proxy_pass )
+            >> xml::start( "initialization" )
+                >> xml::attribute( "serviceURI", init_uri )
             >> xml::end
-        >> xml::end
-        >> xml::start( "reports" )
-            >> xml::attribute( "activate", use_report )
-            >> xml::optional >> xml::attribute( "frequency", report_frequency )
-        >> xml::end;
-    
-    std::string sessionDir( config.GetSessionDir() );
-    AddArgument( "--bml.server.url=\"" + url + "\"" );
-    AddArgument( "--bml.ssl=" + std::string( use_ssl ? "true" : "false" ) );
+            >> xml::start( "update" )
+                >> xml::attribute( "serviceURI", update_uri )
+                >> xml::attribute( "frequency", update_frequency )
+            >> xml::end;
+        
+    AddArgument( "--edxl.host=\"" + host + "\"" );
+    AddArgument( "--edxl.initialization.serviceURI=\"" + init_uri + "\"" );
+    AddArgument( "--edxl.update.serviceURI=\"" + update_uri + "\"" );
+    AddArgument( "--edxl.update.frequency=" + update_frequency );
+    AddArgument( "--edxl.ssl=" + std::string( use_ssl ? "true" : "false" ) );
     AddArgument( "--log=" + std::string( use_log ? "true" : "false" ) );
     if( use_log )
-        AddArgument( "--log.file=\"" + bfs::path( sessionDir + "/sword_bml_service.log" ).native_file_string() + "\"" );
-    AddArgument( "--bml.proxy.user=\"" + proxy_user + "\"" );
-    AddArgument( "--bml.proxy.pass=\"" + proxy_pass + "\"" );
-    if( use_report )
-        AddArgument( "--bml.update.frequency=" + report_frequency );
+        AddArgument( "--log.file=\"" + bfs::path( config.GetSessionDir() + "/edxlhave_app.log" ).native_file_string() + "\"" );
 }
 
 // -----------------------------------------------------------------------------

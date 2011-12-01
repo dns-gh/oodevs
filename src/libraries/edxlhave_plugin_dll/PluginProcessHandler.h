@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __plugins_bml_PluginProcessHandler_h_
-#define __plugins_bml_PluginProcessHandler_h_
+#ifndef __plugins_edxl_PluginProcessHandler_h_
+#define __plugins_edxl_PluginProcessHandler_h_
 
 #define LOG_MESSAGE( e ) \
-	std::string( "[Sword BML Service]: " ) + e
+	std::string( "[Sword EDXL Service]: " ) + e
 
 #pragma warning( disable: 4996 ) // Function call with parameters that may be unsafe
 #define _WIN32_WINNT 0x0501
@@ -34,7 +34,7 @@ namespace xml
 
 namespace plugins 
 {
-namespace bml
+namespace edxl
 {
 
 // =============================================================================
@@ -48,7 +48,7 @@ class PluginProcessHandler : public dispatcher::Plugin_ABC
 public: 
     //! @name Constructors/Destructor
     //@{
-             PluginProcessHandler( const dispatcher::Config& config, const std::string& process_name, dispatcher::Logger_ABC& logger, xml::xistream& xis );        
+             PluginProcessHandler( const dispatcher::Config& config, const std::string& process_name, dispatcher::Logger_ABC& logger, xml::xistream& xis );
     virtual ~PluginProcessHandler();
     //@}
 

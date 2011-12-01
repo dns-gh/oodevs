@@ -10,7 +10,6 @@
 #include "frontend_pch.h"
 #include "StartExercise.h"
 #include "StartDispatcher.h"
-#include "StartEdxl.h"
 #include "ConfigurationManipulator.h"
 #include "SimulationMonitor.h"
 #include "clients_gui/Tools.h"
@@ -50,7 +49,6 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );
-    edxl_.reset( new StartEdxl( config, exercise, session, attach ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +72,6 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     AddSessionArgument( session );
     if( !checkpoint.isEmpty() )
         AddArgument( "--checkpoint=" + checkpoint );
-    edxl_.reset( new StartEdxl( config, exercise, session, attach ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +105,6 @@ void StartExercise::Start()
         boost::this_thread::sleep( boost::posix_time::milliseconds( 250 ) );
     }
     percentage_ = 100;
-    edxl_->Start();
 }
 
 // -----------------------------------------------------------------------------
