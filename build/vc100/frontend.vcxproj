@@ -109,7 +109,6 @@
     <ClCompile Include="..\..\src\libraries\frontend\SpawnCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\StartAuthoring.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\StartDispatcher.cpp" />
-    <ClCompile Include="..\..\src\libraries\frontend\StartEdxl.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\StartExercise.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\StartReplay.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\StartTerrainWorkshop.cpp" />
@@ -122,7 +121,6 @@
     <ClCompile Include="..\..\src\libraries\frontend\CheckpointList.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\ListViewHelper.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\AdvancedConfigPanel.cpp" />
-    <ClCompile Include="..\..\src\libraries\frontend\EdxlHavePluginConfigPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\RandomPluginConfigPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\SessionConfigPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\CompositePluginConfig.cpp" />
@@ -174,7 +172,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\frontend\StartAuthoring.h" />
     <ClInclude Include="..\..\src\libraries\frontend\StartDispatcher.h" />
-    <ClInclude Include="..\..\src\libraries\frontend\StartEdxl.h" />
     <ClInclude Include="..\..\src\libraries\frontend\StartExercise.h" />
     <ClInclude Include="..\..\src\libraries\frontend\StartReplay.h" />
     <ClInclude Include="..\..\src\libraries\frontend\StartTerrainWorkshop.h" />

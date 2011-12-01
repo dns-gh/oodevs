@@ -91,9 +91,6 @@
     <ClCompile Include="..\..\src\libraries\frontend\StartDispatcher.cpp">
       <Filter>Source Files\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\frontend\StartEdxl.cpp">
-      <Filter>Source Files\Commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\frontend\StartExercise.cpp">
       <Filter>Source Files\Commands</Filter>
     </ClCompile>
@@ -128,9 +125,6 @@
       <Filter>Source Files\Panels</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\frontend\AdvancedConfigPanel.cpp">
-      <Filter>Source Files\Panels\Plugins config</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\frontend\EdxlHavePluginConfigPanel.cpp">
       <Filter>Source Files\Panels\Plugins config</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\frontend\RandomPluginConfigPanel.cpp">
@@ -214,9 +208,6 @@
       <Filter>Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\frontend\StartDispatcher.h">
-      <Filter>Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\frontend\StartEdxl.h">
       <Filter>Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\frontend\StartExercise.h">
@@ -317,9 +308,6 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuildStep Include="..\..\src\libraries\frontend\AdvancedConfigPanel.h">
-      <Filter>Source Files\Panels\Plugins config</Filter>
-    </CustomBuildStep>
-    <CustomBuildStep Include="..\..\src\libraries\frontend\EdxlHavePluginConfigPanel.h">
       <Filter>Source Files\Panels\Plugins config</Filter>
     </CustomBuildStep>
     <CustomBuildStep Include="..\..\src\libraries\frontend\SessionConfigPanel.h">
