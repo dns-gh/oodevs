@@ -18,7 +18,7 @@
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 QuitPage::QuitPage( Q3WidgetStack* pages, Page_ABC& previous )
-    : MenuPage( pages, *this, 0, tools::translate( "QuitPage", "Please confirm" )  )
+    : MenuPage( pages, *this, 0 )
 {
     yesButton_ = AddLink( *this, SLOT( OnQuit() ) );
     noButton_ = AddLink( previous );
@@ -39,6 +39,7 @@ QuitPage::~QuitPage()
 // -----------------------------------------------------------------------------
 void QuitPage::OnLanguageChanged()
 {
+    SetCenterTitle( tools::translate( "QuitPage", "Please confirm" ) );
     SetTextAndSubtitle( yesButton_, tools::translate( "QuitPage", "Yes" ) );
     SetTextAndSubtitle( noButton_, tools::translate( "QuitPage", "No" ) );
     MenuPage::OnLanguageChanged();

@@ -115,3 +115,12 @@ void MenuPage::OnUnSelectedItem( MenuButton* /* button */ )
 {
     subTitle_->setText( "" ) ;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MenuPage::SetCenterTitle
+// Created: ABR 2011-12-01
+// -----------------------------------------------------------------------------
+void MenuPage::SetCenterTitle( const QString& title )
+{
+    title_->setText( title );
+}
