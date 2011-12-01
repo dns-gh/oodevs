@@ -76,10 +76,10 @@ private:
 
     //! @name Process arguments
     //@{
-    class ProfileInfo;
+	class PluginConfig;
 	void LoadLoginProfile();
-	void LoadSimulationConfig( const dispatcher::Config& config );
-    void LoadPluginConfig( xml::xistream& xis, const dispatcher::Config& config );
+	void LoadSimulationConfig( const PluginConfig& config );
+    void LoadPluginConfig( xml::xistream& xis, const PluginConfig& config );
     void AddArgument( const std::string& arg );
     //@}
     
@@ -89,12 +89,12 @@ private:
     dispatcher::Logger_ABC& logger_;
 	std::string processName_;
     std::string workingDir_;
+	std::string sessionDir_;
+	std::string physicalDir_;
     std::string commandLine_;
 
-	const dispatcher::Config& config_;
+	std::auto_ptr< PluginConfig > config_;
 	std::auto_ptr< xml::xistream > xis_;
-	
-	std::auto_ptr< ProfileInfo > profile_;
     std::auto_ptr< InternalData > internal_;
 };
 
