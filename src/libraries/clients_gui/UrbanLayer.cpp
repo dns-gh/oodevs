@@ -59,16 +59,18 @@ namespace
         {
             if( const kernel::UrbanPositions_ABC* positions = proxy.Retrieve< kernel::UrbanPositions_ABC >() )
             {
-                viewport_.SetHotpoint( positions->Barycenter() );
-                // dessin du réseau en dernier par dessus les blocs
-                if( const kernel::ResourceNetwork_ABC* resource = proxy.Retrieve< kernel::ResourceNetwork_ABC >() )
-                    resource->Draw( viewport_, tools_ );
-                if( drawInfrastructure_ )
-                    if( const kernel::Infrastructure_ABC* infra = proxy.Retrieve< kernel::Infrastructure_ABC >() )
+                const kernel::ResourceNetwork_ABC* resource = proxy.Retrieve< kernel::ResourceNetwork_ABC >();
+                const kernel::Infrastructure_ABC* infra = drawInfrastructure_ ? proxy.Retrieve< kernel::Infrastructure_ABC >() : 0;
+                if( resource ||  infra )
+                {
+                    viewport_.SetHotpoint( positions->Barycenter() );
+                    if( resource )
+                        resource->Draw( viewport_, tools_ );
+                    if( infra )
                         infra->Draw( viewport_, tools_ );
+                }
             }
         }
-
         kernel::Viewport_ABC& viewport_;
         const kernel::GlTools_ABC& tools_;
         bool drawInfrastructure_;
@@ -161,9 +163,9 @@ void UrbanLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& v
 {
     if( ShouldDisplay( entity ) ) // && positions.IsIn( viewport ) )
     {
-        SelectColor( entity );
         if( const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
         {
+            SelectColor( entity );
             const geometry::Point2f position = positions->Barycenter();
             viewport.SetHotpoint( position );
             entity.Draw( position, viewport, tools_ );

@@ -34,6 +34,7 @@ UrbanPositions::UrbanPositions( const sword::Location& location, const sword::Ur
     polygon_ = geometry::Polygon2f( positions );
     boundingBox_ = polygon_.BoundingBox();
     barycenter_ = polygon_.Barycenter();
+    area_ = polygon_.ComputeArea();
     if( attributes.has_architecture() )
         height_ = static_cast< unsigned int >( attributes.architecture().height() );
 }
@@ -51,7 +52,7 @@ UrbanPositions::~UrbanPositions()
 // Name: UrbanPositions::Barycenter
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-geometry::Point2f UrbanPositions::Barycenter() const
+const geometry::Point2f& UrbanPositions::Barycenter() const
 {
     return barycenter_;
 }
@@ -60,7 +61,7 @@ geometry::Point2f UrbanPositions::Barycenter() const
 // Name: UrbanPositions::BoundingBox
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-geometry::Rectangle2f UrbanPositions::BoundingBox() const
+const geometry::Rectangle2f& UrbanPositions::BoundingBox() const
 {
     return boundingBox_;
 }
@@ -117,5 +118,5 @@ void UrbanPositions::SetInfrastructurePresent()
 // -----------------------------------------------------------------------------
 float UrbanPositions::ComputeArea() const
 {
-    return polygon_.ComputeArea();
+    return area_;
 }
