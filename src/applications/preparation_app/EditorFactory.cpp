@@ -9,9 +9,9 @@
 
 #include "preparation_app_pch.h"
 #include "EditorFactory.h"
-#include "LogisticSuperiorEditor.h"
 #include "DotationsEditor.h"
 #include "LogisticLevelEditor.h"
+#include "LogisticSuperiorEditor.h"
 #include "MultipleResolverEditor.h"
 #include "preparation/LogisticSuperior.h"
 #include "preparation/Model.h"
