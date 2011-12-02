@@ -12,8 +12,8 @@
               <unit color="0x647dff" command-post="false" id="18" name="INF . Section CBT AMX10P CDS OFF" position="29TNF4123750049" type="INF . Section CBT AMX10P CDS OFF"/>
               <unit color="0x647dff" command-post="false" id="19" name="INF . Section CBT AMX10P CDS OFF" position="29TNF4231262699" type="INF . Section CBT AMX10P CDS OFF"/>
               <unit color="0x647dff" command-post="false" id="20" name="INF . Section CBT AMX10P CDS SOFF" position="29TNF4143049988" type="INF . Section CBT AMX10P CDS SOFF"/>
-              <unit color="0x647dff" command-post="false" id="22" name="INF . Fantassin lunette" position="29TNF4180850209" type="INF . Fantassin lunette"/>
               <unit color="0x647dff" command-post="false" id="23" name="INF . Fantassin oeil" position="29TNF4160850160" type="INF . Fantassin oeil"/>
+              <unit color="0x647dff" command-post="false" id="24" name="INF . Fantassin I.L." position="29TNF4170849963" type="INF . Fantassin I.L."/>
             </automat>
           </formation>
         </formation>
@@ -57,4 +57,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2487097434" -->
+<!-- signature="1370188526" -->
