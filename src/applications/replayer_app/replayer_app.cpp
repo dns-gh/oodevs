@@ -9,13 +9,14 @@
 
 #include "App.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
+#include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/win32/FlexLm.h"
 #include "tools/WinArguments.h"
 #include <windows.h>
 
-int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
-{
+int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
+{    
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
     std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword-replayer", 1.0f ) );
 #endif
@@ -34,4 +35,16 @@ int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine
     }
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return nResult;
+}
+
+int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
+{
+    __try
+    {
+        return RunReplayer( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
+    }
+    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
+    {
+    }
+    return 0;
 }
