@@ -10,6 +10,7 @@
 #include "App.h"
 #include "license_gui/LicenseDialog.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
+#include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/WinArguments.h"
 #pragma warning( push )
@@ -18,8 +19,8 @@
 #pragma warning( pop )
 #include <windows.h>
 
-int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
-{
+int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
+{    
     int nResult = EXIT_SUCCESS;
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
@@ -43,4 +44,16 @@ int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
     }
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return nResult;
+}
+
+int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
+{
+    __try
+    {
+        return RunReplayer( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
+    }
+    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
+    {
+    }
+    return 0;
 }
