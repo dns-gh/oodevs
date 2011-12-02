@@ -30,6 +30,9 @@ UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const ke
     const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();;
     if( pPhysical && pPhysical->GetArchitecture() )
         height_ = static_cast< unsigned int >( pPhysical->GetArchitecture()->GetHeight() );
+    barycenter_ = object_.Get< urban::GeometryAttribute >().Geometry().Barycenter();
+    boundingBox_ = object_.Get< urban::GeometryAttribute >().Geometry().BoundingBox();
+    area_ = object_.Get< urban::GeometryAttribute >().Geometry().ComputeArea();
 }
 
 // -----------------------------------------------------------------------------
@@ -45,18 +48,18 @@ UrbanPositions::~UrbanPositions()
 // Name: UrbanPositions::Barycenter
 // Created: LGY 2011-04-18
 // -----------------------------------------------------------------------------
-geometry::Point2f UrbanPositions::Barycenter() const
+const geometry::Point2f& UrbanPositions::Barycenter() const
 {
-    return object_.Get< urban::GeometryAttribute >().Geometry().Barycenter();
+    return barycenter_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions::BoundingBox
 // Created: LGY 2011-04-18
 // -----------------------------------------------------------------------------
-geometry::Rectangle2f UrbanPositions::BoundingBox() const
+const geometry::Rectangle2f& UrbanPositions::BoundingBox() const
 {
-    return object_.Get< urban::GeometryAttribute >().Geometry().BoundingBox();
+    return boundingBox_;
 }
 
 // -----------------------------------------------------------------------------
@@ -111,5 +114,5 @@ void UrbanPositions::SetInfrastructurePresent()
 // -----------------------------------------------------------------------------
 float UrbanPositions::ComputeArea() const
 {
-    return object_.Get< urban::GeometryAttribute >().Geometry().ComputeArea();
+    return area_;
 }

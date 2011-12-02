@@ -44,8 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual geometry::Point2f Barycenter() const;
-    virtual geometry::Rectangle2f BoundingBox() const;
+    virtual const geometry::Point2f& Barycenter() const;
+    virtual const geometry::Rectangle2f& BoundingBox() const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
     virtual const std::vector< geometry::Point2f >& Vertices() const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
@@ -65,6 +65,7 @@ private:
     geometry::Polygon2f polygon_;
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f barycenter_;
+    float area_;
     //@}
 };
 

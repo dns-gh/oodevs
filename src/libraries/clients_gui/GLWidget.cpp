@@ -473,62 +473,71 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
     glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );    // enable writing to color buffer
     glStencilFunc( GL_EQUAL, 0x1, 0x1 );                  // test if it is odd(1)
     glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
-    glColor4f( color[ 0 ], color[ 1 ], color[ 2 ], color[ 3 ] );
+    glColor4fv( color );
     glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( footprint.size() ) );
     glDisable( GL_STENCIL_TEST );
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glLineWidth( 1 );
-        color[ 3 ] = urbanColor.Alpha() * 0.6f;
-        glColor4fv( color );
-        glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
-        //calculating roof geometry:
-        Polygon2f::T_Vertices roofPoints = polygon.VerticeCopy();
-        for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
+        if( height == 0)
         {
-            Point2f& point = roofPoints[ i ];
-            float factor = rZoom_ * height;
-            float deltaX = ( point.X() - center_.X() ) * factor;
-            float deltaY = ( point.Y() - center_.Y() ) * factor;
-            point.Set( point.X() + deltaX, point.Y() + deltaY );
+            if( selected )
+            {
+                UpdateStipple();
+                glLineWidth( 1.5 );
+                color[ 0 ] = 1.f - color[ 0 ];
+                color[ 1 ] = 1.f - color[ 1 ];
+                color[ 2 ] = 1.f - color[ 2 ];
+                color[ 3 ] = 0.9f;
+            }
+            else
+                color[ 3 ] = urbanColor.Alpha();
+            glColor4fv( color );
+            glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
+            glDisable( GL_LINE_STIPPLE );
         }
-        //drawing faces:
-        Polygon2f::T_Vertices face;
-        for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
-        {
-            face.clear();
-            unsigned int next = i + 1;
-            if( i == roofPoints.size() - 1 )
-                next = 0;
-            face.push_back( footprint[ i ] );
-            face.push_back( roofPoints[ i ] );
-            face.push_back( roofPoints[ next ] );
-            face.push_back( footprint[ next ] );
-            glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &face.front() ) );
-            glDrawArrays( GL_POLYGON, 0, static_cast< GLsizei >( face.size() ) );
-            glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( face.size() ) );
-        }
-        if( selected )
-            color[ 3 ] = std::min ( 1.f, urbanColor.Alpha() * 1.6f );
         else
-            color[ 3 ] = urbanColor.Alpha();
-        glColor4fv( color );
-        glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &footprint.front() ) );
-        glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
-        if( selected )
         {
-            UpdateStipple();
-            glLineWidth( 1.5 );
-            color[ 0 ] = 1.f - color[ 0 ];
-            color[ 1 ] = 1.f - color[ 1 ];
-            color[ 2 ] = 1.f - color[ 2 ];
-            color[ 3 ] = 0.9f;
+            glLineWidth( 1 );
+            color[ 3 ] = urbanColor.Alpha() * 0.2f;
+            glColor4fv( color );
+            glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
+            //calculating roof geometry:
+            Point2f* roofPoints = new Point2f[ footprint.size() ];
+            float factor = rZoom_ * height;
+            for( unsigned int i = 0 ; i < footprint.size() ; ++i )
+            {
+                const Point2f& point = footprint[ i ];
+                roofPoints[ i ].Set( point.X() + ( point.X() - center_.X() ) * factor, point.Y() + ( point.Y() - center_.Y() ) * factor );
+            }
+            //drawing faces:
+            glBegin( GL_QUAD_STRIP );
+                for( unsigned int i = 0 ; i < footprint.size() ; ++i )
+                {
+                    glVertex2fv( reinterpret_cast< const GLfloat* >( &footprint[ i ] ) );
+                    glVertex2fv( reinterpret_cast< const GLfloat* >( roofPoints + i ) );
+                }
+                glVertex2fv( reinterpret_cast< const GLfloat* >( &footprint[ 0 ] ) );
+                glVertex2fv( reinterpret_cast< const GLfloat* >( roofPoints ) );
+            glEnd();
+            if( selected )
+            {
+                UpdateStipple();
+                glLineWidth( 1.5 );
+                color[ 0 ] = 1.f - color[ 0 ];
+                color[ 1 ] = 1.f - color[ 1 ];
+                color[ 2 ] = 1.f - color[ 2 ];
+                color[ 3 ] = 0.9f;
+            }
+            else
+                color[ 3 ] = urbanColor.Alpha();
+            glColor4fv( color );
+            glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( roofPoints ) );
+            glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
+            glDisable( GL_LINE_STIPPLE );
+            delete [] roofPoints;
         }
-        glColor4fv( color );
-        glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
-        glDisable( GL_LINE_STIPPLE );
     glPopAttrib();
     if( !name.empty() )
-        const_cast< GlWidget* >( this )->DrawTextLabel( name, Polygon2f( roofPoints ).BoundingBoxCenter(), 13 );
+        const_cast< GlWidget* >( this )->DrawTextLabel( name, polygon.BoundingBoxCenter(), 13 );
 }
 
 // -----------------------------------------------------------------------------
