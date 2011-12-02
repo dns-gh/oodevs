@@ -72,20 +72,12 @@ int Run( LPSTR lpCmdLine )
 //-----------------------------------------------------------------------------
 int WINAPI WinMain( HINSTANCE /*hinstance*/, HINSTANCE /*hPrevInstance*/, LPSTR lpCmdLine, int /*nCmdShow*/ )
 {
-    /*__try
-    {
-        return Run( argc, argv );
-    }
-    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
-    {
-    }*/
-    try
+    __try
     {
         return Run( lpCmdLine );
     }
-    catch( std::exception& e )
+    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
     {
-        MT_LOG_ERROR_MSG( e.what() );
     }
     return 0;
 }
