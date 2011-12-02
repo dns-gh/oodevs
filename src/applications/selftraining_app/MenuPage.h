@@ -37,6 +37,7 @@ protected:
     //@{
     MenuButton* AddLink( Page_ABC& page, const char* slot = 0 );
     void SetTextAndSubtitle( QPushButton* button, const QString& text, const QString& subTitle = "" );
+    void SetCenterTitle( const QString& title );
     //@}
 
 protected slots:
