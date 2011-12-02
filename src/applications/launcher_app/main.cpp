@@ -9,6 +9,7 @@
 
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_CrashHandler.h"
 #include "LauncherService.h"
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
@@ -36,11 +37,8 @@ namespace
             std::cout << desc << std::endl;
         return vm;
     }
-}
 
-int main( int argc, char* argv[] )
-{
-    try
+    int launcherMain( int argc, char* argv[] )
     {
         const bpo::variables_map vm = ParseCommandLine( argc, argv );
         if( vm.count( "help" ) )
@@ -70,17 +68,20 @@ int main( int argc, char* argv[] )
 
         LauncherService::Terminate();
         CloseHandle( launcherJob );
-
+        
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
         return EXIT_SUCCESS;
     }
-    catch( std::exception& e )
+}
+
+int main( int argc, char* argv[] )
+{
+    __try
     {
-        std::cerr << "Error: " << e.what() << std::endl;
+        return launcherMain( argc, argv );
     }
-    catch( ... )
+    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
     {
-        std::cerr << "Unknown exception caught" << std::endl;
     }
     return EXIT_FAILURE;
 }

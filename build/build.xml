@@ -663,9 +663,9 @@
 
     <target name="application.launcher_app" depends="library.MT_Tools,application.launcher_dll" description="build Sword launcher service">
         <build-app name="launcher_app" depends="boost,xerces,xalan" subsystem="console"
-            libs="launcher-${platform}-mt@{suffix},
+            libs="launcher-${platform}-mt@{suffix},tools
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}">
-            <syslibset libs="advapi32"/>
+            <syslibset libs="psapi,advapi32"/>
             <defineset define="_WIN32_WINNT=0x0501"/>
         </build-app>
     </target>
