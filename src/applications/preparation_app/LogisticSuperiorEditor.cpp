@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "LogisticSuperiorEditor.h"
+#include "preparation/LogisticHierarchiesBase.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -138,7 +139,16 @@ bool LogisticSuperiorEditor::IsValidSuperior( const T& superiorToTest ) const
 {
     if( superiorToTest.GetLogisticLevel() == LogisticLevel::none_ )
         return false;
-
+    if( &selected_ == &superiorToTest )
+        return false;
+    const LogisticHierarchiesBase* base = superiorToTest.Retrieve< LogisticHierarchiesBase >();
+    while( base )
+    {
+        const Entity_ABC* superior = base->GetSuperior();
+        if( superior && superior == &selected_ )
+            return false;
+        base = superior ? superior->Retrieve< LogisticHierarchiesBase >() : 0;
+    }
     // Test same team
     return &selected_.Get< kernel::TacticalHierarchies >().GetTop() == &superiorToTest.Get< kernel::TacticalHierarchies >().GetTop();
 }
