@@ -22,5 +22,5 @@
     ${SetOutPath} "$INSTDIR\applications\plugins\edxlhave"
     ${File} "${RUNDIR}\plugins\edxlhave\" "edxlhave_plugin-${PLATFORM}-mt.dll"
     ${File} "${RUNDIR}\plugins\edxlhave\" "plugin.xml"
-	${File} "${OUTDIR}\release\applications\edxlhave_app\edxlhave_app.exe"
+	${File} "${OUTDIR}\release\applications\edxlhave_app\edxlhave_app.exe" "edxlhave_app.exe"
 !macroend
