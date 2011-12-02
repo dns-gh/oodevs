@@ -28,20 +28,6 @@
             <unit color="0x647dff" command-post="false" id="299" name="ALAT - Patrouille 1HM SOFF" position="31UCQ0718504984" type="ALAT - Patrouille 1HM SOFF"/>
             <unit color="0x647dff" command-post="false" id="300" name="ALAT - Patrouille 1HM SOFF" position="31UCQ0696004492" type="ALAT - Patrouille 1HM SOFF"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="307" knowledge-group="2" name="ART - Batterie de Reco et Tir CAESAR [307]" type="ART - Batterie de Reco et Tir CAESAR">
-            <unit color="0x647dff" command-post="true" id="308" name="ART - PC Batterie ASS" position="31UCQ0141908915" type="ART - PC Batterie ASS"/>
-            <unit color="0x647dff" command-post="false" id="309" name="ART - Section de Tir CAESAR CDS OFF Pour SIC" position="31UCQ0190208397" type="ART - Section de Tir CAESAR CDS OFF Pour SIC"/>
-            <unit color="0x647dff" command-post="false" id="310" name="ART - Section de Tir CAESAR CDS SOFF Pour SIC" position="31UCQ0138307916" type="ART - Section de Tir CAESAR CDS SOFF Pour SIC"/>
-            <unit color="0x647dff" command-post="false" id="311" name="ART - Equipe de Reco CAESAR" position="31UCQ0090108433" type="ART - Equipe de Reco CAESAR"/>
-            <unit color="0x647dff" command-post="false" id="312" name="ART - Equipe de Reco CAESAR" position="31UCQ0192008897" type="ART - Equipe de Reco CAESAR"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="313" knowledge-group="2" name="ART - Batterie de Reco et Tir TRF1 [313]" type="ART - Batterie de Reco et Tir TRF1">
-            <unit color="0x647dff" command-post="true" id="314" name="ART - PC Batterie ASS" position="31UCQ0313305168" type="ART - PC Batterie ASS"/>
-            <unit color="0x647dff" command-post="false" id="315" name="ART - Equipe de Reco TRF1" position="31UCQ0361604651" type="ART - Equipe de Reco TRF1"/>
-            <unit color="0x647dff" command-post="false" id="316" name="ART - Equipe de Reco TRF1" position="31UCQ0309804169" type="ART - Equipe de Reco TRF1"/>
-            <unit color="0x647dff" command-post="false" id="317" name="ART - Section de Tir TRF1 CDS OFF Pour SIC" position="31UCQ0261504686" type="ART - Section de Tir TRF1 CDS OFF Pour SIC"/>
-            <unit color="0x647dff" command-post="false" id="318" name="ART - Section de Tir TRF1 CDS SOFF Pour SIC" position="31UCQ0363405150" type="ART - Section de Tir TRF1 CDS SOFF Pour SIC"/>
-          </automat>
           <automat color="0x647dff" engaged="true" id="319" knowledge-group="2" name="RENS - Section ROHUM [319]" type="RENS - Section ROHUM">
             <unit color="0x647dff" command-post="true" id="320" name="RENS - Section CDT ROHUM" position="31UCQ0563003927" type="RENS - Section CDT ROHUM"/>
             <unit color="0x647dff" command-post="false" id="321" name="RENS - Equipe de recueil information" position="31UCQ0611303410" type="RENS - Equipe de recueil information"/>
@@ -86,24 +72,10 @@
             <unit color="0x647dff" command-post="false" id="395" name="ALAT - Patrouille 2HAH" position="31UBQ8766706603" type="ALAT - Patrouille 2HAH"/>
             <unit color="0x647dff" command-post="false" id="396" name="ALAT - Patrouille 1HM SOFF" position="31UBQ8868607066" type="ALAT - Patrouille 1HM SOFF"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="397" knowledge-group="2" name="ART - Batterie de Reco AUF1 [397]" type="ART - Batterie de Reco AUF1">
-            <unit color="0x647dff" command-post="true" id="398" name="ART - PC Batterie de Reco AUF1" position="30UYV1488506693" type="ART - PC Batterie de Reco AUF1"/>
-            <unit color="0x647dff" command-post="false" id="399" name="ART - Section de Reco AUF1" position="30UYV1540806215" type="ART - Section de Reco AUF1"/>
-            <unit color="0x647dff" command-post="false" id="400" name="ART - Section de Reco AUF1" position="30UYV1492805695" type="ART - Section de Reco AUF1"/>
-            <unit color="0x647dff" command-post="false" id="401" name="ART - Section de Reco AUF1" position="30UYV1440606172" type="ART - Section de Reco AUF1"/>
-          </automat>
           <automat color="0x647dff" engaged="true" id="441" knowledge-group="2" name="GLAISE - ASA - Batterie SA 11 [441]" type="GLAISE - ASA - Batterie SA 11">
             <unit color="0x647dff" command-post="true" id="442" name="GLAISE - ASA - PC" position="31UBQ9055008612" type="GLAISE - ASA - PC"/>
             <unit color="0x647dff" command-post="false" id="443" name="GLAISE - ASA - Section SA 11" position="31UBQ9103308095" type="GLAISE - ASA - Section SA 11"/>
             <unit color="0x647dff" command-post="false" id="444" name="GLAISE - ASA - Section SA 11" position="31UBQ9051407614" type="GLAISE - ASA - Section SA 11"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="445" knowledge-group="2" name="GLAISE - ASS - RECO [445]" type="GLAISE - ASS - RECO">
-            <unit color="0x647dff" command-post="true" id="446" name="GLAISE - ASS - RECO PC" position="31UBQ8034007365" type="GLAISE - ASS - RECO PC"/>
-            <unit color="0x647dff" command-post="false" id="447" name="GLAISE - ASS - RECO" position="31UBQ8082306848" type="GLAISE - ASS - RECO"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="448" knowledge-group="2" name="GLAISE - ASS - DLO [448]" type="GLAISE - ASS - DLO">
-            <unit color="0x647dff" command-post="true" id="449" name="GLAISE - ASS - PC" position="31UBQ8498808120" type="GLAISE - ASS - PC"/>
-            <unit color="0x647dff" command-post="false" id="450" name="GLAISE - ASS - EO" position="31UBQ8547007603" type="GLAISE - ASS - EO"/>
           </automat>
           <automat color="0x647dff" engaged="true" id="482" knowledge-group="2" logistic-level="logistic-base" name="GLAISE - LOG . TC2 [482]" type="GLAISE - LOG . TC2">
             <unit color="0x647dff" command-post="true" id="483" name="GLAISE - LOG . TC2" position="31UBQ8234211670" type="GLAISE - LOG . TC2"/>
@@ -119,13 +91,6 @@
             <unit color="0x647dff" command-post="false" id="501" name="ABC . PLT AMX 10 RC CDP OFF" position="31UBQ8336819902" type="ABC . PLT AMX 10 RC CDP OFF"/>
             <unit color="0x647dff" command-post="false" id="502" name="ABC . PLT AMX 10 RC CDP SOFF" position="31UBQ8438720365" type="ABC . PLT AMX 10 RC CDP SOFF"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="503" knowledge-group="2" name="ART - Batterie de Reco et Tir AUF1 [503]" type="ART - Batterie de Reco et Tir AUF1">
-            <unit color="0x647dff" command-post="true" id="504" name="ART - PC Batterie ASS" position="31UBQ9618611175" type="ART - PC Batterie ASS"/>
-            <unit color="0x647dff" command-post="false" id="505" name="ART - Section de Tir AUF1 CDS OFF Pour SIC" position="31UBQ9666910658" type="ART - Section de Tir AUF1 CDS OFF Pour SIC"/>
-            <unit color="0x647dff" command-post="false" id="506" name="ART - Section de Tir AUF1 CDS SOFF Pour SIC" position="31UBQ9615110176" type="ART - Section de Tir AUF1 CDS SOFF Pour SIC"/>
-            <unit color="0x647dff" command-post="false" id="507" name="ART - Equipe de Reco AUF1" position="31UBQ9566810694" type="ART - Equipe de Reco AUF1"/>
-            <unit color="0x647dff" command-post="false" id="508" name="ART - Equipe de Reco AUF1" position="31UBQ9668711157" type="ART - Equipe de Reco AUF1"/>
-          </automat>
           <automat color="0x647dff" engaged="true" id="517" knowledge-group="2" name="INF . Compagnie CBT AMX 10 P [517]" type="INF . Compagnie CBT AMX 10 P">
             <unit color="0x647dff" command-post="true" id="518" name="INF . Section CDT CIE quaternaire AMX10P" position="31UBQ8514063866" type="INF . Section CDT CIE quaternaire AMX10P"/>
             <unit color="0x647dff" command-post="false" id="519" name="INF . Section CBT AMX10P CDS OFF" position="31UBQ8562363348" type="INF . Section CBT AMX10P CDS OFF"/>
@@ -138,22 +103,57 @@
             <unit color="0x647dff" command-post="false" id="525" name="INF . Section PROTERRE" position="31UBQ8891164843" type="INF . Section PROTERRE"/>
             <unit color="0x647dff" command-post="false" id="526" name="INF . Section PROTERRE" position="31UBQ8839364361" type="INF . Section PROTERRE"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="3562" knowledge-group="2" name="ART - Batterie de Reco et Tir 120 RTF1 4 pieces [3562]" type="ART - Batterie de Reco et Tir 120 RTF1 4 pieces">
-            <unit color="0x647dff" command-post="true" id="3563" name="ART - PC Batterie Mortier 120" position="30UYV1612110203" type="ART - PC Batterie Mortier 120"/>
-            <unit color="0x647dff" command-post="false" id="3564" name="ART - Equipe Reco M120 VAB" position="30UYV1664309725" type="ART - Equipe Reco M120 VAB"/>
-            <unit color="0x647dff" command-post="false" id="3565" name="ART - Equipe Reco M120 VAB" position="30UYV1616409205" type="ART - Equipe Reco M120 VAB"/>
-            <unit color="0x647dff" command-post="false" id="3566" name="ART - Section Mortier 120 OFF 2 pcs Pour SIC" position="30UYV1564209682" type="ART - Section Mortier 120 OFF 2 pcs Pour SIC"/>
-            <unit color="0x647dff" command-post="false" id="3567" name="ART - Section Mortier 120 SOFF 2 pcs Pour SIC" position="30UYV1662110224" type="ART - Section Mortier 120 SOFF 2 pcs Pour SIC"/>
-          </automat>
           <automat color="0x647dff" engaged="true" id="3592" knowledge-group="2" name="CIRCU . Escadron Transport Blinde [3592]" type="CIRCU . Escadron Transport Blinde">
             <unit color="0x647dff" command-post="true" id="3593" name="CIRCU . Peloton CDT ESC TRPT BLD" position="30UYV1826913982" type="CIRCU . Peloton CDT ESC TRPT BLD"/>
             <unit color="0x647dff" command-post="false" id="3594" name="CIRCU . Peloton Transport Blindes CL100" position="30UYV1879113505" type="CIRCU . Peloton Transport Blindes CL100"/>
             <unit color="0x647dff" command-post="false" id="3595" name="CIRCU . Peloton Transport Blindes CL50" position="30UYV1831212984" type="CIRCU . Peloton Transport Blindes CL50"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="3610" knowledge-group="2" name="ART - Batterie de Tir TRF1 [3610]" type="ART - Batterie de Tir TRF1">
-            <unit color="0x647dff" command-post="true" id="3611" name="ART - PC Batterie de Tir TRF1" position="31UBQ8474014119" type="ART - PC Batterie de Tir TRF1"/>
-            <unit color="0x647dff" command-post="false" id="3612" name="ART - Section de Tir TRF1 CDS OFF" position="31UBQ8522313601" type="ART - Section de Tir TRF1 CDS OFF"/>
-            <unit color="0x647dff" command-post="false" id="3613" name="ART - Section de Tir TRF1 CDS SOFF" position="31UBQ8470413120" type="ART - Section de Tir TRF1 CDS SOFF"/>
+          <automat color="0x647dff" engaged="true" id="3619" knowledge-group="2" name="ART - Batterie de Tir TRF1 [3610] [3619]" type="ASS . Batterie de Tir TRF1">
+            <unit color="0x647dff" command-post="true" id="3620" name="ASS . PC Batterie de Tir TRF1" position="31UBQ8490714113" type="ASS . PC Batterie de Tir TRF1"/>
+            <unit color="0x647dff" command-post="false" id="3621" name="ASS . Section de Tir TRF1 CDS OFF" position="31UBQ8539013595" type="ASS . Section de Tir TRF1 CDS OFF"/>
+            <unit color="0x647dff" command-post="false" id="3622" name="ASS . Section de Tir TRF1 CDS SOFF" position="31UBQ8487113114" type="ASS . Section de Tir TRF1 CDS SOFF"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="3623" knowledge-group="2" name="ART - Batterie de Reco et Tir 120 RTF1 4 pieces [3562] [3623]" type="ASS . Batterie de Reco et Tir 120 RTF1 4 pieces">
+            <unit color="0x647dff" command-post="true" id="3624" name="ASS . PC Batterie Mortier 120" position="30UYV1621710307" type="ASS . PC Batterie Mortier 120"/>
+            <unit color="0x647dff" command-post="false" id="3625" name="ASS . Equipe Reco M120 VAB" position="30UYV1673909829" type="ASS . Equipe Reco M120 VAB"/>
+            <unit color="0x647dff" command-post="false" id="3626" name="ASS . Equipe Reco M120 VAB" position="30UYV1626009309" type="ASS . Equipe Reco M120 VAB"/>
+            <unit color="0x647dff" command-post="false" id="3627" name="ASS . Section Mortier 120 OFF 2 pcs Pour SIC" position="30UYV1573809786" type="ASS . Section Mortier 120 OFF 2 pcs Pour SIC"/>
+            <unit color="0x647dff" command-post="false" id="3628" name="ASS . Section Mortier 120 SOFF 2 pcs Pour SIC" position="30UYV1671710328" type="ASS . Section Mortier 120 SOFF 2 pcs Pour SIC"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="3629" knowledge-group="2" name="ART - Batterie de Reco et Tir AUF1 [503] [3629]" type="ASS . Batterie de Reco et Tir AUF1">
+            <unit color="0x647dff" command-post="true" id="3630" name="ASS . PC Batterie AUF1" position="31UBQ9629011271" type="ASS . PC Batterie AUF1"/>
+            <unit color="0x647dff" command-post="false" id="3631" name="ASS . Section de Tir AUF1 CDS OFF Pour SIC" position="31UBQ9677310754" type="ASS . Section de Tir AUF1 CDS OFF Pour SIC"/>
+            <unit color="0x647dff" command-post="false" id="3632" name="ASS . Section de Tir AUF1 CDS SOFF Pour SIC" position="31UBQ9625510273" type="ASS . Section de Tir AUF1 CDS SOFF Pour SIC"/>
+            <unit color="0x647dff" command-post="false" id="3633" name="ASS . Equipe de Reco AUF1" position="31UBQ9577210790" type="ASS . Equipe de Reco AUF1"/>
+            <unit color="0x647dff" command-post="false" id="3634" name="ASS . Equipe de Reco AUF1" position="31UBQ9679111253" type="ASS . Equipe de Reco AUF1"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="3635" knowledge-group="2" name="GLAISE - ASS - DLO [448] [3635]" type="GLAISE - ASS . DLO">
+            <unit color="0x647dff" command-post="true" id="3636" name="GLAISE - ASS . PC" position="31UBQ8524708361" type="GLAISE - ASS . PC"/>
+            <unit color="0x647dff" command-post="false" id="3637" name="GLAISE - ASS . EO" position="31UBQ8573007844" type="GLAISE - ASS . EO"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="3638" knowledge-group="2" name="GLAISE - ASS - RECO [445] [3638]" type="GLAISE - ASS . RECO">
+            <unit color="0x647dff" command-post="true" id="3639" name="GLAISE - ASS . RECO PC" position="31UBQ8060007606" type="GLAISE - ASS . RECO PC"/>
+            <unit color="0x647dff" command-post="false" id="3640" name="GLAISE - ASS . RECO" position="31UBQ8108207089" type="GLAISE - ASS . RECO"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="3641" knowledge-group="2" name="ART - Batterie de Reco AUF1 [397] [3641]" type="ASS . Batterie de Reco AUF1">
+            <unit color="0x647dff" command-post="true" id="3642" name="ASS . PC Batterie de Reco AUF1" position="30UYV1488506693" type="ASS . PC Batterie de Reco AUF1"/>
+            <unit color="0x647dff" command-post="false" id="3643" name="ASS . Section de Reco AUF1" position="30UYV1540806215" type="ASS . Section de Reco AUF1"/>
+            <unit color="0x647dff" command-post="false" id="3644" name="ASS . Section de Reco AUF1" position="30UYV1492805695" type="ASS . Section de Reco AUF1"/>
+            <unit color="0x647dff" command-post="false" id="3645" name="ASS . Section de Reco AUF1" position="30UYV1440606172" type="ASS . Section de Reco AUF1"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="3646" knowledge-group="2" name="ART - Batterie de Reco et Tir TRF1 [313] [3646]" type="ASS . Batterie de Reco et Tir TRF1">
+            <unit color="0x647dff" command-post="true" id="3647" name="ASS . PC Batterie TRF1" position="31UCQ0323705264" type="ASS . PC Batterie TRF1"/>
+            <unit color="0x647dff" command-post="false" id="3648" name="ASS . Equipe de Reco TRF1" position="31UCQ0372004747" type="ASS . Equipe de Reco TRF1"/>
+            <unit color="0x647dff" command-post="false" id="3649" name="ASS . Equipe de Reco TRF1" position="31UCQ0320204266" type="ASS . Equipe de Reco TRF1"/>
+            <unit color="0x647dff" command-post="false" id="3650" name="ASS . Section de Tir TRF1 CDS OFF Pour SIC" position="31UCQ0271904783" type="ASS . Section de Tir TRF1 CDS OFF Pour SIC"/>
+            <unit color="0x647dff" command-post="false" id="3651" name="ASS . Section de Tir TRF1 CDS SOFF Pour SIC" position="31UCQ0373805246" type="ASS . Section de Tir TRF1 CDS SOFF Pour SIC"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="3652" knowledge-group="2" name="ART - Batterie de Reco et Tir CAESAR [307] [3652]" type="ASS . Batterie de Reco et Tir CAESAR">
+            <unit color="0x647dff" command-post="true" id="3653" name="ASS . PC Batterie CAESAR" position="31UCQ0152309011" type="ASS . PC Batterie CAESAR"/>
+            <unit color="0x647dff" command-post="false" id="3654" name="ASS . Section de Tir CAESAR CDS OFF Pour SIC" position="31UCQ0200608494" type="ASS . Section de Tir CAESAR CDS OFF Pour SIC"/>
+            <unit color="0x647dff" command-post="false" id="3655" name="ASS . Section de Tir CAESAR CDS SOFF Pour SIC" position="31UCQ0148708012" type="ASS . Section de Tir CAESAR CDS SOFF Pour SIC"/>
+            <unit color="0x647dff" command-post="false" id="3656" name="ASS . Equipe de Reco CAESAR" position="31UCQ0100508530" type="ASS . Equipe de Reco CAESAR"/>
+            <unit color="0x647dff" command-post="false" id="3657" name="ASS . Equipe de Reco CAESAR" position="31UCQ0202408993" type="ASS . Equipe de Reco CAESAR"/>
           </automat>
           <lima name="Lima 0">
             <point>30UYV0177400073</point>
@@ -289,4 +289,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0156265097" -->
+<!-- signature="2171327535" -->

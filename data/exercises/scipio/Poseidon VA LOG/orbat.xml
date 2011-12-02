@@ -72,22 +72,11 @@
               </stocks>
             </unit>
           </automat>
-          <automat color="0x647dff" engaged="true" id="182" knowledge-group="7" name="ART - Batterie de Reco et Tir AUF1 [182]" type="ART - Batterie de Reco et Tir AUF1">
-            <unit color="0x647dff" command-post="true" id="183" name="ART - PC Batterie ASS" position="29TNF3232560375" type="ART - PC Batterie ASS">
-              <extensions>
-                <entry key="DiffusionList" value=""/>
-                <entry key="IndOpe" value="PBR2"/>
-                <entry key="IndRadio" value="50"/>
-                <entry key="Nationalite" value="84"/>
-                <entry key="NomLong" value="EO.21.DL2.35BA.FR"/>
-                <entry key="TypePC" value="1"/>
-                <entry key="TypeSIOC" value="1"/>
-              </extensions>
-            </unit>
-            <unit color="0x647dff" command-post="false" id="184" name="ART - Section de Tir AUF1 CDS OFF Pour SIC" position="29TNF3282859878" type="ART - Section de Tir AUF1 CDS OFF Pour SIC"/>
-            <unit color="0x647dff" command-post="false" id="185" name="ART - Section de Tir AUF1 CDS SOFF Pour SIC" position="29TNF3232959377" type="ART - Section de Tir AUF1 CDS SOFF Pour SIC"/>
-            <unit color="0x647dff" command-post="false" id="186" name="ART - Equipe de Reco AUF1" position="29TNF3182759874" type="ART - Equipe de Reco AUF1"/>
-            <unit color="0x647dff" command-post="false" id="187" name="ART - Equipe de Reco AUF1" position="29TNF3282560377" type="ART - Equipe de Reco AUF1"/>
+          <automat color="0x647dff" engaged="true" id="187" knowledge-group="7" name="ART - Batterie de Reco et Tir AUF1 [182] [187]" type="ASS . Batterie de Reco AUF1">
+            <unit color="0x647dff" command-post="true" id="188" name="ASS . PC Batterie de Reco AUF1" position="29TNF3245460147" type="ASS . PC Batterie de Reco AUF1"/>
+            <unit color="0x647dff" command-post="false" id="189" name="ASS . Section de Reco AUF1" position="29TNF3270460009" type="ASS . Section de Reco AUF1"/>
+            <unit color="0x647dff" command-post="false" id="190" name="ASS . Section de Reco AUF1" position="29TNF3246359860" type="ASS . Section de Reco AUF1"/>
+            <unit color="0x647dff" command-post="false" id="191" name="ASS . Section de Reco AUF1" position="29TNF3224459983" type="ASS . Section de Reco AUF1"/>
           </automat>
           <limit name="Limite 90">
             <point>29TNF2690165242</point>
@@ -417,4 +406,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1484930337" -->
+<!-- signature="0728987521" -->
