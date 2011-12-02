@@ -11202,7 +11202,7 @@
   <unit decisional-model="Masalife.DPRE" id="383" name="Refugies" type="Pion REFUGIE">
     <nature atlas-nature="None" level="ooo" nature-app6="mootw/refugees"/>
     <equipments>
-      <equipment count="150" crew="1" major="true" type="Individu"/>
+      <equipment count="1" crew="150" major="true" type="Individu"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="5000"/>
@@ -15018,7 +15018,7 @@
   <unit decisional-model="Masalife.DPRE" id="519" name="Refugiés femmes et enfants" type="Pion REFUGIE">
     <nature atlas-nature="None" level="ooo" nature-app6="mootw/refugees"/>
     <equipments>
-      <equipment count="100" crew="1" major="true" type="Individu"/>
+      <equipment count="1" crew="100" major="true" type="Individu"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="5000"/>
@@ -15040,7 +15040,7 @@
   <unit decisional-model="Masalife.DPRE" id="520" name="Réfugiés hommes femmes et enfants" type="Pion REFUGIE">
     <nature atlas-nature="None" level="ooo" nature-app6="mootw/refugees"/>
     <equipments>
-      <equipment count="100" crew="1" major="true" type="Individu"/>
+      <equipment count="1" crew="100" major="true" type="Individu"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="5000"/>
@@ -19194,4 +19194,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="2239108033" -->
+<!-- signature="0056269410" -->
