@@ -1134,7 +1134,7 @@
           </shape>
           <attributes>
             <construction completion="1"/>
-            <nbc-agents state="gaseous">
+            <nbc-agents danger="0" state="gaseous">
               <nbc-agent type="gaz sarin"/>
             </nbc-agents>
           </attributes>
@@ -1150,7 +1150,7 @@
           </shape>
           <attributes>
             <construction completion="1"/>
-            <nbc-agents state="gaseous">
+            <nbc-agents danger="0" state="gaseous">
               <nbc-agent type="gaz sarin"/>
             </nbc-agents>
           </attributes>
@@ -1975,4 +1975,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1392890567" -->
+<!-- signature="1239991067" -->

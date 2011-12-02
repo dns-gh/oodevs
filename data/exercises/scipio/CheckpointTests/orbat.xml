@@ -47,7 +47,7 @@
             </points>
           </shape>
           <attributes>
-            <nbc-agents state="liquid">
+            <nbc-agents danger="0" state="liquid">
               <nbc-agent type="gaz sarin"/>
             </nbc-agents>
             <input-toxic-cloud data-field="nom_var_shp_mesure_C" export="false" source="Romilly ponctuel 04 08 2008 1"/>
@@ -139,7 +139,7 @@
             </points>
           </shape>
           <attributes>
-            <nbc-agents state="liquid">
+            <nbc-agents danger="0" state="liquid">
               <nbc-agent type="gaz sarin"/>
             </nbc-agents>
           </attributes>
@@ -159,10 +159,10 @@
             <unit command-post="false" id="1201" name="PIA Dominante Reco" position="31TCM1897590249" type="PIA Dominante Reco"/>
             <unit command-post="false" id="1202" name="Groupe GEN . EBG" position="31TCM2003989826" type="GEN . Groupe EBG"/>
           </automat>
-          <automat engaged="false" id="1207" knowledge-group="1189" name="Batterie de Tir AUF1 [1207]" type="ART - Batterie de Tir AUF1">
-            <unit command-post="true" id="1208" name="PC Batterie ASS" position="31TCM1313597574" type="ART - PC Batterie ASS"/>
-            <unit command-post="false" id="1209" name="Section de Tir AUF1 CDS OFF" position="31TCM1362097059" type="ART - Section de Tir AUF1 CDS OFF"/>
-            <unit command-post="false" id="1210" name="Section de Tir AUF1 CDS SOFF" position="31TCM1310396576" type="ART - Section de Tir AUF1 CDS SOFF"/>
+          <automat engaged="true" id="1223" knowledge-group="1189" name="Batterie de Tir AUF1 [1207] [1223]" type="ASS . Batterie de Tir AUF1">
+            <unit command-post="true" id="1224" name="ASS . PC Batterie ASS" position="31TCM1330297569" type="ASS . PC Batterie ASS"/>
+            <unit command-post="false" id="1225" name="ASS . Section de Tir AUF1 CDS OFF" position="31TCM1378797054" type="ASS . Section de Tir AUF1 CDS OFF"/>
+            <unit command-post="false" id="1226" name="ASS . Section de Tir AUF1 CDS SOFF" position="31TCM1327196571" type="ASS . Section de Tir AUF1 CDS SOFF"/>
           </automat>
         </formation>
       </tactical>
@@ -515,7 +515,7 @@
             </points>
           </shape>
           <attributes>
-            <nbc-agents state="liquid">
+            <nbc-agents danger="0" state="liquid">
               <nbc-agent type="Chimique"/>
             </nbc-agents>
             <input-toxic-cloud data-field="nom_var_shp_mesure_C" export="false" source="Indianapolis_Plume_1300"/>
@@ -702,4 +702,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2536170134" -->
+<!-- signature="1636294874" -->

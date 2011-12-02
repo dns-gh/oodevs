@@ -242,25 +242,8 @@
           <subordinate id="495"/>
         </logistic-base>
         <logistic-base id="502">
-          <subordinate id="173">
-            <quotas>
-              <resource name="F-63 1" quantity="20000"/>
-              <resource name="F-57 1" quantity="20000"/>
-              <resource name="F-35 1" quantity="20000"/>
-              <resource name="RATION DE COMBAT 1" quantity="20000"/>
-              <resource name="EAU MINERALE 1L T 1" quantity="20000"/>
-              <resource name="h2o" quantity="20000"/>
-            </quotas>
-          </subordinate>
-          <subordinate id="198">
-            <quotas>
-              <resource name="F-63 1" quantity="20000"/>
-              <resource name="F-57 1" quantity="20000"/>
-              <resource name="F-35 1" quantity="20000"/>
-              <resource name="RATION DE COMBAT 1" quantity="20000"/>
-              <resource name="EAU MINERALE 1L T 1" quantity="20000"/>
-            </quotas>
-          </subordinate>
+          <subordinate id="173"/>
+          <subordinate id="198"/>
         </logistic-base>
         <logistic-base id="422">
           <subordinate id="511"/>
@@ -531,4 +514,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3493885985" -->
+<!-- signature="0178672487" -->

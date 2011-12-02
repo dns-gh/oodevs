@@ -15,11 +15,6 @@
           <automat engaged="true" id="27" knowledge-group="2" logistic-level="logistic-base" name="TC2 GE40 LECLERC [27]" type="LOG . TC2 GE40 LECLERC">
             <unit command-post="true" id="28" name="TC2 GE40 LECLERC" position="31UEQ0878126383" type="LOG . ABC . TC2 GE40 LECLERC"/>
           </automat>
-          <automat engaged="true" id="31" knowledge-group="2" name="Batterie de Tir AUF1 [31]" type="ART - Batterie de Tir AUF1">
-            <unit command-post="true" id="32" name="PC Batterie ASS" position="31UEQ1143722593" type="ART - PC Batterie ASS"/>
-            <unit command-post="false" id="33" name="Section de Tir AUF1 CDS OFF" position="31UEQ1193722093" type="ART - Section de Tir AUF1 CDS OFF"/>
-            <unit command-post="false" id="34" name="Section de Tir AUF1 CDS SOFF" position="31UEQ1143621594" type="ART - Section de Tir AUF1 CDS SOFF"/>
-          </automat>
           <automat engaged="true" id="37" knowledge-group="2" name="Compagnie CBT GENIE type BB BM [37]" type="GEN . Compagnie CBT type BB BM">
             <unit command-post="true" id="38" name="PC CIE CBT GENIEType BB/BM" position="31UEQ1299126523" type="GEN . PC CIE CBT GENIE Type BB/BM"/>
             <unit command-post="false" id="39" name="Section CBT GEN" position="31UEQ1349126023" type="GEN . Section CBT"/>
@@ -31,6 +26,11 @@
             <unit command-post="false" id="45" name="Groupe EBG" position="31UEQ1298925318" type="GEN . Groupe EBG"/>
             <unit command-post="false" id="46" name="Groupe MPG" position="31UEQ1248925525" type="GEN . Groupe MPG"/>
             <unit command-post="false" id="47" name="Groupe MPG" position="31UEQ1228226025" type="GEN . Groupe MPG"/>
+          </automat>
+          <automat engaged="true" id="50" knowledge-group="2" name="Batterie de Tir AUF1 [31] [50]" type="ASS . Batterie de Tir AUF1">
+            <unit command-post="true" id="51" name="ASS . PC Batterie ASS" position="31UEQ1160422593" type="ASS . PC Batterie ASS"/>
+            <unit command-post="false" id="52" name="ASS . Section de Tir AUF1 CDS OFF" position="31UEQ1210422093" type="ASS . Section de Tir AUF1 CDS OFF"/>
+            <unit command-post="false" id="53" name="ASS . Section de Tir AUF1 CDS SOFF" position="31UEQ1160321594" type="ASS . Section de Tir AUF1 CDS SOFF"/>
           </automat>
           <limit name="Limite 7">
             <point>31UEQ0687827739</point>
@@ -54,7 +54,6 @@
         <logistic-base id="27">
           <subordinate id="12"/>
           <subordinate id="27"/>
-          <subordinate id="31"/>
         </logistic-base>
       </logistics>
     </party>
@@ -121,4 +120,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1826846733" -->
+<!-- signature="0373246246" -->
