@@ -28,7 +28,7 @@ class ControlsChecker_ABC;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class UserProfileList : public Q3VBox
+class UserProfileList : public QWidget
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< UserProfile >
 {
@@ -84,13 +84,15 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    ProfilesModel&       model_;
-    ControlsChecker_ABC& checker_;
-    T_Profiles           profiles_;
-    T_ProfileEditors     editors_;
-    UserProfileWidget&   pages_;
-    Q3ListBox*           list_;
+    kernel::Controllers&   controllers_;
+    ProfilesModel&         model_;
+    ControlsChecker_ABC&   checker_;
+    T_Profiles             profiles_;
+    T_ProfileEditors       editors_;
+    UserProfileWidget&     pages_;
+    QListView*             list_;
+    QSortFilterProxyModel* proxyModel_;
+    QStandardItemModel*    dataModel_;
     //@}
 };
 

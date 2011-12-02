@@ -25,19 +25,36 @@
 // -----------------------------------------------------------------------------
 UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers,
                                   ProfilesModel& model, ControlsChecker_ABC& checker )
-    : Q3VBox( parent, "UserProfileList" )
+    : QWidget( parent )
     , controllers_( controllers )
     , pages_      ( pages )
     , model_      ( model )
     , checker_    ( checker )
 {
-    list_ = new Q3ListBox( this );
-    Q3HBox* box = new Q3HBox( this );
-    QPushButton* createBtn = new QPushButton( tr( "Create" ), box );
-    QPushButton* deleteBtn = new QPushButton( tr( "Delete" ), box );
+    QVBoxLayout* layout = new QVBoxLayout( this );
+
+    dataModel_ = new QStandardItemModel();
+    dataModel_->setColumnCount( 1 );
+    proxyModel_ = new QSortFilterProxyModel();
+    proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->setSortCaseSensitivity( Qt::CaseInsensitive );
+    proxyModel_->setSourceModel( dataModel_ );
+    list_ = new QListView( this );
+    list_->setViewMode( QListView::ListMode );
+    list_->setSelectionMode( QAbstractItemView::SingleSelection );
+    list_->setModel( proxyModel_ );
+
+    QHBoxLayout* box = new QHBoxLayout();
+    QPushButton* createBtn = new QPushButton( tr( "Create" ) );
+    QPushButton* deleteBtn = new QPushButton( tr( "Delete" ) );
     connect( createBtn, SIGNAL( clicked() ), SLOT( OnCreate() ) );
     connect( deleteBtn, SIGNAL( clicked() ), SLOT( OnDelete() ) );
-    connect( list_, SIGNAL( selectionChanged() ), SLOT( OnSelectionChanged() ) );
+    connect( list_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelectionChanged() ) );
+    box->addWidget( createBtn );
+    box->addWidget( deleteBtn );
+
+    layout->addWidget( list_ );
+    layout->addLayout( box );
     controllers_.Register( *this );
 }
 
@@ -81,14 +98,17 @@ void UserProfileList::Cancel()
 // -----------------------------------------------------------------------------
 void UserProfileList::OnSelectionChanged()
 {
-    if( isVisible() && list_->currentItem() != -1 )
+    QModelIndexList indexes = list_->selectionModel()->selectedIndexes();
+    if( isVisible() && !indexes.empty() )
     {
-        const UserProfile* profile = profiles_.at( list_->currentItem() );
-        UserProfile*& editor = editors_[profile];
-        if( !editor )
-            editor = new ProfileEditor( *profile, controllers_.controller_ );
-        checker_.Display( editors_ );
-        pages_.Display( *editor );
+        if( const UserProfile* profile = profiles_.at( proxyModel_->mapToSource( indexes.front() ).row() ) )
+        {
+            UserProfile*& editor = editors_[profile];
+            if( !editor )
+                editor = new ProfileEditor( *profile, controllers_.controller_ );
+            checker_.Display( editors_ );
+            pages_.Display( *editor );
+        }
     }
 }
 
@@ -107,8 +127,20 @@ void UserProfileList::OnCreate()
 // -----------------------------------------------------------------------------
 void UserProfileList::OnDelete()
 {
-    if( list_->currentItem() != -1 )
-        model_.DeleteProfile( *profiles_.at( list_->currentItem() ) );
+    QModelIndexList indexes = list_->selectionModel()->selectedIndexes();
+    if( !indexes.empty() )
+        if( const UserProfile* profile = profiles_.at( proxyModel_->mapToSource( indexes.front() ).row() ) )
+            model_.DeleteProfile( *profile );
+}
+
+namespace
+{
+    QStandardItem* CreateItem( const QString& text )
+    {
+        QStandardItem* item = new QStandardItem( text );
+        item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+        return item;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -118,13 +150,8 @@ void UserProfileList::OnDelete()
 void UserProfileList::NotifyCreated( const UserProfile& profile )
 {
     profiles_.push_back( &profile );
-    const bool itemSelected = list_->selectedItem() != 0;
-    list_->insertItem( profile.GetLogin() );
-    if( !itemSelected )
-    {
-        list_->setSelected( 0, true );
-        pages_.SetEnabled( true );
-    }
+    dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( profile.GetLogin() ) );
+    proxyModel_->sort( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,9 +169,11 @@ void UserProfileList::NotifyUpdated( const UserProfile& profile )
     if( it != profiles_.end() )
     {
         const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
-        if( list_->text( index ) != updated->GetLogin() )
-            list_->changeItem( updated->GetLogin(), index );
+        QStandardItem* item = dataModel_->item( index );
+        if( item && item->text() != updated->GetLogin() )
+            item->setText( updated->GetLogin() );
     }
+    proxyModel_->sort( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,8 +186,7 @@ void UserProfileList::NotifyDeleted( const UserProfile& profile )
     if( it != profiles_.end() )
     {
         const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
-        const bool selected = list_->isSelected( index );
-        list_->removeItem( index );
+        dataModel_->takeRow( index );
         profiles_.erase( it );
         T_ProfileEditors::iterator editorIt = editors_.find( &profile );
         if( editorIt != editors_.end() )
@@ -166,8 +194,6 @@ void UserProfileList::NotifyDeleted( const UserProfile& profile )
             delete editorIt->second;
             editors_.erase( editorIt );
         }
-        if( selected && list_->count() )
-            list_->setSelected( list_->item( index ) ? index : index - 1, true );
         pages_.SetEnabled( !profiles_.empty() );
     }
 }
@@ -178,6 +204,8 @@ void UserProfileList::NotifyDeleted( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void UserProfileList::showEvent( QShowEvent* event )
 {
-    Q3VBox::showEvent( event );
-    OnSelectionChanged();
+    QWidget::showEvent( event );
+    if( dataModel_->rowCount() > 0 )
+        pages_.SetEnabled( true );
+    list_->selectionModel()->select( proxyModel_->index( 0, 0 ), QItemSelectionModel::Select );
 }
