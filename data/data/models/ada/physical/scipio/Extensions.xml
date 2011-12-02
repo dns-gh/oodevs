@@ -5112,11 +5112,6 @@
         <label language="fr" text="Religion"/>
       </labels>
     </attribute>
-    <attribute extends="unit;formation;automat;crowd;population" name="Id64" type="string">
-      <labels>
-        <label language="fr" text="Id 64 bits"/>
-      </labels>
-    </attribute>
     <attribute extends="unit;crowd;population" name="Information" type="string">
       <labels>
         <label language="fr" text="Information"/>
@@ -5139,4 +5134,4 @@
     </attribute>
   </profile-attributes>
 </extensions>
-<!-- signature="2119327540" -->
+<!-- signature="1305924281" -->

@@ -264,45 +264,6 @@
         <value id="1" name="directionnel"/>
       </parameter>
     </mission>
-    <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnOeuvre" dia-type="T_Mission_Pion_ASS_AssurerMiseEnOeuvre" id="29" name="PION ASS Assurer Mise En Oeuvre" package="support">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zoneImplantation_" name="Zone implantation" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition" dia-type="T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition" id="30" name="PION ASS Assurer Mise En Oeuvre Sur Position" package="support">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positionImplantation_" name="Position implantation" optional="false" type="Point"/>
-      <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones" dia-type="T_Mission_Pion_ASS_AssurerMiseEnOeuvre2Zones" id="1005" name="PION ASS Assurer Mise En Oeuvre2Zones" package="support">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zoneImplantation1_" name="Zone implantation1" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="zoneImplantation2_" name="Zone implantation2" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnBatterieInopinee" dia-type="T_Mission_Pion_ASS_AssurerMiseEnBatterieInopinee" id="465" name="PION ASS Assurer Mise En Batterie Inopinee" package="support">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positionSauvegarde_" name="Position de sauvegarde" optional="true" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASS_ReconnaitreZoneDeploiement" dia-type="T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" id="31" name="PION ASS Reconnaitre Zone Deploiement" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zoneDeploiement_" name="Zone deploiement" optional="false" type="Polygon"/>
-    </mission>
     <mission dia-behavior="MIS_Pion_ASS_AcquerirLanceursEni" dia-type="T_Mission_Pion_ASS_AcquerirLanceursEni" id="32" name="PION ASS Acquerir Lanceurs Eni" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -423,14 +384,6 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_JOINT_AIR_EffectuerRaid" dia-type="T_Mission_Pion_JOINT_AIR_EffectuerRaid" id="151" name="PION JOINT AIR Effectuer Raid" package="attack">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_RENS_ROHUM_RenseignerSur" dia-type="T_Mission_Pion_RENS_ROHUM_RenseignerSur" id="157" name="PION RENS ROHUM Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -960,7 +913,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" id="2030" name="PION ASS Assurer la Mise En Oeuvre" package="attack">
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" id="2030" name="PION ASS Assurer Mise En Oeuvre" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1644,7 +1597,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.ReconnaitreZoneDeploiement" dia-type="france.military.platoon.combat.support.artillery.tasks.ReconnaitreZoneDeploiement" id="2477" name="PION ASS Reconaitre Zone Deploiement" package="support">
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.ReconnaitreZoneDeploiement" dia-type="france.military.platoon.combat.support.artillery.tasks.ReconnaitreZoneDeploiement" id="2477" name="PION ASS Reconnaitre Zone Deploiement" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1936,27 +1889,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Positions sections" optional="false" type="Point"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_SeDeployer" dia-type="T_Mission_Automate_ASS_SeDeployer" id="204" mrt-dia-behavior="MIS_Automate_MRT_ASS_SeDeployer" name="AUTOMATE ASS Se Deployer" package="none">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zoneDeploiement_" name="Zone deploiement" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement" dia-type="T_Mission_Automate_ASS_ReconnaitreZonesDeploiement" id="205" mrt-dia-behavior="MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement" name="AUTOMATE ASS Reconnaitre Zones Deploiement" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zonesAReconnaitre_" max-occurs="unbounded" min-occurs="1" name="Positions a reconnaitre" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_RecoEtDeploiement" dia-type="T_Mission_Automate_ASS_RecoEtDeploiement" id="1007" mrt-dia-behavior="MIS_Automate_MRT_ASS_RecoEtDeploiement" name="AUTOMATE ASS Reco Et Deploiement" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="positionsAReconnaitre_" max-occurs="unbounded" min-occurs="1" name="Positions a reconnaitre" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_AcquerirObjectifs" dia-type="T_Mission_Automate_ASS_AcquerirObjectifs" id="206" mrt-dia-behavior="MIS_Automate_MRT_ASS_AcquerirObjectifs" name="AUTOMATE ASS Acquerir Objectifs" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2266,7 +2198,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Point d'embarquement" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.SeDeployer" dia-type="france.military.company.combat.support.artillery.tasks.SeDeployer" id="1008" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.SeDeployer" name="AUTOMATE ASS SeDeployer" package="none">
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.SeDeployer" dia-type="france.military.company.combat.support.artillery.tasks.SeDeployer" id="1008" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.SeDeployer" name="AUTOMATE ASS Se Deployer" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3012,7 +2944,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Unite a suivre" optional="false" type="Agent"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.RecoEtDeploiement" dia-type="france.military.company.combat.support.artillery.tasks.RecoEtDeploiement" id="28768" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.RecoEtDeploiement" name="AUTOMATE ASS Reconnaissance Et Deploiement">
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.RecoEtDeploiement" dia-type="france.military.company.combat.support.artillery.tasks.RecoEtDeploiement" id="28768" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.RecoEtDeploiement" name="AUTOMATE ASS Reco Et Deploiement">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3020,7 +2952,7 @@
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Zones deploiement" optional="false" type="Polygon"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.ReconaitreZoneDeploiement" dia-type="france.military.company.combat.support.artillery.tasks.ReconaitreZoneDeploiement" id="28769" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.ReconaitreZoneDeploiement" name="AUTOMATE ASS Reconnaitre Zone Deploiement">
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.ReconaitreZoneDeploiement" dia-type="france.military.company.combat.support.artillery.tasks.ReconaitreZoneDeploiement" id="28769" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.ReconaitreZoneDeploiement" name="AUTOMATE ASS Reconnaitre Zones Deploiement">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3267,4 +3199,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="2514424192" -->
+<!-- signature="3616825401" -->
