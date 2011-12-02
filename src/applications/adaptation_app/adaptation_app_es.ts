@@ -3339,10 +3339,6 @@ Asegúrese que el archivo existe.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Angry crowd mission</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Males</source>
         <translation type="unfinished"></translation>
     </message>

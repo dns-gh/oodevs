@@ -64,7 +64,6 @@ void ADN_People_GUI::Build()
 
     builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vInfosConnectors[ eName ] );
     builder.AddField< ADN_ComboBox_Vector< ADN_Population_Data::PopulationInfos > >( pPropertiesGroup, tr( "Associated Crowd" ), vInfosConnectors[ eModel ] );
-    builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Angry crowd mission" ), vInfosConnectors[ eAngryCrowdMission ] );
     // repartition
     ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pPropertiesGroup, builder );
     pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ] );

@@ -3388,10 +3388,6 @@ Assurez vous que le fichier existe.</translation>
         <source>Number of people per medical infrastructure</source>
         <translation>Nombre de personnes par infrastructure médicale</translation>
     </message>
-    <message>
-        <source>Angry crowd mission</source>
-        <translation>Mission pour les foules en colère</translation>
-    </message>
 </context>
 <context>
     <name>ADN_People_ListView</name>

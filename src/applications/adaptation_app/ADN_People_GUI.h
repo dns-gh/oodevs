@@ -32,7 +32,6 @@ public:
     {
         eName,
         eModel,
-        eAngryCrowdMission,
         eMale,
         eFemale,
         eChildren,
