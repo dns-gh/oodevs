@@ -28,7 +28,7 @@ PopulationType::PopulationType( xml::xistream& xis, const tools::Resolver_ABC< D
         >> xml::start( "repartition" )
             >> xml::attribute( "male", male_ )
             >> xml::attribute( "female", female_ )
-            >> xml::attribute( "female", children_ )
+            >> xml::attribute( "children", children_ )
         >> xml::end;
     model_ = & modelResolver.Get( model );
 }
