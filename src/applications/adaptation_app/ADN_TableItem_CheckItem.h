@@ -68,7 +68,6 @@ protected:
 
 private:
     ADN_BoolEditor*                            pEditor_;
-//    QCheckBox*                                pEditor_;
     bool                                    bIsChecked_;
 
 };

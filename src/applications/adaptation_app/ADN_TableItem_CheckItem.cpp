@@ -58,13 +58,8 @@ ADN_TableItem_CheckItem::~ADN_TableItem_CheckItem()
 QWidget* ADN_TableItem_CheckItem::createEditor() const
 {
     ((ADN_TableItem_CheckItem*)(this))->pEditor_ = new ADN_BoolEditor( table()->viewport(), bIsChecked_ );
-//    ((ADN_TableItem_CheckItem*)(this))->pEditor_ = new ADN_BoolEditor( table()->viewport(), bIsChecked_ );
     pEditor_->SetState( bIsChecked_ );
     QObject::connect( pEditor_, SIGNAL( StateChanged( bool ) ), table(), SLOT( doValueChanged() ) );
-
-//    ((ADN_TableItem_CheckItem*)(this))->pEditor_ = new QCheckBox( table()->viewport() );
-//    pEditor_->setChecked( bIsChecked_ );
-//    QObject::connect( pEditor_, SIGNAL( toggled( bool ) ), table(), SLOT( doValueChanged() ) );
 
     return pEditor_;
 }
@@ -104,30 +99,19 @@ void ADN_TableItem_CheckItem::setContentFromEditor( QWidget *w )
 // -----------------------------------------------------------------------------
 void ADN_TableItem_CheckItem::paint( QPainter *pPainter, const QColorGroup &cg, const QRect &rc, bool bSelected )
 {
-    const QColorGroup& colorGroup = cg;
-    QStyleOption* opt = new QStyleOption();
-
-    Q3TableItem::paint( pPainter, colorGroup, rc, bSelected );
-
+    Q3TableItem::paint( pPainter, cg, rc, bSelected );
     QSize sz = QSize( table()->style()->pixelMetric( QStyle::PM_IndicatorWidth )
                     , table()->style()->pixelMetric( QStyle::PM_IndicatorHeight ) );
-
     pPainter->fillRect( ( rc.width() - sz.width() ) / 2 - 2
                       , ( rc.height() - sz.height() ) / 2 - 2
                       , sz.width() + 4
                       , sz.height() + 4
-                      , colorGroup.brush( QColorGroup::Text ) );
+                      , cg.brush( QColorGroup::Text ) );
 
-    QColorGroup c( colorGroup );
-    c.setBrush( QColorGroup::Background, c.brush( QColorGroup::Base ) );
-    
+    QStyleOption* opt = new QStyleOption();
     opt->rect = QRect( ( rc.width() - sz.width() ) / 2, ( rc.height() - sz.height() ) / 2, sz.width(), sz.height() );
-    table()->style()->drawPrimitive( QStyle::PE_IndicatorCheckBox
-                                  , opt
-                                  , pPainter );
-                                  /*, c
-                                  , bIsChecked_ ? QStyle::State_On : QStyle::State_Off );*/
-
+    opt->state = bIsChecked_ ? ( QStyle::State_Enabled | QStyle::State_On ) : QStyle::State_Off;
+    table()->style()->drawPrimitive( QStyle::PE_IndicatorCheckBox, opt, pPainter );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,5 +141,4 @@ void ADN_TableItem_CheckItem::setHidden( bool )
 void ADN_TableItem_CheckItem::DoValueChanged()
 {
     static_cast<ADN_Connector_Bool< ADN_TableItem_CheckItem >*>(pConnector_)->SetDataChanged( pEditor_->GetState() );
-//    static_cast<ADN_Connector_Bool< ADN_TableItem_CheckItem >*>(pConnector_)->SetDataChanged( pEditor_->isChecked() );
 }
