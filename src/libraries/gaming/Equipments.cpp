@@ -52,8 +52,6 @@ void Equipments::DoUpdate( const sword::UnitAttributes& message )
     if( !message.has_equipment_dotations() )
         return;
 
-    std::string tmp = message.equipment_dotations().DebugString();
-
     std::vector< Equipment > differences;
     uint nSize = message.equipment_dotations().elem_size();
     while( nSize > 0 )

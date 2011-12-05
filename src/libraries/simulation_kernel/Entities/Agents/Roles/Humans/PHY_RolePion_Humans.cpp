@@ -72,7 +72,6 @@ PHY_RolePion_Humans::HumanState::HumanState()
     , location_             ( Human_ABC::eBattleField )
     , contaminated_         ( false )
     , psyop_                ( false )
-    //, hasChanged_           ( true )
 {
     // NOTHING
 }
@@ -88,7 +87,6 @@ PHY_RolePion_Humans::HumanState::HumanState( unsigned int number, const PHY_Huma
     , location_             ( location )
     , contaminated_         ( contaminated )
     , psyop_                ( psyop )
-    //, hasChanged_           ( true )
 {
     // NOTHING
 }

@@ -466,8 +466,6 @@ void PHY_HumansComposante::ChangeHumanState( sword::MissionParameters& msg )
     {
         sword::MissionParameter_Value& elem = *msg.mutable_elem( 0 )->mutable_value()->Mutable( i );
 
-        std::string tmp = elem.DebugString();
-
         const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( static_cast< unsigned int >( elem.list( 1 ).enumeration() ) );
         unsigned int number = static_cast< unsigned int >( elem.list( 0 ).quantity() );
         if( number == 0 )
