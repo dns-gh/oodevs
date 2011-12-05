@@ -68,12 +68,20 @@ namespace
         menu.AddItem( kernel::TristateOption::OnName(), kernel::TristateOption::On() );
         menu.AddItem( kernel::TristateOption::OffName(), kernel::TristateOption::Off() );
     }
-    void Populate( OptionMenu< kernel::FourStateOption >& menu )
+    void Populate( OptionMenu< kernel::FourStateOption >& menu, const kernel::FourStateOption& state )
     {
-        menu.AddItem( kernel::FourStateOption::SelectedName(), kernel::FourStateOption::Selected() );
-        menu.AddItem( kernel::FourStateOption::SuperiorSelectedName(), kernel::FourStateOption::SuperiorSelected() );
-        menu.AddItem( kernel::FourStateOption::OnName(), kernel::FourStateOption::On() );
-        menu.AddItem( kernel::FourStateOption::OffName(), kernel::FourStateOption::Off() );
+        int index = menu.AddItem( kernel::FourStateOption::SelectedName(), kernel::FourStateOption::Selected() );
+        if ( state == kernel::FourStateOption::Selected() )
+            menu.OnSelected( index );
+        index = menu.AddItem( kernel::FourStateOption::SuperiorSelectedName(), kernel::FourStateOption::SuperiorSelected() );
+        if ( state == kernel::FourStateOption::SuperiorSelected() )
+            menu.OnSelected( index );
+        index = menu.AddItem( kernel::FourStateOption::OnName(), kernel::FourStateOption::On() );
+        if ( state == kernel::FourStateOption::On() )
+            menu.OnSelected( index );
+        index = menu.AddItem( kernel::FourStateOption::OffName(), kernel::FourStateOption::Off() );
+        if ( state == kernel::FourStateOption::Off() )
+            menu.OnSelected( index );
     }
 
     void AddSubMenu3( QToolBar* toolBar, Q3PopupMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option )
@@ -90,19 +98,19 @@ namespace
             button->setPopupDelay( 1 );
         }
         {
-            OptionMenu< kernel::TristateOption >* optionMenu = new OptionMenu< kernel::TristateOption >( parent, options, option );
-            Populate( *optionMenu );
-            parent->insertItem( iconSet, label, optionMenu );
+            OptionMenu< kernel::TristateOption >* optionMenuParent = new OptionMenu< kernel::TristateOption >( parent, options, option );
+            Populate( *optionMenuParent );
+            parent->insertItem( iconSet, label, optionMenuParent );
         }
     }
 
-    void AddSubMenu4( QToolBar* toolBar, Q3PopupMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option )
+    void AddSubMenu4( QToolBar* toolBar, Q3PopupMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option, kernel::FourStateOption state = kernel::FourStateOption::Selected() )
     {
         {
             QToolButton* button = new QToolButton( toolBar );
             toolBar->addWidget( button );
             OptionMenu< kernel::FourStateOption >* optionMenu = new OptionMenu< kernel::FourStateOption >( button, options, option );
-            Populate( *optionMenu );
+            Populate( *optionMenu, state );
             button->setIconSet( iconSet );
             button->setTextLabel( label );
             button->setPopup( optionMenu );
@@ -110,9 +118,9 @@ namespace
             button->setPopupDelay( 1 );
         }
         {
-            OptionMenu< kernel::FourStateOption >* optionMenu = new OptionMenu< kernel::FourStateOption >( parent, options, option );
-            Populate( *optionMenu );
-            parent->insertItem( iconSet, label, optionMenu );
+            OptionMenu< kernel::FourStateOption >* optionMenuParent = new OptionMenu< kernel::FourStateOption >( parent, options, option );
+            Populate( *optionMenuParent, state );
+            parent->insertItem( iconSet, label, optionMenuParent );
         }
     }
 
@@ -147,17 +155,17 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     toolBar->setLabel( tools::translate( "Menu", "Units toolbar" ) );
 
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision lines" )   , MakePixmap( "vision_lines" )   , controllers.options_, "VisionLines" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision cones" )   , MakePixmap( "vision_cones" )   , controllers.options_, "VisionCones" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision surfaces" ), MakePixmap( "vision_surfaces" ), controllers.options_, "VisionSurfaces" );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision cones" )   , MakePixmap( "vision_cones" )   , controllers.options_, "VisionCones", kernel::FourStateOption::Off() );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision surfaces" ), MakePixmap( "vision_surfaces" ), controllers.options_, "VisionSurfaces", kernel::FourStateOption::Off() );
     subMenu->insertSeparator();
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Weapon ranges" ) , MakePixmap( "weapon_ranges" ), controllers.options_, "WeaponRanges" );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Weapon ranges" ) , MakePixmap( "weapon_ranges" ), controllers.options_, "WeaponRanges", kernel::FourStateOption::Off() );
     subMenu->insertItem( tools::translate( "Menu", "Efficient Range" ), new EfficientRangeDialog( this, controllers, staticModel.objectTypes_, controllers.options_ ), SLOT( exec() ) );
     subMenu->insertSeparator();
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Routes" )        , MakePixmap( "path_ahead" ) , controllers.options_, "Paths" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Covered routes" ), MakePixmap( "path_behind" ), controllers.options_, "OldPaths" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Direction" )     , MakePixmap( "direction" )  , controllers.options_, "Direction" );
     subMenu->insertSeparator();
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Convex hulls" ),     MakePixmap( "convex_hulls" )    , controllers.options_, "ConvexHulls" );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Convex hulls" ),     MakePixmap( "convex_hulls" )    , controllers.options_, "ConvexHulls", kernel::FourStateOption::Off() );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Current Mission" ),  MakePixmap( "current_mission" ) , controllers.options_, "MissionParameters" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Decisional State" ), MakePixmap( "decisional_state" ), controllers.options_, "DecisionalState" );
     menu->insertItem( tools::translate( "Menu", "Units..." ), subMenu );
