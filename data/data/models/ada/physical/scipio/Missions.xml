@@ -3116,10 +3116,6 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_DesequiperSiteFranchissement" id="374" name="Automate Desequiper Site Franchissement">
       <parameter dia-name="siteFranchissement_" name="Site franchissement" optional="false" type="ObjectKnowledge"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_AffecterPionAObstacle" id="375" name="Automate Affecter Pion AObstacle">
-      <parameter dia-name="pion_" name="Pion" optional="false" type="Agent"/>
-      <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="PlannedWork"/>
-    </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ReconnaitreZoneImplantation" id="376" name="Automate Reconnaitre Zone Implantation">
       <parameter dia-name="orderConduiteAutomateReconnaitreZoneImplantation_" name="Ordre conduite automate reconnaitre zone implantation" optional="false" type="Point"/>
     </fragorder>
@@ -3129,9 +3125,6 @@
         <value id="1" name="detruire_materiels_en_reparation"/>
         <value id="2" name="reparer_materiels_sur_place"/>
       </parameter>
-    </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ActiverObstacle" id="378" name="Automate Activer Obstacle">
-      <parameter dia-name="orderConduiteAutomateActiverObstacle_" name="Ordre conduite automate activer obstacle" optional="false" type="ObjectKnowledge"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TransfererRenforts" id="379" name="Automate Transferer Renforts">
       <parameter dia-name="pionATransferer_" name="Pion a transferer" optional="false" type="Agent"/>
@@ -3201,6 +3194,9 @@
     <fragorder available-without-mission="false" dia-type="france.military.platoon.combat.support.air.tasks.ModifierAltitude" id="402" name="Modifier altitude">
       <parameter dia-name="nbIT_" name="Altitude" optional="false" type="Integer"/>
     </fragorder>
+    <fragorder available-without-mission="false" dia-type="france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" id="403" name="Activer Obstacles">
+      <parameter dia-name="objectKnowledge_" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
+    </fragorder>
   </fragorders>
 </missions>
-<!-- signature="1904704680" -->
+<!-- signature="0836434159" -->
