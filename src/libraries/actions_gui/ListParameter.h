@@ -90,7 +90,7 @@ private:
     //! @name Member data
     //@{
     kernel::ActionController& controller_;
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     Q3ListView* list_;
     Q3ListViewItem* selected_;
     T_Widgets widgets_;

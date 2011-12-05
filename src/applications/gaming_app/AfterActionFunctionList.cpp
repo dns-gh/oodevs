@@ -193,11 +193,7 @@ void AfterActionFunctionList::Request()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< actions::gui::Param_ABC > AfterActionFunctionList::CreateParameter( const std::string& type, const QString& name )
 {
-    const OrderParameter parameter( name.ascii(), type.c_str(), false );
-    const OrderParameter parameterList( name.ascii(), type.c_str(), false, 1, std::numeric_limits< int >::max() );
-
     boost::shared_ptr< actions::gui::Param_ABC > result;
-
     if( type == "unit" || type == "zone" )
     {
         const OrderParameter parameter( name.ascii(), type.c_str(), false );
@@ -214,7 +210,7 @@ boost::shared_ptr< actions::gui::Param_ABC > AfterActionFunctionList::CreatePara
     {
         const OrderParameter parameter( name.ascii(), type.c_str(), false, 1, std::numeric_limits< int >::max() );
         if( type == "unit list" )
-            result.reset( new actions::gui::ParamAgentList( this, OrderParameter( name.ascii(), type.c_str(), false, 1, std::numeric_limits< int >::max() ), controllers_.actions_, controllers_.controller_ ) );
+            result.reset( new actions::gui::ParamAgentList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
         else if( type == "crowd list" )
             result.reset( new actions::gui::ParamCrowdList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
         else if( type == "population list" )
