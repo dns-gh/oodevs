@@ -24,6 +24,7 @@
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "HumansActionsNotificationHandler_ABC.h"
 #include <boost/serialization/vector.hpp>
+#include "MIL_AgentServer.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_HumansComposante )
 
@@ -515,3 +516,19 @@ void PHY_HumansComposante::ChangeHumanState( sword::MissionParameters& msg )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::ChangeHumanSize
+// Created: ABR 2011-12-05
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::ChangeHumanSize( unsigned int newHumanSize )
+{
+    if( humans_.size() > newHumanSize )
+        while( humans_.size() > newHumanSize )
+        {
+            delete humans_.back();
+            humans_.pop_back();
+        }
+    else
+        while( humans_.size() < newHumanSize )
+            humans_.push_back( new PHY_Human( MIL_AgentServer::GetWorkspace(), *this ) );
+}

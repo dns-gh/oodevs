@@ -1547,3 +1547,12 @@ void PHY_ComposantePion::ChangeHumanState( sword::MissionParameters& msg )
         pHumans_->ChangeHumanState( msg );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ChangeHumanSize
+// Created: ABR 2011-12-05
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::ChangeHumanSize( unsigned int newHumanSize )
+{
+    assert( pHumans_ );
+    return pHumans_->ChangeHumanSize( newHumanSize );
+}

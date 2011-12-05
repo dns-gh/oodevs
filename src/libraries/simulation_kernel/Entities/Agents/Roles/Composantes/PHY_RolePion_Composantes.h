@@ -130,6 +130,7 @@ public:
     void CreateWounds( unsigned int quantity, bool randomWound, sword::EnumHumanWound wound );
     void ChangeEquipmentState( const PHY_ComposanteTypePion& composanteType, const sword::MissionParameter_Value& message );
     void ChangeHumanState( const sword::MissionParameters& msg );
+    void ChangeHumanSize( unsigned long equipmentTypeId, unsigned int newHumanSize );
     //@}
 
     //! @name Pret de composantes
@@ -237,7 +238,6 @@ public:
     //@{
     virtual void SendChangedState( client::UnitAttributes& message ) const;
     virtual void SendFullState   ( client::UnitAttributes& message ) const;
-
     virtual void SendChangedState() const;
     virtual void SendFullState   ( unsigned int context ) const;
     //@}
@@ -260,6 +260,7 @@ public:
     PHY_DotationStock& GetOrAddStock( PHY_RoleInterface_Supply& supplyRole, const PHY_DotationCategory& dotation );
     bool CanStockMoreOf( PHY_RoleInterface_Supply& supplyRole, const PHY_DotationCategory& dotation ) const;
     //@}
+
 private:
     //! @name Types
     //@{

@@ -1934,3 +1934,14 @@ void PHY_RolePion_Composantes::ChangeHumanState( const sword::MissionParameters&
     if( remaining )
         MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Cannot apply all the human states in the magic action, " << remaining << " states remaining." );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ChangeHumanSize
+// Created: ABR 2011-12-05
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ChangeHumanSize( unsigned long equipmentTypeId, unsigned int newHumanSize )
+{
+    if( composantes_.size() != 1 || composantes_[ 0 ] == 0 || composantes_[ 0 ]->GetType().GetMosID().id() != equipmentTypeId )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    composantes_[ 0 ]->ChangeHumanSize( newHumanSize );
+}
