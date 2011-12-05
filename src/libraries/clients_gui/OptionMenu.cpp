@@ -61,9 +61,14 @@ void OptionMenuBase::OnItemSelected( int id )
 void OptionMenuBase::Select( int id )
 {
     if( id == selected_ )
-        return;
-
-    setItemChecked( selected_, false );
-    selected_ = id;
-    setItemChecked( selected_, true );
+    {
+        if ( !isItemChecked( id ) )
+            setItemChecked( selected_, true );
+    }
+    else
+    {
+        setItemChecked( selected_, false );
+        selected_ = id;
+        setItemChecked( selected_, true );
+    }
 }

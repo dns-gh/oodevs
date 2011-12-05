@@ -89,10 +89,16 @@ public:
 
     //! @name Operations
     //@{
-    void AddItem( const QString& label, const T& value )
+    int AddItem( const QString& label, const T& value )
     {
+        std::vector< T >::iterator it = std::find( values_.begin(), values_.end(), value );
+        if ( it != values_.end() )
+            return static_cast< int >( std::distance( values_.begin(), it ) );
+
         values_.push_back( value );
-        OptionMenuBase::AddItem( label, static_cast< int >( values_.size() - 1 ) );
+        int id = static_cast< int >( values_.size() - 1 );
+        OptionMenuBase::AddItem( label, id );
+        return id;
     };
     //@}
 
@@ -115,8 +121,6 @@ public:
                     Select( i );
                     return;
                 }
-            values_.push_back( value.To< T >() );
-            Select( static_cast< int >( values_.size() ) - 1 );
         }
     };
     //@}
