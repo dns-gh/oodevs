@@ -520,7 +520,13 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="position" name="Position" optional="false" type="Point"/>
+      <parameter dia-name="position" name="Position" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.SeFaireDecontaminer" dia-type="france.military.platoon.tasks.SeFaireDecontaminer" id="2056" name="PION COMMUNES Se Faire Decontaminer" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2089,7 +2095,13 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="position" name="Position" optional="false" type="Point"/>
+      <parameter dia-name="position" name="Position" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.EscorterRefugiesVersCamp" dia-type="france.military.company.tasks.EscorterRefugiesVersCamp" id="1014" mrt-dia-behavior="france.military.company.tasks.EscorterRefugiesVersCamp" name="AUTOMATE COMMUNES Escorter Refugies Vers Camp" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2959,6 +2971,23 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Zones deploiement" optional="false" type="Polygon"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.Defendre" dia-type="france.military.company.combat.support.artillery.tasks.Defendre" id="28770" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.Defendre" name="AUTOMATE ASA Defendre">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="objective" name="Zone à défendre" optional="false" type="Polygon"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="true" type="Point"/>
+      <parameter dia-name="modeDeploiement" name="Mode deploiement" optional="true" type="Enumeration">
+        <value id="0" name="en_carre"/>
+        <value id="1" name="en_triangle"/>
+        <value id="2" name="nasse_trois_sections"/>
+        <value id="3" name="nasse_quatre_sections"/>
+        <value id="4" name="double_rideau"/>
+        <value id="5" name="simple_rideau"/>
+      </parameter>
+      <parameter dia-name="angle" name="Angle" optional="true" type="Integer"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -3199,4 +3228,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3616825401" -->
+<!-- signature="1456131297" -->

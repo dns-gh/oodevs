@@ -6463,6 +6463,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="AUTOMATE ASA Defendre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7946,4 +7947,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3442342618" -->
+<!-- signature="2285417081" -->
