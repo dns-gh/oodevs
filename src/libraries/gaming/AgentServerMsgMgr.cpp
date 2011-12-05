@@ -2171,8 +2171,8 @@ void AgentServerMsgMgr::SetElements( Model& model, Profile& profile )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::Reconnect( const std::string& login, const std::string& password )
 {
-    GetModel().Purge();
     GetProfile().Login( login, password );
+    GetModel().Purge();
 }
 
 // -----------------------------------------------------------------------------
