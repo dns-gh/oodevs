@@ -22,10 +22,10 @@
   <function name="Mean operational state">
     <descriptions>
       <description name="Mean operational state" lang="en">
-        <![CDATA[Operational state of the selected units]]>
+        <![CDATA[Mean operational state of the selected units]]>
       </description>
       <description name="Etat opérationnel moyen" lang="fr">
-        <![CDATA[Etat opérationnel des unités sélectionnées]]>
+        <![CDATA[Etat opérationnel moyen des unités sélectionnées]]>
       </description>
     </descriptions>
     <parameters>
@@ -101,7 +101,7 @@
         <![CDATA[Total number of resources for the selected units.]]>
       </description>
       <description name="Ressources totales par unités" lang="fr">
-        <![CDATA[Nombre total de ressources pour une liste d'unité.]]>
+        <![CDATA[Nombre total de ressources pour une liste d'unités.]]>
       </description>
     </descriptions>
     <parameters>
@@ -208,7 +208,7 @@
       <description name="Available equipments for units" lang="en">
         <![CDATA[Number of equipments with available state for the selected units.]]>
       </description>
-      <description name="Equipements disponible par unités" lang="fr">
+      <description name="Equipements disponibles par unités" lang="fr">
         <![CDATA[Quantité d'équipements en état disponible pour une liste d'unités.]]>
       </description>
     </descriptions>
@@ -229,8 +229,8 @@
       <description name="Destroyed equipments for units" lang="en">
         <![CDATA[Number of destroyed equipments for the unit list.]]>
       </description>
-      <description name="Equipements détruit par unités" lang="fr">
-        <![CDATA[Quantité d'équipements détruit pour une liste d'unités.]]>
+      <description name="Equipements détruits par unités" lang="fr">
+        <![CDATA[Quantité d'équipements détruits pour une liste d'unités.]]>
       </description>
     </descriptions>
     <parameters>
@@ -269,7 +269,7 @@
   <function name="Number of direct fires in zone">
     <descriptions>
       <description name="Number of direct fires in zone" lang="en">
-        <![CDATA[Number of direct fires by units located within the designated zone.]]>
+        <![CDATA[Number of direct fires within the selected zone.]]>
       </description>
       <description name="Nombre de tirs directs dans zone" lang="fr">
         <![CDATA[Nombre de tirs directs dans la zone désignée.]]>
@@ -314,10 +314,10 @@
   <function name="Number of indirect fires in zone">
     <descriptions>
       <description name="Number of indirect fires in zone" lang="en">
-        <![CDATA[Number of indirect fires by units located within the designated zone.]]>
+        <![CDATA[Number of indirect fires by units located within the selected zone.]]>
       </description>
       <description name="Nombre de tirs indirects dans zone" lang="fr">
-        <![CDATA[Nombre de tirs indirects dans la zone désignée.]]>
+        <![CDATA[Nombre de tirs indirects dans la zone spécifiée.]]>
       </description>
     </descriptions>
     <parameters>
@@ -335,10 +335,10 @@
   
   <function name="Available equipments in zone">
     <descriptions>
-      <description name="Available equipments in specified zone" lang="en">
-        <![CDATA[Total number of equipments with available state located within the designated zone.]]>
+      <description name="Available equipments in zone" lang="en">
+        <![CDATA[Total number of equipments with available state located within the selected zone.]]>
       </description>
-      <description name="Equipements disponibles dans la zone spécifiée" lang="fr">
+      <description name="Equipements disponibles dans zone" lang="fr">
         <![CDATA[Quantité d'équipements en état disponible dans la zone spécifiée.]]>
       </description>
     </descriptions>
@@ -357,13 +357,13 @@
     </indicator>
     </function>
 
-  <function name="Unavailable equipments in specified zone">
+  <function name="Unavailable equipments in zone">
     <descriptions>
-      <description name="Unavailable equipments in specified zone" lang="en">
-        <![CDATA[Total number of equipments with unavailable, repairable, repairing or captured states located within the designated zone.]]>
+      <description name="Unavailable equipments in zone" lang="en">
+        <![CDATA[Total number of equipments with unavailable, repairable, repairing or captured states located within the selected zone.]]>
       </description>
-      <description name="Equipements non disponibles dans la zone spécifiée" lang="fr">
-        <![CDATA[Quantité d'équipements en état unavailable, repairable, repairing ou captured dans la zone spécifiée.]]>
+      <description name="Equipements non disponibles dans zone" lang="fr">
+        <![CDATA[Quantité d'équipements en état non disponible, réparable, en réparation ou capturé dans la zone spécifiée.]]>
       </description>
     </descriptions>
     <parameters>
@@ -381,13 +381,13 @@
     </indicator>
   </function>
 
-  <function name="Operational humans in specified zone">
+  <function name="Operational humans in zone">
     <descriptions>
-      <description name="Operational humans in specified zone" lang="en">
-        <![CDATA[Operational humans for units in specified zone.]]>
+      <description name="Operational humans in zone" lang="en">
+        <![CDATA[Operational humans for units in selected zone.]]>
       </description>
-      <description name="Personnel disponible dans la zone spécifié" lang="fr">
-        <![CDATA[Personnel disponible dans la zone spécifié.]]>
+      <description name="Personnel disponible dans zone" lang="fr">
+        <![CDATA[Personnel disponible dans la zone spécifiéz.]]>
       </description>
     </descriptions>
     <parameters>
@@ -427,10 +427,10 @@
   <function name="Dead humans from direct fires in zone">
     <descriptions>
       <description name="Dead humans from direct fires in zone" lang="en">
-        <![CDATA[Dead humans from direct fires in zone.]]>
+        <![CDATA[Dead humans from direct fires in selected zone.]]>
       </description>
-      <description name="Pertes humaines par tirs directs dans la zone spécifiée" lang="fr">
-        <![CDATA[Pertes humaines par tirs directs dans zone.]]>
+      <description name="Pertes humaines par tirs directs dans zone" lang="fr">
+        <![CDATA[Pertes humaines par tirs directs dans la zone spécifiée.]]>
       </description>
     </descriptions>
     <parameters>
@@ -470,10 +470,10 @@
   <function name="Unavailable equipments for units">
     <descriptions>
       <description name="Unavailable equipments for units" lang="en">
-        <![CDATA[Number of equipments with unavailable,repairable,repairing or captured state for the selected units.]]>
+        <![CDATA[Number of equipments with unavailable, repairable, repairing or captured state for the selected units.]]>
       </description>
-      <description name="Equipements indisponible par unités" lang="fr">
-        <![CDATA[Nombre d'équipements en état "unavailable","repairable","repairing" ou "captured" pour une liste d'unités.]]>
+      <description name="Equipements indisponibles par unités" lang="fr">
+        <![CDATA[Nombre d'équipements en état non disponible, réparable, en réparation ou capturé pour une liste d'unités.]]>
       </description>
     </descriptions>
     <parameters>
@@ -612,9 +612,9 @@
   <function name="Wounded waiting for medical attention in zone">
     <descriptions>
       <description name="Wounded waiting for medical attention in zone" lang="en">
-        <![CDATA[Number of wounded waiting for medical attention in specified zone.]]>
+        <![CDATA[Number of wounded waiting for medical attention in selected zone.]]>
       </description>
-      <description name="Personnel en attente de soins dans la zone spécifiée" lang="fr">
+      <description name="Personnel en attente de soins dans zone" lang="fr">
         <![CDATA[Nombre de personnel en attente de soins dans la zone spécifiée.]]>
       </description>
     </descriptions>
@@ -695,7 +695,7 @@
         <![CDATA[Population quantity in a specified list of urban blocks.]]>
       </description>
       <description name="Nombre d'occupants dans des blocs urbains" lang="fr">
-        <![CDATA[Nombre d'occupants dans une liste de blocks urbains.]]>
+        <![CDATA[Nombre d'occupants dans une liste de blocs urbains.]]>
       </description>
     </descriptions>
         <parameters>
@@ -953,7 +953,7 @@
       <description name="Unavailable humans from indirect fires in zone (loss)" lang="en">
         <![CDATA[Dead humans from direct fires in zone.]]>
       </description>
-      <description name="Nombre d'humains invalides par tirs indirects dans la zone spécifiée (pertes)" lang="fr">
+      <description name="Nombre d'humains invalides par tirs indirects dans zone (pertes)" lang="fr">
         <![CDATA[Pertes humaines par tirs directs dans zone.]]>
       </description>
     </descriptions>
