@@ -50,7 +50,7 @@ void Simulation::OnReceive( const sword::SimToClient& msg )
     {
         handler_.Receive( msg );
     }
-    catch( std::exception& e )
+    catch( std::exception& /*e*/ )
     {
         if( msg.message().has_control_end_tick() )
         {
