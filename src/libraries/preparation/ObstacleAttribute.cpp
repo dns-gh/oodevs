@@ -24,8 +24,8 @@ ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dictionary )
     : dictionary_    ( dictionary )
     , type_          ( eDemolitionTargetType_Preliminary )
     , bActivated_    ( true )
-    , activationTime_( 0 )
-    , activityTime_  ( 0 )
+    , activationTime_( 0, 0 )
+    , activityTime_  ( 0, 0 )
 {
     CreateDictionary();
 }
@@ -38,8 +38,8 @@ ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dictionary, 
     : dictionary_    ( dictionary )
     , type_          ( type )
     , bActivated_    ( type_.GetValue() == eDemolitionTargetType_Preliminary )
-    , activationTime_( 0 )
-    , activityTime_  ( 0 )
+    , activationTime_( 0, 0 )
+    , activityTime_  ( 0, 0 )
 {
     CreateDictionary();
 }
@@ -74,9 +74,13 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDict
     : dictionary_    ( dictionary )
     , type_          ( xis.attribute< std::string >( "type", std::string() ) )
     , bActivated_    ( xis.attribute< bool >( "activated" ) )
-    , activationTime_( GetActivationTime( xis ) )
-    , activityTime_  ( GetActivityTime( xis ) )
+    , activationTime_( 0, 0 )
+    , activityTime_  ( 0, 0 )
 {
+    QTime activationTime;
+    activationTime_ = activationTime.addSecs( GetActivationTime( xis ) );
+    QTime activityTime;
+    activityTime_ = activityTime.addSecs( GetActivityTime( xis ) );
     CreateDictionary();
 }
 
@@ -100,8 +104,8 @@ void ObstacleAttribute::Display( kernel::Displayer_ABC& displayer ) const
              .Display( tools::translate( "Object", "Reserved obstacle activated:" ), bActivated_ );
     if( !bActivated_ )
     {
-        displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ / 3600. * Units::hours );
-        displayer.Display( tools::translate( "Object", "Activity time:" ), activityTime_ / 3600. * Units::hours );
+        displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ );
+        displayer.Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
     }
 }
 
@@ -116,8 +120,8 @@ void ObstacleAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
         displayer.Display( tools::translate( "Object", "Reserved obstacle activated:" ), bActivated_ );
     if( !bActivated_ )
     {
-        displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ / 3600. * Units::hours );
-        displayer.Display( tools::translate( "Object", "Activity time:" ), activityTime_ / 3600. * Units::hours );
+        displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ );
+        displayer.Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
     }
 }
 
@@ -127,16 +131,18 @@ void ObstacleAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "obstacle" )
+     xos << xml::start( "obstacle" )
             << xml::attribute( "type", type_.ToXml() )
             << xml::attribute( "activated", bActivated_ );
     if( !bActivated_ )
     {
+        unsigned int activityTime = activityTime_.hour() * 3600 + activityTime_.minute() * 60 + activityTime_.second();
+        unsigned int activationTime = activationTime_.hour() * 3600 + activationTime_.minute() * 60 + activationTime_.second();
         xos << xml::start( "activation-time" )
-                << xml::attribute( "value", activationTime_ )
+                << xml::attribute( "value", activationTime )
             << xml::end
             << xml::start( "activity-time" )
-                << xml::attribute( "value", activityTime_ )
+                << xml::attribute( "value", activityTime )
             << xml::end;
     }
     xos << xml::end;
@@ -180,7 +186,8 @@ void ObstacleAttribute::Activate( bool activate )
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::SetActivationTime( int time )
 {
-    activationTime_ = time;
+    QTime activationTime;
+    activationTime_ = activationTime.addSecs( time );
 }
 
 // -----------------------------------------------------------------------------
@@ -189,7 +196,8 @@ void ObstacleAttribute::SetActivationTime( int time )
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::SetActivityTime( int time )
 {
-    activityTime_ = time;
+    QTime activityTime;
+    activityTime_ = activityTime.addSecs( time );
 }
 
 // -----------------------------------------------------------------------------

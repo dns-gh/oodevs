@@ -79,8 +79,8 @@ private:
     kernel::PropertiesDictionary& dictionary_;
     Enum_DemolitionTargetType     type_;
     bool                          bActivated_;
-    int                           activationTime_;
-    int                           activityTime_;
+    QTime                         activationTime_;
+    QTime                         activityTime_;
     //@}
 };
 

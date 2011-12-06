@@ -32,7 +32,7 @@ namespace xml
 // Created: SBO 2007-02-08
 // =============================================================================
 class TimeLimitedAttribute : public kernel::TimeLimitedAttribute_ABC
-                            , public kernel::Serializable_ABC
+                           , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -68,7 +68,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::UnitedValue< unsigned int > activityTime_;
+    QTime activityTime_;
     //@}
 };
 

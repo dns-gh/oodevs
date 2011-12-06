@@ -25,6 +25,7 @@ namespace gui
 // =============================================================================
 class EditorFactory : public kernel::EditorFactory_ABC
                     , public tools::Caller< QString* >
+                    , public tools::Caller< QTime* >
                     , public tools::Caller< double* >
                     , public tools::Caller< float* >
                     , public tools::Caller< int* >
@@ -44,6 +45,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Call( QString* const& value );
+    virtual void Call( QTime* const& value );
     virtual void Call( double* const& value );
     virtual void Call( float* const& value );
     virtual void Call( int* const& value );
