@@ -219,7 +219,7 @@ void PHY_ActionMove::Execute()
     if( nReturn == DEC_PathWalker::eItineraireMustBeJoined )
     {
         MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
-        nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint );
+        nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint, forceNextPoint_ );
         forceNextPoint_ = false;
         isTreatingJoining_ = false;
     }
@@ -228,8 +228,17 @@ void PHY_ActionMove::Execute()
         isTreatingJoining_ = false;
         if( ( pCurrentPath != pJoiningPath_ && !pJoiningPath_.get() ) || pCurrentPath == pJoiningPath_ )
         {
-            DestroyJoiningPath();
-            nReturn = CreateAdaptedPath( pCurrentPath, MT_Vector2D() );
+            const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+            MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
+            if( vPionPos == lastBlockedPoint_.first.first && lastJoiningPoint == lastBlockedPoint_.first.second )
+            {
+                if( lastBlockedPoint_.second > 1 )
+                    forceNextPoint_ = true;
+                lastBlockedPoint_.second++;
+            }
+            else
+                lastBlockedPoint_ = std::make_pair( std::make_pair( vPionPos, lastJoiningPoint ), 1 );
+            nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint, forceNextPoint_ );
             isTreatingJoining_ = true;
         }
         forceNextPoint_ = false;
@@ -247,7 +256,7 @@ void PHY_ActionMove::Execute()
         {
             forceNextPoint_ = true;
             MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
-            nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint );
+            nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint, forceNextPoint_ );
         }
     }
     else
@@ -290,10 +299,10 @@ void PHY_ActionMove::CreateFinalPath()
 // Name: PHY_ActionMove::CreateAdaptedPath
 // Bypassd: CMA 2011-11-22
 // -----------------------------------------------------------------------------
-int PHY_ActionMove::CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint )
+int PHY_ActionMove::CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint )
 {
     role_.MoveSuspended( pCurrentPath );
-    if( CreateJoiningPath( lastJoiningPoint, forceNextPoint_ ) )
+    if( CreateJoiningPath( lastJoiningPoint, forceNextPoint ) )
     {
         pCurrentPath = pJoiningPath_;
         return role_.Move( pCurrentPath );

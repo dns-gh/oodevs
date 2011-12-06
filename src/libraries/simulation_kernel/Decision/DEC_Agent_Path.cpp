@@ -44,7 +44,7 @@
 #include "MT_Tools/MT_Logger.h"
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::Initialize
+// Name: DEC_Agent_Path constructor
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
@@ -61,10 +61,10 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVe
 {
     fuseau_= queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-    pathPoints_.reserve( 1 + points.size() );
-    pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    std::copy( points.begin(), points.end(), std::back_inserter( pathPoints_ ) );
-    Initialize( pathPoints_ );
+    initialPathPoints_.reserve( 1 + points.size() );
+    initialPathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    std::copy( points.begin(), points.end(), std::back_inserter( initialPathPoints_ ) );
+    Initialize( initialPathPoints_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,11 +85,11 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< bo
 {
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-    pathPoints_.reserve( 1 + points.size() );
-    pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    initialPathPoints_.reserve( 1 + points.size() );
+    initialPathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
-        pathPoints_.push_back( **it );
-    Initialize( pathPoints_ );
+        initialPathPoints_.push_back( **it );
+    Initialize( initialPathPoints_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -110,10 +110,10 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
 {
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-    pathPoints_.reserve( 2 );
-    pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    pathPoints_.push_back( vPosEnd );
-    Initialize( pathPoints_ );
+    initialPathPoints_.reserve( 2 );
+    initialPathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    initialPathPoints_.push_back( vPosEnd );
+    Initialize( initialPathPoints_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,10 +135,10 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
 {
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-    pathPoints_.reserve( 2 );
-    pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    pathPoints_.push_back( vPosEnd );
-    Initialize( pathPoints_ );
+    initialPathPoints_.reserve( 2 );
+    initialPathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    initialPathPoints_.push_back( vPosEnd );
+    Initialize( initialPathPoints_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -157,11 +157,11 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
     , pathType_                ( rhs.pathType_ )
     , pathClass_               ( rhs.pathClass_ )
     , bDecPointsInserted_      ( false )
-    , pathPoints_              ( rhs.pathPoints_ )
+    , initialPathPoints_       ( rhs.initialPathPoints_ )
 {
     fuseau_ = rhs.fuseau_;
     automateFuseau_ = rhs.automateFuseau_;
-    Initialize( pathPoints_ );
+    Initialize( initialPathPoints_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -398,7 +398,7 @@ bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPath
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::Shit
+// Name: DEC_Agent_Path::InsertPointAndPointAvant
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
 void DEC_Agent_Path::InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant )
@@ -524,6 +524,22 @@ void DEC_Agent_Path::InsertDecPoints()
         InsertPointAvants();
     // Limas
     InsertLimas();
+
+    CIT_PathPointList itTempResult = resultList_.begin();
+    for( CIT_PointVector itPoint = initialPathPoints_.begin(); itPoint != initialPathPoints_.end(); ++itPoint )
+    {
+        MT_Vector2D point( *itPoint );
+        for( CIT_PathPointList itResult = itTempResult; itResult != resultList_.end(); ++itResult )
+        {
+            DEC_PathPoint& result = **itResult;
+            if( point.SquareDistance( result.GetPos() ) < precision_ )
+            {
+                followingPathPoints_.push_back( std::make_pair( point, itResult ) );
+                itTempResult = ++itResult;
+                break;
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -605,16 +621,16 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
 bool DEC_Agent_Path::IsDestinationTrafficable() const
 {
     const PHY_RoleInterface_TerrainAnalysis& analysis = queryMaker_.GetRole< PHY_RoleInterface_TerrainAnalysis >();
-    return analysis.CanMoveOnUrbanBlock( pathPoints_ ) &&
-           analysis.CanMoveOnBurningCells( pathPoints_ ) &&
-           analysis.CanMoveOnKnowledgeObject( pathPoints_ );
+    return analysis.CanMoveOnUrbanBlock( initialPathPoints_ ) &&
+           analysis.CanMoveOnBurningCells( initialPathPoints_ ) &&
+           analysis.CanMoveOnKnowledgeObject( initialPathPoints_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::GetPointOnPathCloseTo
 // Created: CMA 2011-11-10
 // -----------------------------------------------------------------------------
-MT_Vector2D DEC_Agent_Path::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint ) const
+MT_Vector2D DEC_Agent_Path::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint )
 {
-    return DEC_PathResult::GetPointOnPathCloseTo( posToTest, pathPoints_, lastJoiningPoint, forceNextPoint );
+    return DEC_PathResult::GetPointOnPathCloseTo( posToTest, followingPathPoints_, lastJoiningPoint, forceNextPoint );
 }
