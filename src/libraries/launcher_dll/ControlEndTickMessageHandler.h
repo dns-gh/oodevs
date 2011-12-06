@@ -12,6 +12,7 @@
 #define launcher_ControlEndTickMessageHandler_h
 
 #include "ClientMessageHandlerBase.h"
+#include <boost/shared_ptr.hpp>
 
 namespace launcher
 {
@@ -26,7 +27,7 @@ class ControlEndTickMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             ControlEndTickMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             ControlEndTickMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session );
     virtual ~ControlEndTickMessageHandler();
     //@}
 
@@ -41,7 +42,6 @@ private:
     unsigned int timeFactor_;
     unsigned int checkpoint_;
     unsigned int tick_;
-    LauncherPublisher& publisher_;
     //@}
 };
 

@@ -16,12 +16,11 @@ using namespace launcher;
 // Name: ControlEndTickMessageHandler constructor
 // Created: LGY 2011-09-07
 // -----------------------------------------------------------------------------
-ControlEndTickMessageHandler::ControlEndTickMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session )
+ControlEndTickMessageHandler::ControlEndTickMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session )
     : ClientMessageHandlerBase( publisher, exercise, session )
     , timeFactor_( 0 )
     , checkpoint_( 0 )
     , tick_      ( 0 )
-    , publisher_ ( publisher )
 {
     // NOTHING
 }
@@ -58,7 +57,7 @@ bool ControlEndTickMessageHandler::OnReceiveMessage( const sword::SimToClient& m
         response().set_pathfind_request_number( pathfinds );
         if( checkpoint_ != 0 )
             response().set_last_checkpoint_build_duration( checkpoint_ );
-        response.Send( publisher_ );
+        SendSimply( response );
     }
     return false;
 }

@@ -16,7 +16,7 @@ using namespace launcher;
 // Name: CheckpointMessageHandler constructor
 // Created: LGY 2011-05-18
 // -----------------------------------------------------------------------------
-CheckpointMessageHandler::CheckpointMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session )
+CheckpointMessageHandler::CheckpointMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session )
     : ClientMessageHandlerBase( publisher, exercise, session )
 {
     // NOTHING

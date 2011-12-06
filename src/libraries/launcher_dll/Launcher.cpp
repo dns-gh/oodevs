@@ -128,7 +128,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Connecti
     const bool valid = sword::CheckCompatibility( message.client_version() );
     response().set_error_code( valid ? sword::ConnectionResponse::success : sword::ConnectionResponse::incompatible_protocol_version );
     response().mutable_server_version()->set_value( sword::ProtocolVersion().value() );
-    response.Send( server_->ResolveClient( endpoint ) );
+    response.Send( *server_->ResolveClient( endpoint ) );
     processes_->SendSessionsStatuses( endpoint );
 }
 
@@ -140,7 +140,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Exercise
 {
     ExerciseListResponse response;
     processes_->SendExerciseList( response() );
-    response.Send( server_->ResolveClient( endpoint ) );
+    response.Send( *server_->ResolveClient( endpoint ) );
     processes_->SendRunningExercices( endpoint );
 }
 
@@ -167,7 +167,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionS
             break;
     }
     response().set_checkpoint( message.has_checkpoint() ? message.checkpoint() : "" );
-    response.Send( server_->ResolveClient( endpoint ) );
+    response.Send( *server_->ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,7 +180,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionS
     response().set_exercise( message.exercise() );
     response().set_session( message.session() );
     response().set_error_code( processes_->StopSession( message ) );
-    response.Send( server_->ResolveClient( endpoint ) );
+    response.Send( *server_->ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +193,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::ProfileL
     response().set_exercise( message.exercise() );
     processes_->SendProfileList( response() );
     response().set_error_code( sword::ProfileListResponse::success );
-    response.Send( server_->ResolveClient( endpoint ) );
+    response.Send( *server_->ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,7 +206,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionL
     response().set_exercise( message.exercise() );
     processes_->SendSessionList( response() );
     response().set_error_code( sword::SessionListResponse::success );
-    response.Send( server_->ResolveClient( endpoint ) );
+    response.Send( *server_->ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,7 +246,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Checkpoi
     response().set_exercise( message.exercise() );
     response().set_session( message.session() );
     processes_->SendCheckpointList( response(), message.exercise(), message.session() );
-    response.Send( server_->ResolveClient( endpoint ) );
+    response.Send( *server_->ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,7 +262,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Checkpoi
     for( int i = 0; i < message.checkpoint_size(); ++i )
         checkpoints.push_back( message.checkpoint( i ) );
     processes_->RemoveCheckpoint( response(), checkpoints, message.exercise(), message.session() );
-    response.Send( server_->ResolveClient( endpoint ) );
+    response.Send( *server_->ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------

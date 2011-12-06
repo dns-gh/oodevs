@@ -11,6 +11,7 @@
 #define __SessionStatusMessageHandler_h_
 
 #include "ClientMessageHandlerBase.h"
+#include <boost/shared_ptr.hpp>
 
 namespace launcher
 {
@@ -25,7 +26,7 @@ class SessionStatusMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionStatusMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             SessionStatusMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session );
     virtual ~SessionStatusMessageHandler();
     //@}
 

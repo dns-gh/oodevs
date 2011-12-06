@@ -11,6 +11,7 @@
 #define launcher_TimeMessageHandler_h
 
 #include "ClientMessageHandlerBase.h"
+#include <boost/shared_ptr.hpp>
 
 namespace launcher
 {
@@ -25,7 +26,7 @@ class TimeMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             TimeMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             TimeMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session );
     virtual ~TimeMessageHandler();
     //@}
 

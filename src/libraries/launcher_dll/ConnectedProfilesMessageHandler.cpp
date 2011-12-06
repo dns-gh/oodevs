@@ -18,7 +18,7 @@ using namespace launcher;
 // Name: ConnectedProfilesMessageHandler constructor
 // Created: AHC 2011-05-20
 // -----------------------------------------------------------------------------
-ConnectedProfilesMessageHandler::ConnectedProfilesMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session )
+ConnectedProfilesMessageHandler::ConnectedProfilesMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session )
     : ClientMessageHandlerBase( publisher, exercise, session )
 {
     // NOTHING

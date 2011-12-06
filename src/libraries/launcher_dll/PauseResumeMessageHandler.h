@@ -11,6 +11,7 @@
 #define launcher_PauseResumeMessageHandler_h
 
 #include "ClientMessageHandlerBase.h"
+#include <boost/shared_ptr.hpp>
 
 namespace launcher
 {
@@ -25,7 +26,7 @@ class PauseResumeMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             PauseResumeMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             PauseResumeMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session );
     virtual ~PauseResumeMessageHandler();
     //@}
 

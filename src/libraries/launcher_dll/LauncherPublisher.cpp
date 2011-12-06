@@ -11,6 +11,8 @@
 #include "LauncherPublisher.h"
 #include "protocol/LauncherSenders.h"
 #include "tools/MessageSender_ABC.h"
+#include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_FormatString.h"
 
 using namespace launcher;
 
@@ -40,5 +42,13 @@ LauncherPublisher::~LauncherPublisher()
 // -----------------------------------------------------------------------------
 void LauncherPublisher::Send( const sword::LauncherToAdmin& message )
 {
-    sender_.Send( endpoint_, message );
+	try
+	{
+		sender_.Send( endpoint_, message );
+	}
+    catch( std::exception& e )
+    {
+        std::string content = e.what();
+        MT_LOG_ERROR_MSG( MT_FormatString( "Sending message to Admin failed, error code = %d", content) );
+    }
 }

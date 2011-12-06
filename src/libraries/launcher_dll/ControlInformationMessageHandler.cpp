@@ -16,7 +16,7 @@ using namespace launcher;
 // Name: ControlInformationMessageHandler constructor
 // Created: AHC 2011-05-20
 // -----------------------------------------------------------------------------
-ControlInformationMessageHandler::ControlInformationMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session )
+ControlInformationMessageHandler::ControlInformationMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session )
     : ClientMessageHandlerBase( publisher, exercise, session )
 {
     // NOTHING

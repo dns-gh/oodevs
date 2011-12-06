@@ -16,7 +16,7 @@ using namespace launcher;
 // Name: SessionStatusMessageHandler constructor
 // Created: LGY 2011-11-17
 // -----------------------------------------------------------------------------
-SessionStatusMessageHandler::SessionStatusMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session )
+SessionStatusMessageHandler::SessionStatusMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session )
     : ClientMessageHandlerBase( publisher, exercise, session )
 {
     // NOTHING

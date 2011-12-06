@@ -12,6 +12,7 @@
 #define __LAUNCHER_CONTROLINFORMATIONMESSAGEHANDLER_H__
 
 #include "ClientMessageHandlerBase.h"
+#include <boost/shared_ptr.hpp>
 
 namespace launcher
 {
@@ -26,7 +27,7 @@ class ControlInformationMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             ControlInformationMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             ControlInformationMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session );
     virtual ~ControlInformationMessageHandler();
     //@}
 

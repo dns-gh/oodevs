@@ -11,6 +11,7 @@
 #define launcher_NotificationMessageHandler_h
 
 #include "ClientMessageHandlerBase.h"
+#include <boost/shared_ptr.hpp>
 
 namespace launcher
 {
@@ -25,7 +26,7 @@ class NotificationMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             NotificationMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             NotificationMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session );
     virtual ~NotificationMessageHandler();
     //@}
 

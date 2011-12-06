@@ -66,12 +66,22 @@ void LauncherService::ConnectionError( const std::string& address, const std::st
 // Name: LauncherService::ResolveClient
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-LauncherPublisher& LauncherService::ResolveClient( const std::string& endpoint ) const
+boost::shared_ptr< LauncherPublisher > LauncherService::ResolveClient( const std::string& endpoint ) const
 {
     std::map< std::string, boost::shared_ptr< LauncherPublisher > >::const_iterator it = clients_.find( endpoint );
     if( it != clients_.end() )
-        return *it->second;
+        return it->second;
     throw std::runtime_error( __FUNCTION__ ": client " + endpoint + " does not exist." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherService::TestClient
+// Created: RPD 2011-12-06
+// -----------------------------------------------------------------------------
+bool LauncherService::TestClient( const std::string& endpoint ) const
+{
+    std::map< std::string, boost::shared_ptr< LauncherPublisher > >::const_iterator it = clients_.find( endpoint );
+	return it != clients_.end();
 }
 
 // -----------------------------------------------------------------------------

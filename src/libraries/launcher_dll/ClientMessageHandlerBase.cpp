@@ -16,7 +16,7 @@ using namespace launcher;
 // Name: ClientMessageHandlerBase constructor
 // Created: LGY 2011-05-18
 // -----------------------------------------------------------------------------
-ClientMessageHandlerBase::ClientMessageHandlerBase( LauncherPublisher& publisher, const std::string& exercise, const std::string& session )
+ClientMessageHandlerBase::ClientMessageHandlerBase( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session )
     : publisher_( publisher )
     , exercise_ ( exercise )
     , session_  ( session )

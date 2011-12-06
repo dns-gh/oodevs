@@ -16,7 +16,7 @@ using namespace launcher;
 // Name: PauseResumeMessageHandler constructor
 // Created: LGY 2011-05-18
 // -----------------------------------------------------------------------------
-PauseResumeMessageHandler::PauseResumeMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session )
+PauseResumeMessageHandler::PauseResumeMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session )
     : ClientMessageHandlerBase( publisher, exercise, session )
 {
     // NOTHING

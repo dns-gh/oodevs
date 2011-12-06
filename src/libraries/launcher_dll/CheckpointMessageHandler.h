@@ -11,6 +11,7 @@
 #define launcher_CheckpointMessageHandler_h
 
 #include "ClientMessageHandlerBase.h"
+#include <boost/shared_ptr.hpp>
 
 namespace launcher
 {
@@ -25,7 +26,7 @@ class CheckpointMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             CheckpointMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             CheckpointMessageHandler( boost::shared_ptr< LauncherPublisher >, const std::string& exercise, const std::string& session );
     virtual ~CheckpointMessageHandler();
     //@}
 

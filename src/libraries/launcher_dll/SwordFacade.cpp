@@ -10,6 +10,7 @@
 #include "launcher_dll_pch.h"
 #include "SwordFacade.h"
 #include "Config.h"
+#include "LauncherService.h"
 #include "client_proxy/SwordProxy.h"
 #include "frontend/ProcessWrapper.h"
 #include "protocol/ClientSenders.h"
@@ -24,10 +25,12 @@ using namespace launcher;
 // Name: SwordFacade constructor
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-SwordFacade::SwordFacade( bool isDispatcher )
+SwordFacade::SwordFacade( const LauncherService& server, std::string endpoint, bool isDispatcher )
     : isDispatcher_   ( isDispatcher )
     , isConnected_    ( false )
     , isAuthenticated_( false )
+	, server_		  ( server )
+	, endpoint_		  ( endpoint )
 {
     // NOTHING
 }
@@ -224,15 +227,18 @@ void SwordFacade::OnReceiveMessage( const sword::DispatcherToClient& message )
 template< typename T >
 void SwordFacade::Update( const T& message )
 {
-    BOOST_FOREACH( T_Handler handler, permanentHandler_ )
-        handler->OnReceiveMessage( message );
-    HandlerContainer::iterator it = messageHandlers_.find( message.context() );
-    if( messageHandlers_.end() != it )
-    {
-        bool handled = it->second->OnReceiveMessage( message );
-        if ( handled )
-            messageHandlers_.erase( message.context() );
-    }
+	if ( server_.TestClient( endpoint_ ) )
+	{
+		BOOST_FOREACH( T_Handler handler, permanentHandler_ )
+			handler->OnReceiveMessage( message );
+		HandlerContainer::iterator it = messageHandlers_.find( message.context() );
+		if( messageHandlers_.end() != it )
+		{
+			bool handled = it->second->OnReceiveMessage( message );
+			if ( handled )
+				messageHandlers_.erase( message.context() );
+		}
+	}
 }
 
 // -----------------------------------------------------------------------------

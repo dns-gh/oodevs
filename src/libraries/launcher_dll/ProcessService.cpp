@@ -115,7 +115,7 @@ void ProcessService::SendRunningExercices( const std::string& endpoint ) const
             message().set_exercise( key.first );
             message().set_session( key.second );
             message().set_status( sword::SessionStatus::running );
-            message.Send( server_.ResolveClient( endpoint ) );
+            message.Send( *server_.ResolveClient( endpoint ) );
         }
     }
 }
@@ -180,7 +180,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     SupervisorProfileCollector profileCollector;
     frontend::Profile::VisitProfiles( config_, fileLoader_, exercise, profileCollector );
 
-    boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( message.type() == sword::SessionStartRequest::dispatch ) );
+    boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( server_, endpoint, message.type() == sword::SessionStartRequest::dispatch ) );
     {
         boost::recursive_mutex::scoped_lock locker( mutex_ );
         processes_[ std::make_pair( exercise, session ) ] = wrapper;
@@ -245,7 +245,7 @@ void ProcessService::NotifyError( const std::string& /*error*/, std::string comm
 {
     if ( !commanderEndpoint.empty() )
 {
-        LauncherPublisher& publisher = server_.ResolveClient( commanderEndpoint );
+        LauncherPublisher& publisher = *server_.ResolveClient( commanderEndpoint );
         for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
         {
             const frontend::SpawnCommand* command = it->second->GetProcess()->GetCommand();
@@ -358,9 +358,9 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
     ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
     static int context = 1;
     if( processes_.end() == it )
-        return SendErrorMessage< SessionCommandExecutionResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionCommandExecutionResponse::invalid_session_name );
+        return SendErrorMessage< SessionCommandExecutionResponse >( *server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionCommandExecutionResponse::invalid_session_name );
     if( !it->second->IsConnected() )
-        return SendErrorMessage< SessionCommandExecutionResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionCommandExecutionResponse::session_not_running );
+        return SendErrorMessage< SessionCommandExecutionResponse >( *server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionCommandExecutionResponse::session_not_running );
     boost::shared_ptr< SwordFacade > client( it->second );
     if( message.has_set_running() )
     {
@@ -441,9 +441,9 @@ void ProcessService::ChangeParameter( const std::string& endpoint, const sword::
     ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
     static int context = 1;
     if( processes_.end() == it )
-        return SendErrorMessage< SessionParameterChangeResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionParameterChangeResponse::invalid_session_name );
+        return SendErrorMessage< SessionParameterChangeResponse >( *server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionParameterChangeResponse::invalid_session_name );
     if( !it->second->IsConnected() )
-        return SendErrorMessage< SessionParameterChangeResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionParameterChangeResponse::session_not_running );
+        return SendErrorMessage< SessionParameterChangeResponse >( *server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionParameterChangeResponse::session_not_running );
 
     boost::shared_ptr< SwordFacade > client( it->second );
     SessionParameterChangeResponse parameterChangeResponse;
@@ -464,7 +464,7 @@ void ProcessService::ChangeParameter( const std::string& endpoint, const sword::
         request.Send( *client, 0 );
         parameterChangeResponse().set_checkpoint_frequency( message.checkpoint_frequency() );
     }
-    parameterChangeResponse.Send( server_.ResolveClient( endpoint ) );
+    parameterChangeResponse.Send( *server_.ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -476,9 +476,9 @@ void ProcessService::SendConnectedProfiles( const std::string& endpoint, const s
     ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
     static int context = 1;
     if( processes_.end() == it )
-        return SendErrorMessage< ConnectedProfileListResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::ConnectedProfileListResponse::invalid_session_name );
+        return SendErrorMessage< ConnectedProfileListResponse >( *server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::ConnectedProfileListResponse::invalid_session_name );
     if( !it->second->IsConnected() )
-        return SendErrorMessage< ConnectedProfileListResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::ConnectedProfileListResponse::session_not_running );
+        return SendErrorMessage< ConnectedProfileListResponse >( *server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::ConnectedProfileListResponse::session_not_running );
     boost::shared_ptr< SwordFacade > client( it->second );
     client->RegisterMessageHandler( context, std::auto_ptr< MessageHandler_ABC >( new ConnectedProfilesMessageHandler( server_.ResolveClient( endpoint ), message.exercise(), message.session() ) ) );
     authentication::ConnectedProfilesRequest request;
@@ -494,7 +494,7 @@ void ProcessService::SendSessionsStatuses( const std::string& endpoint )
 {    
     if ( !endpoint.empty() )
     {
-        LauncherPublisher& publisher = server_.ResolveClient( endpoint );
+        LauncherPublisher& publisher = *server_.ResolveClient( endpoint );
         for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
         {
             const frontend::SpawnCommand* command = it->second->GetProcess()->GetCommand();

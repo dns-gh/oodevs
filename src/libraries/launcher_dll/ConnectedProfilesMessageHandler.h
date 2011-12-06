@@ -12,6 +12,7 @@
 #define __LAUNCHER_CONNECTEDPROFILESMESSAGEHANDLER_H__
 
 #include "ClientMessageHandlerBase.h"
+#include <boost/shared_ptr.hpp>
 
 namespace launcher
 {
@@ -26,7 +27,7 @@ class ConnectedProfilesMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-    ConnectedProfilesMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+    ConnectedProfilesMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session );
     ~ConnectedProfilesMessageHandler();
     //@}
 

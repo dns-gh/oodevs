@@ -16,7 +16,7 @@ using namespace launcher;
 // Name: NotificationMessageHandler constructor
 // Created: LGY 2011-05-18
 // -----------------------------------------------------------------------------
-NotificationMessageHandler::NotificationMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session )
+NotificationMessageHandler::NotificationMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session )
     : ClientMessageHandlerBase( publisher, exercise, session )
 {
     // NOTHING

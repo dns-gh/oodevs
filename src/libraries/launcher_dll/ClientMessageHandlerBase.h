@@ -16,6 +16,7 @@
 #include "protocol/LauncherSenders.h"
 #include "protocol/AuthenticationSenders.h"
 #include "protocol/DispatcherSenders.h"
+#include <boost/shared_ptr.hpp>
 
 namespace launcher
 {
@@ -32,7 +33,7 @@ class ClientMessageHandlerBase : public MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientMessageHandlerBase( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             ClientMessageHandlerBase( boost::shared_ptr< LauncherPublisher >, const std::string& exercise, const std::string& session );
     virtual ~ClientMessageHandlerBase();
     //@}
 
@@ -52,14 +53,21 @@ protected:
     {
         message().set_exercise( exercise_ );
         message().set_session( session_ );
-        message.Send( publisher_ );
+		if ( publisher_.get() )
+			message.Send( *publisher_ );
+    }
+    template< typename T >
+    void SendSimply( T& message )
+    {
+		if ( publisher_.get() )
+			message.Send( *publisher_ );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    LauncherPublisher& publisher_;
+    boost::shared_ptr< LauncherPublisher > publisher_;
     const std::string exercise_;
     const std::string session_;
     //@}

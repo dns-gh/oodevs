@@ -42,6 +42,7 @@ namespace sword
 namespace launcher
 {
     class Config;
+	class LauncherService;
 
 // =============================================================================
 /** @class  SwordFacade
@@ -55,7 +56,7 @@ class SwordFacade : public SwordConnectionHandler_ABC
 public:
     //! @name Constructor/destructor
     //@{
-    explicit SwordFacade( bool isDispatcher = false );
+    explicit SwordFacade( const LauncherService& server, std::string endpoint, bool isDispatcher = false );
     virtual ~SwordFacade();
     //@}
 
@@ -119,6 +120,8 @@ private:
     boost::shared_ptr< SwordProxy > client_;
     HandlerContainer messageHandlers_;
     std::vector< T_Handler > permanentHandler_;
+	const LauncherService& server_;
+	std::string endpoint_;
     //@}
 };
 
