@@ -2999,6 +2999,23 @@
       </parameter>
       <parameter dia-name="angle" name="Angle" optional="true" type="Integer"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.Surveiller" dia-type="france.military.company.combat.support.artillery.tasks.Surveiller" id="28771" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.Surveiller" name="AUTOMATE . ASA Surveiller">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="objective" name="Zone de stationnement" optional="false" type="Polygon"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="true" type="Point"/>
+      <parameter dia-name="modeDeploiement" name="Mode deploiement" optional="true" type="Enumeration">
+        <value id="0" name="en_carre"/>
+        <value id="1" name="en_triangle"/>
+        <value id="2" name="nasse_trois_sections"/>
+        <value id="3" name="nasse_quatre_sections"/>
+        <value id="4" name="double_rideau"/>
+        <value id="5" name="simple_rideau"/>
+      </parameter>
+      <parameter dia-name="angle" name="Angle" optional="true" type="Integer"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -3238,4 +3255,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="1298001438" -->
+<!-- signature="2990229960" -->
