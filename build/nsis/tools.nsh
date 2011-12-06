@@ -190,15 +190,9 @@
 
     SetOutPath "$INSTDIR\doc\fr"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DOCDIR}\fr\final\Guide_de_Reference.pdf"
-    File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_Entraine.pdf"
-    File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_Outil_Adaptation.pdf"
-    File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_Generation_Terrain.pdf"	
+    File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_General_Sword.pdf"
     CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide de Reference.lnk" "$INSTDIR\doc\fr\Guide_de_Reference.pdf"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur Entraine.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_Entraine.pdf"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur Outil Adaptation.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_Outil_Adaptation.pdf"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur Generation Terrain.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_Generation_Terrain.pdf"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur General Sword.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_General_Sword.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
 !macroend
