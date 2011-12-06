@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "MergingTacticalHierarchies.h"
 #include "SymbolHierarchy_ABC.h"
+#include "Diplomacies_ABC.h"
 #include "ENT/ENT_Tr_Gen.h"
 
 using namespace kernel;
@@ -67,6 +68,8 @@ void MergingTacticalHierarchies::UpdateSymbol( bool up /* = true*/ )
     tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
     while( it.HasMoreElements() )
         MergeSymbol( it.NextElement() );
+    if( TacticalHierarchies* superior = SuperiorHierarchy() )
+        entity_.Get< SymbolHierarchy_ABC >().UpdateKarma( superior->GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
     if( GetSymbol() != oldSymbol || GetLevel() != oldLevel )
         controller_.Update( *static_cast< Symbol_ABC* >( this ) );
     if( up )
