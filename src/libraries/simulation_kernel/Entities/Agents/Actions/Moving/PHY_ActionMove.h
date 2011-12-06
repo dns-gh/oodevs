@@ -60,7 +60,7 @@ private:
     void AvoidObstacles();
     bool UpdateObjectsToAvoid();
     void CreateFinalPath();
-    int  CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint );
+    int  CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint );
     //@}
 
 private:
@@ -79,6 +79,7 @@ private:
     std::vector< TER_Localisation > geometrySignatures_;
     bool forceNextPoint_;
     bool isTreatingJoining_;
+    std::pair< std::pair< MT_Vector2D, MT_Vector2D >, unsigned int > lastBlockedPoint_;
 };
 
 #endif // __PHY_ActionMove_h_

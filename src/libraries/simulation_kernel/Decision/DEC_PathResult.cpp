@@ -21,6 +21,7 @@
 // -----------------------------------------------------------------------------
 DEC_PathResult::DEC_PathResult()
     : DEC_Path_ABC()
+    , precision_( 0.0001 )
     , bSectionJustEnded_( false )
 {
     // NOTHING
@@ -38,56 +39,67 @@ DEC_PathResult::~DEC_PathResult()
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PathResult::GetPointOnPathCloseTo
-// Created: AGN 03-01-13
+// Created: CMA 2011-12-06
 //-----------------------------------------------------------------------------
-MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const T_PointVector& pathPoints, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint ) const
+MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, T_FollowingPathList& pathPoints, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint ) const
 {
     assert( !resultList_.empty() );
-    CIT_PathPointList itStart = resultList_.begin();
-    CIT_PathPointList itEnd   = resultList_.begin();
-    ++itEnd;
+    assert( pathPoints.size() > 1 );
+    
+    CIT_FollowingPathList itCurrentRequest = pathPoints.begin();
+    CIT_FollowingPathList itNextRequest    = itCurrentRequest;
+    ++itNextRequest;
 
-    double precision = 0.0001;
-    CIT_PointVector itNextPoint = pathPoints.begin();
-    assert( itNextPoint->SquareDistance( (*itStart)->GetPos() ) < precision );
-    ++itNextPoint;
+    CIT_PathPointList itResultStart = itCurrentRequest->second;
+    CIT_PathPointList itResultEnd   = itResultStart;
+    ++itResultEnd;
 
-    double rDistance = std::numeric_limits< double >::max();
-    bool useNextPoint = false;
-    for( itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
+    bool bNewMin = false;
+    double rSquareDistance = std::numeric_limits< double >::max();
+    for( ; itResultEnd != resultList_.end(); ++itResultStart, ++itResultEnd )
     {
-        if( itNextPoint->SquareDistance( (*itStart)->GetPos() ) < precision )
+        MT_Line vLine( (*itResultStart)->GetPos(), (*itResultEnd)->GetPos() );
+        MT_Vector2D vClosest = vLine.ClosestPointOnLine( posToTest );
+        double rCurrentSquareDistance = vClosest.SquareDistance( posToTest );
+        if( rCurrentSquareDistance < rSquareDistance )
         {
-            if( lastJoiningPoint != MT_Vector2D( 0, 0 ) && itNextPoint->SquareDistance( lastJoiningPoint ) < precision )
-                break;
-            useNextPoint = true;
+            rSquareDistance = rCurrentSquareDistance;
+            bNewMin = true;
         }
 
-        MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
-        MT_Vector2D vClosest = vLine.ClosestPointOnLine( posToTest );
-        double rCurrentDistance = vClosest.SquareDistance( posToTest );
-        if( rCurrentDistance < rDistance )
+        if( itNextRequest->second == itResultEnd )
         {
-            rDistance = rCurrentDistance;
-            if( useNextPoint )
+            if( bNewMin || rSquareDistance > 1000 )
             {
-                ++itNextPoint;
-                useNextPoint = false;
+                if( itCurrentRequest != pathPoints.begin() )
+                {
+                    pathPoints.pop_front();
+                    itCurrentRequest = pathPoints.begin();
+                    itNextRequest    = itCurrentRequest;
+                    ++itNextRequest;
+                }
+                itCurrentRequest = itNextRequest;
+                ++itNextRequest;
+                bNewMin = false;
+                if( lastJoiningPoint != MT_Vector2D( 0, 0 ) && itCurrentRequest->first.SquareDistance( lastJoiningPoint ) < precision_ )
+                    break;
             }
+            else
+                break;
         }
     }
-    assert( !_isnan( itNextPoint->rX_ ) );
-    assert( !_isnan( itNextPoint->rY_ ) );
+    assert( !_isnan( itCurrentRequest->first.rX_ ) );
+    assert( !_isnan( itCurrentRequest->first.rY_ ) );
 
     if( forceNextPoint )
     {
-        if( itNextPoint != (--pathPoints.end()) )
-            ++itNextPoint;
+        if( itNextRequest != pathPoints.end() )
+            return itNextRequest->first;
         else
             return posToTest;
     }
 
-    return *itNextPoint;
+    return itCurrentRequest->first;
 }
 
 // -----------------------------------------------------------------------------

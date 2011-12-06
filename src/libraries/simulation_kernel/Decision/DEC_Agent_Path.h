@@ -79,7 +79,7 @@ public:
     const DEC_PathType& GetPathType() const;
     const DEC_Agent_PathClass& GetPathClass() const;
     double GetUnitMajorWeight() const;
-    MT_Vector2D GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint ) const;
+    MT_Vector2D GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint );
     //@}
 
     //! @name Tools
@@ -126,7 +126,8 @@ private:
     const DEC_PathType& pathType_; //$$$ A VIRER
     const DEC_Agent_PathClass& pathClass_;
     bool bRefine_;
-    T_PointVector pathPoints_;
+    T_PointVector initialPathPoints_;
+    T_FollowingPathList followingPathPoints_;
     MIL_Fuseau fuseau_;
     MIL_Fuseau automateFuseau_;
     MT_Vector2D vDirDanger_;
