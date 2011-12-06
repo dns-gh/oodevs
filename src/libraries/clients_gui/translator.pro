@@ -44,6 +44,7 @@ LightingPanel.cpp \
 LocationCreator.cpp \
 LocationEditorBox.cpp \
 LocationEditorToolbar.cpp \
+LodgingPrototype_ABC.cpp \
 Logger.cpp \
 LodgingPrototype_ABC.cpp \
 LogisticListView.cpp \
