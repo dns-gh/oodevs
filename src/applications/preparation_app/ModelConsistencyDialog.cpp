@@ -13,6 +13,7 @@
 #include "FilterProxyModel.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include <boost/foreach.hpp>
 #include <boost/assign/list_of.hpp>
@@ -21,10 +22,10 @@
 // Name: ModelConsistencyDialog constructor
 // Created: ABR 2011-09-23
 // -----------------------------------------------------------------------------
-ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::ActionController& actionController )
+ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::Controllers& controllers )
     : QDialog ( parent, "ModelConsistencyDialog" )
-    , actionController_( actionController )
-    , checker_         ( model, staticModel )
+    , actionController_( controllers.actions_ )
+    , checker_         ( model, staticModel, controllers )
     , pMapper_         ( new QSignalMapper( this ) )
 {
     // Initialize dialog
@@ -155,24 +156,29 @@ void ModelConsistencyDialog::UpdateDataModel()
     {
         const ModelConsistencyChecker::ConsistencyError& error = *it;
         QString idList;
-        for( std::vector< const kernel::Entity_ABC* >::const_iterator entityIt = error.entities_.begin(); entityIt != error.entities_.end(); ++entityIt )
-            idList += ( ( idList.isEmpty() ) ? "" : ( entityIt + 1 == error.entities_.end() ) ? tr( " and " ) : ", " ) + QString::number( ( *entityIt )->GetId() );
-
-        for( std::vector< const kernel::Entity_ABC* >::const_iterator entityIt = error.entities_.begin(); entityIt != error.entities_.end(); ++entityIt, ++currentRow )
+        for( ModelConsistencyChecker::CIT_SafeEntities entityIt = error.entities_.begin(); entityIt != error.entities_.end(); ++entityIt )
         {
+            if( *entityIt && **entityIt )
+                idList += ( ( idList.isEmpty() ) ? "" : ( entityIt + 1 == error.entities_.end() ) ? tr( " and " ) : ", " ) + QString::number( ( **entityIt )->GetId() );
+        }
 
-            QList< QStandardItem* > items;
-            const kernel::Entity_ABC& entity = **entityIt;
-            AddItem( static_cast< unsigned int >( entity.GetId() ), QString::number( entity.GetId() ), entity, error.type_, items );
-            AddItem( entity.GetName(), entity.GetName(), entity, error.type_, items );
-            QString text = ( error.type_ & ModelConsistencyChecker::eAllUniqueness ||
-                             error.type_ & ModelConsistencyChecker::eProfileUniqueness ||
-                             error.type_ & ModelConsistencyChecker::eGhostConverted )
-                           ? errorDescriptions_[ error.type_ ].arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() )
-                           : errorDescriptions_[ error.type_ ];
+        for( ModelConsistencyChecker::CIT_SafeEntities entityIt = error.entities_.begin(); entityIt != error.entities_.end(); ++entityIt, ++currentRow )
+        {
+            const kernel::SafePointer< kernel::Entity_ABC >& entity = **entityIt;
+            if( entity )
+            {
+                QList< QStandardItem* > items;
+                AddItem( static_cast< unsigned int >( entity->GetId() ), QString::number( entity->GetId() ), entity, error.type_, items );
+                AddItem( entity->GetName(), entity->GetName(), entity, error.type_, items );
+                QString text = ( error.type_ & ModelConsistencyChecker::eAllUniqueness ||
+                                 error.type_ & ModelConsistencyChecker::eProfileUniqueness ||
+                                 error.type_ & ModelConsistencyChecker::eGhostConverted )
+                               ? errorDescriptions_[ error.type_ ].arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() )
+                               : errorDescriptions_[ error.type_ ];
 
-            AddItem( text, text, entity, error.type_, items  );
-            dataModel_->appendRow( items );
+                AddItem( text, text, entity, error.type_, items  );
+                dataModel_->appendRow( items );
+            }
         }
     }
 }
@@ -196,7 +202,7 @@ namespace
 // Created: ABR 2011-09-26
 // -----------------------------------------------------------------------------
 template< typename T >
-void ModelConsistencyDialog::AddItem( T data, QString text, const kernel::Entity_ABC& entity,
+void ModelConsistencyDialog::AddItem( T data, QString text, const kernel::SafePointer< kernel::Entity_ABC >& entity,
                                       ModelConsistencyChecker::E_ConsistencyCheck type, QList< QStandardItem* >& items )
 {
     QStandardItem* item = new QStandardItem( text );
@@ -216,11 +222,11 @@ void ModelConsistencyDialog::AddItem( T data, QString text, const kernel::Entity
 // -----------------------------------------------------------------------------
 void ModelConsistencyDialog::OnSelectionChanged( const QModelIndex& index )
 {
-    const kernel::Entity_ABC* entity = static_cast< const kernel::Entity_ABC* >( index.data( Qt::UserRole ).value< VariantPointer >().ptr_ );
-    if( entity )
+    const kernel::SafePointer< kernel::Entity_ABC >* entity = static_cast< const kernel::SafePointer< kernel::Entity_ABC >* >( index.data( Qt::UserRole ).value< VariantPointer >().ptr_ );
+    if( entity && *entity )
     {
-        entity->Select( actionController_ );
-        entity->Activate( actionController_ );
+        ( *entity )->Select( actionController_ );
+        ( *entity )->Activate( actionController_ );
     }
 }
 

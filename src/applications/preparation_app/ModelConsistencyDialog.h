@@ -17,6 +17,7 @@
 namespace kernel
 {
     class ActionController;
+    class Controllers;
     class Entity_ABC;
 }
 
@@ -52,7 +53,7 @@ class ModelConsistencyDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::ActionController& actionController );
+             ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::Controllers& controllers );
     virtual ~ModelConsistencyDialog();
     //@}
 
@@ -78,7 +79,7 @@ private:
     void CreateCheckbox( QHBoxLayout& layout, const T_Types& names );
     void UpdateDataModel();
     template< typename T >
-    void AddItem( T data, QString text, const kernel::Entity_ABC& entity,
+    void AddItem( T data, QString text, const kernel::SafePointer< kernel::Entity_ABC >& entity,
                   ModelConsistencyChecker::E_ConsistencyCheck type, QList< QStandardItem* >& items );
     //@}
 

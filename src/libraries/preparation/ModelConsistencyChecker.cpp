@@ -47,9 +47,10 @@ using namespace tools;
 // Name: ModelConsistencyChecker constructor
 // Created: ABR 2011-09-22
 // -----------------------------------------------------------------------------
-ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const StaticModel& staticModel )
+ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const StaticModel& staticModel, Controllers& controllers )
     : model_      ( model )
     , staticModel_( staticModel )
+    , controllers_( controllers )
 {
     // NOTHING
 }
@@ -60,7 +61,7 @@ ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const Stat
 // -----------------------------------------------------------------------------
 ModelConsistencyChecker::~ModelConsistencyChecker()
 {
-    errors_.clear();
+    ClearErrors();
     entities_.clear();
 }
 
@@ -108,7 +109,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool ModelConsistencyChecker::CheckConsistency( unsigned int filters /*= eAllChecks*/ )
 {
-    errors_.clear();
+    ClearErrors();
     filters_ = filters;
     if( filters & eLongNameUniqueness )
         CheckUniqueness( eLongNameUniqueness, &CompareLongName );
@@ -130,9 +131,21 @@ bool ModelConsistencyChecker::CheckConsistency( unsigned int filters /*= eAllChe
         CheckProfileInitialization();
     if( filters & eGhostExistence || filters & eGhostConverted )
         CheckGhosts();
-	//if ( filters & eFormationWithSameLevelEmptiness )
-	//	CheckFormationWithSameLevelAsParentEmptiness();
+    //if ( filters & eFormationWithSameLevelEmptiness )
+    //	CheckFormationWithSameLevelAsParentEmptiness();
     return !errors_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::ClearErrors
+// Created: JSR 2011-12-06
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::ClearErrors()
+{
+    for( IT_ConsistencyErrors it = errors_.begin(); it != errors_.end(); ++it )
+        for( IT_SafeEntities entityIt = it->entities_.begin(); entityIt != it->entities_.end(); ++entityIt )
+            delete *entityIt;
+    errors_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -230,9 +243,16 @@ void ModelConsistencyChecker::CheckUniqueness( E_ConsistencyCheck type, bool ( *
             const Entity_ABC& entity2 = **iter;
             if( ( *comparator )( entity1, entity2 ) )
             {
-                if( std::find( error.entities_.begin(), error.entities_.end(), &entity1 ) == error.entities_.end() )
-                    error.entities_.push_back( &entity1 );
-                error.entities_.push_back( &entity2 );
+                bool bFound = false;
+                for( CIT_SafeEntities safeIt = error.entities_.begin(); safeIt != error.entities_.end(); ++safeIt )
+                    if( **safeIt == &entity1 )
+                    {
+                        bFound = true;
+                        break;
+                    }
+                if( !bFound )
+                    error.entities_.push_back( new SafePointer< Entity_ABC >( controllers_, &entity1 ) );
+                error.entities_.push_back( new SafePointer< Entity_ABC >( controllers_, &entity2 ) );
                 iter = entities_.erase( iter );
             }
             else
@@ -357,15 +377,15 @@ void ModelConsistencyChecker::CheckFormationWithSameLevelAsParentEmptiness()
     while( formationIterator.HasMoreElements() )
     {
         const Formation_ABC& formation = formationIterator.NextElement();
-		const FormationHierarchies* hierarchy = formation.Retrieve< FormationHierarchies >();
+        const FormationHierarchies* hierarchy = formation.Retrieve< FormationHierarchies >();
         if( hierarchy && hierarchy->GetSuperior() && hierarchy->CountSubordinates() != 0 )
-		{
-			const FormationHierarchies* parentHierarchy = hierarchy->GetSuperior()->Retrieve< FormationHierarchies >();
-			if ( hierarchy->GetLevel() == parentHierarchy->GetLevel() )
-			{
-				AddError( eFormationWithSameLevelEmptiness, &formation );
-			}
-		}
+        {
+            const FormationHierarchies* parentHierarchy = hierarchy->GetSuperior()->Retrieve< FormationHierarchies >();
+            if ( hierarchy->GetLevel() == parentHierarchy->GetLevel() )
+            {
+                AddError( eFormationWithSameLevelEmptiness, &formation );
+            }
+        }
     }
 }
 
@@ -377,7 +397,7 @@ void ModelConsistencyChecker::AddError( E_ConsistencyCheck type, const kernel::E
 {
     assert( entity );
     ConsistencyError error ( type );
-    error.entities_.push_back( entity );
+    error.entities_.push_back( new SafePointer< Entity_ABC >( controllers_, entity ) );
     error.optional_ = optional;
     errors_.push_back( error );
 }
