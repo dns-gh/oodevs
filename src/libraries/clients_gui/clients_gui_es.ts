@@ -249,6 +249,13 @@
     </message>
 </context>
 <context>
+    <name>gui::ColorButton</name>
+    <message>
+        <source>Select color</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::ComboTableItem</name>
     <message>
         <source>Unavailable</source>

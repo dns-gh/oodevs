@@ -69,6 +69,10 @@
         <source>Reset color</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select color</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CommunicationListView</name>

@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::ColorButton */
+
 #include "clients_gui_pch.h"
 #include "ColorButton.h"
 #include "moc_ColorButton.cpp"
@@ -67,7 +69,7 @@ void ColorButton::paintEvent( QPaintEvent* )
 // -----------------------------------------------------------------------------
 void ColorButton::OnClick()
 {
-    QColor color = QColorDialog::getColor( current_, this );
+    QColor color = QColorDialog::getColor( current_, this, tr( "Select color" ) );
     if( color.isValid() )
         SetColor( color );
 }
