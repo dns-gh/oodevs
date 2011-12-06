@@ -385,7 +385,7 @@
     </message>
     <message>
         <source>Unsaved changes will be lost, continue anyway ?</source>
-        <translation>Les modifications non sauvegardées seront perdues, continuer malgrès tout ?</translation>
+        <translation>Les modifications non sauvegardées seront perdues, continuer malgré tout ?</translation>
     </message>
     <message>
         <source>Invalid directory</source>
