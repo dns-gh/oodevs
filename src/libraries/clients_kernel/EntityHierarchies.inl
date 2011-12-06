@@ -81,6 +81,16 @@ tools::Iterator< const Entity_ABC& > EntityHierarchies< Interface >::CreateSubor
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityHierarchies::CountSubordinates
+// Created: RPD 2011-11-07
+// -----------------------------------------------------------------------------
+template< typename Interface >
+long EntityHierarchies< Interface >::CountSubordinates() const
+{
+    return Count();
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityHierarchies::RegisterSubordinate
 // Created: AGE 2006-11-20
 // -----------------------------------------------------------------------------
