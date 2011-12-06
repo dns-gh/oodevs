@@ -1623,6 +1623,17 @@
         <value id="1" name="directionnel"/>
       </parameter>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.Surveiller" dia-type="france.military.platoon.combat.support.artillery.tasks.Surveiller" id="2479" name="PION . ASA Surveiller" package="defence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="position" name="Point de deploiement" optional="false" type="Point"/>
+      <parameter dia-name="typeDeploiement" name="Mode deploiement" optional="false" type="Enumeration">
+        <value id="0" name="omnidirectionnel"/>
+        <value id="1" name="directionnel"/>
+      </parameter>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AUTOMATE ALAT Aller Se Recompleter" package="none">
@@ -3227,4 +3238,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="2516818131" -->
+<!-- signature="0795185509" -->

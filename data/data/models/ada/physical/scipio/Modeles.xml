@@ -318,6 +318,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION ASA Defendre"/>
+        <mission name="PION . ASA Surveiller"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7947,4 +7948,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3809759324" -->
+<!-- signature="1444997683" -->
