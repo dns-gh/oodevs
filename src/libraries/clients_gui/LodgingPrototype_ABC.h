@@ -18,7 +18,7 @@ namespace gui
 /** @class  LodgingPrototype_ABC
     @brief  LodgingPrototype_ABC
 */
-// Created: MARTIN 2011-05-02
+// Created: MMC 2011-05-02
 // =============================================================================
 class LodgingPrototype_ABC : public ObjectAttributePrototype_ABC
 {

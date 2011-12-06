@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::LodgingPrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "LodgingPrototype_ABC.h"
 
