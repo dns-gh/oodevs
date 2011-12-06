@@ -42,7 +42,7 @@ Architecture::~Architecture()
 // Name: Architecture::Initialize
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-void Architecture::Initialize( float height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
+void Architecture::Initialize( unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
                                const std::string& material, float occupation, float trafficability )
 {
     roofShape_ = roofShape;

@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( float height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
+    virtual void Initialize( unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
                              const std::string& material, float occupation, float trafficability );
     virtual const std::string& GetMaterial() const;
     virtual unsigned int GetFloorNumber() const;
@@ -49,7 +49,7 @@ private:
     kernel::PropertiesDictionary& dictionary_;
     std::string roofShape_;
     std::string material_;
-    float height_;
+    unsigned int height_;
     unsigned int floorNumber_;
     unsigned int parkingFloors_;
     unsigned int occupation_;
