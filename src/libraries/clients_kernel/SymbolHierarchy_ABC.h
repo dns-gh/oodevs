@@ -15,6 +15,7 @@
 
 namespace kernel
 {
+    class Karma;
 // =============================================================================
 /** @class  SymbolHierarchy_ABC
     @brief  Symbol hierarchy declaration
@@ -40,6 +41,7 @@ public:
     virtual void MergeSymbol( const std::string& symbol ) = 0;
     virtual void PrepareForMerge() = 0;
     virtual void Reset() = 0;
+    virtual void UpdateKarma( const Karma& karma ) = 0;
     //@}
 };
 }

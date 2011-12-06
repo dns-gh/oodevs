@@ -89,3 +89,12 @@ bool SymbolHierarchy::IsOverriden() const
 {
     return overriden_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: SymbolHierarchy::UpdateKarma
+// Created: LGY 2011-12-06
+// -----------------------------------------------------------------------------
+void SymbolHierarchy::UpdateKarma( const Karma& karma )
+{
+    kernel::App6Symbol::SetKarma( symbol_, karma );
+}

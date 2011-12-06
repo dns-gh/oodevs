@@ -38,6 +38,7 @@ public:
     virtual void PrepareForMerge();
     virtual void Reset();
     virtual bool IsOverriden() const;
+    virtual void UpdateKarma( const Karma& karma );
     //@}
 
 private:
