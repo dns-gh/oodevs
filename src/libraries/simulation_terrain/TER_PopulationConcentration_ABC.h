@@ -18,7 +18,6 @@ namespace spatialcontainer
     template< typename T, typename Traits, typename Coordinate > class SpatialContainerNode;
 };
 
-
 // =============================================================================
 // Created: AGE 2005-01-31
 // =============================================================================
@@ -47,7 +46,6 @@ public:
     bool Intersect2DWithLine  ( const MT_Vector2D& vStart, const MT_Vector2D& vEnd ) const;
     bool IsIntersecting       ( const TER_Localisation& localisation ) const;
     //@}
-
 
     //! @name Operations
     //@{

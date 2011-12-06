@@ -18,7 +18,6 @@ namespace spatialcontainer
     template< typename T, typename Traits, typename Coordinate > class SpatialContainerNode;
 };
 
-
 // =============================================================================
 // Created: AGE 2005-01-31
 // =============================================================================

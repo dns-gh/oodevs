@@ -11,7 +11,7 @@
 // Name: TER_Localisation::GetPoints
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
-inline 
+inline
 const T_PointVector& TER_Localisation::GetPoints() const
 {
     return pointVector_;
@@ -21,7 +21,7 @@ const T_PointVector& TER_Localisation::GetPoints() const
 // Name: TER_Localisation::GetType
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
-inline 
+inline
 TER_Localisation::E_LocationType TER_Localisation::GetType() const
 {
     return nType_;
@@ -31,7 +31,7 @@ TER_Localisation::E_LocationType TER_Localisation::GetType() const
 // Name: TER_Localisation::operator==
 // Created: NLD 2003-09-01
 // -----------------------------------------------------------------------------
-inline 
+inline
 bool TER_Localisation::operator == ( const TER_Localisation& localisation ) const
 {
     return localisation.nType_ == nType_ && localisation.pointVector_ == pointVector_;
@@ -41,7 +41,7 @@ bool TER_Localisation::operator == ( const TER_Localisation& localisation ) cons
 // Name: TER_Localisation::operator!=
 // Created: CMA 2011-10-13
 // -----------------------------------------------------------------------------
-inline 
+inline
 bool TER_Localisation::operator != ( const TER_Localisation& localisation ) const
 {
     return ! ( *this == localisation );
@@ -51,7 +51,7 @@ bool TER_Localisation::operator != ( const TER_Localisation& localisation ) cons
 // Name: TER_Localisation::ComputeBarycenter
 // Created: NLD 2003-08-22
 // -----------------------------------------------------------------------------
-inline 
+inline
 MT_Vector2D TER_Localisation::ComputeBarycenter() const
 {
     return MT_ComputeBarycenter( pointVector_ );
@@ -61,7 +61,7 @@ MT_Vector2D TER_Localisation::ComputeBarycenter() const
 // Name: TER_Localisation::GetBoundingBox
 // Created: JVT 03-09-02
 //-----------------------------------------------------------------------------
-inline 
+inline
 const MT_Rect& TER_Localisation::GetBoundingBox() const
 {
     return boundingBox_;
@@ -71,7 +71,7 @@ const MT_Rect& TER_Localisation::GetBoundingBox() const
 // Name: TER_Localisation::Intersect2DWithCircle
 // Created: NLD 2003-07-23
 //-----------------------------------------------------------------------------
-inline 
+inline
 bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const
 {
     switch( nType_ )
@@ -89,7 +89,7 @@ bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, 
 // Name: TER_Localisation::Intersect2DWithCircle
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-inline 
+inline
 bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, T_PointVector& shape ) const
 {
     switch( nType_ )
@@ -111,7 +111,7 @@ bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, 
 // Created: NLD 2003-07-24
 // Last modified: JVT 03-09-02
 //-----------------------------------------------------------------------------
-inline 
+inline
 bool TER_Localisation::IsInside( const MT_Vector2D& vPos, double rPrecision ) const
 {
     switch( nType_ )
@@ -129,7 +129,7 @@ bool TER_Localisation::IsInside( const MT_Vector2D& vPos, double rPrecision ) co
 // Name: TER_Localisation::IsOnBorder
 // Created: NLD 2003-10-03
 // -----------------------------------------------------------------------------
-inline 
+inline
 bool TER_Localisation::IsOnBorder( const MT_Vector2D& vPos ) const
 {
     switch( nType_ )
@@ -147,12 +147,12 @@ bool TER_Localisation::IsOnBorder( const MT_Vector2D& vPos ) const
 // Name: TER_Localisation::Intersect2D
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
-inline 
+inline
 bool TER_Localisation::Intersect2D( const MT_Line& orientedLine, T_PointSet& collisions, double rPrecision /*= rPrecision_*/ ) const
 {
     switch( nType_ )
     {
-        /*case ePoint:   
+        /*case ePoint:
             {
                 if( orientedLine.IsInside( pointVector_[0], rPrecision_ ) )
                 {
@@ -173,7 +173,7 @@ bool TER_Localisation::Intersect2D( const MT_Line& orientedLine, T_PointSet& col
 // Name: TER_Localisation::Intersect2D
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
-inline 
+inline
 bool TER_Localisation::Intersect2D( const MT_Line& line ) const
 {
     switch( nType_ )
@@ -191,13 +191,13 @@ bool TER_Localisation::Intersect2D( const MT_Line& line ) const
 // Name: TER_Localisation::GetArea
 // Created: NLD 2003-10-17
 // -----------------------------------------------------------------------------
-inline 
+inline
 double TER_Localisation::GetArea() const
 {
     switch( nType_ )
     {
         case ePoint:   return 1.f;
-        case ePolygon: return polygon_ .GetArea  (); 
+        case ePolygon: return polygon_ .GetArea  ();
         case eLine:    return polyline_.Magnitude();
         default:
             return 0.f;
@@ -208,7 +208,7 @@ double TER_Localisation::GetArea() const
 // Name: TER_Localisation::GetLength
 // Created: NLD 2003-10-17
 // -----------------------------------------------------------------------------
-inline 
+inline
 double TER_Localisation::GetLength() const
 {
     switch( nType_ )
@@ -225,7 +225,7 @@ double TER_Localisation::GetLength() const
 // Name: TER_Localisation::WasACircle
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-inline 
+inline
 bool TER_Localisation::WasACircle() const
 {
     return bWasCircle_;
@@ -235,7 +235,7 @@ bool TER_Localisation::WasACircle() const
 // Name: TER_Localisation::GetCircleRadius
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-inline 
+inline
 double TER_Localisation::GetCircleRadius() const
 {
     return rCircleRadius_;
@@ -245,12 +245,11 @@ double TER_Localisation::GetCircleRadius() const
 // Name: TER_Localisation::GetCircleCenter
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-inline 
+inline
 const MT_Vector2D& TER_Localisation::GetCircleCenter() const
 {
     return vCircleCenter_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: TER_Localisation::load

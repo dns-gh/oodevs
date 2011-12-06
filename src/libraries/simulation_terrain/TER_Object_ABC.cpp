@@ -133,7 +133,7 @@ void TER_Object_ABC::UpdateLocalisation( const TER_Localisation& newLocalisation
 // -----------------------------------------------------------------------------
 void TER_Object_ABC::RemoveFromWorld()
 {
-    if ( hint_ )
+    if( hint_ )
     {
         TER_World::GetWorld().GetObjectManager().Remove( *this, hint_ );
         hint_ = 0;

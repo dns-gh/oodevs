@@ -118,7 +118,6 @@ TER_Polygon& TER_Polygon::operator=( const TER_Polygon& rhs )
     return *this;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: TER_Polygon::Detach
 // Created: JDY 03-05-26
@@ -163,7 +162,6 @@ bool TER_Polygon::IsInsidish( const MT_Vector2D& vPos ) const
         return false;
     return BoundedSide( vPos ) != eOnUnboundedSide;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: TER_Polygon::IsOnBorder
@@ -357,14 +355,14 @@ void TER_Polygon::Intersection( MT_Polyline& polyline, double rPrecision ) const
     if( IsInside( *itSegEnd ) )
         res.push_back( *itSegEnd );
 
-    for ( CIT_PointVector itSegBegin = itSegEnd++; itSegEnd != polyline.GetPoints().end(); ++itSegBegin, ++itSegEnd )
+    for( CIT_PointVector itSegBegin = itSegEnd++; itSegEnd != polyline.GetPoints().end(); ++itSegBegin, ++itSegEnd )
     {
         TER_DistanceLess cmp( *itSegBegin );
         T_PointSet       collisionSet( cmp );
 
         IntersectWithBorder( MT_Line( *itSegBegin, *itSegEnd ), collisionSet, rPrecision );
 
-        for ( CIT_PointSet it = collisionSet.begin(); it != collisionSet.end(); ++it )
+        for( CIT_PointSet it = collisionSet.begin(); it != collisionSet.end(); ++it )
             res.push_back( *it );
 
         if( IsInside( *itSegEnd ) )
@@ -402,7 +400,7 @@ void TER_Polygon::ComputeBoundingBox()
     MT_Vector2D vDownLeft( std::numeric_limits<double>::max(), std::numeric_limits<double>::max() );
     MT_Vector2D vUpRight ( std::numeric_limits<double>::min(), std::numeric_limits<double>::min() );
 
-    for ( CIT_PointVector itPoint = pData_->borderVector_.begin(); itPoint != pData_->borderVector_.end(); ++itPoint )
+    for( CIT_PointVector itPoint = pData_->borderVector_.begin(); itPoint != pData_->borderVector_.end(); ++itPoint )
     {
         const MT_Vector2D& vPos = *itPoint;
         if( vPos.rX_ < vDownLeft.rX_ )
@@ -471,14 +469,13 @@ double TER_Polygon::ComputeArea() const
 
     const MT_Vector2D firstPoint = pData_->borderVector_.front();
     CIT_PointVector third = second;
-    while ( ++third != pData_->borderVector_.end())
+    while( ++third != pData_->borderVector_.end())
     {
         result = result + TriangleArea( firstPoint, *second, *third );
         second = third;
     }
     return std::fabs( result );
 }
-
 
 namespace
 {

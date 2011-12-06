@@ -111,7 +111,7 @@ void TER_Localisation::InitializeBoundingBox( CT_PointVector& pointVector )
     // bounding box
     MT_Vector2D vDownLeft( std::numeric_limits< double >::max(), std::numeric_limits< double >::max() );
     MT_Vector2D vUpRight ( std::numeric_limits< double >::min(), std::numeric_limits< double >::min() );
-    for ( CIT_PointVector itPoint = pointVector.begin(); itPoint != pointVector.end(); ++itPoint )
+    for( CIT_PointVector itPoint = pointVector.begin(); itPoint != pointVector.end(); ++itPoint )
     {
         const MT_Vector2D& vPos = *itPoint;
         if( vPos.rX_ < vDownLeft.rX_ )
@@ -974,7 +974,7 @@ bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation ) co
         return false;
     CIT_PointVector itPoint = pointVector_.begin();
     const MT_Vector2D* pPrevPoint = &*itPoint;
-    for ( ++itPoint; itPoint != pointVector_.end(); ++itPoint )
+    for( ++itPoint; itPoint != pointVector_.end(); ++itPoint )
     {
         const MT_Vector2D* pCurPoint = &*itPoint;
         if( localisation.IsInside( *pPrevPoint ) || localisation.Intersect2D( MT_Line( *pPrevPoint, *pCurPoint ) ) )
@@ -993,7 +993,7 @@ bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation ) co
 // -----------------------------------------------------------------------------
 bool TER_Localisation::Contains( const TER_Localisation& other ) const
 {
-    for ( CIT_PointVector it = other.pointVector_.begin(); it != other.pointVector_.end(); ++it )
+    for( CIT_PointVector it = other.pointVector_.begin(); it != other.pointVector_.end(); ++it )
     {
         if( !IsInside( *it ) )
             return false;

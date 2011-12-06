@@ -77,6 +77,4 @@ TER_NodeFunctor< F > CreateNodeFunctor( F& functor )
     return TER_NodeFunctor< F >( functor );
 }
 
-
-
 #endif // __TER_NodeFunctor_ABC_h_

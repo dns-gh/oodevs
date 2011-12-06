@@ -45,5 +45,4 @@ public:
     //@}
 };
 
-
 #endif // __TER_PathFindRequest_ABC_h_
