@@ -103,10 +103,6 @@ public:
     virtual void Reset();
     //@}
 
-    //! @name Accessors
-    //@{
-    //@}
-
 private:
     //! @name Helpers
     //@{

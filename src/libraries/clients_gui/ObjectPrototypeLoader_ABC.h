@@ -59,15 +59,6 @@ private:
     ObjectPrototypeLoader_ABC( const ObjectPrototypeLoader_ABC& );            //!< Copy constructor
     ObjectPrototypeLoader_ABC& operator=( const ObjectPrototypeLoader_ABC& ); //!< Assignment operator
     //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 } // end namespace gui

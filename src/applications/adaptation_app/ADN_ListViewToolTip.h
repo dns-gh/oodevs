@@ -28,10 +28,6 @@ public:
     virtual ~ADN_ListViewToolTip();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

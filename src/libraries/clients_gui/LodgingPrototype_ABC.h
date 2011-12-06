@@ -35,13 +35,6 @@ public:
     virtual bool CheckValidity() const;
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    LodgingPrototype_ABC( const LodgingPrototype_ABC& );            //!< Copy constructor
-    LodgingPrototype_ABC& operator=( const LodgingPrototype_ABC& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Member data
     //@{

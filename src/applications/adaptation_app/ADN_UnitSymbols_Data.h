@@ -132,11 +132,6 @@ protected:
     virtual void WriteArchive( xml::xostream& output );
 
 private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
     //! @name Member data
     //@{
     T_UnitSymbolInfoVector symbols_;

@@ -17,7 +17,8 @@ namespace kernel
     class LogisticLevel;
 }
 
-namespace preparation {
+namespace preparation
+{
 
 // =============================================================================
 /** @class  LogisticLevel
@@ -35,10 +36,6 @@ public:
     virtual ~LogisticLevel();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -46,14 +43,6 @@ private:
     LogisticLevel& operator=( const LogisticLevel& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 }
 #endif // __LogisticLevel_h_
