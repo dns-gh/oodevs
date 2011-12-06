@@ -9,6 +9,7 @@ AutomatsLayer.cpp \
 BaseDisplayer.cpp \
 BypassPrototype_ABC.cpp \
 ChangeSuperiorDialog.cpp \
+ColorButton.cpp \
 ConstructionPrototype_ABC.cpp \
 ComboTableItem.cpp \
 CoordinateSystemsPanel.cpp \

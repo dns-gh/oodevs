@@ -76,6 +76,10 @@
         <source>Reset color</source>
         <translation>Couleur par défaut</translation>
     </message>
+    <message>
+        <source>Select color</source>
+        <translation>Sélectionnez la couleur</translation>
+    </message>
 </context>
 <context>
     <name>CommunicationListView</name>
