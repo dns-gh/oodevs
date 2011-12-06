@@ -21,7 +21,7 @@ using namespace kernel;
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute( PropertiesDictionary& dico )
-    : activityTime_( 0, Units::hours )
+    : activityTime_( 0, 0 )
 {
     CreateDictionary( dico );
 }
@@ -31,9 +31,10 @@ TimeLimitedAttribute::TimeLimitedAttribute( PropertiesDictionary& dico )
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis, PropertiesDictionary& dico )
-    : activityTime_( 0, Units::hours )
+    : activityTime_( 0, 0 )
 {
-    xis >> xml::attribute( "value", activityTime_.value_ );
+    QTime activityTime;
+    activityTime_ = activityTime.addSecs( xis.attribute< unsigned int >( "value" ) );
     CreateDictionary( dico );
 }
 
@@ -53,7 +54,7 @@ TimeLimitedAttribute::~TimeLimitedAttribute()
 void TimeLimitedAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Mine parameters" ) )
-        .Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
+           .Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,8 +63,9 @@ void TimeLimitedAttribute::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void TimeLimitedAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
+    unsigned int time = activityTime_.hour() * 3600 + activityTime_.minute() * 60 + activityTime_.second();
     xos << xml::start( "activity-time" )
-        << xml::attribute( "value", activityTime_.value_ )
+        << xml::attribute( "value", time )
         << xml::end;
 }
 
@@ -73,7 +75,8 @@ void TimeLimitedAttribute::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void TimeLimitedAttribute::SetActivityTime( unsigned int time )
 {
-    activityTime_.value_ = time;
+    QTime activityTime;
+    activityTime_ = activityTime.addSecs( time );
 }
 
 // -----------------------------------------------------------------------------

@@ -97,6 +97,44 @@ void EditorFactory::Call( QString* const& value )
 }
 
 // =============================================================================
+// QTime
+// =============================================================================
+namespace
+{
+    class QTimeEditor : public QTimeEdit
+                      , public ValueEditor< QTime >
+    {
+    public:
+        explicit QTimeEditor( QWidget* parent )
+            : QTimeEdit( parent )
+        {
+            // NOTHING
+        }
+
+        virtual ~QTimeEditor()
+        {
+            // NOTHING
+        }
+
+        virtual QTime GetValue()
+        {
+            return time();
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: LGY 2011-12-06
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( QTime* const& value )
+{
+    QTimeEditor* editor = new QTimeEditor( parent_ );
+    editor->setTime( *value );
+    result_ = editor;
+}
+
+// =============================================================================
 // Numbers
 // =============================================================================
 namespace

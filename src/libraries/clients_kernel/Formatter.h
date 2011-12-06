@@ -93,6 +93,12 @@ struct Formatter< QDateTime >
     void operator()( const QDateTime& value, Displayer_ABC& displayer ) const;
 };
 
+template< >
+struct Formatter< QTime >
+{
+    void operator()( const QTime& value, Displayer_ABC& displayer ) const;
+};
+
 // =============================================================================
 /** @class  Formatter
     @brief  Pointers
