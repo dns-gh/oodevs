@@ -47,13 +47,6 @@ protected:
     //! @name Slots
     //@{
     void OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column );
-    void SetStatus( gui::ValuedListItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable );
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void ValueChanged( const kernel::Entity_ABC* entity, bool isWriteable ) = 0;
     //@}
 
 private:
@@ -81,6 +74,7 @@ private:
     void Clear();
     void SetStatus( Q3ListViewItem* item, Status status );
     void SetStatus( gui::ValuedListItem* item, bool inheritsReadable, bool inheritsWriteable );
+    void SetStatus( gui::ValuedListItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable );
     Status MakeStatus( bool read, bool write, bool inheritedRead, bool inheritedWrite );
     //@}
 

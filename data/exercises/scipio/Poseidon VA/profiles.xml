@@ -10,7 +10,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Bleu" password="" role="anibas" supervision="false">
+  <profile name="Bleu" password="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -20,7 +20,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Rouge" password="" role="anibas" supervision="false">
+  <profile name="Rouge" password="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -30,13 +30,13 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Vert" password="" role="anibas" supervision="false">
+  <profile name="Vert" password="" supervision="false">
     <rights>
       <readonly/>
       <readwrite/>
     </rights>
   </profile>
-  <profile name="White Cell" password="" role="environment" supervision="false">
+  <profile name="White Cell" password="" supervision="false">
     <rights>
       <readonly>
         <side id="1"/>
@@ -46,7 +46,7 @@
       <readwrite/>
     </rights>
   </profile>
-  <profile name="Bleu_ABC" password="" role="anibas" supervision="false">
+  <profile name="Bleu_ABC" password="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -54,7 +54,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Bleu_INF" password="" role="anibas" supervision="false">
+  <profile name="Bleu_INF" password="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -62,7 +62,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Bleu_SGTIA_INF" password="" role="anibas" supervision="false">
+  <profile name="Bleu_SGTIA_INF" password="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -70,7 +70,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Bleu_INF_NonSuper" password="" role="anibas" supervision="false">
+  <profile name="Bleu_INF_NonSuper" password="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -78,7 +78,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Bleu_ABC_NonSuper" password="" role="anibas" supervision="false">
+  <profile name="Bleu_ABC_NonSuper" password="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -86,7 +86,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Superviseur scipio" password="" role="supervisor" supervision="true">
+  <profile name="Superviseur scipio" password="" supervision="true">
     <rights>
       <readonly>
         <side id="1"/>
@@ -97,4 +97,4 @@
     </rights>
   </profile>
 </profiles>
-<!-- signature="1381972873" -->
+<!-- signature="3283263104" -->

@@ -20,7 +20,7 @@ namespace kernel
 class UserProfile;
 class UserProfileWidget;
 class ProfilesModel;
-class ControlsChecker_ABC;
+class ProfilesChecker_ABC;
 
 // =============================================================================
 /** @class  UserProfileList
@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers,
-                              ProfilesModel& model, ControlsChecker_ABC& checker );
+                              ProfilesModel& model, ProfilesChecker_ABC& checker );
     virtual ~UserProfileList();
     //@}
 
@@ -86,7 +86,7 @@ private:
     //@{
     kernel::Controllers&   controllers_;
     ProfilesModel&         model_;
-    ControlsChecker_ABC&   checker_;
+    ProfilesChecker_ABC&   checker_;
     T_Profiles             profiles_;
     T_ProfileEditors       editors_;
     UserProfileWidget&     pages_;

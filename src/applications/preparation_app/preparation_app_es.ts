@@ -2078,30 +2078,6 @@ Do you want to save anyway?</source>
     </message>
 </context>
 <context>
-    <name>UserProfileControls</name>
-    <message>
-        <source>Control</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to proceed ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit &apos;%1&apos; is already controlled by &apos;%2&apos; profile.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>UserProfileList</name>
     <message>
         <source>Create</source>
@@ -2172,24 +2148,8 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>User role</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Role</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&apos;Control&apos; permission allows you to control an unit.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Duplicate login: &apos;%1&apos;.</source>
         <translation type="unfinished">Usuario repetido: &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>&apos;View&apos; permission allows you to see an unit.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

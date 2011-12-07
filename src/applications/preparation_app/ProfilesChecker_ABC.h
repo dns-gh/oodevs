@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ControlsChecker_ABC_h_
-#define __ControlsChecker_ABC_h_
+#ifndef __ProfilesChecker_ABC_h_
+#define __ProfilesChecker_ABC_h_
 
 #include <boost/noncopyable.hpp>
 #include <map>
@@ -21,18 +21,18 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  ControlsChecker_ABC
-    @brief  Controls checker declaration
+/** @class  ProfilesChecker_ABC
+    @brief  Profiles checker declaration
 */
-// Created: LGY 2011-09-15
+// Created: LGY 2011-12-07
 // =============================================================================
-class ControlsChecker_ABC : private boost::noncopyable
+class ProfilesChecker_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ControlsChecker_ABC() {}
-    virtual ~ControlsChecker_ABC() {}
+             ProfilesChecker_ABC() {}
+    virtual ~ProfilesChecker_ABC() {}
     //@}
 
     //! @name Types
@@ -44,12 +44,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const = 0;
+    virtual void Display( const T_ProfileEditors& editors ) = 0;
     virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const = 0;
     virtual bool Exists( const QString& login ) const = 0;
-    virtual void Update( const UserProfile& profile, const kernel::Entity_ABC& entity ) = 0;
-    virtual void Display( const T_ProfileEditors& editors ) = 0;
     //@}
 };
 
-#endif // __ControlsChecker_ABC_h_
+#endif // __ProfilesChecker_ABC_h_

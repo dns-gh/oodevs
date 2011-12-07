@@ -30,8 +30,6 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     login_ = new QLineEdit( group );
     new QLabel( tr( "Password:" ), group );
     password_ = new QLineEdit( group );
-    role_ = new QLabel( group );
-    role_->hide();
     addTab( box, tr( "General" ) );
 
     box = new Q3VBox( this );
@@ -76,14 +74,6 @@ void UserProfileWidget::Display( const UserProfile& profile )
     editedProfile_.reset( new UserProfile( profile ) );
     login_->setText( editedProfile_->GetLogin() );
     password_->setText( editedProfile_->GetPassword() );
-    int role = editedProfile_->GetRole();
-    if( role == -1 )
-        role_->hide();
-    else
-    {
-        role_->setText( "Role = " + QString::number( role ) );
-        role_->show();
-    }
     supervisor_->setChecked( editedProfile_->IsSupervision() );
     unitRights_->Display( *editedProfile_ );
     populationRights_->Display( *editedProfile_ );

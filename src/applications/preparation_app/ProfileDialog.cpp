@@ -12,7 +12,7 @@
 #include "moc_ProfileDialog.cpp"
 #include "UserProfileWidget.h"
 #include "UserProfileList.h"
-#include "ControlsChecker.h"
+#include "ProfilesChecker.h"
 #include "icons.h"
 #include "preparation/Model.h"
 
@@ -23,7 +23,7 @@
 ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons,
                               Model& model, const kernel::ExtensionTypes& extensions )
     : QDialog( parent, "ProfileDialog" )
-    , pChecher_( new ControlsChecker( controllers, model ) )
+    , pChecher_( new ProfilesChecker() )
 {
     setCaption( tr( "User profiles" ) );
     Q3GridLayout* grid = new Q3GridLayout( this, 3, 2 );
@@ -108,13 +108,4 @@ void ProfileDialog::OnReject()
 {
     list_->Cancel();
     reject();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfileDialog::showEvent
-// Created: LGY 2011-09-28
-// -----------------------------------------------------------------------------
-void ProfileDialog::showEvent( QShowEvent* /*pEvent*/ )
-{
-    pages_->Show();
 }

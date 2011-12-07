@@ -86,9 +86,6 @@
     <Filter Include="Source Files\Dialogs\Unit state">
       <UniqueIdentifier>{a5aa3f3b-c881-4675-8f00-ea9dfa99db35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Dialogs\Profiles\Controls">
-      <UniqueIdentifier>{a4802ccc-554f-4217-b550-9aa08116aba1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Dialogs\Profiles\Rights">
       <UniqueIdentifier>{ce4754c1-1256-4f35-ae16-34d0eda0e3a5}</UniqueIdentifier>
     </Filter>
@@ -409,15 +406,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticStockEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitControls.cpp">
-      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\UserProfilePopulationControls.cpp">
-      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.cpp">
-      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfilePopulationRights.cpp">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
     </ClCompile>
@@ -426,9 +414,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitRights.cpp">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\ControlsChecker.cpp">
-      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticListView.cpp">
       <Filter>Source Files\Lists</Filter>
@@ -468,6 +453,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\GhostSymbolEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ProfilesChecker.cpp">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -618,17 +606,8 @@
     <ClInclude Include="..\..\src\applications\preparation_app\TrafficabilityPrototype.h">
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.h">
-      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.h">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\ControlsChecker.h">
-      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\ControlsChecker_ABC.h">
-      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\LogisticListView.h">
       <Filter>Source Files\Lists</Filter>
@@ -644,6 +623,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\MultipleResolverEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ProfilesChecker.h">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ProfilesChecker_ABC.h">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -823,9 +808,6 @@
     <CustomBuild Include="..\..\src\applications\preparation_app\LogisticStockEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfilePopulationControls.h">
-      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\LongNameEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
@@ -834,9 +816,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitRights.h">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitControls.h">
-      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\LivingAreaEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>

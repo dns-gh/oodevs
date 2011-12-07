@@ -25,7 +25,7 @@ namespace gui
 class UserProfileList;
 class UserProfileWidget;
 class Model;
-class ControlsChecker_ABC;
+class ProfilesChecker_ABC;
 
 // =============================================================================
 /** @class  ProfileDialog
@@ -48,7 +48,6 @@ public:
     //! @name Operations
     //@{
     virtual QSize sizeHint() const;
-    virtual void showEvent( QShowEvent* pEvent );
     //@}
 
 private slots:
@@ -68,7 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ControlsChecker_ABC > pChecher_;
+    std::auto_ptr< ProfilesChecker_ABC > pChecher_;
     UserProfileList* list_;
     UserProfileWidget* pages_;
     //@}

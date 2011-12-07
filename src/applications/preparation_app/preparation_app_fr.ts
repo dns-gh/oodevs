@@ -2078,30 +2078,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
-    <name>UserProfileControls</name>
-    <message>
-        <source>Control</source>
-        <translation>Contrôle</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation>Vue</translation>
-    </message>
-    <message>
-        <source>Do you want to proceed ?</source>
-        <translation>Voulez-vous continuer ?</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
-    </message>
-    <message>
-        <source>Unit &apos;%1&apos; is already controlled by &apos;%2&apos; profile.
-</source>
-        <translation>L&apos;unité &apos;%1&apos; est déjà controlée par le profil &apos;%2&apos;.</translation>
-    </message>
-</context>
-<context>
     <name>UserProfileList</name>
     <message>
         <source>Create</source>
@@ -2172,24 +2148,8 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Foules</translation>
     </message>
     <message>
-        <source>User role</source>
-        <translation>Rôle de l&apos;utilisateur</translation>
-    </message>
-    <message>
-        <source>Role</source>
-        <translation>Rôle</translation>
-    </message>
-    <message>
-        <source>&apos;Control&apos; permission allows you to control an unit.</source>
-        <translation>&apos;Contrôle&apos; permet de contrôler une unité.</translation>
-    </message>
-    <message>
         <source>Duplicate login: &apos;%1&apos;.</source>
         <translation>Profil en double: &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>&apos;View&apos; permission allows you to see an unit.</source>
-        <translation>&apos;Vue&apos; permet de voir une unité.</translation>
     </message>
 </context>
 <context>

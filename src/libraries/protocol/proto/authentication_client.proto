@@ -163,7 +163,6 @@ message Profile {
     optional CrowdIdList     read_only_crowds      = 9;  // !< Profiles with read-only permissions can only see the situation from the specified crowds but cannot control them
     optional CrowdIdList     read_write_crowds     = 10; // !< Profiles with read-write permissions can see the situation from the specified crowds and control them
     required bool            supervisor            = 11; // !< Supervisor access grants a profile the right to execute "magic actions" such as teleporting or recompleting a unit, and also edit profiles and control the simulation (pause, resume, changing speed factor)
-    optional RoleType        role                  = 12; // !< The role has no impact on the simulation, it is purely intended for exercise organisation purpose, so that the different roles can be identified (DIREX, ENIEX...). The list of roles can be customized from the file "Extensions.xml"
 }
 
 /** @struct ConnectedProfileList

@@ -267,13 +267,12 @@ void ProfilesModel::NotifyDeleted( const kernel::Population_ABC& population)
 void ProfilesModel::Visit( T_Units& units ) const
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        if( (*it)->GetUserRole() != "" )
-        {
-            std::vector< unsigned long > ids;
-            (*it)->Visit( ids );
-            BOOST_FOREACH( unsigned long id, ids )
-                units[ id ].insert( (*it)->GetLogin().ascii() );
-        }
+    {
+        std::vector< unsigned long > ids;
+        (*it)->Visit( ids );
+        BOOST_FOREACH( unsigned long id, ids )
+            units[ id ].insert( (*it)->GetLogin().ascii() );
+    }
 }
 
 // -----------------------------------------------------------------------------

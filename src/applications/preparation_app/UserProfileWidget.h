@@ -10,16 +10,12 @@
 #ifndef __UserProfileWidget_h_
 #define __UserProfileWidget_h_
 
-#include "tools/ElementObserver_ABC.h"
-
 namespace kernel
 {
     class Controllers;
     class DictionaryType;
     class Entity_ABC;
     class ExtensionTypes;
-    class ModelLoaded;
-    class ModelUnLoaded;
 }
 
 namespace gui
@@ -30,8 +26,8 @@ namespace gui
 
 class UserProfile;
 class UserProfileRights_ABC;
-class ControlsChecker_ABC;
 class Model;
+class ProfilesChecker_ABC;
 
 // =============================================================================
 /** @class  UserProfileWidget
@@ -40,9 +36,6 @@ class Model;
 // Created: SBO 2007-01-16
 // =============================================================================
 class UserProfileWidget : public QTabWidget
-                        , public tools::Observer_ABC
-                        , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                        , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT
 
@@ -51,17 +44,14 @@ public:
     //@{
              UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
                                 gui::EntitySymbols& icons, const kernel::ExtensionTypes& extensions,
-                                ControlsChecker_ABC& checker, Model& model );
+                                ProfilesChecker_ABC& checker, Model& model );
     virtual ~UserProfileWidget();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyUpdated( const kernel::ModelLoaded& );
-    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     void Display( UserProfile& profile );
     void SetEnabled( bool enabled );
-    void Show();
     //@}
 
 private slots:
@@ -70,8 +60,6 @@ private slots:
     void OnLoginChanged();
     void OnPasswordChanged( const QString& text );
     void OnSupervisorChanged( bool supervisor );
-    void OnUserRoleActivation( bool enable );
-    void OnUserRole( const QString& role );
     //@}
 
 private:
@@ -82,35 +70,18 @@ private:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void ActivateControls();
-    void DeactivateControls();
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
     const kernel::ExtensionTypes& extensions_;
-    ControlsChecker_ABC& checker_;
+    ProfilesChecker_ABC& checker_;
     Model& model_;
     UserProfile* profile_;
     QLineEdit* login_;
     QLineEdit* password_;
-    QLabel* supervisorLabel_;
     QCheckBox* supervisor_;
-    Q3GroupBox* userRoleGroup_;
-    QLabel* userRoleLabel_;
-    QComboBox* userRole_;
-    kernel::DictionaryType* userRoleDico_;
-    std::string dicoKind_;
-    std::string dicoLanguage_;
-    QStackedWidget* pPopulations_;
-    QStackedWidget* pUnits_;
-    QStackedWidget* pInformations_;
-    QLabel* informationControls_;
-    std::vector< std::string > supervisors_;
+    UserProfileRights_ABC* unitRights_;
+    UserProfileRights_ABC* populationRights_;
     //@}
 };
 

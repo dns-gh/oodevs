@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __ControlsChecker_h_
-#define __ControlsChecker_h_
+#ifndef __ProfilesChecker_h_
+#define __ProfilesChecker_h_
 
-#include "ControlsChecker_ABC.h"
+#include "ProfilesChecker_ABC.h"
 
 namespace kernel
 {
@@ -20,42 +20,32 @@ namespace kernel
 class Model;
 
 // =============================================================================
-/** @class  ControlsChecker
-    @brief  Controls checker
+/** @class  ProfilesChecker
+    @brief  Profiles checker
 */
-// Created: LGY 2011-09-15
+// Created: LGY 2011-12-07
 // =============================================================================
-class ControlsChecker : public ControlsChecker_ABC
+class ProfilesChecker : public ProfilesChecker_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ControlsChecker( kernel::Controllers& controllers, Model& model );
-    virtual ~ControlsChecker();
+             ProfilesChecker();
+    virtual ~ProfilesChecker();
     //@}
 
     //! @name Operations
-    //@{
+    //@{t;
     virtual void Display( const T_ProfileEditors& editors );
-    virtual void Update( const UserProfile& profile, const kernel::Entity_ABC& entity );
-    virtual QString GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const;
     virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const;
     virtual bool Exists( const QString& login ) const;
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void UpdateProfile( UserProfile& profile, const kernel::Entity_ABC& entity, bool control );
-    //@}
-
-private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    Model& model_;
     T_ProfileEditors editors_;
     //@}
 };
 
-#endif // __ControlsChecker_h_
+#endif // __ProfilesChecker_h_

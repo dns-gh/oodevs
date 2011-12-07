@@ -110,8 +110,6 @@ private:
     void ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container );
     void ReadRights( const sword::Profile& message );
 
-    void SetRoleIdFromString( const std::string& role );
-
     template< typename T >
     void SerializeRights( xml::xostream& xos, const std::string& tag, const T& list ) const;
     //@}
@@ -123,7 +121,6 @@ private:
     ClientPublisher_ABC& clients_;
     std::string strLogin_;
     std::string strPassword_;
-    int roleId_;
 
     // Read only
     T_AutomatSet readOnlyAutomats_;

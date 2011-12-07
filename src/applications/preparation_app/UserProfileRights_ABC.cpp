@@ -62,7 +62,6 @@ void UserProfileRights_ABC::Commit()
             const bool isReadable  = status == eReadOnly;
             profile_->SetReadable ( *entity, isReadable && !isWriteable );
             profile_->SetWriteable( *entity, isWriteable );
-            ValueChanged( entity, isWriteable || status == eWriteInherited );
         }
 }
 

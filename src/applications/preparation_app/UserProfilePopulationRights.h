@@ -31,28 +31,10 @@ public:
     virtual ~UserProfilePopulationRights();
     //@}
 
-signals:
-    //! @name signals
-    //@{
-    void ProfiledChanged( const kernel::Entity_ABC* entity, bool isWriteable );
-    //@}
-
-public slots:
-    //! @name Slots
-    //@{
-    void OnProfiledChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable );
-    //@}
-
 private slots:
     //! @name Slots
     //@{
     void OnItemClicked( Q3ListViewItem*, const QPoint&, int );
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void ValueChanged( const kernel::Entity_ABC* entity, bool isWriteable );
     //@}
 
 private:

@@ -40,8 +40,6 @@ public:
     //! @name Operations
     //@{
     void GetStringList( QStringList& list, const std::string& kind, const std::string& language ) const;
-    void GetStringList( std::vector< std::string >& vector, const std::string& kind, const std::string& language,
-                        const std::string& option ) const;
     std::string GetLabel( const std::string& key, const std::string& kind, const std::string& language ) const;
     std::string GetKey( const std::string& label, const std::string& kind, const std::string& language ) const;
     //@}

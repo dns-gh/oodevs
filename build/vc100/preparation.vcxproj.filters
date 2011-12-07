@@ -505,9 +505,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\TimeLimitedAttribute.cpp">
       <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\ProfileHierarchies.cpp">
-      <Filter>Source Files\Model\Automat\Extensions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\ModelConsistencyChecker.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
@@ -956,12 +953,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\LogisticHierarchiesBase.h">
       <Filter>Source Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\ProfileHierarchies.h">
-      <Filter>Source Files\Model\Automat\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\ProfileHierarchies_ABC.h">
-      <Filter>Source Files\Model\Automat\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\InhabitantPositions_ABC.h">
       <Filter>Source Files\Model\Inhabitants\Extensions</Filter>

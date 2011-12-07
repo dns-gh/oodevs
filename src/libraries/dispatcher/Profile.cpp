@@ -37,12 +37,10 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
     , clients_     ( clients )
     , strLogin_    ( strLogin )
     , bSupervision_( false )
-    , roleId_      ( -1 )
 {
     std::string role;
     xis >> xml::attribute( "password", strPassword_ )
         >> xml::attribute( "supervision", bSupervision_ )
-        >> xml::optional >> xml::attribute( "role", role )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readOnlyAutomats_    )
@@ -57,7 +55,6 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
                 >> xml::list( "crowd", *this, &Profile::ReadPopulationRights, readWritePopulations_ )
             >> xml::end
         >> xml::end;
-    SetRoleIdFromString( role );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +67,6 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const sword:
     , strLogin_     ( message.profile().login() )
     , strPassword_  ( message.profile().has_password() ? message.profile().password() : "" )
     , bSupervision_ ( message.profile().supervisor() )
-    , roleId_       ( message.profile().has_role() ? message.profile().role().id() : -1 )
 {
     ReadRights( message.profile() );
     SendCreation( clients_ );
@@ -303,8 +299,6 @@ void Profile::Send( sword::Profile& message ) const
 {
     message.set_login( strLogin_ );
     message.set_supervisor( bSupervision_ );
-    if( roleId_ != -1 )
-        message.mutable_role()->set_id( roleId_ );
     Serialize( *message.mutable_read_only_automates(), readOnlyAutomats_ );
     Serialize( *message.mutable_read_write_automates(), readWriteAutomats_ );
     Serialize( *message.mutable_read_only_parties(), readOnlySides_ );
@@ -324,8 +318,6 @@ void Profile::Send( sword::ProfileDescription& message ) const
     message.set_login( strLogin_ );
     message.set_password( !strPassword_.empty() );
     message.set_supervisor( bSupervision_ );
-    if( roleId_ != -1 )
-        message.mutable_role()->set_id( roleId_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -356,8 +348,6 @@ void Profile::Update( const sword::ProfileUpdateRequest& message )
     updatemessage().set_login( message.login() );
     if( !strPassword_.empty() )
         updatemessage().mutable_profile()->set_password( strPassword_ );
-    if( roleId_ != -1 )
-        updatemessage().mutable_profile()->mutable_role()->set_id( roleId_ );
     Send( *updatemessage().mutable_profile() );
     updatemessage.Send( clients_ );
 }
@@ -398,10 +388,8 @@ void Profile::SetRight( const kernel::Automat_ABC& entity, bool readonly, bool r
 // -----------------------------------------------------------------------------
 void Profile::SerializeProfile( xml::xostream& xos ) const
 {
-    xos << xml::start( "profile" );
-    if( roleId_ != -1 )
-        xos << xml::attribute( "role", roleId_ );
-    xos     << xml::attribute( "name", strLogin_ )
+    xos << xml::start( "profile" )
+            << xml::attribute( "name", strLogin_ )
             << xml::attribute( "password", strPassword_ )
             << xml::attribute( "supervision", bSupervision_ )
             << xml::start( "rights" )
@@ -432,22 +420,4 @@ void Profile::SerializeRights( xml::xostream& xos, const std::string& tag, const
         xos << xml::start( tag )
             << xml::attribute( "id", (*it)->GetId() )
         << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::SetRoleIdFromString
-// Created: RPD 2010-12-28
-// -----------------------------------------------------------------------------
-void Profile::SetRoleIdFromString( const std::string& role )
-{
-    roleId_ = -1;
-    DictionaryType* dictionary = model_.GetExtensionTypes().tools::StringResolver< DictionaryType >::Find( "T_User_Role" );
-    if( dictionary )
-    {
-        DictionaryEntryType* entry = dictionary->Find( role );
-        if( entry )
-        {
-            roleId_ = entry->GetId();
-        }
-    }
 }

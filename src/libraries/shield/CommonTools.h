@@ -106,7 +106,6 @@ namespace shield
         CONVERT( login );
         CONVERT( password );
         CONVERT( supervisor );
-        CONVERT_ID( role );
     }
     template< typename From, typename To >
     void ConvertDiffusion( const From& from, To* to )

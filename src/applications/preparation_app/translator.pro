@@ -6,7 +6,6 @@ AgentsLayer.cpp \
 Application.cpp \
 ColorEditor.cpp \
 CommunicationListView.cpp \
-ControlsChecker.cpp \
 CsvExport.cpp \
 DotationsEditor.cpp \
 EditorFactory.cpp \
@@ -67,7 +66,6 @@ TemplatesPanel.cpp \
 UnitStateDialog.cpp \
 UnitStateTableResource.cpp \
 UserProfileList.cpp \
-UserProfileControls_ABC.cpp \
 UserProfileRights_ABC.cpp \
 UserProfileWidget.cpp \
 WeatherListView.cpp \

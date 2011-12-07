@@ -91,36 +91,3 @@ void UserProfileUnitRights::NotifyUpdated( const Entity_ABC& entity )
         LongNameHelper::SetItemLongName( entity, *item );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::ValueChanged
-// Created: LGY 2011-09-13
-// -----------------------------------------------------------------------------
-void UserProfileUnitRights::ValueChanged( const Entity_ABC* entity, bool isWriteable )
-{
-    if( entity->GetTypeName() == "automat" || entity->GetTypeName() == "party" )
-        emit ProfiledChanged( entity, isWriteable );
-    else
-    {
-        tools::Iterator< const Entity_ABC& > children = entity->Get< TacticalHierarchies >().CreateSubordinateIterator();
-        while( children.HasMoreElements() )
-        {
-            const Entity_ABC& child = children.NextElement();
-            ValueChanged( &child, isWriteable );
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::OnProfiledChanged
-// Created: LGY 2011-09-14
-// -----------------------------------------------------------------------------
-void UserProfileUnitRights::OnProfiledChanged( const Entity_ABC* entity, bool isReadable, bool isWriteable )
-{
-    if( entity )
-    {
-        ValuedListItem* item = FindItem( entity, firstChild() );
-        if( item )
-            SetStatus( item, isReadable, isWriteable, false, false );
-    }
-}

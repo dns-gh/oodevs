@@ -22,7 +22,6 @@ DictionaryEntryType::DictionaryEntryType( xml::xistream& xis )
     : key_      ( xis.attribute< std::string >( "name" ) )
     , id_       ( xis.attribute< unsigned int >( "id" ) )
     , alias_    ( xis.attribute< std::string >( "alias", std::string() ) )
-    , option_   ( xis.attribute< std::string >( "option", std::string() ) )
 {
     xis >> xml::optional >> xml::start( "labels" )
                            >> xml::list( "label", *this, &DictionaryEntryType::ReadLabel )
@@ -69,15 +68,6 @@ std::string DictionaryEntryType::GetKey() const
 unsigned int DictionaryEntryType::GetId() const
 {
     return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DictionaryEntryType::GetOption
-// Created: LGY 2011-09-15
-// -----------------------------------------------------------------------------
-std::string DictionaryEntryType::GetOption() const
-{
-    return option_;
 }
 
 // Name: DictionaryEntryType::GetAlias

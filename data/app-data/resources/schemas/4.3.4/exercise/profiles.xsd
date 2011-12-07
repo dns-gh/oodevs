@@ -118,11 +118,6 @@
 					<xs:documentation xml:lang="en">Grants access to supervision operations for this profile.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
-			<xs:attribute name="role" type="roleType" use="optional">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">Specifies role for this profile.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

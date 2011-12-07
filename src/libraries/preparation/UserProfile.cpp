@@ -39,7 +39,6 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     xis >> xml::attribute( "name", login )
         >> xml::attribute( "password", pass )
         >> xml::attribute( "supervision", supervisor_ )
-        >> xml::optional >> xml::attribute( "role", userRole_ )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "side"      , *this, &UserProfile::ReadRights, readSides_, teamChecker )
@@ -93,7 +92,6 @@ UserProfile::UserProfile( const UserProfile& p )
     , writeAutomats_   ( p.writeAutomats_ )
     , writePopulations_( p.writePopulations_ )
     , isClone_         ( true )
-    , userRole_        ( p.userRole_ )
 {
     // NOTHING
 }
@@ -114,10 +112,8 @@ UserProfile::~UserProfile()
 // -----------------------------------------------------------------------------
 void UserProfile::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::start( "profile" );
-    if( !userRole_.empty() )
-        xos << xml::attribute( "role", userRole_ );
-    xos     << xml::attribute( "name", login_.ascii() )
+    xos << xml::start( "profile" )
+            << xml::attribute( "name", login_.ascii() )
             << xml::attribute( "password", password_.ascii() )
             << xml::attribute( "supervision", supervisor_ )
             << xml::start( "rights" )
@@ -223,15 +219,6 @@ bool UserProfile::IsWriteable( const kernel::Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfile::GetUserRole
-// Created: JSR 2010-10-06
-// -----------------------------------------------------------------------------
-std::string UserProfile::GetUserRole() const
-{
-    return userRole_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: UserProfile::SetLogin
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
@@ -312,15 +299,6 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfile::SetUserRole
-// Created: JSR 2010-10-06
-// -----------------------------------------------------------------------------
-void UserProfile::SetUserRole( const std::string& role )
-{
-    userRole_ = role;
-}
-
-// -----------------------------------------------------------------------------
 // Name: UserProfile::operator=
 // Created: SBO 2007-03-29
 // -----------------------------------------------------------------------------
@@ -338,7 +316,6 @@ UserProfile& UserProfile::operator=( const UserProfile& p )
     writeFormations_  = p.writeFormations_;
     writeAutomats_    = p.writeAutomats_;
     writePopulations_ = p.writePopulations_;
-    userRole_         = p.userRole_;
     if( !isClone_ && changed )
         controller_.Update( *this );
     return *this;

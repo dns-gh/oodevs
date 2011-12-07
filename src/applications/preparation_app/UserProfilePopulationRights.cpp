@@ -62,26 +62,3 @@ void UserProfilePopulationRights::OnItemClicked( Q3ListViewItem* item, const QPo
 {
     UserProfileRights_ABC::OnItemClicked( item, point, column );
 }
-
-// -----------------------------------------------------------------------------
-// Name: UserProfilePopulationRights::OnProfiledChanged
-// Created: LGY 2011-09-13
-// -----------------------------------------------------------------------------
-void UserProfilePopulationRights::OnProfiledChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable )
-{
-    if( entity )
-    {
-        gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
-        if( item )
-            SetStatus( item, isReadable, isWriteable, false, false );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfilePopulationRights::ValueChanged
-// Created: LGY 2011-09-13
-// -----------------------------------------------------------------------------
-void UserProfilePopulationRights::ValueChanged( const kernel::Entity_ABC* entity, bool isWriteable )
-{
-    emit ProfiledChanged( entity, isWriteable );
-}

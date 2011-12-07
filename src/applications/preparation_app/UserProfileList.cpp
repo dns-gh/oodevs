@@ -12,7 +12,7 @@
 #include "moc_UserProfileList.cpp"
 #include "UserProfileWidget.h"
 #include "ProfileEditor.h"
-#include "ControlsChecker_ABC.h"
+#include "ProfilesChecker_ABC.h"
 #include "preparation/ModelConsistencyChecker.h"
 #include "preparation/ProfilesModel.h"
 #include "preparation/UserProfile.h"
@@ -24,7 +24,7 @@
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers,
-                                  ProfilesModel& model, ControlsChecker_ABC& checker )
+                                  ProfilesModel& model, ProfilesChecker_ABC& checker )
     : QWidget( parent )
     , controllers_( controllers )
     , pages_      ( pages )
@@ -78,7 +78,6 @@ void UserProfileList::Save()
         *const_cast< UserProfile* >( it->first ) = *it->second;
         controllers_.controller_.Update( it->first );
     }
-    emit( DoConsistencyCheck() );
 }
 
 // -----------------------------------------------------------------------------
