@@ -1488,7 +1488,8 @@ MIL_Army_ABC& MIL_Population::GetArmy() const
 // -----------------------------------------------------------------------------
 void MIL_Population::SetPionMaxSpeed( double rSpeed )
 {
-    assert( rSpeed >= 0. ); 
+    if( rSpeed < 0. )
+        throw std::runtime_error( "Setting max speed to less than 0" ); 
     bPionMaxSpeedOverloaded_ = true;
     rOverloadedPionMaxSpeed_ = rSpeed;
 }

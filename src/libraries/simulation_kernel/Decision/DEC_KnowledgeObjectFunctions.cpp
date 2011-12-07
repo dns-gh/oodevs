@@ -129,14 +129,15 @@ float DEC_KnowledgeObjectFunctions::GetAnimationLevel( boost::shared_ptr< DEC_Kn
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& callerAgent, const TER_Localisation* location )
 {
-    assert( location );
+    if( !location )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     MIL_ObjectFilter filter;
     filter.Set( "nbc zone" );
     filter.Set( "nbc cloud" );
     T_KnowledgeObjectVector knownObjects;
     callerAgent.GetArmy().GetKnowledge().GetObjects( knownObjects, filter );
     for( CIT_KnowledgeObjectVector it = knownObjects.begin(); it != knownObjects.end(); ++it )
-        if( location->IsIntersecting( ( *it )->GetLocalisation() ) )
+        if( *it && location->IsIntersecting( ( *it )->GetLocalisation() ) )
         {
             if( ContaminationCapacity* pContaminationCapacity = IsValidObjectCapacity< ContaminationCapacity >( *it ) )
                 pContaminationCapacity->DecontaminateZone( *location );

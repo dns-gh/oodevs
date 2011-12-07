@@ -19,7 +19,6 @@
 #include "Decision/DEC_UrbanObjectFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
-#include "Decision/DEC_DynamicFireFunctions.h"
 #include "Decision/DEC_KnowledgeFunctions.h"
 #include "Decision/DEC_PathFunctions.h"
 #include "Decision/DEC_PerceptionFunctions.h"
@@ -664,8 +663,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< boost::shared_ptr< MT_Vector2D >( MT_Vector2D*, MT_Vector2D*, double ) >( boost::bind( &DEC_GeometryFunctions::ComputeAmbushPosition, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_Geometrie_CalculerPositionSurete" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent >, double ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPosition, boost::ref( GetPion() ), _1, _2 ) );
-    brain[ "DEC_Geometrie_CalculerPositionSureteStatique" ] =
-        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent >) >( boost::bind( &DEC_GeometryFunctions::ComputeStaticSafetyPosition, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Geometrie_CalculerPositionSureteAvecPopulation" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( unsigned int, double ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Geometrie_CalculerPositionSureteAvecObjectif" ] =
@@ -748,11 +745,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::AllowAmmunition, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Pion_AutoriserToutesMunitions" ] =
         boost::bind( &DEC_FireFunctions::AllowAllAmmunitions,        boost::ref( GetPion() ) );
-
-    // $$$$ BCI 2011-01-28: obsolète?
-    brain[ "DEC_Fire_GetRangeToExtinguish" ] =
-        boost::function< float ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_DynamicFireFunctions::GetRangeToExtinguish, boost::cref( GetPion() ), _1 ) );
-
 
     // Hospitals
     brain[ "DEC_DeterminerHopital" ] =

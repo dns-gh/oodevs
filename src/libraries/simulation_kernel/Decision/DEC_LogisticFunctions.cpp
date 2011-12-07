@@ -74,7 +74,11 @@ void DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities( MIL_Agent_A
     T_AutomateVector automates;
     automates.reserve( priorities.size() );
     for( std::vector< const DEC_Decision_ABC* >::const_iterator it = priorities.begin(); it != priorities.end(); ++it )
+    {
+        if( !(*it) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         automates.push_back( &(*it)->GetAutomate() );
+    }
     PHY_RoleInterface_Maintenance* role = callerAgent.RetrieveRole< PHY_RoleInterface_Maintenance >();
     if( role )
         role->ChangePriorities( automates );
@@ -142,12 +146,14 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate( MIL_Automate& cal
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DEC_Decision_ABC* pPionWounded, DEC_Decision_ABC* pDecTC2 )
 {
-    assert( pPionWounded );
-    assert( pDecTC2 );
+    if( !pPionWounded || !pDecTC2 )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     if( !pDecTC2->GetAutomate().GetType().IsLogistic() )
         return;
-    MIL_AutomateLOG& tc2 = *( pDecTC2->GetAutomate().GetBrainLogistic() );
-    pPionWounded->GetPion().GetRole< PHY_RoleInterface_Humans >().EvacuateWoundedHumans( tc2 );
+    MIL_AutomateLOG* tc2 = pDecTC2->GetAutomate().GetBrainLogistic();
+    if( !tc2 )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    pPionWounded->GetPion().GetRole< PHY_RoleInterface_Humans >().EvacuateWoundedHumans( *tc2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +162,8 @@ void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DEC_Decision_ABC* pPionW
 // -----------------------------------------------------------------------------
 bool DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DEC_Decision_ABC* pPion )
 {
-    assert( pPion );
+    if( !pPion )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return pPion->GetPion().GetRole< PHY_RoleInterface_Humans >().HasWoundedHumansToEvacuate();
 }
 
@@ -166,7 +173,8 @@ bool DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DEC_Decision_ABC* pPion 
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation( DEC_Decision_ABC* pPion )
 {
-    assert( pPion );
+    if( !pPion )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     pPion->GetPion().GetRole< PHY_RoleInterface_Humans >().ChangeEvacuationMode( PHY_RoleInterface_Humans::eEvacuationMode_Manual );
 }
 
@@ -176,7 +184,8 @@ void DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation( DEC_Decision_ABC*
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation( DEC_Decision_ABC* pPion )
 {
-    assert( pPion );
+    if( !pPion )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     pPion->GetPion().GetRole< PHY_RoleInterface_Humans >().ChangeEvacuationMode( PHY_RoleInterface_Humans::eEvacuationMode_Auto );
 }
 
@@ -266,7 +275,11 @@ void DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities( MIL_Agent_ABC& 
     T_AutomateVector automates;
     automates.reserve( priorities.size() );
     for( std::vector< const DEC_Decision_ABC* >::const_iterator it = priorities.begin(); it != priorities.end(); ++it )
+    {
+        if( !(*it) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         automates.push_back( &(*it)->GetAutomate() );
+    }
     PHY_RoleInterface_Medical* role = callerAgent.RetrieveRole< PHY_RoleInterface_Medical >();
     if( role )
         role->ChangePriorities( automates );
@@ -550,7 +563,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_LogisticFunctions::ConvoyGet
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::UndoLendComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack, T_ComposantePredicate funcPredicate )
 {
-    assert( pTarget );
+    if( !pTarget )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     const unsigned int nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion(), nNbrToGetBack, std::mem_fun_ref( funcPredicate ) );
     if( nNbrGotBack == 0 )
         MIL_Report::PostEvent( callerAgent, MIL_Report::eReport_EquipmentLoanRetrievingImpossible );

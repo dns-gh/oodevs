@@ -110,7 +110,8 @@ std::vector< boost::shared_ptr< TER_Localisation > > DEC_PopulationFunctions::Ge
 int DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation( unsigned int agentId )
 {
     const MIL_AgentPion* pAgent = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( agentId );
-    assert( pAgent  );
+    if( !pAgent  )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return pAgent->GetRole< DEC_RolePion_Decision >().GetRoePopulation().GetID();
 }
 
@@ -120,6 +121,8 @@ int DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation( unsigned int agentI
 // -----------------------------------------------------------------------------
 bool DEC_PopulationFunctions::IsAgentInside( const MIL_Population& caller, DEC_Decision_ABC* pAgent )
 {
+    if( !pAgent )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     MIL_AgentPion& pion = pAgent->GetPion() ;
     return pion.Get< PHY_RoleInterface_Population >().HasCollisionWithCrowd( caller );
 }
@@ -132,7 +135,8 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Object > > DEC_PopulationFunctions
 {
     typedef std::vector< boost::shared_ptr< DEC_Knowledge_Object > >::iterator IT_KnowledgeObject;
 
-    assert( pZone );
+    if( !pZone )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     MIL_ObjectFilter filter( parameters );
     std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledges; //T_KnowledgeObjectDiaIDVector
     caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, *pZone );
@@ -282,6 +286,8 @@ double DEC_PopulationFunctions::GetDominationState( DEC_Decision_ABC& callerPopu
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_Mission_ABC > DEC_PopulationFunctions::GetMission( DEC_Decision_ABC* pAgent )
 {
+    if( !pAgent )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return pAgent->GetMission();
 }
 
@@ -291,6 +297,8 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_PopulationFunctions::GetMission( DEC_De
 // -----------------------------------------------------------------------------
 void DEC_PopulationFunctions::SetMission( DEC_Decision_ABC* object, boost::shared_ptr< MIL_Mission_ABC > mission )
 {
+    if( !object )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     object->SetMission( mission );
 }
 
@@ -328,7 +336,8 @@ void DEC_PopulationFunctions::ReintegrateUrbanBlock( MIL_Population& callerPopul
 // -----------------------------------------------------------------------------
 bool DEC_PopulationFunctions::HasReachedDestination( const MIL_Population& callerPopulation, const MT_Vector2D* destination )
 {
-    assert( destination );
+    if( !destination )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return callerPopulation.HasReachedDestination( *destination );
 }
 // -----------------------------------------------------------------------------
@@ -337,7 +346,8 @@ bool DEC_PopulationFunctions::HasReachedDestination( const MIL_Population& calle
 // -----------------------------------------------------------------------------
 bool DEC_PopulationFunctions::HasReachedBlockBorder( const MIL_Population& callerPopulation, const UrbanObjectWrapper* pUrbanKnowledge )
 {
-    assert( pUrbanKnowledge );
+    if( !pUrbanKnowledge )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return callerPopulation.HasReachedBlockBorder( pUrbanKnowledge );
 }
 
@@ -347,7 +357,8 @@ bool DEC_PopulationFunctions::HasReachedBlockBorder( const MIL_Population& calle
 // -----------------------------------------------------------------------------
 bool DEC_PopulationFunctions::HasReachedDestinationCompletely( const MIL_Population& callerPopulation, const MT_Vector2D* destination )
 {
-    assert( destination );
+    if( !destination )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return callerPopulation.HasReachedDestinationCompletely( *destination );
 }
 

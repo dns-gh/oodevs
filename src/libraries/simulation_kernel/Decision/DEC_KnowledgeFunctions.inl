@@ -28,7 +28,8 @@
 template< typename T > 
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion( const T& caller, const DEC_Decision_ABC* perceiver )
 {
-    assert( perceiver );
+    if( !perceiver )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     const MIL_AgentPion& source = perceiver->GetPion();
     T_ConstKnowledgeAgentVector sourceKnowledge;
     source.GetKnowledge().GetLivingEnemiesPerceived( sourceKnowledge );
@@ -44,7 +45,8 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByP
 template< typename T > 
 void DEC_KnowledgeFunctions::ShareKnowledgesWith( const T& caller, DEC_Decision_ABC* receiver, float minutes )
 {
-    assert( receiver );
+    if( !receiver )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     const unsigned int sharingTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + unsigned int( MIL_Tools::ConvertMinutesToSim( minutes ) );
     receiver->GetAutomate().GetKnowledgeGroup().GetKnowledge().GetKsSharing().ShareFromSource( caller.GetKnowledgeGroup(), sharingTimeStep );
 }
@@ -56,7 +58,8 @@ void DEC_KnowledgeFunctions::ShareKnowledgesWith( const T& caller, DEC_Decision_
 template< typename T > 
 void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( const T& caller, DEC_Decision_ABC* receiver, const MT_Vector2D* center, float radius )
 {
-    assert( receiver );
+    if( !receiver )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     receiver->GetAutomate().GetKnowledgeGroup().GetKnowledge().GetKsSharing().ShareFromSource( caller.GetKnowledgeGroup(), MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(), *center, MIL_Tools::ConvertMeterToSim( radius ) );
 }
 
@@ -126,70 +129,4 @@ std::vector< unsigned int > DEC_KnowledgeFunctions::GetPopulations( const T& cal
     std::vector< unsigned int > results;
     caller.GetKnowledgeGroup().GetKnowledge().GetPopulations( results );
     return results;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::ComputeEnemiesRatio
-// Created: NLD 2007-04-19
-// -----------------------------------------------------------------------------
-template< typename T, typename B >
-float DEC_KnowledgeFunctions::ComputeEnemiesRatio( const T& caller, const B& boundaries, bool unloaded )
-{
-    unsigned int nNbrTotalLivingEnemies = 0;
-    unsigned int nNbrSelectedLivingEnemies = 0;
-    const T_KnowledgeAgentVector& enemies = caller.GetKnowledgeGroup().GetKnowledge().GetEnemies();
-    for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
-    {
-        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = **itKnowledgeAgent;
-        if( knowledge->IsValid() && !knowledge->IsDead() && boundaries.IsInside( knowledge->GetPosition() ) )
-        {
-            ++ nNbrTotalLivingEnemies;
-            if( knowledge->IsHuman() == unloaded )
-                ++ nNbrSelectedLivingEnemies;
-        }
-    }
-    if( nNbrTotalLivingEnemies == 0 )
-        return 0.;
-    return static_cast< float >( nNbrSelectedLivingEnemies ) / nNbrTotalLivingEnemies;
-}
-
-namespace 
-{
-    template< typename Entity, typename Area >
-    struct CompareBoundariesEnemies
-    {
-        CompareBoundariesEnemies( const Entity& caller, bool unloaded )
-            : pCaller_( &caller ), unloaded_( unloaded ) {}
-        bool operator()( boost::shared_ptr< Area > area1, boost::shared_ptr< Area > area2 )
-        {
-            return DEC_KnowledgeFunctions::ComputeEnemiesRatio( *pCaller_, *area1, unloaded_ )
-                 < DEC_KnowledgeFunctions::ComputeEnemiesRatio( *pCaller_, *area2, unloaded_ );
-        }
-        const Entity* pCaller_;
-        bool unloaded_;
-    };    
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::SortAccordingToUnloadedEnemies
-// Created: NLD 2007-04-19
-// -----------------------------------------------------------------------------
-template< typename T > 
-std::vector< boost::shared_ptr< TER_Localisation > > DEC_KnowledgeFunctions::SortAccordingToUnloadedEnemies( const T& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations )
-{
-    std::vector< boost::shared_ptr< TER_Localisation > > result( locations );
-    std::sort( result.begin(), result.end(), CompareBoundariesEnemies< T, TER_Localisation >( caller, true ) );
-    return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::SortAccordingToLoadedEnemies
-// Created: AGE 2007-10-16
-// -----------------------------------------------------------------------------
-template< typename T >
-std::vector< boost::shared_ptr< TER_Localisation > > DEC_KnowledgeFunctions::SortAccordingToLoadedEnemies( const T& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations )
-{
-    std::vector< boost::shared_ptr< TER_Localisation > > result( locations );    
-    std::sort( result.begin(), result.end(), CompareBoundariesEnemies< T, TER_Localisation >( caller, false ) );
-    return result;
 }

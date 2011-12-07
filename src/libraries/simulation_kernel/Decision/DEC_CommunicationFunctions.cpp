@@ -136,6 +136,8 @@ void DEC_CommunicationFunctions::Register( directia::brain::Brain& brain )
 // -----------------------------------------------------------------------------
 int DEC_CommunicationFunctions::F_GeteEtatDec( DEC_Decision_ABC* pAgent )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_GeteEtatDec" );
     return pAgent->GeteEtatDec();
 }
 
@@ -145,6 +147,8 @@ int DEC_CommunicationFunctions::F_GeteEtatDec( DEC_Decision_ABC* pAgent )
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_SeteEtatDec( DEC_Decision_ABC* pAgent, int value )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_SeteEtatDec" );
     pAgent->SeteEtatDec( value );
 }
 
@@ -178,6 +182,8 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatDecPrudence( DEC_Decision_ABC* p
 // -----------------------------------------------------------------------------
 int DEC_CommunicationFunctions::F_GeteEtatLima( DEC_Decision_ABC* pAgent )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_GeteEtatLima" );
     return pAgent->GeteEtatLima();
 }
 
@@ -187,6 +193,8 @@ int DEC_CommunicationFunctions::F_GeteEtatLima( DEC_Decision_ABC* pAgent )
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_SeteEtatLima( DEC_Decision_ABC* pAgent, int value )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_SeteEtatLima" );
     pAgent->SeteEtatLima( value );
 }
 
@@ -436,6 +444,8 @@ void DEC_CommunicationFunctions::F_Pion_SeteConsigneTirPopulation( DEC_Decision_
 // -----------------------------------------------------------------------------
 int DEC_CommunicationFunctions::F_GeteEtatEchelon( DEC_Decision_ABC* pAgent )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_GeteEtatEchelon" );
     return pAgent->GeteEtatEchelon();
 }
 
@@ -445,6 +455,8 @@ int DEC_CommunicationFunctions::F_GeteEtatEchelon( DEC_Decision_ABC* pAgent )
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_SeteEtatEchelon( DEC_Decision_ABC* pAgent, int value )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_SeteEtatEchelon" );
     pAgent->SeteEtatEchelon( value );
 }
 
@@ -502,6 +514,8 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatSituationEnnemi( DEC_Decision_AB
 // -----------------------------------------------------------------------------
 int DEC_CommunicationFunctions::F_GeteEtatPhaseMission( DEC_Decision_ABC* pAgent )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_GeteEtatPhaseMission" );
     return pAgent->GeteEtatPhaseMission();
 }
 
@@ -511,6 +525,8 @@ int DEC_CommunicationFunctions::F_GeteEtatPhaseMission( DEC_Decision_ABC* pAgent
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_SeteEtatPhaseMission( DEC_Decision_ABC* pAgent, int value )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_SeteEtatPhaseMission" );
     pAgent->SeteEtatPhaseMission( value );
 }
 
@@ -544,6 +560,8 @@ void DEC_CommunicationFunctions::F_Pion_SetbOrdreInterrompreMission( DEC_Decisio
 // -----------------------------------------------------------------------------
 bool DEC_CommunicationFunctions::F_GetbOrdreDecrocher( DEC_Decision_ABC* pAgent )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_GetbOrdreDecrocher" );
     return pAgent->GetbOrdreDecrocher();
 }
 
@@ -553,6 +571,8 @@ bool DEC_CommunicationFunctions::F_GetbOrdreDecrocher( DEC_Decision_ABC* pAgent 
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_SetbOrdreDecrocher( DEC_Decision_ABC* pAgent, bool value )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_SetbOrdreDecrocher" );
     pAgent->SetbOrdreDecrocher( value );
 }
 
@@ -562,6 +582,8 @@ void DEC_CommunicationFunctions::F_SetbOrdreDecrocher( DEC_Decision_ABC* pAgent,
 // -----------------------------------------------------------------------------
 bool DEC_CommunicationFunctions::F_GetbOrdreTenirSurLR( DEC_Decision_ABC* pAgent )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_GetbOrdreTenirSurLR" );
     return pAgent->GetbOrdreTenirSurLR();
 }
 
@@ -571,6 +593,8 @@ bool DEC_CommunicationFunctions::F_GetbOrdreTenirSurLR( DEC_Decision_ABC* pAgent
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_SetbOrdreTenirSurLR( DEC_Decision_ABC* pAgent, bool value )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_SetbOrdreTenirSurLR" );
     pAgent->SetbOrdreTenirSurLR( value );
 }
 
@@ -580,6 +604,8 @@ void DEC_CommunicationFunctions::F_SetbOrdreTenirSurLR( DEC_Decision_ABC* pAgent
 // -----------------------------------------------------------------------------
 bool DEC_CommunicationFunctions::F_GetbOrdreTenir( DEC_Decision_ABC* pAgent )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_GetbOrdreTenir" );
     return pAgent->GetbOrdreTenir();
 }
 
@@ -589,6 +615,8 @@ bool DEC_CommunicationFunctions::F_GetbOrdreTenir( DEC_Decision_ABC* pAgent )
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_SetbOrdreTenir( DEC_Decision_ABC* pAgent, bool value )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in F_SetbOrdreTenir" );
     pAgent->SetbOrdreTenir( value );
 }
 
@@ -622,6 +650,8 @@ void DEC_CommunicationFunctions::F_Pion_SetbPasserSurLC( DEC_Decision_ABC* pPion
 // -----------------------------------------------------------------------------
 bool DEC_CommunicationFunctions::F_Pion_GetNewEscorted( DEC_Decision_ABC* pPion )
 {
+    if( !pPion )
+        throw std::runtime_error( "Invalid parameter in F_Pion_GetNewEscorted" );
     return pPion->GetVariable< bool >( "g_bNewEscorted" );
 }
 
@@ -631,6 +661,8 @@ bool DEC_CommunicationFunctions::F_Pion_GetNewEscorted( DEC_Decision_ABC* pPion 
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_Pion_SetNewEscorted( DEC_Decision_ABC* pPion, bool value )
 {
+    if( !pPion )
+        throw std::runtime_error( "Invalid parameter in F_Pion_SetNewEscorted" );
     pPion->SetVariable( "g_bNewEscorted" ,value );
 }
 
@@ -640,6 +672,8 @@ void DEC_CommunicationFunctions::F_Pion_SetNewEscorted( DEC_Decision_ABC* pPion,
 // -----------------------------------------------------------------------------
 bool DEC_CommunicationFunctions::F_Pion_GetNeedReinforcement( DEC_Decision_ABC* pPion )
 {
+    if( !pPion )
+        throw std::runtime_error( "Invalid parameter in F_Pion_GetNeedReinforcement" );
     return pPion->GetVariable< bool >( "g_needReinforcement" );
 }
 
@@ -649,6 +683,8 @@ bool DEC_CommunicationFunctions::F_Pion_GetNeedReinforcement( DEC_Decision_ABC* 
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_Pion_SetNeedReinforcement( DEC_Decision_ABC* pPion, bool value )
 {
+    if( !pPion )
+        throw std::runtime_error( "Invalid parameter in F_Pion_SetNeedReinforcement" );
     pPion->SetVariable( "g_needReinforcement" ,value );
 }
 
@@ -658,6 +694,8 @@ void DEC_CommunicationFunctions::F_Pion_SetNeedReinforcement( DEC_Decision_ABC* 
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_CommunicationFunctions::F_Pion_GetEnemyAttackedBy( DEC_Decision_ABC* pPion )
 {
+    if( !pPion )
+        throw std::runtime_error( "Invalid parameter in F_Pion_GetEnemyAttackedBy" );
     return pPion->GetVariable< boost::shared_ptr< DEC_Knowledge_Agent > >( "g_myEnemy");
 }
 
@@ -919,6 +957,8 @@ void DEC_CommunicationFunctions::F_RemoveFromselUnitesEnAppui( DEC_Decision_ABC*
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_Mot_EtatDesactiveSauvegarde( DEC_Decision_ABC* pPion, bool value )
 {
+    if( !pPion )
+        throw std::runtime_error( "Invalid parameter in F_Mot_EtatDesactiveSauvegarde" );
     pPion->SetVariable( "g_bDesactiveSauvegarde" ,value );
 }
 
@@ -928,7 +968,10 @@ void DEC_CommunicationFunctions::F_Mot_EtatDesactiveSauvegarde( DEC_Decision_ABC
 // -----------------------------------------------------------------------------
 float DEC_CommunicationFunctions::F_Automat_GetrDestruction( DEC_Decision_ABC* pAutomat )
 {
-    return dynamic_cast< DEC_AutomateDecision* >( pAutomat )->GetrDestruction();
+    DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
+    if( !automat )
+        throw std::runtime_error( "Invalid parameter in F_Automat_GetrDestruction" );
+    return automat->GetrDestruction();
 }
 
 // -----------------------------------------------------------------------------
@@ -937,7 +980,10 @@ float DEC_CommunicationFunctions::F_Automat_GetrDestruction( DEC_Decision_ABC* p
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_Automat_SetrDestruction( DEC_Decision_ABC* pAutomat, float value )
 {
-    dynamic_cast< DEC_AutomateDecision* >( pAutomat )->SetrDestruction( value );
+    DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
+    if( !automat )
+        throw std::runtime_error( "Invalid parameter in F_Automat_SetrDestruction" );
+    automat->SetrDestruction( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -946,7 +992,10 @@ void DEC_CommunicationFunctions::F_Automat_SetrDestruction( DEC_Decision_ABC* pA
 // -----------------------------------------------------------------------------
 const MIL_Fuseau* DEC_CommunicationFunctions::F_Automat_Getfuseau( DEC_Decision_ABC* pAutomat )
 {
-    return dynamic_cast< DEC_AutomateDecision* >( pAutomat )->Getfuseau();
+    DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
+    if( !automat )
+        throw std::runtime_error( "Invalid parameter in F_Automat_Getfuseau" );
+    return automat->Getfuseau();
 }
 
 // -----------------------------------------------------------------------------
@@ -955,7 +1004,10 @@ const MIL_Fuseau* DEC_CommunicationFunctions::F_Automat_Getfuseau( DEC_Decision_
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_Automat_Setfuseau( DEC_Decision_ABC* pAutomat, MIL_Fuseau* value )
 {
-    dynamic_cast< DEC_AutomateDecision* >( pAutomat )->Setfuseau( value );
+    DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
+    if( !automat )
+        throw std::runtime_error( "Invalid parameter in F_Automat_Setfuseau" );
+    automat->Setfuseau( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -964,7 +1016,10 @@ void DEC_CommunicationFunctions::F_Automat_Setfuseau( DEC_Decision_ABC* pAutomat
 // -----------------------------------------------------------------------------
 TER_Localisation* DEC_CommunicationFunctions::F_Automat_Getzone( DEC_Decision_ABC* pAutomat )
 {
-    return dynamic_cast< DEC_AutomateDecision* >( pAutomat )->Getzone();
+    DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
+    if( !automat )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    return automat->Getzone();
 }
 
 // -----------------------------------------------------------------------------
@@ -973,7 +1028,10 @@ TER_Localisation* DEC_CommunicationFunctions::F_Automat_Getzone( DEC_Decision_AB
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_Automat_Setzone( DEC_Decision_ABC* pAutomat, TER_Localisation* value )
 {
-    dynamic_cast< DEC_AutomateDecision* >( pAutomat )->Setzone( value );
+    DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
+    if( !automat )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    automat->Setzone( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -982,7 +1040,10 @@ void DEC_CommunicationFunctions::F_Automat_Setzone( DEC_Decision_ABC* pAutomat, 
 // -----------------------------------------------------------------------------
 bool DEC_CommunicationFunctions::F_Automat_GetbOrdreAttendre( DEC_Decision_ABC* pAutomat )
 {
-    return dynamic_cast< DEC_AutomateDecision* >( pAutomat )->GetbOrdreAttendre();
+    DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
+    if( !automat )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    return automat->GetbOrdreAttendre();
 }
 
 // -----------------------------------------------------------------------------
@@ -991,7 +1052,10 @@ bool DEC_CommunicationFunctions::F_Automat_GetbOrdreAttendre( DEC_Decision_ABC* 
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_Automat_SetbOrdreAttendre( DEC_Decision_ABC* pAutomat, bool value )
 {
-    dynamic_cast< DEC_AutomateDecision* >( pAutomat )->SetbOrdreAttendre( value );
+    DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
+    if( !automat )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    automat->SetbOrdreAttendre( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -1000,7 +1064,10 @@ void DEC_CommunicationFunctions::F_Automat_SetbOrdreAttendre( DEC_Decision_ABC* 
 // -----------------------------------------------------------------------------
 bool DEC_CommunicationFunctions::F_Automat_GetbOrdrePoursuivre( DEC_Decision_ABC* pAutomat )
 {
-    return dynamic_cast< DEC_AutomateDecision* >( pAutomat )->GetbOrdrePoursuivre();
+    DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
+    if( !automat )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    return automat->GetbOrdrePoursuivre();
 }
 
 // -----------------------------------------------------------------------------
@@ -1009,7 +1076,10 @@ bool DEC_CommunicationFunctions::F_Automat_GetbOrdrePoursuivre( DEC_Decision_ABC
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_Automat_SetbOrdrePoursuivre( DEC_Decision_ABC* pAutomat, bool value )
 {
-    dynamic_cast< DEC_AutomateDecision* >( pAutomat )->SetbOrdrePoursuivre( value );
+    DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
+    if( !automat )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    automat->SetbOrdrePoursuivre( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -1018,7 +1088,10 @@ void DEC_CommunicationFunctions::F_Automat_SetbOrdrePoursuivre( DEC_Decision_ABC
 // -----------------------------------------------------------------------------
 bool DEC_CommunicationFunctions::F_Automat_GetbOrdreRalentir( DEC_Decision_ABC* pAutomat )
 {
-    return dynamic_cast< DEC_AutomateDecision* >( pAutomat )->GetbOrdreRalentir();
+    DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
+    if( !automat )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    return automat->GetbOrdreRalentir();
 }
 
 // -----------------------------------------------------------------------------
@@ -1027,5 +1100,8 @@ bool DEC_CommunicationFunctions::F_Automat_GetbOrdreRalentir( DEC_Decision_ABC* 
 // -----------------------------------------------------------------------------
 void DEC_CommunicationFunctions::F_Automat_SetbOrdreRalentir( DEC_Decision_ABC* pAutomat, bool value )
 {
-    dynamic_cast< DEC_AutomateDecision* >( pAutomat )->SetbOrdreRalentir( value );
+    DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
+    if( !automat )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    automat->SetbOrdreRalentir( value );
 }

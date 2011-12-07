@@ -50,7 +50,6 @@ const MT_Vector2D& DEC_GeometryFunctions::GetPosition( const MIL_Automate& autom
 template< typename T >
 std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitLocalisationInParts( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts, const MT_Vector2D* direction )
 {
-    assert( pLocalisation );
     if( !pLocalisation )
         throw std::runtime_error( "Null location when splitting location in parts" );
 
@@ -70,7 +69,8 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
 template< typename T >
 std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const double rAverageArea, MT_Vector2D* direction )
 {
-    assert( pLocalisation );
+    if( !pLocalisation )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
 
     std::vector< boost::shared_ptr< TER_Localisation > > result;
     
@@ -91,7 +91,6 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
 template< typename T >
 std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::RecursiveSplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const double rAverageArea )
 {
-    assert( pLocalisation );
     if( !pLocalisation )
         throw std::runtime_error( "Null location when splitting location in surfaces" );
 
@@ -113,7 +112,11 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
                 T_ResultVector splitted;
                 MT_Vector2D* splitDirection = 0;
                 for( T_ResultVector::const_iterator it = result.begin(); it != result.end(); ++it )
+                {
+                    if( !(*it) )
+                        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
                     (*it)->Split( 4, splitted, splitDirection );
+                }
                 std::swap( result, splitted );
             }
         }
@@ -363,7 +366,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestLocalisati
 template< typename T >
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau( const T& caller, const TER_Localisation* pLocation )
 {
-    assert( pLocation );
     if( !pLocation )
         throw std::runtime_error( "Invalid location" );
     boost::shared_ptr< MT_Vector2D > pResult;
@@ -388,12 +390,17 @@ float DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives( const T& cal
     typedef T_ObjectiveVector::iterator       IT_ObjectiveVector;
     typedef T_ObjectiveVector::const_iterator CIT_ObjectiveVector;
     //
+    if( !pFuseau )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+
     const MIL_LimaOrder* pNextLima = caller.GetOrderManager().FindNextScheduledLima();
 
     const DEC_Objective* pNextObjective = 0;
     for( std::vector< DEC_Objective* >::const_iterator it = objectives.begin(); it != objectives.end(); ++it )
     {
         const DEC_Objective* pObjective = *it;
+        if( !pObjective )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         if( pObjective->GetSchedule() == 0 || pObjective->IsFlagged() )
             continue;
 

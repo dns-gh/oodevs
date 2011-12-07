@@ -53,6 +53,8 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetDetectedAgentsInZone( con
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetEnemyAgentsInZone( const DEC_Decision_ABC* callerAgent, const TER_Localisation* area )
 {
     T_ConstKnowledgeAgentVector knowledges;
+    if( !callerAgent )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     callerAgent->GetPion().GetKnowledgeGroup().GetKnowledge().GetEnemyAgentsInZone( knowledges, *area );
     return knowledges;
 }
@@ -74,6 +76,8 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetAgentsAttacking( const MI
 // -----------------------------------------------------------------------------
 T_ConstKnowledgeAgentVector  DEC_KnowledgeFunctions::GetAgentsAttackingAlly( const DEC_Decision_ABC* agentAlly )
 {
+    if( !agentAlly )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return DEC_KnowledgeFunctions::GetAgentsAttacking( agentAlly->GetPion() );
 }
 
@@ -83,11 +87,15 @@ T_ConstKnowledgeAgentVector  DEC_KnowledgeFunctions::GetAgentsAttackingAlly( con
 // -----------------------------------------------------------------------------
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetEnemiesAttacking( const DEC_Decision_ABC* callerAgent )
 {
+    if( !callerAgent )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     T_ConstKnowledgeAgentVector attackers;
     std::set< boost::shared_ptr< DEC_Knowledge_Agent > > buffer;
     const std::vector< MIL_Automate* >& allies = callerAgent->GetPion().GetKnowledgeGroup().GetAutomates();
     for( std::vector< MIL_Automate* >::const_iterator it = allies.begin(); it != allies.end(); ++it )
     {
+        if( !(*it) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         const std::vector< MIL_AgentPion* >& pions = (*it)->GetPions();
         for( std::vector< MIL_AgentPion* >::const_iterator pit = pions.begin(); pit != pions.end(); ++pit )
         {
@@ -109,17 +117,25 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetEnemiesAttacking( const D
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeFunctions::GetNearestToFriend( const DEC_Decision_ABC* callerAgent, T_ConstKnowledgeAgentVector units )
 {
+    if( !callerAgent )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     double minSquareDistance = std::numeric_limits< double >::max();
     boost::shared_ptr< DEC_Knowledge_Agent > result;
     const std::vector< MIL_Automate* >& allies = callerAgent->GetPion().GetKnowledgeGroup().GetAutomates();
     for( std::vector< MIL_Automate* >::const_iterator it = allies.begin(); it != allies.end(); ++it )
     {
+        if( !(*it) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         const std::vector< MIL_AgentPion* >& pions = (*it)->GetPions();
         for( std::vector< MIL_AgentPion* >::const_iterator pit = pions.begin(); pit != pions.end(); ++pit )
         {
+            if( !(*pit) )
+                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
             const MT_Vector2D& allyPosition = (*pit)->Get< PHY_RoleInterface_Location >().GetPosition();
             for( CIT_ConstKnowledgeAgentVector uit = units.begin(); uit != units.end(); ++uit )
             {
+                if( !(*uit) )
+                    throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
                 const MT_Vector2D& uPosition = (*uit)->GetPosition();
                 double squareDistance = allyPosition.SquareDistance( uPosition );
                 if( squareDistance < minSquareDistance )
@@ -246,6 +262,8 @@ void DEC_KnowledgeFunctions::GetUrbanBlock( directia::brain::Brain& brain, const
 // -----------------------------------------------------------------------------
 T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInCircle( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& center, float radius )
 {
+    if( !center )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     //Urban
     T_UrbanObjectVector blocks;
     T_UrbanObjectVector result;
@@ -262,6 +280,8 @@ T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInCircle( const MIL_Age
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper* DEC_KnowledgeFunctions::GetUrbanBlockForPosition( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& point )
 {
+    if( !point )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     T_UrbanObjectVector blocks;
     pion.GetArmy().GetKnowledge().GetUrbanObjects( blocks );
     for( T_UrbanObjectVector::iterator it = blocks.begin(); it != blocks.end(); it++ )

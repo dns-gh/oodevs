@@ -37,7 +37,7 @@ float DEC_UrbanObjectFunctions::GetCurrentRecceProgress( const MIL_AgentPion& pi
     if( pUrbanObject )
     {
         boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = pion.GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *pUrbanObject );
-        if( pKnowledge.get() )
+        if( pKnowledge )
             return pKnowledge->GetCurrentRecceProgress();
     }
     return 0.;
@@ -52,8 +52,12 @@ T_ConstKnowledgeAgentVector DEC_UrbanObjectFunctions::GetLivingEnemiesInBU( cons
     T_ConstKnowledgeAgentVector knowledges;
     const T_KnowledgeAgentVector& enemies = callerAgent.GetKnowledgeGroup().GetKnowledge().GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); it++ )
+    {
+        if( !(*it) )
+            continue;
         if( pUrbanObject && ( *it )->IsInUrbanBlock( *pUrbanObject ) )
             knowledges.push_back( *it );
+    }
     return knowledges;
 }
 
@@ -144,21 +148,32 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
 
     const T_KnowledgeAgentVector& enemies = callerAgent.GetKnowledgeGroup().GetKnowledge().GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); it++ )
+    {
+        if( !(*it) )
+            continue;
         if( pUrbanObject && ( *it )->IsInUrbanBlock( *pUrbanObject ) )
         {
             rTotalFightScoreEnemy += static_cast< float >( ( *it )->GetDangerosity( callerAgent, false ) );
             dangerousEnemies_.push_back( *it );
         }
+    }
 
-    const T_KnowledgeAgentVector& allies = callerAgent.GetKnowledgeGroup().GetKnowledge().GetFriends();
-    for( CIT_KnowledgeAgentVector it = allies.begin(); it != allies.end(); it++ )
-        if( pUrbanObject && ( *it )->IsInUrbanBlock( *pUrbanObject ) )
+    if( !dangerousEnemies_.empty() )
+    {
+        const T_KnowledgeAgentVector& allies = callerAgent.GetKnowledgeGroup().GetKnowledge().GetFriends();
+        for( CIT_KnowledgeAgentVector it = allies.begin(); it != allies.end(); it++ )
         {
-            double rTotalDangerosity = 0.;
-            for( CIT_ConstKnowledgeAgentVector itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
-                rTotalDangerosity += ( ( *it )->GetDangerosity( **itAgentEnemy, true ) * ( *it )->GetOperationalState() );
-            rTotalFightScoreFriend += ( rTotalDangerosity / dangerousEnemies_.size() );
+            if( !(*it) )
+                continue;
+            if( pUrbanObject && ( *it )->IsInUrbanBlock( *pUrbanObject ) )
+            {
+                double rTotalDangerosity = 0.;
+                for( CIT_ConstKnowledgeAgentVector itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
+                    rTotalDangerosity += ( ( *it )->GetDangerosity( **itAgentEnemy, true ) * ( *it )->GetOperationalState() );
+                rTotalFightScoreFriend += ( rTotalDangerosity / dangerousEnemies_.size() );
+            }
         }
+    }
 
     double rRapForValue = 1.;
     if( rTotalFightScoreEnemy != 0. )
@@ -193,6 +208,8 @@ float DEC_UrbanObjectFunctions::GetStateUrbanBlock( UrbanObjectWrapper* pUrbanOb
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_Localisation > DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock( const UrbanObjectWrapper* pUrbanObject )
 {
+    if( !pUrbanObject )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     boost::shared_ptr< TER_Localisation > location( new TER_Localisation( pUrbanObject->GetLocalisation() ) );
     return location;
 }
@@ -203,6 +220,8 @@ boost::shared_ptr< TER_Localisation > DEC_UrbanObjectFunctions::GetPolygonFromUr
 // -----------------------------------------------------------------------------
 void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject, const PHY_DotationCategory* category )
 {
+    if( !pUrbanObject )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     StructuralCapacity* capacity = const_cast< StructuralCapacity* >( pUrbanObject->Retrieve< StructuralCapacity >() );
     if( capacity )
     {
@@ -224,5 +243,7 @@ void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, U
 // -----------------------------------------------------------------------------
 std::string DEC_UrbanObjectFunctions::GetType( const UrbanObjectWrapper* pUrbanObject )
 {
+    if( !pUrbanObject )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return pUrbanObject->GetType().GetName();
 }

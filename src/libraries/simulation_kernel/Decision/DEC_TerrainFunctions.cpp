@@ -43,6 +43,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_TerrainFunctions::FindSafety
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_TerrainFunctions::GetRoadIntersectionsWithZone( const TER_Localisation* zone )
 {
+    if( !zone )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     if( zone->GetType() == TER_Localisation::ePolygon )
     {
@@ -61,5 +63,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_TerrainFunctions::GetRoadInt
 // -----------------------------------------------------------------------------
 bool DEC_TerrainFunctions::CanMoveOn( const DEC_Decision_ABC* agent, boost::shared_ptr< MT_Vector2D > position )
 {
+    if( !agent )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return agent->GetPion().GetRole< PHY_RoleInterface_TerrainAnalysis >().CanMoveOn( position );
 }

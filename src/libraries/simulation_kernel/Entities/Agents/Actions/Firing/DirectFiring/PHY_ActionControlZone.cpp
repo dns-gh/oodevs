@@ -35,7 +35,7 @@ namespace
     public:
         virtual unsigned int GetID() const { return 0; }
         virtual const std::string& GetName() const { return name_; }
-        virtual const std::string& GetRealName() const { return ""; }
+        virtual const std::string& GetRealName() const { static std::string empty; return empty; }
         virtual double GetPointSize() const { return 250.; }
     private:
         static const std::string name_;
