@@ -160,7 +160,7 @@ void DEC_DIAFunctions::CopyLocalisationMission( boost::shared_ptr< TER_Localisat
 // -----------------------------------------------------------------------------
 void DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObjectSource )
 {
-    if( !pKnowledgeObjectSource || pMission.get() )
+    if( !pKnowledgeObjectSource || !pMission.get() )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     pMission->AppendToParameter( parameter, pKnowledgeObjectSource );
 }

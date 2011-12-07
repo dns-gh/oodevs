@@ -86,7 +86,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_MedicalTreatmentFunctions::Determi
 bool DEC_MedicalTreatmentFunctions::CanHospitalTreatWound( const MIL_Agent_ABC& /*callerAgent*/, const DEC_Decision_ABC* patient, boost::shared_ptr< DEC_Knowledge_Object > hospital )
 {
     PHY_InjuredHuman* injuredHuman = GetWound( *patient );
-    if ( !injuredHuman ||!hospital || hospital->GetObjectKnown() )
+    if ( !injuredHuman || !hospital || !hospital->GetObjectKnown() )
         return false;
     return hospital->GetObjectKnown()->Get< MedicalCapacity >().CanTreat( *hospital->GetObjectKnown(), *injuredHuman );
 }

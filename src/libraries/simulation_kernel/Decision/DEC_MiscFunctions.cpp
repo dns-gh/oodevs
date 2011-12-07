@@ -106,7 +106,7 @@ int DEC_MiscFunctions::GetAgentReinforcementsNumber( const DEC_Decision_ABC* pAg
 //-----------------------------------------------------------------------------
 bool DEC_MiscFunctions::Reinforce( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget )
 {
-    if ( pTarget )
+    if ( !pTarget )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return callerAgent.GetRole< PHY_RoleInterface_Reinforcement >().Reinforce( pTarget->GetPion() );
 }

@@ -27,7 +27,7 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::MRT_CreatePionMission(
     if( !pPion )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
-    if( pMissionType )
+    if( !pMissionType )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate.GetOrderManager().MRT_CreatePionMission( pPion->GetPion(), *pMissionType );
     return pPionMission;
@@ -185,7 +185,7 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreateAutomateMission(
     if( !pAutomate )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::FindFromDiaID( mission );
-    if( pMissionType )
+    if( !pMissionType )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     boost::shared_ptr< MIL_Mission_ABC > pMission = callerAutomate.GetOrderManager().CreateAutomateMission( pAutomate->GetAutomate(), *pMissionType );
     return pMission;
