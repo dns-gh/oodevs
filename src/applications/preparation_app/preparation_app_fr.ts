@@ -703,6 +703,13 @@
     </message>
 </context>
 <context>
+    <name>InhabitantListView</name>
+    <message>
+        <source>Create side</source>
+        <translation>Créer un camp</translation>
+    </message>
+</context>
+<context>
     <name>LivingAreaEditor</name>
     <message>
         <source>Information</source>
@@ -1257,6 +1264,20 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Create</source>
         <translation>Créer</translation>
+    </message>
+</context>
+<context>
+    <name>ObjectListView</name>
+    <message>
+        <source>Create side</source>
+        <translation>Créer un camp</translation>
+    </message>
+</context>
+<context>
+    <name>PopulationListView</name>
+    <message>
+        <source>Create side</source>
+        <translation>Créer un camp</translation>
     </message>
 </context>
 <context>

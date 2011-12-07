@@ -57,3 +57,18 @@ void ObjectListView::NotifySelected( const kernel::Entity_ABC* element )
     selected_ = element;
     gui::ObjectListView::NotifySelected( element );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::OnContextMenuRequested
+// Created: ABR 2011-12-07
+// -----------------------------------------------------------------------------
+void ObjectListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoint& pos, int index )
+{
+    gui::ObjectListView::OnContextMenuRequested( item, pos, index );
+    if( item || !isVisible() )
+        return;
+    modelBuilder_.ClearSelection();
+    Q3PopupMenu* menu = new Q3PopupMenu( this );
+    menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
+    menu->exec( pos, index );
+}

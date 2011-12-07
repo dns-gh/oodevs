@@ -89,3 +89,18 @@ Q3DragObject* InhabitantListView::dragObject()
     }
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantListView::OnContextMenuRequested
+// Created: ABR 2011-12-07
+// -----------------------------------------------------------------------------
+void InhabitantListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoint& pos, int index )
+{
+    gui::InhabitantListView::OnContextMenuRequested( item, pos, index );
+    if( item || !isVisible() )
+        return;
+    modelBuilder_.ClearSelection();
+    Q3PopupMenu* menu = new Q3PopupMenu( this );
+    menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
+    menu->exec( pos, index );
+}

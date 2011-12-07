@@ -703,6 +703,13 @@
     </message>
 </context>
 <context>
+    <name>InhabitantListView</name>
+    <message>
+        <source>Create side</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LivingAreaEditor</name>
     <message>
         <source>Information</source>
@@ -1257,6 +1264,20 @@ Do you want to save anyway?</source>
     <message>
         <source>Create</source>
         <translation>Crear</translation>
+    </message>
+</context>
+<context>
+    <name>ObjectListView</name>
+    <message>
+        <source>Create side</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PopulationListView</name>
+    <message>
+        <source>Create side</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
