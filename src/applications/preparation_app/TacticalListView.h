@@ -95,6 +95,7 @@ private:
     bool Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target );
     bool Drop( const kernel::Ghost_ABC& item, const kernel::Entity_ABC& target );
     void AddFormationMenu( kernel::ContextMenu& menu, const kernel::HierarchyLevel_ABC& root );
+    void UpdatePixmap( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     //@}
 
 private:

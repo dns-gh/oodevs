@@ -106,10 +106,7 @@ namespace
 void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
     item->setRenameEnabled( 0, true );
-    if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
-        item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
-    else if( IsCommandPost( entity ) )
-        item->setPixmap( 1, commandPost_ );
+    UpdatePixmap( entity, item );
     QColor color = Qt::transparent;
     if( dynamic_cast< const Ghost_ABC* >( &entity ) != 0 )
         color = QColor( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
@@ -125,8 +122,8 @@ void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
 {
     const Entity_ABC* agent = & decisions.GetAgent();
     ValuedListItem* item = FindItem( agent, firstChild() );
-    if( item )
-        item->setPixmap( 1, decisions.IsEmbraye() ? lock_ : QPixmap() );
+    if( agent )
+        UpdatePixmap( *agent, item );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,10 +135,27 @@ void TacticalListView::NotifyUpdated( const Entity_ABC& entity )
     if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
     {
         item->SetNamed( entity );
+        UpdatePixmap( entity, item );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::UpdatePixmap
+// Created: LGY 2011-12-07
+// -----------------------------------------------------------------------------
+void TacticalListView::UpdatePixmap( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
+{
+    if( item )
+    {
         if( IsCommandPost( entity ) )
             item->setPixmap( 1, commandPost_ );
         else
-            item->setPixmap( 1, QPixmap() );
+        {
+            if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
+                item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
+            else
+                item->setPixmap( 1, QPixmap() );
+        }
     }
 }
 
