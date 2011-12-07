@@ -29,6 +29,7 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
     MOCK_METHOD( WoundHumans, 3 );
     MOCK_METHOD( HealHumans, 2 );
     MOCK_METHOD( HealAllHumans, 0 );
+    MOCK_METHOD( KillAllHumans, 0 );
     MOCK_METHOD( OverloadHumans, 5 );
     MOCK_METHOD( GetOperationalState, 0 );
     MOCK_METHOD( IsViable, 0 );
