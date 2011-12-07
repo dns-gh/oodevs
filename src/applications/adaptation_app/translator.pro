@@ -39,6 +39,8 @@ ADN_ChangeValueCommand_Int.cpp \
 ADN_ChangeValueCommand_Pointer.cpp \
 ADN_ChangeValueCommand_Pointer.inl \
 ADN_ChangeValueCommand_String.cpp \
+ADN_ColorSelector.cpp \
+ADN_ColorNameSelector.cpp \
 ADN_Communications_GUI.cpp \
 ADN_Composante_Wizard.cpp \
 ADN_Composantes_ActiveProtectionsListView.cpp \

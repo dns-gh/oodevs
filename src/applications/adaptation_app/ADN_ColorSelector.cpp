@@ -92,7 +92,7 @@ void ADN_ColorSelector::paintEvent( QPaintEvent *e )
 // -----------------------------------------------------------------------------
 void ADN_ColorSelector::OnClick()
 {
-    QColor color = QColorDialog::getColor( color, this );
+    QColor color = QColorDialog::getColor( color, this, tr( "Select color" ) );
     if( color.isValid() )
     {
         color_ = color;
