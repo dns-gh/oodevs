@@ -57,7 +57,7 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     , controllers_    ( controllers )
     , extensions_     ( extensions )
     , diffusionDialog_( new DiffusionListDialog( parent, controllers, agents, extensions, factory, icons, profile, "ExtensionPanel_DiffusionListDialog" ) )
-    , selected_       ( controllers )
+    , selected_       ( 0 )
     , pGroupBox_      ( 0 )
     , updating_       ( false )
 {
@@ -88,10 +88,10 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
     if( selected_ == element )
         return;
     DeleteWidgets();
+    selected_ = const_cast< Entity_ABC* >( element );
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( type )
     {
-        selected_ = const_cast< Entity_ABC* >( element );
         if( selected_ )
         {
             QString typeName = selected_->GetTypeName();
@@ -135,7 +135,10 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
 void ExtensionsPanel::NotifyDeleted( const Entity_ABC& element )
 {
     if( selected_ == &element )
+    {
+        selected_ = 0;
         DeleteWidgets();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -255,6 +258,8 @@ namespace
 // -----------------------------------------------------------------------------
 void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
 {
+    if( !selected_ )
+        return;
     static const std::string language = ReadLang();
     const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
     std::string value( ext ? ext->GetValue( attribute.GetName() ) : "" );
@@ -347,7 +352,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
         {
             const std::string extensionName = extensions_.GetNameByType( AttributeType::ETypeDiffusionList );
             assert( !extensionName.empty() );
-            DiffusionListLineEdit* edit = new DiffusionListLineEdit( box, selected_, *diffusionDialog_, extensionName, attribute.GetName().c_str() );
+            DiffusionListLineEdit* edit = new DiffusionListLineEdit( box, controllers_, selected_, *diffusionDialog_, extensionName, attribute.GetName().c_str() );
             edit->setValidator( new QMinMaxValidator( edit, min, max, new QRegExpValidator( DiffusionListHierarchy::diffusionRegexp_, edit ) ) );
             edit->insert( value.c_str() );
             box->setStretchFactor( edit, 1 );
@@ -377,7 +382,9 @@ void ExtensionsPanel::DeleteWidgets()
 // -----------------------------------------------------------------------------
 void ExtensionsPanel::OnActivationChanged( bool activate )
 {
-    DictionaryExtensions* dico = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
+    if( !selected_ )
+        return;
+    DictionaryExtensions* dico = selected_->Retrieve< DictionaryExtensions >();
     if( !dico )
         return;
     dico->SetEnabled( activate );
@@ -393,9 +400,9 @@ void ExtensionsPanel::OnActivationChanged( bool activate )
 // -----------------------------------------------------------------------------
 void ExtensionsPanel::Commit()
 {
-    if( updating_ )
+    if( updating_ || !selected_ )
         return;
-    DictionaryExtensions* ext = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
+    DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( !ext || !type )
         return;
@@ -464,7 +471,9 @@ void ExtensionsPanel::Commit()
 // -----------------------------------------------------------------------------
 void ExtensionsPanel::UpdateDisplay()
 {
-    DictionaryExtensions* ext = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
+    if( !selected_ )
+        return;
+    DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( !ext || !type )
         return;
@@ -522,7 +531,9 @@ void ExtensionsPanel::UpdateDisplay()
 // -----------------------------------------------------------------------------
 void ExtensionsPanel::UpdateDependencies()
 {
-    DictionaryExtensions* dico = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
+    if( !selected_ )
+        return;
+    DictionaryExtensions* dico = selected_->Retrieve< DictionaryExtensions >();
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( !dico || !type )
         return;

@@ -86,7 +86,7 @@ protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    kernel::Entity_ABC* selected_;
     const kernel::ExtensionTypes& extensions_;
     DiffusionListDialog* diffusionDialog_;
     Q3VBox* pMainLayout_;
