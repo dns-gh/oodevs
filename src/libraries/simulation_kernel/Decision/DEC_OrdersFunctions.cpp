@@ -117,7 +117,7 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionBM( D
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     // Instanciate and check the new mission
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
-    if( pMissionType )
+    if( !pMissionType )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     boost::shared_ptr< MIL_Mission_ABC > pPionMission = pPion->GetPion().GetAutomate().GetOrderManager().CreatePionMissionBM( pPion->GetPion(), *pMissionType );
     return pPionMission;
