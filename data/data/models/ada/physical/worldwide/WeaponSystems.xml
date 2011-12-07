@@ -1448,11 +1448,6 @@
     <burst duration="1s" munition="1"/>
     <reloading duration="1s" munition="1"/>
   </weapon-system>
-  <weapon-system launcher="Hand" munition="Teargas bomb">
-    <burst duration="1s" munition="1"/>
-    <reloading duration="1s" munition="1"/>
-    <indirect-fire average-speed="30" max-range="20" min-range="1"/>
-  </weapon-system>
   <weapon-system launcher="Hand" munition="Homemade bomb">
     <burst duration="20s" munition="1"/>
     <reloading duration="20s" munition="1"/>
@@ -1464,4 +1459,4 @@
     <indirect-fire average-speed="200" max-range="5000" min-range="0"/>
   </weapon-system>
 </weapons>
-<!-- signature="2498945303" -->
+<!-- signature="4164919014" -->

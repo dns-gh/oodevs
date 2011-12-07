@@ -15323,9 +15323,6 @@
       <speed terrain="mountain edge" value="0"/>
     </speeds>
     <composition>
-      <category name="munition">
-        <resource capacity="1" logistic-threshold="1" name="Teargas bomb" normalized-consumption="1"/>
-      </category>
       <category name="explosif">
         <resource capacity="2" logistic-threshold="1" name="Standard Explosive" normalized-consumption="2"/>
       </category>
@@ -15336,9 +15333,7 @@
     <radars/>
     <transports/>
     <consumptions/>
-    <weapon-systems>
-      <weapon-system launcher="Hand" munition="Teargas bomb"/>
-    </weapon-systems>
+    <weapon-systems/>
     <human-protections/>
     <objects/>
     <equipment-category>Autres</equipment-category>
@@ -15813,4 +15808,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3075219596" -->
+<!-- signature="1572463300" -->

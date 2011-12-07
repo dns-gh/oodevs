@@ -926,10 +926,10 @@
     <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1345 14 470 8533" id="45" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="155-mm FASCAM Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
-    <indirect-fire intervention-type="6" life-time="2h" object-type="Mined Area (linear)" type="effect" x-dispersion="200" y-dispersion="200"/>
+    <indirect-fire intervention-type="6" life-time="2h" object-type="mined area (linear)" type="effect" x-dispersion="200" y-dispersion="200"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="46" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="152-mm Chemical Shell" nature="Solid" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
-    <indirect-fire intervention-type="4" life-time="30m" object-type="NBC Area" type="effect" x-dispersion="500" y-dispersion="500"/>
+    <indirect-fire intervention-type="4" life-time="30m" object-type="nbc zone" type="effect" x-dispersion="500" y-dispersion="500"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1410 14 463 7644" id="47" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="SA-8 Missile" nature="Solid" package-mass="0.17" package-size="1" package-volume="0.13" type="MissileAir">
     <attritions>
@@ -1042,9 +1042,6 @@
       <attrition destruction="0.1" protection="Individual" repairable-with-evacuation="0.9" repairable-without-evacuation="0"/>
     </attritions>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="57" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Teargas bomb" nature="Solid" package-mass="0.027" package-size="16" package-volume="0.04" type="Obus">
-    <indirect-fire intervention-type="1" life-time="300s" object-type="" type="effect" x-dispersion="200" y-dispersion="200"/>
-  </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="58" id-nature="3" logistic-supply-class="Class V.D - Ground to ground artillery shells" name="Antitank Air Bomb" nature="Solid" package-mass="0.5" package-size="1" package-volume="0.5" type="Obus">
     <attritions>
       <attrition destruction="0.5" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
@@ -1138,4 +1135,4 @@
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="88" id-nature="12" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Running Water" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="89" id-nature="13" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Natural Gas" nature="Gaseous" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="1482295811" -->
+<!-- signature="4139043034" -->
