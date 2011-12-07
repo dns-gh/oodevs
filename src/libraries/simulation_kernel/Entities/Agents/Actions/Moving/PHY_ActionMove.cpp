@@ -79,7 +79,7 @@ bool PHY_ActionMove::CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, boo
     assert( !pJoiningPath_.get() );
     const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Vector2D& vTestPos = pMainPath_->GetPointOnPathCloseTo( vPionPos, lastJoiningPoint, forceNextPoint );
-    if( vPionPos == vTestPos )
+    if( vPionPos == vTestPos || vTestPos == MT_Vector2D() )
         return false;
     pJoiningPath_.reset( new DEC_Agent_Path( pion_, vTestPos, pMainPath_->GetPathType() ) );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pJoiningPath_ );
@@ -96,7 +96,7 @@ MT_Vector2D PHY_ActionMove::DestroyJoiningPath()
         return MT_Vector2D();
     role_.MoveCanceled( pJoiningPath_ );
     pJoiningPath_->Cancel();
-    const DEC_PathResult::T_PathPointList& pathResult = pJoiningPath_->GetResult();
+    const DEC_PathResult::T_PathPointList& pathResult = pJoiningPath_->GetResult( false );
     if( pathResult.empty() )
     {
         pJoiningPath_.reset();

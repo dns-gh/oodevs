@@ -12,9 +12,9 @@
 // Created: JVT 02-12-04
 //-----------------------------------------------------------------------------
 inline
-const DEC_PathResult::T_PathPointList& DEC_PathResult::GetResult( bool useAssert ) const
+const DEC_PathResult::T_PathPointList& DEC_PathResult::GetResult( bool useCheck ) const
 {
-    if( useAssert )
-        assert( GetState() != eComputing );
+    if( useCheck && GetState() == eComputing )
+        throw std::runtime_error( "Path is being computed" );
     return resultList_;
 }

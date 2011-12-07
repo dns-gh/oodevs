@@ -46,7 +46,7 @@ public:
 
     //! @name Accessors
     //@{
-    const T_PathPointList& GetResult( bool useAssert = true ) const;
+    const T_PathPointList& GetResult( bool useCheck = true ) const;
     //@}
 
     //! @name Tools
