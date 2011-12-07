@@ -137,6 +137,7 @@ public:
     //@{
     unsigned int GetNbrUsableHumans() const;
     void HealAllHumans();
+    void KillAllHumans();
     unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange );
     unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound, bool psyop = false, bool contaminated = false );
     unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound );

@@ -111,6 +111,16 @@ void PHY_HumansComposante::HealAllHumans()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::KillAllHumans
+// Created: ABR 2011-12-07
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::KillAllHumans()
+{
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
+        ( *it )->SetState( PHY_HumanWound::killed_, ( *it )->IsMentalDiseased(), ( *it )->IsContaminated() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::HealHumans
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------

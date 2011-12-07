@@ -58,6 +58,7 @@ public:
     virtual void ApplyBurn( const MIL_BurnEffectManipulator& burn ) = 0;
     virtual void ApplyFlood( const MIL_FloodEffectManipulator& flood ) = 0;
     virtual void HealAllHumans() = 0;
+    virtual void KillAllHumans() = 0;
     virtual unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange ) = 0;
     virtual unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound, bool psyop = false, bool contaminated = false ) = 0;
     virtual unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound ) = 0;

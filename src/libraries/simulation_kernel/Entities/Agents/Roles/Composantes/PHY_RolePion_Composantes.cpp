@@ -1506,6 +1506,16 @@ void PHY_RolePion_Composantes::DestroyAllComposantes()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::KillAllHumans
+// Created: ABR 2011-12-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::KillAllHumans()
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        ( **it ).KillAllHumans();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::GetNbrUsableHumans
 // Created: MMC 2011-05-09
 // -----------------------------------------------------------------------------
