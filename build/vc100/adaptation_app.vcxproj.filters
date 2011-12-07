@@ -1306,6 +1306,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AnchorType.cpp">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.cpp">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1974,9 +1977,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.h">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
-      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.h">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral data</Filter>
     </ClInclude>
@@ -1991,6 +1991,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AnchorType.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.h">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2389,6 +2392,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\UnitsFilter.h">
       <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

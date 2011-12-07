@@ -81,3 +81,22 @@ void ADN_FuneralPackagingResource::WriteArchive( xml::xostream& output )
             << xml::attribute( "terminal", terminal_ )
             << xml::end();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_FuneralPackagingResource::ExchangeData
+// Created: MMC 2011-12-07
+// -----------------------------------------------------------------------------
+void ADN_FuneralPackagingResource::ExchangeData( ADN_FuneralPackagingResource& packResource )
+{
+    ADN_Equipement_Data::CategoryInfo* curResource = resource_.GetData();
+    std::string curProcessDuration  = processDuration_.GetData();
+    bool curTerminal                = terminal_.GetData();
+
+    resource_.SetData( packResource.resource_.GetData(), true );
+    processDuration_    = packResource.processDuration_.GetData();
+    terminal_           = packResource.terminal_.GetData();
+
+    packResource.resource_.SetData( curResource, true );
+    packResource.processDuration_   = curProcessDuration;
+    packResource.terminal_          = curTerminal;
+}

@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DateEdit.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.cpp" />
@@ -2023,8 +2024,16 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h" />
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_%(Filename).cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_RoofShapes.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Templates.h" />
