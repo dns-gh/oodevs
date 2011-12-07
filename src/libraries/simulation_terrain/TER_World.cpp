@@ -194,4 +194,3 @@ MT_Vector2D TER_World::ClipPointInsideWorld( const MT_Vector2D& pos ) const
     return v;
 }
 
-

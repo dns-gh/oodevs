@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "FormationHierarchies.h"
-#include "AutomatDecisions.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Entity_ABC.h"

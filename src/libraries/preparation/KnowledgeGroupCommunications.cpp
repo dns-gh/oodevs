@@ -10,7 +10,6 @@
 
 #include "preparation_pch.h"
 #include "KnowledgeGroupCommunications.h"
-#include "AutomatDecisions.h"
 #include <xeumeuleu/xml.hpp>
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
