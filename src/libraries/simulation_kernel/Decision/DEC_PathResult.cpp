@@ -60,6 +60,9 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
     double rSquareDistance = std::numeric_limits< double >::max();
     for( ; itResultEnd != resultList_.end(); ++itResultStart, ++itResultEnd )
     {
+        if( itNextRequest == pathPoints.end() )
+            break;
+
         MT_Line vLine( (*itResultStart)->GetPos(), (*itResultEnd)->GetPos() );
         MT_Vector2D vClosest = vLine.ClosestPointOnLine( posToTest );
         double rCurrentSquareDistance = vClosest.SquareDistance( posToTest );
