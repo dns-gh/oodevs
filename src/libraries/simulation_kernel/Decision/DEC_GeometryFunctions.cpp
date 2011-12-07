@@ -34,6 +34,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
+#include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Random.h"
 #include <urban/GeometryAttribute.h>
 #include <urban/Model.h>
@@ -70,8 +71,10 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAgentsBarycenter(
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPointForPion( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion )
 {
-    assert( pPion );
-    assert( std::find( callerAutomate.GetPions().begin(), callerAutomate.GetPions().end(), &pPion->GetPion() ) != callerAutomate.GetPions().end() );
+    if( !pPion )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    if( std::find( callerAutomate.GetPions().begin(), callerAutomate.GetPions().end(), &pPion->GetPion() ) == callerAutomate.GetPions().end() )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return ComputeDestPoint( pPion->GetPion() );
 }
 
@@ -121,7 +124,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreatePoint()
 //-----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyPoint( boost::shared_ptr< MT_Vector2D > point )
 {
-    if( !point.get() )
+    if( !point )
         throw std::runtime_error( "Invalid position" );
     boost::shared_ptr< MT_Vector2D > pVect( new MT_Vector2D( *point ) );
     return pVect;
@@ -191,7 +194,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateOrthoDirection( MT
 // -----------------------------------------------------------------------------
 float DEC_GeometryFunctions::ComputeDistance( boost::shared_ptr< MT_Vector2D > pos1, boost::shared_ptr< MT_Vector2D > pos2 )
 {
-    if( !pos1.get() || !pos2.get() )
+    if( !pos1 || !pos2 )
         throw std::runtime_error( "Null ptr in compute distance" );
     return (float)pos1->Distance( *pos2 );
 }
@@ -202,7 +205,7 @@ float DEC_GeometryFunctions::ComputeDistance( boost::shared_ptr< MT_Vector2D > p
 // -----------------------------------------------------------------------------
 void DEC_GeometryFunctions::ReverseDirection( boost::shared_ptr< MT_Vector2D > pDir )
 {
-    if( !pDir.get() )
+    if( !pDir )
         throw std::runtime_error( "Invalid direction" );
     *pDir *= -1.;
 }
@@ -257,7 +260,7 @@ bool DEC_GeometryFunctions::CompareLocalisations( TER_Localisation* pLocalisatio
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( const std::vector< DEC_Decision_ABC* >& pions, TER_Localisation* pLocalisation, MT_Vector2D* pDirDanger, double rDistMaxBtwPoints )
 {
-    if( pions.empty() || !pLocalisation || !pDirDanger )
+    if( pions.empty() || !pLocalisation || !pDirDanger || !(*pions.begin()) )
         throw std::runtime_error( "Invalid arguments to ComputeLocalisationPointsForPionsInFuseau" );
 
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
@@ -267,6 +270,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
     std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin();
     for( ++itPion; itPion != pions.end(); ++itPion )
     {
+        if( !(*itPion) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         if( ( **itPion ).GetPion().GetOrderManager().GetFuseau() != fuseau ) //$$$ beark
             return result;
     }
@@ -516,7 +521,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( 
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAmbushPosition( const MIL_AgentPion& callerAgent, MT_Vector2D* pAmbushPosition, MT_Vector2D* pRetreatPosition, double rDist )
 {
-    if( !pAmbushPosition || !pRetreatPosition )throw std::runtime_error( "Invalid position" );;
+    if( !pAmbushPosition || !pRetreatPosition )
+        throw std::runtime_error( "Invalid position" );;
 
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() );
 
@@ -555,64 +561,9 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( c
         TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
 
         pResult.reset( new MT_Vector2D( vSafetyPos ) );
-//        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( pResult ) )
-//            pResult.reset();
     }
     return pResult;
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputeStaticSafetyPosition
-// Created: DDA 2010-03-10
-// -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeStaticSafetyPosition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnemy )
-{
-    static std::map< unsigned int, std::pair< boost::shared_ptr< MT_Vector2D >, MT_Vector2D > > buffer;//@TODO MGD Replace by a buffer module for terrain analysis
-
-    double rMinDistance = pKnowledgeEnemy->GetMaxRangeToFireOn(callerAgent,0)+200;
-
-    if( pKnowledgeEnemy && pKnowledgeEnemy->IsValid() )
-    {
-        unsigned int key = callerAgent.GetID() * 100000 + pKnowledgeEnemy->GetID();
-        std::map< unsigned int, std::pair< boost::shared_ptr< MT_Vector2D >, MT_Vector2D > >::iterator search = buffer.find( key);
-
-        // Position de l'ennemi
-        const MT_Vector2D& vEnemyPos  = pKnowledgeEnemy->GetPosition();
-
-        MT_Vector2D vDirEniToAmi = ( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() - vEnemyPos).Normalize();
-        if( vDirEniToAmi.IsZero() )
-            vDirEniToAmi = -callerAgent.GetOrderManager().GetDirDanger();
-
-        MT_Vector2D vSafetyPos = vEnemyPos + vDirEniToAmi * rMinDistance;
-
-        TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
-
-        //update buffer when delta > 100 m
-        if( search == buffer.end() )
-        {
-            boost::shared_ptr< MT_Vector2D > pResult(new MT_Vector2D( vSafetyPos ));
-            buffer.insert( std::pair< unsigned int, std::pair< boost::shared_ptr< MT_Vector2D >, MT_Vector2D > >( key, std::pair< boost::shared_ptr< MT_Vector2D >, MT_Vector2D >(pResult, vEnemyPos) ) );
-
-            if( callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( pResult ) )
-                return pResult;
-        }
-        else if( vEnemyPos.SquareDistance( search->second.second ) > 10000. && vSafetyPos.SquareDistance( search->second.second ) > 10000. )
-        {
-            search->second.first.reset( new MT_Vector2D( vSafetyPos ) );
-            search->second.second = vEnemyPos;
-
-            if( callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( search->second.first ) )
-                return search->second.first;
-        }
-        else
-        {
-            if( callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( search->second.first ) )
-                return search->second.first;
-        }
-    }
-    return boost::shared_ptr< MT_Vector2D >();
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation
@@ -850,7 +801,11 @@ DEC_FrontAndBackLinesComputer* DEC_GeometryFunctions::StartComputingFrontAndBack
     std::vector< MIL_AgentPion*> pions;
     pions.reserve( pionDecisionList.size() );
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = pionDecisionList.begin(); it != pionDecisionList.end(); ++it )
+    {
+        if( !(*it) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         pions.push_back( &static_cast< DEC_Decision_ABC& >( **it ).GetPion() );
+    }
     DEC_FrontAndBackLinesComputer* pComputer = new DEC_FrontAndBackLinesComputer( callerAutomate, pions );
     return pComputer;
 }
@@ -864,7 +819,11 @@ DEC_FrontAndBackLinesComputer* DEC_GeometryFunctions::StartComputingAutomatFront
     std::vector< MIL_Automate* > automats;
     automats.reserve( automatDecisionList.size() );
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = automatDecisionList.begin(); it != automatDecisionList.end(); ++it )
+    {
+        if( !(*it) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         automats.push_back( &static_cast< DEC_Decision_ABC& >( **it ).GetAutomate() );
+    }
     DEC_FrontAndBackLinesComputer* pComputer = new DEC_FrontAndBackLinesComputer( callerAutomate, automats );
     return pComputer;
 }
@@ -962,9 +921,10 @@ bool DEC_GeometryFunctions::ClipLocalisationInFuseau( const TER_Localisation& lo
 // -----------------------------------------------------------------------------
 unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, unsigned int nNbrParts, const MT_Vector2D* splitDirection, std::vector< boost::shared_ptr< TER_Localisation > >& result )
 {
-    assert( nNbrParts > 0 );
-
     result.clear();
+    if( nNbrParts <= 0 )
+        return eWarning_DecoupageIncomplet;
+
     localisation.Split( nNbrParts, result, splitDirection );
 
     if( result.size() != nNbrParts )
@@ -1088,6 +1048,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTr
 		std::vector< boost::shared_ptr< MT_Vector2D > > trafficablePoints;
 		for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
 		{
+            if( !(*it) )
+                continue;
 			if( ! DEC_GeometryFunctions::IsPointInUrbanBlock( **it, &wrapper ) )
 				trafficablePoints.push_back( *it );
 		}
@@ -1111,7 +1073,7 @@ bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, d
     if( const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
     {
         const UrbanObjectWrapper& terrainObject = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object );
-            return terrainObject.GetTrafficability() > weight;
+        return terrainObject.GetTrafficability() > weight;
     }
     return true;
 }
@@ -1131,12 +1093,7 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlock( const MT_Vector2D& point, const
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point )
 {
-    if( const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
-    {
-        const UrbanObjectWrapper& terrainObject = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object );
-            return terrainObject.GetTrafficability() >= pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true );
-    }
-    return true;
+    return DEC_GeometryFunctions::IsUrbanBlockTrafficable( point, pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1150,6 +1107,11 @@ bool DEC_GeometryFunctions::IsPointInCity( const MT_Vector2D& point )
     geometry::Point2f geoPoint( static_cast< float >( point.rX_ ), static_cast< float >( point.rY_ ) );
     for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
     {
+        if( !(*it) )
+        {
+            MT_LOG_ERROR_MSG( "Null pointer in urban block list in IsPointInCity" );
+            continue;
+        }
         const urban::GeometryAttribute* geom = ( *it )->Retrieve< urban::GeometryAttribute >();
         if( geom && geom->Geometry().IsInside( geoPoint ) )
             return true;
@@ -1213,7 +1175,11 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeMeanDirection( co
     else
     {
         for( std::vector< MT_Vector2D* >::const_iterator it = selection.begin(); it != selection.end(); ++it )
+        {
+            if( !(*it) )
+                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
             *pResult += *(*it);
+        }
 
         if( pResult->IsZero() )
             *pResult = *selection.front();
@@ -1266,7 +1232,8 @@ DEC_Decision_ABC* DEC_GeometryFunctions::GetFrontestPion( const std::vector< DEC
     for ( std::vector< DEC_Decision_ABC* >::const_iterator it = pions.begin(); it != pions.end(); ++it )
     {
         DEC_Decision_ABC* pKnow = *it;
-        assert( pKnow );
+        if( !pKnow )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
 
         MT_Vector2D vProjectedPoint;
         double    rSquareDist;
@@ -1315,14 +1282,19 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeCoverPosition( co
 
     // calcul de la première ligne de support ( perpendiculaire à la direction passant par le pion le plus avancé )
     const DEC_Decision_ABC* pFrontestPion = GetFrontestPion( pions, pDirection );
-    assert( pFrontestPion );
+    if( !pFrontestPion )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     const MT_Vector2D& vFrontestPionPosition = pFrontestPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Droite support1( vFrontestPionPosition, vFrontestPionPosition + pDirection->Rotated90() );
 
     // calcul de la seconde ligne de support ( dans la direction passant par le barycentre des pions )
     MT_Vector2D vOrigin;
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = pions.begin(); it != pions.end(); ++it )
+    {
+        if( !(*it) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         vOrigin += ( *it )->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
+    }
     vOrigin /= (double)pions.size();
     const MT_Droite support2( vOrigin, vOrigin + *pDirection );
 
@@ -1441,7 +1413,8 @@ bool DEC_GeometryFunctions::GetInterceptionPoint( const MT_Vector2D& vToIntercep
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetInterceptionPosition( const MIL_AgentPion& /*caller*/, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, MT_Vector2D* pInterceptingPosition, double rSpeed )
 {
-    assert( pInterceptingPosition );
+    if( !pInterceptingPosition )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     boost::shared_ptr< MT_Vector2D > point;
     if( pKnowledge && pKnowledge->IsValid() )
     {
@@ -1488,7 +1461,11 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolylineLocal
 {
     std::vector< MT_Vector2D > pointsVector;
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
+    {
+        if( !(*it) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         pointsVector.push_back( **it );
+    }
     boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( TER_Localisation::eLine, pointsVector ) );
     return pResult;
 }
@@ -1501,7 +1478,11 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolygonLocali
 {
     std::vector< MT_Vector2D > pointsVector;
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
+    {
+        if( !(*it) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         pointsVector.push_back( **it );
+    }
     boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( TER_Localisation::ePolygon, pointsVector ) );
     return pResult;
 }
@@ -1544,6 +1525,8 @@ namespace
     {
         for( std::vector< DEC_Decision_ABC* >::const_iterator itC = coordinatedPions.begin(); itC != coordinatedPions.end(); ++itC )
         {
+            if( !(*itC) )
+                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
             const MT_Vector2D& vPosTmp = (**itC).GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
             if( vPosToTest.Distance( vPosTmp ) <= rMinDist )
                 return true;
@@ -1567,6 +1550,8 @@ std::vector< DEC_Decision_ABC* > DEC_GeometryFunctions::ListUncoordinatedPawns( 
         bDummy = false;
         for( std::vector< DEC_Decision_ABC* >::iterator itNC = notCoordinatedPions.begin(); itNC != notCoordinatedPions.end(); )
         {
+            if( !(*itNC) )
+                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
             const MT_Vector2D& vPosToTest = (**itNC).GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
             if( ::IsPionCoordinated( vPosToTest, coordinatedPions, rMinDist ) )
             {
@@ -1620,7 +1605,11 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::SplitList
     {
         std::vector< MT_Vector2D > points;
         for( std::vector< MT_Vector2D* >::const_iterator it = listPoints.begin(); it != listPoints.end(); ++it )
+        {
+            if( !(*it) )
+                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
             points.push_back( **it );
+        }
         MT_Polyline polyLine( points );
 
         if( nNbrParts <= 0 )
@@ -1753,6 +1742,8 @@ MT_Vector2D DEC_GeometryFunctions::_ComputeAutomatesBarycenter( const std::vecto
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = automates.begin(); it != automates.end(); ++it )
     {
         MT_Vector2D tmp;
+        if( !(*it) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         if( ( **it ).GetAutomate().GetAlivePionsBarycenter( tmp ) )
         {
             barycenter += tmp;
@@ -1781,6 +1772,8 @@ DEC_Objective* DEC_GeometryFunctions::GetNextObjectiveInFuseau( const MIL_Fuseau
         for( std::vector< DEC_Objective* >::const_iterator it = objectives.begin(); it != objectives.end(); ++it )
         {
             DEC_Objective* pObjective = *it;
+            if( !pObjective )
+                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
             if( !pObjective->IsFlagged() && pFuseau->IsInside( pObjective->ComputerBarycenter() ) )
             {
                 const double rTmp = pFuseau->ComputeAverageDistanceFromObjective( *pObjective, *pRefPoint );
@@ -1898,6 +1891,8 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
             const MIL_LimaOrder::T_LimaFunctions& functions = it->GetFunctions();
             for( MIL_LimaOrder::CIT_LimaFunctions fit = functions.begin(); fit != functions.end(); ++fit )
             {
+                if( !(*fit) )
+                    throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
                 if( static_cast< int >( ( *fit )->GetID() ) == limaType )
                 {
                     std::vector< MT_Vector2D > nextPoints;
@@ -1932,6 +1927,8 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
     double rSpeed = std::numeric_limits< double >::max();
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = automates.begin(); it != automates.end(); ++it )
     {
+        if( !(*it) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         const MIL_Automate& automate = ( **it ).GetAutomate();
         rSpeed = std::min( rSpeed, automate.GetAlivePionsMaxSpeed() );
     }

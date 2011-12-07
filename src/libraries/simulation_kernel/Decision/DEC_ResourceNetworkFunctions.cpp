@@ -84,6 +84,8 @@ void DEC_ResourceNetworkFunctions::CreateResourceNetworkLink( DEC_Decision_ABC* 
     if( !objectTarget || !objectTarget->Retrieve< ResourceNetworkCapacity >())
         return;
     MIL_Object_ABC* objectSource = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( type, &caller->GetPion().GetArmy(), *pLocalisation );
+    if( !objectSource )
+        return;
     if( ResourceNetworkCapacity* capacitySource = objectSource->Retrieve< ResourceNetworkCapacity >() )
         capacitySource->CreateLink( objectTarget->GetID(), resourceType->GetId(), production );
 }
@@ -103,6 +105,8 @@ unsigned int DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkReturn( DEC_
     if( !objectTarget || !objectTarget->Retrieve< ResourceNetworkCapacity >())
         return 0;
     MIL_Object_ABC* objectSource = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( type, &caller->GetPion().GetArmy(), *pLocalisation );
+    if( !objectSource )
+        return 0;
     if( ResourceNetworkCapacity* capacitySource = objectSource->Retrieve< ResourceNetworkCapacity >() )
         capacitySource->CreateLink( objectTarget->GetID(), resourceType->GetId(), production );
 

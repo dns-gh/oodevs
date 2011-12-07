@@ -22,7 +22,10 @@ namespace
 {
     PHY_InjuredHuman* GetWound( const DEC_Decision_ABC& wounded )
     {
-        PHY_InjuredHuman* injuredHuman = wounded.GetPion().GetRole< PHY_RolePion_Composantes >().GetMajorComposante()->GetInjury();
+        const PHY_ComposantePion* majorComposante = wounded.GetPion().GetRole< PHY_RolePion_Composantes >().GetMajorComposante();
+        if( !majorComposante )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        PHY_InjuredHuman* injuredHuman = majorComposante->GetInjury();
         return injuredHuman;
     }
 }
@@ -33,7 +36,11 @@ namespace
 // -----------------------------------------------------------------------------
 void DEC_MedicalTreatmentFunctions::TakeCareOfThePatient( const MIL_Agent_ABC& /*callerAgent*/, const DEC_Decision_ABC* patient, boost::shared_ptr< DEC_Knowledge_Object > knowledge )
 {
+    if( !knowledge )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     MIL_Object_ABC* pHospital = knowledge->GetObjectKnown();
+    if( !pHospital )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     PHY_InjuredHuman* injuredHuman = GetWound( *patient );
     if( injuredHuman )
         pHospital->Get< MedicalCapacity >().ReceivePatient( *injuredHuman );
@@ -55,6 +62,8 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_MedicalTreatmentFunctions::Determi
         const MT_Vector2D& callerPosition = caller.GetRole< PHY_RoleInterface_Location >().GetPosition();
         for( const_iterator it = hospitals.begin(); it != hospitals.end(); ++it )
         {
+            if( !(*it) )
+                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
             MIL_Object_ABC* pHospital = (*it)->GetObjectKnown();
             if( pHospital && pHospital->Get< MedicalCapacity >().CanTreat( *pHospital, *injuredHuman ) )
             {
@@ -77,7 +86,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_MedicalTreatmentFunctions::Determi
 bool DEC_MedicalTreatmentFunctions::CanHospitalTreatWound( const MIL_Agent_ABC& /*callerAgent*/, const DEC_Decision_ABC* patient, boost::shared_ptr< DEC_Knowledge_Object > hospital )
 {
     PHY_InjuredHuman* injuredHuman = GetWound( *patient );
-    if ( !injuredHuman )
+    if ( !injuredHuman || !hospital || !hospital->GetObjectKnown() )
         return false;
     return hospital->GetObjectKnown()->Get< MedicalCapacity >().CanTreat( *hospital->GetObjectKnown(), *injuredHuman );
 }

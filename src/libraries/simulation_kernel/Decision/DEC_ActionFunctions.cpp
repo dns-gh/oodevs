@@ -160,6 +160,8 @@ void DEC_ActionFunctions::Knowledge_Load( DEC_Decision_ABC& callerAgent, boost::
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_AddPion( MIL_AgentPion& callerAgent, DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
 {
+    if( !pPion )
+        throw std::runtime_error( "Null pion passed to DEC_ActionFunctions::Transport_AddPion" );
     callerAgent.GetRole< transport::PHY_RoleAction_Transport >().AddPion( pPion->GetPion(), bTransportOnlyLoadable );
 }
 
@@ -171,6 +173,8 @@ void DEC_ActionFunctions::Transport_AddPions( MIL_AgentPion& callerAgent, const 
 {
     for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
+        if( !*itPion )
+            throw std::runtime_error( "Invalid pion in DEC_ActionFunctions::Transport_AddPions" );
         MIL_AgentPion& pion = ( *itPion )->GetPion();
         callerAgent.GetRole< transport::PHY_RoleAction_Transport >().AddPion( pion, bTransportOnlyLoadable );
     }
@@ -182,6 +186,8 @@ void DEC_ActionFunctions::Transport_AddPions( MIL_AgentPion& callerAgent, const 
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::TransportKnowledge_AddPion( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool bTransportOnlyLoadable )
 {
+    if( !pKnowledge )
+        throw std::runtime_error( "Null knowledge passed to DEC_ActionFunctions::TransportKnowledge_AddPion" );
     MIL_Agent_ABC& pion = pKnowledge->GetAgentKnown();
     callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().AddPion( pion, bTransportOnlyLoadable );
 }
@@ -192,7 +198,8 @@ void DEC_ActionFunctions::TransportKnowledge_AddPion( DEC_Decision_ABC& callerAg
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_MagicLoadPionInCarrier( MIL_AgentPion& caller, const DEC_Decision_ABC* pCarrier )
 {
-    assert( pCarrier );
+    if( !pCarrier )
+        throw std::runtime_error( "Null carrier passed to DEC_ActionFunctions::Transport_MagicLoadPionInCarrier" );
     pCarrier->GetPion().Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, caller, boost::cref( false ) );
 }
 
@@ -205,7 +212,7 @@ void DEC_ActionFunctions::Transport_MagicUnloadPionFromCarrier( MIL_AgentPion& c
     //$$$ TMP
     const MIL_Agent_ABC* transporter = caller.GetRole< transport::PHY_RolePion_Transported >().GetTransporter();
     if( transporter )
-        const_cast< MIL_Agent_ABC* >( transporter )->GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( caller );;
+        const_cast< MIL_Agent_ABC* >( transporter )->GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( caller );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +232,8 @@ DEC_Decision_ABC* DEC_ActionFunctions::Transport_GetCarrier( const MIL_AgentPion
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_MagicLoadPion( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable  )
 {
-    assert( pPion );
+    if( !pPion )
+        throw std::runtime_error( "Null pion passed to DEC_ActionFunctions::Transport_MagicLoadPion" );
     callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pPion->GetPion(), bTransportOnlyLoadable );
 }
 
@@ -237,6 +245,8 @@ void DEC_ActionFunctions::Transport_MagicLoadPions( MIL_AgentPion& callerAgent, 
 {
     for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
+        if( !*itPion )
+            throw std::runtime_error( "Invalid pion in DEC_ActionFunctions::Transport_MagicLoadPions" );
         MIL_AgentPion& pion = ( *itPion )->GetPion();
         callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pion, bTransportOnlyLoadable );
     }
@@ -250,6 +260,8 @@ void DEC_ActionFunctions::Transport_MagicUnloadPions( MIL_AgentPion& callerAgent
 {
     for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
+        if( !*itPion )
+            throw std::runtime_error( "Invalid pion in DEC_ActionFunctions::Transport_MagicUnloadPions" );
         MIL_AgentPion& pion = ( *itPion )->GetPion();
         callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pion );
     }
@@ -261,7 +273,8 @@ void DEC_ActionFunctions::Transport_MagicUnloadPions( MIL_AgentPion& callerAgent
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_MagicUnloadPion( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion )
 {
-    assert( pPion );
+    if( !pPion )
+        throw std::runtime_error( "Null pion passed to DEC_ActionFunctions::Transport_MagicUnloadPion" );
     callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pPion->GetPion() );
 }
 
@@ -299,6 +312,8 @@ bool DEC_ActionFunctions::CanTransportPion( const MIL_AgentPion& callerAgent, co
 // -----------------------------------------------------------------------------
 bool DEC_ActionFunctions::CanTransportKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool bTransportOnlyLoadable )
 {
+    if( !pKnowledge )
+        throw std::runtime_error( "Null knowledge passed to DEC_ActionFunctions::CanTransportKnowledge" );
     MIL_Agent_ABC& pion = pKnowledge->GetAgentKnown();
     return callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pion, bTransportOnlyLoadable ) ;
 }
@@ -351,11 +366,13 @@ bool DEC_ActionFunctions::Stock_IsExtractPossible( MIL_AgentPion& callerAgent, b
 
     PHY_RolePion_Composantes& composantes = callerAgent.GetRole< PHY_RolePion_Composantes >();
 
+    if( !pKnowledge || !pKnowledge->GetObjectKnown() )
+        throw std::runtime_error( "Null knowledge object in DEC_ActionFunctions::Stock_IsExtractPossible" );
     if( StockAttribute* attribute = pKnowledge->GetObjectKnown()->RetrieveAttribute< StockAttribute >() )
     {
         BOOST_FOREACH( const PHY_DotationCategory* pDotation, dotationTypes )
         {
-            if( attribute->CanDistribute( *pDotation ) && composantes.CanStockMoreOf( *supplyRole, *pDotation ) )
+            if( pDotation && attribute->CanDistribute( *pDotation ) && composantes.CanStockMoreOf( *supplyRole, *pDotation ) )
                 return true;
         }
     }
@@ -372,10 +389,14 @@ bool DEC_ActionFunctions::Stock_IsSupplyPossible( MIL_AgentPion& callerAgent, bo
     if( !supplyRole )
         return false;
 
+    if( !pKnowledge || !pKnowledge->GetObjectKnown() )
+        throw std::runtime_error( "Null knowledge object in DEC_ActionFunctions::Stock_IsSupplyPossible" );
     if( StockAttribute* attribute = pKnowledge->GetObjectKnown()->RetrieveAttribute< StockAttribute >() )
     {
         BOOST_FOREACH( const PHY_DotationCategory* pDotation, dotationTypes )
         {
+            if( !pDotation )
+                continue;
             PHY_DotationStock& stock = callerAgent.GetRole< PHY_RolePion_Composantes >().GetOrAddStock( *supplyRole, *pDotation );
             if( !stock.IsEmpty() && attribute->CanBeSuppliedWith( *pDotation ) )
                 return true;
@@ -390,6 +411,8 @@ bool DEC_ActionFunctions::Stock_IsSupplyPossible( MIL_AgentPion& callerAgent, bo
 // -----------------------------------------------------------------------------
 bool DEC_ActionFunctions::Stock_IsDistributePossible( MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, boost::shared_ptr< DEC_Knowledge_Population > population )
 {
+    if( !pKnowledge || !pKnowledge->GetObjectKnown() )
+        throw std::runtime_error( "Null knowledge object in DEC_ActionFunctions::Stock_IsDistributePossible" );
     if( StockAttribute* attribute = pKnowledge->GetObjectKnown()->RetrieveAttribute< StockAttribute >() )
         return !attribute->IsEmpty();
     return false;

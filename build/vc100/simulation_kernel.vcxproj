@@ -796,7 +796,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_AutomateFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_CommunicationFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_DIAFunctions.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_DynamicFireFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FireFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FunctionsTools.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_GeometryFunctions.cpp" />
@@ -1613,7 +1612,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_AutomateFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_CommunicationFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_DIAFunctions.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_DynamicFireFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FireFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FunctionsTools.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_GeometryFunctions.h" />

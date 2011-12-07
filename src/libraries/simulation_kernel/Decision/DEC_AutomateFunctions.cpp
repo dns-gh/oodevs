@@ -29,6 +29,8 @@
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetBarycenter( const DEC_Decision_ABC * automat )
 {
+    if( !automat )
+        throw std::runtime_error( "Invalid automat in GetBarycenter" );
     boost::shared_ptr< MT_Vector2D > barycenter( new MT_Vector2D() );
     automat->GetAutomate().GetAlivePionsBarycenter( *barycenter );
     return barycenter;
@@ -53,7 +55,11 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetAutomates( const MIL_
     const MIL_Automate::T_AutomateVector& automates = callerAutomate.GetAutomates();
     result.reserve( automates.size() );
     for( MIL_Automate::CIT_AutomateVector it = automates.begin(); it != automates.end(); ++it )
+    {
+        if( !(*it ) )
+            throw std::runtime_error( "Invalid automat in GetAutomates" );
         result.push_back( &(*it)->GetDecision() );
+    }
     return result;
 }
 
@@ -69,12 +75,16 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithoutPC( const
     {
         result.reserve( pions.size() - 1 );
         for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+        {
+            if( !( *it ) )
+                throw std::runtime_error( "Invalid pion in GetPionsWithoutPC" );
             if( callerAutomate.GetPionPC() != (**it) )
             {
                 const PHY_RolePion_Communications& role = (*it)->GetRole< PHY_RolePion_Communications >();
                 if( role.CanReceive() )
                     result.push_back( &(*it)->GetDecision() );
             }
+        }
     }
     return result;
 }
@@ -85,7 +95,8 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithoutPC( const
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC( const DEC_Decision_ABC* automat )
 {
-    assert( automat );
+    if( !automat )
+        throw std::runtime_error( "Invalid automat in GetPionsOfAutomateWithoutPC" );
     return GetPionsWithoutPC( automat->GetAutomate() );
 }
 
@@ -95,6 +106,8 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsOfAutomateWithou
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetAutomatPionsWithPC( DEC_Decision_ABC* pAutomate )
 {
+    if( !pAutomate )
+        throw std::runtime_error( "Invalid automat in GetAutomatPionsWithPC" );
     const MIL_Automate& callerAutomate = pAutomate->GetAutomate();
     return GetPionsWithPC( callerAutomate );
 }
@@ -109,6 +122,8 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithPC( const MI
     std::vector< DEC_Decision_ABC* > result;
     for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
     {
+        if( !( *it ) )
+            throw std::runtime_error( "Invalid pion in GetPionsWithPC" );
         const PHY_RolePion_Communications& role = (*it)->GetRole< PHY_RolePion_Communications >();
         if( role.CanReceive() )
             result.push_back( &(**it).GetDecision() );
@@ -131,7 +146,8 @@ DEC_Decision_ABC* DEC_AutomateFunctions::GetPionPC( const MIL_Automate& callerAu
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_AutomateFunctions::GetPionPCOfAutomate( DEC_Decision_ABC* pAutomate )
 {
-    assert( pAutomate );
+    if( !pAutomate )
+        throw std::runtime_error( "Invalid automat in GetPionPCOfAutomate" );
     return DEC_AutomateFunctions::GetPionPC( pAutomate->GetAutomate() );
 }
 
@@ -145,6 +161,8 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsMelee( const MIL
     std::vector< DEC_Decision_ABC* > result;
     for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
     {
+        if( ! (*it) )
+            throw std::runtime_error( "Invalid pion in GetPionsMelee" );
         const std::string& type = (*it)->GetType().GetMilPionType();
         if( type == "Pion ABC" || type == "Pion INF" )
             result.push_back( &(**it).GetDecision() );
@@ -172,7 +190,8 @@ void DEC_AutomateFunctions::DecisionalState( const MIL_Automate& callerAutomate,
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::PionChangeAutomate( DEC_Decision_ABC* pion, const DEC_Decision_ABC* superior )
 {
-    assert( pion && superior );
+    if( !pion || !superior )
+        throw std::runtime_error( "Invalid parameter in PionChangeAutomate" );
     if( superior->GetAutomate().GetArmy() == pion->GetPion().GetArmy() )
     {
         pion->GetPion().ChangeSuperior( superior->GetAutomate() );
@@ -187,6 +206,8 @@ bool DEC_AutomateFunctions::PionChangeAutomate( DEC_Decision_ABC* pion, const DE
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::IsEngaged( DEC_Decision_ABC* pAutomate )
 {
+    if( !pAutomate )
+        throw std::runtime_error( "Invalid automat in IsEngaged" );
     return pAutomate->GetAutomate().IsEngaged();
 }
 
@@ -206,7 +227,8 @@ bool DEC_AutomateFunctions::IsPionInAutomate( const MIL_Automate& automate, cons
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::CanPionConstructObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type )
 {
-    assert( pion && IsPionInAutomate( callerAutomate, pion->GetPion() ) );
+    if( !pion || !IsPionInAutomate( callerAutomate, pion->GetPion() ) )
+        throw std::runtime_error( "Invalid pion in CanPionConstructObject" );
     return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, false );
 }
 
@@ -216,7 +238,8 @@ bool DEC_AutomateFunctions::CanPionConstructObject( const MIL_Automate& callerAu
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::CanPionBypassObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    assert( pion && IsPionInAutomate( callerAutomate, pion->GetPion() ) );
+    if( !pion || !IsPionInAutomate( callerAutomate, pion->GetPion() ) )
+        throw std::runtime_error( "Invalid pion in CanPionBypassObject" );
     if( pKnowledge && pKnowledge->IsValid() )
         return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( pKnowledge->GetType() );
     return false;
@@ -228,7 +251,8 @@ bool DEC_AutomateFunctions::CanPionBypassObject( const MIL_Automate& callerAutom
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::CanPionDestroyObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    assert( pion && IsPionInAutomate( callerAutomate, pion->GetPion() ) );
+    if( !pion || !IsPionInAutomate( callerAutomate, pion->GetPion() ) )
+        throw std::runtime_error( "Invalid pion in CanPionDestroyObject" );
     if( pKnowledge && pKnowledge->IsValid() )
         return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( pKnowledge->GetType() );
     return false;
@@ -240,7 +264,8 @@ bool DEC_AutomateFunctions::CanPionDestroyObject( const MIL_Automate& callerAuto
 // -----------------------------------------------------------------------------
 float DEC_AutomateFunctions::PionTimeToMoveDistance( const DEC_Decision_ABC* pion, float distance )
 {
-    assert( pion );
+    if( !pion )
+        throw std::runtime_error( "Invalid pion in PionTimeToMoveDistance" );
     const double rDistance = MIL_Tools::ConvertMeterToSim( distance );
     const double rMaxSpeed = pion->GetPion().GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement();
     return rMaxSpeed != 0. ? float( MIL_Tools::ConvertSimToMinutes( rDistance / rMaxSpeed ) ) : std::numeric_limits< float >::max();
@@ -252,7 +277,8 @@ float DEC_AutomateFunctions::PionTimeToMoveDistance( const DEC_Decision_ABC* pio
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::IsPionContaminated( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion )
 {
-    assert( pPion && IsPionInAutomate( pCallerAutomate->GetAutomate(), pPion->GetPion() ) );
+    if( !pPion || !pCallerAutomate || !IsPionInAutomate( pCallerAutomate->GetAutomate(), pPion->GetPion() ) )
+        throw std::runtime_error( "Invalid parameter in IsPionContaminated" );
     return pPion->GetPion().GetRole< nbc::PHY_RoleInterface_NBC >().IsContaminated();
 }
 
@@ -262,7 +288,8 @@ bool DEC_AutomateFunctions::IsPionContaminated( DEC_Decision_ABC* pCallerAutomat
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::IsPionNeutralized( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion )
 {
-    assert( pPion && IsPionInAutomate( pCallerAutomate->GetAutomate(), pPion->GetPion() ) );
+    if( !pPion || !pCallerAutomate || !IsPionInAutomate( pCallerAutomate->GetAutomate(), pPion->GetPion() ) )
+        throw std::runtime_error( "Invalid parameter in IsPionNeutralized" );
     return pPion->GetPion().IsNeutralized();
 }
 
@@ -272,7 +299,8 @@ bool DEC_AutomateFunctions::IsPionNeutralized( DEC_Decision_ABC* pCallerAutomate
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::IsPionTransported( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion )
 {
-    assert( pPion && IsPionInAutomate( pCallerAutomate->GetAutomate(), pPion->GetPion() ) );
+    if( !pPion || !pCallerAutomate || !IsPionInAutomate( pCallerAutomate->GetAutomate(), pPion->GetPion() ) )
+        throw std::runtime_error( "Invalid parameter in IsPionTransported" );
     return pPion->IsTransported();
 }
 
@@ -282,7 +310,8 @@ bool DEC_AutomateFunctions::IsPionTransported( DEC_Decision_ABC* pCallerAutomate
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::IsPointInPionFuseau( const MIL_Automate& callerAutomate, MT_Vector2D* pPoint, DEC_Decision_ABC* pPion )
 {
-    assert( pPion && IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
+    if( !pPion || !IsPionInAutomate( callerAutomate, pPion->GetPion() ) )
+        throw std::runtime_error( "Invalid parameter in IsPointInPionFuseau" );
     return DEC_GeometryFunctions::IsPointInFuseau< MIL_AgentPion >( pPion->GetPion(), pPoint );
 }
 
@@ -292,7 +321,8 @@ bool DEC_AutomateFunctions::IsPointInPionFuseau( const MIL_Automate& callerAutom
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetPionPosition( const DEC_Decision_ABC* pion )
 {
-    assert( pion );
+    if( !pion )
+        throw std::runtime_error( "Invalid pion in GetPionPosition" );
     return pion->GetPion().GetRole< PHY_RoleInterface_Location >().GetSharedPosition();
 }
 
@@ -302,7 +332,8 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetPionPosition( const D
 // -----------------------------------------------------------------------------
 double DEC_AutomateFunctions::GetPerceptionForPion( const DEC_Decision_ABC* pPion, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget)
 {
-    assert( pPion );
+    if( !pPion )
+        throw std::runtime_error( "Invalid pion in GetPerceptionForPion" );
     return DEC_PerceptionFunctions::GetPerception( pPion->GetPion(), pPoint, pTarget );
 }
 
@@ -312,9 +343,8 @@ double DEC_AutomateFunctions::GetPerceptionForPion( const DEC_Decision_ABC* pPio
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::MakePionRelievePion( const MIL_Automate& callerAutomate, DEC_Decision_ABC* relieving, DEC_Decision_ABC* relieved )
 {
-    assert( relieving && relieved );
-    assert( IsPionInAutomate( callerAutomate, relieving->GetPion() ) );
-    assert( IsPionInAutomate( callerAutomate, relieved->GetPion() ) );
+    if( !relieving || !relieved || !IsPionInAutomate( callerAutomate, relieving->GetPion() ) || !IsPionInAutomate( callerAutomate, relieved->GetPion() ) )
+        throw std::runtime_error( "Invalid parameter in MakePionRelievePion" );
     if( relieving->GetPion().GetOrderManager().RelievePion( relieved->GetPion() ) )
     {
         relieved->GetPion().GetOrderManager().CancelMission();
@@ -329,9 +359,8 @@ bool DEC_AutomateFunctions::MakePionRelievePion( const MIL_Automate& callerAutom
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::CanPionRelievePion( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* relieving, const DEC_Decision_ABC* relieved )
 {
-    assert( relieving && relieved );
-    assert( IsPionInAutomate( callerAutomate, relieving->GetPion() ) );
-    assert( IsPionInAutomate( callerAutomate, relieved->GetPion() ) );
+    if( !relieving || !relieved || !IsPionInAutomate( callerAutomate, relieving->GetPion() ) || !IsPionInAutomate( callerAutomate, relieved->GetPion() ) )
+        throw std::runtime_error( "Invalid parameter in CanPionRelievePion" );
     return relieving->GetPion().GetOrderManager().CanRelievePion( relieved->GetPion() );
 }
 
@@ -341,7 +370,8 @@ bool DEC_AutomateFunctions::CanPionRelievePion( const MIL_Automate& callerAutoma
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePointBeforeLimaForPion( int phaseLine, float distanceBefore, const DEC_Decision_ABC* pion )
 {
-    assert( pion );
+    if( !pion )
+        throw std::runtime_error( "Invalid pion in ComputePointBeforeLimaForPion" );
     return DEC_GeometryFunctions::ComputePointBeforeLima< MIL_AgentPion >( pion->GetPion(), phaseLine, distanceBefore );
 }
 
@@ -351,7 +381,8 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePointBeforeLimaFo
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau( const TER_Localisation* location, const DEC_Decision_ABC* pion )
 {
-    assert( pion );
+    if( !pion )
+        throw std::runtime_error( "Invalid pion in ComputePionNearestLocalisationPointInFuseau" );
     return DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( pion->GetPion(), location );
 }
 
@@ -361,7 +392,8 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePionNearestLocali
 // -----------------------------------------------------------------------------
 unsigned int DEC_AutomateFunctions::GetPionEfficiency( const DEC_Decision_ABC* pion, int pionEfficiency )
 {
-    assert( pion );
+    if( !pion )
+        throw std::runtime_error( "Invalid pion in GetPionEfficiency" );
     return pion->GetPion().GetType().GetUnitType().GetPionEfficiency( static_cast< E_PionEfficiency >( pionEfficiency ) );
 }
 
@@ -371,6 +403,8 @@ unsigned int DEC_AutomateFunctions::GetPionEfficiency( const DEC_Decision_ABC* p
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_Mission_ABC > DEC_AutomateFunctions::GetMission( DEC_Decision_ABC* pAgent )
 {
+    if( !pAgent )
+        throw std::runtime_error( "Invalid parameter in GetMission" );
     return pAgent->GetMission();
 }
 
@@ -380,6 +414,8 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_AutomateFunctions::GetMission( DEC_Deci
 // -----------------------------------------------------------------------------
 void DEC_AutomateFunctions::SetMission( DEC_Decision_ABC* object, boost::shared_ptr< MIL_Mission_ABC > mission )
 {
+    if( !object )
+        throw std::runtime_error( "Invalid parameter in SetMission" );
     object->SetMission( mission );
 }
 

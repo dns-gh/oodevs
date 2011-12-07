@@ -260,6 +260,8 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnKnowledgeObject( const std::vector< 
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOn( boost::shared_ptr< MT_Vector2D > position ) const
 {
+    if( !position )
+        return false;
     std::vector< MT_Vector2D > points;
     points.push_back( *position );
     return CanMoveOnTerrain( points ) && CanMoveOnUrbanBlock( points ) && CanMoveOnBurningCells( points ) && CanMoveOnKnowledgeObject( points );
