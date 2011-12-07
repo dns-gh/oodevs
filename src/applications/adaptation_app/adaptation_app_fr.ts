@@ -621,6 +621,20 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ColorNameSelector</name>
+    <message>
+        <source>Select color</source>
+        <translation>Sélectionnez la couleur</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ColorSelector</name>
+    <message>
+        <source>Select color</source>
+        <translation>Sélectionnez la couleur</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Communications_GUI</name>
     <message>
         <source>Jamming</source>
