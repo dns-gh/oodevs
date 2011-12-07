@@ -1623,7 +1623,7 @@
         <value id="1" name="directionnel"/>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.Surveiller" dia-type="france.military.platoon.combat.support.artillery.tasks.Surveiller" id="2479" name="PION . ASA Surveiller" package="defence">
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.Surveiller" dia-type="france.military.platoon.combat.support.artillery.tasks.Surveiller" id="2479" name="PION ASA .Surveiller" package="defence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2999,12 +2999,12 @@
       </parameter>
       <parameter dia-name="angle" name="Angle" optional="true" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.Surveiller" dia-type="france.military.company.combat.support.artillery.tasks.Surveiller" id="28771" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.Surveiller" name="AUTOMATE . ASA Surveiller">
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.Surveiller" dia-type="france.military.company.combat.support.artillery.tasks.Surveiller" id="28771" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.Surveiller" name="AUTOMATE ASA .Surveiller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objective" name="Zone de stationnement" optional="false" type="Polygon"/>
+      <parameter dia-name="objective" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="true" type="Point"/>
       <parameter dia-name="modeDeploiement" name="Mode deploiement" optional="true" type="Enumeration">
         <value id="0" name="en_carre"/>
@@ -3255,4 +3255,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3772280504" -->
+<!-- signature="3194283387" -->
