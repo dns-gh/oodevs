@@ -22,10 +22,10 @@ using namespace gui;
 // Name: DiffusionListLineEdit constructor
 // Created: ABR 2011-04-29
 // -----------------------------------------------------------------------------
-DiffusionListLineEdit::DiffusionListLineEdit( QWidget* parent, kernel::SafePointer< kernel::Entity_ABC > selected, DiffusionListDialog& dialog, const std::string extensionName, const char* name /*= 0*/ )
+DiffusionListLineEdit::DiffusionListLineEdit( QWidget* parent, kernel::Controllers& controllers, const kernel::Entity_ABC* selected, DiffusionListDialog& dialog, const std::string extensionName, const char* name /*= 0*/ )
     : QLineEdit( parent, name )
     , dialog_       ( dialog )
-    , selected_     ( selected )
+    , selected_     ( controllers, selected )
     , extensionName_( extensionName )
 {
     connect( &dialog_, SIGNAL( Accepted( const QString& ) ), SLOT( OnAccepted( const QString& ) ) );
@@ -68,6 +68,8 @@ void DiffusionListLineEdit::OnAccepted( const QString& text )
 // -----------------------------------------------------------------------------
 void DiffusionListLineEdit::OnRejected()
 {
+    if( !selected_ )
+        return;
     kernel::DictionaryExtensions* dico = const_cast< kernel::DictionaryExtensions* >( selected_->Retrieve< kernel::DictionaryExtensions >() );
     if( !dico )
         return;

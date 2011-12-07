@@ -37,7 +37,7 @@ class DiffusionListLineEdit : public QLineEdit
 public:
     //! @name Constructors/Destructor
     //@{
-             DiffusionListLineEdit( QWidget* parent, kernel::SafePointer< kernel::Entity_ABC > selected, DiffusionListDialog& diffusionDialog_, const std::string extensionName, const char* name = 0 );
+             DiffusionListLineEdit( QWidget* parent, kernel::Controllers& controllers, const kernel::Entity_ABC* selected, DiffusionListDialog& diffusionDialog_, const std::string extensionName, const char* name = 0 );
     virtual ~DiffusionListLineEdit();
     //@}
 
