@@ -69,6 +69,7 @@ public:
     virtual void Clean() = 0;
 
     virtual void HealAllHumans() = 0;
+    virtual void KillAllHumans() = 0;
     virtual void ChangeHumansAvailability( const PHY_HumanRank& rank, unsigned int nNbrAvailable ) = 0;
     //@}
 

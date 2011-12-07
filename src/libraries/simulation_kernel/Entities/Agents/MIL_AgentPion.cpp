@@ -978,6 +978,7 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
 void  MIL_AgentPion::OnReceiveDestroyAll()
 {
     GetRole< PHY_RolePion_Composantes >().DestroyAllComposantes();
+    GetRole< PHY_RolePion_Composantes >().KillAllHumans();
 }
 
 // -----------------------------------------------------------------------------

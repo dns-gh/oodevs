@@ -1421,6 +1421,16 @@ void PHY_ComposantePion::HealAllHumans()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::KillAllHumans
+// Created: ABR 2011-12-07
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::KillAllHumans()
+{
+    assert( pHumans_ );
+    pHumans_->KillAllHumans();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::HealHumans
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------

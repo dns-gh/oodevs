@@ -63,6 +63,7 @@ public:
     PHY_InjuredHuman* GetInjury();
     void ApplyWounds( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
     void HealAllHumans();
+    void KillAllHumans();
     unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange );
     unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound, bool psyop = false, bool contaminated = false );
     unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound );

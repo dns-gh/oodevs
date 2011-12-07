@@ -125,6 +125,7 @@ public:
     virtual void RepairAllComposantes();
     virtual void DestroyRandomComposante();
     virtual void DestroyAllComposantes();
+    virtual void KillAllHumans();
     unsigned int GetNbrUsableHumans() const;
     void CreateBreakdowns( const PHY_ComposanteTypePion& composanteType, unsigned int quantity, unsigned int breakdownId );
     void CreateWounds( unsigned int quantity, bool randomWound, sword::EnumHumanWound wound );
