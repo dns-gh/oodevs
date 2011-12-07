@@ -77,7 +77,7 @@ bool UnitFilter::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
     if( !forward_.IsKnowledgeVisible( knowledge ) )
         return false;
     if( !entity_ || !cHierarchies_ )
-        return !forward_.IsSupervision();
+        return true; //!forward_.IsSupervision(); $$$$ JSR 2011-12-06: revert temporaire bug 4464
     const AgentKnowledges* filteredGroup = 0;
     const AgentKnowledges* knowledgeToCheckGroup = 0;
     for( const Entity_ABC* superior = &cHierarchies_->GetEntity(); superior && !filteredGroup; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
