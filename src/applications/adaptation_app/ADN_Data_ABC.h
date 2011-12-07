@@ -51,6 +51,7 @@ public:
     virtual void FilesNeeded( T_StringList& vFiles ) const = 0;
     virtual void Reset() = 0;
     virtual void Load( const tools::Loader_ABC& fileLoader );
+    virtual void Initialize();
     virtual void Save();
     virtual bool IsValidDatabase();
     //@}

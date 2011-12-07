@@ -14,6 +14,7 @@
 #include "ADN_App.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Sensors_Data.h"
+#include "ADN_Objects_Data.h"
 
 typedef ADN_Sensors_Data::SensorInfos SensorInfos;
 typedef ADN_Sensors_Data::TargetInfos TargetInfos;
@@ -118,7 +119,7 @@ void ADN_Sensors_Targets_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoint
 
     for( ADN_Objects_Data::T_ObjectsInfos_Vector::iterator it = vAllMunitions.begin(); it != vAllMunitions.end(); ++it )
     {
-        ADN_Objects_Data::ObjectInfos* pInfo = *it;
+        ADN_Objects_Data_ObjectInfos* pInfo = *it;
         if( Contains( pInfo->strName_.GetData() ) != 0 )
             continue;
 

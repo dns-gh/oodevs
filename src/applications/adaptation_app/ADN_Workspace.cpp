@@ -290,6 +290,9 @@ void ADN_Workspace::Load( const std::string& filename, const tools::Loader_ABC& 
         qApp->processEvents();
         elements_[n]->GetDataABC().Load( fileLoader );
     }
+    // Allow circular dependences between pages
+    for( int n = 0; n < eNbrWorkspaceElements; ++n )
+        elements_[n]->GetDataABC().Initialize();
     ResetProgressIndicator();
 
     GetModels().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );

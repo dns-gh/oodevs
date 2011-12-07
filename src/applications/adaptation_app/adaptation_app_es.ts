@@ -6195,6 +6195,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Object type - Invalid object &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Health_Data</name>

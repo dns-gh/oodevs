@@ -16,6 +16,7 @@
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Enums.h"
 #include "ADN_Categories_Data.h"
+#include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_ResourceNatureInfos.h"
 #include "ADN_LogisticSupplyClass.h"
 #include "ADN_UrbanAttritionInfos.h"
@@ -52,6 +53,7 @@ public:
         virtual void ReadArchive( xml::xistream& );
         virtual void WriteArchive( xml::xostream& ) const;
         virtual void WriteContent( xml::xostream& ) const;
+        virtual void Initialize();
 
     public:
         ResourceInfos&  parentResource_;
@@ -114,6 +116,7 @@ public:
         void ReadArchive( xml::xistream& );
         void ReadPh( xml::xistream& );
         void WriteArchive( xml::xostream& ) const;
+        void Initialize();
 
     public:
         ADN_Type_Enum<E_TypeMunitionTirIndirect,eNbrTypeMunitionTirIndirect>  nIndirectType_;
@@ -133,7 +136,8 @@ public:
         ADN_Type_Int                                                          nMineNumber_;
 
         // For effect
-        ADN_Type_String                                                       objectType_;
+        std::string                                                           strObjectType_;
+        ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos >              objectType_;
         ADN_Type_Time                                                         effectLifeTime_;
     };
 
@@ -152,6 +156,7 @@ public:
         void ReadIndirectFire( xml::xistream& );
         void WriteArchive( xml::xostream& ) const;
         bool HasUrbanAttrition() const;
+        virtual void Initialize();
 
     public:
         ADN_Type_Enum< E_MunitionType, eNbrMunitionType > nType_;
@@ -194,6 +199,7 @@ public:
 
         void ReadArchive( xml::xistream& );
         void WriteArchive( xml::xostream& ) const;
+        void Initialize();
 
     public:
         E_DotationFamily      nType_;
@@ -217,6 +223,7 @@ public:
     CategoryInfo*           FindEquipementCategory( const std::string& strCategoryName );
 
     int                     GetNextCatId();
+    void                    Initialize();
 
 private:
     void ReadArchive( xml::xistream& );

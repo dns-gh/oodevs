@@ -17,8 +17,6 @@
 #include "ADN_ComboBox.h"
 #include "ADN_Tr.h"
 
-typedef ADN_Objects_Data::ObjectInfos ObjectInfos;
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Objects constructor
 // Created: JDY 03-07-03
@@ -33,7 +31,7 @@ ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent, const char* szName
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
-    pConnector_ = new ADN_Connector_ListView< ObjectInfos >( *this );
+    pConnector_ = new ADN_Connector_ListView< ADN_Objects_Data_ObjectInfos >( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -55,7 +53,7 @@ namespace
     {
         template < typename T > friend class BuilderHelper;
     public:
-        LinkBuilder( T_ConnectorVector& connectors, ObjectInfos& infos, bool bConnect )
+        LinkBuilder( T_ConnectorVector& connectors, ADN_Objects_Data_ObjectInfos& infos, bool bConnect )
             : connectors_( connectors )
             , infos_     ( infos )
             , bConnect_  ( bConnect )
@@ -67,7 +65,7 @@ namespace
         template< typename T >
         void Check()
         {
-            ObjectInfos::CIT_CapacityMap cit = infos_.capacities_.find( T::TAG );
+            ADN_Objects_Data_ObjectInfos::CIT_CapacityMap cit = infos_.capacities_.find( T::TAG );
             if( cit == infos_.capacities_.end() )
                 throw std::runtime_error( "unregister object capacity: " + T::TAG );
         }
@@ -86,7 +84,7 @@ namespace
 
     private:
         T_ConnectorVector& connectors_;
-        ObjectInfos& infos_;
+        ADN_Objects_Data_ObjectInfos& infos_;
         bool bConnect_;
     };
 
@@ -132,7 +130,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
 
-    ObjectInfos* pInfos = reinterpret_cast< ObjectInfos* >( pCurData_ );
+    ADN_Objects_Data_ObjectInfos* pInfos = reinterpret_cast< ADN_Objects_Data_ObjectInfos* >( pCurData_ );
 
     LinkBuilder builder( vItemConnectors_, *pInfos, bConnect );
 

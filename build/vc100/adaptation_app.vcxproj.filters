@@ -1309,6 +1309,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TextEdit_ABC.cpp">
       <Filter>Source Files\Common widgets\Edit line</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp">
+      <Filter>Source Files\Workspace\Object\Objects Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1994,6 +1997,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TextEdit.h">
       <Filter>Source Files\Common widgets\Edit line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h">
+      <Filter>Source Files\Workspace\Object\Objects Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

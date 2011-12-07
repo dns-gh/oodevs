@@ -53,7 +53,7 @@ void ADN_Funeral_GUI::Build()
 
     // Create the main widget.
     pMainWidget_ = new QWidget( 0 );
-    Q3GroupBox* pGroup = new Q3GroupBox( 5, Qt::Horizontal, tr( "Funeral system data" ), pMainWidget_ );
+    /*Q3GroupBox* pGroup = */new Q3GroupBox( 5, Qt::Horizontal, tr( "Funeral system data" ), pMainWidget_ );
 
     /*QWidget* pHolder = builder.AddFieldHolder( pGroup );
 

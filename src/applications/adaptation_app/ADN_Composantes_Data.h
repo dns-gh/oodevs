@@ -18,7 +18,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Launchers_Data.h"
-#include "ADN_Objects_Data.h"
+#include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_ActiveProtections_Data.h"
@@ -517,7 +517,7 @@ public:
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Objects_Data::ObjectInfos>     ptrObject_;
+        ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos >    ptrObject_;
 
         ADN_Type_Bool                                               bInitialBuildTime_;
         ADN_Type_Bool                                               bInitialDestructionTime_;

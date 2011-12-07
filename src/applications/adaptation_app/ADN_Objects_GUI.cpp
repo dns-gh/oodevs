@@ -282,7 +282,7 @@ void ADN_Objects_GUI::Build()
     {
         vInfosConnectors[ eSpawnCapacityPresent ] = & spawn->GetConnector();
         builder.AddField<ADN_EditLine_Double>( spawn, tr( "Action range" ), vInfosConnectors[ eSpawnCapacity_ActionRange ], tr( "m" ) );
-        builder.AddField< ADN_ComboBox_Vector< ADN_Objects_Data::ObjectInfos > >( spawn, tr( "Object" ), vInfosConnectors[ eSpawnCapacity_ObjectType ] );
+        builder.AddField< ADN_ComboBox_Vector< ADN_Objects_Data_ObjectInfos > >( spawn, tr( "Object" ), vInfosConnectors[ eSpawnCapacity_ObjectType ] );
         builder.AddField< ADN_CheckBox >( spawn, tr( "NBC" ), vInfosConnectors[ eSpawnCapacity_NBC ] );
     }
 
@@ -508,14 +508,14 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
     int n = 1;
     for( ADN_Objects_Data::IT_ObjectsInfos_Vector it = objects.begin(); it != objects.end(); ++it, ++n )
     {
-        ADN_Objects_Data::ObjectInfos& object = **it;
+        ADN_Objects_Data_ObjectInfos& object = **it;
         indexBuilder.TableItem( n, 0, object.strName_.GetData().c_str() );
         indexBuilder.TableItem( n, 1, object.strType_.GetData().c_str() );
         indexBuilder.TableItem( n, 2, object.geometries_.GetData().c_str() );
 
         ADN_HtmlBuilder listBuilder;
         listBuilder.BeginList();
-        for( ADN_Objects_Data::ObjectInfos::CIT_CapacityMap itCapacity = object.capacities_.begin(); itCapacity != object.capacities_.end(); ++itCapacity )
+        for( ADN_Objects_Data_ObjectInfos::CIT_CapacityMap itCapacity = object.capacities_.begin(); itCapacity != object.capacities_.end(); ++itCapacity )
         {
             if( itCapacity->second->bPresent_.GetData() )
                 listBuilder.ListItem( itCapacity->first.c_str() );

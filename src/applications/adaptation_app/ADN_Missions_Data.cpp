@@ -222,7 +222,7 @@ namespace
     QString GetFussedDiaName( const QString& name )
     {
         QStringList list = QStringList::split( ' ', name );
-        for( unsigned int i = 0; i < list.size(); ++i )
+        for( int i = 0; i < list.size(); ++i )
             list[i][0] = i == 0 ? list[i][0].lower() : list[i][0].upper();
         return list.join( "" ).append( '_' );
     }
@@ -381,7 +381,7 @@ namespace
     QString BuildDiaMissionType( const QString& name )
     {
         QStringList list = QStringList::split( ' ', name );
-        for( unsigned int i = 0; i < list.size() - 1; ++i )
+        for( int i = 0; i < list.size() - 1; ++i )
             if( list[i].length() > 1 && ( list[i] == list[i].upper() || list[i].lower() == "test" ) )
                 list[i].append( "_" );
         return list.join( "" );
@@ -548,7 +548,7 @@ namespace
         QStringList list = QStringList::split( ' ', name );
         if( list.front() == "Pion" || list.front() == "Automate" || list.front() == "Population" )
             list[0].append( "_" );
-        for( unsigned int i = 1; i < list.size() - 1; ++i )
+        for( int i = 1; i < list.size() - 1; ++i )
             if( list[i].length() > 1 && list[i] == list[i].upper() )
                 list[i].append( "_" );
         return QString( "Rep_OrderConduite_%1" ).arg( list.join( "" ) );

@@ -180,6 +180,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainWindow.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableDialog.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_ABC.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
@@ -2047,6 +2048,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClass.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TextEdit.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TextEdit_ABC.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>

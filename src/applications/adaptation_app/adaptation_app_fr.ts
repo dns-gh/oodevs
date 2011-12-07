@@ -6206,6 +6206,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Object type - Invalid object &apos;%1&apos;</source>
+        <translation>Type d&apos;object - Object invalide &apos;%1&apos;</translation>
+    </message>
 </context>
 <context>
     <name>Health_Data</name>

@@ -21,6 +21,7 @@
 #include "ADN_Type_Choice.h"
 #include "ADN_FireClass_Data.h"
 #include "ADN_Drawings_Data.h"
+#include "ADN_Objects_Data_ObjectInfos.h"
 #include <boost/tuple/tuple.hpp>
 
 namespace xml
@@ -489,7 +490,6 @@ public:
         ADN_Type_Bool bRecoTime_; // LTO
         ADN_Type_Time identTime_; // LTO
     };
-    class ObjectInfos;
     class ADN_CapacityInfos_Spawn : public helpers::ADN_CapacityInfos_Default< helpers::eSpawnCapacity >
     {
     public:
@@ -503,7 +503,7 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC< ADN_Objects_Data::ObjectInfos > object_;
+        ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos > object_;
         std::string objectName_;
         bool load_;
         ADN_Type_Double rActionRange_;
@@ -632,47 +632,9 @@ public:
     };
 
 //*****************************************************************************
-    class ObjectInfos : public ADN_Ref_ABC
-                      , public ADN_DataTreeNode_ABC
-    {
 
-    public:
-                 ObjectInfos();
-        explicit ObjectInfos( const std::string& name );
-        virtual ~ObjectInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-        ObjectInfos* CreateCopy();
-        void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
-
-    private:
-        void ReadCapacityArchive( const std::string& type, xml::xistream& input );
-        void InitializeCapacities();
-
-    public:
-        ADN_Type_String strName_;
-        ADN_Type_String strType_;
-        ADN_Type_String geometries_;
-        ADN_Type_String description_;
-        ADN_Type_Double pointSize_;
-        ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbol_;
-
-        typedef std::map< std::string, boost::shared_ptr< helpers::ADN_TypeCapacity_Infos > > T_CapacityMap;
-        typedef T_CapacityMap::iterator                                                      IT_CapacityMap;
-        typedef T_CapacityMap::const_iterator                                               CIT_CapacityMap;
-        T_CapacityMap capacities_;
-
-        static int VAL;
-        template< typename T > struct Enumerator
-        {
-            enum E { value = VAL++ };
-        };
-    };
-
-    typedef ADN_Type_Vector_ABC< ObjectInfos > T_ObjectsInfos_Vector;
-    typedef T_ObjectsInfos_Vector::iterator   IT_ObjectsInfos_Vector;
+    typedef ADN_Type_Vector_ABC< ADN_Objects_Data_ObjectInfos > T_ObjectsInfos_Vector;
+    typedef T_ObjectsInfos_Vector::iterator                    IT_ObjectsInfos_Vector;
 
 
 //*****************************************************************************
@@ -684,9 +646,8 @@ public:
     void Reset();
     void SaveAttritionInfos( xml::xostream& output );
 
-
     T_ObjectsInfos_Vector& GetObjectInfos();
-    ObjectInfos* FindObject( const std::string& strName );
+    ADN_Objects_Data_ObjectInfos* FindObject( const std::string& strName );
 
 private:
     void ReadArchive( xml::xistream& input );
@@ -733,9 +694,9 @@ namespace
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
 inline
-ADN_Objects_Data::ObjectInfos* ADN_Objects_Data::FindObject( const std::string& strName )
+ADN_Objects_Data_ObjectInfos* ADN_Objects_Data::FindObject( const std::string& strName )
 {
-    IT_ObjectsInfos_Vector it = std::find_if( vObjectInfos_.begin(), vObjectInfos_.end(), TypeCmp< ADN_Objects_Data::ObjectInfos>( strName ) );
+    IT_ObjectsInfos_Vector it = std::find_if( vObjectInfos_.begin(), vObjectInfos_.end(), TypeCmp< ADN_Objects_Data_ObjectInfos >( strName ) );
     if( it == vObjectInfos_.end() )
         return 0;
     return *it;

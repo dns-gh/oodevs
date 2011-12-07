@@ -13,6 +13,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
+#include "ADN_Objects_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_DataException.h"
 #include "ADN_AttritionInfos.h"
@@ -145,6 +146,15 @@ void ADN_Equipement_Data::CategoryInfo::WriteArchive( xml::xostream& output ) co
 }
 
 // -----------------------------------------------------------------------------
+// Name: CategoryInfo::Initialize
+// Created: ABR 2011-12-06
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Data::CategoryInfo::Initialize()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Equipement_Data:::CategoryInfo::WriteContent
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
@@ -233,6 +243,7 @@ ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
     , flareLifeTime_       ( "0s" )
     , nMineNumber_         ( 0 )
     , effectLifeTime_      ( "0s" )
+    , objectType_          ( ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos >( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0, "" ) )
 {
     for( int i = 0; i < eNbrUnitPosture; ++i )
     {
@@ -313,8 +324,8 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( xml::xistream& input )
             input >> xml::attribute( "mine-count", nMineNumber_ );
             break;
         case eTypeMunitionTirIndirect_Effect:
-            input >> xml::attribute( "object-type", objectType_ );
-            input >> xml::attribute( "life-time", effectLifeTime_ );
+            input >> xml::attribute( "object-type", strObjectType_ )
+                  >> xml::attribute( "life-time", effectLifeTime_ );
             break;
     }
 }
@@ -351,12 +362,34 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
         output << xml::attribute( "mine-count", nMineNumber_ );
         break;
     case eTypeMunitionTirIndirect_Effect:
-        output << xml::attribute( "object-type", objectType_ )
+        output << xml::attribute( "object-type", ( objectType_.GetData() != 0 ) ? objectType_.GetData()->strType_.GetData() : "" )
                << xml::attribute( "life-time", effectLifeTime_ );
         break;
     }
 
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndirectAmmoInfos::Initialize
+// Created: ABR 2011-12-06
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Data::IndirectAmmoInfos::Initialize()
+{
+    if( objectType_.GetData() != 0 )
+        return;
+    if( !strObjectType_.empty() )
+    {
+        ADN_Objects_Data_ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strObjectType_ );
+        if( !pObject )
+            throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).ascii(), tools::translate( "Equipment_Data", "Object type - Invalid object '%1'" ).arg( strObjectType_.c_str() ).ascii() );
+        objectType_ = pObject;
+    }
+    else if( !ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos().empty() )
+    {
+        objectType_ = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos().front();
+        strObjectType_ = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos().front()->strType_.GetData();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -378,6 +411,7 @@ ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDo
     , modifUrbanBlocks_     ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 {
     // NOTHING
+    BindExistenceTo( &( indirectAmmoInfos_.objectType_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -549,6 +583,15 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
 }
 
 // -----------------------------------------------------------------------------
+// Name: AmmoCategoryInfo::Initialize
+// Created: ABR 2011-12-06
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Data::AmmoCategoryInfo::Initialize()
+{
+    indirectAmmoInfos_.Initialize();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Equipement_Data::AmmoCategoryInfo::HasUrbanAttrition
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
@@ -658,6 +701,16 @@ void ADN_Equipement_Data::ResourceInfos::WriteArchive( xml::xostream& output ) c
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceInfos::Initialize
+// Created: ABR 2011-12-06
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Data::ResourceInfos::Initialize()
+{
+    for( CIT_CategoryInfos_Vector it = categories_.begin(); it != categories_.end(); ++it )
+        (*it)->Initialize();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Equipement_Data constructor
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
@@ -735,6 +788,16 @@ void ADN_Equipement_Data::WriteArchive( xml::xostream& output )
     for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_Data::Initialize
+// Created: ABR 2011-12-06
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Data::Initialize()
+{
+    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+        (*it)->Initialize();
 }
 
 // -----------------------------------------------------------------------------

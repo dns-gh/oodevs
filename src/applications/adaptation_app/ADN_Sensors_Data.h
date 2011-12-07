@@ -16,9 +16,9 @@
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
+#include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_Urban_Data.h"
-#include "ADN_Objects_Data.h"
 #include "ADN_DataTreeNode_ABC.h"
 #include "ADN_Radars_Data.h"
 
@@ -347,7 +347,7 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Objects_Data::ObjectInfos>   ptrObject_;
+        ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos >  ptrObject_;
         ADN_Type_String                                           strName_;  //!< For code convenience, not for editing.
         ADN_Type_Double                                           rDistanceDetection_;
         T_ModificatorPostureInfos_Vector                          vModifStance_;

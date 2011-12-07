@@ -15,7 +15,7 @@
 #include "ADN_Wizard_FirstPage_Default.h"
 #include "ADN_Wizard_LastPage.h"
 
-typedef ADN_Objects_Data::ObjectInfos ObjectInfos;
+typedef ADN_Objects_Data_ObjectInfos ObjectInfos;
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Wizard constructor
@@ -52,7 +52,7 @@ ADN_Ref_ABC* ADN_Objects_Wizard::CreateObject()
     ADN_Ref_ABC* object = ADN_Wizard_ABC_ADN_Object_Data_ObjectInfos::CreateObject();
     if( object )
     {
-        ADN_Objects_Data::ObjectInfos* info = static_cast<ADN_Objects_Data::ObjectInfos*>( object );
+        ADN_Objects_Data_ObjectInfos* info = static_cast<ADN_Objects_Data_ObjectInfos*>( object );
         if( !info->strType_.GetData().empty() )
             ADN_Workspace::GetWorkspace().GetProject().addedObjects_[ info->strName_.GetData() ] = info->strType_.GetData();
         info->strType_ = info->strName_.GetData();
