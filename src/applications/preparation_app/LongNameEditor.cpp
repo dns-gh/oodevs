@@ -112,6 +112,17 @@ namespace
         }
         return entity.GetName();
     }
+
+    bool IsBattalionOrHigher( const Entity_ABC& entity )
+    {
+        if( entity.GetTypeName() == Team_ABC::typeName_ )
+            return true;
+        if( entity.GetTypeName() != Formation_ABC::typeName_ )
+            return false;
+        const Formation_ABC& formation = static_cast< const Formation_ABC& >( entity );
+        QString level = formation.GetLevel().GetName();
+        return ( level == "ii" || level == "iii" || level.endsWith( 'x' ) ); // >= battalion
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -134,13 +145,8 @@ void LongNameEditor::Generate()
         const TacticalHierarchies* pTactical = selected_->Retrieve< TacticalHierarchies >();
         while( entity && pTactical )
         {
-            if( entity->GetTypeName() == Formation_ABC::typeName_ )
-            {
-                const Formation_ABC& formation = static_cast< const Formation_ABC& >( *entity );
-                QString level = formation.GetLevel().GetName();
-                if( level == "iii" || level.endsWith( 'x' ) ) // >= Régiment
-                    break;
-            }
+            if( IsBattalionOrHigher( *entity ) )
+                break;
             entity = pTactical->GetSuperior();
             if( entity )
             {
@@ -182,7 +188,9 @@ void LongNameEditor::TransmitToSubordinates( const Entity_ABC& entity, const QSt
         while( children.HasMoreElements() )
         {
             Entity_ABC& child = const_cast< Entity_ABC& >( children.NextElement() );
-            QString childName = GetEntityName( child ) + "." + name;
+            QString childName = GetEntityName( child );
+            if( !IsBattalionOrHigher( child ) )
+                childName += "." + name;
             SetExtension( child, childName, attribute );
             TransmitToSubordinates( child, childName, attribute );
         }
