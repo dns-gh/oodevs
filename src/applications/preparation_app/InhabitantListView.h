@@ -23,7 +23,7 @@ class ModelBuilder;
 // =============================================================================
 class InhabitantListView : public gui::InhabitantListView
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -33,18 +33,13 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InhabitantListView( const InhabitantListView& );            //!< Copy constructor
-    InhabitantListView& operator=( const InhabitantListView& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual Q3DragObject* dragObject();
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void keyPressEvent( QKeyEvent* key );
+    virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     //@}
 
 private:

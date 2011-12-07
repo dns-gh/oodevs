@@ -67,7 +67,6 @@ public:
 private slots:
     //! @name Slots
     //@{
-    virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     void OnRename();
     void OnChangeSuperior();
     void Engage();
@@ -77,6 +76,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     virtual void hideEvent( QHideEvent* event );
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );

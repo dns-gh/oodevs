@@ -31,16 +31,11 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectListView( const ObjectListView& );            //!< Copy constructor
-    ObjectListView& operator=( const ObjectListView& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void keyPressEvent( QKeyEvent* key );
+    virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     //@}
 
 private:

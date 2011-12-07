@@ -25,6 +25,7 @@ GhostsPanel.cpp \
 GhostSymbolDialog.cpp \
 GhostSymbolEditor.cpp \
 InhabitantCreationPanel.cpp \
+InhabitantListView.cpp \
 InitialStateDialog.cpp \
 InitialStateTableCrew.cpp \
 InitialStateTableEquipments.cpp \
@@ -38,7 +39,9 @@ Menu.cpp \
 ModelBuilder.cpp \
 ModelConsistencyDialog.cpp \
 ObjectCreationPanel.cpp \
+ObjectListView.cpp \
 PeopleAffinitiesDialog.cpp \
+PopulationListView.cpp \
 PopulationRepartitionEditor.cpp \
 PositionEditor.cpp \
 ProfileDialog.cpp \
