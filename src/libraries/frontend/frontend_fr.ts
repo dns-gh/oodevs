@@ -101,45 +101,6 @@
     </message>
 </context>
 <context>
-    <name>EdxlHavePluginConfigPanel</name>
-    <message>
-        <source>Enable EDXL-HAVE exchange</source>
-        <translation>Activer les échanges EDXL-HAVE</translation>
-    </message>
-    <message>
-        <source>Host: </source>
-        <translation>Hôte: </translation>
-    </message>
-    <message>
-        <source>Use SSL: </source>
-        <translation>Utiliser SSL: </translation>
-    </message>
-    <message>
-        <source>Log: </source>
-        <translation>Journal: </translation>
-    </message>
-    <message>
-        <source>Services configuration:</source>
-        <translation>Configuration des services:</translation>
-    </message>
-    <message>
-        <source>Initialization service: </source>
-        <translation>Service d&apos;initialisation: </translation>
-    </message>
-    <message>
-        <source>Update service: </source>
-        <translation>Service de mise à jour: </translation>
-    </message>
-    <message>
-        <source>Frequency: </source>
-        <translation>Fréquence: </translation>
-    </message>
-    <message>
-        <source>EDXL-HAVE</source>
-        <translation>EDXL-HAVE</translation>
-    </message>
-</context>
-<context>
     <name>JoinExercise</name>
     <message>
         <source>Starting user interface...</source>
