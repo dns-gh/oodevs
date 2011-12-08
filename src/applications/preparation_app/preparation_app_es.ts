@@ -2162,10 +2162,6 @@ Do you want to save anyway?</source>
         <translation>Permisos de acceso</translation>
     </message>
     <message>
-        <source>Supervisor actions:</source>
-        <translation>Acciones de supervisor:</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Unidades</translation>
     </message>
@@ -2190,6 +2186,10 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
     <message>
         <source>Duplicate login: &apos;%1&apos;.</source>
         <translation type="unfinished">Usuario repetido: &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Supervisor actions</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

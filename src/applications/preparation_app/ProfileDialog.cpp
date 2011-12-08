@@ -45,6 +45,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
     icon->setPixmap( MAKE_PIXMAP( profiles ) );
     icon->setMaximumWidth( 64 );
     icon->setBackgroundColor( Qt::white );
+    box->setMaximumHeight( 64 );
     grid->addMultiCellWidget( box, 0, 0, 0, 1 );
 
     box = new Q3VBox( this );

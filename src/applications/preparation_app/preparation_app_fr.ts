@@ -2162,10 +2162,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Droits d&apos;accès</translation>
     </message>
     <message>
-        <source>Supervisor actions:</source>
-        <translation>Actions de supervision:</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Unités</translation>
     </message>
@@ -2190,6 +2186,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Duplicate login: &apos;%1&apos;.</source>
         <translation>Profil en double: &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Supervisor actions</source>
+        <translation>Actions de supervision</translation>
     </message>
 </context>
 <context>

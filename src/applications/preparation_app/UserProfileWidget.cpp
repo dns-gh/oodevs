@@ -60,8 +60,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         Q3GroupBox* group = new Q3GroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
         group->setMargin( 5 );
         Q3HBox* holder = new Q3HBox( group );
-        new QLabel( tr( "Supervisor actions:" ), holder );
-        supervisor_ = new QCheckBox( holder );
+        supervisor_ = new QCheckBox( tr( "Supervisor actions" ), holder );
         QTabWidget* tabs = new QTabWidget( group );
 
         UserProfileUnitRights* unitRights = new UserProfileUnitRights( tabs, controllers, factory, icons );
