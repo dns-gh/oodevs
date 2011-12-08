@@ -1309,6 +1309,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TextEdit_ABC.cpp">
       <Filter>Source Files\Common widgets\Edit line</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.cpp">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp">
       <Filter>Source Files\Workspace\Object\Objects Data</Filter>
     </ClCompile>
@@ -1992,11 +1995,11 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.h">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
-      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TextEdit.h">
       <Filter>Source Files\Common widgets\Edit line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.h">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h">
       <Filter>Source Files\Workspace\Object\Objects Data</Filter>
@@ -2404,6 +2407,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TextEdit_ABC.h">
       <Filter>Source Files\Common widgets\Edit line</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

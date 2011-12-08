@@ -13,6 +13,7 @@
 #include "ADN_GUI_ABC.h"
 
 class ADN_Funeral_Data;
+class ADN_FuneralPackagingResources_GUI;
 
 // =============================================================================
 /** @class  ADN_Funeral_GUI
@@ -22,6 +23,7 @@ class ADN_Funeral_Data;
 // =============================================================================
 class ADN_Funeral_GUI : public ADN_GUI_ABC
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -33,12 +35,21 @@ public:
     //! @name Operations
     //@{
     void Build();
+    void SwapResource( int offsetRow );
     //@}
+
+    private slots:
+        //! @name Helpers
+        //@{
+        void OnButtonUp() { SwapResource( -1 ); }
+        void OnButtonDown() { SwapResource( 1 ); }
+        //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Funeral_Data& data_;
+    ADN_FuneralPackagingResources_GUI* resourceTable_;
     //@}
 };
 
