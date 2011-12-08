@@ -35,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach = false,
-                  std::string commanderEndpoint = "", bool fromLauncher = false  );
+                  std::string commanderEndpoint = "", bool makeSilent = false  );
     virtual ~SpawnCommand();
     //@}
 

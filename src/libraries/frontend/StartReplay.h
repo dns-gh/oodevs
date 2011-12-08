@@ -30,7 +30,7 @@ public:
              StartReplay( const tools::GeneralConfig& config,
                           const QString& exercise, const QString& session,
                           unsigned port, bool attach = false,
-                          std::string commanderEndpoint = "", bool fromLauncher = false );
+                          std::string commanderEndpoint = "", bool makeSilent = false );
     virtual ~StartReplay();
     //@}
 

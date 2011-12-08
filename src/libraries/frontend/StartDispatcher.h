@@ -28,7 +28,7 @@ public:
     StartDispatcher( const tools::GeneralConfig& config, bool attach,
                      const QString& exercise, const QString& session,
                      const QString& checkpoint = "", const QString& dispatcher_path = "",
-                     std::string commanderEndpoint = "", bool fromLauncher = false );
+                     std::string commanderEndpoint = "", bool makeSilent = false );
     //@}
 };
 
