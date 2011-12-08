@@ -852,7 +852,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Communication</source>
-        <translation type="unfinished"></translation>
+        <translation>Communication</translation>
     </message>
     <message>
         <source>Crowds</source>
@@ -1353,52 +1353,48 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Assistant de création de profils utilisateurs</translation>
     </message>
     <message>
-        <source>Select profiles to generate: </source>
-        <translation>Sélectionner les profils à générer: </translation>
-    </message>
-    <message>
-        <source>one profile per side</source>
-        <translation>un profil par camp</translation>
-    </message>
-    <message>
-        <source>one profile per top-level formation</source>
-        <translation>un profil par formation de plus haut niveau</translation>
-    </message>
-    <message>
-        <source>one profile per formation</source>
-        <translation>un profil par formation</translation>
-    </message>
-    <message>
-        <source>Select creation mode: </source>
-        <translation>Sélectionnez le mode de création: </translation>
-    </message>
-    <message>
-        <source>clear existing profiles</source>
-        <translation>supprimer les profils existants</translation>
-    </message>
-    <message>
-        <source>add new profiles to existing</source>
-        <translation>ajouter les nouveaux profils aux profils existants</translation>
-    </message>
-    <message>
-        <source>Select creation permissions: </source>
-        <translation>Sélectionner les droits: </translation>
-    </message>
-    <message>
-        <source>writeable</source>
-        <translation>écriture</translation>
-    </message>
-    <message>
-        <source>readonly</source>
-        <translation>lecture seule</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Select profiles to generate: </source>
+        <translation>Sélectionner les profils à générer: </translation>
+    </message>
+    <message>
+        <source>one ANIBAS profile per low-level friend formation</source>
+        <translation>un profil ANIBAS par formation de plus bas niveau d&apos;un camp AMI</translation>
+    </message>
+    <message>
+        <source>one ENIEX profile per low-level enemy formation</source>
+        <translation>un profil ENIEX par formation de plus bas niveau d&apos;un camp ENNEMI</translation>
+    </message>
+    <message>
+        <source>one global SUPERVISOR profile</source>
+        <translation>un profil SUPERVISEUR global</translation>
+    </message>
+    <message>
+        <source>one SUPERVISOR profile per side</source>
+        <translation>un profil SUPERVISEUR par camp</translation>
+    </message>
+    <message>
+        <source>one DIREX profile</source>
+        <translation>un profil DIREX</translation>
+    </message>
+    <message>
+        <source>one ANALYSIS profile</source>
+        <translation>un profil ANALYSTE</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Attention</translation>
+    </message>
+    <message>
+        <source>All existing profiles will be deleted, do you want to continue?</source>
+        <translation>Tous les profils existants seront supprimés, voulez-vous continuer?</translation>
     </message>
 </context>
 <context>
@@ -1994,7 +1990,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <name>SupplyStocksDialog</name>
     <message>
         <source>Supply stocks</source>
-        <translation type="unfinished">Ravitailler les stocks</translation>
+        <translation>Ravitailler les stocks</translation>
     </message>
 </context>
 <context>

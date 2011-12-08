@@ -71,7 +71,8 @@ public:
     void Purge();
 
     void CreateProfile();
-    void CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly );
+    void CreateProfile( const QString& name, const std::string& userRole, const kernel::Entity_ABC& entity, bool readonly );
+    void CreateProfile( const QString& name, const std::string& userRole, const std::vector< const kernel::Entity_ABC* >& entities, bool readonly );
     void DeleteProfile( const UserProfile& profile );
     void Visit( T_Units& units ) const;
     void Visit( T_Profiles& profiles ) const;

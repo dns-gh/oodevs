@@ -1353,52 +1353,48 @@ Do you want to save anyway?</source>
         <translation>Asistente de creación de perfiles de usuario</translation>
     </message>
     <message>
-        <source>Select profiles to generate: </source>
-        <translation>Seleccionar perfiles a generar: </translation>
-    </message>
-    <message>
-        <source>one profile per side</source>
-        <translation>un perfil por bando</translation>
-    </message>
-    <message>
-        <source>one profile per top-level formation</source>
-        <translation>un perfil por formación de alto nivel</translation>
-    </message>
-    <message>
-        <source>one profile per formation</source>
-        <translation>un perfil por formación</translation>
-    </message>
-    <message>
-        <source>Select creation mode: </source>
-        <translation>Seleccionar modo de creación: </translation>
-    </message>
-    <message>
-        <source>clear existing profiles</source>
-        <translation>Limpiar perfiles existentes</translation>
-    </message>
-    <message>
-        <source>add new profiles to existing</source>
-        <translation>agregar nuevos perfiles a los existentes</translation>
-    </message>
-    <message>
-        <source>Select creation permissions: </source>
-        <translation>Seleccionar permisos de creación: </translation>
-    </message>
-    <message>
-        <source>writeable</source>
-        <translation>escribible</translation>
-    </message>
-    <message>
-        <source>readonly</source>
-        <translation>sólo lectura</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>Select profiles to generate: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one ANIBAS profile per low-level friend formation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one ENIEX profile per low-level enemy formation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one global SUPERVISOR profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one SUPERVISOR profile per side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one DIREX profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one ANALYSIS profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Alerta</translation>
+    </message>
+    <message>
+        <source>All existing profiles will be deleted, do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

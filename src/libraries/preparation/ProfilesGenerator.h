@@ -10,6 +10,8 @@
 #ifndef __ProfilesGenerator_h_
 #define __ProfilesGenerator_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Entity_ABC;
@@ -24,7 +26,7 @@ class ProfilesModel;
 */
 // Created: SBO 2007-11-07
 // =============================================================================
-class ProfilesGenerator
+class ProfilesGenerator : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -35,21 +37,19 @@ public:
 
     //! @name Operations
     //@{
-    void GenerateTeams( bool readonly );
-    void GenerateTopLevelFormations( bool readonly );
-    void GenerateFormations( bool readonly );
+    void GenerateANIBAS();
+    void GenerateENIEX();
+    void GenerateSUPERVISOR();
+    void GenerateSIDESUPERVISOR();
+    void GenerateDIREX();
+    void GenerateANALYSIS();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ProfilesGenerator( const ProfilesGenerator& );            //!< Copy constructor
-    ProfilesGenerator& operator=( const ProfilesGenerator& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void GenerateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly );
+    void GenerateSUPERVISOR( const QString& name, const std::string& userRole );
+    void GenerateLowLevelFormations( const kernel::Entity_ABC& entity, const std::string& userRole );
     //@}
 
 private:

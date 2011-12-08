@@ -22,7 +22,7 @@ class ProfilesGenerator;
 // =============================================================================
 class ProfileWizardDialog : public QDialog
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -40,23 +40,37 @@ private slots:
     //! @name Slots
     //@{
     void OnAccept();
+    void OnChecked();
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    ProfileWizardDialog( const ProfileWizardDialog& );            //!< Copy constructor
-    ProfileWizardDialog& operator=( const ProfileWizardDialog& ); //!< Assignment operator
+    void OnConfirmation( int result );
     //@}
 
 private:
+    //! @name Types
+    //@{
+    enum
+    {
+        eANIBAS,
+        eENIEX,
+        eSUPERVISOR,
+        eSIDESUPERVISOR,
+        eDIREX,
+        eANALYSIS,
+        eNbRoles
+    };
+    //@}
+
     //! @name Member data
     //@{
     std::auto_ptr< ProfilesGenerator > generator_;
     ProfilesModel& profiles_;
-    Q3ButtonGroup* profileTypes_;
-    Q3ButtonGroup* creationMode_;
-    Q3ButtonGroup* creationRight_;
+    std::auto_ptr< QMessageBox > confirmation_;
+    QPushButton* okBtn_;
+    QCheckBox* checkBoxes_[ eNbRoles ];
     //@}
 };
 

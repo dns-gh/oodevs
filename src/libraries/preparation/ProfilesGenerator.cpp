@@ -11,11 +11,13 @@
 #include "ProfilesGenerator.h"
 #include "Model.h"
 #include "ProfilesModel.h"
-#include "TeamsModel.h"
-#include "FormationModel.h"
-#include "clients_kernel/Team_ABC.h"
+#include "clients_gui/LongNameHelper.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Karma.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
 
@@ -40,58 +42,122 @@ ProfilesGenerator::~ProfilesGenerator()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfilesGenerator::GenerateTeams
-// Created: SBO 2007-11-07
+// Name: ProfilesGenerator::GenerateANIBAS
+// Created: JSR 2011-12-07
 // -----------------------------------------------------------------------------
-void ProfilesGenerator::GenerateTeams( bool readonly )
+void ProfilesGenerator::GenerateANIBAS()
+{
+    tools::Iterator< const Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Team_ABC& team = it.NextElement();
+        if( team.Get< Diplomacies_ABC >().GetKarma() == Karma::friend_ )
+            GenerateLowLevelFormations( team, "anibas" );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesGenerator::GenerateENIEX
+// Created: JSR 2011-12-07
+// -----------------------------------------------------------------------------
+void ProfilesGenerator::GenerateENIEX()
+{
+    tools::Iterator< const Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Team_ABC& team = it.NextElement();
+        if( team.Get< Diplomacies_ABC >().GetKarma() == Karma::enemy_ )
+            GenerateLowLevelFormations( team, "eniex" );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesGenerator::GenerateSUPERVISOR
+// Created: JSR 2011-12-07
+// -----------------------------------------------------------------------------
+void ProfilesGenerator::GenerateSUPERVISOR()
+{
+    GenerateSUPERVISOR( "SUPERVISEUR", "supervisor" );
+}
+
+namespace
+{
+    QString GetEntityName( const Entity_ABC& entity )
+    {
+        std::string longName = gui::LongNameHelper::GetEntityLongName( entity );
+        if( longName.empty() )
+            return entity.GetName();
+        return longName.c_str();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesGenerator::GenerateSIDESUPERVISOR
+// Created: JSR 2011-12-07
+// -----------------------------------------------------------------------------
+void ProfilesGenerator::GenerateSIDESUPERVISOR()
 {
     tools::Iterator< const Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
     while( it.HasMoreElements() )
     {
         const Entity_ABC& entity = it.NextElement();
-        GenerateProfile( entity.GetName(), entity, readonly );
+
+        profiles_.CreateProfile( "SUPERVISEUR " + GetEntityName( entity ), "supervisor", entity, true );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfilesGenerator::GenerateTopLevelFormations
-// Created: SBO 2007-11-07
+// Name: ProfilesGenerator::GenerateDIREX
+// Created: JSR 2011-12-07
 // -----------------------------------------------------------------------------
-void ProfilesGenerator::GenerateTopLevelFormations( bool readonly )
+void ProfilesGenerator::GenerateDIREX()
 {
+    GenerateSUPERVISOR( "DIREX", "direx" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesGenerator::GenerateANALYSIS
+// Created: JSR 2011-12-07
+// -----------------------------------------------------------------------------
+void ProfilesGenerator::GenerateANALYSIS()
+{
+    GenerateSUPERVISOR( "ANALYSTE", "analysis" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesGenerator::GenerateSUPERVISOR
+// Created: JSR 2011-12-08
+// -----------------------------------------------------------------------------
+void ProfilesGenerator::GenerateSUPERVISOR( const QString& name, const std::string& userRole )
+{
+    std::vector< const Entity_ABC* > entities;
     tools::Iterator< const Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
     while( it.HasMoreElements() )
     {
         const Entity_ABC& entity = it.NextElement();
-        const TacticalHierarchies& hierarchies = entity.Get< TacticalHierarchies >();
-        tools::Iterator< const Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
-        while( subIt.HasMoreElements() )
-        {
-            const Entity_ABC& subEntity = subIt.NextElement();
-            GenerateProfile( QString( "%1%2" ).arg( subEntity.GetName() ).arg( subEntity.GetId() ), subEntity, readonly );
-        }
+        entities.push_back( &entity );
     }
+    profiles_.CreateProfile( name, userRole, entities, true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfilesGenerator::GenerateFormations
-// Created: SBO 2007-11-07
+// Name: ProfilesGenerator::GenerateLowLevelFormations
+// Created: JSR 2011-12-08
 // -----------------------------------------------------------------------------
-void ProfilesGenerator::GenerateFormations( bool readonly )
+void ProfilesGenerator::GenerateLowLevelFormations( const Entity_ABC& entity, const std::string& userRole )
 {
-    tools::Iterator< const Formation_ABC& > it = model_.GetFormationResolver().CreateIterator();
-    while( it.HasMoreElements() )
+    const TacticalHierarchies& hierarchies = entity.Get< TacticalHierarchies >();
+    tools::Iterator< const Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
+    std::vector< const Entity_ABC* > automats;
+    while( subIt.HasMoreElements() )
     {
-        const Entity_ABC& entity = it.NextElement();
-        GenerateProfile( QString( "%1%2" ).arg( entity.GetName() ).arg( entity.GetId() ), entity, readonly );
+        const Entity_ABC& subEntity = subIt.NextElement();
+        QString typeName = subEntity.GetTypeName();
+        if( typeName == Automat_ABC::typeName_ )
+            automats.push_back( &subEntity );
+        else if( typeName == Formation_ABC::typeName_ )
+            GenerateLowLevelFormations( subEntity, userRole );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfilesGenerator::GenerateProfile
-// Created: SBO 2007-11-07
-// -----------------------------------------------------------------------------
-void ProfilesGenerator::GenerateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly )
-{
-    profiles_.CreateProfile( name, entity, readonly );
+    if( !automats.empty() )
+        profiles_.CreateProfile( GetEntityName( entity), userRole, automats, false );
 }

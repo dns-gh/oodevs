@@ -116,16 +116,35 @@ void ProfilesModel::CreateProfile()
 
 // -----------------------------------------------------------------------------
 // Name: ProfilesModel::CreateProfile
-// Created: SBO 2007-11-07
+// Created: JSR 2011-12-08
 // -----------------------------------------------------------------------------
-void ProfilesModel::CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly )
+void ProfilesModel::CreateProfile( const QString& name, const std::string& userRole, const kernel::Entity_ABC& entity, bool readonly )
 {
     std::auto_ptr< UserProfile > profile( factory_.Create() );
     profile->SetLogin( name );
+    profile->SetUserRole( userRole );
     if( readonly )
         profile->SetReadable( entity, true );
     else
         profile->SetWriteable( entity, true );
+    userProfiles_.push_back( profile.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::CreateProfile
+// Created: SBO 2007-11-07
+// -----------------------------------------------------------------------------
+void ProfilesModel::CreateProfile( const QString& name, const std::string& userRole, const std::vector< const kernel::Entity_ABC* >& entities, bool readonly )
+{
+    std::auto_ptr< UserProfile > profile( factory_.Create() );
+    profile->SetLogin( name );
+    profile->SetUserRole( userRole );
+    if( readonly )
+        for( std::vector< const kernel::Entity_ABC* >::const_iterator it = entities.begin(); it != entities.end(); ++it )
+            profile->SetReadable( **it, true );
+    else
+        for( std::vector< const kernel::Entity_ABC* >::const_iterator it = entities.begin(); it != entities.end(); ++it )
+            profile->SetWriteable( **it, true );
     userProfiles_.push_back( profile.release() );
 }
 
