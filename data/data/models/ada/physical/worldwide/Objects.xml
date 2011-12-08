@@ -23,7 +23,7 @@
     </heuristic>
     <interact-with-enemy/>
     <interaction-height height="1"/>
-    <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
     <time-limited/>
   </object>
@@ -523,4 +523,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="0771413765" -->
+<!-- signature="1336574287" -->

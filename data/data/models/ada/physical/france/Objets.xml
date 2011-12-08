@@ -22,7 +22,7 @@
       <terrain type="suburb" value="7"/>
     </heuristic>
     <interact-with-enemy/>
-    <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
     <time-limited/>
   </object>
@@ -396,4 +396,4 @@
     <workable max-animator="3"/>
   </object>
 </objects>
-<!-- signature="2763872201" -->
+<!-- signature="1473810269" -->
