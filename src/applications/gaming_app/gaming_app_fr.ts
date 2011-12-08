@@ -3336,10 +3336,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Droits d&apos;accès</translation>
     </message>
     <message>
-        <source>Supervisor actions:</source>
-        <translation>Actions de supervision:</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Unités</translation>
     </message>
@@ -3364,6 +3360,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Crowds</source>
         <translation>Foules</translation>
+    </message>
+    <message>
+        <source>Supervisor actions</source>
+        <translation>Actions de supervision</translation>
     </message>
 </context>
 <context>

@@ -36,8 +36,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     group = new Q3GroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
     group->setMargin( 5 );
     Q3HBox* holder = new Q3HBox( group );
-    new QLabel( tr( "Supervisor actions:" ), holder );
-    supervisor_ = new QCheckBox( holder );
+    supervisor_ = new QCheckBox( tr( "Supervisor actions" ), holder );
     QTabWidget* tabs = new QTabWidget( group );
     UserProfileUnitRights* unitRights = new UserProfileUnitRights( tabs, controllers, itemFactory, profile, icons );
     tabs->addTab( unitRights, tr( "Units" ) );

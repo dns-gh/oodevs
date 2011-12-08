@@ -60,6 +60,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     icon->setPixmap( MAKE_PIXMAP( option_general ) );
     icon->setMaximumWidth( 64 );
     icon->setBackgroundColor( Qt::white );
+    box->setMaximumHeight( 64 );
     grid->addMultiCellWidget( box, 0, 0, 0, 1 );
 
     QStackedWidget* pages = new QStackedWidget( this );

@@ -3337,10 +3337,6 @@ Motivo: %3
         <translation>Permisos de acceso</translation>
     </message>
     <message>
-        <source>Supervisor actions:</source>
-        <translation>Acciones de supervisor:</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Unidades</translation>
     </message>
@@ -3364,6 +3360,10 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
     </message>
     <message>
         <source>Crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supervisor actions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
