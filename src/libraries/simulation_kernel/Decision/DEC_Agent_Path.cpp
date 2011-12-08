@@ -641,5 +641,5 @@ MT_Vector2D DEC_Agent_Path::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
         return DEC_PathResult::GetPointOnPathCloseTo( posToTest, followingPathPoints_, lastJoiningPoint, forceNextPoint );
     else if( followingPathPoints_.size() == 1 )
         return followingPathPoints_.front().first;
-    return MT_Vector2D();
+    return posToTest;
 }

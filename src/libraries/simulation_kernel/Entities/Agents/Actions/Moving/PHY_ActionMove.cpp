@@ -79,10 +79,11 @@ bool PHY_ActionMove::CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, boo
     assert( !pJoiningPath_.get() );
     const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Vector2D& vTestPos = pMainPath_->GetPointOnPathCloseTo( vPionPos, lastJoiningPoint, forceNextPoint );
-    if( vPionPos == vTestPos || vTestPos == MT_Vector2D() )
+    if( vPionPos == vTestPos )
         return false;
     pJoiningPath_.reset( new DEC_Agent_Path( pion_, vTestPos, pMainPath_->GetPathType() ) );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pJoiningPath_ );
+    isTreatingJoining_ = true;
     return true;
 }
 
@@ -90,7 +91,21 @@ bool PHY_ActionMove::CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, boo
 // Name: PHY_ActionMove::DestroyJoiningPath
 // Created: NLD 2004-09-29
 // -----------------------------------------------------------------------------
-MT_Vector2D PHY_ActionMove::DestroyJoiningPath()
+void PHY_ActionMove::DestroyJoiningPath()
+{
+    if( !pJoiningPath_.get() )
+        return;
+    role_.MoveCanceled( pJoiningPath_ );
+    pJoiningPath_->Cancel();
+    pJoiningPath_.reset();
+    isTreatingJoining_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionMove::GetLastPointAndDestroyJoiningPath
+// Created: CMA 2011-12-08
+// -----------------------------------------------------------------------------
+MT_Vector2D PHY_ActionMove::GetLastPointAndDestroyJoiningPath()
 {
     if( !pJoiningPath_.get() )
         return MT_Vector2D();
@@ -100,11 +115,13 @@ MT_Vector2D PHY_ActionMove::DestroyJoiningPath()
     if( pathResult.empty() )
     {
         pJoiningPath_.reset();
+        isTreatingJoining_ = false;
         return MT_Vector2D();
     }
     boost::shared_ptr< DEC_PathPoint > lastPoint = pathResult.back();
     MT_Vector2D point = lastPoint.get() ? lastPoint->GetPos() : MT_Vector2D();
     pJoiningPath_.reset();
+    isTreatingJoining_ = false;
     return point;
 }
 
@@ -188,8 +205,8 @@ void PHY_ActionMove::AvoidObstacles()
 
     if( !isTreatingJoining_ )
     {
-        MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
-        if( !CreateJoiningPath( lastJoiningPoint, forceNextPoint_ ) )
+        DestroyJoiningPath();
+        if( !CreateJoiningPath( MT_Vector2D(), forceNextPoint_ ) )
             CreateFinalPath();
         role_.SendRC( MIL_Report::eReport_DifficultTerrain );
     }
@@ -218,18 +235,16 @@ void PHY_ActionMove::Execute()
 
     if( nReturn == DEC_PathWalker::eItineraireMustBeJoined )
     {
-        MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
+        MT_Vector2D lastJoiningPoint = GetLastPointAndDestroyJoiningPath();
         nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint, forceNextPoint_ );
         forceNextPoint_ = false;
-        isTreatingJoining_ = false;
     }
     else if( nReturn == DEC_PathWalker::eBlockedByObject )
     {
-        isTreatingJoining_ = false;
         if( ( pCurrentPath != pJoiningPath_ && !pJoiningPath_.get() ) || pCurrentPath == pJoiningPath_ )
         {
             const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-            MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
+            MT_Vector2D lastJoiningPoint = GetLastPointAndDestroyJoiningPath();
             if( vPionPos == lastBlockedPoint_.first.first && lastJoiningPoint == lastBlockedPoint_.first.second )
             {
                 if( lastBlockedPoint_.second > 1 )
@@ -239,14 +254,12 @@ void PHY_ActionMove::Execute()
             else
                 lastBlockedPoint_ = std::make_pair( std::make_pair( vPionPos, lastJoiningPoint ), 1 );
             nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint, forceNextPoint_ );
-            isTreatingJoining_ = true;
         }
         forceNextPoint_ = false;
     }
     else if( pCurrentPath == pJoiningPath_ )
     {
         forceNextPoint_ = false;
-        isTreatingJoining_ = false;
         if( nReturn == DEC_PathWalker::eFinished )
         {
             DestroyJoiningPath();
@@ -255,15 +268,12 @@ void PHY_ActionMove::Execute()
         else if( nReturn == DEC_PathWalker::ePartialPath )
         {
             forceNextPoint_ = true;
-            MT_Vector2D lastJoiningPoint = DestroyJoiningPath();
+            MT_Vector2D lastJoiningPoint = GetLastPointAndDestroyJoiningPath();
             nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint, forceNextPoint_ );
         }
     }
     else
-    {
         forceNextPoint_ = false;
-        isTreatingJoining_ = false;
-    }
 
     Callback( nReturn );
 }
