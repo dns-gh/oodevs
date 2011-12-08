@@ -250,10 +250,6 @@
         <translation type="unfinished">Terreno</translation>
     </message>
     <message>
-        <source>Decisional model:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Exercise:</source>
         <translation type="unfinished">Ejercicio:</translation>
     </message>
@@ -267,6 +263,10 @@
     </message>
     <message>
         <source>Physical model:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include decisional model</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

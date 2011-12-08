@@ -94,14 +94,14 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
             modelDescription_->setMaximumHeight( 30 );
         }
         {
-            modelsDecisionalLabel_ = new QLabel( box );
-            decisionalCheckBox_ = new QCheckBox( box );
-            decisionalCheckBox_->setEnabled( false );
-        }
-        {
             modelsPhysicalLabel_ = new QLabel( box );
             physicalList_ = new Q3ListBox( box );
             connect( physicalList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
+        }
+        {
+            decisionalCheckBox_ = new QCheckBox( box );
+            decisionalCheckBox_->setEnabled( false );
+            decisionalCheckBox_->setEnabled( false );
         }
     }
     progress_ = new Q3ProgressBar( this );
@@ -135,7 +135,7 @@ void ExportWidget::OnLanguageChanged()
     terrainDescriptionLabel_->setText(  tools::translate( "ExportWidget", "Package description:" ) );
     terrainLabel_->setText(             tools::translate( "ExportWidget", "Terrain:" ) );
     modelsDescriptionLabel_->setText(   tools::translate( "ExportWidget", "Package description:" ) );
-    modelsDecisionalLabel_->setText(    tools::translate( "ExportWidget", "Decisional model:" ) );
+    decisionalCheckBox_->setText(		tools::translate( "ExportWidget", "Include decisional model" ) );
     modelsPhysicalLabel_->setText(      tools::translate( "ExportWidget", "Physical model:" ) );
 }
 
@@ -232,6 +232,7 @@ void ExportWidget::Update( Q3ListBoxItem* item /*= 0*/ )
                 physicalBase << QString( "%1/%2" ).arg( *it ).arg( *itP );
         }
         physicalList_->insertStringList( physicalBase );
+        exerciseContent_->clear();
     }
     else // Item, update content
     {

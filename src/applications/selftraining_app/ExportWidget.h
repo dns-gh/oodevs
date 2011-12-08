@@ -103,7 +103,6 @@ private:
     QLabel*                     terrainDescriptionLabel_;
     QLabel*                     terrainLabel_;
     QLabel*                     modelsDescriptionLabel_;
-    QLabel*                     modelsDecisionalLabel_;
     QLabel*                     modelsPhysicalLabel_;
     //@}
 };

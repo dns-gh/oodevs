@@ -262,12 +262,12 @@
         <translation>Terrain:</translation>
     </message>
     <message>
-        <source>Decisional model:</source>
-        <translation>Modèle décisionnel:</translation>
-    </message>
-    <message>
         <source>Physical model:</source>
         <translation>Modèle physique:</translation>
+    </message>
+    <message>
+        <source>Include decisional model</source>
+        <translation>Inclure le modèle décisionnel</translation>
     </message>
 </context>
 <context>
