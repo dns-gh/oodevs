@@ -35,8 +35,17 @@ ProfilesChecker::~ProfilesChecker()
 // -----------------------------------------------------------------------------
 void ProfilesChecker::Display( const T_ProfileEditors& editors )
 {
-    editors_.clear();
+    Clean();
     editors_ = editors;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesChecker::Clean
+// Created: LGY 2011-12-08
+// -----------------------------------------------------------------------------
+void ProfilesChecker::Clean()
+{
+    editors_.clear();
 }
 
 // -----------------------------------------------------------------------------

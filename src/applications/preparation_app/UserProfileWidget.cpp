@@ -34,12 +34,12 @@ using namespace kernel;
 UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory,
                                       gui::EntitySymbols& icons, const ExtensionTypes& extensions,
                                       ProfilesChecker_ABC& checker, Model& model )
-    : QTabWidget   ( parent, "UserProfileWidget" )
-    , controllers_ ( controllers )
-    , extensions_  ( extensions )
-    , checker_     ( checker )
-    , model_       ( model )
-    , profile_     ( 0 )
+    : QTabWidget( parent, "UserProfileWidget" )
+    , controllers_( controllers )
+    , extensions_ ( extensions )
+    , checker_    ( checker )
+    , model_      ( model )
+    , profile_    ( 0 )
 {
     {
         Q3VBox* box = new Q3VBox( this );

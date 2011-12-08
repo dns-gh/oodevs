@@ -10,6 +10,8 @@
 #ifndef __ProfileFactory_ABC_h_
 #define __ProfileFactory_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace xml
 {
     class xistream;
@@ -23,7 +25,7 @@ class UserProfile;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class ProfileFactory_ABC
+class ProfileFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -35,7 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual UserProfile* Create( xml::xistream& xis ) const = 0;
-    virtual UserProfile* Create() const = 0;
+    virtual UserProfile* Create( const QString& name ) const = 0;
     //@}
 };
 

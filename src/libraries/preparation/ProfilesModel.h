@@ -70,7 +70,7 @@ public:
     void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
-    void CreateProfile();
+    void CreateProfile( const QString& name );
     void CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly );
     void DeleteProfile( const UserProfile& profile );
     void Visit( T_Units& units ) const;

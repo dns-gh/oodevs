@@ -457,6 +457,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\ProfilesChecker.cpp">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\NewProfileDialog.cpp">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -849,6 +852,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\CommunicationListView.h">
       <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\NewProfileDialog.h">
+      <Filter>Source Files\Dialogs\Profiles</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

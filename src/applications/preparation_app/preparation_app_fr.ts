@@ -1256,6 +1256,25 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
+    <name>NewProfileDialog</name>
+    <message>
+        <source>New profile</source>
+        <translation>Nouveau profil</translation>
+    </message>
+    <message>
+        <source>Profile name:</source>
+        <translation>Nom du profil :</translation>
+    </message>
+    <message>
+        <source>Profile name is empty.</source>
+        <translation>Le nom du profil n&apos;est pas renseigné.</translation>
+    </message>
+    <message>
+        <source>Profile &apos;%1&apos; already exists.</source>
+        <translation>Le profil &apos;%1&apos; existe déjà.</translation>
+    </message>
+</context>
+<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>

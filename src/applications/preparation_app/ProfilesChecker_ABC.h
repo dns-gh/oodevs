@@ -45,6 +45,7 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const T_ProfileEditors& editors ) = 0;
+    virtual void Clean() = 0;
     virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const = 0;
     virtual bool Exists( const QString& login ) const = 0;
     //@}

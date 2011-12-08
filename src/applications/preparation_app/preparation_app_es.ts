@@ -1256,6 +1256,25 @@ Do you want to save anyway?</source>
     </message>
 </context>
 <context>
+    <name>NewProfileDialog</name>
+    <message>
+        <source>New profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile name is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile &apos;%1&apos; already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
