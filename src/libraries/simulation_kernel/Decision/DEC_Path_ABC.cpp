@@ -87,7 +87,8 @@ void DEC_Path_ABC::DoExecute( TerrainPathfinder& pathfind )
     else
         nComputationEndTime = static_cast< unsigned int >( time( 0 ) ) + nMaxComputationDuration;
 
-    assert( !pathSections_.empty() );
+    if( pathSections_.empty() )
+        throw std::runtime_error( "List of path sections is empty" );
     const DEC_PathResult::T_PathPointList& pathPoints = dynamic_cast< const DEC_PathResult* >( &pathSections_.front()->GetPath() )->GetResult( false );
 
     nState_ = eComputing;

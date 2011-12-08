@@ -43,8 +43,10 @@ DEC_PathResult::~DEC_PathResult()
 //-----------------------------------------------------------------------------
 MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, T_FollowingPathList& pathPoints, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint ) const
 {
-    assert( !resultList_.empty() );
-    assert( pathPoints.size() > 1 );
+    if( resultList_.empty() )
+        throw std::runtime_error( "List of path points resulting from pathfind is empty" );
+    if( pathPoints.size() <= 1 )
+        throw std::runtime_error( "List of path points requested has not at least 2 elements" );
     
     CIT_FollowingPathList itCurrentRequest = pathPoints.begin();
     CIT_FollowingPathList itNextRequest    = itCurrentRequest;
@@ -58,6 +60,9 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
     double rSquareDistance = std::numeric_limits< double >::max();
     for( ; itResultEnd != resultList_.end(); ++itResultStart, ++itResultEnd )
     {
+        if( itNextRequest == pathPoints.end() )
+            break;
+
         MT_Line vLine( (*itResultStart)->GetPos(), (*itResultEnd)->GetPos() );
         MT_Vector2D vClosest = vLine.ClosestPointOnLine( posToTest );
         double rCurrentSquareDistance = vClosest.SquareDistance( posToTest );
@@ -88,8 +93,9 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
                 break;
         }
     }
-    assert( !_isnan( itCurrentRequest->first.rX_ ) );
-    assert( !_isnan( itCurrentRequest->first.rY_ ) );
+
+    if( _isnan( itCurrentRequest->first.rX_ ) || _isnan( itCurrentRequest->first.rY_ ) )
+        throw std::runtime_error( "Result point is invalid" );
 
     if( forceNextPoint )
     {
@@ -134,7 +140,8 @@ DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath( const MT_
 //-----------------------------------------------------------------------------
 MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, double rDist, bool bBoundOnPath ) const
 {
-    assert( itCurrentPos != resultList_.end() );
+    if( itCurrentPos == resultList_.end() )
+        throw std::runtime_error( "Current position is invalid" );
 
     // recherche du prochain point sur le path
     // on passe tous les points spéciaux, car il n'y a des changement de direction que sur les PathPoint_Point
@@ -192,7 +199,8 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
     E_State nPathState = GetState();
     if( nPathState != eValid && nPathState != ePartial )
         return false;
-    assert( !resultList_.empty() );
+    if( resultList_.empty() )
+        throw std::runtime_error( "List of path points resulting from pathfind is empty" );
     CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath( vStartPos );
     if( itCurrentPathPoint == resultList_.end() )
         return false;
@@ -211,7 +219,8 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
             T_PointSet collisions( colCmp );
             if( pKnowledge->GetLocalisation().Intersect2D( lineTmp, collisions ) )
             {
-                assert( !collisions.empty() );
+                if( collisions.empty() )
+                    throw std::runtime_error( "List of collision points is empty" );
                 //$$$ Distance fausse (distance en ligne droite)
                 const double rColDist = vStartPos.Distance( *collisions.begin() );
                 objectsOnPathMap.insert( std::make_pair( rColDist, pKnowledge ) );
@@ -233,7 +242,8 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
 // -----------------------------------------------------------------------------
 void DEC_PathResult::Serialize( sword::Path& asn ) const
 {
-    assert( !resultList_.empty() );
+    if( resultList_.empty() )
+        throw std::runtime_error( "List of path points resulting from pathfind is empty" );
     asn.mutable_location()->set_type( sword::Location::line );
     for( CIT_PathPointList it = resultList_.begin(); it != resultList_.end(); ++it )
         NET_ASN_Tools::WritePoint( (*it)->GetPos(), *asn.mutable_location()->mutable_coordinates()->add_elem() );

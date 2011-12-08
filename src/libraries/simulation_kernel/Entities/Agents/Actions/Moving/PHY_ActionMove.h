@@ -55,12 +55,13 @@ public:
 private:
     //! @name Tools
     //@{
-    bool CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint );
-    MT_Vector2D DestroyJoiningPath();
-    void AvoidObstacles();
-    bool UpdateObjectsToAvoid();
-    void CreateFinalPath();
-    int  CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint );
+    bool        CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint );
+    void        DestroyJoiningPath();
+    MT_Vector2D GetLastPointAndDestroyJoiningPath();
+    void        AvoidObstacles();
+    bool        UpdateObjectsToAvoid();
+    void        CreateFinalPath();
+    int         CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint );
     //@}
 
 private:

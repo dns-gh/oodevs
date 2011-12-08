@@ -109,7 +109,8 @@ void DEC_PathWalker::InitializeEnvironment( const DEC_PathResult& path )
     DEC_PathResult::CIT_PathPointList itPathPointTmp = itCurrentPathPoint_;
     while( itPathPointTmp != path.GetResult().end() && ( *itPathPointTmp )->GetType() != DEC_PathPoint::eTypePointPath )
         ++itPathPointTmp;
-    assert( itPathPointTmp != path.GetResult().end() );
+    if( itPathPointTmp == path.GetResult().end() )
+        throw std::runtime_error( "Path point is invalid" );
 
     TerrainData tmpEnvironment = ( *itPathPointTmp )->GetObjectTypesToNextPoint();
     if( !( environment_ == tmpEnvironment ) ) //$$$
@@ -134,7 +135,8 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
     pPath->InsertDecPoints(); // $$$ HIDEUX
     movingEntity_.NotifyCurrentPathChanged();
     bForcePathCheck_ = false;
-    assert( !pPath->GetResult().empty() );
+    if( pPath->GetResult().empty() )
+        throw std::runtime_error( "List of path points resulting from pathfind is empty" );
     itCurrentPathPoint_ = pPath->GetCurrentKeyOnPath( movingEntity_.GetPosition() );
     if( itCurrentPathPoint_ == pPath->GetResult().end() )
         return eItineraireMustBeJoined;
@@ -197,7 +199,8 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
         {
             for( IT_PointSet itPoint = collisions.begin(); itPoint != collisions.end(); ++itPoint )
             {
-                assert( object.IsInside( *itPoint ) );
+                if( !object.IsInside( *itPoint ) )
+                    throw std::runtime_error( "Point is not inside of the object" );
                 IT_MoveStepSet itMoveStep = moveStepSet.insert( T_MoveStep( *itPoint ) ).first;
                 const_cast< T_ObjectSet& >( itMoveStep->ponctualObjectsOnSet_ ).insert( &object );
                 // A - C - B ( Le point C ajouté entre A et B contient les mêmes objets que de A -> B)
@@ -345,14 +348,16 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
     if( vNewPosTmp == vNewPos_ )
         return true;
 
-    assert( rCurrentSpeed_ > 0. );
+    if( rCurrentSpeed_ <= 0. )
+        throw std::runtime_error( "Current speed is not positive" );
 //    bool bFirstMove = ( vNewPos_.Distance( (*path.GetResult().begin())->GetPos() ) <= 10. );
     bool bFirstMove = ( static_cast< float>( vNewPos_.rX_ ) == static_cast< float >( ( *path.GetResult().begin() )->GetPos().rX_ ) && static_cast< float >( vNewPos_.rY_ ) == static_cast< float >( ( *path.GetResult().begin() )->GetPos().rY_ ) );
 
     sMoveStepCmp cmp( vNewPos_ );
     T_MoveStepSet moveStepSet( cmp );
     ComputeObjectsCollision( vNewPos_, vNewPosTmp, moveStepSet );
-    assert( moveStepSet.size() >= 2 );
+    if( moveStepSet.size() < 2 )
+        throw std::runtime_error( "Move step set has not at least 2 elements" );
     CIT_MoveStepSet itCurMoveStep  = moveStepSet.begin();
     CIT_MoveStepSet itNextMoveStep = moveStepSet.begin();
     ++itNextMoveStep;
@@ -465,7 +470,8 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
 // -----------------------------------------------------------------------------
 void DEC_PathWalker::MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    assert( pCurrentPath_.get() || bForcePathCheck_ );
+    if( !pCurrentPath_.get() && !bForcePathCheck_ )
+        throw std::runtime_error( "Move cannot be suspended" );
     if( pCurrentPath_.get() && pCurrentPath_ == pPath )
         bForcePathCheck_ = true;
 }

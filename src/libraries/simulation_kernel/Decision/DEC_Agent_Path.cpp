@@ -188,7 +188,8 @@ DEC_Agent_Path::~DEC_Agent_Path()
 void DEC_Agent_Path::Initialize( const T_PointVector& points )
 {
     InitializePathKnowledges( points );
-    assert( !points.empty() );
+    if( points.empty() )
+        throw std::runtime_error( "List of points is empty" );
     const MT_Vector2D* pLastPoint = 0;
     for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
     {
@@ -239,7 +240,8 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
             {
                 if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
                     pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
-                assert( pathKnowledgeObjects_.size() > knowledge.GetType().GetID() );
+                if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
+                    throw std::runtime_error( "Size of path knowledge objects list is invalid" );
 
                 T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
                 if( knowledge.GetType().GetCapacity< FloodCapacity >() )
@@ -302,7 +304,8 @@ bool DEC_Agent_Path::IsPointAvant( const TerrainData& nObjectTypesBefore, const 
 inline
 DEC_Agent_Path::IT_PathPointList DEC_Agent_Path::GetPreviousPathPointOnDifferentLocation( IT_PathPointList itCurrent )
 {
-    assert( itCurrent != resultList_.end() );
+    if( itCurrent == resultList_.end() )
+        throw std::runtime_error( "Current path point is invalid" );
     const MT_Vector2D& vPosition = ( *itCurrent )->GetPos();
     while ( itCurrent != resultList_.begin() && ( *itCurrent )->GetPos() == vPosition )
         --itCurrent;
@@ -335,7 +338,8 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
         IT_PathPointList itPrev = GetPreviousPathPointOnDifferentLocation( itCurrent );
         itCurrent = itPrev;
         ++itCurrent;
-        assert( ( *itCurrent )->GetPos() == vCurrentPos );
+        if( ( *itCurrent )->GetPos() != vCurrentPos )
+            throw std::runtime_error( "Current position is invalid" );
 
         // calcul de la distance "mangée" par le parcours de ce segment
         const MT_Vector2D& vPreviousPos = ( *itPrev )->GetPos();
@@ -480,7 +484,8 @@ void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
     for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
     {
         boost::shared_ptr< DEC_PathPoint > pCurrentPoint = *itPoint;
-        assert( pCurrentPoint );
+        if( !pCurrentPoint )
+            throw std::runtime_error( "Current point is invalid" );
         if( pLastPoint.get() && ( pCurrentPoint->GetPos() != pLastPoint->GetPos() ) )
         {
             MT_Line segment( pLastPoint->GetPos(), pCurrentPoint->GetPos() );
@@ -572,8 +577,8 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
         MT_LOG_MESSAGE_MSG( GetPathAsString() );
         profiler_.Start();
     }
-
-    assert( resultList_.empty() );
+    if( !resultList_.empty() )
+        throw std::runtime_error( "List of path points is not empty before running pathfind" );
 
     if( !IsDestinationTrafficable() )
     {
@@ -590,11 +595,12 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
     {
         DEC_PathPoint& point = **itPoint;
 
-//        if( itPoint != resultList_.begin() )
-//            assert( unitSpeeds_.IsPassable( point.GetObjectTypes() ) );
+//        if( itPoint != resultList_.begin() && !unitSpeeds_.IsPassable( point.GetObjectTypes() ) )
+//            throw std::runtime_error( "Unit max speed is not positive for a given object" );
+
         ++itPoint;
-        if( itPoint != resultList_.end() )
-            assert( unitSpeeds_.GetMaxSpeed( point.GetObjectTypesToNextPoint() ) > 0 );
+        if( itPoint != resultList_.end() && unitSpeeds_.GetMaxSpeed( point.GetObjectTypesToNextPoint() ) <= 0 )
+            throw std::runtime_error( "Unit max speed is not positive for a given object" );
     }
 #endif
 
@@ -632,5 +638,9 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
 // -----------------------------------------------------------------------------
 MT_Vector2D DEC_Agent_Path::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint )
 {
-    return DEC_PathResult::GetPointOnPathCloseTo( posToTest, followingPathPoints_, lastJoiningPoint, forceNextPoint );
+    if( followingPathPoints_.size() > 1 )
+        return DEC_PathResult::GetPointOnPathCloseTo( posToTest, followingPathPoints_, lastJoiningPoint, forceNextPoint );
+    else if( followingPathPoints_.size() == 1 )
+        return followingPathPoints_.front().first;
+    return posToTest;
 }
