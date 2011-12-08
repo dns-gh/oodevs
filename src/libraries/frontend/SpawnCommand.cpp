@@ -27,17 +27,16 @@ struct SpawnCommand::InternalData
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
 SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach ,
-                            std::string commanderEndpoint /*= ""*/, std::string jobName /*= ""*/ )
+                            std::string commanderEndpoint, bool fromLauncher /* = true */ )
     : config_                   ( config )
     , internal_                 ( new InternalData() )
     , attach_                   ( attach )
     , workingDirectory_         ( "." )
     , stopped_                  ( false )
     , networkCommanderEndpoint_ ( commanderEndpoint )
-    , jobName_                  ( jobName )
 {
     AddArgument( exe );
-    if( jobName_ == "launcher-job" )
+    if( fromLauncher )
         AddArgument( "--silent" );
 }
 
@@ -106,9 +105,6 @@ void SpawnCommand::Start()
         DWORD errCode = GetLastError();
         throw std::exception( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" ).arg( debug.c_str() ).arg( errCode ).ascii() );
     }
-     
-    if ( HANDLE jobObject = OpenJobObject( JOB_OBJECT_ALL_ACCESS, TRUE, jobName_.c_str() ) )
-        AssignProcessToJobObject( jobObject, internal_->pid_.hProcess );
 }
 
 namespace

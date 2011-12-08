@@ -171,11 +171,11 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     }
     boost::shared_ptr< frontend::SpawnCommand > command;
     if( message.type() == sword::SessionStartRequest::simulation )
-        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), true, false, endpoint, "launcher-job" ) );
+        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), true, false, endpoint, true ) );
     else if( message.type() == sword::SessionStartRequest::dispatch )
-        command.reset( new frontend::StartDispatcher( config_, true, exercise.c_str(), session.c_str(), checkpoint.c_str(), "", endpoint, "launcher-job" ) );
+        command.reset( new frontend::StartDispatcher( config_, true, exercise.c_str(), session.c_str(), checkpoint.c_str(), "", endpoint, true ) );
     else
-        command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, true, endpoint, "launcher-job" ) );
+        command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, true, endpoint, true ) );
 
     SupervisorProfileCollector profileCollector;
     frontend::Profile::VisitProfiles( config_, fileLoader_, exercise, profileCollector );

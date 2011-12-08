@@ -24,8 +24,8 @@ StartDispatcher::StartDispatcher( const tools::GeneralConfig& config,
                                   const QString& checkpoint /*= ""*/,
                                   const QString& dispatcher_path /*= ""*/,
                                   std::string commanderEndpoint /*= ""*/,
-                                  std::string processJobName /*= ""*/ )
-    : SpawnCommand( config, "dispatcher_app.exe", attach, commanderEndpoint, processJobName )
+                                  bool fromLauncher /*= false*/ )
+    : SpawnCommand( config, "dispatcher_app.exe", attach, commanderEndpoint, fromLauncher )
 {
     if( !dispatcher_path.isEmpty() )
         SetWorkingDirectory( dispatcher_path );

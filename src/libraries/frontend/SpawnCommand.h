@@ -35,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach = false,
-                  std::string commanderEndpoint = "", std::string jobName = ""  );
+                  std::string commanderEndpoint = "", bool fromLauncher = false  );
     virtual ~SpawnCommand();
     //@}
 
@@ -91,7 +91,6 @@ private:
     bool                             stopped_;
     boost::shared_ptr< Process_ABC > attachment_;
     std::string                      networkCommanderEndpoint_;
-    std::string                      jobName_;
     //@}
 };
 

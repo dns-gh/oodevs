@@ -29,10 +29,10 @@ public:
     //@{
     StartExercise(  const tools::GeneralConfig& config, const QString& exercise,
                     const QString& session, bool attach, bool launchDispatchedIfNotEmbedded = true,
-                    std::string commanderEndpoint = "", std::string processJobName = "" );
+                    std::string commanderEndpoint = "", bool fromLauncher = false );
     StartExercise(  const tools::GeneralConfig& config, const QString& exercise,
                     const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded = true,
-                    std::string commanderEndpoint = "", std::string processJobName = "" );
+                    std::string commanderEndpoint = "", bool fromLauncher = false );
     virtual ~StartExercise();
     //@}
 

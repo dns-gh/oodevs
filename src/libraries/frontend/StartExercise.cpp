@@ -35,8 +35,8 @@ namespace
 // Name: StartExercise constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/, std::string processJobName /*= ""*/ )
-    : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, processJobName )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/, bool fromLauncher /*= false*/ )
+    : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, fromLauncher )
     , exercise_ ( exercise.ascii() )
     , session_ ( session.ascii() )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
@@ -57,8 +57,8 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 // Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/, std::string processJobName /*= ""*/ )
-    : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, processJobName )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/, bool fromLauncher /*= false*/ )
+    : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, fromLauncher )
     , exercise_ ( exercise.ascii() )
     , session_ ( session.ascii() )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )

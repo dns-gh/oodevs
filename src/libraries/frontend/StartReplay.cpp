@@ -27,8 +27,8 @@ StartReplay::StartReplay( const tools::GeneralConfig& config,
                           const QString& session,
                           unsigned port, bool attach,
                           std::string commanderEndpoint /*= ""*/,
-                          std::string processJobName /*= ""*/  )
-                          : SpawnCommand( config, "replayer_app.exe", attach, commanderEndpoint, processJobName )
+                          bool fromLauncher /*= false */  )
+                          : SpawnCommand( config, "replayer_app.exe", attach, commanderEndpoint, fromLauncher )
     , configManipulator_( new ConfigurationManipulator( config, exercise.ascii(), session.ascii() ) )
 {
     AddRootDirArgument();
