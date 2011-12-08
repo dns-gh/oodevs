@@ -66,7 +66,6 @@ public:
     virtual bool IsSupervision() const;
 
     QString GetPassword() const;
-    int GetRole() const;
     bool IsPasswordProtected() const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
@@ -102,7 +101,6 @@ private:
     QString login_;
     QString password_;
     bool supervision_;
-    int role_;
     //@}
 };
 

@@ -29,7 +29,6 @@ UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Control
     , registered_ ( true )
     , login_      ( "" )
     , supervision_( false )
-    , role_       ( -1 )
 {
     controller_.Register( *this );
     controller_.Create( *this );
@@ -48,7 +47,6 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
     , registered_ ( false )
     , login_      ( login )
     , supervision_( false )
-    , role_       ( -1 )
 {
     controller_.Register( *this );
 }
@@ -65,8 +63,6 @@ UserProfile::UserProfile( const UserProfile& p )
     , login_           ( p.login_ )
     , password_        ( p.password_ )
     , supervision_     ( p.supervision_ )
-    , role_            ( p.role_ )
-
 {
     controller_.Register( *this );
     readTeams_ = p.readTeams_;
@@ -134,8 +130,6 @@ void UserProfile::RequestUpdate( const QString& newLogin )
     profile.set_login( newLogin.ascii() );
     profile.set_password( password_.ascii() );
     profile.set_supervisor( supervision_ );
-    if( role_ != -1 )
-        profile.mutable_role()->set_id( role_ );
     CopyList( readTeams_, *profile.mutable_read_only_parties() );
     CopyList( writeTeams_, *profile.mutable_read_write_parties() );
     CopyList( readFormations_, *profile.mutable_read_only_formations() );
@@ -180,8 +174,6 @@ void UserProfile::SetProfile( const sword::Profile& profile )
     if( profile.has_password() )
         password_ = profile.password().c_str();
     supervision_ = profile.supervisor();
-    if( profile.has_role() )
-        role_ = profile.role().id();
     if( profile.has_read_only_parties() )
         CopyList( profile.read_only_parties(), readTeams_);
     if( profile.has_read_only_formations() )
@@ -211,15 +203,6 @@ void UserProfile::SetProfile( const sword::Profile& profile )
 QString UserProfile::GetPassword() const
 {
     return password_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::GetRole
-// Created: JSR 2010-10-12
-// -----------------------------------------------------------------------------
-int UserProfile::GetRole() const
-{
-    return role_;
 }
 
 // -----------------------------------------------------------------------------

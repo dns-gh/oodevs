@@ -41,7 +41,6 @@ namespace launcher_test
         p->set_login( "login" );
         p->set_password( "password" );
         p->set_supervisor( true );
-        p->mutable_role()->set_id( 77 );
     }
     template< typename P >
     void FillProfile( P* p )
