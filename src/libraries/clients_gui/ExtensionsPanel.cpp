@@ -326,6 +326,8 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
             box->setStretchFactor( combo, 1 );
             widgets_.push_back( combo );
             connect( combo, SIGNAL( activated( int ) ), SLOT( Commit() ) );
+            if( attribute.GetName() == "Nationalite" )
+                connect( combo, SIGNAL( activated( int ) ), SLOT( OnChangeNationality() ) );
         }
         break;
     case AttributeType::ETypeLoosyDictionary:

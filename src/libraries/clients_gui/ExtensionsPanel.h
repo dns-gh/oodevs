@@ -73,6 +73,7 @@ protected slots:
     //@{
     virtual void OnActivationChanged( bool );
     virtual void Commit();
+    virtual void OnChangeNationality() {}
     //@}
 
 private:

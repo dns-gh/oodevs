@@ -17,6 +17,7 @@
 #include "CreationPanels.h"
 #include "Dialogs.h"
 #include "ExerciseDialog.h"
+#include "ExtensionsPanel.h"
 #include "FileToolbar.h"
 #include "FilterDialog.h"
 #include "FilterDialogs.h"
@@ -56,7 +57,6 @@
 #include "clients_gui/EntitySearchBox.h"
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
-#include "clients_gui/ExtensionsPanel.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/GisToolbar.h"
@@ -270,7 +270,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     }
     // Extensions panel
     {
-        pExtensionsPanel_ = new gui::ExtensionsPanel( this, controllers, staticModel_.extensions_, model.agents_, *factory, *icons, PreparationProfile::GetProfile(), "ExtensionsPanel" );
+        pExtensionsPanel_ = new ::ExtensionsPanel( this, controllers, staticModel_.extensions_, model.agents_, *factory, *icons, PreparationProfile::GetProfile(), "ExtensionsPanel" );
         addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel_ );
         pExtensionsPanel_->hide();
     }

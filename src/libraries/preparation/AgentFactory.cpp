@@ -84,6 +84,24 @@ AgentFactory::~AgentFactory()
     // NOTHING
 }
 
+namespace
+{
+    void SetNationality( Entity_ABC& entity, const Entity_ABC& parent )
+    {
+        const DictionaryExtensions* parentExt = parent.Retrieve< DictionaryExtensions >();
+        DictionaryExtensions* childExt = entity.Retrieve< DictionaryExtensions >();
+        if( parentExt && childExt )
+        {
+            const std::string& country = parentExt->GetValue( "Nationalite" );
+            if( !country.empty() )
+            {
+                childExt->SetEnabled( true );
+                childExt->SetValue( "Nationalite", country );
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
@@ -104,6 +122,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach( *new CommandPostAttributes( *result, type, dico, commandPost ) );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
+    SetNationality( *result, parent );
     result->Polish();
     return result;
 }
@@ -132,6 +151,7 @@ Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, 
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( &result->Get< CommunicationHierarchies >().GetTop() );
     result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, superior ) );
+    SetNationality( *result, parent );
     result->Polish();
     return result;
 }
@@ -155,6 +175,7 @@ Population_ABC* AgentFactory::Create( Entity_ABC& parent, const PopulationType& 
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( Populations* popus = top->Retrieve< Populations >() )
         popus->AddPopulation( *result );
+    SetNationality( *result, *top );
     result->Polish();
     return result;
 }
@@ -187,6 +208,7 @@ Inhabitant_ABC* AgentFactory::Create( Entity_ABC& parent, const InhabitantType& 
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( Inhabitants* inhabs = top->Retrieve< Inhabitants >() )
         inhabs->AddInhabitant( *result );
+    SetNationality( *result, *top );
     result->Polish();
     return result;
 }

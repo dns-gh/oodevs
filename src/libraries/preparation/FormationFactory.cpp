@@ -49,6 +49,24 @@ FormationFactory::~FormationFactory()
     // NOTHING
 }
 
+namespace
+{
+    void SetNationality( Entity_ABC& entity, const Entity_ABC& parent )
+    {
+        const DictionaryExtensions* parentExt = parent.Retrieve< DictionaryExtensions >();
+        DictionaryExtensions* childExt = entity.Retrieve< DictionaryExtensions >();
+        if( parentExt && childExt )
+        {
+            const std::string& country = parentExt->GetValue( "Nationalite" );
+            if( !country.empty() )
+            {
+                childExt->SetEnabled( true );
+                childExt->SetValue( "Nationalite", country );
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: FormationFactory::Create
 // Created: SBO 2006-09-22
@@ -67,6 +85,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
     formation->Attach< kernel::Color_ABC >( *new Color( parent ) );
     formation->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
     formation->Attach( *new LogisticLevelAttritube( controllers_.controller_, *formation, dico ) );
+    SetNationality( *formation, parent );
     formation->Polish();
     return formation;
 }

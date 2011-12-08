@@ -469,6 +469,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\FilterProxyModel.cpp">
       <Filter>Source Files\Dialogs\Consistency</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ExtensionsPanel.cpp">
+      <Filter>Source Files\Panels\Infos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -644,6 +647,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\MultipleResolverEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ExtensionsPanel.h">
+      <Filter>Source Files\Panels\Infos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

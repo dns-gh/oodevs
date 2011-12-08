@@ -145,6 +145,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\Config.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ControlsChecker.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\CsvExport.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\ExtensionsPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FilterCsv.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FilterInputArgument.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FilterProxyModel.cpp" />
@@ -436,6 +437,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\ExtensionsPanel.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\GhostsLayer.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\GhostSymbolDialog.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
