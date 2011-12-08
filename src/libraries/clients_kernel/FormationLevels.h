@@ -44,7 +44,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    Level* AddLevel( Level& root, const QString& name );
+    Level* AddLevel( Level* root, const QString& name );
     //@}
 
 private:

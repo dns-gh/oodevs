@@ -49,9 +49,9 @@ enum E_MunitionType
 enum E_NatureLevel
 {
     eNatureLevel_None  = 0,
-    eNatureLevel_b     = 1,
-    eNatureLevel_o     = 2,
-    eNatureLevel_c     = 3,
+    eNatureLevel_c     = 1,
+    eNatureLevel_b     = 2,
+    eNatureLevel_o     = 3,
     eNatureLevel_oo    = 4,
     eNatureLevel_ooo   = 5,
     eNatureLevel_i     = 6,

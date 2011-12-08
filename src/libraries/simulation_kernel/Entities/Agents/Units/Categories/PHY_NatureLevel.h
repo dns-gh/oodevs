@@ -13,6 +13,7 @@
 #define __PHY_NatureLevel_h_
 
 #include "MT_Tools/MT_String.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace sword
 {
@@ -45,39 +46,21 @@ public:
 private:
     //! @name Types
     //@{
-    enum E_Type
-    {
-      eNatureLevel_none = 0,
-      eNatureLevel_b = 1,
-      eNatureLevel_o = 2,
-      eNatureLevel_c = 3,
-      eNatureLevel_oo = 4,
-      eNatureLevel_ooo = 5,
-      eNatureLevel_i = 6,
-      eNatureLevel_ii = 7,
-      eNatureLevel_iii = 8,
-      eNatureLevel_x = 9,
-      eNatureLevel_xx = 10,
-      eNatureLevel_xxx = 11,
-      eNatureLevel_xxxx = 12,
-      eNatureLevel_xxxxx = 13
-    };
-
     typedef std::map< std::string, const PHY_NatureLevel* > T_NatureLevelMap;
     typedef T_NatureLevelMap::const_iterator              CIT_NatureLevelMap;
     //@}
 
 private:
-     PHY_NatureLevel( const std::string& strName, E_Type nType, sword::EnumNatureLevel nAsnID );
+     PHY_NatureLevel( const std::string& strName, E_NatureLevel nType, sword::EnumNatureLevel nAsnID );
     virtual ~PHY_NatureLevel();
 
 private:
-    const std::string     strName_;
-    const E_Type          nType_;
+    const std::string            strName_;
+    const E_NatureLevel          nType_;
     const sword::EnumNatureLevel nAsnID_;
 
 private:
-    static T_NatureLevelMap natureLevels_;
+    static T_NatureLevelMap      natureLevels_;
 };
 
 #endif // __PHY_NatureLevel_h_

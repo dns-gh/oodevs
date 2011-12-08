@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "FormationLevels.h"
 #include "Level.h"
+#include "ENT/ENT_Tr.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -21,21 +22,9 @@ using namespace kernel;
 FormationLevels::FormationLevels()
     : root_( 0 )
 {
-    root_ = new Level( "b", 0 );
-    Register( root_->GetId(), root_->GetName().toStdString(), *root_ );
-
-    root_ = AddLevel( *root_, "o" );
-    root_ = AddLevel( *root_, "c" );
-    root_ = AddLevel( *root_, "oo" );
-    root_ = AddLevel( *root_, "ooo" );
-    root_ = AddLevel( *root_, "i" );
-    root_ = AddLevel( *root_, "ii" );
-    root_ = AddLevel( *root_, "iii" );
-    root_ = AddLevel( *root_, "x" );
-    root_ = AddLevel( *root_, "xx" );
-    root_ = AddLevel( *root_, "xxx" );
-    root_ = AddLevel( *root_, "xxxx" );
-    root_ = AddLevel( *root_, "xxxxx" );}
+    for( int i = eNatureLevel_c; i < eNbrNatureLevel; ++i )
+        root_ = AddLevel( root_, ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( i ) ).c_str() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: FormationLevels destructor
@@ -50,10 +39,11 @@ FormationLevels::~FormationLevels()
 // Name: FormationLevels::AddLevel
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-Level* FormationLevels::AddLevel( Level& root, const QString& name )
+Level* FormationLevels::AddLevel( Level* root, const QString& name )
 {
-    Level* newLevel = new Level( name, &root );
-    root.SetPrevious( *newLevel );
+    Level* newLevel = new Level( name, root );
+    if( root != 0 )
+        root->SetPrevious( *newLevel );
     Register( newLevel->GetId(), newLevel->GetName().toStdString(), *newLevel );
     return newLevel;
 }

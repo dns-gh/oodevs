@@ -487,9 +487,9 @@ enum EnumHumanWound {
 */
 enum EnumNatureLevel {
     none_naturelevel = 0;  //!< No nature @todo rename to no_nature
-    b                = 1;  //!< Fire and maneuver team
-    o                = 2;  //!< Fireteam
-    c                = 3;  //!< Squad or crew
+    c                = 1;  //!< Squad or crew
+    b                = 2;  //!< Fire and maneuver team
+    o                = 3;  //!< Fireteam
     oo               = 4;  //!< Section or patrol
     ooo              = 5;  //!< Platoon or Commonwealth troop
     i                = 6;  //!< Infantry company, artillery battery, U.S. Cavalry troop, or Commonwealth armour or combat engineering squadron

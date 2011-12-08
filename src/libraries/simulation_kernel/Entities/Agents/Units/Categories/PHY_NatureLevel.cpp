@@ -21,10 +21,10 @@ PHY_NatureLevel::T_NatureLevelMap PHY_NatureLevel::natureLevels_;
 // -----------------------------------------------------------------------------
 void PHY_NatureLevel::Initialize()
 {
-    natureLevels_[ "none"  ] = new PHY_NatureLevel( "none" , eNatureLevel_none , sword::none_naturelevel  );
+    natureLevels_[ "none"  ] = new PHY_NatureLevel( "none" , eNatureLevel_None , sword::none_naturelevel  );
+    natureLevels_[ "c"     ] = new PHY_NatureLevel( "c"    , eNatureLevel_c    , sword::c     );
     natureLevels_[ "b"     ] = new PHY_NatureLevel( "b"    , eNatureLevel_b    , sword::b     );
     natureLevels_[ "o"     ] = new PHY_NatureLevel( "o"    , eNatureLevel_o    , sword::o     );
-    natureLevels_[ "c"     ] = new PHY_NatureLevel( "c"    , eNatureLevel_c    , sword::c     );
     natureLevels_[ "oo"    ] = new PHY_NatureLevel( "oo"   , eNatureLevel_oo   , sword::oo    );
     natureLevels_[ "ooo"   ] = new PHY_NatureLevel( "ooo"  , eNatureLevel_ooo  , sword::ooo   );
     natureLevels_[ "i"     ] = new PHY_NatureLevel( "i"    , eNatureLevel_i    , sword::i     );
@@ -50,7 +50,7 @@ void PHY_NatureLevel::Terminate()
 // Name: PHY_NatureLevel constructor
 // Created: JVT 2004-12-09
 // -----------------------------------------------------------------------------
-PHY_NatureLevel::PHY_NatureLevel( const std::string& strName, E_Type nType, sword::EnumNatureLevel nAsnID )
+PHY_NatureLevel::PHY_NatureLevel( const std::string& strName, E_NatureLevel nType, sword::EnumNatureLevel nAsnID )
     : strName_ ( strName )
     , nType_   ( nType   )
     , nAsnID_  ( nAsnID  )

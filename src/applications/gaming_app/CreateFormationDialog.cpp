@@ -72,7 +72,7 @@ void CreateFormationDialog::NotifyContextMenu( const kernel::Formation_ABC& enti
 // -----------------------------------------------------------------------------
 void CreateFormationDialog::NotifyContextMenu( const kernel::Entity_ABC& entity, const kernel::HierarchyLevel_ABC* level, kernel::ContextMenu& menu )
 {
-    if( profile_.CanDoMagic( entity ) )
+    if( profile_.CanDoMagic( entity ) && level && level->GetNext() )
     {
         currentEntity_ = &entity;
         Q3PopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );

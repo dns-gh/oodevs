@@ -45,9 +45,9 @@ namespace shield
     void ConvertNatureLevel( const From& from, To* to )
     {
         CONVERT_ENUM( level, ( sword::none_naturelevel, Common::none_naturelevel )
+                             ( sword::c, Common::c )
                              ( sword::b, Common::b )
                              ( sword::o, Common::o )
-                             ( sword::c, Common::c )
                              ( sword::oo, Common::oo )
                              ( sword::ooo, Common::ooo )
                              ( sword::i, Common::i )
