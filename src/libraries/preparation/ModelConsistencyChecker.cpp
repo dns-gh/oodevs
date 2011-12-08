@@ -28,17 +28,21 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
+#include "clients_kernel/Karma.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/TacticalLine_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "tools/Resolver.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
+#include <boost/format.hpp>
 
 using namespace kernel;
 using namespace tools;
@@ -131,8 +135,8 @@ bool ModelConsistencyChecker::CheckConsistency( unsigned int filters /*= eAllChe
         CheckProfileInitialization();
     if( filters & eGhostExistence || filters & eGhostConverted )
         CheckGhosts();
-    //if ( filters & eFormationWithSameLevelEmptiness )
-    //	CheckFormationWithSameLevelAsParentEmptiness();
+    if ( filters & eLongNameSize )
+        CheckLongNameSize();
     return !errors_.empty();
 }
 
@@ -368,23 +372,29 @@ void ModelConsistencyChecker::CheckGhosts()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModelConsistencyChecker::CheckFormationWithSameLevelAsParentEmptiness
-// Created: RPD 2011-11-07
+// Name: ModelConsistencyChecker::CheckLongNameSize
+// Created: MMC 2011-12-08
 // -----------------------------------------------------------------------------
-void ModelConsistencyChecker::CheckFormationWithSameLevelAsParentEmptiness()
+void ModelConsistencyChecker::CheckLongNameSize()
 {
-    Iterator< const Formation_ABC& > formationIterator = model_.GetFormationResolver().CreateIterator();
-    while( formationIterator.HasMoreElements() )
+    FillEntitiesCopy( eLongNameUniqueness );
+
+    for( std::vector< const Entity_ABC* >::iterator it = entities_.begin(); it != entities_.end(); ++it )
     {
-        const Formation_ABC& formation = formationIterator.NextElement();
-        const FormationHierarchies* hierarchy = formation.Retrieve< FormationHierarchies >();
-        if( hierarchy && hierarchy->GetSuperior() && hierarchy->CountSubordinates() != 0 )
+        const Entity_ABC& entity = **it;
+        const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+        if( !pTacticalHierarchies )
+            continue;
+        if( gui::LongNameHelper::GetEntityLongName( entity ).empty() )
+            continue;
+
+        const Diplomacies_ABC* diplo = pTacticalHierarchies->GetTop().Retrieve< Diplomacies_ABC >();
+        if( diplo && !( diplo->GetKarma() == Karma::unknown_ ) )
         {
-            const FormationHierarchies* parentHierarchy = hierarchy->GetSuperior()->Retrieve< FormationHierarchies >();
-            if ( hierarchy->GetLevel() == parentHierarchy->GetLevel() )
-            {
-                AddError( eFormationWithSameLevelEmptiness, &formation );
-            }
+            int maxSize = diplo->GetKarma() == Karma::enemy_ ? 15 : 17;
+            int curSize = gui::LongNameHelper::GetEntityLongName( entity ).size();
+            if( curSize > maxSize )
+                AddError( eLongNameSize, &entity, boost::str( boost::format( "%d > %d" ) % curSize % maxSize ) );
         }
     }
 }

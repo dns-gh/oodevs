@@ -1228,10 +1228,6 @@ Do you want to save anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Formation with same level as parent must be empty.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1249,6 +1245,14 @@ Do you want to save anyway?</source>
     </message>
     <message>
         <source>Unicity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DQP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Long name size limit exceeded : %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

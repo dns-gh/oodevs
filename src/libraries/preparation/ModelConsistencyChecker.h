@@ -64,10 +64,10 @@ public:
         eGhostConverted                  = 0x0800,
         eAllGhost                        = eGhostExistence | eGhostConverted,
 
-        eFormationWithSameLevelEmptiness = 0x1000,
-        eAllFormation                    = eFormationWithSameLevelEmptiness,
+        eLongNameSize                    = 0x1000,
+        eAllDQP                          = eLongNameSize,
 
-        eAllChecks                       = eAllCheckWithoutProfile | eAllProfile | eAllGhost | eAllFormation
+        eAllChecks                       = eAllCheckWithoutProfile | eAllProfile | eAllGhost | eAllDQP
     };
 
     typedef std::vector< kernel::SafePointer< kernel::Entity_ABC >* > T_SafeEntities;
@@ -113,7 +113,7 @@ private:
     void CheckProfileUniqueness();
     void CheckProfileInitialization();
     void CheckGhosts();
-    void CheckFormationWithSameLevelAsParentEmptiness();
+    void CheckLongNameSize();
     //@}
 
 private:

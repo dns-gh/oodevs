@@ -5092,7 +5092,7 @@
         <label language="fr" text="Indicatif opérationnel"/>
       </labels>
     </attribute>
-    <attribute extends="unit;automat;formation" max-length="17" name="NomLong" type="alphanumeric">
+    <attribute extends="unit;automat;formation" name="NomLong" type="alphanumeric">
       <labels>
         <label language="fr" text="Nom long unité"/>
       </labels>
@@ -5134,4 +5134,4 @@
     </attribute>
   </profile-attributes>
 </extensions>
-<!-- signature="2363757626" -->
+<!-- signature="0974798327" -->

@@ -61,7 +61,8 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     CreateCheckbox( *checkBoxLayout, boost::assign::map_list_of( ModelConsistencyChecker::eAllProfile, tr( "Profile" ) )
                                                                ( ModelConsistencyChecker::eAllGhost, tr( "Ghost" ) )
                                                                ( ModelConsistencyChecker::eAllInitialization, tr( "Logistic" ) )
-                                                               ( ModelConsistencyChecker::eAllUniqueness, tr( "Unicity" ) ) );
+                                                               ( ModelConsistencyChecker::eAllUniqueness, tr( "Unicity" ) ) 
+                                                               ( ModelConsistencyChecker::eAllDQP, tr( "DQP" ) ) );
 
     // Layout creation
     QVBoxLayout* mainLayout = new QVBoxLayout();
@@ -88,7 +89,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ ModelConsistencyChecker::eProfileUnwritable ]               = tr( "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
     errorDescriptions_[ ModelConsistencyChecker::eGhostExistence ]                  = tr( "A phantom unit is present." );
     errorDescriptions_[ ModelConsistencyChecker::eGhostConverted ]                  = tr( "Unknown type '%1', a phantom unit has been created instead." );
-    errorDescriptions_[ ModelConsistencyChecker::eFormationWithSameLevelEmptiness ] = tr( "Formation with same level as parent must be empty." );
+    errorDescriptions_[ ModelConsistencyChecker::eLongNameSize ]                    = tr( "Long name size limit exceeded : %1." );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +173,8 @@ void ModelConsistencyDialog::UpdateDataModel()
                 AddItem( entity->GetName(), entity->GetName(), entity, error.type_, items );
                 QString text = ( error.type_ & ModelConsistencyChecker::eAllUniqueness ||
                                  error.type_ & ModelConsistencyChecker::eProfileUniqueness ||
-                                 error.type_ & ModelConsistencyChecker::eGhostConverted )
+                                 error.type_ & ModelConsistencyChecker::eGhostConverted ||
+                                 error.type_ & ModelConsistencyChecker::eLongNameSize )
                                ? errorDescriptions_[ error.type_ ].arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() )
                                : errorDescriptions_[ error.type_ ];
 
@@ -193,7 +195,9 @@ namespace
             return ModelConsistencyChecker::eAllInitialization;
         if( type <= ModelConsistencyChecker::eAllProfile )
             return ModelConsistencyChecker::eAllProfile;
-        return ModelConsistencyChecker::eAllGhost;
+        if ( type <= ModelConsistencyChecker::eAllGhost )
+            return ModelConsistencyChecker::eAllGhost;
+        return ModelConsistencyChecker::eAllDQP;
     }
 }
 

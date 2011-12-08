@@ -1228,10 +1228,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Une unité fantôme est présente.</translation>
     </message>
     <message>
-        <source>Formation with same level as parent must be empty.</source>
-        <translation>Une formation de même niveau que son parent doit être vide.</translation>
-    </message>
-    <message>
         <source>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</source>
         <translation>Type inconnu &apos;%1&apos;, un fantôme a été créé à la place.</translation>
     </message>
@@ -1250,6 +1246,14 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Unicity</source>
         <translation>Unicité</translation>
+    </message>
+    <message>
+        <source>DQP</source>
+        <translation>DQP</translation>
+    </message>
+    <message>
+        <source>Long name size limit exceeded : %1.</source>
+        <translation>Limite de taille du nom long dépassée : %1</translation>
     </message>
 </context>
 <context>
