@@ -1986,9 +1986,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.h">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
-      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AnchorType.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </ClInclude>
