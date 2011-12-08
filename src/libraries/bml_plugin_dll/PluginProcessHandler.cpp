@@ -120,15 +120,15 @@ private:
 // Name: PluginProcessHandler constructor
 // Created: JCR 2011-10-27
 // -----------------------------------------------------------------------------
-PluginProcessHandler::PluginProcessHandler( const dispatcher::Config& config, const std::string& process_name, dispatcher::Logger_ABC& logger, xml::xistream& xis )
+PluginProcessHandler::PluginProcessHandler( const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
     : logger_ ( logger )
-    , processName_ ( process_name )
+    , xis_         ( new xml::xibufferstream( xis ) )
     , workingDir_  ( config.BuildPluginDirectory( "bml" ) )
     , sessionDir_  ( config.GetSessionFile() )
     , physicalDir_ ( config.GetPhysicalFile() )
-    , commandLine_ ( workingDir_ + "/" + processName_ )
     , config_      ( new PluginConfig( physicalDir_, sessionDir_, logger ) )
-    , xis_         ( new xml::xibufferstream( xis ) )
+    , processName_ ( xis_->attribute<std::string>( "process", "process_app.exe" ) )
+    , commandLine_ ( workingDir_ + "/" + processName_ )
 {
     LoadSimulationConfig( *config_ );
     LoadPluginConfig( *xis_, *config_ );

@@ -48,7 +48,7 @@ class PluginProcessHandler : public dispatcher::Plugin_ABC
 public: 
     //! @name Constructors/Destructor
     //@{
-             PluginProcessHandler( const dispatcher::Config& config, const std::string& process_name, dispatcher::Logger_ABC& logger, xml::xistream& xis );        
+             PluginProcessHandler( const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis );        
     virtual ~PluginProcessHandler();
     //@}
 
@@ -86,16 +86,30 @@ private:
     struct InternalData;
 
 private:
+    //! @name 
+    //@{
     dispatcher::Logger_ABC& logger_;
-	std::string processName_;
+	std::auto_ptr< xml::xistream > xis_;
+    //@}
+    
+    //! @name Sword config dir
+    //@{
     std::string workingDir_;
 	std::string sessionDir_;
 	std::string physicalDir_;
+    std::auto_ptr< PluginConfig > config_;
+    //@}
+    
+    //! @name Associated process parameters
+    //@{
+    std::string processName_;
     std::string commandLine_;
-
-	std::auto_ptr< PluginConfig > config_;
-	std::auto_ptr< xml::xistream > xis_;
+    //@}
+	
+    //! @name Process data
+    //@{
     std::auto_ptr< InternalData > internal_;
+    //@}
 };
 
 }

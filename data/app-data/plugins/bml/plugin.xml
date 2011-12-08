@@ -6,6 +6,7 @@
 		<description lang="fr" name="OpenBML"><![CDATA[Plugin de communication OpenBML.]]></description>
 	</descriptions>
 	<settings>
+	    <setting attribute="@process" type="string" default="Sword.BMLService.Application.exe" display="false"/>
 		<group>
 			<descriptions>
 				<description lang="en" name="Webserver"><![CDATA[OpenBML Webserver]]></description>

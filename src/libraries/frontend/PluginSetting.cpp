@@ -80,9 +80,15 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     , config_ ( config )
     , description_( xis, ReadLang() )
 {
+    bool display = xis.attribute< bool >( "display", true ); 
+    
     label_ = new QLabel( parent );
+    label_->setHidden( !display );
     if( type_ == "string" )
+    {
         stringValue_ = new QLineEdit( xis.attribute< std::string >( "default", "" ).c_str(), parent );
+        stringValue_->setHidden( !display );
+    }
     else if( type_ == "integer" )
     {
         integerValue_ = new QSpinBox( parent );
@@ -91,17 +97,20 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
         if( xis.has_attribute( "max" ) )
             integerValue_->setMaxValue( xis.attribute< int >( "max" ) );
         integerValue_->setValue( xis.attribute< int >( "default", 0 ) );
+        integerValue_->setHidden( !display );
     }
     else if( type_ == "boolean" )
     {
         booleanValue_ = new QCheckBox( parent );
         booleanValue_->setChecked( xis.attribute< bool >( "default", false ) );
+        booleanValue_->setHidden( !display );
     }
     else if( type_ == "time" )
     {
         timeValue_ = new Q3TimeEdit( parent );
         timeValue_->setDisplay ( Q3TimeEdit::Hours | Q3TimeEdit::Minutes | Q3TimeEdit::Seconds );
         timeValue_->setTime( QTime().addSecs( xis.attribute< int >( "default", 0 ) ) );
+        timeValue_->setHidden( !display );
     }
     else if( type_ == "file" )
     {
@@ -116,6 +125,7 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
         BOOST_FOREACH( const std::string& enumeration , enumerations )
             enumerationValue_->insertItem( enumeration.c_str() );
         enumerationValue_->setCurrentItem( 0u );
+        enumerationValue_->setHidden( !display );
     }
 }
 
