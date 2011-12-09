@@ -305,21 +305,6 @@ void MIL_Formation::SendFullState( unsigned int context /*= 0*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Formation::UpdateNetwork
-// Created: ABR 2011-05-11
-// -----------------------------------------------------------------------------
-void MIL_Formation::UpdateNetwork() const
-{
-    if( pExtensions_->HasChanged() )
-    {
-        client::FormationUpdate message;
-        message().mutable_formation()->set_id( nID_ );
-        pExtensions_->UpdateNetwork( message );
-        message.Send( NET_Publisher_ABC::Publisher() );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Formation::OnReceiveUnitMagicAction
 // Created: ABR 2011-05-11
 // -----------------------------------------------------------------------------
@@ -462,6 +447,13 @@ void MIL_Formation::UpdateNetwork()
 {
    if( pBrainLogistic_.get() )
         pBrainLogistic_->SendChangedState();
+    if( pExtensions_->HasChanged() )
+    {
+        client::FormationUpdate message;
+        message().mutable_formation()->set_id( nID_ );
+        pExtensions_->UpdateNetwork( message );
+        message.Send( NET_Publisher_ABC::Publisher() );
+    }
 }
 
 // -----------------------------------------------------------------------------
