@@ -25,7 +25,9 @@ class ADN_HumanFactors_Data : public ADN_Data_ABC
 {
 
 public:
-// *****************************************************************************
+    // =============================================================================
+    // ModifiersInfo
+    // =============================================================================
     class ModifiersInfo
     {
     public:
@@ -44,8 +46,25 @@ public:
         ADN_Type_Double rStanceModifier_;
     };
 
+    // =============================================================================
+    // ThresholdsInfo
+    // =============================================================================
+    class ThresholdsInfo
+    {
+    public:
+        ThresholdsInfo();
 
-// *****************************************************************************
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+    public:
+        ADN_Type_Int firstThreshold_;
+        ADN_Type_Int secondThreshold_;
+    };
+
+// =============================================================================
+// ADN_HumanFactors_Data
+// =============================================================================
 public:
     //! @name Constructors/Destructor
     //@{
@@ -60,20 +79,33 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
     void ReadArchive( xml::xistream& input );
     void ReadModifier( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
+    //@}
 
 public:
-    ModifiersInfo veteranModifiers_;
-    ModifiersInfo xpModifiers_;
-    ModifiersInfo newbieModifiers_;
-    ModifiersInfo normalModifiers_;
-    ModifiersInfo tiredModifiers_;
-    ModifiersInfo exhaustedModifiers_;
-    ModifiersInfo calmModifiers_;
-    ModifiersInfo worriedModifiers_;
-    ModifiersInfo stressedModifiers_;
+    // Modifiers
+    ModifiersInfo   veteranModifiers_;
+    ModifiersInfo   xpModifiers_;
+    ModifiersInfo   newbieModifiers_;
+    ModifiersInfo   normalModifiers_;
+    ModifiersInfo   tirednessModifiers_;
+    ModifiersInfo   exhaustedModifiers_;
+    ModifiersInfo   calmModifiers_;
+    ModifiersInfo   worriedModifiers_;
+    ModifiersInfo   stressedModifiers_;
+    // Evolution
+    ThresholdsInfo  tirednessThresholds_;
+    ADN_Type_Int    tirednessMoving_;
+    ADN_Type_Int    tirednessWorking_;
+    ADN_Type_Int    tirednessEngineStopped_;
+    ADN_Type_Int    tirednessEngineRunning_;
+    ThresholdsInfo  stressThresholds_;
+    ADN_Type_Int    stressIncPerShot_;
+    ADN_Type_Int    stressDecPerHour_;
 };
 
 #endif // __ADN_HumanFactors_Data_h_

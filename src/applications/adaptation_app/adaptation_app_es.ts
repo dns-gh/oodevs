@@ -2000,6 +2000,62 @@ estacionado con motor encendido</translation>
         <source>Stressed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automatic evolution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tiredness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thresholds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exhaustion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Evolution (per hour)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parked, engine stopped</source>
+        <translation type="unfinished">à l&apos;arrêt, moteur éteint</translation>
+    </message>
+    <message>
+        <source>Parked, engine running</source>
+        <translation type="unfinished">aà l&apos;arrêt, moteur allumé</translation>
+    </message>
+    <message>
+        <source>Moving</source>
+        <translation type="unfinished">En mouvement</translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished">En travaux</translation>
+    </message>
+    <message>
+        <source>Stress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Worry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Evolution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Increase per fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decrease per hour</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_KnowledgeGroups_GUI</name>

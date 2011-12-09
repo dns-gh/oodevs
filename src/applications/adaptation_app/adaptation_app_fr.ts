@@ -2002,6 +2002,62 @@ Arrêt moteur allumé</translation>
         <source>Stressed</source>
         <translation>Stressé</translation>
     </message>
+    <message>
+        <source>Automatic evolution</source>
+        <translation>Evolution automatique</translation>
+    </message>
+    <message>
+        <source>Tiredness</source>
+        <translation>Fatigue</translation>
+    </message>
+    <message>
+        <source>Thresholds</source>
+        <translation>Seuils</translation>
+    </message>
+    <message>
+        <source>Exhaustion</source>
+        <translation>Epuisement</translation>
+    </message>
+    <message>
+        <source>Evolution (per hour)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Parked, engine stopped</source>
+        <translation>A l&apos;arrêt, moteur éteint</translation>
+    </message>
+    <message>
+        <source>Parked, engine running</source>
+        <translation>A l&apos;arrêt, moteur allumé</translation>
+    </message>
+    <message>
+        <source>Moving</source>
+        <translation>En mouvement</translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation>En travaux</translation>
+    </message>
+    <message>
+        <source>Stress</source>
+        <translation>Stress</translation>
+    </message>
+    <message>
+        <source>Worry</source>
+        <translation>Inquiétude</translation>
+    </message>
+    <message>
+        <source>Evolution</source>
+        <translation>Evolution</translation>
+    </message>
+    <message>
+        <source>Increase per fire</source>
+        <translation>Augmentation par tir</translation>
+    </message>
+    <message>
+        <source>Decrease per hour</source>
+        <translation>Diminution par heure</translation>
+    </message>
 </context>
 <context>
     <name>ADN_KnowledgeGroups_GUI</name>
@@ -4557,11 +4613,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Parked, engine stopped</source>
-        <translation>à l&apos;arrêt, moteur éteint</translation>
+        <translation>A l&apos;arrêt, moteur éteint</translation>
     </message>
     <message>
         <source>Parked, engine running</source>
-        <translation>à l&apos;arrêt, moteur allumé</translation>
+        <translation>A l&apos;arrêt, moteur allumé</translation>
     </message>
     <message>
         <source>Moving</source>
