@@ -58,6 +58,7 @@ private slots:
     //! @name Slots
     //@{
     void OnItemClicked( Q3ListViewItem*, const QPoint&, int );
+    void OnItemExpanded( Q3ListViewItem* );
     //@}
 
 private:

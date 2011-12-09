@@ -36,6 +36,7 @@ UserProfileUnitControls::UserProfileUnitControls( QWidget* parent, Controllers& 
 {
     controllers_.Register( *this );
     connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
+    connect( this, SIGNAL( expanded( Q3ListViewItem* ) ), SLOT( OnItemExpanded( Q3ListViewItem* ) ) );
     setSortColumn( -1 );
     setSorting( -1 );
 }
@@ -113,6 +114,26 @@ void UserProfileUnitControls::setColumnWidth( int column, int w )
 void UserProfileUnitControls::OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column )
 {
     UserProfileControls_ABC::OnItemClicked( item, point, column );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::OnItemExpanded
+// Created: LGY 2011-12-09
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::OnItemExpanded( Q3ListViewItem* item )
+{
+    if( item )
+        if(  ValuedListItem* value = static_cast< ValuedListItem* >( item ) )
+            if( const Entity_ABC* entity = value->GetValue< const Entity_ABC >() )
+                if( entity->GetTypeName() == Team_ABC::typeName_ )
+                {
+                    ValuedListItem* child = static_cast< ValuedListItem* >( item->firstChild() );
+                    while( child )
+                    {
+                        child->setOpen( true );
+                        child = static_cast< ValuedListItem* >( child->nextSibling() );
+                    }
+                }
 }
 
 // -----------------------------------------------------------------------------
