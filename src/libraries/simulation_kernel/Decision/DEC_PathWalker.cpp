@@ -246,7 +246,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove )
 {
-    static int nDistanceBeforeBlockingObject = -10;
+    static int nDistanceBeforeBlockingObject = -20;
     CIT_ObjectSet itObject;
 
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'

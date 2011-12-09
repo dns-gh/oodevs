@@ -57,6 +57,7 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
     ++itResultEnd;
 
     bool bNewMin = false;
+    bool hasMoreThanTwoPoints = pathPoints.size() > 2;
     double rSquareDistance = std::numeric_limits< double >::max();
     for( ; itResultEnd != resultList_.end(); ++itResultStart, ++itResultEnd )
     {
@@ -101,7 +102,7 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
     {
         if( itNextRequest != pathPoints.end() )
             return itNextRequest->first;
-        else
+        else if( !hasMoreThanTwoPoints )
             return posToTest;
     }
 
