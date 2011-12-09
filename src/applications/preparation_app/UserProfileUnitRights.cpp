@@ -43,11 +43,21 @@ UserProfileUnitRights::~UserProfileUnitRights()
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileUnitRights::Display
+// Created: LGY 2011-12-09
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::Display( UserProfile& profile )
+{
+    ClearSelection();
+    UserProfileRights_ABC::Display( profile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::Display
 // Created: JSR 2011-09-15
 // -----------------------------------------------------------------------------
 void UserProfileUnitRights::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
-    T_Parent::Display( entity, item);
+    T_Parent::Display( entity, item );
     LongNameHelper::SetItemLongName( entity, *item );
 }
 

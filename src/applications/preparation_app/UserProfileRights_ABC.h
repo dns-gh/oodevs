@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( UserProfile& profile );
+    virtual void Display( UserProfile& profile );
     //@}
 
 protected:

@@ -40,6 +40,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Display( UserProfile& profile );
     virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     //@}
 

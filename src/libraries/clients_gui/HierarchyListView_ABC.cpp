@@ -302,6 +302,16 @@ void HierarchyListView_ABC::Update()
 }
 
 // -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::ClearSelection
+// Created: LGY 2011-12-09
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::ClearSelection()
+{
+    clearSelection();
+    selected_ = 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: HierarchyListView_ABC::UpdateItem
 // Created: SBO 2010-08-03
 // -----------------------------------------------------------------------------
