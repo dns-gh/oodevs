@@ -472,6 +472,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\ExtensionsPanel.cpp">
       <Filter>Source Files\Panels\Infos</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ProfileConsistencyDialog.cpp">
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -876,6 +879,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\CommunicationListView.h">
       <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ProfileConsistencyDialog.h">
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

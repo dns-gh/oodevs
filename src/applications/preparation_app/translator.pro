@@ -45,6 +45,7 @@ PopulationListView.cpp \
 PopulationRepartitionEditor.cpp \
 PositionEditor.cpp \
 ProfileDialog.cpp \
+ProfileConsistencyDialog.cpp \
 ProfileEditor.cpp \
 ProfileWizardDialog.cpp \
 PropertiesTableDisplayer.cpp \

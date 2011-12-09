@@ -1336,6 +1336,22 @@ Do you want to save anyway?</source>
     </message>
 </context>
 <context>
+    <name>ProfileConsistencyDialog</name>
+    <message>
+        <source>Consistency analysis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to proceed ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit &apos;%1&apos; is already controlled by &apos;%2&apos; profile.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileDialog</name>
     <message>
         <source>User profiles</source>
@@ -2103,19 +2119,6 @@ Do you want to save anyway?</source>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to proceed ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit &apos;%1&apos; is already controlled by &apos;%2&apos; profile.
-</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

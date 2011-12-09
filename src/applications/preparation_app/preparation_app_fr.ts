@@ -1336,6 +1336,22 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
+    <name>ProfileConsistencyDialog</name>
+    <message>
+        <source>Consistency analysis</source>
+        <translation>Analyse de cohérence</translation>
+    </message>
+    <message>
+        <source>Do you want to proceed ?</source>
+        <translation>Voulez-vous continuer ?</translation>
+    </message>
+    <message>
+        <source>Unit &apos;%1&apos; is already controlled by &apos;%2&apos; profile.
+</source>
+        <translation>L&apos;unité &apos;%1&apos; est déjà controlée par le profil &apos;%2&apos;.</translation>
+    </message>
+</context>
+<context>
     <name>ProfileDialog</name>
     <message>
         <source>User profiles</source>
@@ -2104,19 +2120,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>View</source>
         <translation>Vue</translation>
-    </message>
-    <message>
-        <source>Do you want to proceed ?</source>
-        <translation>Voulez-vous continuer ?</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
-    </message>
-    <message>
-        <source>Unit &apos;%1&apos; is already controlled by &apos;%2&apos; profile.
-</source>
-        <translation>L&apos;unité &apos;%1&apos; est déjà controlée par le profil &apos;%2&apos;.</translation>
     </message>
 </context>
 <context>

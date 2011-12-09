@@ -86,7 +86,6 @@ private:
     void Check( gui::ValuedListItem* item, bool control );
     T_Errors GetErrors( gui::ValuedListItem* item );
     void CheckErrors( const kernel::Entity_ABC& entity, T_Errors& errors );
-    QString ConvertErrors( T_Errors& errors ) const;
     //@}
 
 private:

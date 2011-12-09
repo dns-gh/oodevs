@@ -11,6 +11,7 @@
 #include "UserProfileControls_ABC.h"
 #include "icons.h"
 #include "ControlsChecker_ABC.h"
+#include "ProfileConsistencyDialog.h"
 #include "clients_kernel/Tools.h"
 #include "preparation/UserProfile.h"
 #include "clients_gui/ValuedListItem.h"
@@ -202,14 +203,8 @@ void UserProfileControls_ABC::Check( ValuedListItem* item, bool control )
    T_Errors errors = GetErrors( item );
     if( !errors.empty() && !supervisor_ )
     {
-        QMessageBox msgBox( listView_ );
-        msgBox.setWindowTitle( tools::translate( "UserProfileControls", "Profile" ) );
-        msgBox.setText( ConvertErrors( errors ) );
-        msgBox.setInformativeText( tools::translate( "UserProfileControls", "Do you want to proceed ?" ) );
-        msgBox.setStandardButtons( QMessageBox::Yes | QMessageBox::No );
-        msgBox.setDefaultButton( QMessageBox::No );
-        msgBox.setIcon( QMessageBox::NoIcon );
-        if( msgBox.exec() == QMessageBox::Yes )
+        ProfileConsistencyDialog* dialog = new ProfileConsistencyDialog( listView_ );
+        if( dialog->Exec( errors ) == QDialog::Accepted )
         {
             BOOST_FOREACH(  const T_Error& error, errors )
                 checker_.Update( *profile_, *error.second );
@@ -253,17 +248,4 @@ void UserProfileControls_ABC::CheckErrors( const kernel::Entity_ABC& entity, T_E
     std::string login = checker_.GetProfileControl( *profile_, entity );
     if( login != "" )
         errors.push_back( std::make_pair( login, &entity ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileControls_ABC::ConvertErrors
-// Created: LGY 2011-09-15
-// -----------------------------------------------------------------------------
-QString UserProfileControls_ABC::ConvertErrors( T_Errors& errors ) const
-{
-    QString results;
-    BOOST_FOREACH( const T_Error& error, errors )
-        results += QString( tools::translate( "UserProfileControls", "Unit '%1' is already controlled by '%2' profile.\n" ) )
-            .arg( error.second->GetName().ascii() ).arg( error.first.c_str() );
-    return results;
 }
