@@ -15,6 +15,7 @@
 #include "LogisticBaseStates.h"
 #include "LogisticLevelAttritube.h"
 #include "FormationPositions.h"
+#include "ProfileHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -85,6 +86,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
     formation->Attach< kernel::Color_ABC >( *new Color( parent ) );
     formation->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
     formation->Attach( *new LogisticLevelAttritube( controllers_.controller_, *formation, dico ) );
+    formation->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *formation, &parent ) );
     SetNationality( *formation, parent );
     formation->Polish();
     return formation;
@@ -106,6 +108,7 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
     formation->Attach< kernel::Color_ABC >( *new Color( xis ) );
     formation->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );
     formation->Attach( *new LogisticLevelAttritube( controllers_.controller_, xis, *formation, true, dico ) );
+    formation->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Polish();
     return formation;
 }

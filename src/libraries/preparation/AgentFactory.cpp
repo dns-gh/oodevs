@@ -149,8 +149,7 @@ Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, 
     result->Attach( *new TacticalLines() );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
-    kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( &result->Get< CommunicationHierarchies >().GetTop() );
-    result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, superior ) );
+    result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, &parent ) );
     SetNationality( *result, parent );
     result->Polish();
     return result;
@@ -285,8 +284,7 @@ Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
     result->Attach( *new TacticalLines() );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
-    kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( &result->Get< CommunicationHierarchies >().GetTop() );
-    result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, superior ) );
+    result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, &parent ) );
     result->Polish();
     return result;
 }
@@ -379,6 +377,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
         Entity_ABC* tactSuperior = const_cast< Entity_ABC* >( ghostHierarchy->GetSuperior() );
         assert( tactSuperior );
         result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, tactSuperior ) );
+        result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, tactSuperior ) );
     }
     // Communication Hierarchies
     {
@@ -396,8 +395,6 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
     result->Attach( *new TacticalLines() );
     result->Attach< kernel::Color_ABC >( *new Color( ghost ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
-    kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( &result->Get< CommunicationHierarchies >().GetTop() );
-    result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, superior ) );
     result->Polish();
     return result;
 }
