@@ -574,5 +574,6 @@
   <report category="operational" id="402" message="Unité déjà désengagée"/>
   <report category="operational" id="403" message="Aucune unité ne peut effectuer la mission principale"/>
   <report category="operational" id="404" message="L'obstacle doit être activé"/>
+  <report category="exceptional" id="405" message="Aucun pion ne sait effectuer la mission principale"/>
 </reports>
-<!-- signature="3003862994" -->
+<!-- signature="1918829204" -->
