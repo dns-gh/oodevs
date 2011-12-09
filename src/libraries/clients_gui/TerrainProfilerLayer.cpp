@@ -48,7 +48,7 @@ void TerrainProfilerLayer::Paint( kernel::Viewport_ABC& viewport )
 {
     if( !ShouldDrawPass() || GetAlpha() == 0 )
         return;
-    if( viewport.IsVisible( from_ ) || viewport.IsVisible( to_ ) )
+    if( viewport.IsVisible( geometry::Rectangle2f( from_, to_ ) ) )
     {
         glPushAttrib( GL_CURRENT_BIT );
             if( from_ != notSet && viewport.IsVisible( from_ ) )
