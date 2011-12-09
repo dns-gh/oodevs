@@ -35,6 +35,8 @@ enum E_Validator
     eNone,
     eGreaterZero,
     eGreaterEqualZero,
+    eLowerZero,
+    eLowerEqualZero,
     ePercentage,
     eZeroOne,
     eDegrees,
@@ -358,6 +360,12 @@ void ADN_GuiBuilder::SetValidator( ADN_IntValidator& validator, E_Validator nVal
     case eGreaterEqualZero:
         validator.setRange( 0, INT_MAX );
         break;
+    case eLowerZero:
+        validator.setRange( INT_MIN, -1 );
+        break;
+    case eLowerEqualZero:
+        validator.setRange( INT_MIN, 0 );
+        break;
     case ePercentage:
         validator.setRange( 0, 100 );
         break;
@@ -385,6 +393,12 @@ void ADN_GuiBuilder::SetValidator( ADN_DoubleValidator& validator, E_Validator n
         break;
     case eGreaterEqualZero:
         validator.setRange( 0, INT_MAX, 3 );
+        break;
+    case eLowerZero:
+        validator.setRange( INT_MIN, -0.001 );
+        break;
+    case eLowerEqualZero:
+        validator.setRange( INT_MIN, 0 );
         break;
     case ePercentage:
         validator.setRange( 0, 100, 2 );
@@ -419,6 +433,8 @@ void ADN_GuiBuilder::SetValidator( ADN_PercentageValidator& validator, E_Validat
         break;
     case eGreaterZero:
     case eGreaterEqualZero:
+    case eLowerZero:
+    case eLowerEqualZero:
     case eZeroOne:
     case eDegrees:
     default:

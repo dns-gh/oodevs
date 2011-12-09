@@ -15,5 +15,9 @@
     <modifier loading-time="2" max-speed="1" ph="0.8" posture-setup-time="2" sensor-distance="0.8" state="Worried"/>
     <modifier loading-time="4" max-speed="1" ph="0.6" posture-setup-time="4" sensor-distance="0.6" state="Stressed"/>
   </stress-factor>
+  <automatic-evolution>
+    <tiredness-evolution engine-running="0" engine-stopped="-10" first-threshold="100" moving="10" second-threshold="200" working="20"/>
+    <stress-evolution dec-per-hour="-20" first-threshold="10" inc-per-shot="10" second-threshold="50"/>
+  </automatic-evolution>
 </humans-factors>
-<!-- signature="2787696725" -->
+<!-- signature="1002845519" -->

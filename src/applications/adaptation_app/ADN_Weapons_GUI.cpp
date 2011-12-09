@@ -600,7 +600,7 @@ void ADN_Weapons_GUI::UpdateModifiers()
             phModifier *= humanFactors.exhaustedModifiers_.rPHModifier_.GetData();
             break;
         case eUnitTiredness_Fatigue:
-            phModifier *= humanFactors.tiredModifiers_.rPHModifier_.GetData();
+            phModifier *= humanFactors.tirednessModifiers_.rPHModifier_.GetData();
             break;
         case eUnitTiredness_Normal:
             phModifier *= humanFactors.normalModifiers_.rPHModifier_.GetData();
