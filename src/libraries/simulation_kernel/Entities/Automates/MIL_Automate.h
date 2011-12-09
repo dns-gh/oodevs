@@ -157,6 +157,8 @@ public:
     virtual void UpdateNetwork   () const;
     virtual void UpdateState     ();
     virtual void Clean           ();
+    const std::string& GetNationality() const;
+    void ChangeNationality( const std::string& nationality );
 
     template< typename T > void ApplyOnHierarchy( T& functor )
     {

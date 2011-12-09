@@ -127,6 +127,31 @@ void MIL_DictionaryExtensions::OnReceiveMsgChangeExtensions( const sword::UnitMa
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_DictionaryExtensions::GetExtension
+// Created: JSR 2011-12-09
+// -----------------------------------------------------------------------------
+const std::string& MIL_DictionaryExtensions::GetExtension( const std::string& type ) const
+{
+    static const std::string empty;
+    if( extensions_.find( type) != extensions_.end() )
+        return extensions_.at( type );
+    return empty;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DictionaryExtensions::SetExtension
+// Created: JSR 2011-12-09
+// -----------------------------------------------------------------------------
+void MIL_DictionaryExtensions::SetExtension( const std::string& type, const std::string& value )
+{
+    if( extensions_[ type ] != value )
+    {
+        extensions_[ type ] = value;
+        hasChanged_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_DictionaryExtensions::HasChanged
 // Created: ABR 2011-05-11
 // -----------------------------------------------------------------------------

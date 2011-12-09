@@ -48,6 +48,8 @@ public:
     template< typename T >
     void UpdateNetwork( T& msg );
     void OnReceiveMsgChangeExtensions( const sword::UnitMagicAction& msg );
+    const std::string& GetExtension( const std::string& type ) const;
+    void SetExtension( const std::string& type, const std::string& value );
     bool HasChanged() const;
     bool IsEmpty() const;
     //@}

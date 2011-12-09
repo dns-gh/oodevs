@@ -137,6 +137,7 @@ public:
     const T_KnowledgeGroupMap& GetKnowledgeGroups() const;
     DEC_KnowledgeBlackBoard_Army& GetKnowledge() const;
     virtual const MIL_Color& GetColor() const;
+    const std::string& GetNationality() const;
     //@}
 
     //! @name Network

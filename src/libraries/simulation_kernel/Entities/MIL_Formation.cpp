@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Formation.h"
-#include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_Army.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
@@ -99,16 +99,21 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
         RegisterAction( pLogisticAction_ );
     }
+    std::string nationality;
     if( pParent_ )
     {
         pColor_.reset( new MIL_Color( pParent_->GetColor() ) );
         pParent_->RegisterFormation( *this );
+        nationality = pParent_->GetNationality();
     }
     else
     {
         pColor_.reset( new MIL_Color( pArmy_->GetColor() ) );
         pArmy_->RegisterFormation( *this );
+        nationality = static_cast< MIL_Army* >( pArmy_ )->GetNationality();
     }
+    if( !nationality.empty() )
+        ChangeNationality( nationality );
 }
 
 // -----------------------------------------------------------------------------
@@ -306,18 +311,14 @@ void MIL_Formation::SendFullState( unsigned int context /*= 0*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Formation::UpdateNetwork
-// Created: ABR 2011-05-11
+// Name: MIL_Formation::ChangeNationality
+// Created: JSR 2011-12-09
 // -----------------------------------------------------------------------------
-void MIL_Formation::UpdateNetwork() const
+void MIL_Formation::ChangeNationality( const std::string& nationality )
 {
-    if( pExtensions_->HasChanged() )
-    {
-        client::FormationUpdate message;
-        message().mutable_formation()->set_id( nID_ );
-        pExtensions_->UpdateNetwork( message );
-        message.Send( NET_Publisher_ABC::Publisher() );
-    }
+    pExtensions_->SetExtension( "Nationalite", nationality );
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::ChangeNationality, _1, boost::cref( nationality ) ) );
+    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::ChangeNationality, _1, boost::cref( nationality ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -329,7 +330,16 @@ void MIL_Formation::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg 
     switch( msg.type() )
     {
     case sword::UnitMagicAction::change_extension:
-        pExtensions_->OnReceiveMsgChangeExtensions( msg );
+        {
+            const std::string oldNationality = pExtensions_->GetExtension( "Nationalite" );
+            pExtensions_->OnReceiveMsgChangeExtensions( msg );
+            const std::string newNationality = pExtensions_->GetExtension( "Nationalite" );
+            if( oldNationality != newNationality )
+            {
+                tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::ChangeNationality, _1, boost::cref( newNationality ) ) );
+                tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::ChangeNationality, _1, boost::cref( newNationality ) ) );
+            }
+        }
         break;
     default:
         break;
@@ -353,6 +363,15 @@ MIL_Army_ABC& MIL_Formation::GetArmy() const
 const MIL_Color& MIL_Formation::GetColor() const
 {
     return *pColor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::GetNationality
+// Created: JSR 2011-12-09
+// -----------------------------------------------------------------------------
+const std::string& MIL_Formation::GetNationality() const
+{
+    return pExtensions_->GetExtension( "Nationalite" );
 }
 
 // -----------------------------------------------------------------------------
@@ -463,6 +482,13 @@ void MIL_Formation::UpdateNetwork()
 {
    if( pBrainLogistic_.get() )
         pBrainLogistic_->SendChangedState();
+   if( pExtensions_->HasChanged() )
+   {
+       client::FormationUpdate message;
+       message().mutable_formation()->set_id( nID_ );
+       pExtensions_->UpdateNetwork( message );
+       message.Send( NET_Publisher_ABC::Publisher() );
+   }
 }
 
 // -----------------------------------------------------------------------------

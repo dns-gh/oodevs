@@ -864,6 +864,15 @@ const MIL_Color& MIL_Army::GetColor() const
     return *pColor_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::GetNationality
+// Created: JSR 2011-12-09
+// -----------------------------------------------------------------------------
+const std::string& MIL_Army::GetNationality() const
+{
+    return pExtensions_->GetExtension( "Nationalite" );
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_Army::GetDiplomacy
 // Created: NLD 2004-03-24

@@ -163,7 +163,7 @@ public:
     virtual void NotifyAttackedBy( MIL_AgentPion& pion, bool mustReport );
     virtual void NotifyAttackedBy( MIL_Population& population );
     void ChangeSuperior( MIL_Automate& newAutomate );
-
+    void ChangeNationality( const std::string& nationality );
     //@}
 
 private:

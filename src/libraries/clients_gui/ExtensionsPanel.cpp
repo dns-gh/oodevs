@@ -63,6 +63,8 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
 {
     setObjectName( "extensions" );
     pMainLayout_ = new Q3VBox( this );
+    pMainLayout_->setMargin( 5 );
+    pMainLayout_->setSpacing( 5 );
     pExtensionLayout_ = new Q3VBox( pMainLayout_ );
     setWindowTitle( tr( "Extensions" ) );
     setWidget( pMainLayout_ );

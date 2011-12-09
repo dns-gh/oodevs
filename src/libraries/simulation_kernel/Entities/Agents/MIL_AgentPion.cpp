@@ -1640,3 +1640,12 @@ void MIL_AgentPion::OnReceiveChangeEquipmentHumanSize( const sword::MissionParam
     PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
     roleComposantes.ChangeHumanSize( msg.elem( 0 ).value( 0 ).equipmenttype().id(), msg.elem( 1 ).value( 0 ).quantity() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::ChangeNationality
+// Created: JSR 2011-12-09
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::ChangeNationality( const std::string& nationality )
+{
+    pExtensions_->SetExtension( "Nationalite", nationality );
+}

@@ -19,6 +19,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/Team_ABC.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/DictionaryExtensions.h"
 #include "gaming/Model.h"
@@ -67,6 +68,9 @@ void ExtensionsPanel::NotifySelected( const kernel::Entity_ABC* element )
     Reset();
     gui::ExtensionsPanel::NotifySelected( element );
     ChangeButtonsState( false );
+    // $$$$ JSR 2011-12-09: On désactive les actions magiques pour les camps (message d'update inexistant dans les ICD)
+    if( element && element->GetTypeName() == kernel::Team_ABC::typeName_ && pGroupBox_ )
+        pGroupBox_->setEnabled( false );
 }
 
 // -----------------------------------------------------------------------------

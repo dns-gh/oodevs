@@ -519,6 +519,9 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition );
     if( !pPion )
         throw std::runtime_error( "Pion couldn't be created." );
+    const std::string nationality = automate.GetNationality();
+    if( !nationality.empty() )
+        pPion->ChangeNationality( nationality );
     pPion->SendCreation ( nCtx );
     pPion->SendFullState( nCtx );
     pPion->SendKnowledge( nCtx );
@@ -534,6 +537,9 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition, name );
     if( !pPion )
         throw std::runtime_error( "Pion couldn't be created." );
+    const std::string nationality = automate.GetNationality();
+    if( !nationality.empty() )
+        pPion->ChangeNationality( nationality );
     pPion->SendCreation ( nCtx );
     pPion->SendFullState( nCtx );
     pPion->SendKnowledge( nCtx );

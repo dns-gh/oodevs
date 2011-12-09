@@ -184,17 +184,22 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
 
     RegisterRole( *new DEC_AutomateDecision( *this, gcPause, gcMult ) ) ;
     RegisterRole( *new DEC_Representations() );
-
+    
+    std::string nationality;
     if( pParentFormation_ )
     {
         pColor_.reset( new MIL_Color( pParentFormation_->GetColor() ) );
         pParentFormation_->RegisterAutomate( *this );
+        nationality = pParentFormation_->GetNationality();
     }
     else if( pParentAutomate_ )
     {
         pColor_.reset( new MIL_Color( pParentAutomate_->GetColor() ) );
         pParentAutomate_->RegisterAutomate( *this );
+        nationality = pParentAutomate_->GetNationality();
     }
+    if( !nationality.empty() )
+        pExtensions_->SetExtension( "Nationalite", nationality );
 
     if( type.IsLogistic() )
     {
@@ -1016,6 +1021,28 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetNationality
+// Created: JSR 2011-12-09
+// -----------------------------------------------------------------------------
+const std::string& MIL_Automate::GetNationality() const
+{
+    return pExtensions_->GetExtension( "Nationalite" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::ChangeNationality
+// Created: JSR 2011-12-09
+// -----------------------------------------------------------------------------
+void MIL_Automate::ChangeNationality( const std::string& nationality )
+{
+    pExtensions_->SetExtension( "Nationalite", nationality );
+    for( IT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        ( **it ).ChangeNationality( nationality );
+    for( IT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+        ( **it ).ChangeNationality( nationality );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveUnitMagicAction
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
@@ -1044,7 +1071,18 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
             ( **itPion ).OnReceiveMagicCancelSurrender();
         break;
     case sword::UnitMagicAction::change_extension:
-        pExtensions_->OnReceiveMsgChangeExtensions( msg );
+        {
+            const std::string oldNationality = pExtensions_->GetExtension( "Nationalite" );
+            pExtensions_->OnReceiveMsgChangeExtensions( msg );
+            const std::string newNationality = pExtensions_->GetExtension( "Nationalite" );
+            if( oldNationality != newNationality )
+            {
+                for( IT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+                    ( **it ).ChangeNationality( newNationality );
+                for( IT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+                    ( **it ).ChangeNationality( newNationality );
+            }
+        }
         break;
     case sword::UnitMagicAction::reload_brain:
         CancelAllActions();

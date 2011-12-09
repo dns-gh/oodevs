@@ -82,6 +82,7 @@ public:
     MIL_AutomateLOG* GetBrainLogistic() const;
     MIL_AutomateLOG* FindLogisticManager() const;
     const MIL_Color& GetColor() const;
+    const std::string& GetNationality() const;
     //@}
 
     //! @name Visitor
@@ -93,7 +94,6 @@ public:
     //@{
     void SendCreation( unsigned int context = 0 ) const;
     void SendFullState( unsigned int context = 0 ) const;
-    void UpdateNetwork() const;
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg );
     //@}
 
@@ -101,6 +101,11 @@ public:
     //@{
     void UpdateNetwork   ();
     void Clean           ();
+    //@}
+
+    //! @name Operations
+    //@{
+    void ChangeNationality( const std::string& nationality );
     //@}
 
 private:
