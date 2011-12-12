@@ -146,6 +146,16 @@ void SwordFacade::RegisterMessageHandler( int context, std::auto_ptr< MessageHan
 {
     messageHandlers_[ context ] = handler;
 }
+
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::ClearPermanentMessageHandler
+// Created: JSR 2011-12-12
+// -----------------------------------------------------------------------------
+void SwordFacade::ClearPermanentMessageHandler()
+{
+    permanentHandler_.clear();
+}
+
 // -----------------------------------------------------------------------------
 // Name: SwordFacade::AddPermanentMessageHandler
 // Created: AHC 2011-05-16
@@ -267,4 +277,13 @@ void SwordFacade::Update() const
 const frontend::ProcessWrapper* SwordFacade::GetProcess()
 {
     return process_.lock().get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::GetEndpoint
+// Created: JSR 2011-12-12
+// -----------------------------------------------------------------------------
+const std::string& SwordFacade::GetEndpoint() const
+{
+    return endpoint_;
 }

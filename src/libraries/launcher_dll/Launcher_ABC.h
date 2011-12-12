@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     virtual void Update() = 0;
+    virtual void HandleConnectionToAdmin( const std::string& endpoint ) = 0;
     virtual void HandleAdminToLauncher( const std::string& endpoint, const sword::AdminToLauncher& message ) = 0;
     //@}
 };

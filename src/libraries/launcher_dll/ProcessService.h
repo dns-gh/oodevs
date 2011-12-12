@@ -51,6 +51,7 @@ public:
 
     //! @name Operations
     //@{
+    void CreatePermanentHandlers( const std::string& endpoint );
     void SendExerciseList( sword::ExerciseListResponse& message );
     void SendSessionList( sword::SessionListResponse& message );
     void SendProfileList( sword::ProfileListResponse& message );

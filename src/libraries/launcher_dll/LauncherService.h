@@ -23,6 +23,7 @@ namespace sword
 
 namespace launcher
 {
+    class Launcher_ABC;
     class LauncherPublisher;
 
 // =============================================================================
@@ -36,7 +37,7 @@ class LauncherService : public tools::ServerNetworker, public shield::ClientHand
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LauncherService( unsigned short port );
+    explicit LauncherService( unsigned short port, Launcher_ABC& launcher );
     virtual ~LauncherService();
     //@}
 
@@ -69,6 +70,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Launcher_ABC& launcher_;
     std::map< std::string, boost::shared_ptr< LauncherPublisher > > clients_;
     //@}
 };

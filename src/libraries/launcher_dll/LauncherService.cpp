@@ -9,6 +9,7 @@
 
 #include "launcher_dll_pch.h"
 #include "LauncherService.h"
+#include "Launcher_ABC.h"
 #include "LauncherPublisher.h"
 
 using namespace launcher;
@@ -17,8 +18,9 @@ using namespace launcher;
 // Name: LauncherService constructor
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-LauncherService::LauncherService( unsigned short port )
+LauncherService::LauncherService( unsigned short port, Launcher_ABC& launcher )
     : tools::ServerNetworker( port )
+    , launcher_( launcher )
 {
     AllowConnections();
 }
@@ -39,6 +41,7 @@ LauncherService::~LauncherService()
 void LauncherService::ConnectionSucceeded( const std::string& endpoint )
 {
     clients_[ endpoint ].reset( new LauncherPublisher( *this, endpoint ) );
+    launcher_.HandleConnectionToAdmin( endpoint );
     tools::ServerNetworker::ConnectionSucceeded( endpoint );
 }
 
@@ -91,6 +94,7 @@ bool LauncherService::TestClient( const std::string& endpoint ) const
 void LauncherService::Register( const std::string& endpoint, tools::MessageSender_ABC& sender, dispatcher::ClientBroadcaster_ABC& /*broadcaster*/ )
 {
     clients_[ endpoint ].reset( new LauncherPublisher( sender, endpoint ) );
+    launcher_.HandleConnectionToAdmin( endpoint );
 }
 
 // -----------------------------------------------------------------------------

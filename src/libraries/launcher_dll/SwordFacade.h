@@ -14,6 +14,7 @@
 #include "MessageHandler_ABC.h"
 #include "client_proxy/SwordConnectionHandler_ABC.h"
 #include "client_proxy/SwordMessageHandler_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 #include <vector>
@@ -52,6 +53,7 @@ namespace launcher
 // =============================================================================
 class SwordFacade : public SwordConnectionHandler_ABC
                   , public SwordMessageHandler_ABC
+                  , private boost::noncopyable
 {
 public:
     //! @name Constructor/destructor
@@ -85,6 +87,7 @@ public:
     virtual void OnReceiveMessage( const sword::DispatcherToClient& message );
     //
     void RegisterMessageHandler( int context, std::auto_ptr< MessageHandler_ABC > handler );
+    void ClearPermanentMessageHandler();
     void AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC > handler );
 
     void Send( const sword::ClientToSim& message ) const;
@@ -94,6 +97,7 @@ public:
     bool IsRunning() const;
     void Update() const;
     const frontend::ProcessWrapper* GetProcess();
+    const std::string& GetEndpoint() const;
     //@}
 
 private:
@@ -121,7 +125,7 @@ private:
     HandlerContainer messageHandlers_;
     std::vector< T_Handler > permanentHandler_;
     const LauncherService& server_;
-    std::string endpoint_;
+    const std::string endpoint_;
     //@}
 };
 

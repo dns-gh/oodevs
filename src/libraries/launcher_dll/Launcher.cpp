@@ -21,6 +21,8 @@
 #include "shield/Listener_ABC.h"
 #include "shield/Model_ABC.h"
 
+#pragma warning( disable : 4355 )
+
 using namespace launcher;
 
 namespace
@@ -57,7 +59,7 @@ namespace
 Launcher::Launcher( const Config& config )
     : fileLoaderObserver_( new tools::NullFileLoaderObserver() )
     , fileLoader_        ( new tools::DefaultLoader( *fileLoaderObserver_ ) )
-    , server_            ( new LauncherService( config.GetLauncherPort() ) )
+    , server_            ( new LauncherService( config.GetLauncherPort(), *this ) )
     , processes_         ( new ProcessService( config, *fileLoader_, *server_ ) )
     , proxy_             ( new shield::Server( config.GetLauncherPort() + 1, *server_, model, *server_, logger, true ) ) // $$$$ MCO should we hard-code 30001 instead of port + 1 ?
 {
@@ -84,6 +86,15 @@ void Launcher::Update()
     if( processes_.get() )
         processes_->Update();
     proxy_->Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Launcher::HandleConnectionToAdmin
+// Created: JSR 2011-12-12
+// -----------------------------------------------------------------------------
+void Launcher::HandleConnectionToAdmin( const std::string& endpoint )
+{
+    processes_->CreatePermanentHandlers( endpoint );
 }
 
 // -----------------------------------------------------------------------------

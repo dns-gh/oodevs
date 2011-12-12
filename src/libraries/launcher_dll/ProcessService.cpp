@@ -76,6 +76,29 @@ ProcessService::~ProcessService()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProcessService::CreatePermanentHandlers
+// Created: JSR 2011-12-12
+// -----------------------------------------------------------------------------
+void ProcessService::CreatePermanentHandlers( const std::string& endpoint )
+{
+    for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
+    {
+        boost::shared_ptr< SwordFacade >& facade = it->second;
+        if( facade.get() && facade->GetEndpoint() == endpoint )
+        {
+            const std::string& exercise = it->first.first;
+            const std::string& session  = it->first.second;
+            facade->ClearPermanentMessageHandler();
+            facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new CheckpointMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+            facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+            facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+            facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlEndTickMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+            facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new SessionStatusMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProcessService::SendExerciseList
 // Created: SBO 2010-09-30
 // -----------------------------------------------------------------------------
