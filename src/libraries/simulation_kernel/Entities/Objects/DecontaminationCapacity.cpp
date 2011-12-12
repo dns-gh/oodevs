@@ -153,7 +153,7 @@ bool DecontaminationCapacity::Decontaminate( MIL_Object_ABC& object, MIL_Agent_A
     const double rRatioWorkers = animators.GetAnimatorsRatio();
     if( rRatioWorkers > 0 )
         roleNBC.Decontaminate( rRatioWorkers );
-    return roleNBC.IsContaminated();
+    return !roleNBC.IsContaminated();
 }
 
 // -----------------------------------------------------------------------------
