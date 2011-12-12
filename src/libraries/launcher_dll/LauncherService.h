@@ -43,7 +43,7 @@ public:
     //! @name Operations
     //@{
     boost::shared_ptr< LauncherPublisher > ResolveClient( const std::string& endpoint ) const;
-	bool TestClient( const std::string& endpoint ) const;
+    bool TestClient( const std::string& endpoint ) const;
     //@}
 
     //! @name Operations

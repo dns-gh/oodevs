@@ -42,10 +42,10 @@ LauncherPublisher::~LauncherPublisher()
 // -----------------------------------------------------------------------------
 void LauncherPublisher::Send( const sword::LauncherToAdmin& message )
 {
-	try
-	{
-		sender_.Send( endpoint_, message );
-	}
+    try
+    {
+        sender_.Send( endpoint_, message );
+    }
     catch( std::exception& e )
     {
         std::string content = e.what();

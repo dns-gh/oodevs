@@ -29,8 +29,8 @@ SwordFacade::SwordFacade( const LauncherService& server, std::string endpoint, b
     : isDispatcher_   ( isDispatcher )
     , isConnected_    ( false )
     , isAuthenticated_( false )
-	, server_		  ( server )
-	, endpoint_		  ( endpoint )
+    , server_         ( server )
+    , endpoint_       ( endpoint )
 {
     // NOTHING
 }
@@ -227,18 +227,18 @@ void SwordFacade::OnReceiveMessage( const sword::DispatcherToClient& message )
 template< typename T >
 void SwordFacade::Update( const T& message )
 {
-	if ( server_.TestClient( endpoint_ ) )
-	{
-		BOOST_FOREACH( T_Handler handler, permanentHandler_ )
-			handler->OnReceiveMessage( message );
-		HandlerContainer::iterator it = messageHandlers_.find( message.context() );
-		if( messageHandlers_.end() != it )
-		{
-			bool handled = it->second->OnReceiveMessage( message );
-			if ( handled )
-				messageHandlers_.erase( message.context() );
-		}
-	}
+    if ( server_.TestClient( endpoint_ ) )
+    {
+        BOOST_FOREACH( T_Handler handler, permanentHandler_ )
+            handler->OnReceiveMessage( message );
+        HandlerContainer::iterator it = messageHandlers_.find( message.context() );
+        if( messageHandlers_.end() != it )
+        {
+            bool handled = it->second->OnReceiveMessage( message );
+            if ( handled )
+                messageHandlers_.erase( message.context() );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

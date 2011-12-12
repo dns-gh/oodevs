@@ -53,14 +53,14 @@ protected:
     {
         message().set_exercise( exercise_ );
         message().set_session( session_ );
-		if ( publisher_.get() )
-			message.Send( *publisher_ );
+        if ( publisher_.get() )
+            message.Send( *publisher_ );
     }
     template< typename T >
     void SendSimply( T& message )
     {
-		if ( publisher_.get() )
-			message.Send( *publisher_ );
+        if ( publisher_.get() )
+            message.Send( *publisher_ );
     }
     //@}
 

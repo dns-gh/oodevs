@@ -81,7 +81,7 @@ boost::shared_ptr< LauncherPublisher > LauncherService::ResolveClient( const std
 bool LauncherService::TestClient( const std::string& endpoint ) const
 {
     std::map< std::string, boost::shared_ptr< LauncherPublisher > >::const_iterator it = clients_.find( endpoint );
-	return it != clients_.end();
+    return it != clients_.end();
 }
 
 // -----------------------------------------------------------------------------
