@@ -42,6 +42,10 @@ public:
 
     //! @name Operations
     //@{
+    virtual void HideAssignedAutomats();
+    virtual void ShowAssignedAutomats();
+    virtual void RemoveFilter();
+
     virtual void Display( UserProfile& profile );
     void Update( bool supervisor );
     //@}
@@ -52,7 +56,6 @@ protected:
     void OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column );
     //@}
 
-private:
     //! @name Types
     //@{
     enum Status
@@ -63,6 +66,7 @@ private:
     };
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::pair< std::string, const kernel::Entity_ABC* > T_Error;

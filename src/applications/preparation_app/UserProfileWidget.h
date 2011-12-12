@@ -70,6 +70,8 @@ private slots:
     void OnLoginChanged();
     void OnPasswordChanged( const QString& text );
     void OnUserRole( const QString& role );
+    void OnHideFilterChanged( int state );
+    void OnShowFilterChanged( int state );
     //@}
 
 private:
@@ -105,6 +107,8 @@ private:
     UserProfileControls_ABC* pUnits_;
     QLabel* informationControls_;
     std::vector< std::string > supervisors_;
+    QCheckBox* pHidefilter_;
+    QCheckBox* pShowFilter_;
     //@}
 };
 

@@ -205,7 +205,7 @@ void UserProfileControls_ABC::Check( ValuedListItem* item, bool control )
         ProfileConsistencyDialog* dialog = new ProfileConsistencyDialog( listView_ );
         if( dialog->Exec( errors ) == QDialog::Accepted )
         {
-            BOOST_FOREACH(  const T_Error& error, errors )
+            BOOST_FOREACH( const T_Error& error, errors )
                 checker_.Update( *profile_, *error.second );
             SetStatus( item, control, false );
             Commit();
@@ -247,4 +247,31 @@ void UserProfileControls_ABC::CheckErrors( const kernel::Entity_ABC& entity, T_E
     std::string login = checker_.GetProfileControl( *profile_, entity );
     if( login != "" )
         errors.push_back( std::make_pair( login, &entity ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::HideAssignedAutomats
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void UserProfileControls_ABC::HideAssignedAutomats()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::ShowAssignedAutomats
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void UserProfileControls_ABC::ShowAssignedAutomats()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::RemoveFilter
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void UserProfileControls_ABC::RemoveFilter()
+{
+    // NOTHING
 }

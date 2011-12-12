@@ -69,6 +69,14 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         Q3VBox* box = new Q3VBox( this );
         Q3GroupBox* group = new Q3GroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
         group->setMargin( 5 );
+
+        Q3VBox* pFilterBox = new Q3VBox( group );
+
+        pHidefilter_ = new QCheckBox( tr( "Hide automats controlled by another profile" ), pFilterBox );
+        connect( pHidefilter_, SIGNAL( stateChanged( int ) ), this, SLOT( OnHideFilterChanged( int ) ) );
+        pShowFilter_ = new QCheckBox( tr( "Show only automats controlled by this profile" ), pFilterBox );
+        connect( pShowFilter_, SIGNAL( stateChanged( int ) ), this, SLOT( OnShowFilterChanged( int ) ) );
+
         QTabWidget* tabs = new QTabWidget( group );
 
         UserProfileUnitControls* unitRights = new UserProfileUnitControls( tabs, controllers, factory, icons, checker_, model );
@@ -244,4 +252,35 @@ void UserProfileWidget::Update()
 void UserProfileWidget::Show()
 {
     dynamic_cast< UserProfileUnitControls* >( pUnits_ )->Show();
+}
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::OnHideFilterChanged
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void UserProfileWidget::OnHideFilterChanged( int state )
+{
+    if( state == Qt::Checked )
+        pUnits_->HideAssignedAutomats();
+    else
+    {
+        pUnits_->RemoveFilter();
+        if( pShowFilter_->isChecked() )
+            pUnits_->ShowAssignedAutomats();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::OnShowFilterChanged
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void UserProfileWidget::OnShowFilterChanged( int state )
+{
+    if( state == Qt::Checked )
+        pUnits_->ShowAssignedAutomats();
+    else
+    {
+        pUnits_->RemoveFilter();
+        if( pHidefilter_->isChecked() )
+            pUnits_->HideAssignedAutomats();
+    }
 }

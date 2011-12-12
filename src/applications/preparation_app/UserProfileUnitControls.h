@@ -12,7 +12,13 @@
 
 #include "clients_gui/HierarchyListView.h"
 #include "preparation/ProfileHierarchies_ABC.h"
+#include "preparation/ProfilesModel.h"
 #include "UserProfileControls_ABC.h"
+
+namespace gui
+{
+    class ValuedListItem;
+}
 
 class Model;
 
@@ -38,6 +44,10 @@ public:
 
     //! @name Operations
     //@{
+    virtual void HideAssignedAutomats();
+    virtual void ShowAssignedAutomats();
+    virtual void RemoveFilter();
+
     virtual void Display( UserProfile& profile );
     virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     void Show();
@@ -56,12 +66,16 @@ private:
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
+
+    bool ApplyHideFilter( gui::ValuedListItem* item ) const;
+    bool ApplyShowFilter( gui::ValuedListItem* item ) const;
     //@}
 
 private:
     //! @name Member Data
     //@{
     Model& model_;
+    ProfilesModel::T_Units units_;
     //@}
 };
 

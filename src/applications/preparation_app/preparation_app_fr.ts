@@ -2222,6 +2222,14 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>&apos;View&apos; permission allows you to see an unit.</source>
         <translation>&apos;Vue&apos; permet de voir une unité.</translation>
     </message>
+    <message>
+        <source>Hide automats controlled by another profile</source>
+        <translation>Masquer les automates contrôlées par un autre profil</translation>
+    </message>
+    <message>
+        <source>Show only automats controlled by this profile</source>
+        <translation>Afficher seulement les automates contrôlés</translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>

@@ -18,6 +18,8 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include <boost/lambda/lambda.hpp>
+#include <boost/bind.hpp>
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
 
@@ -157,4 +159,59 @@ void UserProfileUnitControls::NotifyUpdated( const Entity_ABC& entity )
         item->SetNamed( entity );
         LongNameHelper::SetItemLongName( entity, *item );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::HideAssignedAutomats
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::HideAssignedAutomats()
+{
+    units_.clear();
+    model_.profiles_.Visit( units_ );
+    ApplyFilter( boost::bind( &UserProfileUnitControls::ApplyShowFilter, this, _1 ) || boost::bind( &UserProfileUnitControls::ApplyHideFilter, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::ApplyHideFilter
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+bool UserProfileUnitControls::ApplyHideFilter( gui::ValuedListItem* /*item*/ ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::ShowAssignedAutomats
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::ShowAssignedAutomats()
+{
+    ApplyFilter( boost::bind( &UserProfileUnitControls::ApplyShowFilter, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::ApplyShowFilter
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+bool UserProfileUnitControls::ApplyShowFilter( gui::ValuedListItem* item ) const
+{
+    if( item )
+        if( ValuedListItem* value = static_cast< ValuedListItem* >( item ) )
+            if( const Entity_ABC* entity = value->GetValue< const Entity_ABC >() )
+            {
+                const Status status = Status( value->text( 2 ).toInt() );
+                if( status != eNothing )
+                    return true;
+            }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::RemoveFilter
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::RemoveFilter()
+{
+    ApplyFilter( boost::lambda::constant( true ) );
 }
