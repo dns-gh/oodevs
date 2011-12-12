@@ -19274,33 +19274,6 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Masalife.RENS.Drone CL289" id="675" is-autonomous="true" name="RENS . Drone CL 289" type="Pion RENS">
-    <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
-    <equipments>
-      <equipment count="1" crew="0" major="true" type="Drone CL 289"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="0" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="500s"/>
-    </postures>
-    <nbc decontamination-delay="180s"/>
-    <distance-before-points>
-      <distance-before-point type="forest" value="500"/>
-      <distance-before-point type="urban area" value="500"/>
-      <distance-before-point type="crossroad" value="500"/>
-      <distance-before-point type="bridge" value="500"/>
-    </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
   <unit decisional-model="Masalife.RENS.Section ROHUM" id="676" name="RENS . Equipe de recueil information" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="combat/reconnaissance/long range surveillance"/>
     <equipments>
@@ -19327,39 +19300,6 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre CL289" id="677" name="RENS . Section MO CL 289" type="Pion RENS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
-    <equipments>
-      <equipment count="3" crew="2" type="VTC P4"/>
-      <equipment count="1" crew="2" type="Lot 7"/>
-      <equipment count="1" crew="3" type="Ambulance J5"/>
-      <equipment count="3" crew="3" type="TRM 2000"/>
-      <equipment count="1" crew="3" type="TRM 2000 CN20"/>
-      <equipment count="5" crew="3" type="TRM 10000"/>
-      <equipment count="9" crew="2" major="true" type="GBC 180 Lanceur Drones"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="3" type="Officier"/>
-      <crew-rank count="26" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="500s"/>
-    </postures>
-    <nbc decontamination-delay="1950s"/>
-    <distance-before-points>
-      <distance-before-point type="forest" value="500"/>
-      <distance-before-point type="urban area" value="500"/>
-      <distance-before-point type="crossroad" value="500"/>
-      <distance-before-point type="bridge" value="500"/>
-    </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
@@ -19985,4 +19925,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1159385973" -->
+<!-- signature="1051769417" -->
