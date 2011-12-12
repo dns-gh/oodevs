@@ -127,10 +127,22 @@ void LauncherService::Install() const
         );
         if( IsValid( schService, MT_FormatString( "Failed to create service %s, error code = %d", name_.c_str(), GetLastError() ) ) )
         {
+            // set service description
             LPTSTR desc = TEXT( "Launcher MASA Sword SCIPIO" );
             SERVICE_DESCRIPTION sd;
             sd.lpDescription = desc;
             ChangeServiceConfig2( schService, SERVICE_CONFIG_DESCRIPTION, &sd );
+            // relaunch service if failure
+            SERVICE_FAILURE_ACTIONS sfa;
+            SC_ACTION actions;
+            sfa.dwResetPeriod = INFINITE;
+            sfa.lpCommand = NULL;
+            sfa.lpRebootMsg = NULL;
+            sfa.cActions = 1;
+            sfa.lpsaActions = &actions;
+            sfa.lpsaActions[ 0 ].Type = SC_ACTION_RESTART;
+            sfa.lpsaActions[ 0 ].Delay = 5000; 
+            ChangeServiceConfig2( schService, SERVICE_CONFIG_FAILURE_ACTIONS, &sfa );
             MT_LOG_INFO_MSG( MT_FormatString( "Service %s installed", name_.c_str() ).c_str() );
             CloseServiceHandle( schService );
         }
@@ -258,7 +270,7 @@ void LauncherService::ServiceMain( DWORD, LPTSTR* )
     std::vector< char* > args = boost::assign::list_of< char* >( &appName[ 0 ] )( &arg[ 0 ] );
 
     pInstance_->pFacade_.reset( new LauncherFacade( pInstance_->path_.parent_path().string() ) );
-    pInstance_->pFacade_->Initialize( args.size(), &args[ 0 ] );
+    pInstance_->pFacade_->Initialize( static_cast< int >( args.size() ), &args[ 0 ] );
     pInstance_->isRunning_ = true;
 
     MT_LOG_INFO_MSG( "ServiceMain running" );
