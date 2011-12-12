@@ -58,6 +58,7 @@ UserProfileDialog::UserProfileDialog( QWidget* parent, kernel::Controllers& cont
 
     box = new Q3HBox( this );
     box->setMargin( 5 );
+    box->setSpacing( 5 );
     box->setMaximumHeight( 40 );
     QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
     QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );

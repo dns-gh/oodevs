@@ -62,6 +62,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new Q3HBox( this );
     box->setMargin( 5 );
+    box->setSpacing( 5 );
     box->setMaximumHeight( 40 );
     QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
     okBtn->setDefault( true );
