@@ -1634,6 +1634,13 @@
         <value id="1" name="directionnel"/>
       </parameter>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.MettreEnOeuvre" dia-type="france.military.platoon.combat.support.rens.tasks.MettreEnOeuvre" id="2480" name="PION RENS Mettre En Oeuvre" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AUTOMATE ALAT Aller Se Recompleter" package="none">
@@ -3255,4 +3262,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3194283387" -->
+<!-- signature="0396009416" -->
