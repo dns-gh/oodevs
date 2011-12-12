@@ -19274,7 +19274,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Section ROHUM" id="676" name="RENS . Equipe de recueil information" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Section ROHUM" id="675" name="RENS . Equipe de recueil information" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="combat/reconnaissance/long range surveillance"/>
     <equipments>
       <equipment count="1" crew="2" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
@@ -19303,7 +19303,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre DRAC" id="678" name="RENS . Section MO DRAC" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre DRAC" id="676" name="RENS . Section MO DRAC" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VBL 7,62"/>
@@ -19331,7 +19331,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre SDTI" id="679" name="RENS . PC MO DRAC" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre SDTI" id="677" name="RENS . PC MO DRAC" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/aviation/fixed wing"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="TRM 4000"/>
@@ -19358,7 +19358,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre SDTI" id="680" name="RENS . Section MO SDTI" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre SDTI" id="678" name="RENS . Section MO SDTI" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VLRA"/>
@@ -19387,7 +19387,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat URH" id="681" name="RENS . Equipe URH OFF" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat URH" id="679" name="RENS . Equipe URH OFF" type="Pion RENS">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" major="true" type="Fantassin URH"/>
@@ -19416,7 +19416,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat URH" id="682" name="RENS . Equipe URH S/OFF" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat URH" id="680" name="RENS . Equipe URH S/OFF" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" major="true" type="Fantassin URH"/>
@@ -19445,7 +19445,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Groupe BROVAB" id="683" name="RENS . Groupe BROMURE" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Groupe BROVAB" id="681" name="RENS . Groupe BROMURE" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/jamming"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="VAB BROMURE"/>
@@ -19474,7 +19474,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="684" name="RENS . Groupe ELGE" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="682" name="RENS . Groupe ELGE" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VTC P4 BROD"/>
@@ -19501,7 +19501,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="685" name="RENS . Groupe ROEM" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="683" name="RENS . Groupe ROEM" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VBL 7,62 ROEM"/>
@@ -19528,7 +19528,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Systeme_START" id="686" name="RENS . Module Interception START" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Systeme_START" id="684" name="RENS . Module Interception START" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="5" crew="3" major="true" type="VLRA START"/>
@@ -19557,7 +19557,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Systeme_START" id="687" name="RENS . Module Localisation SPRINT" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Systeme_START" id="685" name="RENS . Module Localisation SPRINT" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4 7,62"/>
@@ -19586,7 +19586,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Systeme STAIR" id="688" name="RENS . Module STAIR" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Systeme STAIR" id="686" name="RENS . Module STAIR" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="VLRA STAIR"/>
@@ -19615,7 +19615,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="689" name="RENS . Patrouille Recherche Blindee" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="687" name="RENS . Patrouille Recherche Blindee" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
@@ -19644,7 +19644,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat recherche moto" id="690" name="RENS . Patrouille Recherche Moto" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat recherche moto" id="688" name="RENS . Patrouille Recherche Moto" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="5" crew="1" loadable="true" major="true" type="Moto CAGIVA 350"/>
@@ -19672,7 +19672,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat recherche nautique" id="691" name="RENS . Patrouille Recherche Nautique" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat recherche nautique" id="689" name="RENS . Patrouille Recherche Nautique" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="VBL 7,62"/>
@@ -19702,7 +19702,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat recherche RASIT" id="692" name="RENS . Patrouille Recherche Radar" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat recherche RASIT" id="690" name="RENS . Patrouille Recherche Radar" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="combat/field artillery/artillery survey"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="TRM 2000 RASIT"/>
@@ -19731,7 +19731,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Masalife.RENS.Patrouille Viviane" id="693" name="RENS . Patrouille Rens Viviane" type="Pion RENS">
+  <unit can-fly="true" decisional-model="Masalife.RENS.Patrouille Viviane" id="691" name="RENS . Patrouille Rens Viviane" type="Pion RENS">
     <nature atlas-nature="Helicoptere" level="oo" nature-app6="combat/aviation/rotary wing"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="Helicoptere HAV"/>
@@ -19760,7 +19760,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="694" name="RENS . PC RBRR" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="692" name="RENS . PC RBRR" type="Pion RENS">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
@@ -19789,7 +19789,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="695" name="RENS . PC ROEM" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="693" name="RENS . PC ROEM" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VBL 7,62 ROEM"/>
@@ -19816,7 +19816,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="696" name="RENS . Section CDT ROHUM" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="694" name="RENS . Section CDT ROHUM" type="Pion RENS">
     <nature atlas-nature="PC" level="ooo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VBL 7,62"/>
@@ -19837,7 +19837,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Stations MROD_ELODEE" id="697" name="RENS . Section ELODEE" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Stations MROD_ELODEE" id="695" name="RENS . Section ELODEE" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="3" crew="2" type="TRM 2000 12,7"/>
@@ -19868,7 +19868,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Stations Horizon" id="698" name="RENS . Stations Horizon" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Stations Horizon" id="696" name="RENS . Stations Horizon" type="Pion RENS">
     <nature atlas-nature="Helicoptere" level="i" nature-app6="combat/aviation/rotary wing/scout"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VLRA Horizon"/>
@@ -19897,7 +19897,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Stations Linx" id="699" name="RENS . Stations LINX" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Stations Linx" id="697" name="RENS . Stations LINX" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="VAB LINX"/>
@@ -19924,5 +19924,32 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit can-fly="true" decisional-model="Masalife.RENS.Drone SDTI" id="698" is-autonomous="true" name="RENS . DRAC" type="Pion RENS">
+    <nature atlas-nature="Indefini" level="o" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
+    <equipments>
+      <equipment count="1" crew="0" major="true" type="Drone DRAC"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="1051769417" -->
+<!-- signature="4046020952" -->
