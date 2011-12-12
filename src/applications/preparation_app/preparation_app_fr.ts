@@ -1443,6 +1443,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>All existing profiles will be deleted, do you want to continue?</source>
         <translation>Tous les profils existants seront supprimés, voulez-vous continuer?</translation>
     </message>
+    <message>
+        <source>Some profiles have similar names. Please edit them manually.</source>
+        <translation>Certains profils ont des noms similaires. Veuillez les éditer manuellement.</translation>
+    </message>
 </context>
 <context>
     <name>PropertiesTableDisplayer</name>

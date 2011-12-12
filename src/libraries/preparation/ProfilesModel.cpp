@@ -171,6 +171,27 @@ void ProfilesModel::DeleteProfile( const UserProfile& profile )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfilesModel::CheckUnicityAndRename
+// Created: JSR 2011-12-12
+// -----------------------------------------------------------------------------
+bool ProfilesModel::CheckUnicityAndRename()
+{
+    bool ret = false;
+    std::map< const QString, unsigned int > logins;
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    {
+        const QString login = ( *it )->GetLogin();
+        ++logins[ login ];
+        if( logins[ login ] > 1 )
+        {
+            ret = true;
+            ( *it )->SetLogin( login + '(' + QString::number( logins[ login ] - 1 ) + ')' );
+        }
+    }
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfilesModel::Exists
 // Created: SBO 2007-01-17
 // -----------------------------------------------------------------------------

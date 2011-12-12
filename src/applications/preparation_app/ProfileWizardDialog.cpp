@@ -169,5 +169,7 @@ void ProfileWizardDialog::OnConfirmation( int result )
             generator_->GenerateDIREX();
         if( checkBoxes_[ eANALYSIS ]->isChecked() )
             generator_->GenerateANALYSIS();
+        if( profiles_.CheckUnicityAndRename() )
+            QMessageBox::warning( this, tr( "Warning" ), tr( "Some profiles have similar names. Please edit them manually.") );
     }
 }
