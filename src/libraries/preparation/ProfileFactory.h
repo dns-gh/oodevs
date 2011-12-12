@@ -37,19 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual UserProfile* Create( xml::xistream& xis ) const;
-    virtual UserProfile* Create() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ProfileFactory( const ProfileFactory& );            //!< Copy constructor
-    ProfileFactory& operator=( const ProfileFactory& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    QString BuildUniqueLogin() const;
+    virtual UserProfile* Create( const QString& name ) const;
     //@}
 
 private:

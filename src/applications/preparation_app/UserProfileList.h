@@ -21,6 +21,7 @@ class UserProfile;
 class UserProfileWidget;
 class ProfilesModel;
 class ControlsChecker_ABC;
+class NewProfileDialog;
 
 // =============================================================================
 /** @class  UserProfileList
@@ -66,7 +67,7 @@ private:
     UserProfileList& operator=( const UserProfileList& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
+    //! @name Operations
     //@{
     virtual void NotifyCreated( const UserProfile& profile );
     virtual void NotifyUpdated( const UserProfile& profile );
@@ -93,6 +94,7 @@ private:
     QListView*             list_;
     QSortFilterProxyModel* proxyModel_;
     QStandardItemModel*    dataModel_;
+    std::auto_ptr< NewProfileDialog > pNewProfileDialog_;
     //@}
 };
 

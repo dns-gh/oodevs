@@ -35,7 +35,7 @@
 // -----------------------------------------------------------------------------
 ProfilesModel::ProfilesModel( kernel::Controllers& controllers, const ProfileFactory_ABC& factory )
     : controllers_( controllers )
-    , factory_( factory )
+    , factory_   ( factory )
 {
     controllers_.Register( *this );
 }
@@ -108,9 +108,9 @@ void ProfilesModel::LoadProfile( xml::xistream& xis )
 // Name: ProfilesModel::CreateProfile
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-void ProfilesModel::CreateProfile()
+void ProfilesModel::CreateProfile( const QString& name )
 {
-    std::auto_ptr< UserProfile > profile( factory_.Create() );
+    std::auto_ptr< UserProfile > profile( factory_.Create( name ) );
     userProfiles_.push_back( profile.release() );
 }
 
@@ -120,8 +120,7 @@ void ProfilesModel::CreateProfile()
 // -----------------------------------------------------------------------------
 void ProfilesModel::CreateProfile( const QString& name, const std::string& userRole, const kernel::Entity_ABC& entity, bool readonly )
 {
-    std::auto_ptr< UserProfile > profile( factory_.Create() );
-    profile->SetLogin( name );
+    std::auto_ptr< UserProfile > profile( factory_.Create( name ) );
     profile->SetUserRole( userRole );
     if( readonly )
         profile->SetReadable( entity, true );
@@ -136,8 +135,7 @@ void ProfilesModel::CreateProfile( const QString& name, const std::string& userR
 // -----------------------------------------------------------------------------
 void ProfilesModel::CreateProfile( const QString& name, const std::string& userRole, const std::vector< const kernel::Entity_ABC* >& entities, bool readonly )
 {
-    std::auto_ptr< UserProfile > profile( factory_.Create() );
-    profile->SetLogin( name );
+    std::auto_ptr< UserProfile > profile( factory_.Create( name ) );
     profile->SetUserRole( userRole );
     if( readonly )
         for( std::vector< const kernel::Entity_ABC* >::const_iterator it = entities.begin(); it != entities.end(); ++it )

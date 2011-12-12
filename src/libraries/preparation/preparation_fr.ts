@@ -672,13 +672,6 @@
     </message>
 </context>
 <context>
-    <name>ProfilesModel</name>
-    <message>
-        <source>New profile</source>
-        <translation>Nouveau profil</translation>
-    </message>
-</context>
-<context>
     <name>ScoresModel</name>
     <message>
         <source>Score definitions contain errors:

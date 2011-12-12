@@ -1257,6 +1257,25 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
+    <name>NewProfileDialog</name>
+    <message>
+        <source>New profile</source>
+        <translation>Nouveau profil</translation>
+    </message>
+    <message>
+        <source>Profile name:</source>
+        <translation>Nom du profil :</translation>
+    </message>
+    <message>
+        <source>Profile name is empty.</source>
+        <translation>Le nom du profil n&apos;est pas renseigné.</translation>
+    </message>
+    <message>
+        <source>Profile &apos;%1&apos; already exists.</source>
+        <translation>Le profil &apos;%1&apos; existe déjà.</translation>
+    </message>
+</context>
+<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
@@ -2134,17 +2153,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
-    <name>UserProfileRights</name>
-    <message>
-        <source>Read</source>
-        <translation>Lecture</translation>
-    </message>
-    <message>
-        <source>Write</source>
-        <translation>Ecriture</translation>
-    </message>
-</context>
-<context>
     <name>UserProfileWidget</name>
     <message>
         <source>Profile information</source>
@@ -2167,10 +2175,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Droits d&apos;accès</translation>
     </message>
     <message>
-        <source>Supervisor actions:</source>
-        <translation>Actions de supervision:</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Unités</translation>
     </message>
@@ -2181,12 +2185,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Permissions</source>
         <translation>Droits</translation>
-    </message>
-    <message>
-        <source>&apos;Read&apos; permission allows you to see an unit.
-&apos;Write&apos; permission allows you to control an unit.</source>
-        <translation>&apos;Lecture&apos; permet de voir une unité.
-&apos;Ecriture&apos; permet de contrôler une unité.</translation>
     </message>
     <message>
         <source>Crowds</source>

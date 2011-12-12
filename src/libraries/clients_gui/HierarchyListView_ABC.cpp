@@ -200,6 +200,16 @@ bool HierarchyListView_ABC::HasAnyChildVisible( gui::ValuedListItem* item, boost
 }
 
 // -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::ClearSelection
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::ClearSelection()
+{
+    clearSelection();
+    selected_ = 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: HierarchyListView_ABC::OnSelectionChange
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------

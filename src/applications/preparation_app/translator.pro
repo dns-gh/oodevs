@@ -38,6 +38,7 @@ MainWindow.cpp \
 Menu.cpp \
 ModelBuilder.cpp \
 ModelConsistencyDialog.cpp \
+NewProfileDialog.cpp \
 ObjectCreationPanel.cpp \
 ObjectListView.cpp \
 PeopleAffinitiesDialog.cpp \

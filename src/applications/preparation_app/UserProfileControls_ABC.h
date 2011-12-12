@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( UserProfile& profile );
+    virtual void Display( UserProfile& profile );
     void Update( bool supervisor );
     //@}
 
@@ -50,13 +50,6 @@ protected:
     //! @name Slots
     //@{
     void OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column );
-    void SetStatus( gui::ValuedListItem* item, bool isControl, bool inheritsControllable );
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void ValueChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable ) = 0;
     //@}
 
 private:
@@ -82,6 +75,7 @@ private:
     void Clear();
     void SetItem( Q3ListViewItem* item, Status status );
     void SetStatus( gui::ValuedListItem* item, bool inheritsControllable );
+    void SetStatus( gui::ValuedListItem* item, bool isControl, bool inheritsControllable );
     Status MakeStatus( bool control, bool inheritedControl );
     void Check( gui::ValuedListItem* item, bool control );
     T_Errors GetErrors( gui::ValuedListItem* item );

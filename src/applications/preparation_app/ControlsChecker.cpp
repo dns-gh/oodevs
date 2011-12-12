@@ -49,8 +49,17 @@ ControlsChecker::~ControlsChecker()
 // -----------------------------------------------------------------------------
 void ControlsChecker::Display( const T_ProfileEditors& editors )
 {
-    editors_.clear();
+    Clean();
     editors_ = editors;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlsChecker::Clean
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void ControlsChecker::Clean()
+{
+    editors_.clear();
 }
 
 // -----------------------------------------------------------------------------

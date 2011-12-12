@@ -12,6 +12,7 @@
 #include "moc_UserProfileList.cpp"
 #include "UserProfileWidget.h"
 #include "ProfileEditor.h"
+#include "NewProfileDialog.h"
 #include "ControlsChecker_ABC.h"
 #include "preparation/ModelConsistencyChecker.h"
 #include "preparation/ProfilesModel.h"
@@ -26,10 +27,11 @@
 UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers,
                                   ProfilesModel& model, ControlsChecker_ABC& checker )
     : QWidget( parent )
-    , controllers_( controllers )
-    , pages_      ( pages )
-    , model_      ( model )
-    , checker_    ( checker )
+    , controllers_      ( controllers )
+    , pages_            ( pages )
+    , model_            ( model )
+    , checker_          ( checker )
+    , pNewProfileDialog_( new NewProfileDialog( this, model, checker ) )
 {
     QVBoxLayout* layout = new QVBoxLayout( this );
 
@@ -79,6 +81,7 @@ void UserProfileList::Save()
         controllers_.controller_.Update( it->first );
     }
     emit( DoConsistencyCheck() );
+    checker_.Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +93,7 @@ void UserProfileList::Cancel()
     for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
         delete it->second;
     editors_.clear();
+    checker_.Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +107,7 @@ void UserProfileList::OnSelectionChanged()
     {
         if( const UserProfile* profile = profiles_.at( proxyModel_->mapToSource( indexes.front() ).row() ) )
         {
-            UserProfile*& editor = editors_[profile];
+            UserProfile*& editor = editors_[ profile ];
             if( !editor )
                 editor = new ProfileEditor( *profile, controllers_.controller_ );
             checker_.Display( editors_ );
@@ -118,7 +122,7 @@ void UserProfileList::OnSelectionChanged()
 // -----------------------------------------------------------------------------
 void UserProfileList::OnCreate()
 {
-    model_.CreateProfile();
+    pNewProfileDialog_->Exec();
 }
 
 // -----------------------------------------------------------------------------
@@ -150,8 +154,14 @@ namespace
 void UserProfileList::NotifyCreated( const UserProfile& profile )
 {
     profiles_.push_back( &profile );
-    dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( profile.GetLogin() ) );
+    int count = dataModel_->rowCount();
+    dataModel_->setItem( count, 0, CreateItem( profile.GetLogin() ) );
     proxyModel_->sort( 0 );
+    if( isShown() )
+    {
+        list_->selectionModel()->clear();
+        list_->selectionModel()->select( proxyModel_->mapFromSource( dataModel_->index( count, 0 ) ), QItemSelectionModel::Select );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -194,6 +204,7 @@ void UserProfileList::NotifyDeleted( const UserProfile& profile )
             delete editorIt->second;
             editors_.erase( editorIt );
         }
+        checker_.Display( editors_ );
         pages_.SetEnabled( !profiles_.empty() );
     }
 }
@@ -207,5 +218,6 @@ void UserProfileList::showEvent( QShowEvent* event )
     QWidget::showEvent( event );
     if( dataModel_->rowCount() > 0 )
         pages_.SetEnabled( true );
+    list_->selectionModel()->clear();
     list_->selectionModel()->select( proxyModel_->index( 0, 0 ), QItemSelectionModel::Select );
 }

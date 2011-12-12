@@ -29,7 +29,7 @@ namespace gui
 }
 
 class UserProfile;
-class UserProfileRights_ABC;
+class UserProfileControls_ABC;
 class ControlsChecker_ABC;
 class Model;
 
@@ -69,7 +69,6 @@ private slots:
     //@{
     void OnLoginChanged();
     void OnPasswordChanged( const QString& text );
-    void OnSupervisorChanged( bool supervisor );
     void OnUserRoleActivation( bool enable );
     void OnUserRole( const QString& role );
     //@}
@@ -85,7 +84,6 @@ private:
     //! @name Helpers
     //@{
     void ActivateControls();
-    void DeactivateControls();
     //@}
 
 private:
@@ -98,17 +96,14 @@ private:
     UserProfile* profile_;
     QLineEdit* login_;
     QLineEdit* password_;
-    QLabel* supervisorLabel_;
-    QCheckBox* supervisor_;
     Q3GroupBox* userRoleGroup_;
     QLabel* userRoleLabel_;
     QComboBox* userRole_;
     kernel::DictionaryType* userRoleDico_;
     std::string dicoKind_;
     std::string dicoLanguage_;
-    QStackedWidget* pPopulations_;
-    QStackedWidget* pUnits_;
-    QStackedWidget* pInformations_;
+    UserProfileControls_ABC* pPopulations_;
+    UserProfileControls_ABC* pUnits_;
     QLabel* informationControls_;
     std::vector< std::string > supervisors_;
     //@}

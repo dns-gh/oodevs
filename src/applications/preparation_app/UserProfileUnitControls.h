@@ -38,20 +38,9 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Display( UserProfile& profile );
     virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     void Show();
-    //@}
-
-signals:
-    //! @name signals
-    //@{
-    void ProfiledChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable );
-    //@}
-
-public slots:
-    //! @name Slots
-    //@{
-    void OnProfiledChanged( const kernel::Entity_ABC* entity, bool isWriteable );
     //@}
 
 private slots:
@@ -59,12 +48,6 @@ private slots:
     //@{
     void OnItemClicked( Q3ListViewItem*, const QPoint&, int );
     void OnItemExpanded( Q3ListViewItem* );
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void ValueChanged( const kernel::Entity_ABC* entity, bool isReadable, bool isWriteable );
     //@}
 
 private:
@@ -78,7 +61,7 @@ private:
 private:
     //! @name Member Data
     //@{
-Model& model_;
+    Model& model_;
     //@}
 };
 

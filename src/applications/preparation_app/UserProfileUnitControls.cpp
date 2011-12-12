@@ -52,6 +52,16 @@ UserProfileUnitControls::~UserProfileUnitControls()
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileUnitControls::Display
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::Display( UserProfile& profile )
+{
+    ClearSelection();
+    UserProfileControls_ABC::Display( profile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::Display
 // Created: JSR 2011-09-15
 // -----------------------------------------------------------------------------
 void UserProfileUnitControls::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
@@ -147,27 +157,4 @@ void UserProfileUnitControls::NotifyUpdated( const Entity_ABC& entity )
         item->SetNamed( entity );
         LongNameHelper::SetItemLongName( entity, *item );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileUnitControls::OnProfiledChanged
-// Created: LGY 2011-09-14
-// -----------------------------------------------------------------------------
-void UserProfileUnitControls::OnProfiledChanged( const Entity_ABC* entity, bool isWriteable )
-{
-    if( entity )
-    {
-        ValuedListItem* item = FindItem( entity, firstChild() );
-        if( item )
-            SetStatus( item, isWriteable, false );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileUnitControls::ValueChanged
-// Created: LGY 2011-09-13
-// -----------------------------------------------------------------------------
-void UserProfileUnitControls::ValueChanged( const Entity_ABC* entity, bool isReadable, bool isWriteable )
-{
-    emit ProfiledChanged( entity, isReadable, isWriteable );
 }

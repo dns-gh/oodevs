@@ -66,7 +66,6 @@ void UserProfileControls_ABC::Commit()
             const bool isReadable = status == eControl;
             profile_->SetReadable( *entity, isReadable );
             profile_->SetWriteable( *entity, isWriteable );
-            ValueChanged( entity, isReadable, isWriteable );
         }
 }
 

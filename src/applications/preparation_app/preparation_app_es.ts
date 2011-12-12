@@ -1257,6 +1257,25 @@ Do you want to save anyway?</source>
     </message>
 </context>
 <context>
+    <name>NewProfileDialog</name>
+    <message>
+        <source>New profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile name is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile &apos;%1&apos; already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
@@ -2134,17 +2153,6 @@ Do you want to save anyway?</source>
     </message>
 </context>
 <context>
-    <name>UserProfileRights</name>
-    <message>
-        <source>Read</source>
-        <translation>Lectura</translation>
-    </message>
-    <message>
-        <source>Write</source>
-        <translation>Escritura</translation>
-    </message>
-</context>
-<context>
     <name>UserProfileWidget</name>
     <message>
         <source>Profile information</source>
@@ -2167,10 +2175,6 @@ Do you want to save anyway?</source>
         <translation>Permisos de acceso</translation>
     </message>
     <message>
-        <source>Supervisor actions:</source>
-        <translation>Acciones de supervisor:</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Unidades</translation>
     </message>
@@ -2181,12 +2185,6 @@ Do you want to save anyway?</source>
     <message>
         <source>Permissions</source>
         <translation>Permisos</translation>
-    </message>
-    <message>
-        <source>&apos;Read&apos; permission allows you to see an unit.
-&apos;Write&apos; permission allows you to control an unit.</source>
-        <translation>Permiso de &apos;Lectura&apos; permite visualizar una unidad.
-Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
     </message>
     <message>
         <source>Crowds</source>

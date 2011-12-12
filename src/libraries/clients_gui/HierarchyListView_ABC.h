@@ -88,6 +88,7 @@ protected:
     virtual void NotifyActivated( const kernel::Entity_ABC& element );
     virtual void focusInEvent( QFocusEvent* );
     virtual void DisplayIcon( const kernel::Entity_ABC& entity, ValuedListItem* item );
+    virtual void ClearSelection();
     static void SetVisible( Q3ListViewItem* item, bool visible );
     void ApplyFilter( boost::function< bool ( gui::ValuedListItem* ) > func );
     void UpdateItem( ValuedListItem* item );

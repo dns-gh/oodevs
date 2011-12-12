@@ -89,9 +89,6 @@
     <Filter Include="Source Files\Dialogs\Profiles\Controls">
       <UniqueIdentifier>{a4802ccc-554f-4217-b550-9aa08116aba1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Dialogs\Profiles\Rights">
-      <UniqueIdentifier>{ce4754c1-1256-4f35-ae16-34d0eda0e3a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Dialogs\Consistency">
       <UniqueIdentifier>{ef8e205d-93c8-4eeb-97fc-71c09fc62a0c}</UniqueIdentifier>
     </Filter>
@@ -418,15 +415,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.cpp">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\UserProfilePopulationRights.cpp">
-      <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.cpp">
-      <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitRights.cpp">
-      <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\ControlsChecker.cpp">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </ClCompile>
@@ -473,6 +461,9 @@
       <Filter>Source Files\Panels\Infos</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\ProfileConsistencyDialog.cpp">
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\NewProfileDialog.cpp">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </ClCompile>
   </ItemGroup>
@@ -626,9 +617,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.h">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.h">
-      <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\ControlsChecker.h">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
@@ -838,12 +826,6 @@
     <CustomBuild Include="..\..\src\applications\preparation_app\LongNameEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfilePopulationRights.h">
-      <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitRights.h">
-      <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitControls.h">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </CustomBuild>
@@ -881,6 +863,9 @@
       <Filter>Source Files\Lists</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\ProfileConsistencyDialog.h">
+      <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\NewProfileDialog.h">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </CustomBuild>
   </ItemGroup>
