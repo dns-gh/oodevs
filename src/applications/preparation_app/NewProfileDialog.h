@@ -10,6 +10,12 @@
 #ifndef __NewProfileDialog_h_
 #define __NewProfileDialog_h_
 
+namespace kernel
+{
+    class ExtensionTypes;
+    class DictionaryType;
+}
+
 class ProfilesModel;
 class ControlsChecker_ABC;
 
@@ -26,12 +32,15 @@ class NewProfileDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             NewProfileDialog( QWidget* parent, ProfilesModel& model, ControlsChecker_ABC& checker );
+             NewProfileDialog( QWidget* parent, ProfilesModel& model, ControlsChecker_ABC& checker,
+                               const kernel::ExtensionTypes& extensions );
     virtual ~NewProfileDialog();
     //@}
 
     //! @name Operations
     //@{
+    void Load();
+    void Unload();
     void Exec();
     //@}
 
@@ -53,9 +62,14 @@ private:
     //@{
     ProfilesModel& model_;
     ControlsChecker_ABC& checker_;
+    const kernel::ExtensionTypes& extensions_;
+    kernel::DictionaryType* userRoleDico_;
     QLineEdit* value_;
+    QComboBox* userRole_;
     QDialogButtonBox* okButton_;
     QLabel* warningLabel_;
+    std::string dicoKind_;
+    std::string dicoLanguage_;
     //@}
 };
 

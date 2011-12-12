@@ -69,7 +69,6 @@ private slots:
     //@{
     void OnLoginChanged();
     void OnPasswordChanged( const QString& text );
-    void OnUserRoleActivation( bool enable );
     void OnUserRole( const QString& role );
     //@}
 
@@ -83,7 +82,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    void ActivateControls();
+    void Update();
     //@}
 
 private:

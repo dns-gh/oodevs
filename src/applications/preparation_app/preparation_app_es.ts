@@ -1274,6 +1274,14 @@ Do you want to save anyway?</source>
         <source>Profile &apos;%1&apos; already exists.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Role:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No role defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ObjectCreationPanel</name>

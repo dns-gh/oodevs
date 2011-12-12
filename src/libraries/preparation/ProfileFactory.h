@@ -38,6 +38,7 @@ public:
     //@{
     virtual UserProfile* Create( xml::xistream& xis ) const;
     virtual UserProfile* Create( const QString& name ) const;
+    virtual UserProfile* Create( const QString& name, const std::string& role ) const;
     //@}
 
 private:

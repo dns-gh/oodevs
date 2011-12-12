@@ -25,13 +25,13 @@
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers,
-                                  ProfilesModel& model, ControlsChecker_ABC& checker )
+                                  ProfilesModel& model, const kernel::ExtensionTypes& extensions, ControlsChecker_ABC& checker )
     : QWidget( parent )
     , controllers_      ( controllers )
     , pages_            ( pages )
     , model_            ( model )
     , checker_          ( checker )
-    , pNewProfileDialog_( new NewProfileDialog( this, model, checker ) )
+    , pNewProfileDialog_( new NewProfileDialog( this, model, checker, extensions ) )
 {
     QVBoxLayout* layout = new QVBoxLayout( this );
 
@@ -207,6 +207,24 @@ void UserProfileList::NotifyDeleted( const UserProfile& profile )
         checker_.Display( editors_ );
         pages_.SetEnabled( !profiles_.empty() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileList::NotifyUpdated
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void UserProfileList::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
+{
+    pNewProfileDialog_->Load();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileList::NotifyUpdated
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void UserProfileList::NotifyUpdated( const kernel::ModelUnLoaded& /*model*/ )
+{
+    pNewProfileDialog_->Unload();
 }
 
 // -----------------------------------------------------------------------------

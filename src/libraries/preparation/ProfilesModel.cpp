@@ -116,12 +116,21 @@ void ProfilesModel::CreateProfile( const QString& name )
 
 // -----------------------------------------------------------------------------
 // Name: ProfilesModel::CreateProfile
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+void ProfilesModel::CreateProfile( const QString& name, const std::string& userRole )
+{
+    std::auto_ptr< UserProfile > profile( factory_.Create( name, userRole ) );
+    userProfiles_.push_back( profile.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::CreateProfile
 // Created: JSR 2011-12-08
 // -----------------------------------------------------------------------------
 void ProfilesModel::CreateProfile( const QString& name, const std::string& userRole, const kernel::Entity_ABC& entity, bool readonly )
 {
-    std::auto_ptr< UserProfile > profile( factory_.Create( name ) );
-    profile->SetUserRole( userRole );
+    std::auto_ptr< UserProfile > profile( factory_.Create( name, userRole ) );
     if( readonly )
         profile->SetReadable( entity, true );
     else

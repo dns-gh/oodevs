@@ -59,7 +59,6 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         userRoleLabel_->setText( tr( "Role" ));
         roleBox->setStretchFactor( userRoleLabel_, 1 );
         roleBox->setStretchFactor( userRole_, 1 );
-        connect( userRoleGroup_, SIGNAL( toggled( bool ) ), this, SLOT( OnUserRoleActivation( bool ) ) );
         connect( userRole_, SIGNAL( activated( const QString& ) ), this, SLOT( OnUserRole( const QString& ) ) );
         userRoleGroup_->hide();
         addTab( box, tr( "General" ) );
@@ -154,9 +153,7 @@ void UserProfileWidget::Display( UserProfile& profile )
     if( userRoleDico_ )
     {
         const std::string role = profile_->GetUserRole();
-        userRoleGroup_->setChecked( ! role.empty() );
-        if( userRoleGroup_->isChecked() )
-            ActivateControls();
+        Update();
         if( !role.empty() )
             userRole_->setCurrentText( userRoleDico_->GetLabel( role, dicoKind_, dicoLanguage_ ).c_str() );
     }
@@ -202,25 +199,6 @@ void UserProfileWidget::OnPasswordChanged( const QString& text )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileWidget::OnUserRoleActivation
-// Created: JSR 2010-10-06
-// -----------------------------------------------------------------------------
-void UserProfileWidget::OnUserRoleActivation( bool enable )
-{
-    if( userRoleDico_ && profile_ )
-    {
-        if( enable && profile_->GetUserRole().empty() )
-        {
-            profile_->SetUserRole( userRoleDico_->GetKey( userRole_->currentText().ascii(), dicoKind_, dicoLanguage_ ) );
-            ActivateControls();
-        }
-        else if( !enable )
-            profile_->SetUserRole( "" );
-        controllers_.controller_.Update( profile_ );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: UserProfileWidget::OnUserRole
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------
@@ -229,7 +207,7 @@ void UserProfileWidget::OnUserRole( const QString& role )
     if( userRoleDico_ && profile_ )
     {
         profile_->SetUserRole( userRoleDico_->GetKey( role.ascii(), dicoKind_, dicoLanguage_ ) );
-        ActivateControls();
+        Update();
     }
     controllers_.controller_.Update( profile_ );
 }
@@ -244,10 +222,10 @@ void UserProfileWidget::SetEnabled( bool enabled )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileWidget::ActivateControls
+// Name: UserProfileWidget::Update
 // Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
-void UserProfileWidget::ActivateControls()
+void UserProfileWidget::Update()
 {
     if( profile_ )
     {

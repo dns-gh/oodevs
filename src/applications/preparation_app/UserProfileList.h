@@ -15,6 +15,9 @@
 namespace kernel
 {
     class Controllers;
+    class ExtensionTypes;
+    class ModelLoaded;
+    class ModelUnLoaded;
 }
 
 class UserProfile;
@@ -32,6 +35,8 @@ class NewProfileDialog;
 class UserProfileList : public QWidget
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< UserProfile >
+                      , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                      , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT;
 
@@ -39,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers,
-                              ProfilesModel& model, ControlsChecker_ABC& checker );
+                              ProfilesModel& model, const kernel::ExtensionTypes& extensions, ControlsChecker_ABC& checker );
     virtual ~UserProfileList();
     //@}
 
@@ -72,6 +77,8 @@ private:
     virtual void NotifyCreated( const UserProfile& profile );
     virtual void NotifyUpdated( const UserProfile& profile );
     virtual void NotifyDeleted( const UserProfile& profile );
+    virtual void NotifyUpdated( const kernel::ModelLoaded& model );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& model );
     virtual void showEvent( QShowEvent* event );
     //@}
 
@@ -85,15 +92,15 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&   controllers_;
-    ProfilesModel&         model_;
-    ControlsChecker_ABC&   checker_;
-    T_Profiles             profiles_;
-    T_ProfileEditors       editors_;
-    UserProfileWidget&     pages_;
-    QListView*             list_;
-    QSortFilterProxyModel* proxyModel_;
-    QStandardItemModel*    dataModel_;
+    kernel::Controllers&              controllers_;
+    ProfilesModel&                    model_;
+    ControlsChecker_ABC&              checker_;
+    T_Profiles                        profiles_;
+    T_ProfileEditors                  editors_;
+    UserProfileWidget&                pages_;
+    QListView*                        list_;
+    QSortFilterProxyModel*            proxyModel_;
+    QStandardItemModel*               dataModel_;
     std::auto_ptr< NewProfileDialog > pNewProfileDialog_;
     //@}
 };

@@ -49,3 +49,12 @@ UserProfile* ProfileFactory::Create( const QString& name ) const
 {
     return new UserProfile( name, controller_, model_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFactory::Create
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+UserProfile* ProfileFactory::Create( const QString& name, const std::string& role ) const
+{
+    return new UserProfile( name, role, controller_, model_ );
+}

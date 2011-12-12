@@ -37,6 +37,7 @@ public:
     //@{
              UserProfile( xml::xistream& xis, kernel::Controller& controller, const Model& model );
              UserProfile( const QString& login, kernel::Controller& controller, const Model& model );
+             UserProfile( const QString& login, const std::string& role, kernel::Controller& controller, const Model& model );
              UserProfile( const UserProfile& );
     virtual ~UserProfile();
     //@}

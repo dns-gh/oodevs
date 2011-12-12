@@ -1274,6 +1274,14 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Profile &apos;%1&apos; already exists.</source>
         <translation>Le profil &apos;%1&apos; existe déjà.</translation>
     </message>
+    <message>
+        <source>Role:</source>
+        <translation>Rôle :</translation>
+    </message>
+    <message>
+        <source>No role defined.</source>
+        <translation>Aucun rôle défini.</translation>
+    </message>
 </context>
 <context>
     <name>ObjectCreationPanel</name>

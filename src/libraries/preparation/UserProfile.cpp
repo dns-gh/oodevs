@@ -64,12 +64,28 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfile::UserProfile( const QString& login, kernel::Controller& controller, const Model& model )
-    : controller_     ( controller )
-    , model_          ( model )
-    , login_          ( login )
-    , password_       ( "" )
-    , supervisor_     ( false )
-    , isClone_        ( false )
+    : controller_( controller )
+    , model_     ( model )
+    , login_     ( login )
+    , password_  ( "" )
+    , supervisor_( false )
+    , isClone_   ( false )
+{
+    controller_.Create( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile constructor
+// Created: LGY 2011-12-12
+// -----------------------------------------------------------------------------
+UserProfile::UserProfile( const QString& login, const std::string& role, kernel::Controller& controller, const Model& model )
+    : controller_ ( controller )
+    , model_      ( model )
+    , login_      ( login )
+    , password_   ( "" )
+    , supervisor_ ( false )
+    , isClone_    ( false )
+    , userRole_   ( role )
 {
     controller_.Create( *this );
 }
