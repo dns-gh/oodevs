@@ -57,7 +57,7 @@ void SimulationModel::Reset()
 void SimulationModel::Update( const sword::ControlInformation& msg )
 {
     initialDate_          = msg.initial_date_time().data();
-    date_                 = initialDate_;
+    date_                 = msg.date_time().data();
     nCurrentTick_         = msg.current_tick();
     nTickDuration_        = msg.tick_duration();
     nTimeFactor_          = msg.time_factor();
