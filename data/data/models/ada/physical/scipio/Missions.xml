@@ -3247,7 +3247,7 @@
     <fragorder available-without-mission="false" dia-type="france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="392" name="Appliquer les feux">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
       <parameter dia-name="nbIT_" name="Type d'intervention" optional="false" type="Integer"/>
-      <parameter dia-name="pointCible_" name="Cible" optional="false" type="LocationComposite">
+      <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point">
         <choice>
           <parameter type="Point"/>
           <parameter type="AgentKnowledge"/>
@@ -3274,4 +3274,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="4114193998" -->
+<!-- signature="1365531781" -->
