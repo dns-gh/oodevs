@@ -574,8 +574,15 @@ void NET_ASN_Tools::WriteGDH( unsigned int nRealTimeSec, DateTime& asnGDH )
 void NET_ASN_Tools::ReadTick( const DateTime& asn, unsigned int& simTick )
 {
     unsigned int value = 0;
-    ReadGDH( asn, value );
-    simTick = MIL_AgentServer::GetWorkspace().RealTimeToTick( value );
+    try
+    {
+        ReadGDH( asn, value );
+        simTick = MIL_AgentServer::GetWorkspace().RealTimeToTick( value );
+    }
+    catch( std::exception& e )
+    {
+        simTick = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
