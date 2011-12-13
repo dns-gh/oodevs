@@ -65,6 +65,8 @@ public:
     virtual std::string GetProfilesFile() const;
     virtual std::string GetPopulationFile() const;
     virtual std::string GetScoresFile() const;
+    virtual std::string GetSettingsFile() const;
+    virtual std::string GetSettingsFileName() const;
     virtual std::string GetSuccessFactorsFile() const;
 
     virtual std::string GetPropagationFile( const std::string& path ) const;
@@ -102,6 +104,7 @@ private:
     std::string urban_;
     std::string urbanState_;
     std::string scores_;
+    std::string settings_;
     std::string successFactors_;
     std::string population_;
     std::string propagations_;

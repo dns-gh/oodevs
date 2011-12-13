@@ -36,13 +36,14 @@ class ExerciseDialog : public QDialog
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< Exercise >
                      , public ExerciseVisitor_ABC
+                     , private boost::noncopyable
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseDialog( QWidget* parent, kernel::Controllers& controllers, Exercise& exercise, const tools::ExerciseConfig& config, bool& infiniteDotations );
+             ExerciseDialog( QWidget* parent, kernel::Controllers& controllers, Exercise& exercise, const tools::ExerciseConfig& config );
     virtual ~ExerciseDialog();
     //@}
 
@@ -71,12 +72,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ExerciseDialog( const ExerciseDialog& );            //!< Copy constructor
-    ExerciseDialog& operator=( const ExerciseDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Update( const Exercise& exercise );
@@ -95,14 +90,14 @@ private:
     kernel::Controllers& controllers_;
     Exercise& exercise_;
     const tools::ExerciseConfig& config_;
-    bool& infiniteDotations_;
     QLineEdit* name_;
     gui::ValuedComboBox< QString >* lang_;
     QString selectedLang_;
     Q3TextEdit* briefing_;
     T_Briefings briefings_;
     Q3ListView* resources_;
-    QCheckBox* infiniteDotationsCB_;
+    QCheckBox* infiniteDotationsCheckBox_;
+    QCheckBox* humanEvolutionCheckBox_;
     //@}
 };
 

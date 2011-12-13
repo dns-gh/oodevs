@@ -339,12 +339,16 @@
         <translation>Paramètres</translation>
     </message>
     <message>
-        <source>Infinite resources</source>
-        <translation>Dotations infinies</translation>
-    </message>
-    <message>
         <source>Spanish</source>
         <translation>Espagnol</translation>
+    </message>
+    <message>
+        <source>Infinite resources</source>
+        <translation>Dotation infinies</translation>
+    </message>
+    <message>
+        <source>Human factors automatic evolution</source>
+        <translation>Evolution automatique des facteurs humains</translation>
     </message>
 </context>
 <context>

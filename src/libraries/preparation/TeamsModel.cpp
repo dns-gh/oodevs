@@ -38,7 +38,6 @@ using namespace kernel;
 TeamsModel::TeamsModel( Controllers& controllers, TeamFactory_ABC& factory )
     : controllers_      ( controllers )
     , factory_          ( factory )
-    , infiniteDotations_( false )
     , noSideTeam_       ( factory.CreateNoSideTeam() )
 {
     controllers_.Register( *this );
@@ -60,7 +59,6 @@ TeamsModel::~TeamsModel()
 // -----------------------------------------------------------------------------
 void TeamsModel::Purge()
 {
-    infiniteDotations_ = false;
     DeleteAll();
 }
 
@@ -145,10 +143,6 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
         xos << xml::end;
     }
     xos << xml::end;
-    if( infiniteDotations_ )
-        xos << xml::start( "resources" )
-                << xml::attribute( "infinite", infiniteDotations_ )
-            << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -167,9 +161,6 @@ tools::Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
 void TeamsModel::Load( xml::xistream& xis, Model& model, std::string& loadingErrors )
 {
     xis >> xml::start( "orbat" )
-            >> xml::optional >> xml::start( "resources" )
-                >> xml::attribute( "infinite", infiniteDotations_ )
-            >> xml::end
             >> xml::start( "parties" )
                 >> xml::list( *this, &TeamsModel::ReadTeam, model, loadingErrors )
             >> xml::end
@@ -278,13 +269,4 @@ bool TeamsModel::CheckValidity( ModelChecker_ABC& checker ) const
         }
     }
     return checker.Validate();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamsModel::InfiniteDotations
-// Created: JSR 2010-05-04
-// -----------------------------------------------------------------------------
-bool& TeamsModel::InfiniteDotations()
-{
-    return infiniteDotations_;
 }

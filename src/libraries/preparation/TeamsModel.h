@@ -60,7 +60,6 @@ public:
     void Serialize( xml::xostream& xos ) const;
     tools::Iterator< const kernel::Entity_ABC& > CreateEntityIterator() const;
     bool CheckValidity( ModelChecker_ABC& checker ) const;
-    bool& InfiniteDotations();
     //@}
 
 private:
@@ -78,7 +77,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     TeamFactory_ABC& factory_;
-    bool infiniteDotations_;
     std::auto_ptr< kernel::Team_ABC > noSideTeam_;
     //@}
 };

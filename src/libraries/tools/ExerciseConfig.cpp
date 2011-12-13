@@ -107,6 +107,9 @@ void ExerciseConfig::ReadExercise( xml::xistream& xis )
             >> xml::optional >> xml::start( "population" )
                 >> xml::attribute( "name", population_ )
             >> xml::end
+            >> xml::optional >> xml::start( "settings" );
+    settings_ = xis.attribute< std::string >( "file", "settings.xml" );
+    xis     >> xml::end
             >> xml::optional >> xml::start( "propagations" );
     propagations_ = xis.attribute< std::string >( "name", "propagations" );
     xis     >> xml::end
@@ -309,6 +312,24 @@ std::string ExerciseConfig::GetProfilesFile() const
 std::string ExerciseConfig::GetScoresFile() const
 {
     return BuildExerciseChildFile( scores_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetSettingsFile
+// Created: ABR 2011-12-09
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetSettingsFile() const
+{
+    return BuildExerciseChildFile( settings_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetSettingsFileName
+// Created: ABR 2011-12-12
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetSettingsFileName() const
+{
+    return settings_;
 }
 
 // -----------------------------------------------------------------------------

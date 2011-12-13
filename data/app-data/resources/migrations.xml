@@ -11,13 +11,14 @@
     <match-if non-versioned-schema="schemas/exercise/profiles.xsd" assign-schema="schemas/3.0/exercise/profiles.xsd"/>
     <match-if non-versioned-schema="schemas/exercise/scores.xsd" assign-schema="schemas/3.0/exercise/scores.xsd"/>
     <match-if non-versioned-schema="schemas/exercise/success-factors.xsd" assign-schema="schemas/3.0/exercise/success-factors.xsd"/>
+    <match-if non-versioned-schema="schemas/exercise/settings.xsd" assign-schema="schemas/3.0/exercise/settings.xsd"/>
     <match-if root-node="orbat" assign-schema="schemas/3.0/exercise/orbat.xsd"/>
     <match-if root-node="actions" assign-schema="schemas/3.0/exercise/orders.xsd"/>
-    
+
     <!-- Terrain -->
     <match-if non-versioned-schema="schemas/terrain/terrain.xsd" assign-schema="schemas/3.0/terrain/terrain.xsd"/>
     <match-if non-versioned-schema="schemas/terrain/urban.xsd" assign-schema="schemas/3.0/terrain/urban.xsd"/>
-    
+
     <!-- Physical -->
     <match-if non-versioned-schema="schemas/physical/UrbanTypes.xsd" assign-schema="schemas/3.0/physical/UrbanTypes.xsd"/>
     <match-if non-versioned-schema="schemas/physical/Reports.xsd" assign-schema="schemas/3.0/physical/Reports.xsd"/>
@@ -74,6 +75,7 @@
     <added-file filename="symbols.xml" assign-file="schemas/4.3.1/added-files/symbols.xml"/>
     <added-file filename="UrbanTemplates.xml" assign-file="schemas/4.3.3/added-files/UrbanTemplates.xml"/>
     <added-file filename="LogisticSupplyClasses.xml" assign-file="schemas/4.3.3/added-files/LogisticSupplyClasses.xml"/>
+    <added-file filename="settings.xml" assign-file="schemas/4.3.3/added-files/settings.xml"/>
     <added-file filename="Funeral.xml" assign-file="schemas/4.3.4/added-files/Funeral.xml"/>
   </added-files>
 
@@ -144,5 +146,7 @@
     <upgrade schema="schemas/4.3.3/physical/Resources.xsd" apply="schemas/4.3.4/xsl/resources_4.3.3-4.3.4.xsl"/>
     <upgrade schema="schemas/4.3.3/physical/Units.xsd" apply="schemas/4.3.4/xsl/units_4.3.3-4.3.4.xsl"/>
     <upgrade schema="schemas/4.3.3/physical/Crowds.xsd" apply="schemas/4.3.4/xsl/crowd_4.3.3-4.3.4.xsl"/>
+    <upgrade schema="schemas/4.3.3/exercise/orbat.xsd" apply="schemas/4.3.4/xsl/orbat_4.3.3-4.3.4.xsl"/>
+    <upgrade schema="schemas/4.3.3/exercise/exercise.xsd" apply="schemas/4.3.4/xsl/exercise_4.3.3-4.3.4.xsl"/>
   </migration>
 </migrations>

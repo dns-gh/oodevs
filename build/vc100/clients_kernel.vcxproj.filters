@@ -445,6 +445,9 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\XmlDescription.cpp">
       <Filter>Source Files\XML model</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ExerciseSettings.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h">
@@ -1037,6 +1040,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Filter_ABC.h">
       <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ExerciseSettings.h">
+      <Filter>Source Files\XML model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
