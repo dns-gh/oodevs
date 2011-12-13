@@ -19193,5 +19193,763 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="Masalife.RENS.Coge" id="672" name="RENS . Coge Linx" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
+    <equipments>
+      <equipment count="2" crew="4" major="true" type="VAB LINX"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="4" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="300s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Masalife.RENS.Drone DRAC" id="673" is-autonomous="true" name="RENS . Drone DRAC" type="Pion RENS">
+    <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
+    <equipments>
+      <equipment count="1" crew="0" major="true" type="Drone DRAC"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Masalife.RENS.Drone SDTI" id="674" is-autonomous="true" name="RENS . Drone SDTI" type="Pion RENS">
+    <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
+    <equipments>
+      <equipment count="1" crew="0" major="true" type="Drone SDTI"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Section ROHUM" id="675" name="RENS . Equipe de recueil information" type="Pion RENS">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/reconnaissance/long range surveillance"/>
+    <equipments>
+      <equipment count="1" crew="2" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="1" crew="1" major="true" type="VBL 7,62"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre DRAC" id="676" name="RENS . Section MO DRAC" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="VBL 7,62"/>
+      <equipment count="4" crew="3" type="TRM 4000 Lanceur Drones"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre SDTI" id="677" name="RENS . PC MO DRAC" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/aviation/fixed wing"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="TRM 4000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre SDTI" id="678" name="RENS . Section MO SDTI" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
+    <equipments>
+      <equipment count="4" crew="2" major="true" type="VLRA"/>
+      <equipment count="2" crew="3" type="VTC P4"/>
+      <equipment count="9" crew="3" type="GBC 180 Lanceur Drones"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="16" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Pat URH" id="679" name="RENS . Equipe URH OFF" type="Pion RENS">
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="4" crew="1" loadable="true" major="true" type="Fantassin URH"/>
+      <equipment count="2" crew="2" major="true" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Pat URH" id="680" name="RENS . Equipe URH S/OFF" type="Pion RENS">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="4" crew="1" loadable="true" major="true" type="Fantassin URH"/>
+      <equipment count="2" crew="2" major="true" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Groupe BROVAB" id="681" name="RENS . Groupe BROMURE" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/jamming"/>
+    <equipments>
+      <equipment count="4" crew="3" major="true" type="VAB BROMURE"/>
+      <equipment count="1" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="1" type="GBC 180"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="3150s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="682" name="RENS . Groupe ELGE" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="VTC P4 BROD"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="683" name="RENS . Groupe ROEM" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="VBL 7,62 ROEM"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Systeme_START" id="684" name="RENS . Module Interception START" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
+    <equipments>
+      <equipment count="5" crew="3" major="true" type="VLRA START"/>
+      <equipment count="4" crew="2" type="VTC P4 7,62"/>
+      <equipment count="1" crew="3" type="TRM 2000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="18" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="5700s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Systeme_START" id="685" name="RENS . Module Localisation SPRINT" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
+    <equipments>
+      <equipment count="1" crew="2" type="VTC P4 7,62"/>
+      <equipment count="2" crew="3" major="true" type="SYSTEME SPRINT 11"/>
+      <equipment count="1" crew="2" type="TRM 2000 7,62"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="5700s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Systeme STAIR" id="686" name="RENS . Module STAIR" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="VLRA STAIR"/>
+      <equipment count="1" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="1" type="TRM 2000"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="11" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="687" name="RENS . Patrouille Recherche Blindee" type="Pion RENS">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="4" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="1" crew="1" major="true" type="VBL 7,62"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Pat recherche moto" id="688" name="RENS . Patrouille Recherche Moto" type="Pion RENS">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="5" crew="1" loadable="true" major="true" type="Moto CAGIVA 350"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Pat recherche nautique" id="689" name="RENS . Patrouille Recherche Nautique" type="Pion RENS">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="2" crew="1" major="true" type="VBL 7,62"/>
+      <equipment count="1" crew="1" type="VAB RENS 7,62"/>
+      <equipment count="7" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="750s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Pat recherche RASIT" id="690" name="RENS . Patrouille Recherche Radar" type="Pion RENS">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/field artillery/artillery survey"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="TRM 2000 RASIT"/>
+      <equipment count="1" crew="1" type="VTC P4 7,62"/>
+      <equipment count="4" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Masalife.RENS.Patrouille Viviane" id="691" name="RENS . Patrouille Rens Viviane" type="Pion RENS">
+    <nature atlas-nature="Helicoptere" level="oo" nature-app6="combat/aviation/rotary wing"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="Helicoptere HAV"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="692" name="RENS . PC RBRR" type="Pion RENS">
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="4" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="1" crew="1" major="true" type="VBL 7,62"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="693" name="RENS . PC ROEM" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="VBL 7,62 ROEM"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="694" name="RENS . Section CDT ROHUM" type="Pion RENS">
+    <nature atlas-nature="PC" level="ooo" nature-app6="combat/reconnaissance"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="VBL 7,62"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Stations MROD_ELODEE" id="695" name="RENS . Section ELODEE" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
+    <equipments>
+      <equipment count="3" crew="2" type="TRM 2000 12,7"/>
+      <equipment count="3" crew="2" type="VTC P4 7,62"/>
+      <equipment count="3" crew="2" type="GBC 8 KT"/>
+      <equipment count="1" crew="3" type="GBC 8 KT 7.62"/>
+      <equipment count="3" crew="2" major="true" type="GBC ELODEE"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="10" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="5400s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Stations Horizon" id="696" name="RENS . Stations Horizon" type="Pion RENS">
+    <nature atlas-nature="Helicoptere" level="i" nature-app6="combat/aviation/rotary wing/scout"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="VLRA Horizon"/>
+      <equipment count="1" crew="2" type="TRM 2000 12,7"/>
+      <equipment count="4" crew="2" type="VTC P4"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1950s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.RENS.Stations Linx" id="697" name="RENS . Stations LINX" type="Pion RENS">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
+    <equipments>
+      <equipment count="4" crew="4" major="true" type="VAB LINX"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="16" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1800s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Masalife.RENS.Drone SDTI" id="698" is-autonomous="true" name="RENS . DRAC" type="Pion RENS">
+    <nature atlas-nature="Indefini" level="o" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
+    <equipments>
+      <equipment count="1" crew="0" major="true" type="Drone DRAC"/>
+    </equipments>
+    <sensors-range range="5000"/>
+    <equipments-range range="5000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="0056269410" -->
+<!-- signature="3839066496" -->
