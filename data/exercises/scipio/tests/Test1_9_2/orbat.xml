@@ -28,20 +28,20 @@
             <unit color="0x647dff" command-post="false" id="299" name="ALAT - Patrouille 1HM SOFF" position="31UCQ0718504984" type="ALAT - Patrouille 1HM SOFF"/>
             <unit color="0x647dff" command-post="false" id="300" name="ALAT - Patrouille 1HM SOFF" position="31UCQ0696004492" type="ALAT - Patrouille 1HM SOFF"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="319" knowledge-group="2" name="RENS . Section ROHUM [319]" type="RENS . Section ROHUM">
-            <unit color="0x647dff" command-post="true" id="320" name="RENS . Section CDT ROHUM" position="31UCQ0563003927" type="RENS . Section CDT ROHUM"/>
-            <unit color="0x647dff" command-post="false" id="321" name="RENS . Equipe de recueil information" position="31UCQ0611303410" type="RENS . Equipe de recueil information"/>
-            <unit color="0x647dff" command-post="false" id="322" name="RENS . Equipe de recueil information" position="31UCQ0559402928" type="RENS . Equipe de recueil information"/>
-            <unit color="0x647dff" command-post="false" id="323" name="RENS . Equipe de recueil information" position="31UCQ0511203445" type="RENS . Equipe de recueil information"/>
-            <unit color="0x647dff" command-post="false" id="324" name="RENS . Equipe de recueil information" position="31UCQ0613103909" type="RENS . Equipe de recueil information"/>
-            <unit color="0x647dff" command-post="false" id="325" name="RENS . Equipe de recueil information" position="31UCQ0632003402" type="RENS . Equipe de recueil information"/>
+          <automat color="0x647dff" engaged="true" id="319" knowledge-group="2" name="RENS - Section ROHUM [319]" type="RENS - Section ROHUM">
+            <unit color="0x647dff" command-post="true" id="320" name="RENS - Section CDT ROHUM" position="31UCQ0563003927" type="RENS - Section CDT ROHUM"/>
+            <unit color="0x647dff" command-post="false" id="321" name="RENS - Equipe de recueil information" position="31UCQ0611303410" type="RENS - Equipe de recueil information"/>
+            <unit color="0x647dff" command-post="false" id="322" name="RENS - Equipe de recueil information" position="31UCQ0559402928" type="RENS - Equipe de recueil information"/>
+            <unit color="0x647dff" command-post="false" id="323" name="RENS - Equipe de recueil information" position="31UCQ0511203445" type="RENS - Equipe de recueil information"/>
+            <unit color="0x647dff" command-post="false" id="324" name="RENS - Equipe de recueil information" position="31UCQ0613103909" type="RENS - Equipe de recueil information"/>
+            <unit color="0x647dff" command-post="false" id="325" name="RENS - Equipe de recueil information" position="31UCQ0632003402" type="RENS - Equipe de recueil information"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="326" knowledge-group="2" name="RENS . Section ROIM [326]" type="RENS . Section ROIM">
-            <unit color="0x647dff" command-post="true" id="327" name="RENS . Section MO DRAC" position="31UCQ0462501659" type="RENS . Section MO DRAC"/>
-            <unit color="0x647dff" command-post="false" id="328" name="RENS . Drone DRAC" position="31UCQ0510801142" type="RENS . Drone DRAC"/>
-            <unit color="0x647dff" command-post="false" id="329" name="RENS . Drone DRAC" position="31UCQ0458900661" type="RENS . Drone DRAC"/>
-            <unit color="0x647dff" command-post="false" id="330" name="RENS . Drone DRAC" position="31UCQ0410601178" type="RENS . Drone DRAC"/>
-            <unit color="0x647dff" command-post="false" id="331" name="RENS . Drone DRAC" position="31UCQ0512601641" type="RENS . Drone DRAC"/>
+          <automat color="0x647dff" engaged="true" id="326" knowledge-group="2" name="RENS - Section ROIM [326]" type="RENS - Section ROIM">
+            <unit color="0x647dff" command-post="true" id="327" name="RENS - Section MO DRAC" position="31UCQ0462501659" type="RENS - Section MO DRAC"/>
+            <unit color="0x647dff" command-post="false" id="328" name="RENS - Drone DRAC" position="31UCQ0510801142" type="RENS - Drone DRAC"/>
+            <unit color="0x647dff" command-post="false" id="329" name="RENS - Drone DRAC" position="31UCQ0458900661" type="RENS - Drone DRAC"/>
+            <unit color="0x647dff" command-post="false" id="330" name="RENS - Drone DRAC" position="31UCQ0410601178" type="RENS - Drone DRAC"/>
+            <unit color="0x647dff" command-post="false" id="331" name="RENS - Drone DRAC" position="31UCQ0512601641" type="RENS - Drone DRAC"/>
           </automat>
           <automat color="0x647dff" engaged="true" id="350" knowledge-group="2" name="INF . Section TE [350]" type="INF . Section TE">
             <unit color="0x647dff" command-post="true" id="351" name="INF . PC Section TE" position="31UBQ9558507280" type="INF . PC Section TE"/>
@@ -80,9 +80,9 @@
           <automat color="0x647dff" engaged="true" id="482" knowledge-group="2" logistic-level="logistic-base" name="GLAISE - LOG . TC2 [482]" type="GLAISE - LOG . TC2">
             <unit color="0x647dff" command-post="true" id="483" name="GLAISE - LOG . TC2" position="31UBQ8234211670" type="GLAISE - LOG . TC2"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="488" knowledge-group="2" name="GLAISE - RENS . URH [488]" type="GLAISE . RENS . URH">
-            <unit color="0x647dff" command-post="true" id="489" name="GLAISE - RENS . PC URH" position="31UBQ8556411325" type="GLAISE - RENS . PC URH"/>
-            <unit color="0x647dff" command-post="false" id="490" name="GLAISE - RENS . Patrouille URH" position="31UBQ8604710807" type="GLAISE - RENS . Patrouille URH"/>
+          <automat color="0x647dff" engaged="true" id="488" knowledge-group="2" name="GLAISE - RENS - URH [488]" type="GLAISE - RENS - URH">
+            <unit color="0x647dff" command-post="true" id="489" name="GLAISE - RENS - PC URH" position="31UBQ8556411325" type="GLAISE - RENS - PC URH"/>
+            <unit color="0x647dff" command-post="false" id="490" name="GLAISE - RENS - Patrouille URH" position="31UBQ8604710807" type="GLAISE - RENS - Patrouille URH"/>
           </automat>
           <automat color="0x647dff" engaged="true" id="497" knowledge-group="2" name="ABC . Escadron Blinde AMX 10 RC [497]" type="ABC . Escadron Blinde AMX 10 RC">
             <unit color="0x647dff" command-post="true" id="498" name="ABC . PC" position="31UBQ8388620383" type="ABC . PC"/>
@@ -289,4 +289,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0841299259" -->
+<!-- signature="2171327535" -->
