@@ -19,7 +19,7 @@
 						<xs:documentation xml:lang="en">Defines the file to be used for profiles definition.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="settings" type="T_FileReference">
+				<xs:element name="settings" type="T_FileReference" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation xml:lang="en">Defines the file to be used for exercise settings.</xs:documentation>
 					</xs:annotation>
@@ -60,7 +60,7 @@
 	<xs:element name="meta">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="name" minOccurs="0" maxOccurs="1">
+				<xs:element name="name" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation xml:lang="en">Defines the display name of the exercise.</xs:documentation>
 					</xs:annotation>
