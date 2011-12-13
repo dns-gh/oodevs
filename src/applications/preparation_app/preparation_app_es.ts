@@ -336,11 +336,11 @@
         <translation>Parámetros</translation>
     </message>
     <message>
-        <source>Infinite resources</source>
-        <translation>Dotaciones infinitas</translation>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Spanish</source>
+        <source>Human factors automatic evolution</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

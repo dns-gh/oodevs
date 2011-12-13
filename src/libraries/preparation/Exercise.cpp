@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter_ABC.h"
+#include "tools/XmlCrc32Signature.h"
 #include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -26,6 +27,7 @@ namespace bfs = boost::filesystem;
 Exercise::Exercise( kernel::Controller& controller )
     : controller_    ( controller )
     , actionPlanning_( "" )
+    , settings_      ()
 {
     // NOTHING
 }
@@ -98,6 +100,7 @@ void Exercise::Purge()
     briefings_.clear();
     resources_.clear();
     actionPlanning_.clear();
+    settings_.Purge();
     controller_.Update( *this );
 }
 
@@ -105,7 +108,7 @@ namespace
 {
     void CopyNode( const std::string& name, xml::xistream& xis, xml::xostream& xos )
     {
-        if( name != "meta" && name != "action-planning" )
+        if( name != "meta" && name != "action-planning" && name != "settings" )
             xos << xml::content( name, xis );
     }
     void CopyFromFile( const std::string& file, xml::xostream& xos )
@@ -167,6 +170,15 @@ void Exercise::SerializeResources( xml::xostream& xos ) const
                 << xml::attribute( "file", it->second.ascii() )
             << xml::end;
     xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::GetSettings
+// Created: ABR 2011-12-09
+// -----------------------------------------------------------------------------
+kernel::ExerciseSettings& Exercise::GetSettings()
+{
+    return settings_;
 }
 
 // -----------------------------------------------------------------------------

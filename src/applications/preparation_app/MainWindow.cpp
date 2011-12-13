@@ -295,7 +295,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pCreationDockWnd->setWindowTitle( tr( "Creation" ) );
 
     // Dialogs
-    QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_, model.teams_.InfiniteDotations() );
+    QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_ );
     pScoreDialog_ = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_, config_, *glProxy_ );
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
     fileToolBar_ = new FileToolbar( this, controllers );

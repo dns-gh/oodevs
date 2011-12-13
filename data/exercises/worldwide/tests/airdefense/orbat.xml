@@ -61,6 +61,5 @@
       <relationship diplomacy="enemy" party="1"/>
     </party>
   </diplomacy>
-  <resources infinite="true"/>
 </orbat>
-<!-- signature="0224534443" -->
+<!-- signature="3373623126" -->

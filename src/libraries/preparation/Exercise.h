@@ -10,6 +10,9 @@
 #ifndef __Exercise_h_
 #define __Exercise_h_
 
+#include <boost/noncopyable.hpp>
+#include "clients_kernel/ExerciseSettings.h"
+
 namespace kernel
 {
     class Controller;
@@ -42,7 +45,7 @@ public:
 */
 // Created: SBO 2010-03-08
 // =============================================================================
-class Exercise
+class Exercise : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -61,6 +64,7 @@ public:
 
     //! @name Accessors
     //@{
+    kernel::ExerciseSettings& GetSettings();
     QString GetName() const;
     void SetName( const QString& name );
     void SetBriefing( const QString& lang, const QString& text );
@@ -70,12 +74,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Exercise( const Exercise& );            //!< Copy constructor
-    Exercise& operator=( const Exercise& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadBriefing( xml::xistream& xis );
@@ -92,11 +90,12 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller&          controller_;
-    QString                      name_;
-    T_Resources                  briefings_;
-    T_Resources                  resources_;
-    std::string                  actionPlanning_;
+    kernel::Controller&         controller_;
+    kernel::ExerciseSettings    settings_;
+    QString                     name_;
+    T_Resources                 briefings_;
+    T_Resources                 resources_;
+    std::string                 actionPlanning_;
     //@}
 };
 

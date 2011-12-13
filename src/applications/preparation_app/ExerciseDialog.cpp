@@ -21,12 +21,11 @@ namespace bfs = boost::filesystem;
 // Name: ExerciseDialog constructor
 // Created: SBO 2010-03-09
 // -----------------------------------------------------------------------------
-ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controllers, Exercise& exercise, const tools::ExerciseConfig& config, bool& infiniteDotations )
+ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controllers, Exercise& exercise, const tools::ExerciseConfig& config )
     : QDialog( parent, "ExerciseDialog" )
     , controllers_( controllers )
     , exercise_( exercise )
     , config_( config )
-    , infiniteDotations_( infiniteDotations )
 {
     setModal( false );
     setCaption( tr( "Exercise" ) );
@@ -78,7 +77,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
     }
     {
         Q3GroupBox* box = new Q3VGroupBox( tr( "Parameters" ), this );
-        infiniteDotationsCB_ = new QCheckBox( tr( "Infinite resources" ), box );
+        humanEvolutionCheckBox_ = new QCheckBox( tr( "Human factors automatic evolution" ), box );
         grid->addMultiCellWidget( box, 3, 3, 0, 2 );
     }
     {
@@ -152,7 +151,7 @@ void ExerciseDialog::VisitResource( const QString& name, const QString& file )
 void ExerciseDialog::showEvent( QShowEvent* showEvent )
 {
     QDialog::showEvent( showEvent );
-    infiniteDotationsCB_->setChecked( infiniteDotations_ );
+    humanEvolutionCheckBox_->setChecked( exercise_.GetSettings().GetValue< bool >( "human-evolution" ) );
 }
 
 namespace
@@ -209,7 +208,7 @@ void ExerciseDialog::OnAccept()
     exercise_.ClearResources();
     for( Q3ListViewItemIterator it( resources_ ); it.current(); ++it )
         exercise_.AddResource( it.current()->text( 0 ), it.current()->text( 1 ) );
-    infiniteDotations_ = infiniteDotationsCB_->isChecked();
+    exercise_.GetSettings().SetValue< bool >( "human-evolution", humanEvolutionCheckBox_->isChecked() );
     accept();
 }
 

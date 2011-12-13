@@ -36,6 +36,7 @@
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/ExerciseSettings.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/SymbolFactory.h"
@@ -267,6 +268,7 @@ namespace
 void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors )
 {
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
+    config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
     symbolsFactory_.Load( config );
 
     //$$ LOADING DE FICHIERS A UNIFIER
@@ -326,6 +328,7 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
     if( valid )
     {
         SerializeAndSign( config.GetExerciseFile(), exercise_, schemaWriter );
+        SerializeAndSign( config.GetSettingsFile(), exercise_.GetSettings(), schemaWriter );
         {
             xml::xofstream xos( config.GetOrbatFile() );
             xos << xml::start( "orbat" );
