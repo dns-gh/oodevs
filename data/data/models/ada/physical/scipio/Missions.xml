@@ -1623,7 +1623,7 @@
         <value id="1" name="directionnel"/>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.Surveiller" dia-type="france.military.platoon.combat.support.artillery.tasks.Surveiller" id="2479" name="PION ASA .Surveiller" package="defence">
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.Surveiller" dia-type="france.military.platoon.combat.support.artillery.tasks.Surveiller" id="2479" name="PION ASA .Surveiller" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1640,6 +1640,18 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.OrienterGuider" dia-type="france.military.platoon.combat.support.rens.tasks.OrienterGuider" id="2481" name="PION RENS ROHUM .Orienter Guider" package="support">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="unit" name="Unite" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
   </units>
   <automats>
@@ -3262,4 +3274,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="0451170643" -->
+<!-- signature="2216421837" -->
