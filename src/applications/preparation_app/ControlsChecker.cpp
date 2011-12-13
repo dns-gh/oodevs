@@ -140,3 +140,28 @@ bool ControlsChecker::Exists( const QString& login ) const
             return true;
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ControlsChecker::IsControlled
+// Created: LGY 2011-12-13
+// -----------------------------------------------------------------------------
+bool ControlsChecker::IsControlled( const kernel::Entity_ABC& entity ) const
+{
+    for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
+        if( it->second && IsIsWriteable( entity, *it->second ) )
+            return true;
+    return model_.profiles_.IsWriteable( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlsChecker::IsIsWriteable
+// Created: LGY 2011-12-13
+// -----------------------------------------------------------------------------
+bool ControlsChecker::IsIsWriteable( const kernel::Entity_ABC& entity, const UserProfile& profile ) const
+{
+    if( profile.IsWriteable( entity ) )
+        return true;
+    if( const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior() )
+        return IsIsWriteable( *parent, profile );
+    return false;
+}

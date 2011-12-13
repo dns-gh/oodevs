@@ -67,6 +67,7 @@ void UserProfileControls_ABC::Commit()
             profile_->SetReadable( *entity, isReadable );
             profile_->SetWriteable( *entity, isWriteable );
         }
+    UpdateFilter();
 }
 
 // -----------------------------------------------------------------------------
@@ -272,6 +273,15 @@ void UserProfileControls_ABC::ShowAssignedAutomats()
 // Created: LGY 2011-12-12
 // -----------------------------------------------------------------------------
 void UserProfileControls_ABC::RemoveFilter()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::UpdateFilter
+// Created: LGY 2011-12-13
+// -----------------------------------------------------------------------------
+void UserProfileControls_ABC::UpdateFilter()
 {
     // NOTHING
 }

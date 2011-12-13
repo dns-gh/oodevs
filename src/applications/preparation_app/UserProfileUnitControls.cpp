@@ -11,6 +11,7 @@
 #include "UserProfileUnitControls.h"
 #include "moc_UserProfileUnitControls.cpp"
 #include "PreparationProfile.h"
+#include "ControlsChecker_ABC.h"
 #include "preparation/Model.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -34,7 +35,9 @@ UserProfileUnitControls::UserProfileUnitControls( QWidget* parent, Controllers& 
                                                   EntitySymbols& icons, ControlsChecker_ABC& checker, Model& model )
     : HierarchyListView< ProfileHierarchies_ABC >( parent, controllers, factory, PreparationProfile::GetProfile(), icons )
     , UserProfileControls_ABC( this, checker )
-    , model_( model )
+    , model_  ( model )
+    , checker_( checker )
+    , func_   ( boost::lambda::constant( true ) )
 {
     controllers_.Register( *this );
     connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
@@ -135,7 +138,7 @@ void UserProfileUnitControls::OnItemClicked( Q3ListViewItem* item, const QPoint&
 void UserProfileUnitControls::OnItemExpanded( Q3ListViewItem* item )
 {
     if( item )
-        if(  ValuedListItem* value = static_cast< ValuedListItem* >( item ) )
+        if( ValuedListItem* value = static_cast< ValuedListItem* >( item ) )
             if( const Entity_ABC* entity = value->GetValue< const Entity_ABC >() )
                 if( entity->GetTypeName() == Team_ABC::typeName_ )
                 {
@@ -167,18 +170,21 @@ void UserProfileUnitControls::NotifyUpdated( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void UserProfileUnitControls::HideAssignedAutomats()
 {
-    units_.clear();
-    model_.profiles_.Visit( units_ );
-    ApplyFilter( boost::bind( &UserProfileUnitControls::ApplyShowFilter, this, _1 ) || boost::bind( &UserProfileUnitControls::ApplyHideFilter, this, _1 ) );
+    func_ = boost::bind( &UserProfileUnitControls::ApplyShowFilter, this, _1 ) || boost::bind( &UserProfileUnitControls::ApplyHideFilter, this, _1 );
+    UpdateFilter();
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileUnitControls::ApplyHideFilter
 // Created: LGY 2011-12-12
 // -----------------------------------------------------------------------------
-bool UserProfileUnitControls::ApplyHideFilter( gui::ValuedListItem* /*item*/ ) const
+bool UserProfileUnitControls::ApplyHideFilter( gui::ValuedListItem* item ) const
 {
-    return true;
+    if( item )
+        if( ValuedListItem* value = static_cast< ValuedListItem* >( item ) )
+            if( const Entity_ABC* entity = value->GetValue< const Entity_ABC >() )
+                return !checker_.IsControlled( *entity );
+        return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +193,8 @@ bool UserProfileUnitControls::ApplyHideFilter( gui::ValuedListItem* /*item*/ ) c
 // -----------------------------------------------------------------------------
 void UserProfileUnitControls::ShowAssignedAutomats()
 {
-    ApplyFilter( boost::bind( &UserProfileUnitControls::ApplyShowFilter, this, _1 ) );
+    func_ = boost::bind( &UserProfileUnitControls::ApplyShowFilter, this, _1 );
+    UpdateFilter();
 }
 
 // -----------------------------------------------------------------------------
@@ -213,5 +220,15 @@ bool UserProfileUnitControls::ApplyShowFilter( gui::ValuedListItem* item ) const
 // -----------------------------------------------------------------------------
 void UserProfileUnitControls::RemoveFilter()
 {
-    ApplyFilter( boost::lambda::constant( true ) );
+    func_ =  boost::lambda::constant( true );
+    UpdateFilter();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::UpdateFilter
+// Created: LGY 2011-12-13
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::UpdateFilter()
+{
+    ApplyFilter( func_ );
 }

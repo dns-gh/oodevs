@@ -168,6 +168,8 @@ void UserProfileWidget::Display( UserProfile& profile )
 
     pUnits_->Display( profile );
     pPopulations_->Display( profile );
+    OnHideFilterChanged( pHidefilter_->checkState() );
+    OnShowFilterChanged( pShowFilter_->checkState() );
     SetEnabled( true );
 }
 
@@ -251,6 +253,8 @@ void UserProfileWidget::Update()
 // -----------------------------------------------------------------------------
 void UserProfileWidget::Show()
 {
+    OnHideFilterChanged( pHidefilter_->checkState() );
+    OnShowFilterChanged( pShowFilter_->checkState() );
     dynamic_cast< UserProfileUnitControls* >( pUnits_ )->Show();
 }
 // -----------------------------------------------------------------------------

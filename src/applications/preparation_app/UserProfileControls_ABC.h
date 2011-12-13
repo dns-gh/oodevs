@@ -42,6 +42,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void UpdateFilter();
     virtual void HideAssignedAutomats();
     virtual void ShowAssignedAutomats();
     virtual void RemoveFilter();

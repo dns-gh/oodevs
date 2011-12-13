@@ -12,7 +12,6 @@
 
 #include "clients_gui/HierarchyListView.h"
 #include "preparation/ProfileHierarchies_ABC.h"
-#include "preparation/ProfilesModel.h"
 #include "UserProfileControls_ABC.h"
 
 namespace gui
@@ -44,6 +43,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void UpdateFilter();
     virtual void HideAssignedAutomats();
     virtual void ShowAssignedAutomats();
     virtual void RemoveFilter();
@@ -75,7 +75,8 @@ private:
     //! @name Member Data
     //@{
     Model& model_;
-    ProfilesModel::T_Units units_;
+    ControlsChecker_ABC& checker_;
+    boost::function< bool ( gui::ValuedListItem* ) > func_;
     //@}
 };
 
