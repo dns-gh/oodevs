@@ -14621,7 +14621,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.PC Appui Mob" id="502" name="CIRCU . Peloton CDT ESC TRPT BLD" type="Pion CIRCULATION">
-    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VTC P4"/>
       <equipment count="1" crew="4" type="GBC 8 KT 7.62"/>
@@ -14649,7 +14649,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="503" name="CIRCU . PC sur P4" type="Pion CIRCULATION">
-    <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VTC P4 Circu"/>
       <equipment count="1" crew="2" type="TRM 2000 PC"/>
@@ -14672,7 +14672,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="504" name="CIRCU . PC sur VAB" type="Pion CIRCULATION">
-    <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VTC P4 Circu CDT"/>
       <equipment count="1" crew="2" major="true" type="VAB CIRCU"/>
@@ -15277,7 +15277,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="528" name="CIRCU . PC sur PVP" type="Pion CIRCULATION">
-    <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="1" crew="2" type="TRM 2000 PC"/>
       <equipment count="2" crew="1" type="GBC 8 KT"/>
@@ -19952,4 +19952,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="4046020952" -->
+<!-- signature="1746935393" -->
