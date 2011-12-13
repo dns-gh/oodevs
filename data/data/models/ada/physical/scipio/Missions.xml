@@ -1646,7 +1646,12 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="unit" name="Unite amie" optional="false" type="Agent"/>
+      <parameter dia-name="unit" name="Unite" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
   </units>
   <automats>
@@ -3269,4 +3274,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="2664248430" -->
+<!-- signature="0840664881" -->
