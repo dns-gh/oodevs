@@ -82,7 +82,7 @@
       <AdditionalDependencies>psapi.lib;masalloc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackReserveSize>15000000</StackReserveSize>
       <LargeAddressAware>true</LargeAddressAware>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
@@ -103,7 +103,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>psapi.lib;masalloc_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <StackReserveSize>15000000</StackReserveSize>
       <LargeAddressAware>true</LargeAddressAware>
     </Link>

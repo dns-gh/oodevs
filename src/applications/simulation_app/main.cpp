@@ -68,7 +68,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     SIM_App* app = 0;
     int nResult = EXIT_FAILURE;
     bool silentMode = false;
-    int maxConnections = 10;
+    int maxConnections = 0;
     try
     {
         // Silent mode

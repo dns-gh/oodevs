@@ -23,20 +23,18 @@
 // Name: Run()
 // Created: NLD 2004-02-04
 //-----------------------------------------------------------------------------
-int Run( LPSTR lpCmdLine )
+int Run( int argc, char** argv )
 {
     // Init logger
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
 
     bool silentMode = false;
-    int maxConnections = 10;
+    int maxConnections = 0;
     int nResult = EXIT_FAILURE;
     try
     {
-        // Silent mode
-        std::vector< std::string > argv = boost::program_options:: split_winmain( lpCmdLine );
-        silentMode = ( std::find( argv.begin(), argv.end(), "--silent" ) != argv.end() );
+        silentMode = ( std::find( argv, argv+argc, "--silent" ) != argv+argc );
 
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
         // Check license
@@ -52,9 +50,7 @@ int Run( LPSTR lpCmdLine )
         }
 #endif
 
-        // Execute dispatcher
-        tools::WinArguments winArgs( lpCmdLine );
-        Application app( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ), maxConnections );
+        Application app( argc, argv, maxConnections );
         nResult = app.Execute();
     }
     catch( std::exception& e )
@@ -67,7 +63,17 @@ int Run( LPSTR lpCmdLine )
 }
 
 //-----------------------------------------------------------------------------
-// Name: main constructor
+// Name: Run()
+// Created: NLD 2004-02-04
+//-----------------------------------------------------------------------------
+int Run( LPSTR lpCmdLine ) 
+{
+    tools::WinArguments winArgs( lpCmdLine );
+    return Run( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
+}
+
+//-----------------------------------------------------------------------------
+// Name: Winmain
 // Created: FBD 02-11-22
 //-----------------------------------------------------------------------------
 int WINAPI WinMain( HINSTANCE /*hinstance*/, HINSTANCE /*hPrevInstance*/, LPSTR lpCmdLine, int /*nCmdShow*/ )
@@ -80,4 +86,13 @@ int WINAPI WinMain( HINSTANCE /*hinstance*/, HINSTANCE /*hPrevInstance*/, LPSTR 
     {
     }
     return 0;
+}
+
+//-----------------------------------------------------------------------------
+// Name: main
+// Created: FBD 02-11-22
+//-----------------------------------------------------------------------------
+int main( int argc, char** argv )
+{
+	return Run( argc, argv );
 }
