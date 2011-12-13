@@ -83,7 +83,7 @@ private:
     void SetStatus( gui::ValuedListItem* item, bool isControl, bool inheritsControllable );
     Status MakeStatus( bool control, bool inheritedControl );
     void Check( gui::ValuedListItem* item, bool control );
-    T_Errors GetErrors( gui::ValuedListItem* item );
+    void CheckErrors( gui::ValuedListItem* item, T_Errors& errors );
     void CheckErrors( const kernel::Entity_ABC& entity, T_Errors& errors );
     //@}
 

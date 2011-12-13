@@ -11,6 +11,7 @@
 #define __ControlsChecker_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include <set>
 #include <map>
 
 class UserProfile;
@@ -44,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const = 0;
+    virtual std::set< std::string > Find( const kernel::Entity_ABC& entity ) const = 0;
     virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const = 0;
     virtual bool Exists( const QString& login ) const = 0;
     virtual bool IsControlled( const kernel::Entity_ABC& entity ) const = 0;

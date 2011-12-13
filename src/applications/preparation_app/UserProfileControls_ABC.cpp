@@ -200,7 +200,8 @@ void UserProfileControls_ABC::Update( bool supervisor )
 // -----------------------------------------------------------------------------
 void UserProfileControls_ABC::Check( ValuedListItem* item, bool control )
 {
-   T_Errors errors = GetErrors( item );
+    T_Errors errors;
+    CheckErrors( item, errors );
     if( !errors.empty() && !supervisor_ )
     {
         ProfileConsistencyDialog* dialog = new ProfileConsistencyDialog( listView_ );
@@ -220,23 +221,18 @@ void UserProfileControls_ABC::Check( ValuedListItem* item, bool control )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileControls_ABC::GetErrors
-// Created: LGY 2011-09-15
+// Name: UserProfileControls_ABC::CheckErrors
+// Created: LGY 2011-12-13
 // -----------------------------------------------------------------------------
-UserProfileControls_ABC::T_Errors UserProfileControls_ABC::GetErrors( gui::ValuedListItem* item )
+void UserProfileControls_ABC::CheckErrors( gui::ValuedListItem* item, T_Errors& errors )
 {
-    T_Errors errors;
     CheckErrors( *item->GetValue< const Entity_ABC >(), errors );
-    if( !errors.empty() )
-        return errors;
-
     ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
     while( value )
     {
-        CheckErrors( *value->GetValue< const Entity_ABC >(), errors );
+        CheckErrors( value, errors );
         value = static_cast< ValuedListItem* >( value->nextSibling() );
     }
-    return errors;
 }
 
 // -----------------------------------------------------------------------------
@@ -245,9 +241,9 @@ UserProfileControls_ABC::T_Errors UserProfileControls_ABC::GetErrors( gui::Value
 // -----------------------------------------------------------------------------
 void UserProfileControls_ABC::CheckErrors( const kernel::Entity_ABC& entity, T_Errors& errors )
 {
-    std::string login = checker_.GetProfileControl( *profile_, entity );
-    if( login != "" )
-        errors.push_back( std::make_pair( login, &entity ) );
+    BOOST_FOREACH( const std::string& result, checker_.Find( entity ) )
+        if( profile_->GetLogin().ascii() != result )
+            errors.push_back( std::make_pair( result, &entity ) );
 }
 
 // -----------------------------------------------------------------------------

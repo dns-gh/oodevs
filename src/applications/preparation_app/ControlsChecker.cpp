@@ -13,7 +13,6 @@
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/Model.h"
 #include "preparation/UserProfile.h"
-#include "preparation/ProfilesModel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -63,25 +62,40 @@ void ControlsChecker::Clean()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ControlsChecker::GetProfileControl
-// Created: LGY 2011-09-15
+// Name: ControlsChecker::Find
+// Created: LGY 2011-12-13
 // -----------------------------------------------------------------------------
-QString ControlsChecker::GetProfileControl( const UserProfile& profile, const kernel::Entity_ABC& entity ) const
+std::set< std::string > ControlsChecker::Find( const kernel::Entity_ABC& entity ) const
 {
+    std::set< std::string > results;
+    std::set< std::string > editors;
     for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
-        if( it->second )
+        if( it->first )
         {
-            QString login = it->second->GetLogin();
-            const kernel::Entity_ABC* parent = 0;
-            if( const ProfileHierarchies_ABC* pProfileHierarchy = entity.Retrieve< ProfileHierarchies_ABC >() )
-                parent = pProfileHierarchy->GetSuperior();
-            else if( const TacticalHierarchies* pTacticalHierarchy = entity.Retrieve< TacticalHierarchies >() )
-                parent = &pTacticalHierarchy->GetTop();
-            if( profile.GetLogin().ascii() != login )
-                if( it->second->IsWriteable( entity ) || ( parent && it->second->IsWriteable( *parent ) ) )
-                    return login;
+            editors.insert( it->first->GetLogin().ascii() );
+            if( it->second && IsWriteable( entity, *it->second ) )
+                results.insert( it->second->GetLogin().ascii() );
         }
-    return "";
+    ProfilesModel::T_Units units;
+    model_.profiles_.Visit( units );
+    Find( entity, units, results, editors );
+    return results;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlsChecker::Find
+// Created: LGY 2011-12-13
+// -----------------------------------------------------------------------------
+void ControlsChecker::Find( const kernel::Entity_ABC& entity, const ProfilesModel::T_Units& units,
+                            std::set< std::string >& results, const std::set< std::string >& editors ) const
+{
+    ProfilesModel::CIT_Units it = units.find( entity.GetId() );
+    if( it != units.end() )
+        BOOST_FOREACH( const std::string& profile, it->second )
+            if( editors.find( profile ) == editors.end() )
+                results.insert( profile );
+    if( const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior() )
+        Find( *parent, units, results, editors );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,20 +162,20 @@ bool ControlsChecker::Exists( const QString& login ) const
 bool ControlsChecker::IsControlled( const kernel::Entity_ABC& entity ) const
 {
     for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
-        if( it->second && IsIsWriteable( entity, *it->second ) )
+        if( it->second && IsWriteable( entity, *it->second ) )
             return true;
     return model_.profiles_.IsWriteable( entity );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ControlsChecker::IsIsWriteable
+// Name: ControlsChecker::IsWriteable
 // Created: LGY 2011-12-13
 // -----------------------------------------------------------------------------
-bool ControlsChecker::IsIsWriteable( const kernel::Entity_ABC& entity, const UserProfile& profile ) const
+bool ControlsChecker::IsWriteable( const kernel::Entity_ABC& entity, const UserProfile& profile ) const
 {
     if( profile.IsWriteable( entity ) )
         return true;
     if( const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior() )
-        return IsIsWriteable( *parent, profile );
+        return IsWriteable( *parent, profile );
     return false;
 }

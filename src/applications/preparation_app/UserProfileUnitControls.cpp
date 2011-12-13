@@ -220,7 +220,7 @@ bool UserProfileUnitControls::ApplyShowFilter( gui::ValuedListItem* item ) const
 // -----------------------------------------------------------------------------
 void UserProfileUnitControls::RemoveFilter()
 {
-    func_ =  boost::lambda::constant( true );
+    func_ = boost::lambda::constant( true );
     UpdateFilter();
 }
 

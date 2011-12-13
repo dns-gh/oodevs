@@ -407,6 +407,7 @@ void UserProfile::NotifyPopulationDeleted( unsigned long populationId )
 void UserProfile::Visit( std::vector< unsigned long >& elements ) const
 {
     elements.insert( elements.begin(), writeSides_.begin(), writeSides_.end() );
+    elements.insert( elements.begin(), writeFormations_.begin(), writeFormations_.end() );
     elements.insert( elements.begin(), writeAutomats_.begin(), writeAutomats_.end() );
     elements.insert( elements.begin(), writePopulations_.begin(), writePopulations_.end() );
 }
