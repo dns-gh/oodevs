@@ -434,8 +434,8 @@
           <automat engaged="true" id="1179" knowledge-group="1109" name="Refugies x10 [1179]" type="CIV . DPRE hommes femmes et enfants">
             <unit command-post="true" id="1180" name="Refugies 10 Pers" position="31TBM9644394487" type="Réfugiés hommes femmes et enfants"/>
           </automat>
-          <automat engaged="true" id="1181" knowledge-group="1109" name="GLAISE RENS URH [1181]" type="GLAISE - RENS - URH">
-            <unit command-post="true" id="1182" name="GLAISE RENS Patrouille URH" position="31TBN9102806415" type="GLAISE - RENS - Patrouille URH"/>
+          <automat engaged="true" id="1181" knowledge-group="1109" name="GLAISE RENS URH [1181]" type="GLAISE - RENS . URH">
+            <unit command-post="true" id="1182" name="GLAISE RENS Patrouille URH" position="31TBN9102806415" type="GLAISE - RENS . Patrouille URH"/>
           </automat>
           <lima name="Lima 1185">
             <point>31TBM7861890937</point>
@@ -702,4 +702,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1636294874" -->
+<!-- signature="2446965194" -->
