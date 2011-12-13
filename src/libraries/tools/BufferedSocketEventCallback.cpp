@@ -8,86 +8,84 @@
 // *****************************************************************************
 
 #include "tools_pch.h"
-#include "BufferedMessageCallback.h"
+#include "BufferedSocketEventCallback.h"
+#include <boost/bind.hpp>
 
 using namespace tools;
 
 // -----------------------------------------------------------------------------
-// Name: BufferedMessageCallback constructor
+// Name: BufferedSocketEventCallback constructor
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-BufferedMessageCallback::BufferedMessageCallback()
+BufferedSocketEventCallback::BufferedSocketEventCallback()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: BufferedMessageCallback destructor
+// Name: BufferedSocketEventCallback destructor
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-BufferedMessageCallback::~BufferedMessageCallback()
+BufferedSocketEventCallback::~BufferedSocketEventCallback()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: BufferedMessageCallback::Event::Event
-// Created: AGE 2007-09-07
-// -----------------------------------------------------------------------------
-BufferedMessageCallback::Event::Event( const std::string& endpoint, const std::string& error, const std::string& warning )
-    : endpoint_( endpoint )
-    , error_   ( error )
-    , warning_ ( warning )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: BufferedMessageCallback::Event::Event
-// Created: AGE 2007-09-07
-// -----------------------------------------------------------------------------
-BufferedMessageCallback::Event::Event( const std::string& endpoint, const Message& message )
-    : endpoint_( endpoint )
-    , message_ ( message )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: BufferedMessageCallback::OnError
+// Name: BufferedSocketEventCallback::OnMessage
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void BufferedMessageCallback::OnError( const std::string& endpoint, const std::string& error )
+void BufferedSocketEventCallback::OnMessage( const std::string& endpoint, Message& message )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    events_.push_back( Event( endpoint, error, "" ) );
+    events_.push_back( boost::bind( &SocketEventCallback_ABC::OnMessage, _1, endpoint, message ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: BufferedMessageCallback::OnWarning
+// Name: BufferedSocketEventCallback::ConnectionSucceeded
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void BufferedSocketEventCallback::ConnectionSucceeded( const std::string& endpoint )
+{
+    boost::mutex::scoped_lock locker( mutex_ );
+    events_.push_back( boost::bind( &SocketEventCallback_ABC::ConnectionSucceeded, _1, endpoint ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BufferedSocketEventCallback::ConnectionFailed
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void BufferedSocketEventCallback::ConnectionFailed( const std::string& endpoint, const std::string& error )
+{
+    boost::mutex::scoped_lock locker( mutex_ );
+    events_.push_back( boost::bind( &SocketEventCallback_ABC::ConnectionFailed, _1, endpoint, error ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BufferedSocketEventCallback::ConnectionError
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+void BufferedSocketEventCallback::ConnectionError( const std::string& endpoint, const std::string& error )
+{
+    boost::mutex::scoped_lock locker( mutex_ );
+    events_.push_back( boost::bind( &SocketEventCallback_ABC::ConnectionError, _1, endpoint, error ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BufferedSocketEventCallback::ConnectionWarning
 // Created: MCO 2011-09-26
 // -----------------------------------------------------------------------------
-void BufferedMessageCallback::OnWarning( const std::string& endpoint, const std::string& warning )
+void BufferedSocketEventCallback::ConnectionWarning( const std::string& endpoint, const std::string& warning )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    events_.push_back( Event( endpoint, "", warning ) );
+    events_.push_back( boost::bind( &SocketEventCallback_ABC::ConnectionWarning, _1, endpoint, warning ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: BufferedMessageCallback::OnMessage
+// Name: BufferedSocketEventCallback::Commit
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void BufferedMessageCallback::OnMessage( const std::string& endpoint, Message& message )
-{
-    boost::mutex::scoped_lock locker( mutex_ );
-    events_.push_back( Event( endpoint, message ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: BufferedMessageCallback::Commit
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-void BufferedMessageCallback::Commit( MessageCallback_ABC& callback )
+void BufferedSocketEventCallback::Commit( SocketEventCallback_ABC& callback )
 {
     T_Events events;
     {
@@ -95,21 +93,14 @@ void BufferedMessageCallback::Commit( MessageCallback_ABC& callback )
         std::swap( events_, events );
     }
     for( IT_Events it = events.begin(); it != events.end(); ++it )
-    {
-        if( ! it->error_.empty() )
-            callback.OnError( it->endpoint_, it->error_ );
-        else if( ! it->warning_.empty() )
-            callback.OnWarning( it->endpoint_, it->warning_ );
-        else
-            Commit( callback, it->endpoint_, it->message_ );
-    }
+        (*it)( callback );
 }
 
 // -----------------------------------------------------------------------------
-// Name: BufferedMessageCallback::Commit
+// Name: BufferedSocketEventCallback::Commit
 // Created: MCO 2010-12-07
 // -----------------------------------------------------------------------------
-void BufferedMessageCallback::Commit( MessageCallback_ABC& callback, const std::string& endpoint, Message& message ) const
+void BufferedSocketEventCallback::Commit( SocketEventCallback_ABC& callback, const std::string& endpoint, Message& message ) const
 {
     try
     {
@@ -117,6 +108,6 @@ void BufferedMessageCallback::Commit( MessageCallback_ABC& callback, const std::
     }
     catch( std::exception& e )
     {
-        callback.OnWarning( endpoint, e.what() );
+        callback.ConnectionWarning( endpoint, e.what() );
     }
 }

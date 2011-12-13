@@ -13,9 +13,15 @@
 #define __NET_AgentServer_h_
 
 #include "tools/ServerNetworker.h"
+#include "NET_Publisher_ABC.h"
 
-class NET_AS_MOSServerMsgMgr;
-class NET_Publisher_ABC;
+namespace sword
+{
+    class SimToClient;
+    class ClientToSim;
+    class DispatcherToSim;
+}
+
 class MIL_Config;
 class MIL_Time_ABC;
 class NET_Simulation_ABC;
@@ -24,29 +30,31 @@ class NET_Simulation_ABC;
 // Created: NLD 2002-07-12
 //=============================================================================
 class NET_AgentServer : public tools::ServerNetworker
+                      , public NET_Publisher_ABC
 {
 public:
              NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time, NET_Simulation_ABC& simulation );
     virtual ~NET_AgentServer();
 
-    //-------------------------------------------------------------------------
-    /** @name Main methods */
-    //-------------------------------------------------------------------------
+    //!  @name Main methods
     //@{
     void Update();
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
+    //! @name NET_Publisher_ABC
     //@{
-    bool                           MustInitUnitVisionCones   () const;
-    bool                           MustSendUnitVisionCones   () const;
-    void                           SetMustSendUnitVisionCones( bool bEnable );
+    virtual void Send( sword::SimToClient& asnMsg );
+    //@}
+
+    //! @name Ugly accessors
+    //@{
+    bool MustInitUnitVisionCones   () const;
+    bool MustSendUnitVisionCones   () const;
+    void SetMustSendUnitVisionCones( bool bEnable );
     //@}
 
 private:
-    //! @name Operations
+    //! @name Low level callbacks
     //@{
     virtual void ConnectionSucceeded( const std::string& endpoint );
     virtual void ConnectionFailed   ( const std::string& address, const std::string& error );
@@ -54,13 +62,27 @@ private:
     virtual void ConnectionWarning  ( const std::string& address, const std::string& warning );
     //@}
 
+    //! @name Messages callbacks
+    //@{
+    void OnReceiveClient( const std::string& from, const sword::ClientToSim& message );
+    void OnReceiveMiddle( const std::string& from, const sword::DispatcherToSim& message );
+    void OnReceiveCtrlClientAnnouncement( const std::string& from );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::set< std::string > T_Clients;
+    //@}
+
 private:
     //! @name Member data
     //@{
-    const MIL_Time_ABC&             time_;
-    NET_AS_MOSServerMsgMgr*         pMsgMgr_;
-    unsigned int                            nUnitVisionConesChangeTimeStep_;
-    bool                            bSendUnitVisionCones_;
+    const MIL_Time_ABC& time_;
+    NET_Simulation_ABC& simulation_;
+    T_Clients           clients_;
+    unsigned int        nUnitVisionConesChangeTimeStep_;
+    bool                bSendUnitVisionCones_;
     //@}
 };
 

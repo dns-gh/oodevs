@@ -16,8 +16,7 @@
 
 namespace tools
 {
-    class MessageCallback_ABC;
-    class ConnectionCallback_ABC;
+    class SocketEventCallback_ABC;
     class Socket;
     class Message;
 
@@ -32,8 +31,7 @@ class SocketManager : public MessageSender_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SocketManager( boost::shared_ptr< MessageCallback_ABC > message,
-                            boost::shared_ptr< ConnectionCallback_ABC > connection, DWORD timeOut );
+             SocketManager( boost::shared_ptr< SocketEventCallback_ABC > callback, DWORD timeOut );
     virtual ~SocketManager();
     //@}
 
@@ -69,8 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
-    boost::shared_ptr< MessageCallback_ABC > message_;
-    boost::shared_ptr< ConnectionCallback_ABC > connection_;
+    boost::shared_ptr< SocketEventCallback_ABC > callback_;
     const DWORD timeOut_;
     T_Sockets sockets_;
     unsigned long nbMessagesSent_;

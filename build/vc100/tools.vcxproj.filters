@@ -63,12 +63,6 @@
     <ClCompile Include="..\..\src\libraries\tools\Acceptor.cpp">
       <Filter>Source Files\Network\internal</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\tools\BufferedConnectionCallback.cpp">
-      <Filter>Source Files\Network\internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\tools\BufferedMessageCallback.cpp">
-      <Filter>Source Files\Network\internal</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\tools\Connector.cpp">
       <Filter>Source Files\Network\internal</Filter>
     </ClCompile>
@@ -123,6 +117,9 @@
     <ClCompile Include="..\..\src\libraries\tools\SchemaWriter.cpp">
       <Filter>Source Files\File writer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\BufferedSocketEventCallback.cpp">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h">
@@ -164,15 +161,6 @@
     <ClInclude Include="..\..\src\libraries\tools\asio.h">
       <Filter>Source Files\Network\internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\tools\BufferedConnectionCallback.h">
-      <Filter>Source Files\Network\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\tools\BufferedMessageCallback.h">
-      <Filter>Source Files\Network\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\tools\ConnectionCallback_ABC.h">
-      <Filter>Source Files\Network\internal</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\Connector.h">
       <Filter>Source Files\Network\internal</Filter>
     </ClInclude>
@@ -180,9 +168,6 @@
       <Filter>Source Files\Network\internal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\Message.h">
-      <Filter>Source Files\Network\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\tools\MessageCallback_ABC.h">
       <Filter>Source Files\Network\internal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\MessageHandler.h">
@@ -292,6 +277,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\SchemaWriter_ABC.h">
       <Filter>Source Files\File writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\SocketEventCallback_ABC.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\BufferedSocketEventCallback.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\ObjectMessageCallback_ABC.h">
+      <Filter>Source Files\Network\internal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

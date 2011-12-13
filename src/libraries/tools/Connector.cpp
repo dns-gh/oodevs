@@ -10,7 +10,7 @@
 #include "tools_pch.h"
 #include "Connector.h"
 #include "SocketManager.h"
-#include "ConnectionCallback_ABC.h"
+#include "SocketEventCallback_ABC.h"
 #pragma warning( disable : 4503 )
 #include <boost/bind.hpp>
 
@@ -20,7 +20,7 @@ using namespace tools;
 // Name: Connector constructor
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-Connector::Connector( boost::asio::io_service& service, SocketManager& manager, ConnectionCallback_ABC& callback )
+Connector::Connector( boost::asio::io_service& service, SocketManager& manager, SocketEventCallback_ABC& callback )
     : service_ ( service )
     , manager_ ( manager )
     , callback_( callback )

@@ -11,8 +11,7 @@
 #include "ClientNetworker.h"
 #include "SocketManager.h"
 #include "Connector.h"
-#include "BufferedMessageCallback.h"
-#include "BufferedConnectionCallback.h"
+#include "BufferedSocketEventCallback.h"
 #include "ObjectMessageService.h"
 #include <boost/bind.hpp>
 #include "asio.h"
@@ -27,17 +26,14 @@ using namespace tools;
 // -----------------------------------------------------------------------------
 ClientNetworker::ClientNetworker( const std::string& host /* = "" */, bool retry /* = false*/, unsigned long timeOut /*=10000*/ )
     : service_         ( new boost::asio::io_service() )
-    , connectionBuffer_( new BufferedConnectionCallback() )
-    , messageBuffer_   ( new BufferedMessageCallback() )
-    , sockets_         ( new SocketManager( messageBuffer_, connectionBuffer_, timeOut ) )
+    , eventsBuffer_    ( new BufferedSocketEventCallback() )
+    , sockets_         ( new SocketManager( eventsBuffer_, timeOut ) )
     , messageService_  ( new ObjectMessageService() )
-    , connector_       ( new Connector( *service_, *sockets_, *connectionBuffer_ ) )
+    , connector_       ( new Connector( *service_, *sockets_, *eventsBuffer_ ) )
     , retry_           ( retry )
     , stopped_         ( false )
     , thread_          ( boost::bind( &ClientNetworker::Run, this ) )
 {
-    messageService_->RegisterErrorCallback( boost::bind( &ClientNetworker::ConnectionError, this, _1, _2 ) );
-    messageService_->RegisterWarningCallback( boost::bind( &ClientNetworker::ConnectionWarning, this, _1, _2 ) );
     if( !host.empty() )
         Connect( host, retry );
 }
@@ -85,12 +81,11 @@ void ClientNetworker::Disconnect()
 // -----------------------------------------------------------------------------
 void ClientNetworker::Update()
 {
-    connectionBuffer_->Commit( *this );
-    messageBuffer_->Commit( *messageService_ );
+    eventsBuffer_->Commit( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientNetworker::ConnectionSucceeded
+// Name: ObjectMessageService::ConnectionSucceeded
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
 void ClientNetworker::ConnectionSucceeded( const std::string& )
@@ -99,13 +94,22 @@ void ClientNetworker::ConnectionSucceeded( const std::string& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientNetworker::ConnectionFailed
+// Name: ObjectMessageService::ConnectionFailed
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ClientNetworker::ConnectionFailed( const std::string& , const std::string& )
+void ClientNetworker::ConnectionFailed( const std::string&, const std::string& )
 {
     if( retry_ )
         connector_->Connect( host_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMessageService::OnMessage
+// Created: NLD 2011-12-12
+// -----------------------------------------------------------------------------
+void ClientNetworker::OnMessage( const std::string& endpoint, Message& message )
+{
+    messageService_->OnMessage( endpoint, message );
 }
 
 // -----------------------------------------------------------------------------

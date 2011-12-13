@@ -18,8 +18,7 @@
 namespace tools
 {
     class Message;
-    class MessageCallback_ABC;
-
+    
 // =============================================================================
 /** @class  ObjectMessageCallback_ABC
     @brief  ObjectMessageCallback_ABC
@@ -37,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnMessage( const std::string& link, Message& message, MessageCallback_ABC& callback ) const = 0;
+    virtual void OnMessage( const std::string& link, Message& message ) const = 0;
     virtual void OnMessage( const std::string& link, const google::protobuf::Message& message ) const = 0;
     //@}
 };

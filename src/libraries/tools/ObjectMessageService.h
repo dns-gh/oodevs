@@ -11,7 +11,6 @@
 #define __ObjectMessageService_h_
 
 #include "MessageDispatcher_ABC.h"
-#include "MessageCallback_ABC.h"
 #include <boost/function.hpp>
 #include <map>
 
@@ -26,7 +25,6 @@ namespace tools
 // Created: AGE 2007-03-07
 // =============================================================================
 class ObjectMessageService : public MessageDispatcher_ABC
-                           , public MessageCallback_ABC
 {
 private:
     //! @name Types
@@ -44,20 +42,15 @@ public:
     //! @name Operations
     //@{
     using MessageDispatcher_ABC::RegisterMessage;
-
-    void RegisterErrorCallback( const T_Callback& error );
-    void RegisterWarningCallback( const T_Callback& warning );
-
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
     virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
+
+    void OnMessage( const std::string& endpoint, Message& message );
     //@}
 
     //! @name Accessors
     //@{
-    virtual unsigned long GetNbMessagesReceived() const
-    {
-        return nbMessagesReceived_;
-    }
+    virtual unsigned long GetNbMessagesReceived() const { return nbMessagesReceived_; }
     //@}
 
 private:
@@ -65,13 +58,6 @@ private:
     //@{
     ObjectMessageService( const ObjectMessageService& );            //!< Copy constructor
     ObjectMessageService& operator=( const ObjectMessageService& ); //!< Assignment operator
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void OnError( const std::string& endpoint, const std::string& error );
-    virtual void OnWarning( const std::string& endpoint, const std::string& error );
-    virtual void OnMessage( const std::string& endpoint, Message& message );
     //@}
 
 private:
@@ -85,7 +71,6 @@ private:
     //! @name Member data
     //@{
     T_Callbacks callbacks_;
-    T_Callback error_, warning_;
     unsigned long nbMessagesReceived_;
     //@}
 };

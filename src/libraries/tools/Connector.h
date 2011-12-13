@@ -15,7 +15,7 @@
 namespace tools
 {
     class SocketManager;
-    class ConnectionCallback_ABC;
+    class SocketEventCallback_ABC;
 
 // =============================================================================
 /** @class  Connector
@@ -28,7 +28,7 @@ class Connector
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Connector( boost::asio::io_service& service, SocketManager& manager, ConnectionCallback_ABC& callback );
+    explicit Connector( boost::asio::io_service& service, SocketManager& manager, SocketEventCallback_ABC& callback );
     virtual ~Connector();
     //@}
 
@@ -57,7 +57,7 @@ private:
     //@{
     boost::asio::io_service& service_;
     SocketManager& manager_;
-    ConnectionCallback_ABC& callback_;
+    SocketEventCallback_ABC& callback_;
     boost::asio::ip::tcp::resolver resolver_;
     bool closed_;
     //@}

@@ -11,7 +11,6 @@
 #define __ObjectMessageCallback_h_
 
 #include "ObjectMessageCallback_ABC.h"
-#include "MessageCallback_ABC.h"
 #include "Message.h"
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
@@ -62,15 +61,15 @@ public:
             throw std::runtime_error( e.what() + (" " + message.ShortDebugString()) );
         }
     }
-    virtual void OnMessage( const std::string& link, Message& message, MessageCallback_ABC& callback ) const
+    virtual void OnMessage( const std::string& link, Message& message ) const
     {
         T t;
         if( ! t.ParseFromArray( message.Data(), static_cast< int >( message.Size() ) ) )
             throw std::runtime_error( "Error deserializing message of type \"" + t.GetDescriptor()->full_name() + '"' );
-        static const unsigned long threshold = 32 * 1024; // 32 kB
+       /* static const unsigned long threshold = 32 * 1024; // 32 kB
         if( message.Size() > threshold )
             callback.OnWarning( link,
-                "Message size larger than " + boost::lexical_cast< std::string >( threshold ) + " detected" + " " + t.ShortDebugString() );
+                "Message size larger than " + boost::lexical_cast< std::string >( threshold ) + " detected" + " " + t.ShortDebugString() );*/
         OnMessage( link, t );
     }
     virtual void OnMessage( const std::string& link, const google::protobuf::Message& message ) const

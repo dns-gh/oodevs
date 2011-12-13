@@ -145,7 +145,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\network\NET_AgentServer.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\network\NET_AS_MOSServerMsgMgr.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Network\NET_Publisher_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\network\NET_ASN_Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\MIL_Entity_ABC.cpp" />
@@ -880,7 +879,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tristate.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\network\NET_AgentServer.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Network\NetworkBufferedPercentageValue.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\network\NET_AS_MOSServerMsgMgr.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Network\NET_Publisher_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Network\NET_Simulation_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\network\NET_ASN_Tools.h" />

@@ -18,7 +18,7 @@
 
 namespace tools
 {
-    class MessageCallback_ABC;
+    class SocketEventCallback_ABC;
     class Message;
 
 // =============================================================================
@@ -33,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Socket( boost::shared_ptr< boost::asio::ip::tcp::socket > socket,
-                     boost::shared_ptr< MessageCallback_ABC > message, const std::string& endpoint );
+                     boost::shared_ptr< SocketEventCallback_ABC > callback, const std::string& endpoint );
     virtual ~Socket();
     //@}
 
@@ -65,7 +65,7 @@ private:
     //! @name Member data
     //@{
     boost::shared_ptr< boost::asio::ip::tcp::socket > socket_;
-    boost::shared_ptr< MessageCallback_ABC > message_;
+    boost::shared_ptr< SocketEventCallback_ABC > callback_;
     std::string endpoint_;
     boost::system::error_code previous_;
     std::deque< std::pair< unsigned long, Message > > queue_;

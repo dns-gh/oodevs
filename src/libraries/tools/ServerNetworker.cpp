@@ -9,8 +9,7 @@
 
 #include "tools_pch.h"
 #include "ServerNetworker.h"
-#include "BufferedMessageCallback.h"
-#include "BufferedConnectionCallback.h"
+#include "BufferedSocketEventCallback.h"
 #include "ObjectMessageService.h"
 #include "SocketManager.h"
 #include "Acceptor.h"
@@ -26,16 +25,13 @@ using namespace tools;
 // -----------------------------------------------------------------------------
 ServerNetworker::ServerNetworker( unsigned short port, unsigned long timeOut /*=10000*/ )
     : service_         ( new boost::asio::io_service() )
-    , connectionBuffer_( new BufferedConnectionCallback() )
-    , messageBuffer_   ( new BufferedMessageCallback() )
-    , sockets_         ( new SocketManager( messageBuffer_, connectionBuffer_, timeOut ) )
+    , eventsBuffer_    ( new BufferedSocketEventCallback() )
+    , sockets_         ( new SocketManager( eventsBuffer_, timeOut ) )
     , messageService_  ( new ObjectMessageService() )
     , acceptor_        ( new Acceptor( *sockets_, *service_, port ) )
     , stopped_         ( false )
     , thread_          ( boost::bind( &ServerNetworker::Run, this ) )
 {
-    messageService_->RegisterErrorCallback( boost::bind( &ServerNetworker::ConnectionError, this, _1, _2 ) );
-    messageService_->RegisterWarningCallback( boost::bind( &ServerNetworker::ConnectionWarning, this, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,8 +84,7 @@ void ServerNetworker::AllowConnections()
 // -----------------------------------------------------------------------------
 void ServerNetworker::Update()
 {
-    connectionBuffer_->Commit( *this );
-    messageBuffer_->Commit( *messageService_ );
+    eventsBuffer_->Commit( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,6 +138,16 @@ ObjectMessageCallback_ABC* ServerNetworker::Retrieve( unsigned long id )
 void ServerNetworker::Send( const std::string& endpoint, unsigned long tag, Message& message )
 {
     sockets_->Send( endpoint, tag, message );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMessageService::OnMessage
+// Created: NLD 2011-12-12
+// -----------------------------------------------------------------------------
+void ServerNetworker::OnMessage( const std::string& endpoint, Message& message )
+{
+    messageService_->OnMessage( endpoint, message );
 }
 
 // -----------------------------------------------------------------------------

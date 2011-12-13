@@ -84,6 +84,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\tools\App6Symbol.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\BufferedSocketEventCallback.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\tools_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -98,8 +99,6 @@
     <ClCompile Include="..\..\src\libraries\tools\WinArguments.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\WorldParameters.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\Acceptor.cpp" />
-    <ClCompile Include="..\..\src\libraries\tools\BufferedConnectionCallback.cpp" />
-    <ClCompile Include="..\..\src\libraries\tools\BufferedMessageCallback.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\Connector.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\Message.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\ObjectMessageService.cpp" />
@@ -121,6 +120,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h" />
+    <ClInclude Include="..\..\src\libraries\tools\BufferedSocketEventCallback.h" />
+    <ClInclude Include="..\..\src\libraries\tools\ObjectMessageCallback_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\SocketEventCallback_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\tools_pch.h" />
     <ClInclude Include="..\..\src\libraries\tools\Version.h" />
     <ClInclude Include="..\..\src\libraries\tools\Visitor_ABC.h" />
@@ -133,13 +135,9 @@
     <ClInclude Include="..\..\src\libraries\tools\WorldParameters.h" />
     <ClInclude Include="..\..\src\libraries\tools\Acceptor.h" />
     <ClInclude Include="..\..\src\libraries\tools\asio.h" />
-    <ClInclude Include="..\..\src\libraries\tools\BufferedConnectionCallback.h" />
-    <ClInclude Include="..\..\src\libraries\tools\BufferedMessageCallback.h" />
-    <ClInclude Include="..\..\src\libraries\tools\ConnectionCallback_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\Connector.h" />
     <ClInclude Include="..\..\src\libraries\tools\Handler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\Message.h" />
-    <ClInclude Include="..\..\src\libraries\tools\MessageCallback_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\MessageHandler.h" />
     <ClInclude Include="..\..\src\libraries\tools\MessageHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\MessageIdentifierFactory.h" />

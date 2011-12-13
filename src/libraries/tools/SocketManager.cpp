@@ -10,7 +10,7 @@
 #include "tools_pch.h"
 #include "SocketManager.h"
 #include "Socket.h"
-#include "ConnectionCallback_ABC.h"
+#include "SocketEventCallback_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 
 using namespace tools;
@@ -19,10 +19,8 @@ using namespace tools;
 // Name: SocketManager constructor
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
-SocketManager::SocketManager( boost::shared_ptr< MessageCallback_ABC > message,
-                              boost::shared_ptr< ConnectionCallback_ABC > connection, DWORD timeOut )
-    : message_       ( message )
-    , connection_    ( connection )
+SocketManager::SocketManager( boost::shared_ptr< SocketEventCallback_ABC > callback, DWORD timeOut )
+    : callback_      ( callback)
     , nbMessagesSent_( 0 )
     , timeOut_       ( timeOut )
 {
@@ -79,16 +77,16 @@ void SocketManager::Disconnect( const std::string& endpoint )
 void SocketManager::Add( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket )
 {
     const std::string address = ToString( socket->remote_endpoint() );
-    boost::shared_ptr< Socket > pSocket( new Socket( socket, message_, address ) );
+    boost::shared_ptr< Socket > pSocket( new Socket( socket, callback_, address ) );
     SOCKET nativeSock = socket->native();
     if( nativeSock !=0 )
     {
-        setsockopt( nativeSock, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast< const char* >( &timeOut_ ), sizeof( DWORD) );
+        setsockopt( nativeSock, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast< const char* >( &timeOut_ ), sizeof( DWORD) ); //$$ USELESS, to be replaced by SO_KEEPALIVE
         setsockopt( nativeSock, SOL_SOCKET, SO_SNDTIMEO, reinterpret_cast< const char* >( &timeOut_ ), sizeof( DWORD) );
     }
     pSocket->StartReading();
     sockets_.insert( std::make_pair( address, pSocket ) );
-    connection_->ConnectionSucceeded( address );
+    callback_->ConnectionSucceeded( address ); //$$$ NLD - 20111213 - Why is it done after "StartReading()" ?
 }
 
 // -----------------------------------------------------------------------------

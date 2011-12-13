@@ -12,7 +12,7 @@
 
 #include "MessageDispatcher_ABC.h"
 #include "MessageSender_ABC.h"
-#include "ConnectionCallback_ABC.h"
+#include "SocketEventCallback_ABC.h"
 #pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
@@ -30,9 +30,7 @@ namespace asio
 namespace tools
 {
     class ObjectMessageService;
-    class ConnectionCallback_ABC;
-    class BufferedMessageCallback;
-    class BufferedConnectionCallback;
+    class BufferedSocketEventCallback;
     class SocketManager;
     class Acceptor;
 
@@ -44,7 +42,7 @@ namespace tools
 // =============================================================================
 class ServerNetworker : public MessageDispatcher_ABC
                       , public MessageSender_ABC
-                      , private ConnectionCallback_ABC
+                      , private SocketEventCallback_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -73,12 +71,13 @@ public:
     //@}
 
 protected:
-    //! @name Operations
+     //! @name Operations
     //@{
     virtual void ConnectionSucceeded( const std::string& endpoint );
-    virtual void ConnectionFailed( const std::string& address, const std::string& error );
-    virtual void ConnectionError( const std::string& address, const std::string& error );
-    virtual void ConnectionWarning( const std::string& address, const std::string& warning );
+    virtual void ConnectionFailed   ( const std::string& address, const std::string& error );
+    virtual void ConnectionError    ( const std::string& address, const std::string& error );
+    virtual void ConnectionWarning  ( const std::string& address, const std::string& warning );
+    virtual void OnMessage( const std::string& endpoint, Message& message );
     //@}
 
 private:
@@ -104,14 +103,13 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< boost::asio::io_service >        service_;
-    boost::shared_ptr< BufferedConnectionCallback > connectionBuffer_;
-    boost::shared_ptr< BufferedMessageCallback >    messageBuffer_;
-    std::auto_ptr< SocketManager >                  sockets_;
-    std::auto_ptr< ObjectMessageService >           messageService_;
-    std::auto_ptr< Acceptor >                       acceptor_;
-    bool                                            stopped_;
-    boost::thread                                   thread_;
+    std::auto_ptr< boost::asio::io_service >         service_;
+    boost::shared_ptr< BufferedSocketEventCallback > eventsBuffer_;
+    std::auto_ptr< SocketManager >                   sockets_;
+    std::auto_ptr< ObjectMessageService >            messageService_;
+    std::auto_ptr< Acceptor >                        acceptor_;
+    bool                                             stopped_;
+    boost::thread                                    thread_;
     //@}
 };
 

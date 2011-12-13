@@ -131,7 +131,14 @@ void ClientsNetworker::Register( const std::string& link, MessageSender_ABC& sen
     MT_LOG_INFO_MSG( "Publisher registered for client '" << link << "'" );
     boost::shared_ptr< Client >& pClient = clients_[ link ];
     pClient.reset( new Client( sender, broadcaster, link ) );
-    services_.Send( *pClient );
+    try
+    {
+        services_.Send( *pClient );
+    }
+    catch( std::exception& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+    }
     broadcasters_.insert( &broadcaster );
     MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }
@@ -162,7 +169,14 @@ void ClientsNetworker::ConnectionSucceeded( const std::string& link )
     ServerNetworker::ConnectionSucceeded( link );
     boost::shared_ptr< Client >& pClient = clients_[ link ];
     pClient.reset( new Client( *this, *this, link ) );
-    services_.Send( *pClient );
+    try
+    {
+        services_.Send( *pClient );
+    }
+    catch( std::exception& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+    }
     MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }
 

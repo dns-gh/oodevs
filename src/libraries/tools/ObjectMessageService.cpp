@@ -56,44 +56,6 @@ ObjectMessageCallback_ABC* ObjectMessageService::Retrieve( unsigned long id )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMessageService::RegisterErrorCallback
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-void ObjectMessageService::RegisterErrorCallback( const T_Callback& error )
-{
-    error_ = error;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectMessageService::RegisterWarningCallback
-// Created: MCO 2011-09-26
-// -----------------------------------------------------------------------------
-void ObjectMessageService::RegisterWarningCallback( const T_Callback& warning )
-{
-    warning_ = warning;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectMessageService::OnError
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-void ObjectMessageService::OnError( const std::string& endpoint, const std::string& error )
-{
-    if( error_ )
-        error_( endpoint, error );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectMessageService::OnWarning
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-void ObjectMessageService::OnWarning( const std::string& endpoint, const std::string& warning )
-{
-    if( warning_ )
-        warning_( endpoint, warning );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectMessageService::OnMessage
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
@@ -105,5 +67,5 @@ void ObjectMessageService::OnMessage( const std::string& endpoint, Message& mess
     CIT_Callbacks it = callbacks_.find( tag );
     if( it == callbacks_.end() )
         throw std::runtime_error( "Unknown message tag " + boost::lexical_cast< std::string >( tag ) );
-    it->second->OnMessage( endpoint, message, *this );
+    it->second->OnMessage( endpoint, message );
 }

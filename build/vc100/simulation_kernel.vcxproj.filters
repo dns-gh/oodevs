@@ -534,9 +534,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\network\NET_AgentServer.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\network\NET_AS_MOSServerMsgMgr.cpp">
-      <Filter>Source Files\Network\MOS</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Network\NET_Publisher_ABC.cpp">
       <Filter>Source Files\Network\MOS</Filter>
     </ClCompile>
@@ -2533,9 +2530,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Network\NetworkBufferedPercentageValue.h">
       <Filter>Source Files\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\network\NET_AS_MOSServerMsgMgr.h">
-      <Filter>Source Files\Network\MOS</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Network\NET_Publisher_ABC.h">
       <Filter>Source Files\Network\MOS</Filter>

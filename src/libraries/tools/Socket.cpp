@@ -10,7 +10,7 @@
 #include "tools_pch.h"
 #include "Socket.h"
 #include "Message.h"
-#include "MessageCallback_ABC.h"
+#include "SocketEventCallback_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/bind.hpp>
 
@@ -21,10 +21,10 @@ using namespace tools;
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
 Socket::Socket( boost::shared_ptr< boost::asio::ip::tcp::socket > socket,
-                boost::shared_ptr< MessageCallback_ABC > message,
+                boost::shared_ptr< SocketEventCallback_ABC > callback,
                 const std::string& endpoint )
     : socket_  ( socket )
-    , message_ ( message )
+    , callback_( callback )
     , endpoint_( endpoint )
     , needCleanup_( false )
     , answered_( false )
@@ -92,7 +92,7 @@ void Socket::Sent( const Message&, const boost::system::error_code& error )
     if( error && error != boost::asio::error::operation_aborted && error != previous_)
     {
         previous_ = error;
-        message_->OnError( endpoint_, error.message() );
+        callback_->ConnectionError( endpoint_, error.message() );
     }
     {
         boost::mutex::scoped_lock locker( mutex_ );
@@ -114,7 +114,7 @@ void Socket::Sent( const Message&, const boost::system::error_code& error )
         if( needCleanup_ && size < reclaimSize )
         {
             std::deque< std::pair< unsigned long, Message > > queue( queue_ );
-		    queue_.swap( queue );
+            queue_.swap( queue );
             needCleanup_ = false;
         }
     }
@@ -144,8 +144,7 @@ void Socket::HeaderRead( Message& header, const boost::system::error_code& error
         header >> size;
         static const unsigned long threshold = 1000 * 1024; // 1 MB
         if( size > threshold )
-            message_->OnError( endpoint_,
-                "Message size too large : " + boost::lexical_cast< std::string >( size ) );
+            callback_->ConnectionError( endpoint_, "Message size too large : " + boost::lexical_cast< std::string >( size ) );
         else
         {
             Message message( size );
@@ -155,7 +154,7 @@ void Socket::HeaderRead( Message& header, const boost::system::error_code& error
         }
     }
     else
-        message_->OnError( endpoint_, error.message() );
+        callback_->ConnectionError( endpoint_, error.message() );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,10 +166,10 @@ void Socket::Read( Message& message, const boost::system::error_code& error )
     if( ! error )
     {
         StartReading();
-        message_->OnMessage( endpoint_, message );
+        callback_->OnMessage( endpoint_, message );
     }
     else
-        message_->OnError( endpoint_, error.message() );
+        callback_->ConnectionError( endpoint_, error.message() );
 }
 
 // -----------------------------------------------------------------------------

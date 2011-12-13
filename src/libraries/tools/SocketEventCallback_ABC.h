@@ -7,35 +7,42 @@
 //
 // *****************************************************************************
 
-#ifndef __ConnectionCallback_ABC_h_
-#define __ConnectionCallback_ABC_h_
+#ifndef __SocketEventCallback_ABC_h_
+#define __SocketEventCallback_ABC_h_
 
 #include <string>
 
 namespace tools
 {
+    class Message;
+
 // =============================================================================
-/** @class  ConnectionCallback_ABC
-    @brief  ConnectionCallback_ABC
+/** @class  SocketEventCallback_ABC
+    @brief  Socket event callback declaration
 */
 // Created: AGE 2007-09-06
 // =============================================================================
-class ConnectionCallback_ABC
+class SocketEventCallback_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ConnectionCallback_ABC() {}
-    virtual ~ConnectionCallback_ABC() {}
+             SocketEventCallback_ABC() {}
+    virtual ~SocketEventCallback_ABC() {}
     //@}
 
     //! @name Operations
     //@{
+    //$$$$ A RENOMMER EN QQCHOSE DE COHERENT
     virtual void ConnectionSucceeded( const std::string& endpoint ) = 0;
     virtual void ConnectionFailed   ( const std::string& address, const std::string& error ) = 0;
+    virtual void ConnectionError    ( const std::string& endpoint, const std::string& error ) = 0;
+    virtual void ConnectionWarning  ( const std::string& endpoint, const std::string& warning ) = 0;
+    virtual void OnMessage( const std::string& endpoint, Message& message ) = 0;
     //@}
+
 };
 
 }
 
-#endif // __ConnectionCallback_ABC_h_
+#endif // __SocketEventCallback_ABC_h_
