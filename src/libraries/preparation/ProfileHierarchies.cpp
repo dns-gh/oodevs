@@ -28,3 +28,12 @@ ProfileHierarchies::~ProfileHierarchies()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: ProfileHierarchies::ChangeSuperior
+// Created: LGY 2011-12-13
+// -----------------------------------------------------------------------------
+void ProfileHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
+{
+    kernel::EntityHierarchies< ProfileHierarchies_ABC >::ChangeSuperior( &superior );
+}

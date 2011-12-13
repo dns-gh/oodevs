@@ -16,6 +16,8 @@
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/EntityCommunications.h"
 #include "preparation/CommandPostAttributes.h"
+#include "preparation/ProfileHierarchies_ABC.h"
+#include "preparation/ProfileHierarchies.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/Level.h"
 #include "clients_kernel/FormationLevels.h"
@@ -394,6 +396,8 @@ namespace
         {
             UpdateCommunicationHierarchies( ent, superior );
             static_cast< ::TacticalHierarchies* >( hierarchies )->ChangeSuperior( const_cast< Entity_ABC& >( superior ) );
+            if( ProfileHierarchies_ABC* profileHierarchie = ent.Retrieve< ProfileHierarchies_ABC >() )
+                static_cast< ::ProfileHierarchies* >( profileHierarchie )->ChangeSuperior( const_cast< Entity_ABC& >( superior ) );
             return true;
          }
         return false;

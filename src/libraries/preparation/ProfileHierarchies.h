@@ -27,6 +27,11 @@ public:
              ProfileHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
     virtual ~ProfileHierarchies();
     //@}
+
+    //! @name Operations
+    //@{
+    void ChangeSuperior( kernel::Entity_ABC& superior );
+    //@}
 };
 
 #endif // __AutomatProfileHierarchies_h_
