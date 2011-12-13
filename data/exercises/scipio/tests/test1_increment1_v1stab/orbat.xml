@@ -22,7 +22,7 @@
             <unit command-post="false" id="337" name="HUMUS - ABC . Peloton T55" position="31UEP7481995273" type="HUMUS - ABC . Peloton T55"/>
             <unit command-post="false" id="338" name="HUMUS - INF . Section Cdo BMP1" position="31UEP7500894767" type="HUMUS - INF . Section Cdo BMP1"/>
             <unit command-post="false" id="339" name="HUMUS - ASY -  Activiste" position="31UEP7478494275" type="HUMUS - ASY -  Activiste"/>
-            <unit command-post="false" id="340" name="HUMUS - RENS - Societe Militaire Privee" position="31UEP7427694086" type="HUMUS - RENS - Societe Militaire Privee"/>
+            <unit command-post="false" id="340" name="HUMUS - RENS . Societe Militaire Privee" position="31UEP7427694086" type="HUMUS - RENS . Societe Militaire Privee"/>
           </automat>
           <automat engaged="true" id="350" knowledge-group="2" name="INF . Section TE [350]" type="INF . Section TE">
             <unit command-post="true" id="351" name="INF . PC Section TE" position="31UEP7892996977" type="INF . PC Section TE"/>
@@ -216,4 +216,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0031311881" -->
+<!-- signature="1926428583" -->
