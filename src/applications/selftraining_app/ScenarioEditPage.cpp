@@ -118,6 +118,7 @@ void ScenarioEditPage::Update()
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::OnEdit()
 {
+    EnableButton( eButtonEdit, false );
     switch( mainTabs_->currentPageIndex() )
     {
     case eTabs_Edit:
@@ -139,6 +140,7 @@ void ScenarioEditPage::OnEdit()
     default:
         break;
     }
+    EnableButton( eButtonEdit, true );
 }
 
 // -----------------------------------------------------------------------------
