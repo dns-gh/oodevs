@@ -15,6 +15,6 @@ inline
 const DEC_PathResult::T_PathPointList& DEC_PathResult::GetResult( bool useCheck ) const
 {
     if( useCheck && GetState() == eComputing )
-        throw std::runtime_error( "Path is being computed" );
+        MT_LOG_ERROR_MSG( "Path is being computed" );
     return resultList_;
 }

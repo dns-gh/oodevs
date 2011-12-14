@@ -219,6 +219,8 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
     assert( pHeadPath_ );
     boost::shared_ptr< DEC_PathResult > pHeadPath = boost::dynamic_pointer_cast< DEC_PathResult >( pHeadPath_ );
     int nOut = PHY_MovingEntity_ABC::Move( pHeadPath );
+    if( nOut == DEC_PathWalker::eItineraireMustBeJoined )
+        ApplyMove( GetHeadPosition(), GetDirection(), 0, 0 );
     if( nOut == DEC_PathWalker::eFinished )
         bHeadMoveFinished_ = true;
 }
