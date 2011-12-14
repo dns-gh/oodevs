@@ -53,7 +53,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Commit( SocketEventCallback_ABC& callback, const std::string& endpoint, Message& message ) const;
+    void OnMessageWrapper( SocketEventCallback_ABC& callback, const std::string& endpoint, Message& message ) const;
     //@}
 
 private:

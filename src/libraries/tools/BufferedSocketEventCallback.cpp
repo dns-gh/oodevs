@@ -38,7 +38,7 @@ BufferedSocketEventCallback::~BufferedSocketEventCallback()
 void BufferedSocketEventCallback::OnMessage( const std::string& endpoint, Message& message )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    events_.push_back( boost::bind( &SocketEventCallback_ABC::OnMessage, _1, endpoint, message ) );
+    events_.push_back( boost::bind( &BufferedSocketEventCallback::OnMessageWrapper, this, _1, endpoint, message ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,11 +96,12 @@ void BufferedSocketEventCallback::Commit( SocketEventCallback_ABC& callback )
         (*it)( callback );
 }
 
+
 // -----------------------------------------------------------------------------
-// Name: BufferedSocketEventCallback::Commit
+// Name: BufferedSocketEventCallback::OnMessageWrapper
 // Created: MCO 2010-12-07
 // -----------------------------------------------------------------------------
-void BufferedSocketEventCallback::Commit( SocketEventCallback_ABC& callback, const std::string& endpoint, Message& message ) const
+void BufferedSocketEventCallback::OnMessageWrapper( SocketEventCallback_ABC& callback, const std::string& endpoint, Message& message ) const
 {
     try
     {

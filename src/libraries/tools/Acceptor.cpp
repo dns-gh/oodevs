@@ -84,7 +84,6 @@ void Acceptor::Listen()
 // -----------------------------------------------------------------------------
 void Acceptor::OnAccepted( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket, const boost::system::error_code& error )
 {
-	std::cout << "Acceptor::OnAccepted " << error << " - " << accept_ << std::endl;
     if( ! error )
         manager_.Add( socket );
     if( error != boost::asio::error::operation_aborted && accept_ )

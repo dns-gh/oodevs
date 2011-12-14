@@ -199,7 +199,7 @@ BOOST_FIXTURE_TEST_CASE( message_a_bit_long_sent_from_client_is_detected_by_prox
     int notified = 1;
     MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
                                                 mock::contain( "warning" ) &&
-                                                mock::contain( "Message size larger than" ) ).calls( --bl::var( notified ) );
+                                                mock::contain( "Message size warning" ) ).calls( --bl::var( notified ) );
     bool received = false;
     MOCK_EXPECT( functor, _ ).once().calls( bl::var( received ) = true );
     wait( bl::var( received ) && bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
