@@ -118,6 +118,7 @@ void ScenarioEditPage::Update()
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::OnEdit()
 {
+    EnableButton( eButtonEdit, false );
     switch( mainTabs_->currentPageIndex() )
     {
     case eTabs_Edit:
@@ -131,9 +132,7 @@ void ScenarioEditPage::OnEdit()
         createExerciceWidget_->CreateExercise();
         break;
     case eTabs_Import:
-        EnableButton( eButtonEdit, false );
         importWidget_->InstallExercise();
-        EnableButton( eButtonEdit, true );
         break;
     case eTabs_Export:
         exportWidget_->ExportPackage();
@@ -141,6 +140,7 @@ void ScenarioEditPage::OnEdit()
     default:
         break;
     }
+    EnableButton( eButtonEdit, true );
 }
 
 // -----------------------------------------------------------------------------
