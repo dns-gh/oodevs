@@ -163,107 +163,6 @@
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ASA_DefendreSite" dia-type="T_Mission_Pion_ASA_DefendreSite" id="18" name="PION ASA Defendre Site" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="site_" name="Site" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_DefendreSiteAPartirPosition" dia-type="T_Mission_Pion_ASA_DefendreSiteAPartirPosition" id="19" name="PION ASA Defendre Site A Partir Position" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="site_" name="Site" optional="false" type="Polygon"/>
-      <parameter dia-name="pointDeDeploiement_" name="Point de deploiement" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_DefendreZone" dia-type="T_Mission_Pion_ASA_DefendreZone" id="20" name="PION ASA Defendre Zone" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_DefendreZoneAPartirPosition" dia-type="T_Mission_Pion_ASA_DefendreZoneAPartirPosition" id="21" name="PION ASA Defendre Zone A Partir Position" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-      <parameter dia-name="pointDeDeploiement_" name="Point de deploiement" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_Surveiller" dia-type="T_Mission_Pion_ASA_Surveiller" id="22" name="PION ASA Surveiller" package="control">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="pointDeDeploiement_" name="Point de deploiement" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_DefendreUnites" dia-type="T_Mission_Pion_ASA_DefendreUnites" id="23" name="PION ASA Defendre Unites" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="unites_" max-occurs="unbounded" min-occurs="1" name="Unites" optional="false" type="Agent"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_MISTRAL_DefendreSite" dia-type="T_Mission_Pion_ASA_MISTRAL_DefendreSite" id="24" name="PION ASA MISTRAL Defendre Site" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="site_" name="Site" optional="false" type="Polygon"/>
-      <parameter dia-name="modeDeploiement_" name="Mode deploiement" optional="false" type="Enumeration">
-        <value id="0" name="omnidirectionnel"/>
-        <value id="1" name="directionnel"/>
-      </parameter>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition" dia-type="T_Mission_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition" id="25" name="PION ASA MISTRAL Defendre Site A Partir Position" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="site_" name="Site" optional="false" type="Polygon"/>
-      <parameter dia-name="pointDeDeploiement_" name="Point de deploiement" optional="false" type="Point"/>
-      <parameter dia-name="modeDeploiement_" name="Mode deploiement" optional="false" type="Enumeration">
-        <value id="0" name="omnidirectionnel"/>
-        <value id="1" name="directionnel"/>
-      </parameter>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_MISTRAL_DefendreZone" dia-type="T_Mission_Pion_ASA_MISTRAL_DefendreZone" id="26" name="PION ASA MISTRAL Defendre Zone" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-      <parameter dia-name="modeDeploiement_" name="Mode deploiement" optional="false" type="Enumeration">
-        <value id="0" name="omnidirectionnel"/>
-        <value id="1" name="directionnel"/>
-      </parameter>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition" dia-type="T_Mission_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition" id="27" name="PION ASA MISTRAL Defendre Zone A Partir Position" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-      <parameter dia-name="pointDeDeploiement_" name="Point de deploiement" optional="false" type="Point"/>
-      <parameter dia-name="modeDeploiement_" name="Mode deploiement" optional="false" type="Enumeration">
-        <value id="0" name="omnidirectionnel"/>
-        <value id="1" name="directionnel"/>
-      </parameter>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASA_MISTRAL_Surveiller" dia-type="T_Mission_Pion_ASA_MISTRAL_Surveiller" id="28" name="PION ASA MISTRAL Surveiller" package="control">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="pointDeDeploiement_" name="Point de deploiement" optional="false" type="Point"/>
-      <parameter dia-name="modeDeploiement_" name="Mode deploiement" optional="false" type="Enumeration">
-        <value id="0" name="omnidirectionnel"/>
-        <value id="1" name="directionnel"/>
-      </parameter>
-    </mission>
     <mission dia-behavior="MIS_Pion_ASS_AcquerirLanceursEni" dia-type="T_Mission_Pion_ASS_AcquerirLanceursEni" id="32" name="PION ASS Acquerir Lanceurs Eni" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -1623,7 +1522,7 @@
         <value id="1" name="directionnel"/>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.Surveiller" dia-type="france.military.platoon.combat.support.artillery.tasks.Surveiller" id="2479" name="PION ASA .Surveiller" package="support">
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.Surveiller" dia-type="france.military.platoon.combat.support.artillery.tasks.Surveiller" id="2479" name="PION ASA Surveiller" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1815,116 +1714,6 @@
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreSite" dia-type="T_Mission_Automate_ASA_DefendreSite" id="193" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreSite" name="AUTOMATE ASA Defendre Site" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Positions sections" optional="false" type="Point"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreZone" dia-type="T_Mission_Automate_ASA_DefendreZone" id="194" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreZone" name="AUTOMATE ASA Defendre Zone" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Positions sections" optional="false" type="Point"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreUnites" dia-type="T_Mission_Automate_ASA_DefendreUnites" id="195" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreUnites" name="AUTOMATE ASA Defendre Unites" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="unites_" max-occurs="unbounded" min-occurs="1" name="Unites" optional="false" type="Agent"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_Surveiller" dia-type="T_Mission_Automate_ASA_Surveiller" id="196" mrt-dia-behavior="MIS_Automate_MRT_ASA_Surveiller" name="AUTOMATE ASA Surveiller" package="control">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Positions sections" optional="false" type="Point"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreItineraire" dia-type="T_Mission_Automate_ASA_DefendreItineraire" id="197" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreItineraire" name="AUTOMATE ASA Defendre Itineraire" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_MISTRAL_DefendreZone" dia-type="T_Mission_Automate_ASA_MISTRAL_DefendreZone" id="198" mrt-dia-behavior="MIS_Automate_MRT_ASA_MISTRAL_DefendreZone" name="AUTOMATE ASA MISTRAL Defendre Zone" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-      <parameter dia-name="modeDeploiement_" name="Mode deploiement" optional="false" type="Enumeration">
-        <value id="0" name="en_carre"/>
-        <value id="1" name="en_triangle"/>
-        <value id="2" name="nasse_trois_sections"/>
-        <value id="3" name="nasse_quatre_sections"/>
-        <value id="4" name="double_rideau"/>
-        <value id="5" name="simple_rideau"/>
-      </parameter>
-      <parameter dia-name="angle_" name="Angle" optional="false" type="Integer"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_MISTRAL_DefendreSite" dia-type="T_Mission_Automate_ASA_MISTRAL_DefendreSite" id="199" mrt-dia-behavior="MIS_Automate_MRT_ASA_MISTRAL_DefendreSite" name="AUTOMATE ASA MISTRAL Defendre Site" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-      <parameter dia-name="modeDeploiement_" name="Mode deploiement" optional="false" type="Enumeration">
-        <value id="0" name="en_carre"/>
-        <value id="1" name="en_triangle"/>
-        <value id="2" name="nasse_trois_sections"/>
-        <value id="3" name="nasse_quatre_sections"/>
-        <value id="4" name="double_rideau"/>
-        <value id="5" name="simple_rideau"/>
-      </parameter>
-      <parameter dia-name="angle_" name="Angle" optional="false" type="Integer"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_MISTRAL_Surveiller" dia-type="T_Mission_Automate_ASA_MISTRAL_Surveiller" id="200" mrt-dia-behavior="MIS_Automate_MRT_ASA_MISTRAL_Surveiller" name="AUTOMATE ASA MISTRAL Surveiller" package="control">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-      <parameter dia-name="modeDeploiement_" name="Mode deploiement" optional="false" type="Enumeration">
-        <value id="0" name="en_carre"/>
-        <value id="1" name="en_triangle"/>
-        <value id="2" name="nasse_trois_sections"/>
-        <value id="3" name="nasse_quatre_sections"/>
-        <value id="4" name="double_rideau"/>
-        <value id="5" name="simple_rideau"/>
-      </parameter>
-      <parameter dia-name="angle_" name="Angle" optional="false" type="Integer"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_HAWK_DefendreZone" dia-type="T_Mission_Automate_ASA_HAWK_DefendreZone" id="201" mrt-dia-behavior="MIS_Automate_MRT_ASA_HAWK_DefendreZone" name="AUTOMATE ASA HAWK Defendre Zone" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Positions sections" optional="false" type="Point"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_HAWK_DefendreSite" dia-type="T_Mission_Automate_ASA_HAWK_DefendreSite" id="202" mrt-dia-behavior="MIS_Automate_MRT_ASA_HAWK_DefendreSite" name="AUTOMATE ASA HAWK Defendre Site" package="defence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Positions sections" optional="false" type="Point"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_HAWK_Surveiller" dia-type="T_Mission_Automate_ASA_HAWK_Surveiller" id="203" mrt-dia-behavior="MIS_Automate_MRT_ASA_HAWK_Surveiller" name="AUTOMATE ASA HAWK Surveiller" package="control">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Positions sections" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_AcquerirObjectifs" dia-type="T_Mission_Automate_ASS_AcquerirObjectifs" id="206" mrt-dia-behavior="MIS_Automate_MRT_ASS_AcquerirObjectifs" name="AUTOMATE ASS Acquerir Objectifs" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3274,4 +3063,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="1365531781" -->
+<!-- signature="2880496975" -->
