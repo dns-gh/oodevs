@@ -13,6 +13,7 @@
 #include "ProfileFactory_ABC.h"
 #include "ModelChecker_ABC.h"
 #include "Model.h"
+#include "ProfileHierarchies_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "AgentsModel.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -25,6 +26,7 @@
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Controller.h"
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -268,6 +270,20 @@ const UserProfile* ProfilesModel::Find( const QString& name ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfilesModel::UpdateProfile
+// Created: LGY 2011-12-14
+// -----------------------------------------------------------------------------
+void ProfilesModel::UpdateProfile( const kernel::Entity_ABC& entity, const std::set< std::string >& editors )
+{
+    for( IT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        if( editors.find( (*it)->GetLogin().ascii() ) == editors.end() )
+        {
+            Update( entity, **it );
+            controllers_.controller_.Update( static_cast< const UserProfile* >( *it ) );
+        }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfilesModel::NotifyDeleted
 // Created: MMC 2011-06-24
 // -----------------------------------------------------------------------------
@@ -331,4 +347,43 @@ void ProfilesModel::Visit( T_Profiles& profiles ) const
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         profiles.insert( (*it)->GetLogin() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::IsWriteable
+// Created: LGY 2011-12-14
+// -----------------------------------------------------------------------------
+bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity, const UserProfile& profile ) const
+{
+    if( profile.IsWriteable( entity ) )
+        return true;
+    if( const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior() )
+        return IsWriteable( *parent, profile );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::Update
+// Created: LGY 2011-12-14
+// -----------------------------------------------------------------------------
+void ProfilesModel::Update( const kernel::Entity_ABC& entity, UserProfile& profile )
+{
+    profile.SetWriteable( entity, false );
+    profile.SetReadable( entity, false );
+    if( IsWriteable( entity, profile ) )
+        if( const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior() )
+        {
+            tools::Iterator< const kernel::Entity_ABC& > it = parent->Get< ProfileHierarchies_ABC >().CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& child = it.NextElement();
+                if( entity.GetId() != child.GetId() )
+                {
+                    profile.SetWriteable( child, true );
+                    profile.SetReadable( child, true );
+                }
+            }
+        }
+    if( const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior() )
+        Update( *parent, profile );
 }

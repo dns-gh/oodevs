@@ -31,7 +31,7 @@ class ControlsChecker : public ControlsChecker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ControlsChecker( kernel::Controllers& controllers, Model& model );
+             ControlsChecker( kernel::Controllers& controllers, Model& model );
     virtual ~ControlsChecker();
     //@}
 
@@ -49,6 +49,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    void UpdateProfile( const kernel::Entity_ABC& entity, UserProfile& profile );
     void UpdateProfile( UserProfile& profile, const kernel::Entity_ABC& entity, bool control );
     void Find( const kernel::Entity_ABC& entity, const ProfilesModel::T_Units& units, std::set< std::string >& results,
                const std::set< std::string >& editors ) const;

@@ -75,6 +75,7 @@ public:
     void CreateProfile( const QString& name, const std::string& userRole, const kernel::Entity_ABC& entity, bool readonly );
     void CreateProfile( const QString& name, const std::string& userRole, const std::vector< const kernel::Entity_ABC* >& entities, bool readonly );
     void DeleteProfile( const UserProfile& profile );
+    void UpdateProfile( const kernel::Entity_ABC& entity, const std::set< std::string >& editors );
     bool CheckUnicityAndRename();
     void Visit( T_Units& units ) const;
     void Visit( T_Profiles& profiles ) const;
@@ -103,11 +104,14 @@ private:
     //@{
     void Read( xml::xistream& xis );
     void LoadProfile( xml::xistream& xis );
+    void Update( const kernel::Entity_ABC& entity, UserProfile& profile );
+    bool IsWriteable( const kernel::Entity_ABC& entity, const UserProfile& profile ) const;
     //@}
 
     //! @name Types
     //@{
     typedef std::vector< UserProfile* >      T_UserProfiles;
+    typedef T_UserProfiles::iterator        IT_UserProfiles;
     typedef T_UserProfiles::const_iterator CIT_UserProfiles;
     //@}
 

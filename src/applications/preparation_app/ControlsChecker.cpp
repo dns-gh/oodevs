@@ -104,21 +104,40 @@ void ControlsChecker::Find( const kernel::Entity_ABC& entity, const ProfilesMode
 // -----------------------------------------------------------------------------
 void ControlsChecker::Update( const UserProfile& profile, const kernel::Entity_ABC& entity )
 {
+    std::set< std::string > editors;
     for( IT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
-        if( it->second && profile.GetLogin().ascii() != it->second->GetLogin() )
+        if( it->first )
         {
-            UserProfile* userProfile = it->second;
-            const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior();
-            if( parent && userProfile->IsWriteable( *parent ) )
+            editors.insert( it->first->GetLogin().ascii() );
+            if( it->second && profile.GetLogin().ascii() != it->second->GetLogin() )
             {
-                tools::Iterator< const kernel::Entity_ABC& > it = parent->Get< ProfileHierarchies_ABC >().CreateSubordinateIterator();
-                while( it.HasMoreElements() )
-                    UpdateProfile( *userProfile, it.NextElement(), true );
-                UpdateProfile( *userProfile, *parent, false );
+                UserProfile* userProfile = it->second;
+                UpdateProfile( entity, *userProfile );
             }
-            UpdateProfile( *userProfile, entity, false );
-            controllers_.controller_.Update( userProfile );
         }
+        model_.profiles_.UpdateProfile( entity, editors );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlsChecker::UpdateProfile
+// Created: LGY 2011-12-13
+// -----------------------------------------------------------------------------
+void ControlsChecker::UpdateProfile( const kernel::Entity_ABC& entity, UserProfile& profile )
+{
+    UpdateProfile( profile, entity, false );
+    if( IsWriteable( entity, profile ) )
+        if( const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior() )
+        {
+            tools::Iterator< const kernel::Entity_ABC& > it = parent->Get< ProfileHierarchies_ABC >().CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& child = it.NextElement();
+                if( entity.GetId() != child.GetId() )
+                    UpdateProfile( profile, child, true );
+            }
+        }
+    if( const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior() )
+        UpdateProfile( *parent, profile );
 }
 
 // -----------------------------------------------------------------------------
