@@ -170,7 +170,8 @@ void UserProfileUnitControls::NotifyUpdated( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void UserProfileUnitControls::HideAssignedAutomats()
 {
-    func_ = boost::bind( &UserProfileUnitControls::ApplyShowFilter, this, _1 ) || boost::bind( &UserProfileUnitControls::ApplyHideFilter, this, _1 );
+    func_ = boost::bind( &UserProfileUnitControls::ApplyShowFilter, this, _1 ) ||
+          ( boost::bind( &UserProfileUnitControls::ApplyShowFilter, this, _1 ) && boost::bind( &UserProfileUnitControls::ApplyHideFilter, this, _1 ) );
     UpdateFilter();
 }
 

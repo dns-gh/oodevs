@@ -29,7 +29,6 @@ UserProfileControls_ABC::UserProfileControls_ABC( Q3ListView* listView, Controls
     , checker_   ( checker )
     , profile_   ( 0 )
     , check_     ( MAKE_PIXMAP( check ) )
-    , check_grey_( MAKE_PIXMAP( check_grey ) )
     , supervisor_( false )
 {
     listView_->header()->show();
@@ -62,10 +61,18 @@ void UserProfileControls_ABC::Commit()
         {
             const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
             const Status status = Status( item->text( 2 ).toInt() );
-            const bool isWriteable = ( status == eControl ) ? ( supervisor_ ? false : true ) : false;
-            const bool isReadable = status == eControl;
-            profile_->SetReadable( *entity, isReadable );
-            profile_->SetWriteable( *entity, isWriteable );
+            if( !item->parent() || item->parent()->text( 2 ).toInt() == eNothing )
+            {
+                const bool isWriteable = ( status == eControl ) ? ( supervisor_ ? false : true ) : false;
+                const bool isReadable = status == eControl;
+                profile_->SetReadable( *entity, isReadable );
+                profile_->SetWriteable( *entity, isWriteable );
+            }
+            else
+            {
+                profile_->SetReadable( *entity, false );
+                profile_->SetWriteable( *entity, false );
+            }
         }
     UpdateFilter();
 }
@@ -82,9 +89,99 @@ void UserProfileControls_ABC::Display( UserProfile& profile )
     ValuedListItem* value = static_cast< ValuedListItem* >( listView_->firstChild() );
     while( value )
     {
-        SetStatus( value, false );
+        ReadRights( value, IsControlled( value ) );
         value = static_cast< ValuedListItem* >( value->nextSibling() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::ReadRights
+// Created: LGY 2011-12-14
+// -----------------------------------------------------------------------------
+void UserProfileControls_ABC::ReadRights( gui::ValuedListItem* item, bool control )
+{
+    if( control )
+    {
+        SetItem( item, eControl );
+        listView_->ensureItemVisible( item );
+        ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
+        while( value )
+        {
+            ReadRights( value, control );
+            value = static_cast< ValuedListItem* >( value->nextSibling() );
+        }
+    }
+    else
+    {
+        ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
+        while( value )
+        {
+            ReadRights( value, IsControlled( value ) );
+            value = static_cast< ValuedListItem* >( value->nextSibling() );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::IsControlled
+// Created: LGY 2011-12-14
+// -----------------------------------------------------------------------------
+bool UserProfileControls_ABC::IsControlled( gui::ValuedListItem* item ) const
+{
+    const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
+    if( !entity )
+        return false;
+    return supervisor_ ? profile_->IsReadable( *entity ) : profile_->IsWriteable( *entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::UpdateRights
+// Created: LGY 2011-12-14
+// -----------------------------------------------------------------------------
+void UserProfileControls_ABC::UpdateRights( gui::ValuedListItem* item, bool control )
+{
+    if( control || !item->parent() )
+        Select( item, control );
+    else
+    {
+        Deselect( item );
+        ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
+        while( value )
+        {
+            SetItem( value, eNothing );
+            value = static_cast< ValuedListItem* >( value->nextSibling() );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::Select
+// Created: LGY 2011-12-14
+// -----------------------------------------------------------------------------
+void UserProfileControls_ABC::Select( gui::ValuedListItem* item, bool control )
+{
+    SetItem( item, control ? eControl : eNothing );
+    if( control )
+        listView_->ensureItemVisible( item );
+
+    ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
+    while( value )
+    {
+        Select( value, control );
+        value = static_cast< ValuedListItem* >( value->nextSibling() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::Deselect
+// Created: LGY 2011-12-14
+// -----------------------------------------------------------------------------
+void UserProfileControls_ABC::Deselect( gui::ValuedListItem* item )
+{
+    SetItem( item, eNothing );
+    if( gui::ValuedListItem* parent = static_cast< ValuedListItem* >( item->parent() ) )
+        if( parent->text( 2 ).toInt() == eControl )
+            Deselect( parent );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,8 +193,6 @@ void UserProfileControls_ABC::OnItemClicked( Q3ListViewItem* item, const QPoint&
     if( column == 0 || !item )
         return;
     const Status status = Status( item->text( 2 ).toInt() );
-    if( status == eControlInherited )
-        return;
     bool control = status == eControl;
     if( column == 1 )
         control = !control;
@@ -105,7 +200,7 @@ void UserProfileControls_ABC::OnItemClicked( Q3ListViewItem* item, const QPoint&
         Check( static_cast< ValuedListItem* >( item ), control );
     else
     {
-        SetStatus( static_cast< ValuedListItem* >( item ), control, false );
+        UpdateRights( static_cast< ValuedListItem* >( item ), control );
         Commit();
     }
 }
@@ -119,6 +214,7 @@ void UserProfileControls_ABC::Clear()
     for( Q3ListViewItemIterator it( listView_ ); it.current(); ++it )
     {
         (*it)->setPixmap( 1, QPixmap() );
+        (*it)->setText( 2, QString::number( eNothing ) );
         listView_->setOpen( *it, false );
     }
 }
@@ -132,55 +228,8 @@ void UserProfileControls_ABC::SetItem( Q3ListViewItem* item, Status status )
     item->setText( 2, QString::number( status ) );
     if( status == eNothing )
         item->setPixmap( 1, QPixmap() );
-    else if( status == eControl )
+    else
         item->setPixmap( 1, check_ );
-    else if( status == eControlInherited )
-        item->setPixmap( 1, check_grey_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileControls_ABC::SetStatus
-// Created: LGY 2011-09-12
-// -----------------------------------------------------------------------------
-void UserProfileControls_ABC::SetStatus( gui::ValuedListItem* item, bool inheritsControllable )
-{
-    const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
-    if( !entity )
-        return;
-    bool isControl = supervisor_ ? profile_->IsReadable( *entity ) : profile_->IsWriteable( *entity );
-    SetStatus( item, isControl && !inheritsControllable, inheritsControllable );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileControls_ABC::SetStatus
-// Created: LGY 2011-09-12
-// -----------------------------------------------------------------------------
-void UserProfileControls_ABC::SetStatus( gui::ValuedListItem* item, bool isControl, bool inheritsControllable )
-{
-    SetItem( item, MakeStatus( isControl, inheritsControllable ) );
-    if( isControl )
-        listView_->ensureItemVisible( item );
-
-    ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
-    while( value )
-    {
-        SetStatus( value, isControl || inheritsControllable );
-        value = static_cast< ValuedListItem* >( value->nextSibling() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileControls_ABC::MakeStatus
-// Created: LGY 2011-09-12
-// -----------------------------------------------------------------------------
-UserProfileControls_ABC::Status UserProfileControls_ABC::MakeStatus( bool control, bool inheritedControl )
-{
-    Status status = eNothing;
-    if( control )
-        status = eControl;
-    else if( inheritedControl )
-        status = eControlInherited;
-    return status;
 }
 
 // -----------------------------------------------------------------------------
@@ -207,13 +256,13 @@ void UserProfileControls_ABC::Check( ValuedListItem* item, bool control )
         ProfileConsistencyDialog* dialog = new ProfileConsistencyDialog( listView_ );
         if( dialog->Exec( errors ) == QDialog::Accepted )
         {
-            SetStatus( item, control, false );
+            UpdateRights( item, control );
             Commit();
         }
     }
     else
     {
-        SetStatus( item, control, false );
+        UpdateRights( item, control );
         Commit();
     }
 }

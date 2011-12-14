@@ -63,7 +63,6 @@ protected:
     {
         eNothing,
         eControl,
-        eControlInherited
     };
     //@}
 
@@ -79,9 +78,13 @@ private:
     void Commit();
     void Clear();
     void SetItem( Q3ListViewItem* item, Status status );
-    void SetStatus( gui::ValuedListItem* item, bool inheritsControllable );
-    void SetStatus( gui::ValuedListItem* item, bool isControl, bool inheritsControllable );
-    Status MakeStatus( bool control, bool inheritedControl );
+
+    void ReadRights( gui::ValuedListItem* item, bool control );
+    void UpdateRights( gui::ValuedListItem* item, bool control );
+    void Select( gui::ValuedListItem* item, bool control );
+    void Deselect( gui::ValuedListItem* item );
+    bool IsControlled( gui::ValuedListItem* item ) const;
+
     void Check( gui::ValuedListItem* item, bool control );
     void CheckErrors( gui::ValuedListItem* item, T_Errors& errors );
     void CheckErrors( const kernel::Entity_ABC& entity, T_Errors& errors );
@@ -94,7 +97,6 @@ private:
     ControlsChecker_ABC& checker_;
     UserProfile* profile_;
     QPixmap check_;
-    QPixmap check_grey_;
     bool supervisor_;
     //@}
 };
