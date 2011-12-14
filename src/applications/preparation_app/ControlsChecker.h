@@ -38,7 +38,6 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const T_ProfileEditors& editors );
-    virtual void Update( const UserProfile& profile, const kernel::Entity_ABC& entity );
     virtual std::set< std::string > Find( const kernel::Entity_ABC& entity ) const;
     virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const;
     virtual bool Exists( const QString& login ) const;
@@ -49,8 +48,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    void UpdateProfile( const kernel::Entity_ABC& entity, UserProfile& profile );
-    void UpdateProfile( UserProfile& profile, const kernel::Entity_ABC& entity, bool control );
     void Find( const kernel::Entity_ABC& entity, const ProfilesModel::T_Units& units, std::set< std::string >& results,
                const std::set< std::string >& editors ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity, const UserProfile& profile ) const;

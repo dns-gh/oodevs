@@ -207,8 +207,6 @@ void UserProfileControls_ABC::Check( ValuedListItem* item, bool control )
         ProfileConsistencyDialog* dialog = new ProfileConsistencyDialog( listView_ );
         if( dialog->Exec( errors ) == QDialog::Accepted )
         {
-            BOOST_FOREACH( const T_Error& error, errors )
-                checker_.Update( *profile_, *error.second );
             SetStatus( item, control, false );
             Commit();
         }

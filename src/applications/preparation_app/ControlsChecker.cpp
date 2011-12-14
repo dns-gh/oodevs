@@ -99,58 +99,6 @@ void ControlsChecker::Find( const kernel::Entity_ABC& entity, const ProfilesMode
 }
 
 // -----------------------------------------------------------------------------
-// Name: ControlsChecker::Update
-// Created: LGY 2011-09-15
-// -----------------------------------------------------------------------------
-void ControlsChecker::Update( const UserProfile& profile, const kernel::Entity_ABC& entity )
-{
-    std::set< std::string > editors;
-    for( IT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
-        if( it->first )
-        {
-            editors.insert( it->first->GetLogin().ascii() );
-            if( it->second && profile.GetLogin().ascii() != it->second->GetLogin() )
-            {
-                UserProfile* userProfile = it->second;
-                UpdateProfile( entity, *userProfile );
-            }
-        }
-        model_.profiles_.UpdateProfile( entity, editors );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ControlsChecker::UpdateProfile
-// Created: LGY 2011-12-13
-// -----------------------------------------------------------------------------
-void ControlsChecker::UpdateProfile( const kernel::Entity_ABC& entity, UserProfile& profile )
-{
-    UpdateProfile( profile, entity, false );
-    if( IsWriteable( entity, profile ) )
-        if( const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior() )
-        {
-            tools::Iterator< const kernel::Entity_ABC& > it = parent->Get< ProfileHierarchies_ABC >().CreateSubordinateIterator();
-            while( it.HasMoreElements() )
-            {
-                const kernel::Entity_ABC& child = it.NextElement();
-                if( entity.GetId() != child.GetId() )
-                    UpdateProfile( profile, child, true );
-            }
-        }
-    if( const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior() )
-        UpdateProfile( *parent, profile );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ControlsChecker::UpdateProfile
-// Created: LGY 2011-09-16
-// -----------------------------------------------------------------------------
-void ControlsChecker::UpdateProfile( UserProfile& profile, const kernel::Entity_ABC& entity, bool control )
-{
-    profile.SetWriteable( entity, control );
-    profile.SetReadable( entity, control );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ControlsChecker::Exists
 // Created: LGY 2011-09-26
 // -----------------------------------------------------------------------------

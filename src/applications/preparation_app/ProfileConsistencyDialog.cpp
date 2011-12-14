@@ -21,7 +21,7 @@
 ProfileConsistencyDialog::ProfileConsistencyDialog( QWidget* parent )
     : QDialog( parent )
 {
-    setCaption( tools::translate( "ProfileConsistencyDialog", "Consistency analysis" ) );
+    setCaption( tools::translate( "ProfileConsistencyDialog", "Conflict" ) );
     setMinimumSize( 500, 500 );
 
     QVBoxLayout* mainLayout = new QVBoxLayout( this );

@@ -1365,16 +1365,16 @@ Do you want to save anyway?</source>
 <context>
     <name>ProfileConsistencyDialog</name>
     <message>
-        <source>Consistency analysis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do you want to proceed ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unit &apos;%1&apos; is already controlled by &apos;%2&apos; profile.
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conflict</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
