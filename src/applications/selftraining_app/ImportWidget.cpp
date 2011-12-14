@@ -33,9 +33,6 @@ ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools
 {
     setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     setMargin( 0 );
-    //Q3GroupBox* importGroup = new Q3GroupBox( 2, Qt::Vertical, this );
-    //importGroup->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-    //importGroup->setMargin( 0 );
     Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, this );
     group->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     {
