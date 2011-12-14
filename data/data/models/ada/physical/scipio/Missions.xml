@@ -1552,6 +1552,19 @@
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.SExfiltrer" dia-type="france.military.platoon.combat.support.rens.tasks.SExfiltrer" id="2482" name="PION RENS SExfiltrer" package="support">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Itinéraire" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AUTOMATE ALAT Aller Se Recompleter" package="none">
@@ -3063,4 +3076,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="2880496975" -->
+<!-- signature="3643706091" -->
