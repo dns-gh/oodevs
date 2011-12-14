@@ -24,6 +24,11 @@ namespace resource
     class ResourceTools_ABC;
 }
 
+namespace tools
+{
+    class ExerciseSettings;
+}
+
 namespace urban
 {
     class Model;
@@ -122,6 +127,7 @@ public:
     MIL_Config& GetConfig();
     MIL_BurningCells& GetBurningCells() const;
     MIL_PropagationManager& GetPropagationManager() const;
+    tools::ExerciseSettings& GetSettings() const;
     //@}
 
     //! @name Workspace management
@@ -171,6 +177,7 @@ private:
     //@{
     E_SimState nSimState_;
     MIL_Config& config_;
+    tools::ExerciseSettings* settings_;
     unsigned int nTimeStepDuration_; /* const */
     unsigned int nTimeFactor_;
     unsigned int nCurrentTimeStep_;

@@ -15,7 +15,6 @@
 #include "MT_Tools/MT_Stl.h"
 #include <xeumeuleu/xml.hpp>
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_HumanFactor constructor
 // Created: LDC 2011-06-16
@@ -135,13 +134,4 @@ bool PHY_HumanFactor::operator!=( const PHY_HumanFactor& rhs ) const
 unsigned int PHY_HumanFactor::GetID() const
 {
     return (unsigned int)nType_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_HumanFactor::GetWeight
-// Created: NLD 2004-12-01
-// -----------------------------------------------------------------------------
-double PHY_HumanFactor::GetWeight() const
-{
-    return 1.;
 }

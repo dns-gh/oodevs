@@ -54,8 +54,7 @@ public:
     //! @name Accessors
     //@{
     const std::string&        GetName  () const;
-          unsigned int                GetID    () const;
-          double            GetWeight() const;
+          unsigned int        GetID    () const;
           sword::UnitAttributes_EnumUnitMorale GetAsnID () const;
     //@}
 
@@ -78,14 +77,13 @@ private:
     //@}
 
 private:
-     PHY_Morale( const std::string& strName, E_MoraleType nType, sword::UnitAttributes_EnumUnitMorale nAsnID, double rDIAWeight );
+     PHY_Morale( const std::string& strName, E_MoraleType nType, sword::UnitAttributes_EnumUnitMorale nAsnID/*, double rDIAWeight*/ );
     ~PHY_Morale();
 
 private:
     const std::string          strName_;
     const E_MoraleType         nType_;
     const sword::UnitAttributes_EnumUnitMorale nAsnID_;
-    const double             rDIAWeight_;
 
 private:
     static T_MoraleMap morales_;

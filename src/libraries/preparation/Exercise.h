@@ -11,7 +11,7 @@
 #define __Exercise_h_
 
 #include <boost/noncopyable.hpp>
-#include "clients_kernel/ExerciseSettings.h"
+#include "tools/ExerciseSettings.h"
 
 namespace kernel
 {
@@ -64,7 +64,7 @@ public:
 
     //! @name Accessors
     //@{
-    kernel::ExerciseSettings& GetSettings();
+    tools::ExerciseSettings& GetSettings();
     QString GetName() const;
     void SetName( const QString& name );
     void SetBriefing( const QString& lang, const QString& text );
@@ -90,12 +90,12 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller&         controller_;
-    kernel::ExerciseSettings    settings_;
-    QString                     name_;
-    T_Resources                 briefings_;
-    T_Resources                 resources_;
-    std::string                 actionPlanning_;
+    kernel::Controller&     controller_;
+    tools::ExerciseSettings settings_;
+    QString                 name_;
+    T_Resources             briefings_;
+    T_Resources             resources_;
+    std::string             actionPlanning_;
     //@}
 };
 

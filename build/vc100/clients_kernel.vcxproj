@@ -98,7 +98,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\ExerciseSettings.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\FormationLevels.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Ghost_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Karma.cpp" />
@@ -225,7 +224,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\ExerciseSettings.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Finalizable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\FormationLevels.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\GhostPrototype.h" />

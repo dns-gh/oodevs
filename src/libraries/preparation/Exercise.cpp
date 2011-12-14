@@ -176,7 +176,7 @@ void Exercise::SerializeResources( xml::xostream& xos ) const
 // Name: Exercise::GetSettings
 // Created: ABR 2011-12-09
 // -----------------------------------------------------------------------------
-kernel::ExerciseSettings& Exercise::GetSettings()
+tools::ExerciseSettings& Exercise::GetSettings()
 {
     return settings_;
 }

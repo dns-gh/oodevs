@@ -7,15 +7,14 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "tools_pch.h"
 #include "ExerciseSettings.h"
-#include "Tools.h"
-#include "tools/Loader_ABC.h"
-#include "tools/SchemaWriter_ABC.h"
+#include "Loader_ABC.h"
+#include "SchemaWriter_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
-using namespace kernel;
+using namespace tools;
 
 // =============================================================================
 // Setting
@@ -128,7 +127,7 @@ void ExerciseSettings::Purge()
 void ExerciseSettings::Load( xml::xistream& xis )
 {
     xis >> xml::start( "settings" )
-            >> xml::list( "setting", *this, &ExerciseSettings::ReadSetting )
+        >> xml::list( "setting", *this, &ExerciseSettings::ReadSetting )
         >> xml::end;
 }
 

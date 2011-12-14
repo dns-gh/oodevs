@@ -39,6 +39,16 @@ public:
     //@{
     typedef std::map< std::string, const PHY_Stress* > T_StressMap;
     typedef T_StressMap::const_iterator                CIT_StressMap;
+
+    struct Evolution
+    {
+        Evolution() : firstThreshold_( 0.f ), secondThreshold_( 0.f ), incPerShot_( 0.f ), decPerHour_( 0.f ) {};
+
+        double firstThreshold_;
+        double secondThreshold_;
+        double incPerShot_;
+        double decPerHour_;
+    };
     //@}
 
 public:
@@ -47,6 +57,7 @@ public:
     static const PHY_Stress calm_;
     static const PHY_Stress worried_;
     static const PHY_Stress stressed_;
+    static Evolution evolution_;
     //@}
 
 public:
@@ -65,18 +76,29 @@ public:
     //@}
 
 private:
-     PHY_Stress( const std::string& strName, unsigned int nType, sword::UnitAttributes_EnumUnitStress nAsnID );
-    ~PHY_Stress();
-
-private:
-    const sword::UnitAttributes_EnumUnitStress nAsnID_;
-
-private:
-    //! @name Statics
+    //! @name Constructors/Destructor
     //@{
-    static T_StressMap stresses_;
+    PHY_Stress( const std::string& strName, unsigned int nType, sword::UnitAttributes_EnumUnitStress nAsnID );
+    ~PHY_Stress();
+    //@}
+
+private:
+    //! @name Static Helpers
+    //@{
     struct LoadingWrapper;
     static void ReadStress( xml::xistream& xis );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const sword::UnitAttributes_EnumUnitStress nAsnID_;
+    //@}
+
+private:
+    //! @name Static member data
+    //@{
+    static T_StressMap stresses_;
     //@}
 };
 

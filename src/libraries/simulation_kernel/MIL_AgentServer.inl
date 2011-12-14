@@ -276,3 +276,13 @@ bool MIL_AgentServer::IsInitialized()
     return pTheAgentServer_ != 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetSettings
+// Created: ABR 2011-12-13
+// -----------------------------------------------------------------------------
+inline
+tools::ExerciseSettings& MIL_AgentServer::GetSettings() const
+{
+    assert( settings_ != 0 );
+    return *settings_;
+}
