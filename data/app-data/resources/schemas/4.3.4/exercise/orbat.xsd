@@ -752,7 +752,7 @@
 				<xs:extension base="entityType">
 					<xs:choice minOccurs="0" maxOccurs="unbounded">
 						<xs:element ref="automat" minOccurs="0" maxOccurs="unbounded"/>
-						<xs:element name="phantom" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="phantom" type="phantom_automat" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element ref="formation" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
@@ -824,7 +824,7 @@
 				<xs:extension base="entityType">
 					<xs:choice minOccurs="0" maxOccurs="unbounded">
 						<xs:element ref="unit" minOccurs="0" maxOccurs="unbounded"/>
-						<xs:element name="phantom" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="phantom" type="phantom_agent" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element ref="automat" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
@@ -1202,4 +1202,82 @@
 			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
+	<xs:simpleType name="phantomType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines list of phantom type.</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit les types de fantôme possible.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="agent"/>
+			<xs:enumeration value="automat"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="phantom_agent">
+		<xs:complexContent>
+			<xs:extension base="entityType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Base type for agent phantom.</xs:documentation>
+					<xs:documentation xml:lang="fr">Type de base pour les fantôme agent.</xs:documentation>
+				</xs:annotation>
+				<xs:attribute name="ghost-type" type="phantomType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines whether phantom is an automat or an agent.</xs:documentation>
+						<xs:documentation xml:lang="fr">Définit si le fantôme est un automate ou un agent.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="level" type="hierarchicalLevelType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the hierarchical level of the phantom.</xs:documentation>
+						<xs:documentation xml:lang="fr">Définit le niveau hiérarchique du fantôme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="type" type="xs:string" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the name of the phantom.</xs:documentation>
+						<xs:documentation xml:lang="fr">Définit le nom du fantôme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="nature" type="xs:string" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the nature of the phantom following APP6 symbology.</xs:documentation>
+						<xs:documentation xml:lang="fr">Défnit la nature du fantôme suivant la symbologie APP6.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="position" type="utmCoordinatesType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the position of the phantom as UTM coordinates.</xs:documentation>
+						<xs:documentation xml:lang="fr">Définit la géolocalisation du fantôme en coordonnées UTM.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="color" type="T_ColorRGB" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
+						<xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="symbol" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Overrides symbol</xs:documentation>
+						<xs:documentation xml:lang="fr">Surdéfinit le symbole</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="phantom_automat">
+		<xs:complexContent>
+			<xs:extension base="phantom_agent">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Base type for automat phantom.</xs:documentation>
+					<xs:documentation xml:lang="fr">Type de base pour les fantôme automate.</xs:documentation>
+				</xs:annotation>
+				<xs:attribute name="knowledge-group" type="xs:nonNegativeInteger" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines reference to existing knowledge group which phantom automat belongs to. Not present in agent automat</xs:documentation>
+						<xs:documentation xml:lang="fr">Désigne le groupe de connaissance auquel l'automate fantôme appartient.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
 </xs:schema>
