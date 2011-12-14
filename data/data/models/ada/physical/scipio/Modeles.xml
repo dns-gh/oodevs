@@ -5231,6 +5231,7 @@
         <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS ROHUM Renseigner Sur"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
+        <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION COMMUNES Decrocher"/>
@@ -5330,6 +5331,7 @@
         <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS ROHUM Renseigner Sur"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
+        <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION Sinfiltrer"/>
@@ -5519,6 +5521,7 @@
         <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS ROHUM Renseigner Sur"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
+        <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION Sinfiltrer"/>
@@ -5559,6 +5562,7 @@
         <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS ROHUM Orienter Guider"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
+        <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION Sinfiltrer"/>
@@ -5637,6 +5641,7 @@
         <mission name="PION Soutenir sur position en mesure de"/>
         <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS ROHUM Renseigner Sur"/>
+        <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION Sinfiltrer"/>
@@ -8969,4 +8974,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1824366111" -->
+<!-- signature="4107874137" -->
