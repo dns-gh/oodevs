@@ -768,12 +768,6 @@
 							<xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
-					<xs:attribute name="symbol" type="xs:string" use="optional">
-						<xs:annotation>
-							<xs:documentation xml:lang="en">Overrides symbol</xs:documentation>
-							<xs:documentation xml:lang="fr">Surdéfinit le symbole</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -850,12 +844,6 @@
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
 							<xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="symbol" type="xs:string" use="optional">
-						<xs:annotation>
-							<xs:documentation xml:lang="en">Overrides symbol</xs:documentation>
-							<xs:documentation xml:lang="fr">Surdéfinit le symbole</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:extension>

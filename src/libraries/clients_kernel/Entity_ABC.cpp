@@ -95,7 +95,7 @@ void Entity_ABC::CheckUpdate( const type_info& /*type*/ )
 // Name: Entity_ABC::OverFly
 // Created: ABR 2011-10-27
 // -----------------------------------------------------------------------------
-void Entity_ABC::OverFly( ActionController& controller ) const
+void Entity_ABC::OverFly( ActionController& /* controller */ ) const
 {
     // NOTHING
 }

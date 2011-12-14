@@ -112,8 +112,11 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
     , pColor_                        ( new MIL_Color( xis ) )
-    , symbol_                        ( xis.attribute< std::string >( "symbol", "" ) )
 {
+	std::string symbol = xis.attribute< std::string >( "nature", "" );
+	if ( !symbol.empty() && symbol.find( "symbols/" ) == std::string::npos )
+		symbol = "symbols/" + symbol;
+	symbol_ = symbol;
     Initialize( xis, gcPause, gcMult );
     if( pParentFormation_ )
         pParentFormation_->RegisterAutomate( *this );
@@ -480,7 +483,12 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
         << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetId() )
         << xml::attribute( "type", pType_->GetName() );
     if( !symbol_.empty() )
-        xos << xml::attribute( "symbol", symbol_ );
+	{
+		std::string nature = symbol_;
+		if ( nature.find( "symbols/" ) == 0 )
+			nature = nature.substr( 8, nature.length() - 8 );
+        xos << xml::attribute( "nature", nature );
+	}
     pColor_->WriteODB( xos );
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         ( **it ).WriteODB( xos );
