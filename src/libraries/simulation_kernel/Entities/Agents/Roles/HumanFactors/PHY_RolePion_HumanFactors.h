@@ -17,22 +17,20 @@
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 
-namespace xml
-{
-    class xistream;
-}
-
 class PHY_Morale;
 class PHY_Experience;
 class PHY_Tiredness;
 class PHY_Stress;
 class MIL_Entity_ABC;
 
+namespace xml
+{
+    class xistream;
+}
 namespace posture
 {
     class PostureComputer_ABC;
 }
-
 namespace firing
 {
     class WeaponReloadingComputer_ABC;
@@ -45,6 +43,7 @@ namespace detection
 {
     class PerceptionDistanceComputer_ABC;
 }
+
 // =============================================================================
 // @class  PHY_RolePion_HumanFactors
 // Created: JVT 2004-08-03
@@ -96,6 +95,7 @@ public:
      //! @name Operations
      //@{
     double ModifyPH( double rPH ) const;
+    void NotifyAttacked();
      //@}
 
     //! @name Network
@@ -105,18 +105,35 @@ public:
     //@}
 
 private:
-    bool bHasChanged_;
+    //! @name Types
+    //@{
+    typedef boost::function< void() > T_EvolutionFunction;
+    //@}
+
+    //! @name Member data
+    //@{
+    MIL_Entity_ABC&       entity_;
+    bool                  bHasChanged_;
 
     const PHY_Morale*     pMorale_;
     const PHY_Experience* pExperience_;
     const PHY_Tiredness*  pTiredness_;
     const PHY_Stress*     pStress_;
+    double                stressValue_;
+    double                tirednessValue_;
 
-    MIL_Entity_ABC& entity_;
+    T_EvolutionFunction   evolutionFunction_;
+    //@}
 
 private:
     //! @name Helpers
     //@{
+    void Evolution();
+    void NoEvolution();
+    void UpdateStress();
+    void UpdateStressValue();
+    void UpdateTiredness();
+    void UpdateTirednessValue();
     bool HasChanged() const;
     void ReadFacteursHumains( xml::xistream& xis );
     void ReadFatigue        ( xml::xistream& xis );
@@ -126,7 +143,6 @@ private:
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ );
-
     //@}
 };
 

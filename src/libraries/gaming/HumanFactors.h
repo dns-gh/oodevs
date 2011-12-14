@@ -38,7 +38,7 @@ class HumanFactors : public kernel::HumanFactors_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HumanFactors( kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
+             HumanFactors( kernel::Entity_ABC& entity, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
     virtual ~HumanFactors();
     //@}
 
@@ -71,11 +71,12 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
-    E_UnitExperience experience_;
-    E_UnitTiredness tiredness_;
-    E_UnitMorale morale_;
-    E_UnitStress stress_;
+    E_UnitExperience    experience_;
+    E_UnitTiredness     tiredness_;
+    E_UnitMorale        morale_;
+    E_UnitStress        stress_;
     //@}
 };
 

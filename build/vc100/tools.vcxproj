@@ -84,6 +84,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\tools\App6Symbol.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\ExerciseSettings.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\tools_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -121,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h" />
+    <ClInclude Include="..\..\src\libraries\tools\ExerciseSettings.h" />
     <ClInclude Include="..\..\src\libraries\tools\tools_pch.h" />
     <ClInclude Include="..\..\src\libraries\tools\Version.h" />
     <ClInclude Include="..\..\src\libraries\tools\Visitor_ABC.h" />

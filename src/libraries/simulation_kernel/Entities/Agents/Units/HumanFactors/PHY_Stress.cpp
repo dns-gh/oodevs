@@ -9,12 +9,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Stress.h"
-#include "protocol/Protocol.h"
+#include "MIL_AgentServer.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Stl.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_Stress::T_StressMap PHY_Stress::stresses_;
+PHY_Stress::Evolution PHY_Stress::evolution_;
 
 const PHY_Stress PHY_Stress::calm_ ( "Calm", 0 , sword::UnitAttributes::calm  );
 const PHY_Stress PHY_Stress::worried_( "Worried", 1, sword::UnitAttributes::worried );
@@ -43,7 +45,17 @@ void PHY_Stress::Initialize( xml::xistream& xis )
             >> xml::start( "stress-factor" )
                 >> xml::list( "modifier", loader, &LoadingWrapper::ReadStress )
             >> xml::end
+            >> xml::start( "automatic-evolution" )
+                >> xml::start( "stress-evolution" )
+                    >> xml::attribute( "first-threshold", evolution_.firstThreshold_ )
+                    >> xml::attribute( "second-threshold", evolution_.secondThreshold_ )
+                    >> xml::attribute( "inc-per-shot", evolution_.incPerShot_ )
+                    >> xml::attribute( "dec-per-hour", evolution_.decPerHour_ )
+                >> xml::end
+            >> xml::end
         >> xml::end;
+    double timeFactor = MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 3600.;
+    evolution_.decPerHour_ *= timeFactor;
 }
 
 // -----------------------------------------------------------------------------

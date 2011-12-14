@@ -25,6 +25,8 @@
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
 #include "KnowledgesVisitor_ABC.h"
+#include "tools/ExerciseSettings.h"
+#include "tools/Loader_ABC.h"
 #include "tools/WorldParameters.h"
 #include <boost/filesystem/path.hpp>
 #include <tools/thread/Thread.h>
@@ -48,6 +50,7 @@ MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     : nSimState_            ( eSimLoading )
     , config_               ( config )
+    , settings_             ( new tools::ExerciseSettings() )
     , nTimeStepDuration_    ( 1 )
     , nTimeFactor_          ( 1 )
     , nCurrentTimeStep_     ( 1 )
@@ -75,6 +78,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
     config_.AddFileToCRC( config_.GetExerciseFile() );
+    config_.GetLoader().LoadFile( config_.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, settings_, _1 ) );
     ReadStaticData();
     ReadUrbanModel();
     if( config_.HasCheckpoint() )
@@ -120,6 +124,7 @@ MIL_AgentServer::~MIL_AgentServer()
 //    delete pProfilerMgr_;
 //    delete pCheckPointManager_;
     delete pProcessMonitor_;
+    delete settings_;
     //    MT_LOG_INFO_MSG( "Terminating Terrain" );
 //    TER_World::DestroyWorld();
 }

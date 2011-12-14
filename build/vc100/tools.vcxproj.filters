@@ -123,6 +123,9 @@
     <ClCompile Include="..\..\src\libraries\tools\SchemaWriter.cpp">
       <Filter>Source Files\File writer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\ExerciseSettings.cpp">
+      <Filter>Source Files\Command line</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h">
@@ -292,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\SchemaWriter_ABC.h">
       <Filter>Source Files\File writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\ExerciseSettings.h">
+      <Filter>Source Files\Command line</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

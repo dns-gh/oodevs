@@ -36,7 +36,6 @@
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/ExerciseSettings.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/SymbolFactory.h"
@@ -45,6 +44,7 @@
 #include "clients_gui/DrawerModel.h"
 #include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
 #include <tools/XmlCrc32Signature.h>
@@ -268,7 +268,7 @@ namespace
 void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors )
 {
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
-    config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
+    config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
     symbolsFactory_.Load( config );
 
     //$$ LOADING DE FICHIERS A UNIFIER

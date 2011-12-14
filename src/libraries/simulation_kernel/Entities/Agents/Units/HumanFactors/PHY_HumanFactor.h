@@ -35,7 +35,6 @@ public:
     //@{
     const std::string&        GetName                         () const;
           unsigned int        GetID                           () const;
-          double              GetWeight                       () const;
           double              GetCoefMaxSpeedModificator      () const;
           double              GetCoefReloadingTimeModificator () const;
           double              GetCoefPhModificator            () const;

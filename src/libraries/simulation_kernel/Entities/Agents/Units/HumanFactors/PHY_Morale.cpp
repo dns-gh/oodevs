@@ -17,10 +17,10 @@
 
 PHY_Morale::T_MoraleMap PHY_Morale::morales_;
 
-const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, sword::UnitAttributes::fanatical, 1.25 );
-const PHY_Morale PHY_Morale::bon_      ( "Bon"      , eBon      , sword::UnitAttributes::high     , 1    );
-const PHY_Morale PHY_Morale::moyen_    ( "Moyen"    , eMoyen    , sword::UnitAttributes::standard , 0.75 );
-const PHY_Morale PHY_Morale::mauvais_  ( "Mauvais"  , eMauvais  , sword::UnitAttributes::low      , 0.5  );
+const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, sword::UnitAttributes::fanatical );
+const PHY_Morale PHY_Morale::bon_      ( "Bon"      , eBon      , sword::UnitAttributes::high );
+const PHY_Morale PHY_Morale::moyen_    ( "Moyen"    , eMoyen    , sword::UnitAttributes::standard );
+const PHY_Morale PHY_Morale::mauvais_  ( "Mauvais"  , eMauvais  , sword::UnitAttributes::low );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Morale::Initialize
@@ -48,11 +48,10 @@ void PHY_Morale::Terminate()
 // Name: PHY_Morale constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Morale::PHY_Morale( const std::string& strName, E_MoraleType nType, sword::UnitAttributes::EnumUnitMorale nAsnID, double rDIAWeight )
+PHY_Morale::PHY_Morale( const std::string& strName, E_MoraleType nType, sword::UnitAttributes::EnumUnitMorale nAsnID )
     : strName_   ( strName )
     , nType_     ( nType )
     , nAsnID_    ( nAsnID )
-    , rDIAWeight_( rDIAWeight )
 {
     // NOTHING
 }
@@ -141,11 +140,3 @@ unsigned int PHY_Morale::GetID() const
     return (unsigned int)nType_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_Morale::GetWeight
-// Created: NLD 2004-12-01
-// -----------------------------------------------------------------------------
-double PHY_Morale::GetWeight() const
-{
-    return rDIAWeight_;
-}

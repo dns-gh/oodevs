@@ -37,6 +37,18 @@ public:
     //@{
     typedef std::map< std::string, const PHY_Tiredness* > T_TirednessMap;
     typedef T_TirednessMap::const_iterator              CIT_TirednessMap;
+
+    struct Evolution
+    {
+        Evolution() : firstThreshold_( 0.f ), secondThreshold_( 0.f ), engineRunning_( 0.f ), engineStopped_( 0.f ), moving_( 0.f ), working_( 0.f ) {};
+
+        double firstThreshold_;
+        double secondThreshold_;
+        double engineRunning_;
+        double engineStopped_;
+        double moving_;
+        double working_;
+    };
     //@}
 
 public:
@@ -45,6 +57,7 @@ public:
     static const PHY_Tiredness normal_;
     static const PHY_Tiredness fatigue_;
     static const PHY_Tiredness epuise_;
+    static Evolution evolution_;
     //@}
 
 public:
@@ -63,18 +76,29 @@ public:
     //@}
 
 private:
-     PHY_Tiredness( const std::string& strName, unsigned int nType, sword::UnitAttributes_EnumUnitTiredness nAsnID );
-    ~PHY_Tiredness();
-
-private:
-    const sword::UnitAttributes_EnumUnitTiredness nAsnID_;
-
-private:
-    //! @name Statics
+    //! @name Constructors/Destructor
     //@{
-    static T_TirednessMap tirednesses_;
+    PHY_Tiredness( const std::string& strName, unsigned int nType, sword::UnitAttributes_EnumUnitTiredness nAsnID );
+    ~PHY_Tiredness();
+    //@}
+
+private:
+    //! @name Static helpers
+    //@{
     struct LoadingWrapper;
     static void ReadTiredness( xml::xistream& xis );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const sword::UnitAttributes_EnumUnitTiredness nAsnID_;
+    //@}
+
+private:
+    //! @name Statics member data
+    //@{
+    static T_TirednessMap tirednesses_;
     //@}
 };
 

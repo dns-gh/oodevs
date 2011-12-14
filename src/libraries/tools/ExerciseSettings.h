@@ -16,7 +16,6 @@
 #include <boost/variant.hpp>
 #pragma warning( pop )
 
-
 namespace xml
 {
     class xistream;
@@ -27,10 +26,6 @@ namespace tools
 {
     class Loader_ABC;
     class SchemaWriter_ABC;
-}
-
-namespace kernel
-{
 
 // =============================================================================
 /** @class  ExerciseSettings
@@ -108,7 +103,7 @@ const T& ExerciseSettings::GetValue( const std::string& name ) const
 {
     CIT_Settings setting = settings_.find( name );
     if( setting == settings_.end() || setting->second == 0 )
-        throw std::runtime_error( __FUNCTION__ "Unknown setting " + name + "." );
+        throw std::runtime_error( __FUNCTION__ " Unknown setting " + name + "." );
     return boost::get< T >( setting->second->value_ );
 }
 
@@ -122,7 +117,7 @@ void ExerciseSettings::SetValue( const std::string& name, T value )
 {
     CIT_Settings setting = settings_.find( name );
     if( setting == settings_.end() || setting->second == 0 )
-        throw std::runtime_error( __FUNCTION__ "Unknown setting " + name + "." );
+        throw std::runtime_error( __FUNCTION__ " Unknown setting " + name + "." );
     setting->second->value_ = value;
 }
 

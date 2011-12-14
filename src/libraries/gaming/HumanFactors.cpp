@@ -9,11 +9,14 @@
 
 #include "gaming_pch.h"
 #include "HumanFactors.h"
+#include "Tools.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
+#include <boost/foreach.hpp>
 
 using namespace kernel;
 
@@ -21,12 +24,13 @@ using namespace kernel;
 // Name: HumanFactors constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-HumanFactors::HumanFactors( Controller& controller, PropertiesDictionary& dictionary )
-    : controller_( controller )
-    , experience_( (E_UnitExperience)0 )
-    , tiredness_( (E_UnitTiredness)0 )
-    , morale_( (E_UnitMorale)0 )
-    , stress_( (E_UnitStress)0 )
+HumanFactors::HumanFactors( kernel::Entity_ABC& entity, Controller& controller, PropertiesDictionary& dictionary )
+    : entity_    ( entity )
+    , controller_( controller )
+    , experience_( ( E_UnitExperience ) 0 )
+    , tiredness_ ( ( E_UnitTiredness ) 0 )
+    , morale_    ( ( E_UnitMorale ) 0 )
+    , stress_    ( ( E_UnitStress ) 0 )
 {
     CreateDictionary( dictionary );
 }
@@ -46,10 +50,10 @@ HumanFactors::~HumanFactors()
 // -----------------------------------------------------------------------------
 void HumanFactors::CreateDictionary( kernel::PropertiesDictionary& dictionary ) const
 {
-    dictionary.Register( *this, tools::translate( "Human factors", "Human factors/Experience" ), experience_ );
-    dictionary.Register( *this, tools::translate( "Human factors", "Human factors/Tiredness" ), tiredness_ );
-    dictionary.Register( *this, tools::translate( "Human factors", "Human factors/Moral" ), morale_ );
-    dictionary.Register( *this, tools::translate( "Human factors", "Human factors/Stress" ), stress_ );
+    dictionary.Register( entity_, tools::translate( "Human factors", "Human factors/Experience" ), experience_ );
+    dictionary.Register( entity_, tools::translate( "Human factors", "Human factors/Tiredness" ), tiredness_ );
+    dictionary.Register( entity_, tools::translate( "Human factors", "Human factors/Moral" ), morale_ );
+    dictionary.Register( entity_, tools::translate( "Human factors", "Human factors/Stress" ), stress_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,18 +62,13 @@ void HumanFactors::CreateDictionary( kernel::PropertiesDictionary& dictionary ) 
 // -----------------------------------------------------------------------------
 void HumanFactors::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_morale() )
-        morale_ = (E_UnitMorale)message.morale();
-
-    if( message.has_experience() )
-        experience_ = (E_UnitExperience)message.experience();
-
-    if( message.has_tiredness() )
-        tiredness_ = (E_UnitTiredness)message.tiredness();
-
-    if( message.has_stress() )
-        stress_ = (E_UnitStress)message.stress();
-
+    std::set< std::string > updated;
+    UPDATE_PROPERTY( message, morale_, morale, "Human factors", updated );
+    UPDATE_PROPERTY( message, experience_, experience, "Human factors", updated );
+    UPDATE_PROPERTY( message, tiredness_, tiredness, "Human factors", updated );
+    UPDATE_PROPERTY( message, stress_, stress, "Human factors", updated );
+    BOOST_FOREACH( const std::string& content, updated )
+        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Attributes", content.c_str() ) ) );
     controller_.Update( *(HumanFactors_ABC*)this );
 }
 

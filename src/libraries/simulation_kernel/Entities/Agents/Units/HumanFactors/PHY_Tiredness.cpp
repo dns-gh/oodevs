@@ -11,12 +11,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Tiredness.h"
-#include "protocol/Protocol.h"
+#include "MIL_AgentServer.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Stl.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_Tiredness::T_TirednessMap PHY_Tiredness::tirednesses_;
+PHY_Tiredness::Evolution PHY_Tiredness::evolution_;
 
 const PHY_Tiredness PHY_Tiredness::normal_ ( "Normal" , 0, sword::UnitAttributes::rested  );
 const PHY_Tiredness PHY_Tiredness::fatigue_( "Fatigue", 1, sword::UnitAttributes::tired );
@@ -45,7 +47,22 @@ void PHY_Tiredness::Initialize( xml::xistream& xis )
             >> xml::start( "tiredness-factor" )
                 >> xml::list( "modifier", loader, &LoadingWrapper::ReadTiredness )
             >> xml::end
+            >> xml::start( "automatic-evolution" )
+                >> xml::start( "tiredness-evolution" )
+                    >> xml::attribute( "first-threshold",  evolution_.firstThreshold_ )
+                    >> xml::attribute( "second-threshold", evolution_.secondThreshold_ )
+                    >> xml::attribute( "engine-running",   evolution_.engineRunning_ )
+                    >> xml::attribute( "engine-stopped",   evolution_.engineStopped_ )
+                    >> xml::attribute( "moving",           evolution_.moving_ )
+                    >> xml::attribute( "working",          evolution_.working_ )
+                >> xml::end
+            >> xml::end
         >> xml::end;
+    double timeFactor = MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 3600.;
+    evolution_.engineRunning_ *= timeFactor;
+    evolution_.engineStopped_ *= timeFactor;
+    evolution_.moving_ *= timeFactor;
+    evolution_.working_ *= timeFactor;
 }
 
 // -----------------------------------------------------------------------------
