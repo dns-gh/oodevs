@@ -13,6 +13,7 @@
 #include "Decision/DEC_Path_ABC.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/Mt_Vector2DTypes.h"
+#include "MT_Tools/MT_Logger.h"
 
 namespace sword
 {

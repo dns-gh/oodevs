@@ -44,9 +44,15 @@ DEC_PathResult::~DEC_PathResult()
 MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, T_FollowingPathList& pathPoints, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint ) const
 {
     if( resultList_.empty() )
-        throw std::runtime_error( "List of path points resulting from pathfind is empty" );
+    {
+        MT_LOG_ERROR_MSG( "List of path points resulting from pathfind is empty" );
+        return posToTest;
+    }
     if( pathPoints.size() <= 1 )
-        throw std::runtime_error( "List of path points requested has not at least 2 elements" );
+    {
+        MT_LOG_ERROR_MSG( "List of path points requested has not at least 2 elements" );
+        return posToTest;
+    }
     
     CIT_FollowingPathList itCurrentRequest = pathPoints.begin();
     CIT_FollowingPathList itNextRequest    = itCurrentRequest;
@@ -96,7 +102,10 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
     }
 
     if( _isnan( itCurrentRequest->first.rX_ ) || _isnan( itCurrentRequest->first.rY_ ) )
-        throw std::runtime_error( "Result point is invalid" );
+    {
+        MT_LOG_ERROR_MSG( "Result point is invalid" );
+        return posToTest;
+    }
 
     if( forceNextPoint )
     {
@@ -201,7 +210,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
     if( nPathState != eValid && nPathState != ePartial )
         return false;
     if( resultList_.empty() )
-        throw std::runtime_error( "List of path points resulting from pathfind is empty" );
+        return false;
     CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath( vStartPos );
     if( itCurrentPathPoint == resultList_.end() )
         return false;
@@ -221,7 +230,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
             if( pKnowledge->GetLocalisation().Intersect2D( lineTmp, collisions ) )
             {
                 if( collisions.empty() )
-                    throw std::runtime_error( "List of collision points is empty" );
+                    return false;
                 //$$$ Distance fausse (distance en ligne droite)
                 const double rColDist = vStartPos.Distance( *collisions.begin() );
                 objectsOnPathMap.insert( std::make_pair( rColDist, pKnowledge ) );
@@ -243,8 +252,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
 // -----------------------------------------------------------------------------
 void DEC_PathResult::Serialize( sword::Path& asn ) const
 {
-    if( resultList_.empty() )
-        throw std::runtime_error( "List of path points resulting from pathfind is empty" );
+    assert( !resultList_.empty() );
     asn.mutable_location()->set_type( sword::Location::line );
     for( CIT_PathPointList it = resultList_.begin(); it != resultList_.end(); ++it )
         NET_ASN_Tools::WritePoint( (*it)->GetPos(), *asn.mutable_location()->mutable_coordinates()->add_elem() );

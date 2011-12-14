@@ -189,7 +189,7 @@ void DEC_Agent_Path::Initialize( const T_PointVector& points )
 {
     InitializePathKnowledges( points );
     if( points.empty() )
-        throw std::runtime_error( "List of points is empty" );
+        MT_LOG_ERROR_MSG( "Initializing empty agent path" );
     const MT_Vector2D* pLastPoint = 0;
     for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
     {
@@ -240,8 +240,6 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
             {
                 if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
                     pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
-                if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
-                    throw std::runtime_error( "Size of path knowledge objects list is invalid" );
 
                 T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
                 if( knowledge.GetType().GetCapacity< FloodCapacity >() )
@@ -324,48 +322,55 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
     double rDistanceLeft = spottedPathPoint->GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
                              queryMaker_.GetType().GetDistanceAvantLima() :
                              queryMaker_.GetType().GetDistanceAvantPoint( spottedPathPoint->GetTypeTerrain() );
-    while( true )
+    try
     {
-        const MT_Vector2D& vCurrentPos = ( *itCurrent )->GetPos();
-        if( itCurrent == resultList_.begin() )
+        while( true )
         {
-            boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vCurrentPos, spottedPathPoint ) );
-            resultList_.insert( ++itCurrent, pNewPoint );
-            break;
-        }
+            const MT_Vector2D& vCurrentPos = ( *itCurrent )->GetPos();
+            if( itCurrent == resultList_.begin() )
+            {
+                boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vCurrentPos, spottedPathPoint ) );
+                resultList_.insert( ++itCurrent, pNewPoint );
+                break;
+            }
 
-        // remise en position des itérateurs
-        IT_PathPointList itPrev = GetPreviousPathPointOnDifferentLocation( itCurrent );
-        itCurrent = itPrev;
-        ++itCurrent;
-        if( ( *itCurrent )->GetPos() != vCurrentPos )
-            throw std::runtime_error( "Current position is invalid" );
+            // remise en position des itérateurs
+            IT_PathPointList itPrev = GetPreviousPathPointOnDifferentLocation( itCurrent );
+            itCurrent = itPrev;
+            ++itCurrent;
+            if( ( *itCurrent )->GetPos() != vCurrentPos )
+                throw std::runtime_error( "Current position is invalid" );
 
-        // calcul de la distance "mangée" par le parcours de ce segment
-        const MT_Vector2D& vPreviousPos = ( *itPrev )->GetPos();
-        MT_Vector2D vTmp = vPreviousPos - vCurrentPos;
-        const double vTmpMag = vTmp.Magnitude();
+            // calcul de la distance "mangée" par le parcours de ce segment
+            const MT_Vector2D& vPreviousPos = ( *itPrev )->GetPos();
+            MT_Vector2D vTmp = vPreviousPos - vCurrentPos;
+            const double vTmpMag = vTmp.Magnitude();
 
-        rDistanceLeft -= vTmpMag;
-        if( rDistanceLeft == 0. )
-        {
-            // Positionnement du point avant au même endroit qu'un autre point
-            boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vPreviousPos, spottedPathPoint ) );
-            resultList_.insert( itPrev, pNewPoint );
-            break;
+            rDistanceLeft -= vTmpMag;
+            if( rDistanceLeft == 0. )
+            {
+                // Positionnement du point avant au même endroit qu'un autre point
+                boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vPreviousPos, spottedPathPoint ) );
+                resultList_.insert( itPrev, pNewPoint );
+                break;
+            }
+            else if( rDistanceLeft < 0. )
+            {
+                // Positionnement du point avant
+                vTmp /= vTmpMag;
+                vTmp *= rDistanceLeft;
+                vTmp += vPreviousPos;
+                boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vTmp, spottedPathPoint ) );
+                resultList_.insert( itCurrent, pNewPoint );
+                break;
+            }
+            // tant pis, ça sera peut-être pour le prochain segment
+            itCurrent = itPrev;
         }
-        else if( rDistanceLeft < 0. )
-        {
-            // Positionnement du point avant
-            vTmp /= vTmpMag;
-            vTmp *= rDistanceLeft;
-            vTmp += vPreviousPos;
-            boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vTmp, spottedPathPoint ) );
-            resultList_.insert( itCurrent, pNewPoint );
-            break;
-        }
-        // tant pis, ça sera peut-être pour le prochain segment
-        itCurrent = itPrev;
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
     }
 }
 
@@ -485,7 +490,10 @@ void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
     {
         boost::shared_ptr< DEC_PathPoint > pCurrentPoint = *itPoint;
         if( !pCurrentPoint )
-            throw std::runtime_error( "Current point is invalid" );
+        {
+            MT_LOG_ERROR_MSG( "Current point is invalid" );
+            break;
+        }
         if( pLastPoint.get() && ( pCurrentPoint->GetPos() != pLastPoint->GetPos() ) )
         {
             MT_Line segment( pLastPoint->GetPos(), pCurrentPoint->GetPos() );
@@ -577,8 +585,8 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
         MT_LOG_MESSAGE_MSG( GetPathAsString() );
         profiler_.Start();
     }
-    if( !resultList_.empty() )
-        throw std::runtime_error( "List of path points is not empty before running pathfind" );
+    assert( resultList_.empty() );
+
     if( !IsDestinationTrafficable() )
     {
         queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
