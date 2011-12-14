@@ -320,12 +320,6 @@
   <object geometry="polygon" name="aire logistique" symbol="G*SPAR----****X" type="logistic area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
   </object>
-  <object geometry="line" name="itineraire logistique" symbol="G*SPLRM---****X" type="logistic route">
-    <bypassable bypass-speed="-1"/>
-    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="200" max-unit-percentage-speed="100" unit-speed-impact-mode="VitesseMaxAgent"/>
-    <supply-route/>
-  </object>
   <object geometry="polygon" name="camp prisonniers" symbol="G*SPAD----****X" type="prisoners camp">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
@@ -472,4 +466,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="1016158114" -->
+<!-- signature="1102899652" -->
