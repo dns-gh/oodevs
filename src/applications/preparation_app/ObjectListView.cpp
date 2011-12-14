@@ -11,6 +11,7 @@
 #include "ObjectListView.h"
 #include "ModelBuilder.h"
 #include "PreparationProfile.h"
+#include "clients_kernel/tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListView constructor
@@ -69,6 +70,6 @@ void ObjectListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoint&
         return;
     modelBuilder_.ClearSelection();
     Q3PopupMenu* menu = new Q3PopupMenu( this );
-    menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
+    menu->insertItem( tools::translate( "ObjectListView", "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
     menu->exec( pos, index );
 }
