@@ -258,6 +258,19 @@ bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity, const std::st
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfilesModel::IsControlled
+// Created: LGY 2011-12-14
+// -----------------------------------------------------------------------------
+bool ProfilesModel::IsControlled( const std::set< std::string >& editors, const kernel::Entity_ABC& entity )
+{
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        if( editors.find( (*it)->GetLogin().toStdString() ) == editors.end() && (*it)->IsWriteable( entity ) )
+            return true;
+    const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
+    return superior ? IsControlled( editors, *superior ) : false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfilesModel::Find
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------

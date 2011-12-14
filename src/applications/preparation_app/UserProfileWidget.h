@@ -109,6 +109,7 @@ private:
     std::vector< std::string > supervisors_;
     QCheckBox* pHidefilter_;
     QCheckBox* pShowFilter_;
+    QWidget* colorWidget_;
     //@}
 };
 

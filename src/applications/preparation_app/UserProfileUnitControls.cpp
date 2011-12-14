@@ -145,10 +145,25 @@ void UserProfileUnitControls::OnItemExpanded( Q3ListViewItem* item )
                     ValuedListItem* child = static_cast< ValuedListItem* >( item->firstChild() );
                     while( child )
                     {
-                        child->setOpen( true );
+                        Expand( child );
                         child = static_cast< ValuedListItem* >( child->nextSibling() );
                     }
                 }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::Expand
+// Created: LGY 2011-12-14
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::Expand( ValuedListItem* item )
+{
+    item->setOpen( true );
+    ValuedListItem* child = static_cast< ValuedListItem* >( item->firstChild() );
+    while( child )
+    {
+        Expand( child );
+        child = static_cast< ValuedListItem* >( child->nextSibling() );
+    }
 }
 
 // -----------------------------------------------------------------------------

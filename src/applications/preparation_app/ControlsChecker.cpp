@@ -135,6 +135,24 @@ bool ControlsChecker::IsControlled( const kernel::Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ControlsChecker::IsControlled
+// Created: LGY 2011-12-14
+// -----------------------------------------------------------------------------
+bool ControlsChecker::IsControlled( const std::string& exclude, const kernel::Entity_ABC& entity ) const
+{
+    std::set< std::string > editors;
+    for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
+        if( it->first )
+        {
+            editors.insert( it->first->GetLogin().ascii() );
+            if( it->second && it->second->GetLogin().ascii() != exclude && IsWriteable( entity, *it->second ) )
+                return true;
+        }
+    editors.insert( exclude );
+    return model_.profiles_.IsControlled( editors, entity );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ControlsChecker::IsWriteable
 // Created: LGY 2011-12-13
 // -----------------------------------------------------------------------------

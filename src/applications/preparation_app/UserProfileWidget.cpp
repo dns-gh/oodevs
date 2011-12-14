@@ -20,6 +20,7 @@
 #include "clients_kernel/DictionaryEntryType.h"
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
+#include "clients_gui/DiffusionListLegendBar.h"
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
 #include "preparation/Model.h"
@@ -89,7 +90,17 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
 
         addTab( box, tr( "Permissions" ) );
 
-        informationControls_ = new QLabel( tr( "'Control' permission allows you to control an unit." ), group );
+        QWidget* information = new QWidget( group );
+        QVBoxLayout* layout = new QVBoxLayout( information );
+        colorWidget_ = new QWidget();
+        QHBoxLayout* colorLayout = new QHBoxLayout( colorWidget_ );
+        colorLayout->setSpacing( 5 );
+        colorLayout->setMargin( 5 );
+        colorLayout->addWidget( new gui::DiffusionListLegendBar( 0, QColor( 255, 136, 136 ), 20 ) );
+        colorLayout->addWidget( new QLabel( tr( "Units controlled by another profile." ) ), 1 );
+        layout->addWidget( colorWidget_ );
+        informationControls_ = new QLabel( tr( "'Control' permission allows you to control an unit." ), information );
+        layout->addWidget( informationControls_ );
     }
     SetEnabled( false );
     controllers_.Register( *this );
@@ -242,6 +253,7 @@ void UserProfileWidget::Update()
         bool supervisor = std::find( supervisors_.begin(), supervisors_.end(), profile_->GetUserRole() ) != supervisors_.end();
         informationControls_->setText( supervisor ? tr( "'View' permission allows you to see an unit." )
                                                   : tr( "'Control' permission allows you to control an unit." ) );
+        colorWidget_->setVisible( !supervisor );
         pUnits_->Update( supervisor );
         pPopulations_->Update( supervisor );
     }

@@ -13,6 +13,7 @@
 #include "ControlsChecker_ABC.h"
 #include "ProfileConsistencyDialog.h"
 #include "clients_kernel/Tools.h"
+#include "preparation/ProfileHierarchies_ABC.h"
 #include "preparation/UserProfile.h"
 #include "clients_gui/ValuedListItem.h"
 #include <boost/foreach.hpp>
@@ -89,6 +90,7 @@ void UserProfileControls_ABC::Display( UserProfile& profile )
     ValuedListItem* value = static_cast< ValuedListItem* >( listView_->firstChild() );
     while( value )
     {
+        UpdateColor( value );
         ReadRights( value, IsControlled( value ) );
         value = static_cast< ValuedListItem* >( value->nextSibling() );
     }
@@ -100,6 +102,7 @@ void UserProfileControls_ABC::Display( UserProfile& profile )
 // -----------------------------------------------------------------------------
 void UserProfileControls_ABC::ReadRights( gui::ValuedListItem* item, bool control )
 {
+    UpdateColor( item );
     if( control )
     {
         SetItem( item, eControl );
@@ -215,6 +218,7 @@ void UserProfileControls_ABC::Clear()
     {
         (*it)->setPixmap( 1, QPixmap() );
         (*it)->setText( 2, QString::number( eNothing ) );
+        static_cast< ValuedListItem* >( *it )->SetBackgroundColor( Qt::white );
         listView_->setOpen( *it, false );
     }
 }
@@ -291,6 +295,18 @@ void UserProfileControls_ABC::CheckErrors( const kernel::Entity_ABC& entity, T_E
     BOOST_FOREACH( const std::string& result, checker_.Find( entity ) )
         if( profile_->GetLogin().ascii() != result )
             errors.push_back( std::make_pair( result, &entity ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::UpdateColor
+// Created: LGY 2011-12-14
+// -----------------------------------------------------------------------------
+void UserProfileControls_ABC::UpdateColor( gui::ValuedListItem* item )
+{
+    if( const Entity_ABC* entity = item->GetValue< const Entity_ABC >() )
+        if( entity->Retrieve< ProfileHierarchies_ABC >() )
+            if( checker_.IsControlled( profile_->GetLogin().toStdString(), *entity ) )
+                item->SetBackgroundColor( QColor( 255, 136, 136 ) );
 }
 
 // -----------------------------------------------------------------------------

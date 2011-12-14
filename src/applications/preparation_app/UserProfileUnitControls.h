@@ -67,6 +67,7 @@ private:
     virtual void setColumnWidth( int column, int w );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
 
+    void Expand( gui::ValuedListItem* item );
     bool ApplyHideFilter( gui::ValuedListItem* item ) const;
     bool ApplyShowFilter( gui::ValuedListItem* item ) const;
     //@}

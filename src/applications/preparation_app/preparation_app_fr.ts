@@ -2230,6 +2230,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Show only automats controlled by this profile</source>
         <translation>Afficher seulement les automates contrôlés</translation>
     </message>
+    <message>
+        <source>Units controlled by another profile.</source>
+        <translation>Unités controlées par un autre profile.</translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>

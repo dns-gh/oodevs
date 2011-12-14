@@ -85,6 +85,7 @@ public:
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     bool IsReadable( const kernel::Entity_ABC& entity, const std::string& profile ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity, const std::string& profile ) const;
+    bool IsControlled( const std::set< std::string >& editors, const kernel::Entity_ABC& entity );
 
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );

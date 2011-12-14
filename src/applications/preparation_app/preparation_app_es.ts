@@ -2230,6 +2230,10 @@ Do you want to save anyway?</source>
         <source>Show only automats controlled by this profile</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Units controlled by another profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>

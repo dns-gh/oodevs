@@ -88,6 +88,8 @@ private:
     void Check( gui::ValuedListItem* item, bool control );
     void CheckErrors( gui::ValuedListItem* item, T_Errors& errors );
     void CheckErrors( const kernel::Entity_ABC& entity, T_Errors& errors );
+
+    void UpdateColor( gui::ValuedListItem* item );
     //@}
 
 private:
