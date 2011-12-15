@@ -138,7 +138,7 @@ void DEC_Decision< T >::UpdateDecision( float duration )
         pBrain_->SelectActions         ();
         pBrain_->TriggerSelectedActions( duration );
     }
-    catch( std::runtime_error& e )
+    catch( std::exception& e )
     {
         HandleUpdateDecisionError( &e );
     }
