@@ -1594,9 +1594,9 @@
         <update name="protobuf" version="2.3.0"/>
         <update name="vcredist" package="vcredist"/>
         <update name="openssl"/>
-        <update name="mak" package="include" todir="${include.dir}"/>
-        <update name="mak" package="lib" todir="${lib.dir}"/>
-        <update name="mak" package="dll" todir="${run.dir}/plugins/vrforces"/>
+        <update name="mak" version="4.0.2" package="include" todir="${include.dir}"/>
+        <update name="mak" version="4.0.2" package="lib" todir="${lib.dir}"/>
+        <update name="mak" version="4.0.2" package="dll" todir="${run.dir}/plugins/vrforces"/>
         <update name="wise"/>
         <antcall target="deploy-application-data"/>
         <update-database database="directia.core.bml" dir="${models.dir}/directia.core"/>

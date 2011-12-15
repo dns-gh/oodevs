@@ -27,7 +27,7 @@ using namespace plugins::vrforces;
 // -----------------------------------------------------------------------------
 Facade::Facade( DtExerciseConn& connection, xml::xistream& xis )
     : controller_( new DtVrfRemoteController() )
-    , models_( xis.attribute< std::string >( "scenario", "../data/simulationModelSets/default.sms" ) )
+    , models_( xis.attribute< std::string >( "models", "../data/simulationModelSets/default.sms" ) )
     , scenario_( xis.attribute< std::string >( "scenario", "../data/terrain/WorldFlatEarth.mtd" ) )
 {
     if( !controller_.get() )

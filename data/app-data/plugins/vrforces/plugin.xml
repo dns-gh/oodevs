@@ -14,7 +14,7 @@
 				<description name="Models" lang="en"><![CDATA[Model database to use.]]></description>
 			</descriptions>
 		</setting>
-		<setting attribute="@scenario" type="string" default="../data/terrain/WorldFlatEarth.mtd">
+		<setting attribute="@scenario" type="string" default="../userData/terrains/WorldFlatEarthNoElevation.mtf">
 			<descriptions>
 				<description name="Scenario" lang="en"><![CDATA[Scenario to load at startup.]]></description>
 			</descriptions>
