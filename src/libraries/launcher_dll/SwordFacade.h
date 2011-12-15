@@ -71,8 +71,8 @@ public:
     //! @name Operations
     //@{
     void Start( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > command,
-                const std::string& supervisorProfile, const std::string& supervisorPassword, const launcher::Config& config );
-    void Stop();
+                const std::string& supervisorProfile, const std::string& supervisorPassword, const launcher::Config& config, bool attach = false );
+    void Stop( bool forceProcessStop = true );
     // SwordConnectionHandler_ABC interface
     virtual void OnConnectionSucceeded( const std::string& endpoint );
     virtual void OnConnectionFailed( const std::string& endpoint, const std::string& reason );
@@ -97,7 +97,7 @@ public:
     bool IsRunning() const;
     void Update() const;
     const frontend::ProcessWrapper* GetProcess();
-    const std::string& GetEndpoint() const;
+    void SetEndpoint( const std::string&  endpoint );
     //@}
 
 private:
@@ -125,7 +125,7 @@ private:
     HandlerContainer messageHandlers_;
     std::vector< T_Handler > permanentHandler_;
     const LauncherService& server_;
-    const std::string endpoint_;
+    std::string endpoint_;
     //@}
 };
 

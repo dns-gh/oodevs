@@ -22,22 +22,48 @@ struct SpawnCommand::InternalData
     InternalData() { ZeroMemory( &pid_ , sizeof( pid_ ) ); }
 };
 
+#ifndef MAKEULONGLONG
+    #define MAKEULONGLONG( ldw, hdw ) ( ( ULONGLONG( hdw ) << 32 ) | ( ( ldw ) & 0xFFFFFFFF ) )
+#endif
+
+#ifndef MAXULONGLONG
+    #define MAXULONGLONG ( ( ULONGLONG ) ~ ( ( ULONGLONG ) 0 ) )
+#endif
+
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
 SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach ,
                             std::string commanderEndpoint, bool makeSilent /* = false */ )
-    : config_                   ( config )
-    , internal_                 ( new InternalData() )
-    , attach_                   ( attach )
-    , workingDirectory_         ( "." )
-    , stopped_                  ( false )
-    , networkCommanderEndpoint_ ( commanderEndpoint )
+    : config_                  ( config )
+    , internal_                ( new InternalData() )
+    , attach_                  ( attach )
+    , forceProcessStop_        ( true )
+    , workingDirectory_        ( "." )
+    , stopped_                 ( false )
+    , networkCommanderEndpoint_( commanderEndpoint )
 {
     AddArgument( exe );
     if( makeSilent )
         AddArgument( "--silent" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand constructor
+// Created: JSR 2011-12-14
+// -----------------------------------------------------------------------------
+SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, DWORD processId, bool attach /*= false*/,
+                            std::string commanderEndpoint /*= ""*/ )
+    : config_                  ( config )
+    , internal_                ( new InternalData() )
+    , attach_                  ( attach )
+    , forceProcessStop_        ( true )
+    , workingDirectory_        ( "." )
+    , stopped_                 ( false )
+    , networkCommanderEndpoint_( commanderEndpoint )
+{
+    FillProcessInformation( processId );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +121,7 @@ void SpawnCommand::Start()
                          commandLine_.local8Bit().data(),       // lpCommandLine
                          0,                    // lpProcessAttributes
                          0,                                     // lpThreadAttributes
-                         TRUE,                                  // bInheritHandles
+                         FALSE,                                 // bInheritHandles
                          CREATE_NEW_CONSOLE,                    // dwCreationFlags
                          0,                                     // lpEnvironment
                          workingDirectory_.c_str(),             // lpCurrentDirectory
@@ -158,15 +184,67 @@ void SpawnCommand::StopProcess()
         while( Thread32Next( hThreadSnap, &te32 ) );
         EnumThreadWindows( internal_->pid_.dwThreadId, &::CloseWndProc, 0 );
         TerminateProcess( internal_->pid_.hProcess, 0 );
+        CloseHandle( hThreadSnap );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::FillProcessInformation
+// Created: JSR 2011-12-14
+// -----------------------------------------------------------------------------
+void SpawnCommand::FillProcessInformation( unsigned long processId )
+{
+    internal_->pid_.dwProcessId = processId;
+    internal_->pid_.hProcess = OpenProcess( PROCESS_ALL_ACCESS, FALSE, processId );
+    if( internal_->pid_.hProcess == NULL )
+        return;
+    // Find primary thread
+    HANDLE hThreadSnap = INVALID_HANDLE_VALUE;
+    THREADENTRY32 te32;
+    hThreadSnap = CreateToolhelp32Snapshot( TH32CS_SNAPTHREAD, 0 );
+    if( hThreadSnap == INVALID_HANDLE_VALUE )
+        return;
+    te32.dwSize = sizeof( THREADENTRY32 );
+    if( !Thread32First( hThreadSnap, &te32 ) )
+    {
+        CloseHandle( hThreadSnap );
+        return;
+    }
+    ULONGLONG ullMinCreateTime = MAXULONGLONG;
+    do
+    {
+        if( te32.th32OwnerProcessID == processId )
+        {
+            HANDLE hThread = OpenThread( THREAD_QUERY_INFORMATION, TRUE, te32.th32ThreadID );
+            if( hThread )
+            {
+                FILETIME afTimes[ 4 ] = { 0 };
+                if( GetThreadTimes( hThread, &afTimes[ 0 ], &afTimes[ 1 ], &afTimes[ 2 ], &afTimes[ 3 ] ) )
+                {
+                    ULONGLONG ullTest = MAKEULONGLONG( afTimes[ 0 ].dwLowDateTime, afTimes[ 0 ].dwHighDateTime );
+                    if( ullTest && ullTest < ullMinCreateTime )
+                    {
+                        ullMinCreateTime = ullTest;
+                        internal_->pid_.dwThreadId = te32.th32ThreadID;
+                    }
+                }
+                CloseHandle(hThread);
+            }
+        }
+    }
+    while( Thread32Next( hThreadSnap, &te32 ) );
+    CloseHandle( hThreadSnap );
+    if( internal_->pid_.dwThreadId )
+        internal_->pid_.hThread = OpenThread( THREAD_ALL_ACCESS, FALSE, internal_->pid_.dwThreadId );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand::Stop
 // Created: RDS 2008-08-19
 // -----------------------------------------------------------------------------
-void SpawnCommand::Stop()
+void SpawnCommand::Stop( bool forceProcessStop/* = true */)
 {
+    forceProcessStop_ = forceProcessStop;
     stopped_ = true;
 }
 
@@ -185,7 +263,8 @@ bool SpawnCommand::Wait()
             return true;
         }
     }
-    StopProcess();
+    if( attach_ || forceProcessStop_)
+        StopProcess();
     return false;
 }
 
@@ -274,4 +353,13 @@ void SpawnCommand::SetWorkingDirectory( const QString& directory )
 const std::string& SpawnCommand::GetCommanderEndpoint() const
 {
     return networkCommanderEndpoint_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::SetCommanderEndpoint
+// Created: JSR 2011-12-13
+// -----------------------------------------------------------------------------
+void SpawnCommand::SetCommanderEndpoint( const std::string& endpoint )
+{
+    networkCommanderEndpoint_ = endpoint;
 }

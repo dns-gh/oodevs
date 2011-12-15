@@ -75,6 +75,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    void CheckForRunningProcesses();
     void ExecutePauseResume( const std::string& endpoint, const std::string& exercise, const std::string& session,
                              bool running, int context, SwordFacade& facade );
     void ExecuteChangeTime( const std::string& endpoint, const std::string& exercise, const std::string& session,

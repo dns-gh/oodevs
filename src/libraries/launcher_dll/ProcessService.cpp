@@ -9,6 +9,7 @@
 
 #include "launcher_dll_pch.h"
 #include "ProcessService.h"
+#include "frontend/AttachCommand.h"
 #include "frontend/commands.h"
 #include "frontend/Config.h"
 #include "frontend/CreateSession.h"
@@ -35,8 +36,13 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/MessengerSenders.h"
 #include <boost/foreach.hpp>
+#include <boost/filesystem/path.hpp>
+#include <windows.h>
+#include <tlhelp32.h>
+#include <fstream>
 
 using namespace launcher;
+namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: ProcessService constructor
@@ -47,7 +53,7 @@ ProcessService::ProcessService( const launcher::Config& config, const tools::Loa
     , fileLoader_( fileLoader )
     , server_    ( server )
 {
-    // NOTHING
+    CheckForRunningProcesses();
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +77,7 @@ ProcessService::~ProcessService()
                 it = processes_.erase( it );
         }
         if( process.get() )
-            process->Stop();
+            process->Stop( false );
     }
 }
 
@@ -81,11 +87,13 @@ ProcessService::~ProcessService()
 // -----------------------------------------------------------------------------
 void ProcessService::CreatePermanentHandlers( const std::string& endpoint )
 {
+    boost::recursive_mutex::scoped_lock locker( mutex_ );
     for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
     {
         boost::shared_ptr< SwordFacade >& facade = it->second;
-        if( facade.get() && facade->GetEndpoint() == endpoint )
+        if( facade.get() )
         {
+            facade->SetEndpoint( endpoint );
             const std::string& exercise = it->first.first;
             const std::string& session  = it->first.second;
             facade->ClearPermanentMessageHandler();
@@ -165,7 +173,19 @@ namespace
         std::string supervisorPassword_;
         bool found_;
     };
+
+    std::string GetSessionTmpFilename()
+    {
+        char filename[ MAX_PATH ];
+        if( GetModuleFileNameA( 0, filename, MAX_PATH ) )
+        {
+            bfs::path filepath = bfs::path( filename, boost::filesystem::native ).branch_path() / "~~launcher.tmp";
+            return( filepath.native_file_string() );
+        }
+        return std::string();
+    }
 }
+
 // -----------------------------------------------------------------------------
 // Name: ProcessService::StartExercise
 // Created: SBO 2010-10-07
@@ -178,7 +198,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
 
     if( ! frontend::commands::ExerciseExists( config_, exercise ) )
         return sword::SessionStartResponse::invalid_exercise_name;
-    if( IsRunning( exercise, session ) )
+    if( !processes_.empty() ) // un seul process autorisé
         return sword::SessionStartResponse::session_already_running;
     if( message.has_checkpoint() && ! frontend::commands::CheckpointExists( config_, exercise, session, checkpoint ) )
         return sword::SessionStartResponse::invalid_checkpoint;
@@ -194,11 +214,11 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     }
     boost::shared_ptr< frontend::SpawnCommand > command;
     if( message.type() == sword::SessionStartRequest::simulation )
-        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), true, false, endpoint, true ) );
+        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), false, false, endpoint, true ) );
     else if( message.type() == sword::SessionStartRequest::dispatch )
-        command.reset( new frontend::StartDispatcher( config_, true, exercise.c_str(), session.c_str(), checkpoint.c_str(), "", endpoint, true ) );
+        command.reset( new frontend::StartDispatcher( config_, false, exercise.c_str(), session.c_str(), checkpoint.c_str(), "", endpoint, true ) );
     else
-        command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, true, endpoint, true ) );
+        command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, false, endpoint, true ) );
 
     SupervisorProfileCollector profileCollector;
     frontend::Profile::VisitProfiles( config_, fileLoader_, exercise, profileCollector );
@@ -214,6 +234,23 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlEndTickMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new SessionStatusMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+
+    try
+    {
+        std::ofstream file( GetSessionTmpFilename().c_str() );
+        if( file.is_open() )
+        {
+            file << session.c_str() << "\n"
+                 << exercise.c_str() << "\n"
+                 << checkpoint.c_str() << "\n"
+                 << profileCollector.supervisorProfile_.c_str() << "\n"
+                 << profileCollector.supervisorPassword_.c_str() << "\n";
+            file.close();
+        }
+    }
+    catch( ... )
+    {
+    }
     return sword::SessionStartResponse::success;
 }
 
@@ -224,12 +261,13 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
 sword::SessionStopResponse::ErrorCode ProcessService::StopSession( const sword::SessionStopRequest& message )
 {
     const std::string name = message.exercise();
-    ProcessContainer::iterator it = processes_.find( std::make_pair(message.exercise(), message.session() ) );
+    ProcessContainer::iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
     if( it != processes_.end() )
     {
         boost::shared_ptr< SwordFacade > process( it->second );
         process->Stop();
         processes_.erase( it );
+        std::remove( GetSessionTmpFilename().c_str() );
         return sword::SessionStopResponse::success;
     }
     return frontend::commands::ExerciseExists( config_, name ) ? sword::SessionStopResponse::session_not_running
@@ -264,7 +302,7 @@ void ProcessService::NotifyStopped()
 // Name: ProcessService::NotifyError
 // Created: SBO 2010-12-09
 // -----------------------------------------------------------------------------
-void ProcessService::NotifyError( const std::string& /*error*/, std::string commanderEndpoint /*= ""*/ )
+void ProcessService::NotifyError( const std::string& error, std::string commanderEndpoint /*= ""*/ )
 {
     if ( !commanderEndpoint.empty() )
 {
@@ -275,7 +313,8 @@ void ProcessService::NotifyError( const std::string& /*error*/, std::string comm
             if( command && command->GetCommanderEndpoint() == commanderEndpoint )
             {
                 SessionStatus statusMessage;
-                statusMessage().set_status( sword::SessionStatus::not_running );
+                statusMessage().set_status( sword::SessionStatus::breakdown );
+                statusMessage().set_breakdown_information( error );
                 statusMessage().set_exercise( command->GetExercise() );
                 statusMessage().set_session( command->GetSession() );
                 statusMessage.Send( publisher );
@@ -397,6 +436,68 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         ExecuteChangeTime( endpoint, message.exercise(), message.session(), message.time_change().data(), context, *client );
         ++context;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessService::CheckForRunningProcesses
+// Created: JSR 2011-12-13
+// -----------------------------------------------------------------------------
+void ProcessService::CheckForRunningProcesses()
+{
+    HANDLE hProcessSnap = INVALID_HANDLE_VALUE;
+    hProcessSnap = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS, 0 );
+    if( hProcessSnap == INVALID_HANDLE_VALUE )
+        return;
+    PROCESSENTRY32 pe32 = { 0 };
+    pe32.dwSize = sizeof( PROCESSENTRY32 );
+    if( !Process32First( hProcessSnap, &pe32 ) )
+    {
+        CloseHandle( hProcessSnap );
+        return;
+    }
+    static const std::string simulationApp = "simulation_app.exe";
+    static const std::string dispatcherApp = "dispatcher_app.exe";
+    static const std::string replayerApp = "replayer_app.exe";
+    do
+    {
+        if( pe32.szExeFile == simulationApp || pe32.szExeFile == dispatcherApp || pe32.szExeFile == replayerApp )
+        {
+            std::string session;
+            std::string exercise;
+            std::string checkpoint;
+            std::string login;
+            std::string password;
+            try
+            {
+                std::ifstream file( GetSessionTmpFilename().c_str() );
+                if( file.is_open() )
+                {
+                    std::getline( file, session );
+                    std::getline( file, exercise );
+                    std::getline( file, checkpoint );
+                    std::getline( file, login );
+                    std::getline( file, password );
+                    file.close();
+                }
+            }
+            catch( ... )
+            {
+                CloseHandle( hProcessSnap );
+                return;
+            }
+            boost::shared_ptr< frontend::SpawnCommand > command;
+            command.reset( new frontend::AttachCommand( config_, pe32.th32ProcessID, false, exercise, session ) );
+            boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( server_, "", pe32.szExeFile == dispatcherApp ) );
+            {
+                boost::recursive_mutex::scoped_lock locker( mutex_ );
+                processes_[ std::make_pair( exercise, session ) ] = wrapper;
+            }
+            wrapper->Start( *this, command, login, password, config_, true );
+            break;
+        }
+    }
+    while( Process32Next( hProcessSnap, &pe32 ) );
+    CloseHandle( hProcessSnap );
 }
 
 // -----------------------------------------------------------------------------

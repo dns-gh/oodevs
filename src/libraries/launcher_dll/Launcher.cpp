@@ -72,6 +72,7 @@ Launcher::Launcher( const Config& config )
 // -----------------------------------------------------------------------------
 Launcher::~Launcher()
 {
+    proxy_.reset();
     server_.reset();
 }
 

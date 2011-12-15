@@ -11,6 +11,7 @@
 #define __frontend_ProcessWrapper_h_
 
 #include "Process_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace boost
 {
@@ -29,6 +30,7 @@ namespace frontend
 // Created: SBO 2008-10-14
 // =============================================================================
 class ProcessWrapper : public Process_ABC
+                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -46,20 +48,16 @@ public:
     virtual std::string  GetSession() const;
     void                 StartAndBlockMainThread();
     void                 Start();
-    void                 Stop();
+    void                 Attach();
+    void                 Stop( bool forceProcessStop = true );
     const SpawnCommand*  GetCommand() const;
+    void                 SetEndpoint( const std::string& endpoint );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ProcessWrapper( const ProcessWrapper& );            //!< Copy constructor
-    ProcessWrapper& operator=( const ProcessWrapper& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void Run();
+    void Run( bool start );
     void RunBlockingMainThread();
     //@}
 

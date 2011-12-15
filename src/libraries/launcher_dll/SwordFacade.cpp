@@ -10,6 +10,7 @@
 #include "launcher_dll_pch.h"
 #include "SwordFacade.h"
 #include "Config.h"
+#include "LauncherPublisher.h"
 #include "LauncherService.h"
 #include "client_proxy/SwordProxy.h"
 #include "frontend/ProcessWrapper.h"
@@ -17,6 +18,7 @@
 #include "protocol/MessengerSenders.h"
 #include "protocol/AuthenticationSenders.h"
 #include "protocol/DispatcherSenders.h"
+#include "protocol/LauncherSenders.h"
 #include <boost/foreach.hpp>
 
 using namespace launcher;
@@ -49,12 +51,15 @@ SwordFacade::~SwordFacade()
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
 void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > command,
-                        const std::string& supervisorProfile, const std::string& supervisorPassword, const launcher::Config& config )
+                        const std::string& supervisorProfile, const std::string& supervisorPassword, const launcher::Config& config, bool attach /*= false*/ )
 {
     if( ! config.GetTestMode() )
     {
-        boost::shared_ptr<frontend::ProcessWrapper> wrapper( new frontend::ProcessWrapper( observer, command ) );
-        wrapper->Start();
+        boost::shared_ptr< frontend::ProcessWrapper > wrapper( new frontend::ProcessWrapper( observer, command ) );
+        if( attach )
+            wrapper->Attach();
+        else
+            wrapper->Start();
         process_ = wrapper;
     }
     if( isDispatcher_ )
@@ -69,7 +74,7 @@ void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_
 // Name: SwordFacade::Stop
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::Stop()
+void SwordFacade::Stop( bool forceProcessStop /*= true*/ )
 {
     if( !process_.expired() )
     {
@@ -79,7 +84,7 @@ void SwordFacade::Stop()
             client_->UnregisterMessageHandler( this );
             client_.reset();
         }
-        process_.lock()->Stop();
+        process_.lock()->Stop( forceProcessStop );
     }
 }
 
@@ -105,10 +110,21 @@ void SwordFacade::OnConnectionFailed( const std::string& /*endpoint*/, const std
 // Name: SwordFacade::OnConnectionError
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::OnConnectionError( const std::string& /*endpoint*/, const std::string& /*reason*/ )
+void SwordFacade::OnConnectionError( const std::string& endpoint, const std::string& reason )
 {
     isConnected_ = false;
     isAuthenticated_ = false;
+    boost::shared_ptr< LauncherPublisher > publisher = server_.ResolveClient( endpoint );
+    if( publisher.get() )
+    {
+        SessionStatus statusResponse;
+        statusResponse().set_status( sword::SessionStatus::breakdown );
+        static const std::string msg( "La connexion avec le dispatcher est perdue. " );
+        statusResponse().set_breakdown_information( msg + reason );
+        statusResponse().set_exercise( "" );
+        statusResponse().set_session( "" );
+        statusResponse.Send( *publisher );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -280,10 +296,12 @@ const frontend::ProcessWrapper* SwordFacade::GetProcess()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SwordFacade::GetEndpoint
-// Created: JSR 2011-12-12
+// Name: SwordFacade::SetEndpoint
+// Created: JSR 2011-12-13
 // -----------------------------------------------------------------------------
-const std::string& SwordFacade::GetEndpoint() const
+void SwordFacade::SetEndpoint( const std::string&  endpoint )
 {
-    return endpoint_;
+    endpoint_ = endpoint;
+    if( !process_.expired() )
+        process_.lock()->SetEndpoint( endpoint );
 }

@@ -172,6 +172,9 @@
     <ClCompile Include="..\..\src\libraries\frontend\Profile.cpp">
       <Filter>Source Files\Model\Profiles</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\AttachCommand.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\frontend\CommandLineTools.h">
@@ -305,6 +308,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\frontend\ProfileVisitor_ABC.h">
       <Filter>Source Files\Model\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\AttachCommand.h">
+      <Filter>Source Files\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

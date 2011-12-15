@@ -90,6 +90,7 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\frontend\AttachCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\CommandLineTools.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\Config.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\frontend_pch.cpp">
@@ -138,6 +139,7 @@
     <ClCompile Include="..\..\src\libraries\frontend\Profile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\frontend\AttachCommand.h" />
     <ClInclude Include="..\..\src\libraries\frontend\CommandLineTools.h" />
     <ClInclude Include="..\..\src\libraries\frontend\Config.h" />
     <ClInclude Include="..\..\src\libraries\frontend\frontend_pch.h" />

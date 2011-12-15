@@ -36,6 +36,8 @@ public:
     //@{
     SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach = false,
                   std::string commanderEndpoint = "", bool makeSilent = false  );
+    SpawnCommand( const tools::GeneralConfig& config, unsigned long processId, bool attach = false,
+                  std::string commanderEndpoint = "" );
     virtual ~SpawnCommand();
     //@}
 
@@ -44,7 +46,7 @@ public:
     bool                 IsRunning() const;
     virtual void         Start();
     virtual bool         Wait();
-    virtual void         Stop();
+    virtual void         Stop( bool forceProcessStop = true );
     virtual unsigned int GetPercentage() const;
     virtual QString      GetStatus() const;
     virtual std::string  GetStartedExercise() const;
@@ -53,6 +55,7 @@ public:
     void                 Attach( boost::shared_ptr< Process_ABC > process );
     void                 SetWorkingDirectory( const QString& directory );
     const std::string&   GetCommanderEndpoint() const;
+    void                 SetCommanderEndpoint( const std::string& endpoint );
     //@}
 
 protected:
@@ -73,6 +76,7 @@ private:
     //! @name Helpers
     //@{
     void StopProcess();
+    void FillProcessInformation( unsigned long processId );
     //@}
 
 protected:
@@ -87,6 +91,7 @@ private:
     QString                          commandLine_;
     std::auto_ptr<InternalData>      internal_; //!< obscure data structure to hide OS implementation
     bool                             attach_;   //!< if set to true , kill the attached process on exit
+    bool                             forceProcessStop_;
     std::string                      workingDirectory_;
     bool                             stopped_;
     boost::shared_ptr< Process_ABC > attachment_;

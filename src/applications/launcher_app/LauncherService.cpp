@@ -271,6 +271,10 @@ void LauncherService::ServiceMain( DWORD, LPTSTR* )
 
     pInstance_->pFacade_.reset( new LauncherFacade( pInstance_->path_.parent_path().string() ) );
     pInstance_->pFacade_->Initialize( static_cast< int >( args.size() ), &args[ 0 ] );
+    if( !pInstance_->pFacade_->GetLastError().empty() )
+    {
+        MT_LOG_INFO_MSG( ( std::string( "Launcher facade initialization failed : " ) + pInstance_->pFacade_->GetLastError() ).c_str() );
+    }
     pInstance_->isRunning_ = true;
 
     MT_LOG_INFO_MSG( "ServiceMain running" );

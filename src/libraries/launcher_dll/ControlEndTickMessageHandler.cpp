@@ -25,7 +25,7 @@ ControlEndTickMessageHandler::ControlEndTickMessageHandler( boost::shared_ptr< L
     // NOTHING
 }
 // -----------------------------------------------------------------------------
-// Name: ControlInformationMessageHandler destructor
+// Name: ControlEndTickMessageHandler destructor
 // Created: LGY 2011-09-07
 // -----------------------------------------------------------------------------
 ControlEndTickMessageHandler::~ControlEndTickMessageHandler()
@@ -34,7 +34,7 @@ ControlEndTickMessageHandler::~ControlEndTickMessageHandler()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ControlInformationMessageHandler::OnReceiveMessage
+// Name: ControlEndTickMessageHandler::OnReceiveMessage
 // Created: LGY 2011-09-07
 // -----------------------------------------------------------------------------
 bool ControlEndTickMessageHandler::OnReceiveMessage( const sword::SimToClient& message )

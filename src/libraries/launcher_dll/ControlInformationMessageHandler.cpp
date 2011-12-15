@@ -75,6 +75,7 @@ bool ControlInformationMessageHandler::OnReceiveMessage( const sword::Dispatcher
     {
         SessionStatus statusResponse;
         statusResponse().set_status( sword::SessionStatus::breakdown );
+        statusResponse().set_breakdown_information( "La connexion entre la simulation et le dispatcher est perdue." );
         Send( statusResponse );
     }
     return false;

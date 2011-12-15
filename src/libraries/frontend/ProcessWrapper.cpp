@@ -45,20 +45,31 @@ ProcessWrapper::~ProcessWrapper()
 void ProcessWrapper::Start()
 {
     process_->Attach( shared_from_this() );
-    thread_.reset( new boost::thread( boost::bind( &ProcessWrapper::Run, this ) ) );
+    thread_.reset( new boost::thread( boost::bind( &ProcessWrapper::Run, this, true ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::Attach
+// Created: JSR 2011-12-14
+// -----------------------------------------------------------------------------
+void ProcessWrapper::Attach()
+{
+    process_->Attach( shared_from_this() );
+    thread_.reset( new boost::thread( boost::bind( &ProcessWrapper::Run, this, false ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper::Run
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-void ProcessWrapper::Run()
+void ProcessWrapper::Run( bool start )
 {
     if( process_.get() )
     {
         try
         {
-            process_->Start();
+            if( start )
+                process_->Start();
             while( process_->Wait() ) {}
             process_.reset();
         }
@@ -109,11 +120,11 @@ void ProcessWrapper::RunBlockingMainThread()
 // Name: ProcessWrapper::Stop
 // Created: SBO 2010-11-10
 // -----------------------------------------------------------------------------
-void ProcessWrapper::Stop()
+void ProcessWrapper::Stop( bool forceProcessStop /*= true*/ )
 {
     if( process_.get() )
     {
-        process_->Stop();
+        process_->Stop( forceProcessStop);
         while( process_->Wait() ) {}
     }
 }
@@ -171,4 +182,14 @@ std::string ProcessWrapper::GetSession() const
 const SpawnCommand* ProcessWrapper::GetCommand() const
 {
     return process_.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::SetEndpoint
+// Created: JSR 2011-12-13
+// -----------------------------------------------------------------------------
+void ProcessWrapper::SetEndpoint( const std::string& endpoint )
+{
+    if( process_.get() )
+        process_->SetCommanderEndpoint( endpoint );
 }
