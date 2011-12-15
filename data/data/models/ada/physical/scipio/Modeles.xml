@@ -268,7 +268,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Artillerie.Sol Air.PC">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASA.PC">
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
@@ -304,7 +304,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Artillerie.Sol Air.SATCP MISTRAL">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASA.SATCP MISTRAL">
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
@@ -318,7 +318,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION ASA Defendre"/>
-        <mission name="PION ASA .Surveiller"/>
+        <mission name="PION ASA Surveiller"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -343,7 +343,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Artillerie.Sol Air.SAMP HAWK">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASA.SAMP HAWK">
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
@@ -1608,238 +1608,6 @@
         <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" masalife="false" name="SACP CAROL">
-      <missions>
-        <mission name="PION ASA Defendre Zone"/>
-        <mission name="PION ASA Defendre Zone A Partir Position"/>
-        <mission name="PION ASA Defendre Site"/>
-        <mission name="PION ASA Defendre Site A Partir Position"/>
-        <mission name="PION ASA Surveiller"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" masalife="false" name="SACP ROLAND">
-      <missions>
-        <mission name="PION ASA Defendre Zone"/>
-        <mission name="PION ASA Defendre Zone A Partir Position"/>
-        <mission name="PION ASA Defendre Site"/>
-        <mission name="PION ASA Defendre Site A Partir Position"/>
-        <mission name="PION ASA Surveiller"/>
-        <mission name="PION ASA Defendre Unites"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" masalife="false" name="SATCP MISTRAL">
-      <missions>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION ASA MISTRAL Defendre Site"/>
-        <mission name="PION ASA MISTRAL Defendre Site A Partir Position"/>
-        <mission name="PION ASA MISTRAL Defendre Zone"/>
-        <mission name="PION ASA MISTRAL Defendre Zone A Partir Position"/>
-        <mission name="PION ASA MISTRAL Surveiller"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.bms" masalife="false" name="PC MISTRAL">
-      <missions>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.bms" masalife="false" name="PC ROLAND CAROL">
-      <missions>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="TheaterHighAltitudeAeraDefenseCP" file="Appui\ArtDsa\Pions\PC HAWK\model.bms" masalife="false" name="PC HAWK">
-      <missions>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
     <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" masalife="false" name="PC ASS Tir">
       <missions>
         <mission name="PION Decrocher"/>
@@ -2549,47 +2317,6 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="SampHawk" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" masalife="false" name="SAMP HAWK">
-      <missions>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION ASA Defendre Zone"/>
-        <mission name="PION ASA Defendre Zone A Partir Position"/>
-        <mission name="PION ASA Defendre Site"/>
-        <mission name="PION ASA Defendre Site A Partir Position"/>
-        <mission name="PION ASA Surveiller"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
     <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Patrouille HR">
       <missions>
         <mission name="PION ALAT Eclairer"/>
@@ -2630,131 +2357,6 @@
         <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" masalife="false" name="GLAISE ASA section tcp">
-      <missions>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION ASA MISTRAL Defendre Site"/>
-        <mission name="PION ASA MISTRAL Defendre Site A Partir Position"/>
-        <mission name="PION ASA MISTRAL Defendre Zone"/>
-        <mission name="PION ASA MISTRAL Defendre Zone A Partir Position"/>
-        <mission name="PION ASA MISTRAL Surveiller"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Glaise\Glaise_Appui\ArtDsa\Pions\section ASA CP\model.bms" masalife="false" name="GLAISE ASA section cp">
-      <missions>
-        <mission name="PION ASA Defendre Zone"/>
-        <mission name="PION ASA Defendre Zone A Partir Position"/>
-        <mission name="PION ASA Defendre Site"/>
-        <mission name="PION ASA Defendre Site A Partir Position"/>
-        <mission name="PION ASA Surveiller"/>
-        <mission name="PION ASA Defendre Unites"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Glaise\Glaise_appui\ArtDsa\Pions\groupe ASA TCP\model.bms" masalife="false" name="GLAISE ASA groupe tcp">
-      <missions>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION ASA MISTRAL Defendre Site"/>
-        <mission name="PION ASA MISTRAL Defendre Site A Partir Position"/>
-        <mission name="PION ASA MISTRAL Defendre Zone"/>
-        <mission name="PION ASA MISTRAL Defendre Zone A Partir Position"/>
-        <mission name="PION ASA MISTRAL Surveiller"/>
-        <mission name="PION ASA Defendre Unites"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
     <unit dia-type="Patrouille_URH" file="Glaise\Glaise_Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" masalife="false" name="GLAISE RENS Pat URH">
       <missions>
         <mission name="PION Decrocher"/>
@@ -2767,83 +2369,6 @@
         <mission name="PION Stationner"/>
         <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS ROHUM Renseigner Sur"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Glaise\Glaise_Appui\ArtDsa\Pions\section ASA MP\Model.bms" masalife="false" name="GLAISE ASA  Section MP">
-      <missions>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION ASA Defendre Zone"/>
-        <mission name="PION ASA Defendre Zone A Partir Position"/>
-        <mission name="PION ASA Defendre Site"/>
-        <mission name="PION ASA Defendre Site A Partir Position"/>
-        <mission name="PION ASA Surveiller"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="glaise\glaise_Appui\ArtDsa\Pions\PC asa cp\model.bms" masalife="false" name="GLAISE ASA PC">
-      <missions>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Stationner"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
       </missions>
@@ -5086,7 +4611,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
-        <mission name="PION ASS Reconnaitre Zone Deploiement"/>
+        <mission name="PION ASS Reconnaitre Zones Deploiement"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7357,114 +6882,6 @@
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
     </automat>
-    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" masalife="false" name="Sgpt Satcp Mistral">
-      <missions>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Franchir"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE ASA Defendre Itineraire"/>
-        <mission name="AUTOMATE ASA MISTRAL Defendre Site"/>
-        <mission name="AUTOMATE ASA MISTRAL Defendre Zone"/>
-        <mission name="AUTOMATE ASA MISTRAL Surveiller"/>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" masalife="false" name="Sgpt Sacp Carol">
-      <missions>
-        <mission name="AUTOMATE ASA Defendre Zone"/>
-        <mission name="AUTOMATE ASA Defendre Site"/>
-        <mission name="AUTOMATE ASA Surveiller"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Franchir"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE ASA Defendre Itineraire"/>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" masalife="false" name="Sgpt Sacp Roland">
-      <missions>
-        <mission name="AUTOMATE ASA Defendre Zone"/>
-        <mission name="AUTOMATE ASA Defendre Site"/>
-        <mission name="AUTOMATE ASA Surveiller"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Franchir"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE ASA Defendre Itineraire"/>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.bms" masalife="false" name="Sgpt Hap Mixte">
       <missions>
         <mission name="AUTOMATE ALAT Reconnaitre"/>
@@ -7965,184 +7382,6 @@
         <mission name="AUTOMATE RENS RADINT Renseigner Sur"/>
         <mission name="AUTOMATE Se Recompleter"/>
         <mission name="AUTOMATE Se Faire Decontaminer"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.bms" masalife="false" name="Sgpt Samp Hawk">
-      <missions>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Franchir"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE ASA HAWK Defendre Site"/>
-        <mission name="AUTOMATE ASA HAWK Defendre Zone"/>
-        <mission name="AUTOMATE ASA HAWK Surveiller"/>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" masalife="false" name="GLAISE ASA batterie TCP">
-      <missions>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Franchir"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE ASA Defendre Itineraire"/>
-        <mission name="AUTOMATE ASA MISTRAL Defendre Site"/>
-        <mission name="AUTOMATE ASA MISTRAL Defendre Zone"/>
-        <mission name="AUTOMATE ASA MISTRAL Surveiller"/>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" masalife="false" name="GLAISE ASA batterie CP">
-      <missions>
-        <mission name="AUTOMATE ASA Defendre Zone"/>
-        <mission name="AUTOMATE ASA Defendre Site"/>
-        <mission name="AUTOMATE ASA Surveiller"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Franchir"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE ASA Defendre Itineraire"/>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" masalife="false" name="GLAISE ASA section tcp independante">
-      <missions>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Franchir"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE ASA Defendre Itineraire"/>
-        <mission name="AUTOMATE ASA MISTRAL Defendre Site"/>
-        <mission name="AUTOMATE ASA MISTRAL Defendre Zone"/>
-        <mission name="AUTOMATE ASA MISTRAL Surveiller"/>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.bms" masalife="false" name="GLAISE ASA Batterie MP">
-      <missions>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Franchir"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE ASA HAWK Defendre Site"/>
-        <mission name="AUTOMATE ASA HAWK Defendre Zone"/>
-        <mission name="AUTOMATE ASA HAWK Surveiller"/>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -9169,4 +8408,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4144541810" -->
+<!-- signature="2639118979" -->

@@ -62,7 +62,7 @@
     <population-filter density="0.1"/>
     <time-limited/>
   </object>
-  <object geometry="polygon" name="fosse anti char" symbol="G*MPOADC--****X" type="anti tank obstacle">
+  <object geometry="line" name="fosse anti char" symbol="G*MPOADC--****X" type="anti tank obstacle">
     <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
@@ -84,7 +84,7 @@
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
-  <object geometry="polygon" name="abattis" symbol="G*MPOS----****X" type="abattis">
+  <object geometry="point" name="abattis" symbol="G*MPOS----****X" type="abattis">
     <activable/>
     <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="1000"/>
@@ -269,7 +269,7 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <propagation model="cloud"/>
   </object>
-  <object geometry="point polygon" name="plot ravitaillement" symbol="G*SPPR----****X" type="logistic support area">
+  <object geometry="point" name="plot ravitaillement" symbol="G*SPPR----****X" type="logistic support area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <supply/>
   </object>
@@ -280,13 +280,13 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <workable max-animator="3"/>
   </object>
-  <object geometry="point" name="rota" symbol="G*ROTA*********" type="rota area">
+  <object geometry="polygon point" name="rota" symbol="G*ROTA*********" type="rota area">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <contamination max-toxic="-1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
   </object>
-  <object geometry="polygon" name="zone nbc" symbol="G*MPNR----****X" type="nbc zone">
+  <object geometry="circle" name="zone nbc" symbol="G*MPNR----****X" type="nbc zone">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <contamination max-toxic="1"/>
@@ -300,31 +300,25 @@
     <interaction-height height="100"/>
     <interference/>
   </object>
-  <object geometry="polygon" name="aire poser" symbol="G*GPGAL---****X" type="landing area">
+  <object geometry="point" name="aire poser" symbol="G*GPGAL---****X" type="landing area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
   </object>
-  <object geometry="polygon" name="piste" symbol="G*GPGAZ---****X" type="trail">
+  <object geometry="line" name="piste" symbol="G*GPGAZ---****X" type="trail">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="90" unit-speed-impact-mode="VitesseMaxAgent"/>
   </object>
-  <object geometry="polygon" name="plate-forme" symbol="G*PLATFORM*****" type="platform">
+  <object geometry="point" name="plate-forme" symbol="G*PLATFORM*****" type="platform">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
   </object>
   <object geometry="polygon" name="zone mobilite amelioree" symbol="G*MPSP----****X" type="mobility enhanced area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="100" unit-speed-impact-mode="VitesseMaxAgent"/>
   </object>
-  <object geometry="polygon" name="zone poser helicoptere" symbol="G*GPGAL---****X" type="landing area (helicopter)">
+  <object geometry="point" name="zone poser helicoptere" symbol="G*GPGAL---****X" type="landing area (helicopter)">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
   </object>
   <object geometry="polygon" name="aire logistique" symbol="G*SPAR----****X" type="logistic area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-  </object>
-  <object geometry="line" name="itineraire logistique" symbol="G*SPLRM---****X" type="logistic route">
-    <bypassable bypass-speed="-1"/>
-    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="200" max-unit-percentage-speed="100" unit-speed-impact-mode="VitesseMaxAgent"/>
-    <supply-route/>
   </object>
   <object geometry="polygon" name="camp prisonniers" symbol="G*SPAD----****X" type="prisoners camp">
     <bypassable bypass-speed="-1"/>
@@ -472,4 +466,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="4099314396" -->
+<!-- signature="0101560036" -->

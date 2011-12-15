@@ -54,7 +54,6 @@
         <object-cost type="logistic area" value="10"/>
         <object-cost type="prisoners camp" value="10"/>
         <object-cost type="refugees camp" value="10"/>
-        <object-cost type="logistic route" value="-10"/>
         <object-cost type="checkpoint" value="-5"/>
         <object-cost type="dropping area" value="10"/>
         <object-cost type="movement forbidden area" value="10000"/>
@@ -222,7 +221,6 @@
         <object-cost type="logistic area" value="10"/>
         <object-cost type="prisoners camp" value="10"/>
         <object-cost type="refugees camp" value="10"/>
-        <object-cost type="logistic route" value="-10"/>
         <object-cost type="checkpoint" value="-5"/>
         <object-cost type="dropping area" value="10"/>
         <object-cost type="movement forbidden area" value="10000"/>
@@ -338,4 +336,4 @@
     <rule channeling-range="1" cost-out-of-channeling="5000" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="0404347115" -->
+<!-- signature="1685113680" -->
