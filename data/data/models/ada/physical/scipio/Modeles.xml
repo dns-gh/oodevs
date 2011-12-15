@@ -5357,29 +5357,50 @@
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="AUTOMATE MELEE Boucler"/>
+        <mission name="AUTOMATE MELEE Boucler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Couvrir"/>
-        <mission name="AUTOMATE MELEE Controler"/>
-        <mission name="AUTOMATE MELEE Defendre"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Defendre">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Detruire"/>
-        <mission name="AUTOMATE MELEE Donner Coup Arret"/>
+        <mission name="AUTOMATE MELEE Donner Coup Arret">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Freiner">
           <fragorder name="Decrocher"/>
+          <fragorder name="Activer Obstacles"/>
         </mission>
-        <mission name="AUTOMATE MELEE Harceler"/>
-        <mission name="AUTOMATE MELEE Intercepter"/>
-        <mission name="AUTOMATE MELEE Interdire"/>
-        <mission name="AUTOMATE MELEE Jalonner"/>
+        <mission name="AUTOMATE MELEE Harceler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Intercepter">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Jalonner">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Ratisser"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
-        <mission name="AUTOMATE MELEE Recueillir"/>
+        <mission name="AUTOMATE MELEE Recueillir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Relever"/>
         <mission name="AUTOMATE MELEE S'emparer"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
-        <mission name="AUTOMATE MELEE Tenir"/>
+        <mission name="AUTOMATE MELEE Tenir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
         <mission name="AUTOMATE MELEE Controler foule"/>
@@ -5422,11 +5443,19 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE MELEE Appuyer"/>
-        <mission name="AUTOMATE MELEE Controler"/>
-        <mission name="AUTOMATE MELEE Defendre"/>
-        <mission name="AUTOMATE MELEE Interdire"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Defendre">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Surveiller"/>
-        <mission name="AUTOMATE MELEE Tenir"/>
+        <mission name="AUTOMATE MELEE Tenir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Controler foule"/>
@@ -5469,20 +5498,31 @@
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="AUTOMATE MELEE Controler"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Couvrir"/>
-        <mission name="AUTOMATE MELEE Defendre"/>
+        <mission name="AUTOMATE MELEE Defendre">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Detruire"/>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Freiner">
           <fragorder name="Decrocher"/>
+          <fragorder name="Activer Obstacles"/>
         </mission>
-        <mission name="AUTOMATE MELEE Harceler"/>
-        <mission name="AUTOMATE MELEE Interdire"/>
+        <mission name="AUTOMATE MELEE Harceler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
-        <mission name="AUTOMATE MELEE Recueillir"/>
+        <mission name="AUTOMATE MELEE Recueillir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Relever"/>
         <mission name="AUTOMATE MELEE S'emparer"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
@@ -5520,7 +5560,9 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Controler"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -5558,11 +5600,17 @@
         <mission name="AUTOMATE MELEE Appuyer"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Couvrir"/>
-        <mission name="AUTOMATE MELEE Defendre"/>
+        <mission name="AUTOMATE MELEE Defendre">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Harceler"/>
-        <mission name="AUTOMATE MELEE Interdire"/>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Surveiller"/>
-        <mission name="AUTOMATE MELEE Freiner"/>
+        <mission name="AUTOMATE MELEE Freiner">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -5598,11 +5646,17 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE MELEE Appuyer"/>
-        <mission name="AUTOMATE MELEE Defendre"/>
+        <mission name="AUTOMATE MELEE Defendre">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Escorter"/>
-        <mission name="AUTOMATE MELEE Interdire"/>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Surveiller"/>
-        <mission name="AUTOMATE MELEE Tenir"/>
+        <mission name="AUTOMATE MELEE Tenir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Controler foule"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
@@ -5641,11 +5695,19 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE MELEE Appuyer"/>
-        <mission name="AUTOMATE MELEE Controler"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Couvrir"/>
-        <mission name="AUTOMATE MELEE Defendre"/>
-        <mission name="AUTOMATE MELEE Harceler"/>
-        <mission name="AUTOMATE MELEE Interdire"/>
+        <mission name="AUTOMATE MELEE Defendre">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Harceler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE S'emparer"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
       </missions>
@@ -5687,12 +5749,17 @@
         </mission>
         <mission name="AUTOMATE MELEE Appuyer"/>
         <mission name="AUTOMATE MELEE Couvrir"/>
-        <mission name="AUTOMATE MELEE Donner Coup Arret"/>
+        <mission name="AUTOMATE MELEE Donner Coup Arret">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Freiner">
           <fragorder name="Decrocher"/>
+          <fragorder name="Activer Obstacles"/>
         </mission>
-        <mission name="AUTOMATE MELEE Interdire"/>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
       </missions>
       <fragorders>
@@ -5728,19 +5795,32 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Controler"/>
-        <mission name="AUTOMATE MELEE Defendre"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Defendre">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Detruire"/>
-        <mission name="AUTOMATE MELEE Donner Coup Arret"/>
+        <mission name="AUTOMATE MELEE Donner Coup Arret">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Freiner">
           <fragorder name="Decrocher"/>
+          <fragorder name="Activer Obstacles"/>
         </mission>
-        <mission name="AUTOMATE MELEE Interdire"/>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
-        <mission name="AUTOMATE MELEE Recueillir"/>
-        <mission name="AUTOMATE MELEE Tenir"/>
+        <mission name="AUTOMATE MELEE Recueillir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Tenir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -5813,29 +5893,48 @@
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="AUTOMATE MELEE Boucler"/>
-        <mission name="AUTOMATE MELEE Controler"/>
-        <mission name="AUTOMATE MELEE Defendre"/>
+        <mission name="AUTOMATE MELEE Boucler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Defendre">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Detruire"/>
-        <mission name="AUTOMATE MELEE Donner Coup Arret"/>
+        <mission name="AUTOMATE MELEE Donner Coup Arret">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Effectuer un raid"/>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Freiner">
           <fragorder name="Decrocher"/>
+          <fragorder name="Activer Obstacles"/>
         </mission>
-        <mission name="AUTOMATE MELEE Interdire"/>
-        <mission name="AUTOMATE MELEE Intercepter"/>
-        <mission name="AUTOMATE MELEE Jalonner"/>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Intercepter">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Jalonner">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Neutraliser"/>
         <mission name="AUTOMATE MELEE Ratisser"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
-        <mission name="AUTOMATE MELEE Recueillir"/>
+        <mission name="AUTOMATE MELEE Recueillir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Renseigner Sur"/>
         <mission name="AUTOMATE MELEE S'emparer"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
-        <mission name="AUTOMATE MELEE Tenir"/>
+        <mission name="AUTOMATE MELEE Tenir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -5872,17 +5971,25 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE MELEE Appuyer"/>
-        <mission name="AUTOMATE MELEE Controler"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Couvrir"/>
         <mission name="AUTOMATE MELEE Donner Coup Arret"/>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
-        <mission name="AUTOMATE MELEE Interdire"/>
-        <mission name="AUTOMATE MELEE Jalonner"/>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Jalonner">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
-        <mission name="AUTOMATE MELEE Recueillir"/>
+        <mission name="AUTOMATE MELEE Recueillir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Renseigner Sur"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
       </missions>
@@ -5924,28 +6031,45 @@
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="AUTOMATE MELEE Boucler"/>
-        <mission name="AUTOMATE MELEE Controler"/>
-        <mission name="AUTOMATE MELEE Donner Coup Arret"/>
+        <mission name="AUTOMATE MELEE Boucler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Donner Coup Arret">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Effectuer un raid"/>
-        <mission name="AUTOMATE MELEE Defendre"/>
+        <mission name="AUTOMATE MELEE Defendre">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Detruire"/>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Freiner">
           <fragorder name="Decrocher"/>
+          <fragorder name="Activer Obstacles"/>
         </mission>
-        <mission name="AUTOMATE MELEE Interdire"/>
-        <mission name="AUTOMATE MELEE Intercepter"/>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Intercepter">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Neutraliser"/>
         <mission name="AUTOMATE MELEE Ratisser"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
-        <mission name="AUTOMATE MELEE Recueillir"/>
+        <mission name="AUTOMATE MELEE Recueillir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Renseigner Sur"/>
         <mission name="AUTOMATE MELEE S'emparer"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
-        <mission name="AUTOMATE MELEE Tenir"/>
+        <mission name="AUTOMATE MELEE Tenir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -5981,14 +6105,20 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Controler"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
-        <mission name="AUTOMATE MELEE Jalonner"/>
+        <mission name="AUTOMATE MELEE Jalonner">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
-        <mission name="AUTOMATE MELEE Recueillir"/>
+        <mission name="AUTOMATE MELEE Recueillir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Renseigner Sur"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
@@ -6026,7 +6156,9 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Controler"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -6098,17 +6230,27 @@
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="AUTOMATE MELEE Boucler"/>
-        <mission name="AUTOMATE MELEE Controler"/>
+        <mission name="AUTOMATE MELEE Boucler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Couvrir"/>
-        <mission name="AUTOMATE MELEE Defendre"/>
+        <mission name="AUTOMATE MELEE Defendre">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Detruire"/>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
-        <mission name="AUTOMATE MELEE Intercepter"/>
-        <mission name="AUTOMATE MELEE Jalonner"/>
+        <mission name="AUTOMATE MELEE Intercepter">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Jalonner">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Neutraliser"/>
         <mission name="AUTOMATE MELEE Ratisser"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
@@ -6149,15 +6291,23 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE MELEE Couvrir"/>
-        <mission name="AUTOMATE MELEE Controler"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
-        <mission name="AUTOMATE MELEE Interdire"/>
-        <mission name="AUTOMATE MELEE Jalonner"/>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Jalonner">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
         <mission name="AUTOMATE MELEE S'emparer"/>
-        <mission name="AUTOMATE MELEE Tenir"/>
+        <mission name="AUTOMATE MELEE Tenir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -6194,14 +6344,19 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE MELEE Appuyer"/>
         <mission name="AUTOMATE MELEE Couvrir"/>
-        <mission name="AUTOMATE MELEE Controler"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Effectuer un raid"/>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Freiner">
           <fragorder name="Decrocher"/>
+          <fragorder name="Activer Obstacles"/>
         </mission>
-        <mission name="AUTOMATE MELEE Interdire"/>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
         <mission name="AUTOMATE MELEE S'emparer"/>
       </missions>
@@ -6241,15 +6396,25 @@
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="AUTOMATE MELEE Boucler"/>
+        <mission name="AUTOMATE MELEE Boucler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Couvrir"/>
-        <mission name="AUTOMATE MELEE Controler"/>
-        <mission name="AUTOMATE MELEE Defendre"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Defendre">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Detruire"/>
-        <mission name="AUTOMATE MELEE Donner Coup Arret"/>
+        <mission name="AUTOMATE MELEE Donner Coup Arret">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
-        <mission name="AUTOMATE MELEE Interdire"/>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Intercepter"/>
         <mission name="AUTOMATE MELEE Neutraliser"/>
         <mission name="AUTOMATE MELEE Ratisser"/>
@@ -6330,7 +6495,9 @@
         <mission name="AUTOMATE GENIE Reconnaitre"/>
         <mission name="AUTOMATE GENIE Degager Obstacles"/>
         <mission name="AUTOMATE GENIE Ouvrir Itineraire"/>
-        <mission name="AUTOMATE GENIE Realiser Travaux"/>
+        <mission name="AUTOMATE GENIE Realiser Travaux">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE GENIE Reparer"/>
         <mission name="AUTOMATE GENIE Retablir Itineraire"/>
         <mission name="AUTOMATE Desactiver Point Du Reseau"/>
@@ -6349,7 +6516,6 @@
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
-        <fragorder name="Activer Obstacles"/>
       </fragorders>
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.GEN.Appui">
@@ -7439,9 +7605,15 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE MELEE Detruire"/>
-        <mission name="AUTOMATE MELEE Harceler"/>
-        <mission name="AUTOMATE MELEE Controler"/>
-        <mission name="AUTOMATE MILICE Appui contre mobilite"/>
+        <mission name="AUTOMATE MELEE Harceler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MILICE Appui contre mobilite">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE Desactiver Point Du Reseau"/>
       </missions>
       <fragorders>
@@ -7479,12 +7651,20 @@
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="AUTOMATE MELEE Boucler"/>
+        <mission name="AUTOMATE MELEE Boucler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Couvrir"/>
-        <mission name="AUTOMATE MELEE Controler"/>
-        <mission name="AUTOMATE MELEE Defendre"/>
+        <mission name="AUTOMATE MELEE Controler">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Defendre">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Detruire"/>
-        <mission name="AUTOMATE MELEE Donner Coup Arret"/>
+        <mission name="AUTOMATE MELEE Donner Coup Arret">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Effectuer un raid"/>
         <mission name="AUTOMATE MELEE Escorter"/>
@@ -7492,19 +7672,30 @@
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Freiner">
           <fragorder name="Decrocher"/>
+          <fragorder name="Activer Obstacles"/>
         </mission>
-        <mission name="AUTOMATE MELEE Intercepter"/>
-        <mission name="AUTOMATE MELEE Interdire"/>
-        <mission name="AUTOMATE MELEE Jalonner"/>
+        <mission name="AUTOMATE MELEE Intercepter">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Interdire">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
+        <mission name="AUTOMATE MELEE Jalonner">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Neutraliser"/>
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
         <mission name="AUTOMATE MELEE Ratisser"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
-        <mission name="AUTOMATE MELEE Recueillir"/>
+        <mission name="AUTOMATE MELEE Recueillir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Renseigner Sur"/>
         <mission name="AUTOMATE MELEE S'emparer"/>
         <mission name="AUTOMATE MELEE Surveiller"/>
-        <mission name="AUTOMATE MELEE Tenir"/>
+        <mission name="AUTOMATE MELEE Tenir">
+          <fragorder name="Activer Obstacles"/>
+        </mission>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Controler foule"/>
       </missions>
@@ -8213,4 +8404,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0551493818" -->
+<!-- signature="2623441036" -->
