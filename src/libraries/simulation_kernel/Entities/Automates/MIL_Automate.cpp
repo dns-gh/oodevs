@@ -548,7 +548,7 @@ void MIL_Automate::UpdateDecision( float duration )
         pOrderManager_->Update();
         GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     }
-    catch( std::runtime_error& /*e*/ )
+    catch( std::exception& /*e*/ )
     {
         pOrderManager_->CancelMission();
         MT_LOG_ERROR_MSG( "Entity " << GetID() << "('" << GetName() << "') : Mission impossible" );
