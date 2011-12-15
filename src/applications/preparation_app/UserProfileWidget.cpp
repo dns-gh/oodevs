@@ -171,6 +171,8 @@ void UserProfileWidget::Display( UserProfile& profile )
         Update();
         if( !role.empty() )
             userRole_->setCurrentText( userRoleDico_->GetLabel( role, dicoKind_, dicoLanguage_ ).c_str() );
+        else if( userRole_->currentText() != "" )
+            profile_->SetUserRole( userRoleDico_->GetKey( userRole_->currentText().ascii(), dicoKind_, dicoLanguage_ ) );
     }
 
     pUnits_->Display( profile );
