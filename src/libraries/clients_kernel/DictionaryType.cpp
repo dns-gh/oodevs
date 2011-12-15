@@ -55,7 +55,8 @@ void DictionaryType::GetStringList( std::vector< std::string >& vector, const st
     while( it.HasMoreElements() )
     {
         const DictionaryEntryType& entry = it.NextElement();
-        if( entry.GetOption() == option )
+        const std::set< std::string > options = entry.GetOptions();
+        if( options.find( option ) != options.end() )
             vector.push_back( entry.GetLabel( kind, language ).c_str() );
     }
 }

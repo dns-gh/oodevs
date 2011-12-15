@@ -14,6 +14,7 @@ namespace kernel
 {
     class Controller;
     class Entity_ABC;
+    class ExtensionTypes;
 }
 
 namespace xml
@@ -35,9 +36,12 @@ class UserProfile
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfile( xml::xistream& xis, kernel::Controller& controller, const Model& model );
-             UserProfile( const QString& login, kernel::Controller& controller, const Model& model );
-             UserProfile( const QString& login, const std::string& role, kernel::Controller& controller, const Model& model );
+             UserProfile( xml::xistream& xis, kernel::Controller& controller, const Model& model,
+                          const kernel::ExtensionTypes& extensions );
+             UserProfile( const QString& login, kernel::Controller& controller, const Model& model,
+                          const kernel::ExtensionTypes& extensions );
+             UserProfile( const QString& login, const std::string& role, kernel::Controller& controller,
+                          const Model& model, const kernel::ExtensionTypes& extensions );
              UserProfile( const UserProfile& );
     virtual ~UserProfile();
     //@}
@@ -46,7 +50,6 @@ public:
     //@{
     QString GetLogin() const;
     QString GetPassword() const;
-    bool IsSupervisor() const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     std::string GetUserRole() const;
@@ -57,10 +60,10 @@ public:
     //@{
     virtual void SetLogin( const QString& value );
     void SetPassword( const QString& value );
-    void SetSupervisor( bool value );
     void SetReadable( const kernel::Entity_ABC& entity, bool readable );
     void SetWriteable( const kernel::Entity_ABC& entity, bool writeable );
     void SetUserRole( const std::string& role );
+    void Clear();
     //@}
 
     //! @name Operations
@@ -100,6 +103,7 @@ private:
     void ReadRights( xml::xistream& xis, T_Ids& list, const ExistenceChecker_ABC& checker );
     void SerializeRights( xml::xostream& xos, const std::string& tag, const T_Ids& list ) const;
     void SetRight( unsigned long id, T_Ids& ids, bool status );
+    bool HasProperty( const std::string& name ) const;
     //@}
 
 private:
@@ -107,9 +111,9 @@ private:
     //@{
     kernel::Controller& controller_;
     const Model& model_;
+    const kernel::ExtensionTypes& extensions_;
     QString login_;
     QString password_;
-    bool supervisor_;
     T_Ids readSides_;
     T_Ids readFormations_;
     T_Ids readAutomats_;

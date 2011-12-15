@@ -20,7 +20,6 @@
 #include "clients_kernel/DictionaryEntryType.h"
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
-#include "clients_gui/DiffusionListLegendBar.h"
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
 #include "preparation/Model.h"
@@ -68,17 +67,17 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
     }
     {
         Q3VBox* box = new Q3VBox( this );
-        Q3GroupBox* group = new Q3GroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
-        group->setMargin( 5 );
+        group_ = new Q3GroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
+        group_->setMargin( 5 );
 
-        Q3VBox* pFilterBox = new Q3VBox( group );
+        Q3VBox* pFilterBox = new Q3VBox( group_ );
 
         pHidefilter_ = new QCheckBox( tr( "Hide automats controlled by another profile" ), pFilterBox );
         connect( pHidefilter_, SIGNAL( stateChanged( int ) ), this, SLOT( OnHideFilterChanged( int ) ) );
         pShowFilter_ = new QCheckBox( tr( "Show only automats controlled by this profile" ), pFilterBox );
         connect( pShowFilter_, SIGNAL( stateChanged( int ) ), this, SLOT( OnShowFilterChanged( int ) ) );
 
-        QTabWidget* tabs = new QTabWidget( group );
+        QTabWidget* tabs = new QTabWidget( group_ );
 
         UserProfileUnitControls* unitRights = new UserProfileUnitControls( tabs, controllers, factory, icons, checker_, model );
         tabs->addTab( unitRights, tr( "Units" ) );
@@ -90,16 +89,11 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
 
         addTab( box, tr( "Permissions" ) );
 
-        QWidget* information = new QWidget( group );
+        QWidget* information = new QWidget( group_ );
         QVBoxLayout* layout = new QVBoxLayout( information );
-        colorWidget_ = new QWidget();
-        QHBoxLayout* colorLayout = new QHBoxLayout( colorWidget_ );
-        colorLayout->setSpacing( 5 );
-        colorLayout->setMargin( 5 );
-        colorLayout->addWidget( new gui::DiffusionListLegendBar( 0, QColor( 255, 136, 136 ), 20 ) );
-        colorLayout->addWidget( new QLabel( tr( "Units controlled by another profile." ) ), 1 );
-        layout->addWidget( colorWidget_ );
+        colorInformation_ = new QLabel( "<font color='#FF0A0A'>" + tr( "Units controlled by another profile." ) + "</font>", information );
         informationControls_ = new QLabel( tr( "'Control' permission allows you to control an unit." ), information );
+        layout->addWidget( colorInformation_ );
         layout->addWidget( informationControls_ );
     }
     SetEnabled( false );
@@ -140,7 +134,9 @@ void UserProfileWidget::NotifyUpdated( const kernel::ModelLoaded& )
                 {
                     QStringList list;
                     userRoleDico_->GetStringList( list, dicoKind_, dicoLanguage_ );
-                    userRoleDico_->GetStringList( supervisors_, dicoKind_, dicoLanguage_, "supervisor" );
+                    userRoleDico_->GetStringList( supervisors_, dicoKind_, dicoLanguage_, "readOnly" );
+                    userRoleDico_->GetStringList( magicActions_, dicoKind_, dicoLanguage_, "magicActions" );
+                    userRoleDico_->GetStringList( noEditable_, dicoKind_, dicoLanguage_, "noEditable" );
                     userRole_->insertStringList( list );
                     userRoleGroup_->show();
                 }
@@ -227,7 +223,9 @@ void UserProfileWidget::OnUserRole( const QString& role )
 {
     if( userRoleDico_ && profile_ )
     {
-        profile_->SetUserRole( userRoleDico_->GetKey( role.ascii(), dicoKind_, dicoLanguage_ ) );
+        const std::string& key = userRoleDico_->GetKey( role.ascii(), dicoKind_, dicoLanguage_ );
+        profile_->SetUserRole( key );
+        pUnits_->Clear();
         Update();
     }
     controllers_.controller_.Update( profile_ );
@@ -250,12 +248,16 @@ void UserProfileWidget::Update()
 {
     if( profile_ )
     {
+        bool editable = std::find( noEditable_.begin(), noEditable_.end(), profile_->GetUserRole() ) == noEditable_.end();
+        group_->setVisible( editable );
+        if( !editable )
+            profile_->Clear();
         bool supervisor = std::find( supervisors_.begin(), supervisors_.end(), profile_->GetUserRole() ) != supervisors_.end();
         informationControls_->setText( supervisor ? tr( "'View' permission allows you to see an unit." )
                                                   : tr( "'Control' permission allows you to control an unit." ) );
-        colorWidget_->setVisible( !supervisor );
-        pUnits_->Update( supervisor );
-        pPopulations_->Update( supervisor );
+        colorInformation_->setVisible( !supervisor );
+        pUnits_->Update( supervisor, *profile_ );
+        pPopulations_->Update( supervisor, *profile_ );
     }
 }
 
@@ -269,6 +271,16 @@ void UserProfileWidget::Show()
     OnShowFilterChanged( pShowFilter_->checkState() );
     dynamic_cast< UserProfileUnitControls* >( pUnits_ )->Show();
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::Hide
+// Created: LGY 2011-12-15
+// -----------------------------------------------------------------------------
+void UserProfileWidget::Hide()
+{
+    pUnits_->Clear();
+}
+
 // -----------------------------------------------------------------------------
 // Name: UserProfileWidget::OnHideFilterChanged
 // Created: LGY 2011-12-12

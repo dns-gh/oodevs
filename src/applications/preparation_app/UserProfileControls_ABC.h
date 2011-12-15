@@ -48,7 +48,8 @@ public:
     virtual void RemoveFilter();
 
     virtual void Display( UserProfile& profile );
-    void Update( bool supervisor );
+    void Update( bool supervisor, UserProfile& profile );
+    void Clear();
     //@}
 
 protected:
@@ -76,7 +77,6 @@ private:
     //! @name Helpers
     //@{
     void Commit();
-    void Clear();
     void SetItem( Q3ListViewItem* item, Status status );
 
     void ReadRights( gui::ValuedListItem* item, bool control );

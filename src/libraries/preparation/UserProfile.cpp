@@ -18,17 +18,21 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/ExtensionType.h"
+#include "clients_kernel/ExtensionTypes.h"
+#include "clients_kernel/DictionaryType.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, const Model& model )
-    : controller_     ( controller )
-    , model_          ( model )
-    , supervisor_     ( false )
-    , isClone_        ( false )
+UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, const Model& model,
+                          const kernel::ExtensionTypes& extensions )
+    : controller_( controller )
+    , model_     ( model )
+    , extensions_( extensions )
+    , isClone_   ( false )
 {
     const ExistenceChecker< tools::Resolver_ABC< kernel::Team_ABC > >       teamChecker( model_.GetTeamResolver() );
     const ExistenceChecker< tools::Resolver_ABC< kernel::Formation_ABC > >  formationChecker( model_.GetFormationResolver() );
@@ -38,7 +42,6 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     std::string login, pass;
     xis >> xml::attribute( "name", login )
         >> xml::attribute( "password", pass )
-        >> xml::attribute( "supervision", supervisor_ )
         >> xml::optional >> xml::attribute( "role", userRole_ )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
@@ -63,12 +66,13 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
 // Name: UserProfile constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const QString& login, kernel::Controller& controller, const Model& model )
+UserProfile::UserProfile( const QString& login, kernel::Controller& controller, const Model& model,
+                          const kernel::ExtensionTypes& extensions )
     : controller_( controller )
     , model_     ( model )
+    , extensions_( extensions )
     , login_     ( login )
     , password_  ( "" )
-    , supervisor_( false )
     , isClone_   ( false )
 {
     controller_.Create( *this );
@@ -78,12 +82,13 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
 // Name: UserProfile constructor
 // Created: LGY 2011-12-12
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const QString& login, const std::string& role, kernel::Controller& controller, const Model& model )
+UserProfile::UserProfile( const QString& login, const std::string& role, kernel::Controller& controller,
+                          const Model& model, const kernel::ExtensionTypes& extensions )
     : controller_ ( controller )
     , model_      ( model )
+    , extensions_ ( extensions )
     , login_      ( login )
     , password_   ( "" )
-    , supervisor_ ( false )
     , isClone_    ( false )
     , userRole_   ( role )
 {
@@ -98,8 +103,8 @@ UserProfile::UserProfile( const UserProfile& p )
     : controller_      ( p.controller_ )
     , model_           ( p.model_ )
     , login_           ( p.login_ )
+    , extensions_      ( p.extensions_ )
     , password_        ( p.password_ )
-    , supervisor_      ( p.supervisor_ )
     , readSides_       ( p.readSides_ )
     , readFormations_  ( p.readFormations_ )
     , readAutomats_    ( p.readAutomats_ )
@@ -130,27 +135,87 @@ UserProfile::~UserProfile()
 // -----------------------------------------------------------------------------
 void UserProfile::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::start( "profile" );
-    if( !userRole_.empty() )
-        xos << xml::attribute( "role", userRole_ );
-    xos     << xml::attribute( "name", login_.ascii() )
+    T_Ids readSides;
+    T_Ids readFormations;
+    T_Ids readAutomats;
+    T_Ids readPopulations;
+    T_Ids writeSides;
+    T_Ids writeFormations;
+    T_Ids writeAutomats;
+    T_Ids writePopulations;
+
+    if( HasProperty( "readAll" ) )
+    {
+        tools::Iterator< const kernel::Team_ABC& > itReceiver = model_.teams_.CreateIterator();
+        while( itReceiver.HasMoreElements() )
+            readSides.push_back( itReceiver.NextElement().GetId() );
+        if( !HasProperty( "noEditable") )
+        {
+            writeSides = writeSides_;
+            writeFormations = writeFormations_;
+            writeAutomats = writeAutomats_;
+            writePopulations = writePopulations_;
+        }
+    }
+    else
+    {
+        readSides = readSides_;
+        readFormations = readFormations_;
+        readAutomats = readAutomats_;
+        readPopulations = readPopulations_;
+        writeSides = writeSides_;
+        writeFormations = writeFormations_;
+        writeAutomats = writeAutomats_;
+        writePopulations = writePopulations_;
+    }
+
+    xos << xml::start( "profile" )
+            << xml::attribute( "role", userRole_ )
+            << xml::attribute( "name", login_.ascii() )
             << xml::attribute( "password", password_.ascii() )
-            << xml::attribute( "supervision", supervisor_ )
+            << xml::attribute( "supervision", HasProperty( "magicActions" ) )
             << xml::start( "rights" )
                 << xml::start( "readonly" );
-    SerializeRights( xos, "side", readSides_ );
-    SerializeRights( xos, "formation", readFormations_ );
-    SerializeRights( xos, "automat", readAutomats_ );
-    SerializeRights( xos, "crowd", readPopulations_ );
+    SerializeRights( xos, "side", readSides );
+    SerializeRights( xos, "formation", readFormations );
+    SerializeRights( xos, "automat", readAutomats );
+    SerializeRights( xos, "crowd", readPopulations );
     xos         << xml::end
                 << xml::start( "readwrite" );
-    SerializeRights( xos, "side", writeSides_ );
-    SerializeRights( xos, "formation", writeFormations_ );
-    SerializeRights( xos, "automat", writeAutomats_ );
-    SerializeRights( xos, "crowd", writePopulations_ );
+    SerializeRights( xos, "side", writeSides );
+    SerializeRights( xos, "formation", writeFormations );
+    SerializeRights( xos, "automat", writeAutomats );
+    SerializeRights( xos, "crowd", writePopulations );
     xos         << xml::end
             << xml::end
         << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::HasProperty
+// Created: LGY 2011-12-15
+// -----------------------------------------------------------------------------
+bool UserProfile::HasProperty( const std::string& name ) const
+{
+    std::vector< std::string > result;
+    kernel::ExtensionType* type = extensions_.tools::StringResolver< kernel::ExtensionType >::Find( "profile-attributes" );
+    if( type )
+    {
+        tools::Iterator< const kernel::AttributeType& > it = type->CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const kernel::AttributeType& attribute = it.NextElement();
+            if( attribute.GetType() == kernel::AttributeType::ETypeDictionary )
+            {
+                std::string dictionary, dicoKind, dicoLanguage;
+                attribute.GetDictionaryValues( dictionary, dicoKind, dicoLanguage );
+                kernel::DictionaryType* userRoleDico = extensions_.tools::StringResolver< kernel::DictionaryType >::Find( dictionary );
+                if( userRoleDico )
+                    userRoleDico->GetStringList( result, dicoKind, dicoLanguage, name );
+            }
+        }
+    }
+    return std::find( result.begin(), result.end(), userRole_ ) != result.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -195,15 +260,6 @@ QString UserProfile::GetLogin() const
 QString UserProfile::GetPassword() const
 {
     return password_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::IsSupervisor
-// Created: SBO 2007-01-16
-// -----------------------------------------------------------------------------
-bool UserProfile::IsSupervisor() const
-{
-    return supervisor_;
 }
 
 namespace
@@ -270,17 +326,6 @@ void UserProfile::SetPassword( const QString& value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfile::SetSupervisor
-// Created: SBO 2007-01-16
-// -----------------------------------------------------------------------------
-void UserProfile::SetSupervisor( bool value )
-{
-    supervisor_ = value;
-    if( !isClone_ )
-        controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UserProfile::SetRight
 // Created: SBO 2007-01-17
 // -----------------------------------------------------------------------------
@@ -337,15 +382,30 @@ void UserProfile::SetUserRole( const std::string& role )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::Clear
+// Created: LGY 2011-12-15
+// -----------------------------------------------------------------------------
+void UserProfile::Clear()
+{
+    readSides_.clear();
+    readFormations_.clear();
+    readAutomats_.clear();
+    readPopulations_.clear();
+    writeSides_.clear();
+    writeFormations_.clear();
+    writeAutomats_.clear();
+    writePopulations_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::operator=
 // Created: SBO 2007-03-29
 // -----------------------------------------------------------------------------
 UserProfile& UserProfile::operator=( const UserProfile& p )
 {
-    const bool changed = login_ != p.login_ || password_ != p.password_ || supervisor_ != p.supervisor_;
+    const bool changed = login_ != p.login_ || password_ != p.password_;
     login_            = p.login_;
     password_         = p.password_;
-    supervisor_       = p.supervisor_;
     readSides_        = p.readSides_;
     readFormations_   = p.readFormations_;
     readAutomats_     = p.readAutomats_;

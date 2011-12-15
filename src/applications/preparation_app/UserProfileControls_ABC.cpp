@@ -218,9 +218,10 @@ void UserProfileControls_ABC::Clear()
     {
         (*it)->setPixmap( 1, QPixmap() );
         (*it)->setText( 2, QString::number( eNothing ) );
-        static_cast< ValuedListItem* >( *it )->SetBackgroundColor( Qt::white );
+        static_cast< ValuedListItem* >( *it )->SetFontColor( QColor( 0, 0, 0 ) );
         listView_->setOpen( *it, false );
     }
+    profile_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -240,11 +241,19 @@ void UserProfileControls_ABC::SetItem( Q3ListViewItem* item, Status status )
 // Name: UserProfileControls_ABC::Update
 // Created: LGY 2011-09-15
 // -----------------------------------------------------------------------------
-void UserProfileControls_ABC::Update( bool supervisor )
+void UserProfileControls_ABC::Update( bool supervisor, UserProfile& profile )
 {
     supervisor_ = supervisor;
+    profile_ = &profile;
     listView_->setColumnText( 1, supervisor ? tools::translate( "UserProfileControls", "View" ) :
                                               tools::translate( "UserProfileControls", "Control" ) );
+    for( Q3ListViewItemIterator it( listView_ ); it.current(); ++it )
+    {
+        ValuedListItem* item = static_cast< ValuedListItem* >( *it );
+        item->SetFontColor( QColor( 0, 0, 0 ) );
+        if( !supervisor_ )
+            UpdateColor( item );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -305,8 +314,8 @@ void UserProfileControls_ABC::UpdateColor( gui::ValuedListItem* item )
 {
     if( const Entity_ABC* entity = item->GetValue< const Entity_ABC >() )
         if( entity->Retrieve< ProfileHierarchies_ABC >() )
-            if( checker_.IsControlled( profile_->GetLogin().toStdString(), *entity ) )
-                item->SetBackgroundColor( QColor( 255, 136, 136 ) );
+            if( !supervisor_ && profile_ && checker_.IsControlled( profile_->GetLogin().toStdString(), *entity ) )
+                item->SetFontColor( QColor( 255, 10, 10 ) );
 }
 
 // -----------------------------------------------------------------------------

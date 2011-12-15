@@ -11,6 +11,9 @@
 #include "DictionaryEntryType.h"
 #include "EntryLabelType.h"
 #include <xeumeuleu/xml.hpp>
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 using namespace kernel;
 
@@ -22,8 +25,10 @@ DictionaryEntryType::DictionaryEntryType( xml::xistream& xis )
     : key_      ( xis.attribute< std::string >( "name" ) )
     , id_       ( xis.attribute< unsigned int >( "id" ) )
     , alias_    ( xis.attribute< std::string >( "alias", std::string() ) )
-    , option_   ( xis.attribute< std::string >( "option", std::string() ) )
 {
+    std::string options = xis.attribute< std::string >( "option", std::string() );
+    if( options != "" )
+        boost::algorithm::split( options_, options, boost::algorithm::is_any_of( ";" ) );
     xis >> xml::optional >> xml::start( "labels" )
                            >> xml::list( "label", *this, &DictionaryEntryType::ReadLabel )
                          >> xml::end;
@@ -72,12 +77,12 @@ unsigned int DictionaryEntryType::GetId() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DictionaryEntryType::GetOption
-// Created: LGY 2011-09-15
+// Name: DictionaryEntryType::GetOptions
+// Created: LGY 2011-12-15
 // -----------------------------------------------------------------------------
-std::string DictionaryEntryType::GetOption() const
+const std::set< std::string >& DictionaryEntryType::GetOptions() const
 {
-    return option_;
+    return options_;
 }
 
 // Name: DictionaryEntryType::GetAlias

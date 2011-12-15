@@ -120,3 +120,12 @@ void ProfileDialog::showEvent( QShowEvent* /*pEvent*/ )
 {
     pages_->Show();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ProfileDialog::hideEvent
+// Created: LGY 2011-12-15
+// -----------------------------------------------------------------------------
+void ProfileDialog::hideEvent( QHideEvent* pEvent )
+{
+    pages_->Hide();
+}

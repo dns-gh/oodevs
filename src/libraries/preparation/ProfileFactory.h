@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Controller;
+    class ExtensionTypes;
 }
 
 class Model;
@@ -30,7 +31,7 @@ class ProfileFactory : public ProfileFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileFactory( kernel::Controller& controller, const Model& model );
+             ProfileFactory( kernel::Controller& controller, const Model& model, const kernel::ExtensionTypes& extensions );
     virtual ~ProfileFactory();
     //@}
 
@@ -46,6 +47,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const Model& model_;
+    const kernel::ExtensionTypes& extensions_;
     //@}
 };
 

@@ -62,6 +62,7 @@ public:
     void Display( UserProfile& profile );
     void SetEnabled( bool enabled );
     void Show();
+    void Hide();
     //@}
 
 private slots:
@@ -103,13 +104,16 @@ private:
     kernel::DictionaryType* userRoleDico_;
     std::string dicoKind_;
     std::string dicoLanguage_;
+    Q3GroupBox* group_;
     UserProfileControls_ABC* pPopulations_;
     UserProfileControls_ABC* pUnits_;
     QLabel* informationControls_;
     std::vector< std::string > supervisors_;
+    std::vector< std::string > magicActions_;
+    std::vector< std::string > noEditable_;
     QCheckBox* pHidefilter_;
     QCheckBox* pShowFilter_;
-    QWidget* colorWidget_;
+    QLabel* colorInformation_;
     //@}
 };
 

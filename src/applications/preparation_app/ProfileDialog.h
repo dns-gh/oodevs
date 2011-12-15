@@ -49,6 +49,7 @@ public:
     //@{
     virtual QSize sizeHint() const;
     virtual void showEvent( QShowEvent* pEvent );
+    virtual void hideEvent( QHideEvent* pEvent );
     //@}
 
 private slots:

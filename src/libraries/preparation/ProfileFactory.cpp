@@ -16,9 +16,10 @@
 // Name: ProfileFactory constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-ProfileFactory::ProfileFactory( kernel::Controller& controller, const Model& model )
+ProfileFactory::ProfileFactory( kernel::Controller& controller, const Model& model, const kernel::ExtensionTypes& extensions )
     : controller_( controller )
     , model_     ( model )
+    , extensions_( extensions )
 {
     // NOTHING
 }
@@ -38,7 +39,7 @@ ProfileFactory::~ProfileFactory()
 // -----------------------------------------------------------------------------
 UserProfile* ProfileFactory::Create( xml::xistream& xis ) const
 {
-    return new UserProfile( xis, controller_, model_ );
+    return new UserProfile( xis, controller_, model_, extensions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +48,7 @@ UserProfile* ProfileFactory::Create( xml::xistream& xis ) const
 // -----------------------------------------------------------------------------
 UserProfile* ProfileFactory::Create( const QString& name ) const
 {
-    return new UserProfile( name, controller_, model_ );
+    return new UserProfile( name, controller_, model_, extensions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,5 +57,5 @@ UserProfile* ProfileFactory::Create( const QString& name ) const
 // -----------------------------------------------------------------------------
 UserProfile* ProfileFactory::Create( const QString& name, const std::string& role ) const
 {
-    return new UserProfile( name, role, controller_, model_ );
+    return new UserProfile( name, role, controller_, model_, extensions_ );
 }

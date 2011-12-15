@@ -11,6 +11,7 @@
 #define __DictionaryEntryType_h_
 
 #include "OptionalValue.h"
+#include <set>
 
 namespace xml
 {
@@ -40,7 +41,7 @@ public:
     //@{
     std::string  GetKey() const;
     unsigned int GetId() const;
-    std::string GetOption() const;
+    const std::set< std::string >& GetOptions() const;
     std::string  GetLabel( const std::string& kind, const std::string& language ) const;
     std::string  GetAlias() const;
     //@}
@@ -70,7 +71,7 @@ private:
     const std::string            key_;
     const unsigned int           id_;
     OptionalValue< std::string > alias_;
-    OptionalValue< std::string > option_;
+    std::set< std::string >      options_;
     T_Labels                     labels_;
     //@}
 };
