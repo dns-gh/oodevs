@@ -2662,7 +2662,7 @@
           <label kind="long" language="en-GB" text="Analyst"/>
         </labels>
       </entry>
-      <entry alias="GESTIM" id="6" name="service-gestim" option="readAll;noEditable;magicActions">
+      <entry alias="GESTIM" id="6" name="service-gestim" option="writeAll;noEditable;magicActions">
         <labels>
           <label kind="short" language="fr-FR" text="GESTIM"/>
           <label kind="long" language="fr-FR" text="Service GESTIM"/>
@@ -5134,4 +5134,4 @@
     </attribute>
   </profile-attributes>
 </extensions>
-<!-- signature="3562541856" -->
+<!-- signature="0296811087" -->

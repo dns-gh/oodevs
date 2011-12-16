@@ -157,6 +157,16 @@ void UserProfile::Serialize( xml::xostream& xos ) const
             writePopulations = writePopulations_;
         }
     }
+    else if( HasProperty( "writeAll" ) )
+    {
+        tools::Iterator< const kernel::Team_ABC& > itReceiver = model_.teams_.CreateIterator();
+        while( itReceiver.HasMoreElements() )
+        {
+            const unsigned int id = itReceiver.NextElement().GetId();
+            readSides.push_back( id );
+            writeSides.push_back( id );
+        }
+    }
     else
     {
         readSides = readSides_;
