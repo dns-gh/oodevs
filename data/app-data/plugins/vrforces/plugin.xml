@@ -19,5 +19,15 @@
 				<description name="Scenario" lang="en"><![CDATA[Scenario to load at startup.]]></description>
 			</descriptions>
 		</setting>
+		<setting attribute="@federation" type="string" default="VR-Link">
+			<descriptions>
+				<description lang="en" name="FOM"><![CDATA[Federation Name.]]></description>
+			</descriptions>
+		</setting>
+		<setting attribute="@RprFomVersion" type="string" default="1.0">
+			<descriptions>
+				<description lang="en" name="FOM"><![CDATA[Version of the RPR FOM.]]></description>
+			</descriptions>
+		</setting>
 	</settings>
 </plugin>

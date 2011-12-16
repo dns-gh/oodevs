@@ -29,13 +29,21 @@ using namespace plugins::vrforces;
 
 namespace
 {
-    DtVrlApplicationInitializer ConfigureInitializer( const dispatcher::Config& config, xml::xistream& xis )
+    const DtVrlApplicationInitializer& ConfigureInitializer( const dispatcher::Config& config, xml::xistream& xis )
     {
-        DtVrlApplicationInitializer initializer( 0, 0, "VR-Forces Plugin" );
+#if defined(_DEBUG)
+        static DtVrlApplicationInitializer* init= new DtVrlApplicationInitializer( 0, 0, "VR-Forces Plugin" );
+        DtVrlApplicationInitializer& intialisation = *init;
+#else
+        DtVrlApplicationInitializer intialisation( 0, 0, "VR-Forces Plugin" );
+#endif
         const std::string rootDirectory = config.BuildPluginDirectory( "vrforces" );
-        initializer.setFedFileName( ( rootDirectory + "/" + xis.attribute< std::string >( "fed" ) ).c_str() );
-        return initializer;
+        intialisation.setFedFileName( ( rootDirectory + "/" + xis.attribute< std::string >( "fed" ) ).c_str() );
+        intialisation.setRprFomVersion( xis.attribute< double >( "RprFomVersion" ) );
+        intialisation.setExecName( xis.attribute< std::string > ( "federation" ).c_str() );
+        return intialisation;
     }
+
 }
 
 // -----------------------------------------------------------------------------
