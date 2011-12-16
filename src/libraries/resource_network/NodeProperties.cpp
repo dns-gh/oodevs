@@ -117,6 +117,7 @@ void NodeProperties::Update( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void NodeProperties::UpdateState( const ResourceNetworkModel& model )
 {
+    needUpdate_ = false;
     if( Count() == 0 )
         return;
     // update intermediate stocks
@@ -272,7 +273,6 @@ void NodeProperties::Serialize( sword::UrbanAttributes_Infrastructures& msg ) co
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Serialize( *msg.add_resource_network() );
-    needUpdate_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -283,7 +283,6 @@ void NodeProperties::Serialize( sword::ObjectAttributeResourceNetwork& msg ) con
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Serialize( *msg.add_network() );
-    needUpdate_ = false;
 }
 
 // -----------------------------------------------------------------------------

@@ -129,6 +129,7 @@ private:
     bool consumptionCritical_;
     float modifier_;
     mutable bool needUpdate_;
+    bool magicChanged_;
     float functionalState_;
     mutable float oldFunctionalState_;
     float consumptionState_;

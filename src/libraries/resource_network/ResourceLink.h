@@ -54,6 +54,7 @@ public:
     //! @name Operations
     //@{
     void Finalize( const ResourceTools_ABC& tools );
+    void Prepare();
     static ETargetKind FindTargetKind( const std::string& kind );
     void SetCapacity( int capacity );
     int GetEfficientCapacity() const;
