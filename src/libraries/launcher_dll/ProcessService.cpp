@@ -53,7 +53,8 @@ ProcessService::ProcessService( const launcher::Config& config, const tools::Loa
     , fileLoader_( fileLoader )
     , server_    ( server )
 {
-    CheckForRunningProcesses();
+    if( !config.GetTestMode() )
+        CheckForRunningProcesses();
 }
 
 // -----------------------------------------------------------------------------
