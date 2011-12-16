@@ -14,6 +14,9 @@
 #include "MessageHandler_ABC.h"
 #include "client_proxy/SwordConnectionHandler_ABC.h"
 #include "client_proxy/SwordMessageHandler_ABC.h"
+#pragma warning( push, 0 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -126,6 +129,9 @@ private:
     std::vector< T_Handler > permanentHandler_;
     const LauncherService& server_;
     std::string endpoint_;
+    unsigned int msTimeOut_;
+    mutable bool checkTime_;
+    boost::posix_time::ptime creationTime_;
     //@}
 };
 

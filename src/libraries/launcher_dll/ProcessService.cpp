@@ -202,6 +202,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
         return sword::SessionStartResponse::session_already_running;
     if( message.has_checkpoint() && ! frontend::commands::CheckpointExists( config_, exercise, session, checkpoint ) )
         return sword::SessionStartResponse::invalid_checkpoint;
+    bool isDispatcher = ( message.type() == sword::SessionStartRequest::dispatch );
     {
         frontend::CreateSession action( config_, exercise, session );
         action.SetDefaultValues();
@@ -209,6 +210,8 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
         {
             const sword::SessionParameter& parameter = message.parameter( i );
             action.SetOption( parameter.key(), parameter.value() );
+            if( message.type() == sword::SessionStartRequest::simulation && parameter.key() == "session/config/simulation/dispatcher/@embedded" && parameter.value() == "true")
+                isDispatcher = true;
         }
         action.Commit();
     }
@@ -223,7 +226,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     SupervisorProfileCollector profileCollector;
     frontend::Profile::VisitProfiles( config_, fileLoader_, exercise, profileCollector );
 
-    boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( server_, endpoint, message.type() == sword::SessionStartRequest::dispatch ) );
+    boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( server_, endpoint, isDispatcher ) );
     {
         boost::recursive_mutex::scoped_lock locker( mutex_ );
         processes_[ std::make_pair( exercise, session ) ] = wrapper;

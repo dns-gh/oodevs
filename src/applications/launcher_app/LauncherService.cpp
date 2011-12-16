@@ -13,6 +13,7 @@
 #include "launcher_dll/LauncherFacade.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/assign/list_of.hpp>
+#include <boost/lexical_cast.hpp>
 #pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
@@ -68,11 +69,11 @@ LauncherService::LauncherService( const boost::filesystem::path& path )
     , path_     ( path )
     , name_     ( "Launcher" )
     , port_     ( "33000" )
+    , msTimeOut_( 0 )
     , isRunning_( false )
     , isPaused_ ( false )
 {
     const boost::filesystem::path configuration( boost::filesystem::path( path.parent_path() / "service-config.xml" ) );
-    std::string port = "33000";
     if( !boost::filesystem::exists( configuration ) )
     {
         MT_LOG_INFO_MSG( "Configuration file is not found!" );
@@ -82,7 +83,8 @@ LauncherService::LauncherService( const boost::filesystem::path& path )
         xml::xifstream xis( configuration.string() );
         xis >> xml::start( "configuration" )
                 >> xml::start( "launcher" )
-                    >> xml::attribute( "port", port_ );
+                    >> xml::attribute( "port", port_ )
+                    >> xml::optional >> xml::attribute( "time-out", msTimeOut_ );
     }
 }
 
@@ -266,8 +268,9 @@ void LauncherService::ServiceMain( DWORD, LPTSTR* )
     }
 
     std::vector< char > appName = MakeArg( pInstance_->path_.leaf() );
-    std::vector< char > arg = MakeArg( std::string( "--launcher-port=" + pInstance_->port_ ) );
-    std::vector< char* > args = boost::assign::list_of< char* >( &appName[ 0 ] )( &arg[ 0 ] );
+    std::vector< char > arg1 = MakeArg( std::string( "--launcher-port=" + pInstance_->port_ ) );
+    std::vector< char > arg2 = MakeArg( std::string( "--time-out=" + boost::lexical_cast< std::string >( pInstance_->msTimeOut_ ) ) );
+    std::vector< char* > args = boost::assign::list_of< char* >( &appName[ 0 ] )( &arg1[ 0 ] )( &arg2[ 0 ] );
 
     pInstance_->pFacade_.reset( new LauncherFacade( pInstance_->path_.parent_path().string() ) );
     pInstance_->pFacade_->Initialize( static_cast< int >( args.size() ), &args[ 0 ] );

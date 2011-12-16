@@ -32,7 +32,9 @@ SwordFacade::SwordFacade( const LauncherService& server, std::string endpoint, b
     , isConnected_    ( false )
     , isAuthenticated_( false )
     , server_         ( server )
+    , msTimeOut_      ( 0 )
     , endpoint_       ( endpoint )
+    , checkTime_      ( false )
 {
     // NOTHING
 }
@@ -64,6 +66,7 @@ void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_
     }
     if( isDispatcher_ )
     {
+        msTimeOut_ = config.GetMsTimeOut();
         client_.reset( new SwordProxy( "localhost", config.GetDispatcherPort(), supervisorProfile, supervisorPassword ) );
         client_->RegisterMessageHandler( this );
         client_->Connect( this );
@@ -94,6 +97,14 @@ void SwordFacade::Stop( bool forceProcessStop /*= true*/ )
 // -----------------------------------------------------------------------------
 void SwordFacade::OnConnectionSucceeded( const std::string& /*endpoint*/ )
 {
+    if( isDispatcher_ )
+    {
+        if( msTimeOut_ > 0 )
+        {
+            creationTime_ = boost::posix_time::microsec_clock::universal_time();
+            checkTime_ = true;
+        }
+    }
     isConnected_ = true;
 }
 
@@ -233,6 +244,7 @@ void SwordFacade::OnReceiveMessage( const sword::MessengerToClient& message )
 // -----------------------------------------------------------------------------
 void SwordFacade::OnReceiveMessage( const sword::AuthenticationToClient& message )
 {
+    checkTime_ = false;
     Update( message );
 }
 
@@ -282,6 +294,24 @@ bool SwordFacade::IsRunning() const
 // -----------------------------------------------------------------------------
 void SwordFacade::Update() const
 {
+    if( checkTime_ )
+    {
+        if( ( boost::posix_time::microsec_clock::universal_time() - creationTime_ ).total_milliseconds() > msTimeOut_ )
+        {
+            boost::shared_ptr< LauncherPublisher > publisher = server_.ResolveClient( endpoint_ );
+            if( publisher.get() )
+            {
+                SessionStatus statusResponse;
+                statusResponse().set_status( sword::SessionStatus::breakdown );
+                static const std::string msg( "Time out : Le dispatcher n'a pas répondu au bout du temps imparti." );
+                statusResponse().set_breakdown_information( msg );
+                statusResponse().set_exercise( "" );
+                statusResponse().set_session( "" );
+                statusResponse.Send( *publisher );
+                checkTime_ = false;
+            }
+        }
+    }
     if( client_.get() )
         client_->Update();
 }

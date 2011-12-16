@@ -57,6 +57,7 @@ Config::Config()
     desc.add_options()
         ( "launcher-port", po::value( &launcherPort_ ), "specify the launcher server port number" )
         ( "dispatcher-port", po::value( &dispatcherPort_ )->default_value( frontend::DispatcherPort( 1 ) ), "specify the dispatcher server port number" )
+        ( "time-out", po::value( &msTimeOut_ )->default_value( 0 ), "specify the timeout value in ms" )
         ( "test", "enable test mode" )
     ;
     AddOptions( desc );
@@ -87,6 +88,15 @@ unsigned short Config::GetLauncherPort() const
 unsigned short Config::GetDispatcherPort() const
 {
     return dispatcherPort_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetMsTimeOut
+// Created: JSR 2011-12-16
+// -----------------------------------------------------------------------------
+unsigned int Config::GetMsTimeOut() const
+{
+    return msTimeOut_;
 }
 
 // -----------------------------------------------------------------------------

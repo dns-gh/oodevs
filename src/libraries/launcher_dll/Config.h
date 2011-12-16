@@ -35,6 +35,7 @@ public:
     //@{
     unsigned short GetLauncherPort() const;
     unsigned short GetDispatcherPort() const;
+    unsigned int   GetMsTimeOut() const;
     bool           GetTestMode() const;
     //@}
 
@@ -43,6 +44,7 @@ private:
     //@{
     unsigned short launcherPort_;
     unsigned short dispatcherPort_;
+    unsigned int   msTimeOut_;
     //@}
 };
 

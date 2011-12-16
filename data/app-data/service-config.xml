@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <configuration>
-  <launcher port="32999"/>
+  <launcher port="32999" time-out="5000"/>
 </configuration>
