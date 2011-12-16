@@ -1417,7 +1417,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_RENS_ROIM_MettreEnOeuvre" dia-type="T_Mission_Pion_RENS_ROIM_MettreEnOeuvre" id="165" name="ImageryIntelligence - operate">
+    <mission dia-behavior="MIS_Pion_RENS_ROIM_MettreEnOeuvre" dia-type="T_Mission_Pion_RENS_ROIM_MettreEnOeuvre" id="165" name="Imagery Intelligence - operate">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
