@@ -11,15 +11,21 @@
 #include "ResourceNetworkAttribute.h"
 #include "MIL_Object_ABC.h"
 #include "ResourceNetworkCapacity.h"
+#include "Checkpoints/SerializationTools.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
+#include "protocol/Protocol.h"
+#include "resource_network/NodeProperties.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ResourceNetworkAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< ResourceNetworkAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< ResourceNetworkAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
 ResourceNetworkAttribute::ResourceNetworkAttribute()
-    : capacity_( 0 )
 {
     // NOTHING
 }
@@ -30,7 +36,9 @@ ResourceNetworkAttribute::ResourceNetworkAttribute()
 // -----------------------------------------------------------------------------
 ResourceNetworkAttribute::ResourceNetworkAttribute( MIL_Object_ABC& object )
 {
-    capacity_ = object.Retrieve< ResourceNetworkCapacity >();
+    ResourceNetworkCapacity* capacity = object.Retrieve< ResourceNetworkCapacity >();
+    if( capacity )
+        nodeProperties_ = capacity->GetNodeProperties();
 }
 
 // -----------------------------------------------------------------------------
@@ -39,9 +47,9 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 ResourceNetworkAttribute::ResourceNetworkAttribute( xml::xistream& xis, MIL_Object_ABC& object )
 {
-    capacity_ = object.Retrieve< ResourceNetworkCapacity >();
-    if( capacity_ )
-        capacity_->Update( xis, object );
+    ResourceNetworkCapacity* capacity = object.Retrieve< ResourceNetworkCapacity >();
+    if( capacity )
+        capacity->Update( xis, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +67,27 @@ ResourceNetworkAttribute::~ResourceNetworkAttribute()
 // -----------------------------------------------------------------------------
 ResourceNetworkAttribute& ResourceNetworkAttribute::operator=( const ResourceNetworkAttribute& from )
 {
-    capacity_ = from.capacity_;
+    nodeProperties_ = from.nodeProperties_;
     return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::Instanciate
+// Created: JSR 2011-12-15
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::Instanciate( DEC_Knowledge_Object& object ) const
+{
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< ResourceNetworkAttribute > >( *new T_KnowledgeProxyType() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::Update
+// Created: JSR 2011-12-15
+// -----------------------------------------------------------------------------
+bool ResourceNetworkAttribute::Update( const ResourceNetworkAttribute& rhs )
+{
+    nodeProperties_ = rhs.nodeProperties_;
+    return nodeProperties_.get() ? nodeProperties_->NeedUpdate() : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,8 +96,8 @@ ResourceNetworkAttribute& ResourceNetworkAttribute::operator=( const ResourceNet
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-    if( capacity_ )
-        capacity_->SendFullState( asn );
+    if( nodeProperties_.get() )
+        nodeProperties_->Serialize( *asn.mutable_resource_networks() );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,8 +106,11 @@ void ResourceNetworkAttribute::SendFullState( sword::ObjectAttributes& asn ) con
 // -----------------------------------------------------------------------------
 bool ResourceNetworkAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
-    if( capacity_ )
-        return capacity_->SendState( asn );
+    if( nodeProperties_.get() && nodeProperties_->NeedUpdate() )
+    {
+        nodeProperties_->Serialize( *asn.mutable_resource_networks() );
+        return true;
+    }
     return false;
 }
 
@@ -92,5 +122,5 @@ template< typename Archive >
 void ResourceNetworkAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & capacity_;
+         & nodeProperties_;
 }

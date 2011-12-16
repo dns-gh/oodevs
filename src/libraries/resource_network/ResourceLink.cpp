@@ -79,6 +79,15 @@ void ResourceLink::Finalize( const ResourceTools_ABC& tools )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceLink::Prepare
+// Created: JSR 2011-12-16
+// -----------------------------------------------------------------------------
+void ResourceLink::Prepare()
+{
+    needUpdate_ = false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceLink::FindTargetKind
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
@@ -171,5 +180,4 @@ void ResourceLink::Serialize( sword::ResourceNetwork_Link& msg ) const
     msg.mutable_object()->set_id( target_ );
     msg.set_capacity( capacity_ );
     msg.set_flow( flow_ );
-    needUpdate_ = false;
 }

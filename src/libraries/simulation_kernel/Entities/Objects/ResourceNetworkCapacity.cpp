@@ -91,6 +91,15 @@ void ResourceNetworkCapacity::Update( const google::protobuf::RepeatedPtrField< 
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< resource::NodeProperties> ResourceNetworkCapacity::GetNodeProperties
+// Created: JSR 2011-12-16
+// -----------------------------------------------------------------------------
+boost::shared_ptr< resource::NodeProperties> ResourceNetworkCapacity::GetNodeProperties() const
+{
+    return nodeProperties_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::load
 // Created: JSR 2010-11-16
 // -----------------------------------------------------------------------------

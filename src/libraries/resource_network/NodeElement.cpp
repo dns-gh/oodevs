@@ -35,6 +35,7 @@ NodeElement::NodeElement()
     , consumptionCritical_( false )
     , modifier_           ( 1. )
     , needUpdate_         ( true )
+    , magicChanged_       ( false )
     , functionalState_    ( 0 )
     , oldFunctionalState_ ( 0 )
     , consumptionState_   ( 0 )
@@ -62,6 +63,7 @@ NodeElement::NodeElement( unsigned long resourceId, const std::string& resourceN
     , consumptionCritical_( false )
     , modifier_           ( 1. )
     , needUpdate_         ( true )
+    , magicChanged_       ( false )
     , functionalState_    ( 0 )
     , oldFunctionalState_ ( 0 )
     , consumptionState_   ( 0 )
@@ -89,6 +91,7 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const st
     , consumptionCritical_( false )
     , modifier_           ( 1. )
     , needUpdate_         ( true )
+    , magicChanged_       ( false )
     , functionalState_    ( 0 )
     , oldFunctionalState_ ( 0 )
     , consumptionState_   ( 0 )
@@ -116,6 +119,7 @@ NodeElement::NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& n
     , consumptionCritical_( node.critical_ )
     , modifier_           ( 1. )
     , needUpdate_         ( true )
+    , magicChanged_       ( false )
     , functionalState_    ( 0 )
     , oldFunctionalState_ ( 0 )
     , consumptionState_   ( 0 )
@@ -144,6 +148,7 @@ NodeElement::NodeElement( const NodeElement& from )
     , consumptionCritical_( from.consumptionCritical_ )
     , modifier_           ( from.modifier_ )
     , needUpdate_         ( true )
+    , magicChanged_       ( false )
     , functionalState_    ( 0 )
     , oldFunctionalState_ ( 0 )
     , consumptionState_   ( 0 )
@@ -193,6 +198,10 @@ void NodeElement::Finalize( const ResourceTools_ABC& tools )
 // -----------------------------------------------------------------------------
 void NodeElement::UpdateImmediateStock( float functionalState )
 {
+    needUpdate_ = magicChanged_;
+    magicChanged_ = false;
+    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+        ( *it )->Prepare();
     if( !isActivated_ )
         return;
     immediateStock_ = static_cast< unsigned int >( modifier_ * receivedQuantity_ ) + stockCapacity_;
@@ -476,7 +485,6 @@ void NodeElement::Serialize( sword::ResourceNetwork& msg ) const
     oldFunctionalState_ = functionalState_;
     for( CIT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
         ( *it )->Serialize( *msg.add_link() );
-    needUpdate_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -505,7 +513,7 @@ void NodeElement::Update( const sword::MissionParameter_Value& msg )
     }
     if( oldActivated != isActivated_ || oldProductionCapacity != productionCapacity_ || oldStockMaxCapacity != stockMaxCapacity_
         || oldConsumptionAmount !=  consumptionAmount_ || oldConsumptionCritical != consumptionCritical_ )
-        needUpdate_ = true;
+        magicChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------

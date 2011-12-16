@@ -11,6 +11,7 @@
 #define __ResourceNetworkAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -18,7 +19,10 @@ namespace xml
     class xistream;
 }
 
-class ResourceNetworkCapacity;
+namespace resource
+{
+    class NodeProperties;
+}
 
 // =============================================================================
 /** @class  ResourceNetworkAttribute
@@ -28,6 +32,9 @@ class ResourceNetworkCapacity;
 // =============================================================================
 class ResourceNetworkAttribute : public ObjectAttribute_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< ResourceNetworkAttribute > T_KnowledgeProxyType;
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -42,10 +49,12 @@ public:
     ResourceNetworkAttribute& operator=( const ResourceNetworkAttribute& ); //!< Assignment operator
     //@}
 
-    //! @name Network update
+    //! @name Operations
     //@{
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
     virtual bool SendUpdate( sword::ObjectAttributes& asn ) const;
+    bool Update( const ResourceNetworkAttribute& rhs );
     //@}
 
     //! @name CheckPoint
@@ -62,7 +71,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ResourceNetworkCapacity* capacity_;
+    boost::shared_ptr< resource::NodeProperties> nodeProperties_;
     //@}
 };
 

@@ -82,11 +82,11 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     ReadStaticData();
     ReadUrbanModel();
     if( config_.HasCheckpoint() )
-	{
-		MIL_CheckPointManager::LoadCheckPoint( config_ );
-		SendControlInformation();
-	}
-else
+    {
+        MIL_CheckPointManager::LoadCheckPoint( config_ );
+        SendControlInformation();
+    }
+    else
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
         pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );

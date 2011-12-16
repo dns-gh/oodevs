@@ -77,6 +77,8 @@ public:
     void Initialize( const urban::ResourceNetworkAttribute& urbanAttribute );
     void Update( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list );
 
+    boost::shared_ptr< resource::NodeProperties> GetNodeProperties() const;
+
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
 
@@ -111,7 +113,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< resource::NodeProperties> nodeProperties_;
+    boost::shared_ptr< resource::NodeProperties> nodeProperties_;
     //@}
 };
 
