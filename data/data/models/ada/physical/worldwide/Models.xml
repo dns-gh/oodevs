@@ -1764,7 +1764,7 @@
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - follow"/>
-        <mission name="ImageryIntelligence - operate"/>
+        <mission name="Imagery Intelligence - operate"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - park"/>
@@ -3290,7 +3290,7 @@
         <mission name="Common - park"/>
         <mission name="OOTW - manage refugees"/>
         <mission name="OOTW - manage prisoners"/>
-        <mission name="Asymetric - attack populations(in an area)"/>
+        <mission name="Asymetric - attack populations (in an area)"/>
         <mission name="Common - follow"/>
         <mission name="Common - request transport"/>
       </missions>
@@ -3882,4 +3882,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3844799527" -->
+<!-- signature="4062738179" -->
