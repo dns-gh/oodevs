@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="2075" name="PION MELEE Controler" target="69" time="2011-11-14T17:09:02" type="mission">
+    <parameter name="Direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Objectif" type="polygon">
+      <location type="polygon">
+        <point coordinates="29TNF3156355831"/>
+        <point coordinates="29TNF3150257109"/>
+        <point coordinates="29TNF3264956900"/>
+        <point coordinates="29TNF3249555788"/>
+        <point coordinates="29TNF3156355831"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacles" type="plannedwork"/>
+    <parameter name="Valoriser obstacles" type="bool"/>
+  </action>
+  <action id="2057" name="PION COMMUNES Se Faire Transporter" target="75" time="2011-11-14T17:11:42" type="mission">
+    <parameter name="Direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Point d'embarquement" type="point">
+      <location type="point">
+        <point coordinates="29TNF3173858123"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="2142" name="PION LOGISTIQUE Transporter Unites" target="82" time="2011-11-14T17:22:12" type="mission">
+    <parameter name="Direction dangereuse" type="heading" value="170"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Unites a transporter" type="locationcomposite">
+      <parameter name="Unites a transporter (élément 1)" type="agent" value="75"/>
+    </parameter>
+    <parameter name="Position d'embarquement" type="point">
+      <location type="point">
+        <point coordinates="29TNF3172658123"/>
+      </location>
+    </parameter>
+    <parameter name="Destination" type="point">
+      <location type="point">
+        <point coordinates="29TNF3190755042"/>
+      </location>
+    </parameter>
+    <parameter name="Point de regroupement" type="point">
+      <location type="point">
+        <point coordinates="29TNF2828756954"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

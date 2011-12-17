@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="2046" name="PION COMMUNES Faire Mouvement" target="75" time="2011-11-14T17:06:32" type="mission">
+    <parameter name="Direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Itineraire" type="point">
+      <parameter name="Itineraire (élément 1)" type="location">
+        <location type="point">
+          <point coordinates="29TNF3358756762"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+</actions>

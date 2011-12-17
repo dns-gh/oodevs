@@ -1,3 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<templates model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/UrbanTemplates.xsd"/>
-<!-- signature="1599931710" -->
+<templates model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/UrbanTemplates.xsd">
+  <template name="Bidonville">
+    <architecture floor-number="1" height="3" material="Torchis" occupation="0.1" parking-floors="0" roof-shape="Aucun" trafficability="100"/>
+    <color alpha="0" blue="0" green="85" red="0"/>
+    <usages>
+      <usage proportion="0.9" type="Logement"/>
+      <usage proportion="0.1" type="Travail"/>
+    </usages>
+  </template>
+  <template name="Zone industrielle">
+    <architecture floor-number="2" height="20" material="Metal" occupation="0.1" parking-floors="0" roof-shape="Plat" trafficability="1"/>
+    <color alpha="0" blue="255" green="0" red="170"/>
+    <usages>
+      <usage proportion="1" type="Travail"/>
+    </usages>
+  </template>
+  <template name="Quartier moderne habitation">
+    <architecture floor-number="20" height="100" material="Metal" occupation="0.9" parking-floors="5" roof-shape="Plat" trafficability="5"/>
+    <color alpha="0" blue="0" green="0" red="0"/>
+    <usages>
+      <usage proportion="0.6" type="Logement"/>
+      <usage proportion="0.2" type="Loisir"/>
+      <usage proportion="0.2" type="Travail"/>
+    </usages>
+  </template>
+  <template name="Zone pavillonaire">
+    <architecture floor-number="1" height="10" material="Brique" occupation="0.35" parking-floors="0" roof-shape="Pentu" trafficability="50"/>
+    <color alpha="0" blue="0" green="170" red="255"/>
+    <usages>
+      <usage proportion="1" type="Logement"/>
+    </usages>
+  </template>
+  <template name="Quartier habitation">
+    <architecture floor-number="2" height="10" material="Beton" occupation="0.15" parking-floors="0" roof-shape="Pentu" trafficability="20"/>
+    <color alpha="0" blue="0" green="255" red="255"/>
+    <usages>
+      <usage proportion="0.8" type="Logement"/>
+      <usage proportion="0.15" type="Loisir"/>
+      <usage proportion="0.05" type="Travail"/>
+    </usages>
+  </template>
+  <template name="quartier d'affaire">
+    <architecture floor-number="3" height="15" material="Metal" occupation="0.75" parking-floors="2" roof-shape="Plat" trafficability="10"/>
+    <color alpha="0" blue="255" green="85" red="85"/>
+    <usages>
+      <usage proportion="0.2" type="Logement"/>
+      <usage proportion="0.2" type="Loisir"/>
+      <usage proportion="0.6" type="Travail"/>
+    </usages>
+  </template>
+  <template name="centre-ville historique">
+    <architecture floor-number="5" height="20" material="Brique" occupation="0.25" parking-floors="0" roof-shape="Pentu" trafficability="25"/>
+    <color alpha="0" blue="0" green="0" red="255"/>
+    <usages>
+      <usage proportion="0.6" type="Logement"/>
+      <usage proportion="0.3" type="Travail"/>
+      <usage proportion="0.1" type="Loisir"/>
+    </usages>
+  </template>
+</templates>
+<!-- signature="3756425532" -->

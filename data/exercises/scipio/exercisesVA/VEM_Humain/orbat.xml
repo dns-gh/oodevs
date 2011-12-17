@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party color="0x647dff" id="1" name="Bleu" type="friend">
+      <objects>
+        <object id="5" name="Destruction de pont" type="bridge destruction">
+          <shape type="point">
+            <points>
+              <point>29TNF3346854523</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="14" name="zone nbc [14]" type="nbc zone">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3237555224</point>
+              <point>29TNF3250854731</point>
+              <point>29TNF3364854863</point>
+              <point>29TNF3358055358</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <nbc-agents danger="0" state="liquid">
+              <nbc-agent type="Biologique"/>
+            </nbc-agents>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation color="0x647dff" id="72" level="ii" name="41">
+          <automat color="0x647dff" engaged="false" id="73" knowledge-group="18" name="SGTIA" type="SGTIA PIA">
+            <unit color="0x647dff" command-post="true" id="74" name="1" position="29TNF3889161270" type="PC SGTIA"/>
+            <unit color="0x647dff" command-post="false" id="75" name="3" position="29TNF3125061403" type="PIA Dominante ABC"/>
+            <unit color="0x647dff" command-post="false" id="76" name="4" position="29TNF3151156593" type="PIA Dominante INF"/>
+            <unit color="0x647dff" command-post="false" id="77" name="5" position="29TNF3100857090" type="PIA Dominante Reco"/>
+            <unit color="0x647dff" command-post="false" id="78" name="2" position="29TNF3200657593" type="ABC . Patrouille EI 12,7"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="18" name="Groupe de connaissance [18]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="4" name="Foule standard [4]" position="29TNF3396552863" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="33" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="58" name="Foule armée [58]" position="29TNF3749256202" type="Foule armée">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.5"/>
+          <repartition children="0.35" female="0.35" male="0.65"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="33" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party color="0xff0000" id="33" name="Rouge" type="friend">
+      <objects/>
+      <tactical>
+        <formation color="0xff0000" id="65" level="ii" name="31">
+          <automat color="0xff0000" engaged="false" id="66" knowledge-group="86" name="31I" type="INF . Compagnie CBT AMX 10 P">
+            <unit color="0xff0000" command-post="true" id="67" name="5" position="29TNF3886254771" type="INF . Section CDT CIE quaternaire AMX10P"/>
+            <unit color="0xff0000" command-post="false" id="68" name="2" position="29TNF3862754828" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit color="0xff0000" command-post="false" id="69" name="3" position="29TNF3862654926" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit color="0xff0000" command-post="false" id="70" name="1" position="29TNF4193460991" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit color="0xff0000" command-post="false" id="71" name="4" position="29TNF3832454788" type="INF . Section CBT AMX10P CDS SOFF"/>
+          </automat>
+        </formation>
+        <formation color="0xff0000" id="79" level="ii" name="32">
+          <automat color="0xff0000" engaged="false" id="80" knowledge-group="87" name="32I" type="INF . Compagnie CBT AMX 10 P">
+            <unit color="0xff0000" command-post="true" id="81" name="5" position="29TNF3634655179" type="INF . Section CDT CIE quaternaire AMX10P"/>
+            <unit color="0xff0000" command-post="false" id="82" name="2" position="29TNF3582855235" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit color="0xff0000" command-post="false" id="83" name="3" position="29TNF3616155129" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit color="0xff0000" command-post="false" id="84" name="1" position="29TNF4186960299" type="INF . Section CBT AMX10P CDS OFF"/>
+            <unit color="0xff0000" command-post="false" id="85" name="4" position="29TNF3126959946" type="INF . Section CBT AMX10P CDS SOFF"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="86" name="kg66" type="Standard"/>
+        <knowledge-group id="87" name="kg80" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="50" name="Foule standard [50]" position="29TNF3572257797" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="33" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="33"/>
+    </party>
+    <party id="33">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="0151576568" -->
