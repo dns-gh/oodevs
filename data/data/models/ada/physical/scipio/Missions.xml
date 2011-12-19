@@ -320,33 +320,12 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_RENS_ROEM_MettreEnOeuvre" dia-type="T_Mission_Pion_RENS_ROEM_MettreEnOeuvre" id="162" name="PION RENS ROEM Mettre En Oeuvre" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
-    </mission>
     <mission dia-behavior="MIS_Pion_RENS_RADINT_RenseignerSur" dia-type="T_Mission_Pion_RENS_RADINT_RenseignerSur" id="163" name="PION RENS RADINT Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zonesDeRecherche_" max-occurs="unbounded" min-occurs="1" name="Zones de recherche" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_RENS_RADINT_MettreEnOeuvre" dia-type="T_Mission_Pion_RENS_RADINT_MettreEnOeuvre" id="164" name="PION RENS RADINT Mettre En Oeuvre" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_RENS_ROIM_MettreEnOeuvre" dia-type="T_Mission_Pion_RENS_ROIM_MettreEnOeuvre" id="165" name="PION RENS ROIM Mettre En Oeuvre" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_RENS_ROIM_SDTI_RenseignerSur" dia-type="T_Mission_Pion_RENS_ROIM_SDTI_RenseignerSur" id="166" name="PION RENS ROIM SDTI Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1533,12 +1512,12 @@
         <value id="1" name="directionnel"/>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.MettreEnOeuvre" dia-type="france.military.platoon.combat.support.rens.tasks.MettreEnOeuvre" id="2480" name="PION RENS Mettre En Oeuvre" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROEMMettreEnOeuvre" dia-type="france.military.platoon.combat.support.rens.tasks.ROEMMettreEnOeuvre" id="2480" name="PION RENS ROEM Mettre En Oeuvre" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
+      <parameter dia-name="position" name="Position de mise en oeuvre" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.OrienterGuider" dia-type="france.military.platoon.combat.support.rens.tasks.OrienterGuider" id="2481" name="PION RENS ROHUM .Orienter Guider" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1579,6 +1558,13 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Zone à observer" optional="false" type="Polygon"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre" dia-type="france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre" id="2485" name="PION RENS ROIM Mettre En Oeuvre" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="position" name="Position de mise en oeuvre" optional="true" type="Point"/>
     </mission>
   </units>
   <automats>
@@ -3091,4 +3077,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="4204536095" -->
+<!-- signature="3252974930" -->

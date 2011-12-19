@@ -1584,8 +1584,8 @@
     <unit max-occurs="5" min-occurs="5" type="RENS . Equipe de recueil information"/>
   </automat>
   <automat decisional-model="Masalife.Automate.RENS.SDTI" id="1042" name="RENS . Section ROIM" type="Automate RENS">
-    <unit max-occurs="4" min-occurs="4" type="RENS . DRAC"/>
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS . Section MO DRAC"/>
+    <unit max-occurs="4" min-occurs="4" type="RENS . Drone DRAC"/>
   </automat>
   <automat decisional-model="Masalife.Automate.RENS.URH" id="1043" name="RENS . URH" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS . Equipe URH OFF"/>
@@ -1596,4 +1596,4 @@
     <unit max-occurs="1" min-occurs="1" type="GLAISE - RENS . Patrouille URH"/>
   </automat>
 </automats>
-<!-- signature="3092383689" -->
+<!-- signature="1637305534" -->
