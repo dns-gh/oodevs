@@ -63,6 +63,7 @@ public:
              ADN_IntValidator( int bottom, int top, QObject * parent );
     virtual ~ADN_IntValidator();
 
+    QValidator::State validate( QString& input, int& nPos ) const;
     void fixup( QString& strInput ) const;
 };
 

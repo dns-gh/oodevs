@@ -32,6 +32,8 @@ ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent, const char* szName
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ADN_Objects_Data_ObjectInfos >( *this );
+
+    SetDeletionEnabled( true );
 }
 
 //-----------------------------------------------------------------------------

@@ -39,6 +39,7 @@ ADN_Breakdowns_ListView::ADN_Breakdowns_ListView( QWidget* pParent, const char* 
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<BreakdownInfo>(*this);
+    SetDeletionEnabled( true );
 }
 
 
