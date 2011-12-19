@@ -145,8 +145,7 @@ private:
 private:
     //! @name Serialization
     //@{
-    template< typename Archive > friend void save_construct_data( Archive& archive, const PHY_RolePion_Posture* role, const unsigned int /*version*/ );
-    template< typename Archive > friend void load_construct_data( Archive& archive, PHY_RolePion_Posture* role, const unsigned int /*version*/ );
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Posture )
     //@}
 };
 

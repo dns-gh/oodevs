@@ -107,6 +107,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RolePion_Deployment.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConfig.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConsign.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralPackagingResource.cpp" />
@@ -828,6 +829,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RoleInterface_Deployment.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RolePion_Deployment.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConfig.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConsign.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConsign_ABC.h" />

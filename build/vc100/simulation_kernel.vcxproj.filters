@@ -523,6 +523,9 @@
     <Filter Include="Source Files\Entities\Agents\Roles\Logistic\Funeral">
       <UniqueIdentifier>{d2ec778d-f5f9-491f-8ddc-4cf76c6a0570}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Entities\Agents\Roles\Deployment">
+      <UniqueIdentifier>{6f759646-5c5f-47e9-a831-da54af6e8385}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp">
@@ -2516,6 +2519,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.cpp">
       <Filter>Source Files\Entities\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RolePion_Deployment.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Deployment</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4939,6 +4945,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.h">
       <Filter>Source Files\Entities\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RoleInterface_Deployment.h">
+      <Filter>Source Files\Entities\Agents\Roles\Deployment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RolePion_Deployment.h">
+      <Filter>Source Files\Entities\Agents\Roles\Deployment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -137,6 +137,10 @@ public:
         eReport_PrisonersUnsupplied,
         eReport_PrisonersCampFull,
         eReport_ExplosionSurBouchonMine,
+        eReport_SectionDeployee,
+        eReport_StartDeploy,
+        eReport_SectionUndeployed,
+        eReport_StartUndeploy,
         eNbrReport
     };
 
@@ -542,10 +546,13 @@ public:
         eRC_TargetIsNotAccessible,
         eRC_NoKeyPositionsFoundInArea,
         eRC_Engaged,
-        eRC_Disengaged,
+        eRC_Disengaged, // 400
         eRC_AlreadyEngaged,
         eRC_AlreadyDisengaged,
         eRC_NoPEInAutomat,
+        eRC_WaitObstacleActivation,
+        eRC_SectionUndeployed,
+        eRC_StartUndeploy,
         eLast
     };
     //@}

@@ -34,6 +34,7 @@
 #include "Roles/Illumination/PHY_RolePion_Illumination.h" // LTO
 #include "Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Roles/Urban/PHY_RolePion_UrbanLocation.h"
+#include "Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Actions/Moving/PHY_RoleAction_Moving.h"
@@ -261,6 +262,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     LoadRole< PHY_RoleAction_FolkInfluence >( file, *this );
     LoadRole< PHY_RolePion_Illumination >( file, *this ); // LTO
     LoadRole< PHY_RoleAction_MovingUnderground >( file, *this );
+    LoadRole< PHY_RoleInterface_Deployment >( file, *this );
     RegisterRole( *new DEC_Representations() );
     RegisterRole( *new PHY_RolePion_TerrainAnalysis( *this ) );
     pAffinities_.reset( pAffinities );
@@ -321,6 +323,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     SaveRole< PHY_RoleAction_FolkInfluence >( *this, file );
     SaveRole< PHY_RolePion_Illumination >( *this, file ); // LTO
     SaveRole< PHY_RoleAction_MovingUnderground >( *this, file );
+    SaveRole< PHY_RoleInterface_Deployment >( *this, file );
 }
 
 // -----------------------------------------------------------------------------
@@ -481,6 +484,7 @@ void MIL_AgentPion::UpdatePhysicalState()
         GetRole< firing::PHY_RoleAction_IndirectFiring >().Update( bIsDead );
         GetRole< PHY_RoleAction_FolkInfluence >().Update( bIsDead );
         GetRole< PHY_RoleAction_MovingUnderground >().Update( bIsDead );
+        GetRole< PHY_RoleInterface_Deployment >().Update( bIsDead );
         PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >(); //@TODO add update to new role interface
         if( role )
             role->Update( bIsDead );
@@ -571,6 +575,7 @@ void MIL_AgentPion::Clean()
     GetRole< DEC_RolePion_Decision >().Clean();
     GetRole< PHY_RoleAction_FolkInfluence >().Clean();
     GetRole< PHY_RoleAction_MovingUnderground >().Clean();
+    GetRole< PHY_RoleInterface_Deployment >().Clean();
     PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >();//@TODO Add an interface for role with clean, update
     if( role )
         role->Clean();

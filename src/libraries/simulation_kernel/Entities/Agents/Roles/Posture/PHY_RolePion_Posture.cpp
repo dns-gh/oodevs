@@ -26,23 +26,9 @@
 using namespace posture;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Posture )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Posture )
 
 static const double rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
-
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePion_Posture* role, const unsigned int /*version*/ )
-{
-    const MIL_Agent_ABC* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePion_Posture* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePion_Posture( *pion );
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture constructor

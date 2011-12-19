@@ -31,6 +31,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
@@ -514,24 +515,6 @@ bool DEC_AgentFunctions::CanMount( DEC_Decision_ABC& callerAgent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetInstallationTime
-// Created: JSR 2011-11-07
-// -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetInstallationTime( DEC_Decision_ABC& callerAgent )
-{
-    return MIL_Tools::ConvertSimToMinutes( callerAgent.GetPion().GetType().GetUnitType().GetInstallationTime() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetUninstallationTime
-// Created: JSR 2011-11-07
-// -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetUninstallationTime( DEC_Decision_ABC& callerAgent )
-{
-    return MIL_Tools::ConvertSimToMinutes( callerAgent.GetPion().GetType().GetUnitType().GetUninstallationTime() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::NotifyForceRatioStateChanged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
@@ -843,6 +826,60 @@ bool DEC_AgentFunctions::IsUninstalled( const MIL_Agent_ABC& callerAgent )
 void DEC_AgentFunctions::Install( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Posture >().Install();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetInstallationTime
+// Created: JSR 2011-11-07
+// -----------------------------------------------------------------------------
+double DEC_AgentFunctions::GetInstallationTime( DEC_Decision_ABC& callerAgent )
+{
+    return MIL_Tools::ConvertSimToMinutes( callerAgent.GetPion().GetType().GetUnitType().GetInstallationTime() );   // $$$$ ABR 2011-12-15: Old method, should be removed soon
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetUninstallationTime
+// Created: JSR 2011-11-07
+// -----------------------------------------------------------------------------
+double DEC_AgentFunctions::GetUninstallationTime( DEC_Decision_ABC& callerAgent )
+{
+    return MIL_Tools::ConvertSimToMinutes( callerAgent.GetPion().GetType().GetUnitType().GetUninstallationTime() ); // $$$$ ABR 2011-12-15: Old method, should be removed soon
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsDeployed
+// Created: ABR 2011-12-15
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsDeployed( const MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.GetRole< PHY_RoleInterface_Deployment >().IsDeployed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsUndeployed
+// Created: ABR 2011-12-15
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsUndeployed( const MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::Deploy
+// Created: ABR 2011-12-15
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::Deploy( MIL_Agent_ABC& callerAgent )
+{
+    callerAgent.GetRole< PHY_RoleInterface_Deployment >().Deploy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::Undeploy
+// Created: ABR 2011-12-15
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::Undeploy( MIL_Agent_ABC& callerAgent )
+{
+    callerAgent.GetRole< PHY_RoleInterface_Deployment >().Undeploy();
 }
 
 // -----------------------------------------------------------------------------

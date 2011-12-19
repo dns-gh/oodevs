@@ -129,6 +129,11 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_CiviliansEncountered       ] = eRc_CiviliansEncountered;
     diaEvents_[ eReport_PrisonersUnsupplied        ] = eRc_PrisonersUnsupplied;
     diaEvents_[ eReport_PrisonersCampFull          ] = eRc_PrisonersCampFull;
+
+    diaEvents_[ eReport_SectionDeployee     ] = eRC_SectionDeployee;
+    diaEvents_[ eReport_StartDeploy         ] = eRC_StartDeploy;
+    diaEvents_[ eReport_SectionUndeployed   ] = eRC_SectionUndeployed;
+    diaEvents_[ eReport_StartUndeploy       ] = eRC_StartUndeploy;
 }
 
 // -----------------------------------------------------------------------------
