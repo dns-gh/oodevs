@@ -2837,6 +2837,13 @@
       </parameter>
       <parameter dia-name="angle" name="Angle" optional="true" type="Integer"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.batallion.tasks.FaireMouvement" dia-type="france.military.batallion.tasks.FaireMouvement" id="28772" mrt-dia-behavior="france.military.batallion.tasks.FaireMouvement" name="ADA Faire Mouvement">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="objectives" name="Itinéraire" optional="false" type="Path"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -3076,4 +3083,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3449801168" -->
+<!-- signature="1414491971" -->

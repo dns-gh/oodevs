@@ -1595,5 +1595,8 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - RENS . PC URH"/>
     <unit max-occurs="1" min-occurs="1" type="GLAISE - RENS . Patrouille URH"/>
   </automat>
+  <automat decisional-model="Masalife.Automate.ADA" id="1045" name="ADA" type="Automate INF">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="PC SGTIA"/>
+  </automat>
 </automats>
-<!-- signature="2809224179" -->
+<!-- signature="0354902550" -->

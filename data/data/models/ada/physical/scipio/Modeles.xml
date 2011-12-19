@@ -8373,6 +8373,12 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
+    <automat dia-type="france.military.batallion.roles.Batallion" file="BMADA.bms" masalife="true" name="Masalife.Automate.ADA">
+      <missions>
+        <mission name="ADA Faire Mouvement"/>
+      </missions>
+      <fragorders/>
+    </automat>
   </automats>
   <crowd>
     <crowd dia-type="france.military.crowd.roles.Foule" file="BMCrowd.bms" masalife="true" name="Masalife.Foule">
@@ -8408,4 +8414,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2639118979" -->
+<!-- signature="2277243706" -->
