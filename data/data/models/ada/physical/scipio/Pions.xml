@@ -19059,6 +19059,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="10m" uninstallation-time="10m"/>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -19086,6 +19087,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="10m" uninstallation-time="10m"/>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -19115,6 +19117,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
+    <setup installation-time="10m" uninstallation-time="10m"/>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -19746,4 +19749,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1980484697" -->
+<!-- signature="3277255403" -->
