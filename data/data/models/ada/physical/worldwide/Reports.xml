@@ -574,5 +574,7 @@
   <report category="operational" id="402" message="Already disengaged"/>
   <report category="operational" id="403" message="No platoon can do the main effect"/>
   <report category="operational" id="404" message="Obstacle should be activated"/>
+  <report category="operational" id="405" message="Section undeployed"/>
+  <report category="operational" id="406" message="Starting undeploy"/>
 </reports>
-<!-- signature="3093556031" -->
+<!-- signature="1282276738" -->

@@ -13,6 +13,7 @@
 #include "PHY_ActionMove.h"
 #include "PHY_RoleAction_Moving.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -225,6 +226,8 @@ void PHY_ActionMove::AvoidObstacles()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::Execute()
 {
+    if( !pion_.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed() ) // $$$$ ABR 2011-12-19: not IsUndeployed == IsDeployed || IsDeploying || IsUndeploying -> Can't move, no call back.
+        return;
     if( !pMainPath_.get() )
     {
         Callback( static_cast< int >( DEC_PathWalker::eNotAllowed ) );

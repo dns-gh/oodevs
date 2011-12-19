@@ -79,10 +79,6 @@ public:
     static void RecoverHumanTransportersNow( MIL_Agent_ABC& callerAgent );
     static bool CanMount( DEC_Decision_ABC& callerAgent );
 
-    // Deploiement
-    static double GetInstallationTime( DEC_Decision_ABC& callerAgent );
-    static double GetUninstallationTime( DEC_Decision_ABC& callerAgent );
-
     // Etat décisionnel
     static int  GetRulesOfEngagementState( const MIL_Agent_ABC& callerAgent );
     static void NotifyForceRatioStateChanged( MIL_Agent_ABC& callerAgent, int state );
@@ -137,6 +133,15 @@ public:
     static bool HasDotation( const MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category );
     static bool HasDotationForFiring( DEC_Decision_ABC* agent, const PHY_DotationCategory* category, int iterations );
     static bool CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category );
+
+    // Old deployment
+    static double GetInstallationTime( DEC_Decision_ABC& callerAgent );   // $$$$ ABR 2011-12-15: Old method, should be removed soon
+    static double GetUninstallationTime( DEC_Decision_ABC& callerAgent ); // $$$$ ABR 2011-12-15: Old method, should be removed soon
+    // Deployment
+    static bool IsDeployed( const MIL_Agent_ABC& callerAgent );
+    static bool IsUndeployed( const MIL_Agent_ABC& callerAgent );
+    static void Deploy( MIL_Agent_ABC& callerAgent );
+    static void Undeploy( MIL_Agent_ABC& callerAgent );
 
     // Installation
     static bool IsInstalled( const MIL_Agent_ABC& callerAgent );

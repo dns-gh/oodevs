@@ -263,10 +263,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_RecupererTransporteursSansDelai" ] =
         boost::bind( &DEC_AgentFunctions::RecoverHumanTransportersNow, boost::ref( GetPion() ) );
 
-    // Deploiement
-    brain[ "DEC_Agent_GetTempsDeploiement" ] = &DEC_AgentFunctions::GetInstallationTime;
-    brain[ "DEC_Agent_GetTempsDedeploiement" ] = &DEC_AgentFunctions::GetUninstallationTime;
-
     // Objects
     brain[ "DEC_CreerObjetSansDelais" ] =
         boost::function< void( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
@@ -382,6 +378,15 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Agent_EstInstalle" ] = boost::bind( &DEC_AgentFunctions::IsInstalled, boost::cref( GetPion() ) );
     brain[ "DEC_Agent_EstDesinstalle" ] = boost::bind( &DEC_AgentFunctions::IsUninstalled, boost::cref( GetPion() ) );
     brain[ "DEC_Agent_SInstaller" ] = boost::bind( &DEC_AgentFunctions::Install, boost::ref( GetPion() ) );
+
+    // Old deployment
+    brain[ "DEC_Agent_GetTempsDeploiement" ] = &DEC_AgentFunctions::GetInstallationTime;     // $$$$ ABR 2011-12-15: Old method, should be removed soon
+    brain[ "DEC_Agent_GetTempsDedeploiement" ] = &DEC_AgentFunctions::GetUninstallationTime; // $$$$ ABR 2011-12-15: Old method, should be removed soon
+    // Deployment
+    brain[ "DEC_Agent_IsDeployed" ] = boost::bind( &DEC_AgentFunctions::IsDeployed, boost::cref( GetPion() ) );
+    brain[ "DEC_Agent_IsUndeployed" ] = boost::bind( &DEC_AgentFunctions::IsUndeployed, boost::cref( GetPion() ) );
+    brain[ "DEC_Agent_Deploy" ] = boost::bind( &DEC_AgentFunctions::Deploy, boost::ref( GetPion() ) );
+    brain[ "DEC_Agent_Undeploye" ] = boost::bind( &DEC_AgentFunctions::Undeploy, boost::ref( GetPion() ) );
 
     // Pion accessors
     brain[ "DEC_Agent_EstPC" ] = boost::bind( &DEC_AgentFunctions::IsPC, boost::cref( GetPion() ) );

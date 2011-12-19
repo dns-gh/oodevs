@@ -5292,7 +5292,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Un-deployment duration</source>
-        <translation>Durée de dé-deploiement</translation>
+        <translation>Durée de repliement</translation>
     </message>
     <message>
         <source>Key terrain features range</source>

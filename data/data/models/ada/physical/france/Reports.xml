@@ -574,5 +574,7 @@
   <report category="operational" id="402" message="Unité déjà désengagée"/>
   <report category="operational" id="403" message="Aucune unité ne peut effectuer la mission principale"/>
   <report category="operational" id="404" message="L'obstacle doit être activé"/>
+  <report category="operational" id="405" message="Section repliée"/>
+  <report category="operational" id="406" message="Début de repliement"/>
 </reports>
-<!-- signature="2428081180" -->
+<!-- signature="3372520353" -->

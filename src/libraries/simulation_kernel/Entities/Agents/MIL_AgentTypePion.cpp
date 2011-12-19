@@ -58,6 +58,7 @@
 #include "Entities/Agents/Roles/Illumination/PHY_RolePion_Illumination.h" // LTO
 #include "Entities/Agents/Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
+#include "Entities/Agents/Roles/Deployment/PHY_RolePion_Deployment.h"
 
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
@@ -397,6 +398,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, unsigned int gcPause
     pion.RegisterRole( *new DEC_Representations() );
     pion.RegisterRole( *new PHY_RolePion_TerrainAnalysis( pion ) );
     pion.RegisterRole( *new PHY_RoleAction_MovingUnderground( pion ) );
+    pion.RegisterRole( *new PHY_RolePion_Deployment( pion ) );
     if( pion.GetType().GetUnitType().CanFly() )
         pion.RegisterRole( *new PHY_RoleAction_Flying( pion ) );
     else
