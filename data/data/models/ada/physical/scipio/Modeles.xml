@@ -4754,7 +4754,7 @@
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Section ROHUM">
       <missions>
         <mission name="PION RENS ROHUM SExfiltrer"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
+        <mission name="PION RENS ROHUM .Renseigner Sur"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
         <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
@@ -4854,7 +4854,7 @@
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
         <mission name="PION RENS ROHUM SExfiltrer"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
+        <mission name="PION RENS ROHUM .Renseigner Sur"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
         <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
@@ -5044,7 +5044,7 @@
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
         <mission name="PION RENS ROHUM SExfiltrer"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
+        <mission name="PION RENS ROHUM .Renseigner Sur"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
         <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
@@ -5126,7 +5126,7 @@
         <mission name="PION Soutenir sur position en mesure de"/>
         <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
+        <mission name="PION RENS ROHUM .Renseigner Sur"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION Sinfiltrer"/>
@@ -5165,7 +5165,7 @@
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
         <mission name="PION RENS ROHUM SExfiltrer"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
+        <mission name="PION RENS RASIT .Renseigner Sur"/>
         <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
@@ -8414,4 +8414,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2277243706" -->
+<!-- signature="2408408153" -->
