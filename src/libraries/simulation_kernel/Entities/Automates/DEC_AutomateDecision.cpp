@@ -175,6 +175,9 @@ void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( directia::brain::Bra
     brain[ "DEC_GetSzName" ] = &DEC_MiscFunctions::GetName;
     brain[ "DEC_GetAutomate" ] = &DEC_MiscFunctions::GetAutomate;
     brain[ "DEC_GetDirectionEnnemi" ] = &DEC_MiscFunctions::GetDirectionEnnemi;
+
+    // Missions
+    brain[ "DEC_DonnerMissionADAAutomate" ] = &DEC_OrdersFunctions::GiveMissionToAutomat;
     brain[ "DEC_Copie_DirectionDanger_Mission" ] = &DEC_MiscFunctions::CopyDirectionDanger;
 }
 

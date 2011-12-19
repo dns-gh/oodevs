@@ -17,6 +17,8 @@
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
+#include "Entities/Orders/MIL_OrderTypeParameter.h"
+#include "Entities/Orders/MIL_ParameterType_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::MRT_CreatePionMission
@@ -210,6 +212,17 @@ void DEC_OrdersFunctions::GiveAutomateMissionToAutomat( boost::shared_ptr< MIL_M
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GiveMissionToAutomat
+// Created: LMT 2011-12-15
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::GiveMissionToAutomat( boost::shared_ptr< MIL_Mission_ABC > pMission )
+{
+    if( !pMission )
+        throw( "Invalid mission" );
+    pMission->GetAutomate().GetOrderManager().ReplaceMission( pMission );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::SplitFuseau
 // Created: NLD 2007-04-05
 // -----------------------------------------------------------------------------
@@ -348,13 +361,43 @@ void DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag( MIL_Automate& call
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_OrdersFunctions::IsMissionAvailable
+// Name: DEC_OrdersFunctions::IsPionMissionAvailable
 // Created: MGD 2010-06-10
 // -----------------------------------------------------------------------------
-bool DEC_OrdersFunctions::IsMissionAvailable( DEC_Decision_ABC* agent, std::string diaType )
+bool DEC_OrdersFunctions::IsPionMissionAvailable( DEC_Decision_ABC* agent, std::string diaType )
 {
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( diaType );
     if( agent && pMissionType )
         return agent->GetPion().GetOrderManager().IsMissionAvailable( *pMissionType );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::DEC_Mission_IsPath
+// Created: LMT 2011-12-15
+// -----------------------------------------------------------------------------
+bool DEC_OrdersFunctions::DEC_Mission_IsPath( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
+{
+    if( !pMission )
+        throw std::runtime_error( "Bad mission passed to DEC_Mission_IsPath" );
+    const MIL_MissionType_ABC& missionType = pMission->GetType();
+    const MIL_OrderTypeParameter& orderParameterType = missionType.GetParameterType( missionType.GetParameterIndex( parameter ) );
+    const MIL_ParameterType_ABC& parameterType = orderParameterType.GetType();
+    if ( parameterType.GetType() == MIL_ParameterType_ABC::ePath )
+        return true;
+    else
+        return false;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::IsAutomateMissionAvailable
+// Created: LMT 2011-12-15
+// -----------------------------------------------------------------------------
+bool DEC_OrdersFunctions::IsAutomateMissionAvailable( DEC_Decision_ABC* agent, std::string diaType )
+{
+    const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::FindFromDiaID( diaType );
+    if( agent && pMissionType )
+        return agent->GetAutomate().GetOrderManager().IsMissionAvailable( *pMissionType );
     return false;
 }
