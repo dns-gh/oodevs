@@ -341,6 +341,18 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 }
 
 // -----------------------------------------------------------------------------
+// Name: void MIL_MissionParameterFactory::AssignPathConst
+// Created: LMT 2011-12-16
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::AssignPathConst( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList )
+{
+    if( !pMission.get() )
+        throw std::runtime_error( "Invalid mission" );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PathParameter( pointList ) );
+    pMission->SetParameter( parameter, result );
+}
+
+// -----------------------------------------------------------------------------
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePath
 // Created: LDC 2009-07-10
 // -----------------------------------------------------------------------------

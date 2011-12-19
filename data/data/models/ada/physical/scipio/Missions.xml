@@ -399,7 +399,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
+      <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.Suivre" dia-type="france.military.platoon.tasks.Suivre" id="2053" name="PION COMMUNES Suivre" package="move">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1487,7 +1487,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
+      <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.air.tasks.Suivre" dia-type="france.military.platoon.combat.support.air.tasks.Suivre" id="2476" name="PION AIR Suivre" package="move">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3076,4 +3076,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="1177118561" -->
+<!-- signature="3449801168" -->

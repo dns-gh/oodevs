@@ -104,7 +104,8 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite" ] = &DEC_AutomateFunctions::PionTimeToMoveDistance;
     brain[ "DEC_GetRawMission" ] = &DEC_AutomateFunctions::GetMission;
     brain[ "DEC_SetMission" ] = &DEC_AutomateFunctions::SetMission;
-    brain[ "DEC_IsMissionPionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
+    brain[ "DEC_IsMissionPionAvailable" ] = &DEC_OrdersFunctions::IsPionMissionAvailable;
+    brain[ "DEC_IsAutomateMissionPionAvailable" ] = &DEC_OrdersFunctions::IsAutomateMissionAvailable;
     brain[ "DEC_Pion_GetMilPionType" ] = &DEC_AgentFunctions::GetMilPionType;
     brain[ "DEC_Agent_EstImmobilise" ] = &DEC_AgentFunctions::IsImmobilized;
     brain[ "DEC_Agent_CanMoveOn" ] = &DEC_TerrainFunctions::CanMoveOn;
@@ -431,7 +432,10 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_AssignMissionNumericTypeParameter" ] = &MIL_MissionParameterFactory::SetNumericTypeParameter;
     brain[ "DEC_AssignMissionResourceNetworkParameter" ] = &MIL_MissionParameterFactory::SetResourceNetworkParameter;
     brain[ "DEC_AssignMissionResourceNetworkListParameter" ] = &MIL_MissionParameterFactory::CreateResourceNetwork;
-    brain[ "DEC_IsMissionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
+    brain[ "DEC_AssignMissionPathConstParameter" ] = &MIL_MissionParameterFactory::AssignPathConst;
+    brain[ "DEC_IsMissionAvailable" ] = &DEC_OrdersFunctions::IsPionMissionAvailable;
+    brain[ "DEC_Mission_IsPath" ] = &DEC_OrdersFunctions::DEC_Mission_IsPath;
+    brain[ "DEC_IsAutomateMissionAvailable" ] = &DEC_OrdersFunctions::IsAutomateMissionAvailable;
     directia::tools::binders::ScriptRef initParameterFunction = brain[ "InitTaskParameter" ];
     brain[ "DEC_FillMissionParameters" ] =
         boost::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2, isMasalife ) );
@@ -1184,6 +1188,7 @@ void InitFunctions()
         functorsBM[ "Polygon" ] = AreaFunctionBM;
         functorsBM[ "PolygonList" ] = AreaListFunctionBM;
         functorsBM[ "Path" ] = PathFunctionBM;
+        functorsBM[ "PathList" ] = PathFunctionBM;
         functorsBM[ "Heading" ] = DirectionFunctionBM;
         functorsBM[ "Automat" ] = AutomatFunctionBM;
         functorsBM[ "AutomatList" ] = AutomatListFunctionBM;
