@@ -41,7 +41,7 @@
 				</xs:element>
 				<xs:element name="drawings" type="T_FileReference" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation xml:lang="en">Defines the file to be used for action planning.</xs:documentation>
+						<xs:documentation xml:lang="en">Defines the file to be used for drawings.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:all>

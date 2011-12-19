@@ -52,10 +52,9 @@ namespace
 {
     std::string BuildDrawingsFile( const dispatcher::Config& config )
     {
-        static const std::string filename = "drawings.xml";
         if( config.HasCheckpoint() )
-            return ( bfs::path( config.GetCheckpointDirectory(), bfs::native ) / bfs::path( filename, bfs::native ) ).native_file_string();
-        return config.BuildExerciseChildFile( filename );
+            return ( bfs::path( config.GetCheckpointDirectory(), bfs::native ) / bfs::path( config.GetDrawingsFileName(), bfs::native ) ).native_file_string();
+        return config.GetDrawingsFile();
     }
 }
 
@@ -191,7 +190,7 @@ void DrawingsModel::Save( const std::string& directory ) const
             notDiffused.insert( &drawing );
     }
 
-    std::string filename = ( bfs::path( directory, bfs::native ) / bfs::path( "drawings.xml", bfs::native ) ).native_file_string();
+    std::string filename = ( bfs::path( directory, bfs::native ) / bfs::path( config_.GetDrawingsFileName(), bfs::native ) ).native_file_string();
     {
         xml::xofstream xos( filename );
         xos << xml::start( "shapes" )

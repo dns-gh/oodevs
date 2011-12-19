@@ -16,6 +16,7 @@
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -48,26 +49,22 @@ DrawerModel::~DrawerModel()
 // Name: DrawerModel::Load
 // Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
-void DrawerModel::Load( const std::string& filename )
+void DrawerModel::Load( const tools::Loader_ABC& fileLoader, const std::string& file )
 {
-    xml::xifstream xis( filename );
-    xis >> xml::start( "shapes" );
-    const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
-    if( !schema.empty() )
-        xml::xifstream( filename, xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ) ) );
-    ReadShapes( xis );
-    xis >> xml::end;
+    fileLoader.LoadFile( file, boost::bind( &DrawerModel::Read, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerModel::ReadShapes
-// Created: LGY 2011-02-10
+// Name: DrawerModel::Read
+// Created: JSR 2011-12-19
 // -----------------------------------------------------------------------------
-void DrawerModel::ReadShapes( xml::xistream& xis )
+void DrawerModel::Read( xml::xistream& xis )
 {
-    xis >> xml::list( "formation", *this, &DrawerModel::ReadFormation )
-        >> xml::list( "automat", *this, &DrawerModel::ReadAutomat )
-        >> xml::list( "shape", boost::bind( &DrawerModel::ReadShape, this, _1, static_cast< const kernel::Entity_ABC* >( 0 ) ) );
+    xis >> xml::start( "shapes" )
+            >> xml::list( "formation", *this, &DrawerModel::ReadFormation )
+            >> xml::list( "automat", *this, &DrawerModel::ReadAutomat )
+            >> xml::list( "shape", boost::bind( &DrawerModel::ReadShape, this, _1, static_cast< const kernel::Entity_ABC* >( 0 ) ) )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -129,10 +126,20 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerModel::Save
+// Name: DrawerModel::Serialize
 // Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
-void DrawerModel::Save( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
+void DrawerModel::Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
+{
+    xml::xofstream xos( filename );
+    Serialize( xos, schemaWriter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerModel::Serialize
+// Created: JSR 2011-12-19
+// -----------------------------------------------------------------------------
+void DrawerModel::Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     T_DrawingsMap formationMap;
     T_DrawingsMap automatMap;
@@ -155,7 +162,6 @@ void DrawerModel::Save( const std::string& filename, const tools::SchemaWriter_A
             notDiffused.insert( &drawing );
     }
 
-    xml::xofstream xos( filename );
     xos << xml::start( "shapes" );
     schemaWriter.WriteExerciseSchema( xos, "drawings" );
     SerializeDrawingsMap( xos, formationMap, "formation" );

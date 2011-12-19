@@ -53,6 +53,7 @@ namespace
                 << xml::start( "orbat" )      << xml::attribute( "file", "orbat.xml" ) << xml::end
                 << xml::start( "urbanstate" ) << xml::attribute( "file", "urbanstate.xml" ) << xml::end
                 << xml::start( "weather" )    << xml::attribute( "file", "weather.xml" ) << xml::end
+                << xml::start( "drawings" )   << xml::attribute( "file", "drawings.xml" ) << xml::end
                 << xml::start( "terrain" )
                     << xml::attribute( "name", terrain )
                 << xml::end

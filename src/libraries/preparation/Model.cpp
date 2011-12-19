@@ -106,6 +106,8 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
 Model::~Model()
 {
     // $$$$ ABR 2011-10-14: TODO: Delete everything ...
+    delete &drawings_;
+    delete &drawingFactory_;
     delete &profiles_;
     delete &successFactors_;
     delete &successFactorFactory_;
@@ -233,6 +235,7 @@ void Model::Purge()
     successFactors_.Purge();
     scores_.Purge();
     weather_.Purge();
+    drawings_.Purge();
     limits_.Purge();
     ghosts_.Purge();
     agents_.Purge();
@@ -298,6 +301,7 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
     LoadOptional( config.GetLoader(), config.GetProfilesFile(), profiles_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetScoresFile(), scores_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
+    LoadOptional( config.GetLoader(), config.GetDrawingsFile(), drawings_, schemaWriter );
     SetLoaded( true );
 }
 
@@ -327,7 +331,7 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
                     && successFactors_.CheckValidity( checker, schemaWriter );
     if( valid )
     {
-        SerializeAndSign( config.GetExerciseFile(), exercise_, schemaWriter );
+        exercise_.SerializeAndSign( config, schemaWriter );
         SerializeAndSign( config.GetSettingsFile(), exercise_.GetSettings(), schemaWriter );
         {
             xml::xofstream xos( config.GetOrbatFile() );
@@ -343,6 +347,7 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
         SerializeAndSign( config.GetScoresFile(), scores_, schemaWriter );
         SerializeAndSign( config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
         successFactors_.SerializeScript( config );
+        SerializeAndSign( config.GetDrawingsFile(), drawings_, schemaWriter );
         UpdateName( config.GetOrbatFile() );
     }
     return valid;

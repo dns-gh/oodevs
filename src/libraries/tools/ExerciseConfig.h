@@ -68,6 +68,8 @@ public:
     virtual std::string GetSettingsFile() const;
     virtual std::string GetSettingsFileName() const;
     virtual std::string GetSuccessFactorsFile() const;
+    virtual std::string GetDrawingsFileName() const;
+    virtual std::string GetDrawingsFile() const;
 
     virtual std::string GetPropagationFile( const std::string& path ) const;
     virtual std::string BuildPropagationChildFile( const std::string& path, const std::string& file ) const;
@@ -106,8 +108,10 @@ private:
     std::string scores_;
     std::string settings_;
     std::string successFactors_;
+    std::string drawings_;
     std::string population_;
     std::string propagations_;
+
     //@}
 };
 

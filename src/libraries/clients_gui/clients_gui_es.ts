@@ -523,6 +523,14 @@ Please check access permissions or write protection.</source>
         <source>Parent:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Import drawings file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export drawings file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::EditorFactory</name>

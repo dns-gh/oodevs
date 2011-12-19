@@ -118,6 +118,9 @@ void ExerciseConfig::ReadExercise( xml::xistream& xis )
     xis     >> xml::end
             >> xml::optional >> xml::start( "success-factors" );
     successFactors_ = xis.attribute< std::string >( "file", "success-factors.xml" );
+    xis     >> xml::end
+            >> xml::optional >> xml::start( "drawings" );
+    drawings_ = xis.attribute< std::string >( "file", "drawings.xml" );
     xis     >> xml::end;
 }
 
@@ -339,6 +342,24 @@ std::string ExerciseConfig::GetSettingsFileName() const
 std::string ExerciseConfig::GetSuccessFactorsFile() const
 {
     return BuildExerciseChildFile( successFactors_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDrawingsFile
+// Created: JSR 2011-12-19
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetDrawingsFile() const
+{
+    return BuildExerciseChildFile( drawings_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDrawingsFileName
+// Created: JSR 2011-12-19
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetDrawingsFileName() const
+{
+    return drawings_;
 }
 
 // -----------------------------------------------------------------------------

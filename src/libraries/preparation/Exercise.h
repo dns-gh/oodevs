@@ -58,7 +58,7 @@ public:
     //@{
     void Load( xml::xistream& xis );
     void Purge();
-    void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void SerializeAndSign( const tools::ExerciseConfig& config, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Accept( ExerciseVisitor_ABC& visitor ) const;
     //@}
 

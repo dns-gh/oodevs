@@ -108,7 +108,7 @@ namespace
 {
     void CopyNode( const std::string& name, xml::xistream& xis, xml::xostream& xos )
     {
-        if( name != "meta" && name != "action-planning" && name != "settings" )
+        if( name != "meta" && name != "action-planning" && name != "settings" && name != "drawings" )
             xos << xml::content( name, xis );
     }
     void CopyFromFile( const std::string& file, xml::xostream& xos )
@@ -121,11 +121,12 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: Exercise::Serialize
+// Name: Exercise::SerializeAndSign
 // Created: SBO 2010-03-08
 // -----------------------------------------------------------------------------
-void Exercise::Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const
+void Exercise::SerializeAndSign( const tools::ExerciseConfig& config, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
+    std::string file = config.GetExerciseFile();
     xml::xofstream xos( file, xml::encoding( "UTF-8" ) );
     xos << xml::start( "exercise" );
     schemaWriter.WriteExerciseSchema( xos, "exercise" );
@@ -136,9 +137,11 @@ void Exercise::Serialize( const std::string& file, const tools::SchemaWriter_ABC
     SerializeResources( xos );
     xos     << xml::end;
     CopyFromFile( file, xos );
+    xos << xml::start( "drawings" ) << xml::attribute( "file", config.GetDrawingsFileName() ) << xml::end;
     if( !actionPlanning_.empty() )
         xos << xml::start( "action-planning" ) << xml::attribute( "file", actionPlanning_ ) << xml::end;
     xos << xml::end;
+    tools::WriteXmlCrc32Signature( file );
 }
 
 // -----------------------------------------------------------------------------

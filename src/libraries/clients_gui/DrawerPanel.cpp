@@ -54,13 +54,13 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
         QToolButton* btn = new QToolButton( box );
         btn->setAutoRaise( true );
         btn->setIconSet( MAKE_PIXMAP( open ) );
-        QToolTip::add( btn, tr( "Load drawings file" ) );
+        QToolTip::add( btn, tr( "Import drawings file" ) );
         connect( btn, SIGNAL( clicked() ), SLOT( Open() ) );
 
         btn = new QToolButton( box );
         btn->setAutoRaise( true );
         btn->setIconSet( MAKE_PIXMAP( save ) );
-        QToolTip::add( btn, tr( "Save drawings to file" ) );
+        QToolTip::add( btn, tr( "Export drawings file" ) );
         connect( btn, SIGNAL( clicked() ), SLOT( Save() ) );
 
         btn = new QToolButton( box );
@@ -257,7 +257,7 @@ void DrawerPanel::Open()
         filename.replace( "/", "\\" );
     try
     {
-        model_.Load( filename.ascii() );
+        model_.Load( config_.GetLoader(), filename.ascii() );
     }
     catch( xml::exception& )
     {
@@ -281,7 +281,7 @@ void DrawerPanel::Save()
     try
     {
         tools::SchemaWriter schemaWriter; //$$ Probablement à remonter
-        model_.Save( filename.ascii(), schemaWriter );
+        model_.Serialize( filename.ascii(), schemaWriter );
     }
     catch( xml::exception& )
     {

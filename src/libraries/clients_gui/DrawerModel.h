@@ -28,6 +28,7 @@ namespace kernel
 
 namespace tools
 {
+    class Loader_ABC;
     class SchemaWriter_ABC;
 }
 
@@ -57,8 +58,8 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& filename );
-    void Save( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
+    void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
     Drawing_ABC* Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;
@@ -68,10 +69,11 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ReadShapes( xml::xistream& xis );
+    void Read( xml::xistream& xis );
     void ReadFormation( xml::xistream& xis );
     void ReadAutomat( xml::xistream& xis );
     void ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity );
+    void Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& schemaWriter ) const;
     virtual void NotifyCreated( const Drawing_ABC& );
     virtual void NotifyDeleted( const Drawing_ABC& );
     //@}
