@@ -1921,7 +1921,6 @@
         <mission name="PION Decrocher"/>
         <mission name="PION Faire Mouvement"/>
         <mission name="PION Suivre"/>
-        <mission name="PION RENS RADINT Mettre En Oeuvre"/>
         <mission name="PION Se Faire Decontaminer"/>
         <mission name="PION Se Faire Transporter"/>
         <mission name="PION Stationner"/>
@@ -5267,7 +5266,7 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Stations Horizon">
       <missions>
-        <mission name="PION RENS RADINT Mettre En Oeuvre"/>
+        <mission name="PION RENS ROEM Mettre En Oeuvre"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION COMMUNES Decrocher"/>
@@ -8414,4 +8413,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2408408153" -->
+<!-- signature="2250224145" -->
