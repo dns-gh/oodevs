@@ -27,6 +27,7 @@ ADN_ResourceNetworks_Data::ResourceNetworkInfos::ResourceNetworkInfos()
     strColor_.SetParentNode( *this );
     nProduction_.SetParentNode( *this );
     ptrCategory_.SetParentNode( *this );
+    BindExistenceTo( &ptrCategory_ );
 }
 
 // -----------------------------------------------------------------------------

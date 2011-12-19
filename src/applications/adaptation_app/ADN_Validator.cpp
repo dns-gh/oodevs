@@ -266,6 +266,13 @@ ADN_IntValidator::ADN_IntValidator( int bottom, int top, QObject * parent ) : QI
 ADN_IntValidator::~ADN_IntValidator()
 {}
 
+QValidator::State ADN_IntValidator::validate( QString& input, int& nPos ) const
+{
+    if( input.contains( ',' ) )
+        return Invalid;
+    return QIntValidator::validate( input, nPos );
+}
+
 void ADN_IntValidator::fixup( QString& strInput ) const
 {
     bool ok = true;

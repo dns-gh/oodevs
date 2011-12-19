@@ -200,16 +200,19 @@ void ADN_ListView::ContextMenuNew()
 // -----------------------------------------------------------------------------
 void ADN_ListView::ContextMenuDelete()
 {
-    if( pCurData_ == 0 )
+    if( pCurData_ == 0 || !bDeletionEnabled_ )
         return;
 
-    ADN_Ref_ABC* pCurrentData = (ADN_Ref_ABC*)pCurData_;
+    ADN_Ref_ABC* pCurrentData = static_cast< ADN_Ref_ABC* >( pCurData_ );
 
     // Check if the item is multi-referenced, and warn the user if it's the case.
     if( pCurrentData->IsMultiRef() )
-        if( ! ADN_GuiTools::MultiRefWarning() )
+    {
+        if( !ADN_GuiTools::MultiRefWarning() )
             return;
-
+    }
+    else if( !ADN_GuiTools::DeletionWarning() )
+        return;
     // Remove the item from the list.
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
     //$$$$ delete it?
@@ -264,19 +267,8 @@ void ADN_ListView::UpdateEnableState()
 // -----------------------------------------------------------------------------
 void ADN_ListView::keyReleaseEvent( QKeyEvent* pEvent )
 {
-    if( pCurData_ == 0 || ! bDeletionEnabled_ )
-        return;
-
     if( pEvent->key() == Qt::Key_Backspace || pEvent->key() == Qt::Key_Delete )
-    {
-        ADN_Ref_ABC* pCurrentData = (ADN_Ref_ABC*)pCurData_;
-
-        if( bDeletionWarning_ && ! ADN_GuiTools::DeletionWarning() )
-            return;
-
-        // Remove the item from the list.
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
-    }
+        ContextMenuDelete();
 }
 
 // -----------------------------------------------------------------------------
