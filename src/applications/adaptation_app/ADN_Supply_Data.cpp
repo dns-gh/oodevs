@@ -87,8 +87,7 @@ ADN_Supply_Data::SupplyDataInfos::SupplyDataInfos()
     , ptrUnit_            ( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
     , ptrSupplyMission_   ( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions(), 0 )
 {
-    BindExistenceTo( &ptrUnit_ );
-    BindExistenceTo( &ptrSupplyMission_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
