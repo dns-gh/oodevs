@@ -126,12 +126,9 @@ public:
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
 
     MIL_Population* FindPopulation( UrbanObjectWrapper* urbanObject ) const;
-
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
-    const bool HasInfiniteDotations() const;
     UrbanObjectWrapper& GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object );
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
-
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
@@ -230,12 +227,9 @@ private:
 private:
     //! @name Init
     //@{
-
-    // ODB
     void ReadOrbat          ( xml::xistream& xis );
     void InitializeArmies   ( xml::xistream& xis );
     void InitializeDiplomacy( xml::xistream& xis );
-    void InitializeDotations( xml::xistream& xis );
     void ReadDiplomacy      ( xml::xistream& xis );
     //@}
 
@@ -253,7 +247,6 @@ private:
     void UpdateEffects();
     void UpdateStates();
     void UpdateKnowledgeGroups();
-
     void PreprocessRandomBreakdowns();
     //@}
 
@@ -289,7 +282,6 @@ private:
     std::auto_ptr< ArmyFactory_ABC >           armyFactory_;
     unsigned int  gcPause_;
     unsigned int  gcMult_;
-    bool          infiniteDotations_;
     //@}
 };
 

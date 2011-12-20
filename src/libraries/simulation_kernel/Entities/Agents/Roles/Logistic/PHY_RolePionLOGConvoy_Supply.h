@@ -12,6 +12,7 @@
 #ifndef __PHY_RolePionLOGConvoy_Supply_h_
 #define __PHY_RolePionLOGConvoy_Supply_h_
 
+#include "MIL.h"
 #include "PHY_RoleInterface_Supply.h"
 
 class MIL_AgentPion;
@@ -33,12 +34,20 @@ namespace moving
 class PHY_RolePionLOGConvoy_Supply : public PHY_RoleInterface_Supply
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
     explicit PHY_RolePionLOGConvoy_Supply( MIL_AgentPion& pion );
     virtual ~PHY_RolePionLOGConvoy_Supply();
+    //@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const MIL_AgentPion& GetPion() const { return owner_; }
     //@}
 
     //! @name Operations
@@ -73,14 +82,20 @@ public:
     //@}
 
 private:
-    MIL_AgentPion& pion_;
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePionLOGConvoy_Supply )
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    MIL_AgentPion&                                      owner_;
     boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ );
-
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePionLOGConvoy_Supply )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePionLOGConvoy_Supply, MIL_AgentPion )
 
 #endif // __PHY_RolePionLOGConvoy_Supply_h_

@@ -12,6 +12,7 @@
 #ifndef __PHY_RoleAction_Loading_h_
 #define __PHY_RoleAction_Loading_h_
 
+#include "MIL.h"
 #include "TransportNotificationHandler_ABC.h"
 #include "NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/Role_ABC.h"
@@ -37,7 +38,6 @@ namespace transport
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_Loading : public tools::Role_ABC
-                             , private boost::noncopyable
                              , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
                              , public transport::TransportNotificationHandler_ABC
                              , public network::NetworkUnitAttributesMessageSender_ABC
@@ -125,27 +125,33 @@ private:
     //@{
     double ComputeLoadingTime  () const;
     double ComputeUnloadingTime() const;
-
     void SetLoadedState  ();
     void SetUnloadedState();
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Loading* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Loading* role, const unsigned int /*version*/ );
+    //@}
+
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_Loading )
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& pion_;
-    E_State nState_;
-    bool bIsLoaded_;
-    unsigned int nEndTimeStep_; // Load or unload
-    bool bHasChanged_;
-    bool bHasBeenUpdated_; // Le trigger Load / Unload ou RecoverCarriers a été appelé durant le pas de temps
+    MIL_Agent_ABC&  owner_;
+    E_State         nState_;
+    bool            bIsLoaded_;
+    unsigned int    nEndTimeStep_; // Load or unload
+    bool            bHasChanged_;
+    bool            bHasBeenUpdated_; // Le trigger Load / Unload ou RecoverCarriers a été appelé durant le pas de temps
     //@}
 };
 
 } // namespace transport
 
 BOOST_CLASS_EXPORT_KEY( transport::PHY_RoleAction_Loading )
+namespace transport
+{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_Loading, MIL_Agent_ABC )
+}
 
 #endif // __PHY_RoleAction_Loading_h_

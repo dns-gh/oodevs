@@ -12,6 +12,7 @@
 #ifndef __PHY_RolePion_Reinforcement_h_
 #define __PHY_RolePion_Reinforcement_h_
 
+#include "MIL.h"
 #include "PHY_RoleInterface_Reinforcement.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/TransportNotificationHandler_ABC.h"
@@ -112,17 +113,23 @@ private:
     void NotifyReinforcementRemoved( MIL_AgentPion& reinforcement );
     //@}
 
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Reinforcement )
+    //@}
+
 private:
-    MIL_AgentPion& pion_;
+    //! @name Member data
+    //@{
+    MIL_AgentPion& owner_;
     MIL_AgentPion* pPionReinforced_;
     T_PionSet      reinforcements_;
     bool           bHasChanged_;
     bool           bExternalCanReinforce_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Reinforcement )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Reinforcement, MIL_AgentPion )
 
 #endif // __PHY_RolePion_Reinforcement_h_

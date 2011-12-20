@@ -52,16 +52,12 @@ public:
     virtual void NotifyHitByIndirectFire() = 0;
     //@}
 
+    //! @name Serialization
+    //@{
     template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PHY_RoleInterface_Illumination( const PHY_RoleInterface_Illumination& );            //!< Copy constructor
-    PHY_RoleInterface_Illumination& operator=( const PHY_RoleInterface_Illumination& ); //!< Assignment operator
     //@}
 };
 

@@ -29,27 +29,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RoleAction_Loading )
 namespace transport
 {
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RoleAction_Loading* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RoleAction_Loading* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* pion;
-    archive >> pion;
-    ::new( role )PHY_RoleAction_Loading( *pion );
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading constructor
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Loading::PHY_RoleAction_Loading( MIL_Agent_ABC& pion )
-    : pion_           ( pion )
+    : owner_           ( pion )
     , bIsLoaded_      ( false )
     , nState_         ( eNothing )
     , nEndTimeStep_   ( 0 )
@@ -92,7 +77,7 @@ void PHY_RoleAction_Loading::SetLoadedState()
     assert( !bIsLoaded_ );
     bIsLoaded_   = true;
     bHasChanged_ = true;
-    pion_.Apply( &transport::LoadingChangeNotificationHandler_ABC::NotifyIsLoadedInVab );
+    owner_.Apply( &transport::LoadingChangeNotificationHandler_ABC::NotifyIsLoadedInVab );
     CheckConsistency();
 }
 
@@ -106,7 +91,7 @@ void PHY_RoleAction_Loading::SetUnloadedState()
     assert( bIsLoaded_ );
     bHasChanged_ = true;
     bIsLoaded_   = false;
-    pion_.Apply( &transport::LoadingChangeNotificationHandler_ABC::NotifyIsUnLoadedInVab );
+    owner_.Apply( &transport::LoadingChangeNotificationHandler_ABC::NotifyIsUnLoadedInVab );
     CheckConsistency();
 }
 
@@ -116,8 +101,8 @@ void PHY_RoleAction_Loading::SetUnloadedState()
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Loading::ComputeLoadingTime() const
 {
-    std::auto_ptr< HumanLoadingTimeComputer_ABC > loadingTimeComputer = pion_.GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer();
-    pion_.Execute( *loadingTimeComputer );
+    std::auto_ptr< HumanLoadingTimeComputer_ABC > loadingTimeComputer = owner_.GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer();
+    owner_.Execute( *loadingTimeComputer );
     if( loadingTimeComputer->GetHumansLoadedPerTimeStep() == 0. )
         return std::numeric_limits< double >::max();
     return loadingTimeComputer->GetHumansCount() / loadingTimeComputer->GetHumansLoadedPerTimeStep();
@@ -129,8 +114,8 @@ double PHY_RoleAction_Loading::ComputeLoadingTime() const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Loading::ComputeUnloadingTime() const
 {
-    std::auto_ptr< HumanLoadingTimeComputer_ABC > loadingTimeComputer = pion_.GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer();
-    pion_.Execute( *loadingTimeComputer );
+    std::auto_ptr< HumanLoadingTimeComputer_ABC > loadingTimeComputer = owner_.GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer();
+    owner_.Execute( *loadingTimeComputer );
     if( loadingTimeComputer->GetHumansUnloadedPerTimeStep() == 0. )
         return std::numeric_limits< double >::max();
     return loadingTimeComputer->GetHumansCount() / loadingTimeComputer->GetHumansUnloadedPerTimeStep();
@@ -146,7 +131,7 @@ int PHY_RoleAction_Loading::Load()
 
     if( nState_ == eUnloading )
     {
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_DisembarkmentInterrupted );
+        MIL_Report::PostEvent( owner_, MIL_Report::eReport_DisembarkmentInterrupted );
         nState_ = eNothing;
     }
     if( bIsLoaded_ )
@@ -161,7 +146,7 @@ int PHY_RoleAction_Loading::Load()
             return eErrorNoCarried;
         nEndTimeStep_ = (unsigned int)rLoadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         nState_       = eLoading;
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentStarted );
+        MIL_Report::PostEvent( owner_, MIL_Report::eReport_EmbarkmentStarted );
     }
 
     if( nState_ == eLoading )
@@ -169,7 +154,7 @@ int PHY_RoleAction_Loading::Load()
         if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nEndTimeStep_ )
         {
             nState_      = eNothing;
-            MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentFinished );
+            MIL_Report::PostEvent( owner_, MIL_Report::eReport_EmbarkmentFinished );
             SetLoadedState();
             return eEnd;
         }
@@ -188,7 +173,7 @@ int PHY_RoleAction_Loading::Unload()
 
     if( nState_ == eLoading )
     {
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentInterrupted );
+        MIL_Report::PostEvent( owner_, MIL_Report::eReport_EmbarkmentInterrupted );
         nState_ = eNothing;
     }
     if( !bIsLoaded_ )
@@ -203,7 +188,7 @@ int PHY_RoleAction_Loading::Unload()
             return eErrorNoCarried;
         nEndTimeStep_ = (unsigned int)rUnloadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         nState_       = eUnloading;
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_DisembarkmentStarted );
+        MIL_Report::PostEvent( owner_, MIL_Report::eReport_DisembarkmentStarted );
     }
 
     if( nState_ == eUnloading )
@@ -211,7 +196,7 @@ int PHY_RoleAction_Loading::Unload()
         if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nEndTimeStep_ )
         {
             nState_      = eNothing;
-            MIL_Report::PostEvent( pion_, MIL_Report::eReport_DisembarkmentFinished );            SetUnloadedState();
+            MIL_Report::PostEvent( owner_, MIL_Report::eReport_DisembarkmentFinished );            SetUnloadedState();
             return eEnd;
         }
         return eRunning;
@@ -225,8 +210,8 @@ int PHY_RoleAction_Loading::Unload()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::CheckConsistency()
 {
-    std::auto_ptr< LoadedStateConsistencyComputer_ABC > comp = pion_.GetAlgorithms().loadingComputerFactory_->CreateLoadedStateConsistencyComputer();
-    pion_.Execute( *comp );
+    std::auto_ptr< LoadedStateConsistencyComputer_ABC > comp = owner_.GetAlgorithms().loadingComputerFactory_->CreateLoadedStateConsistencyComputer();
+    owner_.Execute( *comp );
 
     if( bIsLoaded_ )
     {
@@ -365,8 +350,8 @@ void PHY_RoleAction_Loading::Update( bool /*bIsDead*/ )
 
     if( HasChanged() )
     {
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
 }
 

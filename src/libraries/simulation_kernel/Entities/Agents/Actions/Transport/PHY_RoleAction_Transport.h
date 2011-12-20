@@ -12,6 +12,7 @@
 #ifndef __PHY_RoleAction_Transport_h_
 #define __PHY_RoleAction_Transport_h_
 
+#include "MIL.h"
 #include "TransportNotificationHandler_ABC.h"
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
@@ -35,7 +36,6 @@ namespace transport
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_Transport : public tools::Role_ABC
-                               , private boost::noncopyable
                                , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
                                , public network::NetworkUnitAttributesMessageSender_ABC
@@ -157,25 +157,31 @@ private:
     double ComputeUnloadingTime() const;
     double DoLoad( const double rWeightToLoad );
     double DoUnload( const double rWeightToUnload, MT_Vector2D* position );
+    //@}
 
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Transport* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Transport* role, const unsigned int /*version*/ );
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_Transport )
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&        transporter_;
-    bool                  bHasChanged_;
-    E_State               nState_;
-    bool                  bLoadUnloadHasBeenUpdated_;
-    T_TransportedPionMap  transportedPions_;
-    double              rWeightTransported_;
+    MIL_AgentPion&       owner_;
+    bool                 bHasChanged_;
+    E_State              nState_;
+    bool                 bLoadUnloadHasBeenUpdated_;
+    T_TransportedPionMap transportedPions_;
+    double               rWeightTransported_;
     //@}
 };
 
 } // namespace transport
 
 BOOST_CLASS_EXPORT_KEY( transport::PHY_RoleAction_Transport )
+namespace transport
+{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_Transport, MIL_AgentPion )
+}
 
 #endif // __PHY_RoleAction_Transport_h_

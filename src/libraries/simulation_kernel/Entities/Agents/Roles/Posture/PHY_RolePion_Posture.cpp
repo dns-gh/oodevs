@@ -26,7 +26,6 @@
 using namespace posture;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Posture )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Posture )
 
 static const double rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
 
@@ -35,7 +34,7 @@ static const double rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_Agent_ABC& pion )
-    : pion_                                ( pion )
+    : owner_                                ( pion )
     , pCurrentPosture_                     ( &PHY_Posture::arret_ )
     , pLastPosture_                        ( &PHY_Posture::arret_ )
     , rPostureCompletionPercentage_        ( 1. )
@@ -155,14 +154,14 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
 {
     Uninstall();
 
-    PostureComputer_ABC::Parameters params( pion_.GetType().GetUnitType(), *pCurrentPosture_ );
+    PostureComputer_ABC::Parameters params( owner_.GetType().GetUnitType(), *pCurrentPosture_ );
     params.bIsDead_ = bIsDead;
     params.rCompletionPercentage_ = rPostureCompletionPercentage_;
     params.bDiscreteModeEnabled_ = bDiscreteModeEnabled_;
     params.rStealthFactor_ = rStealthFactor_;
     params.rTimingFactor_ = rTimingFactor_;
-    std::auto_ptr< PostureComputer_ABC > computer( pion_.GetAlgorithms().postureComputerFactory_->Create( params ) );
-    pion_.Execute( *computer );
+    std::auto_ptr< PostureComputer_ABC > computer( owner_.GetAlgorithms().postureComputerFactory_->Create( params ) );
+    owner_.Execute( *computer );
     PostureComputer_ABC::Results& result = computer->Result();
     if( result.newPosture_ )
         ChangePosture( *result.newPosture_ );
@@ -170,7 +169,7 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
         ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );
     bIsStealth_ = result.bIsStealth_;
     if( HasChanged() )
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,7 +200,7 @@ void PHY_RolePion_Posture::Install()
     bInstallationSetUpInProgress_ = true;
     if( rInstallationState_ >= 1. )
         return;
-    const double rTime = pion_.GetType().GetUnitType().GetInstallationTime();
+    const double rTime = owner_.GetType().GetUnitType().GetInstallationTime();
     if( rTime == 0 )
         rInstallationState_ = 1.;
     else
@@ -221,7 +220,7 @@ void PHY_RolePion_Posture::Uninstall()
 {
     if( rInstallationState_ <= 0. || bInstallationSetUpInProgress_ )
         return;
-    const double rTime = pion_.GetType().GetUnitType().GetUninstallationTime();
+    const double rTime = owner_.GetType().GetUnitType().GetUninstallationTime();
     if( rTime == 0 )
         rInstallationState_ = 0.;
     else
@@ -428,7 +427,7 @@ void PHY_RolePion_Posture::Execute( dotation::ConsumptionComputer_ABC& algorithm
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::Execute( detection::DetectionComputer_ABC& algorithm ) const
 {
-    if( bIsStealth_ && algorithm.GetTarget() == pion_ )
+    if( bIsStealth_ && algorithm.GetTarget() == owner_ )
         algorithm.NotifyStealth();
 }
 

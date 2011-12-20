@@ -12,6 +12,7 @@
 #ifndef __PHY_RolePion_Surrender_h_
 #define __PHY_RolePion_Surrender_h_
 
+#include "MIL.h"
 #include "PHY_RoleInterface_Surrender.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
@@ -83,19 +84,28 @@ private:
     virtual bool HasChanged() const;
     //@}
 
-          MIL_AgentPion&        pion_;
-          bool                  bPrisoner_;
-    const MIL_Object_ABC*       pPrison_;
-          bool                  bHasChanged_;
-          unsigned int          nbrHumansLodgingManaged_;
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Surrender )
+    //@}
 
-          template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Surrender* role, const unsigned int /*version*/ );
-          template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Surrender* role, const unsigned int /*version*/ );
-
+private:
+    //! @name Member data
+    //@{
+    MIL_AgentPion&        owner_;
+    bool                  bPrisoner_;
+    const MIL_Object_ABC* pPrison_;
+    bool                  bHasChanged_;
+    unsigned int          nbrHumansLodgingManaged_;
+    //@}
 };
 
 } // namespace surrender
 
 BOOST_CLASS_EXPORT_KEY( surrender::PHY_RolePion_Surrender )
+namespace surrender
+{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Surrender, MIL_AgentPion )
+}
 
 #endif // __PHY_RolePion_Surrender_h_

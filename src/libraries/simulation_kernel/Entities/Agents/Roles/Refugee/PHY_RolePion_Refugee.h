@@ -12,6 +12,7 @@
 #ifndef __PHY_RolePion_Refugee_h_
 #define __PHY_RolePion_Refugee_h_
 
+#include "MIL.h"
 #include "PHY_RoleInterface_Refugee.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "simulation_kernel/RefugeeActionsNotificationHandler_ABC.h"
@@ -84,21 +85,17 @@ private:
     void AddAffinityNearUnit( DEC_Knowledge_Agent& knowledge );
     //@}
 
-    MIL_AgentPion&        pion_;
-    bool                  bManaged_;
-    const MIL_Object_ABC* pCamp_;
-    bool                  bHasChanged_;
-    unsigned int          nbrHumansLodgingManaged_;
-    float                 lodgingSatisfaction_;
-    float                 securitySatisfaction_;
-    float                 healthSatisfaction_;
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Refugee )
+    //@}
 
+private:
+    //! @name Types
+    //@{
     struct NearbyUnitsAffinity
     {
-        NearbyUnitsAffinity() : maxSqrDistance( 0.0f ), affinitySum_( 0.0f ), absAffinitySum_ ( 0.0f )
-        {
-            // NOTHING
-        }
+        NearbyUnitsAffinity() : maxSqrDistance( 0.0f ), affinitySum_( 0.0f ), absAffinitySum_ ( 0.0f ) {}
 
         void resetAffinitySum( double maxDistance, const MT_Vector2D& newPosition )
         {
@@ -107,20 +104,34 @@ private:
             affinitySum_ = absAffinitySum_ = 0.0f;
         }
 
-        double maxSqrDistance;
-        float  affinitySum_;
-        float  absAffinitySum_;
+        double      maxSqrDistance;
+        float       affinitySum_;
+        float       absAffinitySum_;
         MT_Vector2D position;
     };
+    //@}
 
-    NearbyUnitsAffinity nearbyUnitsAffinity;
-
-    template< typename Archive > friend void save_construct_data( Archive& archive, const PHY_RolePion_Refugee* role, const unsigned int /*version*/ );
-    template< typename Archive > friend void load_construct_data( Archive& archive, PHY_RolePion_Refugee* role, const unsigned int /*version*/ );
+private:
+    //! @name Member data
+    //@{
+    MIL_AgentPion&        owner_;
+    bool                  bManaged_;
+    const MIL_Object_ABC* pCamp_;
+    bool                  bHasChanged_;
+    unsigned int          nbrHumansLodgingManaged_;
+    float                 lodgingSatisfaction_;
+    float                 securitySatisfaction_;
+    float                 healthSatisfaction_;
+    NearbyUnitsAffinity   nearbyUnitsAffinity;
+    //@}
 };
 
 } //namespace refugee
 
 BOOST_CLASS_EXPORT_KEY( refugee::PHY_RolePion_Refugee )
+namespace refugee
+{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Refugee, MIL_AgentPion )
+}
 
 #endif // __PHY_RolePion_Refugee_h_

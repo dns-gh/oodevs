@@ -20,32 +20,15 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOGConvoy_Supply )
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePionLOGConvoy_Supply( *pion );
-    pion->RegisterRole( *role );
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply constructor
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
 PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply( MIL_AgentPion& pion )
-    : pion_   ( pion )
+    : owner_( pion )
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply destructor
@@ -64,7 +47,6 @@ template< typename Archive >
 void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this );
-//         & pConvoy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +56,7 @@ void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const unsigned int 
 void PHY_RolePionLOGConvoy_Supply::Update( bool bIsDead )
 {
     if( bIsDead )
-        pion_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, pion_.GetAutomate().GetPionPC() );
+        owner_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, owner_.GetAutomate().GetPionPC() );
 }
 
 // -----------------------------------------------------------------------------

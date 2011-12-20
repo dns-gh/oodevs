@@ -49,17 +49,17 @@ std::pair< T, U > operator+( const std::pair< T, U >& lhs, const std::pair< T, U
 template< typename Archive > friend void save_construct_data( Archive& archive, const BASE_NAME* role, const unsigned int /*version*/ );     \
 template< typename Archive > friend void load_construct_data( Archive& archive, BASE_NAME* role, const unsigned int /*version*/ );
 
-#define INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( BASE_NAME )                                            \
+#define INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( BASE_NAME, CONSTRUCTOR_PARAMETER )                     \
 template< typename Archive >                                                                            \
 void save_construct_data( Archive& archive, const BASE_NAME* role, const unsigned int /*version*/ )     \
 {                                                                                                       \
-    const MIL_Agent_ABC* const pion = &role->pion_;                                                     \
+    const CONSTRUCTOR_PARAMETER* const pion = &role->owner_;                                            \
     archive << pion;                                                                                    \
 }                                                                                                       \
 template< typename Archive >                                                                            \
 void load_construct_data( Archive& archive, BASE_NAME* role, const unsigned int /*version*/ )           \
 {                                                                                                       \
-    MIL_Agent_ABC* pion;                                                                                \
+    CONSTRUCTOR_PARAMETER* pion;                                                                                \
     archive >> pion;                                                                                    \
     ::new( role )BASE_NAME( *pion );                                                                    \
 }

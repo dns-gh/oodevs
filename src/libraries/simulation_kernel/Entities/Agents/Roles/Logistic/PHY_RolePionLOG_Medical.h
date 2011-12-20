@@ -53,7 +53,6 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -167,28 +166,30 @@ private:
     void ExecuteOnComponentsAndLendedComponents( ComposanteUsePredicate_ABC& predicate, PHY_Composante_ABC::T_ComposanteUseMap& result ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePionLOG_Medical )
+    //@}
+
 private:
     //! @name Member data
     //@{
-    MIL_AgentPionLOG_ABC& pion_;
-    bool bHasChanged_;
-    bool bExternalMustChangeState_;
-    bool bSystemEnabled_;
-    bool bSortingFunctionEnabled_;
-    bool bHealingFunctionEnabled_;
-    T_MedicalPriorityVector priorities_;
-    T_AutomateVector tacticalPriorities_;
-    T_MedicalConsigns consigns_;
-    T_EvacuationAmbulancesMMap evacuationAmbulances_;
-    T_CollectionAmbulancesList collectionAmbulances_;
-    T_CollectionAmbulancesSet reservations_;
+    MIL_AgentPionLOG_ABC&       owner_;
+    bool                        bHasChanged_;
+    bool                        bExternalMustChangeState_;
+    bool                        bSystemEnabled_;
+    bool                        bSortingFunctionEnabled_;
+    bool                        bHealingFunctionEnabled_;
+    T_MedicalPriorityVector     priorities_;
+    T_AutomateVector            tacticalPriorities_;
+    T_MedicalConsigns           consigns_;
+    T_EvacuationAmbulancesMMap  evacuationAmbulances_;
+    T_CollectionAmbulancesList  collectionAmbulances_;
+    T_CollectionAmbulancesSet   reservations_;
     //@}
-
-    template< typename Archive > friend void save_construct_data( Archive& archive, const PHY_RolePionLOG_Medical* role, const unsigned int /*version*/ );
-    template< typename Archive > friend void load_construct_data( Archive& archive, PHY_RolePionLOG_Medical* role, const unsigned int /*version*/ );
-
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePionLOG_Medical )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePionLOG_Medical, MIL_AgentPionLOG_ABC )
 
 #endif // __PHY_RolePionLOG_Medical_h_

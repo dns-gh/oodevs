@@ -13,6 +13,7 @@
 #define __Role_ABC_h_
 
 #include <boost/serialization/export.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace tools
 {
@@ -20,7 +21,7 @@ namespace tools
 // @class  Role_ABC
 // Created: JVT/NLD 2004-08-03
 // =============================================================================
-class Role_ABC
+class Role_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructor/Destructor

@@ -579,7 +579,7 @@ void NET_ASN_Tools::ReadTick( const DateTime& asn, unsigned int& simTick )
         ReadGDH( asn, value );
         simTick = MIL_AgentServer::GetWorkspace().RealTimeToTick( value );
     }
-    catch( std::exception& e )
+    catch( std::exception& )
     {
         simTick = 0;
     }

@@ -26,27 +26,12 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_Flying )
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RoleAction_Flying* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* const entity = &role->entity_;
-    archive << entity;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RoleAction_Flying* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* entity;
-    archive >> entity;
-    ::new( role )PHY_RoleAction_Flying( *entity );
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Flying constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Flying::PHY_RoleAction_Flying( MIL_Agent_ABC& entity )
-    : entity_   ( entity )
+    : owner_   ( entity )
     , effectFly_( *this )
     , rHeight_  ( 0. )
 {
@@ -70,7 +55,7 @@ template< typename Archive >
 void PHY_RoleAction_Flying::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleAction_InterfaceFlying >( *this )
-         & entity_;
+         & owner_;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,9 +67,9 @@ bool PHY_RoleAction_Flying::TakeOff()
     if( pActionFly_ )
         return false;
 
-    pActionFly_.reset( new PHY_ActionFly( entity_ ) );
-    entity_.RegisterAction( pActionFly_ );
-    entity_.Apply( &FlyListener_ABC::TakeOff );
+    pActionFly_.reset( new PHY_ActionFly( owner_ ) );
+    owner_.RegisterAction( pActionFly_ );
+    owner_.Apply( &FlyListener_ABC::TakeOff );
     return true;
 }
 
@@ -97,10 +82,10 @@ bool PHY_RoleAction_Flying::Land()
     if( !pActionFly_ )
         return false;
 
-    entity_.UnregisterAction( pActionFly_->GetId() );
+    owner_.UnregisterAction( pActionFly_->GetId() );
     rHeight_ = 0.;
     pActionFly_.reset();
-    entity_.Apply( &FlyListener_ABC::Land );
+    owner_.Apply( &FlyListener_ABC::Land );
     return true;
 }
 
@@ -137,8 +122,8 @@ void PHY_RoleAction_Flying::Fly()
 void PHY_RoleAction_Flying::Apply( double rHeight )
 {
     std::auto_ptr< dotation::ConsumptionModeChangeRequest_ABC > request =
-            entity_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest( PHY_ConsumptionType::moving_ );
-    entity_.Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
+            owner_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest( PHY_ConsumptionType::moving_ );
+    owner_.Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
 
     if( !request->AllChanged() || rHeight <= 0. )
         Land();

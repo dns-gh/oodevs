@@ -62,7 +62,6 @@ public:
     virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable, bool& bTransportedByAnother );
     virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable, MT_Vector2D* position );
     virtual void CancelTransport    ( const MIL_Agent_ABC& transporter );
-
     virtual bool IsTransported      () const;
     void Execute(TransportPermissionComputer_ABC& alg) const;
     //@}
@@ -92,20 +91,28 @@ private:
     virtual bool HasChanged() const;
     //@}
 
-          MIL_AgentPion& pion_;
-          bool           bHasChanged_;
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Transported )
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    MIL_AgentPion&       owner_;
+    bool                 bHasChanged_;
     const MIL_Agent_ABC* pTransporter_;
-
-    MT_Vector2D  vLoadingPosition_;
-    MT_Vector2D  vHumanTransporterPosition_; // position des 'VABs' quand seuls les humains sont héliportés
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Transported* role, const unsigned int /*version*/ );
-      template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Transported* role, const unsigned int /*version*/ );
-
+    MT_Vector2D          vLoadingPosition_;
+    MT_Vector2D          vHumanTransporterPosition_; // position des 'VABs' quand seuls les humains sont héliportés
+    //@}
 };
 
 } // namespace transport
 
 BOOST_CLASS_EXPORT_KEY( transport::PHY_RolePion_Transported )
+namespace transport
+{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Transported, MIL_AgentPion )
+}
 
 #endif // __PHY_RolePion_Transported_h_

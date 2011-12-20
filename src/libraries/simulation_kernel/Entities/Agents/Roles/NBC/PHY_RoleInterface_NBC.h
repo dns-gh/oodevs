@@ -29,7 +29,6 @@ namespace nbc
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_NBC : public tools::Role_ABC
-                            , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -74,9 +73,6 @@ public:
 private:
     //! @name Serialization
     //@{
-//    virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
-//    virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
-
     friend class ::boost::serialization::access;
     template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {

@@ -12,6 +12,7 @@
 #ifndef __PHY_RolePion_Humans_h_
 #define __PHY_RolePion_Humans_h_
 
+#include "MIL.h"
 #include "PHY_RoleInterface_Humans.h"
 #include "HumansActionsNotificationHandler_ABC.h"
 #include "simulation_kernel/Entities/Agents/Units/Humans/Human_ABC.h"
@@ -102,8 +103,7 @@ private:
 
     //! @name Serialization
     //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, const unsigned int /*version*/ );
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Humans )
     //@}
 
 private:
@@ -148,19 +148,23 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&      pion_;
-    T_HumanStateVector  humansStates_;
-    T_HumanSet          humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
-    bool                hasChanged_;
-    unsigned int        nNbrUsableHumans_;
+    MIL_AgentPion&     owner_;
+    T_HumanStateVector humansStates_;
+    T_HumanSet         humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
+    bool               hasChanged_;
+    unsigned int       nNbrUsableHumans_;
     // Medical
-    unsigned int           nTickRcMedicalQuerySent_;
-    E_EvacuationMode       nEvacuationMode_;
+    unsigned int       nTickRcMedicalQuerySent_;
+    E_EvacuationMode   nEvacuationMode_;
     //@}
 };
 
 } //namespace human
 
 BOOST_CLASS_EXPORT_KEY( human::PHY_RolePion_Humans )
+namespace human
+{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Humans, MIL_AgentPion )
+}
 
 #endif // __PHY_RolePion_Humans_h_

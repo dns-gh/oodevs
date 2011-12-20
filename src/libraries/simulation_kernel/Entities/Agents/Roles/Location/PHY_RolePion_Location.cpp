@@ -35,27 +35,12 @@ using namespace location;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Location )
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePion_Location* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePion_Location* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePion_Location( *pion );
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion )
-    : pion_                   ( pion )
+    : owner_                  ( pion )
     , vDirection_             (  0.,  0. )
     , pvPosition_             ( new MT_Vector2D ( -1., -1. ) )   //$$$ Devrait être 'NULL'
     , rHeight_                ( -1. )
@@ -123,7 +108,7 @@ void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const unsigned
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC& PHY_RolePion_Location::GetAgent() const
 {
-    return pion_;
+    return owner_;
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +209,7 @@ void PHY_RolePion_Location::Follow( const MIL_Agent_ABC& agent )
     SetHeight( roleLocation.GetHeight() );
 
     if( bPositionHasChanged_ || bDirectionHasChanged_|| bHeightHasChanged_ || bCurrentSpeedHasChanged_ )
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,8 +247,8 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 {
-    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMagicMoveComputer();
-    pion_.Execute( *moveComputer );
+    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_.GetAlgorithms().moveComputerFactory_->CreateMagicMoveComputer();
+    owner_.Execute( *moveComputer );
 
     if( !moveComputer->CanMove() && !moveComputer->CanMoveOverride() )
         return;
@@ -282,7 +267,7 @@ void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyFlowCollision( MIL_PopulationFlow& population )
 {
-    pion_.GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
+    owner_.GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -291,7 +276,7 @@ void PHY_RolePion_Location::NotifyFlowCollision( MIL_PopulationFlow& population 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyConcentrationCollision( MIL_PopulationConcentration& population )
 {
-    pion_.GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
+    owner_.GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -300,7 +285,7 @@ void PHY_RolePion_Location::NotifyConcentrationCollision( MIL_PopulationConcentr
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyTerrainObjectCollision( MIL_Object_ABC& object )
 {
-    pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, *pvPosition_ );
+    owner_.GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, *pvPosition_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -309,7 +294,7 @@ void PHY_RolePion_Location::NotifyTerrainObjectCollision( MIL_Object_ABC& object
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentMovingInside( pion_ );
+    object.NotifyAgentMovingInside( owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -318,7 +303,7 @@ void PHY_RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentMovingOutside( pion_ );
+    object.NotifyAgentMovingOutside( owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -327,7 +312,7 @@ void PHY_RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentPutInside( pion_ );
+    object.NotifyAgentPutInside( owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -336,7 +321,7 @@ void PHY_RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyPutOutsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentPutOutside( pion_ );
+    object.NotifyAgentPutOutside( owner_ );
 }
 
 // =============================================================================
@@ -436,17 +421,17 @@ void PHY_RolePion_Location::Update( bool bIsDead )
     if( bIsDead || !bHasMove_ )
         Move( *pvPosition_, vDirection_, 0. );
 
-    std::auto_ptr< LocationComputer_ABC > computer( pion_.GetAlgorithms().locationComputerFactory_->Create() );
-    SetHeight( pion_.Execute( *computer ).GetHeight() );
+    std::auto_ptr< LocationComputer_ABC > computer( owner_.GetAlgorithms().locationComputerFactory_->Create() );
+    SetHeight( owner_.Execute( *computer ).GetHeight() );
 
     if( HasLocationChanged() )
     {
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
-        pion_.Apply( &location::MovementHandler_ABC::NotifyHasMove, GetPosition() );
+        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        owner_.Apply( &location::MovementHandler_ABC::NotifyHasMove, GetPosition() );
     }
     if( HasSpeedChanged() )
-        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
 
 }
 
@@ -488,7 +473,7 @@ bool PHY_RolePion_Location::HasLocationChanged() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyTerrainPutInsideObject( MIL_Object_ABC& object )
 {
-    pion_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
+    owner_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -497,7 +482,7 @@ void PHY_RolePion_Location::NotifyTerrainPutInsideObject( MIL_Object_ABC& object
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyTerrainPutOutsideObject( MIL_Object_ABC& object )
 {
-    pion_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
+    owner_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
 }
 
 // -----------------------------------------------------------------------------

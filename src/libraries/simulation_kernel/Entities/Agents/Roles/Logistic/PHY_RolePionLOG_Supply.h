@@ -12,6 +12,7 @@
 #ifndef __PHY_RolePionLOG_Supply_h_
 #define __PHY_RolePionLOG_Supply_h_
 
+#include "MIL.h"
 #include "PHY_RoleInterface_Supply.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
@@ -35,8 +36,11 @@ class PHY_RolePionLOG_Supply : public PHY_RoleInterface_Supply
                              , public network::NetworkMessageSender_ABC
 {
 public:
-    explicit PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion, bool fromArchive = false );
+    //! @name Constructors/Destructor
+    //@{
+    explicit PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion );
     virtual ~PHY_RolePionLOG_Supply();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -51,8 +55,8 @@ public:
 
     //! @name Accessors
     //@{
-    virtual       MIL_AutomateLOG*      FindLogisticManager() const;
-    virtual const MIL_AgentPionLOG_ABC& GetPion() const;
+    virtual MIL_AutomateLOG* FindLogisticManager() const;
+    virtual const MIL_AgentPion& GetPion() const;
     //@}
 
     //! @name Operations
@@ -103,18 +107,23 @@ private:
     double GetConvoyTransportersAvailabilityRatio() const;
     //@}
 
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePionLOG_Supply )
+    //@}
+
 private:
-    MIL_AgentPionLOG_ABC&       pion_;
+    //! @name Member data
+    //@{
+    MIL_AgentPionLOG_ABC&       owner_;
     bool                        bSystemEnabled_;
     bool                        bHasChanged_;
     bool                        bExternalMustChangeState_;
     PHY_DotationStockContainer* pStocks_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ );
-
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePionLOG_Supply )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePionLOG_Supply, MIL_AgentPionLOG_ABC )
 
 #endif // __PHY_RolePionLOG_Supply_h_

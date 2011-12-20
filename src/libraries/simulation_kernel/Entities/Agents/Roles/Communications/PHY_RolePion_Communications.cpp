@@ -36,7 +36,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Communications )
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Communications* role, const unsigned int /*version*/ )
 {
-    MIL_Entity_ABC* const entity = &role->entity_;
+    MIL_Entity_ABC* const entity = &role->owner_;
     archive << entity
             << role->bIsAutonomous_;
 }
@@ -45,12 +45,11 @@ template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Communications* role, const unsigned int /*version*/ )
 {
     MIL_Agent_ABC* entity;
-  bool isAutonomous;
+    bool isAutonomous;
     archive >> entity
-          >> isAutonomous;
+            >> isAutonomous;
     ::new( role )PHY_RolePion_Communications( *entity, isAutonomous );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::Initialize
@@ -76,7 +75,7 @@ void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_Agent_ABC& entity, const bool bIsAutonomous )
-    : entity_                    ( entity )
+    : owner_                    ( entity )
     , bHasChanged_               ( true )
     , bBlackoutReceivedActivated_( false )
     , bBlackoutEmmittedActivated_( false )
@@ -175,7 +174,7 @@ void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 void PHY_RolePion_Communications::CopyKnowledgeGroup()
 {
     if( !pJammingKnowledgeGroup_ )
-        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( entity_.GetKnowledgeGroup(), entity_, 0 );
+        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( owner_.GetKnowledgeGroup(), owner_, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,8 +185,8 @@ void PHY_RolePion_Communications::CopyKnowledgeGroupPartial()
 {
     if( !pJammingKnowledgeGroup_ )
     {
-        MIL_KnowledgeGroup& parent = entity_.GetKnowledgeGroup();
-        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( parent, entity_, &parent );
+        MIL_KnowledgeGroup& parent = owner_.GetKnowledgeGroup();
+        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( parent, owner_, &parent );
     }
 }
 
@@ -244,7 +243,7 @@ void PHY_RolePion_Communications::Update( bool /*bIsDead*/ )
     if( bHasChanged_ && pJammingKnowledgeGroup_ )
         pJammingKnowledgeGroup_->UpdateKnowledges( MIL_Singletons::GetTime().GetCurrentTick() );
     if( bHasChanged_ )
-        entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -269,6 +268,7 @@ void PHY_RolePion_Communications::ActivateBlackout()
     bBlackoutReceivedActivated_ = true;
     bHasChanged_ = true;
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::ActivatePartialBlackout
 // Created: HBD 2010-06-16
@@ -313,7 +313,7 @@ void PHY_RolePion_Communications::DeactivateBlackout()
 MIL_KnowledgeGroup& PHY_RolePion_Communications::GetKnowledgeGroup() const
 {
     if( pJammingKnowledgeGroup_ == 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Jamming knowledge group undefined for agent %d ", entity_.GetID() ) );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Jamming knowledge group undefined for agent %d ", owner_.GetID() ) );
     return *pJammingKnowledgeGroup_;
 }
 
@@ -349,7 +349,7 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectPerception( const DE
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pJammingKnowledgeGroup_->GetKnowledge().ResolveKnowledgeObject( object );
 
     if( !pKnowledge || !pKnowledge->IsValid() )
-        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( entity_.GetArmy(), perception.GetObjectPerceived() );
+        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( owner_.GetArmy(), perception.GetObjectPerceived() );
 
     if( pKnowledge ) // $$$$ LDC: idem fix SLG rev 10556 : objects for urban knowledges don't have knowledges...
         pKnowledge->Update( perception );
@@ -364,7 +364,7 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectCollision( const DEC
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pJammingKnowledgeGroup_->GetKnowledge().ResolveKnowledgeObject( collision.GetObject() );
 
     if( !pKnowledge || !pKnowledge->IsValid() )
-        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( entity_.GetArmy(), collision.GetObject() );
+        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( owner_.GetArmy(), collision.GetObject() );
 
     pKnowledge->Update( collision );
 }

@@ -12,9 +12,8 @@
 #ifndef __PHY_RolePion_Population_h_
 #define __PHY_RolePion_Population_h_
 
+#include "MIL.h"
 #include "PHY_RoleInterface_Population.h"
-#include "MT_Tools/AlgorithmModifier_ABC.h"
-
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
 class MIL_Agent_ABC;
@@ -56,26 +55,28 @@ public:
     //! @name Operations
     //@{
     virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
-
     virtual bool IsInvulnerable        () const;
-
     virtual double GetCollidingPopulationDensity() const;
     virtual bool HasCollision() const;
     virtual bool HasCollisionWithCrowd( const MIL_Population& population ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Population )
+    //@}
 
 private:
-    MIL_Agent_ABC& pion_;
+    //! @name Member data
+    //@{
+    MIL_Agent_ABC& owner_;
     mutable double rPopulationDensity_;
     bool           bHasChanged_;
     mutable bool   bDensityComputed_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Population* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Population* role, const unsigned int /*version*/ );
-
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Population )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Population, MIL_Agent_ABC )
 
 #endif // __PHY_RolePion_Population_h_

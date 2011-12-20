@@ -54,7 +54,6 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -117,38 +116,38 @@ private:
     void Uninstall();
     //@}
 
-private:
-    //! @name Data Members
-    //@{
-    MIL_Agent_ABC& pion_;
-    const PHY_Posture* pCurrentPosture_;
-    const PHY_Posture* pLastPosture_;
-    double rPostureCompletionPercentage_;
-    double rElongationFactor_;
-    double rTimingFactor_;
-    bool bDiscreteModeEnabled_;
-    double rStealthFactor_;
-    bool bIsStealth_;
-    // Installation
-    double rInstallationState_;
-    bool bInstallationSetUpInProgress_;
-    // Network
-    bool bInstallationStateHasChanged_;
-    bool bPostureHasChanged_;
-    bool bPercentageCrossed50_;
-    bool bStealthFactorHasChanged_;
-    bool bPercentageHasChanged_;
-    mutable double rLastPostureCompletionPercentageSent_;
-    mutable double rLastInstallationStateSent_;
-    //@}
-
-private:
     //! @name Serialization
     //@{
     INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Posture )
     //@}
+
+private:
+    //! @name Data Members
+    //@{
+    MIL_Agent_ABC&      owner_;
+    const PHY_Posture*  pCurrentPosture_;
+    const PHY_Posture*  pLastPosture_;
+    double              rPostureCompletionPercentage_;
+    double              rElongationFactor_;
+    double              rTimingFactor_;
+    bool                bDiscreteModeEnabled_;
+    double              rStealthFactor_;
+    bool                bIsStealth_;
+    // Installation
+    double              rInstallationState_;
+    bool                bInstallationSetUpInProgress_;
+    // Network
+    bool                bInstallationStateHasChanged_;
+    bool                bPostureHasChanged_;
+    bool                bPercentageCrossed50_;
+    bool                bStealthFactorHasChanged_;
+    bool                bPercentageHasChanged_;
+    mutable double      rLastPostureCompletionPercentageSent_;
+    mutable double      rLastInstallationStateSent_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Posture )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Posture, MIL_Agent_ABC )
 
 #endif // __PHY_RolePion_Posture_h_

@@ -41,7 +41,6 @@ enum E_RulesOfEngagementState;
 // =============================================================================
 class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
                             , public network::NetworkUnitAttributesMessageSender_ABC
-                            , private boost::noncopyable
 {
 
 public:

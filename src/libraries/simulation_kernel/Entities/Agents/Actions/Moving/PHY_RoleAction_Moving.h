@@ -12,6 +12,7 @@
 #ifndef __PHY_RoleAction_Moving_h_
 #define __PHY_RoleAction_Moving_h_
 
+#include "MIL.h"
 #include "MT_Tools/Role_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
@@ -42,7 +43,6 @@ namespace moving
 // =============================================================================
 class PHY_RoleAction_Moving : public tools::Role_ABC
                             , public PHY_MovingEntity_ABC
-                            , private boost::noncopyable
                             , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
                             , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
                             , public network::NetworkMessageSender_ABC
@@ -138,29 +138,31 @@ private:
     void SendEnvironmentType( unsigned int context = 0 ) const;
     //@}
 
-    //! @name Tools
+    //! @name Serialization
     //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Moving* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Moving* role, const unsigned int /*version*/ );
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_Moving )
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion& pion_;
+    MIL_AgentPion&              owner_;
     PHY_RoleInterface_Location* pRoleLocation_;
-    double rSpeed_;
-    double rSpeedModificator_;
-    double rMaxSpeedModificator_;
+    double                      rSpeed_;
+    double                      rSpeedModificator_;
+    double                      rMaxSpeedModificator_;
     // Network
-    bool bCurrentPathHasChanged_;
-    bool bEnvironmentHasChanged_;
-    bool bHasMove_;
+    bool                        bCurrentPathHasChanged_;
+    bool                        bEnvironmentHasChanged_;
+    bool                        bHasMove_;
     //@}
 };
 
 } // namespace moving
 
 BOOST_CLASS_EXPORT_KEY( moving::PHY_RoleAction_Moving )
-
+namespace moving
+{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_Moving, MIL_AgentPion )
+}
 #endif // __PHY_RoleAction_Moving_h_

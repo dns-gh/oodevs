@@ -65,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const MIL_Agent_ABC& pion_;
+    const MIL_Agent_ABC& owner_;
     E_DeploymentState    eDeploymentState_;
     double               rDeploymentValue_;
     double               rDeploymentGap_;
@@ -74,5 +74,6 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Deployment )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Deployment, MIL_Agent_ABC )
 
 #endif // __PHY_RolePion_Deployment_h_

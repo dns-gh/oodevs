@@ -10,6 +10,7 @@
 #ifndef __PHY_RoleAction_CrowdTransport_h_
 #define __PHY_RoleAction_CrowdTransport_h_
 
+#include "MIL.h"
 #include "TransportNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/Role_ABC.h"
@@ -33,7 +34,6 @@ namespace crowdtransport
 // Created: JSR 2011-08-09
 // =============================================================================
 class PHY_RoleAction_CrowdTransport : public tools::Role_ABC
-                                    , private boost::noncopyable
                                     , public transport::TransportNotificationHandler_ABC
                                     , public network::NetworkUnitAttributesMessageSender_ABC
 {
@@ -92,7 +92,6 @@ private:
         eFinished,
         eImpossible
     };
-
     enum E_State
     {
         eNothing,
@@ -101,28 +100,30 @@ private:
     };
     //@}
 
-private:
-    //! @name Helpers
+    //! @name Serialization
     //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_CrowdTransport* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_CrowdTransport* role, const unsigned int /*version*/ );
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_CrowdTransport )
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion& transporter_;
-    bool bUpdated_;
-    E_State nState_;
-    double currentProgress_;
+    MIL_AgentPion&       owner_;
+    bool                 bUpdated_;
+    E_State              nState_;
+    double               currentProgress_;
     MIL_PopulationHumans loadedHumans_;
-    MIL_Population* currentCrowd_;
-    bool bHasChanged_;
+    MIL_Population*      currentCrowd_;
+    bool                 bHasChanged_;
     //@}
 };
 
 } // namespace crowdtransport
 
 BOOST_CLASS_EXPORT_KEY( crowdtransport::PHY_RoleAction_CrowdTransport )
+namespace crowdtransport
+{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_CrowdTransport, MIL_AgentPion )
+}
 
 #endif // __PHY_RoleAction_CrowdTransport_h_

@@ -29,7 +29,6 @@ class DEC_Knowledge_ObjectCollision;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Communications : public tools::Role_ABC
-                                       , private boost::noncopyable
 {
 public:
     //! @name Types

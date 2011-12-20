@@ -54,25 +54,23 @@ private:
     void UpdateSafety( float radius, float safetyDistance );
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Types
     //@{
-    PHY_RolePion_TerrainAnalysis( const PHY_RolePion_TerrainAnalysis& );            //!< Copy constructor
-    PHY_RolePion_TerrainAnalysis& operator=( const PHY_RolePion_TerrainAnalysis& ); //!< Assignment operator
+    typedef std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > > T_Buffer;
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& pion_;
-    MT_Vector2D lastPos_;
-    std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > > crossroadsBuffer_;
-    std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > > safetyBuffer_;
-    MIL_Fuseau fuseau_;
-    float cacheRadius_;
-    float cacheSafety_;
-    bool crossroadsCacheValid_;
-    bool safetyCacheValid_;
+    MIL_Agent_ABC& owner_;
+    MT_Vector2D    lastPos_;
+    T_Buffer       crossroadsBuffer_;
+    T_Buffer       safetyBuffer_;
+    MIL_Fuseau     fuseau_;
+    float          cacheRadius_;
+    float          cacheSafety_;
+    bool           crossroadsCacheValid_;
+    bool           safetyCacheValid_;
     //@}
 };
 

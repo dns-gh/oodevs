@@ -27,7 +27,6 @@ class MIL_Mission_ABC;
 // Created: JVT 2004-08-03
 // =============================================================================
 class DEC_PopulationDecision : public DEC_Decision< MIL_Population >
-                             , private boost::noncopyable
 {
 
 public:

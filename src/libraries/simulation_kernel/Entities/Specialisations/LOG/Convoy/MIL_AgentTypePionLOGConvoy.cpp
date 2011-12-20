@@ -38,9 +38,9 @@ MIL_AgentTypePionLOGConvoy::~MIL_AgentTypePionLOGConvoy()
 // Name: MIL_AgentTypePionLOGConvoy::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( MIL_Automate& /*automate*/, const AlgorithmsFactories& /*algorithmFactories*/, xml::xistream& xis ) const
 {
-    return new MIL_AgentPionLOGConvoy( *this, automate, algorithmFactories, xis );
+    throw xml::exception( xis.context() + "Creation of pion of type 'Pion LOG Convoi' not allowed in ODB" );
 }
 
 // -----------------------------------------------------------------------------

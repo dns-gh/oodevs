@@ -33,11 +33,11 @@
 // Created: MGD 2010-04-20
 // -----------------------------------------------------------------------------
 PHY_RolePion_TerrainAnalysis::PHY_RolePion_TerrainAnalysis( MIL_Agent_ABC& pion )
-    : pion_( pion )
-    , cacheRadius_( 3000.f )
-    , cacheSafety_( 0.f )
-    , crossroadsCacheValid_( false )
-    , safetyCacheValid_( false )
+    : owner_                ( pion )
+    , cacheRadius_          ( 3000.f )
+    , cacheSafety_          ( 0.f )
+    , crossroadsCacheValid_ ( false )
+    , safetyCacheValid_     ( false )
 {
     // NOTHING
 }
@@ -70,7 +70,7 @@ void PHY_RolePion_TerrainAnalysis::GetCrossroads( std::vector< boost::shared_ptr
 // -----------------------------------------------------------------------------
 void PHY_RolePion_TerrainAnalysis::CheckFuseau()
 {
-    const MIL_Fuseau& fuseau = pion_.GetOrderManager().GetFuseau();
+    const MIL_Fuseau& fuseau = owner_.GetOrderManager().GetFuseau();
     if( fuseau_ != fuseau  )
     {
         crossroadsCacheValid_ = false;
@@ -84,7 +84,7 @@ void PHY_RolePion_TerrainAnalysis::CheckFuseau()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_TerrainAnalysis::NotifyHasMove( const MT_Vector2D& newPos )
 {
-    const double range = std::min( std::max( pion_.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance(), 3000. ), (double)cacheRadius_ );
+    const double range = std::min( std::max( owner_.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance(), 3000. ), (double)cacheRadius_ );
     const double squareRange = range * range;
     if( lastPos_.SquareDistance( newPos ) > squareRange * 0.25 )
     {
@@ -100,7 +100,7 @@ void PHY_RolePion_TerrainAnalysis::NotifyHasMove( const MT_Vector2D& newPos )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_TerrainAnalysis::UpdateCrossroads()
 {
-    const double range = std::min( std::max( pion_.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance(), 3000. ), (double)cacheRadius_ );
+    const double range = std::min( std::max( owner_.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance(), 3000. ), (double)cacheRadius_ );
     const double squareRange = range * range;
     //Remove old points out of range
     //Note that it's better than clearing the buffer as it allows to keep the same shared ptr so directia won't spawn a new node
@@ -189,12 +189,12 @@ void PHY_RolePion_TerrainAnalysis::FindSafetyPositionsWithinCircle( std::vector<
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain( const std::vector< MT_Vector2D >& points ) const
 {
-    if( !pion_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+    if( !owner_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
     {
         for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
         {
             const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *it );
-            double maxSpeed = pion_.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed( data );
+            double maxSpeed = owner_.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed( data );
             if( maxSpeed <= 0. )
                 return false;
         }
@@ -208,9 +208,9 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain( const std::vector< MT_Vecto
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock( const std::vector< MT_Vector2D >& points ) const
 {
-    if( !pion_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+    if( !owner_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
     {
-        double weight = pion_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+        double weight = owner_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
         for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
         {
             if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
@@ -226,7 +226,7 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock( const std::vector< MT_Ve
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnBurningCells( const std::vector< MT_Vector2D >& points ) const
 {
-    if( !pion_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+    if( !owner_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
     {
         for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
         {
@@ -244,11 +244,11 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnBurningCells( const std::vector< MT_
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnKnowledgeObject( const std::vector< MT_Vector2D >& points ) const
 {
     T_KnowledgeObjectVector knowledgesObject;
-    pion_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
+    owner_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
     for( CIT_KnowledgeObjectVector it = knowledgesObject.begin(); it != knowledgesObject.end(); ++it )
     {
         const DEC_Knowledge_Object& knowledge = **it;
-        if( knowledge.RetrieveAttribute< FloodAttribute >() != 0 && knowledge.IsObjectInsidePathPoint( points, pion_ ) )
+        if( knowledge.RetrieveAttribute< FloodAttribute >() != 0 && knowledge.IsObjectInsidePathPoint( points, owner_ ) )
             return false;
     }
     return true;

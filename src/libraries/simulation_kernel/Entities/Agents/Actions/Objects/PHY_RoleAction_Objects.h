@@ -12,6 +12,7 @@
 #ifndef __PHY_RoleAction_Objects_h_
 #define __PHY_RoleAction_Objects_h_
 
+#include "MIL.h"
 #include "MT_Tools/Role_ABC.h"
 
 class DEC_Knowledge_Object;
@@ -27,7 +28,6 @@ class UrbanObjectWrapper;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_Objects : public tools::Role_ABC
-                             , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -114,19 +114,23 @@ private:
     int Construct( MIL_Object_ABC& object );
     int Mine( MIL_Object_ABC& object );
     int Demine( MIL_Object_ABC& object );
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Objects* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Objects* role, const unsigned int /*version*/ );
+    //@}
+
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_Objects )
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion& pion_;
-    double rWeightCapacity_;
-    double rVolumeCapacity_;
+    MIL_AgentPion& owner_;
+    double         rWeightCapacity_;
+    double         rVolumeCapacity_;
     //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_Objects )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_Objects, MIL_AgentPion )
 
 #endif // __PHY_RoleAction_Objects_h_

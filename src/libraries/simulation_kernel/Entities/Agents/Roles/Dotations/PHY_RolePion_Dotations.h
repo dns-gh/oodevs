@@ -47,16 +47,14 @@ class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
                              , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
-    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion, bool fromArchive = false );
+    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Dotations();
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-
     void WriteODB( xml::xostream& xos ) const;
     //@}
 
@@ -112,7 +110,6 @@ public:
 
     //! @name Network
     //@{
-
     void SendChangedState( client::UnitAttributes& asn ) const;
     void SendFullState   ( client::UnitAttributes& asn ) const;
     //@}
@@ -120,7 +117,6 @@ public:
     //! @name Logistic - Supply
     //@{
     virtual void Apply( boost::function< void( PHY_Dotation& ) > visitor ) const;
-
     void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const; // Logistic
     void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const;
     //@}
@@ -128,7 +124,7 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_Dotation*, double /*rValueReserved*/ > T_DotationReservedMap;
+    typedef std::map< const PHY_Dotation*, double /*rValueReserved*/ >   T_DotationReservedMap;
     typedef T_DotationReservedMap::const_iterator                      CIT_DotationReservedMap;
     //@}
 
@@ -138,20 +134,29 @@ private:
     bool HasChanged() const;
     //@}
 
-    MIL_AgentPion& pion_;
-    PHY_DotationGroupContainer* pDotations_;
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Dotations )
+    //@}
 
-    const PHY_ConsumptionType* pCurrentConsumptionMode_;
-    const PHY_ConsumptionType* pPreviousConsumptionMode_;
-    T_DotationReservedMap reservedConsumptions_;
-
-    std::vector< const PHY_DotationCategory* > forbiddenDotations_;
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
+private:
+    //! @name Member data
+    //@{
+    MIL_AgentPion&                              owner_;
+    PHY_DotationGroupContainer*                 pDotations_;
+    const PHY_ConsumptionType*                  pCurrentConsumptionMode_;
+    const PHY_ConsumptionType*                  pPreviousConsumptionMode_;
+    T_DotationReservedMap                       reservedConsumptions_;
+    std::vector< const PHY_DotationCategory* >  forbiddenDotations_;
+    //@}
 };
 
 } // namespace dotation
 
 BOOST_CLASS_EXPORT_KEY( dotation::PHY_RolePion_Dotations )
+namespace dotation
+{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Dotations, MIL_AgentPion )
+}
 
 #endif // __PHY_RolePion_Dotations_h_

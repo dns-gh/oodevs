@@ -27,7 +27,6 @@ class MIL_AgentPion;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Reinforcement : public tools::Role_ABC
-                                      , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -61,7 +60,6 @@ public:
     virtual bool IsReinforcedBy( MIL_AgentPion& pion ) const = 0;
     //@}
 
-
     //! @name Network
     //@{
     virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
@@ -74,6 +72,7 @@ public:
     virtual bool CanReinforce() const = 0;
     virtual bool CanBeReinforced() const = 0;
     //@}
+
 private:
     //! @name Serialization
     //@{

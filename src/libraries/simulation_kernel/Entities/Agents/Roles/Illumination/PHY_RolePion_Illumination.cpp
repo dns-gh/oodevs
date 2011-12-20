@@ -18,28 +18,12 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Illumination )
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePion_Illumination* role, const unsigned int /*version*/ )
-{
-    MIL_Entity_ABC* const owner = &role->owner_;
-    archive << owner;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePion_Illumination* role, const unsigned int /*version*/ )
-{
-    MIL_Entity_ABC* owner;
-    archive >> owner;
-    ::new( role )PHY_RolePion_Illumination( *owner );
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Illumination constructor
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-PHY_RolePion_Illumination::PHY_RolePion_Illumination( MIL_Entity_ABC& owner )
-    : owner_( owner )
-    , bIlluminatedDefinitely_( false )
+PHY_RolePion_Illumination::PHY_RolePion_Illumination()
+    : bIlluminatedDefinitely_( false )
     , bHit_( false )
     , target_( 0 )
 {

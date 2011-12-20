@@ -40,7 +40,6 @@ class UrbanObjectWrapper;
 // Modified: JVT 2004-10-28
 // =============================================================================
 class PHY_RoleInterface_Perceiver : public tools::Role_ABC
-                                  , private boost::noncopyable
 {
 public:
     //! @name Types

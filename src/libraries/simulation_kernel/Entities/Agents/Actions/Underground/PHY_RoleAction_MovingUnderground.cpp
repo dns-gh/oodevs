@@ -25,27 +25,12 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_MovingUnderground )
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RoleAction_MovingUnderground* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RoleAction_MovingUnderground* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* pion;
-    archive >> pion;
-    ::new( role )PHY_RoleAction_MovingUnderground( *pion );
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_MovingUnderground constructor
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
 PHY_RoleAction_MovingUnderground::PHY_RoleAction_MovingUnderground( MIL_Agent_ABC& pion )
-    : pion_           ( pion )
+    : owner_          ( pion )
     , transferTime_   ( 0 )
     , speed_          ( 0 )
     , preparingToHide_( false )
@@ -86,7 +71,7 @@ void PHY_RoleAction_MovingUnderground::serialize( Archive& ar, const unsigned in
 void PHY_RoleAction_MovingUnderground::Update( bool /*bIsDead*/ )
 {
     if( bHasChanged_ )
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +89,7 @@ void PHY_RoleAction_MovingUnderground::Clean()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_MovingUnderground::Execute( detection::DetectionComputer_ABC& algorithm ) const
 {
-    if( algorithm.GetTarget() == pion_ )
+    if( algorithm.GetTarget() == owner_ )
         algorithm.SetUnderground( IsUnderground() );
 }
 
@@ -145,8 +130,8 @@ bool PHY_RoleAction_MovingUnderground::Run()
     {
         bHasChanged_ = true;
         MT_Vector2D destination = pDestination_->GetLocalisation().ComputeBarycenter();
-        pion_.GetRole< PHY_RolePion_Location >().MagicMove( destination );
-        pion_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( destination );
+        owner_.GetRole< PHY_RolePion_Location >().MagicMove( destination );
+        owner_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( destination );
         transferTime_ = 0;
         pCurrentLocation_ = pDestination_;
         pDestination_.reset();
@@ -194,7 +179,7 @@ double PHY_RoleAction_MovingUnderground::EstimatedUndergroundTime( boost::shared
 {
     if( speed_ == 0 )
         return -1.f;
-    return pion_.GetRole< PHY_RolePion_Location >().GetPosition().Distance( pKnowledge->GetLocalisation().ComputeBarycenter() ) / speed_;
+    return owner_.GetRole< PHY_RolePion_Location >().GetPosition().Distance( pKnowledge->GetLocalisation().ComputeBarycenter() ) / speed_;
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +199,7 @@ bool PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork( boost::shared_p
     bHasChanged_ = true;
     preparingToHide_ = true;
     unsigned int duration = MIL_Singletons::GetTime().GetTickDuration();
-    speed_ = duration == 0 ? 0 : pion_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( TerrainData(), *object ) / duration;
+    speed_ = duration == 0 ? 0 : owner_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( TerrainData(), *object ) / duration;
     preparingToHide_ = false;
     pCurrentLocation_ = pKnowledge;
     currentNetwork_ = attr->Network();

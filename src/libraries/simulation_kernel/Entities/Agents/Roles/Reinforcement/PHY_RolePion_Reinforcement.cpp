@@ -23,31 +23,16 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Reinforcement )
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePion_Reinforcement( *pion );
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement( MIL_AgentPion& pion )
-    : pion_                          ( pion )
-    , bHasChanged_                   ( true )
-    , bExternalCanReinforce_         ( true )
-    , reinforcements_                ()
-    , pPionReinforced_               ( 0 )
+    : owner_                ( pion )
+    , bHasChanged_          ( true )
+    , bExternalCanReinforce_( true )
+    , reinforcements_       ()
+    , pPionReinforced_      ( 0 )
 {
     // NOTHING
 }
@@ -77,7 +62,7 @@ void PHY_RolePion_Reinforcement::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Reinforcement::CanReinforce() const
 {
-    return !pion_.IsDead() && bExternalCanReinforce_;
+    return !owner_.IsDead() && bExternalCanReinforce_;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +71,7 @@ bool PHY_RolePion_Reinforcement::CanReinforce() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Reinforcement::CanBeReinforced() const
 {
-    return !pion_.IsDead() && bExternalCanReinforce_;
+    return !owner_.IsDead() && bExternalCanReinforce_;
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +95,7 @@ bool PHY_RolePion_Reinforcement::IsReinforcedBy( MIL_AgentPion& pion ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Reinforcement::Reinforce( MIL_AgentPion& pionToReinforce )
 {
-    if( pionToReinforce == pion_ )
+    if( pionToReinforce == owner_ )
         return false;
 
     // Detection des boucles
@@ -124,7 +109,7 @@ bool PHY_RolePion_Reinforcement::Reinforce( MIL_AgentPion& pionToReinforce )
     if( pPionReinforced_ )
         CancelReinforcement();
 
-    pionToReinforce.GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementAdded( pion_ );
+    pionToReinforce.GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementAdded( owner_ );
     pPionReinforced_ = &pionToReinforce;
     bHasChanged_ = true;
     return true;
@@ -138,7 +123,7 @@ void PHY_RolePion_Reinforcement::CancelReinforcement()
 {
     if( pPionReinforced_ )
     {
-        pPionReinforced_->GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementRemoved( pion_ );
+        pPionReinforced_->GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementRemoved( owner_ );
         pPionReinforced_ = 0;
         bHasChanged_ = true;
     }
@@ -155,11 +140,11 @@ void PHY_RolePion_Reinforcement::Update( bool bIsDead )
         if( bIsDead )
             CancelReinforcement();
         else
-            pion_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pPionReinforced_ );
+            owner_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pPionReinforced_ );
     }
 
     if( HasChanged() )
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------

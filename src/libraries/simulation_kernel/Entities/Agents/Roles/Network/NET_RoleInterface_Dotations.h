@@ -20,7 +20,6 @@
 // Created: JVT 2004-08-03
 // =============================================================================
 class NET_RoleInterface_Dotations : public tools::Role_ABC
-                                  , private boost::noncopyable
 {
 public:
     //! @name Types

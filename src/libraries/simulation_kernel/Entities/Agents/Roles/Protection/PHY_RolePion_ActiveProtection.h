@@ -10,6 +10,7 @@
 #ifndef __PHY_RolePion_ActiveProtection_h_
 #define __PHY_RolePion_ActiveProtection_h_
 
+#include "MIL.h"
 #include "PHY_RoleInterface_ActiveProtection.h"
 
 class PHY_RolePion_Composantes;
@@ -43,26 +44,19 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    PHY_RolePion_ActiveProtection( const PHY_RolePion_ActiveProtection& );            //!< Copy constructor
-    PHY_RolePion_ActiveProtection& operator=( const PHY_RolePion_ActiveProtection& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Checkpoints
-    //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_ActiveProtection* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_ActiveProtection* role, const unsigned int /*version*/ );
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_ActiveProtection )
     //@}
 
 private:
     //! @name Member data
     //@{
-    PHY_RolePion_Composantes& pion_;
+    PHY_RolePion_Composantes& owner_;
     //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_ActiveProtection )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_ActiveProtection, PHY_RolePion_Composantes )
 
 #endif // __PHY_RolePion_ActiveProtection_h_

@@ -78,7 +78,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Perceiver )
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Perceiver* role, const unsigned int /*version*/ )
 {
-    MIL_Agent_ABC* const pion = &role->pion_;
+    MIL_Agent_ABC* const pion = &role->owner_;
     archive << pion;
 }
 
@@ -95,7 +95,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const 
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion, const MT_Vector2D* perceiverPosition, const MT_Vector2D* perceiverDirection )
-    : pion_                          ( pion )
+    : owner_                         ( pion )
     , perceiverPosition_             ( perceiverPosition )
     , perceiverDirection_            ( perceiverDirection )
     , rMaxAgentPerceptionDistance_   ( 0. )
@@ -306,7 +306,7 @@ void PHY_RolePion_Perceiver::DisableRecoAlat()
     activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionAlat_ ) );
     delete pPerceptionAlat_;
     pPerceptionAlat_ = 0;
-    pion_.GetKnowledge().GetKsPerception().MakePerceptionsAvailableTimed();
+    owner_.GetKnowledge().GetKsPerception().MakePerceptionsAvailableTimed();
 }
 
 // -----------------------------------------------------------------------------
@@ -623,8 +623,8 @@ void PHY_RolePion_Perceiver::DisableFlyingShellDetection( int id )
 // -----------------------------------------------------------------------------
 double PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
-    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
-    return rMaxAgentPerceptionDistance_ * pion_.Execute( *computer ).GetFactor();
+    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( owner_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
+    return rMaxAgentPerceptionDistance_ * owner_.Execute( *computer ).GetFactor();
 }
 
 // -----------------------------------------------------------------------------
@@ -643,8 +643,8 @@ double PHY_RolePion_Perceiver::GetMaxTheoreticalcAgentPerceptionDistance() const
 inline
 double PHY_RolePion_Perceiver::GetMaxObjectPerceptionDistance() const
 {
-    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
-    return rMaxObjectPerceptionDistance_ * pion_.Execute( *computer ).GetFactor();
+    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( owner_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
+    return rMaxObjectPerceptionDistance_ * owner_.Execute( *computer ).GetFactor();
 }
 
 // -----------------------------------------------------------------------------
@@ -653,7 +653,7 @@ double PHY_RolePion_Perceiver::GetMaxObjectPerceptionDistance() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::CanPerceive() const
 {
-    return !pion_.IsDead() && !pion_.GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() && bExternalCanPerceive_;
+    return !owner_.IsDead() && !owner_.GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() && bExternalCanPerceive_;
 }
 
 // =============================================================================
@@ -840,11 +840,11 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
     rMaxAgentPerceptionDistance_ = 0;
     rMaxObjectPerceptionDistance_ = 0;
     sPerceptionRotation rotation;
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( rotation ) );
-    pion_.Execute( *componentComputer );
+    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( rotation ) );
+    owner_.Execute( *componentComputer );
     sPerceptionDataComposantes dataFunctor( surfacesAgent_, surfacesObject_, *perceiverPosition_, *perceiverDirection_ , vMainPerceptionDirection, rotation.GetAngle() , rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
-    std::auto_ptr< OnComponentComputer_ABC > dataComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
-    pion_.Execute( *dataComputer );
+    std::auto_ptr< OnComponentComputer_ABC > dataComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
+    owner_.Execute( *dataComputer );
 }
 
 // -----------------------------------------------------------------------------
@@ -857,8 +857,8 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
         return;
     radars_.clear();
     sRadarDataComposantes dataFunctor( radars_ );
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
-    pion_.Execute( *componentComputer );
+    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
+    owner_.Execute( *componentComputer );
 }
 
 namespace
@@ -930,7 +930,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( *perceiverPosition_, maxPerceptionDistance, perceivableAgents );
         AppendHackedAgents( perceivableAgents );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).Execute( perceivableAgents, *pion_.GetAlgorithms().detectionComputerFactory_ );
+            (**itPerception).Execute( perceivableAgents, *owner_.GetAlgorithms().detectionComputerFactory_ );
 
         TER_Object_ABC::T_ObjectVector perceivableObjects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( *perceiverPosition_, maxPerceptionDistance, perceivableObjects );
@@ -953,7 +953,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).FinalizePerception();
     }
-    NotifyPerception( pion_, PHY_PerceptionLevel::identified_, false );
+    NotifyPerception( owner_, PHY_PerceptionLevel::identified_, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -1046,8 +1046,8 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
     if( HasChanged() )
     {
         if( HasRadarStateChanged() )
-            pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+            owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
     // Debug - Cones de vision
     if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() )
@@ -1068,7 +1068,7 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 const MIL_KnowledgeGroup& PHY_RolePion_Perceiver::GetKnowledgeGroup() const
 {
-    return pion_.GetKnowledgeGroup();
+    return owner_.GetKnowledgeGroup();
 }
 
 // -----------------------------------------------------------------------------
@@ -1077,7 +1077,7 @@ const MIL_KnowledgeGroup& PHY_RolePion_Perceiver::GetKnowledgeGroup() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 {
-    return pion_.GetKnowledgeGroup().GetKnowledge().IsKnown( agent );
+    return owner_.GetKnowledgeGroup().GetKnowledge().IsKnown( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1086,7 +1086,7 @@ bool PHY_RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 {
-    return pion_.GetKnowledge().IsIdentified( agent );
+    return owner_.GetKnowledge().IsIdentified( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1095,7 +1095,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsKnown( const MIL_Object_ABC& object ) const
 {
-    return pion_.GetArmy().GetKnowledge().IsKnown( object );
+    return owner_.GetArmy().GetKnowledge().IsKnown( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -1104,7 +1104,7 @@ bool PHY_RolePion_Perceiver::IsKnown( const MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Object_ABC& object ) const
 {
-    return pion_.GetKnowledge().IsIdentified( object );
+    return owner_.GetKnowledge().IsIdentified( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -1113,7 +1113,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsIdentified( const MIL_PopulationConcentration& concentration ) const
 {
-    return pion_.GetKnowledge().IsIdentified( concentration );
+    return owner_.GetKnowledge().IsIdentified( concentration );
 }
 
 // -----------------------------------------------------------------------------
@@ -1122,7 +1122,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_PopulationConcentration& co
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsIdentified( const UrbanObjectWrapper& object ) const
 {
-    return pion_.GetKnowledge().IsIdentified( object );
+    return owner_.GetKnowledge().IsIdentified( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -1131,7 +1131,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const UrbanObjectWrapper& object ) co
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const
 {
-    MIL_Report::PostEvent( pion_, MIL_Report::eReport_IndirectFireObservation, flyingShell );
+    MIL_Report::PostEvent( owner_, MIL_Report::eReport_IndirectFireObservation, flyingShell );
 }
 
 // -----------------------------------------------------------------------------
@@ -1140,7 +1140,7 @@ void PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& fl
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level, bool bPerceptionRecorded )
 {
-    pion_.GetKnowledge().GetKsPerception().NotifyPerception( agent, level, bPerceptionRecorded );
+    owner_.GetKnowledge().GetKsPerception().NotifyPerception( agent, level, bPerceptionRecorded );
 }
 
 // -----------------------------------------------------------------------------
@@ -1149,7 +1149,7 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_P
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level )
 {
-    return pion_.GetKnowledge().GetKsPerception().NotifyPerception( agent, level, bRecordModeEnabled_ );
+    return owner_.GetKnowledge().GetKsPerception().NotifyPerception( agent, level, bRecordModeEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1158,7 +1158,7 @@ bool PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_P
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& object, const PHY_PerceptionLevel& level )
 {
-    pion_.GetKnowledge().GetKsPerception().NotifyPerception( object, level, bRecordModeEnabled_ );
+    owner_.GetKnowledge().GetKsPerception().NotifyPerception( object, level, bRecordModeEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1167,7 +1167,7 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& object, const PHY
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level )
 {
-    pion_.GetKnowledge().GetKsPerception().NotifyPerception( concentration, level, bRecordModeEnabled_ );
+    owner_.GetKnowledge().GetKsPerception().NotifyPerception( concentration, level, bRecordModeEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1176,7 +1176,7 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& conc
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape )
 {
-    pion_.GetKnowledge().GetKsPerception().NotifyPerception( flow, level, shape, bRecordModeEnabled_ );
+    owner_.GetKnowledge().GetKsPerception().NotifyPerception( flow, level, shape, bRecordModeEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1185,7 +1185,7 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const P
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( const UrbanObjectWrapper& object, const PHY_PerceptionLevel& level ) const
 {
-    pion_.GetKnowledge().GetKsPerception().NotifyPerception( object, level );
+    owner_.GetKnowledge().GetKsPerception().NotifyPerception( object, level );
 }
 
 // -----------------------------------------------------------------------------
@@ -1194,7 +1194,7 @@ void PHY_RolePion_Perceiver::NotifyPerception( const UrbanObjectWrapper& object,
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent , const PHY_PerceptionLevel& level )
 {
-    pion_.GetKnowledge().GetKsPerception().NotifyExternalPerception( agent, level );
+    owner_.GetKnowledge().GetKsPerception().NotifyExternalPerception( agent, level );
 }
 
 // -----------------------------------------------------------------------------
@@ -1213,7 +1213,7 @@ void PHY_RolePion_Perceiver::EnableRecordMode()
 void PHY_RolePion_Perceiver::DisableRecordMode()
 {
     bRecordModeEnabled_ = false;
-    pion_.GetKnowledge().GetKsPerception().MakePerceptionsAvailable();
+    owner_.GetKnowledge().GetKsPerception().MakePerceptionsAvailable();
 }
 
 // -----------------------------------------------------------------------------
@@ -1222,7 +1222,7 @@ void PHY_RolePion_Perceiver::DisableRecordMode()
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 {
-    return pion_.GetKnowledge().GetKsPerception().HasDelayedPerceptions();
+    return owner_.GetKnowledge().GetKsPerception().HasDelayedPerceptions();
 }
 
 // =============================================================================
@@ -1236,9 +1236,9 @@ bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 void PHY_RolePion_Perceiver::SendDebugState() const
 {
     client::UnitVisionCones message;
-    message().mutable_unit()->set_id( pion_.GetID() );
-    std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
-    message().set_elongation( static_cast< float >( pion_.Execute( *algorithm ).GetElongationFactor() ) ); //@TODO MGD share
+    message().mutable_unit()->set_id( owner_.GetID() );
+    std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = owner_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
+    message().set_elongation( static_cast< float >( owner_.Execute( *algorithm ).GetElongationFactor() ) ); //@TODO MGD share
     message().mutable_cones();
     for( CIT_SurfaceAgentMap it = surfacesAgent_.begin(); it != surfacesAgent_.end(); ++it )
         it->second.SendFullState( *message().mutable_cones()->add_elem() );
@@ -1279,7 +1279,7 @@ bool PHY_RolePion_Perceiver::IsPeriphericalVisionEnabled() const
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC& PHY_RolePion_Perceiver::GetPion() const
 {
-    return pion_;
+    return owner_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1387,7 +1387,7 @@ const PHY_RolePion_Perceiver::T_RadarSet& PHY_RolePion_Perceiver::GetRadars( con
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::Execute( detection::DetectionComputer_ABC& algorithm ) const
 {
-    if( algorithm.GetTarget() != pion_ && pion_.GetKnowledge().WasPerceived( algorithm.GetTarget() ) )
+    if( algorithm.GetTarget() != owner_ && owner_.GetKnowledge().WasPerceived( algorithm.GetTarget() ) )
         algorithm.AlreadyPerceived();
 }
 

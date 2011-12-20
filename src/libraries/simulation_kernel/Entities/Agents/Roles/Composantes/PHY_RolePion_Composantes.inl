@@ -11,21 +11,6 @@
 
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
-template< typename Archive >
-inline void save_construct_data( Archive& archive, const PHY_RolePion_Composantes* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-inline void load_construct_data( Archive& archive, PHY_RolePion_Composantes* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePion_Composantes( *pion );
-}
-
 // -----------------------------------------------------------------------------
 // Name: template< typename T > void PHY_RolePion_Composantes::ApplyOnWeapons
 // Created: NLD 2006-08-07
@@ -98,7 +83,7 @@ unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime( MIL_Agent_A
 {
     unsigned int nNbrDone = 0;
     unsigned int nTime = 0;
-    const MT_Vector2D& srcPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    const MT_Vector2D& srcPos = owner_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Vector2D& destPos = borrower.GetRole< PHY_RoleInterface_Location >().GetPosition();   //@@Hmm...
     for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
     {

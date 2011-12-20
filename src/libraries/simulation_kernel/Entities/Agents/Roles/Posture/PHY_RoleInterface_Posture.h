@@ -27,7 +27,6 @@ class PHY_Posture;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Posture : public tools::Role_ABC
-                                , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -85,12 +84,6 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsStealth() const = 0;
-    //@}
-
-    //! @name Network
-    //@{
-//    virtual void SendChangedState( client::UnitAttributes& asnMsg ) const = 0;
-//    virtual void SendFullState   ( client::UnitAttributes& asnMsg ) const = 0;
     //@}
 
 private:

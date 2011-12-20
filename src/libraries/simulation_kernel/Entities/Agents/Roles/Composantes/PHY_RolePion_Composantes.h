@@ -310,8 +310,13 @@ private:
     void AddEquipmentDotation( client::UnitAttributes& msg, const PHY_ComposanteTypePion& compType, const T_ComposanteTypeProperties& properties ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Composantes )
+    //@}
+
 private:
-    MIL_Agent_ABC& pion_;
+    MIL_Agent_ABC& owner_;
     PHY_ComposantePion::T_ComposantePionVector composantes_;
     T_ComposanteTypeMap composanteTypes_;
     unsigned int nNbrComposanteChanged_;
@@ -334,14 +339,10 @@ private:
     // Maintenance
     T_MaintenanceComposanteStateSet maintenanceComposanteStates_;
     unsigned int nTickRcMaintenanceQuerySent_;
-
-
-private:
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Composantes* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Composantes* role, const unsigned int /*version*/ );
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Composantes )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Composantes, MIL_Agent_ABC )
 
 #include "PHY_RolePion_Composantes.inl"
 

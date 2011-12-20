@@ -29,7 +29,6 @@
 class TestIndirectFireModifier : public tools::Role_ABC
     , public tools::AlgorithmModifier_ABC< firing::WeaponAvailabilityComputer_ABC >
     , public tools::AlgorithmModifier_ABC< dotation::DotationComputer_ABC >
-    , private boost::noncopyable
 {
 public:
     typedef TestIndirectFireModifier RoleInterface;

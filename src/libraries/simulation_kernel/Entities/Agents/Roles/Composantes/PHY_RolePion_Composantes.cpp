@@ -91,7 +91,7 @@ void PHY_RolePion_Composantes::T_ComposanteTypeProperties::serialize( Archive& f
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
 PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool initialise )
-    : pion_                       ( pion )
+    : owner_                      ( pion )
     , nNbrComposanteChanged_      ( 0 )
     , nNbrUsableComposantes_      ( 0 )
     , rOperationalState_          ( 0. )
@@ -108,7 +108,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool in
 {
     if( initialise ) // $$$$ LDC: Set to false for debug in order to avoid useless creation of crap.
     {
-        pion_.GetType().GetUnitType().InstanciateComposantes( *this );
+        owner_.GetType().GetUnitType().InstanciateComposantes( *this );
         DistributeCommanders();
     }
 }
@@ -229,7 +229,7 @@ void PHY_RolePion_Composantes::DistributeCommanders()
     // Répartition des officiers
     PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
     MIL_Random::random_shuffle( composantes );
-    const PHY_UnitType::T_CommanderRepartitionMap& commanderRepartition = pion_.GetType().GetUnitType().GetCommanderRepartition();
+    const PHY_UnitType::T_CommanderRepartitionMap& commanderRepartition = owner_.GetType().GetUnitType().GetCommanderRepartition();
     for( PHY_UnitType::CIT_CommanderRepartitionMap it = commanderRepartition.begin(); it != commanderRepartition.end(); ++it )
     {
         const PHY_HumanRank& rank = *it->first;
@@ -246,7 +246,7 @@ void PHY_RolePion_Composantes::DistributeCommanders()
                 }
         }
         if( nNbr )
-            MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Not enough humans in crew to distribute commanders : " << nNbr << " " << rank.GetName() << " remaining" );
+            MT_LOG_WARNING_MSG( "Agent " << owner_.GetID() << " - Not enough humans in crew to distribute commanders : " << nNbr << " " << rank.GetName() << " remaining" );
     }
 }
 
@@ -360,7 +360,7 @@ void PHY_RolePion_Composantes::ReadHuman( xml::xistream& xis )
         number -= ( *itCurrentComp )->OverloadHumans( *pRank, number, *pWound, psyop, contaminated );
         if( ++itCurrentComp == composantes_.end() && number > 0 )
         {
-            MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Cannot apply all the human wounds overloading specified in ODB : " << number << " " << pRank->GetName() << " " << pWound->GetName() << " remaining" );
+            MT_LOG_WARNING_MSG( "Agent " << owner_.GetID() << " - Cannot apply all the human wounds overloading specified in ODB : " << number << " " << pRank->GetName() << " " << pWound->GetName() << " remaining" );
             return;
         }
     }
@@ -500,9 +500,9 @@ void PHY_RolePion_Composantes::Update( bool /*bIsDead*/ )
         ( **it ).Update();
     if( HasChanged() )
     {
-        pion_.Apply( &component::ComponentsChangedNotificationHandler_ABC::NotifyComponentHasChanged );
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        owner_.Apply( &component::ComponentsChangedNotificationHandler_ABC::NotifyComponentHasChanged );
+        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
     UpdateOperationalStates();
     UpdateMajorComposante();
@@ -576,7 +576,7 @@ void PHY_RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& compos
     composantes_.push_back( &composante );
     UpdateDataWhenComposanteAdded( composante.GetState(), composanteTypes_[ &composante.GetType() ] );
     if( composante.GetState().IsUsable() )
-        pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::RegisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
+        owner_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::RegisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
 }
 
 // -----------------------------------------------------------------------------
@@ -591,8 +591,8 @@ void PHY_RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& comp
     assert( it != composantes_.end() );
     composantes_.erase( it );
     if( composante.GetState().IsUsable() )
-        pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::UnregisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
-    pion_.Apply( &transport::TransportNotificationHandler_ABC::CheckConsistency );
+        owner_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::UnregisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
+    owner_.Apply( &transport::TransportNotificationHandler_ABC::CheckConsistency );
 }
 
 // -----------------------------------------------------------------------------
@@ -608,14 +608,14 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
     UpdateDataWhenComposanteRemoved( oldState, properties );
     UpdateDataWhenComposanteAdded( newState, properties );
     if( !newState.IsUsable() && oldState.IsUsable() )
-        pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::UnregisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
+        owner_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::UnregisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
     else if( newState.IsUsable() && !oldState.IsUsable() )
-        pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::RegisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
-    pion_.Apply( &transport::TransportNotificationHandler_ABC::NotifyComposanteChanged, composante );
-    PHY_RoleInterface_Supply* role = pion_.Retrieve< PHY_RoleInterface_Supply >();
+        owner_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::RegisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
+    owner_.Apply( &transport::TransportNotificationHandler_ABC::NotifyComposanteChanged, composante );
+    PHY_RoleInterface_Supply* role = owner_.Retrieve< PHY_RoleInterface_Supply >();
     if( role )
         role->NotifyComposanteChanged( composante );
-    pion_.Apply( &transport::TransportNotificationHandler_ABC::CheckConsistency );
+    owner_.Apply( &transport::TransportNotificationHandler_ABC::CheckConsistency );
 }
 
 // -----------------------------------------------------------------------------
@@ -627,9 +627,9 @@ void PHY_RolePion_Composantes::NotifyComposanteRepaired()
     if( !IsUsable() )
     {
         MT_Vector2D newPosition;
-        if( pion_.GetAutomate().GetAlivePionsBarycenter( newPosition ) )
-            pion_.MagicMove( newPosition );
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_ReAvailableAfterRepairation );
+        if( owner_.GetAutomate().GetAlivePionsBarycenter( newPosition ) )
+            owner_.MagicMove( newPosition );
+        MIL_Report::PostEvent( owner_, MIL_Report::eReport_ReAvailableAfterRepairation );
     }
 }
 
@@ -807,7 +807,7 @@ void PHY_RolePion_Composantes::ApplyExplosion( const AttritionCapacity& capacity
 {
     PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
     MIL_Random::random_shuffle( composantes, MIL_Random::eWounds );
-    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
+    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( owner_ );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
@@ -868,7 +868,7 @@ void PHY_RolePion_Composantes::ApplyFlood( const MIL_FloodEffectManipulator& flo
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult, double ratio )
 {
-    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
+    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( owner_ );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
@@ -884,7 +884,7 @@ void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& do
 void PHY_RolePion_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult )
 {
     assert( std::find( composantes_.begin(), composantes_.end(), &compTarget ) != composantes_.end() );
-    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
+    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( owner_ );
     PHY_ComposantePion& compTargetPion = static_cast< PHY_ComposantePion& >( compTarget );
     if( compTargetPion.CanBeFired() )
         compTargetPion.ApplyDirectFire( dotationCategory, fireDamages );
@@ -896,7 +896,7 @@ void PHY_RolePion_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult )
 {
-    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
+    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( owner_ );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
@@ -912,7 +912,7 @@ void PHY_RolePion_Composantes::ApplyDirectFireOnMajorComposantes( const PHY_Dota
 void PHY_RolePion_Composantes::ApplyPopulationFire( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& fireResult, double armedIndividuals )
 {
     assert( std::find( composantes_.begin(), composantes_.end(), &compTarget ) != composantes_.end() );
-    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
+    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( owner_ );
     PHY_ComposantePion& compTargetPion = static_cast< PHY_ComposantePion& >( compTarget );
     if( compTargetPion.CanBeFired() )
         compTargetPion.ApplyPopulationFire( populationType, populationAttitude, fireDamages, armedIndividuals );
@@ -1268,15 +1268,15 @@ void PHY_RolePion_Composantes::PreprocessRandomBreakdowns( unsigned int nEndDayT
 // -----------------------------------------------------------------------------
 PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante )
 {
-    MIL_AutomateLOG* pTC2 = pion_.GetLogisticHierarchy().GetPrimarySuperior();
+    MIL_AutomateLOG* pTC2 = owner_.GetLogisticHierarchy().GetPrimarySuperior();
     if( !pTC2 )
         return 0;
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcMaintenanceQuerySent_ + 1 ) || nTickRcMaintenanceQuerySent_ == 0 )
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_EquipementEvacuationRequest );
+        MIL_Report::PostEvent( owner_, MIL_Report::eReport_EquipementEvacuationRequest );
     nTickRcMaintenanceQuerySent_ = nCurrentTick;
-    PHY_MaintenanceComposanteState* pMaintenanceComposanteState = pTC2->MaintenanceHandleComposanteForTransport( pion_, composante );
+    PHY_MaintenanceComposanteState* pMaintenanceComposanteState = pTC2->MaintenanceHandleComposanteForTransport( owner_, composante );
     if( !pMaintenanceComposanteState )
         return 0;
     if( ! maintenanceComposanteStates_.insert( pMaintenanceComposanteState ).second )
@@ -1331,7 +1331,7 @@ void PHY_RolePion_Composantes::LendComposante( MIL_Agent_ABC& borrower, PHY_Comp
     lentComposantes_[ &borrower ].push_back( &composante );
     composante.TransferComposante( borrower.GetRole< PHY_RoleInterface_Composantes >() );
     bLoansChanged_ = true;
-    borrower.GetRole< PHY_RoleInterface_Composantes >().NotifyLentComposanteReceived( pion_, composante );
+    borrower.GetRole< PHY_RoleInterface_Composantes >().NotifyLentComposanteReceived( owner_, composante );
 }
 
 // -----------------------------------------------------------------------------
@@ -1348,7 +1348,7 @@ void PHY_RolePion_Composantes::RetrieveLentComposante( MIL_Agent_ABC& borrower, 
     if( lentComps.empty() )
         lentComposantes_.erase( lentComposantes_.find( &borrower ) );
     bLoansChanged_ = true;
-    borrower.GetRole< PHY_RoleInterface_Composantes >().NotifyLentComposanteReturned( pion_, composante );
+    borrower.GetRole< PHY_RoleInterface_Composantes >().NotifyLentComposanteReturned( owner_, composante );
 }
 
 // -----------------------------------------------------------------------------
@@ -1454,7 +1454,7 @@ double PHY_RolePion_Composantes::GetMajorOperationalState() const
 // -----------------------------------------------------------------------------
 const MIL_Agent_ABC& PHY_RolePion_Composantes::GetPion() const
 {
-    return pion_;
+    return owner_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1668,7 +1668,7 @@ void PHY_RolePion_Composantes::NotifyIsUnLoadedInVab()
 void PHY_RolePion_Composantes::UseAmmunition( const PHY_DotationCategory& category )
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-        ( *itComposante )->UseAmmunition( category, pion_ );
+        ( *itComposante )->UseAmmunition( category, owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1679,7 +1679,7 @@ double PHY_RolePion_Composantes::GetPHModifier( const PHY_DotationCategory& cate
 {
     double result = 1.;
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-        result = std::min( result, ( *itComposante )->GetPHModifier( category, pion_ ) );
+        result = std::min( result, ( *itComposante )->GetPHModifier( category, owner_ ) );
     return result;
 }
 
@@ -1690,7 +1690,7 @@ double PHY_RolePion_Composantes::GetPHModifier( const PHY_DotationCategory& cate
 bool PHY_RolePion_Composantes::CounterIndirectFire( const PHY_DotationCategory& category ) const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-        if( ( *itComposante )->CounterIndirectFire( category, pion_ ) )
+        if( ( *itComposante )->CounterIndirectFire( category, owner_ ) )
             return true;
     return false;
 }
@@ -1702,7 +1702,7 @@ bool PHY_RolePion_Composantes::CounterIndirectFire( const PHY_DotationCategory& 
 bool PHY_RolePion_Composantes::DestroyIndirectFire( const PHY_DotationCategory& category ) const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-        if( ( *itComposante )->DestroyIndirectFire( category, pion_ ) )
+        if( ( *itComposante )->DestroyIndirectFire( category, owner_ ) )
             return true;
     return false;
 }
@@ -1847,7 +1847,7 @@ void PHY_RolePion_Composantes::CreateBreakdowns( const PHY_ComposanteTypePion& c
         }
     }
     if( quantity )
-        MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Cannot create all the breakdowns in the magic action, " << quantity << " breakdowns for composante " << composanteType.GetName() << " remaining." );
+        MT_LOG_WARNING_MSG( "Agent " << owner_.GetID() << " - Cannot create all the breakdowns in the magic action, " << quantity << " breakdowns for composante " << composanteType.GetName() << " remaining." );
 }
 
 // -----------------------------------------------------------------------------
@@ -1942,5 +1942,5 @@ void PHY_RolePion_Composantes::ChangeHumanState( const sword::MissionParameters&
         remaining += static_cast< unsigned int >( elem.list( 0 ).quantity() );
     }
     if( remaining )
-        MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Cannot apply all the human states in the magic action, " << remaining << " states remaining." );
+        MT_LOG_WARNING_MSG( "Agent " << owner_.GetID() << " - Cannot apply all the human states in the magic action, " << remaining << " states remaining." );
 }

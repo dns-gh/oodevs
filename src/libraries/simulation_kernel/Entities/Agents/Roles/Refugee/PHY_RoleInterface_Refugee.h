@@ -27,7 +27,6 @@ class MIL_Object_ABC;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Refugee : public tools::Role_ABC
-                                , private boost::noncopyable
 {
 public:
     //! @name Types

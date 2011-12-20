@@ -171,13 +171,6 @@ private:
     virtual directia::brain::Brain& GetBrain() = 0;
     template< typename T > static void SetScriptVariable( const T& source, T& dest );
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    DEC_Decision_ABC( const DEC_Decision_ABC& );            //!< Copy constructor
-    DEC_Decision_ABC& operator=( const DEC_Decision_ABC& ); //!< Assignment operator
-    //@}
 };
 
 #include "DEC_Decision_ABC.inl"

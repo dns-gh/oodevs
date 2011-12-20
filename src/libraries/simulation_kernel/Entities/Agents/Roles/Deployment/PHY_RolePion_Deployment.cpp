@@ -15,22 +15,21 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Deployment )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Deployment )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Deployment constructor
 // Created: ABR 2011-12-15
 // -----------------------------------------------------------------------------
 PHY_RolePion_Deployment::PHY_RolePion_Deployment( MIL_Agent_ABC& pion )
-    : pion_            ( pion )
+    : owner_           ( pion )
     , eDeploymentState_( eUndeployed )
     , rDeploymentValue_( 0.f )
 {
-    rDeploymentGap_ = ( pion_.GetType().GetUnitType().GetInstallationTime() != 0.f )
-        ? 1.f / pion_.GetType().GetUnitType().GetInstallationTime()
+    rDeploymentGap_ = ( owner_.GetType().GetUnitType().GetInstallationTime() != 0.f )
+        ? 1.f / owner_.GetType().GetUnitType().GetInstallationTime()
         : 1.f;
-    rUndeploymentGap_ = ( pion_.GetType().GetUnitType().GetUninstallationTime() != 0.f )
-        ? 1.f / pion_.GetType().GetUnitType().GetUninstallationTime()
+    rUndeploymentGap_ = ( owner_.GetType().GetUnitType().GetUninstallationTime() != 0.f )
+        ? 1.f / owner_.GetType().GetUnitType().GetUninstallationTime()
         : 1.f;
 }
 
@@ -79,7 +78,7 @@ void PHY_RolePion_Deployment::Update( bool /*bIsDead*/ )
         {
             rDeploymentValue_ = 1.f;
             eDeploymentState_ = eDeployed;
-            MIL_Report::PostEvent( pion_, MIL_Report::eReport_SectionDeployee );
+            MIL_Report::PostEvent( owner_, MIL_Report::eReport_SectionDeployee );
         }
         break;
     case eUndeploying:
@@ -88,7 +87,7 @@ void PHY_RolePion_Deployment::Update( bool /*bIsDead*/ )
         {
             rDeploymentValue_ = 0.f;
             eDeploymentState_ = eUndeployed;
-            MIL_Report::PostEvent( pion_, MIL_Report::eReport_SectionUndeployed );
+            MIL_Report::PostEvent( owner_, MIL_Report::eReport_SectionUndeployed );
         }
         break;
     case eDeployed:
@@ -104,7 +103,7 @@ void PHY_RolePion_Deployment::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Deployment::Deploy()
 {
-    MIL_Report::PostEvent( pion_, MIL_Report::eReport_StartDeploy );
+    MIL_Report::PostEvent( owner_, MIL_Report::eReport_StartDeploy );
     eDeploymentState_ = eDeploying;
 }
 
@@ -114,7 +113,7 @@ void PHY_RolePion_Deployment::Deploy()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Deployment::Undeploy()
 {
-    MIL_Report::PostEvent( pion_, MIL_Report::eReport_StartUndeploy );
+    MIL_Report::PostEvent( owner_, MIL_Report::eReport_StartUndeploy );
     eDeploymentState_ = eUndeploying;
 }
 

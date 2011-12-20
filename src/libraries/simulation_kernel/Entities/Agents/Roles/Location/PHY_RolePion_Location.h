@@ -45,7 +45,6 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -106,24 +105,30 @@ private:
     void SetHeight( double rHeight );
     //@}
 
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Location )
+    //@}
+
 private:
-    MIL_AgentPion& pion_;
-    MT_Vector2D vDirection_;
-    boost::shared_ptr<MT_Vector2D> pvPosition_;
-    double rHeight_;
-    double rCurrentSpeed_;
-    bool bHasDoneMagicMove_;
-    bool bHasMove_;
+    //! @name Member data
+    //@{
+    MIL_AgentPion&                  owner_;
+    MT_Vector2D                     vDirection_;
+    boost::shared_ptr<MT_Vector2D>  pvPosition_;
+    double                          rHeight_;
+    double                          rCurrentSpeed_;
+    bool                            bHasDoneMagicMove_;
+    bool                            bHasMove_;
 
-    bool bPositionHasChanged_;
-    bool bDirectionHasChanged_;
-    bool bCurrentSpeedHasChanged_;
-    bool bHeightHasChanged_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Location* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Location* role, const unsigned int /*version*/ );
+    bool                            bPositionHasChanged_;
+    bool                            bDirectionHasChanged_;
+    bool                            bCurrentSpeedHasChanged_;
+    bool                            bHeightHasChanged_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Location )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Location, MIL_AgentPion )
 
 #endif // __PHY_RolePion_Location_h_

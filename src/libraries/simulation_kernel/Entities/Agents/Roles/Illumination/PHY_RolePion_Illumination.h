@@ -29,7 +29,7 @@ class PHY_RolePion_Illumination : public PHY_RoleInterface_Illumination
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RolePion_Illumination( MIL_Entity_ABC& owner );
+             PHY_RolePion_Illumination();
     virtual ~PHY_RolePion_Illumination();
     //@}
 
@@ -52,30 +52,18 @@ public:
     //! @name Serialization
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PHY_RolePion_Illumination( const PHY_RolePion_Illumination& );            //!< Copy constructor
-    PHY_RolePion_Illumination& operator=( const PHY_RolePion_Illumination& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-    MIL_Entity_ABC& owner_;
     std::set< const MIL_Entity_ABC* > illuminators_;
-    bool bIlluminatedDefinitely_;
-    bool bHit_;
-    const MIL_Entity_ABC* target_;
+    bool                              bIlluminatedDefinitely_;
+    bool                              bHit_;
+    const MIL_Entity_ABC*             target_;
     //@}
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Illumination* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Illumination* role, const unsigned int /*version*/ );
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Illumination )

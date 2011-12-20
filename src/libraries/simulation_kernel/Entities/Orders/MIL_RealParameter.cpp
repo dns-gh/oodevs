@@ -67,7 +67,7 @@ bool MIL_RealParameter::ToNumeric( float& value ) const
 // -----------------------------------------------------------------------------
 bool MIL_RealParameter::ToId( int& value ) const
 {
-    value = value_;
+    value = static_cast< int >( value_ );
     return true;
 }
 

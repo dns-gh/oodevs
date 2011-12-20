@@ -131,7 +131,6 @@ public:
     {
         ar & boost::serialization::base_object< DEC_Decision_ABC >( *this );
     }
-
     //@}
 
 protected:

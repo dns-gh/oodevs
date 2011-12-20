@@ -225,7 +225,6 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *agentFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
     , gcPause_                      ( gcPause )
     , gcMult_                       ( gcMult )
-    , infiniteDotations_            ( false )
 {
     // NOTHING
 }
@@ -325,7 +324,6 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
 void MIL_EntityManager::ReadOrbat( xml::xistream& xis )
 {
     xis >> xml::start( "orbat" );
-    InitializeDotations( xis );
     InitializeArmies   ( xis );
     InitializeDiplomacy( xis );
 }
@@ -426,19 +424,6 @@ void MIL_EntityManager::InitializeDiplomacy( xml::xistream& xis )
 
     xis >> xml::start( "diplomacy" )
             >> xml::list( "party", *this, &MIL_EntityManager::ReadDiplomacy )
-        >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::InitializeDotations
-// Created: JSR 2010-05-04
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeDotations( xml::xistream& xis )
-{
-    MT_LOG_INFO_MSG( "Initializing resources" );
-
-    xis >> xml::optional >> xml::start( "resources" )
-            >> xml::attribute( "infinite", infiniteDotations_ )
         >> xml::end;
 }
 
@@ -1889,12 +1874,8 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "orbat" );
-    if( infiniteDotations_ )
-        xos << xml::start( "resources" )
-                << xml::attribute( "infinite", infiniteDotations_ )
-            << xml::end;
-    xos     << xml::start( "parties" );
+    xos << xml::start( "orbat" )
+            << xml::start( "parties" );
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteODB, _1, boost::ref( xos ) ) );
                 pObjectManager_->WriteODB( xos );
     xos     << xml::end
@@ -2034,15 +2015,6 @@ MIL_AgentPion* MIL_EntityManager::FindAgentPion( unsigned int nID ) const
 const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const
 {
     return *armyFactory_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::HasInfiniteDotations
-// Created: JSR 2010-05-04
-// -----------------------------------------------------------------------------
-const bool MIL_EntityManager::HasInfiniteDotations() const
-{
-    return infiniteDotations_;
 }
 
 // -----------------------------------------------------------------------------

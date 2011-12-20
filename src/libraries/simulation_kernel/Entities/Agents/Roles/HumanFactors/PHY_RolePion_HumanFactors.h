@@ -62,7 +62,6 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -105,27 +104,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef boost::function< void() > T_EvolutionFunction;
-    //@}
-
-    //! @name Member data
-    //@{
-    MIL_Entity_ABC&       entity_;
-    bool                  bHasChanged_;
-
-    const PHY_Morale*     pMorale_;
-    const PHY_Experience* pExperience_;
-    const PHY_Tiredness*  pTiredness_;
-    const PHY_Stress*     pStress_;
-    double                stressValue_;
-    double                tirednessValue_;
-
-    T_EvolutionFunction   evolutionFunction_;
-    //@}
-
-private:
     //! @name Helpers
     //@{
     void Evolution();
@@ -140,12 +118,37 @@ private:
     void ReadMoral          ( xml::xistream& xis );
     void ReadExperience     ( xml::xistream& xis );
     void ReadStress         ( xml::xistream& xis );
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ );
     //@}
+
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_HumanFactors )
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef boost::function< void() > T_EvolutionFunction;
+    //@}
+
+    //! @name Member data
+    //@{
+    MIL_Entity_ABC&       owner_;
+    bool                  bHasChanged_;
+
+    const PHY_Morale*     pMorale_;
+    const PHY_Experience* pExperience_;
+    const PHY_Tiredness*  pTiredness_;
+    const PHY_Stress*     pStress_;
+    double                stressValue_;
+    double                tirednessValue_;
+
+    T_EvolutionFunction   evolutionFunction_;
+    //@}
+
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_HumanFactors )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_HumanFactors, MIL_Entity_ABC )
 
 #endif // __PHY_RolePion_HumanFactors_h_

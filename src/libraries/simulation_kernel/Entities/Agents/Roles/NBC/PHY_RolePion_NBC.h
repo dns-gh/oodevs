@@ -10,6 +10,7 @@
 #ifndef __PHY_RolePion_NBC_h_
 #define __PHY_RolePion_NBC_h_
 
+#include "MIL.h"
 #include "PHY_RoleInterface_NBC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
@@ -99,28 +100,32 @@ private:
     std::vector< const MIL_NbcAgentType* > GetContaminating() const;
     //@}
 
-    //! @name Data Members
-    //@{
-    MIL_AgentPion& pion_;
-    T_NbcAgentTypeSet nbcAgentTypesContaminating_;
-    bool bNbcProtectionSuitWorn_;
-    double rContaminationState_;
-    double rContaminationQuantity_;
-    bool bHasChanged_;
-    bool poisoned_;
-    bool lastStatePoisoning_;
-    bool immune_;
-    //@}
-
     //! @name Serialization
     //@{
-    template< typename Archive > friend void save_construct_data( Archive& archive, const PHY_RolePion_NBC* role, const unsigned int /*version*/ );
-    template< typename Archive > friend void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsigned int /*version*/ );
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_NBC )
+    //@}
+
+private:
+    //! @name Data Members
+    //@{
+    MIL_AgentPion&    owner_;
+    T_NbcAgentTypeSet nbcAgentTypesContaminating_;
+    bool              bNbcProtectionSuitWorn_;
+    double            rContaminationState_;
+    double            rContaminationQuantity_;
+    bool              bHasChanged_;
+    bool              poisoned_;
+    bool              lastStatePoisoning_;
+    bool              immune_;
     //@}
 };
 
 }
 
 BOOST_CLASS_EXPORT_KEY( nbc::PHY_RolePion_NBC )
+namespace nbc
+{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_NBC, MIL_AgentPion )
+}
 
 #endif // __PHY_RolePion_NBC_h_

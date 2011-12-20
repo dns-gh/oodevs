@@ -13,7 +13,6 @@
 #define __PHY_RolePionLOG_Maintenance_h_
 
 #include "MIL.h"
-
 #include "PHY_RoleInterface_Maintenance.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
@@ -128,25 +127,27 @@ private:
     double GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate = 0 ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePionLOG_Maintenance )
+    //@}
+
 private:
     //! @name Member data
     //@{
-    MIL_AgentPionLOG_ABC& pion_;
-    bool bHasChanged_;
-    bool bExternalMustChangeState_;
-    bool bSystemEnabled_;
-    const PHY_MaintenanceWorkRate* pWorkRate_;
-    unsigned int nWorkRateWarningRCTick_;
-    T_MaintenancePriorityVector priorities_;
-    T_AutomateVector tacticalPriorities_;
-    T_MaintenanceConsigns consigns_;
+    MIL_AgentPionLOG_ABC&           owner_;
+    bool                            bHasChanged_;
+    bool                            bExternalMustChangeState_;
+    bool                            bSystemEnabled_;
+    const PHY_MaintenanceWorkRate*  pWorkRate_;
+    unsigned int                    nWorkRateWarningRCTick_;
+    T_MaintenancePriorityVector     priorities_;
+    T_AutomateVector                tacticalPriorities_;
+    T_MaintenanceConsigns           consigns_;
     //@}
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ );
-
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePionLOG_Maintenance )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePionLOG_Maintenance, MIL_AgentPionLOG_ABC )
 
 #endif // __PHY_RolePionLOG_Maintenance_h_

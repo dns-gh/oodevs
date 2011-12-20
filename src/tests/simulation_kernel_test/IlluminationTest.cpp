@@ -28,13 +28,12 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IlluminatedByOneTest )
 {
-    MockAgentWithPosition illuminated;
     MockAgentWithPosition agent;
 
     const MT_Vector2D pos1;
     const MT_Vector2D pos2;
 
-    PHY_RolePion_Illumination role( illuminated );
+    PHY_RolePion_Illumination role;
     role.NotifyStartIlluminatedBy( agent );
     BOOST_CHECK( role.IsIlluminated() );
     role.NotifyStopIlluminatedBy( agent );
@@ -47,7 +46,6 @@ BOOST_AUTO_TEST_CASE( IlluminatedByOneTest )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IlluminatedByTwoTest )
 {
-    MockAgentWithPosition illuminated;
     MockAgentWithPosition agent;
     MockAgentWithPosition agent2;
 
@@ -55,7 +53,7 @@ BOOST_AUTO_TEST_CASE( IlluminatedByTwoTest )
     const MT_Vector2D pos2;
     const MT_Vector2D pos3;
 
-    PHY_RolePion_Illumination role( illuminated );
+    PHY_RolePion_Illumination role;
     role.NotifyStartIlluminatedBy( agent );
     role.NotifyStartIlluminatedBy( agent );//normal double notification to see if agent is added juyt one time
     role.NotifyStartIlluminatedBy( agent2 );
@@ -72,10 +70,9 @@ BOOST_AUTO_TEST_CASE( IlluminatedByTwoTest )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IlluminatedDefinitelyTest )
 {
-    MockAgentWithPosition illuminated;
     MockAgentWithPosition agent;
 
-    PHY_RolePion_Illumination role( illuminated );
+    PHY_RolePion_Illumination role;
     role.NotifyDefinitelyIlluminated();
     BOOST_CHECK( role.IsIlluminated() );
     BOOST_CHECK( role.IsDefinitevelyIlluminated() );
@@ -90,10 +87,9 @@ BOOST_AUTO_TEST_CASE( IlluminatedDefinitelyTest )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IlluminatingTest )
 {
-    MockAgentWithPosition illuminated;
     MockAgentWithPosition agent;
 
-    PHY_RolePion_Illumination role( illuminated );
+    PHY_RolePion_Illumination role;
     role.NotifyStartIlluminate( agent );
     BOOST_CHECK( role.IsIlluminating() );
     role.NotifyStopIlluminate();
@@ -106,10 +102,9 @@ BOOST_AUTO_TEST_CASE( IlluminatingTest )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( UnderFireTest )
 {
-    MockAgentWithPosition illuminated;
     MockAgentWithPosition agent;
 
-    PHY_RolePion_Illumination role( illuminated );
+    PHY_RolePion_Illumination role;
     role.NotifyStartIlluminatedBy( agent );
     role.NotifyHitByIndirectFire();
     BOOST_CHECK( role.IsUnderIndirectFire() );

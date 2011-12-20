@@ -12,6 +12,7 @@
 #ifndef __PHY_RolePion_Communications_h_
 #define __PHY_RolePion_Communications_h_
 
+#include "MIL.h"
 #include "PHY_RoleInterface_Communications.h"
 #include "NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
@@ -98,6 +99,11 @@ public:
     MIL_KnowledgeGroup& GetKnowledgeGroup() const;
     //@}
 
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Communications )
+    //@}
+
 public:
     //! @name Types
     //@{
@@ -112,21 +118,22 @@ private:
     void CopyKnowledgeGroupPartial();
     //@}
 
-    MIL_Agent_ABC& entity_;
-    T_JammerSet jammers_;
-    bool bBlackoutEmmittedActivated_;
-    bool bBlackoutReceivedActivated_;
-    bool bHasChanged_;
-
-    const bool bIsAutonomous_;
-
+    //! @name Member data
+    //@{
+    MIL_Agent_ABC&      owner_;
+    T_JammerSet         jammers_;
+    bool                bBlackoutEmmittedActivated_;
+    bool                bBlackoutReceivedActivated_;
+    bool                bHasChanged_;
+    const bool          bIsAutonomous_;
     MIL_KnowledgeGroup* pJammingKnowledgeGroup_;
-private:
-    static double rCoefSpeedModificator_;
-    static double rCoefReloadingTimeModificator_;
+    //@}
 
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Communications* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Communications* role, const unsigned int /*version*/ );
+    //! @name Static member data
+    //@{
+    static double       rCoefSpeedModificator_;
+    static double       rCoefReloadingTimeModificator_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Communications )

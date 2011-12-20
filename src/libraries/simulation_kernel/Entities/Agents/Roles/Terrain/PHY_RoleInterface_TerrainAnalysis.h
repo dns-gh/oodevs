@@ -44,14 +44,6 @@ public:
     virtual bool CanMoveOnKnowledgeObject       ( const std::vector< MT_Vector2D >& points ) const = 0;
     virtual bool CanMoveOn                      ( boost::shared_ptr< MT_Vector2D > position ) const = 0;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PHY_RoleInterface_TerrainAnalysis( const PHY_RoleInterface_TerrainAnalysis& );            //!< Copy constructor
-    PHY_RoleInterface_TerrainAnalysis& operator=( const PHY_RoleInterface_TerrainAnalysis& ); //!< Assignment operator
-    //@}
-
 };
 
 #endif // __PHY_RoleInterface_TerrainAnalysis_h_

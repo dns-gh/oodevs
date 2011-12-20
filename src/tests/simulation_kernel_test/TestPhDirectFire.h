@@ -24,7 +24,6 @@
 #include <xeumeuleu/xml.hpp>
 
 class TestPhDirectFire : public tools::Role_ABC
-                       , private boost::noncopyable
 {
 public:
     typedef TestPhDirectFire RoleInterface;

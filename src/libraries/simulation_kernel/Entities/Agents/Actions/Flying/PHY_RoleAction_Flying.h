@@ -12,6 +12,7 @@
 #ifndef __PHY_RoleAction_Flying_h_
 #define __PHY_RoleAction_Flying_h_
 
+#include "MIL.h"
 #include "PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Effects/MIL_Effect_Fly.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
@@ -76,23 +77,27 @@ private:
     //@{
     bool TakeOff();
     bool Land();
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Flying* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Flying* role, const unsigned int /*version*/ );
     virtual void Execute( location::LocationComputer_ABC& algorithm ) const;
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     virtual void Execute( moving::MoveComputer_ABC& algorithm ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_Flying )
+    //@}
+
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& entity_;
-    MIL_Effect_Fly effectFly_;
+    MIL_Agent_ABC&                     owner_;
+    MIL_Effect_Fly                     effectFly_;
     boost::shared_ptr< PHY_ActionFly > pActionFly_;
-    double rHeight_;
+    double                             rHeight_;
     //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_Flying )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_Flying, MIL_Agent_ABC )
 
 #endif // __PHY_RoleAction_Flying_h_

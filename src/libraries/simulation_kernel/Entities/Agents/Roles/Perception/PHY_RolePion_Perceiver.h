@@ -225,10 +225,15 @@ private:
     void AppendHackedPopulationFlows( std::vector< TER_PopulationFlow_ABC* >& perceivableAgents ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Perceiver )
+    //@}
+
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& pion_;
+    MIL_Agent_ABC& owner_;
     const MT_Vector2D* perceiverPosition_;
     const MT_Vector2D* perceiverDirection_;
     MT_Vector2D lastPerceiverPosition_;
@@ -265,11 +270,10 @@ private:
     bool bRadarStateHasChanged_;
     //@}
 
-private:
+    //! @name Static member data
+    //@{
     static const unsigned int nNbrStepsBetweenPeriphericalVision_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Perceiver* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const unsigned int /*version*/ );
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Perceiver )

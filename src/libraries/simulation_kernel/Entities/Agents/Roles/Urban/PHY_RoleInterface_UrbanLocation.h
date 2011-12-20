@@ -25,7 +25,6 @@ class TER_Polygon;
 // Created: SLG 2010-04-08
 // =============================================================================
 class PHY_RoleInterface_UrbanLocation : public tools::Role_ABC
-                                      , private boost::noncopyable
 {
 public:
     typedef PHY_RoleInterface_UrbanLocation RoleInterface;

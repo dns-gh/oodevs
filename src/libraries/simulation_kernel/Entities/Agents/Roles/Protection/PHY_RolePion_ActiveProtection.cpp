@@ -10,32 +10,16 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_ActiveProtection.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_ActiveProtection )
-
-template< typename Archive >
-inline void save_construct_data( Archive& archive, const PHY_RolePion_ActiveProtection* role, const unsigned int /*version*/ )
-{
-    PHY_RolePion_Composantes* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-inline void load_construct_data( Archive& archive, PHY_RolePion_ActiveProtection* role, const unsigned int /*version*/ )
-{
-    PHY_RolePion_Composantes* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePion_ActiveProtection( *pion );
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_ActiveProtection constructor
 // Created: LDC 2010-01-11
 // -----------------------------------------------------------------------------
 PHY_RolePion_ActiveProtection::PHY_RolePion_ActiveProtection( PHY_RolePion_Composantes& pion )
-    : pion_( pion )
+    : owner_( pion )
 {
     // NOTHING
 }
@@ -55,7 +39,7 @@ PHY_RolePion_ActiveProtection::~PHY_RolePion_ActiveProtection()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_ActiveProtection::UseAmmunition( const PHY_DotationCategory& category )
 {
-    pion_.UseAmmunition( category );
+    owner_.UseAmmunition( category );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +48,7 @@ void PHY_RolePion_ActiveProtection::UseAmmunition( const PHY_DotationCategory& c
 // -----------------------------------------------------------------------------
 double PHY_RolePion_ActiveProtection::GetPHModifier( const PHY_DotationCategory& category ) const
 {
-    return pion_.GetPHModifier( category );
+    return owner_.GetPHModifier( category );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +57,7 @@ double PHY_RolePion_ActiveProtection::GetPHModifier( const PHY_DotationCategory&
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_ActiveProtection::CounterIndirectFire( const PHY_DotationCategory& category ) const
 {
-    return pion_.CounterIndirectFire( category );
+    return owner_.CounterIndirectFire( category );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +66,7 @@ bool PHY_RolePion_ActiveProtection::CounterIndirectFire( const PHY_DotationCateg
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_ActiveProtection::DestroyIndirectFire( const PHY_DotationCategory& category ) const
 {
-    return pion_.DestroyIndirectFire( category );
+    return owner_.DestroyIndirectFire( category );
 }
 
 // -----------------------------------------------------------------------------

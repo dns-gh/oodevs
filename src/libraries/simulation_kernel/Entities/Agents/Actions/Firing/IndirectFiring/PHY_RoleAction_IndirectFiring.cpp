@@ -29,27 +29,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( firing::PHY_RoleAction_IndirectFiring )
 
 using namespace firing;
 
-template< typename Archive >
-void firing::save_construct_data( Archive& archive, const PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void firing::load_construct_data( Archive& archive, PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* pion;
-    archive >> pion;
-    ::new( role )PHY_RoleAction_IndirectFiring( *pion );
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_IndirectFiring constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring( MIL_Agent_ABC& pion )
-    : pion_( pion )
+    : owner_( pion )
 {
     // NOTHING
 }
@@ -91,9 +76,9 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
         return eImpossible;
 
     // Firers
-    PHY_IndirectFireData firerWeapons( pion_, *pEffect );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
-    pion_.Execute( *weaponAvailabilityComputer );
+    PHY_IndirectFireData firerWeapons( owner_, *pEffect );
+    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( owner_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
+    owner_.Execute( *weaponAvailabilityComputer );
 
     if( !firerWeapons.HasWeaponsReady() )
     {
@@ -109,7 +94,7 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
     PHY_Weapon* pFirerWeapon = 0;
     while( firerWeapons.GetUnusedFirerWeapon( pFirer, pFirerWeapon ) && !pEffect->IsInterventionTypeFired() ) // ready weapons
     {
-        if( !pFirerWeapon->IndirectFire( pion_, *pEffect ) )
+        if( !pFirerWeapon->IndirectFire( owner_, *pEffect ) )
         {
             pEffect->ForceFlying();
             if( pEffect->GetNbrAmmoFired() )
@@ -141,16 +126,16 @@ void PHY_RoleAction_IndirectFiring::FireSuspended()
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo )
 {
-    PHY_SmokeData smokeData( pion_, PHY_IndirectFireDotationClass::fumigene_, nNbrAmmo );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( smokeData ) );
-    pion_.Execute( *weaponAvailabilityComputer );
+    PHY_SmokeData smokeData( owner_, PHY_IndirectFireDotationClass::fumigene_, nNbrAmmo );
+    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( owner_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( smokeData ) );
+    owner_.Execute( *weaponAvailabilityComputer );
 
     PHY_Weapon* pWeapon = smokeData.GetWeapon();
     if( !pWeapon )
         return eNoCapacity;
 
     PHY_FireResults_Default fireResult; //$$$ POURRI
-    pWeapon->ThrowSmoke( pion_, vTargetPosition, nNbrAmmo, fireResult );
+    pWeapon->ThrowSmoke( owner_, vTargetPosition, nNbrAmmo, fireResult );
     return eFinished;
 }
 
@@ -160,9 +145,9 @@ int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPositio
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* PHY_RoleAction_IndirectFiring::GetMunitionForIndirectFire( const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition )
 {
-    PHY_MunitionForIndirectFireData fireData( pion_, indirectWeaponCategory, vTargetPosition );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( fireData ) );
-    pion_.Execute( *weaponAvailabilityComputer );
+    PHY_MunitionForIndirectFireData fireData( owner_, indirectWeaponCategory, vTargetPosition );
+    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( owner_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( fireData ) );
+    owner_.Execute( *weaponAvailabilityComputer );
 
     return fireData.GetChoosenMunition();
 }

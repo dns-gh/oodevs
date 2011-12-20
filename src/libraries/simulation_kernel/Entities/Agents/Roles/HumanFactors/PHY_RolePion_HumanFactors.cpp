@@ -30,27 +30,12 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_HumanFactors )
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ )
-{
-    MIL_Entity_ABC* const entity = &role->entity_;
-    archive << entity;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ )
-{
-    MIL_Entity_ABC* entity;
-    archive >> entity;
-    ::new( role )PHY_RolePion_HumanFactors( *entity );
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_HumanFactors::PHY_RolePion_HumanFactors( MIL_Entity_ABC& entity )
-    : entity_        ( entity )
+    : owner_         ( entity )
     , bHasChanged_   ( true )
     , pMorale_       ( &PHY_Morale::bon_ )
     , pExperience_   ( &PHY_Experience::veteran_ )
@@ -228,7 +213,7 @@ void PHY_RolePion_HumanFactors::Update( bool /*bIsDead*/ )
 {
     evolutionFunction_();
     if( HasChanged() )
-        entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,7 +243,7 @@ void PHY_RolePion_HumanFactors::Evolution()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::UpdateTirednessValue()
 {
-    const PHY_ConsumptionType& consumptionType = entity_.GetRole< dotation::PHY_RolePion_Dotations >().GetConsumptionMode();
+    const PHY_ConsumptionType& consumptionType = owner_.GetRole< dotation::PHY_RolePion_Dotations >().GetConsumptionMode();
     if( consumptionType.GetID() == PHY_ConsumptionType::engineStopped_.GetID() )
         tirednessValue_ += PHY_Tiredness::evolution_.engineStopped_;
     else if( consumptionType.GetID() == PHY_ConsumptionType::engineStarted_.GetID() )
@@ -291,7 +276,7 @@ void PHY_RolePion_HumanFactors::NotifyAttacked()
     stressValue_ += PHY_Stress::evolution_.incPerShot_;
     UpdateStress();
     if( HasChanged() )
-        entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------

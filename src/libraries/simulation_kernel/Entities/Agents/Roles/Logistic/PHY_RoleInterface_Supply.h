@@ -45,7 +45,6 @@ class PHY_ComposanteTypePion;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Supply : public tools::Role_ABC
-                               , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -62,13 +61,12 @@ public:
 
     //! @name CheckPoints
     //@{
-    //template< typename Archive > void serialize( Archive&, const unsigned int ) = 0;
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Accessors
     //@{
-    virtual const MIL_AgentPionLOG_ABC& GetPion() const { return *pPion_; };
+    virtual const MIL_AgentPion& GetPion() const = 0;
     //@}
 
     //! @name Operations
@@ -135,8 +133,6 @@ public:
     //@}
 
 private:
-    MIL_AgentPionLOG_ABC* pPion_; //$$$Hack
-
     //! @name Serialization
     //@{
     friend class boost::serialization::access;
@@ -145,7 +141,6 @@ private:
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }
     //@}
-
 };
 
 #endif // __PHY_RoleInterface_Supply_h_

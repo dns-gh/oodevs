@@ -12,6 +12,7 @@
 #ifndef __PHY_RoleAction_IndirectFiring_h_
 #define __PHY_RoleAction_IndirectFiring_h_
 
+#include "MIL.h"
 #include "MT_Tools/Role_ABC.h"
 
 class PHY_IndirectFireDotationClass;
@@ -27,7 +28,6 @@ namespace firing
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_IndirectFiring : public tools::Role_ABC
-                                    , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -78,21 +78,24 @@ public:
     //@}
 
 private:
-    //! @name Tools
+    //! @name Serialization
     //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ );
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_IndirectFiring )
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& pion_;
+    MIL_Agent_ABC& owner_;
     //@}
 };
 
 } //namespace firing
 
 BOOST_CLASS_EXPORT_KEY( firing::PHY_RoleAction_IndirectFiring )
+namespace firing
+{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_IndirectFiring, MIL_Agent_ABC )
+}
 
 #endif // __PHY_RoleAction_IndirectFiring_h_

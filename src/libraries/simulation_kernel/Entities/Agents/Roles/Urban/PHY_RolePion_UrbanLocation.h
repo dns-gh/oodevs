@@ -94,18 +94,23 @@ public:
     virtual bool IsInCity() const;
     //@}
 
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_UrbanLocation )
+    //@}
+
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& pion_;
-    const UrbanObjectWrapper* urbanObject_;
+    MIL_Agent_ABC&                          owner_;
+    const UrbanObjectWrapper*               urbanObject_;
     std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
-    bool isInCity_;
-    bool isFlying_;
+    bool                                    isInCity_;
+    bool                                    isFlying_;
     //@}
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_UrbanLocation* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_UrbanLocation* role, const unsigned int /*version*/ );
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_RolePion_UrbanLocation )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_UrbanLocation, MIL_Agent_ABC )
 
 #endif // __PHY_RolePion_UrbanLocation_h_

@@ -32,7 +32,6 @@ class MIL_PopulationConcentration;
 // =============================================================================
 class PHY_RoleInterface_Location : public tools::Role_ABC
                                  , public TER_Agent_ABC
-                                 , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -74,9 +73,6 @@ public:
     virtual bool HasSpeedChanged() const = 0; // Position or direction or height has changed
     virtual bool HasLocationChanged() const = 0;
     //@}
-
-//    virtual void SendChangedState( client::UnitAttributes& asnMsg ) const = 0;
-//    virtual void SendFullState( client::UnitAttributes& asnMsg ) const = 0;
 
 private:
     //! @name Serialization

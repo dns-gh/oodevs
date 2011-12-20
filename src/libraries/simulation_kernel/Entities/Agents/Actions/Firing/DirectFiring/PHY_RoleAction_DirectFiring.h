@@ -31,7 +31,6 @@ namespace firing
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_DirectFiring : public tools::Role_ABC
-                                  , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -93,19 +92,26 @@ private:
     //@{
     MIL_Population* GetPopulationTarget( unsigned int nTargetKnowledgeID );
     void FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ );
+    //@}
+
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_DirectFiring )
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion& pion_;
+    MIL_AgentPion& owner_;
     //@}
 };
 
 } //namespace firing
 
 BOOST_CLASS_EXPORT_KEY( firing::PHY_RoleAction_DirectFiring )
+namespace firing
+{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_DirectFiring, MIL_AgentPion )
+}
 
 #endif // __PHY_RoleAction_DirectFiring_h_

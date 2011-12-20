@@ -28,21 +28,6 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_UrbanLocation )
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePion_UrbanLocation* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePion_UrbanLocation* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePion_UrbanLocation( *pion );
-}
-
 using namespace urbanLocation;
 
 // -----------------------------------------------------------------------------
@@ -50,7 +35,7 @@ using namespace urbanLocation;
 // Created: SLG 2010-04-08
 // -----------------------------------------------------------------------------
 PHY_RolePion_UrbanLocation::PHY_RolePion_UrbanLocation( MIL_Agent_ABC& pion )
-    : pion_       ( pion )
+    : owner_      ( pion )
     , urbanObject_( 0 )
     , delegate_   ( new OutsideUrbanBlockPosition() )
     , isInCity_   ( false )
@@ -173,8 +158,8 @@ bool PHY_RolePion_UrbanLocation::IsInCity() const
 // -----------------------------------------------------------------------------
 double PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const
 {
-    std::auto_ptr< UrbanLocationComputer_ABC > computer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *computer );
+    std::auto_ptr< UrbanLocationComputer_ABC > computer( const_cast< MIL_Agent_ABC& >( owner_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
+    const_cast< MIL_Agent_ABC& >( owner_ ).Execute( *computer );
     UrbanLocationComputer_ABC::Results& result = computer->Result();
     return delegate_->ComputeRatioPionInside( result, attritionSurface );
 }
@@ -185,8 +170,8 @@ double PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const MT_Ellipse& att
 // -----------------------------------------------------------------------------
 double PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const TER_Polygon& polygon, double modificator ) const
 {
-    std::auto_ptr< UrbanLocationComputer_ABC > computer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *computer );
+    std::auto_ptr< UrbanLocationComputer_ABC > computer( const_cast< MIL_Agent_ABC& >( owner_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
+    const_cast< MIL_Agent_ABC& >( owner_ ).Execute( *computer );
     UrbanLocationComputer_ABC::Results& result = computer->Result();
     return delegate_->ComputeRatioPionInside( result, polygon, modificator );
 }
@@ -206,8 +191,8 @@ double PHY_RolePion_UrbanLocation::ComputeUrbanProtection( const PHY_DotationCat
 // -----------------------------------------------------------------------------
 MT_Vector2D PHY_RolePion_UrbanLocation::GetFirerPosition( MIL_Agent_ABC& target ) const
 {
-    std::auto_ptr< UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *firerComputer );
+    std::auto_ptr< UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( owner_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
+    const_cast< MIL_Agent_ABC& >( owner_ ).Execute( *firerComputer );
     UrbanLocationComputer_ABC::Results& firerResult = firerComputer->Result();
     return delegate_->GetFirerPosition( target, firerResult );
 }
@@ -218,8 +203,8 @@ MT_Vector2D PHY_RolePion_UrbanLocation::GetFirerPosition( MIL_Agent_ABC& target 
 // -----------------------------------------------------------------------------
 MT_Vector2D PHY_RolePion_UrbanLocation::GetTargetPosition( MIL_Agent_ABC& firer ) const
 {
-    std::auto_ptr< UrbanLocationComputer_ABC > targetComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *targetComputer );
+    std::auto_ptr< UrbanLocationComputer_ABC > targetComputer( const_cast< MIL_Agent_ABC& >( owner_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
+    const_cast< MIL_Agent_ABC& >( owner_ ).Execute( *targetComputer );
     UrbanLocationComputer_ABC::Results& targetResult = targetComputer->Result();
     return delegate_->GetTargetPosition( firer, targetResult );
 }
@@ -230,8 +215,8 @@ MT_Vector2D PHY_RolePion_UrbanLocation::GetTargetPosition( MIL_Agent_ABC& firer 
 // -----------------------------------------------------------------------------
 double PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const
 {
-    std::auto_ptr< UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    pion_.Execute( *firerComputer );
+    std::auto_ptr< UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( owner_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
+    owner_.Execute( *firerComputer );
     UrbanLocationComputer_ABC::Results& firerResult = firerComputer->Result();
     std::auto_ptr< UrbanLocationComputer_ABC > targetComputer( target.GetAlgorithms().urbanLocationComputerFactory_->Create() );
     target.Execute( *targetComputer );
@@ -260,7 +245,7 @@ void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& /*algori
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    if( urbanObject_ && !isFlying_ && !pion_.Get< PHY_RoleAction_MovingUnderground >().PreparingToHide() )
+    if( urbanObject_ && !isFlying_ && !owner_.Get< PHY_RoleAction_MovingUnderground >().PreparingToHide() )
         algorithm.AddModifier( 1. - urbanObject_->GetOccupation(), true );
 }
 
@@ -271,7 +256,7 @@ void PHY_RolePion_UrbanLocation::Execute( moving::SpeedComputer_ABC& algorithm )
 bool PHY_RolePion_UrbanLocation::CanMount() const
 {
     if( urbanObject_ )
-        return urbanObject_->GetTrafficability() >= pion_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true );
+        return urbanObject_->GetTrafficability() >= owner_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true );
     return true;
 }
 

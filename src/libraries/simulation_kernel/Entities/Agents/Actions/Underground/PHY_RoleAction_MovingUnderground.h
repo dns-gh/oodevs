@@ -10,6 +10,7 @@
 #ifndef __PHY_RoleAction_MovingUnderground_h_
 #define __PHY_RoleAction_MovingUnderground_h_
 
+#include "MIL.h"
 #include "NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/Role_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
@@ -30,7 +31,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class PHY_RoleAction_MovingUnderground : public tools::Role_ABC
                                        , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
-                                       , private boost::noncopyable
                                        , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
@@ -75,28 +75,26 @@ public:
     //@}
 
 private:
-    //! @name Helpers
+    //! @name Serialization
     //@{
-    template< typename Archive >
-    friend void save_construct_data( Archive& archive, const PHY_RoleAction_MovingUnderground* role, const unsigned int /*version*/ );
-    template< typename Archive >
-    friend void load_construct_data( Archive& archive, PHY_RoleAction_MovingUnderground* role, const unsigned int /*version*/ );
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_MovingUnderground )
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& pion_;
-    std::string currentNetwork_;
+    MIL_Agent_ABC&                            owner_;
+    std::string                               currentNetwork_;
     boost::shared_ptr< DEC_Knowledge_Object > pCurrentLocation_;
     boost::shared_ptr< DEC_Knowledge_Object > pDestination_;
-    double transferTime_;
-    double speed_;
-    bool preparingToHide_;
-    bool bHasChanged_;
+    double                                    transferTime_;
+    double                                    speed_;
+    bool                                      preparingToHide_;
+    bool                                      bHasChanged_;
     //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_MovingUnderground )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_MovingUnderground, MIL_Agent_ABC )
 
 #endif // __PHY_RoleAction_MovingUnderground_h_

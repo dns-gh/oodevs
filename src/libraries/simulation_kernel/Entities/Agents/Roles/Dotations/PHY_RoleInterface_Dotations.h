@@ -39,7 +39,6 @@ namespace dotation
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Dotations : public tools::Role_ABC
-                                  , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -57,9 +56,7 @@ public:
     //! @name Operations
     //@{
     virtual const PHY_ConsumptionType& GetConsumptionMode() const = 0;
-
     virtual void ReadOverloading( xml::xistream& xis ) = 0;
-
     virtual void Update( bool bIsDead ) = 0;
     virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
@@ -90,13 +87,6 @@ public:
     virtual void RemoveForbiddenDotation( const PHY_DotationCategory& category ) = 0;
     virtual void AllowAllDotations() = 0;
     virtual bool HasDotationForFiring( const PHY_DotationCategory& category, int iterations ) = 0;
-
-    //@}
-
-    //! @name Network
-    //@{
-//    virtual void SendChangedState( client::UnitAttributes& asn ) const = 0;
-//    virtual void SendFullState   ( client::UnitAttributes& asn ) const = 0;
     //@}
 
     //! @name Logistic - Supply
@@ -105,6 +95,7 @@ public:
     virtual void Apply( boost::function< void( PHY_Dotation& ) > visitor ) const = 0;
     virtual void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const = 0;
     //@}
+
 private:
     //! @name Serialization
     //@{

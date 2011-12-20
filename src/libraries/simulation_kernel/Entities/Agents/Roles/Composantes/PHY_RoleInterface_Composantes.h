@@ -37,7 +37,6 @@ class PHY_Volume;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Composantes : public tools::Role_ABC
-                                    , private boost::noncopyable
 {
 public:
     //! @name Types

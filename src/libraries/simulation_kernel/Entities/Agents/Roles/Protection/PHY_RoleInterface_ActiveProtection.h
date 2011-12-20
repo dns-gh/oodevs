@@ -48,13 +48,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PHY_RoleInterface_ActiveProtection( const PHY_RoleInterface_ActiveProtection& );            //!< Copy constructor
-    PHY_RoleInterface_ActiveProtection& operator=( const PHY_RoleInterface_ActiveProtection& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Serialization
     //@{
     friend class boost::serialization::access;

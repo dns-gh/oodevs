@@ -30,7 +30,6 @@ class PHY_RoePopulation;
 // Created: JVT 2004-08-03
 // =============================================================================
 class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
-                           , private boost::noncopyable
 {
 public:
              DEC_AutomateDecision( MIL_Automate& automate, unsigned int gcPause, unsigned int gcMult );

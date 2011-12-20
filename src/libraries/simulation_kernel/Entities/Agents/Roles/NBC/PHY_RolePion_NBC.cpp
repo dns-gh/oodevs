@@ -66,27 +66,12 @@ namespace boost
 namespace nbc
 {
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePion_NBC* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePion_NBC( *pion );
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
-    : pion_                  ( pion )
+    : owner_                 ( pion )
     , bNbcProtectionSuitWorn_( false )
     , rContaminationState_   ( 0. )
     , rContaminationQuantity_( 0. )
@@ -130,9 +115,9 @@ void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
     if( bNbcProtectionSuitWorn_ )
         return;
     if( ! lastStatePoisoning_ && ! poisoned_ )
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_Poisoned );
+        MIL_Report::PostEvent( owner_, MIL_Report::eReport_Poisoned );
     poisoned_ = true;
-    pion_.Apply( &nbc::ToxicEffectHandler_ABC::ApplyPoisonous, contamination );
+    owner_.Apply( &nbc::ToxicEffectHandler_ABC::ApplyPoisonous, contamination );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,10 +129,10 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
     if( contamination.GetQuantity() < 1e-15 ) // TODO
         return;
     if( ! bNbcProtectionSuitWorn_ )
-        pion_.Apply( &nbc::ToxicEffectHandler_ABC::ApplyContamination, contamination );
+        owner_.Apply( &nbc::ToxicEffectHandler_ABC::ApplyContamination, contamination );
     nbcAgentTypesContaminating_.insert( &contamination.GetType() );
     if( rContaminationQuantity_ == 0 )
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_Contaminated );
+        MIL_Report::PostEvent( owner_, MIL_Report::eReport_Contaminated );
     rContaminationQuantity_ += contamination.GetQuantity();
     rContaminationState_ = 1.;
     bHasChanged_ = true;
@@ -181,7 +166,7 @@ void PHY_RolePion_NBC::Decontaminate( double rRatioAgentsWorking )
         assert( nbcAgentTypesContaminating_.empty() );
         return;
     }
-    double rNewContaminationState = rContaminationState_ - ( pion_.GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
+    double rNewContaminationState = rContaminationState_ - ( owner_.GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
     rNewContaminationState = std::max( rNewContaminationState, 0. );
     if( static_cast< unsigned int >( rNewContaminationState * 100. ) != ( rContaminationState_ * 100. ) )
         bHasChanged_ = true;
@@ -309,7 +294,7 @@ void PHY_RolePion_NBC::StopImmunizeAgent()
 void PHY_RolePion_NBC::Update( bool /*bIsDead*/ )
 {
     if( HasChanged() )
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     if( IsContaminated() )
         ContaminateOtherUnits();
     lastStatePoisoning_ = poisoned_;
@@ -344,13 +329,13 @@ void PHY_RolePion_NBC::ContaminateOtherUnits()
     if( typeNbcContaminating.empty() || rContaminationState_ != 1. || rContaminationQuantity_ < 5 )
         return;
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-    TER_World::GetWorld().GetAgentManager().GetListWithinCircle( pion_.Get< PHY_RoleInterface_Location >().GetPosition() ,
+    TER_World::GetWorld().GetAgentManager().GetListWithinCircle( owner_.Get< PHY_RoleInterface_Location >().GetPosition() ,
          MIL_NbcAgentType::GetContaminationDistance() , perceivableAgents );
     double minQuantity = MIL_NbcAgentType::GetMinContaminationQuantity();
     for( TER_Agent_ABC::CIT_AgentPtrVector it  = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-        if( target.GetID() != pion_.GetID() && !target.Get< PHY_RoleInterface_NBC >().IsImmune() &&
+        if( target.GetID() != owner_.GetID() && !target.Get< PHY_RoleInterface_NBC >().IsImmune() &&
             ( rContaminationQuantity_ - target.Get< PHY_RoleInterface_NBC >().GetContaminationQuantity()  >  minQuantity )  )
         {
             MIL_ToxicEffectManipulator* manipulator = new MIL_ToxicEffectManipulator( typeNbcContaminating, minQuantity );

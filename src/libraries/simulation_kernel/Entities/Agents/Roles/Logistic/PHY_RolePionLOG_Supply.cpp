@@ -28,38 +28,23 @@
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "tools/ExerciseSettings.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Supply )
-
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPionLOG_ABC* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePionLOG_Supply( *pion, true );
-    pion->RegisterRole( *role );
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply constructor
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
-PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion, bool fromArchive /*= false*/ )
-    : pion_             ( pion )
+PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion )
+    : owner_             ( pion )
     , bSystemEnabled_    ( false )
     , bHasChanged_       ( true )
     , bExternalMustChangeState_ ( false )
     , pStocks_           ( 0 )
 {
-    pStocks_ = new PHY_DotationStockContainer( *this, fromArchive ? false : MIL_AgentServer::GetWorkspace().GetEntityManager().HasInfiniteDotations() );
+    pStocks_ = new PHY_DotationStockContainer( *this, MIL_AgentServer::GetWorkspace().GetSettings().GetValue< bool >( "infinite-dotation" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +106,7 @@ void PHY_RolePionLOG_Supply::ReadOverloading( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG* PHY_RolePionLOG_Supply::FindLogisticManager() const
 {
-    return pion_.FindLogisticManager();
+    return owner_.FindLogisticManager();
 }
 
 // =============================================================================
@@ -156,8 +141,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
         return 0;
 
     AvailableConvoyFunctor functor( dotationCategory );
-    std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    pion_.Execute( *computer );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_.Execute( *computer );
     return functor.pSelectedConvoy_;
 }
 
@@ -190,8 +175,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
         return 0;
 
     AvailableConvoyTypeFunctor functor( type );
-    std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    pion_.Execute( *computer );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_.Execute( *computer );
     return functor.pSelectedConvoy_;
 }
 // -----------------------------------------------------------------------------
@@ -200,7 +185,7 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
 // -----------------------------------------------------------------------------
 double PHY_RolePionLOG_Supply::GetStockAvailablity( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const
 {
-    if( !bSystemEnabled_ && !pion_.IsDead() ) // <== Stock à terre quand pion mort = libre service
+    if( !bSystemEnabled_ && !owner_.IsDead() ) // <== Stock à terre quand pion mort = libre service
         return 0.;
     return std::min( GetStockValue( dotationCategory ), rRequestedValue );
 }
@@ -292,11 +277,11 @@ double PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
 
     ConvoyTransportersUseFunctor functor( composanteUse );
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    pion_.Execute( *componentComputer );
+    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_.Execute( *componentComputer );
     ConvoyLendedTransportersUseFunctor functor2( composanteUse );
-    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
-    pion_.Execute( *lendedComputer );
+    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
+    owner_.Execute( *lendedComputer );
 
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
@@ -320,7 +305,7 @@ void PHY_RolePionLOG_Supply::StartUsingForLogistic( PHY_ComposantePion& composan
     composante.StartUsingForLogistic();
 
     if( PHY_SupplyResourcesAlarms::IsConvoyTransporterResourcesLevelReached( rTransporterRatio, GetConvoyTransportersAvailabilityRatio() ) )
-        MIL_Report::PostEvent< MIL_Agent_ABC >( pion_, MIL_Report::eReport_ConvoyTransporterResourcesLevelReached );
+        MIL_Report::PostEvent< MIL_Agent_ABC >( owner_, MIL_Report::eReport_ConvoyTransporterResourcesLevelReached );
 }
 
 // -----------------------------------------------------------------------------
@@ -344,9 +329,9 @@ void PHY_RolePionLOG_Supply::StopUsingForLogistic( PHY_ComposantePion& composant
 void PHY_RolePionLOG_Supply::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
     if( bNewNeed )
-        MIL_Report::PostEvent< MIL_Agent_ABC >( pion_, MIL_Report::eReport_LogisticStockThresholdExceeded, dotationCategory );
+        MIL_Report::PostEvent< MIL_Agent_ABC >( owner_, MIL_Report::eReport_LogisticStockThresholdExceeded, dotationCategory );
 
-    pion_.GetAutomate().NotifyStockSupplyNeeded( dotationCategory );
+    owner_.GetAutomate().NotifyStockSupplyNeeded( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -444,7 +429,7 @@ PHY_DotationStock* PHY_RolePionLOG_Supply::AddEmptyStock( const PHY_DotationCate
 void PHY_RolePionLOG_Supply::Update( bool /*bIsDead*/ )
 {
     if( bHasChanged_ )
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     assert( pStocks_ );
     pStocks_->Update(); // Stock checking
 }
@@ -503,16 +488,16 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, swor
 void PHY_RolePionLOG_Supply::SendFullState( unsigned int context ) const
 {
     client::LogSupplyState asn;
-    asn().mutable_unit()->set_id( pion_.GetID() );
+    asn().mutable_unit()->set_id( owner_.GetID() );
     asn().set_chain( bSystemEnabled_ );
 
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     ConvoyTransportersUseFunctor functor( composanteUse );
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    pion_.Execute( *componentComputer );
+    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_.Execute( *componentComputer );
     ConvoyLendedTransportersUseFunctor functor2( composanteUse );
-    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
-    pion_.Execute( *lendedComputer );
+    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
+    owner_.Execute( *lendedComputer );
 
     SendComposanteUse( composanteUse, *asn().mutable_transporters()  );
 
@@ -533,18 +518,18 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
         return;
 
     client::LogSupplyState asn;
-    asn().mutable_unit()->set_id( pion_.GetID() );
+    asn().mutable_unit()->set_id( owner_.GetID() );
     if( bHasChanged_ || bExternalMustChangeState_ )
     {
         asn().set_chain( bSystemEnabled_ );
 
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         ConvoyTransportersUseFunctor functor( composanteUse );
-        std::auto_ptr< OnComponentComputer_ABC > transportedComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-        pion_.Execute( *transportedComputer );
+        std::auto_ptr< OnComponentComputer_ABC > transportedComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+        owner_.Execute( *transportedComputer );
         ConvoyLendedTransportersUseFunctor functor2( composanteUse );
-        std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
-        pion_.Execute( *lendedComputer );
+        std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
+        owner_.Execute( *lendedComputer );
 
         SendComposanteUse( composanteUse, *asn().mutable_transporters() );
     }
@@ -583,10 +568,9 @@ void PHY_RolePionLOG_Supply::DisableSystem()
 // Name: PHY_RolePionLOG_Supply::GetPion
 // Created: NLD 2006-01-03
 // -----------------------------------------------------------------------------
-const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Supply::GetPion() const
+const MIL_AgentPion& PHY_RolePionLOG_Supply::GetPion() const
 {
-
-    return pion_;
+    return owner_;
 }
 
 // -----------------------------------------------------------------------------
