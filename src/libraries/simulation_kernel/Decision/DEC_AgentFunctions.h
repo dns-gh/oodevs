@@ -133,6 +133,7 @@ public:
     static bool HasDotation( const MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category );
     static bool HasDotationForFiring( DEC_Decision_ABC* agent, const PHY_DotationCategory* category, int iterations );
     static bool CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category );
+    static bool AgentHasTappingRadar( const DEC_Decision_ABC* agent );
 
     // Old deployment
     static double GetInstallationTime( DEC_Decision_ABC& callerAgent );   // $$$$ ABR 2011-12-15: Old method, should be removed soon

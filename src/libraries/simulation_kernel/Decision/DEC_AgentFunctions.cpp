@@ -40,6 +40,7 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_Suicide.h"
 #include "Entities/Objects/ActivableCapacity.h"
@@ -1119,4 +1120,16 @@ bool DEC_AgentFunctions::AgentCanDestroyObject( const DEC_Decision_ABC* agent, b
 bool DEC_AgentFunctions::AgentCanBypassObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
     return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && agent && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentHasTappingRadar
+// Created: DDA 2011-12-19
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentHasTappingRadar( const DEC_Decision_ABC* agent )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in AgentHasTappingRadar" );
+    PHY_RoleInterface_Perceiver& agentPerceiver = agent->GetPion().GetRole< PHY_RoleInterface_Perceiver >();
+    return !agentPerceiver.GetRadars( PHY_RadarClass::tappingRadar_ ).empty();
 }
