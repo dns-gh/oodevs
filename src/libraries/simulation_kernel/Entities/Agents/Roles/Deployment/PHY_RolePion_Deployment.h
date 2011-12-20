@@ -40,7 +40,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Clean();
     virtual void Update( bool bIsDead );
     //@}
 

@@ -35,7 +35,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Clean() = 0;
     virtual void Update( bool bIsDead ) = 0;
     //@}
 
