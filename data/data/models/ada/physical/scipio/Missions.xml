@@ -1549,7 +1549,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="Zone à observer" optional="false" type="Polygon"/>
+      <parameter dia-name="area" name="Zone à renseigner" optional="false" type="Polygon"/>
       <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.RASIT_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.RASIT_RenseignerSur" id="2484" name="PION RENS RASIT .Renseigner Sur" package="intelligence">
@@ -1557,7 +1557,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="Zone à observer" optional="false" type="Polygon"/>
+      <parameter dia-name="area" name="Zone à renseigner" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre" dia-type="france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre" id="2485" name="PION RENS ROIM Mettre En Oeuvre" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1565,6 +1565,13 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="position" name="Position de mise en oeuvre" optional="true" type="Point"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROEM_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.ROEM_RenseignerSur" id="2486" name="PION RENS ROEM .Renseigner Sur" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area" name="Zone à renseigner" optional="false" type="Polygon"/>
     </mission>
   </units>
   <automats>
@@ -3084,4 +3091,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="1797706381" -->
+<!-- signature="2407765048" -->
