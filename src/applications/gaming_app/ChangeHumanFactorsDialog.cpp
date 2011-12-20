@@ -213,7 +213,7 @@ QSize ChangeHumanFactorsDialog::sizeHint() const
 // -----------------------------------------------------------------------------
 void ChangeHumanFactorsDialog::DoContextMenu( const kernel::Entity_ABC& entity, ContextMenu& menu )
 {
-    if( profile_.CanDoMagic( entity ) )
+    if( profile_.CanDoMagic( entity ) && entity.Retrieve< Troops >() )
     {
         selected_ = &entity;
         Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
