@@ -575,7 +575,6 @@ void MIL_AgentPion::Clean()
     GetRole< DEC_RolePion_Decision >().Clean();
     GetRole< PHY_RoleAction_FolkInfluence >().Clean();
     GetRole< PHY_RoleAction_MovingUnderground >().Clean();
-    GetRole< PHY_RoleInterface_Deployment >().Clean();
     PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >();//@TODO Add an interface for role with clean, update
     if( role )
         role->Clean();

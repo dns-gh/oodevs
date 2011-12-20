@@ -27,10 +27,10 @@ PHY_RolePion_Deployment::PHY_RolePion_Deployment( MIL_Agent_ABC& pion )
     , rDeploymentValue_( 0.f )
 {
     rDeploymentGap_ = ( pion_.GetType().GetUnitType().GetInstallationTime() != 0.f )
-        ? MIL_AgentServer::GetWorkspace().GetTickDuration() / pion_.GetType().GetUnitType().GetInstallationTime()
+        ? 1.f / pion_.GetType().GetUnitType().GetInstallationTime()
         : 1.f;
     rUndeploymentGap_ = ( pion_.GetType().GetUnitType().GetUninstallationTime() != 0.f )
-        ? MIL_AgentServer::GetWorkspace().GetTickDuration() / pion_.GetType().GetUnitType().GetUninstallationTime()
+        ? 1.f / pion_.GetType().GetUnitType().GetUninstallationTime()
         : 1.f;
 }
 
@@ -66,16 +66,6 @@ void PHY_RolePion_Deployment::save( MIL_CheckPointOutArchive& file, const unsign
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Deployment::Clean
-// Created: ABR 2011-12-15
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Deployment::Clean()
-{
-    eDeploymentState_ = eUndeployed;
-    rDeploymentValue_ = 0.f;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Deployment::Update
 // Created: ABR 2011-12-15
 // -----------------------------------------------------------------------------
@@ -84,24 +74,22 @@ void PHY_RolePion_Deployment::Update( bool /*bIsDead*/ )
     switch( eDeploymentState_ )
     {
     case eDeploying:
+        rDeploymentValue_ += rDeploymentGap_;
         if( rDeploymentValue_ >= 1.f )
         {
             rDeploymentValue_ = 1.f;
             eDeploymentState_ = eDeployed;
             MIL_Report::PostEvent( pion_, MIL_Report::eReport_SectionDeployee );
         }
-        else
-            rDeploymentValue_ += rDeploymentGap_;
         break;
     case eUndeploying:
+        rDeploymentValue_ -= rUndeploymentGap_;
         if( rDeploymentValue_ <= 0.f )
         {
             rDeploymentValue_ = 0.f;
             eDeploymentState_ = eUndeployed;
             MIL_Report::PostEvent( pion_, MIL_Report::eReport_SectionUndeployed );
         }
-        else
-            rDeploymentValue_ -= rUndeploymentGap_;
         break;
     case eDeployed:
     case eUndeployed:
