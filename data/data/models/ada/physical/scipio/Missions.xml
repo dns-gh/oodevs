@@ -1573,6 +1573,15 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Zone à renseigner" optional="false" type="Polygon"/>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.AcquerirObjectif" dia-type="france.military.platoon.combat.support.artillery.tasks.AcquerirObjectif" id="2487" name="PION ASS Acquérir Objectifs" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="zone" name="Zone à observer" optional="false" type="Polygon"/>
+      <parameter dia-name="position" name="Position d'installation" optional="false" type="Point"/>
+      <parameter dia-name="positionDebarquement" name="Position de débarquement" optional="true" type="Point"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AUTOMATE ALAT Aller Se Recompleter" package="none">
@@ -3084,4 +3093,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3134499625" -->
+<!-- signature="3136539295" -->
