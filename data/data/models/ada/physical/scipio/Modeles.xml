@@ -5203,7 +5203,7 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Patrouille Viviane">
       <missions>
-        <mission name="PION RENS RADINT Renseigner Sur"/>
+        <mission name="PION RENS RADINT .Renseigner Sur"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -8405,4 +8405,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3925039058" -->
+<!-- signature="1360898011" -->
