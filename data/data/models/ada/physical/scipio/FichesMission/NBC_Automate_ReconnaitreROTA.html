@@ -1,0 +1,110 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	
+		<title>NBC Pion Reconnaitre Un Site ROTA</title>
+		<link href="Fiche.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" width="14" height="16">
+			<param name="Keyword" value="Pion NBC Reconnaitre Un Site ROTA">
+		</Object><span class="Entete"><img id="logoProjet" src="imagesCommunes/scipio.png" height="101" width="130"></img><span id="contenu"><p>NIVEAU : Pion</p>
+				<p>ARME : NBC</p>
+				<p>MISSION : Reconnaitre Un Site ROTA</p>
+			</span></span><h2>Définition TTA 106</h2><span class="normal"><definition>Il s'agit, progressant en premier échelon de la compagnie ou isolément, de rechercher le renseignement d'ordre tactique ou technique, sur l'ennemi ou le terrain, sur un point ou dans une zone donnée, en engageant éventuellement le combat</definition>
+		</span><br><h2>Effets</h2>
+		<h2>Variantes et modalités d'exécution</h2><span class="normal" style="font-weight: bold;"><span class="space">Reconnaître un point : 
+                        </span></span><ol>
+			<li>
+				<step>Déplacement vers l’objectif</step>
+			</li>
+			<li>
+				<step>Observation à partir d'une position offrant une vue sur l'objectif</step>
+			</li>
+			<li>
+				<step>Si l'objectif est occupé le pion engage le combat (cas non détaillé pour le moment), sinon le pion l'occupe</step>
+			</li>
+			<li>
+				<step>Après un délai de reconnaissance, le point est reconnu et le pion l'occupe</step>
+			</li>
+		</ol><br><span class="normal" style="font-weight: bold;"><span class="space">Reconnaître un bloc urbain : 
+                        </span></span><ol>
+			<li>
+				<step>Déplacement vers le bloc urbain</step>
+			</li>
+			<li>
+				<step>Observation de l'extérieur du bloc urbain à partir d'une position offrant une vue sur l'objectif</step>
+			</li>
+			<li>
+				<step>Après un délai d'observation, le pion entre dans le bloc urbain pour le reconnaitre.</step>
+			</li>
+			<li>
+				<step>Après un délai de reconnaissance, le bloc urbain est reconnu.</step>
+			</li>
+		</ol><br><span class="normal" style="font-weight: bold;"><span class="space">Reconnaître un itinéraire : 
+                        </span></span><ol>
+			<li>
+				<step>Parcourir l’itinéraire de point en point en les reconnaissant</step>
+			</li>
+			<li>
+				<step>Remontée du renseignement pour chacun de ces points</step>
+			</li>
+			<li>
+				<step>Si un point est occupé le pion engage le combat (cas non détaillé pour le moment), sinon le pion l'occupe</step>
+			</li>
+		</ol><br><span class="normal" style="font-weight: bold;"><span class="space">Reconnaître une zone : 
+                        </span></span><ol>
+			<li>
+				<step>Déplacement vers la zone</step>
+			</li>
+			<li>
+				<step>Observation de l'extérieur de la zone à partir d'une position offrant une vue sur l'objectif</step>
+			</li>
+			<li>
+				<step>Après un délai d'observation, le pion se déplace dans la zone en reconnaissant tous les points et/ou tous les blocs urbains de celle-ci. Les blocs urbains ne seront reconnus que de l'extérieur</step>
+			</li>
+		</ol><br><table style="text-align: left; page-break-before:always" cellpadding="10" cellspacing="2">
+			<tbody>
+				<tr>
+					<td class="table" colspan="2" rowspan="3">
+						<h2> Schéma de modélisation </h2>
+						<h3>Reconnaître itinéraire</h3><img src="./Images/Melee_Pion_Reconnaitre/MissionItineraire.svg" height="350" width=""><br></td>
+					<td class="table" style="vertical-align: top;">
+						<h2>Paramètres obligatoires</h2><br><span class="param" style="font-weight: normal;">Objectif (parmi les objectifs suivants)</span><br><span style="font-weight: bold;" class="normal">Itinéraire</span><br><span id="tabulation" style="font-weight: normal;" class="normal">Précise les points de passage obligés. Le dernier point représente la destination de la section.</span><br><span style="font-weight: bold;" class="normal">Point</span><br><span id="tabulation" style="font-weight: normal;" class="normal">Position à rejoindre et reconnaître.</span><br><span style="font-weight: bold;" class="normal">Zone</span><br><span id="tabulation" style="font-weight: normal;" class="normal">Zone à rejoindre et reconnaître.</span><br><span style="font-weight: bold;" class="normal">Bloc Urbain</span><br><span id="tabulation" style="font-weight: normal;" class="normal">Bloc Urbain à rejoindre et reconnaître.</span><br></td>
+				</tr>
+				<tr>
+					<td class="table" style="vertical-align: top;">
+						<h2>Paramètres optionnels</h2><span class="normal param_2">Direction Dangereuse</span><br><br><span class="normal param_2">Lignes de coordination [LC]</span><br><br><span class="normal param_2">Lignes de changement d'attitude [LCA]</span><br><br><span class="normal param_2">Lignes de début et fin de mission[LDM/LFM]</span><br><br><span class="normal param_2">Limite gauche / Limite droite</span><br><br></td>
+				</tr>
+			</tbody>
+		</table>
+		<table style="page-break-after:always">
+			<tbody>
+				<tr>
+					<td class="table">
+						<h3>Exemple : un point</h3>
+						<object data="./Images/Melee_Pion_Reconnaitre/MissionPoint.svg" height="300" width=""></object>
+					</td>
+					<td class="table">
+						<h3>Exemple : un bloc urbain</h3>
+						<object data="./Images/Melee_Pion_Reconnaitre/MissionBU.svg" height="300" width=""></object>
+					</td>
+					<td class="table">
+						<h3>Exemple : une zone</h3>
+						<object data="./Images/Melee_Pion_Reconnaitre/MissionZone.svg" height="300" width=""></object>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Interface de saisie</h2>
+		<table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
+			<tbody>
+				<tr>
+					<td class="Footer"><img style="width: 142px; height: 83px;" alt="Masa Logo" src="imagesCommunes/masa.png"></td>
+					<td style="width: 100%;" class="Footer"><span class="Entete">Fiches missions 
+                    </span></td>
+					<td class="FooterClient"><img style="width: 213px; height: 54px;" alt="Logo" src="imagesCommunes/thales.png"></td>
+				</tr>
+			</tbody>
+		</table><br><br></body>
+</html>

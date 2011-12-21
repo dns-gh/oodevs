@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_flows "http://ns.adobe.com/Flows/1.0/">
+]>
+<svg version="1.1"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+	 x="0px" y="0px" width="578px" height="466px" viewBox="102.411 13.004 578 466" enable-background="new 102.411 13.004 578 466"
+	 xml:space="preserve">
+<defs>
+	<symbol  id="BU_1" viewBox="-54 -49 108 98">
+		<polygon fill="#F27F7C" points="54,25 -14,-47 -54,-49 -39,49 45,43 		"/>
+	</symbol>
+	<symbol  id="BU_2" viewBox="-43.5 -37 87 74">
+		<polygon fill="#F27F7C" points="43.5,-37 -41.5,-31 -34.5,12 -43.5,36 18.5,37 		"/>
+	</symbol>
+	<symbol  id="BU_3" viewBox="-73 -66.699 146 133.398">
+		<polygon fill="#F27F7C" points="57,-47.301 41,-59.301 10.601,-66.699 -69,-51.301 -73,-37.545 -57,-0.301 2,33.699 73,66.699 		
+			"/>
+	</symbol>
+	<symbol  id="Carrefour" viewBox="-14 -15 28 30">
+		<path fill="#CC1111" stroke="#CC1111" stroke-width="2" d="M4.5,0c0-2.485-2.015-4.5-4.5-4.5S-4.5-2.485-4.5,0S-2.485,4.5,0,4.5
+			S4.5,2.485,4.5,0z"/>
+		<line fill="none" stroke="#CC1111" stroke-width="2" x1="-14" y1="2" x2="-2" y2="2"/>
+		<line fill="none" stroke="#CC1111" stroke-width="2" x1="-2" y1="3" x2="-2" y2="15"/>
+		<line fill="none" stroke="#CC1111" stroke-width="2" x1="2" y1="15" x2="2" y2="3"/>
+		<line fill="none" stroke="#CC1111" stroke-width="2" x1="2" y1="2" x2="14" y2="2"/>
+		<line fill="none" stroke="#CC1111" stroke-width="2" x1="14" y1="-2" x2="2" y2="-2"/>
+		<line fill="none" stroke="#CC1111" stroke-width="2" x1="2" y1="-3" x2="2" y2="-15"/>
+		<line fill="none" stroke="#CC1111" stroke-width="2" x1="-2" y1="-15" x2="-2" y2="-3"/>
+		<line fill="none" stroke="#CC1111" stroke-width="2" x1="-2" y1="-2" x2="-14" y2="-2"/>
+	</symbol>
+	<symbol  id="Deleted_Symbol" viewBox="-50.478 -231.709 100.956 463.418">
+		<line stroke="#000000" stroke-width="2" x1="-49.5" y1="-231.5" x2="49.5" y2="231.5"/>
+	</symbol>
+	<symbol  id="Direction_Dangereuse" viewBox="-51.5 -71.862 103 143.726">
+		<g>
+			<polygon fill="#FFFFFF" stroke="#000000" points="51,-71.362 -51,-71.362 -51,-29.362 51,-29.362 			"/>
+			<text transform="matrix(1 0 0 -1 -36.9487 -45.1523)" enable-background="new    "><tspan x="0" y="0" font-family="'MyriadPro-Bold'" font-size="17">D</tspan><tspan x="11.9" y="0" font-family="'MyriadPro-Bold'" font-size="17">i</tspan><tspan x="16.558" y="0" font-family="'MyriadPro-Bold'" font-size="17">r</tspan><tspan x="22.882" y="0" font-family="'MyriadPro-Bold'" font-size="17">e</tspan><tspan x="31.858" y="0" font-family="'MyriadPro-Bold'" font-size="17">c</tspan><tspan x="39.797" y="0" font-family="'MyriadPro-Bold'" font-size="17">tion </tspan><tspan x="-7.829" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">dange</tspan><tspan x="40.162" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">r</tspan><tspan x="46.486" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">euse</tspan></text>
+		</g>
+		<g>
+			<g>
+				<line fill="none" stroke="#000000" stroke-width="6" x1="0" y1="-24.355" x2="0" y2="64.645"/>
+				<polygon points="10.172,53.055 0,63.232 -10.178,53.055 -10.178,61.688 0,71.863 10.172,61.688 				"/>
+			</g>
+		</g>
+	</symbol>
+	<symbol  id="Ficelle_dans_Zone" viewBox="-69.02 -200.34 138.04 400.68">
+		<g>
+			<g>
+				<line fill="none" stroke="#000000" stroke-width="2" x1="-55.017" y1="-196.726" x2="-58.017" y2="-158.726"/>
+				<polygon points="-51.985,-162.225 -59.481,-141.067 -63.568,-163.139 				"/>
+			</g>
+		</g>
+		<path fill="none" stroke="#000000" stroke-width="2" d="M-12.018,48.274c36.099-0.219-16.061,141.366,20,143
+			c27.442,1.244-2.4-108.959,25-107c28.785,2.06-18.673,111.729,10,115c20.108,2.294,25.548-56.768,25-77
+			c-2.311-85.442-122.999-319-122.999-319s-12.015,166.755-13,223c-0.202,11.501,7.84,48.556,9,60c3.181,31.376-3.5,112.529,28,111
+			C6.491,195.455-49.568,48.503-12.018,48.274z"/>
+	</symbol>
+	<symbol  id="LDM" viewBox="-225.25 -21.5 450.5 43">
+		<line fill="none" stroke="#000000" stroke-width="2" x1="-99.75" y1="-2" x2="225.25" y2="-2"/>
+		
+			<use xlink:href="#Label_LDM"  width="125" height="43" x="-62.5" y="-21.5" transform="matrix(1 0 0 1 -162.75 0)" overflow="visible"/>
+	</symbol>
+	<symbol  id="LFM" viewBox="-151.258 -21.5 302.515 43">
+		<line fill="none" stroke="#000000" stroke-width="2" x1="-45.758" y1="-2" x2="151.242" y2="1"/>
+		
+			<use xlink:href="#Label_LFM"  width="105" height="43" x="-52.5" y="-21.5" transform="matrix(1 0 0 1 -98.7578 0)" overflow="visible"/>
+	</symbol>
+	<symbol  id="Label_Bloc_Urbain" viewBox="-31.5 -20.5 63 41">
+		<polygon fill="#FFFFFF" stroke="#CC1111" points="31,-20 -31,-20 -31,20 31,20 		"/>
+		<text transform="matrix(1 0 0 -1 -16.2349 5.2109)" enable-background="new    "><tspan x="0" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">Bl</tspan><tspan x="14.942" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">o</tspan><tspan x="24.802" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">c</tspan><tspan x="-9.647" y="20.4" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">U</tspan><tspan x="1.946" y="20.4" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">r</tspan><tspan x="8.355" y="20.4" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">bain</tspan></text>
+	</symbol>
+	<symbol  id="Label_Itinéraire_1" viewBox="-57.117 -12.021 114.234 24.041">
+		<polygon fill="#FFFFFF" stroke="#CC1111" points="56.617,-11.521 -56.617,-11.521 -56.617,11.521 56.617,11.521 		"/>
+		<text transform="matrix(1 0 0 -1 -34.5024 -4.9902)" enable-background="new    "><tspan x="0" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">I</tspan><tspan x="4.963" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">tiné</tspan><tspan x="34.798" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">r</tspan><tspan x="41.071" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">ai</tspan><tspan x="54.705" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">r</tspan><tspan x="61.029" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">e</tspan></text>
+	</symbol>
+	<symbol  id="Label_LD_2" viewBox="-56.5 -21.5 113 43">
+		<polygon fill="#FFFFFF" stroke="#000000" points="56,-21 -56,-21 -56,21 56,21 		"/>
+		<text transform="matrix(1 0 0 -1 -23.876 5.2109)" enable-background="new    "><tspan x="0" y="0" font-family="'MyriadPro-Bold'" font-size="17">Limi</tspan><tspan x="32.622" y="0" font-family="'MyriadPro-Bold'" font-size="17">t</tspan><tspan x="38.775" y="0" font-family="'MyriadPro-Bold'" font-size="17">e</tspan><tspan x="0.85" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">d</tspan><tspan x="10.981" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">r</tspan><tspan x="17.306" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">oi</tspan><tspan x="31.772" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">t</tspan><tspan x="37.926" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">e</tspan></text>
+	</symbol>
+	<symbol  id="Label_LDM" viewBox="-62.5 -21.5 125 43">
+		<polygon fill="#FFFFFF" stroke="#000000" points="62,-21 -62,-21 -62,21 62,21 		"/>
+		<text transform="matrix(1 0 0 -1 -57.6631 5.4102)" enable-background="new    "><tspan x="0" y="0" font-family="'MyriadPro-Bold'" font-size="17">Ligne de Début</tspan><tspan x="17.229" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">de </tspan><tspan x="39.771" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">M</tspan><tspan x="54.255" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">ission</tspan></text>
+	</symbol>
+	<symbol  id="Label_LFM" viewBox="-52.5 -21.5 105 43">
+		<polygon fill="#FFFFFF" stroke="#000000" points="52,-21 -52,-21 -52,21 52,21 		"/>
+		<text transform="matrix(1 0 0 -1 -45.7212 5.4102)" enable-background="new    "><tspan x="0" y="0" font-family="'MyriadPro-Bold'" font-size="17">Ligne de </tspan><tspan x="68.204" y="0" font-family="'MyriadPro-Bold'" font-size="17">F</tspan><tspan x="76.823" y="0" font-family="'MyriadPro-Bold'" font-size="17">in</tspan><tspan x="5.287" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">de </tspan><tspan x="27.829" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">M</tspan><tspan x="42.313" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">ission</tspan></text>
+	</symbol>
+	<symbol  id="Label_LG_1" viewBox="-56.5 -21.5 113 43">
+		<polygon fill="#FFFFFF" stroke="#000000" points="56,-21 -56,-21 -56,21 56,21 		"/>
+		<text transform="matrix(1 0 0 -1 -23.876 5.2109)" enable-background="new    "><tspan x="0" y="0" font-family="'MyriadPro-Bold'" font-size="17">Limi</tspan><tspan x="32.622" y="0" font-family="'MyriadPro-Bold'" font-size="17">t</tspan><tspan x="38.775" y="0" font-family="'MyriadPro-Bold'" font-size="17">e</tspan><tspan x="-3.842" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">gauche</tspan></text>
+	</symbol>
+	<symbol  id="Label_Objets_1" viewBox="-27.617 -12.021 55.234 24.041">
+		<polygon fill="#FFFFFF" stroke="#CC1111" points="27.117,-11.521 -27.117,-11.521 -27.117,11.521 27.117,11.521 		"/>
+		<text transform="matrix(1 0 0 -1 -24.9727 -4.9902)" enable-background="new    "><tspan x="0" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">O</tspan><tspan x="12.24" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">bjets</tspan></text>
+	</symbol>
+	<symbol  id="Label_Point_d_x27_installation" viewBox="-54.5 -21.5 109 43">
+		<polygon fill="#FFFFFF" stroke="#000000" points="54,-21 -54,-21 -54,21 54,21 		"/>
+		<text transform="matrix(1 0 0 -1 -20.0176 5.4102)" enable-background="new    "><tspan x="0" y="0" font-family="'MyriadPro-Bold'" font-size="17">P</tspan><tspan x="9.469" y="0" font-family="'MyriadPro-Bold'" font-size="17">oi</tspan><tspan x="23.936" y="0" font-family="'MyriadPro-Bold'" font-size="17">n</tspan><tspan x="33.796" y="0" font-family="'MyriadPro-Bold'" font-size="17">t</tspan><tspan x="-29.885" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">d</tspan><tspan x="-19.686" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">’</tspan><tspan x="-16.149" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">install</tspan><tspan x="30.413" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">a</tspan><tspan x="39.253" y="20.4" font-family="'MyriadPro-Bold'" font-size="17">tion</tspan></text>
+	</symbol>
+	<symbol  id="Label_Zone" viewBox="-27.617 -12.021 55.234 24.041">
+		<polygon fill="#FFFFFF" stroke="#CC1111" points="27.117,-11.521 -27.117,-11.521 -27.117,11.521 27.117,11.521 		"/>
+		<text transform="matrix(1 0 0 -1 -19.2017 -4.9902)" enable-background="new    "><tspan x="0" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">Z</tspan><tspan x="9.656" y="0" fill="#CC1111" font-family="'MyriadPro-Bold'" font-size="17">one</tspan></text>
+	</symbol>
+	<symbol  id="Limites_DG_1" viewBox="-161.078 -232.511 322.155 465.021">
+		<polyline fill="none" stroke="#000000" stroke-width="2" points="65.066,232.198 160.066,-56.802 148.066,-231.802 		"/>
+		
+			<use xlink:href="#Deleted_Symbol"  width="100.956" height="463.418" x="-50.478" y="-231.709" transform="matrix(1 0 0 1 -110.6001 -0.8018)" overflow="visible"/>
+	</symbol>
+	<symbol  id="Limites_DG_2" viewBox="-240.167 -230.536 480.334 461.072">
+		<polyline fill="none" stroke="#000000" stroke-width="2" points="239.17,-230.464 227.171,-63.797 143.837,224.869 
+			-206.163,229.536 		"/>
+		<polyline fill="none" stroke="#000000" stroke-width="2" points="-239.481,101.524 -138.815,6.857 -34.814,-25.809 
+			-80.148,-216.476 		"/>
+	</symbol>
+	<symbol  id="Objets_1" viewBox="-12.473 -12.972 24.946 25.944">
+		<path fill="#CC1111" stroke="#CC1111" stroke-width="2" d="M3.274-3.087C1.569-4.896-1.278-4.979-3.087-3.274
+			s-1.893,4.553-0.188,6.361s4.553,1.893,6.361,0.188S4.979-1.278,3.274-3.087z"/>
+		<line stroke="#CC1111" stroke-width="2" x1="-8.815" y1="11.059" x2="-0.083" y2="2.827"/>
+		<line stroke="#CC1111" stroke-width="2" x1="0.603" y1="3.555" x2="8.833" y2="12.286"/>
+		<line stroke="#CC1111" stroke-width="2" x1="11.745" y1="9.543" x2="3.513" y2="0.811"/>
+		<line stroke="#CC1111" stroke-width="2" x1="2.827" y1="0.083" x2="11.559" y2="-8.148"/>
+		<line stroke="#CC1111" stroke-width="2" x1="8.814" y1="-11.059" x2="0.083" y2="-2.827"/>
+		<line stroke="#CC1111" stroke-width="2" x1="-0.603" y1="-3.555" x2="-8.834" y2="-12.286"/>
+		<line stroke="#CC1111" stroke-width="2" x1="-11.745" y1="-9.543" x2="-3.514" y2="-0.811"/>
+		<line stroke="#CC1111" stroke-width="2" x1="-2.827" y1="-0.083" x2="-11.559" y2="8.148"/>
+		<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="-0.268" y1="-1.442" x2="-9.732" y2="-11.475"/>
+		<line stroke="#CC1111" stroke-width="2" x1="9.745" y1="10.543" x2="1.513" y2="1.811"/>
+		<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="9.73" y1="-8.979" x2="1.087" y2="-0.831"/>
+		<line stroke="#CC1111" stroke-width="2" x1="-1.186" y1="0.941" x2="-9.917" y2="9.173"/>
+		<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="-1.268" y1="-0.442" x2="-10.732" y2="-10.475"/>
+		<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="11.167" y1="10.039" x2="1.559" y2="-0.133"/>
+		<line stroke="#CC1111" stroke-width="2" x1="9.987" y1="11.222" x2="1.801" y2="2.539"/>
+		<line stroke="#CC1111" stroke-width="2" x1="10.39" y1="-9.398" x2="1.576" y2="-1.091"/>
+		<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="9.645" y1="-10.142" x2="0.966" y2="-1.96"/>
+		<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="-0.81" y1="1.508" x2="-9.803" y2="9.984"/>
+		<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="-1.81" y1="0.508" x2="-10.783" y2="8.966"/>
+	</symbol>
+	<symbol  id="Point_Option" viewBox="-5.5 -5.5 11 11">
+		<path stroke="#000000" stroke-width="2" d="M4.5,0c0-2.485-2.015-4.5-4.5-4.5S-4.5-2.485-4.5,0S-2.485,4.5,0,4.5S4.5,2.485,4.5,0z
+			"/>
+	</symbol>
+	<symbol  id="Pont" viewBox="-14.992 -27.131 29.984 54.263">
+		<polyline fill="none" stroke="#CC1111" stroke-width="2" points="-14.271,23.238 -5.26,13.887 -2.307,-13.432 -7.605,-26.762 		
+			"/>
+		<polyline fill="none" stroke="#CC1111" stroke-width="2" points="10.449,26.6 3.542,15.602 6.244,-11.74 14.158,-23.705 		"/>
+	</symbol>
+	<symbol  id="Pont_Option" viewBox="-14.992 -27.132 29.984 54.263">
+		<polyline fill="none" stroke="#000000" stroke-width="2" points="-14.271,23.237 -5.26,13.886 -2.307,-13.432 -7.604,-26.763 		
+			"/>
+		<polyline fill="none" stroke="#000000" stroke-width="2" points="10.449,26.6 3.542,15.601 6.244,-11.741 14.158,-23.706 		"/>
+	</symbol>
+	<symbol  id="RENS_Drone_1" viewBox="-181 -143.5 362 287">
+		<polygon fill="#5292EF" stroke="#000000" stroke-width="2" points="-180,97.5 180,97.5 180,-142.5 -180,-142.5 		"/>
+		<g transform="translate(0 40)">
+			<g>
+				<text transform="matrix(1 0 0 -1 -49.9883 -134.5)" fill="#5292EF" font-family="'Arial-BoldMT'" font-size="90">MI</text>
+				<text transform="matrix(1 0 0 -1 -49.9883 -134.5)" fill="#5292EF" font-family="'Arial-BoldMT'" font-size="90">MI</text>
+			</g>
+			<g>
+				<text transform="matrix(1 0 0 -1 -49.9883 -134.5)" font-family="'Arial-BoldMT'" font-size="90">MI</text>
+				
+					<text transform="matrix(1 0 0 -1 -49.9883 -134.5)" fill="none" stroke="#000000" stroke-width="2" font-family="'Arial-BoldMT'" font-size="90">MI</text>
+			</g>
+			<g>
+				
+					<text transform="matrix(1 0 0 -1 -49.9883 -134.5)" fill="none" stroke="#000000" stroke-width="2" font-family="'Arial-BoldMT'" font-size="90">MI</text>
+				
+					<text transform="matrix(1 0 0 -1 -49.9883 -134.5)" fill="none" stroke="#000000" stroke-width="2" font-family="'Arial-BoldMT'" font-size="90">MI</text>
+			</g>
+		</g>
+		<g transform="translate(60 10) scale(0.7 0.7)">
+			<g>
+				<polyline fill="#5292EF" points="-185.714,55 -185.714,25 -85.714,-35 14.286,25 14.286,55 -85.714,5 				"/>
+			</g>
+			<g>
+				<polyline stroke="#000000" stroke-width="2" points="-185.714,55 -185.714,25 -85.714,-35 14.286,25 14.286,55 -85.714,5 				
+					"/>
+			</g>
+			<g>
+				<polyline fill="none" stroke="#000000" stroke-width="2" points="-185.714,55 -185.714,25 -85.714,-35 14.286,25 14.286,55 
+					-85.714,5 				"/>
+			</g>
+		</g>
+		<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M0,142.5c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+			S-11.046,142.5,0,142.5z"/>
+	</symbol>
+	<symbol  id="Riviere" viewBox="-58.99 -199.138 117.981 398.278">
+		<path fill="none" stroke="#5292EF" stroke-width="2" d="M-58-198.994c32.666,224,105.333,318.666,116,398"/>
+		<path fill="none" stroke="#5292EF" stroke-width="2" d="M-2.667,25.672c3.333,25.334-0.16,30.036-2,52.667
+			c-0.532,6.543-0.564,24.589,0.667,38c1.588,17.312,18.878,44.725,26.666,48c14.611,6.145,32.031,8.367,33.334,24"/>
+	</symbol>
+	<symbol  id="Scake_250" viewBox="-62.519 -9.783 125.037 19.566">
+		<polygon fill="#B50000" stroke="#000000" stroke-width="2" points="30.356,-2.328 -61.519,-2.328 -61.519,2.547 30.356,2.547 		
+			"/>
+		<text transform="matrix(1 0 0 -1 32.5488 -5.2832)" font-family="'MyriadPro-Bold'" font-size="18">250</text>
+	</symbol>
+	<symbol  id="ZURB" viewBox="-252.5 -215.5 505 431">
+		<polygon fill="#DDDDDD" points="-39.5,22.5 -55.5,10.5 -85.899,3.101 -165.5,18.5 -169.5,32.256 -153.5,69.5 -94.5,103.5 
+			-23.5,136.5 		"/>
+		<polygon fill="#DDDDDD" points="-230.5,-154.5 -205.5,-54.5 -179.5,10.5 -66.5,-22.5 -78.5,-95.5 -111.5,-203.5 		"/>
+		<polygon fill="#DDDDDD" points="-34.5,17.5 -24.5,-16.5 -41.5,-123.5 -71.5,-129.5 -43.5,5.5 		"/>
+		<polygon fill="#DDDDDD" points="159.5,-82.5 163.5,-204.5 160.5,-215.5 88.5,-215.5 81.5,-199.5 -26.5,-118.5 -11.5,-14.5 
+			-19.5,16.5 20.5,15.5 96.5,94.5 95.5,119.5 102.5,119.5 		"/>
+		<polygon fill="#DDDDDD" points="223.5,43.5 172.5,-75.5 112.5,124.5 121.5,122.5 		"/>
+		<polygon fill="#DDDDDD" points="251.5,57.5 231.5,55.5 138.5,128.5 252.5,161.5 		"/>
+		<polygon fill="#DDDDDD" points="252,214.5 252.5,176.5 203.5,162.5 239.5,213.5 		"/>
+		<polygon fill="#DDDDDD" points="222.5,213.5 179.5,157.5 133.5,140.5 110.5,140.5 86.5,214.5 		"/>
+		<polygon fill="#DDDDDD" points="72.5,141.5 -12.5,147.5 -5.5,190.5 -14.5,214.5 47.5,215.5 		"/>
+		<polygon fill="#DDDDDD" points="81.5,106.5 13.5,34.5 -26.5,32.5 -11.5,130.5 72.5,124.5 		"/>
+		<polygon fill="#DDDDDD" points="-33.5,213.5 -22.5,190.5 -25.5,145.5 -151.5,80.5 -112.5,214.5 		"/>
+		<polygon fill="#DDDDDD" points="-158.5,143.5 -180.5,111.5 -183.5,112.5 -176.5,154.5 -161.5,179.5 		"/>
+		<polygon fill="#DDDDDD" points="-163.5,214.5 -187.5,157.5 -192.5,109.5 -207.5,104.5 -213.5,93.5 -252.5,104.5 -227.5,174.5 
+			-247.5,213.5 		"/>
+	</symbol>
+	<symbol  id="Zone" viewBox="-90.098 -99.183 180.196 198.366">
+		<polygon fill="none" stroke="#CC1111" stroke-width="3" points="88.386,6.322 -9.614,-97.678 -88.281,-97.01 -50.947,94.99 
+			57.053,97.656 		"/>
+	</symbol>
+	<symbol  id="Zone_Option" viewBox="-90.098 -99.183 180.196 198.366">
+		<polygon fill="none" stroke="#000000" stroke-width="3" points="88.386,6.322 -9.614,-97.678 -88.281,-97.011 -50.948,94.989 
+			57.052,97.656 		"/>
+	</symbol>
+	<symbol  id="ZurbWithScale" viewBox="-255.402 -218.811 509.469 435.334">
+		
+			<use xlink:href="#ZURB"  width="505" height="431" x="-252.5" y="-215.5" transform="matrix(1 0 0 1 1.5664 1.0225)" overflow="visible"/>
+		
+			<use xlink:href="#Scake_250"  width="125.037" height="19.566" x="-62.519" y="-9.783" transform="matrix(1 0 0 1 -192.8838 -209.0283)" overflow="visible"/>
+	</symbol>
+</defs>
+<use xlink:href="#ZurbWithScale"  width="509.469" height="435.334" id="XMLID_9_" x="-255.402" y="-218.811" transform="matrix(1 0 0 -1 357.9106 245.5044)" overflow="visible"/>
+<use xlink:href="#Riviere"  width="117.981" height="398.278" x="-58.99" y="-199.138" transform="matrix(1 0 0 -1 176.7451 219.3433)" display="none" overflow="visible"/>
+<use xlink:href="#Pont_Option"  width="29.984" height="54.263" x="-14.992" y="-27.132" transform="matrix(0.53 -0.848 -0.848 -0.53 179.6831 154.9087)" display="none" overflow="visible"/>
+<use xlink:href="#Limites_DG_2"  width="480.334" height="461.072" x="-240.167" y="-230.536" transform="matrix(1 0 0 -1 313.4106 249.0044)" display="none" overflow="visible"/>
+<use xlink:href="#Limites_DG_1"  width="322.155" height="465.021" id="XMLID_7_" x="-161.078" y="-232.511" transform="matrix(1 0 0 -1 389.3442 246.2021)" overflow="visible"/>
+<use xlink:href="#BU_1"  width="108" height="98" x="-54" y="-49" transform="matrix(1 0 0 -1 387.0767 163.6709)" display="none" overflow="visible"/>
+<use xlink:href="#BU_2"  width="87" height="74" x="-43.5" y="-37" transform="matrix(1 0 0 -1 388.7427 66.6709)" display="none" overflow="visible"/>
+<use xlink:href="#BU_3"  width="146" height="133.398" x="-73" y="-66.699" transform="matrix(1 0 0 -1 261.7432 175.3379)" display="none" overflow="visible"/>
+<use xlink:href="#Zone_Option"  width="180.196" height="198.366" id="XMLID_6_" x="-90.098" y="-99.183" transform="matrix(1 0 0 -1 388.7437 122.3379)" display="none" overflow="visible"/>
+<use xlink:href="#Pont"  width="29.984" height="54.263" x="-14.992" y="-27.131" transform="matrix(0.5239 -0.8518 -0.8518 -0.5239 177.0781 161.3389)" display="none" overflow="visible"/>
+<use xlink:href="#Zone"  width="180.196" height="198.366" x="-90.098" y="-99.183" transform="matrix(1 0 0 -1 389.4106 122.0044)" overflow="visible"/>
+<use xlink:href="#Direction_Dangereuse"  width="103" height="143.726" id="XMLID_2_" x="-51.5" y="-71.862" transform="matrix(1 0 0 -1 628.2935 394.1216)" overflow="visible"/>
+<use xlink:href="#Label_Zone"  width="55.234" height="24.041" x="-27.617" y="-12.021" transform="matrix(1 0 0 -1 440.2935 112.3833)" display="none" overflow="visible"/>
+<use xlink:href="#LDM"  width="450.5" height="43" x="-225.25" y="-21.5" transform="matrix(1 0 0 -1 326.1606 416.0044)" display="none" overflow="visible"/>
+<use xlink:href="#LFM"  width="302.515" height="43" x="-151.258" y="-21.5" transform="matrix(0.4493 -0.8934 -0.8934 -0.4493 87.1685 136.0044)" display="none" overflow="visible"/>
+<use xlink:href="#Objets_1"  width="24.946" height="25.944" x="-12.473" y="-12.972" transform="matrix(1 0 0 -1 331.4106 222.0044)" display="none" overflow="visible"/>
+<use xlink:href="#Objets_1"  width="24.946" height="25.944" x="-12.473" y="-12.972" transform="matrix(1 0 0 -1 344.4106 102.0044)" display="none" overflow="visible"/>
+<use xlink:href="#Objets_1"  width="24.946" height="25.944" x="-12.473" y="-12.972" transform="matrix(1 0 0 -1 446.4106 112.0044)" display="none" overflow="visible"/>
+<use xlink:href="#Label_Objets_1"  width="55.234" height="24.041" x="-27.617" y="-12.021" transform="matrix(1 0 0 -1 383.4106 152.0044)" display="none" overflow="visible"/>
+<use xlink:href="#Label_LG_1"  width="113" height="43" x="-56.5" y="-21.5" transform="matrix(1 0 0 -1 198.4106 313.0044)" overflow="visible"/>
+<use xlink:href="#Label_LD_2"  width="113" height="43" x="-56.5" y="-21.5" transform="matrix(1 0 0 -1 594.4106 229.0044)" overflow="visible"/>
+<use xlink:href="#Label_Bloc_Urbain"  width="63" height="41" x="-31.5" y="-20.5" transform="matrix(1 0 0 -1 448.4106 185.0044)" display="none" overflow="visible"/>
+<use xlink:href="#Carrefour"  width="28" height="30" x="-14" y="-15" transform="matrix(1 0 0 -1 333.4106 223.0044)" display="none" overflow="visible"/>
+<use xlink:href="#Carrefour"  width="28" height="30" x="-14" y="-15" transform="matrix(1 0 0 -1 340.4106 105.0044)" display="none" overflow="visible"/>
+<use xlink:href="#Carrefour"  width="28" height="30" x="-14" y="-15" transform="matrix(1 0 0 -1 325.4106 367.0044)" display="none" overflow="visible"/>
+<line display="none" fill="none" stroke="#CC1111" stroke-width="4" x1="325.411" y1="367.004" x2="343.411" y2="252.004"/>
+<line display="none" fill="none" stroke="#CC1111" stroke-width="4" x1="343.411" y1="252.004" x2="332.411" y2="224.004"/>
+<line display="none" fill="none" stroke="#CC1111" stroke-width="4" x1="337.411" y1="105.004" x2="270.411" y2="133.004"/>
+<line display="none" fill="none" stroke="#CC1111" stroke-width="4" x1="270.411" y1="133.004" x2="206.411" y2="167.004"/>
+<use xlink:href="#Label_Itinéraire_1"  width="114.234" height="24.041" x="-57.117" y="-12.021" transform="matrix(1 0 0 -1 421.4106 232.0044)" display="none" overflow="visible"/>
+<use xlink:href="#Point_Option"  width="11" height="11" x="-5.5" y="-5.5" transform="matrix(1 0 0 -1 327.4106 373.0044)" display="none" overflow="visible"/>
+<use xlink:href="#Label_Point_d_x27_installation"  width="109" height="43" x="-54.5" y="-21.5" transform="matrix(1 0 0 -1 397.4106 372.0044)" display="none" overflow="visible"/>
+<use xlink:href="#Ficelle_dans_Zone"  width="138.04" height="400.68" x="-69.02" y="-200.34" transform="matrix(1 0 0 -1 390.4116 235.0044)" overflow="visible"/>
+<use xlink:href="#Label_Zone"  width="55.234" height="24.041" x="-27.617" y="-12.021" transform="matrix(1 0 0 -1 420.4106 80.0044)" overflow="visible"/>
+<use xlink:href="#RENS_Drone_1"  width="362" height="287" x="-181" y="-143.5" transform="matrix(0.0941 0 0 -0.0941 335.3833 443.0044)" overflow="visible"/>
+</svg>

@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	
+		<title>AUTOMATE ALAT Detruire Neutraliser Dans Profondeur</title>
+		<link href="Fiche.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" width="14" height="16">
+			<param name="Keyword" value="Automate ALAT Detruire Neutraliser Dans Profondeur">
+		</Object><span class="Entete"><img id="logoProjet" src="imagesCommunes/scipio.png" height="101" width="130"></img><span id="contenu"><p>NIVEAU : Automate</p>
+				<p>ARME : ALAT</p>
+				<p>MISSION : Detruire Neutraliser Dans Profondeur</p>
+			</span></span><h2>Définition TTA 106</h2><span class="normal"><definition>Mission consistant à isoler, neutraliser ou détruire des forces terrestres ennemies qui ne sont pas encore engagées.</definition>
+		</span><br><h2>Effets</h2><span class="normal"><effects>
+				<ol>
+					<li>Détruire</li>
+				</ol>
+			</effects>
+		</span><h2>Variantes et modalités d'exécution</h2><span class="normal" style="font-weight: bold;"><span class="space"></span></span><ol>
+			<li>
+				<step>Ravitaillement si la mission indique "Ravitaillement en début de mission" ;</step>
+			</li>
+			<li>
+				<step>Adaptation du dispositif afin de réaliser une destruction ou une neutralisation dans une zone située dans la profondeur du dispositif adverse ;</step>
+			</li>
+			<li>
+				<step>Infiltration jusqu'au point de dislocation ;</step>
+			</li>
+			<li>
+				<step>Prise à partie d'une ennemi à priori statique en favorisant les unités de type 'Cibles Prioritaires" ;</step>
+			</li>
+			<li>
+				<step>Gestion de la logistique interne du sous groupement : création de plots de ravitaillement et IMEX ;</step>
+			</li>
+			<li>
+				<step>Fin de mission sur ordre de conduite "Interrompre".</step>
+			</li>
+		</ol><br><table style="text-align: left; page-break-before:always" cellpadding="10" cellspacing="2">
+			<tbody>
+				<tr>
+					<td class="table" colspan="2" rowspan="3">
+						<h2> Schéma de modélisation </h2>
+						<h3>Detruire Neutraliser Dans Profondeur</h3><img src="./Images/ALAT_Automate_DetruireNeutraliserProfondeur/Mission.png" height="400" width=""><br></td>
+					<td class="table" style="vertical-align: top;">
+						<h2>Paramètres obligatoires</h2><span class="param" style="font-weight: normal;">Fuseau : Limite gauche / Limite droite</span><br><span style="font-weight: normal;" class="normal">Zone de responsabilité.</span><br><span class="param" style="font-weight: normal;">Direction Dangereuse</span><br><span style="font-weight: normal;" class="normal">Orientation privilégiée des capteurs lors de bond ou de reconnaissance de points.</span><br><span class="param" style="font-weight: normal;">Zone</span><br><span style="font-weight: normal;" class="normal">Zone dans laquelle sera détruit ou neutralisé l'ennemi.</span><br><span class="param" style="font-weight: normal;">Point dislocation</span><br><span style="font-weight: normal;" class="normal">Position de surveillance de la zone.</span><br><span class="param" style="font-weight: normal;">Point de regroupement</span><br><span style="font-weight: normal;" class="normal">Le point à rejoindre en fin de mission.</span><br><span class="param" style="font-weight: normal;">Portee Action</span><br><span style="font-weight: normal;" class="normal">Permet, en association de l'Ambiance Mission de déterminer les quantités de carburant et de munition à embarquer à chaque ravitaillement.</span><br><span class="param" style="font-weight: normal;">Ambiance Mission</span><br><span style="font-weight: normal;" class="normal">Permet, en association de la Portée Action de déterminer les quantités de carburant et de munition à embarquer à chaque ravitaillement.</span><br><span class="param" style="font-weight: normal;">Neutraliser</span><br><span style="font-weight: normal;" class="normal">Paramètre permettant de spécifier si l'on souhaite détruire ou neutraliser l'ennemi. Influe sur la puissance de feu engagée à chaque prise à partie.</span><br></td>
+				</tr>
+				<tr>
+					<td class="table" style="vertical-align: top;">
+						<h2>Paramètres optionnels</h2><span class="normal param_2">Lignes de Début et Fin de mission [LDM/LFM] : permettent d'orienter le fuseau.</span><br><br><span class="normal param_2">Lignes de Changement d'attitude [LCA] : Passage en vol tactique</span><br><br><span class="normal param_2">Lignes de Coordination [LC] : la patrouille se poste en attente de l'ODC Poursuivre.</span><br><br><span class="normal param_2">Plots ravitaillement : Les plots passés en paramètre pouront être utilisés dans le cadre de la mission. Cette liste est automatiquement mise à jour avec les plots créés dans le fuseau de la mission. Si l'ANIBAS n'a pas précisé les limites droite et gauche de la mission, la patrouille s'autorisera à utiliser tous les plots de ravitaillement connus.</span><br><br><span class="normal param_2">Ravitaillement en Début de Mission : cette option permet d'indiquer si le pion doit aller se ravitailler au début de la mission.</span><br><br><span class="normal param_2">Cibles Prioritaires : Paramètre perméttant de favoriser la prise à partie des unités en fonction de leurs types.</span><br><br></td>
+				</tr>
+			</tbody>
+		</table>
+		<table style="page-break-after:always">
+			<tbody>
+				<tr />
+			</tbody>
+		</table>
+		<h2>Interface de saisie</h2>
+		<table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
+			<tbody>
+				<tr>
+					<td class="Footer"><img style="width: 142px; height: 83px;" alt="Masa Logo" src="imagesCommunes/masa.png"></td>
+					<td style="width: 100%;" class="Footer"><span class="Entete">Fiches missions 
+                    </span></td>
+					<td class="FooterClient"><img style="width: 213px; height: 54px;" alt="Logo" src="imagesCommunes/thales.png"></td>
+				</tr>
+			</tbody>
+		</table><br><br></body>
+</html>

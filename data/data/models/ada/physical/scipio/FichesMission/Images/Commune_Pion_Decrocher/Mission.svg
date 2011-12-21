@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="717.173px" height="573.544px" viewBox="0 0 717.173 573.544" enable-background="new 0 0 717.173 573.544"
+	 xml:space="preserve">
+<symbol  id="Artillerie_Sol_Sol_3" viewBox="-181 -144.5 362 289">
+	<g>
+		<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M-40,143.5c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+			S-51.046,143.5-40,143.5z"/>
+		<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M0,143.5c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+			S-11.046,143.5,0,143.5z"/>
+		<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M40,143.5c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+			S28.954,143.5,40,143.5z"/>
+		<polygon fill="#5292EF" stroke="#000000" stroke-width="2" points="-180,96.5 180,96.5 180,-143.5 -180,-143.5 		"/>
+		<path stroke="#000000" stroke-width="2" d="M0-5.5c9.94,0,18-8.059,18-18s-8.06-18-18-18c-9.941,0-18,8.059-18,18
+			S-9.941-5.5,0-5.5z"/>
+	</g>
+</symbol>
+<symbol  id="Artillerie_Sol_Sol_C" viewBox="-181 -147.375 362 294.75">
+	<g>
+		<polygon fill="#5292EF" stroke="#000000" stroke-width="2" points="-180,93.625 180,93.625 180,-146.375 -180,-146.375 		"/>
+		<path stroke="#000000" stroke-width="2" d="M0-8.375c9.94,0,18-8.059,18-18s-8.06-18-18-18c-9.941,0-18,8.059-18,18
+			S-9.941-8.375,0-8.375z"/>
+		<g>
+			
+				<line fill="none" stroke="#000000" stroke-width="18" stroke-linecap="square" x1="-0.168" y1="108.375" x2="-0.168" y2="138.375"/>
+			
+				<line fill="none" stroke="#5292EF" stroke-width="14" stroke-linecap="square" x1="-0.168" y1="108.375" x2="-0.168" y2="138.375"/>
+		</g>
+	</g>
+</symbol>
+<symbol  id="Aviation" viewBox="-181 -143.25 362 286.5">
+	<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M-40,142.25c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+		S-51.046,142.25-40,142.25z"/>
+	<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M0,142.25c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+		S-11.046,142.25,0,142.25z"/>
+	<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M40,142.25c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+		S28.954,142.25,40,142.25z"/>
+	<polygon fill="#5292EF" stroke="#000000" stroke-width="2" points="-180,97.75 180,97.75 180,-142.25 -180,-142.25 	"/>
+	<polyline stroke="#000000" stroke-width="2" points="0,-22.25 -90,27.75 -90,-72.25 0,-22.25 90,27.75 90,-72.25 0,-22.25 	"/>
+</symbol>
+<symbol  id="BU_1" viewBox="-54 -49 108 98">
+	<polygon fill="#F27F7C" points="54,25 -14,-47 -54,-49 -39,49 45,43 	"/>
+</symbol>
+<symbol  id="BU_2" viewBox="-43.5 -37 87 74">
+	<polygon fill="#F27F7C" points="43.5,-37 -41.5,-31 -34.5,12 -43.5,36 18.5,37 	"/>
+</symbol>
+<symbol  id="BU_3" viewBox="-73 -66.699 146 133.398">
+	<polygon fill="#F27F7C" points="57,-47.301 41,-59.301 10.601,-66.699 -69,-51.301 -73,-37.545 -57,-0.301 2,33.699 73,66.699 	"/>
+</symbol>
+<symbol  id="Carrefour" viewBox="-14 -15 28 30">
+	<path fill="#CC1111" stroke="#CC1111" stroke-width="2" d="M4.5,0c0-2.485-2.015-4.5-4.5-4.5S-4.5-2.485-4.5,0S-2.485,4.5,0,4.5
+		S4.5,2.485,4.5,0z"/>
+	<line fill="none" stroke="#CC1111" stroke-width="2" x1="-14" y1="2" x2="-2" y2="2"/>
+	<line fill="none" stroke="#CC1111" stroke-width="2" x1="-2" y1="3" x2="-2" y2="15"/>
+	<line fill="none" stroke="#CC1111" stroke-width="2" x1="2" y1="15" x2="2" y2="3"/>
+	<line fill="none" stroke="#CC1111" stroke-width="2" x1="2" y1="2" x2="14" y2="2"/>
+	<line fill="none" stroke="#CC1111" stroke-width="2" x1="14" y1="-2" x2="2" y2="-2"/>
+	<line fill="none" stroke="#CC1111" stroke-width="2" x1="2" y1="-3" x2="2" y2="-15"/>
+	<line fill="none" stroke="#CC1111" stroke-width="2" x1="-2" y1="-15" x2="-2" y2="-3"/>
+	<line fill="none" stroke="#CC1111" stroke-width="2" x1="-2" y1="-2" x2="-14" y2="-2"/>
+</symbol>
+<symbol  id="Char_1" viewBox="-185 -147.334 370 294.668">
+	<polygon fill="#5292EF" stroke="#CC1111" stroke-width="10" points="-180,97.666 180,97.666 180,-142.334 -180,-142.334 	"/>
+	<path fill="#5292EF" stroke="#CC1111" stroke-width="10" d="M-60,37.666c-60,0-60-120,0-120H60c60,0,60,120,0,120H-60z"/>
+	<path fill="#5292EF" stroke="#CC1111" stroke-width="10" d="M-40,142.334c11.046,0,20-8.955,20-20c0-11.047-8.954-20-20-20
+		s-20,8.953-20,20C-60,133.379-51.046,142.334-40,142.334z"/>
+	<path fill="#5292EF" stroke="#CC1111" stroke-width="10" d="M0,142.334c11.046,0,20-8.955,20-20c0-11.047-8.954-20-20-20
+		s-20,8.953-20,20C-20,133.379-11.046,142.334,0,142.334z"/>
+	<path fill="#5292EF" stroke="#CC1111" stroke-width="10" d="M40,142.334c11.046,0,20-8.955,20-20c0-11.047-8.954-20-20-20
+		s-20,8.953-20,20C20,133.379,28.954,142.334,40,142.334z"/>
+</symbol>
+<symbol  id="Char_3" viewBox="-181 -143.334 362 286.668">
+	<polygon fill="#5292EF" stroke="#000000" stroke-width="2" points="-180,97.666 180,97.666 180,-142.334 -180,-142.334 	"/>
+	<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M-60,37.666c-60,0-60-120,0-120H60c60,0,60,120,0,120H-60z"/>
+	<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M-40,142.334c11.046,0,20-8.955,20-20c0-11.047-8.954-20-20-20
+		s-20,8.953-20,20C-60,133.379-51.046,142.334-40,142.334z"/>
+	<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M0,142.334c11.046,0,20-8.955,20-20c0-11.047-8.954-20-20-20
+		s-20,8.953-20,20C-20,133.379-11.046,142.334,0,142.334z"/>
+	<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M40,142.334c11.046,0,20-8.955,20-20c0-11.047-8.954-20-20-20
+		s-20,8.953-20,20C20,133.379,28.954,142.334,40,142.334z"/>
+</symbol>
+<symbol  id="CheckPoint_Option" viewBox="-31.044 -54.812 62.088 109.625">
+	<polygon fill="none" stroke="#231F20" stroke-width="2" points="30.006,-6.188 -29.994,-6.188 -29.994,53.813 30.006,53.813 	"/>
+	<polygon fill="none" stroke="#231F20" stroke-width="2" points="29.206,-8.115 0.179,-52.979 -29.194,-8.082 	"/>
+	<polygon fill="none" points="27.067,12.688 -27.058,12.688 -27.058,35.188 27.067,35.188 	"/>
+	<text transform="matrix(1 0 0 -1 -17.6338 13.8877)" font-family="'MyriadPro-Bold'" font-size="30">CP</text>
+</symbol>
+<symbol  id="Direction_Dangereuse" viewBox="-51.5 -71.71 103 143.42">
+	<g>
+		<polygon fill="#FFFFFF" stroke="#CC1111" points="51,-71.21 -51,-71.21 -51,-29.21 51,-29.21 		"/>
+		<text transform="matrix(1 0 0 -1 -36.3613 -45.6133)" enable-background="new    "><tspan x="0" y="0" fill="#CC1111" font-family="'Verdana'" font-size="15">Direction </tspan><tspan x="-7.492" y="18" fill="#CC1111" font-family="'Verdana'" font-size="15">dangereuse</tspan></text>
+	</g>
+	<g>
+		<g>
+			<line fill="none" stroke="#CC1111" stroke-width="6" x1="5.745" y1="-24.509" x2="5.745" y2="64.491"/>
+			<polygon fill="#CC1111" points="15.917,52.901 5.745,63.079 -4.433,52.901 -4.433,61.535 5.745,71.71 15.917,61.535 			"/>
+		</g>
+	</g>
+</symbol>
+<symbol  id="Direction_Dangereuse_Option" viewBox="-51.5 -71.579 103 143.157">
+	<g>
+		<polygon fill="#FFFFFF" stroke="#000000" points="51,-71.079 -51,-71.079 -51,-29.079 51,-29.079 		"/>
+		<text transform="matrix(1 0 0 -1 -36.3613 -46.0059)" enable-background="new    "><tspan x="0" y="0" font-family="'Verdana'" font-size="15">Direction </tspan><tspan x="-7.492" y="18" font-family="'Verdana'" font-size="15">dangereuse</tspan></text>
+	</g>
+	<g>
+		<g>
+			<line fill="none" stroke="#000000" stroke-width="6" x1="0" y1="-24.641" x2="0" y2="64.359"/>
+			<polygon points="10.172,52.77 0,62.947 -10.178,52.77 -10.178,61.403 0,71.578 10.172,61.403 			"/>
+		</g>
+	</g>
+</symbol>
+<symbol  id="Fuseau_1" viewBox="-162.542 -232.487 325.084 464.974">
+	<polygon opacity="0.05" fill="#0067FF" points="-160.099,-231.958 147.901,-232.292 159.901,-57.292 64.901,231.708 
+		-61.349,230.456 	"/>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" d="M-113.39-13.235c-1.602-7.564-2.602-15.564-4.602-23.564
+			c-17-67-28-130-42.107-195.158"/>
+		<path fill="none" stroke="#CC1111" stroke-width="2" d="M-113.39-13.235c-1.602-7.564-2.602-15.564-4.602-23.564
+			c-17-67-28-130-42.107-195.158"/>
+	</g>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" d="M-61.349,230.456c-2.643-13.256-5.643-25.256-8.643-38.256
+			c-13-67-27-128-40.623-192.438"/>
+		<path fill="none" stroke="#CC1111" stroke-width="2" d="M-61.349,230.456c-2.643-13.256-5.643-25.256-8.643-38.256
+			c-13-67-27-128-40.623-192.438"/>
+	</g>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" d="M134.85,18.917C111.009,90.2,88.009,161.2,64.901,231.708"/>
+		<path fill="none" stroke="#CC1111" stroke-width="2" d="M134.85,18.917C111.009,90.2,88.009,161.2,64.901,231.708"/>
+	</g>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" d="M147.901-232.292C152.009-172.8,156.009-114.8,160.009-55.8
+			c-8,20-14,41-20.978,61.996"/>
+		<path fill="none" stroke="#CC1111" stroke-width="2" d="M147.901-232.292C152.009-172.8,156.009-114.8,160.009-55.8
+			c-8,20-14,41-20.978,61.996"/>
+	</g>
+	<polygon fill="#CC1111" stroke="#FFFFFF" stroke-width="2" points="-103.447,-10.55 -120.364,-6.778 -119.435,-2.608 
+		-102.517,-6.38 	"/>
+	<polygon fill="#CC1111" stroke="#FFFFFF" stroke-width="2" points="145.402,13.134 129.291,6.739 127.717,10.708 143.827,17.103 	
+		"/>
+</symbol>
+<symbol  id="Fuseau_1_Option" viewBox="-162.542 -232.487 325.084 464.974">
+	<polygon opacity="0.05" fill="#0067FF" points="-160.099,-231.958 147.901,-232.292 159.901,-57.292 64.901,231.708 
+		-61.349,230.457 	"/>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" d="M-113.39-13.235c-1.602-7.563-2.602-15.563-4.602-23.563
+			c-17-67-28-130-42.107-195.159"/>
+		<path fill="none" stroke="#000000" stroke-width="2" d="M-113.39-13.235c-1.602-7.563-2.602-15.563-4.602-23.563
+			c-17-67-28-130-42.107-195.159"/>
+	</g>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" d="M-61.349,230.457c-2.643-13.256-5.643-25.256-8.643-38.256
+			c-13-67-27-128-40.623-192.438"/>
+		<path fill="none" stroke="#000000" stroke-width="2" d="M-61.349,230.457c-2.643-13.256-5.643-25.256-8.643-38.256
+			c-13-67-27-128-40.623-192.438"/>
+	</g>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" d="M134.85,18.918c-23.841,71.283-46.841,142.283-69.948,212.79"/>
+		<path fill="none" stroke="#000000" stroke-width="2" d="M134.85,18.918c-23.841,71.283-46.841,142.283-69.948,212.79"/>
+	</g>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" d="M147.901-232.292c4.107,59.493,8.107,117.493,12.107,176.493
+			c-8,20-14,41-20.978,61.995"/>
+		<path fill="none" stroke="#000000" stroke-width="2" d="M147.901-232.292c4.107,59.493,8.107,117.493,12.107,176.493
+			c-8,20-14,41-20.978,61.995"/>
+	</g>
+	<polygon stroke="#FFFFFF" stroke-width="2" points="-103.447,-10.549 -120.364,-6.777 -119.435,-2.608 -102.517,-6.38 	"/>
+	<polygon stroke="#FFFFFF" stroke-width="2" points="145.402,13.134 129.291,6.739 127.717,10.709 143.827,17.104 	"/>
+</symbol>
+<symbol  id="Fuseau_2" viewBox="-241.417 -231.342 482.834 462.684">
+	<g id="XMLID_18_" opacity="0.05">
+		<g>
+			<polygon fill="#0067FF" points="226.928,-64.486 238.928,-231.156 -80.392,-217.166 -35.063,-26.496 -139.063,6.164 
+				-239.732,100.834 -206.412,228.844 143.588,224.174 			"/>
+		</g>
+		<g>
+		</g>
+	</g>
+	<polygon fill="#CC1111" stroke="#FFFFFF" stroke-width="2" points="-83.219,-2.445 -88.594,-18.924 -92.655,-17.6 -87.28,-1.12 	
+		"/>
+	<polygon fill="#CC1111" stroke="#FFFFFF" stroke-width="2" points="193.398,82.688 176.857,77.503 175.58,81.58 192.121,86.765 	
+		"/>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-miterlimit="1" d="M182.443,89.585
+			c-12.455,45.383-25.455,89.383-38.455,134.383c-117,2-233,3-350.398,4.875"/>
+		<path fill="none" stroke="#CC1111" stroke-width="2" d="M182.443,89.585c-12.455,45.383-25.455,89.383-38.455,134.383
+			c-117,2-233,3-350.398,4.875"/>
+	</g>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-miterlimit="1" d="M238.924-231.157
+			c-3.936,53.125-7.936,106.125-10.936,159.125c-11,49-28,97-41.18,146.497"/>
+		<path fill="none" stroke="#CC1111" stroke-width="2" d="M238.924-231.157c-3.936,53.125-7.936,106.125-10.936,159.125
+			c-11,49-28,97-41.18,146.497"/>
+	</g>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-miterlimit="1" d="M-80.411-12.258
+			c15.399-4.774,30.399-10.774,45.399-13.774c-15-64-31-127-45.383-191.137"/>
+		<path fill="none" stroke="#CC1111" stroke-width="2" d="M-80.411-12.258c15.399-4.774,30.399-10.774,45.399-13.774
+			c-15-64-31-127-45.383-191.137"/>
+	</g>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-miterlimit="1" d="M-239.729,100.831
+			c33.716-30.863,66.716-62.863,100.716-94.863c15-4,30-9,44.309-13.736"/>
+		<path fill="none" stroke="#CC1111" stroke-width="2" d="M-239.729,100.831c33.716-30.863,66.716-62.863,100.716-94.863
+			c15-4,30-9,44.309-13.736"/>
+	</g>
+</symbol>
+<symbol  id="Fuseau_2_Option" viewBox="-241.417 -231.512 482.834 463.024">
+	<g id="XMLID_16_" opacity="0.05">
+		<g>
+			<polygon fill="#7FCAFF" points="226.928,-64.318 238.928,-230.988 -80.392,-216.998 -35.063,-26.328 -139.063,6.332 
+				-239.732,101.002 -206.412,229.012 143.588,224.342 			"/>
+		</g>
+		<g>
+			<polygon fill="none" stroke="#0067FF" points="-80.392,-216.998 -35.063,-26.328 -139.063,6.332 -239.732,101.002 
+				-206.412,229.012 143.588,224.342 226.928,-64.318 238.928,-230.988 			"/>
+		</g>
+	</g>
+	<polygon stroke="#FFFFFF" stroke-width="2" points="-83.219,-2.276 -88.594,-18.755 -92.655,-17.431 -87.28,-0.951 	"/>
+	<polygon stroke="#FFFFFF" stroke-width="2" points="193.398,82.856 176.857,77.672 175.58,81.749 192.121,86.934 	"/>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-miterlimit="1" d="M182.443,89.754
+			c-12.455,45.383-25.455,89.383-38.455,134.383c-117,2-233,3-350.398,4.875"/>
+		<path fill="none" stroke="#000000" stroke-width="2" d="M182.443,89.754c-12.455,45.383-25.455,89.383-38.455,134.383
+			c-117,2-233,3-350.398,4.875"/>
+	</g>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-miterlimit="1" d="M238.924-230.988
+			c-3.936,53.125-7.936,106.125-10.936,159.125c-11,49-28,97-41.18,146.497"/>
+		<path fill="none" stroke="#000000" stroke-width="2" d="M238.924-230.988c-3.936,53.125-7.936,106.125-10.936,159.125
+			c-11,49-28,97-41.18,146.497"/>
+	</g>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-miterlimit="1" d="M-80.411-12.089
+			c15.399-4.774,30.399-10.774,45.399-13.774c-15-64-31-127-45.383-191.137"/>
+		<path fill="none" stroke="#231F20" stroke-width="2" d="M-80.411-12.089c15.399-4.774,30.399-10.774,45.399-13.774
+			c-15-64-31-127-45.383-191.137"/>
+	</g>
+	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-miterlimit="1" d="M-239.729,101
+			c33.716-30.863,66.716-62.863,100.716-94.863c15-4,30-9,44.309-13.736"/>
+		<path fill="none" stroke="#231F20" stroke-width="2" d="M-239.729,101c33.716-30.863,66.716-62.863,100.716-94.863
+			c15-4,30-9,44.309-13.736"/>
+	</g>
+</symbol>
+<symbol  id="GEN_2" viewBox="-181 -143.667 362 287.334">
+	<polygon fill="#5292EF" stroke="#000000" stroke-width="2" points="-180,97.333 180,97.333 180,-142.667 -180,-142.667 	"/>
+	<line fill="#5292EF" stroke="#000000" stroke-width="2" x1="0" y1="22.333" x2="0" y2="-47.667"/>
+	<line fill="#5292EF" stroke="#000000" stroke-width="2" x1="-90" y1="22.333" x2="-90" y2="-77.667"/>
+	<line fill="#5292EF" stroke="#000000" stroke-width="2" x1="90" y1="22.333" x2="90" y2="-77.667"/>
+	<line fill="#5292EF" stroke="#000000" stroke-width="2" x1="-95" y1="22.333" x2="95" y2="22.333"/>
+	<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M-30.167,142.667c11.046,0,20-8.954,20-20s-8.954-20-20-20
+		s-20,8.954-20,20S-41.212,142.667-30.167,142.667z"/>
+	<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M29.833,142.667c11.046,0,20-8.954,20-20s-8.954-20-20-20
+		s-20,8.954-20,20S18.788,142.667,29.833,142.667z"/>
+</symbol>
+<symbol  id="INF_1" viewBox="-181 -143 362 286">
+	<polygon fill="#5292EF" stroke="#000000" stroke-width="2" points="-180,98 180,98 180,-142 -180,-142 	"/>
+	<line fill="#5292EF" stroke="#000000" stroke-width="2" x1="180" y1="98" x2="-180" y2="-142"/>
+	<line fill="#5292EF" stroke="#000000" stroke-width="2" x1="-180" y1="98" x2="180" y2="-142"/>
+	<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M-40,142c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+		S-51.046,142-40,142z"/>
+	<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M0,142c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+		S-11.046,142,0,142z"/>
+	<path fill="#5292EF" stroke="#000000" stroke-width="2" d="M40,142c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+		S28.954,142,40,142z"/>
+</symbol>
+<symbol  id="INF_3" viewBox="-185 -147 370 294">
+	<polygon fill="#5292EF" stroke="#CC1111" stroke-width="10" points="-180,98 180,98 180,-142 -180,-142 	"/>
+	<line fill="#CC1111" stroke="#CC1111" stroke-width="10" x1="180" y1="98" x2="-180" y2="-142"/>
+	<line fill="#CC1111" stroke="#CC1111" stroke-width="10" x1="-180" y1="98" x2="180" y2="-142"/>
+	<path fill="#5292EF" stroke="#CC1111" stroke-width="10" d="M-40,142c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+		S-51.046,142-40,142z"/>
+	<path fill="#5292EF" stroke="#CC1111" stroke-width="10" d="M0,142c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+		S-11.046,142,0,142z"/>
+	<path fill="#5292EF" stroke="#CC1111" stroke-width="10" d="M40,142c11.046,0,20-8.954,20-20s-8.954-20-20-20s-20,8.954-20,20
+		S28.954,142,40,142z"/>
+</symbol>
+<symbol  id="Itineraire" viewBox="-103.79 -147.818 207.579 295.636">
+	<polyline fill="none" stroke="#CC1111" stroke-width="3" points="98.456,-147.555 86.955,-83.054 100.456,22.445 84.207,81.928 
+		81.997,82.279 	"/>
+	<polyline fill="none" stroke="#CC1111" stroke-width="3" points="-86.378,138.529 -46.212,120.779 -56.545,62.112 -37.878,52.779 
+		-29.878,54.445 -28.545,58.112 	"/>
+	
+		<use xlink:href="#Carrefour"  width="28" height="30" x="-14" y="-15" transform="matrix(1 0 0 1 89.7896 62.4463)" overflow="visible"/>
+	
+		<use xlink:href="#Carrefour"  width="28" height="30" x="-14" y="-15" transform="matrix(1 0 0 1 -56.8779 63.1123)" overflow="visible"/>
+	
+		<use xlink:href="#Carrefour"  width="28" height="30" x="-14" y="-15" transform="matrix(1 0 0 1 87.1216 -82.8877)" overflow="visible"/>
+	<g>
+		<g>
+			<line fill="none" stroke="#CC1111" stroke-width="2" x1="96.776" y1="-138.462" x2="96.551" y2="-137.229"/>
+			<polygon fill="#CC1111" points="102.907,-140.1 93.305,-119.811 91.476,-142.183 			"/>
+		</g>
+	</g>
+	<g>
+		<g>
+			<line fill="none" stroke="#CC1111" stroke-width="2" x1="-86.763" y1="139.45" x2="-87.885" y2="140.007"/>
+			<polygon fill="#CC1111" points="-81.785,143.387 -103.79,147.818 -86.949,132.978 			"/>
+		</g>
+	</g>
+</symbol>
+<symbol  id="LC" viewBox="-188.75 -12.5 377.5 25">
+	<line fill="#231F20" stroke="#000000" stroke-width="2" x1="-158.25" y1="0" x2="188.75" y2="0"/>
+	
+		<use xlink:href="#Label_LC"  width="31" height="25" x="-15.5" y="-12.5" transform="matrix(1 0 0 1 -173.25 0)" overflow="visible"/>
+</symbol>
+<symbol  id="LCA" viewBox="-181.752 -12.5 363.503 25">
+	<line fill="#231F20" stroke="#000000" stroke-width="2" x1="-141.252" y1="0" x2="181.748" y2="1"/>
+	
+		<use xlink:href="#Label_LCA"  width="41" height="25" x="-20.5" y="-12.5" transform="matrix(1 0 0 1 -161.252 0)" overflow="visible"/>
+</symbol>
+<symbol  id="LDM" viewBox="-197.375 -12.5 383.125 25">
+	<line fill="none" stroke="#000000" stroke-width="2" x1="-139.25" y1="0" x2="185.75" y2="0"/>
+	
+		<use xlink:href="#Label_LDM"  width="70.25" height="25" x="-35.125" y="-12.5" transform="matrix(1 0 0 1 -162.25 0)" overflow="visible"/>
+</symbol>
+<symbol  id="LDM_1" viewBox="-147.563 -12.5 295.125 25">
+	<line fill="none" stroke="#000000" stroke-width="2" x1="-147.563" y1="0" x2="101.438" y2="0"/>
+	
+		<use xlink:href="#Label_LDM"  width="70.25" height="25" x="-35.125" y="-12.5" transform="matrix(1 0 0 1 112.4375 0)" overflow="visible"/>
+</symbol>
+<symbol  id="LFM" viewBox="-185.063 -12.5 370.127 25">
+	<line fill="none" stroke="#000000" stroke-width="2" x1="-138.937" y1="-1" x2="185.063" y2="-1"/>
+	
+		<use xlink:href="#Label_LFM"  width="47" height="25" x="-23.5" y="-12.5" transform="matrix(1 0 0 1 -161.5635 0)" overflow="visible"/>
+</symbol>
+<symbol  id="Label_Bloc_Urbain" viewBox="-31.5 -20.5 63 41">
+	<polygon fill="#FFFFFF" stroke="#CC1111" points="31,-20 -31,-20 -31,20 31,20 	"/>
+	<text transform="matrix(1 0 0 -1 -15.6592 4.0723)" enable-background="new    "><tspan x="0" y="0" fill="#CC1111" font-family="'Verdana'" font-size="15">Bloc</tspan><tspan x="-9.013" y="18" fill="#CC1111" font-family="'Verdana'" font-size="15">Urbain</tspan></text>
+</symbol>
+<symbol  id="Label_Itinéraire" viewBox="-57.117 -12.021 114.234 24.041">
+	<polygon fill="#FFFFFF" stroke="#CC1111" points="56.617,-11.521 -56.617,-11.521 -56.617,11.521 56.617,11.521 	"/>
+	<text transform="matrix(1 0 0 -1 -34.8154 -4.9277)" fill="#CC1111" font-family="'Verdana'" font-size="15">Itinéraire</text>
+</symbol>
+<symbol  id="Label_LC" viewBox="-15.5 -12.5 31 25">
+	<polygon fill="#FFFFFF" stroke="#000000" points="15,-12 -15,-12 -15,12 15,12 	"/>
+	<text transform="matrix(1 0 0 -1 -9.4116 -4.9277)" font-family="'Verdana'" font-size="15">LC</text>
+</symbol>
+<symbol  id="Label_LCA" viewBox="-20.5 -12.5 41 25">
+	<polygon fill="#FFFFFF" stroke="#000000" points="20,-12 -20,-12 -20,12 20,12 	"/>
+	<text transform="matrix(1 0 0 -1 -14.5386 -4.9277)" font-family="'Verdana'" font-size="15">LCA</text>
+</symbol>
+<symbol  id="Label_LD" viewBox="-56.5 -21.5 113 43">
+	<polygon fill="#FFFFFF" stroke="#CC1111" points="56,-21 -56,-21 -56,21 56,21 	"/>
+	<text transform="matrix(1 0 0 -1 -23.0088 4.0723)" enable-background="new    "><tspan x="0" y="0" fill="#CC1111" font-family="'Verdana'" font-size="15">Limite</tspan><tspan x="1.102" y="18" fill="#CC1111" font-family="'Verdana'" font-size="15">droite</tspan></text>
+</symbol>
+<symbol  id="Label_LD_Option" viewBox="-56.5 -21.5 113 43">
+	<polygon fill="#FFFFFF" stroke="#000000" points="56,-21 -56,-21 -56,21 56,21 	"/>
+	<text transform="matrix(1 0 0 -1 -23.0088 4.0723)" enable-background="new    "><tspan x="0" y="0" font-family="'Verdana'" font-size="15">Limite</tspan><tspan x="1.102" y="18" font-family="'Verdana'" font-size="15">droite</tspan></text>
+</symbol>
+<symbol  id="Label_LDM" viewBox="-35.125 -12.5 70.25 25">
+	<polygon fill="#FFFFFF" stroke="#000000" points="34.625,-12 -11.375,-12 -11.375,12 34.625,12 	"/>
+	<text transform="matrix(1 0 0 -1 -4.6494 -4.9277)" font-family="'Verdana'" font-size="15">LDM</text>
+</symbol>
+<symbol  id="Label_LFM" viewBox="-23.5 -12.5 47 25">
+	<polygon fill="#FFFFFF" stroke="#000000" points="23,-12 -23,-12 -23,12 23,12 	"/>
+	<text transform="matrix(1 0 0 -1 -14.8057 -4.9277)" font-family="'Verdana'" font-size="15">LFM</text>
+</symbol>
+<symbol  id="Label_LG" viewBox="-56.5 -21.5 113 43">
+	<polygon fill="#FFFFFF" stroke="#CC1111" points="56,-21 -56,-21 -56,21 56,21 	"/>
+	<text transform="matrix(1 0 0 -1 -23.0088 4.0723)" enable-background="new    "><tspan x="0" y="0" fill="#CC1111" font-family="'Verdana'" font-size="15">Limite</tspan><tspan x="-4.036" y="18" fill="#CC1111" font-family="'Verdana'" font-size="15">gauche</tspan></text>
+</symbol>
+<symbol  id="Label_LG_Option" viewBox="-56.5 -21.5 113 43">
+	<polygon fill="#FFFFFF" stroke="#000000" points="56,-21 -56,-21 -56,21 56,21 	"/>
+	<text transform="matrix(1 0 0 -1 -23.0088 4.0723)" enable-background="new    "><tspan x="0" y="0" font-family="'Verdana'" font-size="15">Limite</tspan><tspan x="-4.036" y="18" font-family="'Verdana'" font-size="15">gauche</tspan></text>
+</symbol>
+<symbol  id="Label_LI" viewBox="-15.5 -12.5 31 25">
+	<polygon fill="#FFFFFF" stroke="#000000" points="15,-12 -15,-12 -15,12 15,12 	"/>
+	<text transform="matrix(1 0 0 -1 -7.3315 -4.9277)" font-family="'Verdana'" font-size="15">LI</text>
+</symbol>
+<symbol  id="Label_Objets" viewBox="-27.617 -12.021 55.234 24.041">
+	<polygon fill="#FFFFFF" stroke="#CC1111" points="27.117,-11.521 -27.117,-11.521 -27.117,11.521 27.117,11.521 	"/>
+	<text transform="matrix(1 0 0 -1 -24.4883 -4.9277)" fill="#CC1111" font-family="'Verdana'" font-size="15">Objets</text>
+</symbol>
+<symbol  id="Label_Plot_de_ravitaillement_Option" viewBox="-58.5 -21.5 117 43">
+	<polygon fill="#FFFFFF" stroke="#000000" points="58,-21 -58,-21 -58,21 58,21 	"/>
+	<text transform="matrix(1 0 0 -1 -25.8652 4.0723)" enable-background="new    "><tspan x="0" y="0" font-family="'Verdana'" font-size="15">Plot de</tspan><tspan x="-25.902" y="18" font-family="'Verdana'" font-size="15">ravitaillement</tspan></text>
+</symbol>
+<symbol  id="Label_Point" viewBox="-27.617 -12.021 55.234 24.041">
+	<polygon fill="#FFFFFF" stroke="#CC1111" points="27.117,-11.521 -27.117,-11.521 -27.117,11.521 27.117,11.521 	"/>
+	<text transform="matrix(1 0 0 -1 -18.834 -4.9277)" fill="#CC1111" font-family="'Verdana'" font-size="15">Point</text>
+</symbol>
+<symbol  id="Label_Point_Logistique" viewBox="-46.5 -20.5 93 41">
+	<polygon fill="#FFFFFF" stroke="#CC1111" points="46,-20 -46,-20 -46,20 46,20 	"/>
+	<text transform="matrix(1 0 0 -1 -18.834 4.0723)" enable-background="new    "><tspan x="0" y="0" fill="#CC1111" font-family="'Verdana'" font-size="15">Point</tspan><tspan x="-17.314" y="18" fill="#CC1111" font-family="'Verdana'" font-size="15">logistique</tspan></text>
+</symbol>
+<symbol  id="Label_Point_d_x27_exfiltration_Option" viewBox="-56.5 -21.5 113 43">
+	<polygon fill="#FFFFFF" stroke="#000000" points="56,-21 -56,-21 -56,21 56,21 	"/>
+	<text transform="matrix(1 0 0 -1 -21.4707 4.0723)" enable-background="new    "><tspan x="0" y="0" font-family="'Verdana'" font-size="15">Point </tspan><tspan x="-25.848" y="18" font-family="'Verdana'" font-size="15">d’exfiltration</tspan></text>
+</symbol>
+<symbol  id="Label_Point_d_x27_infiltration_Option" viewBox="-56.5 -21.5 113 43">
+	<polygon fill="#FFFFFF" stroke="#000000" points="56,-21 -56,-21 -56,21 56,21 	"/>
+	<text transform="matrix(1 0 0 -1 -21.4707 4.0723)" enable-background="new    "><tspan x="0" y="0" font-family="'Verdana'" font-size="15">Point </tspan><tspan x="-23.745" y="18" font-family="'Verdana'" font-size="15">d’infiltration</tspan></text>
+</symbol>
+<symbol  id="Label_Point_de_regroupement" viewBox="-58.5 -21.5 117 43">
+	<polygon fill="#FFFFFF" stroke="#CC1111" points="58,-21 -58,-21 -58,21 58,21 	"/>
+	<text transform="matrix(1 0 0 -1 -30.6113 4.0723)" enable-background="new    "><tspan x="0" y="0" fill="#CC1111" font-family="'Verdana'" font-size="15">Point de</tspan><tspan x="-22.833" y="18" fill="#CC1111" font-family="'Verdana'" font-size="15">regroupement</tspan></text>
+</symbol>
+<symbol  id="Label_Position_de_sauvagarde_Option_1" viewBox="-68.5 -21.5 137 43">
+	<polygon fill="#FFFFFF" stroke="#000000" points="68,-21 -68,-21 -68,21 68,21 	"/>
+	<text transform="matrix(1 0 0 -1 -31.9883 4.0723)" enable-background="new    "><tspan x="0" y="0" font-family="'Verdana'" font-size="15">Position </tspan><tspan x="-23.372" y="18" font-family="'Verdana'" font-size="15">de sauvegarde</tspan></text>
+</symbol>
+<symbol  id="Label_Unités" viewBox="-28.5 -12.021 57 24.041">
+	<polygon fill="#FFFFFF" stroke="#CC1111" points="28,-11.521 -28,-11.521 -28,11.521 28,11.521 	"/>
+	<text transform="matrix(1 0 0 -1 -23.624 -4.9277)" fill="#CC1111" font-family="'Verdana'" font-size="15">Unités</text>
+</symbol>
+<symbol  id="Label_Zone" viewBox="-27.617 -12.021 55.234 24.041">
+	<polygon fill="#FFFFFF" stroke="#CC1111" points="27.117,-11.521 -27.117,-11.521 -27.117,11.521 27.117,11.521 	"/>
+	<text transform="matrix(1 0 0 -1 -21.4243 -4.9902)" fill="#CC1111" font-family="'Verdana'" font-size="17">Zone</text>
+</symbol>
+<symbol  id="Label_Zone_De_Déploiement_1" viewBox="-71.5 -28.262 143 56.524">
+	<polygon fill="#FFFFFF" stroke="#CC1111" points="71,-12.237 -71,-12.237 -71,27.763 71,27.763 	"/>
+	<text transform="matrix(1 0 0 -1 -20.5405 10.8359)" enable-background="new    "><tspan x="0" y="0" fill="#CC1111" font-family="'Verdana'" font-size="15">Zone </tspan><tspan x="-32.252" y="18" fill="#CC1111" font-family="'Verdana'" font-size="15">d’implantation</tspan></text>
+</symbol>
+<symbol  id="Objets_1" viewBox="-12.473 -12.972 24.946 25.944">
+	<path fill="#CC1111" stroke="#CC1111" stroke-width="2" d="M3.274-3.087C1.569-4.896-1.278-4.979-3.087-3.274
+		s-1.893,4.553-0.188,6.361s4.553,1.893,6.361,0.188S4.979-1.278,3.274-3.087z"/>
+	<line stroke="#CC1111" stroke-width="2" x1="-8.815" y1="11.059" x2="-0.083" y2="2.827"/>
+	<line stroke="#CC1111" stroke-width="2" x1="0.603" y1="3.555" x2="8.833" y2="12.286"/>
+	<line stroke="#CC1111" stroke-width="2" x1="11.745" y1="9.543" x2="3.513" y2="0.811"/>
+	<line stroke="#CC1111" stroke-width="2" x1="2.827" y1="0.083" x2="11.559" y2="-8.148"/>
+	<line stroke="#CC1111" stroke-width="2" x1="8.814" y1="-11.059" x2="0.083" y2="-2.827"/>
+	<line stroke="#CC1111" stroke-width="2" x1="-0.603" y1="-3.555" x2="-8.834" y2="-12.286"/>
+	<line stroke="#CC1111" stroke-width="2" x1="-11.745" y1="-9.543" x2="-3.514" y2="-0.811"/>
+	<line stroke="#CC1111" stroke-width="2" x1="-2.827" y1="-0.083" x2="-11.559" y2="8.148"/>
+	<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="-0.268" y1="-1.442" x2="-9.732" y2="-11.475"/>
+	<line stroke="#CC1111" stroke-width="2" x1="9.745" y1="10.543" x2="1.513" y2="1.811"/>
+	<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="9.73" y1="-8.979" x2="1.087" y2="-0.831"/>
+	<line stroke="#CC1111" stroke-width="2" x1="-1.186" y1="0.941" x2="-9.917" y2="9.173"/>
+	<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="-1.268" y1="-0.442" x2="-10.732" y2="-10.475"/>
+	<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="11.167" y1="10.039" x2="1.559" y2="-0.133"/>
+	<line stroke="#CC1111" stroke-width="2" x1="9.987" y1="11.222" x2="1.801" y2="2.539"/>
+	<line stroke="#CC1111" stroke-width="2" x1="10.39" y1="-9.398" x2="1.576" y2="-1.091"/>
+	<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="9.645" y1="-10.142" x2="0.966" y2="-1.96"/>
+	<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="-0.81" y1="1.508" x2="-9.803" y2="9.984"/>
+	<line fill="#CC1111" stroke="#CC1111" stroke-width="2" x1="-1.81" y1="0.508" x2="-10.783" y2="8.966"/>
+</symbol>
+<symbol  id="Objets_2" viewBox="-12.473 -12.972 24.946 25.944">
+	<path fill="#231F20" stroke="#231F20" stroke-width="2" d="M3.274-3.087C1.569-4.896-1.278-4.979-3.087-3.274
+		s-1.893,4.553-0.188,6.361s4.553,1.893,6.361,0.188S4.979-1.278,3.274-3.087z"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="-8.815" y1="11.059" x2="-0.083" y2="2.827"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="0.603" y1="3.555" x2="8.833" y2="12.286"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="11.745" y1="9.543" x2="3.513" y2="0.811"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="2.827" y1="0.083" x2="11.559" y2="-8.148"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="8.814" y1="-11.059" x2="0.083" y2="-2.827"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="-0.603" y1="-3.555" x2="-8.834" y2="-12.286"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="-11.745" y1="-9.543" x2="-3.514" y2="-0.811"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="-2.827" y1="-0.083" x2="-11.559" y2="8.148"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="-0.268" y1="-1.442" x2="-9.732" y2="-11.475"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="9.745" y1="10.543" x2="1.513" y2="1.811"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="9.73" y1="-8.979" x2="1.087" y2="-0.831"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="-1.186" y1="0.941" x2="-9.917" y2="9.173"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="-1.268" y1="-0.442" x2="-10.732" y2="-10.475"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="11.167" y1="10.039" x2="1.559" y2="-0.133"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="9.987" y1="11.222" x2="1.801" y2="2.539"/>
+	<g id="XMLID_8_">
+		<g>
+		</g>
+		<g>
+			<line fill="none" stroke="#231F20" stroke-width="2" x1="10.39" y1="-9.4" x2="1.58" y2="-1.09"/>
+		</g>
+	</g>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="9.645" y1="-10.142" x2="0.966" y2="-1.96"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="-0.81" y1="1.508" x2="-9.803" y2="9.984"/>
+	<line fill="#231F20" stroke="#231F20" stroke-width="2" x1="-1.81" y1="0.508" x2="-10.783" y2="8.966"/>
+</symbol>
+<symbol  id="Point" viewBox="-5.5 -5.5 11 11">
+	<path fill="#CC1111" stroke="#CC1111" stroke-width="2" d="M4.5,0c0-2.485-2.015-4.5-4.5-4.5S-4.5-2.485-4.5,0S-2.485,4.5,0,4.5
+		S4.5,2.485,4.5,0z"/>
+</symbol>
+<symbol  id="Point_Option" viewBox="-5.5 -5.5 11 11">
+	<path stroke="#000000" stroke-width="2" d="M4.5,0c0-2.485-2.015-4.5-4.5-4.5S-4.5-2.485-4.5,0S-2.485,4.5,0,4.5S4.5,2.485,4.5,0z"
+		/>
+</symbol>
+<symbol  id="Pont" viewBox="-14.992 -27.131 29.984 54.263">
+	<polyline fill="none" stroke="#CC1111" stroke-width="2" points="-14.271,23.238 -5.26,13.887 -2.307,-13.432 -7.605,-26.762 	"/>
+	<polyline fill="none" stroke="#CC1111" stroke-width="2" points="10.449,26.6 3.542,15.602 6.244,-11.74 14.158,-23.705 	"/>
+</symbol>
+<symbol  id="Pont_Option" viewBox="-14.992 -27.132 29.984 54.263">
+	<polyline fill="none" stroke="#000000" stroke-width="2" points="-14.271,23.237 -5.26,13.886 -2.307,-13.432 -7.604,-26.763 	"/>
+	<polyline fill="none" stroke="#000000" stroke-width="2" points="10.449,26.6 3.542,15.601 6.244,-11.741 14.158,-23.706 	"/>
+</symbol>
+<symbol  id="Riviere" viewBox="-58.99 -199.138 117.981 398.278">
+	<path fill="none" stroke="#5292EF" stroke-width="2" d="M-58-198.994c32.666,224,105.333,318.666,116,398"/>
+	<path fill="none" stroke="#5292EF" stroke-width="2" d="M-2.667,25.672c3.333,25.334-0.16,30.036-2,52.667
+		c-0.532,6.543-0.564,24.589,0.667,38c1.588,17.312,18.878,44.725,26.666,48c14.611,6.145,32.031,8.367,33.334,24"/>
+</symbol>
+<symbol  id="Zone" viewBox="-90.098 -99.183 180.196 198.366">
+	<polygon fill="none" stroke="#CC1111" stroke-width="3" points="88.386,6.322 -9.614,-97.678 -88.281,-97.01 -50.947,94.99 
+		57.053,97.656 	"/>
+</symbol>
+<symbol  id="Zone_Option" viewBox="-90.098 -99.183 180.196 198.366">
+	<polygon fill="none" stroke="#000000" stroke-width="3" points="88.386,6.322 -9.614,-97.678 -88.281,-97.011 -50.948,94.989 
+		57.052,97.656 	"/>
+</symbol>
+<symbol  id="Zone_XXL" viewBox="-141.649 -221.839 283.299 443.678">
+	<polygon fill="none" stroke="#CC1111" stroke-width="3" points="140.136,-77.672 130.136,-220.339 35.47,-220.339 -74.53,-139.006 
+		-139.864,-147.672 -83.864,218.994 60.136,220.328 	"/>
+	<line fill="none" stroke="#CC1111" stroke-width="2" x1="-6.864" y1="218.661" x2="-6.864" y2="-188.339"/>
+	<line fill="none" stroke="#CC1111" stroke-width="2" x1="-113.198" y1="25.661" x2="-6.614" y2="32.161"/>
+	<line fill="none" stroke="#CC1111" stroke-width="2" x1="-6.614" y1="32.161" x2="90.136" y2="108.994"/>
+</symbol>
+<symbol  id="Zone_de_déploiement_artillerie_1" viewBox="-55.507 -75.238 111.014 150.476">
+	<polygon fill="none" stroke="#CC1111" stroke-width="3" points="54.008,-27.275 4.008,-73.275 -53.992,-28.275 -51.992,73.725 
+		54.008,72.725 	"/>
+</symbol>
+<symbol  id="Zone_scindée" viewBox="-68.515 -95.015 137.029 190.029">
+	<line fill="none" stroke="#000000" stroke-width="2" x1="-67.63" y1="94.549" x2="-24.964" y2="13.549"/>
+	<line fill="none" stroke="#000000" stroke-width="2" x1="-24.964" y1="13.549" x2="68.453" y2="7.799"/>
+	<line fill="none" stroke="#000000" stroke-width="2" x1="-24.964" y1="13.549" x2="-43.422" y2="-94.847"/>
+</symbol>
+<symbol  id="ZurbWithScale" viewBox="-254.734 -217.07 509.469 434.141">
+	<g>
+		<polygon fill="#DDDDDD" points="-37.266,24.07 -53.266,12.07 -83.666,4.67 -163.266,20.07 -167.266,33.826 -151.266,71.07 
+			-92.266,105.07 -21.266,138.07 		"/>
+		<polygon fill="#DDDDDD" points="-228.266,-152.931 -203.266,-52.931 -177.266,12.07 -64.266,-20.931 -76.266,-93.931 
+			-109.266,-201.931 		"/>
+		<polygon fill="#DDDDDD" points="-32.266,19.07 -22.266,-14.931 -39.266,-121.931 -69.266,-127.931 -41.266,7.07 		"/>
+		<polygon fill="#DDDDDD" points="161.734,-80.931 165.734,-202.931 162.734,-213.931 90.734,-213.931 83.734,-197.931 
+			-24.266,-116.931 -9.266,-12.931 -17.266,18.07 22.734,17.07 98.734,96.07 97.734,121.07 104.734,121.07 		"/>
+		<polygon fill="#DDDDDD" points="225.734,45.07 174.734,-73.931 114.734,126.07 123.734,124.07 		"/>
+		<polygon fill="#DDDDDD" points="253.734,59.07 233.734,57.07 140.734,130.07 254.734,163.07 		"/>
+		<polygon fill="#DDDDDD" points="254.234,216.07 254.734,178.07 205.734,164.07 241.734,215.07 		"/>
+		<polygon fill="#DDDDDD" points="224.734,215.07 181.734,159.07 135.734,142.07 112.734,142.07 88.734,216.07 		"/>
+		<polygon fill="#DDDDDD" points="74.734,143.07 -10.266,149.07 -3.266,192.07 -12.266,216.07 49.734,217.07 		"/>
+		<polygon fill="#DDDDDD" points="83.734,108.07 15.734,36.07 -24.266,34.07 -9.266,132.07 74.734,126.07 		"/>
+		<polygon fill="#DDDDDD" points="-31.266,215.07 -20.266,192.07 -23.266,147.07 -149.266,82.07 -110.266,216.07 		"/>
+		<polygon fill="#DDDDDD" points="-156.266,145.07 -178.266,113.07 -181.266,114.07 -174.266,156.07 -159.266,181.07 		"/>
+		<polygon fill="#DDDDDD" points="-161.266,216.07 -185.266,159.07 -190.266,111.07 -205.266,106.07 -211.266,95.07 
+			-250.266,106.07 -225.266,176.07 -245.266,215.07 		"/>
+	</g>
+	<g>
+		<polygon fill="#B50000" stroke="#000000" stroke-width="2" points="-161.859,-210.81 -253.734,-210.81 -253.734,-205.935 
+			-161.859,-205.935 		"/>
+		<text transform="matrix(1 0 0 -1 -159.667 -213.7656)" font-family="'Verdana'" font-size="16">250</text>
+	</g>
+</symbol>
+<g id="ZURB">
+	
+		<use xlink:href="#ZurbWithScale"  width="509.469" height="434.141" id="XMLID_3_" x="-254.734" y="-217.07" transform="matrix(1 0 0 -1 388.29 290.5439)" overflow="visible"/>
+	
+		<use xlink:href="#Riviere"  width="117.981" height="398.278" x="-58.99" y="-199.138" transform="matrix(1 0 0 -1 207.1245 264.3828)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Pont_Option"  width="29.984" height="54.263" x="-14.992" y="-27.132" transform="matrix(0.53 -0.848 -0.848 -0.53 193.0625 250.9482)" display="none" overflow="visible"/>
+</g>
+<g id="Fuseau" display="none">
+	
+		<use xlink:href="#Fuseau_2_Option"  width="482.834" height="463.024" x="-241.417" y="-231.512" transform="matrix(1 0 0 -1 347.79 299.0439)" overflow="visible"/>
+	
+		<use xlink:href="#Fuseau_1_Option"  width="325.084" height="464.974" id="XMLID_5_" x="-162.542" y="-232.487" transform="matrix(1 0 0 -1 419.7236 293.2412)" display="inline" overflow="visible"/>
+	
+		<use xlink:href="#Fuseau_2"  width="482.834" height="462.684" x="-241.417" y="-231.342" transform="matrix(1 0 0 -1 347.79 299.0439)" overflow="visible"/>
+	
+		<use xlink:href="#Fuseau_1"  width="325.084" height="464.974" x="-162.542" y="-232.487" transform="matrix(1 0 0 -1 419.79 293.0439)" overflow="visible"/>
+</g>
+<g id="Params_Optionnels" display="none">
+	
+		<use xlink:href="#Pont_Option"  width="29.984" height="54.263" x="-14.992" y="-27.132" transform="matrix(0.53 -0.848 -0.848 -0.53 193.0625 251.9482)" overflow="visible"/>
+	
+		<use xlink:href="#Zone_Option"  width="180.196" height="198.366" id="XMLID_1_" x="-90.098" y="-99.183" transform="matrix(1 0 0 -1 419.123 167.3774)" overflow="visible"/>
+	
+		<use xlink:href="#Direction_Dangereuse_Option"  width="103" height="143.157" id="XMLID_4_" x="-51.5" y="-71.579" transform="matrix(1 0 0 -1 665.6729 397.1611)" overflow="visible"/>
+	
+		<use xlink:href="#LDM"  width="383.125" height="25" id="XMLID_10_" x="-197.375" y="-12.5" transform="matrix(1 0 0 -1 387.54 523.0439)" overflow="visible"/>
+	
+		<use xlink:href="#LFM"  width="370.127" height="25" x="-185.063" y="-12.5" transform="matrix(0.6086 -0.7935 -0.7935 -0.6086 122.5488 176.0454)" overflow="visible"/>
+	
+		<use xlink:href="#Label_LG_Option"  width="113" height="43" id="XMLID_13_" x="-56.5" y="-21.5" transform="matrix(1 0 0 -1 274.79 124.3774)" overflow="visible"/>
+	
+		<use xlink:href="#Label_LD_Option"  width="113" height="43" id="XMLID_11_" x="-56.5" y="-21.5" transform="matrix(1 0 0 -1 571.7891 104.3784)" overflow="visible"/>
+	
+		<use xlink:href="#LC"  width="377.5" height="25" id="XMLID_9_" x="-188.75" y="-12.5" transform="matrix(1 0 0 -1 421.7061 400.377)" overflow="visible"/>
+	
+		<use xlink:href="#LCA"  width="363.503" height="25" id="XMLID_6_" x="-181.752" y="-12.5" transform="matrix(1 0 0 -1 414.042 346.0439)" display="inline" overflow="visible"/>
+	
+		<use xlink:href="#Label_Point_d_x27_infiltration_Option"  width="113" height="43" x="-56.5" y="-21.5" transform="matrix(1 0 0 -1 425.79 496.0439)" overflow="visible"/>
+	
+		<use xlink:href="#Label_Point_d_x27_exfiltration_Option"  width="113" height="43" x="-56.5" y="-21.5" transform="matrix(1 0 0 -1 260.79 112.0439)" overflow="visible"/>
+	
+		<use xlink:href="#Point_Option"  width="11" height="11" x="-5.5" y="-5.5" transform="matrix(1 0 0 -1 309.79 428.0439)" overflow="visible"/>
+	
+		<use xlink:href="#CheckPoint_Option"  width="62.088" height="109.625" x="-31.044" y="-54.812" transform="matrix(0.2376 0 0 -0.2376 465.1211 83.4956)" overflow="visible"/>
+	
+		<use xlink:href="#LFM"  width="370.127" height="25" id="XMLID_7_" x="-185.063" y="-12.5" transform="matrix(1 0 0 -1 393.458 523.0439)" display="inline" overflow="visible"/>
+	
+		<use xlink:href="#Objets_2"  width="24.946" height="25.944" x="-12.473" y="-12.972" transform="matrix(1 0 0 -1 423.79 501.0439)" overflow="visible"/>
+	
+		<use xlink:href="#Label_Plot_de_ravitaillement_Option"  width="117" height="43" id="XMLID_12_" x="-58.5" y="-21.5" transform="matrix(1 0 0 -1 503.79 482.0439)" overflow="visible"/>
+	
+		<use xlink:href="#LDM_1"  width="295.125" height="25" id="XMLID_14_" x="-147.563" y="-12.5" transform="matrix(1 0 0 -1 458.3525 64.7539)" display="inline" overflow="visible"/>
+	
+		<use xlink:href="#Zone_scindée"  width="137.029" height="190.029" x="-68.515" y="-95.015" transform="matrix(1 0 0 -1 434.0869 166.2598)" overflow="visible"/>
+	
+		<use xlink:href="#Label_Position_de_sauvagarde_Option_1"  width="137" height="43" x="-68.5" y="-21.5" transform="matrix(1 0 0 -1 396.79 417.0439)" overflow="visible"/>
+</g>
+<g id="Params_Obligatoires">
+	
+		<use xlink:href="#BU_1"  width="108" height="98" x="-54" y="-49" transform="matrix(1 0 0 -1 417.4561 208.7104)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#BU_2"  width="87" height="74" x="-43.5" y="-37" transform="matrix(1 0 0 -1 419.1221 111.7104)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#BU_3"  width="146" height="133.398" x="-73" y="-66.699" transform="matrix(1 0 0 -1 293.1226 219.3774)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Pont"  width="29.984" height="54.263" x="-14.992" y="-27.131" transform="matrix(0.5239 -0.8518 -0.8518 -0.5239 203.1245 202.0454)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Zone"  width="180.196" height="198.366" x="-90.098" y="-99.183" transform="matrix(1 0 0 -1 415.79 165.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Label_Zone"  width="55.234" height="24.041" x="-27.617" y="-12.021" transform="matrix(1 0 0 -1 438.3408 96.7563)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Objets_1"  width="24.946" height="25.944" x="-12.473" y="-12.972" transform="matrix(1 0 0 -1 476.79 157.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Label_Objets"  width="55.234" height="24.041" x="-27.617" y="-12.021" transform="matrix(1 0 0 -1 413.79 197.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Label_Bloc_Urbain"  width="63" height="41" x="-31.5" y="-20.5" transform="matrix(1 0 0 -1 409.79 178.0439)" display="none" overflow="visible"/>
+	<g id="Itinéraire" display="none">
+		<line display="inline" fill="none" stroke="#CC1111" stroke-width="4" x1="355.79" y1="412.044" x2="373.79" y2="297.044"/>
+		<line display="inline" fill="none" stroke="#CC1111" stroke-width="4" x1="373.79" y1="297.044" x2="362.79" y2="269.044"/>
+		<g display="inline">
+			<line fill="none" stroke="#CC1111" stroke-width="4" x1="367.79" y1="150.044" x2="300.79" y2="178.044"/>
+			<line fill="none" stroke="#CC1111" stroke-width="4" x1="300.79" y1="178.044" x2="236.79" y2="212.044"/>
+		</g>
+	</g>
+	
+		<use xlink:href="#Label_Itinéraire"  width="114.234" height="24.041" x="-57.117" y="-12.021" transform="matrix(1 0 0 -1 451.79 277.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Carrefour"  width="28" height="30" x="-14" y="-15" transform="matrix(1 0 0 -1 371.79 149.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Zone_XXL"  width="283.299" height="443.678" x="-141.649" y="-221.839" transform="matrix(1 0 0 -1 435.6543 285.7051)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Label_Itinéraire"  width="114.234" height="24.041" x="-57.117" y="-12.021" transform="matrix(1 0 0 -1 441.123 339.3779)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Itineraire"  width="207.579" height="295.636" id="XMLID_2_" x="-103.79" y="-147.818" transform="matrix(1 0 0 -1 270.7373 332.1162)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Label_Point_de_regroupement"  width="117" height="43" x="-58.5" y="-21.5" transform="matrix(1 0 0 -1 385.79 433.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Point"  width="11" height="11" x="-5.5" y="-5.5" transform="matrix(1 0 0 -1 373.79 150.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Point"  width="11" height="11" x="-5.5" y="-5.5" transform="matrix(1 0 0 -1 317.79 450.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Label_Point"  width="55.234" height="24.041" x="-27.617" y="-12.021" transform="matrix(1 0 0 -1 375.79 237.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Label_Unités"  width="57" height="24.041" x="-28.5" y="-12.021" transform="matrix(1 0 0 -1 427.79 313.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Label_LG"  width="113" height="43" x="-56.5" y="-21.5" transform="matrix(1 0 0 -1 225.79 552.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Label_LD"  width="113" height="43" x="-56.5" y="-21.5" transform="matrix(1 0 0 -1 590.79 551.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Label_Point_Logistique"  width="93" height="41" x="-46.5" y="-20.5" transform="matrix(1 0 0 -1 419.79 181.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Label_Zone_De_Déploiement_1"  width="143" height="56.524" x="-71.5" y="-28.262" transform="matrix(1 0 0 -1 420.79 149.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Direction_Dangereuse"  width="103" height="143.42" x="-51.5" y="-71.71" transform="matrix(1 0 0 -1 660.79 377.0439)" overflow="visible"/>
+	
+		<use xlink:href="#Label_Zone_De_Déploiement_1"  width="143" height="56.524" x="-71.5" y="-28.262" transform="matrix(1 0 0 -1 419.79 240.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Zone_de_déploiement_artillerie_1"  width="111.014" height="150.476" x="-55.507" y="-75.238" transform="matrix(1 0 0 -1 416.79 145.0439)" display="none" overflow="visible"/>
+	<g id="Itinéraire_simple" display="none">
+		<line display="inline" fill="none" stroke="#CC1111" stroke-width="5" x1="399.79" y1="463.044" x2="356.79" y2="414.044"/>
+		<line display="inline" fill="none" stroke="#CC1111" stroke-width="5" x1="356.79" y1="414.044" x2="372.79" y2="303.044"/>
+		<line display="inline" fill="none" stroke="#CC1111" stroke-width="5" x1="372.79" y1="303.044" x2="359.79" y2="259.044"/>
+		<line display="inline" fill="none" stroke="#CC1111" stroke-width="5" x1="359.79" y1="259.044" x2="373.79" y2="148.044"/>
+	</g>
+	
+		<use xlink:href="#Carrefour"  width="28" height="30" x="-14" y="-15" transform="matrix(1 0 0 -1 359.2988 261.3071)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Carrefour"  width="28" height="30" x="-14" y="-15" transform="matrix(1 0 0 -1 357.2988 413.3076)" overflow="visible"/>
+	
+		<use xlink:href="#Carrefour"  width="28" height="30" x="-14" y="-15" transform="matrix(1 0 0 -1 371.2988 301.3076)" display="none" overflow="visible"/>
+</g>
+<g id="Pions">
+	
+		<use xlink:href="#INF_1"  width="362" height="286" x="-181" y="-143" transform="matrix(0.0608 0 0 -0.0608 349.1245 153.7354)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#INF_1"  width="362" height="286" x="-181" y="-143" transform="matrix(0.0608 0 0 -0.0608 384.792 476.4023)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#INF_1"  width="362" height="286" x="-181" y="-143" transform="matrix(0.0608 0 0 -0.0608 368.792 301.7363)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#INF_1"  width="362" height="286" x="-181" y="-143" transform="matrix(0.0608 0 0 -0.0608 134.1245 196.4028)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Char_3"  width="362" height="286.668" x="-181" y="-143.334" transform="matrix(0.0607 0 0 -0.0607 366.6846 198.4849)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#GEN_2"  width="362" height="287.334" x="-181" y="-143.667" transform="matrix(0.061 0 0 -0.061 162.3335 212.3418)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#GEN_2"  width="362" height="287.334" x="-181" y="-143.667" transform="matrix(0.061 0 0 -0.061 376.665 432.3408)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#GEN_2"  width="362" height="287.334" x="-181" y="-143.667" transform="matrix(0.061 0 0 -0.061 295.3335 236.3413)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Char_1"  width="370" height="294.668" x="-185" y="-147.334" transform="matrix(0.0946 0 0 -0.0946 404.29 260.4414)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#INF_3"  width="370" height="294" x="-185" y="-147" transform="matrix(0.0876 0 0 -0.0876 462.5762 352.9277)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#INF_3"  width="370" height="294" x="-185" y="-147" transform="matrix(0.0876 0 0 -0.0876 343.5762 358.9277)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#INF_3"  width="370" height="294" x="-185" y="-147" transform="matrix(0.0876 0 0 -0.0876 370.5762 308.9277)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Aviation"  width="362" height="286.5" id="Aviation_3" x="-181" y="-143.25" transform="matrix(0.096 0 0 -0.096 352.4175 495.5439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#Artillerie_Sol_Sol_3"  width="362" height="289" x="-181" y="-144.5" transform="matrix(0.1 0 0 -0.1 415.79 491.0439)" display="none" overflow="visible"/>
+	
+		<use xlink:href="#INF_1"  width="362" height="286" x="-181" y="-143" transform="matrix(0.1022 0 0 -0.1084 478.29 146.5439)" overflow="visible"/>
+	
+		<use xlink:href="#Label_Point_de_regroupement"  width="117" height="43" x="-58.5" y="-21.5" transform="matrix(1 0 0 -1 417.79 456.0439)" overflow="visible"/>
+</g>
+<g id="Automates">
+	
+		<use xlink:href="#Artillerie_Sol_Sol_C"  width="362" height="294.75" x="-181" y="-147.375" transform="matrix(0.1 0 0 -0.1 348.79 491.0439)" display="none" overflow="visible"/>
+	<rect x="396.79" y="154.044" fill="none" width="35" height="16"/>
+</g>
+</svg>
