@@ -21,10 +21,8 @@
 // Name: ADN_ListView_Objects constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent, const char* szName, Qt::WFlags f, ADN_ComboBox* pComboListUnitType, ADN_ComboBox* pComboListPropagation )
-    : ADN_ListView( pParent, szName, f )
-    , pComboListUnitType_   ( pComboListUnitType ) 
-    , pComboListPropagation_( pComboListPropagation ) 
+ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent )
+    : ADN_ListView( pParent )
 {
     // Add one column.
     addColumn( tools::translate( "ADN_ListView_Objects", "Objects" ) );
@@ -145,8 +143,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     // process capacities
     BUILDER_HELPER( Constructor );
     CONNECT_HELPER( Constructor, DefaultConsumption, nDefaultConsumption_ );
-    CONNECT_HELPER( Constructor, UnitType, unitType_ );
-    UpdateComboList( pComboListUnitType_, Constructor.GetConnector().unitType_.GetData() );
+    CONNECT_HELPER( Constructor, UnitType, nUnitType_ );
     ADN_Objects_Data::ADN_CapacityInfos_Buildable& buildable = *Constructor.GetConnector().ptrBuildable_.get();
     vItemConnectors_[ ADN_Objects_GUI::eBuildableCapacity_Dotation ]->Connect( &buildable.categories_, bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eBuildableCapacityPresent ]->Connect( &buildable.bPresent_, bConnect );
@@ -231,8 +228,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     CONNECT_HELPER( TerrainHeuristic, LocationScore, scores_ );
 
     BUILDER_HELPER( Propagation );
-    CONNECT_HELPER( Propagation, ModelType, model_ );
-    UpdateComboList( pComboListPropagation_, Propagation.GetConnector().model_.GetData() );
+    CONNECT_HELPER( Propagation, ModelType, nModel_ );
 
     BUILDER_HELPER( Detection );
     CONNECT_HELPER( Detection, HasDetectionTime, bDetectTime_ );
@@ -304,21 +300,4 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
         FillContextMenuWithDefault( popupMenu, wizard );
         popupMenu.exec( pt );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Automata_ListView::UpdateComboList
-// Created: MMC 2011-07-19
-// -----------------------------------------------------------------------------
-void ADN_ListView_Objects::UpdateComboList( ADN_ComboBox* pCombo, const std::string& value )
-{
-    if ( !pCombo )
-        return;
-
-    for ( int i=0; i < pCombo->count(); ++i )
-        if ( value == static_cast< std::string >( pCombo->text( i ) ) )
-        { 
-            pCombo->setCurrentItem( i ); 
-            return; 
-        }
 }

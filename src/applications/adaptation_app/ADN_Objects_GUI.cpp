@@ -47,46 +47,6 @@ ADN_Objects_GUI::~ADN_Objects_GUI()
     // NOTHING
 }
 
-namespace
-{
-    class ADN_ComboBox_List : public ADN_ComboBox
-    {
-    private:
-        class ADN_CCB : public ADN_Connector_EnumComboBox
-        {
-        public:
-            explicit ADN_CCB( ADN_ComboBox_List& parent )
-                : ADN_Connector_EnumComboBox( &parent )
-            {
-                // NOTHING
-            }
-            virtual ~ADN_CCB()
-            {
-                // NOTHING
-            }
-            virtual std::string GetItem( void* obj )
-            {
-                return *static_cast< std::string* >( obj );
-            }
-        };
-    public:
-        explicit ADN_ComboBox_List( QWidget* parent = 0, const char * name = 0 )
-            : ADN_ComboBox( parent, name )
-        {
-            pConnector_ = new ADN_CCB( *this );
-        }
-        virtual ~ADN_ComboBox_List()
-        {
-            // NOTHING
-        }
-    protected:
-        void UpdateEnableState()
-        {
-            // NOTHING
-        }
-    };
-}
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_GUI::Build
 // Created: JDY 03-06-26
@@ -118,14 +78,13 @@ void ADN_Objects_GUI::Build()
 
     Q3GroupBox* hBox = new Q3GroupBox( 2, Qt::Horizontal, tr( "Capacities" ), pGroup_ );
 
-    ADN_ComboBox_List *pComboListUnitType = 0, *pComboListPropagation = 0;
 
     ADN_GroupBox* constructor = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Constructor" ), hBox );
     {
         vInfosConnectors[ eConstructorCapacityPresent ] = & constructor->GetConnector();
         // Comsumption
         builder.AddEnumField< E_ConsumptionType >( constructor, tr( "Default consumption" ), vInfosConnectors[ eConstructorCapacity_DefaultConsumption ], ADN_Tr::ConvertFromConsumptionType );
-        pComboListUnitType = builder.AddField< ADN_ComboBox_List >( constructor, tr( "Model"), vInfosConnectors[ eConstructorCapacity_UnitType ] );
+        builder.AddEnumField< E_ConstructorType >( constructor, tr( "Model" ), vInfosConnectors[ eConstructorCapacity_UnitType ], ADN_Tr::ConvertFromConstructorType );
         // Buildable
         ADN_GroupBox* buildable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Buildable" ), constructor );
         {
@@ -347,7 +306,7 @@ void ADN_Objects_GUI::Build()
     ADN_GroupBox* propagation = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Propagation" ), hBox );
     {
         vInfosConnectors[ ePropagationCapacityPresent ] = & propagation->GetConnector();
-        pComboListPropagation = builder.AddField< ADN_ComboBox_List >( propagation, tr( "Model"), vInfosConnectors[ ePropagationCapacity_ModelType ] );
+        builder.AddEnumField< E_PropagationModel >( propagation, tr( "Model" ), vInfosConnectors[ ePropagationCapacity_ModelType ], ADN_Tr::ConvertFromPropagationModel);
     }
 
     ADN_GroupBox* attitudeModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( "AttitudeModifier" ), hBox );
@@ -424,7 +383,7 @@ void ADN_Objects_GUI::Build()
     }
 
     // Create the object listview.
-    ADN_ListView_Objects* pList = new ADN_ListView_Objects( pMainWidget_, 0, 0, pComboListUnitType, pComboListPropagation );
+    ADN_ListView_Objects* pList = new ADN_ListView_Objects( pMainWidget_ );
     pList->GetConnector().Connect( &data_.GetObjectInfos() );
 
     ADN_GroupBox* lodging = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Lodging" ), hBox );

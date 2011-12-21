@@ -44,6 +44,8 @@ public:
     static const std::string& ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect, E_Conversion = eToSim );
     static const std::string& ConvertFromMissionParameterType( E_MissionParameterType, E_Conversion = eToSim );
     static const std::string& ConvertFromSupplyConvoyType( E_SupplyConvoyType, E_Conversion = eToSim );
+    static const std::string& ConvertFromConstructorType( E_ConstructorType, E_Conversion = eToSim );
+    static const std::string& ConvertFromPropagationModel( E_PropagationModel, E_Conversion = eToSim );
     //@}
 
     //! @name Convert To functions
@@ -67,6 +69,8 @@ public:
     static E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );
     static E_MissionParameterType ConvertToMissionParameterType( const std::string& );
     static E_SupplyConvoyType   ConvertToSupplyConvoyType( const std::string& );
+    static E_ConstructorType         ConvertToConstructorType( const std::string& );
+    static E_PropagationModel        ConvertToPropagationModel( const std::string& );
     //@}
 
     //! @name Initializer
@@ -96,6 +100,8 @@ public:
     typedef converter<E_TypeMunitionTirIndirect>    T_ConverterTypeMunitionTirIndirect;
     typedef converter<E_MissionParameterType>       T_ConverterMissionParameterType;
     typedef converter<E_SupplyConvoyType>           T_ConverterSupplyConvoyType;
+    typedef converter< E_ConstructorType >         T_ConverterConstructorType;
+    typedef converter< E_PropagationModel >        T_ConverterPropagationModel;
     //@}
 
     //! @name Converters
@@ -118,6 +124,8 @@ public:
     static T_ConverterTypeMunitionTirIndirect munitionTirIndirectConverter_ [];
     static T_ConverterMissionParameterType missionParameterTypeConverter_ [];
     static T_ConverterSupplyConvoyType  supplyConvoyTypeConverter_[];
+    static T_ConverterConstructorType         constructorTypeConverter_[];
+    static T_ConverterPropagationModel        propagationModelConverter_[];
     //@}
 };
 

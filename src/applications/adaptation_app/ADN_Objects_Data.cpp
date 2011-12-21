@@ -209,21 +209,18 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream
     xos << xml::end;
 }
 
-
-const char* ADN_Objects_Data::ADN_CapacityInfos_Constructor::choices_[] = { "raw", "density" };
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Constructor
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Constructor::ADN_CapacityInfos_Constructor()
     : nDefaultConsumption_( eWorking )
-    , unitType_           ( VectorBuilder( choices_, 2 ) )
+    , nUnitType_          ( eRaw )
     , ptrBuildable_       ( new ADN_CapacityInfos_Buildable() )
     , ptrImprovable_      ( new ADN_CapacityInfos_Improvable() )
 {
     nDefaultConsumption_.SetParentNode( *this );
-    unitType_.SetParentNode( *this );
+    nUnitType_.SetParentNode( *this );
     ptrBuildable_->SetParentNode( *this );
     ptrImprovable_->SetParentNode( *this );
 }
@@ -236,7 +233,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::ReadArchive( xml::xistream
 {
     ADN_TypeCapacity_Infos::ReadArchive( xis );
     nDefaultConsumption_ = ADN_Tr::ConvertToConsumptionType( xis.attribute< std::string >( "default-consumption-mode" ) );
-    unitType_ = xis.attribute< std::string >( "unit-type" );
+    nUnitType_ = ADN_Tr::ConvertToConstructorType( xis.attribute< std::string >( "unit-type" ) );
     xis >> xml::optional >> xml::list( ADN_CapacityInfos_Buildable::TAG, *ptrBuildable_, &ADN_CapacityInfos_Buildable::ReadArchive );
     xis >> xml::optional >> xml::list( ADN_CapacityInfos_Improvable::TAG, *ptrImprovable_, &ADN_CapacityInfos_Improvable::ReadArchive );
 }
@@ -248,7 +245,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::ReadArchive( xml::xistream
 void ADN_Objects_Data::ADN_CapacityInfos_Constructor::WriteArchive( xml::xostream& xos )
 {
     xos << xml::attribute( "default-consumption-mode", ADN_Tr::ConvertFromConsumptionType( nDefaultConsumption_.GetData() ) )
-        << xml::attribute( "unit-type", unitType_.GetData() == "" ? ADN_Objects_Data::ADN_CapacityInfos_Constructor::choices_[ 0 ]:unitType_.GetData() );
+        << xml::attribute( "unit-type", ADN_Tr::ConvertFromConstructorType( nUnitType_.GetData() ) );
     if( ptrBuildable_->bPresent_.GetData() )
     {
         xos << xml::start( ADN_CapacityInfos_Buildable::TAG );
@@ -666,23 +663,21 @@ void ADN_Objects_Data::ADN_CapacityInfos_Population::WriteArchive( xml::xostream
 
 //! @name ADN_CapacityInfos_Propagation
 //@{
-const char* ADN_Objects_Data::ADN_CapacityInfos_Propagation::choices_[] = { "input", "fire", "cloud" };
-
 ADN_Objects_Data::ADN_CapacityInfos_Propagation::ADN_CapacityInfos_Propagation()
-    : model_( VectorBuilder( choices_, 3 ) )
+    : nModel_( eInput )
 {
-    model_.SetParentNode( *this );
+    nModel_.SetParentNode( *this );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Propagation::ReadArchive( xml::xistream& xis )
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    model_ = xis.attribute< std::string >( "model" );
+    nModel_ = ADN_Tr::ConvertToPropagationModel( xis.attribute< std::string >( "model" ) );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Propagation::WriteArchive( xml::xostream& xos )
 {
-    xos << xml::attribute( "model", model_.GetData() );
+    xos << xml::attribute( "model", ADN_Tr::ConvertFromPropagationModel( nModel_.GetData() ) );
 }
 //@}
 
