@@ -18,7 +18,6 @@
 #include "ADN_CapacityInfos.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_DataTreeNode_ABC.h"
-#include "ADN_Type_Choice.h"
 #include "ADN_FireClass_Data.h"
 #include "ADN_Drawings_Data.h"
 #include <boost/tuple/tuple.hpp>
@@ -367,8 +366,6 @@ public:
 
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
-    private:
-        static const char* choices_[];
     public:
         ADN_Type_Double density_;
     };
@@ -385,10 +382,8 @@ public:
 
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
-    private:
-        static const char* choices_[];
     public:
-        ADN_Type_Choice< std::string > model_;
+        ADN_Type_Enum< E_PropagationModel, eNbrPropagationModel > nModel_;
     };
 
     class ADN_CapacityInfos_Protection
@@ -459,12 +454,9 @@ public:
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
-    private:
-        static const char* choices_[];
-
     public:
-        ADN_Type_Enum< E_ConsumptionType, eNbrConsumptionType> nDefaultConsumption_;
-        ADN_Type_Choice< std::string > unitType_;
+        ADN_Type_Enum< E_ConsumptionType, eNbrConsumptionType > nDefaultConsumption_;
+        ADN_Type_Enum< E_ConstructorType, eNbrConstructorType > nUnitType_;
         std::auto_ptr< ADN_CapacityInfos_Buildable > ptrBuildable_;
         std::auto_ptr< ADN_CapacityInfos_Improvable > ptrImprovable_;
     };

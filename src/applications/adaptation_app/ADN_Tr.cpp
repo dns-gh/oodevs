@@ -280,6 +280,23 @@ ADN_Tr::T_ConverterAnchorType ADN_Tr::anchorTypeConverter_[] =
     T_ConverterAnchorType( "", "", (E_AnchorType)-1 )
 };
 
+ADN_Tr::T_ConverterConstructorType ADN_Tr::constructorTypeConverter_[] =
+{
+    T_ConverterConstructorType( "raw",     QT_TRANSLATE_NOOP("ADN_Tr", "Raw" ), eRaw ),
+    T_ConverterConstructorType( "density", QT_TRANSLATE_NOOP("ADN_Tr", "Density" ), eDensity ),
+
+    T_ConverterConstructorType( "", "", ( E_ConstructorType )-1 )
+};
+
+ADN_Tr::T_ConverterPropagationModel ADN_Tr::propagationModelConverter_[] =
+{
+    T_ConverterPropagationModel( "input", QT_TRANSLATE_NOOP("ADN_Tr", "Input" ), eInput ),
+    T_ConverterPropagationModel( "fire",  QT_TRANSLATE_NOOP("ADN_Tr", "Fire" ), eFire ),
+    T_ConverterPropagationModel( "cloud", QT_TRANSLATE_NOOP("ADN_Tr", "Cloud" ), eCloud ),
+
+    T_ConverterPropagationModel( "", "", (E_PropagationModel)-1 )
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromLocation
 // Created: APE 2005-02-18
@@ -471,6 +488,24 @@ const std::string& ADN_Tr::ConvertFromAnchorType( E_AnchorType nValue, E_Convers
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromConstructorType
+// Created: JSR 2011-12-21
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromConstructorType( E_ConstructorType nValue, E_Conversion nConverterType )
+{
+    return ADN_Tr::InverseFindInConverter( constructorTypeConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromPropagationModel
+// Created: JSR 2011-12-21
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromPropagationModel( E_PropagationModel nValue, E_Conversion nConverterType )
+{
+    return ADN_Tr::InverseFindInConverter( propagationModelConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToLocation
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -657,6 +692,24 @@ E_AnchorType ADN_Tr::ConvertToAnchorType( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToConstructorType
+// Created: JSR 2011-12-21
+// -----------------------------------------------------------------------------
+E_ConstructorType ADN_Tr::ConvertToConstructorType( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( constructorTypeConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToPropagationModel
+// Created: JSR 2011-12-21
+// -----------------------------------------------------------------------------
+E_PropagationModel ADN_Tr::ConvertToPropagationModel( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( propagationModelConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -681,4 +734,6 @@ void ADN_Tr::InitTranslations()
     InitTr( munitionTirIndirectConverter_ , "ADN_Tr" );
     InitTr( missionParameterTypeConverter_, "ADN_Tr" );
     InitTr( anchorTypeConverter_, "ADN_Tr" );
+    InitTr( constructorTypeConverter_, "ADN_Tr" );
+    InitTr( propagationModelConverter_, "ADN_Tr" );
 }

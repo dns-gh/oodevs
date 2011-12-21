@@ -378,4 +378,20 @@ enum E_AnchorType
     eEnd,
     eNbrAnchorType
 };
+
+enum E_ConstructorType
+{
+    eRaw,
+    eDensity,
+    eNbrConstructorType
+};
+
+enum E_PropagationModel
+{
+    eInput,
+    eFire,
+    eCloud,
+    eNbrPropagationModel
+};
+
 #endif // __ADN_Enums_h_

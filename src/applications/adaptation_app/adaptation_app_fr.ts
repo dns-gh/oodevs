@@ -5131,6 +5131,26 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>nothing</source>
         <translation>aucun</translation>
     </message>
+    <message>
+        <source>Raw</source>
+        <translation>Brut</translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation>Densité</translation>
+    </message>
+    <message>
+        <source>Input</source>
+        <translation>Externe</translation>
+    </message>
+    <message>
+        <source>Fire</source>
+        <translation>Feu</translation>
+    </message>
+    <message>
+        <source>Cloud</source>
+        <translation>Nuage</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
