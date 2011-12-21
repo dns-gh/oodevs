@@ -1536,7 +1536,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Itinéraire" optional="false" type="LocationComposite">
+      <parameter dia-name="entity" name="Point de regroupement" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -3100,4 +3100,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="0816069668" -->
+<!-- signature="4200185200" -->
