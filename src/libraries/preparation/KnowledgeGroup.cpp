@@ -11,13 +11,8 @@
 #include "KnowledgeGroup.h"
 #include "IdManager.h"
 #include "clients_kernel/Tools.h"
-#include "clients_kernel/ActionController.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h" // LTO
-#include "clients_kernel/Controller.h"
 #include "clients_kernel/KnowledgeGroupType.h" // LTO
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/Team_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -28,8 +23,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
-    , type_( types.Find( "Standard" ) ) // $$$$ SBO 2006-11-17: Hard coded default
-    , isActivated_( true ) // LTO
+    , type_( ResolveType( "Standard", types ) )
 {
     UpdateCommunicationDelay();
     name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ );
@@ -41,16 +35,15 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, to
 // Name: KnowledgeGroup constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
+KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, xis.attribute< unsigned int >( "id" ), "" )
-    , type_( types.Find( xis.attribute< std::string >( "type" ) ) )
+    , type_( ResolveType( xis.attribute< std::string >( "type" ), types ) )
 {
-    std::string name;
-    xis >> xml::optional >> xml::attribute( "name", name );
+    name_ = xis.attribute< std::string >( "name", "" ).c_str();;
+    if( name_.isEmpty() )
+        name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ );
     UpdateCommunicationDelay(); // LTO
-    name_ = name.empty() ? tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ ) : name.c_str();
     idManager.Lock( id_ );
-
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
@@ -65,17 +58,37 @@ KnowledgeGroup::~KnowledgeGroup()
 }
 
 // -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::ResolveType
+// Created: JSR 2011-12-22
+// -----------------------------------------------------------------------------
+KnowledgeGroupType* KnowledgeGroup::ResolveType( const std::string& typeName, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
+{
+    KnowledgeGroupType* ret = 0;
+    tools::Iterator< const KnowledgeGroupType& > it = types.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        ret = const_cast< KnowledgeGroupType* >( &it.NextElement() );
+        if( ret->GetName() == typeName )
+            break;
+    }
+    if( !ret )
+        throw std::exception( "No Knowledge group types defined in physical database." );
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::CreateDictionary
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::CreateDictionary( kernel::Controller& controller )
+void KnowledgeGroup::CreateDictionary( Controller& controller )
 {
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Identifier" ), (const unsigned long)id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Name" ), name_, *this, &KnowledgeGroup::Rename );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Type/Name" ), type_, *this, &KnowledgeGroup::SetType );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Type/Delay" ), ((const KnowledgeGroup*)this)->communicationDelay_ ); // LTO
+    const Entity_ABC& constSelf = static_cast< const Entity_ABC& >( *this );
+    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Info/Identifier" ), static_cast< const unsigned long >( id_ ) );
+    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Info/Name" ), name_, *this, &KnowledgeGroup::Rename );
+    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Name" ), type_, *this, &KnowledgeGroup::SetType );
+    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Delay" ), static_cast< const KnowledgeGroup* >( this )->communicationDelay_ ); // LTO
 }
 
 // -----------------------------------------------------------------------------
@@ -105,9 +118,9 @@ void KnowledgeGroup::Rename( const QString& name )
 // Created: SYD 2009-11-20
 // LTO
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::SetType( kernel::KnowledgeGroupType* const& type )
+void KnowledgeGroup::SetType( KnowledgeGroupType* const& type )
 {
-    if( type == type_ )
+    if( !type || type == type_ )
         return;
     type_ = type;
     UpdateCommunicationDelay();
@@ -121,7 +134,7 @@ void KnowledgeGroup::SetType( kernel::KnowledgeGroupType* const& type )
 void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", id_ )
-        << xml::attribute( "type", type_ ? type_->GetName() : "Standard" ) // $$$$ LDC: Same Hard coded default as in constructor
+        << xml::attribute( "type", type_->GetName() ) // type_ cannot be null (else, exception thrown in constructor)
         << xml::attribute( "name", name_ );
 }
 
@@ -132,7 +145,7 @@ void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 bool KnowledgeGroup::IsActivated() const
 {
-    return isActivated_;
+    return true;
 }
 
 // -----------------------------------------------------------------------------

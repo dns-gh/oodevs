@@ -14,6 +14,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "tools/Resolver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -36,6 +37,7 @@ class IdManager;
 class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >
                      , public kernel::Extension_ABC
                      , public kernel::Serializable_ABC
+                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -55,16 +57,11 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    KnowledgeGroup( const KnowledgeGroup& );
-    KnowledgeGroup& operator=( const KnowledgeGroup& );
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
     void UpdateCommunicationDelay();
+    kernel::KnowledgeGroupType* ResolveType( const std::string& typeName, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     //@}
 
 private:
@@ -72,7 +69,6 @@ private:
     //@{
     kernel::KnowledgeGroupType* type_;
     std::string communicationDelay_;
-    bool isActivated_;
     //@}
 };
 
