@@ -4701,9 +4701,9 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone DRAC">
+    <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone DRAC">
       <missions>
-        <mission name="PION RENS ROIM SDTI Renseigner Sur"/>
+        <mission name="PION RENS ROIM .Renseigner Sur"/>
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
@@ -4725,9 +4725,11 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone SDTI">
+    <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone SDTI">
       <missions>
-        <mission name="PION RENS ROIM SDTI Renseigner Sur"/>
+        <mission name="PION RENS ROIM .Renseigner Sur">
+          <fragorder name="Rejoindre point de lancement"/>
+        </mission>
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
@@ -4747,7 +4749,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
