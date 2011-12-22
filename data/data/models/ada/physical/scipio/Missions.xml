@@ -1582,6 +1582,19 @@
       <parameter dia-name="position" name="Position d'installation" optional="false" type="Point"/>
       <parameter dia-name="positionDebarquement" name="Position de débarquement" optional="true" type="Point"/>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.SuivreEtAcquerirObjectif" dia-type="france.military.platoon.combat.support.artillery.tasks.SuivreEtAcquerirObjectif" id="2489" name="PION ASS Suivre et Acquerir Objectifs" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="zone" name="Zone à observer" optional="false" type="Polygon"/>
+      <parameter dia-name="entity" name="Unité à suivre" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
     <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.RADINT_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.RADINT_RenseignerSur" id="2488" name="PION RENS RADINT .Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -3108,4 +3121,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="1460335156" -->
+<!-- signature="3874529338" -->

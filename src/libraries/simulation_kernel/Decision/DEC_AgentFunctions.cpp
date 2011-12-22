@@ -1123,13 +1123,16 @@ bool DEC_AgentFunctions::AgentCanBypassObject( const DEC_Decision_ABC* agent, bo
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::AgentHasTappingRadar
+// Name: DEC_AgentFunctions::AgentHasRadar
 // Created: DDA 2011-12-19
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::AgentHasTappingRadar( const DEC_Decision_ABC* agent )
+bool DEC_AgentFunctions::AgentHasRadar( const DEC_Decision_ABC* agent, int typeRadar )
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentHasTappingRadar" );
     PHY_RoleInterface_Perceiver& agentPerceiver = agent->GetPion().GetRole< PHY_RoleInterface_Perceiver >();
-    return !agentPerceiver.GetRadars( PHY_RadarClass::tappingRadar_ ).empty();
+    const PHY_RadarClass* radar = PHY_RadarClass::Find( typeRadar );
+    if( !radar )
+        throw std::runtime_error( "Invalid radar in AgentHasTappingRadar" );
+    return !agentPerceiver.GetRadars( *radar ).empty();
 }
