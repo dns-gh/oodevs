@@ -74,21 +74,21 @@ namespace
     {
         std::string prefix = upperLeft.prefix;
        
-        unsigned int prefixX =  RandomInt( upperLeft.prefixX, lowerRight.prefixX);
+        int prefixX =  atoi(RandomInt( upperLeft.prefixX, lowerRight.prefixX));
 		char prefixY = RandomChar( upperLeft.prefixY, lowerRight.prefixY );
 		char charmin = 'A';
 		char charmax = 'Z';
 		unsigned int max = 99999;
         unsigned int min = 0;
 		if ( prefixY == upperLeft.prefixY )
-		 charmin=lowerRight.aplhaY;
+		 charmin=lowerRight.alphaY;
 		if ( prefixY == lowerRight.prefixY )
-			 charmax=upperLeft.aplhaY;
+			 charmax=upperLeft.alphaY;
 		char alphaY = RandomChar( charmin, charmax );
 		if ( prefixX == upperLeft.prefixX )
-			 charmin=upperLeft.aplhaX;
+			 charmin=upperLeft.alphaX;
 		if ( prefixX == lowerRight.prefixX )
-			 charmax=lowerRight.aplhaX;
+			 charmax=lowerRight.alphaX;
 		char alphaX = RandomChar( charmin, charmax );
 		if ((prefixX == upperLeft.prefixX) && (alphaX == upperLeft.alphaX) )
             min = upperLeft.x;
