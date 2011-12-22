@@ -100,7 +100,9 @@ namespace
         if (( prefixY == lowerRight.prefixY ) && (alphaY == lowerRight.alphaY) )
             max = upperLeft.y;
         std::string y = RandomInt( min, max );
-        return boost::lexical_cast< std::string >(prefixX) + prefixY + alphaX + alphaY + x + y;
+        std::string result = boost::lexical_cast< std::string >(prefixX) + prefixY + alphaX + alphaY + x + y;
+        std::cout << result << std::endl;
+        return result;
     }
 }
 
