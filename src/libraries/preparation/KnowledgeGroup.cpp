@@ -63,16 +63,14 @@ KnowledgeGroup::~KnowledgeGroup()
 // -----------------------------------------------------------------------------
 KnowledgeGroupType* KnowledgeGroup::ResolveType( const std::string& typeName, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
 {
-    KnowledgeGroupType* ret = 0;
-    tools::Iterator< const KnowledgeGroupType& > it = types.CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        ret = const_cast< KnowledgeGroupType* >( &it.NextElement() );
-        if( ret->GetName() == typeName )
-            break;
-    }
+    KnowledgeGroupType* ret = types.Find( typeName );
     if( !ret )
-        throw std::exception( "No Knowledge group types defined in physical database." );
+    {
+        tools::Iterator< const KnowledgeGroupType& > it = types.CreateIterator();
+        if( !it.HasMoreElements() )
+            throw std::exception( "No Knowledge group types defined in physical database." );
+        ret = const_cast< KnowledgeGroupType* >( &it.NextElement() );
+    }
     return ret;
 }
 
