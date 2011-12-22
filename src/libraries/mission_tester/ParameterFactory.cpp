@@ -49,7 +49,12 @@ namespace
     {
         if ( upLeft >= downRight )
             return upLeft;
-        return char( rand() % ( downRight + 1 - upLeft ) + upLeft );
+		char res='I';
+		while((res=='I') || (res=='O'))
+			{
+				res = char( rand() % ( downRight + 1 - upLeft ) + upLeft );
+			}
+        return res; 
     }
 
     std::string RandomInt( unsigned int min, unsigned int max )
@@ -68,21 +73,34 @@ namespace
     std::string ComputeCoord( Coordinates upperLeft, Coordinates lowerRight )
     {
         std::string prefix = upperLeft.prefix;
-        char alphaX = RandomChar( upperLeft.alphaX, lowerRight.alphaX );
-        char alphaY = RandomChar( upperLeft.alphaY, lowerRight.alphaY );
-        unsigned int max = 99999;
+       
+        unsigned int prefixX =  RandomInt( upperLeft.prefixX, lowerRight.prefixX);
+		char prefixY = RandomChar( upperLeft.prefixY, lowerRight.prefixY );
+		char charmin = 'A';
+		char charmax = 'Z';
+		unsigned int max = 99999;
         unsigned int min = 0;
-        if ( alphaX == upperLeft.alphaX )
+		if ( prefixY == upperLeft.prefixY )
+		 charmin=lowerRight.aplhaY;
+		if ( prefixY == lowerRight.prefixY )
+			 charmax=upperLeft.aplhaY;
+		char alphaY = RandomChar( charmin, charmax );
+		if ( prefixX == upperLeft.prefixX )
+			 charmin=upperLeft.aplhaX;
+		if ( prefixX == lowerRight.prefixX )
+			 charmax=lowerRight.aplhaX;
+		char alphaX = RandomChar( charmin, charmax );
+		if ((prefixX == upperLeft.prefixX) && (alphaX == upperLeft.alphaX) )
             min = upperLeft.x;
-        if ( alphaX == lowerRight.alphaX )
+		if ( (prefixX == lowerRight.prefixX) && (alphaX == lowerRight.alphaX) )
             max = lowerRight.x;
         std::string x = RandomInt( min, max );
-        if ( alphaY == upperLeft.alphaY )
+        if (( prefixY == upperLeft.prefixY ) && (alphaY == upperLeft.alphaY) )
             min = lowerRight.y;
-        if ( alphaY == lowerRight.alphaY )
+        if (( prefixY == lowerRight.prefixY ) && (alphaY == lowerRight.alphaY) )
             max = upperLeft.y;
         std::string y = RandomInt( min, max );
-        return prefix + alphaX + alphaY + x + y;
+        return boost::lexical_cast< std::string >(prefixX) + prefixY + alphaX + alphaY + x + y;
     }
 }
 
