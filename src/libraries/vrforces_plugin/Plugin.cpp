@@ -31,12 +31,8 @@ namespace
 {
     const DtVrlApplicationInitializer& ConfigureInitializer( const dispatcher::Config& config, xml::xistream& xis )
     {
-#if defined(_DEBUG)
         static DtVrlApplicationInitializer* init= new DtVrlApplicationInitializer( 0, 0, "VR-Forces Plugin" );
         DtVrlApplicationInitializer& intialisation = *init;
-#else
-        DtVrlApplicationInitializer intialisation( 0, 0, "VR-Forces Plugin" );
-#endif
         const std::string rootDirectory = config.BuildPluginDirectory( "vrforces" );
         intialisation.setFedFileName( ( rootDirectory + "/" + xis.attribute< std::string >( "fed" ) ).c_str() );
         intialisation.setRprFomVersion( xis.attribute< double >( "RprFomVersion" ) );
