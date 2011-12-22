@@ -158,9 +158,10 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
     {
         if( !selectedAgent_ )
             return false;
-        // if the events comes from the list or if far enough
-        if( event->source() || position->GetPosition( true ).Distance( point ) > 100 )
-            position->Move( point );
+        if( draggingPoint_.Distance( point ) >= 2 )
+            position->Move( point + draggingOffset_.ToVector() );
+        draggingPoint_.Set( 0, 0 );
+        draggingOffset_.Set( 0, 0 );
         return true;
     }
     if( const AgentType* droppedItem = gui::ValuedDragObject::GetValue< const AgentType >( event ) )
@@ -209,9 +210,13 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
     bool result = gui::AgentsLayer::HandleMousePress( event, point );
     if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
     {
-        const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() );
-        Q3DragObject* drag = new gui::ValuedDragObject( pos, dynamic_cast< QWidget* >( parent() ) );
-        drag->dragMove();
+        if( const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() ) )
+        {
+            draggingPoint_ = point;
+            draggingOffset_ = pos->GetPosition( true ) - point.ToVector();
+            Q3DragObject* drag = new gui::ValuedDragObject( pos, dynamic_cast< QWidget* >( parent() ) );
+            drag->dragMove();
+        }
     }
     return result;
 }
