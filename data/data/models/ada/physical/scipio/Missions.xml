@@ -1589,6 +1589,13 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="areas" max-occurs="unbounded" min-occurs="1" name="Zones de recherche" optional="false" type="Polygon"/>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur" id="2489" name="PION RENS ROIM .Renseigner Sur" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="ficelleDeVol" name="Ficelle de vol" optional="false" type="Path"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AUTOMATE ALAT Aller Se Recompleter" package="none">
@@ -3100,4 +3107,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="4200185200" -->
+<!-- signature="4227632058" -->

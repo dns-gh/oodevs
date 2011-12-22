@@ -4703,9 +4703,9 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone DRAC">
+    <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone DRAC">
       <missions>
-        <mission name="PION RENS ROIM SDTI Renseigner Sur"/>
+        <mission name="PION RENS ROIM .Renseigner Sur"/>
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
@@ -4727,9 +4727,9 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone SDTI">
+    <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone SDTI">
       <missions>
-        <mission name="PION RENS ROIM SDTI Renseigner Sur"/>
+        <mission name="PION RENS ROIM .Renseigner Sur"/>
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
@@ -8407,4 +8407,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2099880609" -->
+<!-- signature="3903714044" -->
