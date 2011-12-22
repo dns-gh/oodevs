@@ -74,7 +74,7 @@ namespace
     {
         std::string prefix = upperLeft.prefix;
        
-        int prefixX =  atoi(RandomInt( upperLeft.prefixX, lowerRight.prefixX));
+        int prefixX =  atoi(RandomInt( upperLeft.prefixX, lowerRight.prefixX).c_str());
 		char prefixY = RandomChar( upperLeft.prefixY, lowerRight.prefixY );
 		char charmin = 'A';
 		char charmax = 'Z';
