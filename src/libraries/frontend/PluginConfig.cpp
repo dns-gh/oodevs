@@ -20,7 +20,9 @@
 #include <Qt3Support/q3scrollview.h>
 #include <QtCore/qsettings.h>
 #include <QtCore/qtextcodec.h>
+#include <QtCore/qstring.h>
 #include <QtGui/qtooltip.h>
+#include <QtGui/qlabel.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
@@ -57,13 +59,19 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     view_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
     view_->setResizePolicy( Q3ScrollView::AutoOneFit );
     view_->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    box_ = new Q3GroupBox( 2, Qt::Horizontal, view_->viewport() );
+    view_->enableClipper( true );
+
+	box_ = new Q3GroupBox( 2, Qt::Horizontal, view_->viewport() );
     box_->setCheckable( true );
     box_->setChecked( false );
-    xis >> xml::start( "settings" )
+	box_->setFlat( true );
+	xis >> xml::start( "settings" )
             >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box_ )
             >> xml::list( "group", *this, &PluginConfig::ReadGroup, box_ );
-    view_->addChild( box_ );
+	// Add empty label to fix viewport bug of not displaying the overall content
+	QLabel* label = new QLabel( QString( ""), box_ );
+	label->setMinimumHeight( 15 );
+	view_->addChild( box_ );
 }
 
 // -----------------------------------------------------------------------------
