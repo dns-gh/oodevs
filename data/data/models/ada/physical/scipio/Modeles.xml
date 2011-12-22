@@ -355,6 +355,8 @@
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION ASA Surveiller"/>
+        <mission name="PION ASA Defendre"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -4498,7 +4500,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION COMMUNES Decrocher"/>
-        <mission name="PION ASS Acquérir Objectifs"/>
+        <mission name="PION ASS Acquerir Objectifs"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -4532,7 +4534,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
-        <mission name="PION ASS Acquérir Objectifs"/>
+        <mission name="PION ASS Acquerir Objectifs"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -6862,7 +6864,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE ASA Defendre"/>
-        <mission name="AUTOMATE ASA .Surveiller"/>
+        <mission name="AUTOMATE ASA Surveiller"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8416,4 +8418,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0302472585" -->
+<!-- signature="1476697140" -->

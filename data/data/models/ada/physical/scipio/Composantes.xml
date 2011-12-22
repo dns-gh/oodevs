@@ -7194,7 +7194,6 @@
     <sensors>
       <sensor height="2" type="Oeil"/>
       <sensor height="2" type="Jumelle Optique Gx8"/>
-      <sensor height="2" type="Radar RASIT"/>
     </sensors>
     <radars>
       <radar type="Radar doppler RASIT"/>
@@ -35323,4 +35322,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3420176217" -->
+<!-- signature="0809442333" -->
