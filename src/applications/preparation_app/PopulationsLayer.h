@@ -61,6 +61,8 @@ private:
     Model& model_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     kernel::SafePointer< kernel::Population_ABC > selectedPopulation_;
+    geometry::Point2f draggingPoint_;
+    geometry::Point2f draggingOffset_;
     QWidget* dummy_;
     //@}
 };

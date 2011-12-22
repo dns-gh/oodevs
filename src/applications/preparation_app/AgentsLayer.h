@@ -71,6 +71,8 @@ private:
     kernel::SafePointer< kernel::Automat_ABC >   selectedAutomat_;
     kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
     kernel::SafePointer< kernel::Team_ABC >      selectedTeam_;
+    geometry::Point2f                            draggingPoint_;
+    geometry::Point2f                            draggingOffset_;
     //@}
 };
 
