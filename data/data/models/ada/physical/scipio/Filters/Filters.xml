@@ -25,8 +25,8 @@
           <argument name="-root-dir" value="$rootdir$"/>
         </arguments>
         <descriptions>
-          <description name="Test DQP export" lang="en">HTML Description</description>
-          <description name="Test d'export DQP" lang="fr">HTML Description</description>
+          <description name="Test DQP export" lang="en"><![CDATA[Simulate DQP export.]]></description>
+          <description name="Test d'export DQP" lang="fr"><![CDATA[Simule l'export DQP.]]></description>
         </descriptions>
       </filter>
       <filter command="ExportDQP.exe" directory="D:\THALES\SCIPIO\PrepaSE\bin">
@@ -36,8 +36,8 @@
           <argument name="-root-dir" value="$rootdir$"/>
         </arguments>
         <descriptions>
-          <description name="Export DQP" lang="en">HTML Description</description>
-          <description name="Exporter DQP" lang="fr">HTML Description</description>
+          <description name="Export DQP" lang="en"><![CDATA[Launch DQP export application.]]></description>
+          <description name="Exporter DQP" lang="fr"><![CDATA[Lance l'application d'export DQP.]]></description>
         </descriptions>
       </filter>
     </filters>
@@ -54,8 +54,8 @@
           <argument name="-root-dir" value="$rootdir$"/>
         </arguments>
         <descriptions>
-          <description name="Import DQP" lang="en">HTML Description</description>
-          <description name="Importer DQP" lang="fr">HTML Description</description>
+          <description name="Import DQP" lang="en"><![CDATA[Launch DQP import application.]]></description>
+          <description name="Importer DQP" lang="fr"><![CDATA[Lance l'application d'import DQP.]]></description>
         </descriptions>
       </filter>
       <filter command="Melmil.exe" reload-exercise="true" directory="D:\THALES\SCIPIO\PrepaSE\bin">
@@ -64,12 +64,11 @@
           <argument name="-root-dir" value="$rootdir$"/>
         </arguments>
         <descriptions>
-          <description name="Import Melmil" lang="en">HTML Description</description>
-          <description name="Importer Melmil" lang="fr">HTML Description</description>
+          <description name="Import Melmil" lang="en"><![CDATA[Launch Melmil import application.]]></description>
+          <description name="Importer Melmil" lang="fr"><![CDATA[Lance l'application d'import Melmil.]]></description>
         </descriptions>
       </filter>
     </filters>
   </section>
 </sections>
-<!-- signature="3276741492" -->
-<!-- signature="2854906404" -->
+<!-- signature="1256158481" -->
