@@ -75,6 +75,7 @@ void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
     item->SetNamed( (const Entity_ABC&)object );
     item->setVisible( profile_.IsVisible( object ) );
     item->SetToolTip( QString( "%1 [%2]" ).arg( object.GetName() ).arg( object.GetId() ) );
+    item->setDragEnabled( true );
 }
 
 namespace

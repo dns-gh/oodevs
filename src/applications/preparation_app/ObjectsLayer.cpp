@@ -55,7 +55,13 @@ bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
 // -----------------------------------------------------------------------------
 bool ObjectsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
-    return gui::ValuedDragObject::Provides< const ObjectPositions >( event ) && selected_;
+    if( !selected_ )
+        return false;
+    if( gui::ValuedDragObject::Provides< const ObjectPositions >( event ) )
+        return true;
+    if( kernel::Entity_ABC* entity = gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) )
+        return entity->GetTypeName() == kernel::Object_ABC::typeName_;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,6 +80,13 @@ bool ObjectsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::P
             position->Translate( draggingPoint_, translation, 5.f * tools_.Pixels( point ) );
             draggingPoint_ = point;
         }
+        return true;
+    }
+    else if( kernel::Entity_ABC* entity = gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) )
+    {
+        ObjectPositions* position = static_cast< ObjectPositions* >( entity->Retrieve< kernel::Positions >() );
+        position->Move( point );
+        draggingPoint_ = point;
         return true;
     }
     return false;

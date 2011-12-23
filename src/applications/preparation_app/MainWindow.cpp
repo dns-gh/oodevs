@@ -343,6 +343,7 @@ MainWindow::~MainWindow()
     controllers_.Unregister( *this );
     delete glProxy_;
     delete modelBuilder_;
+    delete progressDialog_;
 }
 
 // -----------------------------------------------------------------------------
@@ -677,7 +678,7 @@ void MainWindow::SaveAs()
     bfs::path exerciseFile( config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( name.ascii() ) );
     bfs::copy_file( config_.GetExerciseFile(), exerciseFile );
     config_.LoadExercise( exerciseFile.string() );
-	model_.exercise_.SetName( name );
+    model_.exercise_.SetName( name );
     needsSaving_ = true;
     Save();
 }

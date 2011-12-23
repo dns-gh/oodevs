@@ -33,6 +33,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    virtual Q3DragObject* dragObject();
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void keyPressEvent( QKeyEvent* key );
     virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
