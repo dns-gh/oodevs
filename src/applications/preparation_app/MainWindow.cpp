@@ -344,6 +344,7 @@ MainWindow::~MainWindow()
     controllers_.Unregister( *this );
     delete glProxy_;
     delete modelBuilder_;
+    delete progressDialog_;
 }
 
 // -----------------------------------------------------------------------------

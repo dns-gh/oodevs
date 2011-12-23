@@ -10,7 +10,7 @@
 #ifndef __ObjectPositions_h_
 #define __ObjectPositions_h_
 
-#include "clients_kernel/Positions.h"
+#include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -33,7 +33,7 @@ namespace xml
 */
 // Created: AGE 2006-03-22
 // =============================================================================
-class ObjectPositions : public kernel::Positions
+class ObjectPositions : public kernel::Moveable_ABC
                       , public kernel::Drawable_ABC
                       , public kernel::LocationVisitor_ABC
 {
@@ -53,6 +53,7 @@ public:
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
+    virtual void Move( const geometry::Point2f& position );
     void Translate( const geometry::Point2f& position, const geometry::Vector2f& translation, float precision);
 
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;

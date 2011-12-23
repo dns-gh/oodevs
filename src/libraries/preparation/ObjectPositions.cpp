@@ -164,6 +164,19 @@ void ObjectPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
         visitor.VisitPoint( GetPosition( true ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::Move
+// Created: JSR 2011-12-23
+// -----------------------------------------------------------------------------
+void ObjectPositions::Move( const geometry::Point2f& position )
+{
+    if( location_ )
+    {
+        geometry::Point2f center = boundingBox_.Center();
+        location_->Translate( center, ( position - center.ToVector() ).ToVector(), 5.f );
+        Update();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions::Translate

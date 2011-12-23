@@ -11,6 +11,8 @@
 #include "ObjectListView.h"
 #include "ModelBuilder.h"
 #include "PreparationProfile.h"
+#include "clients_gui/ValuedDragObject.h"
+#include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/tools.h"
 
 // -----------------------------------------------------------------------------
@@ -32,6 +34,19 @@ ObjectListView::ObjectListView( QWidget* pParent, kernel::Controllers& controlle
 ObjectListView::~ObjectListView()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::dragObject
+// Created: JSR 2011-12-23
+// -----------------------------------------------------------------------------
+Q3DragObject* ObjectListView::dragObject()
+{
+    gui::ObjectListView::dragObject();
+    gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
+    if( !pItem )
+        return 0;
+    return new gui::ValuedDragObject( pItem->GetValue< const kernel::Entity_ABC >(), this );
 }
 
 // -----------------------------------------------------------------------------
