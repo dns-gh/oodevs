@@ -4500,7 +4500,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION COMMUNES Decrocher"/>
-        <mission name="PION ASS Suivre et Acquerir Objectifs"/>
+        <mission name="PION RATAC Acquerir Objectifs"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -8409,4 +8409,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1613670831" -->
+<!-- signature="2502566614" -->
