@@ -72,6 +72,8 @@ void Polygon::Translate( const geometry::Point2f& from, const geometry::Vector2f
         if( it->SquareDistance( from ) < squarePrecision )
         {
             *it += translation;
+            if( it == points_.begin() )
+                points_.back() = points_.front();
             return;
         }
     for( IT_PointVector it = points_.begin(); it != points_.end(); ++it )

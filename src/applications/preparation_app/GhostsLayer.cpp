@@ -69,6 +69,18 @@ bool GhostsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*poi
 // -----------------------------------------------------------------------------
 bool GhostsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
+    // Move ghost on map
+    if( GhostPositions* position = gui::ValuedDragObject::GetValue< GhostPositions >( event ) )
+    {
+        if( !selectedGhost_ )
+            return false;
+        if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
+        {
+            position->Move( point + draggingOffset_.ToVector() );
+            draggingPoint_ = point;
+        }
+        return true;
+    }
     bool found = false;
     for( unsigned i = 0; i < entities_.size() && !found; ++i )
         if( IsInSelection( *entities_[ i ], point ) )
@@ -89,7 +101,6 @@ bool GhostsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
         controllers_.actions_.OverFly( point );
     }
     return ( gui::ValuedDragObject::Provides< const GhostPrototype >( event ) && ( selectedAutomat_ || selectedFormation_ ) ) ||
-           ( gui::ValuedDragObject::Provides< const GhostPositions >( event ) && selectedGhost_ ) ||
            ( gui::ValuedDragObject::Provides< const Entity_ABC >    ( event ) && selectedGhost_ ) ||
            ( gui::ValuedDragObject::Provides< const AgentType >     ( event ) && ( highLightedGhost_ && highLightedGhost_->GetGhostType() == eGhostType_Agent ||
                                                                                    selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Agent ) ) ||
@@ -114,13 +125,13 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         model_.ghosts_.Create( *selectedEntity, *droppedItem, point );
         return true;
     }
-    // Move ghost on map
+    // End of move ghost on map
     if( GhostPositions* position = gui::ValuedDragObject::GetValue< GhostPositions >( event ) )
     {
         if( !selectedGhost_ )
             return false;
-        if( event->source() || position->GetPosition( true ).Distance( point ) > 100 )
-            position->Move( point );
+        draggingPoint_.Set( 0, 0 );
+        draggingOffset_.Set( 0, 0 );
         return true;
     }
     // Move ghost from ODB
@@ -196,9 +207,13 @@ bool GhostsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
     bool result = EntityLayer< kernel::Ghost_ABC >::HandleMousePress( event, point );
     if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
     {
-        const GhostPositions* pos = static_cast< const GhostPositions* >( selectedGhost_->Retrieve< Positions >() );
-        Q3DragObject* drag = new gui::ValuedDragObject( pos, dummy_ );
-        drag->dragMove();
+        if( const GhostPositions* pos = static_cast< const GhostPositions* >( selectedGhost_->Retrieve< Positions >() ) )
+        {
+            draggingPoint_ = point;
+            draggingOffset_ = pos->GetPosition( true ) - point.ToVector();
+            Q3DragObject* drag = new gui::ValuedDragObject( pos, dummy_ );
+            drag->dragMove();
+        }
     }
     return result;
 }

@@ -45,6 +45,7 @@ public:
     //@{
     virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
+    virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
     //@}
 
 private:

@@ -55,12 +55,31 @@ bool PopulationsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationsLayer::HandleMoveDragEvent
+// Created: JSR 2011-12-22
+// -----------------------------------------------------------------------------
+bool PopulationsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
+{
+    if( selectedPopulation_ )
+        if( PopulationPositions* positions = gui::ValuedDragObject::GetValue< PopulationPositions >( event ) )
+        {
+            if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
+            {
+                positions->Move( point + draggingOffset_.ToVector() );
+                draggingPoint_ = point;
+            }
+            return true;
+        }
+    return gui::PopulationsLayer::HandleMoveDragEvent( event, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationsLayer::HandleDropEvent
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
 bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( selectedEntity_ && gui::ValuedDragObject::Provides< const PopulationPrototype >( event ) )
+    if( selectedEntity_ )
     {
         if( const PopulationPrototype* droppedItem = gui::ValuedDragObject::GetValue< const kernel::PopulationPrototype >( event ) )
         {
@@ -68,12 +87,10 @@ bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point
             return true;
         }
     }
-    else if( selectedPopulation_ && gui::ValuedDragObject::Provides< const PopulationPositions >( event ) )
+    else if( selectedPopulation_ )
     {
         if( PopulationPositions* positions = gui::ValuedDragObject::GetValue< PopulationPositions >( event ) )
         {
-            if( draggingPoint_.Distance( point ) >= 2 )
-                positions->Move( point + draggingOffset_.ToVector() );
             draggingPoint_.Set( 0, 0 );
             draggingOffset_.Set( 0, 0 );
             return true;
@@ -148,7 +165,7 @@ bool PopulationsLayer::HandleMousePress( QMouseEvent* event, const geometry::Poi
         {
             draggingPoint_ = point;
             draggingOffset_ = pos->GetPosition( true ) - point.ToVector();
-            Q3DragObject* drag = new gui::ValuedDragObject( pos, dummy_ );
+            Q3DragObject* drag = new gui::ValuedDragObject( pos, dummy_.get() );
             drag->dragMove();
         }
     }
