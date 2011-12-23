@@ -32,6 +32,8 @@ namespace
     }
 }
 
+std::vector< geometry::Vector2f > SvgLocationDrawer::circle_;
+
 // -----------------------------------------------------------------------------
 // Name: SvgLocationDrawer constructor
 // Created: SBO 2008-05-30
@@ -42,7 +44,7 @@ SvgLocationDrawer::SvgLocationDrawer( const DrawingTemplate& style )
     , overlined_( false )
     , tools_    ( 0 )
 {
-    // NOTHING
+    GenerateCircle();
 }
 
 // -----------------------------------------------------------------------------
@@ -52,6 +54,21 @@ SvgLocationDrawer::SvgLocationDrawer( const DrawingTemplate& style )
 SvgLocationDrawer::~SvgLocationDrawer()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SvgLocationDrawer::GenerateCircle
+// Created: JSR 2011-12-23
+// -----------------------------------------------------------------------------
+void SvgLocationDrawer::GenerateCircle()
+{
+    if( circle_.empty() )
+    {
+        static const float twoPi = 2.f * std::acos( -1.f );
+        for( float angle = 0; angle < twoPi; angle += twoPi / 40.f + 1e-7f )
+            circle_.push_back( geometry::Vector2f( std::cos( angle ), std::sin( angle ) ) );
+        circle_.push_back( geometry::Vector2f( 1.f, 0.f ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -120,9 +137,13 @@ void SvgLocationDrawer::VisitPath( const geometry::Point2f& point, const T_Point
 // Name: SvgLocationDrawer::VisitCircle
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-void SvgLocationDrawer::VisitCircle( const geometry::Point2f& /*center*/, float /*radius*/ )
+void SvgLocationDrawer::VisitCircle( const geometry::Point2f& center, float radius )
 {
-    // $$$$ SBO 2008-05-30: TODO
+    T_PointVector points;
+    points.reserve( circle_.size() );
+    for( int i = 0; i < circle_.size(); ++i )
+        points.push_back( center + radius * circle_[ i ] );
+    DrawShape( points );
 }
 
 // -----------------------------------------------------------------------------

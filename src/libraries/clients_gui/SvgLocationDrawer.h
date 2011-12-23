@@ -66,6 +66,7 @@ private:
 
     //! @name Helpers
     //@{
+    static void GenerateCircle();
     void SetColor( const QColor& color );
     template< typename T > void DrawShape( const T& shape );
     void DrawOverlined( const T_PointVector& points );
@@ -75,6 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
+    static std::vector< geometry::Vector2f > circle_;
     std::auto_ptr< svg::RenderingContext > context_;
     geometry::Rectangle2f viewport_;
     const DrawingTemplate& style_;

@@ -68,8 +68,12 @@ void Circle::AddPoint( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void Circle::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision )
 {
-    if( IsValid() && center_.SquareDistance( from ) < precision * precision )
-        center_ += translation;
+    if( IsValid() )
+    {
+        float dist = center_.SquareDistance( from );
+        if( dist < precision * precision || dist < std::abs( dist - radius_ * radius_ ) < precision * precision )
+            center_ += translation;
+    }
 }
 
 // -----------------------------------------------------------------------------
