@@ -98,6 +98,8 @@ void AutomatHierarchies::MergeSymbol( const kernel::Entity_ABC& entity )
         const std::string childLevel = hierarchies->GetLevel();
         if( level_.empty() && !childLevel.empty() )
             level_ = childLevel;
+		else if( !childLevel.empty() )
+            level_ = MergingTacticalHierarchies::MaxLevel( level_, childLevel );
     }
     MergingTacticalHierarchies::MergeSymbol( entity );
 }
