@@ -677,6 +677,7 @@ void MainWindow::SaveAs()
     bfs::path exerciseFile( config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( name.ascii() ) );
     bfs::copy_file( config_.GetExerciseFile(), exerciseFile );
     config_.LoadExercise( exerciseFile.string() );
+	model_.exercise_.SetName( name );
     needsSaving_ = true;
     Save();
 }
@@ -791,7 +792,7 @@ void MainWindow::SetWindowTitle( bool needsSaving )
     QString filename = tr( "No file loaded" );
     if( model_.IsLoaded() )
     {
-        filename = model_.GetName().isEmpty() ? tr( "New ORBAT" ) : model_.GetName();
+        filename = model_.exercise_.GetName().isEmpty() ? tr( "New ORBAT" ) : model_.exercise_.GetName();
         if( needsSaving )
             filename += "*";
     }
