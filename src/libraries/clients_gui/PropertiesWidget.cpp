@@ -252,7 +252,6 @@ void PropertiesWidget::UpdatePath( const kernel::DictionaryUpdated& message, con
     CIT_SubCategories it = categories_.find( path.front() );
     if( it != categories_.end() )
     {
-        std::string tmp = name.ascii();
         path.pop_front();
         if( !path.empty() )
             subWidgets_[it->second]->UpdatePath( message, path.join( "/" ), parent );

@@ -218,7 +218,7 @@ void AgentPositions::Move( const geometry::Point2f& position )
 // -----------------------------------------------------------------------------
 void AgentPositions::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    dico.Register( (const AgentPositions*)this, tools::translate( "AgentPositions", "Info/Position" ), moveable_ );
+    dico.Register( static_cast< const AgentPositions* >( this ), tools::translate( "AgentPositions", "Info/Position" ), moveable_ );
 }
 
 // -----------------------------------------------------------------------------

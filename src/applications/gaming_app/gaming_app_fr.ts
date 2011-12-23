@@ -169,11 +169,11 @@
     <name>AlarmEditor</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -235,11 +235,11 @@
     </message>
     <message>
         <source>Unknown exception caught</source>
-        <translation type="unfinished"></translation>
+        <translation>Exception inconnue</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Avertissement</translation>
+        <translation>Avertissement</translation>
     </message>
 </context>
 <context>
@@ -380,11 +380,11 @@
     </message>
     <message>
         <source>Nominal superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Supérieur nominal</translation>
     </message>
     <message>
         <source>Current superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Supérieur courant</translation>
     </message>
 </context>
 <context>
@@ -698,15 +698,15 @@ Reason: %3
     <name>ExtensionsPanel</name>
     <message>
         <source>Change extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer l&apos;extension</translation>
     </message>
     <message>
         <source>Validate</source>
-        <translation type="unfinished"></translation>
+        <translation>Valider</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialiser</translation>
     </message>
 </context>
 <context>
@@ -963,11 +963,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Lent equipment(s)</source>
-        <translation type="unfinished">Equipement(s) prêté(s)</translation>
+        <translation>Equipement(s) prêté(s)</translation>
     </message>
     <message>
         <source>Borrowed equipment(s)</source>
-        <translation type="unfinished">Equipement(s) emprunté(s)</translation>
+        <translation>Equipement(s) emprunté(s)</translation>
     </message>
 </context>
 <context>
@@ -1020,11 +1020,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>InfoFuneralDialog</name>
     <message>
         <source>Funeral system</source>
-        <translation type="unfinished"></translation>
+        <translation>Système mortuaire</translation>
     </message>
     <message>
         <source>Consigns</source>
-        <translation type="unfinished">Consignes</translation>
+        <translation>Consignes</translation>
     </message>
 </context>
 <context>
@@ -1261,6 +1261,29 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>KnowledgeAddInGroupDialog</name>
+    <message>
+        <source>Add to knowledge group</source>
+        <translation>Ajouter au groupe de connaissance</translation>
+    </message>
+    <message>
+        <source>Target: </source>
+        <translation>Cible: </translation>
+    </message>
+    <message>
+        <source>Perception: </source>
+        <translation>Perception: </translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
     <name>KnowledgeGroupMagicOrdersInterface</name>
     <message>
         <source>Magic orders</source>
@@ -1306,7 +1329,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>LineEdit</name>
     <message>
         <source>Checkpoint name: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nom du checkpoint: </translation>
     </message>
 </context>
 <context>
@@ -1706,75 +1729,75 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Journal</translation>
     </message>
     <message>
         <source>Tactical</source>
-        <translation type="unfinished"></translation>
+        <translation>Tactique</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished">Propriétés</translation>
+        <translation>Propriétés</translation>
     </message>
     <message>
         <source>Knowledge</source>
-        <translation type="unfinished"></translation>
+        <translation>Connaissance</translation>
     </message>
     <message>
         <source>Profiling</source>
-        <translation type="unfinished"></translation>
+        <translation>Performances</translation>
     </message>
     <message>
         <source>Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Création</translation>
     </message>
     <message>
         <source>Communication</source>
-        <translation type="unfinished"></translation>
+        <translation>Communication</translation>
     </message>
     <message>
         <source>Orbat</source>
-        <translation type="unfinished"></translation>
+        <translation>ODB</translation>
     </message>
     <message>
         <source>Elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>Elévation</translation>
     </message>
     <message>
         <source>Raster</source>
-        <translation type="unfinished"></translation>
+        <translation>Cartes raster</translation>
     </message>
     <message>
         <source>Terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>Terrain</translation>
     </message>
     <message>
         <source>Contour Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Lignes de niveau</translation>
     </message>
     <message>
         <source>Watershed</source>
-        <translation type="unfinished"></translation>
+        <translation>Montée des eaux</translation>
     </message>
     <message>
         <source>Formations</source>
-        <translation type="unfinished"></translation>
+        <translation>Formations</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished">Unités</translation>
+        <translation>Unités</translation>
     </message>
     <message>
         <source>Automats</source>
-        <translation type="unfinished"></translation>
+        <translation>Automates</translation>
     </message>
     <message>
         <source>Logo</source>
-        <translation type="unfinished"></translation>
+        <translation>Logo</translation>
     </message>
     <message>
         <source> - Not connected</source>
-        <translation type="unfinished"> - Non connecté</translation>
+        <translation> - Non connecté</translation>
     </message>
     <message>
         <source>Logistic</source>
@@ -2195,7 +2218,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Population</source>
-        <translation type="unfinished"></translation>
+        <translation>Population</translation>
     </message>
     <message>
         <source>Show population display tool</source>
@@ -2211,7 +2234,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fenêtres</translation>
     </message>
 </context>
 <context>
@@ -2346,11 +2369,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
-        <translation type="unfinished">Objets</translation>
+        <translation>Objets</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Créer</translation>
+        <translation>Créer</translation>
     </message>
 </context>
 <context>
@@ -2365,7 +2388,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Known objects</source>
-        <translation type="unfinished">Objets connus</translation>
+        <translation>Objets connus</translation>
     </message>
 </context>
 <context>
@@ -2459,7 +2482,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>ObjectReportPanel</name>
     <message>
         <source>Reports</source>
-        <translation type="unfinished">Comptes-rendus</translation>
+        <translation>Comptes-rendus</translation>
     </message>
 </context>
 <context>
@@ -2477,11 +2500,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>Parameter</name>
     <message>
         <source>Parameter</source>
-        <translation type="unfinished">Paramètre</translation>
+        <translation>Paramètre</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Valeur</translation>
+        <translation>Valeur</translation>
     </message>
 </context>
 <context>
@@ -2639,23 +2662,23 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Incoming bytes: </source>
-        <translation type="unfinished"></translation>
+        <translation>Octets entrants: </translation>
     </message>
     <message>
         <source>Incoming messages: </source>
-        <translation type="unfinished"></translation>
+        <translation>Messages entrants: </translation>
     </message>
     <message>
         <source>Nb messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Nb de messages</translation>
     </message>
     <message>
         <source>Outgoing bytes: </source>
-        <translation type="unfinished"></translation>
+        <translation>Octets sortants: </translation>
     </message>
     <message>
         <source>Outgoing messages: </source>
-        <translation type="unfinished"></translation>
+        <translation>Messages sortants: </translation>
     </message>
 </context>
 <context>
@@ -2884,7 +2907,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Last tick speed factor/Mean speed factor</source>
-        <translation type="unfinished">Facteur d&apos;accélération dernier tick/moyen</translation>
+        <translation>Facteur d&apos;accélération dernier tick/moyen</translation>
     </message>
 </context>
 <context>
@@ -3172,7 +3195,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Reload brain</source>
-        <translation type="unfinished">Recharger le decisionnel</translation>
+        <translation>Recharger le decisionnel</translation>
     </message>
 </context>
 <context>
@@ -3382,7 +3405,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Weather parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de météo</translation>
     </message>
     <message>
         <source>Local Weather Destruction</source>
@@ -3393,7 +3416,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>gamig_app::Action</name>
     <message>
         <source>Knowledge Group Activation Change</source>
-        <translation type="unfinished">Changement d&apos;activation de groupe de connaissance</translation>
+        <translation>Changement d&apos;activation de groupe de connaissance</translation>
     </message>
 </context>
 <context>
@@ -3410,12 +3433,16 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Object Destruction</source>
         <translation>Destruction d&apos;objet</translation>
     </message>
+    <message>
+        <source>Knowledge Group Add knowledge</source>
+        <translation>Groupe de connaissance Ajout de connaissance</translation>
+    </message>
 </context>
 <context>
     <name>tools</name>
     <message>
         <source> - Not connected</source>
-        <translation type="unfinished"> - Non connecté</translation>
+        <translation> - Non connecté</translation>
     </message>
 </context>
 </TS>
