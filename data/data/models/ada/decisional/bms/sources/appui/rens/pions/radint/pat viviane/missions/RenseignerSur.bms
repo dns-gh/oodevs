@@ -107,6 +107,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
                     if( DEC_Perception_PointEstVisible( self.positionObservation ) ) then
                         do
+							DEC_Trace("visible")
                             Activate( self.activations.BEH_Obs_Pion_Rens_Radint_RenseignerDans, 1, { self._namedParams.mission.zonesDeRecherche_, } )
                             Activate( self.activations.ACT_Info_Trace, 1, { "Vertical take off", } )
                             Activate( self.activations.ACT_Dep_SePoster, 1.1, emptyTable )
@@ -115,7 +116,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
                         end
                     end
-
+					DEC_Trace("aller au point: "..tostring(DEC_PointToString(self.positionObservation)))
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionObservation, eProgressionDirect, eTypeItiMouvement, } )
                     _continue = false
                 elseif switch_1 == eRejoindre then
@@ -131,7 +132,7 @@ self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
 
                         end
                     end
-
+					DEC_Trace("décroche vers le point: "..tostring(DEC_PointToString(self.positionInitiale)))
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionInitiale, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false

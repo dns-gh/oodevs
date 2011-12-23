@@ -5205,7 +5205,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Patrouille Viviane">
+    <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Patrouille Viviane">
       <missions>
         <mission name="PION RENS RADINT .Renseigner Sur"/>
         <mission name="PION COMMUNES Decrocher"/>
@@ -8419,4 +8419,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0403782519" -->
+<!-- signature="1952205396" -->
