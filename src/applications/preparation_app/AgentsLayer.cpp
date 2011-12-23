@@ -149,6 +149,26 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentsLayer::HandleMoveDragEvent
+// Created: JSR 2011-12-22
+// -----------------------------------------------------------------------------
+bool AgentsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
+{
+    if( AgentPositions* position = gui::ValuedDragObject::GetValue< AgentPositions >( event ) )
+    {
+        if( !selectedAgent_ )
+            return false;
+        if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
+        {
+            position->Move( point + draggingOffset_.ToVector() );
+            draggingPoint_ = point;
+        }
+        return true;
+    }
+    return gui::AgentsLayer::HandleMoveDragEvent( event, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentsLayer::HandleDropEvent
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
@@ -158,8 +178,6 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
     {
         if( !selectedAgent_ )
             return false;
-        if( draggingPoint_.Distance( point ) >= 2 )
-            position->Move( point + draggingOffset_.ToVector() );
         draggingPoint_.Set( 0, 0 );
         draggingOffset_.Set( 0, 0 );
         return true;

@@ -164,6 +164,20 @@ void ObjectPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
         visitor.VisitPoint( GetPosition( true ) );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::Translate
+// Created: JSR 2011-12-22
+// -----------------------------------------------------------------------------
+void ObjectPositions::Translate( const geometry::Point2f& position, const geometry::Vector2f& translation, float precision)
+{
+    if( location_ )
+    {
+        location_->Translate( position, translation, precision );
+        Update();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions::Serialize
 // Created: SBO 2006-09-12

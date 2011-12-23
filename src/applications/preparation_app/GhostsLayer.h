@@ -72,6 +72,8 @@ private:
     kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
     kernel::SafePointer< kernel::Ghost_ABC >     highLightedGhost_;
     QWidget* dummy_;
+    geometry::Point2f draggingPoint_;
+    geometry::Point2f draggingOffset_;
     //@}
 };
 

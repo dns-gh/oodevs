@@ -35,18 +35,26 @@ public:
     //! @name Operations
     //@{
     virtual bool HandleKeyPress( QKeyEvent* key );
+    virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
+    virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
+    virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
     //@}
 
 private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Object_ABC* object );
+    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    bool IsEligibleForDrag( const geometry::Point2f& point ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::SafePointer< kernel::Object_ABC > selected_;
+    const kernel::GlTools_ABC& tools_;
+    std::auto_ptr< QWidget > dummy_;
+    geometry::Point2f draggingPoint_;
     //@}
 };
 
