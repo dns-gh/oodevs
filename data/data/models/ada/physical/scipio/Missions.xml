@@ -1604,6 +1604,7 @@
       <parameter dia-name="zone" name="Zone à observer" optional="false" type="Polygon"/>
       <parameter dia-name="entity" name="Unité à suivre" optional="false" type="LocationComposite">
         <choice>
+          <parameter type="Automat"/>
           <parameter type="Agent"/>
           <parameter type="AgentKnowledge"/>
         </choice>
@@ -3130,4 +3131,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="3938731676" -->
+<!-- signature="2998441203" -->
