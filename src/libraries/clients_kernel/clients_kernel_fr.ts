@@ -150,11 +150,11 @@
     <name>E_PerceptionResult</name>
     <message>
         <source>Identification</source>
-        <translation>Identification</translation>
+        <translation>Identifié</translation>
     </message>
     <message>
         <source>Detection</source>
-        <translation>Détection</translation>
+        <translation>Détecté</translation>
     </message>
     <message>
         <source>Not seen</source>

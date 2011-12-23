@@ -50,7 +50,7 @@ KnowledgeGroupMagicOrdersInterface::KnowledgeGroupMagicOrdersInterface( QWidget*
 {
     controllers_.Register( *this );
 
-    pAddKnowledgeDialog_ = new KnowledgeAddInGroupDialog( parent , profile, controllers, simulation, actionsModel, staticModel );
+    pAddKnowledgeDialog_ = new KnowledgeAddInGroupDialog( parent , controllers, simulation, actionsModel, staticModel );
     pAddKnowledgeDialog_->hide();
 }
 

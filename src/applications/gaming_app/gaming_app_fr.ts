@@ -1261,6 +1261,29 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>KnowledgeAddInGroupDialog</name>
+    <message>
+        <source>Add to knowledge group</source>
+        <translation>Ajouter au groupe de connaissance</translation>
+    </message>
+    <message>
+        <source>Target: </source>
+        <translation>Cible: </translation>
+    </message>
+    <message>
+        <source>Perception: </source>
+        <translation>Perception: </translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
     <name>KnowledgeGroupMagicOrdersInterface</name>
     <message>
         <source>Magic orders</source>
@@ -3420,6 +3443,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Object Destruction</source>
         <translation>Destruction d&apos;objet</translation>
+    </message>
+    <message>
+        <source>Knowledge Group Add knowledge</source>
+        <translation>Groupe de connaissance Ajout de connaissance</translation>
     </message>
 </context>
 <context>

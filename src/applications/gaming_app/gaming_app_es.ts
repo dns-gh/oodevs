@@ -1261,6 +1261,29 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>KnowledgeAddInGroupDialog</name>
+    <message>
+        <source>Add to knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perception: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>KnowledgeGroupMagicOrdersInterface</name>
     <message>
         <source>Magic orders</source>
@@ -3420,6 +3443,10 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
     </message>
     <message>
         <source>Object Destruction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Knowledge Group Add knowledge</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

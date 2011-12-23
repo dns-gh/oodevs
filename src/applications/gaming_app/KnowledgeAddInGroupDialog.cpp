@@ -19,6 +19,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
@@ -30,17 +31,16 @@ using namespace kernel;
 // Name: KnowledgeAddInGroupDialog constructor
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
-KnowledgeAddInGroupDialog::KnowledgeAddInGroupDialog( QWidget* pParent, const kernel::Profile_ABC& profile, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel )
-: QDialog( pParent, 0, 0, Qt::WStyle_Customize | Qt::WStyle_NormalBorder | Qt::WStyle_Title | Qt::WStyle_SysMenu )
-    , controllers_( controllers )
-    , profile_( profile )
-    , simulation_( simulation )
-    , actionsModel_( actionsModel )
-    , static_( staticModel )
+KnowledgeAddInGroupDialog::KnowledgeAddInGroupDialog( QWidget* pParent, Controllers& controllers, const Time_ABC& simulation, ActionsModel& actionsModel, const ::StaticModel& staticModel )
+    : QDialog( pParent, 0, 0, Qt::WStyle_Customize | Qt::WStyle_NormalBorder | Qt::WStyle_Title | Qt::WStyle_SysMenu )
+    , controllers_            ( controllers )
+    , simulation_             ( simulation )
+    , actionsModel_           ( actionsModel )
+    , static_                 ( staticModel )
     , selectedKnowledgeGroup_ ( controllers )
-    , pTempTarget_ ( 0 )
-    , pSelectedTarget_( 0 )
-    , pTargetName_( 0 )
+    , pTempTarget_            ( 0 )
+    , pSelectedTarget_        ( 0 )
+    , pTargetName_            ( 0 )
 {
     setCaption( tools::translate( "KnowledgeAddInGroupDialog", "Add to knowledge group" ) );
 
@@ -61,9 +61,9 @@ KnowledgeAddInGroupDialog::KnowledgeAddInGroupDialog( QWidget* pParent, const ke
     {
         grid->addWidget( new QLabel( tr( "Perception: " ), this ), 1, 0 );
         pPerceptionCombo_ = new QComboBox( this );
-        pPerceptionCombo_->insertItem( tools::ToString( kernel::eDetection ) );
-        pPerceptionCombo_->insertItem( tools::ToString( kernel::eRecognition ) );
-        pPerceptionCombo_->insertItem( tools::ToString( kernel::eIdentification ) );
+        pPerceptionCombo_->insertItem( tools::ToString( eDetection ) );
+        pPerceptionCombo_->insertItem( tools::ToString( eRecognition ) );
+        pPerceptionCombo_->insertItem( tools::ToString( eIdentification ) );
         grid->addWidget( pPerceptionCombo_, 1, 1 );
     }
     {
@@ -91,7 +91,7 @@ KnowledgeAddInGroupDialog::~KnowledgeAddInGroupDialog()
 // Name: KnowledgeAddInGroupDialog::Show
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
-void KnowledgeAddInGroupDialog::Show( kernel::SafePointer< kernel::KnowledgeGroup_ABC > knowledgeGroup )
+void KnowledgeAddInGroupDialog::Show( SafePointer< KnowledgeGroup_ABC > knowledgeGroup )
 {
     show();
     selectedKnowledgeGroup_ = knowledgeGroup;
@@ -109,7 +109,7 @@ void KnowledgeAddInGroupDialog::OnAccept()
         return;
     }
 
-    kernel::E_PerceptionResult selectedPerception = static_cast< kernel::E_PerceptionResult > ( pPerceptionCombo_->currentItem() + 1 );
+    E_PerceptionResult selectedPerception = static_cast< E_PerceptionResult > ( pPerceptionCombo_->currentItem() + 1 );
 
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_add_knowledge" );
     KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedKnowledgeGroup_, actionType, controllers_.controller_, true );
@@ -156,7 +156,7 @@ void KnowledgeAddInGroupDialog::Close()
 // Name: KnowledgeAddInGroupDialog::NotifyContextMenu
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
-void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+void KnowledgeAddInGroupDialog::NotifyContextMenu( const Agent_ABC& entity, ContextMenu& menu )
 {
     InsertInMenu( entity, menu );
 }
@@ -165,7 +165,7 @@ void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Agent_ABC& enti
 // Name: KnowledgeAddInGroupDialog::NotifyContextMenu
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
-void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+void KnowledgeAddInGroupDialog::NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu )
 {
     InsertInMenu( entity, menu );
 }
@@ -174,7 +174,7 @@ void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Object_ABC& ent
 // Name: KnowledgeAddInGroupDialog::NotifyContextMenu
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
-void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu )
+void KnowledgeAddInGroupDialog::NotifyContextMenu( const Population_ABC& entity, ContextMenu& menu )
 {
     InsertInMenu( entity, menu );
 }
@@ -183,9 +183,9 @@ void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Population_ABC&
 // Name: KnowledgeAddInGroupDialog::InsertInMenu
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
-void KnowledgeAddInGroupDialog::InsertInMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+void KnowledgeAddInGroupDialog::InsertInMenu( const Entity_ABC& entity, ContextMenu& menu )
 {
-    if( !this->isHidden() )
+    if( !isHidden() )
     {
         pTempTarget_ = &entity;
         menu.InsertItem( "Command", tr( "Add to knowledge group" ), this, SLOT( SetTarget() ) );
@@ -201,7 +201,7 @@ void KnowledgeAddInGroupDialog::SetTarget()
     if( pTempTarget_ )
     {
         pSelectedTarget_ = pTempTarget_;
-        pTargetName_->setText( QString( pSelectedTarget_->GetName() ) );
+        pTargetName_->setText( pSelectedTarget_->GetName() );
         if( pTargetNameTitle_ )
             pTargetNameTitle_->setText( tr( "Target: " ) );
     }
