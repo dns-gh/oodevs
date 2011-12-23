@@ -2846,6 +2846,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Zones deploiement" optional="false" type="Polygon"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.Defendre" dia-type="france.military.company.combat.support.artillery.tasks.Defendre" id="28770" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.Defendre" name="AUTOMATE ASA Defendre">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3121,4 +3122,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="1531913973" -->
+<!-- signature="1278694331" -->
