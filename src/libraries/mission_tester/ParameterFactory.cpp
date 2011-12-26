@@ -40,6 +40,7 @@
 #include "clients_kernel/Point.h"
 #include <boost/assign/list_of.hpp>
 #include "protocol/Protocol.h"
+#include "clients_kernel/CoordinateConverter.h"
 
 using namespace mission_tester;
 
@@ -70,39 +71,23 @@ namespace
         return res;
     }
 
-    std::string ComputeCoord( Coordinates upperLeft, Coordinates lowerRight )
+    std::string ComputeCoord( Coordinates upperLeft, Coordinates lowerRight, const kernel::CoordinateConverter& converter )
     {
         std::string prefix = upperLeft.prefix;
+       // std::string result = "30TYT1741869888";
+		geometry::Point2f p1,p2,pf;
+		p1 = converter.ConvertToXY( upperLeft.prefix+upperLeft.alphaX+upperLeft.alphaY+boost::lexical_cast< std::string >(upperLeft.x)+boost::lexical_cast< std::string >(upperLeft.y));
+		p2 = converter.ConvertToXY( lowerRight.prefix+lowerRight.alphaX+lowerRight.alphaY+boost::lexical_cast< std::string >(lowerRight.x)+boost::lexical_cast< std::string >(lowerRight.y));
+		std::string result=converter.ConvertToMgrs(p1);
+		float max = p2.X();
+        float min = p1.X();
+		float x= (rand()/(float)RAND_MAX )*( max - min ) + min;
+		max = p2.Y();
+		min = p1.Y();
+		float y = (rand()/(float)RAND_MAX )*( max - min ) + min;
+		pf = geometry::Point2f(x,y);
+		return converter.ConvertToMgrs(pf);
        
-        int prefixX =  atoi(RandomInt( upperLeft.prefixX, lowerRight.prefixX).c_str());
-		char prefixY = RandomChar( upperLeft.prefixY, lowerRight.prefixY );
-		char charmin = 'A';
-		char charmax = 'Z';
-		unsigned int max = 99999;
-        unsigned int min = 0;
-		if ( prefixY == upperLeft.prefixY )
-		 charmin=lowerRight.alphaY;
-		if ( prefixY == lowerRight.prefixY )
-			 charmax=upperLeft.alphaY;
-		char alphaY = RandomChar( charmin, charmax );
-		if ( prefixX == upperLeft.prefixX )
-			 charmin=upperLeft.alphaX;
-		if ( prefixX == lowerRight.prefixX )
-			 charmax=lowerRight.alphaX;
-		char alphaX = RandomChar( charmin, charmax );
-		if ((prefixX == upperLeft.prefixX) && (alphaX == upperLeft.alphaX) )
-            min = upperLeft.x;
-		if ( (prefixX == lowerRight.prefixX) && (alphaX == lowerRight.alphaX) )
-            max = lowerRight.x;
-        std::string x = RandomInt( min, max );
-        if (( prefixY == upperLeft.prefixY ) && (alphaY == upperLeft.alphaY) )
-            min = lowerRight.y;
-        if (( prefixY == lowerRight.prefixY ) && (alphaY == lowerRight.alphaY) )
-            max = upperLeft.y;
-        std::string y = RandomInt( min, max );
-        std::string result = boost::lexical_cast< std::string >(prefixX) + prefixY + alphaX + alphaY + x + y;
-        std::cout << result << std::endl;
-        return result;
     }
 }
 
@@ -138,6 +123,7 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateParameter( const
 {
 	//if( parameter.GetType() == "locationcomposite" )
 	//	return CreateLocationCompositeParameter( parameter );
+
 	if( parameter.GetType() == "heading" )
 		return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Direction( parameter, rand() % 360 + 1 ) );
 	if( parameter.GetType() == "phaseline" )
@@ -183,8 +169,8 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreatePhaselineParamet
                              "  <parameter name='Limas (item 1)' type='lima' value='LDM'>"
                              "    <parameter name='Position' type='location'>"
                              "      <location type='line'>"
-                             "        <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>"
-                             "        <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>"
+                             "        <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_,(const kernel::CoordinateConverter&)converter_ ) + "'/>"
+                             "        <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_,(const kernel::CoordinateConverter&)converter_ ) + "'/>"
                              "      </location>"
                              "    </parameter>"
                              "    <parameter name='Horaire' type='datetime' value='20101023T120001'/>"
@@ -202,8 +188,8 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateLimitParameter( 
 {
     xml::xistringstream xis( std::string( "" ) + "<parameter name='Limit' type='Limit'>"
                              "  <location type='line'>"
-                             "    <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>"
-                             "    <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>"
+                             "    <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_,(const kernel::CoordinateConverter&)converter_ ) + "'/>"
+                             "    <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_,(const kernel::CoordinateConverter&)converter_ ) + "'/>"
                              "  </location>"
                              "</parameter>" );
     xis >> xml::start( "parameter" );
@@ -218,7 +204,7 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreatePointParameter( 
 {
     xml::xistringstream xis( "<parameter name='Point' type='point'>"
                              "  <location type='point'>"
-                             "    <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>"
+                             "    <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_,(const kernel::CoordinateConverter&)converter_ ) + "'/>"
                              "  </location>"
                              "</parameter>" );
     xis >> xml::start( "parameter" );
@@ -237,7 +223,7 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreatePathParameter( c
     {
         pathString += "  <parameter name='Destination' type='pathpoint'>"
                       "    <location type='point'>"
-                      "      <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>"
+                      "      <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ,(const kernel::CoordinateConverter&)converter_) + "'/>"
                       "    </location>"
                       "  </parameter>";
     }
@@ -288,10 +274,10 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreatePolygonParameter
     std::string polygonString = "<parameter name='Area' type='Polygon'>"
                                 "  <location type='polygon'>";
     unsigned int pointQuantity = rand() % 8 + 3;
-    std::string firstPoint = ComputeCoord( upperLeft_, lowerRight_ );
+    std::string firstPoint = ComputeCoord( upperLeft_, lowerRight_ ,(const kernel::CoordinateConverter&)converter_);
     polygonString +=        "    <point coordinates='" + firstPoint + "'/>";
     for( unsigned int it = 1; it < pointQuantity; ++it )
-        polygonString +=        "    <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>";
+        polygonString +=        "    <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_,(const kernel::CoordinateConverter&)converter_ ) + "'/>";
     polygonString +=            "    <point coordinates='" + firstPoint + "'/>"
                                 "  </location>"
                                 "</parameter>";
