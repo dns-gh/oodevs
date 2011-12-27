@@ -28,7 +28,7 @@ using namespace kernel;
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
 LogisticBaseStates::LogisticBaseStates( Controller& controller, Entity_ABC& entity,
-                                       const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, PropertiesDictionary& dico, bool canHaveQuotas )
+                                       const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, PropertiesDictionary& dico, bool canHaveQuotas /*=true*/, bool isVisible /*=true*/ )
     : kernel::EntityHierarchies< LogisticHierarchiesBase >( controller, entity, 0 )
     , controller_( controller )
     , resolver_( resolver )
@@ -37,6 +37,8 @@ LogisticBaseStates::LogisticBaseStates( Controller& controller, Entity_ABC& enti
     , canHaveQuotas_( canHaveQuotas )
 {
     CreateDictionary( dico, entity );
+	dico.SetPropertyVisibility( tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), isVisible );
+	dico.SetPropertyVisibility( tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), isVisible );
 }
 
 // -----------------------------------------------------------------------------

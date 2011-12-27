@@ -12,6 +12,7 @@
 #include "LogisticBaseStates.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_gui/Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <QtGui/qmessagebox.h>
@@ -20,39 +21,42 @@
 // Name: LogisticLevelAttritube constructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controller& controller, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
-    : controller_   ( controller )
+LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controllers& controllers, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
+    : controllers_   ( controllers )
     , entity_       ( entity )
     , logisticLevel_( active ? &kernel::LogisticLevel::logistic_base_ : &kernel::LogisticLevel::none_ ) // Logistic brain is enabled by default for type "tc2"
+	, entityDico_ ( dictionary )
 {
-    CreateDictionary( dictionary, active );
+    CreateDictionary( entityDico_, active );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLevelAttritube constructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controller& controller, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary )
-    : controller_   ( controller )
+LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controllers& controllers, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary )
+    : controllers_   ( controllers )
     , entity_       ( entity )
     , logisticLevel_( &kernel::LogisticLevel::none_ )
+	, entityDico_ ( dictionary )
 {
-    CreateDictionary( dictionary, true );
+    CreateDictionary( entityDico_, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLevelAttritube constructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controller& controller, xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
-    : controller_   ( controller )
+LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controllers& controllers, xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
+    : controllers_   ( controllers )
     , entity_       ( entity )
     , logisticLevel_( &kernel::LogisticLevel::none_ )
+	, entityDico_ ( dictionary )
 {
     std::string logLevelName = "none";
     xis >> xml::optional >> xml::attribute( "logistic-level", logLevelName );
     logisticLevel_ = const_cast< kernel::LogisticLevel* >( &kernel::LogisticLevel::Resolve( logLevelName ) );
-    CreateDictionary( dictionary, active );
+    CreateDictionary( entityDico_, active );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +84,8 @@ LogisticLevelAttritube::~LogisticLevelAttritube()
 // -----------------------------------------------------------------------------
 void LogisticLevelAttritube::SetLogisticLevel( const kernel::EntityLogisticLevel& logisticLevel )
 {
-    if( (*logisticLevel) == kernel::LogisticLevel::none_ )
+	bool noLogistics = ( (*logisticLevel) == kernel::LogisticLevel::none_ );
+    if( noLogistics )
     {
         const LogisticHierarchiesBase* logHierarchy = entity_.Retrieve< LogisticHierarchiesBase >();
         if( logHierarchy )
@@ -102,8 +107,10 @@ void LogisticLevelAttritube::SetLogisticLevel( const kernel::EntityLogisticLevel
             }
         }
     }
+	entityDico_.SetPropertyVisibility( tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), !noLogistics );
+	entityDico_.SetPropertyVisibility( tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), !noLogistics );
     logisticLevel_ = logisticLevel;
-    controller_.Update( *this );
+    controllers_.controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

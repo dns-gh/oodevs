@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticBaseStates( kernel::Controller& controller, kernel::Entity_ABC& entity,
-                 const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico, bool canHaveQuotas = true );
+                 const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico, bool canHaveQuotas = true, bool isVisible = true );
     virtual ~LogisticBaseStates();
     //@}
 

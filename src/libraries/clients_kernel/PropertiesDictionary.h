@@ -67,6 +67,7 @@ public:
     void Display( Displayer_ABC& displayer );
     void Display( const QString& name, Displayer_ABC& displayer );
     void DisplaySubPath( const QString& path, Displayer_ABC& displayer );
+	void SetPropertyVisibility( const QString& name, bool visible );
     //@}
 
 private:

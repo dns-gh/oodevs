@@ -42,6 +42,8 @@ public:
     virtual QWidget* CreateEditor( QWidget* parent, EditorFactory_ABC& factory ) = 0;
     virtual void SetValueFromEditor( QWidget* editor ) = 0;
     virtual void Display( Displayer_ABC& displayer ) = 0;
+	virtual bool IsVisible () const = 0;
+	virtual void SetVisibility ( bool status ) = 0;
     //@}
 
 private:
@@ -60,14 +62,15 @@ public:
         : controller_( controller )
         , owner_( owner )
         , data_( &value )
-        , setter_( setter ) {
-
-    }
+        , setter_( setter )
+		, isVisible_ ( true )
+	{}
     virtual ~Property() {};
 
     virtual void Display( Displayer_ABC& displayer )
     {
-        displayer.Display( *data_ );
+		if ( IsVisible() )
+			displayer.Display( *data_ );
     }
 
     virtual QWidget* CreateEditor( QWidget* parent, EditorFactory_ABC& factory )
@@ -85,11 +88,22 @@ public:
         }
     }
 
+	bool IsVisible() const
+	{
+		return isVisible_;
+	}
+	
+	void SetVisibility ( bool status )
+	{
+		isVisible_ = status;
+	}
+
 private:
     Controller& controller_;
     const Owner& owner_;
     T* data_;
     Setter setter_;
+	bool isVisible_;
 };
 
 }

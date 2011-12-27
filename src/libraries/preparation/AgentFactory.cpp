@@ -143,7 +143,7 @@ Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, 
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
 
     bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
-    result->Attach( *new LogisticLevelAttritube( controllers_.controller_, *result, isTC2, dico ) );
+    result->Attach( *new LogisticLevelAttritube( controllers_, *result, isTC2, dico ) );
     result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico, isTC2 ) );
 
     result->Attach( *new TacticalLines() );
@@ -278,7 +278,7 @@ Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
 
     bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
-    result->Attach( *new LogisticLevelAttritube( controllers_.controller_, xis, *result, isTC2, dico ) );
+    result->Attach( *new LogisticLevelAttritube( controllers_, xis, *result, isTC2, dico ) );
     result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico, isTC2 ) );
 
     result->Attach( *new TacticalLines() );
@@ -389,7 +389,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
     }
 
     bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
-    result->Attach( *new LogisticLevelAttritube( controllers_.controller_, *result, isTC2, dico ) );
+    result->Attach( *new LogisticLevelAttritube( controllers_, *result, isTC2, dico ) );
     result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico, isTC2 ) );
 
     result->Attach( *new TacticalLines() );
