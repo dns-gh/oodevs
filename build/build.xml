@@ -770,6 +770,13 @@
         <extract-knowledges dir="${models.dir}" tofile="${models.dir}/../integration/TaskKnowledge.lua"/>
     </target>
 
+    <target name="generate-database-security" description="compile behavior model database for security">
+        <bmc src="${models.dir}/security/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
+        <bmc src="${models.dir}/security/integration/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/security/common/src" luac="false"/>
+        <bmc src="${models.dir}/security/test/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/security/common/src" luac="false"/>
+        <bmc src="${models.dir}/security/training/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/security/common/src;${models.dir}/security/integration/src" luac="false"/>
+    </target>
+
     <target name="generate-symbols" description="generate symbols">
         <zip destfile="${run.dir}/resources/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg"/>
@@ -1601,6 +1608,7 @@
         <antcall target="deploy-application-data"/>
         <update-database database="directia.core.bml" dir="${models.dir}/directia.core"/>
         <antcall target="generate-database"/>
+        <antcall target="generate-database-security"/>
         <antcall target="generate-symbols"/>
     </target>
 
