@@ -82,8 +82,8 @@ public:
     void ReadOverloading( xml::xistream& xis );
     void SetMorale( const PHY_Morale& morale );
     void SetExperience( const PHY_Experience& experience );
-    void SetTiredness( const PHY_Tiredness& tiredness );
-    void SetStress( const PHY_Stress& stress );
+    void SetTiredness( const PHY_Tiredness& tiredness, bool updateValue = false );
+    void SetStress( const PHY_Stress& stress, bool updateValue = false );
     //@}
 
     //! @name Accessors
