@@ -74,7 +74,6 @@ private:
     QLineEdit* login_;
     QLineEdit* password_;
     QCheckBox* supervisor_;
-    QLabel* role_;
     //@}
 };
 
