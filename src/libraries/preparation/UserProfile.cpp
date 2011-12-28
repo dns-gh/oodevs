@@ -13,6 +13,7 @@
 #include "FormationModel.h"
 #include "Model.h"
 #include "TeamsModel.h"
+#include "TacticalHierarchies.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -129,6 +130,25 @@ UserProfile::~UserProfile()
         controller_.Delete( *this );
 }
 
+namespace
+{
+    void Convert( const kernel::Entity_ABC& entity, std::vector< unsigned long >& automats )
+    {
+        if( entity.GetTypeName() == kernel::Automat_ABC::typeName_ )
+            automats.push_back( entity.GetId() );
+        tools::Iterator< const kernel::Entity_ABC& > children = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+        while( children.HasMoreElements() )
+            Convert( children.NextElement(), automats );
+    }
+
+    void Convert( const std::vector< unsigned long >& formations, std::vector< unsigned long >& automats, const Model& model )
+    {
+        for( unsigned int i = 0; i < formations.size(); ++i )
+            if( kernel::Formation_ABC* formation = model.FindFormation( formations[ i ] ) )
+                Convert( *formation, automats );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: UserProfile::Serialize
 // Created: SBO 2007-01-17
@@ -179,6 +199,9 @@ void UserProfile::Serialize( xml::xostream& xos ) const
         writePopulations = writePopulations_;
     }
 
+    Convert( writeFormations, writeAutomats, model_ );
+    Convert( readFormations, readAutomats, model_ );
+
     xos << xml::start( "profile" )
             << xml::attribute( "role", userRole_ )
             << xml::attribute( "name", login_.ascii() )
@@ -187,13 +210,11 @@ void UserProfile::Serialize( xml::xostream& xos ) const
             << xml::start( "rights" )
                 << xml::start( "readonly" );
     SerializeRights( xos, "side", readSides );
-    SerializeRights( xos, "formation", readFormations );
     SerializeRights( xos, "automat", readAutomats );
     SerializeRights( xos, "crowd", readPopulations );
     xos         << xml::end
                 << xml::start( "readwrite" );
     SerializeRights( xos, "side", writeSides );
-    SerializeRights( xos, "formation", writeFormations );
     SerializeRights( xos, "automat", writeAutomats );
     SerializeRights( xos, "crowd", writePopulations );
     xos         << xml::end

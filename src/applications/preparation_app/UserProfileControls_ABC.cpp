@@ -106,6 +106,7 @@ void UserProfileControls_ABC::ReadRights( gui::ValuedListItem* item, bool contro
     if( control )
     {
         SetItem( item, eControl );
+        SelectParent( item );
         listView_->ensureItemVisible( item );
         ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
         while( value )
@@ -143,7 +144,7 @@ bool UserProfileControls_ABC::IsControlled( gui::ValuedListItem* item ) const
 // -----------------------------------------------------------------------------
 void UserProfileControls_ABC::UpdateRights( gui::ValuedListItem* item, bool control )
 {
-    if( control  )
+    if( control )
     {
         SelectChild( item );
         SelectParent( item );
