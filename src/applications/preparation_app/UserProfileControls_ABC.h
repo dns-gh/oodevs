@@ -82,6 +82,7 @@ private:
     void ReadRights( gui::ValuedListItem* item, bool control );
     void UpdateRights( gui::ValuedListItem* item, bool control );
     void Select( gui::ValuedListItem* item, bool control );
+    void Select( gui::ValuedListItem* item );
     void Deselect( gui::ValuedListItem* item );
     bool IsControlled( gui::ValuedListItem* item ) const;
 

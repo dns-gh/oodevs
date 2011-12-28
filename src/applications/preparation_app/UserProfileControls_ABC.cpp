@@ -144,7 +144,10 @@ bool UserProfileControls_ABC::IsControlled( gui::ValuedListItem* item ) const
 void UserProfileControls_ABC::UpdateRights( gui::ValuedListItem* item, bool control )
 {
     if( control || !item->parent() )
+    {
         Select( item, control );
+        Select( item );
+    }
     else
     {
         Deselect( item );
@@ -154,6 +157,28 @@ void UserProfileControls_ABC::UpdateRights( gui::ValuedListItem* item, bool cont
             SetItem( value, eNothing );
             value = static_cast< ValuedListItem* >( value->nextSibling() );
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::Select
+// Created: LGY 2011-12-28
+// -----------------------------------------------------------------------------
+void UserProfileControls_ABC::Select( gui::ValuedListItem* item )
+{
+    if( gui::ValuedListItem* parent = static_cast< ValuedListItem* >( item->parent() ) )
+    {
+        bool allSelect = true;
+        ValuedListItem* value = static_cast< ValuedListItem* >( parent->firstChild() );
+        while( value )
+        {
+            if( value->text( 2 ).toInt() != eControl )
+                allSelect = false;
+            value = static_cast< ValuedListItem* >( value->nextSibling() );
+        }
+        if( allSelect && parent->text( 2 ).toInt() != eControl )
+            SetItem( parent, eControl );
+        Select( parent );
     }
 }
 
