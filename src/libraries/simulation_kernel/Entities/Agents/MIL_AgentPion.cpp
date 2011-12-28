@@ -796,7 +796,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
         const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
         if( !pTiredness )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-        GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness );
+        GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness, true );
     }
     if( msg.elem( 1 ).value_size() == 1 && msg.elem( 1 ).value().Get(0).has_enumeration() )
     {
@@ -820,7 +820,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
         const PHY_Stress* pStress = PHY_Stress::Find( stress );
         if( !pStress )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-        GetRole< PHY_RolePion_HumanFactors >().SetStress( *pStress );
+        GetRole< PHY_RolePion_HumanFactors >().SetStress( *pStress, true );
     }
 }
 

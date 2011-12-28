@@ -61,8 +61,8 @@ public:
     virtual void ReadOverloading( xml::xistream& xis ) = 0;
     virtual void SetMorale( const PHY_Morale& morale ) = 0;
     virtual void SetExperience( const PHY_Experience& experience ) = 0;
-    virtual void SetTiredness( const PHY_Tiredness& tiredness ) = 0;
-    virtual void SetStress( const PHY_Stress& stress ) = 0;
+    virtual void SetTiredness( const PHY_Tiredness& tiredness, bool updateValue = false ) = 0;
+    virtual void SetStress( const PHY_Stress& stress, bool updateValue = false ) = 0;
     //@}
 
     //! @name Accessors

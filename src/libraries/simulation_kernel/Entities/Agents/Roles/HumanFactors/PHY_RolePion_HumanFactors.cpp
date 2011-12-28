@@ -368,7 +368,6 @@ void PHY_RolePion_HumanFactors::SetExperience( const PHY_Experience& experience 
 {
     if( experience == *pExperience_ )
         return;
-
     pExperience_ = &experience;
     bHasChanged_ = true;
 }
@@ -377,26 +376,42 @@ void PHY_RolePion_HumanFactors::SetExperience( const PHY_Experience& experience 
 // Name: PHY_RolePion_HumanFactors::SetTiredness
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_HumanFactors::SetTiredness( const PHY_Tiredness& tiredness )
+void PHY_RolePion_HumanFactors::SetTiredness( const PHY_Tiredness& tiredness, bool updateValue /*=false*/ )
 {
     if( tiredness == *pTiredness_ )
         return;
-
     pTiredness_  = &tiredness;
     bHasChanged_ = true;
+    if( updateValue )
+    {
+        if( *pTiredness_ == PHY_Tiredness::normal_ )
+            tirednessValue_ = 0;
+        else if( *pTiredness_ == PHY_Tiredness::fatigue_ )
+            tirednessValue_ = PHY_Tiredness::evolution_.firstThreshold_;
+        else if( *pTiredness_ == PHY_Tiredness::epuise_ )
+            tirednessValue_ = PHY_Tiredness::evolution_.secondThreshold_;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors::SetStress
 // Created: LDC 2011-06-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_HumanFactors::SetStress( const PHY_Stress& stress )
+void PHY_RolePion_HumanFactors::SetStress( const PHY_Stress& stress, bool updateValue /*=false*/ )
 {
     if( stress == *pStress_ )
         return;
-
     pStress_  = &stress;
     bHasChanged_ = true;
+    if( updateValue )
+    {
+        if( *pStress_ == PHY_Stress::calm_ )
+            stressValue_ = 0;
+        else if( *pStress_ == PHY_Stress::worried_ )
+            stressValue_ = PHY_Stress::evolution_.firstThreshold_;
+        else if( *pStress_ == PHY_Stress::stressed_ )
+            stressValue_ = PHY_Stress::evolution_.secondThreshold_;
+    }
 }
 
 // -----------------------------------------------------------------------------
