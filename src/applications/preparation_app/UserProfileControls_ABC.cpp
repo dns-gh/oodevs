@@ -143,28 +143,23 @@ bool UserProfileControls_ABC::IsControlled( gui::ValuedListItem* item ) const
 // -----------------------------------------------------------------------------
 void UserProfileControls_ABC::UpdateRights( gui::ValuedListItem* item, bool control )
 {
-    if( control || !item->parent() )
+    if( control  )
     {
-        Select( item, control );
-        Select( item );
+        SelectChild( item );
+        SelectParent( item );
     }
     else
     {
-        Deselect( item );
-        ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
-        while( value )
-        {
-            SetItem( value, eNothing );
-            value = static_cast< ValuedListItem* >( value->nextSibling() );
-        }
+        DeselectParent( item );
+        DeselectChild( item );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileControls_ABC::Select
+// Name: UserProfileControls_ABC::SelectParent
 // Created: LGY 2011-12-28
 // -----------------------------------------------------------------------------
-void UserProfileControls_ABC::Select( gui::ValuedListItem* item )
+void UserProfileControls_ABC::SelectParent( gui::ValuedListItem* item )
 {
     if( gui::ValuedListItem* parent = static_cast< ValuedListItem* >( item->parent() ) )
     {
@@ -178,38 +173,52 @@ void UserProfileControls_ABC::Select( gui::ValuedListItem* item )
         }
         if( allSelect && parent->text( 2 ).toInt() != eControl )
             SetItem( parent, eControl );
-        Select( parent );
+        SelectParent( parent );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileControls_ABC::Select
+// Name: UserProfileControls_ABC::SelectChild
 // Created: LGY 2011-12-14
 // -----------------------------------------------------------------------------
-void UserProfileControls_ABC::Select( gui::ValuedListItem* item, bool control )
+void UserProfileControls_ABC::SelectChild( gui::ValuedListItem* item )
 {
-    SetItem( item, control ? eControl : eNothing );
-    if( control )
-        listView_->ensureItemVisible( item );
+    SetItem( item, eControl );
+    listView_->ensureItemVisible( item );
 
     ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
     while( value )
     {
-        Select( value, control );
+        SelectChild( value );
         value = static_cast< ValuedListItem* >( value->nextSibling() );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileControls_ABC::Deselect
+// Name: UserProfileControls_ABC::DeselectParents
 // Created: LGY 2011-12-14
 // -----------------------------------------------------------------------------
-void UserProfileControls_ABC::Deselect( gui::ValuedListItem* item )
+void UserProfileControls_ABC::DeselectParent( gui::ValuedListItem* item )
 {
     SetItem( item, eNothing );
     if( gui::ValuedListItem* parent = static_cast< ValuedListItem* >( item->parent() ) )
         if( parent->text( 2 ).toInt() == eControl )
-            Deselect( parent );
+            DeselectParent( parent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::DeselectChild
+// Created: LGY 2011-12-28
+// -----------------------------------------------------------------------------
+void UserProfileControls_ABC::DeselectChild( gui::ValuedListItem* item )
+{
+    ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
+    while( value )
+    {
+        SetItem( value, eNothing );
+        DeselectChild( value );
+        value = static_cast< ValuedListItem* >( value->nextSibling() );
+    }
 }
 
 // -----------------------------------------------------------------------------

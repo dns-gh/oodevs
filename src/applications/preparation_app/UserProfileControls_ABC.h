@@ -81,9 +81,10 @@ private:
 
     void ReadRights( gui::ValuedListItem* item, bool control );
     void UpdateRights( gui::ValuedListItem* item, bool control );
-    void Select( gui::ValuedListItem* item, bool control );
-    void Select( gui::ValuedListItem* item );
-    void Deselect( gui::ValuedListItem* item );
+    void SelectChild( gui::ValuedListItem* item );
+    void SelectParent( gui::ValuedListItem* item );
+    void DeselectParent( gui::ValuedListItem* item );
+    void DeselectChild( gui::ValuedListItem* item );
     bool IsControlled( gui::ValuedListItem* item ) const;
 
     void Check( gui::ValuedListItem* item, bool control );
