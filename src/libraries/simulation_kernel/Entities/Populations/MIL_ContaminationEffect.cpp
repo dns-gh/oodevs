@@ -20,7 +20,7 @@ MIL_ContaminationEffect::MIL_ContaminationEffect( MIL_PopulationHumans& humans, 
     , humans_( humans )
     , time_  ( time )
 {
-    // NOTHING
+    humans_.ApplyContamination();
 }
 
 // -----------------------------------------------------------------------------
