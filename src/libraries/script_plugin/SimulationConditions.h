@@ -51,6 +51,7 @@ private:
     boost::shared_ptr< Condition_ABC > TickEnded();
     boost::shared_ptr< Condition_ABC > ClientConnected();
     boost::shared_ptr< Condition_ABC > ClientLeft();
+	boost::shared_ptr< Condition_ABC > AtDateTime( const std::string& triggerTime );
     //@}
 
 private:

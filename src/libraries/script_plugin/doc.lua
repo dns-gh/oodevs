@@ -84,6 +84,7 @@ events =
         TickEnded       = function( self ) return condition( tick, duration ) end,
         ClientConnected = function( self ) return condition( strClient, strProfile ) end,
         ClientLeft      = function( self ) return condition( strClient ) end
+        AtDateTime      = function( self, dateTime ) return condition( dateTime ) end -- event triggered at specified simulation dateTime (format YYYYMMDDTHHMMSS )
     },
 
     indicators =

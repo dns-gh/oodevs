@@ -51,6 +51,7 @@ void SimulationConditions::RegisterIn( directia::brain::Brain& brain )
     brain.Register( "TickEnded",       &SimulationConditions::TickEnded );
     brain.Register( "ClientConnected", &SimulationConditions::ClientConnected );
     brain.Register( "ClientLeft",      &SimulationConditions::ClientLeft );
+	brain.Register( "AtDateTime", &SimulationConditions::AtDateTime );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,6 +73,35 @@ boost::shared_ptr< Condition_ABC > SimulationConditions::TickEnded()
         }
     };
     return boost::shared_ptr< Condition_ABC >( new ClientConnected( controller_ ) );
+}
+
+namespace
+{
+    struct AtDateTimeCondition : public SimpleEventCondition< events::SimulationTimeChanged >
+    {
+		AtDateTimeCondition( kernel::Controller& controller, const std::string& triggerTime )
+            : SimpleEventCondition( controller )
+			, triggerTime_( triggerTime )
+        {
+            // NOTHING
+        }
+        virtual void NotifyUpdated( const events::SimulationTimeChanged& ev )
+        {
+			if( triggerTime_ == ev.time )
+				Trigger( ev.time );
+        }
+
+		std::string triggerTime_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationConditions::SimulationTimeChanged
+// Created: BCI 2011-12-29
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Condition_ABC > SimulationConditions::AtDateTime( const std::string& triggerTime )
+{
+    return boost::shared_ptr< Condition_ABC >( new AtDateTimeCondition( controller_, triggerTime ) );
 }
 
 // -----------------------------------------------------------------------------
