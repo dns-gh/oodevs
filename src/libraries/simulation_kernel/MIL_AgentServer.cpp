@@ -4,6 +4,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentServer.h"
+#include "MIL_UrbanCache.h"
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Workspace.h"
@@ -69,6 +70,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pCheckPointManager_   ( 0 )
     , pAgentServer_         ( 0 )
     , pUrbanModel_          ( new urban::Model() )
+    , pUrbanCache_          ( new MIL_UrbanCache( *pUrbanModel_ ) )
     , pResourceTools_       ( new ResourceTools() )
     , pBurningCells_        ( new MIL_BurningCells() )
     , pPropagationManager_  ( new MIL_PropagationManager() )
@@ -285,6 +287,7 @@ void MIL_AgentServer::MainSimLoop()
 {
     pProfilerMgr_->NotifyTickBegin( GetCurrentTimeStep() );
     SendMsgBeginTick();
+    GetUrbanCache().Clear();
     pEntityManager_->Update();
     pMeteoDataManager_->Update( nRealTime_ );
     pResourceNetworkModel_->Update();

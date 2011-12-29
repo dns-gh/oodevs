@@ -14,6 +14,7 @@
 #include "AlgorithmsFactories.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "MIL_AgentServer.h"
+#include "MIL_UrbanCache.h"
 #include "PerceptionDistanceComputer_ABC.h"
 #include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
@@ -510,7 +511,7 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
     geometry::Point2f vTargetPoint( static_cast< float >( vTarget.rX_ ), static_cast< float >( vTarget.rY_ ) );
 
     std::set< const urban::TerrainObject_ABC* > list;
-    MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinSegment( vSourcePoint, vTargetPoint, list );
+    MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( vSourcePoint, vTargetPoint, list );
 
     if( !list.empty() )
     {

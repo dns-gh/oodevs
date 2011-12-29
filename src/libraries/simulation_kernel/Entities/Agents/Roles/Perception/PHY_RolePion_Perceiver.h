@@ -232,9 +232,7 @@ private:
     const MT_Vector2D* perceiverPosition_;
     const MT_Vector2D* perceiverDirection_;
     MT_Vector2D lastPerceiverPosition_;
-    bool bPeriphericalVisionEnabled_;
     unsigned int nNextPeriphericalVisionStep_;
-    bool bRecordModeEnabled_;
     // Perceptions
     T_RadarsPerClassMap radars_;
     T_SurfaceAgentMap surfacesAgent_;
@@ -257,6 +255,8 @@ private:
     E_SensorMode nSensorMode_;
     MT_Vector2D  vSensorInfo_;
 
+    bool bPeriphericalVisionEnabled_;
+    bool bRecordModeEnabled_;
     bool bHasChanged_;
     bool bExternalMustChangePerception_;
     bool bExternalMustChangeRadar_;
