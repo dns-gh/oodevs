@@ -11,6 +11,7 @@
 #include "PHY_ZURBPerceptionComputer.h"
 #include "AlgorithmsFactories.h"
 #include "MIL_AgentServer.h"
+#include "MIL_UrbanCache.h"
 #include "OnComponentComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
 #include "OnComponentFunctor_ABC.h"
@@ -163,7 +164,7 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
     geometry::Point2f vTargetPoint( VECTOR_TO_POINT( targetPosition ) );
 
     std::set< const urban::TerrainObject_ABC* > list;
-    MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinSegment( vSourcePoint, vTargetPoint, list );
+    MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( vSourcePoint, vTargetPoint, list );
     const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
 

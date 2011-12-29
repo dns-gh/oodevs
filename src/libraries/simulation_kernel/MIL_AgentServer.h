@@ -52,6 +52,7 @@ class PHY_MeteoDataManager;
 class ProcessMonitor;
 class MIL_BurningCells;
 class MIL_PropagationManager;
+class MIL_UrbanCache;
 
 //*****************************************************************************
 // Created: DFT 02-02-28
@@ -115,6 +116,7 @@ public:
     //@{
     MIL_EntityManager& GetEntityManager() const;
     urban::Model& GetUrbanModel() const;
+    MIL_UrbanCache& GetUrbanCache() const;
     DEC_Workspace& GetWorkspaceDIA() const;
     NET_AgentServer& GetAgentServer() const;
     MIL_TacticalLineManager& GetTacticalLineManager() const;
@@ -200,6 +202,7 @@ private:
     MIL_CheckPointManager* pCheckPointManager_;
     NET_AgentServer* pAgentServer_;
     urban::Model* pUrbanModel_;
+    MIL_UrbanCache* pUrbanCache_;
     resource::ResourceNetworkModel* pResourceNetworkModel_;
     resource::ResourceTools_ABC* pResourceTools_;
     MIL_BurningCells* pBurningCells_;

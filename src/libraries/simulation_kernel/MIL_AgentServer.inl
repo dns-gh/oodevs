@@ -187,6 +187,17 @@ urban::Model& MIL_AgentServer::GetUrbanModel() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetUrbanCache
+// Created: LDC 2011-12-28
+// -----------------------------------------------------------------------------
+inline
+MIL_UrbanCache& MIL_AgentServer::GetUrbanCache() const
+{
+    assert( pUrbanCache_ );
+    return *pUrbanCache_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetResourceNetworkModel
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
