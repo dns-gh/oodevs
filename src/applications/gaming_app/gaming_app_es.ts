@@ -1261,6 +1261,45 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>InhabitantPanel</name>
+    <message>
+        <source>Living area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nombre</translation>
+    </message>
+    <message>
+        <source>Resident</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angriness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alerted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Evacuated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Sí</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">No</translation>
+    </message>
+</context>
+<context>
     <name>KnowledgeAddInGroupDialog</name>
     <message>
         <source>Add to knowledge group</source>
@@ -1329,49 +1368,6 @@ Motivo: %3
     <name>LineEdit</name>
     <message>
         <source>Checkpoint name: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LivingAreaDialog</name>
-    <message>
-        <source>Living area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Living area: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="unfinished">Sí</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="unfinished">No</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
-    </message>
-    <message>
-        <source>Resident</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Angriness</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alerted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Confined</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Evacuated</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

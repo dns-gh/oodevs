@@ -15,6 +15,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/VariantPointer.h"
 #include <boost/foreach.hpp>
 #include <boost/assign/list_of.hpp>
 
@@ -208,7 +209,7 @@ void ModelConsistencyDialog::AddItem( T data, QString text, const kernel::SafePo
     QStandardItem* item = new QStandardItem( text );
     item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
     QVariant* variant = new QVariant();
-    variant->setValue( VariantPointer( &entity ) );
+    variant->setValue( kernel::VariantPointer( &entity ) );
     item->setData( *variant, Qt::UserRole );
     QVariant* errorType = new QVariant( Convert( type ) );
     item->setData( *errorType, Qt::UserRole + 1 );
@@ -222,7 +223,7 @@ void ModelConsistencyDialog::AddItem( T data, QString text, const kernel::SafePo
 // -----------------------------------------------------------------------------
 void ModelConsistencyDialog::OnSelectionChanged( const QModelIndex& index )
 {
-    const kernel::SafePointer< kernel::Entity_ABC >* entity = static_cast< const kernel::SafePointer< kernel::Entity_ABC >* >( index.data( Qt::UserRole ).value< VariantPointer >().ptr_ );
+    const kernel::SafePointer< kernel::Entity_ABC >* entity = static_cast< const kernel::SafePointer< kernel::Entity_ABC >* >( index.data( Qt::UserRole ).value< kernel::VariantPointer >().ptr_ );
     if( entity && *entity )
     {
         ( *entity )->Select( actionController_ );

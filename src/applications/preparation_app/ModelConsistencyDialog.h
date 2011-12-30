@@ -21,22 +21,6 @@ namespace kernel
     class Entity_ABC;
 }
 
-// =============================================================================
-/** @class  VariantPointer
-    @brief  VariantPointer
-*/
-// Created: ABR 2011-09-23
-// =============================================================================
-struct VariantPointer
-{
-    VariantPointer() : ptr_( 0 ) {}
-    VariantPointer( const VariantPointer& other ) : ptr_( other.ptr_ ) {}
-    VariantPointer( const void* ptr ) : ptr_( ptr ) {}
-
-    const void* ptr_;
-};
-Q_DECLARE_METATYPE( VariantPointer );
-
 class FilterProxyModel;
 
 // =============================================================================

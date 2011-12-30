@@ -49,6 +49,7 @@
 #include "PopulationsLayer.h"
 #include "ProfilingPanel.h"
 #include "ProfilesPanel.h"
+#include "InhabitantPanel.h"
 #include "Properties.h"
 #include "ReplayerToolbar.h"
 #include "ResourceLinksDialog.h"
@@ -228,7 +229,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     addToolBarBreak();
 
     //Dialogs
-    new Dialogs( this, controllers, model_, staticModel, publisher, model_.actions_, simulation, *pProfile_, network.GetCommands(), config, rcResolver, *factory, *paramLayer );
+    new Dialogs( this, controllers, model_, staticModel, publisher, model_.actions_, simulation, *pProfile_, network.GetCommands(), config, *paramLayer );
 
     // Profile
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
@@ -345,6 +346,12 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
         ProfilesPanel* profilesPanel = new ProfilesPanel( this, controllers_, network_, *pProfile_, model_.teams_ );
         addDockWidget( Qt::RightDockWidgetArea, profilesPanel );
         profilesPanel->hide();
+    }
+    // Inhabitant panel
+    {
+        InhabitantPanel* inhabitantPanel = new InhabitantPanel( this, controllers_, model_ );
+        addDockWidget( Qt::RightDockWidgetArea, inhabitantPanel );
+        inhabitantPanel->hide();
     }
     // Score panel
     {

@@ -59,10 +59,10 @@ InhabitantChangeAlertedStateDialog.cpp \
 InhabitantChangeConfinedStateDialog.cpp \
 InhabitantChangeHealthStateDialog.cpp \
 InhabitantExtractCrowdDialog.cpp \
+InhabitantPanel.cpp \
 KnowledgeAddInGroupDialog.cpp \
 KnowledgeGroupMagicOrdersInterface.cpp \
 LendingsListView.cpp \
-LivingAreaDialog.cpp \
 LoginDialog.cpp \
 LogisticListView.cpp \
 LogisticStatusWidgets.cpp \

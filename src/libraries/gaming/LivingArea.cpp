@@ -79,7 +79,7 @@ void LivingArea::Accept( kernel::LivingAreaVisitor_ABC& visitor ) const
             unsigned int resident = 0;
             BOOST_FOREACH( const gui::T_BlockOccupation::value_type& person, it->second.persons_ )
                 resident += person.second.first;
-            visitor.Visit( block.first, resident, it->second.alerted_, it->second.angriness_, it->second.confined_, it->second.evacuated_ );
+            visitor.Visit( block.first, block.second, resident, it->second.alerted_, it->second.angriness_, it->second.confined_, it->second.evacuated_ );
         }
     }
 }

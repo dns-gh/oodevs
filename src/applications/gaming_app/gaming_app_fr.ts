@@ -1261,6 +1261,45 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>InhabitantPanel</name>
+    <message>
+        <source>Living area</source>
+        <translation>Zone de vie</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Resident</source>
+        <translation>Habitant</translation>
+    </message>
+    <message>
+        <source>Angriness</source>
+        <translation>Colère</translation>
+    </message>
+    <message>
+        <source>Alerted</source>
+        <translation>Alerté</translation>
+    </message>
+    <message>
+        <source>Confined</source>
+        <translation>Confiné</translation>
+    </message>
+    <message>
+        <source>Evacuated</source>
+        <translation>Evacué</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>Oui</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>Non</translation>
+    </message>
+</context>
+<context>
     <name>KnowledgeAddInGroupDialog</name>
     <message>
         <source>Add to knowledge group</source>
@@ -1330,49 +1369,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Checkpoint name: </source>
         <translation>Nom de la sauvegarde: </translation>
-    </message>
-</context>
-<context>
-    <name>LivingAreaDialog</name>
-    <message>
-        <source>Living area</source>
-        <translation>Zone de vie</translation>
-    </message>
-    <message>
-        <source>Living area: %1</source>
-        <translation>Zone de vie : %1</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation>Oui</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation>Non</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
-        <source>Resident</source>
-        <translation>Habitant</translation>
-    </message>
-    <message>
-        <source>Angriness</source>
-        <translation>Colère</translation>
-    </message>
-    <message>
-        <source>Alerted</source>
-        <translation>Alerté</translation>
-    </message>
-    <message>
-        <source>Confined</source>
-        <translation>Confiné</translation>
-    </message>
-    <message>
-        <source>Evacuated</source>
-        <translation>Evacué</translation>
     </message>
 </context>
 <context>

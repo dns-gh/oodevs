@@ -7,38 +7,38 @@
 //
 // *****************************************************************************
 
-#ifndef __LivingAreaVisitor_ABC_h_
-#define __LivingAreaVisitor_ABC_h_
+#ifndef __VariantPointer_h_
+#define __VariantPointer_h_
 
-#include <boost/noncopyable.hpp>
-#include <string>
+//#include <QMetaType>
 
 namespace kernel
 {
 
 // =============================================================================
-/** @class  LivingAreaVisitor_ABC
-    @brief  Living area visitor declaration
+/** @class  VariantPointer
+    @brief  Variant pointer
 */
-// Created: LGY 2011-05-02
+// Created: ABR 2011-09-23
 // =============================================================================
-class LivingAreaVisitor_ABC : private boost::noncopyable
+class VariantPointer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             LivingAreaVisitor_ABC() {}
-    virtual ~LivingAreaVisitor_ABC() {}
+    VariantPointer() : ptr_( 0 ) {}
+    VariantPointer( const VariantPointer& other ) : ptr_( other.ptr_ ) {}
+    VariantPointer( const void* ptr ) : ptr_( ptr ) {}
     //@}
 
-    //! @name Operations
+    //! @name Member data
     //@{
-    virtual void Visit( unsigned int id, const std::string& name, unsigned int resident, bool alerted,
-                        float angriness, bool confined, bool evacuated ) = 0;
+    const void* ptr_;
     //@}
 };
+Q_DECLARE_METATYPE( VariantPointer );
 
 }
 
-#endif // __LivingAreaVisitor_ABC_h_
+
+#endif // __VariantPointer_h_

@@ -262,6 +262,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Tools.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Types.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Units.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\VariantPointer.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Workers.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\WorkerTask_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Circle.h" />

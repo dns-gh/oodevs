@@ -217,9 +217,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\EfficientRangeDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\LivingAreaDialog.cpp">
-      <Filter>Source Files\Dialogs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\LoginDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
@@ -793,6 +790,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\ReconnectLoginDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\InhabitantPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1195,9 +1195,6 @@
     <CustomBuild Include="..\..\src\applications\gaming_app\EfficientRangeDialog.h">
       <Filter>Source Files\Dialogs</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\LivingAreaDialog.h">
-      <Filter>Source Files\Dialogs</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\LoginDialog.h">
       <Filter>Source Files\Dialogs</Filter>
     </CustomBuild>
@@ -1449,6 +1446,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\ProfilesPanel.h">
       <Filter>Source Files\Panels\Profiles</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantPanel.h">
+      <Filter>Source Files\Panels</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

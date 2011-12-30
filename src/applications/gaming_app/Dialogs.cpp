@@ -21,7 +21,6 @@
 #include "InhabitantChangeConfinedStateDialog.h"
 #include "InhabitantChangeHealthStateDialog.h"
 #include "InhabitantExtractCrowdDialog.h"
-#include "LivingAreaDialog.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "LogisticSupplyPullFlowDialog.h"
 #include "LogisticSupplyPushFlowDialog.h"
@@ -41,7 +40,7 @@
 // -----------------------------------------------------------------------------
 Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel,
                   Publisher_ABC& publisher, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation,
-                  const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config, const RcEntityResolver_ABC& rcResolver, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer )
+                  const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config, gui::ParametersLayer& layer )
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, actionsModel, staticModel, simulation, profile );
@@ -57,7 +56,6 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new AgentChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new PopulationChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new InhabitantChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
-    new LivingAreaDialog( parent, controllers, factory, rcResolver );
     new InhabitantChangeHealthStateDialog( parent, controllers, actionsModel, simulation, profile );
     new InhabitantChangeAlertedStateDialog( parent, controllers, actionsModel, simulation, profile );
     new InhabitantChangeConfinedStateDialog( parent, controllers, actionsModel, simulation, profile );
