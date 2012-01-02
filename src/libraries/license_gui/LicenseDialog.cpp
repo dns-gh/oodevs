@@ -98,7 +98,7 @@ LicenseDialog::LicenseDialog( const std::string& feature, const std::string& hos
     , hostId_           ( hostId )
 {
     ReadTranslations();
-    
+
     static TCHAR szWindowClass[] = _T( "win32app" );
     static TCHAR szTitle[] = _T( "License Dialog" );
 
@@ -344,7 +344,7 @@ void LicenseDialog::ReadTranslations()
             if( bfs::exists( filePath) )
             {
                 xml::xifstream xis( filePath.native_file_string() );
-                xis >> xml::start( "TS" ) 
+                xis >> xml::start( "TS" )
                       >> xml::start( "context" )
                         >> xml::list( "message", *this, &LicenseDialog::ReadTranslation );
             }

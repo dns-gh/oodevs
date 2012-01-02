@@ -42,7 +42,7 @@ public:
     virtual const Entity_ABC* GetSuperior() const;
     virtual const Entity_ABC& GetEntity() const;
     virtual tools::Iterator< const Entity_ABC& > CreateSubordinateIterator() const;
-	virtual long CountSubordinates() const;
+    virtual long CountSubordinates() const;
     //@}
 
     //! @name Modifiers

@@ -163,7 +163,6 @@ std::string ProcessWrapper::GetSession() const
     return process_->GetSession();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper::GetProcess
 // Created: RPD 2011-09-12

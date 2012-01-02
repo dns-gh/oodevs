@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #ifndef __LAUNCHER_CONNECTEDPROFILESMESSAGEHANDLER_H__
 #define __LAUNCHER_CONNECTEDPROFILESMESSAGEHANDLER_H__
 

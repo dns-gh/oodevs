@@ -87,7 +87,6 @@ struct InstantValue : public ContinuousValue< T >
     };
 };
 
-
 // =============================================================================
 /** @class  InstantValueIdentifier
 */

@@ -48,7 +48,7 @@ void MIL_UrbanCache::GetUrbanBlocksWithinSegment( const geometry::Point2f& vSour
     urbanModel_.GetListWithinSegment( vSourcePoint, vTargetPoint, list );
     cache_[ start ][ end ] = list;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanCache::Clear
 // Created: LDC 2011-12-28

@@ -125,6 +125,6 @@ void CheckpointList::SelectCheckpoint( int index )
 void CheckpointList::Toggle( bool enabled )
 {
     enabled_ = enabled;
-    if ( checkpoints_.count() )
+    if( checkpoints_.count() )
         emit Select( enabled && list_->selectedItem() ? checkpoints_[ list_->currentItem() ] : "" );
 }

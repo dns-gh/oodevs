@@ -36,7 +36,7 @@ public:
     //@{
     static void CheckLicense( const std::string& licenseFeature, bool silentMode = false, int* pMaxConnections = 0, std::string* pExpiration = 0 );
     //@}
-    
+
 private:
     //! @name Constructors/Destructor
     //@{

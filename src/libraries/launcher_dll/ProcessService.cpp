@@ -242,7 +242,7 @@ void ProcessService::NotifyStopped()
 // -----------------------------------------------------------------------------
 void ProcessService::NotifyError( const std::string& /*error*/, std::string commanderEndpoint /*= ""*/ )
 {
-    if ( !commanderEndpoint.empty() )
+    if( !commanderEndpoint.empty() )
 {
         LauncherPublisher& publisher = server_.ResolveClient( commanderEndpoint );
         for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
@@ -482,8 +482,8 @@ void ProcessService::SendConnectedProfiles( const std::string& endpoint, const s
 // Created: RPD 2011-09-12
 // -----------------------------------------------------------------------------
 void ProcessService::SendSessionsStatuses( const std::string& endpoint )
-{    
-    if ( !endpoint.empty() )
+{
+    if( !endpoint.empty() )
     {
         LauncherPublisher& publisher = server_.ResolveClient( endpoint );
         for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )

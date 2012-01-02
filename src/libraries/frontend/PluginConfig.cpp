@@ -61,17 +61,17 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     view_->setFrameStyle( QFrame::Box | QFrame::Sunken );
     view_->enableClipper( true );
 
-	box_ = new Q3GroupBox( 2, Qt::Horizontal, view_->viewport() );
+    box_ = new Q3GroupBox( 2, Qt::Horizontal, view_->viewport() );
     box_->setCheckable( true );
     box_->setChecked( false );
-	box_->setFlat( true );
-	xis >> xml::start( "settings" )
+    box_->setFlat( true );
+    xis >> xml::start( "settings" )
             >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box_ )
             >> xml::list( "group", *this, &PluginConfig::ReadGroup, box_ );
-	// Add empty label to fix viewport bug of not displaying the overall content
-	QLabel* label = new QLabel( QString( ""), box_ );
-	label->setMinimumHeight( 15 );
-	view_->addChild( box_ );
+    // Add empty label to fix viewport bug of not displaying the overall content
+    QLabel* label = new QLabel( QString( ""), box_ );
+    label->setMinimumHeight( 15 );
+    view_->addChild( box_ );
 }
 
 // -----------------------------------------------------------------------------

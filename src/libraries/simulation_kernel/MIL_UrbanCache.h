@@ -26,7 +26,7 @@ public:
     MIL_UrbanCache( urban::Model& urbanModel );
     void GetUrbanBlocksWithinSegment( const geometry::Point2f& vSourcePoint, const geometry::Point2f& vTargetPoint, std::set< const urban::TerrainObject_ABC* >& list );
     void Clear();
-    
+
 private:
     typedef std::map< geometry::Point2f, std::set< const urban::TerrainObject_ABC* > > T_InnerCache;
     typedef std::map< geometry::Point2f, T_InnerCache > T_Cache;

@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #ifndef launcher_ControlEndTickMessageHandler_h
 #define launcher_ControlEndTickMessageHandler_h
 

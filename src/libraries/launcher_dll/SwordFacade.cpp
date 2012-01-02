@@ -220,7 +220,7 @@ void SwordFacade::Update( const T& message )
     if( messageHandlers_.end() != it )
     {
         bool handled = it->second->OnReceiveMessage( message );
-        if ( handled )
+        if( handled )
             messageHandlers_.erase( message.context() );
     }
 }

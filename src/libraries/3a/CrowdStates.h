@@ -16,7 +16,6 @@
 namespace extractors
 {
 
-
 // =============================================================================
 /** @class  CrowdStates
     @brief  CrowdStates

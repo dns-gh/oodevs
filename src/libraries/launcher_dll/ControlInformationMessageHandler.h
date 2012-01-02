@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #ifndef __LAUNCHER_CONTROLINFORMATIONMESSAGEHANDLER_H__
 #define __LAUNCHER_CONTROLINFORMATIONMESSAGEHANDLER_H__
 

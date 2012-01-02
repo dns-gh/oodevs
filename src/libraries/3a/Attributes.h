@@ -129,5 +129,4 @@ struct Detections : public ContinuousValue< extractors::UnitDetection::Type >
 
 } // namespace attributes
 
-
 #endif // __Attributes_h_

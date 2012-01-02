@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #ifndef __LAUNCHER_SWORDFACADE_H__
 #define __LAUNCHER_SWORDFACADE_H__
 

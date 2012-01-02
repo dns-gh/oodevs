@@ -220,7 +220,6 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
     return RightsResolver::IsVisible( entity );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Profile::CanBeOrdered
 // Created: AGE 2006-10-11

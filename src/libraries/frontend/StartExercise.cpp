@@ -154,4 +154,3 @@ std::string StartExercise::GetSession() const
     return session_;
 }
 
-

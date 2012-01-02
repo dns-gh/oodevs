@@ -46,7 +46,7 @@ namespace
     }
 }
 
-FileButtonEvent::FileButtonEvent( PluginSetting& plugins, QWidget* parent ) 
+FileButtonEvent::FileButtonEvent( PluginSetting& plugins, QWidget* parent )
     : QPushButton( parent )
     , plugins_ ( plugins )
     , updated_( false )
@@ -80,8 +80,8 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     , config_ ( config )
     , description_( xis, ReadLang() )
 {
-    bool display = xis.attribute< bool >( "display", true ); 
-    
+    bool display = xis.attribute< bool >( "display", true );
+
     label_ = new QLabel( parent );
     label_->setHidden( !display );
     if( type_ == "string" )
@@ -195,7 +195,7 @@ void PluginSetting::OnFileClicked()
         fileName_ = fileName;
         std::string::size_type size = fileName_.length() - std::min( max_size, (int)fileName_.length() );
         std::string msg( fileName_, size, size );
-        if ( fileName_.size() > max_size + 2 )
+        if( fileName_.size() > max_size + 2 )
             fileValue_->SetText( ".." + msg );
         else
             fileValue_->SetText( msg );

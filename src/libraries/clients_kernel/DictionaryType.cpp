@@ -44,7 +44,6 @@ void DictionaryType::GetStringList( QStringList& list, const std::string& kind, 
         list.append( it.NextElement().GetLabel( kind, language ).c_str() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DictionaryType::GetLabel
 // Created: JSR 2010-10-06
