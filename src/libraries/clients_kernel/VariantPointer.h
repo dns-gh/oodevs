@@ -36,9 +36,8 @@ public:
     const void* ptr_;
     //@}
 };
-Q_DECLARE_METATYPE( VariantPointer );
 
 }
-
+Q_DECLARE_METATYPE( kernel::VariantPointer )
 
 #endif // __VariantPointer_h_
