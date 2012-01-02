@@ -139,6 +139,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_UrbanCache.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -877,6 +878,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\KnowledgesVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_UrbanCache.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_HumanRepartition.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tristate.h" />
