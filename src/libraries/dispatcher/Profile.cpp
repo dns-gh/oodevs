@@ -204,6 +204,8 @@ bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
         return bSupervision_;
     if( message.has_control_checkpoint_set_frequency() )
         return bSupervision_;
+    if( message.has_control_checkpoint_delete_request() )
+        return bSupervision_;
     if( wrapper.message().has_control_checkpoint_set_frequency() )
         return bSupervision_;
     if( wrapper.message().has_control_toggle_vision_cones() )

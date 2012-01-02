@@ -397,8 +397,20 @@ void ProcessService::RemoveCheckpoint( sword::CheckpointDeleteResponse& message,
     {
         message.set_error_code( sword::CheckpointDeleteResponse::success );
         const std::vector< std::string > result = frontend::commands::RemoveCheckpoint( config_, exercice, session, checkpoints );
+        ProcessContainer::const_iterator it = processes_.find( std::make_pair( exercice, session ) );
+        boost::shared_ptr< SwordFacade > client;
+        if( it != processes_.end() && it->second->IsConnected() )
+            client = it->second;
         BOOST_FOREACH( const std::string& name, result )
+        {
             message.add_checkpoint( name );
+            if( client.get() )
+            {
+                simulation::ControlCheckPointDeleteRequest request;
+                request().set_checkpoint( name );
+                request.Send( *client );
+            }
+        }
     }
 }
 

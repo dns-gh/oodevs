@@ -261,10 +261,13 @@ void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
             std::string oldName = currentCheckPoints_.front();
             std::string oldFile = MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", oldName );
             const boost::filesystem::path oldPath( oldFile, boost::filesystem::native );
-            boost::filesystem::remove_all( oldPath );
-            client::ControlCheckPointSaveDelete message;
-            message().set_name( oldName );
-            message.Send( NET_Publisher_ABC::Publisher() );
+            if( boost::filesystem::exists( oldPath ) )
+            {
+                boost::filesystem::remove_all( oldPath );
+                client::ControlCheckPointSaveDelete message;
+                message().set_name( oldName );
+                message.Send( NET_Publisher_ABC::Publisher() );
+            }
         }
         catch( std::exception& exception )
         {
@@ -372,6 +375,24 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const sword::Con
     nCheckPointsFrequency_ = msg.frequency() * 60; // $$$$ NLD 2007-01-11: beeeeeeaaaaah
     client::ControlCheckPointSetFrequencyAck().Send( NET_Publisher_ABC::Publisher() );
     UpdateNextCheckPointTick();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_CheckPointManager::OnReceiveMsgCheckPointDeleteRequest
+// Created: JSR 2012-01-02
+// -----------------------------------------------------------------------------
+void MIL_CheckPointManager::OnReceiveMsgCheckPointDeleteRequest( const sword::ControlCheckPointDeleteRequest& msg )
+{
+    try
+    {
+        std::string path = MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", msg.checkpoint() );
+        const boost::filesystem::path bfsPath( path, boost::filesystem::native );
+        boost::filesystem::remove_all( bfsPath );
+    }
+    catch( std::exception& exception )
+    {
+        MT_LOG_ERROR_MSG( MT_FormatString( "Error while removing checkpoint ( '%s' )", exception.what() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

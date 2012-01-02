@@ -21,6 +21,7 @@
 
 namespace sword
 {
+    class ControlCheckPointDeleteRequest;
     class ControlCheckPointSaveNow;
     class ControlCheckPointSetFrequency;
 }
@@ -56,8 +57,9 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgCheckPointSaveNow     ( const sword::ControlCheckPointSaveNow&      msg );
-    void OnReceiveMsgCheckPointSetFrequency( const sword::ControlCheckPointSetFrequency& msg );
+    void OnReceiveMsgCheckPointSaveNow      ( const sword::ControlCheckPointSaveNow&       msg );
+    void OnReceiveMsgCheckPointSetFrequency ( const sword::ControlCheckPointSetFrequency&  msg );
+    void OnReceiveMsgCheckPointDeleteRequest( const sword::ControlCheckPointDeleteRequest& msg );
     //@}
 
     //! @name CheckPoints
