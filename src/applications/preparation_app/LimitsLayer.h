@@ -41,7 +41,6 @@ private:
     //@{
     virtual bool CanCreateLine();
     virtual void Delete( const kernel::TacticalLine_ABC& line );
-    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void CreateLimit( const T_PointVector& points );
     virtual void CreateLima( const T_PointVector& points );
 

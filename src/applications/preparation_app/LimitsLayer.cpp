@@ -61,15 +61,6 @@ void LimitsLayer::Delete( const kernel::TacticalLine_ABC& line )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LimitsLayer::ShouldDisplay
-// Created: AGE 2006-11-21
-// -----------------------------------------------------------------------------
-bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& )
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: LimitsLayer::CreateLimit
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
