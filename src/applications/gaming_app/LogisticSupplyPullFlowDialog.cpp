@@ -716,7 +716,7 @@ void LogisticSupplyPullFlowDialog::AddCarryingEquipment( const kernel::Entity_AB
         while( it.HasMoreElements() )
         {
             const Equipment& equipment = it.NextElement();
-            if( equipment.type_.IsLogSupplyFunctionCarrying() )
+            if( equipment.type_.GetLogSupplyFunctionCarrying() )
             {
                 T_CarriersQty::iterator itEquip = carriersTypes_.find( equipment.GetName() );
                 if( itEquip == carriersTypes_.end() )

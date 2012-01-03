@@ -37,8 +37,8 @@ LogisticBaseStates::LogisticBaseStates( Controller& controller, Entity_ABC& enti
     , canHaveQuotas_( canHaveQuotas )
 {
     CreateDictionary( dico, entity );
-	dico.SetPropertyVisibility( tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), isVisible );
-	dico.SetPropertyVisibility( tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), isVisible );
+    dico.SetPropertyVisibility( tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), isVisible );
+    dico.SetPropertyVisibility( tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), isVisible );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ void LogisticBaseStates::ReadDotation( xml::xistream& xis )
     {
         Dotation* dotation = new Dotation( xis, resolver_ );
         item_->AddDotation( *dotation );
-        tools::Resolver< Dotation >::Register( dotation->type_->GetId(), *dotation );
+        tools::Resolver< Dotation >::Register( dotation->type_.GetId(), *dotation );
         controller_.Update( *this );
     }
     else

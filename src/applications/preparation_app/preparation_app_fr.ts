@@ -1255,6 +1255,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Long name size limit exceeded : %1.</source>
         <translation>Limite de taille du nom long dépassée : %1</translation>
     </message>
+    <message>
+        <source>Allocated stocks of nature %1 exceed max capacity.</source>
+        <translation>Stocks affectés de nature %1 supérieurs à la capacité maximum.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

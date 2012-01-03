@@ -30,6 +30,24 @@ namespace kernel
 class EquipmentType : public tools::Resolver< WeaponSystemType, std::string >
                     , private boost::noncopyable
 {
+public :
+    //! @name Types
+    //@{
+    struct CarryingSupplyFunction
+    {
+        CarryingSupplyFunction( const std::string& stockNature, double stockWeightCapacity, double stockVolumeCapacity )
+            : stockNature_        ( stockNature )
+            , stockWeightCapacity_( stockWeightCapacity )
+            , stockVolumeCapacity_( stockVolumeCapacity )
+        {
+            // NOTHING
+        }
+        std::string stockNature_;
+        double stockWeightCapacity_;
+        double stockVolumeCapacity_;
+    };
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -44,7 +62,7 @@ public:
     unsigned long GetId() const;
     tools::Iterator< const BreakdownOriginType& > CreateBreakdownsIterator() const;
     tools::Iterator< const DotationCapacityType& > CreateResourcesIterator() const;
-    bool IsLogSupplyFunctionCarrying() const;
+    const CarryingSupplyFunction* GetLogSupplyFunctionCarrying() const;
     //@}
 
 private:
@@ -73,7 +91,7 @@ private:
     unsigned long id_;
     T_Breakdowns breakdowns_;
     T_Resources resources_;
-    bool carryingLogSupplyFunction_;
+    std::auto_ptr< CarryingSupplyFunction > carryingSupplyFunction_;
     //@}
 };
 

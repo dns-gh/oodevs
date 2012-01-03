@@ -83,6 +83,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ ModelConsistencyChecker::eLimaNameUniqueness ]              = tr( "Duplicate name for limas %1." );
     errorDescriptions_[ ModelConsistencyChecker::eLimitNameUniqueness ]             = tr( "Duplicate name for limits %1." );
     errorDescriptions_[ ModelConsistencyChecker::eStockInitialization ]             = tr( "No stocks initialized." );
+    errorDescriptions_[ ModelConsistencyChecker::eStockMaxExceeded ]                = tr( "Allocated stocks of nature %1 exceed max capacity." );
     errorDescriptions_[ ModelConsistencyChecker::eLogisticInitialization ]          = tr( "No logistic link initialized." );
     errorDescriptions_[ ModelConsistencyChecker::eProfileUniqueness ]               = tr( "Association with multiple profiles: %1." );
     errorDescriptions_[ ModelConsistencyChecker::eProfileUnreadable ]               = tr( "Not 'readable' to any user profile. You will not be able to see it on the game." );
@@ -174,7 +175,8 @@ void ModelConsistencyDialog::UpdateDataModel()
                 QString text = ( error.type_ & ModelConsistencyChecker::eAllUniqueness ||
                                  error.type_ & ModelConsistencyChecker::eProfileUniqueness ||
                                  error.type_ & ModelConsistencyChecker::eGhostConverted ||
-                                 error.type_ & ModelConsistencyChecker::eLongNameSize )
+                                 error.type_ & ModelConsistencyChecker::eLongNameSize ||
+                                 error.type_ & ModelConsistencyChecker::eStockMaxExceeded )
                                ? errorDescriptions_[ error.type_ ].arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() )
                                : errorDescriptions_[ error.type_ ];
 

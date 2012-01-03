@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "ModelConsistencyChecker.h"
 #include "AgentsModel.h"
+#include "Dotation.h"
 #include "FormationModel.h"
 #include "GhostModel.h"
 #include "LimitsModel.h"
@@ -26,9 +27,13 @@
 #include "clients_gui/Tools.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/ComponentType.h"
 #include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -36,6 +41,7 @@
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
@@ -127,6 +133,8 @@ bool ModelConsistencyChecker::CheckConsistency( unsigned int filters /*= eAllChe
         CheckUniqueness( eLimitNameUniqueness, &CompareName );
     if( filters & eStockInitialization )
         CheckStockInitialization();
+    if( filters & eStockMaxExceeded )
+        CheckMaxStockExceeded();
     if( filters & eLogisticInitialization )
         CheckLogisticInitialization();
     if( filters & eProfileUniqueness )
@@ -221,6 +229,7 @@ void ModelConsistencyChecker::FillEntitiesCopy( E_ConsistencyCheck type )
         }
         break;
     case eStockInitialization:
+    case eStockMaxExceeded:
     case eLogisticInitialization:
     case eProfileUniqueness:
     case eProfileUnreadable:
@@ -280,6 +289,53 @@ void ModelConsistencyChecker::CheckStockInitialization()
         const Stocks* stocks = agent.Retrieve< Stocks >();
         if( agent.GetType().HasStocks() && stocks && !stocks->HasDotations() )
             AddError( eStockInitialization, &agent );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckMaxStockExceeded
+// Created: JSR 2012-01-03
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckMaxStockExceeded()
+{
+    Iterator< const Agent_ABC& > it = model_.GetAgentResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Agent_ABC& agent = it.NextElement();
+        const Stocks* stocks = agent.Retrieve< Stocks >();
+        if( stocks && stocks->HasDotations() )
+        {
+            typedef std::map< std::string, std::pair< double, double > > T_StockCapacities;
+            typedef T_StockCapacities::const_iterator                  CIT_StockCapacities;
+            T_StockCapacities maxCapacities;
+            tools::Iterator< const AgentComposition& > itComposition = agent.GetType().CreateIterator();
+            while( itComposition.HasMoreElements() )
+            {
+                const ComponentType& equipment = itComposition.NextElement().GetType();
+                const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( equipment.GetId() );
+                if( const EquipmentType::CarryingSupplyFunction* carrying = equipmentType.GetLogSupplyFunctionCarrying() )
+                {
+                    maxCapacities[ carrying->stockNature_ ].first += carrying->stockWeightCapacity_;
+                    maxCapacities[ carrying->stockNature_ ].second += carrying->stockVolumeCapacity_;
+                }
+            }
+
+            T_StockCapacities currentCapacities;
+            tools::Iterator< const Dotation& > itDotation = stocks->CreateIterator();
+            while( itDotation.HasMoreElements() )
+            {
+                const Dotation& dotation = itDotation.NextElement();
+                currentCapacities[ dotation.type_.GetNature() ].first += dotation.quantity_ * dotation.type_.GetUnitWeight();
+                currentCapacities[ dotation.type_.GetNature() ].second += dotation.quantity_ * dotation.type_.GetUnitVolume();
+            }
+
+            for( CIT_StockCapacities it = currentCapacities.begin(); it != currentCapacities.end(); ++it )
+            {
+                CIT_StockCapacities maxIt = maxCapacities.find( it->first );
+                if( maxIt == maxCapacities.end() || it->second.first > maxIt->second.first || it->second.second > maxIt->second.second )
+                    AddError( eStockMaxExceeded, &agent, it->first );
+            }
+        }
     }
 }
 
@@ -399,7 +455,7 @@ void ModelConsistencyChecker::CheckLongNameSize()
         if( diplo && !( diplo->GetKarma() == Karma::unknown_ ) )
         {
             int maxSize = diplo->GetKarma() == Karma::enemy_ ? 15 : 17;
-            int curSize = gui::LongNameHelper::GetEntityLongName( entity ).size();
+            std::size_t curSize = gui::LongNameHelper::GetEntityLongName( entity ).size();
             if( curSize > maxSize )
                 AddError( eLongNameSize, &entity, boost::str( boost::format( "%d > %d" ) % curSize % maxSize ) );
         }

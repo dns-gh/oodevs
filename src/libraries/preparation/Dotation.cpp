@@ -19,7 +19,7 @@ using namespace kernel;
 // Created: SBO 2006-10-11
 // -----------------------------------------------------------------------------
 Dotation::Dotation( const DotationType& type, unsigned int quantity )
-    : type_( &type )
+    : type_    ( type )
     , quantity_( quantity )
 {
     // NOTHING
@@ -30,13 +30,10 @@ Dotation::Dotation( const DotationType& type, unsigned int quantity )
 // Created: SBO 2006-10-11
 // -----------------------------------------------------------------------------
 Dotation::Dotation( xml::xistream& xis, const tools::Resolver_ABC< DotationType, std::string >& resolver )
+    : type_    ( resolver.Get( xis.attribute< std::string >( "name" ) ) )
+    , quantity_( static_cast< unsigned int >( xis.attribute< double >( "quantity" ) ) )
 {
-    std::string name;
-    double quantity;
-    xis >> xml::attribute( "name", name )
-        >> xml::attribute( "quantity", quantity );
-    type_ = &resolver.Get( name );
-    quantity_ = unsigned int( quantity );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,6 +51,6 @@ Dotation::~Dotation()
 // -----------------------------------------------------------------------------
 void Dotation::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "name", type_->GetName() )
-        << xml::attribute( "quantity", unsigned int( quantity_ ) );
+    xos << xml::attribute( "name", type_.GetName() )
+        << xml::attribute( "quantity", quantity_ );
 }

@@ -11,6 +11,7 @@
 #define __Dotation_h_
 
 #include "tools/Resolver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -29,7 +30,7 @@ namespace xml
 */
 // Created: SBO 2006-10-11
 // =============================================================================
-class Dotation
+class Dotation : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -47,7 +48,7 @@ public:
 public:
     //! @name Member data
     //@{
-    const kernel::DotationType* type_;
+    const kernel::DotationType& type_;
     unsigned int quantity_;
     //@}
 };

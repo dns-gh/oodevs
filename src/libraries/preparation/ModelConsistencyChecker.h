@@ -50,21 +50,22 @@ public:
         eAllUniqueness                   = eLongNameUniqueness | eTeamNameUniqueness | eObjectNameUniqueness | eLimaNameUniqueness | eLimitNameUniqueness,
 
         eStockInitialization             = 0x0020,
-        eLogisticInitialization          = 0x0040,
-        eAllInitialization               = eStockInitialization | eLogisticInitialization,
+        eStockMaxExceeded                = 0x0040,
+        eLogisticInitialization          = 0x0080,
+        eAllInitialization               = eStockInitialization | eLogisticInitialization | eStockMaxExceeded,
 
         eAllCheckWithoutProfile          = eAllUniqueness | eAllInitialization,
 
-        eProfileUniqueness               = 0x0080,
-        eProfileUnreadable               = 0x0100,
-        eProfileUnwritable               = 0x0200,
+        eProfileUniqueness               = 0x0100,
+        eProfileUnreadable               = 0x0200,
+        eProfileUnwritable               = 0x0400,
         eAllProfile                      = eProfileUniqueness | eProfileUnreadable | eProfileUnwritable,
 
-        eGhostExistence                  = 0x0400,
-        eGhostConverted                  = 0x0800,
+        eGhostExistence                  = 0x0800,
+        eGhostConverted                  = 0x1000,
         eAllGhost                        = eGhostExistence | eGhostConverted,
 
-        eLongNameSize                    = 0x1000,
+        eLongNameSize                    = 0x2000,
         eAllDQP                          = eLongNameSize,
 
         eAllChecks                       = eAllCheckWithoutProfile | eAllProfile | eAllGhost | eAllDQP
@@ -109,6 +110,7 @@ private:
     void FillEntitiesCopy( E_ConsistencyCheck type );
     void CheckUniqueness( E_ConsistencyCheck type, bool ( *comparator )( const kernel::Entity_ABC&, const kernel::Entity_ABC& ) );
     void CheckStockInitialization();
+    void CheckMaxStockExceeded();
     void CheckLogisticInitialization();
     void CheckProfileUniqueness();
     void CheckProfileInitialization();

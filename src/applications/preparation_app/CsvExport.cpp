@@ -259,8 +259,7 @@ void CsvExport::WriteStocks( boost::filesystem::path& path, const std::string& s
             while( itStock.HasMoreElements() )
             {
                 const Dotation& dotation = itStock.NextElement();
-                if( dotation.type_ )
-                    file << GetName( child ) << separator << dotation.type_->GetName() << separator << dotation.quantity_ << std::endl;
+                file << GetName( child ) << separator << dotation.type_.GetName() << separator << dotation.quantity_ << std::endl;
             }
         }
     }
