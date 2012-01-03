@@ -87,7 +87,7 @@ void PHY_MaintenanceRepairConsign::DoReturnComposante()
 {
     assert( pComposanteState_ );
     assert( !pRepairer_ );
-    nTimer_ = 0;
+    ResetTimer( 0 );
     pComposanteState_->NotifyRepaired();
     pComposanteState_ = 0;
 }
@@ -100,8 +100,7 @@ bool PHY_MaintenanceRepairConsign::DoWaitingForParts()
 {
     assert( pComposanteState_ );
     assert( !pRepairer_ );
-
-    nTimer_ = 0;
+    ResetTimer( 0 );
     return GetPionMaintenance().ConsumePartsForBreakdown( pComposanteState_->GetComposanteBreakdown() );
 }
 
@@ -114,7 +113,7 @@ bool PHY_MaintenanceRepairConsign::DoWaitingForRepairer()
     assert( pComposanteState_ );
     assert( !pRepairer_ );
 
-    nTimer_    = 0;
+    ResetTimer( 0 );
     pRepairer_ = GetPionMaintenance().GetAvailableRepairer( pComposanteState_->GetComposanteBreakdown() );
     if( !pRepairer_ )
     {
@@ -134,7 +133,7 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForCarrier()
 {
     assert( pComposanteState_ );
     assert( !pRepairer_ );
-    nTimer_ = 0;
+    ResetTimer( 0 );
     SetState( eWaitingForCarrier );
 }
 
@@ -165,7 +164,7 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForParts()
 {
     assert( pComposanteState_ );
     SetState( eWaitingForParts );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +175,7 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairer()
 {
     assert( pComposanteState_ );
     SetState( eWaitingForRepairer );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,9 +185,8 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairer()
 void PHY_MaintenanceRepairConsign::EnterStateRepairing()
 {
     assert( pComposanteState_ );
-
     SetState( eRepairing );
-    nTimer_ = (int)( pComposanteState_->GetComposanteBreakdown().GetRepairTime() );
+    ResetTimer( pComposanteState_->GetComposanteBreakdown().GetRepairTime() );
 }
 
 
@@ -203,8 +201,8 @@ void PHY_MaintenanceRepairConsign::EnterStateGoingBackToWar()
 
     GetPionMaintenance().StopUsingForLogistic( *pRepairer_ );
     pRepairer_ = 0;
-    nTimer_    = pComposanteState_->ApproximateTravelTime( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(), pComposanteState_->GetPionPosition() );
     SetState( eGoingBackToWar );
+    ResetTimer( pComposanteState_->ApproximateTravelTime( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(), pComposanteState_->GetPionPosition() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -213,7 +211,7 @@ void PHY_MaintenanceRepairConsign::EnterStateGoingBackToWar()
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceRepairConsign::Update()
 {
-    if( --nTimer_ > 0 )
+    if( DecrementTimer() )
         return GetState() == eFinished;
 
     switch( GetState() )

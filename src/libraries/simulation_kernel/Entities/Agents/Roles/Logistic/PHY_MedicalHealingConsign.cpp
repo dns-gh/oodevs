@@ -72,7 +72,7 @@ void PHY_MedicalHealingConsign::EnterStateWaitingForHealing()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     SetState( eWaitingForHealing );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ void PHY_MedicalHealingConsign::EnterStateHealing()
     assert( pHumanState_ );
     assert( pDoctor_ );
     SetState( eHealing );
-    nTimer_ = (unsigned int)( pDoctor_->GetHealingTime( pHumanState_->GetHuman() ) );
+    ResetTimer( pDoctor_->GetHealingTime( pHumanState_->GetHuman() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ void PHY_MedicalHealingConsign::EnterStateResting()
     assert( pDoctor_ );
 
     // Healing time elapsed
-    nTimer_ = pHumanState_->Heal( *pDoctor_ ); // Returns resting time
+    ResetTimer( pHumanState_->Heal( *pDoctor_ ) ); // Returns resting time
     GetPionMedical().StopUsingForLogistic( *pDoctor_ );
     pDoctor_ = 0;
     SetState( eResting );
@@ -153,7 +153,7 @@ void PHY_MedicalHealingConsign::EnterStateSearchingForHealingArea()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     SetState( eSearchingForHealingArea );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ void PHY_MedicalHealingConsign::DoSearchForHealingArea()
     if( pLogisticManager && pLogisticManager->MedicalHandleHumanForHealing( *pHumanState_ ) )
     {
         SetState( eFinished );
-        nTimer_ = 0;
+        ResetTimer( 0 );
         pHumanState_ = 0;
         return;
     }
@@ -182,7 +182,7 @@ void PHY_MedicalHealingConsign::EnterStateWaitingForCollection()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    nTimer_ = 0;
+    ResetTimer( 0 );
     SetState( eWaitingForCollection );
 }
 
@@ -225,7 +225,7 @@ void PHY_MedicalHealingConsign::DoReturnHuman()
 // -----------------------------------------------------------------------------
 bool PHY_MedicalHealingConsign::Update()
 {
-    if( --nTimer_ > 0 )
+    if( DecrementTimer() )
         return GetState() == eFinished;
 
     switch( GetState() )

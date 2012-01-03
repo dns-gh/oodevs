@@ -72,7 +72,7 @@ void PHY_MedicalCollectionConsign::EnterStateWaitingForCollection()
     assert( pHumanState_ );
     assert( !pCollectionAmbulance_ );
     pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    nTimer_ = 0;
+    ResetTimer( 0 );
     SetState( eWaitingForCollection );
 }
 
@@ -98,7 +98,7 @@ void PHY_MedicalCollectionConsign::EnterStateCollectionLoading()
 //    assert( pCollectionAmbulance_ );
     assert( GetState() == eWaitingForCollection );
     SetState( eCollectionLoading );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +111,7 @@ bool PHY_MedicalCollectionConsign::EnterStateCollectionWaitingForFullLoading()
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
 
-    nTimer_ = 0;
+    ResetTimer( 0 );
     if( GetState() == eCollectionLoading )
     {
         SetState( eCollectionWaitingForFullLoading );
@@ -132,7 +132,7 @@ void PHY_MedicalCollectionConsign::EnterStateSearchingForSortingArea()
     assert( pCollectionAmbulance_ );
     assert( GetState() == eCollectionWaitingForFullLoading );
     SetState( eSearchingForSortingArea );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +146,7 @@ void PHY_MedicalCollectionConsign::EnterStateCollectionGoingTo()
     assert( pCollectionAmbulance_ );
     assert( GetState() == eSearchingForSortingArea );
     SetState( eCollectionGoingTo );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +160,7 @@ void PHY_MedicalCollectionConsign::EnterStateCollectionUnloading()
     assert( pCollectionAmbulance_ );
     assert( GetState() == eCollectionGoingTo );
     SetState( eCollectionUnloading );
-    nTimer_ = 0;
+    ResetTimer( 0 );;
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +173,7 @@ void PHY_MedicalCollectionConsign::TransferToSortingArea( PHY_RoleInterface_Medi
     assert( pCollectionAmbulance_ );
     assert( GetState() == eCollectionUnloading );
     SetState( eFinished );
-    nTimer_               = 0;
+    ResetTimer( 0 );
     sortingArea.HandleHumanForSorting( *pCollectionAmbulance_, *pHumanState_ );
     pCollectionAmbulance_ = 0;
     pHumanState_          = 0;
@@ -188,7 +188,7 @@ void PHY_MedicalCollectionConsign::NotifyOutOfMedicalSystem()
     assert( pHumanState_ );
     SetState( eFinished );
     pCollectionAmbulance_ = 0;
-    nTimer_               = 0;
+    ResetTimer( 0 );
 }
 
 
@@ -202,7 +202,7 @@ void PHY_MedicalCollectionConsign::NotifyOutOfMedicalSystem()
 // -----------------------------------------------------------------------------
 bool PHY_MedicalCollectionConsign::Update()
 {
-    if( --nTimer_ > 0 )
+    if( DecrementTimer() )
         return GetState() == eFinished;
 
     switch( GetState() )
@@ -217,6 +217,8 @@ bool PHY_MedicalCollectionConsign::Update()
         default:
             assert( false );
     }
+    if( pCollectionAmbulance_ )
+        SendExternalTimerValue( pCollectionAmbulance_->GetTimer() );
     return GetState() == eFinished;
 }
 

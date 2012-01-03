@@ -69,6 +69,7 @@ private:
     bool bMentalDiseased_;
     bool bContaminated_;
     sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus nState_;
+    unsigned long currentStateEndTick_;
     bool bDiagnosed_;
     //@}
 };

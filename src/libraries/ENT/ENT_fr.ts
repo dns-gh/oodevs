@@ -297,7 +297,7 @@
     </message>
     <message>
         <source>tow-truck moving to target</source>
-        <translation>remorqueur en déplacement allé</translation>
+        <translation>remorqueur en déplacement aller</translation>
     </message>
     <message>
         <source>tow-truck loading</source>
@@ -537,7 +537,7 @@
     </message>
     <message>
         <source>looking for triage area</source>
-        <translation type="unfinished"></translation>
+        <translation>recherche d&apos;un secteur de triage</translation>
     </message>
     <message>
         <source>energy</source>

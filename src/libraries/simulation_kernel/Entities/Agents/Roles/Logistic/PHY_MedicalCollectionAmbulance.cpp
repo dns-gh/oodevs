@@ -353,6 +353,15 @@ unsigned int PHY_MedicalCollectionAmbulance::GetNbrHumans() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_MedicalCollectionAmbulance::GetNbrHumans
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+int PHY_MedicalCollectionAmbulance::GetTimer() const
+{
+    return nTimer_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_MedicalCollectionAmbulance::IsAnEmergency
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------

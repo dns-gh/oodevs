@@ -93,7 +93,7 @@ bool PHY_MaintenanceTransportConsign::DoWaitingForCarrier()
     assert( pComposanteState_ );
     assert( !pCarrier_ );
 
-    nTimer_ = 0;
+    ResetTimer( 0 );
     pCarrier_ = GetPionMaintenance().GetAvailableHauler( GetComposanteType() );
     if( pCarrier_ )
         GetPionMaintenance().StartUsingForLogistic( *pCarrier_ );
@@ -109,8 +109,7 @@ bool PHY_MaintenanceTransportConsign::DoSearchForUpperLevel()
     assert( pComposanteState_ );
     assert( !pCarrier_ );
 
-    nTimer_ = 0;
-
+    ResetTimer( 0 );
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     if( !pLogisticManager )
         return false;
@@ -138,7 +137,7 @@ void PHY_MaintenanceTransportConsign::EnterStateWaitingForCarrier()
     assert( !pCarrier_ );
 
     SetState( eWaitingForCarrier );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +150,7 @@ void PHY_MaintenanceTransportConsign::EnterStateGoingFrom()
     assert( !pCarrier_ );
 
     SetState( eGoingFrom );
-    nTimer_ = pComposanteState_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
+    ResetTimer( pComposanteState_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() ) );
     pComposanteState_->NotifyHandledByMaintenance();
 }
 
@@ -165,7 +164,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingTo()
     assert( pCarrier_ );
 
     SetState( eCarrierGoingTo );
-    nTimer_ = pCarrier_->ApproximateTravelTime( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(), pComposanteState_->GetComposantePosition() );
+    ResetTimer( pCarrier_->ApproximateTravelTime( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(), pComposanteState_->GetComposantePosition() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +177,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierLoading()
     assert( pCarrier_ );
 
     SetState( eCarrierLoading );
-    nTimer_ = ( int ) pCarrier_->GetType().GetHaulerLoadingTime();
+    ResetTimer( pCarrier_->GetType().GetHaulerLoadingTime() );
     pComposanteState_->NotifyHandledByMaintenance();
 }
 
@@ -192,7 +191,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingFrom()
     assert( pCarrier_ );
 
     SetState( eCarrierGoingFrom );
-    nTimer_ = pCarrier_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
+    ResetTimer( pCarrier_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +204,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierUnloading()
     assert( pCarrier_ );
 
     SetState( eCarrierUnloading );
-    nTimer_ = ( int ) pCarrier_->GetType().GetHaulerUnloadingTime();
+    ResetTimer( pCarrier_->GetType().GetHaulerUnloadingTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +224,7 @@ void PHY_MaintenanceTransportConsign::EnterStateDiagnosing()
     if( pComposanteState_->NeedDiagnosis() )
     {
         SetState( eDiagnosing );
-        nTimer_ = PHY_BreakdownType::GetDiagnosticTime();
+        ResetTimer( PHY_BreakdownType::GetDiagnosticTime() );
     }
     else
         ChooseStateAfterDiagnostic();
@@ -241,7 +240,7 @@ void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
 
     pComposanteState_->NotifyDiagnosed();
     pComposanteState_->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
@@ -259,7 +258,7 @@ void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceTransportConsign::Update()
 {
-    if( --nTimer_ > 0 )
+    if( DecrementTimer() )
         return GetState() == eFinished;
 
     switch( GetState() )

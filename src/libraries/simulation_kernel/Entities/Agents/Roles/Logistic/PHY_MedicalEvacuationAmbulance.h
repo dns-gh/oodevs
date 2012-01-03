@@ -45,6 +45,11 @@ public:
     void UnregisterHuman( PHY_MedicalEvacuationConsign& consign );
     //@}
 
+    //! @name Accessors
+    //@{
+    int GetTimer() const;
+    //@}
+
 private:
     //! @name Types
     //@{
@@ -84,7 +89,7 @@ private:
     T_ConsignVector             consigns_;
     E_State                     nState_;
     int                         nTimer_;
-    double                    rNbrHumanHandled_;
+    double                      rNbrHumanHandled_;
     //@}
 };
 

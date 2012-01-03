@@ -49,6 +49,7 @@ public:
     //@{
     bool IsAnEmergency() const;
     unsigned int GetNbrHumans () const;
+    int          GetTimer() const;
     //@}
 
 private:

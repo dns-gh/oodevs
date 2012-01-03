@@ -11,6 +11,7 @@
 #include "LogMedicalConsign.h"
 #include "LogisticConsigns.h"
 #include "Tools.h"
+#include "Simulation.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -25,17 +26,19 @@ using namespace kernel;
 // Name: LogMedicalConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const sword::LogMedicalHandlingCreation& message )
-    : controller_      ( controller )
-    , resolver_        ( resolver )
-    , nID_             ( message.request().id() )
-    , consumer_        ( resolver_.Get( message.unit().id() ) )
-    , pPionLogHandling_( 0 )
-    , wound_           ( E_HumanWound( message.wound() ) )
-    , bMentalDeceased_ ( message.mental_wound() )
-    , bContaminated_   ( message.nbc_contaminated() )
-    , diagnosed_       ( false )
-    , nState_          ( eLogMedicalHandlingStatus_Termine )
+LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const Simulation& simulation, const sword::LogMedicalHandlingCreation& message )
+    : controller_         ( controller )
+    , resolver_           ( resolver )
+    , simulation_         ( simulation )
+    , nID_                ( message.request().id() )
+    , consumer_           ( resolver_.Get( message.unit().id() ) )
+    , pPionLogHandling_   ( 0 )
+    , wound_              ( E_HumanWound( message.wound() ) )
+    , bMentalDeceased_    ( message.mental_wound() )
+    , bContaminated_      ( message.nbc_contaminated() )
+    , diagnosed_          ( false )
+    , nState_             ( eLogMedicalHandlingStatus_Termine )
+    , currentStateEndTick_( std::numeric_limits< unsigned int >::max() )
 {
     consumer_.Get< LogMedicalConsigns >().AddConsign( *this );
 }
@@ -73,6 +76,8 @@ void LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message )
         wound_ = E_HumanWound( message.wound() );
     if( message.has_state()  )
         nState_ = E_LogMedicalHandlingStatus( message.state() );
+    if( message.has_current_state_end_tick() )
+        currentStateEndTick_ = message.current_state_end_tick();
     if( message.has_diagnosed()  )
         diagnosed_ = message.diagnosed();
     controller_.Update( *this );
@@ -95,6 +100,21 @@ void LogMedicalConsign::Display( Displayer_ABC& displayer, Displayer_ABC& itemDi
         itemDisplayer.Display( tools::translate( "Logistic", "Injury:" ), wound_ );
     else
         itemDisplayer.Display( tools::translate( "Logistic", "Injury:" ), tools::translate( "Logistic", "Not diagnosed" ) );
+    if( currentStateEndTick_ == std::numeric_limits< unsigned int >::max() )
+        itemDisplayer.Display( tools::translate( "Logistic", "Current state end:" ), tools::translate( "Logistic", "Unknown" ) );
+    else
+    {
+        unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + currentStateEndTick_ * simulation_.GetTickDuration();
+        QDateTime endDate = QDateTime::	fromTime_t( endSeconds );
+        QDateTime curDate = simulation_.GetDateTime();
+
+        QString dateDisplay;
+        if ( endDate.date() != curDate.date() )
+            dateDisplay += endDate.date().toString() + " ";
+        dateDisplay += endDate.time().toString();
+
+        itemDisplayer.Display( tools::translate( "Logistic", "Current state end:" ), dateDisplay );
+    }
 }
 
 // -----------------------------------------------------------------------------

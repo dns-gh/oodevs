@@ -76,7 +76,7 @@ void PHY_MedicalSortingConsign::EnterStateWaitingForSorting()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     SetState( eWaitingForSorting );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ void PHY_MedicalSortingConsign::EnterStateSorting()
     assert( pHumanState_ );
     assert( pDoctor_ );
     SetState( eSorting );
-    nTimer_ = (unsigned int)( PHY_HumanWound::GetSortingTime() );
+    ResetTimer( PHY_HumanWound::GetSortingTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +117,7 @@ void PHY_MedicalSortingConsign::EnterStateSearchingForHealingArea()
     assert( pHumanState_ );
 
     SetState( eSearchingForHealingArea );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 
     // Sorting
     if( pDoctor_ )
@@ -138,7 +138,7 @@ void PHY_MedicalSortingConsign::DoSearchForHealingArea()
     if( pLogisticManager && pLogisticManager->MedicalHandleHumanForHealing( *pHumanState_ ) )
     {
         SetState( eFinished );
-        nTimer_ = 0;
+        ResetTimer( 0 );
         pHumanState_ = 0;
         return;
     }
@@ -154,7 +154,7 @@ void PHY_MedicalSortingConsign::EnterStateWaitingForCollection()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    nTimer_ = 0;
+    ResetTimer( 0 );
     SetState( eWaitingForCollection );
 }
 
@@ -193,7 +193,7 @@ bool PHY_MedicalSortingConsign::DoWaitingForCollection()
 // -----------------------------------------------------------------------------
 bool PHY_MedicalSortingConsign::Update()
 {
-    if( --nTimer_ > 0 )
+    if( DecrementTimer() )
         return GetState() == eFinished;
 
     switch( GetState() )

@@ -260,3 +260,12 @@ bool PHY_MedicalEvacuationAmbulance::Update()
     }
     return nState_ == eFinished;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalEvacuationAmbulance::GetNbrHumans
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+int PHY_MedicalEvacuationAmbulance::GetTimer() const
+{
+    return nTimer_;
+}

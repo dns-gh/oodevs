@@ -96,18 +96,23 @@ protected:
 
     E_State GetState() const;
     void    SetState( E_State nNewState );
+    void ResetTimer( int timer );
+    bool DecrementTimer();
+    void SendExternalTimerValue( int timer );
 
     PHY_RoleInterface_Medical& GetPionMedical() const;
     //@}
 
 private:
+    int                         nTimer_;
     E_State                     nState_;
+    unsigned                    currentStateEndTimeStep_; // Only used to send the information over the network
     bool                        bHasChanged_;
     PHY_RoleInterface_Medical*  pMedical_;
 
 protected:
     PHY_MedicalHumanState*   pHumanState_;
-    int                      nTimer_;
+   
 };
 
 // -----------------------------------------------------------------------------
@@ -120,7 +125,8 @@ void PHY_MedicalConsign_ABC::serialize( Archive& file, const unsigned int )
     file & pMedical_
          & pHumanState_
          & nTimer_
-         & nState_;
+         & nState_
+         & currentStateEndTimeStep_;
 }
 
 #endif // __PHY_MedicalConsign_ABC_h_

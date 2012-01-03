@@ -11,6 +11,7 @@
 #include "LogMaintenanceConsign.h"
 #include "LogisticConsigns.h"
 #include "Tools.h"
+#include "Simulation.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -26,16 +27,18 @@ using namespace kernel;
 // Name: LogMaintenanceConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const sword::LogMaintenanceHandlingCreation& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver, const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver )
-    : controller_      ( controller )
-    , resolver_        ( resolver )
-    , nID_             ( message.request().id() )
-    , consumer_        ( resolver_.Get( message.unit().id() ) )
-    , pPionLogHandling_( 0 )
-    , equipmentType_   ( & componentResolver.Get( message.equipement().id() ) )
-    , breakdownType_   ( & breakdownResolver.Get( message.breakdown().id() ) )
-    , diagnosed_       ( false )
-    , nState_          ( eLogMaintenanceHandlingStatus_Termine )
+LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const sword::LogMaintenanceHandlingCreation& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver, const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver, const Simulation& simulation )
+    : controller_         ( controller )
+    , resolver_           ( resolver )
+    , simulation_         ( simulation )
+    , nID_                ( message.request().id() )
+    , consumer_           ( resolver_.Get( message.unit().id() ) )
+    , pPionLogHandling_   ( 0 )
+    , equipmentType_      ( & componentResolver.Get( message.equipement().id() ) )
+    , breakdownType_      ( & breakdownResolver.Get( message.breakdown().id() ) )
+    , diagnosed_          ( false )
+    , nState_             ( eLogMaintenanceHandlingStatus_Termine )
+    , currentStateEndTick_( std::numeric_limits< unsigned int >::max() )
 {
     consumer_.Get< LogMaintenanceConsigns >().AddConsign( *this );
 }
@@ -62,6 +65,8 @@ void LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& m
         nState_ = E_LogMaintenanceHandlingStatus( message.state() );
     if( message.has_diagnosed()  )
         diagnosed_ = message.diagnosed();
+    if( message.has_current_state_end_tick() )
+        currentStateEndTick_ = message.current_state_end_tick();
     if( message.has_provider() && ( !pPionLogHandling_ || message.provider().id() != int( pPionLogHandling_->GetId() ) ) )
     {
         if( pPionLogHandling_ )
@@ -86,6 +91,21 @@ void LogMaintenanceConsign::Display( Displayer_ABC& displayer, Displayer_ABC& it
                  .Display( tools::translate( "Logistic", "Equipment:" ), diagnosed_ ? equipmentType_ : 0 )
                  .Display( tools::translate( "Logistic", "Breakdown:" ), diagnosed_ ? breakdownType_ : 0 )
                  .Display( tools::translate( "Logistic", "State:" ), nState_ );
+    if( currentStateEndTick_ == std::numeric_limits< unsigned int >::max() )
+        itemDisplayer.Display( tools::translate( "Logistic", "Current state end:" ), tools::translate( "Logistic", "Unknown" ) );
+    else
+    {
+        unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + currentStateEndTick_ * simulation_.GetTickDuration();
+        QDateTime endDate = QDateTime::	fromTime_t( endSeconds );
+        QDateTime curDate = simulation_.GetDateTime();
+
+        QString dateDisplay;
+        if ( endDate.date() != curDate.date() )
+            dateDisplay += endDate.date().toString() + " ";
+        dateDisplay += endDate.time().toString();
+
+        itemDisplayer.Display( tools::translate( "Logistic", "Current state end:" ), dateDisplay );
+    }
 }
 
 // -----------------------------------------------------------------------------

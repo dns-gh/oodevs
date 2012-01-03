@@ -29,6 +29,8 @@ namespace sword
     class LogMaintenanceHandlingUpdate;
 }
 
+class Simulation;
+
 // =============================================================================
 /** @class  LogMaintenanceConsign
     @brief  LogMaintenanceConsign
@@ -42,7 +44,7 @@ public:
     //@{
              LogMaintenanceConsign( kernel::Controller& controller, const sword::LogMaintenanceHandlingCreation& message,
                                     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::ComponentType >& componentResolver,
-                                    const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver );
+                                    const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver, const Simulation& simulation );
     virtual ~LogMaintenanceConsign();
     //@}
 
@@ -65,6 +67,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const Simulation& simulation_;
     unsigned int nID_;
     kernel::Agent_ABC& consumer_;
     kernel::Agent_ABC* pPionLogHandling_;
@@ -72,6 +75,7 @@ private:
     const kernel::BreakdownType* breakdownType_;
     bool diagnosed_;
     E_LogMaintenanceHandlingStatus nState_;
+    unsigned int currentStateEndTick_;
     //@}
 };
 

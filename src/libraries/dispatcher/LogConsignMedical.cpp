@@ -21,17 +21,18 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 LogConsignMedical::LogConsignMedical( const Model& model, const sword::LogMedicalHandlingCreation& msg )
-    : SimpleEntity< >( msg.request().id() )
-    , model_          ( model )
-    , agent_          ( model.Agents().Get( msg.unit().id() ) )
-    , nTickCreation_  ( msg.tick() )
-    , pTreatingAgent_ ( 0 )
-    , nRank_          ( msg.rank() )
-    , nWound_         ( msg.wound() )
-    , bMentalDiseased_( msg.mental_wound() != 0 )
-    , bContaminated_  ( msg.nbc_contaminated() != 0 )
-    , nState_         ( sword::LogMedicalHandlingUpdate::collection_ambulance_unloading )
-    , bDiagnosed_     ( false )
+    : SimpleEntity< >     ( msg.request().id() )
+    , model_              ( model )
+    , agent_              ( model.Agents().Get( msg.unit().id() ) )
+    , nTickCreation_      ( msg.tick() )
+    , pTreatingAgent_     ( 0 )
+    , nRank_              ( msg.rank() )
+    , nWound_             ( msg.wound() )
+    , bMentalDiseased_    ( msg.mental_wound() != 0 )
+    , bContaminated_      ( msg.nbc_contaminated() != 0 )
+    , nState_             ( sword::LogMedicalHandlingUpdate::collection_ambulance_unloading )
+    , currentStateEndTick_( std::numeric_limits< unsigned long >::max() )
+    , bDiagnosed_         ( false )
 {
     // NOTHING
 }
@@ -61,6 +62,8 @@ void LogConsignMedical::Update( const sword::LogMedicalHandlingUpdate& msg )
         bContaminated_ = msg.nbc_contaminated() != 0;
     if( msg.has_state() )
         nState_ = msg.state();
+    if( msg.has_current_state_end_tick() )
+        currentStateEndTick_ = msg.current_state_end_tick();
     if( msg.has_diagnosed() )
         bDiagnosed_ = msg.diagnosed() != 0;
 }
@@ -99,6 +102,7 @@ void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().set_nbc_contaminated( bContaminated_);
     asn().set_diagnosed( bDiagnosed_);
     asn().set_state( nState_);
+    asn().set_current_state_end_tick( currentStateEndTick_ );
     asn.Send( publisher );
 }
 

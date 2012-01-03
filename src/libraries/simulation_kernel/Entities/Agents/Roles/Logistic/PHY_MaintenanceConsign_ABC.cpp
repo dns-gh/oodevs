@@ -16,6 +16,7 @@
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
+#include "MIL_AgentServer.h"
 #include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
@@ -23,10 +24,11 @@
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC(  MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
-    : pMaintenance_    ( &maintenanceAgent )
-    , pComposanteState_( &composanteState )
-    , nTimer_          ( 0 )
-    , bHasChanged_     ( true )
+    : pMaintenance_           ( &maintenanceAgent )
+    , pComposanteState_       ( &composanteState )
+    , nTimer_                 ( 0 )
+    , currentStateEndTimeStep_( std::numeric_limits< unsigned >::max() )
+    , bHasChanged_            ( true )
 {
     pComposanteState_->SetConsign( this );
 }
@@ -36,10 +38,11 @@ PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC(  MIL_Agent_ABC& maintena
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC()
-    : pMaintenance_    ( 0 )
-    , pComposanteState_( 0 )
-    , bHasChanged_     ( true )
-    , nTimer_          ( 0 )
+    : pMaintenance_            ( 0 )
+    , pComposanteState_        ( 0 )
+    , nTimer_                  ( 0 )
+    , currentStateEndTimeStep_ ( std::numeric_limits< unsigned >::max() )
+    , bHasChanged_             ( true )
 {
     // NOTHING
 }
@@ -81,10 +84,8 @@ const PHY_Breakdown& PHY_MaintenanceConsign_ABC::GetComposanteBreakdown() const
 void PHY_MaintenanceConsign_ABC::Cancel()
 {
     assert( pComposanteState_ );
-
-
     SetState( eFinished );
-    nTimer_ = 0;
+    ResetTimer( 0 );
     pComposanteState_ = 0;
 }
 
@@ -95,7 +96,7 @@ void PHY_MaintenanceConsign_ABC::Cancel()
 void PHY_MaintenanceConsign_ABC::EnterStateFinished()
 {
     SetState( eFinished );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,6 +109,7 @@ void PHY_MaintenanceConsign_ABC::SendFullState( client::LogMaintenanceHandlingUp
     assert( pMaintenance_ );
     asn().mutable_provider()->set_id( pMaintenance_->GetID() );
     asn().set_state( sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus( nState_ ) );
+    asn().set_current_state_end_tick( currentStateEndTimeStep_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +133,7 @@ void PHY_MaintenanceConsign_ABC::Clean()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceConsign_ABC::SetTimer
+// Name: PHY_MaintenanceConsign_ABC::SetState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceConsign_ABC::SetState( E_State nNewState )
@@ -141,12 +143,38 @@ void PHY_MaintenanceConsign_ABC::SetState( E_State nNewState )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::ResetTimer
+// Created: NLD 2012-01-02
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceConsign_ABC::ResetTimer( int timer )
+{
+    nTimer_ = timer;
+    unsigned tmp = std::numeric_limits< unsigned >::max();
+    if( timer > 0 )
+        tmp = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + timer;
+    if( tmp != currentStateEndTimeStep_ )
+    {
+        currentStateEndTimeStep_ = tmp;
+        bHasChanged_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceConsign_ABC::GetState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
 PHY_MaintenanceConsign_ABC::E_State PHY_MaintenanceConsign_ABC::GetState() const
 {
     return nState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::DecrementTimer
+// Created: NLD 2012-01-02
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceConsign_ABC::DecrementTimer()
+{
+    return --nTimer_ > 0;
 }
 
 // -----------------------------------------------------------------------------

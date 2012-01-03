@@ -21,15 +21,16 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 LogConsignMaintenance::LogConsignMaintenance( const Model& model, const sword::LogMaintenanceHandlingCreation& msg )
-    : SimpleEntity<>( msg.request().id() )
-    , model_         ( model )
-    , agent_         ( model.Agents().Get( msg.unit().id() ) )
-    , nTickCreation_ ( msg.tick() )
-    , nEquipmentType_( msg.equipement().id() )
-    , nBreakdownType_( msg.breakdown().id() )
-    , pTreatingAgent_( 0 )
-    , nState_        ( sword::LogMaintenanceHandlingUpdate::waiting_for_parts )
-    , bDiagnosed_    ( false )
+    : SimpleEntity<>      ( msg.request().id() )
+    , model_              ( model )
+    , agent_              ( model.Agents().Get( msg.unit().id() ) )
+    , nTickCreation_      ( msg.tick() )
+    , nEquipmentType_     ( msg.equipement().id() )
+    , nBreakdownType_     ( msg.breakdown().id() )
+    , pTreatingAgent_     ( 0 )
+    , nState_             ( sword::LogMaintenanceHandlingUpdate::waiting_for_parts )
+    , currentStateEndTick_( std::numeric_limits< unsigned long >::max() )
+    , bDiagnosed_         ( false )
 {
     // NOTHING
 }
@@ -53,6 +54,8 @@ void LogConsignMaintenance::Update( const sword::LogMaintenanceHandlingUpdate& m
         bDiagnosed_ = msg.diagnosed() != 0;
     if( msg.has_state() )
         nState_ = msg.state();
+     if( msg.has_current_state_end_tick() )
+        currentStateEndTick_ = msg.current_state_end_tick();
     pTreatingAgent_ = ( msg.provider().id() == 0 )? 0 : &model_.Agents().Get( msg.provider().id() );
 }
 
@@ -83,6 +86,7 @@ void LogConsignMaintenance::SendFullUpdate( ClientPublisher_ABC& publisher ) con
     message().mutable_provider()->set_id( pTreatingAgent_ ? pTreatingAgent_->GetId() : 0 );
     message().set_state( nState_ );
     message().set_diagnosed( bDiagnosed_ );
+    message().set_current_state_end_tick( currentStateEndTick_ );
     message.Send( publisher );
 }
 

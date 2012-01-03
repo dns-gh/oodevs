@@ -84,28 +84,26 @@ protected:
     //@}
 
 protected:
-    //! @name
-    //@{
-    void EnterStateFinished();
-
-    E_State GetState() const;
-    //@}
-
-protected:
     //! @name Tools
     //@{
-    void SetState( E_State nNewState );
+    void EnterStateFinished();
+    E_State GetState() const;
+    void    SetState      ( E_State nNewState );
+    void    ResetTimer    ( int timer );
+    bool    DecrementTimer();
 
     PHY_RoleInterface_Maintenance& GetPionMaintenance() const;
     //@}
 
     MIL_Agent_ABC*                  pMaintenance_;
+
 private:
-    E_State                         nState_;
-    bool                            bHasChanged_;
+    E_State  nState_;
+    int      nTimer_;
+    unsigned currentStateEndTimeStep_; // Only used to send the information over the network
+    bool     bHasChanged_;
 
 protected:
-    int                             nTimer_;
     PHY_MaintenanceComposanteState* pComposanteState_;
 };
 
@@ -120,7 +118,8 @@ void PHY_MaintenanceConsign_ABC::serialize( Archive& file, const unsigned int )
     file & pMaintenance_
          & pComposanteState_
          & nState_
-         & nTimer_;
+         & nTimer_
+         & currentStateEndTimeStep_;
 }
 
 #endif // __PHY_MaintenanceConsign_ABC_h_
