@@ -21,13 +21,24 @@ using namespace kernel;
 DotationType::DotationType( xml::xistream& xis, const tools::Resolver_ABC< LogisticSupplyClass, std::string >& resolver )
 {
     std::string category;
+    double nbrInPackage;
     std::string strLogisticSupplyClass;
     xis >> xml::attribute( "id", id_ )
         >> xml::attribute( "name", name_ )
         >> xml::attribute( "category", category )
+        >> xml::attribute( "package-size", nbrInPackage )
+        >> xml::attribute( "package-mass", unitWeight_ )
+        >> xml::attribute( "package-volume", unitVolume_ )
+        >> xml::attribute( "nature", nature_ )
         >> xml::attribute( "logistic-supply-class", strLogisticSupplyClass )
         >> xml::optional >> xml::attribute( "type", type_ );
     logisticSupplyClass_ = &resolver.Get( strLogisticSupplyClass );
+    assert( nbrInPackage > 0 );
+    if( nbrInPackage > 0 )
+    {
+        unitWeight_ /= nbrInPackage;
+        unitVolume_ /= nbrInPackage;
+    }
     categoryId_ = tools::DotationFamilyFromString( category );
     gaz_        = ( category == "carburant" );
     ammunition_ = ( category == "munition" );
@@ -86,6 +97,33 @@ const std::string DotationType::GetCategoryName() const
 const std::string& DotationType::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DotationType::GetNature
+// Created: JSR 2012-01-03
+// -----------------------------------------------------------------------------
+const std::string& DotationType::GetNature() const
+{
+    return nature_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DotationType::GetUnitWeight
+// Created: JSR 2012-01-03
+// -----------------------------------------------------------------------------
+double DotationType::GetUnitWeight() const
+{
+    return unitWeight_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DotationType::GetUnitVolume
+// Created: JSR 2012-01-03
+// -----------------------------------------------------------------------------
+double DotationType::GetUnitVolume() const
+{
+    return unitVolume_;
 }
 
 // -----------------------------------------------------------------------------

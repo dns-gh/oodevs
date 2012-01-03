@@ -1258,6 +1258,10 @@ Do you want to save anyway?</source>
         <source>Unicity</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Allocated stocks of nature %1 exceed max capacity.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

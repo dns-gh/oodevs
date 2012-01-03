@@ -159,7 +159,7 @@ void DotationsEditor::AddItem( const Dotation* dotation /* =0*/ )
     if( dotation )
     {
         table_->setText( row, 1, QString::number( dotation->quantity_ ) );
-        item->setCurrentItem( dotation->type_->GetName().c_str() );
+        item->setCurrentItem( dotation->type_.GetName().c_str() );
     }
     table_->setCurrentCell( row, 1 );
 }

@@ -47,6 +47,9 @@ public:
     const std::string GetCategoryName() const;
     const std::string& GetType() const;
     const LogisticSupplyClass& GetLogisticSupplyClass() const;
+    const std::string& GetNature() const;
+    double GetUnitWeight() const;
+    double GetUnitVolume() const;
 
     bool IsGas() const;
     bool IsAmmunition() const;
@@ -61,6 +64,9 @@ private:
     unsigned long categoryId_;
     std::string type_;
     const LogisticSupplyClass* logisticSupplyClass_;
+    std::string nature_;
+    double unitWeight_;
+    double unitVolume_;
     bool gaz_;
     bool ammunition_;
     bool indirectFireAmmunition_;

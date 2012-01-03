@@ -59,7 +59,7 @@ void Stocks::ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< Dotati
 {
     Dotation* dotation = new Dotation( xis, resolver );
     item_->AddDotation( *dotation );
-    Register( dotation->type_->GetId(), *dotation );
+    Register( dotation->type_.GetId(), *dotation );
     controller_.Update( *this );
 }
 
@@ -72,16 +72,16 @@ void Stocks::AddDotation( Dotation* pNewDotation )
     if( !pNewDotation )
         return;
 
-    Dotation* pDotation = Find( pNewDotation->type_->GetId() );
+    Dotation* pDotation = Find( pNewDotation->type_.GetId() );
     if( pDotation )
     {
-        *pDotation = *pNewDotation;
+        pDotation->quantity_ = pNewDotation->quantity_;
         delete pNewDotation;
         return;
     }
 
     item_->AddDotation( *pNewDotation );
-    Register( pNewDotation->type_->GetId(), *pNewDotation );
+    Register( pNewDotation->type_.GetId(), *pNewDotation );
     controller_.Update( *this );
 }
 
