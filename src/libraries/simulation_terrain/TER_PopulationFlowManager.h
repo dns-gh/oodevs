@@ -26,6 +26,7 @@ public:
     //! @name Types
     //@{
     typedef std::vector< TER_PopulationFlow_ABC* > T_PopulationFlowVector;
+    typedef std::vector< const TER_PopulationFlow_ABC* > T_ConstPopulationFlowVector;
     //@}
 
 public:
@@ -37,6 +38,7 @@ public:
 
     //! @name Operations
     //@{
+    void GetListWithinCircle    ( const MT_Vector2D& vCenter, double rRadius, T_ConstPopulationFlowVector& flows ) const;
     void GetListWithinCircle    ( const MT_Vector2D& vCenter, double rRadius, T_PopulationFlowVector& flows ) const;
     void GetListIntersectingLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_PopulationFlowVector& flows ) const;
     void GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationFlowVector& flows ) const;

@@ -34,6 +34,24 @@ TER_PopulationConcentrationManager::~TER_PopulationConcentrationManager()
 
 // -----------------------------------------------------------------------------
 // Name: TER_PopulationConcentrationManager::GetListWithinCircle
+// Created: LDC 2012-01-02
+// $$$ LDC FIXME Could be templated because it's a copy paste of the next method...
+// -----------------------------------------------------------------------------
+void TER_PopulationConcentrationManager::GetListWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_ConstPopulationConcentrationVector& concentrations ) const
+{
+    concentrations.reserve( 10 );
+    spatialcontainer::PointIntersecter< double > intersecter( geometry::Point2< double >( vCenter.rX_, vCenter.rY_ ), rRadius );
+    T_PopulationConcentrations::View view = concentrations_.CreateView( intersecter );
+    while( view.HasMoreElements() )
+    {
+        TER_PopulationConcentration_ABC* pConcentration = view.NextElement();
+        if( pConcentration && pConcentration->Intersect2DWithCircle( vCenter, rRadius ) )
+            concentrations.push_back( pConcentration );
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationConcentrationManager::GetListWithinCircle
 // Created: NLD 2005-10-07
 // -----------------------------------------------------------------------------
 void TER_PopulationConcentrationManager::GetListWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_PopulationConcentrationVector& concentrations ) const

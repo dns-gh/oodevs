@@ -26,6 +26,7 @@ class TER_PopulationFlow_ABC
 public:
     //! @name Types
     //@{
+    typedef std::vector< const TER_PopulationFlow_ABC* > T_ConstPopulationFlowVector;
     typedef std::vector< TER_PopulationFlow_ABC* >  T_PopulationFlowVector;
     typedef T_PopulationFlowVector::iterator        IT_PopulationFlowVector;
     typedef T_PopulationFlowVector::const_iterator  CIT_PopulationFlowVector;

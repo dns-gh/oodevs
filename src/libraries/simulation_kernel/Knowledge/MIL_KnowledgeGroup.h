@@ -12,6 +12,10 @@
 
 #include "MIL.h"
 #include "MIL_KnowledgeGroupType.h"
+#include "simulation_terrain/TER_Agent_ABC.h"
+#include "simulation_terrain/TER_PopulationConcentration_ABC.h"
+#include "simulation_terrain/TER_PopulationFlow_ABC.h"
+#include "simulation_terrain/TER_Object_ABC.h"
 #include "Tools/MIL_IDManager.h"
 #include "tools/Resolver.h"
 #include <boost/serialization/export.hpp>
@@ -93,9 +97,9 @@ public:
 
     //! @name Operations
     //@{
+    void RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
     // LTO begin
     void InitializeKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
-    void RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
     void UnregisterKnowledgeGroup( const MIL_KnowledgeGroup& knowledgeGroup );
     MIL_KnowledgeGroup* FindKnowledgeGroup ( unsigned int id ) const;
     void SetType( MIL_KnowledgeGroupType *type ){ type_ = type; }
@@ -103,6 +107,8 @@ public:
     // LTO end
     void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
+
+    void AppendAddedKnowledge( TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, TER_Object_ABC::T_ObjectVector& perceivableObjects, TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector& perceivablePopulationDensity, TER_PopulationFlow_ABC::T_ConstPopulationFlowVector& perceivablePopulationFlow ) const;
 
     void UpdateKnowledges(int currentTimeStep);
     void UpdateObjectKnowledges(int currentTimeStep);
@@ -118,10 +124,7 @@ public:
 
     bool operator==( const MIL_KnowledgeGroup& rhs ) const;
     bool operator!=( const MIL_KnowledgeGroup& rhs ) const;
-    //@}
 
-    //! @name Operations
-    //@{
     void OnReceiveKnowledgeGroupCreation   ( const sword::KnowledgeGroupCreationRequest& message );
     void OnReceiveKnowledgeGroupUpdate     ( const sword::KnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies );
     void Destroy();
@@ -212,6 +215,7 @@ private:
     MIL_KnowledgeGroup*     parent_; // LTO
     DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
     T_AutomateVector        automates_;
+    std::set< unsigned int > additionalPerceptions_;
     T_KnowledgeGroupVector  knowledgeGroups_; // LTO
     double                  timeToDiffuse_; // LTO
     bool                    isActivated_; // LTO

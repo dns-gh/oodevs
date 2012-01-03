@@ -26,6 +26,7 @@ class TER_PopulationConcentration_ABC
 public:
     //! @name Types
     //@{
+    typedef std::vector< const TER_PopulationConcentration_ABC* > T_ConstPopulationConcentrationVector;
     typedef std::vector< TER_PopulationConcentration_ABC* >  T_PopulationConcentrationVector;
     typedef T_PopulationConcentrationVector::iterator        IT_PopulationConcentrationVector;
     typedef T_PopulationConcentrationVector::const_iterator  CIT_PopulationConcentrationVector;

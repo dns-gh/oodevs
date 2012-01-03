@@ -27,6 +27,7 @@ public:
     //! @name Types
     //@{
     typedef std::vector< TER_PopulationConcentration_ABC* > T_PopulationConcentrationVector;
+    typedef std::vector< const TER_PopulationConcentration_ABC* > T_ConstPopulationConcentrationVector;
     //@}
 
 public:
@@ -38,6 +39,7 @@ public:
 
     //! @name Operations
     //@{
+    void GetListWithinCircle    ( const MT_Vector2D& vCenter, double rRadius, T_ConstPopulationConcentrationVector& concentrations ) const;
     void GetListWithinCircle    ( const MT_Vector2D& vCenter, double rRadius, T_PopulationConcentrationVector& concentrations ) const;
     void GetListIntersectingLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_PopulationConcentrationVector& concentrations ) const;
     void GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationConcentrationVector& concentrations ) const;

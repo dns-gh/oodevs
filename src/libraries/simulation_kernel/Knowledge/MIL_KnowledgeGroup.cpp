@@ -18,6 +18,10 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/MIL_EntityVisitor_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Populations/MIL_Population.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgePopulation.h"
@@ -35,6 +39,8 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "simulation_terrain/TER_PopulationConcentration_ABC.h"
+#include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "Tools/MIL_IDManager.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
@@ -661,12 +667,13 @@ void MIL_KnowledgeGroup::SetParent( MIL_KnowledgeGroup* parent )
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::RegisterKnowledgeGroup
 // Created: NLD 2006-10-13
-// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
 {
     assert( std::find( knowledgeGroups_.begin(), knowledgeGroups_.end(), &knowledgeGroup ) == knowledgeGroups_.end() );
     knowledgeGroups_.push_back( &knowledgeGroup );
+    for( std::set< unsigned int >::const_iterator it = additionalPerceptions_.begin(); it != additionalPerceptions_.end(); ++it )
+        knowledgeGroup.additionalPerceptions_.insert( *it ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -885,6 +892,7 @@ void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupCreation( const sword::Knowledge
 bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::MissionParameters& message )
 {
     unsigned int identifier = message.elem( 0 ).value().Get( 0 ).identifier();
+    additionalPerceptions_.insert( identifier );
     MIL_AgentPion* pAgent       = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( identifier );
     MIL_Object_ABC* pObject     = pAgent? 0 : MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( identifier );
     MIL_Population* pPopulation = ( pAgent || pObject )? 0 : MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( identifier );
@@ -931,6 +939,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_ABC& agent, unsigned int perception )
 {
+    additionalPerceptions_.insert( agent.GetID() );
     for( MIL_KnowledgeGroup::IT_KnowledgeGroupVector itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
     {
         MIL_KnowledgeGroup* pKnowledgeGroup = *itKG;
@@ -949,6 +958,7 @@ void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object_ABC& object, unsigned int perception )
 {
+    additionalPerceptions_.insert( object.GetID() );
     DEC_BlackBoard_CanContainKnowledgeObject& armyKnowledgeContainer = army_->GetKnowledge().GetKnowledgeObjectContainer();
     DEC_Knowledge_Object* knowledgeObject = armyKnowledgeContainer.RetrieveKnowledgeObject( object );
     if( knowledgeObject )
@@ -972,7 +982,8 @@ void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object
 // Created: MMC 2011-06-14
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Population& population, unsigned int perception )
-{
+{    
+    additionalPerceptions_.insert( population.GetID() );
     for( MIL_KnowledgeGroup::IT_KnowledgeGroupVector itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
     {
         MIL_KnowledgeGroup* pKnowledgeGroup = *itKG;
@@ -1229,4 +1240,62 @@ DEC_BlackBoard_CanContainKnowledgeObject& MIL_KnowledgeGroup::GetKnowledgeObject
 void MIL_KnowledgeGroup::Accept( KnowledgesVisitor_ABC& visitor ) const
 {
     knowledgeBlackBoard_->Accept( visitor );
+}
+
+namespace
+{
+    class PopulationElementPerceptionVisitor : public MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >
+    {
+    public:
+        PopulationElementPerceptionVisitor( TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector& perceivablePopulationDensity, TER_PopulationFlow_ABC::T_ConstPopulationFlowVector& perceivablePopulationFlow )
+          : concentrations_( perceivablePopulationDensity )
+          , flows_         ( perceivablePopulationFlow )
+        {
+        }
+        
+        virtual void Visit( const MIL_PopulationElement_ABC& element )
+        {
+            const TER_PopulationConcentration_ABC* concentration = dynamic_cast< const TER_PopulationConcentration_ABC* >( &element );
+            if( concentration )
+                concentrations_.push_back( concentration );
+            else
+            {
+                const TER_PopulationFlow_ABC* flow = dynamic_cast< const TER_PopulationFlow_ABC* >( &element );
+                if( flow )
+                    flows_.push_back( flow );
+            }
+        }
+
+    private:
+        TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector& concentrations_;
+        TER_PopulationFlow_ABC::T_ConstPopulationFlowVector& flows_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::AppendAddedKnowledge
+// Created: LDC 2012-01-02
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::AppendAddedKnowledge( TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, TER_Object_ABC::T_ObjectVector& perceivableObjects, TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector& perceivablePopulationDensity, TER_PopulationFlow_ABC::T_ConstPopulationFlowVector& perceivablePopulationFlow ) const
+{
+    PopulationElementPerceptionVisitor populationElementVisitor( perceivablePopulationDensity, perceivablePopulationFlow ); // $$$$ RC LDC Population concentration and flow should be merged - need refactor TER_Populationconcentration_ABC etc.
+    for( std::set< unsigned int >::const_iterator it = additionalPerceptions_.begin(); it != additionalPerceptions_.end(); ++it )
+    {
+        unsigned int identifier = *it;
+        MIL_AgentPion* pAgent = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( identifier );
+        if( pAgent )
+            perceivableAgents.push_back( pAgent->Retrieve< PHY_RoleInterface_Location >() );
+        else
+        {
+            MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( identifier );
+            if( pObject )
+                perceivableObjects.push_back( pObject );
+            else
+            {
+                MIL_Population* pPopulation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( identifier );
+                if( pPopulation )
+                    pPopulation->Apply( populationElementVisitor );
+            }
+        }
+    }
 }

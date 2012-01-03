@@ -61,18 +61,18 @@ public:
 
     //! @name Operations
     //@{
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MT_Vector2D&                 target, double rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC&               target, double rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Agent&         target, double rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MIL_PopulationConcentration& target, double rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow&          target, double rSensorHeight, T_PointVector& shape ) const;
-          double             ComputePerceptionAccuracy( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow&          target, double rSensorHeight ) const;
-    const double               IdentificationDistance   () const;
-    const double               ReconnoissanceDistance   () const;
-    const double             ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const double             ComputeRecognitionDist   ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const double             ComputeDetectionDist     ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const double             RayTrace                 ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double sensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MT_Vector2D& target, double rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target, double rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Agent& target, double rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_PopulationConcentration& target, double rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow& target, double rSensorHeight, T_PointVector& shape ) const;
+    double ComputePerceptionAccuracy( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow& target, double rSensorHeight ) const;
+    const double IdentificationDistance   () const;
+    const double ReconnoissanceDistance   () const;
+    const double ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    const double ComputeRecognitionDist   ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    const double ComputeDetectionDist     ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    const double RayTrace                 ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double sensorHeight ) const;
     //@}
 
 public:
