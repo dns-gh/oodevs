@@ -86,7 +86,7 @@ void DEC_Knowledge_PopulationCollision::Update( MIL_PopulationFlow& flow )
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationCollision::Update( MIL_PopulationConcentration& concentration )
 {
-    concentrations_.insert( &concentration ).second;
+    concentrations_.insert( &concentration );
 }
 
 // -----------------------------------------------------------------------------

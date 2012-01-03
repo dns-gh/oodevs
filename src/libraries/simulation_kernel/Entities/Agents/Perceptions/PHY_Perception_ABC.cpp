@@ -113,7 +113,7 @@ const PHY_PerceptionLevel& PHY_Perception_ABC::Compute( const MIL_Object_ABC& /*
 // Name: PHY_Perception_ABC::Execute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void PHY_Perception_ABC::Execute( const TER_PopulationFlow_ABC::T_PopulationFlowVector& /*perceivableFlows*/ )
+void PHY_Perception_ABC::Execute( const TER_PopulationFlow_ABC::T_ConstPopulationFlowVector& /*perceivableFlows*/ )
 {
     // NOTHING
 }
@@ -131,7 +131,7 @@ const PHY_PerceptionLevel& PHY_Perception_ABC::Compute( const MIL_PopulationConc
 // Name: PHY_Perception_ABC::Execute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void PHY_Perception_ABC::Execute( const TER_PopulationConcentration_ABC::T_PopulationConcentrationVector /*perceivableConcentrations*/ )
+void PHY_Perception_ABC::Execute( const TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector /*perceivableConcentrations*/ )
 {
     // NOTHING
 }
