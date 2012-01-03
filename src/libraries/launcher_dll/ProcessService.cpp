@@ -443,15 +443,15 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         ++context;
     }
     if( message.has_save_checkpoint() )
-	{
+    {
         SaveCheckpoint( message.save_checkpoint(), *client );
-		SessionCommandExecutionResponse response;
-		response().set_exercise( message.exercise() );
-		response().set_session( message.session() );
-		response().set_error_code( sword::SessionCommandExecutionResponse::success );
-		response().set_saved_checkpoint( message.save_checkpoint() );
-		response.Send( *server_.ResolveClient( endpoint ) );
-	}
+        SessionCommandExecutionResponse response;
+        response().set_exercise( message.exercise() );
+        response().set_session( message.session() );
+        response().set_error_code( sword::SessionCommandExecutionResponse::success );
+        response().set_saved_checkpoint( message.save_checkpoint() );
+        response.Send( *server_.ResolveClient( endpoint ) );
+    }
     if( message.has_time_change() )
     {
         ExecuteChangeTime( endpoint, message.exercise(), message.session(), message.time_change().data(), context, *client );
