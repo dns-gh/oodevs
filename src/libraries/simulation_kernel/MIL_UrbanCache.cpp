@@ -48,7 +48,7 @@ void MIL_UrbanCache::GetUrbanBlocksWithinSegment( const geometry::Point2f& vSour
     urbanModel_.GetListWithinSegment( vSourcePoint, vTargetPoint, list );
     cache_[ start ][ end ] = list;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanCache::Clear
 // Created: LDC 2011-12-28
@@ -57,3 +57,13 @@ void MIL_UrbanCache::Clear()
 {
     cache_.clear();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanCache::GetListWithinCircle
+// Created: LDC 2011-12-30
+// -----------------------------------------------------------------------------
+void MIL_UrbanCache::GetListWithinCircle( const geometry::Point2f& center, float radius, std::set< const urban::TerrainObject_ABC* >& result ) const
+{
+    urbanModel_.GetListWithinCircle( center, radius, result );    
+}
+    
