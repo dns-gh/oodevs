@@ -44,7 +44,6 @@ namespace gui
     class FormationLayer;
 }
 
-class AgentsLayer;
 class Config;
 class CreationPanels;
 class FileToolbar;
@@ -120,7 +119,7 @@ private:
     //@{
     void LoadExercise();
     void CreateLayers( const CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locations,
-                       gui::Layer_ABC& weather, AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
+                       gui::Layer_ABC& weather, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
                        gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker,
                        LivingAreaEditor& livingAreaEditor, gui::AutomatsLayer& automats, gui::FormationLayer& formation );
     void closeEvent( QCloseEvent* pEvent );

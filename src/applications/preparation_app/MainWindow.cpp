@@ -280,7 +280,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
     gui::LocationEditorToolbar* LocEditToolBar = new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer );
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *LocEditToolBar );
-    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, PreparationProfile::GetProfile(), *simpleFilter_, this );
     gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
@@ -315,7 +314,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     filterDialogs_ = new FilterDialogs( this, config_, model, *menu_, staticModel_.coordinateConverter_ );
 
     // Layers
-    CreateLayers( *pCreationPanel_, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer,
+    CreateLayers( *pCreationPanel_, *paramLayer, *locationsLayer, *weatherLayer, *terrainLayer,
                   *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker, *pLivingAreaEditor, automats, formation );
 
     // Status bar
@@ -352,10 +351,11 @@ MainWindow::~MainWindow()
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locations,
-                               gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
+                               gui::Layer_ABC& weather, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
                                PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker,
                                LivingAreaEditor& livingAreaEditor, gui::AutomatsLayer& automats, gui::FormationLayer& formation )
 {
+    Layer_ABC& agents                   = *new ::AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, PreparationProfile::GetProfile(), *simpleFilter_, this );
     TooltipsLayer_ABC& tooltipLayer     = *new TooltipsLayer( *glProxy_ );
     Layer_ABC& objectCreationLayer      = *new MiscLayer< ObjectCreationPanel >( creationPanels.GetObjectCreationPanel() );
     Layer_ABC& inhabitantCreationLayer  = *new MiscLayer< InhabitantCreationPanel >( creationPanels.GetInhabitantCreationPanel() );
