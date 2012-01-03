@@ -45,12 +45,16 @@ namespace mission_tester
         {
             prefix = coord[0];
             prefix += coord[1];
+			prefixX = atoi(prefix.c_str());
             prefix += coord[2];
+			prefixY = coord[2];
         }
         unsigned int x;
         unsigned int y;
         char alphaX;
         char alphaY;
+		int prefixX;
+		char prefixY;
         std::string prefix;
     };
 
