@@ -290,8 +290,15 @@ void ModelConsistencyChecker::CheckLogisticInitialization()
     {
         const Automat_ABC& automat = it.NextElement();
         const LogisticBaseStates* hierarchy = static_cast< const LogisticBaseStates* >( automat.Retrieve< LogisticHierarchiesBase >() );
-        if( hierarchy->GetSuperior() == 0 )
+        const kernel::Entity_ABC* superior = hierarchy->GetSuperior();
+        if( !superior )
             AddError( eLogisticInitialization, &automat );
+        if( superior == &automat )
+        {
+            const kernel::LogisticBaseSuperior nullReference;
+            const_cast< LogisticBaseStates* >( hierarchy )->SetLogisticSuperior( nullReference );
+            AddError( eLogisticInitialization, &automat );
+        }
     }
 }
 
