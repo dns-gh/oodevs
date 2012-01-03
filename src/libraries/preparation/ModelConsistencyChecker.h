@@ -87,13 +87,13 @@ public:
 
     //! @name Typedef
     //@{
-    typedef std::vector< ConsistencyError >        T_ConsistencyErrors;
-    typedef T_ConsistencyErrors::iterator         IT_ConsistencyErrors;
-    typedef T_ConsistencyErrors::const_iterator  CIT_ConsistencyErrors;
+    typedef std::vector< ConsistencyError >       T_ConsistencyErrors;
+    typedef T_ConsistencyErrors::iterator        IT_ConsistencyErrors;
+    typedef T_ConsistencyErrors::const_iterator CIT_ConsistencyErrors;
 
-    typedef std::vector< const kernel::Entity_ABC* >   T_Entities;
-    typedef T_Entities::iterator                      IT_Entities;
-    typedef T_Entities::const_iterator               CIT_Entities;
+    typedef std::vector< const kernel::Entity_ABC* > T_Entities;
+    typedef T_Entities::iterator                    IT_Entities;
+    typedef T_Entities::const_iterator             CIT_Entities;
     //@}
 
     //! @name Operations
@@ -125,7 +125,6 @@ private:
     const StaticModel&   staticModel_;
     kernel::Controllers& controllers_;
     unsigned int         filters_;
-
     T_ConsistencyErrors  errors_;
     T_Entities           entities_;
     //@}

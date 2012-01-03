@@ -15,16 +15,13 @@
 #include "GhostModel.h"
 #include "LimitsModel.h"
 #include "LogisticBaseStates.h"
-#include "LogisticHierarchiesBase.h"
 #include "Model.h"
 #include "ObjectsModel.h"
 #include "ProfilesModel.h"
 #include "StaticModel.h"
 #include "Stocks.h"
-#include "FormationHierarchies.h"
 #include "TacticalLine_ABC.h"
 #include "TeamsModel.h"
-#include "clients_gui/Tools.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
@@ -36,17 +33,12 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Karma.h"
-#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
-#include "tools/Resolver.h"
-#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 
@@ -89,10 +81,17 @@ namespace
     class EntityWithLongNameExtractor : private boost::noncopyable
     {
     public:
-        EntityWithLongNameExtractor( std::vector< const Entity_ABC* >& entities ) : entities_( entities ) {}
-        virtual ~EntityWithLongNameExtractor() {}
+        explicit EntityWithLongNameExtractor( std::vector< const Entity_ABC* >& entities )
+            : entities_( entities )
+        {
+            // NOTHING
+        }
+        virtual ~EntityWithLongNameExtractor()
+        {
+            // NOTHING
+        }
 
-        virtual void operator()( const kernel::Entity_ABC& entity ) const
+        virtual void operator()( const Entity_ABC& entity ) const
         {
             if( !gui::LongNameHelper::GetEntityLongName( entity ).empty() )
                 entities_.push_back( &entity );
@@ -102,12 +101,12 @@ namespace
         std::vector< const Entity_ABC* >& entities_;
     };
 
-    bool CompareLongName( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 )
+    bool CompareLongName( const Entity_ABC& entity1, const Entity_ABC& entity2 )
     {
         return gui::LongNameHelper::GetEntityLongName( entity1 ) == gui::LongNameHelper::GetEntityLongName( entity2 );
     }
 
-    bool CompareName( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 )
+    bool CompareName( const Entity_ABC& entity1, const Entity_ABC& entity2 )
     {
         return entity1.GetName() == entity2.GetName();
     }
@@ -143,7 +142,7 @@ bool ModelConsistencyChecker::CheckConsistency( unsigned int filters /*= eAllChe
         CheckProfileInitialization();
     if( filters & eGhostExistence || filters & eGhostConverted )
         CheckGhosts();
-    if ( filters & eLongNameSize )
+    if( filters & eLongNameSize )
         CheckLongNameSize();
     return !errors_.empty();
 }
@@ -308,11 +307,11 @@ void ModelConsistencyChecker::CheckMaxStockExceeded()
             typedef std::map< std::string, std::pair< double, double > > T_StockCapacities;
             typedef T_StockCapacities::const_iterator                  CIT_StockCapacities;
             T_StockCapacities maxCapacities;
-            tools::Iterator< const AgentComposition& > itComposition = agent.GetType().CreateIterator();
+            Iterator< const AgentComposition& > itComposition = agent.GetType().CreateIterator();
             while( itComposition.HasMoreElements() )
             {
                 const ComponentType& equipment = itComposition.NextElement().GetType();
-                const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( equipment.GetId() );
+                const EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver< EquipmentType >::Get( equipment.GetId() );
                 if( const EquipmentType::CarryingSupplyFunction* carrying = equipmentType.GetLogSupplyFunctionCarrying() )
                 {
                     maxCapacities[ carrying->stockNature_ ].first += carrying->stockWeightCapacity_;
@@ -321,7 +320,7 @@ void ModelConsistencyChecker::CheckMaxStockExceeded()
             }
 
             T_StockCapacities currentCapacities;
-            tools::Iterator< const Dotation& > itDotation = stocks->CreateIterator();
+            Iterator< const Dotation& > itDotation = stocks->CreateIterator();
             while( itDotation.HasMoreElements() )
             {
                 const Dotation& dotation = itDotation.NextElement();
@@ -350,12 +349,12 @@ void ModelConsistencyChecker::CheckLogisticInitialization()
     {
         const Automat_ABC& automat = it.NextElement();
         const LogisticBaseStates* hierarchy = static_cast< const LogisticBaseStates* >( automat.Retrieve< LogisticHierarchiesBase >() );
-        const kernel::Entity_ABC* superior = hierarchy->GetSuperior();
+        const Entity_ABC* superior = hierarchy->GetSuperior();
         if( !superior )
             AddError( eLogisticInitialization, &automat );
         if( superior == &automat )
         {
-            const kernel::LogisticBaseSuperior nullReference;
+            const LogisticBaseSuperior nullReference;
             const_cast< LogisticBaseStates* >( hierarchy )->SetLogisticSuperior( nullReference );
             AddError( eLogisticInitialization, &automat );
         }
@@ -370,14 +369,12 @@ void ModelConsistencyChecker::CheckProfileUniqueness()
 {
     ProfilesModel::T_Units units;
     model_.profiles_.Visit( units );
-    QString result;
-
     for( ProfilesModel::CIT_Units it = units.begin(); it != units.end(); ++it )
     {
         const ProfilesModel::T_Units::value_type& element = *it;
         if( element.second.size() > 1 )
         {
-            const kernel::Entity_ABC* entity = model_.GetTeamResolver().Find( element.first );
+            const Entity_ABC* entity = model_.GetTeamResolver().Find( element.first );
             if( !entity )
                 entity = model_.GetAutomatResolver().Find( element.first );
             if( !entity )
@@ -445,7 +442,7 @@ void ModelConsistencyChecker::CheckLongNameSize()
     for( std::vector< const Entity_ABC* >::iterator it = entities_.begin(); it != entities_.end(); ++it )
     {
         const Entity_ABC& entity = **it;
-        const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+        const TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< TacticalHierarchies >();
         if( !pTacticalHierarchies )
             continue;
         if( gui::LongNameHelper::GetEntityLongName( entity ).empty() )
@@ -466,10 +463,10 @@ void ModelConsistencyChecker::CheckLongNameSize()
 // Name: ModelConsistencyChecker::AddError
 // Created: ABR 2011-09-27
 // -----------------------------------------------------------------------------
-void ModelConsistencyChecker::AddError( E_ConsistencyCheck type, const kernel::Entity_ABC* entity, const std::string& optional /*= ""*/ )
+void ModelConsistencyChecker::AddError( E_ConsistencyCheck type, const Entity_ABC* entity, const std::string& optional /*= ""*/ )
 {
     assert( entity );
-    ConsistencyError error ( type );
+    ConsistencyError error( type );
     error.entities_.push_back( new SafePointer< Entity_ABC >( controllers_, entity ) );
     error.optional_ = optional;
     errors_.push_back( error );
