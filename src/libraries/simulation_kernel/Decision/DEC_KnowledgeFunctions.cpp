@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeFunctions.h"
+#include "MIL_UrbanCache.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
@@ -20,6 +21,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
+#include "MT_Tools/MT_Logger.h"
 #include <limits>
 
 // -----------------------------------------------------------------------------
@@ -260,17 +262,22 @@ void DEC_KnowledgeFunctions::GetUrbanBlock( directia::brain::Brain& brain, const
 // Name: DEC_KnowledgeFunctions::GetUrbanBlockInCircle
 // Created: DDA 2010-03-16
 // -----------------------------------------------------------------------------
-T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInCircle( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& center, float radius )
+T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInCircle( boost::shared_ptr< MT_Vector2D > center, float radius )
 {
     if( !center )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     //Urban
-    T_UrbanObjectVector blocks;
     T_UrbanObjectVector result;
-    pion.GetArmy().GetKnowledge().GetUrbanObjects( blocks );  // $$$$ _RC_ LGY 2011-02-25: remanier
-    for( T_UrbanObjectVector::iterator it = blocks.begin(); it != blocks.end(); it++ )
-        if( ( *it ) && ( *it )->GetLocalisation().Intersect2DWithCircle( *center, radius ) )
-            result.push_back( *it );
+    std::set< const urban::TerrainObject_ABC* > blocks;
+    geometry::Point2f centerPoint( center->rX_, center->rY_ );
+    MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( centerPoint, radius, blocks );
+    // retrieve UrbanObjectWrapper from block...
+    result.reserve( blocks.size() );
+    MIL_EntityManager& objectManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
+    for( std::set< const urban::TerrainObject_ABC* >::const_iterator it = blocks.begin(); it != blocks.end(); ++it )
+    {
+        result.push_back( &objectManager.GetUrbanObjectWrapper( **it ) );
+    }
     return result;
 }
 

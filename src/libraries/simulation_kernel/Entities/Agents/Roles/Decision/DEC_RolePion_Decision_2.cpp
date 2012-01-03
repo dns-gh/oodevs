@@ -117,6 +117,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     // Urban knowledges accessors
     brain[ "DEC_NiveauDeProtectionMaterielComposantes" ] = &DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel;
     brain[ "DEC_GetAgentIdFromKnowledge" ] = &DEC_KnowledgeAgentFunctions::GetAgentIdFromKnowledge;
+    brain[ "DEC_Connaissances_BlocUrbainDansCercle" ] = &DEC_KnowledgeFunctions::GetUrbanBlockInCircle;
 
     //limas / Missions
     brain[ "DEC_GetRawMission" ] = &DEC_AgentFunctions::GetMission;
@@ -549,8 +550,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlock, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) );
     brain[ "DEC_Connaissances_BlocUrbainPourPosition" ] =
         boost::function< UrbanObjectWrapper*( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockForPosition, boost::ref( GetPion() ), _1 ) );
-    brain[ "DEC_Connaissances_BlocUrbainDansCercle" ] =
-        boost::function< T_UrbanObjectVector( boost::shared_ptr< MT_Vector2D>, float )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockInCircle, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Connaissances_BlocUrbainDansZone" ] =
         boost::function< T_UrbanObjectVector( TER_Localisation* )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockInZone, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant" ] = boost::function< float( UrbanObjectWrapper* )>( boost::bind( &DEC_UrbanObjectFunctions::GetCurrentRecceProgress, boost::ref( GetPion() ), _1 ) );

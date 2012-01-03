@@ -25,6 +25,7 @@ class MIL_UrbanCache
 public:
     MIL_UrbanCache( urban::Model& urbanModel );
     void GetUrbanBlocksWithinSegment( const geometry::Point2f& vSourcePoint, const geometry::Point2f& vTargetPoint, std::set< const urban::TerrainObject_ABC* >& list );
+    void GetListWithinCircle( const geometry::Point2f& center, float radius, std::set< const urban::TerrainObject_ABC* >& result ) const;
     void Clear();
 
 private:

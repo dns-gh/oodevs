@@ -59,7 +59,7 @@ public:
 
     static void GetObservableKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
     static void GetUrbanBlock( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
-    static T_UrbanObjectVector GetUrbanBlockInCircle( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& center, float radius );
+    static T_UrbanObjectVector GetUrbanBlockInCircle( boost::shared_ptr< MT_Vector2D > center, float radius );
     static T_UrbanObjectVector GetUrbanBlockInZone( const MIL_AgentPion& pion, TER_Localisation* );
     static UrbanObjectWrapper* GetUrbanBlockForPosition( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& point );
     static void GetDestroyableKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
