@@ -43,9 +43,6 @@
     <ClCompile Include="..\..\src\libraries\launcher_dll\SwordFacade.cpp">
       <Filter>Source Files\Processes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\launcher_dll\CheckpointMessageHandler.cpp">
-      <Filter>Source Files\Notification</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\launcher_dll\ClientMessageHandlerBase.cpp">
       <Filter>Source Files\Notification</Filter>
     </ClCompile>
@@ -101,9 +98,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\launcher_dll\SwordFacade.h">
       <Filter>Source Files\Processes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\launcher_dll\CheckpointMessageHandler.h">
-      <Filter>Source Files\Notification</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\launcher_dll\ClientMessageHandlerBase.h">
       <Filter>Source Files\Notification</Filter>

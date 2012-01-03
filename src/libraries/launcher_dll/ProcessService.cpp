@@ -23,7 +23,6 @@
 #include "client_proxy/SwordMessageHandler_ABC.h"
 #include "SwordFacade.h"
 #include "Config.h"
-#include "CheckpointMessageHandler.h"
 #include "PauseResumeMessageHandler.h"
 #include "LauncherService.h"
 #include "TimeMessageHandler.h"
@@ -98,7 +97,6 @@ void ProcessService::CreatePermanentHandlers( const std::string& endpoint )
             const std::string& exercise = it->first.first;
             const std::string& session  = it->first.second;
             facade->ClearPermanentMessageHandler();
-            facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new CheckpointMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
             facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
             facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
             facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlEndTickMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
@@ -233,7 +231,6 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
         processes_[ std::make_pair( exercise, session ) ] = wrapper;
     }
     wrapper->Start( *this, command, profileCollector.supervisorProfile_, profileCollector.supervisorPassword_, config_ );
-    wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new CheckpointMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlEndTickMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
@@ -446,7 +443,15 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         ++context;
     }
     if( message.has_save_checkpoint() )
+	{
         SaveCheckpoint( message.save_checkpoint(), *client );
+		SessionCommandExecutionResponse response;
+		response().set_exercise( message.exercise() );
+		response().set_session( message.session() );
+		response().set_error_code( sword::SessionCommandExecutionResponse::success );
+		response().set_saved_checkpoint( message.save_checkpoint() );
+		response.Send( *server_.ResolveClient( endpoint ) );
+	}
     if( message.has_time_change() )
     {
         ExecuteChangeTime( endpoint, message.exercise(), message.session(), message.time_change().data(), context, *client );
