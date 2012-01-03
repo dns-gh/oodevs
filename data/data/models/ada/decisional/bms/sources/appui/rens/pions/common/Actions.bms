@@ -519,13 +519,15 @@ include "bit.lua"
 ]]--[[//---------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-				do
+                                do
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                         DEC_RC( eRC_ExtractionDonnes )
                     else
                         DEC_Message( eRC_ExtractionDonnes )
                     end
+
                 end
+
                 DEC_Perception_DesactiverModeEnregistrement()
             end
         end
