@@ -197,22 +197,23 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     // Force an order for the tabs. Combine some other tabs. Exclude others... All in all, has to be done by hand.
     mainWindow.AddPage( elements_[eCategories]->GetName(), * elements_[eCategories]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eUrban]->GetName(), * elements_[eUrban]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eLaunchers]->GetName(), * elements_[eLaunchers]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eEquipement]->GetName(), * elements_[eEquipement]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eWeapons]->GetName(), * elements_[eWeapons]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eActiveProtections]->GetName(), * elements_[eActiveProtections]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eSensors]->GetName(), * elements_[eSensors]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eBreakdowns]->GetName(), * elements_[eBreakdowns]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eComposantes]->GetName(), * elements_[eComposantes]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eResourceNetworks]->GetName(), * elements_[eResourceNetworks]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eLaunchers]->GetName(), * elements_[eLaunchers]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eWeapons]->GetName(), * elements_[eWeapons]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eSensors]->GetName(), * elements_[eSensors]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eActiveProtections]->GetName(), * elements_[eActiveProtections]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eBreakdowns]->GetName(), * elements_[eBreakdowns]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eFireClasses]->GetName(), * elements_[eFireClasses]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eNBC]->GetName(), * elements_[eNBC]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eObjects]->GetName(), * elements_[eObjects]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eMissions]->GetName(), * elements_[eMissions]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eModels]->GetName(), * elements_[eModels]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eComposantes]->GetName(), * elements_[eComposantes]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eUnits]->GetName(), * elements_[eUnits]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eAutomata]->GetName(), * elements_[eAutomata]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[ePopulation]->GetName(), * elements_[ePopulation]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[ePeople]->GetName(), * elements_[ePeople]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eModels]->GetName(), * elements_[eModels]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eObjects]->GetName(), * elements_[eObjects]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eNBC]->GetName(), * elements_[eNBC]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eFireClasses]->GetName(), * elements_[eFireClasses]->GetGuiABC().GetMainWidget() );
 
     QWidget* pLogPage = new QWidget();
     Q3VBoxLayout* pLayout = new Q3VBoxLayout( pLogPage );
@@ -229,12 +230,14 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     builder.AddStretcher( pLayout, Qt::Vertical );
     mainWindow.AddPage( tr( "Log" ), *pLogPage );
 
-    mainWindow.AddPage( elements_[eHumanFactors]->GetName(), * elements_[eHumanFactors]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eCommunications]->GetName(), * elements_[eCommunications]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eKnowledgeGroups]->GetName(), * elements_[eKnowledgeGroups]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eMissions]->GetName(), * elements_[eMissions]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eReports]->GetName(), * elements_[eReports]->GetGuiABC().GetMainWidget() );
+
+    mainWindow.AddPage( elements_[eHumanFactors]->GetName(), * elements_[eHumanFactors]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eAiEngine]->GetName(), * elements_[eAiEngine]->GetGuiABC().GetMainWidget() );
+
+    // $$$$ JSR 2012-01-04: TODO : reports à supprimer complètement?
+    // mainWindow.AddPage( elements_[eReports]->GetName(), * elements_[eReports]->GetGuiABC().GetMainWidget() );
 
     pProgressIndicator_->Reset( tr( "GUI loaded" ) );
 }
