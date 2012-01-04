@@ -1126,7 +1126,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Sinfiltrer" dia-type="france.military.platoon.tasks.Sinfiltrer" id="2139" name="PION MELEE S'Infiltrer" package="move">
+    <mission dia-behavior="france.military.platoon.tasks.Sinfiltrer" dia-type="france.military.platoon.tasks.Sinfiltrer" id="2139" name="PION S'Infiltrer" package="move">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -3131,4 +3131,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="2998441203" -->
+<!-- signature="3377596217" -->
