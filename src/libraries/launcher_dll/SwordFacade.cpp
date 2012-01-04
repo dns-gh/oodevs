@@ -121,11 +121,11 @@ void SwordFacade::OnConnectionFailed( const std::string& /*endpoint*/, const std
 // Name: SwordFacade::OnConnectionError
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::OnConnectionError( const std::string& endpoint, const std::string& reason )
+void SwordFacade::OnConnectionError( const std::string& /*endpoint*/, const std::string& reason )
 {
     isConnected_ = false;
     isAuthenticated_ = false;
-    boost::shared_ptr< LauncherPublisher > publisher = server_.ResolveClient( endpoint );
+    boost::shared_ptr< LauncherPublisher > publisher = server_.ResolveClient( endpoint_ );
     if( publisher.get() )
     {
         SessionStatus statusResponse;
