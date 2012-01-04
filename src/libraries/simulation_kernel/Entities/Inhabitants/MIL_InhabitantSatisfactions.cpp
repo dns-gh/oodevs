@@ -138,7 +138,6 @@ void MIL_InhabitantSatisfactions::SendFullState( client::PopulationUpdate& msg )
     msg().mutable_satisfaction()->set_health( health_ );
     msg().mutable_satisfaction()->set_safety( safety_ );
     msg().mutable_satisfaction()->set_lodging( lodging_ );
-    msg().mutable_satisfaction()->set_lodging( lodging_ );
     for( CIT_Motivations it = motivations_.begin(); it != motivations_.end(); ++it )
     {
         sword::PopulationUpdate_MotivationSatisfaction* motivation = msg().mutable_satisfaction()->add_motivations();
