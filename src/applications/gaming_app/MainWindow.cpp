@@ -135,8 +135,7 @@ using namespace kernel;
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation,
-                        Network& network, const Profile_ABC& p, Config& config, LoggerProxy& logger,
-                        const RcEntityResolver_ABC& rcResolver, const QString& license )
+                        Network& network, const Profile_ABC& p, Config& config, LoggerProxy& logger, const QString& license )
     : QMainWindow()
     , controllers_     ( controllers )
     , staticModel_     ( staticModel )

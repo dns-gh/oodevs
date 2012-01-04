@@ -56,7 +56,6 @@ class CreationPanels;
 class LogisticListView;
 class LoggerProxy;
 class Simulation;
-class RcEntityResolver_ABC;
 class ColorController;
 class ProfileFilter;
 
@@ -79,7 +78,7 @@ public:
     //@{
              MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation,
                          Network& network, const kernel::Profile_ABC& profile, Config& config, LoggerProxy& logger,
-                         const RcEntityResolver_ABC& rcResolver, const QString& license );
+                         const QString& license );
     virtual ~MainWindow();
     //@}
 
