@@ -163,7 +163,7 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
     geometry::Point2f vSourcePoint( VECTOR_TO_POINT( perceiverPosition ) );
     geometry::Point2f vTargetPoint( VECTOR_TO_POINT( targetPosition ) );
 
-    std::set< const urban::TerrainObject_ABC* > list;
+    std::vector< const urban::TerrainObject_ABC* > list;
     MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( vSourcePoint, vTargetPoint, list );
     const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
@@ -179,7 +179,7 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
     for( std::set< const PHY_SensorTypeAgent* >::const_iterator itSensor = dataFunctor.sensors_.begin(); itSensor != dataFunctor.sensors_.end(); ++itSensor )
     {
         double worstFactor = 1.;
-        for( std::set< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
+        for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
             if( perceiverUrbanBlock == 0 || !( perceiverUrbanBlock->Is( **it ) && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
             {
                 const urban::TerrainObject_ABC& object = **it;
