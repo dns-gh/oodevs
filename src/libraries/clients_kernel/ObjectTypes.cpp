@@ -118,13 +118,8 @@ void ObjectTypes::ReadObjectTypes( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadObjectType( xml::xistream& xis )
 {
-    const std::string name = xis.attribute< std::string >( "name" );
-    if( name != "pont flottant continu" && name != "pont flottant discontinu" && name != "controle de zone"
-        && name != "zone bouclee" )
-    {
-        ObjectType* type = new ObjectType( xis );
-        tools::StringResolver< ObjectType >::Register( type->GetType(), *type );
-    }
+    ObjectType* type = new ObjectType( xis );
+    tools::StringResolver< ObjectType >::Register( type->GetType(), *type );
 }
 
 // -----------------------------------------------------------------------------

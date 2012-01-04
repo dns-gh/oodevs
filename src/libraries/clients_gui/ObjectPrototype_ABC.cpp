@@ -158,7 +158,8 @@ void ObjectPrototype_ABC::FillObjectTypes()
     {
         const ObjectType& element = it.NextElement();
         const std::string& type = element.GetType();
-        if( type == "urban block" || type == "population moving" )
+        if( type == "urban block" || type == "population moving" || type == "continuous pontoon bridge"
+            || type == "discontinuous pontoon bridge" || type == "controle de zone" || type == "seal off area" )
             continue;
         objectTypes_->AddItem( element.GetName(), &element );
     }
