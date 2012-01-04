@@ -510,12 +510,12 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
     geometry::Point2f vSourcePoint( static_cast< float >( vSource.rX_ ), static_cast< float >( vSource.rY_ ) );
     geometry::Point2f vTargetPoint( static_cast< float >( vTarget.rX_ ), static_cast< float >( vTarget.rY_ ) );
 
-    std::set< const urban::TerrainObject_ABC* > list;
+    std::vector< const urban::TerrainObject_ABC* > list;
     MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( vSourcePoint, vTargetPoint, list );
 
     if( !list.empty() )
     {
-        for( std::set< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
+        for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
         {
             const urban::TerrainObject_ABC& object = **it;
 
