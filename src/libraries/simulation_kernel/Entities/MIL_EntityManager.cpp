@@ -299,11 +299,12 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
     config.GetLoader().LoadFile( strOrbat, boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ) );
 
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants", inhabitantFactory_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , pObjectManager_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"       , automateFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"           , agentFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d populations"     , populationFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants"     , inhabitantFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"         , pObjectManager_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d knowledge groups", knowledgeGroupFactory_->Count() ) );
 
     // Check automate composition
     if( config.CheckAutomateComposition() )
@@ -337,6 +338,7 @@ namespace
     public:
         UrbanWrapperVisitor( MIL_EntityManager& manager )
             : manager_( manager )
+            , count_( 0 )
         {
             // NOTHING
         }
@@ -352,9 +354,15 @@ namespace
                 MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetId(), object.GetName().c_str() ) );
             }
             manager_.CreateUrbanObject( object );
+            ++count_;
+        }
+        void Dump()
+        {
+            MT_LOG_INFO_MSG( MT_FormatString( "%d Urban blocs", count_ ) );
         }
     private:
         MIL_EntityManager& manager_;
+        unsigned int count_;
     };
 }
 
@@ -366,6 +374,7 @@ void MIL_EntityManager::CreateUrbanObjects( urban::Model& urbanModel, const MIL_
 {
     UrbanWrapperVisitor visitor( *this );
     urbanModel.Accept( visitor );
+    visitor.Dump();
 
     const std::string strUrbanState = config.GetUrbanStateFile();
     if( !strUrbanState.empty() && bfs::exists( bfs::path( strUrbanState, bfs::native ) ) )

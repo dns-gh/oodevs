@@ -162,7 +162,15 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
         simulation_->Update( message.message().control_begin_tick() );
     }
     else if( message.message().has_control_end_tick() )
+    {
         nCurrentTick_ = message.message().control_end_tick().current_tick();
+        if( pLogger_.get() )
+        {
+            std::string information = "**** Time tick " + boost::lexical_cast< std::string >( nCurrentTick_ ) + " - [" + date_ + "] - "
+                                    + boost::lexical_cast< std::string >( missions_.size() ) + " Missions running";
+            pLogger_->Log( MT_Logger_ABC::eLogLevel_Info, information.c_str() );
+        }
+    }
     else if( message.message().has_unit_order() )
     {
         kernel::Entity_ABC* agent = model_.Agents().Find( message.message().unit_order().tasker().id() );
@@ -231,10 +239,16 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
 void LoggerPlugin::FormatMission( const char* name, int id, int mission )
 {
     if( mission )
+    {
         FormatMessage( staticModel_.types_.tools::Resolver< kernel::MissionType >::Get( mission ).GetName(),
                        "Mission", name, id, date_ );
+        missions_.insert( id );
+    }
     else
+    {
         FormatMessage( "Mission cancelled.", "Mission", name, id, date_ );
+        missions_.erase( id );
+    }
 }
 
 // -----------------------------------------------------------------------------

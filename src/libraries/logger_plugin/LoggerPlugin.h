@@ -15,6 +15,7 @@
 #include "reports/ReportFactory.h"
 #include "RcEntityResolver.h"
 #include <fstream>
+#include <set>
 
 namespace tools
 {
@@ -97,6 +98,7 @@ private:
     std::auto_ptr< Simulation >    simulation_;
     std::auto_ptr< ActionsLogger > actions_;
     unsigned int                   nCurrentTick_;
+    std::set< int >                missions_;
     //@}
 };
 }
