@@ -64,6 +64,7 @@ Launcher::Launcher( const Config& config )
     , proxy_             ( new shield::Server( config.GetLauncherPort() + 1, *server_, model, *server_, logger, true ) ) // $$$$ MCO should we hard-code 30001 instead of port + 1 ?
 {
     server_->RegisterMessage( *this, &Launcher::HandleAdminToLauncher );
+	proxy_->AllowConnections();
 }
 
 // -----------------------------------------------------------------------------

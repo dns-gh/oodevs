@@ -62,7 +62,7 @@ namespace shield
 */
 // Created: MCO 2010-11-29
 // =============================================================================
-class Server : private tools::ServerNetworker, private ClientListener_ABC
+class Server : public tools::ServerNetworker, private ClientListener_ABC
 {
 public:
     //! @name Constructors/Destructor

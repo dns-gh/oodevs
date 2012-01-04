@@ -61,7 +61,6 @@ Server::Server( unsigned short port, tools::MessageDispatcher_ABC& dispatcher,
     RegisterMessage( MakeLogger( *this, *this, &Server::ReceiveClientToReplay ) );
     RegisterMessage( MakeLogger( *this, *this, &Server::ReceiveClientToSim ) );
     RegisterMessage( MakeLogger( *this, *this, &Server::ReceiveAdminToLauncher ) );
-    AllowConnections();
 }
 
 // -----------------------------------------------------------------------------
