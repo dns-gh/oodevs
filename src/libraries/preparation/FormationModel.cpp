@@ -60,7 +60,7 @@ kernel::Formation_ABC* FormationModel::Create( kernel::Entity_ABC& parent, unsig
     const HierarchyLevel_ABC* level = levels_.Resolve( levelId );
     if( !level )
         return 0;
-    Formation_ABC* formation = factory_.Create( parent, *level, name );
+    Formation_ABC* formation = factory_.Create( parent, *level, levels_, name );
     Register( formation->GetId(), *formation );
     return formation;
 }

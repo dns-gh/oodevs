@@ -53,9 +53,9 @@ FormationFactory::~FormationFactory()
 // Name: FormationFactory::Create
 // Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, const kernel::HierarchyLevel_ABC& level, const QString& name )
+kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, const kernel::HierarchyLevel_ABC& level, const FormationLevels& levels, const QString& name )
 {
-    Formation* formation = new Formation( controllers_.controller_, level, idManager_ );
+    Formation* formation = new Formation( controllers_.controller_, level, levels, idManager_ );
     PropertiesDictionary& dico = formation->Get< PropertiesDictionary >();
     if( !name.isEmpty() )
         formation->Rename( name );

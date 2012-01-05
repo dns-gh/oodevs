@@ -26,6 +26,7 @@ FormationHierarchies::FormationHierarchies( kernel::Controller& controller, kern
     : kernel::MergingTacticalHierarchies( controller, holder, 0 )
     , superior_( superior )
     , level_   ( factory.CreateLevelSymbol( holder.GetLevel() ) )
+    , symbolFactory_( factory )
 {
     // NOTHING
 }
@@ -46,6 +47,15 @@ FormationHierarchies::~FormationHierarchies()
 std::string FormationHierarchies::GetLevel() const
 {
     return level_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationHierarchies::SetLevel
+// Created: MMC 2012-01-05
+// -----------------------------------------------------------------------------
+void FormationHierarchies::SetLevel( const kernel::HierarchyLevel_ABC& hierarchyLevel )
+{
+    level_ = symbolFactory_.CreateLevelSymbol( hierarchyLevel );
 }
 
 // -----------------------------------------------------------------------------
