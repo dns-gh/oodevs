@@ -132,7 +132,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
 
         if( !allTargets.empty() )
         {
-            std::set< const urban::TerrainObject_ABC* > urbanList;
+            std::vector< const urban::TerrainObject_ABC* > urbanList;
             if( MIL_AgentServer::IsInitialized() )
                 MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vTargetPosition.rX_ ), static_cast< float >( vTargetPosition.rY_ ) ),
                                                                    static_cast< float >( rInterventionTypeFired * rDispersionX_ ), urbanList );

@@ -12,7 +12,6 @@
 
 #include <geometry/types.h>
 #include <map>
-#include <set>
 
 namespace urban
 {
