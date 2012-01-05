@@ -94,6 +94,7 @@ namespace
             : shield( PORT, dispatcher, model, handler, listener, true )
         {
             int notified = 4;
+			shield.AllowConnections();
             MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy received connection from" ) ).calls( --bl::var( notified ) );
             MOCK_EXPECT( handler, Register ).once().with( mock::any, mock::retrieve( sender ), mock::retrieve( broadcaster ) )
                 .calls( (--bl::var( notified ), bl::bind( &dispatcher::ClientBroadcaster_ABC::Activate, &bl::_3, bl::_1 )) );
