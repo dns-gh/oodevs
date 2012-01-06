@@ -76,8 +76,12 @@ Server::~Server()
 // Name: Server::Update
 // Created: MCO 2010-11-29
 // -----------------------------------------------------------------------------
-void Server::Update()
+void Server::Update( bool allowConnections )
 {
+	if ( allowConnections )
+		tools::ServerNetworker::AllowConnections();
+	else
+		tools::ServerNetworker::DenyConnections();
     tools::ServerNetworker::Update();
     for( CIT_Errors it = errors_.begin(); it != errors_.end(); ++it )
         clients_.Remove( *it );

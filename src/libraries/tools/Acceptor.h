@@ -35,6 +35,7 @@ public:
     //@{
     void DenyConnections();
     void AllowConnections();
+	bool IsAllowingConnections() const;
     //@}
 
 private:

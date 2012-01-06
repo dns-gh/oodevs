@@ -97,7 +97,7 @@ void Dispatcher::Update()
     clientsNetworker_->Update();
     simulationNetworker_->Update();
     handler_->Update();
-    shield_->Update();
+	shield_->Update( clientsNetworker_->IsAllowingConnections() );
     memoryLogger_->Update();
 }
 

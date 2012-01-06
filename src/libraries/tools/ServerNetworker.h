@@ -58,6 +58,7 @@ public:
     void Disconnect( const std::string& endpoint );
     void DenyConnections();
     void AllowConnections();
+	bool IsAllowingConnections() const;
 
     using MessageSender_ABC::Send;
     using MessageDispatcher_ABC::RegisterMessage;

@@ -100,8 +100,8 @@ Shield::~Shield()
 // Name: Shield::Update
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void Shield::Update()
+void Shield::Update( bool allowConnections )
 {
     if( server_.get() )
-        server_->Update();
+        server_->Update( allowConnections );
 }

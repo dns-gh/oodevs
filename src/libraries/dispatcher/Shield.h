@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update();
+    void Update( bool allowConnections );
     //@}
 
 private:

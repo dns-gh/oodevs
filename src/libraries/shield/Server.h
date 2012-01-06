@@ -75,7 +75,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update();
+    virtual void Update( bool allowConnections );
     //@}
 
 private:

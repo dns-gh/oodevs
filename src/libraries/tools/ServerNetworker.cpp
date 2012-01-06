@@ -79,6 +79,15 @@ void ServerNetworker::AllowConnections()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ServerNetworker::IsAllowingConnections
+// Created: RPD 2012-01-06
+// -----------------------------------------------------------------------------
+bool ServerNetworker::IsAllowingConnections() const
+{
+	return acceptor_->IsAllowingConnections();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ServerNetworker::Update
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------

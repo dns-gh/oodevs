@@ -43,6 +43,8 @@ Acceptor::~Acceptor()
 // -----------------------------------------------------------------------------
 void Acceptor::DenyConnections()
 {
+	if ( !accept_ )
+		return;
     accept_ = false;
     boost::system::error_code code;
     acceptor_.close( code );
@@ -54,6 +56,8 @@ void Acceptor::DenyConnections()
 // -----------------------------------------------------------------------------
 void Acceptor::AllowConnections()
 {
+	if ( accept_ )
+		return;
     accept_ = true;
     boost::asio::ip::tcp::endpoint endpoint( boost::asio::ip::tcp::v4(), port_ );
     acceptor_.open( endpoint.protocol() );
@@ -63,6 +67,15 @@ void Acceptor::AllowConnections()
         throw std::runtime_error( error.message() + " (port : " + boost::lexical_cast< std::string >( port_ ) + ")" );
     acceptor_.listen();
     Listen();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Acceptor::IsAllowingConnections
+// Created: RPD 2012-01-06
+// -----------------------------------------------------------------------------
+bool Acceptor::IsAllowingConnections() const
+{
+	return accept_;
 }
 
 // -----------------------------------------------------------------------------
