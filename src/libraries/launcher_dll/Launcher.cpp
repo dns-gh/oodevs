@@ -87,7 +87,7 @@ void Launcher::Update()
         server_->Update();
     if( processes_.get() )
         processes_->Update();
-    proxy_->Update();
+    proxy_->Update( true );
 }
 
 // -----------------------------------------------------------------------------
