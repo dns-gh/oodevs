@@ -771,10 +771,9 @@
     </target>
 
     <target name="generate-database-security" description="compile behavior model database for security">
-        <bmc src="${models.dir}/security/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
-        <bmc src="${models.dir}/security/integration/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/security/common/src" luac="false"/>
-        <bmc src="${models.dir}/security/test/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/security/common/src;${models.dir}/security/integration/src" luac="false"/>
-        <bmc src="${models.dir}/security/training/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/security/common/src;${models.dir}/security/integration/src" luac="false"/>
+        <bmc src="${models.dir}/security/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
+        <bmc src="${models.dir}/security_test/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/security/src" luac="false"/>
+        <bmc src="${models.dir}/security_training/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/security/src" luac="false"/>
     </target>
 
     <target name="generate-symbols" description="generate symbols">
