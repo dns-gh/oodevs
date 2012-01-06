@@ -107,7 +107,7 @@ namespace
         }
         void Update()
         {
-            shield.Update();
+            shield.Update( true );
             client.Update();
         }
         MockMessageDispatcher dispatcher;
