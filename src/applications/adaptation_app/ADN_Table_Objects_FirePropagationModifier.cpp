@@ -47,6 +47,7 @@ public:
             pNameItem->GetConnector().Connect( &pModifier->ptrFireClass_.GetData()->strName_ );
             pIgnitionThresholdItem->GetConnector().Connect( &pModifier->ignitionThreshold_ );
             pMaxCombustionEnergyItem->GetConnector().Connect( &pModifier->maxCombustionEnergy_ );
+            tab_.showRow( i );
         }
         else
             tab_.hideRow( i );
