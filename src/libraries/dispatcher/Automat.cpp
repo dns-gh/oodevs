@@ -314,23 +314,6 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         }
         asn.Send( publisher );
     }
-    {
-        client::AutomatChangeKnowledgeGroup asn;
-        asn().mutable_automat()->set_id( GetId() );
-        asn().mutable_party()->set_id( team_.GetId() );
-        asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
-        asn.Send( publisher );
-    }
-    {
-        client::AutomatChangeSuperior asn;
-        asn().mutable_automat()->set_id( GetId() );
-
-        if( parentFormation_ )
-            asn().mutable_superior()->mutable_formation()->set_id( parentFormation_->GetId() );
-        if( parentAutomat_ )
-            asn().mutable_superior()->mutable_automat()->set_id( parentAutomat_->GetId() );
-        asn.Send( publisher );
-    }
     if( order_.get() )
         order_->Send( publisher );
     else
