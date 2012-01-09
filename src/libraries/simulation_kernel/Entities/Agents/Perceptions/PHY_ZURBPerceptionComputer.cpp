@@ -15,6 +15,7 @@
 #include "OnComponentComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
 #include "OnComponentFunctor_ABC.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -139,14 +140,17 @@ namespace
     class CollateSensorComponentFunctor : public OnComponentFunctor_ABC
     {
     public:
+        CollateSensorComponentFunctor( const MIL_Agent_ABC& perceiver )
+            : perceiver_( perceiver.RetrieveRole< transport::PHY_RoleAction_Loading >() ) {}
         void operator()( PHY_ComposantePion& composante )
         {
-            if( !composante.CanPerceive() )
+            if( !composante.CanPerceive( perceiver_ ) )
                 return;
             CollateSensorFunctor dataFunctor( sensors_ );
             composante.ApplyOnSensors( dataFunctor );
         }
         std::set< const PHY_SensorTypeAgent* > sensors_;
+        const transport::PHY_RoleAction_Loading* perceiver_;
     };
 }
 
@@ -168,7 +172,7 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
     const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
 
-    CollateSensorComponentFunctor dataFunctor;
+    CollateSensorComponentFunctor dataFunctor( perceiver_ );
     std::auto_ptr< OnComponentComputer_ABC > dataComputer( perceiver_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     const_cast< MIL_Agent_ABC&>( perceiver_ ).Execute( *dataComputer );
 
@@ -195,12 +199,13 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
                 urbanFactor = 1. + occupation * ( urbanFactor - 1. ) ;
                 worstFactor = std::min( worstFactor, urbanFactor );
             }
-        sensorsParameters.identificationDist_ = std::max( sensorsParameters.identificationDist_,
-            worstFactor * ( *itSensor )->ComputeIdentificationDist( perceiver_, target ) );
-        sensorsParameters.recognitionDist_ = std::max( sensorsParameters.recognitionDist_,
-            worstFactor * ( *itSensor )->ComputeRecognitionDist( perceiver_, target ) );
-        sensorsParameters.detectionDist_ = std::max( sensorsParameters.detectionDist_,
-            worstFactor * ( *itSensor )->ComputeDetectionDist( perceiver_, target ) );
+        double identification = 0.;
+        double recognition = 0.;
+        double detection = 0.;
+        ( *itSensor )->ComputeDistances( perceiver_, target, identification, recognition, detection );
+        sensorsParameters.identificationDist_ = std::max( sensorsParameters.identificationDist_, worstFactor * identification );
+        sensorsParameters.recognitionDist_ = std::max( sensorsParameters.recognitionDist_, worstFactor * recognition );
+        sensorsParameters.detectionDist_ = std::max( sensorsParameters.detectionDist_, worstFactor * detection );
         sensorsParameters.delay_ = std::min( sensorsParameters.delay_, ( *itSensor )->GetDelay() );
     }
 }

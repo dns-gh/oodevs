@@ -658,7 +658,8 @@ void PHY_ComposantePion::NotifyRepairedByMaintenance()
 // -----------------------------------------------------------------------------
 bool PHY_ComposantePion::CanBeUsed( bool bWithLoaded ) const
 {
-    if( bUsedForLogistic_ )
+    const transport::PHY_RoleAction_Loading* roleLoading = ( bLoadable_ && !bWithLoaded ) ? pRole_->GetPion().RetrieveRole< transport::PHY_RoleAction_Loading >() : 0;
+    if( !CanComponentBeUsed( roleLoading, bWithLoaded ) )
         return false;
     assert( pRole_ );
     // $$$$ LDC: All this should be rewritten with GetRole/RetrieveRole's but using Apply.
@@ -668,12 +669,23 @@ bool PHY_ComposantePion::CanBeUsed( bool bWithLoaded ) const
     const surrender::PHY_RoleInterface_Surrender* roleSurrendered = pRole_->GetPion().RetrieveRole< surrender::PHY_RoleInterface_Surrender >();
     if( roleSurrendered && roleSurrendered->IsSurrendered() )
         return false;
+    return !roleTransported || !roleTransported->HasHumanTransportersToRecover();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CanComponentBeUsed
+// Created: LDC 2012-01-04
+// Same as CanBeUsed() but doesn't check stuff that can be used at pion level (performance)
+// -----------------------------------------------------------------------------
+bool PHY_ComposantePion::CanComponentBeUsed( const transport::PHY_RoleAction_Loading* roleLoading, bool bWithLoaded ) const
+{
+    if( bUsedForLogistic_ )
+        return false;
     if( bLoadable_ && !bWithLoaded )
     {
-        const transport::PHY_RoleAction_Loading* roleLoading = pRole_->GetPion().RetrieveRole< transport::PHY_RoleAction_Loading >();
         return !roleLoading || !roleLoading->IsLoaded();
     }
-    return !roleTransported || !roleTransported->HasHumanTransportersToRecover();
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -1112,10 +1124,12 @@ unsigned int PHY_ComposantePion::GetMajorScore() const
 // Name: PHY_ComposantePion::CanPerceive
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanPerceive() const
+bool PHY_ComposantePion::CanPerceive( const transport::PHY_RoleAction_Loading* roleLoading ) const
 {
     assert( pState_ );
-    return pState_->IsUsable() && CanBeUsed();
+    if( !pState_->IsUsable() )
+        return false;
+    return CanComponentBeUsed( roleLoading, false );
 }
 
 // -----------------------------------------------------------------------------

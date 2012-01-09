@@ -12,12 +12,8 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Units/Radars/PHY_RadarType.h"
-#include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
-#include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
-#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
-#include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
+#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionView.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionCoupDeSonde.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
@@ -30,7 +26,12 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionAlat.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
+#include "Entities/Agents/Units/Radars/PHY_RadarType.h"
+#include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -42,13 +43,6 @@
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_terrain/TER_Agent_ABC.h"
-#include "simulation_terrain/TER_PopulationConcentration_ABC.h"
-#include "simulation_terrain/TER_PopulationFlow_ABC.h"
-#include "simulation_terrain/TER_PopulationManager.h"
-#include "simulation_terrain/TER_World.h"
-#include "simulation_terrain/TER_ObjectManager.h"
-#include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
@@ -61,10 +55,17 @@
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
+#include "simulation_terrain/TER_Agent_ABC.h"
+#include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_AgentVisitor_ABC.h"
+#include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_ObjectVisitor_ABC.h"
+#include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "simulation_terrain/TER_PopulationConcentrationVisitor_ABC.h"
+#include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationFlowVisitor_ABC.h"
+#include "simulation_terrain/TER_PopulationManager.h"
+#include "simulation_terrain/TER_World.h"
 #include <urban/model.h>
 #include <urban/TerrainObject_ABC.h>
 #include <boost/serialization/map.hpp>
@@ -731,7 +732,7 @@ private:
 class sPerceptionDataComposantes : public OnComponentFunctor_ABC
 {
 public:
-    sPerceptionDataComposantes( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject,
+    sPerceptionDataComposantes( MIL_Agent_ABC& pion, PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject,
                                 const MT_Vector2D& position, const MT_Vector2D& direction, const MT_Vector2D& vMainPerceptionDirection, double rDirectionRotation,
                                 double& rMaxAgentPerceptionDistance, double& rMaxObjectPerceptionDistance )
         : surfacesAgent_               ( surfacesAgent )
@@ -743,13 +744,14 @@ public:
         , rRotationAngle_              ( rDirectionRotation )
         , rMaxAgentPerceptionDistance_ ( rMaxAgentPerceptionDistance )
         , rMaxObjectPerceptionDistance_( rMaxObjectPerceptionDistance )
+        , transport_                   ( pion.RetrieveRole< transport::PHY_RoleAction_Loading >() )
     {
         // NOTHING
     }
 
     void operator()( PHY_ComposantePion& composante )
     {
-        if( !composante.CanPerceive() )
+        if( !composante.CanPerceive( transport_ ) )
             return;
         MT_Vector2D vComposantePerceptionDirection( vMainPerceptionDirection_ );
         if( nRotationIdx_ == 0 )
@@ -767,10 +769,11 @@ private:
     const MT_Vector2D&                          position_;
     const MT_Vector2D&                          direction_;
     const MT_Vector2D&                          vMainPerceptionDirection_;
-    double&                                   rMaxAgentPerceptionDistance_;
-    double&                                   rMaxObjectPerceptionDistance_;
+    double&                                     rMaxAgentPerceptionDistance_;
+    double&                                     rMaxObjectPerceptionDistance_;
     int                                         nRotationIdx_;
-    const double                              rRotationAngle_;
+    const double                                rRotationAngle_;
+    const transport::PHY_RoleAction_Loading*    transport_;
 };
 
 
@@ -779,15 +782,16 @@ class sRadarDataComposantes : public OnComponentFunctor_ABC
 {
 
 public:
-    sRadarDataComposantes( PHY_RolePion_Perceiver::T_RadarsPerClassMap& radars )
+    sRadarDataComposantes( MIL_Agent_ABC& pion, PHY_RolePion_Perceiver::T_RadarsPerClassMap& radars )
         : radars_( radars )
+        , transport_( pion.RetrieveRole< transport::PHY_RoleAction_Loading >() )
     {
         // NOTHING
     }
 
     void operator()( PHY_ComposantePion& composante )//@TODO MGD Use same design for weaponAvailability
     {
-        if( !composante.CanPerceive() )
+        if( !composante.CanPerceive( transport_ ) )
             return;
         composante.ApplyOnRadars( *this );
     }
@@ -799,6 +803,7 @@ public:
 
 private:
     PHY_RolePion_Perceiver::T_RadarsPerClassMap& radars_;
+    const transport::PHY_RoleAction_Loading* transport_;
 };
 
 // -----------------------------------------------------------------------------
@@ -842,7 +847,7 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
     sPerceptionRotation rotation;
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( rotation ) );
     owner_.Execute( *componentComputer );
-    sPerceptionDataComposantes dataFunctor( surfacesAgent_, surfacesObject_, *perceiverPosition_, *perceiverDirection_ , vMainPerceptionDirection, rotation.GetAngle() , rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
+    sPerceptionDataComposantes dataFunctor( pion_, surfacesAgent_, surfacesObject_, *perceiverPosition_, *perceiverDirection_ , vMainPerceptionDirection, rotation.GetAngle() , rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
     std::auto_ptr< OnComponentComputer_ABC > dataComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     owner_.Execute( *dataComputer );
 }
@@ -856,7 +861,7 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
     if( !bExternalMustChangeRadar_ )
         return;
     radars_.clear();
-    sRadarDataComposantes dataFunctor( radars_ );
+    sRadarDataComposantes dataFunctor( pion_, radars_ );
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     owner_.Execute( *componentComputer );
 }

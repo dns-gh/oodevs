@@ -17,13 +17,7 @@
 #include "OnComponentFunctorComputerFactory_ABC.h"
 #include "OnComponentFunctor_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Units/Categories/PHY_Protection.h"
-#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
-#include "Entities/Agents/Units/Categories/PHY_Volume.h"
-#include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -31,6 +25,13 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Units/Categories/PHY_Protection.h"
+#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
+#include "Entities/Agents/Units/Categories/PHY_Volume.h"
+#include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePion.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePopulation.h"
@@ -428,14 +429,17 @@ namespace
     {
     public:
         Functor( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target )
-            : perceiver_( perceiver ), target_( target ), isInside_( false )
+            : perceiver_( perceiver )
+            , transport_( perceiver.RetrieveRole< transport::PHY_RoleAction_Loading >() )
+            , target_( target )
+            , isInside_( false )
         {}
         ~Functor()
         {}
 
         void operator() ( PHY_ComposantePion& composante )
         {
-            if( !composante.CanPerceive() )
+            if( !composante.CanPerceive( transport_ ) )
                 return;
             SensorFunctor dataFunctor( perceiver_, target_ );
             composante.ApplyOnSensors( dataFunctor );
@@ -447,6 +451,7 @@ namespace
 
     private:
         const MIL_Agent_ABC& perceiver_;
+        const transport::PHY_RoleAction_Loading* transport_;
         const MIL_Agent_ABC& target_;
         bool isInside_;
     };

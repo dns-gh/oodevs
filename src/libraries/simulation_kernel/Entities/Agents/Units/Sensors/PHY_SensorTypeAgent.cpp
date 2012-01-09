@@ -759,30 +759,15 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::ComputeIdentificationDist
-// Created: SLG 2010-04-30
+// Name: PHY_SensorTypeAgent::ComputeDistances
+// Created: LDC 2012-01-04
 // -----------------------------------------------------------------------------
-const double PHY_SensorTypeAgent::ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
+void PHY_SensorTypeAgent::ComputeDistances( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target, double& identification, double& recognition, double& detection ) const
 {
-    return rIdentificationDist_ * ComputeDistanceModificator( perceiver, target );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::ComputeRecognitionDist
-// Created: SLG 2010-04-30
-// -----------------------------------------------------------------------------
-const double PHY_SensorTypeAgent::ComputeRecognitionDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
-{
-    return rRecognitionDist_ * ComputeDistanceModificator( perceiver, target );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::ComputeDetectionDist
-// Created: SLG 2010-04-30
-// -----------------------------------------------------------------------------
-const double PHY_SensorTypeAgent::ComputeDetectionDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
-{
-    return rDetectionDist_ * ComputeDistanceModificator( perceiver, target );
+    double distanceModifier = ComputeDistanceModificator( perceiver, target );
+    identification = rIdentificationDist_ * distanceModifier;
+    recognition = rRecognitionDist_ * distanceModifier;
+    detection = rDetectionDist_ * distanceModifier;
 }
 
 // -----------------------------------------------------------------------------

@@ -16,6 +16,7 @@
 #include "OnComponentComputer_ABC.h"
 #include "OnComponentFunctor_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
@@ -414,6 +415,7 @@ namespace
     public:
         Functor( const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
             : perceiver_( perceiver )
+            , transport_( perceiver.RetrieveRole< transport::PHY_RoleAction_Loading >() )
             , point_    ( point )
             , target_   ( target )
             , energy_   ( 0 )
@@ -422,7 +424,7 @@ namespace
         {}
         void operator()( PHY_ComposantePion& composante )
         {
-            if( !composante.CanPerceive() )
+            if( !composante.CanPerceive( transport_ ) )
                 return;
             SensorFunctor dataFunctor( perceiver_, point_, target_ );
             composante.ApplyOnSensors( dataFunctor );
@@ -434,6 +436,7 @@ namespace
         }
     private:
         const MIL_Agent_ABC& perceiver_;
+        const transport::PHY_RoleAction_Loading* transport_;
         const MT_Vector2D& point_;
         const MT_Vector2D& target_;
         double energy_;
