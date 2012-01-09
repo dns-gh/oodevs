@@ -825,7 +825,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
-      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.AppuiContreMobilite" dia-type="france.military.platoon.combat.support.engineer.tasks.AppuiContreMobilite" id="2078" name="PION MILICE Appui contre mobilite" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2993,11 +2993,6 @@
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Contourner" id="355" name="Pion Contourner"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_EnvoyerVehicule" id="356" name="Pion Envoyer Vehicule"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AppliquerFeux" id="358" name="Pion Appliquer Feux">
-      <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
-      <parameter dia-name="nbIT_" name="Nb IT" optional="false" type="Integer"/>
-      <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
-    </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ExecuterTir" id="359" name="Pion Executer Tir"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Emettre" id="360" name="Pion Emettre"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_StopperEmission" id="361" name="Pion Stopper Emission"/>
@@ -3107,7 +3102,7 @@
     <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Orienter" id="391" name="Pion Orienter Capteurs">
       <parameter dia-name="pointCible_" name="Face a" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="392" name="Appliquer les feux">
+    <fragorder available-without-mission="false" dia-type="france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="392" name="Pion Appliquer Feux">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
       <parameter dia-name="nbIT_" name="Type d'intervention" optional="false" type="Integer"/>
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point">
@@ -3138,4 +3133,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="1763013953" -->
+<!-- signature="1729354843" -->
