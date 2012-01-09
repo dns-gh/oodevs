@@ -91,7 +91,7 @@ void DelayCapacity::CanInteractWith( const MIL_Object_ABC& object, const MIL_Age
 {
     CIT_AgentMap it = agentInsideMap_.find( &agent );
     if( it != agentInsideMap_.end() )
-        canInteract = object.GetAttribute< DelayAttribute >().IsOverDelay( it->second );
+        canInteract &= object.GetAttribute< DelayAttribute >().IsOverDelay( it->second );
 }
 
 // -----------------------------------------------------------------------------
