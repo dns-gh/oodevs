@@ -241,33 +241,6 @@
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PlatoonTest">
-      <missions/>
-      <fragorders>
-        <fragorder name="Rejoindre"/>
-        <fragorder name="Embarquer"/>
-        <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-      </fragorders>
-    </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASA.PC">
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
@@ -4573,7 +4546,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION ASS Assurer Mise En Oeuvre">
-          <fragorder name="Appliquer les feux"/>
+          <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Pion Engager"/>
           <fragorder name="Pion Desengager"/>
         </mission>
@@ -8409,4 +8382,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3389454794" -->
+<!-- signature="2100214352" -->
