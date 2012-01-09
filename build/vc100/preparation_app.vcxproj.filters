@@ -466,6 +466,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\NewProfileDialog.cpp">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FormationHierarchyEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -867,6 +870,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\NewProfileDialog.h">
       <Filter>Source Files\Dialogs\Profiles\Controls</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\FormationHierarchyEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -15,6 +15,7 @@
 
 namespace kernel {
     class Formation_ABC;
+    class HierarchyLevel_ABC;
     class SymbolFactory;
 }
 
@@ -38,6 +39,7 @@ public:
     //@{
     virtual const kernel::Entity_ABC* GetSuperior() const;
     virtual std::string GetLevel() const;
+    virtual void SetLevel( const kernel::HierarchyLevel_ABC& hierarchyLevel );
     void ChangeSuperior( kernel::Entity_ABC& superior );
     virtual void UnregisterParent();
     //@}
@@ -54,6 +56,7 @@ private:
     //@{
     kernel::Entity_ABC* superior_;
     std::string level_;
+    kernel::SymbolFactory& symbolFactory_;
     //@}
 };
 

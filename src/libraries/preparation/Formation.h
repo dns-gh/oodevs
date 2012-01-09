@@ -44,7 +44,7 @@ class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( kernel::Controller& controller, const kernel::HierarchyLevel_ABC& level, IdManager& idManager );
+             Formation( kernel::Controller& controller, const kernel::HierarchyLevel_ABC& level, const kernel::FormationLevels& levels, IdManager& idManager );
              Formation( xml::xistream& xis, kernel::Controller& controller, const kernel::FormationLevels& levels, IdManager& idManager );
     virtual ~Formation();
     //@}
@@ -54,6 +54,7 @@ public:
     virtual QString GetName() const;
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
     void Rename( const QString& name );
+    void SetLevel( int levelId );
     virtual const kernel::LogisticLevel& GetLogisticLevel() const ;
     //@}
 
@@ -86,6 +87,7 @@ private:
     std::string nature_;
     mutable std::string symbolPath_;
     mutable std::string levelPath_;
+    const kernel::FormationLevels& levels_;
     //@}
 };
 

@@ -584,6 +584,13 @@
     </message>
 </context>
 <context>
+    <name>FormationHierarchyEditor</name>
+    <message>
+        <source>Change hierarchy level</source>
+        <translation>Changer le niveau hiérarchique</translation>
+    </message>
+</context>
+<context>
     <name>GhostSymbolDialog</name>
     <message>
         <source>Phantom symbol editor</source>

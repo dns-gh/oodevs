@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "Formation.h"
+#include "FormationHierarchies.h"
 #include "IdManager.h"
 #include "LogisticBaseStates.h"
 #include "clients_gui/Tools.h"
@@ -34,9 +35,10 @@ using namespace kernel;
 // Name: Formation constructor
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& level, IdManager& idManager )
+Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& level, const FormationLevels& levels, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, idManager.GetNextId(), "" )
     , level_( &level )
+    , levels_( levels )
 {
     RegisterSelf( *this );
     name_ = tools::translate( "Formation", "Formation [%1]" ).arg( id_ );
@@ -49,6 +51,7 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
 // -----------------------------------------------------------------------------
 Formation::Formation( xml::xistream& xis, Controller& controller, const FormationLevels& levels, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, 0, "" )
+    , levels_( levels )
 {
     std::string level, name;
     xis >> xml::attribute( "id", ( int& ) id_ )
@@ -134,6 +137,23 @@ void Formation::Rename( const QString& name )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Formation::SetLevelName
+// Created: MMC 2012-01-05
+// -----------------------------------------------------------------------------
+void Formation::SetLevel( int levelId )
+{
+    kernel::TacticalHierarchies& hierarchies = Get< kernel::TacticalHierarchies >();
+    FormationHierarchies* pFormationHierachies = dynamic_cast< FormationHierarchies* >( &hierarchies );
+    if( pFormationHierachies )
+    {
+        level_ = levels_.Resolve( levelId );
+        Rename( name_ );
+        pFormationHierachies->SetLevel( *level_ );
+        InitializeSymbol();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: Formation::SerializeAttributes
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
@@ -142,9 +162,9 @@ void Formation::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::attribute( "id", long( id_ ) )
         << xml::attribute( "name", name_.ascii() )
         << xml::attribute( "level", level_->GetName().ascii() );
-    if (nature_.length() > 0)
+    if( nature_.length() > 0 )
         xos << xml::attribute( "nature", nature_ );
-    if (color_.length() > 0)
+    if( color_.length() > 0 )
         xos << xml::attribute( "color", color_ );
 }
 

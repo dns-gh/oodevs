@@ -14,6 +14,7 @@
 #include "AgentAffinitiesDialog.h"
 #include "PeopleAffinitiesDialog.h"
 #include "ColorEditor.h"
+#include "FormationHierarchyEditor.h"
 #include "GhostSymbolDialog.h"
 #include "LongNameEditor.h"
 #include "SymbolEditor.h"
@@ -43,6 +44,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const StaticModel& 
     new LogisticLinksEditor( parent, controllers );
     new LogisticStockEditor( parent, controllers, model );
     new LongNameEditor( parent, controllers, model );
+    new FormationHierarchyEditor( parent, controllers, model.levels_ );
 }
 
 // -----------------------------------------------------------------------------

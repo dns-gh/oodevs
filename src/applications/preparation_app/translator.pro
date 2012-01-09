@@ -21,6 +21,7 @@ FilterInputArgument.cpp \
 FilterManager.cpp \
 FilterOrbatReIndexer.cpp \
 FilterXsl.cpp \
+FormationHierarchyEditor.cpp \
 GhostsPanel.cpp \
 GhostSymbolDialog.cpp \
 GhostSymbolEditor.cpp \
