@@ -373,7 +373,7 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
 
             // network serialization
             MockClientPublisher publisher;
-            MOCK_EXPECT( publisher, SendSimToClient ).exactly( 4 ); // TODO! AutomatAttributes, AutomatChangeKnowledgeGroup, AutomatChangeSuperior, AutomatOrder
+            MOCK_EXPECT( publisher, SendSimToClient ).exactly( 2 ); // TODO! AutomatAttributes, AutomatOrder
             MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
             MOCK_EXPECT( publisher, SendSimToClient ).exactly( 1 ); // AutomatChangeLogisticLinks
             result->SendFullUpdate( publisher );
@@ -458,7 +458,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             // network serialization
             MockClientPublisher publisher;
             MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
-            MOCK_EXPECT( publisher, SendSimToClient ).exactly( 4 ); // TODO! AutomatChangeKnowledgeGroup, AutomatChangeSuperior, AutomatChangeLogisticLinks, AutomatOrder
+            MOCK_EXPECT( publisher, SendSimToClient ).exactly( 2 ); // TODO! AutomatChangeLogisticLinks, AutomatOrder
             // no DecisionalStates if none is set
             result->SendFullUpdate( publisher );
             publisher.verify();
@@ -572,7 +572,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged )
 
             // network serialization
             MockClientPublisher publisher;
-            MOCK_EXPECT( publisher, SendSimToClient ).exactly( 4 ); // TODO! AutomatChangeKnowledgeGroup, AutomatChangeSuperior, AutomatChangeLogisticLinks, AutomatOrder
+            MOCK_EXPECT( publisher, SendSimToClient ).exactly( 2 ); // TODO! AutomatChangeLogisticLinks, AutomatOrder
             MOCK_EXPECT( logisticEntity, Send ).exactly( 2 ).calls( ParentEntitySender( 51 ) ); // 1 for logistic links, 1 for quotas
             MOCK_EXPECT( publisher, SendSimToClient ).once().with( expectedLink );
             MOCK_EXPECT( publisher, SendSimToClient ).once().with( expectedQuotas );
