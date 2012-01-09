@@ -91,6 +91,7 @@ private:
     void CheckLoadingErrors();
     void CheckScores();
     void CheckSuccessFactors();
+    void CheckLogisticBase();
     //@}
 
 private:

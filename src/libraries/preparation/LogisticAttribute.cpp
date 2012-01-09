@@ -115,19 +115,25 @@ void LogisticAttribute::Display( kernel::Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticAttribute::HasValidLogisticBase
+// Created: JSR 2012-01-09
+// -----------------------------------------------------------------------------
+bool LogisticAttribute::HasValidLogisticBase() const
+{
+    if( !logisticBase_ )
+        return false;
+    const LogisticLevelAttritube& attribute = logisticBase_->Get< LogisticLevelAttritube >();
+    return attribute.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticAttribute::SerializeAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
 void LogisticAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-   if( !logisticBase_ )
-        throw std::exception( tools::translate( "Object", "The logistic base is not defined for '%1'" ).arg( object_.GetName().ascii() ) );
-   const LogisticLevelAttritube& attribute = logisticBase_->Get< LogisticLevelAttritube >();
-   if( attribute.GetLogisticLevel() == kernel::LogisticLevel::none_ )
-        throw std::exception( tools::translate( "Object", "Object '%1' : '%2' is not a logistic base" ).arg( object_.GetName().ascii() )
-                                                                                                       .arg( logisticBase_->GetName().ascii() ) );
     xos << xml::start( "logistic-base" )
-            << xml::attribute( "id", logisticBase_->GetId() )
+            << xml::attribute( "id", logisticBase_ ? logisticBase_->GetId() : 0 )
         << xml::end;
 }
 

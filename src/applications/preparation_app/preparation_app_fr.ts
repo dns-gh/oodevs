@@ -1276,8 +1276,8 @@
         <translation>Poste de Commande</translation>
     </message>
     <message>
-        <source>No logistic base defined.</source>
-        <translation>Pas de base logistique définie.</translation>
+        <source>No valid logistic base defined.</source>
+        <translation>Pas de base logistique valide définie.</translation>
     </message>
     <message>
         <source>Automat has no command post.</source>
@@ -1298,6 +1298,22 @@
     <message>
         <source>Success factor definitions contain errors: %1</source>
         <translation>Les définitions des facteurs de réussite contiennent des erreurs: %1</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation>Niveau</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Alerte</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
     </message>
 </context>
 <context>

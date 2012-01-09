@@ -15,6 +15,7 @@
 #include "FormationModel.h"
 #include "GhostModel.h"
 #include "LimitsModel.h"
+#include "LogisticAttribute.h"
 #include "LogisticBaseStates.h"
 #include "Model.h"
 #include "ObjectsModel.h"
@@ -136,6 +137,7 @@ bool ModelConsistencyChecker::CheckConsistency()
     CheckStockInitialization();
     CheckMaxStockExceeded();
     CheckLogisticInitialization();
+    CheckLogisticBase();
 
     CheckProfileUniqueness();
     CheckProfileInitialization();
@@ -529,6 +531,22 @@ void ModelConsistencyChecker::CheckLoadingErrors()
     Model::T_LoadingErrors errors = model_.GetLoadingErrors();
     for( Model::T_LoadingErrors::const_iterator it = errors.begin(); it != errors.end(); ++it )
         AddError( it->first, 0, it->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckLogisticBase
+// Created: JSR 2012-01-09
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckLogisticBase()
+{
+    Iterator< const Object_ABC& > it = model_.GetObjectResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Object_ABC& obj = it.NextElement();
+        const LogisticAttribute* attribute = obj.Retrieve< LogisticAttribute >();
+        if( attribute && !attribute->HasValidLogisticBase() )
+            AddError( eNoLogisticBase, &obj );
+    }
 }
 
 // -----------------------------------------------------------------------------

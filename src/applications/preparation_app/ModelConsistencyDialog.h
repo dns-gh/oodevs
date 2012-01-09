@@ -50,7 +50,7 @@ public slots:
 private:
     //! @name Enums
     //@{
-    enum E_Column { eID = 0, eName = 1, eDescription = 2 };
+    enum E_Column { eIcon = 0, eID = 1, eName = 2, eDescription = 3 };
     //@}
 
     //! @name Types
@@ -60,8 +60,9 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateCheckbox( QHBoxLayout& layout, const T_Types& names );
+    void CreateCheckbox( QGridLayout& layout, const T_Types& names );
     void UpdateDataModel();
+    void AddIcon( const kernel::SafePointer< kernel::Entity_ABC >& entity, E_ConsistencyCheck type, QList< QStandardItem* >& items );
     template< typename T >
     void AddItem( T data, QString text, const kernel::SafePointer< kernel::Entity_ABC >& entity,
                   E_ConsistencyCheck type, QList< QStandardItem* >& items );
@@ -80,6 +81,7 @@ private slots:
     void OnClose();
     void OnSelectionChanged( const QModelIndex& );
     void OnFilterChanged( int type );
+    void OnLevelChanged();
     //@}
 
 private:
@@ -88,6 +90,8 @@ private:
     kernel::ActionController&         actionController_;
     ModelConsistencyChecker           checker_;
     QTableView*                       tableView_;
+    QCheckBox*                        warningCheckBox_;
+    QCheckBox*                        errorCheckBox_;
     QStandardItemModel*               dataModel_;
     FilterProxyModel*                 proxyModel_;
     QStringList                       horizontalHeaders_;
