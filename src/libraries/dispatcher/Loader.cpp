@@ -81,6 +81,8 @@ void Loader::SkipToFrame( unsigned int frame )
 // -----------------------------------------------------------------------------
 bool Loader::Tick()
 {
+    if( currentFrame_ > GetTickNumber() )
+        return false;
     bool ret = false;
     bool needSync = currentFrame_ == 0 && !model_.IsSynching();
     if( needSync )
