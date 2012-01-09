@@ -11,9 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_ObjectFunctions.h"
+#include "Decision/DEC_Gen_Object.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/ObstacleAttribute.h"
-#include "Decision/DEC_Gen_Object.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -140,7 +143,10 @@ void DEC_ObjectFunctions::MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_O
     {
         MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
         if( pObject && ( *pObject )().CanBeDestroyed() )
-            ( *pObject )().Destroy(); // AddObjectKnowledgeToForget done
+        {
+            pKnowledge->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+            ( *pObject )().Destroy();
+        }
     }
 }
 
