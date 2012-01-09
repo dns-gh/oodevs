@@ -405,6 +405,23 @@ float UrbanObjectWrapper::GetHeight() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetStructuralHeight
+// Created: MMC 2012-01-09
+// -----------------------------------------------------------------------------
+float UrbanObjectWrapper::GetStructuralHeight() const
+{
+    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
+        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
+        {
+            if ( const StructuralCapacity* structuralCapacity = Retrieve< StructuralCapacity >() )
+                return float( architecture->GetHeight() ) * structuralCapacity->GetStructuralState();
+            else
+                return float( architecture->GetHeight() );
+        }
+        return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::GetOccupation
 // Created: JSR 2011-05-26
 // -----------------------------------------------------------------------------

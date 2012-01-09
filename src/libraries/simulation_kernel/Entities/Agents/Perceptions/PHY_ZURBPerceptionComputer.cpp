@@ -27,6 +27,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_Geometry.h"
 #include <urban/GeometryAttribute.h>
 #include <urban/PhysicalAttribute.h>
@@ -178,7 +179,7 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
 
     double perceiverUrbanBlockHeight = 2; //2 = SensorHeight
     if( perceiverUrbanBlock )
-        perceiverUrbanBlockHeight += perceiverUrbanBlock->GetHeight();
+        perceiverUrbanBlockHeight += perceiverUrbanBlock->GetStructuralHeight();
 
     for( std::set< const PHY_SensorTypeAgent* >::const_iterator itSensor = dataFunctor.sensors_.begin(); itSensor != dataFunctor.sensors_.end(); ++itSensor )
     {
@@ -192,7 +193,8 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
                 if( const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >() )
                     if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
                     {
-                        objectHeight += architecture->GetHeight();
+                        UrbanObjectWrapper& objectUrbanBlock = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( object );
+                        objectHeight += objectUrbanBlock.GetStructuralHeight();
                         occupation = architecture->GetOccupation();
                     }
                 double urbanFactor = ( *itSensor )->GetUrbanBlockFactor( object ) * perceiverUrbanBlockHeight / objectHeight;

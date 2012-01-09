@@ -85,6 +85,7 @@ public:
     bool HasChild() const;
     float ComputeComplexity() const;
     float GetHeight() const;
+    float GetStructuralHeight() const;
     float GetOccupation() const;
     float GetTrafficability() const;
     const urban::TerrainObject_ABC& GetObject() const;  // $$$$ _RC_ LGY 2011-02-18: à supprimer
