@@ -4872,7 +4872,7 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROEM Appuyer"/>
+        <mission name="PION RENS .ROEM Appuyer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION COMMUNES Decrocher"/>
@@ -4907,19 +4907,15 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Groupe ELGE">
       <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROEM Appuyer"/>
+        <mission name="PION COMMUNES Decrocher"/>
+        <mission name="PION COMMUNES Faire Mouvement"/>
+        <mission name="PION COMMUNES Franchir"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
+        <mission name="PION COMMUNES Stationner"/>
+        <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION RENS .ROEM Appuyer"/>
         <mission name="PION RENS ROEM .Renseigner Sur"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION Franchir"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8392,4 +8388,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1427158339" -->
+<!-- signature="3382489228" -->
