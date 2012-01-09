@@ -34,7 +34,7 @@
   <object id="31" type="checkpoint"/>
   <object id="32" type="dropping area"/>
   <object id="33" type="movement forbidden area"/>
-  <object id="34" type="fire forbidden area"/>
+  <object id="34" type="firing forbidden area"/>
   <object id="35" type="mortar deployment area"/>
   <object id="36" type="discontinuous pontoon bridge"/>
   <object id="37" type="installation"/>
@@ -44,4 +44,4 @@
   <object id="41" type="underground exit"/>
   <object id="42" type="resource production node"/>
 </objects>
-<!-- signature="4112045410" -->
+<!-- signature="3790925869" -->
