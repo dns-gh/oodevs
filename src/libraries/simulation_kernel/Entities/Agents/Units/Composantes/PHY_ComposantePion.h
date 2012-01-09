@@ -47,6 +47,11 @@ namespace firing
     class WeaponAvailabilityComputer_ABC;
 }
 
+namespace transport
+{
+    class PHY_RoleAction_Loading;
+}
+
 namespace sword
 {
     class MissionParameters;
@@ -186,7 +191,7 @@ public:
     bool CanMove() const;
     bool IsUsable() const;
     bool IsLoadable() const;
-    bool CanPerceive() const;
+    bool CanPerceive(  const transport::PHY_RoleAction_Loading* roleLoading  ) const;
     bool CanBeFired() const;
     bool CanBeLent() const;
     virtual bool CanFire() const;
@@ -278,6 +283,7 @@ private:
     void ApplyNewComposanteState( const PHY_ComposanteState& pNewState, const PHY_ComposanteState& oldState );
     bool CanBeUsed( bool bWithLoaded = false ) const;
     bool CanBeUsedForMove() const;
+    bool CanComponentBeUsed( const transport::PHY_RoleAction_Loading* role, bool bWithLoaded ) const;
     void ManageEndMaintenance();
     //@}
 

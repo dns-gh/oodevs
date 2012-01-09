@@ -69,9 +69,7 @@ public:
     double ComputePerceptionAccuracy( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow& target, double rSensorHeight ) const;
     const double IdentificationDistance   () const;
     const double ReconnoissanceDistance   () const;
-    const double ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const double ComputeRecognitionDist   ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const double ComputeDetectionDist     ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    void ComputeDistances( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target, double& identification, double& recognition, double& detection ) const;
     const double RayTrace                 ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double sensorHeight ) const;
     //@}
 
