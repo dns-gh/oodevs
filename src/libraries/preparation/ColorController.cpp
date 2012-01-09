@@ -11,7 +11,6 @@
 #include "ColorController.h"
 #include "LogisticHierarchiesBase.h"
 #include "LogisticBaseStates.h"
-#include "ProfileHierarchies_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -141,8 +140,6 @@ void ColorController::UpdateHierarchies( const kernel::Entity_ABC& entity )
         if( const LogisticBaseStates* pLogistic = static_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() ) )
             controllers_.controller_.Update( *pLogistic );
         UpdateLogisticBaseStates( *pTactical );
-        if( const ProfileHierarchies_ABC* pProfil = entity.Retrieve< ProfileHierarchies_ABC >() )
-            controllers_.controller_.Update( *pProfil );
     }
 }
 
