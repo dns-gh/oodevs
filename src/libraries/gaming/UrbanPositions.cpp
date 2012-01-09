@@ -29,6 +29,8 @@ UrbanPositions::UrbanPositions( const sword::Location& location, const sword::Ur
     std::vector< geometry::Point2f > positions;
     for( int i = 0; i < location.coordinates().elem_size(); ++i )
         positions.push_back( converter.ConvertToXY( location.coordinates().elem( i ) ) );
+    if( positions.empty() )
+        throw std::runtime_error( "UrbanPositions cannot be created with empty location" );
     if( positions.front() == positions.back() )
         positions.pop_back();
     polygon_ = geometry::Polygon2f( positions );

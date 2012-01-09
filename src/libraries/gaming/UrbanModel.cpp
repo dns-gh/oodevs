@@ -9,21 +9,22 @@
 
 #include "gaming_pch.h"
 #include "UrbanModel.h"
-#include "UrbanPositions.h"
+#include "Architecture.h"
+#include "InfrastructureAttribute.h"
+#include "MedicalTreatmentAttribute.h"
 #include "ResourceNetwork.h"
 #include "ResourceNetworkModel.h"
 #include "StaticModel.h"
-#include "Usages.h"
-#include "Architecture.h"
-#include "UrbanColor.h"
 #include "StructuralStateAttribute.h"
-#include "InfrastructureAttribute.h"
-#include "MedicalTreatmentAttribute.h"
+#include "UrbanColor.h"
+#include "UrbanPositions.h"
+#include "Usages.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_gui/UrbanDisplayOptions.h"
 #include "clients_gui/Usages.h"
 #include "clients_gui/Architecture.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "MT_Tools/MT_Logger.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel constructor
@@ -56,6 +57,11 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     unsigned long id = message.object().id();
     if( Find( id ) )
         return;
+    if( message.location().coordinates().elem_size() == 0 )
+    {
+        MT_LOG_ERROR_MSG( "Urban block " << id << "cannot be created because of empty location." );
+        return;
+    }
     const kernel::ObjectType& type = static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" );
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, message.name(), id, type, *urbanDisplayOptions_, static_.accommodationTypes_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
