@@ -89,8 +89,22 @@ bool PHY_MedicalSortingConsign::DoWaitingForSorting()
     assert( !pDoctor_ );
 
     pDoctor_ = GetPionMedical().GetAvailableDoctorForSorting();
-    if( !pDoctor_ ) // $$$ TODO if !HasUsable => changer de secteur de tri
+    if( !pDoctor_ )
+    {
+        // Find alternative sorting unit
+        MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+        if( pLogisticManager )
+        {
+            PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeSortingHandler( *pHumanState_ );
+            if( newPion != &GetPionMedical() )
+            {
+                newPion->HandleHumanForSorting( *pHumanState_ );
+                EnterStateFinished();
+                pHumanState_ = 0; // Crade
+            }
+        } 
         return false;
+    }
 
     GetPionMedical().StartUsingForLogistic( *pDoctor_ );
     return true;

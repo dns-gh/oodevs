@@ -568,6 +568,19 @@ PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanForEvacuation( MIL_Ag
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::HandleHumanForEvacuation
+// Created: NLD 2005-01-10
+// -----------------------------------------------------------------------------
+bool PHY_RolePionLOG_Medical::HandleHumanForEvacuation( PHY_MedicalHumanState& humanState )
+{
+    if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( humanState.GetHuman() ) )
+        return false;
+    PHY_MedicalEvacuationConsign* pConsign = new PHY_MedicalEvacuationConsign( *this, humanState );
+    InsertConsign( *pConsign );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::ExecuteOnComponentsAndLendedComponents
 // Created: LDC 2009-12-18
 // -----------------------------------------------------------------------------
@@ -632,9 +645,8 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_Medica
 // Name: PHY_RolePionLOG_Medical::HandleHumanForSorting
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::HandleHumanForSorting( const PHY_MedicalCollectionAmbulance& ambulance, PHY_MedicalHumanState& humanState )
+void PHY_RolePionLOG_Medical::HandleHumanForSorting( PHY_MedicalHumanState& humanState )
 {
-    assert( reservations_.find( &ambulance ) != reservations_.end() );
     PHY_MedicalSortingConsign* pConsign = new PHY_MedicalSortingConsign( *this, humanState );
     InsertConsign( *pConsign );
 }
@@ -643,7 +655,7 @@ void PHY_RolePionLOG_Medical::HandleHumanForSorting( const PHY_MedicalCollection
 // Name: PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting( const PHY_MedicalCollectionAmbulance& /*ambulance*/ ) const
+int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting() const
 {
     if( !bSystemEnabled_ || !bSortingFunctionEnabled_ || !HasUsableDoctorForSorting() )
         return std::numeric_limits< int >::min();

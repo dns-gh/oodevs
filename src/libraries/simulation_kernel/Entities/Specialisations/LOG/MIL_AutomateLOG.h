@@ -48,6 +48,7 @@ class PHY_MedicalHumanState;
 class Human_ABC;
 class PHY_MedicalCollectionAmbulance;
 class PHY_RoleInterface_Medical;
+class PHY_RoleInterface_Maintenance;
 class PHY_Dotation;
 class PHY_RoleInterface_Supply;
 class PHY_DotationCategory;
@@ -102,9 +103,13 @@ public:
 
     //! @name Maintenance
     //@{
-    PHY_MaintenanceComposanteState* MaintenanceHandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
-    bool                            MaintenanceHandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState );
-    bool                            MaintenanceHandleComposanteForRepair   ( PHY_MaintenanceComposanteState& composanteState );
+    PHY_MaintenanceComposanteState* MaintenanceHandleComposanteForTransport   ( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
+    bool                            MaintenanceHandleComposanteForTransport   ( PHY_MaintenanceComposanteState& composanteState );
+    bool                            MaintenanceHandleComposanteForRepair      ( PHY_MaintenanceComposanteState& composanteState );
+    
+    //$$$ A FACTORISER AVEC LES FONCTION CI DESSUS
+    PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeRepairHandler   ( PHY_MaintenanceComposanteState& composanteState );
+    PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeTransportHandler( PHY_MaintenanceComposanteState& composanteState );
     //@}
 
     //! @name Medical
@@ -115,6 +120,12 @@ public:
     PHY_RoleInterface_Medical*  MedicalReserveForSorting          ( PHY_MedicalCollectionAmbulance& ambulance );
     bool                   MedicalHandleHumanForHealing           ( PHY_MedicalHumanState& humanState );
     bool                   MedicalCanCollectionAmbulanceGo        ( const PHY_MedicalCollectionAmbulance& ambulance ) const;
+
+    //$$$ A FACTORISER AVEC LES FONCTION CI DESSUS
+    PHY_RoleInterface_Medical* MedicalFindAlternativeEvacuationHandler( PHY_MedicalHumanState& humanState );
+    PHY_RoleInterface_Medical* MedicalFindAlternativeCollectionHandler( PHY_MedicalHumanState& humanState );
+    PHY_RoleInterface_Medical* MedicalFindAlternativeSortingHandler   ( PHY_MedicalHumanState& humanState );
+    PHY_RoleInterface_Medical* MedicalFindAlternativeHealingHandler   ( PHY_MedicalHumanState& humanState );
     //@}
 
     //! @name Supply

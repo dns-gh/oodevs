@@ -78,12 +78,13 @@ public:
 
     virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ); // Imex
     virtual PHY_MedicalHumanState* HandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human ); // Releve
+    virtual bool                   HandleHumanForEvacuation( PHY_MedicalHumanState& humanState );
     virtual int GetAvailabilityScoreForEvacuation( const Human_ABC& human ) const;
     virtual bool HandleHumanForCollection( PHY_MedicalHumanState& humanState );     // Ramassage
     virtual int GetAvailabilityScoreForCollection( const PHY_MedicalHumanState& humanState ) const;
 
-    virtual void HandleHumanForSorting( const PHY_MedicalCollectionAmbulance& ambulance, PHY_MedicalHumanState& humanState );
-    virtual int GetAvailabilityScoreForSorting( const PHY_MedicalCollectionAmbulance& ambulance ) const;
+    virtual void HandleHumanForSorting( PHY_MedicalHumanState& humanState );
+    virtual int GetAvailabilityScoreForSorting() const;
     virtual void ReserveForSorting( const PHY_MedicalCollectionAmbulance& ambulance );
     virtual void CancelReservationForSorting( const PHY_MedicalCollectionAmbulance& ambulance );
 

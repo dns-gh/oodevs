@@ -117,6 +117,18 @@ bool PHY_MaintenanceRepairConsign::DoWaitingForRepairer()
     pRepairer_ = GetPionMaintenance().GetAvailableRepairer( pComposanteState_->GetComposanteBreakdown() );
     if( !pRepairer_ )
     {
+        // Find alternative repair unit
+        MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
+        if( pLogisticManager )
+        {
+            PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeRepairHandler( *pComposanteState_ );
+            if( newPion != &GetPionMaintenance() && newPion->HandleComposanteForRepair( *pComposanteState_ ) )
+            {
+                EnterStateFinished();
+                pComposanteState_ = 0; // Crade
+                return false;
+            }
+        }
         if( !GetPionMaintenance().HasUsableRepairer( pComposanteState_->GetComposanteBreakdown() ) )
             EnterStateWaitingForCarrier();
         return false;

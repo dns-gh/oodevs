@@ -21,6 +21,7 @@
 #include "Entities/MIL_Formation.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
+#include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalCollectionAmbulance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
@@ -201,6 +202,28 @@ bool MIL_AutomateLOG::MaintenanceHandleComposanteForRepair( PHY_MaintenanceCompo
     return visitor.pSelected_ ? visitor.pSelected_->HandleComposanteForRepair( composanteState ) : false;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::MaintenanceFindAlternativeRepairHandler
+// Created: NLD 2012-01-03
+// -----------------------------------------------------------------------------
+PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeRepairHandler( PHY_MaintenanceComposanteState& composanteState )
+{
+    MaintenanceRepairVisitor visitor( composanteState );
+    Visit( visitor );
+    return visitor.pSelected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler
+// Created: NLD 2012-01-03
+// -----------------------------------------------------------------------------
+PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler( PHY_MaintenanceComposanteState& composanteState )
+{
+    MaintenanceTransportVisitor visitor( composanteState.GetComposante() );
+    Visit( visitor );
+    return visitor.pSelected_;
+}
+
 // =============================================================================
 // MEDICAL
 // =============================================================================
@@ -244,7 +267,7 @@ bool MIL_AutomateLOG::MedicalHandleHumanForCollection( PHY_MedicalHumanState& hu
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalReserveForSorting( PHY_MedicalCollectionAmbulance& ambulance )
 {
-    MedicalSortingVisitor visitor( ambulance );
+    MedicalSortingVisitor visitor;
     Visit( visitor );
 
     if( !visitor.pSelected_ )
@@ -279,6 +302,50 @@ bool MIL_AutomateLOG::MedicalCanCollectionAmbulanceGo( const PHY_MedicalCollecti
     return visitor.bAuthorized_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler
+// Created: NLD 2012-01-03
+// -----------------------------------------------------------------------------
+PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler( PHY_MedicalHumanState& humanState )
+{
+    MedicalEvacuationVisitor visitor( humanState.GetHuman() );
+    Visit( visitor );
+    return visitor.pSelected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler
+// Created: NLD 2012-01-03
+// -----------------------------------------------------------------------------
+PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeCollectionHandler( PHY_MedicalHumanState& humanState )
+{
+    MedicalCollectionVisitor visitor( humanState );
+    Visit( visitor );
+    return visitor.pSelected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler
+// Created: NLD 2012-01-03
+// -----------------------------------------------------------------------------
+PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeSortingHandler( PHY_MedicalHumanState& )
+{
+    MedicalSortingVisitor visitor;
+    Visit( visitor );
+    return visitor.pSelected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler
+// Created: NLD 2012-01-03
+// -----------------------------------------------------------------------------
+PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeHealingHandler( PHY_MedicalHumanState& humanState )
+{
+    MedicalHealingVisitor visitor( humanState );
+    Visit( visitor );
+    return visitor.pSelected_;
+}
+
 // =============================================================================
 // QUOTAS
 // =============================================================================
@@ -307,7 +374,7 @@ void MIL_AutomateLOG::SupplyHandleRequest( boost::shared_ptr < logistic::SupplyC
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::SupplyGetStock
+// Name: MIL_AutomateLOG::SupplyHasStock
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
 bool MIL_AutomateLOG::SupplyHasStock( const PHY_DotationCategory& dotationCategory ) const

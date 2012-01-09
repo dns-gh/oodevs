@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 
@@ -97,6 +98,21 @@ bool PHY_MaintenanceTransportConsign::DoWaitingForCarrier()
     pCarrier_ = GetPionMaintenance().GetAvailableHauler( GetComposanteType() );
     if( pCarrier_ )
         GetPionMaintenance().StartUsingForLogistic( *pCarrier_ );
+    else
+    {
+        // Find alternative transport unit
+        MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
+        if( pLogisticManager )
+        {
+            PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeTransportHandler( *pComposanteState_ );
+            if( newPion != &GetPionMaintenance() && newPion->HandleComposanteForTransport( *pComposanteState_ ) )
+            {
+                EnterStateFinished();
+                pComposanteState_ = 0; // Crade
+                return false;
+            }
+        }
+    }
     return pCarrier_ != 0;
 }
 

@@ -84,7 +84,23 @@ void PHY_MedicalCollectionConsign::CreateCollectionAmbulance()
 {
     assert( pHumanState_ );
     if( !pCollectionAmbulance_ )
+    {
         pCollectionAmbulance_ = GetPionMedical().GetAvailableCollectionAmbulance( *this );
+        if( !pCollectionAmbulance_ )
+        {
+            // Find alternative evacuation unit
+            MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+            if( pLogisticManager )
+            {
+                PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeCollectionHandler( *pHumanState_ );
+                if( newPion != &GetPionMedical() && newPion->HandleHumanForCollection( *pHumanState_ ) )
+                {
+                    EnterStateFinished();
+                    pHumanState_ = 0; // Crade
+                }
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +190,7 @@ void PHY_MedicalCollectionConsign::TransferToSortingArea( PHY_RoleInterface_Medi
     assert( GetState() == eCollectionUnloading );
     SetState( eFinished );
     ResetTimer( 0 );
-    sortingArea.HandleHumanForSorting( *pCollectionAmbulance_, *pHumanState_ );
+    sortingArea.HandleHumanForSorting( *pHumanState_ );
     pCollectionAmbulance_ = 0;
     pHumanState_          = 0;
 }

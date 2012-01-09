@@ -87,8 +87,17 @@ bool PHY_MedicalHealingConsign::DoWaitingForHealing()
     pDoctor_ = GetPionMedical().GetAvailableDoctorForHealing( pHumanState_->GetHuman() );
     if( !pDoctor_ )
     {
-        if( !GetPionMedical().HasUsableDoctorForHealing( pHumanState_->GetHuman(), true /*Bypass priorities*/ ) )
-            EnterStateSearchingForHealingArea();
+        // Find alternative healing unit
+        MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+        if( pLogisticManager )
+        {
+            PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeHealingHandler( *pHumanState_ );
+            if( newPion != &GetPionMedical() && newPion->HandleHumanForHealing( *pHumanState_ ) )
+            {
+                EnterStateFinished();
+                pHumanState_ = 0; // Crade
+            }
+        }
         return false;
     }
 

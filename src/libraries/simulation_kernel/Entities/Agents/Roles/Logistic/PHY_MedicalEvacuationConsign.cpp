@@ -103,7 +103,23 @@ void PHY_MedicalEvacuationConsign::CreateEvacuationAmbulance()
     assert( !pDoctor_ );
 
     if( !pEvacuationAmbulance_ )
+    {
         pEvacuationAmbulance_ = GetPionMedical().GetAvailableEvacuationAmbulance( *this );
+        if( !pEvacuationAmbulance_ )
+        {
+            // Find alternative evacuation unit
+            MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+            if( pLogisticManager )
+            {
+                PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeEvacuationHandler( *pHumanState_ );
+                if( newPion != &GetPionMedical() && newPion->HandleHumanForEvacuation( *pHumanState_ ) )
+                {
+                    EnterStateFinished();
+                    pHumanState_ = 0; // Crade
+                }
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

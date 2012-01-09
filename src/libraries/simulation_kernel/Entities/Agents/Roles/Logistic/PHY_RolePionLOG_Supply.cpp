@@ -194,16 +194,6 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
     pion_.Execute( *computer );
     return functor.pSelectedConvoy_;
 }
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Supply::GetStockAvailablity
-// Created: NLD 2005-02-01
-// -----------------------------------------------------------------------------
-double PHY_RolePionLOG_Supply::GetStockAvailablity( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const
-{
-    if( !bSystemEnabled_ && !pion_.IsDead() ) // <== Stock à terre quand pion mort = libre service
-        return 0.;
-    return std::min( GetStockValue( dotationCategory ), rRequestedValue );
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::AddStockReservation
@@ -212,6 +202,8 @@ double PHY_RolePionLOG_Supply::GetStockAvailablity( const PHY_DotationCategory& 
 double PHY_RolePionLOG_Supply::AddStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue )
 {
     assert( pStocks_ );
+    if( !bSystemEnabled_ && !pion_.IsDead() ) // <== Stock à terre quand pion mort = libre service
+        return 0.;
     return pStocks_->AddReservation( dotationCategory, rRequestedValue );
 }
 
