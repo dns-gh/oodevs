@@ -144,7 +144,9 @@ void DEC_ObjectFunctions::MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_O
         MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
         if( pObject && ( *pObject )().CanBeDestroyed() )
         {
-            pKnowledge->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+            MIL_Army_ABC* army = pKnowledge->GetArmy();
+            if( army )
+                army->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
             ( *pObject )().Destroy();
         }
     }
