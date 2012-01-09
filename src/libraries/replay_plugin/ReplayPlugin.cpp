@@ -101,7 +101,7 @@ void ReplayPlugin::OnTimer()
     if( running_ )
         loader_.Tick();
     if( running_ || tickNumber_ != loader_.GetTickNumber() )
-        SendReplayInfo( clients_ );
+		tickNumber_ = loader_.GetTickNumber();
 }
 
 // -----------------------------------------------------------------------------
