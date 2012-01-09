@@ -172,7 +172,7 @@ void ModelConsistencyDialog::CheckConsistency()
 {
     checker_.CheckConsistency();
     UpdateDataModel();
-    if( !checker_.GetConsistencyErrors().empty() && !isShown() && dataModel_->rowCount() > 0 )
+    if( !checker_.GetConsistencyErrors().empty() && dataModel_->rowCount() > 0 )
         show();
 }
 
