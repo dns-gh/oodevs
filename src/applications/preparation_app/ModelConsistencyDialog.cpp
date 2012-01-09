@@ -264,7 +264,7 @@ void ModelConsistencyDialog::AddIcon( const kernel::SafePointer< kernel::Entity_
     QStandardItem* item = new QStandardItem( qApp->style()->standardIcon( isError ? QStyle::SP_MessageBoxCritical : QStyle::SP_MessageBoxWarning ), "" );
     item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
     QVariant* variant = new QVariant();
-    variant->setValue( VariantPointer( &entity ) );
+    variant->setValue( kernel::VariantPointer( &entity ) );
     item->setData( *variant, Qt::UserRole );
     QVariant* errorType = new QVariant( type );
     item->setData( *errorType, Qt::UserRole + 1 );
