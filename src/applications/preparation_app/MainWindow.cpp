@@ -39,7 +39,6 @@
 #include "ProfileWizardDialog.h"
 #include "PropertiesPanel.h"
 #include "ResourceNetworkDialog.h"
-#include "SaveModelChecker.h"
 #include "ScoreDialog.h"
 #include "SuccessFactorDialog.h"
 #include "TacticalListView.h"
@@ -588,16 +587,14 @@ void MainWindow::LoadExercise()
     try
     {
         loading_ = true;
-        std::string loadingErrors;
         SetProgression( 70, tr( "Loading exercise ..." ) );
-        model_.Load( config_, loadingErrors );
+        model_.Load( config_ );
         pCreationPanel_->Load();
         if( config_.HasGenerateScores() )
         {
             model_.scores_.GenerateScoresFromTemplate( config_.GetLoader() );
             const tools::SchemaWriter schemaWriter;
-            SaveModelChecker checker( this );
-            if( model_.scores_.CheckValidity( checker, schemaWriter ) )
+            if( model_.scores_.CheckValidity( schemaWriter ) )
             {
                 model_.scores_.Serialize( config_.GetScoresFile(), schemaWriter );
                 tools::WriteXmlCrc32Signature( config_.GetScoresFile() );
@@ -605,11 +602,7 @@ void MainWindow::LoadExercise()
             return;
         }
         loading_ = false;
-        bool errors = !loadingErrors.empty();
-        SetWindowTitle( errors || model_.ghosts_.NeedSaving() );
-        if( errors )
-            QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                , tr( "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() );
+        SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() );
         EnableWorkspace( true );
         CheckConsistency();
     }
@@ -641,13 +634,9 @@ bool MainWindow::Save()
     bool result = false;
     if( needsSaving_ )
     {
-        SaveModelChecker checker( this );
-        result = model_.Save( config_, checker );
-        if( result )
-        {
-            SetWindowTitle( false );
-            CheckConsistency();
-        }
+        CheckConsistency();
+        model_.Save( config_ );
+        SetWindowTitle( false );
     }
     return result;
 }
@@ -725,6 +714,15 @@ void MainWindow::CheckConsistency()
     if( !consistencyDialog_ )
         return;
     consistencyDialog_->CheckConsistency();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::ClearLoadingErrors
+// Created: JSR 2012-01-05
+// -----------------------------------------------------------------------------
+void MainWindow::ClearLoadingErrors()
+{
+    model_.ClearLoadingErrors();
 }
 
 // -----------------------------------------------------------------------------

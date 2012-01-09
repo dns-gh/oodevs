@@ -11,6 +11,7 @@
 #define __KnowledgeGroupFactory_h_
 
 #include "clients_kernel/KnowledgeGroupFactory_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -29,6 +30,7 @@ class IdManager;
 // Created: FHD 2009-11-19
 // =============================================================================
 class KnowledgeGroupFactory : public kernel::KnowledgeGroupFactory_ABC
+                            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -41,18 +43,9 @@ public:
     //@{
     virtual kernel::KnowledgeGroup_ABC* Create( kernel::Team_ABC& team );
     virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::Team_ABC& team );
-    virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::Team_ABC& team, std::string& loadingErrors );
 
     virtual kernel::KnowledgeGroup_ABC* Create( kernel::KnowledgeGroup_ABC& knowledgeGroup );
     virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::KnowledgeGroup_ABC& knowledgeGroup );
-    virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::KnowledgeGroup_ABC& knowledgeGroup, std::string& loadingErrors );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    KnowledgeGroupFactory( const KnowledgeGroupFactory& );            //!< Copy constructor
-    KnowledgeGroupFactory& operator=( const KnowledgeGroupFactory& ); //!< Assignment operator
     //@}
 
 private:

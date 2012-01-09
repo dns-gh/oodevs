@@ -11,7 +11,6 @@
 #include "ProfilesModel.h"
 #include "UserProfile.h"
 #include "ProfileFactory_ABC.h"
-#include "ModelChecker_ABC.h"
 #include "Model.h"
 #include "clients_kernel/Tools.h"
 #include "AgentsModel.h"

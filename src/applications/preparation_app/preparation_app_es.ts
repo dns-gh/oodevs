@@ -519,19 +519,11 @@
         <translation type="unfinished">Objetos</translation>
     </message>
     <message>
-        <source>The following entities cannot be loaded: </source>
-        <translation type="unfinished">Las siguientes entidades no pueden ser cargadas: </translation>
-    </message>
-    <message>
         <source>File does not appear to be a valid orbat file.&lt;br&gt;Please select an other orbat file to import.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Import parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error loading the new orbat file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -845,12 +837,6 @@
     <message>
         <source>Load exercise definition file (exercise.xml)</source>
         <translation>Cargar archivo de definición de ejercicio (exercise.xml)</translation>
-    </message>
-    <message>
-        <source>
-Do you want to save anyway?</source>
-        <translation>
-¿Desea grabar sin embargo?</translation>
     </message>
     <message>
         <source>Watershed</source>
@@ -1242,10 +1228,6 @@ Do you want to save anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Formation with same level as parent must be empty.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1266,7 +1248,55 @@ Do you want to save anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Long name size limit exceeded : %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Allocated stocks of nature %1 exceed max capacity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown object type &quot;%1&quot;, some objects could not be loaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown crowd type &quot;%1&quot;, some crowds could not be loaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown population type &quot;%1&quot;, some populations could not be loaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command Post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No logistic base defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat has no command post.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat has more than one command post.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat has no knowledge group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Score definitions contain errors: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Success factor definitions contain errors: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2262,10 +2292,6 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
     <message>
         <source>Error loading exercise: </source>
         <translation>Error cargando ejercicio: </translation>
-    </message>
-    <message>
-        <source>The following entities cannot be loaded: </source>
-        <translation>Las siguientes entidades no pueden ser cargadas: </translation>
     </message>
 </context>
 </TS>

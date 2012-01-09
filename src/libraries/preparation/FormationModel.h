@@ -12,6 +12,7 @@
 
 #include "tools/Resolver.h"
 #include "tools/ElementObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -42,6 +43,7 @@ class StaticModel;
 class FormationModel : public tools::Resolver< kernel::Formation_ABC >
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< kernel::Formation_ABC >
+                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -54,17 +56,11 @@ public:
     //! @name Operations
     //@{
     kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, unsigned int levelId, const QString& name = "" );
-    void Create( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model, std::string& loadingErrors );
+    void Create( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model );
     void Purge();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FormationModel( const FormationModel& );            //!< Copy constructor
-    FormationModel& operator=( const FormationModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );

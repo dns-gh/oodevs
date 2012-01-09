@@ -39,9 +39,9 @@ Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QS
 // Name: Inhabitant constructor
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const tools::StringResolver< kernel::InhabitantType >& types )
+Inhabitant::Inhabitant( xml::xistream& xis, const kernel::InhabitantType& type, kernel::Controller& controller, IdManager& idManager )
     : kernel::EntityImplementation< kernel::Inhabitant_ABC >( controller, xis.attribute< int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
-    , type_( types.Get( xis.attribute< std::string >( "type" ) ) )
+    , type_( type )
 {
     xis >> xml::start( "composition" )
             >> xml::attribute( "healthy", healthy_ )

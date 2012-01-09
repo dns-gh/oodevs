@@ -50,7 +50,6 @@ ProfileDialog.cpp \
 ProfileEditor.cpp \
 ProfileWizardDialog.cpp \
 PropertiesTableDisplayer.cpp \
-SaveModelChecker.cpp \
 ScoreDialog.cpp \
 ScoreEditor.cpp \
 ScoreGaugeConfiguration.cpp \

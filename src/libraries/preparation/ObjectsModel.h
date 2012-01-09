@@ -47,7 +47,7 @@ class ObjectsModel : public tools::Resolver< kernel::Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsModel( kernel::Controllers& controllers, ObjectFactory_ABC& factory );
+             ObjectsModel( kernel::Controllers& controllers, ObjectFactory_ABC& factory, const tools::StringResolver< kernel::ObjectType >& resolver );
     virtual ~ObjectsModel();
     //@}
 
@@ -56,7 +56,7 @@ public:
     void Finalize();
     void Purge();
     kernel::Object_ABC* CreateObject( const kernel::Team_ABC& team, const kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location );
-    void CreateObject( xml::xistream& xis, const kernel::Team_ABC& team, std::string& loadingErrors );
+    void CreateObject( xml::xistream& xis, const kernel::Team_ABC& team, Model& model );
     //@}
 
 private:
@@ -70,6 +70,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ObjectFactory_ABC& factory_;
+    const tools::StringResolver< kernel::ObjectType >& resolver_;
     //@}
 };
 

@@ -298,10 +298,7 @@ void FilterOrbatReIndexer::Execute()
     xos << xml::end;
     xml::xistringstream newXis( xos.str() );
     // Reload teams model
-    std::string loadingErrors;
-    model_.teams_.Load( newXis, model_, loadingErrors );
-    if( !loadingErrors.empty() )
-        QMessageBox::critical( QApplication::activeModalWidget(), tools::translate( "FilterOrbatReIndexer", "Error loading the new orbat file" ), ( tools::translate( "FilterOrbatReIndexer", "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() ).ascii() );
+    model_.teams_.Load( newXis, model_ );
     emit( DoConsistencyCheck() );
 }
 

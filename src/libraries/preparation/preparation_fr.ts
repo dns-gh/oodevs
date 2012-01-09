@@ -43,25 +43,17 @@
     </message>
 </context>
 <context>
-    <name>AgentsModelChecker</name>
-    <message>
-        <source>Units model</source>
-        <translation>Modèles d&apos;unités</translation>
-    </message>
-    <message>
-        <source>Automat &apos;%1&apos; [%2] has no command post.</source>
-        <translation>L&apos;automate &apos;%1&apos; [%2] n&apos;a pas de poste de commandement.</translation>
-    </message>
-    <message>
-        <source>Automat &apos;%1&apos; [%2] has &apos;%3&apos; command posts.</source>
-        <translation>L&apos;automate &apos;%1&apos; [%2] a &apos;%3&apos; postes de commandement.</translation>
-    </message>
-</context>
-<context>
     <name>AltitudeModifierAttribute</name>
     <message>
         <source>Info/Altitude modifier/Height</source>
         <translation>Info/Modificateur d&apos;altitude/Hauteur</translation>
+    </message>
+</context>
+<context>
+    <name>Application</name>
+    <message>
+        <source>SWORD</source>
+        <translation type="unfinished">SWORD</translation>
     </message>
 </context>
 <context>
@@ -662,14 +654,6 @@
         <source>Army %1</source>
         <translation>Camp %1</translation>
     </message>
-    <message>
-        <source>Communication model</source>
-        <translation>Modèle de communication</translation>
-    </message>
-    <message>
-        <source>Unit &apos;%1&apos; in team &apos;%2&apos; has no knowledge group</source>
-        <translation>L&apos;unité &apos;%1&apos; du camp &apos;%2&apos; n&apos;a pas de groupe de connaissance</translation>
-    </message>
 </context>
 <context>
     <name>ScoresModel</name>
@@ -696,15 +680,6 @@ Détail: %1.</translation>
     <message>
         <source>Info/StructuralState</source>
         <translation>Info/Etat structurel</translation>
-    </message>
-</context>
-<context>
-    <name>SuccessFactorsModel</name>
-    <message>
-        <source>Success factor definitions contain errors:
-Reason: %1.</source>
-        <translation>La définition des facteurs de succès contient des erreurs:
-Détail: %1.</translation>
     </message>
 </context>
 <context>
@@ -789,7 +764,7 @@ Détail: %1.</translation>
     <name>TrafficabilityAttribute</name>
     <message>
         <source>Info/Trafficability/Max:</source>
-        <translation type="unfinished">Info/Traficabilité/Max :</translation>
+        <translation>Info/Traficabilité/Max :</translation>
     </message>
 </context>
 <context>

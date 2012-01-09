@@ -39,7 +39,7 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, Controller& controller, IdMa
     : EntityImplementation< KnowledgeGroup_ABC >( controller, xis.attribute< unsigned int >( "id" ), "" )
     , type_( ResolveType( xis.attribute< std::string >( "type" ), types ) )
 {
-    name_ = xis.attribute< std::string >( "name", "" ).c_str();;
+    name_ = xis.attribute< std::string >( "name", "" ).c_str();
     if( name_.isEmpty() )
         name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ );
     UpdateCommunicationDelay(); // LTO
@@ -144,18 +144,4 @@ void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
 bool KnowledgeGroup::IsActivated() const
 {
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::CheckType
-// Created: LDC 2011-05-25
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::CheckType( std::string& loadingErrors ) const
-{
-    if( !type_ )
-    {
-        std::stringstream error;
-        error << "Knowledge group " << id_ << ": type unknown reset to 'Standard'\n";
-        loadingErrors += error.str();
-    }
 }

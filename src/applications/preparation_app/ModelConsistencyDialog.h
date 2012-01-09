@@ -64,13 +64,20 @@ private:
     void UpdateDataModel();
     template< typename T >
     void AddItem( T data, QString text, const kernel::SafePointer< kernel::Entity_ABC >& entity,
-                  ModelConsistencyChecker::E_ConsistencyCheck type, QList< QStandardItem* >& items );
+                  E_ConsistencyCheck type, QList< QStandardItem* >& items );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void ClearLoadingErrors();
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnRefresh();
+    void OnClose();
     void OnSelectionChanged( const QModelIndex& );
     void OnFilterChanged( int type );
     //@}

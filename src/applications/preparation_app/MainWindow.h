@@ -105,6 +105,7 @@ public slots:
     void ToggleDocks();
     void ReloadExercise();
     void CheckConsistency();
+    void ClearLoadingErrors();
     void OnForceSaveAndAddActionPlanning( const std::string& filename );
     //@}
 

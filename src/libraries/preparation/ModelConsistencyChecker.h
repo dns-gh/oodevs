@@ -11,6 +11,7 @@
 #define __ModelConsistencyChecker_h_
 
 #include "clients_kernel/SafePointer.h"
+#include "ConsistencyErrorTypes.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -40,37 +41,6 @@ public:
 public:
     //! @name Types
     //@{
-    enum E_ConsistencyCheck
-    {
-        eLongNameUniqueness              = 0x0001,
-        eTeamNameUniqueness              = 0x0002,
-        eObjectNameUniqueness            = 0x0004,
-        eLimaNameUniqueness              = 0x0008,
-        eLimitNameUniqueness             = 0x0010,
-        eAllUniqueness                   = eLongNameUniqueness | eTeamNameUniqueness | eObjectNameUniqueness | eLimaNameUniqueness | eLimitNameUniqueness,
-
-        eStockInitialization             = 0x0020,
-        eStockMaxExceeded                = 0x0040,
-        eLogisticInitialization          = 0x0080,
-        eAllInitialization               = eStockInitialization | eLogisticInitialization | eStockMaxExceeded,
-
-        eAllCheckWithoutProfile          = eAllUniqueness | eAllInitialization,
-
-        eProfileUniqueness               = 0x0100,
-        eProfileUnreadable               = 0x0200,
-        eProfileUnwritable               = 0x0400,
-        eAllProfile                      = eProfileUniqueness | eProfileUnreadable | eProfileUnwritable,
-
-        eGhostExistence                  = 0x0800,
-        eGhostConverted                  = 0x1000,
-        eAllGhost                        = eGhostExistence | eGhostConverted,
-
-        eFormationWithSameLevelEmptiness = 0x1000,
-        eAllFormation                    = eFormationWithSameLevelEmptiness,
-
-        eAllChecks                       = eAllCheckWithoutProfile | eAllProfile | eAllGhost | eAllFormation
-    };
-
     typedef std::vector< kernel::SafePointer< kernel::Entity_ABC >* > T_SafeEntities;
     typedef T_SafeEntities::iterator                                 IT_SafeEntities;
     typedef T_SafeEntities::const_iterator                          CIT_SafeEntities;
@@ -99,7 +69,8 @@ public:
     //! @name Operations
     //@{
     const T_ConsistencyErrors& GetConsistencyErrors() const;
-    bool CheckConsistency( unsigned int filters = eAllChecks );
+    bool CheckConsistency();
+
     //@}
 
 private:
@@ -115,7 +86,11 @@ private:
     void CheckProfileUniqueness();
     void CheckProfileInitialization();
     void CheckGhosts();
-    void CheckFormationWithSameLevelAsParentEmptiness();
+    void CheckCommandPosts();
+    void CheckKnowledgeGroups();
+    void CheckLoadingErrors();
+    void CheckScores();
+    void CheckSuccessFactors();
     //@}
 
 private:
@@ -124,7 +99,6 @@ private:
     const Model&         model_;
     const StaticModel&   staticModel_;
     kernel::Controllers& controllers_;
-    unsigned int         filters_;
     T_ConsistencyErrors  errors_;
     T_Entities           entities_;
     //@}

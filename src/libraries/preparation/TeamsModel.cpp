@@ -20,7 +20,6 @@
 #include "Diplomacies.h"
 #include "Objects.h"
 #include "clients_kernel/Tools.h"
-#include "ModelChecker_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -158,11 +157,11 @@ tools::Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
 // Name: TeamsModel::Load
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void TeamsModel::Load( xml::xistream& xis, Model& model, std::string& loadingErrors )
+void TeamsModel::Load( xml::xistream& xis, Model& model )
 {
     xis >> xml::start( "orbat" )
             >> xml::start( "parties" )
-                >> xml::list( *this, &TeamsModel::ReadTeam, model, loadingErrors )
+                >> xml::list( *this, &TeamsModel::ReadTeam, model )
             >> xml::end
             >> xml::start( "diplomacy" )
                 >> xml::list( "party", *this, &TeamsModel::ReadDiplomacy )
@@ -174,7 +173,7 @@ void TeamsModel::Load( xml::xistream& xis, Model& model, std::string& loadingErr
 // Name: TeamsModel::ReadTeam
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void TeamsModel::ReadTeam( const std::string& tag, xml::xistream& xis, Model& model, std::string& loadingErrors )
+void TeamsModel::ReadTeam( const std::string& tag, xml::xistream& xis, Model& model )
 {
     Team_ABC* team = 0;
     if( tag == "party" )
@@ -189,22 +188,22 @@ void TeamsModel::ReadTeam( const std::string& tag, xml::xistream& xis, Model& mo
 
     // $$$$ SBO 2006-10-05: forward to communications extension?
     xis >> xml::optional >> xml::start( "communication" )
-            >> xml::list( "knowledge-group", model.knowledgeGroups_, &KnowledgeGroupsModel::Create, *team, model, loadingErrors )
+            >> xml::list( "knowledge-group", model.knowledgeGroups_, &KnowledgeGroupsModel::Create, *team, model )
         >> xml::end;
     xis >> xml::optional >> xml::start( "tactical" )
-            >> xml::list( "formation", model.formations_, &FormationModel::Create, *team, model, loadingErrors )
+            >> xml::list( "formation", model.formations_, &FormationModel::Create, *team, model )
         >> xml::end;
     xis >> xml::optional >> xml::start( "logistics" )
             >> xml::list( "logistic-base", *this, &TeamsModel::ReadLogistic, model )
         >> xml::end;
     xis >> xml::optional >> xml::start( "objects" )
-            >> xml::list( "object", model.objects_, &ObjectsModel::CreateObject, *team, loadingErrors  )
+            >> xml::list( "object", model.objects_, &ObjectsModel::CreateObject, *team, model  )
         >> xml::end;
     xis >> xml::optional >> xml::start( "populations" )
-            >> xml::list( "population", model.agents_, &AgentsModel::CreatePopulation, *team, loadingErrors )
+            >> xml::list( "population", model.agents_, &AgentsModel::CreatePopulation, *team, model )
         >> xml::end;
     xis >> xml::optional >> xml::start( "inhabitants" )
-        >> xml::list( "inhabitant", model.agents_, &AgentsModel::CreateInhabitant, *team, loadingErrors )
+        >> xml::list( "inhabitant", model.agents_, &AgentsModel::CreateInhabitant, *team, model )
         >> xml::end;
 }
 
@@ -247,26 +246,4 @@ void TeamsModel::ReadLogisticLink( xml::xistream& xis, Model& model, kernel::Ent
         if( hierarchies )
             hierarchies->Load( xis, &superior );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamsModel::CheckValidity
-// Created: SBO 2006-10-10
-// -----------------------------------------------------------------------------
-bool TeamsModel::CheckValidity( ModelChecker_ABC& checker ) const
-{
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        const CommunicationHierarchies& hierarchies = it->second->Get< CommunicationHierarchies >();
-        tools::Iterator< const Entity_ABC& > itSub = hierarchies.CreateSubordinateIterator();
-        while( itSub.HasMoreElements() )
-        {
-            const Entity_ABC* entity = &itSub.NextElement();
-            if( !dynamic_cast< const KnowledgeGroup_ABC* >( entity ) )
-                return checker.Reject( QString( "%1:\n%2" )
-                                      .arg( tools::translate( "Preparation", "Communication model" ) )
-                                      .arg( tools::translate( "Preparation", "Unit '%1' in team '%2' has no knowledge group" ).arg( entity->GetName() ).arg( it->second->GetName() ) ) );
-        }
-    }
-    return checker.Validate();
 }

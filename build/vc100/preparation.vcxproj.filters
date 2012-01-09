@@ -187,9 +187,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\AgentsModel.cpp">
       <Filter>Source Files\Model\Agent</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\AgentsModelChecker.cpp">
-      <Filter>Source Files\Model\Agent</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\AgentAffinities.cpp">
       <Filter>Source Files\Model\Agent\Extensions</Filter>
     </ClCompile>
@@ -549,9 +546,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\Model.h">
       <Filter>Source Files\Model</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\ModelChecker_ABC.h">
-      <Filter>Source Files\Model</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\StaticModel.h">
       <Filter>Source Files\Model</Filter>
     </ClInclude>
@@ -601,9 +595,6 @@
       <Filter>Source Files\Model\Agent</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\AgentsModel.h">
-      <Filter>Source Files\Model\Agent</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\AgentsModelChecker.h">
       <Filter>Source Files\Model\Agent</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\AgentAffinities.h">
@@ -977,6 +968,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\GhostPositions.h">
       <Filter>Source Files\Model\Ghosts\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ConsistencyErrorTypes.h">
+      <Filter>Source Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

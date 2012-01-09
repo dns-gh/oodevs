@@ -31,6 +31,8 @@ namespace tools
     class SchemaWriter_ABC;
 }
 
+
+class Model;
 class StaticModel;
 
 // =============================================================================
@@ -51,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& directoryPath, urban::WorldParameters& world, std::string& loadingErrors );
+    void Load( const std::string& directoryPath, urban::WorldParameters& world, ::Model& model );
     void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void LoadUrbanState( xml::xistream& xis );
     void Purge();

@@ -9,27 +9,23 @@
 
 #include "preparation_pch.h"
 #include "UrbanModel.h"
+#include "Architecture.h"
+#include "ConsistencyErrorTypes.h"
+#include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
-#include "Overridable_ABC.h"
+#include "Model.h"
 #include "ResourceNetworkAttribute.h"
 #include "StaticModel.h"
 #include "StructuralStateAttribute.h"
-#include "InfrastructureAttribute.h"
 #include "UrbanPositions.h"
 #include "Usages.h"
 #include "UrbanColor.h"
-#include "Architecture.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_gui/Usages.h"
 #include "clients_gui/Architecture.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/InfrastructureType.h"
-#include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/UrbanPositions_ABC.h"
-#include "clients_kernel/Usages_ABC.h"
-#include "clients_kernel/Architecture_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <urban/PhysicalAttribute.h>
 #include <urban/InfrastructureAttribute.h>
@@ -52,7 +48,7 @@ namespace
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-UrbanModel::UrbanModel( Controllers& controllers, const StaticModel& staticModel, const tools::Resolver< Object_ABC >& objects )
+UrbanModel::UrbanModel( Controllers& controllers, const StaticModel& staticModel, const Resolver< Object_ABC >& objects )
     : controllers_        ( controllers )
     , objectTypes_        ( staticModel.objectTypes_ )
     , accommodationTypes_ ( staticModel.accommodationTypes_ )
@@ -77,10 +73,10 @@ namespace
     class UrbanSendingCreationVisitor : public urban::TerrainObjectVisitor_ABC
     {
     public:
-        UrbanSendingCreationVisitor( UrbanModel& model, const ObjectTypes& objectTypes, std::string& loadingErrors )
-            : model_        ( model )
-            , objectTypes_  ( objectTypes )
-            , loadingErrors_( loadingErrors )
+        UrbanSendingCreationVisitor( UrbanModel& urbanModel, Model& model, const ObjectTypes& objectTypes )
+            : urbanModel_ ( urbanModel )
+            , model_      ( model )
+            , objectTypes_( objectTypes )
         {
             // NOTHING
         }
@@ -97,21 +93,21 @@ namespace
             {
                 if( !objectTypes_.StringResolver< MaterialCompositionType >::Find( pPhysical->GetArchitecture()->GetMaterial() ) )
                 {
-                    loadingErrors_ += "Urban Bloc " + urbanObject.GetName() + ": Unknown Material " + pPhysical->GetArchitecture()->GetMaterial() + "\n";
+                    model_.AppendLoadingError( eOthers, "Urban Bloc " + urbanObject.GetName() + ": Unknown Material " + pPhysical->GetArchitecture()->GetMaterial() );
                     return;
                 }
                 if( !objectTypes_.StringResolver< RoofShapeType >::Find( pPhysical->GetArchitecture()->GetRoofShape() ) )
                 {
-                    loadingErrors_ += "Urban Bloc " + urbanObject.GetName() + ": Unknown Roof shape " + pPhysical->GetArchitecture()->GetRoofShape() + "\n";
+                    model_.AppendLoadingError( eOthers, "Urban Bloc " + urbanObject.GetName() + ": Unknown Roof shape " + pPhysical->GetArchitecture()->GetRoofShape() );
                     return;
                 }
             }
-            model_.SendCreation( urbanObject );
+            urbanModel_.SendCreation( urbanObject );
         }
     private:
-        UrbanModel& model_;
+        UrbanModel& urbanModel_;
+        Model& model_;
         const ObjectTypes& objectTypes_;
-        std::string& loadingErrors_;
     };
 }
 
@@ -119,11 +115,11 @@ namespace
 // Name: UrbanModel::Load
 // Created: SBO 2010-06-10
 // -----------------------------------------------------------------------------
-void UrbanModel::Load( const std::string& directoryPath, urban::WorldParameters& world, std::string& loadingErrors )
+void UrbanModel::Load( const std::string& directoryPath, urban::WorldParameters& world, ::Model& model )
 {
     Purge();
     urban::Model::Load( directoryPath, world );
-    UrbanSendingCreationVisitor visitor( *this, objectTypes_, loadingErrors );
+    UrbanSendingCreationVisitor visitor( *this, model, objectTypes_ );
     Accept( visitor );
 }
 
@@ -229,23 +225,23 @@ void UrbanModel::Purge()
 // -----------------------------------------------------------------------------
 void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
 {
-    const kernel::ObjectType& type = objectTypes_.StringResolver< ObjectType >::Get( "urban block" );
+    const ObjectType& type = objectTypes_.StringResolver< ObjectType >::Get( "urban block" );
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject.GetName(), urbanObject.GetId(), type, *urbanDisplayOptions_, accommodationTypes_ );
     PropertiesDictionary& dictionary = pTerrainObject->Get< PropertiesDictionary >();
     pTerrainObject->Attach< StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
-    pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( urbanObject.Retrieve< urban::ColorAttribute >() ) );
+    pTerrainObject->Attach< UrbanColor_ABC >( *new UrbanColor( urbanObject.Retrieve< urban::ColorAttribute >() ) );
     UrbanPositions_ABC* urbanPositions = 0;
     if( const urban::GeometryAttribute* pGeometryAttribute = urbanObject.Retrieve< urban::GeometryAttribute >() )
     {
-        urbanPositions = new UrbanPositions( urbanObject, pTerrainObject->Retrieve< kernel::UrbanColor_ABC >() );
-        pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *urbanPositions );
+        urbanPositions = new UrbanPositions( urbanObject, pTerrainObject->Retrieve< UrbanColor_ABC >() );
+        pTerrainObject->Attach< UrbanPositions_ABC >( *urbanPositions );
         const urban::ResourceNetworkAttribute* resource = urbanObject.Retrieve< urban::ResourceNetworkAttribute >();
-        pTerrainObject->Attach< ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, resource, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), *this, objects_, objectTypes_ ) );
+        pTerrainObject->Attach< ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, resource, pTerrainObject->Get< UrbanPositions_ABC >().Barycenter(), *this, objects_, objectTypes_ ) );
     }
     const urban::PhysicalAttribute* pPhysical = urbanObject.Retrieve< urban::PhysicalAttribute >();
     if( pPhysical && pPhysical->GetArchitecture() )
-        pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( *pPhysical->GetArchitecture(), std::auto_ptr< Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
-    pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( urbanObject, std::auto_ptr< Usages_ABC >( new gui::Usages( dictionary, accommodationTypes_, pTerrainObject->GetLivingSpace() ) ) ) );
+        pTerrainObject->Attach< Architecture_ABC >( *new Architecture( *pPhysical->GetArchitecture(), std::auto_ptr< Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
+    pTerrainObject->Attach< Usages_ABC >( *new Usages( urbanObject, std::auto_ptr< Usages_ABC >( new gui::Usages( dictionary, accommodationTypes_, pTerrainObject->GetLivingSpace() ) ) ) );
     const urban::InfrastructureAttribute* infra = urbanObject.Retrieve< urban::InfrastructureAttribute >();
     if( infra && urbanPositions )
         if( const InfrastructureType* infraType = objectTypes_.StringResolver< InfrastructureType >::Find( infra->GetType() ) )

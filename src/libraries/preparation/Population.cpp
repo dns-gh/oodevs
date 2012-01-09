@@ -45,9 +45,9 @@ Population::Population( const PopulationType& type, int number, Controller& cont
 // Name: Population constructor
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-Population::Population( xml::xistream& xis, Controller& controller, IdManager& idManager, const tools::Resolver_ABC< PopulationType, std::string >& types )
+Population::Population( xml::xistream& xis, const kernel::PopulationType& type, Controller& controller, IdManager& idManager )
     : EntityImplementation< Population_ABC >( controller, xis.attribute< int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
-    , type_            ( types.Get( xis.attribute< std::string >( "type" ) ) )
+    , type_            ( type )
     , armedIndividuals_( 0, Units::percentage )
     , repartition_     ( new PopulationRepartition() )
     , attitude_        ( xis.attribute< std::string >( "attitude" ).c_str() )

@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "SuccessFactorsModel.h"
-#include "ModelChecker_ABC.h"
 #include "SuccessFactor.h"
 #include "SuccessFactorFactory_ABC.h"
 #include "clients_kernel/Tools.h"
@@ -124,27 +123,6 @@ void SuccessFactorsModel::SerializeScript( const tools::ExerciseConfig& config )
         xft << xml::xifstream( config.GetSuccessFactorsFile() );
     }
     EraseLine( config.BuildExerciseChildFile( "scripts/success-factors.lua" ), 0 ); // $$$$ ABR 2011-07-26: Temporaire, la transformation xsl de Xalan crash en vc100 (Mantis 5915)
-}
-
-// -----------------------------------------------------------------------------
-// Name: SuccessFactorsModel::CheckValidity
-// Created: SBO 2009-06-17
-// -----------------------------------------------------------------------------
-bool SuccessFactorsModel::CheckValidity( ModelChecker_ABC& checker, const tools::SchemaWriter_ABC& schemaWriter ) const
-{
-    try
-    {
-        xml::xostringstream xos;
-        Serialize( xos, schemaWriter );
-        xsl::xstringtransform xst( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ) );
-        xml::xistringstream xis( xos.str() );
-        xst << xis;
-    }
-    catch( std::exception& e )
-    {
-        return checker.Reject( tools::translate( "SuccessFactorsModel", "Success factor definitions contain errors:\nReason: %1." ).arg( e.what() ) );
-    }
-    return checker.Validate();
 }
 
 // -----------------------------------------------------------------------------

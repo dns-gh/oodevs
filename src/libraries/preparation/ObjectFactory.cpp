@@ -264,9 +264,9 @@ Object_ABC* ObjectFactory::CreateObject( const ObjectType& type, const Team_ABC&
 // Name: ObjectFactory::CreateObject
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-Object_ABC* ObjectFactory::CreateObject( xml::xistream& xis, const Team_ABC& team )
+Object_ABC* ObjectFactory::CreateObject( xml::xistream& xis, const Team_ABC& team, const kernel::ObjectType& type )
 {
-    Object* result = new Object( xis, controllers_.controller_, staticModel_.coordinateConverter_, staticModel_.objectTypes_, idManager_ );
+    Object* result = new Object( xis, controllers_.controller_, staticModel_.coordinateConverter_, type, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( xis, staticModel_.coordinateConverter_, result->GetType() ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );

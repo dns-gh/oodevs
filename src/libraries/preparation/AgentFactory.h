@@ -40,17 +40,17 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Agent_ABC* Create( kernel::Automat_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position, bool commandPost = false, const QString& name = "" );
-    virtual kernel::Automat_ABC* Create( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const QString& name = "" );
+    virtual kernel::Agent_ABC*      Create( kernel::Automat_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position, bool commandPost = false, const QString& name = "" );
+    virtual kernel::Automat_ABC*    Create( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const QString& name = "" );
     virtual kernel::Population_ABC* Create( kernel::Entity_ABC& parent, const kernel::PopulationType& type, int number, const geometry::Point2f& position );
     virtual kernel::Inhabitant_ABC* Create( kernel::Entity_ABC& parent, const kernel::InhabitantType& type, int number, const QString& name, const kernel::Location_ABC& location );
 
-    virtual kernel::Agent_ABC* Create( xml::xistream& xis, kernel::Automat_ABC& parent );
-    virtual kernel::Automat_ABC* Create( xml::xistream& xis, kernel::Entity_ABC& parent );
-    virtual kernel::Population_ABC* CreatePop( xml::xistream& xis, kernel::Team_ABC& parent );
-    virtual kernel::Inhabitant_ABC* CreateInhab( xml::xistream& xis, kernel::Team_ABC& parent );
+    virtual kernel::Agent_ABC*      Create( xml::xistream& xis, kernel::Automat_ABC& parent );
+    virtual kernel::Automat_ABC*    Create( xml::xistream& xis, kernel::Entity_ABC& parent );
+    virtual kernel::Population_ABC* Create( xml::xistream& xis, kernel::Team_ABC& parent, const kernel::PopulationType& type );
+    virtual kernel::Inhabitant_ABC* Create( xml::xistream& xis, kernel::Team_ABC& parent, const kernel::InhabitantType& type );
 
-    virtual kernel::Agent_ABC* Create( kernel::Ghost_ABC& ghost, const kernel::AgentType& type, const geometry::Point2f position );
+    virtual kernel::Agent_ABC*   Create( kernel::Ghost_ABC& ghost, const kernel::AgentType& type, const geometry::Point2f position );
     virtual kernel::Automat_ABC* Create( kernel::Ghost_ABC& ghost, const kernel::AutomatType& type );
     //@}
 

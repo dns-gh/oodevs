@@ -382,9 +382,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\FileLoaderObserver.cpp">
       <Filter>Source Files\File loader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\SaveModelChecker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\SymbolEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
@@ -599,9 +596,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\FileLoaderObserver.h">
       <Filter>Source Files\File loader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\SaveModelChecker.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\UnitStateTableCrew.h">
       <Filter>Source Files\Dialogs\Unit state</Filter>

@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "ScoresModel.h"
-#include "ModelChecker_ABC.h"
 #include "Score_ABC.h"
 #include "ScoreFactory_ABC.h"
 #include "TeamsModel.h"
@@ -25,6 +24,7 @@
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
+#include <QtGui/qmessagebox.h>
 #include "ENT/ENT_Tr.h"
 
 // -----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void ScoresModel::Read( xml::xistream& xis )
 // Name: ScoresModel::CheckValidity
 // Created: SBO 2009-05-26
 // -----------------------------------------------------------------------------
-bool ScoresModel::CheckValidity( ModelChecker_ABC& checker, const tools::SchemaWriter_ABC& schemaWriter ) const
+bool ScoresModel::CheckValidity( const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     try
     {
@@ -91,9 +91,10 @@ bool ScoresModel::CheckValidity( ModelChecker_ABC& checker, const tools::SchemaW
     }
     catch( std::exception& e )
     {
-        return checker.Reject( tools::translate( "ScoresModel", "Score definitions contain errors:\nReason: %1." ).arg( e.what() ) );
+        QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), tools::translate( "ScoresModel", "Score definitions contain errors:\nReason: %1." ).arg( e.what() ) );
+        return false;
     }
-    return checker.Validate();
+    return true;
 }
 
 // -----------------------------------------------------------------------------

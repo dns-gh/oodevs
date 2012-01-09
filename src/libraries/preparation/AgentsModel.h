@@ -14,6 +14,7 @@
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "tools/WorldParameters.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -39,9 +40,7 @@ namespace xml
 
 class AgentFactory_ABC;
 class Model;
-class GhostModel;
-class LimitsModel;
-class ModelChecker_ABC;
+class StaticModel;
 
 // =============================================================================
 /** @class  AgentsModel
@@ -59,11 +58,12 @@ class AgentsModel : public tools::Resolver< kernel::Agent_ABC >
                   , public tools::ElementObserver_ABC< kernel::Population_ABC >
                   , public tools::ElementObserver_ABC< kernel::Inhabitant_ABC >
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                  , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsModel( kernel::Controllers& controllers, AgentFactory_ABC& agentFactory, Model& model );
+             AgentsModel( kernel::Controllers& controllers, AgentFactory_ABC& agentFactory, const StaticModel& staticModel );
     virtual ~AgentsModel();
     //@}
 
@@ -71,7 +71,7 @@ public:
     //@{
     void CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
     void CreateAutomat( kernel::Ghost_ABC& ghost, const kernel::AutomatType& type, const geometry::Point2f& position );
-    void CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits, GhostModel& ghosts, std::string& loadingErrors );
+    void CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model );
     kernel::Automat_ABC& CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const QString& name = "" );
 
     kernel::Automat_ABC& GetAutomat( unsigned long id );
@@ -79,33 +79,26 @@ public:
 
     kernel::Agent_ABC& CreateAgent( kernel::Automat_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position, bool commandPost = false, const QString& name = "" );
     void CreateAgent( kernel::Ghost_ABC& ghost, const kernel::AgentType& type, const geometry::Point2f& position );
-    void CreateAgent( xml::xistream& xis, kernel::Automat_ABC& parent, std::string& loadingErrors );
+    void CreateAgent( xml::xistream& xis, kernel::Automat_ABC& parent, Model& model );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;
 
     kernel::Entity_ABC* FindAllAgent( unsigned long id ) const;
 
     void CreatePopulation( kernel::Entity_ABC& parent, const kernel::PopulationType& type, int number, const geometry::Point2f& position );
-    void CreatePopulation( xml::xistream& xis, kernel::Team_ABC& parent, std::string& loadingErrors );
+    void CreatePopulation( xml::xistream& xis, kernel::Team_ABC& parent, Model& model );
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
 
     void CreateInhabitant( kernel::Entity_ABC& parent, const kernel::InhabitantType& type, int number, const QString& name, const kernel::Location_ABC& location );
-    void CreateInhabitant( xml::xistream& xis, kernel::Team_ABC& parent, std::string& loadingErrors );
+    void CreateInhabitant( xml::xistream& xis, kernel::Team_ABC& parent, Model& model );
     kernel::Inhabitant_ABC& GetInhabitant( unsigned long id );
     kernel::Inhabitant_ABC* FindInhabitant( unsigned long id );
 
     void Purge();
-    bool CheckValidity( ModelChecker_ABC& checker ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AgentsModel( const AgentsModel& );            //!< Copy constructor
-    AgentsModel& operator=( const AgentsModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateAutomatChilds( kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
@@ -125,7 +118,7 @@ private:
     //@{
     kernel::Controllers&   controllers_;
     AgentFactory_ABC&      agentFactory_;
-    Model&                 model_;
+    const StaticModel&     staticModel_;
     tools::WorldParameters parameters_;
     //@}
 };

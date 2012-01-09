@@ -173,7 +173,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\InhabitantCreationPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ObjectCreationPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ProfilesChecker.cpp" />
-    <ClCompile Include="..\..\src\applications\preparation_app\SaveModelChecker.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\SymbolEditor.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\TemplatesPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\TemplateListView.cpp" />
@@ -600,7 +599,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\ProfilesChecker_ABC.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\Progress_ABC.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ResourceNetworkPrototype.h" />
-    <ClInclude Include="..\..\src\applications\preparation_app\SaveModelChecker.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\StockPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\SupplyRoutePrototype.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\SymbolEditor.h">
@@ -1511,7 +1509,9 @@
   <ItemGroup>
     <None Include="..\..\src\applications\preparation_app\MultipleResolverEditor.inl" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts" />
-    <None Include="..\..\src\applications\preparation_app\preparation_app_fr.ts" />
+    <None Include="..\..\src\applications\preparation_app\preparation_app_fr.ts">
+      <SubType>Designer</SubType>
+    </None>
     <CustomBuild Include="..\..\src\applications\preparation_app\translator.pro">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose %(FullPath)
 lrelease -verbose %(FullPath)

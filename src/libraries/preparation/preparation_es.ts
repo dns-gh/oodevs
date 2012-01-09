@@ -43,24 +43,16 @@
     </message>
 </context>
 <context>
-    <name>AgentsModelChecker</name>
-    <message>
-        <source>Units model</source>
-        <translation>Modelos de unidades</translation>
-    </message>
-    <message>
-        <source>Automat &apos;%1&apos; [%2] has no command post.</source>
-        <translation>Autómata &apos;%1&apos; [%2] no tiene puesto de comando.</translation>
-    </message>
-    <message>
-        <source>Automat &apos;%1&apos; [%2] has &apos;%3&apos; command posts.</source>
-        <translation>Autómata &apos;%1&apos; [%2] tiene &apos;%3&apos; puestos de comando.</translation>
-    </message>
-</context>
-<context>
     <name>AltitudeModifierAttribute</name>
     <message>
         <source>Info/Altitude modifier/Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Application</name>
+    <message>
+        <source>SWORD</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -662,14 +654,6 @@
         <source>Army %1</source>
         <translation>Ejército %1</translation>
     </message>
-    <message>
-        <source>Communication model</source>
-        <translation>Modelo de comunicación</translation>
-    </message>
-    <message>
-        <source>Unit &apos;%1&apos; in team &apos;%2&apos; has no knowledge group</source>
-        <translation>La unidad &apos;%1&apos; en el equipo &apos;%2&apos; no tiene grupo de transferencia de información</translation>
-    </message>
 </context>
 <context>
     <name>ScoresModel</name>
@@ -696,15 +680,6 @@ Detalle: %1.</translation>
     <message>
         <source>Info/StructuralState</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SuccessFactorsModel</name>
-    <message>
-        <source>Success factor definitions contain errors:
-Reason: %1.</source>
-        <translation>La definición de factores contiene errores:
-Detallado: %1.</translation>
     </message>
 </context>
 <context>

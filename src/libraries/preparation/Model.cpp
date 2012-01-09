@@ -82,9 +82,9 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , loaded_               ( false )
     , exercise_             ( *new Exercise( controllers.controller_ ) )
     , teams_                ( *new TeamsModel( controllers, teamFactory_ ) )
-    , objects_              ( *new ObjectsModel( controllers, objectFactory_ ) )
+    , objects_              ( *new ObjectsModel( controllers, objectFactory_, staticModel.objectTypes_ ) )
     , knowledgeGroups_      ( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) ) // LTO
-    , agents_               ( *new AgentsModel( controllers, agentFactory_, *this ) )
+    , agents_               ( *new AgentsModel( controllers, agentFactory_, staticModel ) )
     , formations_           ( *new FormationModel( controllers, formationFactory_, agents_, staticModel ) )
     , limits_               ( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
     , weather_              ( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
@@ -222,11 +222,21 @@ Object_ABC& Model::GetUrbanObject( unsigned int id ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Model::ClearLoadingErrors
+// Created: JSR 2012-01-05
+// -----------------------------------------------------------------------------
+void Model::ClearLoadingErrors()
+{
+    loadingErrors_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::Purge
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 void Model::Purge()
 {
+    ClearLoadingErrors();
     UpdateName( "orbat" );
     profiles_.Purge();
     urban_.Purge();
@@ -265,7 +275,7 @@ namespace
 // Name: Model::Load
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors )
+void Model::Load( const tools::ExerciseConfig& config )
 {
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
     config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
@@ -278,7 +288,7 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
     {
         config.GetLoader().CheckFile( urbanFile.string() );
         urban::WorldParameters world( directoryPath );
-        urban_.Load( directoryPath, world, loadingErrors );
+        urban_.Load( directoryPath, world, *this );
         const std::string urbanStateFile = config.GetUrbanStateFile() ;
         if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
             config.GetLoader().LoadFile( urbanStateFile, boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
@@ -288,7 +298,7 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
     if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
     {
         UpdateName( orbatFile );
-        config.GetLoader().LoadFile( orbatFile, boost::bind( &TeamsModel::Load, &teams_, _1, boost::ref( *this ), boost::ref( loadingErrors ) ) );
+        config.GetLoader().LoadFile( orbatFile, boost::bind( &TeamsModel::Load, &teams_, _1, boost::ref( *this ) ) );
         objects_.Finalize();
     }
 
@@ -315,37 +325,47 @@ namespace
 // Name: Model::Save
 // Created: SBO 2006-11-21
 // -----------------------------------------------------------------------------
-bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker )
+void Model::Save( const tools::ExerciseConfig& config )
 {
     if( !loaded_ )
-        return false;
+        return;
     const tools::SchemaWriter schemaWriter;
 
-    const bool valid = teams_.CheckValidity( checker )
-                    && agents_.CheckValidity( checker )
-                    && scores_.CheckValidity( checker, schemaWriter )
-                    && successFactors_.CheckValidity( checker, schemaWriter );
-    if( valid )
+    exercise_.SerializeAndSign( config, schemaWriter );
+    SerializeAndSign( config.GetSettingsFile(), exercise_.GetSettings(), schemaWriter );
     {
-        exercise_.SerializeAndSign( config, schemaWriter );
-        SerializeAndSign( config.GetSettingsFile(), exercise_.GetSettings(), schemaWriter );
-        {
-            xml::xofstream xos( config.GetOrbatFile() );
-            xos << xml::start( "orbat" );
-            schemaWriter.WriteExerciseSchema( xos, "orbat" );
-            teams_.Serialize( xos );
-            xos << xml::end;
-        }
-        tools::WriteXmlCrc32Signature( config.GetOrbatFile() );
-        SerializeAndSign( config.GetUrbanStateFile(), urban_, schemaWriter );
-        SerializeAndSign( config.GetWeatherFile(), weather_, schemaWriter );
-        SerializeAndSign( config.GetProfilesFile(), profiles_, schemaWriter );
-        SerializeAndSign( config.GetScoresFile(), scores_, schemaWriter );
-        SerializeAndSign( config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
-        successFactors_.SerializeScript( config );
-        UpdateName( config.GetOrbatFile() );
+        xml::xofstream xos( config.GetOrbatFile() );
+        xos << xml::start( "orbat" );
+        schemaWriter.WriteExerciseSchema( xos, "orbat" );
+        teams_.Serialize( xos );
+        xos << xml::end;
     }
-    return valid;
+    tools::WriteXmlCrc32Signature( config.GetOrbatFile() );
+    SerializeAndSign( config.GetUrbanStateFile(), urban_, schemaWriter );
+    SerializeAndSign( config.GetWeatherFile(), weather_, schemaWriter );
+    SerializeAndSign( config.GetProfilesFile(), profiles_, schemaWriter );
+    SerializeAndSign( config.GetScoresFile(), scores_, schemaWriter );
+    SerializeAndSign( config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
+    successFactors_.SerializeScript( config );
+    UpdateName( config.GetOrbatFile() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::AppendLoadingError
+// Created: JSR 2012-01-05
+// -----------------------------------------------------------------------------
+void Model::AppendLoadingError( E_ConsistencyCheck type, const std::string& error )
+{
+    loadingErrors_.insert( std::make_pair< E_ConsistencyCheck, std::string>( type, error) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetLoadingErrors
+// Created: JSR 2012-01-05
+// -----------------------------------------------------------------------------
+const Model::T_LoadingErrors& Model::GetLoadingErrors() const
+{
+    return loadingErrors_;
 }
 
 // -----------------------------------------------------------------------------
