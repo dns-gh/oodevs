@@ -87,7 +87,7 @@ ADN_Sensors_Environments_GUI::ADN_Sensors_Environments_GUI(QWidget * parent)
     horizontalHeader()->setLabel(1, tr( "Modifiers" ) );
 
     // connector creation
-    pConnector_=new ADN_CT_Sensors_Environments(*this);
+    pConnector_=new ADN_CT_Sensors_Environments( *this );
     connect( this, SIGNAL( currentChanged( int, int ) ), SLOT( OnCurrentChanged() ) );
     connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
 }
