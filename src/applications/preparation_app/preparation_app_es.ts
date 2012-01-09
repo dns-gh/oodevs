@@ -1269,10 +1269,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No logistic base defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Automat has no command post.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1290,6 +1286,26 @@
     </message>
     <message>
         <source>Success factor definitions contain errors: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Tipo</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Alerta</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No valid logistic base defined.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

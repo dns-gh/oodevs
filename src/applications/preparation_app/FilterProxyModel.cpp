@@ -15,8 +15,11 @@
 // Name: FilterProxyModel constructor
 // Created: LGY 2011-10-26
 // -----------------------------------------------------------------------------
-FilterProxyModel::FilterProxyModel( QWidget* parent )
+FilterProxyModel::FilterProxyModel( QWidget* parent, bool ( *IsError )( E_ConsistencyCheck ) )
     : QSortFilterProxyModel ( parent )
+    , IsError_( IsError )
+    , warning_( true )
+    , error_  ( true )
 {
     // NOTHING
 }
@@ -44,6 +47,32 @@ void FilterProxyModel::ToggleFilter( E_ConsistencyCheck type )
 }
 
 // -----------------------------------------------------------------------------
+// Name: FilterProxyModel::SetLevelFilter
+// Created: JSR 2012-01-09
+// -----------------------------------------------------------------------------
+void FilterProxyModel::SetLevelFilter( bool warning, bool error )
+{
+    warning_ = warning;
+    error_ = error;
+    beginResetModel();
+}
+
+namespace
+{
+    #define CONVERT_TO_MASK( mask ) { if( type & mask ) return mask; }
+
+    E_ConsistencyCheck Convert( E_ConsistencyCheck type )
+    {
+        CONVERT_TO_MASK( eUniquenessMask )
+        CONVERT_TO_MASK( eLogisticMask )
+        CONVERT_TO_MASK( eProfileMask )
+        CONVERT_TO_MASK( eGhostMask )
+        CONVERT_TO_MASK( eCommandPostMask )
+        return eOthersMask;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: FilterProxyModel::filterAcceptsRow
 // Created: LGY 2011-10-26
 // -----------------------------------------------------------------------------
@@ -51,7 +80,8 @@ bool FilterProxyModel::filterAcceptsRow( int row, const QModelIndex& parent ) co
 {
     QModelIndex index = sourceModel()->index( row, 0, parent );
     E_ConsistencyCheck type = static_cast< E_ConsistencyCheck >( index.data( Qt::UserRole + 1 ).toInt() );
-    if( filters_.find( type ) != filters_.end() )
-        return true;
-    return false;
+    if( filters_.find( Convert( type ) ) == filters_.end() )
+        return false;
+    bool isError = IsError_( type );
+    return ( warning_ && !isError ) || ( error_ && isError );
 }

@@ -18,6 +18,15 @@
 #include <boost/foreach.hpp>
 #include <boost/assign/list_of.hpp>
 
+namespace
+{
+    bool IsError( E_ConsistencyCheck type )
+    {
+        return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
+            || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyDialog constructor
 // Created: ABR 2011-09-23
@@ -35,10 +44,10 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     connect( this, SIGNAL( ClearLoadingErrors() ), parent, SLOT( ClearLoadingErrors() ) );
 
     // Model
-    horizontalHeaders_ << tr( "ID" ) << tr( "Name" ) << tr( "Description" );
+    horizontalHeaders_ << "" << tr( "ID" ) << tr( "Name" ) << tr( "Description" );
     dataModel_ = new QStandardItemModel( this );
-    dataModel_->setColumnCount( 3 );
-    proxyModel_ = new FilterProxyModel( this );
+    dataModel_->setColumnCount( 4 );
+    proxyModel_ = new FilterProxyModel( this, IsError );
     proxyModel_->setDynamicSortFilter( true );
     proxyModel_->setSourceModel( dataModel_ );
     proxyModel_->setSortRole( Qt::UserRole + 2 );
@@ -60,13 +69,27 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     closeButton->setDefault( true );
 
     // CheckBox
-    QHBoxLayout* checkBoxLayout = new QHBoxLayout();
+    QGroupBox* checkboxGroup = new QGroupBox( tr( "Type" ) );
+    QGridLayout* checkBoxLayout = new QGridLayout();
     CreateCheckbox( *checkBoxLayout, boost::assign::map_list_of( eUniquenessMask,  tr( "Unicity" ) )
                                                                ( eLogisticMask,    tr( "Logistic" ) )
                                                                ( eProfileMask,     tr( "Profile" ) )
                                                                ( eGhostMask,       tr( "Ghost" ) )
                                                                ( eCommandPostMask, tr( "Command Post" ) )
                                                                ( eOthersMask,      tr( "Others" ) ) );
+    checkboxGroup->setLayout( checkBoxLayout );
+
+    QGroupBox* levelGroup = new QGroupBox( tr( "Level" ) );
+    QHBoxLayout* levelLayout = new QHBoxLayout();
+    warningCheckBox_ = new QCheckBox( tr( "Warning" ) );
+    errorCheckBox_ = new QCheckBox( tr( "Error" ) );
+    connect( warningCheckBox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnLevelChanged() ) );
+    connect( errorCheckBox_  , SIGNAL( stateChanged( int ) ), this, SLOT( OnLevelChanged() ) );
+    warningCheckBox_->setCheckState( Qt::Checked );
+    errorCheckBox_->setCheckState( Qt::Checked );
+    levelLayout->addWidget( warningCheckBox_ );
+    levelLayout->addWidget( errorCheckBox_ );
+    levelGroup->setLayout( levelLayout );
 
     // Layout creation
     QVBoxLayout* mainLayout = new QVBoxLayout();
@@ -74,7 +97,8 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     QHBoxLayout* buttonLayout = new QHBoxLayout();
 
     // Layout management
-    mainLayout->addLayout( checkBoxLayout );
+    mainLayout->addWidget( checkboxGroup );
+    mainLayout->addWidget( levelGroup );
     mainLayout->addWidget( tableView_ );
     mainLayout->addLayout( buttonLayout );
     buttonLayout->addWidget( refreshButton );
@@ -92,7 +116,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eStockInitialization ]             = tr( "No stocks initialized." );
     errorDescriptions_[ eStockMaxExceeded ]                = tr( "Allocated stocks of nature %1 exceed max capacity." );
     errorDescriptions_[ eLogisticInitialization ]          = tr( "No logistic link initialized." );
-    errorDescriptions_[ eNoLogisticBase ]                  = tr( "No logistic base defined." );
+    errorDescriptions_[ eNoLogisticBase ]                  = tr( "No valid logistic base defined." );
 
     // Profile
     errorDescriptions_[ eProfileUniqueness ]               = tr( "Association with multiple profiles: %1." );
@@ -131,16 +155,18 @@ ModelConsistencyDialog::~ModelConsistencyDialog()
 // Name: ModelConsistencyDialog::CreateCheckbox
 // Created: LGY 2011-10-26
 // -----------------------------------------------------------------------------
-void ModelConsistencyDialog::CreateCheckbox( QHBoxLayout& layout, const T_Types& names )
+void ModelConsistencyDialog::CreateCheckbox( QGridLayout& layout, const T_Types& names )
 {
     connect( pMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnFilterChanged( int ) ) );
+    int index = 0;
     BOOST_FOREACH( const T_Types::value_type& name, names )
     {
         QCheckBox* pCheckBox = new QCheckBox( name.second );
         connect( pCheckBox, SIGNAL( stateChanged( int ) ), pMapper_, SLOT( map() ) );
         pMapper_->setMapping( pCheckBox, name.first );
         pCheckBox->setCheckState( Qt::Checked );
-        layout.addWidget( pCheckBox );
+        layout.addWidget( pCheckBox, index / 3, index % 3 );
+        ++index;
     }
 }
 
@@ -184,6 +210,7 @@ void ModelConsistencyDialog::UpdateDataModel()
 {
     dataModel_->clear();
     dataModel_->setHorizontalHeaderLabels( horizontalHeaders_ );
+    tableView_->horizontalHeader()->setResizeMode( eIcon, QHeaderView::ResizeToContents );
     tableView_->horizontalHeader()->setResizeMode( eID, QHeaderView::ResizeToContents );
     tableView_->horizontalHeader()->setResizeMode( eName, QHeaderView::ResizeToContents );
     tableView_->horizontalHeader()->setResizeMode( eDescription, QHeaderView::Stretch );
@@ -206,11 +233,13 @@ void ModelConsistencyDialog::UpdateDataModel()
             const kernel::SafePointer< kernel::Entity_ABC >& entity = **entityIt;
             if( entity )
             {
+                AddIcon( entity, error.type_, items );
                 AddItem( static_cast< unsigned int >( entity->GetId() ), QString::number( entity->GetId() ), entity, error.type_, items );
                 AddItem( entity->GetName(), entity->GetName(), entity, error.type_, items );
             }
             else
             {
+                AddIcon( entity, error.type_, items );
                 AddItem( 0, "---", entity, error.type_, items );
                 AddItem( "---", "---", entity, error.type_, items );
             }
@@ -224,20 +253,22 @@ void ModelConsistencyDialog::UpdateDataModel()
     }
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyDialog::AddIcon
+// Created: JSR 2012-01-09
+// -----------------------------------------------------------------------------
+void ModelConsistencyDialog::AddIcon( const kernel::SafePointer< kernel::Entity_ABC >& entity, E_ConsistencyCheck type, QList< QStandardItem* >& items )
 {
-    #define CONVERT_TO_MASK( mask ) { if( type & mask ) return mask; }
-
-    int Convert( E_ConsistencyCheck type )
-    {
-        CONVERT_TO_MASK( eUniquenessMask )
-        CONVERT_TO_MASK( eLogisticMask )
-        CONVERT_TO_MASK( eProfileMask )
-        CONVERT_TO_MASK( eGhostMask )
-        CONVERT_TO_MASK( eCommandPostMask )
-        CONVERT_TO_MASK( eOthersMask )
-        throw std::runtime_error( "Consistency type Unknown" );
-    }
+    bool isError = IsError( type );
+    QStandardItem* item = new QStandardItem( qApp->style()->standardIcon( isError ? QStyle::SP_MessageBoxCritical : QStyle::SP_MessageBoxWarning ), "" );
+    item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+    QVariant* variant = new QVariant();
+    variant->setValue( VariantPointer( &entity ) );
+    item->setData( *variant, Qt::UserRole );
+    QVariant* errorType = new QVariant( type );
+    item->setData( *errorType, Qt::UserRole + 1 );
+    item->setData( isError, Qt::UserRole + 2 );
+    items.push_back( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,7 +284,7 @@ void ModelConsistencyDialog::AddItem( T data, QString text, const kernel::SafePo
     QVariant* variant = new QVariant();
     variant->setValue( VariantPointer( &entity ) );
     item->setData( *variant, Qt::UserRole );
-    QVariant* errorType = new QVariant( Convert( type ) );
+    QVariant* errorType = new QVariant( type );
     item->setData( *errorType, Qt::UserRole + 1 );
     item->setData( data, Qt::UserRole + 2 );
     items.push_back( item );
@@ -280,5 +311,15 @@ void ModelConsistencyDialog::OnSelectionChanged( const QModelIndex& index )
 void ModelConsistencyDialog::OnFilterChanged( int type )
 {
     proxyModel_->ToggleFilter( static_cast< E_ConsistencyCheck >( type ) );
+    proxyModel_->setSourceModel( dataModel_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyDialog::OnLevelChanged
+// Created: JSR 2012-01-09
+// -----------------------------------------------------------------------------
+void ModelConsistencyDialog::OnLevelChanged()
+{
+    proxyModel_->SetLevelFilter( warningCheckBox_->isChecked(), errorCheckBox_->isChecked() );
     proxyModel_->setSourceModel( dataModel_ );
 }

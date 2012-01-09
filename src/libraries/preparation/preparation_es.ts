@@ -585,14 +585,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The logistic base is not defined for &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Object &apos;%1&apos; : &apos;%2&apos; is not a logistic base</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Trafficability</source>
         <translation type="unfinished"></translation>
     </message>

@@ -26,13 +26,14 @@ class FilterProxyModel : public QSortFilterProxyModel
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterProxyModel( QWidget* parent );
+             FilterProxyModel( QWidget* parent, bool( *IsError )( E_ConsistencyCheck ) );
     virtual ~FilterProxyModel();
     //@}
 
     //! @name Operations
     //@{
     void ToggleFilter( E_ConsistencyCheck type );
+    void SetLevelFilter( bool warning, bool error );
     //@}
 
 private:
@@ -51,6 +52,9 @@ private:
     //! @name Member data
     //@{
     T_Filters filters_;
+    bool (*IsError_)( E_ConsistencyCheck );
+    bool warning_;
+    bool error_;
     //@}
 };
 
