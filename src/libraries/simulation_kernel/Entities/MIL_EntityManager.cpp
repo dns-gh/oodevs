@@ -104,8 +104,9 @@
 #include "resource_network/ResourceNetworkModel.h"
 #include "tools/Loader_ABC.h"
 #include <urban/Model.h>
-#include <urban/PhysicalAttribute.h>
+#include <urban/GeometryAttribute.h>
 #include <urban/ObjectVisitor_ABC.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
@@ -352,6 +353,12 @@ namespace
             if( pPhysical && pPhysical->GetArchitecture() && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture()->GetRoofShape() ) ) )
             {
                 MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetId(), object.GetName().c_str() ) );
+            }
+            const urban::GeometryAttribute* geometry = object.Retrieve< urban::GeometryAttribute >();
+            if( !geometry || geometry->Geometry().Vertices().empty() )
+            {
+                MT_LOG_ERROR_MSG( MT_FormatString( "Urban block %d ignored for lack of geometry", object.GetId() ) );
+                return;
             }
             manager_.CreateUrbanObject( object );
             ++count_;
