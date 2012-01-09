@@ -51,7 +51,7 @@ InteractIfHeightCapacity::~InteractIfHeightCapacity()
 // -----------------------------------------------------------------------------
 void InteractIfHeightCapacity::CanInteractWith( const MIL_Object_ABC& object, const MIL_Agent_ABC& agent, bool& canInteract )
 {
-    canInteract = agent.GetRole< PHY_RoleInterface_Location >().GetHeight() <= object.GetAttribute< InteractionHeightAttribute >().Get();
+    canInteract &= ( agent.GetRole< PHY_RoleInterface_Location >().GetHeight() <= object.GetAttribute< InteractionHeightAttribute >().Get() );
 }
 
 // -----------------------------------------------------------------------------
